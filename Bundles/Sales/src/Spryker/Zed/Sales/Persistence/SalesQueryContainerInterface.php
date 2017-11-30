@@ -94,7 +94,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @deprecated Use SalesQueryContainerInterface::querySalesOrderDetailsWithDescendingItemStateHistory() or
-     *             SalesQueryContainerInterface::querySalesOrderDetailsWithDescendingItemStateHistoryByCustomer() instead.
+     *   SalesQueryContainerInterface::querySalesOrderDetailsWithDescendingItemStateHistoryByCustomer() instead.
      *
      * @param int $idSalesOrder
      *
@@ -144,7 +144,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @deprecated Use SalesQueryContainerInterface::querySalesOrderDetailsWithDescendingItemStateHistory() or
-     *             SalesQueryContainerInterface::querySalesOrderDetailsWithDescendingItemStateHistoryByCustomer() instead.
+     *   SalesQueryContainerInterface::querySalesOrderDetailsWithDescendingItemStateHistoryByCustomer() instead.
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
      *
