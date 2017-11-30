@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Api\ApiDependencyProvider;
 use Spryker\Zed\Api\Business\Exception\FormatterNotFoundException;
 use Spryker\Zed\Api\Communication\Formatter\JsonFormatter;
+use Spryker\Zed\Api\Communication\Plugin\ApiControllerListenerPlugin;
 use Spryker\Zed\Api\Communication\Transformer\Transformer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -59,5 +60,13 @@ class ApiCommunicationFactory extends AbstractCommunicationFactory
     protected function getUtilEncoding()
     {
         return $this->getProvidedDependency(ApiDependencyProvider::SERVICE_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Communication\Plugin\ApiControllerListenerInterface
+     */
+    public function createControllerListener()
+    {
+        return new ApiControllerListenerPlugin();
     }
 }

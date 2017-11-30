@@ -10,7 +10,6 @@ namespace Spryker\Zed\User\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Kernel\Container;
 
 /**
  * @method \Spryker\Zed\User\Business\UserFacadeInterface getFacade()
@@ -18,19 +17,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class UserServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-    /**
-     * @var \Spryker\Zed\User\Business\UserFacadeInterface
-     */
-    protected $userFacade;
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     */
-    public function __construct(Container $container)
-    {
-        $this->userFacade = $container->getLocator()->user()->facade();
-    }
-
     /**
      * @param \Silex\Application $app
      *
@@ -54,8 +40,8 @@ class UserServiceProvider extends AbstractPlugin implements ServiceProviderInter
     {
         $username = '';
 
-        if ($this->userFacade->hasCurrentUser()) {
-            $user = $this->userFacade->getCurrentUser();
+        if ($this->getFacade()->hasCurrentUser()) {
+            $user = $this->getFacade()->getCurrentUser();
             $username = sprintf('%s %s', $user->getFirstName(), $user->getLastName());
         }
 

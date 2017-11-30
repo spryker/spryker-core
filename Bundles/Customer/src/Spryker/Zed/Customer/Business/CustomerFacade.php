@@ -88,22 +88,6 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      *
      * @api
      *
-     * @deprecated Use CustomerFacade::sendPasswordRestoreMail() instead
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
-     */
-    public function forgotPassword(CustomerTransfer $customerTransfer)
-    {
-        return $this->sendPasswordRestoreMail($customerTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -431,7 +415,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      */
     public function saveCustomerForOrder(
         QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer  $checkoutResponseTransfer
+        CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
         $this->getFactory()->createCustomerOrderSaver()->saveOrder($quoteTransfer, $checkoutResponseTransfer);
     }
@@ -448,7 +432,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      */
     public function checkOrderPreSaveConditions(
         QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer  $checkoutResponseTransfer
+        CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
         $this->getFactory()
             ->createPreConditionChecker()

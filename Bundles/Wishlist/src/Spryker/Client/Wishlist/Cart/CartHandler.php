@@ -64,13 +64,10 @@ class CartHandler implements CartHandlerInterface
     {
         $wishlistRequestCollectionDiff = new WishlistMoveToCartRequestCollectionTransfer();
 
-        $skuItems = [];
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $skuItems[] = $itemTransfer->getSku();
-        }
+        $existingSkuIndex = $this->createExistingSkuIndex($quoteTransfer);
 
         foreach ($requestCollectionTransfer->getRequests() as $wishlistRequestTransfer) {
-            if (in_array($wishlistRequestTransfer->getSku(), $skuItems)) {
+            if (isset($existingSkuIndex[$wishlistRequestTransfer->getSku()])) {
                 continue;
             }
 
@@ -176,5 +173,23 @@ class CartHandler implements CartHandlerInterface
         return (new ItemTransfer())
             ->setSku($sku)
             ->setQuantity($quantity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    protected function createExistingSkuIndex(QuoteTransfer $quoteTransfer)
+    {
+        $skuIndex = [];
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $skuIndex[$itemTransfer->getSku()] = true;
+        }
+
+        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
+            $skuIndex[$itemTransfer->getSku()] = true;
+        }
+        return $skuIndex;
     }
 }

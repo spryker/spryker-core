@@ -13,12 +13,16 @@ use Spryker\Shared\Search\SearchConstants;
 abstract class AbstractIndexClientProvider extends AbstractSearchClientProvider
 {
     /**
+     * @param null|string $index
+     *
      * @return \Elastica\Index
      */
-    protected function createZedClient()
+    protected function createZedClient($index = null)
     {
         $client = parent::createZedClient();
 
-        return $client->getIndex(Config::get(SearchConstants::ELASTICA_PARAMETER__INDEX_NAME));
+        $index = ($index !== null) ? $index : Config::get(SearchConstants::ELASTICA_PARAMETER__INDEX_NAME);
+
+        return $client->getIndex($index);
     }
 }

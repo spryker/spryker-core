@@ -139,6 +139,7 @@ class ConsoleBootstrap extends Application
      */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
+        $this->setDecorated($output);
         $output->writeln($this->getInfoText());
 
         $this->application->boot();
@@ -165,5 +166,24 @@ class ConsoleBootstrap extends Application
             APPLICATION_STORE,
             APPLICATION_ENV
         );
+    }
+
+    /**
+     * This will force color mode when executed from another tool. The env variable can be set
+     * from anybody who wants to force color mode for the execution of this Application.
+     *
+     * For Spryker's deploy tool it is needed to get colored output from the console commands
+     * executed by this script without force projects to deal with ANSI Escape sequences of the underlying
+     * console commands.
+     *
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    protected function setDecorated(OutputInterface $output)
+    {
+        if (getenv('FORCE_COLOR_MODE')) {
+            $output->setDecorated(true);
+        }
     }
 }

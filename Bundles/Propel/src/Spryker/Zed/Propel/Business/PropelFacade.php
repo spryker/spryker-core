@@ -39,6 +39,8 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
+     * @deprecated Use `createDatabase()` instead.
+     *
      * {@inheritdoc}
      *
      * @api
@@ -146,5 +148,69 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     public function getCurrentDatabaseEngineName()
     {
         return $this->getFactory()->getConfig()->getCurrentDatabaseEngineName();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function deleteMigrationFilesDirectory()
+    {
+        $this->getFactory()->createMigrationDirectoryRemover()->execute();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function createDatabase()
+    {
+        $this->getFactory()->createPropelDatabaseAdapterCollection()->getAdapter()->createIfNotExists();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function dropDatabase()
+    {
+        $this->getFactory()->createPropelDatabaseAdapterCollection()->getAdapter()->dropDatabase();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $backupPath
+     *
+     * @return void
+     */
+    public function exportDatabase($backupPath)
+    {
+        $this->getFactory()->createPropelDatabaseAdapterCollection()->getAdapter()->exportDatabase($backupPath);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $backupPath
+     *
+     * @return void
+     */
+    public function importDatabase($backupPath)
+    {
+        $this->getFactory()->createPropelDatabaseAdapterCollection()->getAdapter()->importDatabase($backupPath);
     }
 }

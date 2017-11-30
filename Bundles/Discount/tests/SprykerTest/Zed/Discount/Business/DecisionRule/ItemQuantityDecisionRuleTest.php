@@ -29,7 +29,7 @@ class ItemQuantityDecisionRuleTest extends BaseRuleTester
     public function testDecisionRuleWhenCurrentItemQuantityMatchesShouldReturnTrue()
     {
         $comparatorMock = $this->createComparatorMock();
-        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer  $clauseTransfer, $itemQuantity) {
+        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $itemQuantity) {
             return $clauseTransfer->getValue() === $itemQuantity;
         });
 
