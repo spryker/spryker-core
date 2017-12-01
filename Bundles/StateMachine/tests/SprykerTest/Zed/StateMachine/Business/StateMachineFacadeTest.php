@@ -605,7 +605,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDoesStateMachineExistReturnsTrueWhenStateMachineHasHandler()
+    public function testStateMachineExistsReturnsTrueWhenStateMachineHasHandler()
     {
         // Assign
         $stateMachineHandler = new TestStateMachineHandler();
@@ -623,7 +623,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDoesStateMachineExistReturnsFalseWhenStateMachineHasNoHandler()
+    public function testStateMachineExistsReturnsFalseWhenStateMachineHasNoHandler()
     {
         // Assign
         $stateMachineHandler = new TestStateMachineHandler();
