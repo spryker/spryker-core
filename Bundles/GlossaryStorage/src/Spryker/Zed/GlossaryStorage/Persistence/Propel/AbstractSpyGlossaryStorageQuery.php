@@ -19,6 +19,6 @@ use Orm\Zed\GlossaryStorage\Persistence\Base\SpyGlossaryStorageQuery as BaseSpyG
  * long as it does not already exist in the output directory.
  *
  */
-class AbstractSpyGlossaryStorageQuery extends BaseSpyGlossaryStorageQuery
+abstract class AbstractSpyGlossaryStorageQuery extends BaseSpyGlossaryStorageQuery
 {
 }

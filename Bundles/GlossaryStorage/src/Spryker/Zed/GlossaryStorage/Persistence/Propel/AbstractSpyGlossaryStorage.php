@@ -19,6 +19,6 @@ use Orm\Zed\GlossaryStorage\Persistence\Base\SpyGlossaryStorage as BaseSpyGlossa
  * long as it does not already exist in the output directory.
  *
  */
-class AbstractSpyGlossaryStorage extends BaseSpyGlossaryStorage
+abstract class AbstractSpyGlossaryStorage extends BaseSpyGlossaryStorage
 {
 }

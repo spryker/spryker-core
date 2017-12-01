@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\GlossaryStorage\Dependency\Client;
 
-class GlossaryStorageToStorageBridge implements GlossaryStorageToStorageInterface
+class GlossaryStorageToStorageClientBridge implements GlossaryStorageToStorageClientInterface
 {
 
     /**
@@ -27,13 +27,12 @@ class GlossaryStorageToStorageBridge implements GlossaryStorageToStorageInterfac
 
     /**
      * @param string $key
-     * @param string $prefix
      *
      * @return array
      */
-    public function get($key, $prefix = '')
+    public function get($key)
     {
-        return $this->storageClient->get($key, $prefix);
+        return $this->storageClient->get($key);
     }
 
 }

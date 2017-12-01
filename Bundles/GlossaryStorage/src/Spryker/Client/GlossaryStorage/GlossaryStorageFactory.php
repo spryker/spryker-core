@@ -7,24 +7,27 @@
 
 namespace Spryker\Client\GlossaryStorage;
 
-use Spryker\Client\GlossaryStorage\Storage\AvailabilityKeyValueStorage;
+use Spryker\Client\GlossaryStorage\Storage\GlossaryStorage;
+use Spryker\Client\GlossaryStorage\Storage\GlossaryStorageInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class GlossaryStorageFactory extends AbstractFactory
 {
-
     /**
-     * @return \Spryker\Client\GlossaryStorage\Storage\AvailabilityKeyValueStorageInterface
+     * @return GlossaryStorageInterface
      */
-    public function createAvailabilityKeyValueStorage()
+    public function createTranslator()
     {
-        return new AvailabilityKeyValueStorage($this->getStorage(), $this->getSynchronizationService());
+        return new GlossaryStorage(
+            $this->getStorageClient(),
+            $this->getSynchronizationService()
+        );
     }
 
     /**
-     * @return \Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageInterface
+     * @return \Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageClientInterface
      */
-    protected function getStorage()
+    protected function getStorageClient()
     {
         return $this->getProvidedDependency(GlossaryStorageDependencyProvider::CLIENT_STORAGE);
     }

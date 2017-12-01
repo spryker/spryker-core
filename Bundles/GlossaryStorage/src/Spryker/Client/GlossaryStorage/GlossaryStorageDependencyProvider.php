@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\GlossaryStorage;
 
-use Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageBridge;
+use Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageClientBridge;
 use Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToSynchronizationServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
@@ -26,11 +26,11 @@ class GlossaryStorageDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container[static::CLIENT_STORAGE] = function (Container $container) {
-            return new GlossaryStorageToStorageBridge($container->getLocator()->storage()->client());
+            return new GlossaryStorageToStorageClientBridge($container->getLocator()->storage()->client());
         };
 
         $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
-            return new GlossaryStorageToSynchronizationServiceBridge($container->getLocator()->utilSynchronization()->service());
+            return new GlossaryStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
         };
 
         return $container;

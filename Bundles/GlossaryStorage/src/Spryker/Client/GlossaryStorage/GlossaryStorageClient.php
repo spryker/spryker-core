@@ -14,33 +14,20 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class GlossaryStorageClient extends AbstractClient implements GlossaryStorageClientInterface
 {
-
     /**
      * @api
      *
-     * @param int $idProductAbstract
+     * @param string $id
+     * @param string $localeName
+     * @param array $parameters
      *
-     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
+     * @return string
      */
-    public function getAvailabilityAbstractAsStorageTransfer($idProductAbstract)
+    public function translate($id, $localeName, array $parameters = [])
     {
-        return $this->getFactory()
-            ->createAvailabilityKeyValueStorage()
-            ->getAvailabilityAbstractAsStorageTransfer($idProductAbstract);
+        return $this
+            ->getFactory()
+            ->createTranslator()
+            ->translate($id, $localeName, $parameters);
     }
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractTransfer
-     */
-    public function getAvailabilityAbstract($idProductAbstract)
-    {
-        return $this->getFactory()
-            ->createAvailabilityKeyValueStorage()
-            ->getAvailabilityAbstract($idProductAbstract);
-    }
-
 }

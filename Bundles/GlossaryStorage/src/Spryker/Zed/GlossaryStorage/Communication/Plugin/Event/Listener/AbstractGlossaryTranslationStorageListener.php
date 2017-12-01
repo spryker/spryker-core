@@ -78,7 +78,7 @@ abstract class AbstractGlossaryTranslationStorageListener extends AbstractPlugin
             $spyGlossaryStorage = new SpyGlossaryStorage();
         }
 
-        $data = $this->getFactory()->getUtilSynchronization()->arrayFilterRecursive($spyGlossaryTranslationEntity);
+        $data = $this->getFactory()->getUtilSanitizeService()->arrayFilterRecursive($spyGlossaryTranslationEntity);
         $spyGlossaryStorage->setFkGlossaryKey($spyGlossaryTranslationEntity['fk_glossary_key']);
         $spyGlossaryStorage->setGlossaryKey($spyGlossaryTranslationEntity['GlossaryKey']['key']);
         $spyGlossaryStorage->setLocale($spyGlossaryTranslationEntity['Locale']['locale_name']);

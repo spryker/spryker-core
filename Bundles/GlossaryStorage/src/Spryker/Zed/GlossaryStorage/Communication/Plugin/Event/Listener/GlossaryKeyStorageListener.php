@@ -8,7 +8,6 @@
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
-use Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener\AbstractGlossaryTranslationStorageListener;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class GlossaryKeyStorageListener extends AbstractGlossaryTranslationStorageListener
@@ -27,7 +26,7 @@ class GlossaryKeyStorageListener extends AbstractGlossaryTranslationStorageListe
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $glossaryKeyIds = $this->getFactory()->getUtilSynchronization()->getEventTransferIds($eventTransfers);
+        $glossaryKeyIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
         if ($eventName === GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_DELETE) {
             $this->unpublish($glossaryKeyIds);

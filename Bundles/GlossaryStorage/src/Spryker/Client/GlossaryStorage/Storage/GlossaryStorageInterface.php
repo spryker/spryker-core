@@ -5,20 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\GlossaryStorage;
+namespace Spryker\Client\GlossaryStorage\Storage;
 
-interface GlossaryStorageClientInterface
+interface GlossaryStorageInterface
 {
 
     /**
-     * @api
-     *
-     * @param string $id
+     * @param string $keyName
      * @param string $localeName
      * @param array $parameters
      *
      * @return string
      */
-    public function translate($id, $localeName, array $parameters = []);
-
+    public function translate($keyName, $localeName, array $parameters = []);
 }

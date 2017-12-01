@@ -7,15 +7,14 @@
 
 namespace Spryker\Client\GlossaryStorage\Dependency\Client;
 
-interface GlossaryStorageToStorageInterface
+interface GlossaryStorageToStorageClientInterface
 {
 
     /**
      * @param string $key
-     * @param string $prefix
      *
      * @return array
      */
-    public function get($key, $prefix = '');
+    public function get($key);
 
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\GlossaryStorage\Communication;
 
+use Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToEventBehaviorFacadeInterface;
+use Spryker\Zed\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\GlossaryStorage\GlossaryStorageDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -18,11 +20,18 @@ class GlossaryStorageCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return \Spryker\Zed\AvailabilityStorage\Dependency\Service\AvailabilityStorageToUtilSynchronizationInterface
+     * @return GlossaryStorageToUtilSanitizeServiceInterface
      */
-    public function getUtilSynchronization()
+    public function getUtilSanitizeService()
     {
-        return $this->getProvidedDependency(GlossaryStorageDependencyProvider::SERVICE_UTIL_SYNCHRONIZATION);
+        return $this->getProvidedDependency(GlossaryStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
 
+    /**
+     * @return GlossaryStorageToEventBehaviorFacadeInterface
+     */
+    public function getEventBehaviorFacade()
+    {
+        return $this->getProvidedDependency(GlossaryStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
 }

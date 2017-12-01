@@ -30,7 +30,7 @@ class GlossaryTranslationStorageListener extends AbstractGlossaryTranslationStor
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $glossaryKeyIds = $this->getFactory()->getUtilSynchronization()->getEventTransferForeignKeys($eventTransfers, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY);
+        $glossaryKeyIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY);
 
         $this->publish($glossaryKeyIds);
     }

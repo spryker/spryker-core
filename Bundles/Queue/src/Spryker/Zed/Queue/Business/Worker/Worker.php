@@ -21,7 +21,7 @@ class Worker implements WorkerInterface
     const SECOND_TO_MILLISECONDS = 1000;
     const PROCESS_BUSY = 'busy';
     const PROCESS_NEW = 'new';
-    const PROCESSES_INTSTANCES = 'processes';
+    const PROCESSES_INSTANCES = 'processes';
 
     /**
      * @var \Spryker\Zed\Queue\Business\Process\ProcessManagerInterface
@@ -78,27 +78,28 @@ class Worker implements WorkerInterface
      */
     public function start($command, $round = 1, $processes = [])
     {
-        $startTime = time();
-        $passedSeconds = 0;
-        $advancedStep = 1;
+        $loopPassedSeconds = 0;
+        $totalPassedSeconds = 0;
+        $pendingProcesses = [];
+        $startTime = $this->getFreshMicroTime();
         $maxThreshold = (int)$this->queueConfig->getQueueWorkerMaxThreshold();
         $delayIntervalMilliseconds = (int)$this->queueConfig->getQueueWorkerInterval();
-        $this->workerProgressBar->start($maxThreshold, $round);
 
-        $pendingProcesses = [];
-        while ($passedSeconds < $maxThreshold) {
+        $this->workerProgressBar->start($maxThreshold, $round);
+        while ($totalPassedSeconds < $maxThreshold) {
             $processes = array_merge($this->executeOperation($command), $processes);
             $pendingProcesses = $this->getPendingProcesses($processes);
-
-            $this->workerProgressBar->advance($advancedStep);
-            $advancedStep = $delayIntervalMilliseconds / static::SECOND_TO_MILLISECONDS;
+            if ($loopPassedSeconds >= 1) {
+                $this->workerProgressBar->advance(1);
+                $totalPassedSeconds++;
+                $startTime = $this->getFreshMicroTime();
+            }
             usleep($delayIntervalMilliseconds * static::SECOND_TO_MILLISECONDS);
-            $passedSeconds = time() - $startTime;
+            $loopPassedSeconds = $this->getFreshMicroTime() - $startTime;
         }
 
         $this->workerProgressBar->finish();
         $this->waitForPendingProcesses($pendingProcesses, $command, $round, $delayIntervalMilliseconds);
-
         $this->processManager->flushIdleProcesses();
     }
 
@@ -157,7 +158,7 @@ class Worker implements WorkerInterface
             }
 
             $queueProcesses = $this->startProcesses($processCommand, $queue);
-            $processes = array_merge($processes, $queueProcesses[static::PROCESSES_INTSTANCES]);
+            $processes = array_merge($processes, $queueProcesses[static::PROCESSES_INSTANCES]);
 
             $this
                 ->workerProgressBar
@@ -197,7 +198,7 @@ class Worker implements WorkerInterface
         return [
             static::PROCESS_BUSY => $busyProcessNumber,
             static::PROCESS_NEW => $numberOfWorkers,
-            static::PROCESSES_INTSTANCES => $processes,
+            static::PROCESSES_INSTANCES => $processes,
         ];
     }
 
@@ -220,5 +221,13 @@ class Worker implements WorkerInterface
         }
 
         return $queueAdapterConfiguration[SharedConfig::CONFIG_MAX_WORKER_NUMBER];
+    }
+
+    /**
+     * @return float
+     */
+    protected function getFreshMicroTime()
+    {
+        return microtime(true);
     }
 }
