@@ -34,8 +34,15 @@ class ProductAbstractRelationCollector extends AbstractStoragePropelCollector
     protected function getProductLabelIds(array $collectItemData)
     {
         $productLabelIdsCsv = $collectItemData[ProductAbstractRelationCollectorQuery::RESULT_FIELD_ID_PRODUCT_LABELS_CSV];
+
         $productLabelIds = explode(',', $productLabelIdsCsv);
-        $productLabelIds = array_map('intval', $productLabelIds);
+
+        $activeIds = $this->filterActiveLabels($productLabelIds);
+        if (!$activeIds) {
+            return [];
+        }
+
+        $productLabelIds = array_map('intval', $activeIds);
 
         return $productLabelIds;
     }
@@ -54,5 +61,24 @@ class ProductAbstractRelationCollector extends AbstractStoragePropelCollector
     protected function isStorageTableJoinWithLocaleEnabled()
     {
         return true;
+    }
+
+    /**
+     * @param array $productLabelIds
+     *
+     * @return array
+     */
+    protected function filterActiveLabels(array $productLabelIds)
+    {
+        $activeIds = [];
+        foreach ($productLabelIds as $labelId) {
+            list($idProductLabel, $isActive) = explode(ProductAbstractRelationCollectorQuery::LABEL_DELIMITER, $labelId);
+            $isActive = filter_var($isActive, FILTER_VALIDATE_BOOLEAN);
+            if (!$isActive) {
+                continue;
+            }
+            $activeIds[] = $idProductLabel;
+        }
+        return $activeIds;
     }
 }

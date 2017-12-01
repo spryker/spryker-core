@@ -8,10 +8,13 @@
 namespace Spryker\Zed\ProductLabel\Business\Label;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
+use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Spryker\Zed\ProductLabel\Business\Exception\MissingProductLabelException;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface;
 use Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface;
+use Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -35,18 +38,26 @@ class LabelUpdater implements LabelUpdaterInterface
     protected $dictionaryTouchManager;
 
     /**
+     * @var \Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface
+     */
+    protected $productAbstractRelationTouchManager;
+
+    /**
      * @param \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface $dictionaryTouchManager
+     * @param \Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface $productAbstractRelationTouchManager
      */
     public function __construct(
         LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter,
         ProductLabelQueryContainerInterface $queryContainer,
-        LabelDictionaryTouchManagerInterface $dictionaryTouchManager
+        LabelDictionaryTouchManagerInterface $dictionaryTouchManager,
+        ProductAbstractRelationTouchManagerInterface $productAbstractRelationTouchManager
     ) {
         $this->localizedAttributesCollectionWriter = $localizedAttributesCollectionWriter;
         $this->queryContainer = $queryContainer;
         $this->dictionaryTouchManager = $dictionaryTouchManager;
+        $this->productAbstractRelationTouchManager = $productAbstractRelationTouchManager;
     }
 
     /**
@@ -86,6 +97,7 @@ class LabelUpdater implements LabelUpdaterInterface
     protected function executeUpdateTransaction(ProductLabelTransfer $productLabelTransfer)
     {
         $isModified = $this->persistLabel($productLabelTransfer);
+
         $this->persistLocalizedAttributesCollection($productLabelTransfer);
 
         if ($isModified) {
@@ -101,6 +113,11 @@ class LabelUpdater implements LabelUpdaterInterface
     protected function persistLabel(ProductLabelTransfer $productLabelTransfer)
     {
         $productLabelEntity = $this->getUpdatedLabelEntity($productLabelTransfer);
+
+        if ($productLabelEntity->isColumnModified(SpyProductLabelTableMap::COL_IS_ACTIVE)) {
+            $this->touchLabelProducts($productLabelTransfer->getIdProductLabel());
+        }
+
         if (!$productLabelEntity->isModified()) {
             return false;
         }
@@ -192,5 +209,23 @@ class LabelUpdater implements LabelUpdaterInterface
     protected function touchDictionary()
     {
         $this->dictionaryTouchManager->touchActive();
+    }
+
+    /**
+     * @param int $idProductLabel
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
+     */
+    protected function touchLabelProducts($idProductLabel)
+    {
+        $idProductAbstractList = $this->queryContainer
+            ->queryProductAbstractRelationsByIdProductLabel($idProductLabel)
+            ->select([SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->find();
+
+        foreach ($idProductAbstractList as $idProductAbstract) {
+            $this->productAbstractRelationTouchManager->touchActiveByIdProductAbstract($idProductAbstract);
+        }
     }
 }
