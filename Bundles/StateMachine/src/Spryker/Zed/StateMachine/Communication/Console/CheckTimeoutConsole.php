@@ -8,8 +8,8 @@
 namespace Spryker\Zed\StateMachine\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -19,7 +19,7 @@ class CheckTimeoutConsole extends Console
 {
     const COMMAND_NAME = 'state-machine:check-timeout';
     const COMMAND_DESCRIPTION = 'Check timeouts';
-    const ARGUMENT_STATE_MACHINE_NAME = 'state machine name';
+    const OPTION_STATE_MACHINE_NAME = 'state-machine-name';
 
     /**
      * @return void
@@ -29,9 +29,10 @@ class CheckTimeoutConsole extends Console
         $this->setName(static::COMMAND_NAME);
         $this->setDescription(static::COMMAND_DESCRIPTION);
 
-        $this->addArgument(
-            static::ARGUMENT_STATE_MACHINE_NAME,
-            InputArgument::REQUIRED,
+        $this->addOption(
+            static::OPTION_STATE_MACHINE_NAME,
+            's',
+            InputOption::VALUE_REQUIRED,
             'Name of state machine to trigger timeout expired items'
         );
 
@@ -46,14 +47,29 @@ class CheckTimeoutConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $stateMachineName = $this->input->getArgument(static::ARGUMENT_STATE_MACHINE_NAME);
+        $stateMachineName = $this->input->getOption(self::OPTION_STATE_MACHINE_NAME);
+        $this->assertStateMachineName($stateMachineName);
 
-        $doesExist = $this->getFacade()->stateMachineExists($stateMachineName);
-        if (!$doesExist) {
-            $this->error(sprintf('State machine "%s" was not found.', $stateMachineName));
+        $this->getFacade()->checkTimeouts($stateMachineName);
+    }
+
+    /**
+     * Method does not terminate process for BC reasons.
+     *
+     * @param string $stateMachineName
+     *
+     * @return void
+     */
+    protected function assertStateMachineName($stateMachineName)
+    {
+        if ($stateMachineName === null || trim($stateMachineName) === '') {
+            $this->info('No statemachine name was provided.');
+
             return;
         }
 
-        $this->getFacade()->checkTimeouts($stateMachineName);
+        if (!$this->getFacade()->stateMachineExists($stateMachineName)) {
+            $this->info(sprintf('StateMachine "%s" was not found. ', $stateMachineName));
+        }
     }
 }
