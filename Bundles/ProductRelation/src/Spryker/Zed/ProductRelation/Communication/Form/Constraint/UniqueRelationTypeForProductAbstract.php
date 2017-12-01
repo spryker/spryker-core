@@ -26,4 +26,11 @@ class UniqueRelationTypeForProductAbstract extends SymfonyConstraint
         return $this->productRelationQueryContainer;
     }
 
+    /**
+     * @return string
+     */
+    public function getTargets()
+    {
+         return static::CLASS_CONSTRAINT;
+    }
 }
