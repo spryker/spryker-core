@@ -213,7 +213,6 @@ class LabelUpdater implements LabelUpdaterInterface
 
     /**
      * @param int $idProductLabel
-     * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
