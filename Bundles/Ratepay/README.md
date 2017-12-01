@@ -10,4 +10,4 @@ composer require spryker/ratepay
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/3rd-party_integration/ratepay/integration_payment_ratepay.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/3rd-party_integration/ratepay/integration_payment_ratepay.html)

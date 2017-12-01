@@ -12,11 +12,11 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Search\Business\SearchFacade getFacade()
+ * @method \Spryker\Zed\Search\Business\SearchFacadeInterface getFacade()
  */
 class SearchConsole extends Console
 {
-    const COMMAND_NAME = 'setup:search';
+    const COMMAND_NAME = 'search:setup';
     const DESCRIPTION = 'This command will run installer for search';
 
     /**
@@ -26,6 +26,7 @@ class SearchConsole extends Console
     {
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::DESCRIPTION);
+        $this->setAliases(['setup:search']);
 
         parent::configure();
     }

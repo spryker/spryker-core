@@ -11,7 +11,7 @@ use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Heartbeat\Business\HeartbeatFacade getFacade()
+ * @method \Spryker\Zed\Heartbeat\Business\HeartbeatFacadeInterface getFacade()
  * @method \Spryker\Zed\Heartbeat\Communication\HeartbeatCommunicationFactory getFactory()
  */
 class SearchHealthIndicatorPlugin extends AbstractPlugin implements HealthIndicatorInterface

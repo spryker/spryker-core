@@ -19,7 +19,7 @@ use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Customer\CustomerConfig getConfig()
  */
 class CustomerCommunicationFactory extends AbstractCommunicationFactory
@@ -129,7 +129,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeInterface
+     * @return \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceInterface
      */
     protected function getUtilSanitizeService()
     {

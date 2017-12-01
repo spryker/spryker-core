@@ -13,7 +13,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 
 /**
  * @method \Spryker\Zed\Nopayment\Communication\NopaymentCommunicationFactory getFactory()
- * @method \Spryker\Zed\Nopayment\Business\NopaymentFacade getFacade()
+ * @method \Spryker\Zed\Nopayment\Business\NopaymentFacadeInterface getFacade()
  */
 class NopaymentConditionPlugin extends AbstractPlugin implements ConditionInterface
 {

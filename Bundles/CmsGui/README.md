@@ -25,6 +25,6 @@ To enable it overwrite `CmsConfig::appendPrefixToCmsPageUrl` method in project a
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/content_management/cms/cms.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/content_management/cms/cms.html)
 
 

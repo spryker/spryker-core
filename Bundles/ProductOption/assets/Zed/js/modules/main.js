@@ -14,8 +14,12 @@ $(document).ready(function() {
 
     new OptionValueFormHandler();
 
-    $('#create-product-option-button').on('click', function(event) {
-        event.preventDefault();
+    $('#create-product-option-button').on('click', function(e) {
+        e.preventDefault();
+
+        $(this)
+            .prop('disabled', true)
+            .addClass('disabled');
 
         $('#product_option_general').submit();
     });

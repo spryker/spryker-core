@@ -17,27 +17,8 @@ use Spryker\Client\Kernel\AbstractClient;
 class CustomerClient extends AbstractClient implements CustomerClientInterface
 {
     /**
-     * @api
+     * {@inheritdoc}
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
-    public function hasCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer)
-    {
-        $customerResponseTransfer = $this->getFactory()
-            ->createZedCustomerStub()
-            ->hasCustomerWithEmailAndPassword($customerTransfer);
-
-        $hasCustomer = $customerResponseTransfer->getHasCustomer();
-        if ($hasCustomer === true) {
-            $this->setCustomer($customerResponseTransfer->getCustomerTransfer());
-        }
-
-        return $hasCustomer;
-    }
-
-    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -54,6 +35,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -68,6 +51,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -82,6 +67,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -96,6 +83,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -110,6 +99,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -126,6 +117,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -140,6 +133,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idCustomer
@@ -179,6 +174,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -195,6 +192,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -209,6 +208,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -223,6 +224,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -237,6 +240,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -257,6 +262,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
@@ -269,6 +276,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return bool
@@ -281,6 +290,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -295,6 +306,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -309,6 +322,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -323,6 +338,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -337,6 +354,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -351,6 +370,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -365,6 +386,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -379,6 +402,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -393,6 +418,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -407,6 +434,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

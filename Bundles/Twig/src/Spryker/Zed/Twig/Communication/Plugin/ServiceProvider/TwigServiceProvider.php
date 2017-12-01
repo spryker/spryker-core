@@ -23,7 +23,7 @@ use Twig_Loader_Chain;
 /**
  * @method \Spryker\Zed\Twig\TwigConfig getConfig()
  * @method \Spryker\Zed\Twig\Communication\TwigCommunicationFactory getFactory()
- * @method \Spryker\Zed\Twig\Business\TwigFacade getFacade()
+ * @method \Spryker\Zed\Twig\Business\TwigFacadeInterface getFacade()
  */
 class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

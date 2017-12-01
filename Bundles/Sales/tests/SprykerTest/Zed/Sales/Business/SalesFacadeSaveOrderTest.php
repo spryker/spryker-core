@@ -82,6 +82,7 @@ class SalesFacadeSaveOrderTest extends Unit
                 'getManualEventsByIdSalesOrder',
                 'getDistinctManualEventsByIdSalesOrder',
                 'getOrderItemMatrix',
+                'isOrderFlaggedExcludeFromCustomer',
             ])
             ->getMock();
         $omsFacadeMock->method('selectProcess')

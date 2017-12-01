@@ -21,7 +21,7 @@ class BundleControllerActionRouteNameResolver implements RouteNameResolverInterf
     private $bundleControllerAction;
 
     /**
-     * @var \Zend\Filter\Word\CamelCaseToDash
+     * @var \Zend\Filter\FilterChain
      */
     private $filter;
 

@@ -18,7 +18,7 @@ use Spryker\Zed\ProductReview\ProductReviewDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductReview\ProductReviewConfig getConfig()
- * @method \Spryker\Zed\ProductReview\Persistence\ProductReviewQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductReview\Persistence\ProductReviewQueryContainerInterface getQueryContainer()
  */
 class ProductReviewBusinessFactory extends AbstractBusinessFactory
 {

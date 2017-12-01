@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\User\Dependency\Plugin\GroupPluginInterface;
 
 /**
- * @method \Spryker\Zed\Acl\Business\AclFacade getFacade()
+ * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
  */
 class GroupPlugin extends AbstractPlugin implements GroupPluginInterface

@@ -48,13 +48,23 @@ function createTriggerItemUrl(idOrder, idOrderItem, eventName) {
     return decodeURIComponent(finalUrl);
 }
 
+function disableTrigger($item) {
+    $item
+        .prop('disabled', true)
+        .addClass('disabled');
+}
+
 $(document).ready(function() {
     $('.trigger-order-single-event').click(function(e){
         e.preventDefault();
 
-        var idOrder = $(this).data('id-sales-order');
-        var eventName = $(this).data('event');
-        var idOrderItem = $(this).data('id-item');
+        var $item = $(this);
+
+        disableTrigger($item);
+
+        var idOrder = $item.data('id-sales-order');
+        var eventName = $item.data('event');
+        var idOrderItem = $item.data('id-item');
 
         window.location = createTriggerItemUrl(idOrder, idOrderItem, eventName);
     });
@@ -62,8 +72,12 @@ $(document).ready(function() {
     $('.trigger-order-event').click(function(e){
         e.preventDefault();
 
-        var idOrder = $(this).data('id-sales-order');
-        var eventName = $(this).data('event');
+        var $item = $(this);
+        
+        disableTrigger($item);
+
+        var idOrder = $item.data('id-sales-order');
+        var eventName = $item.data('event');
 
         window.location = createTriggerUrl(idOrder, eventName);
     });
