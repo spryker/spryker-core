@@ -233,4 +233,18 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
         return $this->getFactory()->createShipmentMethodTransformer()
             ->transformEntityToTransfer($shipmentMethodEntity);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idShipmentMethod
+     *
+     * @return bool
+     */
+    public function isShipmentMethodActive($idShipmentMethod)
+    {
+        return $this->getFactory()->createMethod()->isShipmentMethodActive($idShipmentMethod);
+    }
 }

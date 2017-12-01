@@ -198,4 +198,16 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     public function transformShipmentMethodEntityToShipmentMethodTransfer(SpyShipmentMethod $shipmentMethodEntity);
+
+    /**
+     * Specification:
+     *  - Check if provided shipment is activated, have is_active set to true.
+     *
+     * @api
+     *
+     * @param int $idShipmentMethod
+     *
+     * @return bool
+     */
+    public function isShipmentMethodActive($idShipmentMethod);
 }

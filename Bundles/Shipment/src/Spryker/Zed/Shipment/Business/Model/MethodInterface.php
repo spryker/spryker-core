@@ -65,4 +65,11 @@ interface MethodInterface
      * @return int|bool
      */
     public function updateMethod(ShipmentMethodTransfer $methodTransfer);
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return bool
+     */
+    public function isShipmentMethodActive($idShipmentMethod);
 }

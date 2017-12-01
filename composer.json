@@ -168,6 +168,7 @@
     "spryker/session": "*",
     "spryker/setup": "*",
     "spryker/shipment": "*",
+    "spryker/shipment-checkout-connector": "*",
     "spryker/silex": "*",
     "spryker/sql-criteria-builder": "*",
     "spryker/state-machine": "*",
