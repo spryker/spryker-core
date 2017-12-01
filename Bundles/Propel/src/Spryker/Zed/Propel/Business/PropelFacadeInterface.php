@@ -25,9 +25,11 @@ interface PropelFacadeInterface
 
     /**
      * Specification:
-     * - Create database for configured driver if it doesn't exist
+     * - Creates database for configured driver if it doesn't exist
      *
      * @api
+     *
+     * @deprecated Use `createDatabase()` instead.
      *
      * @return void
      */
@@ -35,7 +37,7 @@ interface PropelFacadeInterface
 
     /**
      * Specification:
-     * - Convert given PHP configuration into json configuration
+     * - Converts given PHP configuration into json configuration
      * - File is placed in configured phpConfDir
      *
      * @api
@@ -104,4 +106,58 @@ interface PropelFacadeInterface
      * @return string
      */
     public function getCurrentDatabaseEngineName();
+
+    /**
+     * Specification:
+     * - Deletes all migration files and the migration directory.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function deleteMigrationFilesDirectory();
+
+    /**
+     * Specification:
+     * - Creates database if not exists for configured driver.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function createDatabase();
+
+    /**
+     * Specification:
+     * - Drops database for configured driver.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function dropDatabase();
+
+    /**
+     * Specification:
+     * - Exports database backup for configured driver to `$backupPath`.
+     *
+     * @api
+     *
+     * @param string $backupPath
+     *
+     * @return void
+     */
+    public function exportDatabase($backupPath);
+
+    /**
+     * Specification:
+     * - Imports database backup for configured driver from `$backupPath`.
+     *
+     * @api
+     *
+     * @param string $backupPath
+     *
+     * @return void
+     */
+    public function importDatabase($backupPath);
 }

@@ -1,0 +1,29 @@
+{
+  "name": "spryker/setup-frontend",
+  "description": "SetupFrontend module",
+  "license": "proprietary",
+  "require": {
+    "spryker/kernel": "^3.0.0",
+    "spryker/log": "^3.0.0",
+    "spryker/symfony": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
