@@ -3,10 +3,16 @@
   "description": "ShipmentCheckoutConnector module",
   "license": "proprietary",
   "require": {
+    "spryker/kernel": "^3.14.0",
+    "spryker/shipment": "^6.1.0"
   },
   "require-dev": {
+    "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/checkout": "If you want to use Checkout plugins."
   },
   "autoload": {
     "psr-4": {
