@@ -93,33 +93,11 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Use SalesQueryContainerInterface::querySalesOrderDetailsWithDescendingItemStateHistory() or
-     *   SalesQueryContainerInterface::querySalesOrderDetailsWithDescendingItemStateHistoryByCustomer() instead.
-     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function querySalesOrderDetails($idSalesOrder);
-
-    /**
-     * @api
-     *
-     * @param int $idSalesOrder
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
-     */
-    public function querySalesOrderDetailsWithDescendingItemStateHistory($idSalesOrder);
-
-    /**
-     * @api
-     *
-     * @param int $idSalesOrder
-     * @param int $idCustomer
-     *
-     * @return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery
-     */
-    public function querySalesOrderDetailsWithDescendingItemStateHistoryByCustomer($idSalesOrder, $idCustomer);
 
     /**
      * @api
@@ -142,9 +120,6 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
-     *
-     * @deprecated Use SalesQueryContainerInterface::querySalesOrderDetailsWithDescendingItemStateHistory() or
-     *   SalesQueryContainerInterface::querySalesOrderDetailsWithDescendingItemStateHistoryByCustomer() instead.
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
      *

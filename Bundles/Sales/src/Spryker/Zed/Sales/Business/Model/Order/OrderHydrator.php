@@ -60,6 +60,9 @@ class OrderHydrator implements OrderHydratorInterface
     public function getCustomerOrder(OrderTransfer $orderTransfer)
     {
         $orderEntity = $this->getOrderEntity($orderTransfer);
+
+        $this->queryContainer->queryOrderItemsStateHistoriesOrderedByNewestState($orderEntity->getItems());
+
         $orderTransfer = $this->createOrderTransfer($orderEntity);
 
         return $orderTransfer;
@@ -77,13 +80,10 @@ class OrderHydrator implements OrderHydratorInterface
         $orderTransfer->requireIdSalesOrder()
             ->requireFkCustomer();
 
-        $orderCollection = $this->queryContainer
-            ->querySalesOrderDetailsWithDescendingItemStateHistoryByCustomer(
-                $orderTransfer->getIdSalesOrder(),
-                $orderTransfer->getFkCustomer()
-            )
-            ->find();
-        $orderEntity = $orderCollection->getFirst();
+        $orderEntity = $this->queryContainer
+            ->querySalesOrderDetails($orderTransfer->getIdSalesOrder())
+            ->filterByFkCustomer($orderTransfer->getFkCustomer())
+            ->findOne();
 
         if ($orderEntity === null) {
             throw new InvalidSalesOrderException(sprintf(
@@ -105,10 +105,9 @@ class OrderHydrator implements OrderHydratorInterface
      */
     public function hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder)
     {
-        $orderCollection = $this->queryContainer
-            ->querySalesOrderDetailsWithDescendingItemStateHistory($idSalesOrder)
-            ->find();
-        $orderEntity = $orderCollection->getFirst();
+        $orderEntity = $this->queryContainer
+            ->querySalesOrderDetails($idSalesOrder)
+            ->findOne();
 
         if ($orderEntity === null) {
             throw new InvalidSalesOrderException(
@@ -118,6 +117,8 @@ class OrderHydrator implements OrderHydratorInterface
                 )
             );
         }
+
+        $this->queryContainer->queryOrderItemsStateHistoriesOrderedByNewestState($orderEntity->getItems());
 
         $orderTransfer = $this->createOrderTransfer($orderEntity);
 

@@ -185,9 +185,6 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     /**
      * @api
      *
-     * @deprecated Use SalesQueryContainerInterface::querySalesOrderDetailsWithDescendingItemStateHistory() or
-     *   SalesQueryContainerInterface::querySalesOrderDetailsWithDescendingItemStateHistoryByCustomer() instead.
-     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
@@ -201,49 +198,6 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
          ->innerJoinWith('billingAddress.Country billingCountry')
          ->innerJoinWith('order.ShippingAddress shippingAddress')
          ->innerJoinWith('shippingAddress.Country shippingCountry');
-
-        return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idSalesOrder
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
-     */
-    public function querySalesOrderDetailsWithDescendingItemStateHistory($idSalesOrder)
-    {
-        $query = $this->getFactory()->createSalesOrderQuery()
-            ->setModelAlias('order')
-            ->filterByIdSalesOrder($idSalesOrder)
-            ->innerJoinWith('order.BillingAddress billingAddress')
-            ->innerJoinWith('billingAddress.Country billingCountry')
-            ->innerJoinWith('order.ShippingAddress shippingAddress')
-            ->innerJoinWith('shippingAddress.Country shippingCountry')
-            ->leftJoinWithItem()
-            ->useItemQuery(null, Criteria::LEFT_JOIN)
-                ->leftJoinWithStateHistory()
-                ->useStateHistoryQuery(null, Criteria::LEFT_JOIN)
-                    ->orderByIdOmsOrderItemStateHistory(Criteria::DESC)
-                ->endUse()
-            ->endUse();
-
-        return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idSalesOrder
-     * @param int $idCustomer
-     *
-     * @return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderQuery
-     */
-    public function querySalesOrderDetailsWithDescendingItemStateHistoryByCustomer($idSalesOrder, $idCustomer)
-    {
-        $query = $this->querySalesOrderDetailsWithDescendingItemStateHistory($idSalesOrder)
-            ->filterByFkCustomer($idCustomer);
 
         return $query;
     }
@@ -269,9 +223,6 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
 
     /**
      * @api
-     *
-     * @deprecated Use SalesQueryContainerInterface::querySalesOrderDetailsWithDescendingItemStateHistory() or
-     *   SalesQueryContainerInterface::querySalesOrderDetailsWithDescendingItemStateHistoryByCustomer() instead.
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
      *
