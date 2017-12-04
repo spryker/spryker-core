@@ -125,6 +125,17 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
      *
      * @return void
      */
+    public function fillOrderItemsWithLatestStates(ObjectCollection $salesOrderItems);
+
+    /**
+     * @api
+     *
+     * @deprecated Use SalesQueryContainer::fillOrderItemsWithLatestStates() instead.
+     *
+     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
+     *
+     * @return void
+     */
     public function queryOrderItemsStateHistoriesOrderedByNewestState(ObjectCollection $salesOrderItems);
 
     /**
