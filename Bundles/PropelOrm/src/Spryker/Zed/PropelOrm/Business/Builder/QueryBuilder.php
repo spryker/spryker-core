@@ -213,7 +213,7 @@ SCRIPT;
      * \$query->filterBy$colPhpName([1, 'foo'], Criteria::IN); // WHERE $colName IN (1, 'foo')
      * </code>
      *
-     * @param     string|mixed[] \$$variableName The value to use as filter.
+     * @param     string|string[] \$$variableName The value to use as filter.
      *              Accepts wildcards (* and % trigger a LIKE). Add Criteria::LIKE explicitly.";
         } elseif ($col->isBooleanType()) {
             $script .= "
