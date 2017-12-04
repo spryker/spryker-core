@@ -415,7 +415,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      */
     public function saveCustomerForOrder(
         QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer  $checkoutResponseTransfer
+        CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
         $this->getFactory()->createCustomerOrderSaver()->saveOrder($quoteTransfer, $checkoutResponseTransfer);
     }
@@ -432,7 +432,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      */
     public function checkOrderPreSaveConditions(
         QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer  $checkoutResponseTransfer
+        CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
         $this->getFactory()
             ->createPreConditionChecker()

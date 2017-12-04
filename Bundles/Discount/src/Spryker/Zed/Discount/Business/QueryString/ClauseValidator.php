@@ -110,10 +110,8 @@ class ClauseValidator implements ClauseValidatorInterface
             $clauseField = $clauseField . '.' . $clauseTransfer->getAttribute();
         }
 
-        foreach ($this->metaDataProvider->getAvailableFields() as $field) {
-            if ($field === $clauseField) {
-                return;
-            }
+        if ($this->metaDataProvider->isFieldAvailable($clauseField)) {
+            return;
         }
 
         throw new QueryStringException(sprintf(
