@@ -62,8 +62,10 @@ class AttributeValueTranslationForm extends AbstractType
     {
         $builder->add(self::FIELD_VALUE, TextType::class, [
             'label' => 'Value',
-            'read_only' => true,
             'disabled' => true,
+            'attr' => [
+                'readonly' => true,
+            ],
         ]);
 
         return $this;
