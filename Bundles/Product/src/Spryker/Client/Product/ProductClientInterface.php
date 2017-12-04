@@ -77,4 +77,37 @@ interface ProductClientInterface
      * @return \Generated\Shared\Transfer\StorageProductTransfer[]
      */
     public function getProductConcreteCollection(array $idProductConcreteCollection);
+
+    /**
+     * Specification:
+     * - Maps raw product data to StorageProductTransfer for the given locale.
+     * - Based on the super attributes and the selected attributes of the product the result might be abstract or concrete product.
+     * - Executes a stack of \Spryker\Client\Product\Dependency\Plugin\StorageProductExpanderPluginInterface plugins that
+     * can expand the result with extra data.
+     *
+     * @api
+     *
+     * @param string $locale
+     * @param array $data
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\StorageProductTransfer
+     */
+    public function mapStorageProduct($locale, array $data, array $selectedAttributes = []);
+
+    /**
+     * Specification:
+     * - Maps raw product data to StorageProductTransfer for the current locale.
+     * - Based on the super attributes and the selected attributes of the product the result might be abstract or concrete product.
+     * - Executes a stack of \Spryker\Client\Product\Dependency\Plugin\StorageProductExpanderPluginInterface plugins that
+     * can expand the result with extra data.
+     *
+     * @api
+     *
+     * @param array $data
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\StorageProductTransfer
+     */
+    public function mapStorageProductForCurrentLocale(array $data, array $selectedAttributes = []);
 }
