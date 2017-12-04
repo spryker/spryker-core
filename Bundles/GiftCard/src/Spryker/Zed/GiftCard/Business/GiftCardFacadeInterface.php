@@ -136,7 +136,7 @@ interface GiftCardFacadeInterface
 
     /**
      * Specification:
-     * - Finds a gift card  configuration for an order item
+     * - Finds a gift card configuration for an order item
      * - Creates a gift card meta data record (spy_sales_order_item_gift_card)
      * - Creates a gift card based on the meta data (generates code, sets a value)
      *

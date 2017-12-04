@@ -19,7 +19,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByItemInterface;
 class CreateGiftCardCommandPlugin extends AbstractPlugin implements CommandByItemInterface
 {
     /**
-     *{@inheritdoc}
+     * {@inheritdoc}
      * Command which is executed per order item basis
      *
      * @api

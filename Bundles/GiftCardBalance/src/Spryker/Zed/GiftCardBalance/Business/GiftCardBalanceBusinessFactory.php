@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\GiftCardBalance\Business;
 
+use Spryker\Zed\GiftCardBalance\Business\Checker\GiftCardBalanceChecker;
+use Spryker\Zed\GiftCardBalance\Business\Saver\GiftCardBalanceSaver;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -16,7 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class GiftCardBalanceBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\GiftCardBalance\Business\GiftCardBalanceCheckerInterface
+     * @return \Spryker\Zed\GiftCardBalance\Business\Checker\GiftCardBalanceCheckerInterface
      */
     public function createGiftCardBalanceChecker()
     {
@@ -26,7 +28,7 @@ class GiftCardBalanceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCardBalance\Business\GiftCardBalanceSaverInterface
+     * @return \Spryker\Zed\GiftCardBalance\Business\Saver\GiftCardBalanceSaverInterface
      */
     public function createGiftCardBalanceSaver()
     {
