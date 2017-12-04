@@ -355,18 +355,7 @@ class ShipmentFacadeTest extends Test
             ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
             ->setCurrency((new CurrencyTransfer())->setCode($currencyCode));
 
-        $priceList = [
-            $this->tester->getDefaultStoreName() => [
-                'EUR' => [
-                    'netAmount' => 3100,
-                    'grossAmount' => 3100,
-                ],
-                'USD' => [
-                    'netAmount' => 3200,
-                    'grossAmount' => 3200,
-                ],
-            ],
-        ];
+        $priceList = $this->createDefaultPriceList();
 
         $idShipmentMethod = $this->tester->haveShipmentMethod([], [], $priceList)->getIdShipmentMethod();
 
@@ -376,6 +365,38 @@ class ShipmentFacadeTest extends Test
 
         // Assert
         $this->assertEquals($expectedPriceResult, $actualPriceResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsShipmentMethodActiveShouldReturnTrueWhenActive()
+    {
+        $this->tester->disableAllShipmentMethods();
+
+        $priceList = $this->createDefaultPriceList();
+
+        $idShipmentMethod = $this->tester->haveShipmentMethod([], [], $priceList)->getIdShipmentMethod();
+
+        $isActive = $this->tester->getShipmentFacade()->isShipmentMethodActive($idShipmentMethod);
+
+        $this->assertTrue($isActive);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsShipmentMethodActiveShouldReturnFalseWhenInActive()
+    {
+        $this->tester->disableAllShipmentMethods();
+
+        $priceList = $this->createDefaultPriceList();
+
+        $idShipmentMethod = $this->tester->haveShipmentMethod([ShipmentMethodTransfer::IS_ACTIVE => false], [], $priceList)->getIdShipmentMethod();
+
+        $isActive = $this->tester->getShipmentFacade()->isShipmentMethodActive($idShipmentMethod);
+
+        $this->assertFalse($isActive);
     }
 
     /**
@@ -436,5 +457,25 @@ class ShipmentFacadeTest extends Test
                 static::DELIVERY_TIME_PLUGIN => $deliveryTimePlugin,
             ],
         ]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function createDefaultPriceList()
+    {
+        $priceList = [
+            $this->tester->getDefaultStoreName() => [
+                'EUR' => [
+                    'netAmount' => 3100,
+                    'grossAmount' => 3100,
+                ],
+                'USD' => [
+                    'netAmount' => 3200,
+                    'grossAmount' => 3200,
+                ],
+            ],
+        ];
+        return $priceList;
     }
 }
