@@ -23,6 +23,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
@@ -38,6 +40,8 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idGiftCard
@@ -53,6 +57,8 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
@@ -61,10 +67,14 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      */
     public function expandGiftCardMetadata(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFactory()->createGiftCardMetadataExpander()->expandGiftCardMetadata($cartChangeTransfer);
+        return $this->getFactory()
+            ->createGiftCardMetadataExpander()
+            ->expandGiftCardMetadata($cartChangeTransfer);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
@@ -73,10 +83,14 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      */
     public function filterGiftCardDiscountableItems(CollectedDiscountTransfer $collectedDiscountTransfer)
     {
-        return $this->getFactory()->createGiftCardDiscountableItemFilter()->filterGiftCardDiscountableItems($collectedDiscountTransfer);
+        return $this->getFactory()
+            ->createGiftCardDiscountableItemFilter()
+            ->filterGiftCardDiscountableItems($collectedDiscountTransfer);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
@@ -86,10 +100,14 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      */
     public function filterPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer, QuoteTransfer $quoteTransfer)
     {
-        return $this->getFactory()->createPaymentMethodFilter()->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);
+        return $this->getFactory()
+            ->createPaymentMethodFilter()
+            ->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
@@ -98,10 +116,14 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $this->getFactory()->createGiftCardCalculator()->recalculate($calculableObjectTransfer);
+        $this->getFactory()
+            ->createGiftCardCalculator()
+            ->recalculate($calculableObjectTransfer);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -118,6 +140,8 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -134,6 +158,8 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idSalesOrderItem
@@ -142,10 +168,14 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      */
     public function isGiftCardOrderItem($idSalesOrderItem)
     {
-        return $this->getFactory()->createGiftCardReader()->isGiftCardOrderItem($idSalesOrderItem);
+        return $this->getFactory()
+            ->createGiftCardReader()
+            ->isGiftCardOrderItem($idSalesOrderItem);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idSalesOrderItem
@@ -154,10 +184,14 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      */
     public function createGiftCardForOrderItem($idSalesOrderItem)
     {
-        return $this->getFactory()->createGiftCardCreator()->createGiftCardForOrderItem($idSalesOrderItem);
+        return $this->getFactory()
+            ->createGiftCardCreator()
+            ->createGiftCardForOrderItem($idSalesOrderItem);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -167,10 +201,14 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      */
     public function saveSalesOrderGiftCardItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFactory()->createSalesOrderItemSaver()->saveSalesOrderGiftCardItems($quoteTransfer, $checkoutResponse);
+        $this->getFactory()
+            ->createSalesOrderItemSaver()
+            ->saveSalesOrderGiftCardItems($quoteTransfer, $checkoutResponse);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $code
@@ -179,10 +217,14 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      */
     public function isUsed($code)
     {
-        return $this->getFactory()->createGiftCardReader()->isUsed($code);
+        return $this->getFactory()
+            ->createGiftCardReader()
+            ->isUsed($code);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -191,10 +233,14 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      */
     public function replaceGiftCards($idSalesOrder)
     {
-        $this->getFactory()->createGiftCardReplacer()->replaceGiftCards($idSalesOrder);
+        $this->getFactory()
+            ->createGiftCardReplacer()
+            ->replaceGiftCards($idSalesOrder);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
@@ -204,10 +250,14 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      */
     public function filterShipmentMethods(ArrayObject $shipmentMethods, QuoteTransfer $quoteTransfer)
     {
-        return $this->getFactory()->createShipmentMethodFilter()->filterShipmentMethods($shipmentMethods, $quoteTransfer);
+        return $this->getFactory()
+            ->createShipmentMethodFilter()
+            ->filterShipmentMethods($shipmentMethods, $quoteTransfer);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idSalesOrder

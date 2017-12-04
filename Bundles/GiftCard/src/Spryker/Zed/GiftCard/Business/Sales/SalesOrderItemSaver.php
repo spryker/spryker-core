@@ -82,17 +82,15 @@ class SalesOrderItemSaver implements SalesOrderItemSaverInterface
         $salesOrderGiftCardItemEntity->setFkSalesOrderItem($itemTransfer->getIdSalesOrderItem());
         $attributes = $this->getAttributes($itemTransfer);
 
-        //TODO outsource
         $pattern = $itemTransfer->getGiftCardMetadata()->getAbstractConfiguration()->getCodePattern();
         $salesOrderGiftCardItemEntity->setPattern($pattern);
-        $concreteConfiguration = $itemTransfer->getGiftCardMetadata()->getConcreteConfiguration();
 
+        $concreteConfiguration = $itemTransfer->getGiftCardMetadata()->getConcreteConfiguration();
         if ($concreteConfiguration && $concreteConfiguration->getValue()) {
             $salesOrderGiftCardItemEntity->setValue($concreteConfiguration->getValue());
         }
 
         $salesOrderGiftCardItemEntity->setAttributes($this->utilEncodingService->encodeJson($attributes));
-
         $salesOrderGiftCardItemEntity->save();
     }
 

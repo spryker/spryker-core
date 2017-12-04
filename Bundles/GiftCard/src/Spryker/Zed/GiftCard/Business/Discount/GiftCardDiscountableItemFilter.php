@@ -23,9 +23,11 @@ class GiftCardDiscountableItemFilter implements GiftCardDiscountableItemFilterIn
         $discountableItems = new ArrayObject();
 
         foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItem) {
-            if (!$this->isGiftCard($discountableItem)) {
-                $discountableItems[] = $discountableItem;
+            if ($this->isGiftCard($discountableItem)) {
+                continue;
             }
+
+            $discountableItems[] = $discountableItem;
         }
 
         $collectedDiscountTransfer->setDiscountableItems($discountableItems);

@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class GiftCardBalanceFacade extends AbstractFacade implements GiftCardBalanceFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
@@ -26,10 +28,14 @@ class GiftCardBalanceFacade extends AbstractFacade implements GiftCardBalanceFac
      */
     public function getRemainingValue(GiftCardTransfer $giftCardTransfer)
     {
-        return $this->getFactory()->createGiftCardBalanceChecker()->getRemainingValue($giftCardTransfer);
+        return $this->getFactory()
+            ->createGiftCardBalanceChecker()
+            ->getRemainingValue($giftCardTransfer);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
@@ -38,10 +44,14 @@ class GiftCardBalanceFacade extends AbstractFacade implements GiftCardBalanceFac
      */
     public function hasPositiveBalance(GiftCardTransfer $giftCardTransfer)
     {
-        return $this->getFactory()->createGiftCardBalanceChecker()->hasPositiveBalance($giftCardTransfer);
+        return $this->getFactory()
+            ->createGiftCardBalanceChecker()
+            ->hasPositiveBalance($giftCardTransfer);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
@@ -51,6 +61,8 @@ class GiftCardBalanceFacade extends AbstractFacade implements GiftCardBalanceFac
      */
     public function saveTransactionLog(PaymentTransfer $paymentTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFactory()->createGiftCardBalanceSaver()->saveTransactionLog($paymentTransfer, $checkoutResponse);
+        $this->getFactory()
+            ->createGiftCardBalanceSaver()
+            ->saveTransactionLog($paymentTransfer, $checkoutResponse);
     }
 }

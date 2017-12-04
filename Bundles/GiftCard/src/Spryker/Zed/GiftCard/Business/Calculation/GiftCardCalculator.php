@@ -56,15 +56,16 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $allGiftCards = $calculableObjectTransfer->getGiftCards();
-        if ($this->containsGiftCardProducts($calculableObjectTransfer)) {
+        $giftCards = $calculableObjectTransfer->getGiftCards();
+
+        if ($this->hasGiftCardProducts($calculableObjectTransfer)) {
             $calculableObjectTransfer->setGiftCards(new ArrayObject());
-            $this->addNotApplicableGiftCardsToCalculableObject($calculableObjectTransfer, $allGiftCards);
+            $this->addNotApplicableGiftCardsToCalculableObject($calculableObjectTransfer, $giftCards);
 
             return;
         }
 
-        list($applicableGiftCards, $nonApplicableGiftCards) = $this->partitionGiftCardsByApplicability($allGiftCards, $calculableObjectTransfer);
+        list($applicableGiftCards, $nonApplicableGiftCards) = $this->partitionGiftCardsByApplicability($giftCards, $calculableObjectTransfer);
 
         $this->addGiftCardPaymentsToQuote($calculableObjectTransfer, $applicableGiftCards);
         $calculableObjectTransfer->setGiftCards($applicableGiftCards);
@@ -76,7 +77,7 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
      *
      * @return bool
      */
-    protected function containsGiftCardProducts(CalculableObjectTransfer $calculableObjectTransfer)
+    protected function hasGiftCardProducts(CalculableObjectTransfer $calculableObjectTransfer)
     {
         foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
             $giftCardMetadata = $itemTransfer->getGiftCardMetadata();
@@ -104,17 +105,17 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\GiftCardTransfer[] $allGiftCards
+     * @param \ArrayObject|\Generated\Shared\Transfer\GiftCardTransfer[] $giftCardTransfers
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return \ArrayObject[]
      */
-    protected function partitionGiftCardsByApplicability(ArrayObject $allGiftCards, CalculableObjectTransfer $calculableObjectTransfer)
+    protected function partitionGiftCardsByApplicability(ArrayObject $giftCardTransfers, CalculableObjectTransfer $calculableObjectTransfer)
     {
         $applicableGiftCards = [];
         $nonApplicableGiftCards = [];
 
-        foreach ($allGiftCards as $giftCardTransfer) {
+        foreach ($giftCardTransfers as $giftCardTransfer) {
             $giftCardTransfer = $this->findGiftCard($giftCardTransfer);
 
             if (!$giftCardTransfer) {
@@ -160,13 +161,14 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
                 $giftCardPayment->setAmount($this->giftCardValueProvider->getValue($giftCard));
                 continue;
             }
-            $giftCardPayment = new PaymentTransfer();
-            $giftCardPayment->setPaymentProvider(GiftCardConfig::PROVIDER_NAME);
-            $giftCardPayment->setPaymentSelection(GiftCardConfig::PROVIDER_NAME);
-            $giftCardPayment->setPaymentMethod(GiftCardConfig::PROVIDER_NAME);
-            $giftCardPayment->setAmount($this->giftCardValueProvider->getValue($giftCard));
-            $giftCardPayment->setIsLimitedAmount(true);
-            $giftCardPayment->setGiftCard($giftCard);
+
+            $giftCardPayment = (new PaymentTransfer())
+                ->setPaymentProvider(GiftCardConfig::PROVIDER_NAME)
+                ->setPaymentSelection(GiftCardConfig::PROVIDER_NAME)
+                ->setPaymentMethod(GiftCardConfig::PROVIDER_NAME)
+                ->setAmount($this->giftCardValueProvider->getValue($giftCard))
+                ->setIsLimitedAmount(true)
+                ->setGiftCard($giftCard);
 
             $calculableObjectTransfer->addPayment($giftCardPayment);
         }

@@ -75,7 +75,7 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
             $paymentTransfer->requireGiftCard();
             $giftCardTransfer = $paymentTransfer->getGiftCard();
 
-            $errors = $this->getErrors($giftCardTransfer, $quoteTransfer, $paymentTransfer);
+            $errors = $this->checkGiftCard($giftCardTransfer, $quoteTransfer, $paymentTransfer);
 
             if ($errors->count() === 0) {
                 $validPayments[] = $paymentTransfer;
@@ -113,7 +113,7 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[]
      */
-    protected function getErrors(GiftCardTransfer $giftCardTransfer, QuoteTransfer $quoteTransfer, PaymentTransfer $paymentTransfer)
+    protected function checkGiftCard(GiftCardTransfer $giftCardTransfer, QuoteTransfer $quoteTransfer, PaymentTransfer $paymentTransfer)
     {
         $result = new ArrayObject();
 

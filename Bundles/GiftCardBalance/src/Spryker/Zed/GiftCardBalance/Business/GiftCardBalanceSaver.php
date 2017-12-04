@@ -22,9 +22,10 @@ class GiftCardBalanceSaver implements GiftCardBalanceSaverInterface
     public function saveTransactionLog(PaymentTransfer $paymentTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         $paymentTransfer->requireGiftCard();
+        $paymentTransfer->getGiftCard()->requireIdGiftCard();
 
         $idSalesOrder = $checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder();
-        $idGiftCard = $paymentTransfer->getGiftCard()->requireIdGiftCard()->getIdGiftCard();
+        $idGiftCard = $paymentTransfer->getGiftCard()->getIdGiftCard();
 
         $transactionLogEntity = new SpyGiftCardBalanceLog();
         $transactionLogEntity->setFkSalesOrder($idSalesOrder);

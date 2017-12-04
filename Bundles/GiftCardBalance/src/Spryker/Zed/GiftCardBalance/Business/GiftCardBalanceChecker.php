@@ -10,6 +10,9 @@ namespace Spryker\Zed\GiftCardBalance\Business;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Spryker\Zed\GiftCardBalance\Persistence\GiftCardBalanceQueryContainerInterface;
 
+/**
+ * move to folder
+ */
 class GiftCardBalanceChecker implements GiftCardBalanceCheckerInterface
 {
     /**

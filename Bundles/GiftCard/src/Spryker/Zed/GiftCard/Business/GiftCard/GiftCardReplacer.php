@@ -76,18 +76,16 @@ class GiftCardReplacer implements GiftCardReplacerInterface
                 continue;
             }
 
-            //TODO throw exception? verify and adapt
-
             $newValue = $giftCard->getValue() - $giftCardPayment->getSpySalesPayment()->getAmount();
 
             if ($newValue > 0) {
-                $giftCardTransfer = new GiftCardTransfer();
-                $giftCardTransfer->setCode($this->giftCardCodeGenerator->generateGiftCardCode($giftCard->getReplacementPattern()));
-                $giftCardTransfer->setValue($newValue);
-                $giftCardTransfer->setReplacementPattern($giftCard->getReplacementPattern());
-                $giftCardTransfer->setName('Gift Card Replacement');
-                $giftCardTransfer->setAttributes($giftCard->getAttributes());
-                $giftCardTransfer->setIsActive(true);
+                $giftCardTransfer = (new GiftCardTransfer())
+                    ->setCode($this->giftCardCodeGenerator->generateGiftCardCode($giftCard->getReplacementPattern()))
+                    ->setValue($newValue)
+                    ->setReplacementPattern($giftCard->getReplacementPattern())
+                    ->setName('Gift Card Replacement')
+                    ->setAttributes($giftCard->getAttributes())
+                    ->setIsActive(true);
 
                 $this->giftCardCreator->create($giftCardTransfer);
             }
