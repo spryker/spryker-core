@@ -33,7 +33,11 @@ $(document).ready(function() {
 
     activeFiltersContainer.on('click', '.remove-product-category-filter', function(e) {
         var filter = e.currentTarget.closest('.filter-item');
-        inactiveFilters.append(createInactiveFilter(filter.dataset['filter'], filter.dataset['count']));
+        inactiveFilters.append(createInactiveFilter(filter.dataset['filter'], filter.dataset['count'], filter.classList.contains('non-filter-attribute')));
+
+        inactiveFilters.find('li').sort(function(a, b) {
+            return ($(b).data('count')) < ($(a).data('count')) ? -1 : 1;
+        }).appendTo(inactiveFilters);
 
         removeFilter(filter.dataset['filter'], true);
         activeFiltersContainer.trigger('change');
@@ -41,7 +45,7 @@ $(document).ready(function() {
 
     inactiveFiltersContainer.on('click', '.re-add-product-category-filter', function(e) {
         var filter = e.currentTarget.closest('.filter-item');
-        activeFilters.append(createActiveFilter(filter.dataset['filter'], filter.dataset['count']));
+        activeFilters.append(createActiveFilter(filter.dataset['filter'], filter.dataset['count'], filter.classList.contains('non-filter-attribute')));
 
         removeFilter(filter.dataset['filter'], false);
         activeFiltersContainer.trigger('change');
@@ -77,7 +81,7 @@ function getFilters(selector, value) {
 }
 
 function addToActiveList(filterToAdd, count) {
-    activeFilters.append(createActiveFilter(filterToAdd, count));
+    activeFilters.append(createActiveFilter(filterToAdd, count, true));
     activeFiltersContainer.trigger('change');
 }
 
@@ -86,8 +90,8 @@ function removeFromInactiveList(filter) {
     activeFiltersContainer.trigger('change');
 }
 
-function createActiveFilter(filter, count) {
-    return '<li data-count="' + count + '" data-filter="' + filter + '" class="filter-item dd-item">\n' +
+function createActiveFilter(filter, count, nonFilterAttribute) {
+    return '<li data-count="' + count + '" data-filter="' + filter + '" class="filter-item dd-item ' + ((nonFilterAttribute)? 'non-filter-attribute': '') + '">\n' +
         '    <a class="btn btn-xs btn-outline btn-danger remove-product-category-filter" title="Remove Filter">\n' +
         '        <i class="fa fa-fw fa-trash"></i>\n' +
         '    </a>\n' +
@@ -97,12 +101,12 @@ function createActiveFilter(filter, count) {
         '</li>';
 }
 
-function createInactiveFilter(filter, count) {
-    return '<li data-count="' + count + '" data-filter="' + filter + '" class="filter-item dd-item">\n' +
+function createInactiveFilter(filter, count, nonFilterAttribute) {
+    return '<li data-count="' + count + '" data-filter="' + filter + '" class="filter-item dd-item ' + ((nonFilterAttribute)? 'non-filter-attribute': '') + '">\n' +
         '    <a class="btn btn-xs btn-outline btn-info re-add-product-category-filter" title="Re-add Filter">\n' +
         '        <i class="fa fa-fw fa-plus-circle"></i>\n' +
         '    </a>\n' +
-        '     <div class="dd-handle">' + filter + '</div>' +
+        '     <div class="dd-handle">' + filter + ' (' + count + ')' + '</div>' +
         '</li>';
 }
 

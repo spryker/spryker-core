@@ -1,7 +1,7 @@
 <ul>
     {% for categoryNode in categoryTree %}
         <li id="category-node-{{ categoryNode.id }}" data-id-category="{{ categoryNode.id_category }}"
-            class="fa jstree-open {% if not categoryNode.is_active %}node-inactive{% endif %}"
+            class="jstree-open {% if not categoryNode.is_active %}node-inactive{% endif %}"
             {% if categoryNode.id in categoriesWithSpecificFilters %}data-jstree='{"type":"edited-category"}'{% endif %}
         >
             {{ categoryNode.text }}
