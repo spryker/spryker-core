@@ -70,8 +70,6 @@ class CheckTimeoutConsole extends Console
     }
 
     /**
-     * Method does not affect workflow for BC reasons.
-     *
      * @param string|null $stateMachineName
      *
      * @return void
@@ -96,7 +94,6 @@ class CheckTimeoutConsole extends Console
      */
     protected function validateStateMachineNameArgument($stateMachineName)
     {
-        // To support BC
         if ($stateMachineName === null) {
             return null;
         }
