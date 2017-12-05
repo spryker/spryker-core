@@ -16,8 +16,23 @@ class GiftCardConfig extends AbstractBundleConfig
      */
     public function getCodePrefix()
     {
-        //TODO read it from config
         return 'GC';
+    }
+
+    /**
+     * @return string
+     */
+    public function getCodeSuffix()
+    {
+        return date('y');
+    }
+
+    /**
+     * @return int
+     */
+    public function getCodeRandomPartLength()
+    {
+        return 8;
     }
 
     /**

@@ -40,14 +40,12 @@ class GiftCardCodeGenerator implements GiftCardCodeGeneratorInterface
      */
     public function generateGiftCardCode($pattern)
     {
-        $candidate = $this->generateGiftCardCodeCandidate($pattern);
-
         //TODO evaluate max tries
         //TODO make sure to prevent gift card / voucher code collisions
 
-        while ($this->giftCardReader->isPresent($candidate)) {
-            $candidate = $this->generateGiftCardCodeCandidate($abstractConfiguration->getCodePattern());
-        }
+        do {
+            $candidate = $this->generateGiftCardCodeCandidate($pattern);
+        } while ($this->giftCardReader->isPresent($candidate));
 
         return $candidate;
     }
@@ -76,9 +74,10 @@ class GiftCardCodeGenerator implements GiftCardCodeGeneratorInterface
     {
         return $replacements = [
             '{prefix}' => $this->giftCardConfig->getCodePrefix(),
-            '{randomPart}' => $this->getValidRandomString(8),
-            //TODO don't hardcode 8, don't hardcode suffix
-            '{suffix}' => date('y'),
+            '{randomPart}' => $this->getValidRandomString(
+                $this->giftCardConfig->getCodeRandomPartLength()
+            ),
+            '{suffix}' => $this->giftCardConfig->getCodeSuffix(),
         ];
     }
 
