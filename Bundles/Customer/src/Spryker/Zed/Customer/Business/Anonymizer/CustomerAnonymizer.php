@@ -47,8 +47,7 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
      * @param array $customerAnonymizerPlugins
      */
     public function __construct(
-        CustomerQueryContainerInterface
-        $customerQueryContainer,
+        CustomerQueryContainerInterface $customerQueryContainer,
         CustomerInterface $customerModel,
         AddressInterface $addressModel,
         array $customerAnonymizerPlugins

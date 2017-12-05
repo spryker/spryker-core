@@ -6,7 +6,6 @@
     "spryker/config": "^3.0.0",
     "spryker/error-handler": "^2.0.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/propel": "^3.0.0",
     "symfony/console": "^2.6.13 || ^3.0.0"
   },
   "require-dev": {
