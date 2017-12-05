@@ -242,6 +242,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @deprecated Use SalesQueryContainerInterface::fillOrderItemsWithLatestStates() instead.
