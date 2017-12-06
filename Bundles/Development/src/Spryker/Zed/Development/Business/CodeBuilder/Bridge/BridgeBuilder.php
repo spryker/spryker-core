@@ -32,12 +32,12 @@ class BridgeBuilder
     ];
 
     /**
-     * @var DevelopmentConfig
+     * @var \Spryker\Zed\Development\DevelopmentConfig
      */
     protected $config;
 
     /**
-     * @param DevelopmentConfig $config
+     * @param \Spryker\Zed\Development\DevelopmentConfig $config
      */
     public function __construct(DevelopmentConfig $config)
     {
@@ -149,7 +149,7 @@ class BridgeBuilder
     }
 
     /**
-     * @param BridgeBuilderDataTransfer $bridgeBuilderDataTransfer
+     * @param \Generated\Shared\Transfer\BridgeBuilderDataTransfer $bridgeBuilderDataTransfer
      * @param string $templateContent
      * @param string $fileName
      *
@@ -168,7 +168,7 @@ class BridgeBuilder
     }
 
     /**
-     * @param BridgeBuilderDataTransfer $bridgeBuilderDataTransfer
+     * @param \Generated\Shared\Transfer\BridgeBuilderDataTransfer $bridgeBuilderDataTransfer
      *
      * @return string
      */
@@ -280,7 +280,7 @@ class BridgeBuilder
     }
 
     /**
-     * @param BridgeBuilderDataTransfer $bridgeBuilderDataTransfer
+     * @param \Generated\Shared\Transfer\BridgeBuilderDataTransfer $bridgeBuilderDataTransfer
      *
      * @return string
      */
