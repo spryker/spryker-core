@@ -67,7 +67,7 @@ class MoneyCollectionType extends AbstractCollectionType
         parent::configureOptions($resolver);
     }
 
-    /**
+    /**                                                     ´
      * @param \Symfony\Component\Form\FormEvent $event
      * @param string[] $options
      *

@@ -9,10 +9,12 @@ namespace Spryker\Zed\Stock\Business\Model;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
+use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerStoreAwarePluginInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class Writer implements WriterInterface
@@ -90,9 +92,9 @@ class Writer implements WriterInterface
 
         $idStockType = $this->reader->getStockTypeIdByName($transferStockProduct->getStockType());
         $idProduct = $this->reader->getProductConcreteIdBySku($transferStockProduct->getSku());
-        $this->reader->checkStockDoesNotExist($idStockType, $idProduct);
+        $this->reader->checkStockDoesNotExistForStore($idStockType, $idProduct, $transferStockProduct->getFkStore());
         $idStockProduct = $this->saveStockProduct($transferStockProduct, $idStockType, $idProduct);
-        $this->handleStockUpdatePlugins($transferStockProduct->getSku());
+        $this->handleStockUpdatePlugins($transferStockProduct->getSku(), $transferStockProduct->getStore());
 
         $this->queryContainer->getConnection()->commit();
 
@@ -120,7 +122,7 @@ class Writer implements WriterInterface
             ->save();
 
         $this->insertActiveTouchRecordStockProduct($stockProductEntity);
-        $this->handleStockUpdatePlugins($transferStockProduct->getSku());
+        $this->handleStockUpdatePlugins($transferStockProduct->getSku(), $transferStockProduct->getStore());
 
         $this->queryContainer->getConnection()->commit();
 
@@ -214,6 +216,7 @@ class Writer implements WriterInterface
             ->setFkStock($idStockType)
             ->setIsNeverOutOfStock($transferStockProduct->getIsNeverOutOfStock())
             ->setQuantity($transferStockProduct->getQuantity())
+            ->setFkStore($transferStockProduct->getStore()->getIdStore())
             ->save();
 
         $this->insertActiveTouchRecordStockProduct($stockProduct);
@@ -223,13 +226,18 @@ class Writer implements WriterInterface
 
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return void
      */
-    protected function handleStockUpdatePlugins($sku)
+    protected function handleStockUpdatePlugins($sku, StoreTransfer $storeTransfer)
     {
         foreach ($this->stockUpdateHandlerPlugins as $stockUpdateHandlerPlugin) {
-            $stockUpdateHandlerPlugin->handle($sku);
+            if ($stockUpdateHandlerPlugin instanceof  StockUpdateHandlerStoreAwarePluginInterface) {
+                $stockUpdateHandlerPlugin->handleStock($sku, $storeTransfer);
+            } else {
+                $stockUpdateHandlerPlugin->handle($sku);
+            }
         }
     }
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Business;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -325,14 +326,15 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @api
      *
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function getOmsReservedProductQuantityForSku($sku)
+    public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer)
     {
         return $this->getFactory()
             ->createUtilReservation()
-            ->getOmsReservedProductQuantityForSku($sku);
+            ->getOmsReservedProductQuantityForSku($sku, $storeTransfer);
     }
 
     /**

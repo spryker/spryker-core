@@ -132,10 +132,15 @@
         <column name="id_oms_product_reservation" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="reservation_quantity" type="INTEGER" required="true" default="0"/>
+        <column name="fk_store" required="false" type="INTEGER"/>
 
         <unique name="spy_oms_product_reservation-sku">
             <unique-column name="sku"/>
         </unique>
+
+        <foreign-key name="spy_oms_product_reservation-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="OmsProductReservation">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
 
         <id-method-parameter value="spy_oms_product_reservation_pk_seq"/>
     </table>

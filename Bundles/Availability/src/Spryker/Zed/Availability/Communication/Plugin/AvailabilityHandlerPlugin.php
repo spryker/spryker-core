@@ -6,15 +6,19 @@
 
 namespace Spryker\Zed\Availability\Communication\Plugin;
 
+use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
 use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface;
+use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerStoreAwarePluginInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\ReservationStoreAwareHandlerPluginInterface;
 
 /**
  * @method \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface getFacade()
  * @method \Spryker\Zed\Availability\Communication\AvailabilityCommunicationFactory getFactory()
  */
-class AvailabilityHandlerPlugin extends AbstractPlugin implements ReservationHandlerPluginInterface, StockUpdateHandlerPluginInterface
+class AvailabilityHandlerPlugin extends AbstractPlugin implements ReservationHandlerPluginInterface, StockUpdateHandlerPluginInterface, ReservationStoreAwareHandlerPluginInterface
 {
     /**
      * @param string $sku
@@ -24,5 +28,18 @@ class AvailabilityHandlerPlugin extends AbstractPlugin implements ReservationHan
     public function handle($sku)
     {
         $this->getFacade()->updateAvailability($sku);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return void
+     */
+    public function handleStock($sku, StoreTransfer $storeTransfer)
+    {
+        $this->getFacade()->updateAvailabilityForStore($sku, $storeTransfer);
     }
 }

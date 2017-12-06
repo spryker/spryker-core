@@ -6,8 +6,12 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
+use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\ReservationStoreAwareHandlerPluginInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use Spryker\Zed\Store\Business\StoreFacade;
 
 class Reservation implements ReservationInterface
 {
@@ -52,13 +56,21 @@ class Reservation implements ReservationInterface
 
     /**
      * @param string $sku
+     * @param null|string $storeName
      *
      * @return void
      */
-    public function updateReservationQuantity($sku)
+    public function updateReservationQuantity($sku, $storeName = null)
     {
-        $this->saveReservation($sku);
-        $this->handleReservationPlugins($sku);
+        $store = SpyStoreQuery::create()
+            ->filterByName($storeName)
+            ->findOne();
+
+        $storeTransfer = new StoreTransfer();
+        $storeTransfer->setIdStore($store->getIdStore());
+
+        $this->saveReservation($sku, $store->getIdStore());
+        $this->handleReservationPlugins($sku, $storeTransfer);
     }
 
     /**
@@ -73,12 +85,17 @@ class Reservation implements ReservationInterface
 
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function getOmsReservedProductQuantityForSku($sku)
+    public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer)
     {
-        $reservationEntity = $this->queryContainer->createOmsProductReservationQuery($sku)->findOne();
+        $reservationEntity = $this->queryContainer
+            ->createOmsProductReservationQuery($sku)
+            ->filterByFkStore($storeTransfer->getIdStore())
+            ->findOne();
+
         if ($reservationEntity === null) {
             return 0;
         }
@@ -117,27 +134,36 @@ class Reservation implements ReservationInterface
 
     /**
      * @param string $sku
+     * @param int $idStore
      *
      * @return void
      */
-    protected function saveReservation($sku)
+    protected function saveReservation($sku, $idStore)
     {
         $reservationQuantity = $this->sumReservedProductQuantitiesForSku($sku);
-        $reservationEntity = $this->queryContainer->createOmsProductReservationQuery($sku)->findOneOrCreate();
-        $reservationEntity->setReservationQuantity($reservationQuantity);
+        $reservationEntity = $this->queryContainer
+            ->createOmsProductReservationQuery($sku)
+            ->filterByFkStore($idStore)
+            ->findOneOrCreate();
 
+        $reservationEntity->setReservationQuantity($reservationQuantity);
         $reservationEntity->save();
     }
 
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return void
      */
-    protected function handleReservationPlugins($sku)
+    protected function handleReservationPlugins($sku, StoreTransfer $storeTransfer)
     {
         foreach ($this->reservationHandlerPlugins as $reservationHandlerPluginInterface) {
-            $reservationHandlerPluginInterface->handle($sku);
+            if ($reservationHandlerPluginInterface instanceof ReservationStoreAwareHandlerPluginInterface) {
+                $reservationHandlerPluginInterface->handleStock($sku, $storeTransfer);
+            } else {
+                $reservationHandlerPluginInterface->handle($sku);
+            }
         }
     }
 }

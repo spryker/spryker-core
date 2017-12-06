@@ -9,6 +9,7 @@ namespace Spryker\Zed\Availability\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -82,6 +83,23 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
         $this->getFactory()
             ->createAvailabilityHandler()
             ->updateAvailability($sku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return void
+     */
+    public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer)
+    {
+        $this->getFactory()
+            ->createAvailabilityHandler()
+            ->updateAvailabilityForStore($sku, $storeTransfer);
     }
 
     /**

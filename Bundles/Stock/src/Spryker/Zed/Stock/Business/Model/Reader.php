@@ -9,12 +9,14 @@ namespace Spryker\Zed\Stock\Business\Model;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use InvalidArgumentException;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
 use Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapperInterface;
 use Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
+use Spryker\Zed\Store\Business\StoreFacade;
 
 class Reader implements ReaderInterface
 {
@@ -70,13 +72,21 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return bool
      */
-    public function isNeverOutOfStock($sku)
+    public function isNeverOutOfStock($sku, StoreTransfer $storeTransfer = null)
     {
+        if (!$storeTransfer) {
+            $storeTransfer = $this->getCurrentStore();
+        }
+
         $idProduct = $this->productFacade->findProductConcreteIdBySku($sku);
-        $stock = $this->queryContainer->queryStockByNeverOutOfStockAllTypes($idProduct)->findOne();
+        $stock = $this->queryContainer
+            ->queryStockByNeverOutOfStockAllTypes($idProduct)
+            ->filterByFkStore($storeTransfer->getIdStore())
+            ->findOne();
 
         return ($stock !== null);
     }
@@ -91,8 +101,10 @@ class Reader implements ReaderInterface
     public function getStocksProduct($sku)
     {
         $productId = $this->productFacade->findProductConcreteIdBySku($sku);
+
         $stockEntities = $this->queryContainer
             ->queryStockByProducts($productId)
+            ->filterByFkStore($this->getCurrentStore()->getIdStore())
             ->find();
 
         if (count($stockEntities) < 1) {
@@ -100,6 +112,37 @@ class Reader implements ReaderInterface
         }
 
         return $stockEntities;
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
+     */
+    public function getProductStocksForStore($sku, StoreTransfer $storeTransfer)
+    {
+        $productId = $this->productFacade->findProductConcreteIdBySku($sku);
+
+        $stockEntities = $this->queryContainer
+            ->queryStockByProducts($productId)
+            ->filterByFkStore($storeTransfer->getIdStore())
+            ->find();
+
+        if (count($stockEntities) < 1) {
+            throw new InvalidArgumentException(self::MESSAGE_NO_RESULT);
+        }
+
+        return $stockEntities;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getCurrentStore()
+    {
+        return (new StoreFacade())->getCurrentStore();;
     }
 
     /**
@@ -128,8 +171,9 @@ class Reader implements ReaderInterface
     public function hasStockProduct($sku, $stockType)
     {
         return $this->queryContainer
-            ->queryStockProductBySkuAndType($sku, $stockType)
-            ->count() > 0;
+                ->queryStockProductBySkuAndType($sku, $stockType)
+                ->filterByFkStore($this->getCurrentStore()->getIdStore())
+                ->count() > 0;
     }
 
     /**
@@ -147,6 +191,7 @@ class Reader implements ReaderInterface
 
         $stockProductEntity = $this->queryContainer
             ->queryStockProductByStockAndProduct($idStockType, $idProduct)
+            ->filterByFkStore($this->getCurrentStore()->getIdStore())
             ->findOne();
 
         if ($stockProductEntity === null) {
@@ -174,6 +219,26 @@ class Reader implements ReaderInterface
     {
         $stockProductQuery = $this->queryContainer
             ->queryStockProductByStockAndProduct($idStockType, $idProduct);
+
+        if ($stockProductQuery->count() > 0) {
+            throw new StockProductAlreadyExistsException(
+                'Cannot duplicate entry: this stock type is already set for this product'
+            );
+        }
+    }
+
+    /**
+     * @param int $idStockType
+     * @param int $idProduct
+     * @param int $idStore
+     *
+     * @return void
+     */
+    public function checkStockDoesNotExistForStore($idStockType, $idProduct, $idStore)
+    {
+        $stockProductQuery = $this->queryContainer
+            ->queryStockProductByStockAndProduct($idStockType, $idProduct)
+            ->filterByFkStore($idStore);
 
         if ($stockProductQuery->count() > 0) {
             throw new StockProductAlreadyExistsException(
@@ -240,11 +305,21 @@ class Reader implements ReaderInterface
             throw new StockProductNotFoundException();
         }
 
+        $storeFacade = new StoreFacade();
+
         $products = [];
         foreach ($stockProducts as $stockProductEntity) {
             $stockProductTransfer = new StockProductTransfer();
+
+            if ($stockProductEntity->getFkStore()) {
+                $storeTransfer = $storeFacade->getStoreById($stockProductEntity->getFkStore());
+                $stockProductTransfer->setStore($storeTransfer);
+            }
+
             $stockProductTransfer->fromArray($stockProductEntity->toArray(), true);
+
             $products[] = $stockProductTransfer;
+
         }
 
         return $products;

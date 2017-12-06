@@ -9,6 +9,7 @@ namespace Spryker\Zed\Availability\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface AvailabilityFacadeInterface
 {
@@ -72,6 +73,22 @@ interface AvailabilityFacadeInterface
      * @return void
      */
     public function updateAvailability($sku);
+
+    /**
+     * Specification:
+     *  - Calculates current item stock, for given store take into account reserved items
+     *  - Stores new stock for concrete product
+     *  - Stores sum of all concrete product stocks for abstract product
+     *  - Touches availability abstract collector if data changed
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return void
+     */
+    public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer);
 
     /**
      * Specification:

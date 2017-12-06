@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
+use Spryker\Zed\Store\Business\StoreFacade;
 
 class Sellable implements SellableInterface
 {
@@ -37,28 +39,39 @@ class Sellable implements SellableInterface
     /**
      * @param string $sku
      * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return bool
      */
-    public function isProductSellable($sku, $quantity)
+    public function isProductSellable($sku, $quantity, StoreTransfer $storeTransfer = null)
     {
-        if ($this->stockFacade->isNeverOutOfStock($sku)) {
+        if (!$storeTransfer) {
+            $storeTransfer = (new StoreFacade())->getCurrentStore();
+        }
+
+        if ($this->stockFacade->isNeverOutOfStock($sku, $storeTransfer)) {
             return true;
         }
-        $realStock = $this->calculateStockForProduct($sku);
+        $realStock = $this->calculateStockForProduct($sku, $storeTransfer);
 
         return ($realStock >= $quantity);
     }
 
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
      */
-    public function calculateStockForProduct($sku)
+    public function calculateStockForProduct($sku, StoreTransfer $storeTransfer = null)
     {
-        $physicalItems = $this->stockFacade->calculateStockForProduct($sku);
-        $reservedItems = $this->omsFacade->getOmsReservedProductQuantityForSku($sku);
+        if (!$storeTransfer) {
+            $storeTransfer = (new StoreFacade())->getCurrentStore();
+        }
+
+        $physicalItems = $this->stockFacade->calculateProductStockForStore($sku, $storeTransfer);
+
+        $reservedItems = $this->omsFacade->getOmsReservedProductQuantityForSku($sku, $storeTransfer);
 
         return $physicalItems - $reservedItems;
     }

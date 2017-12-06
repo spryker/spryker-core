@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 class AvailabilityToStockBridge implements AvailabilityToStockInterface
 {
@@ -36,12 +37,24 @@ class AvailabilityToStockBridge implements AvailabilityToStockInterface
 
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer)
+    {
+        return $this->stockFacade->calculateProductStockForStore($sku, $storeTransfer);
+    }
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return bool
      */
-    public function isNeverOutOfStock($sku)
+    public function isNeverOutOfStock($sku, StoreTransfer $storeTransfer = null)
     {
-        return $this->stockFacade->isNeverOutOfStock($sku);
+        return $this->stockFacade->isNeverOutOfStock($sku, $storeTransfer);
     }
 
     /**

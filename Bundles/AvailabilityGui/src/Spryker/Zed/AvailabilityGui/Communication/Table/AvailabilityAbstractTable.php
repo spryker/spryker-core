@@ -15,6 +15,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Store\Business\StoreFacade;
 
 class AvailabilityAbstractTable extends AbstractTable
 {
@@ -49,6 +50,7 @@ class AvailabilityAbstractTable extends AbstractTable
 
         $config->setUrl($url);
         $config->setHeader([
+            AvailabilityQueryContainer::ID_STORE => 'Store',
             SpyProductAbstractTableMap::COL_SKU => 'SKU',
             AvailabilityQueryContainer::PRODUCT_NAME => 'Name',
             SpyAvailabilityAbstractTableMap::COL_QUANTITY => 'Availability',
@@ -60,6 +62,7 @@ class AvailabilityAbstractTable extends AbstractTable
         ]);
 
         $config->setSortable([
+            AvailabilityQueryContainer::ID_STORE,
             SpyProductAbstractTableMap::COL_SKU,
             AvailabilityQueryContainer::PRODUCT_NAME,
             AvailabilityQueryContainer::STOCK_QUANTITY,
@@ -97,7 +100,10 @@ class AvailabilityAbstractTable extends AbstractTable
 
             $isNeverOutOfStock = $this->isAllConcreteIsNeverOutOfStock($productAbstractEntity);
 
+            $storeTransfer = (new StoreFacade())->getStoreById($productAbstractEntity->getidStore());
+
             $result[] = [
+                AvailabilityQueryContainer::ID_STORE => $storeTransfer->getName(),
                 SpyProductAbstractTableMap::COL_SKU => $this->getProductEditPageLink($productAbstractEntity->getSku(), $productAbstractEntity->getIdProductAbstract()),
                 AvailabilityQueryContainer::PRODUCT_NAME => $productAbstractEntity->getProductName(),
                 SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->getAvailabilityLabel($productAbstractEntity->getAvailabilityQuantity(), $isNeverOutOfStock),

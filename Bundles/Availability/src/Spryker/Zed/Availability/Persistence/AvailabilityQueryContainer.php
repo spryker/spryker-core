@@ -17,6 +17,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * @method \Spryker\Zed\Availability\Persistence\AvailabilityPersistenceFactory getFactory()
@@ -36,6 +37,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     const GROUP_CONCAT = "GROUP_CONCAT";
     const CONCAT = "CONCAT";
     const CONCRETE_NEVER_OUT_OF_STOCK_SET = 'concreteNeverOutOfStockSet';
+    const ID_STORE = 'idStore';
 
     /**
      * @api
@@ -125,7 +127,16 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     {
         return $this->querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale)
             ->addJoin(SpyProductTableMap::COL_ID_PRODUCT, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT, Criteria::INNER_JOIN)
-            ->addJoin(SpyProductTableMap::COL_SKU, SpyAvailabilityTableMap::COL_SKU, Criteria::INNER_JOIN)
+            ->addJoin(
+            [
+                SpyProductTableMap::COL_SKU,
+                SpyAvailabilityTableMap::COL_FK_STORE,
+            ],
+            [
+                SpyAvailabilityTableMap::COL_SKU,
+                SpyAvailabilityAbstractTableMap::COL_FK_STORE
+            ],
+            Criteria::INNER_JOIN)
             ->addAnd(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $idLocale);
     }
 
@@ -143,7 +154,8 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
                 ->filterByFkLocale($idLocale)
             ->endUse()
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::PRODUCT_NAME)
-            ->withColumn(SpyAvailabilityAbstractTableMap::COL_QUANTITY, static::AVAILABILITY_QUANTITY);
+            ->withColumn(SpyAvailabilityAbstractTableMap::COL_QUANTITY, static::AVAILABILITY_QUANTITY)
+            ->withColumn(SpyAvailabilityAbstractTableMap::COL_FK_STORE, static::ID_STORE);
     }
 
     /**
@@ -154,8 +166,29 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     public function querySpyProductAbstractAvailabilityWithStock()
     {
         return $this->querySpyProductAbstractAvailability()
-            ->addJoin(SpyProductTableMap::COL_ID_PRODUCT, SpyStockProductTableMap::COL_FK_PRODUCT, Criteria::INNER_JOIN)
-            ->addJoin(SpyProductTableMap::COL_SKU, SpyOmsProductReservationTableMap::COL_SKU, Criteria::LEFT_JOIN);
+            ->addJoin(
+            [
+                SpyProductTableMap::COL_ID_PRODUCT,
+                SpyStockProductTableMap::COL_FK_STORE
+            ],
+            [
+                SpyStockProductTableMap::COL_FK_PRODUCT,
+                SpyAvailabilityAbstractTableMap::COL_FK_STORE
+            ],
+                Criteria::INNER_JOIN
+            )
+            ->addJoin(
+            [
+                SpyProductTableMap::COL_SKU,
+                SpyAvailabilityAbstractTableMap::COL_FK_STORE
+            ],
+            [
+                SpyOmsProductReservationTableMap::COL_SKU,
+                SpyOmsProductReservationTableMap::COL_FK_STORE
+
+            ],
+                Criteria::LEFT_JOIN
+            );
     }
 
     /**
@@ -197,7 +230,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     public function queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale)
     {
         return $this->queryAvailabilityWithStockByIdLocale($idLocale)
-            ->withColumn(SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK, static::CONCRETE_NEVER_OUT_OF_STOCK_SET)
+            ->withColumn('GROUP_CONCAT(' .SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK . ')', static::CONCRETE_NEVER_OUT_OF_STOCK_SET)
             ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, static::ID_PRODUCT)
             ->withColumn(SpyProductTableMap::COL_SKU, static::CONCRETE_SKU)
             ->withColumn(SpyAvailabilityTableMap::COL_QUANTITY, static::CONCRETE_AVAILABILITY)
@@ -205,6 +238,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE)
             ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', static::STOCK_QUANTITY)
             ->withColumn(SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY, static::RESERVATION_QUANTITY)
+            ->withColumn(SpyStockProductTableMap::COL_FK_STORE, static::ID_STORE)
             ->filterByIdProductAbstract($idProductAbstract)
             ->select([static::CONCRETE_SKU])
             ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);

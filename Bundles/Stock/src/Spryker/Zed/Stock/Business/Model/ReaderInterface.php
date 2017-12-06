@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Stock\Business\Model;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface ReaderInterface
 {
@@ -18,10 +19,11 @@ interface ReaderInterface
 
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return bool
      */
-    public function isNeverOutOfStock($sku);
+    public function isNeverOutOfStock($sku, StoreTransfer $storeTransfer = null);
 
     /**
      * @param string $sku
@@ -29,6 +31,15 @@ interface ReaderInterface
      * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
      */
     public function getStocksProduct($sku);
+
+    /**
+     * @param string $sku
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
+     */
+    public function getProductStocksForStore($sku, StoreTransfer $storeTransfer);
 
     /**
      * @param string $sku
@@ -80,6 +91,15 @@ interface ReaderInterface
      * @return void
      */
     public function checkStockDoesNotExist($idStockType, $idProduct);
+
+    /**
+     * @param int $idStockType
+     * @param int $idProduct
+     * @param int $idStore
+     *
+     * @return void
+     */
+    public function checkStockDoesNotExistForStore($idStockType, $idProduct, $idStore);
 
     /**
      * @param int $idStockProduct

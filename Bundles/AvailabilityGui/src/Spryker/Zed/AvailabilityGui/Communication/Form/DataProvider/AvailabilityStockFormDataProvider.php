@@ -10,6 +10,7 @@ namespace Spryker\Zed\AvailabilityGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\AvailabilityStockTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterface;
+use Spryker\Zed\Store\Business\StoreFacade;
 
 class AvailabilityStockFormDataProvider
 {
@@ -82,28 +83,35 @@ class AvailabilityStockFormDataProvider
     {
         $allStockType = $this->stockFacade->getAvailableStockTypes();
 
-        foreach ($allStockType as $type) {
-            if ($this->stockTypeExist($availabilityStockTransfer, $type)) {
-                continue;
-            }
-            $stockProductTransfer = new StockProductTransfer();
-            $stockProductTransfer->setStockType($type);
-            $stockProductTransfer->setQuantity(0);
+        $storeFacade = new StoreFacade();
 
-            $availabilityStockTransfer->addStockProduct($stockProductTransfer);
+        foreach ($storeFacade->getAllStores() as $storeTransfer) {
+            foreach ($allStockType as $type) {
+                if ($this->stockTypeExist($availabilityStockTransfer, $type, $storeTransfer->getName())) {
+                    continue;
+                }
+                $stockProductTransfer = new StockProductTransfer();
+                $stockProductTransfer->setStockType($type);
+                $stockProductTransfer->setQuantity(0);
+                $stockProductTransfer->setStore($storeTransfer);
+
+                $availabilityStockTransfer->addStockProduct($stockProductTransfer);
+            }
         }
+
     }
 
     /**
      * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $availabilityStockTransfer
      * @param \Orm\Zed\Stock\Persistence\SpyStock $type
+     * @param string $storeName
      *
      * @return bool
      */
-    protected function stockTypeExist($availabilityStockTransfer, $type)
+    protected function stockTypeExist($availabilityStockTransfer, $type, $storeName)
     {
         foreach ($availabilityStockTransfer->getStocks() as $stockProduct) {
-            if ($stockProduct->getStockType() === $type) {
+            if ($stockProduct->getStockType() === $type && $stockProduct->getStore()->getName() === $storeName) {
                 return true;
             }
         }

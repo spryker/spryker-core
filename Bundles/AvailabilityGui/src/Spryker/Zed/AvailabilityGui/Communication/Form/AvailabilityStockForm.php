@@ -10,6 +10,8 @@ namespace Spryker\Zed\AvailabilityGui\Communication\Form;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 
 class AvailabilityStockForm extends AbstractType
 {
@@ -61,5 +63,26 @@ class AvailabilityStockForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        parent::buildView($view, $form, $options);
+
+        $stockTable = [];
+
+        foreach ($form->get(static::FIELD_STOCKS) as $stockFormType) {
+
+            /* @var $stockProductTransfer StockProductTransfer */
+            $stockProductTransfer = $stockFormType->getData();
+
+            $stockTable[$stockProductTransfer->getStockType()][$stockProductTransfer->getStore()->getName()] = $stockFormType;
+        }
+
+        $view->vars['storeTable'] = $stockTable;
+
     }
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Stock\Business;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 
 interface StockFacadeInterface
@@ -19,11 +20,12 @@ interface StockFacadeInterface
      *
      * @api
      *
-     * @param string $sku
+     * @param $skum
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return bool
      */
-    public function isNeverOutOfStock($sku);
+    public function isNeverOutOfStock($skum,  StoreTransfer $storeTransfer = null);
 
     /**
      * Specification:
@@ -36,6 +38,16 @@ interface StockFacadeInterface
      * @return int
      */
     public function calculateStockForProduct($sku);
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function calculateProductStockForStore($sku,  StoreTransfer $storeTransfer);
 
     /**
      * Specification:

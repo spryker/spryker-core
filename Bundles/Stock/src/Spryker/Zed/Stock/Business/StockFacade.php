@@ -9,6 +9,7 @@ namespace Spryker\Zed\Stock\Business;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -24,12 +25,13 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      * @api
      *
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return bool
      */
-    public function isNeverOutOfStock($sku)
+    public function isNeverOutOfStock($sku, StoreTransfer $storeTransfer = null)
     {
-        return $this->getFactory()->createReaderModel()->isNeverOutOfStock($sku);
+        return $this->getFactory()->createReaderModel()->isNeverOutOfStock($sku, $storeTransfer);
     }
 
     /**
@@ -45,6 +47,19 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     public function calculateStockForProduct($sku)
     {
         return $this->getFactory()->createCalculatorModel()->calculateStockForProduct($sku);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function calculateProductStockForStore($sku,  StoreTransfer $storeTransfer)
+    {
+        return $this->getFactory()->createCalculatorModel()->calculateProductStockForStore($sku, $storeTransfer);
     }
 
     /**
