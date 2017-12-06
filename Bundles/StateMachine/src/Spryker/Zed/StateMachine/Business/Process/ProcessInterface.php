@@ -34,26 +34,26 @@ interface ProcessInterface
     public function addSubProcess(ProcessInterface $subProcess);
 
     /**
-     * @param mixed $main
+     * @param bool $isMain
      *
      * @return void
      */
-    public function setMain($main);
+    public function setIsMain($isMain);
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getMain();
+    public function getIsMain();
 
     /**
-     * @param mixed $name
+     * @param string $name
      *
      * @return void
      */
     public function setName($name);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName();
 
@@ -146,12 +146,12 @@ interface ProcessInterface
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface[]
      */
-    public function getManualEvents();
+    public function getManuallyExecutableEvents();
 
     /**
      * @return array
      */
-    public function getManualEventsBySource();
+    public function getManuallyExecutableEventsBySource();
 
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
@@ -159,7 +159,7 @@ interface ProcessInterface
     public function getAllProcesses();
 
     /**
-     * @param mixed $file
+     * @param string $file
      *
      * @return void
      */
@@ -171,7 +171,7 @@ interface ProcessInterface
     public function hasFile();
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getFile();
 }
