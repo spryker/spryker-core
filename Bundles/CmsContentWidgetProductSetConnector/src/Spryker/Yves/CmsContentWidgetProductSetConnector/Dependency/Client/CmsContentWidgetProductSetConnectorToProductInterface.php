@@ -15,4 +15,12 @@ interface CmsContentWidgetProductSetConnectorToProductInterface
      * @return array
      */
     public function getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
+
+    /**
+     * @param array $data
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\StorageProductTransfer
+     */
+    public function mapStorageProductForCurrentLocale(array $data, array $selectedAttributes = []);
 }

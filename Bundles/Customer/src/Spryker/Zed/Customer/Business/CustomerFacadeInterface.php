@@ -351,12 +351,13 @@ interface CustomerFacadeInterface
      */
     public function saveCustomerForOrder(
         QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer  $checkoutResponseTransfer
+        CheckoutResponseTransfer $checkoutResponseTransfer
     );
 
     /**
      * Specification:
      * - Checks if a new customer has a not yet registered email.
+     * - Checks if a new customer or a guest user has a valid email address.
      *
      * @api
      *
@@ -367,7 +368,7 @@ interface CustomerFacadeInterface
      */
     public function checkOrderPreSaveConditions(
         QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer  $checkoutResponseTransfer
+        CheckoutResponseTransfer $checkoutResponseTransfer
     );
 
     /**

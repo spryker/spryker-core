@@ -145,4 +145,43 @@ class ProductClient extends AbstractClient implements ProductClientInterface
 
         return $productStorage->getProductConcreteCollection($idProductConcreteCollection);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $locale
+     * @param array $data
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\StorageProductTransfer
+     */
+    public function mapStorageProduct($locale, array $data, array $selectedAttributes = [])
+    {
+        return $this->getFactory()
+            ->createStorageProductMapper($locale)
+            ->mapStorageProduct($data, $selectedAttributes);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $data
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\StorageProductTransfer
+     */
+    public function mapStorageProductForCurrentLocale(array $data, array $selectedAttributes = [])
+    {
+        $locale = $this->getFactory()
+            ->getLocaleClient()
+            ->getCurrentLocale();
+
+        return $this->getFactory()
+            ->createStorageProductMapper($locale)
+            ->mapStorageProduct($data, $selectedAttributes);
+    }
 }
