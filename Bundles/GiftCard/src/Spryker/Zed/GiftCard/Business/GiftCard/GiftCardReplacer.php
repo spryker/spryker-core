@@ -79,21 +79,48 @@ class GiftCardReplacer implements GiftCardReplacerInterface
 
             $newValue = $giftCardTransfer->getValue() - $giftCardPayment->getSpySalesPayment()->getAmount();
 
-            if ($newValue > 0) {
-                $giftCardCode = $this->giftCardCodeGenerator->generateGiftCardCode(
-                    $giftCardTransfer->getReplacementPattern()
-                );
-
-                $giftCardTransfer = (new GiftCardTransfer())
-                    ->setCode($giftCardCode)
-                    ->setValue($newValue)
-                    ->setReplacementPattern($giftCardTransfer->getReplacementPattern())
-                    ->setName('Gift Card Replacement')
-                    ->setAttributes($giftCardTransfer->getAttributes())
-                    ->setIsActive(true);
-
-                $this->giftCardCreator->create($giftCardTransfer);
+            if ($newValue <= 0) {
+                continue;
             }
+
+            $this->createReplacementGiftCard($giftCardTransfer, $newValue);
         }
+    }
+
+    /**
+     * @param GiftCardTransfer $giftCardTransferBase
+     * @param int $value
+     *
+     * @return void
+     */
+    protected function createReplacementGiftCard(GiftCardTransfer $giftCardTransferBase, $value)
+    {
+        $giftCardCode = $this->giftCardCodeGenerator->generateGiftCardCode(
+            $giftCardTransferBase->getReplacementPattern()
+        );
+
+        $giftCardName = $this->generateGiftCardName($giftCardTransferBase);
+
+        $giftCardTransfer = new GiftCardTransfer();
+        $giftCardTransfer = $giftCardTransfer->fromArray($giftCardTransferBase->toArray(), true);
+        $giftCardTransfer
+            ->setCode($giftCardCode)
+            ->setName($giftCardName)
+            ->setValue($value)
+            ->setReplacementPattern($giftCardTransfer->getReplacementPattern())
+            ->setAttributes($giftCardTransfer->getAttributes())
+            ->setIsActive(true);
+
+        $this->giftCardCreator->create($giftCardTransfer);
+    }
+
+    /**
+     * @param GiftCardTransfer $giftCardTransfer
+     *
+     * @return string
+     */
+    protected function generateGiftCardName(GiftCardTransfer $giftCardTransfer)
+    {
+        return $giftCardTransfer->getName() . ' Replacement';
     }
 }
