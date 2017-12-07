@@ -47,7 +47,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
             $this->getUtilTextService(),
-            $this->getCurrencyFacade()
+            $this->getCurrencyFacade(),
+            $this->getStoreRelationFormTypePlugin()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -67,7 +68,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
             $this->getUtilTextService(),
-            $this->getCurrencyFacade()
+            $this->getCurrencyFacade(),
+            $this->getStoreRelationFormTypePlugin()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -87,7 +89,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
             $this->getUtilTextService(),
-            $this->getCurrencyFacade()
+            $this->getCurrencyFacade(),
+            $this->getStoreRelationFormTypePlugin()
         );
 
         return $this->getFormFactory()->create($formType, $formData, $formOptions);
@@ -461,5 +464,13 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     protected function getStore()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function getStoreRelationFormTypePlugin()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
     }
 }

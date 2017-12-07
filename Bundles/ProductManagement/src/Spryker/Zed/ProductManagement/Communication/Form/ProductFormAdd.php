@@ -11,6 +11,7 @@ use DateTime;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
@@ -47,6 +48,7 @@ class ProductFormAdd extends AbstractType
     const FORM_PRICE_AND_STOCK = 'price_and_stock';
     const FORM_TAX_SET = 'tax_set';
     const FORM_SEO = 'seo';
+    const FORM_STORE_RELATION = 'store_relation';
     const FIELD_NEW_FROM = 'new_from';
     const FIELD_NEW_TO = 'new_to';
 
@@ -97,12 +99,18 @@ class ProductFormAdd extends AbstractType
     protected $utilTextService;
 
     /**
+     * @var \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected $storeRelationFormTypePlugin;
+
+    /**
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface $utilTextService
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface $currencyFacade
+     * @param \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface $storeRelationFormTypePlugin
      */
     public function __construct(
         LocaleProvider $localeProvider,
@@ -110,7 +118,8 @@ class ProductFormAdd extends AbstractType
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductManagementToMoneyInterface $moneyFacade,
         ProductManagementToUtilTextInterface $utilTextService,
-        ProductManagementToCurrencyInterface $currencyFacade
+        ProductManagementToCurrencyInterface $currencyFacade,
+        FormTypeInterface $storeRelationFormTypePlugin
     ) {
         $this->localeProvider = $localeProvider;
         $this->productQueryContainer = $productQueryContainer;
@@ -118,6 +127,7 @@ class ProductFormAdd extends AbstractType
         $this->moneyFacade = $moneyFacade;
         $this->utilTextService = $utilTextService;
         $this->currencyFacade = $currencyFacade;
+        $this->storeRelationFormTypePlugin = $storeRelationFormTypePlugin;
     }
 
     /**
@@ -190,7 +200,8 @@ class ProductFormAdd extends AbstractType
             ->addAttributeSuperForm($builder, $options[self::OPTION_ATTRIBUTE_SUPER])
             ->addPriceForm($builder, $options)
             ->addSeoLocalizedForms($builder)
-            ->addImageLocalizedForms($builder);
+            ->addImageLocalizedForms($builder)
+            ->addStoreRelationForm($builder);
     }
 
     /**
@@ -275,6 +286,21 @@ class ProductFormAdd extends AbstractType
         );
 
         $this->addImageSetForm($builder, $defaultName);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addStoreRelationForm(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FORM_STORE_RELATION,
+            $this->storeRelationFormTypePlugin->getType()
+        );
 
         return $this;
     }

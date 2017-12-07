@@ -55,6 +55,17 @@ abstract class AbstractCollector
     abstract protected function collectItem($touchKey, array $collectItemData);
 
     /**
+     * @param array $collectItemData
+     *
+     * @return bool
+     */
+    protected function isStorable(array $collectItemData)
+    {
+        // TODO: make this call abstract
+        return true;
+    }
+
+    /**
      * @return string
      */
     abstract protected function collectResourceType();
@@ -119,9 +130,14 @@ abstract class AbstractCollector
      */
     protected function collectData(array $collectedSet, LocaleTransfer $locale, TouchUpdaterSet $touchUpdaterSet)
     {
+        // TODO: collapse these methods
         $setToExport = [];
 
         foreach ($collectedSet as $index => $collectedItemData) {
+            if (!$this->isStorable($collectedItemData)) {
+                continue;
+            }
+
             $touchKey = $this->collectKey(
                 $collectedItemData[CollectorConfig::COLLECTOR_RESOURCE_ID],
                 $locale->getLocaleName(),
@@ -131,6 +147,32 @@ abstract class AbstractCollector
         }
 
         return $setToExport;
+    }
+
+    /**
+     * @param array $collectedSet
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return string[]
+     */
+    protected function collectDeletableData(array $collectedSet, LocaleTransfer $locale)
+    {
+        $setToDelete = [];
+
+        foreach ($collectedSet as $index => $collectedItemData) {
+            if ($this->isStorable($collectedItemData)) {
+                continue;
+            }
+
+            $touchKey = $this->collectKey(
+                $collectedItemData[CollectorConfig::COLLECTOR_RESOURCE_ID],
+                $locale->getLocaleName(),
+                $collectedItemData
+            );
+            $setToDelete[] = $touchKey;
+        }
+
+        return $setToDelete;
     }
 
     /**

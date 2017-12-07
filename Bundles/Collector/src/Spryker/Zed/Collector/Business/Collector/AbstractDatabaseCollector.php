@@ -98,17 +98,24 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
         $progressBar->advance($batchSize);
 
         $touchUpdaterSet = new TouchUpdaterSet(CollectorConfig::COLLECTOR_TOUCH_ID);
-        $collectedData = $this->collectData($batch, $locale, $touchUpdaterSet);
-        $collectedDataCount = count($collectedData);
 
-        $touchUpdater->bulkUpdate(
-            $touchUpdaterSet,
-            $locale->getIdLocale(),
-            $this->touchQueryContainer->getConnection()
-        );
-        $storeWriter->write($collectedData);
+        $storableData = $this->collectData($batch, $locale, $touchUpdaterSet);
+        $storableDataCount = count($storableData);
 
-        $batchResult->increaseProcessedCount($collectedDataCount);
+        $deletableData = $this->collectDeletableData($batch, $locale);
+        $deletableCount = count($deletableData);
+
+        if ($storableDataCount > 0) {
+            $touchUpdater->bulkUpdate($touchUpdaterSet, $locale->getIdLocale(), $this->touchQueryContainer->getConnection());
+            $storeWriter->write($storableData);
+        }
+
+        if ($deletableCount > 0) {
+            $touchUpdater->deleteTouchKeyEntities($deletableData, $locale->getIdLocale());
+            $storeWriter->delete(array_flip($deletableData));
+        }
+
+        $batchResult->increaseProcessedCount($storableDataCount + $deletableCount);
     }
 
     /**
