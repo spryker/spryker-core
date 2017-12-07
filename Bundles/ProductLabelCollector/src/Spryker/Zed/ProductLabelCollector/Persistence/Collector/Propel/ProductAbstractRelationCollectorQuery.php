@@ -36,9 +36,10 @@ class ProductAbstractRelationCollectorQuery extends AbstractPropelCollectorQuery
             SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT,
             static::RESULT_FIELD_ID_PRODUCT_ABSTRACT
         );
+
         $this->touchQuery->withColumn(
             sprintf(
-                'GROUP_CONCAT(CONCAT(%s, \'%s\', cast(%s as TEXT)) ORDER BY %s %s)',
+                'GROUP_CONCAT(CONCAT(%s, \'%s\', %s) ORDER BY %s %s)',
                 SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL,
                 static::LABEL_DELIMITER,
                 SpyProductLabelTableMap::COL_IS_ACTIVE,
