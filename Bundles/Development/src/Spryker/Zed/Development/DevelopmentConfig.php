@@ -312,4 +312,14 @@ class DevelopmentConfig extends AbstractBundleConfig
     {
         return 2;
     }
+
+    /**
+     * @return string
+     */
+    public function getPathToShop()
+    {
+        $vendorDir = APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR;
+
+        return $vendorDir . 'spryker/spryker-shop/Bundles/';
+    }
 }

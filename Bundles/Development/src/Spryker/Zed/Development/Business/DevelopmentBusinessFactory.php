@@ -124,9 +124,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createBridgeBuilder()
     {
-        return new BridgeBuilder(
-            $this->getConfig()->getBundleDirectory()
-        );
+        return new BridgeBuilder($this->getConfig());
     }
 
     /**

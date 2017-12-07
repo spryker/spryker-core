@@ -71,7 +71,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductBundleImageCartExpander()
     {
-        return new ProductBundleImageCartExpander($this->getProductImageFacade());
+        return new ProductBundleImageCartExpander($this->getProductImageFacade(), $this->getLocaleFacade());
     }
 
     /**

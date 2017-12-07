@@ -17,15 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInterface
 {
     /**
-     * Trigger when first time adding item to state machine process
-     *
-     * Specification:
-     *  - Returns number of items transitioned
-     *  - Creates new process item in persistence if does not exist
-     *  - Creates new state item in persistence if does not exist
-     *  - Calls plugin method in StateMachineHandlerInterface::getInitialStateForProcess
-     *  - Calls plugin method in StateMachineHandlerInterface::itemStateUpdated when state changed happens
-     *  - Persist state history
+     * {@inheritdoc}
      *
      * @api
      *
@@ -44,13 +36,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * Trigger event for single item. Must be already initialized with triggerForNewStateMachineItem
-     *
-     * Specification:
-     *  - Returns number of items transitioned
-     *  - Creates new state item in persistence if does not exist
-     *  - Calls plugin method in StateMachineHandlerInterface::itemStateUpdated when state changed happens
-     *  - Persist state history
+     * {@inheritdoc}
      *
      * @api
      *
@@ -67,13 +53,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * Trigger event for multiple items. Must be already initialized with triggerForNewStateMachineItem
-     *
-     * Specification:
-     *  - Returns number of items transitioned
-     *  - Creates new state item in persistence if does not exist
-     *  - Calls plugin method in StateMachineHandlerInterface::itemStateUpdated when state changed happens
-     *  - Persist state history
+     * {@inheritdoc}
      *
      * @api
      *
@@ -90,11 +70,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * Return available state machine process list. Includes all state machine details: states transitions, events
-     *
-     * Specification:
-     *  - Parse xml file and build object graph from it.
-     *  - Calls plugin method in StateMachineHandlerInterface::getActiveProcesses to get list of process
+     * {@inheritdoc}
      *
      * @api
      *
@@ -110,10 +86,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * Specification:
-     *  - Read all transition without event for given state machine.
-     *  - Read from database items with those transitions
-     *  - execute each transition
+     * {@inheritdoc}
      *
      * @api
      *
@@ -129,9 +102,23 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * Specification:
-     *  - Read all expired timeout events for given state machine
-     *  - Execute events
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $stateMachineName
+     *
+     * @return bool
+     */
+    public function stateMachineExists($stateMachineName)
+    {
+        return $this->getFactory()
+            ->createStateMachineFinder()
+            ->hasHandler($stateMachineName);
+    }
+
+    /**
+     * {@inheritdoc}
      *
      * @api
      *
@@ -147,9 +134,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     *  Specification:
-     *  - Read all processes from given state machine
-     *  - Using graph library draw graph
+     * {@inheritdoc}
      *
      * @api
      *
@@ -177,8 +162,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     *  Specification:
-     *  - Read process id from database.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -194,10 +178,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     *  Specification:
-     *  - Read state machine process list
-     *  - Find all manual events
-     *  - Map manual events with give event name.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -213,10 +194,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * Specification:
-     *  - Read state machine process list
-     *  - Find all manual events
-     *  - Map manual events with give event state machine items.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -232,8 +210,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * Specification:
-     *  - Get StateMachine item transfer as stored in persistence
+     * {@inheritdoc}
      *
      * @api
      *
@@ -249,8 +226,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * Specification:
-     *  - Get StateMachine items transfer as stored in persistence
+     * {@inheritdoc}
      *
      * @api
      *
@@ -266,8 +242,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * Specification:
-     *  - Get history for given state machine item reading state machine history table
+     * {@inheritdoc}
      *
      * @api
      *
@@ -284,8 +259,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * Specification:
-     *  - Find all items with flag for given state machine and process, parse xml.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -302,8 +276,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * Specification:
-     *  - Find all items without flag for given state machine and process, parse xml.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -320,8 +293,7 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     }
 
     /**
-     * Specification:
-     *  - Clear all expired locks from database, deletes rows.
+     * {@inheritdoc}
      *
      * @api
      *

@@ -57,6 +57,10 @@ class LogConfig extends AbstractBundleConfig
      */
     public function getExceptionLogFilePath()
     {
+        if ($this->getConfig()->hasKey(LogConstants::EXCEPTION_LOG_FILE_PATH_YVES)) {
+            return $this->get(LogConstants::EXCEPTION_LOG_FILE_PATH_YVES);
+        }
+
         return $this->get(LogConstants::EXCEPTION_LOG_FILE_PATH);
     }
 }
