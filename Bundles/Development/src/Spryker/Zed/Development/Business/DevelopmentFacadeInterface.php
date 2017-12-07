@@ -225,7 +225,6 @@ interface DevelopmentFacadeInterface
      * @api
      *
      * @param string $directory
-     *
      * @param array $options
      *
      * @return array
