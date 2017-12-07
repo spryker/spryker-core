@@ -155,22 +155,22 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
     protected function addGiftCardPaymentsToQuote(CalculableObjectTransfer $calculableObjectTransfer, ArrayObject $applicableGiftCards)
     {
         foreach ($applicableGiftCards as $giftCard) {
-            $giftCardPayment = $this->findPayment($calculableObjectTransfer, $giftCard);
+            $giftCardPaymentTransfer = $this->findPayment($calculableObjectTransfer, $giftCard);
 
-            if ($giftCardPayment) {
-                $giftCardPayment->setAmount($this->giftCardValueProvider->getValue($giftCard));
+            if ($giftCardPaymentTransfer) {
+                $giftCardPaymentTransfer->setAmount($this->giftCardValueProvider->getValue($giftCard));
                 continue;
             }
 
-            $giftCardPayment = (new PaymentTransfer())
+            $giftCardPaymentTransfer = (new PaymentTransfer())
                 ->setPaymentProvider(GiftCardConfig::PROVIDER_NAME)
                 ->setPaymentSelection(GiftCardConfig::PROVIDER_NAME)
                 ->setPaymentMethod(GiftCardConfig::PROVIDER_NAME)
-                ->setAmount($this->giftCardValueProvider->getValue($giftCard))
+                ->setAvailableAmount($this->giftCardValueProvider->getValue($giftCard))
                 ->setIsLimitedAmount(true)
                 ->setGiftCard($giftCard);
 
-            $calculableObjectTransfer->addPayment($giftCardPayment);
+            $calculableObjectTransfer->addPayment($giftCardPaymentTransfer);
         }
     }
 

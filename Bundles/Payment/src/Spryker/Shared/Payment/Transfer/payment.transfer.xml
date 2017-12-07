@@ -10,6 +10,7 @@
         <property name="paymentSelection" type="string"/>
         <property name="amount" type="int"/>
         <property name="isLimitedAmount" type="bool" />
+        <property name="availableAmount" type="int" description="Maximum amount available for a payment by the payment method" />
     </transfer>
 
     <transfer name="Quote">

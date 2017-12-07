@@ -9,6 +9,8 @@ namespace Spryker\Zed\Payment\Business\Calculation;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 
 class PaymentCalculator implements PaymentCalculatorInterface
 {
@@ -20,24 +22,25 @@ class PaymentCalculator implements PaymentCalculatorInterface
     public function recalculatePayments(CalculableObjectTransfer $calculableObjectTransfer)
     {
         $paymentCollection = $this->getPaymentCollection($calculableObjectTransfer);
-        $availablePriceToPay = $calculableObjectTransfer->getTotals()->getGrandTotal();
 
-        foreach ($paymentCollection as $paymentTransfer) {
-            if ($paymentTransfer->getAmount() > $availablePriceToPay || !$paymentTransfer->getIsLimitedAmount()) {
-                $paymentTransfer->setAmount($availablePriceToPay);
-                $availablePriceToPay = 0;
-                continue;
-            }
+        $this->definePriceToPay(
+            $calculableObjectTransfer->getTotals()
+        );
 
-            $availablePriceToPay -= $paymentTransfer->getAmount();
-        }
+        $this->applyLimitedAmountPayments(
+            $calculableObjectTransfer->getTotals(),
+            $paymentCollection
+        );
 
-        $calculableObjectTransfer->getTotals()->setPriceToPay($availablePriceToPay);
+        $this->applyUnlimitedAmountPayments(
+            $calculableObjectTransfer->getTotals(),
+            $paymentCollection
+        );
     }
 
     /**
      * @deprecated To be removed when the single payment property
-     * (\Generated\Shared\Transfer\CalculableObjectTransfer::getPayment()) in the quote is removed
+     * Use \Generated\Shared\Transfer\CalculableObjectTransfer::getPayments directly
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -45,7 +48,8 @@ class PaymentCalculator implements PaymentCalculatorInterface
      */
     protected function getPaymentCollection(CalculableObjectTransfer $calculableObjectTransfer)
     {
-        $result = new ArrayObject();
+        $result = [];
+
         foreach ($calculableObjectTransfer->getPayments() as $payment) {
             $result[] = $payment;
         }
@@ -57,5 +61,64 @@ class PaymentCalculator implements PaymentCalculatorInterface
         }
 
         return $result;
+    }
+
+    /**
+     * @param TotalsTransfer $totalsTransfer
+     */
+    protected function definePriceToPay(TotalsTransfer $totalsTransfer)
+    {
+        $totalsTransfer->setPriceToPay(
+            $totalsTransfer->getGrandTotal()
+        );
+    }
+
+    /**
+     * @param TotalsTransfer $totalsTransfer
+     * @param PaymentTransfer[] $paymentTransfers
+     *
+     * @return void
+     */
+    protected function applyLimitedAmountPayments(TotalsTransfer $totalsTransfer, array $paymentTransfers)
+    {
+        $priceToPay = $totalsTransfer->getPriceToPay();
+
+        foreach ($paymentTransfers as $paymentTransfer) {
+            if (!$paymentTransfer->getIsLimitedAmount()) {
+                continue;
+            }
+
+            if ($paymentTransfer->getAvailableAmount() >= $priceToPay) {
+                $paymentTransfer->setAmount($priceToPay);
+                $priceToPay = 0;
+            } else {
+                $paymentTransfer->setAmount(
+                    $paymentTransfer->getAvailableAmount()
+                );
+
+                $priceToPay = $priceToPay - $paymentTransfer->getAvailableAmount();
+            }
+        }
+
+        $totalsTransfer->setPriceToPay($priceToPay);
+    }
+
+    /**
+     * @param TotalsTransfer $totalsTransfer
+     * @param PaymentTransfer[] $paymentTransfers
+     *
+     * @return void
+     */
+    protected function applyUnlimitedAmountPayments(TotalsTransfer $totalsTransfer, array $paymentTransfers)
+    {
+        foreach ($paymentTransfers as $paymentTransfer) {
+            if ($paymentTransfer->getIsLimitedAmount()) {
+                continue;
+            }
+
+            $paymentTransfer->setAmount(
+                $totalsTransfer->getPriceToPay()
+            );
+        }
     }
 }

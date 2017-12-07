@@ -79,7 +79,6 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
         $singlePayment = $quoteTransfer->getPayment();
 
         if ($singlePayment) {
-            $singlePayment->setAmount($quoteTransfer->getTotals()->getPriceToPay());
             $result[] = $singlePayment;
         }
 

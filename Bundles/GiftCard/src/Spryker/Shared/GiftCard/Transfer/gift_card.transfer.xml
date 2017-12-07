@@ -23,6 +23,8 @@
 
     <transfer name="Payment">
         <property name="giftCard" type="GiftCard"/>
+        <property name="isLimitedAmount" type="bool" />
+        <property name="availableAmount" type="int" />
     </transfer>
 
     <transfer name="CalculableObject">
