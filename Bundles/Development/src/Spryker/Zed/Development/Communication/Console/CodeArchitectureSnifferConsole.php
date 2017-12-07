@@ -159,7 +159,7 @@ class CodeArchitectureSnifferConsole extends Console
         if (!isset($violations)) {
             $output->writeln('<error>No paths found for checking</error>');
 
-            return static::CODE_ERROR;
+            return false;
         }
 
         $output->writeln($result . ' violations found');
