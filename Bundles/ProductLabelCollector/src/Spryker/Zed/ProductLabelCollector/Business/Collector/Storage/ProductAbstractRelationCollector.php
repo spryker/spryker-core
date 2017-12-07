@@ -36,15 +36,12 @@ class ProductAbstractRelationCollector extends AbstractStoragePropelCollector
         $productLabelIdsCsv = $collectItemData[ProductAbstractRelationCollectorQuery::RESULT_FIELD_ID_PRODUCT_LABELS_CSV];
 
         $productLabelIds = explode(',', $productLabelIdsCsv);
-
         $activeIds = $this->filterActiveLabels($productLabelIds);
         if (!$activeIds) {
             return [];
         }
 
-        $productLabelIds = array_map('intval', $activeIds);
-
-        return $productLabelIds;
+        return array_map('intval', $activeIds);
     }
 
     /**
@@ -74,7 +71,7 @@ class ProductAbstractRelationCollector extends AbstractStoragePropelCollector
         foreach ($productLabelIds as $labelId) {
             list($idProductLabel, $isActive) = explode(ProductAbstractRelationCollectorQuery::LABEL_DELIMITER, $labelId);
 
-            $isActive = $this->resolveIsActive(strtolower($isActive));
+            $isActive = $this->normalizeIsActive($isActive);
 
             $isActive = filter_var($isActive, FILTER_VALIDATE_BOOLEAN);
             if (!$isActive) {
@@ -86,12 +83,15 @@ class ProductAbstractRelationCollector extends AbstractStoragePropelCollector
     }
 
     /**
+     * In PostgreSQL the return value for is active is different than MySQL, here we normalize the value.
+     *
      * @param string $isActive
      *
      * @return bool
      */
-    protected function resolveIsActive($isActive)
+    protected function normalizeIsActive($isActive)
     {
+        $isActive = strtolower($isActive);
         if ($isActive[0] === 't') {
             return true;
         }
