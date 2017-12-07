@@ -10,12 +10,13 @@ namespace Spryker\Zed\ProductCategoryFilterGui\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Form\DataProvider\ProductCategoryFilterDataProvider;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Form\ProductCategoryFilterForm;
+use Spryker\Zed\ProductCategoryFilterGui\Communication\Formatter\SuggestionsFormatter;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Hydrator\ProductCategoryFilterTransferHydrator;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Table\CategoryRootNodeTable;
 use Spryker\Zed\ProductCategoryFilterGui\ProductCategoryFilterGuiDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToCategoryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductCategoryFilterGui\Persistence\ProductCategoryFilterGuiQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductCategoryFilterGui\ProductCategoryFilterGuiConfig getConfig()
  */
 class ProductCategoryFilterGuiCommunicationFactory extends AbstractCommunicationFactory
@@ -63,11 +64,27 @@ class ProductCategoryFilterGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
+     * @return \Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToProductCategoryQueryContainerInterface
+     */
+    public function getProductCategoryQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductCategoryFilterGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_CATEGORY);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductSearchFacadeInterface
      */
     public function getProductSearchFacade()
     {
         return $this->getProvidedDependency(ProductCategoryFilterGuiDependencyProvider::FACADE_PRODUCT_SEARCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductFacadeInterface
+     */
+    public function getProductFacade()
+    {
+        return $this->getProvidedDependency(ProductCategoryFilterGuiDependencyProvider::FACADE_PRODUCT);
     }
 
     /**
@@ -120,5 +137,13 @@ class ProductCategoryFilterGuiCommunicationFactory extends AbstractCommunication
     public function getUtilEncodingService()
     {
         return $this->getProvidedDependency(ProductCategoryFilterGuiDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryFilterGui\Communication\Formatter\SuggestionsFormatterInterface
+     */
+    public function createSuggestionsFormatter()
+    {
+        return new SuggestionsFormatter($this->getQueryContainer(), $this->getProductFacade());
     }
 }

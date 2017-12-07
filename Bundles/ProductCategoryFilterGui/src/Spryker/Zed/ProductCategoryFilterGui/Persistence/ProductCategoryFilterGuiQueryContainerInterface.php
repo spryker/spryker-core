@@ -18,4 +18,13 @@ interface ProductCategoryFilterGuiQueryContainerInterface
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
      */
     public function queryCategoryByIdAndLocale($idCategory, $idLocale);
+
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryProductAbstractsInCategory($idCategory);
 }

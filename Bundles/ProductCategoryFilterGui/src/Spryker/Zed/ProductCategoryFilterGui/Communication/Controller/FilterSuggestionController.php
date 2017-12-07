@@ -7,13 +7,12 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Communication\Controller;
 
-use Generated\Shared\Search\PageIndexMap;
-use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductCategoryFilterGui\Communication\ProductCategoryFilterGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCategoryFilterGui\Persistence\ProductCategoryFilterGuiQueryContainerInterface getQueryContainer()
  */
 class FilterSuggestionController extends AbstractController
 {
@@ -35,20 +34,7 @@ class FilterSuggestionController extends AbstractController
             ->getProductSearchFacade()
             ->suggestProductSearchAttributeKeys($searchTerm);
 
-        $searchResultsForCategory = $this->getFactory()
-            ->getCatalogClient()
-            ->catalogSearch('', [PageIndexMap::CATEGORY => $idCategory]);
-
-        $suggestionsWithNumbers = [];
-        foreach ($suggestions as $suggestion) {
-            $attachedNumber = 0;
-            if (isset($searchResultsForCategory[FacetResultFormatterPlugin::NAME][$suggestion])) {
-                $attachedNumber = $searchResultsForCategory[FacetResultFormatterPlugin::NAME][$suggestion]->getDocCount();
-            }
-
-            $suggestionsWithNumbers[] = $suggestion . ' (' . $attachedNumber . ')';
-        }
-
-        return $this->jsonResponse($suggestionsWithNumbers);
+        $suggestions = array_flip($suggestions);
+        return $this->jsonResponse($this->getFactory()->createSuggestionsFormatter()->formatCategorySuggestions($suggestions, $idCategory));
     }
 }

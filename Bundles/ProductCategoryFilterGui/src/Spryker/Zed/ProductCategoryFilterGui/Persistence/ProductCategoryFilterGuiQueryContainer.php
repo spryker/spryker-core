@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductCategoryFilterGui\Persistence;
 
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
+use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -30,5 +31,20 @@ class ProductCategoryFilterGuiQueryContainer extends AbstractQueryContainer impl
                 ->joinLocale()
                 ->filterByFkLocale($idLocale)
                 ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCategory
+     *
+     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryProductAbstractsInCategory($idCategory)
+    {
+        return $this->getFactory()->getProductCategoryQueryContainer()
+            ->queryProductCategoryMappings()
+            ->filterByFkCategory($idCategory)
+            ->select([SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT]);
     }
 }

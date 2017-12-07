@@ -26,6 +26,14 @@ class ProductCategoryFilterGuiPersistenceFactory extends AbstractPersistenceFact
     }
 
     /**
+     * @return \Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToProductCategoryQueryContainerInterface
+     */
+    public function getProductCategoryQueryContainer()
+    {
+        return $this->getProvidedDependency(ProductCategoryFilterGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_CATEGORY);
+    }
+
+    /**
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
      */
     public function createFilterQuery()

@@ -14,8 +14,10 @@ use Spryker\Zed\ProductCategoryFilterGui\Dependency\Client\ProductCategoryFilter
 use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToCategoryFacadeBridge;
 use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToLocaleFacadeBridge;
 use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductCategoryFilterFacadeBridge;
+use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductFacadeBridge;
 use Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade\ProductCategoryFilterGuiToProductSearchFacadeBridge;
 use Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToCategoryQueryContainerBridge;
+use Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer\ProductCategoryFilterGuiToProductCategoryQueryContainerBridge;
 use Spryker\Zed\ProductCategoryFilterGui\Dependency\Service\ProductCategoryFilterGuiToUtilEncodingServiceBridge;
 
 class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependencyProvider
@@ -23,8 +25,10 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
     const FACADE_PRODUCT_CATEGORY_FILTER = 'FACADE_PRODUCT_CATEGORY_FILTER';
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_CATEGORY = 'FACADE_CATEGORY';
+    const FACADE_PRODUCT = 'FACADE_PRODUCT';
     const FACADE_PRODUCT_SEARCH = 'FACADE_PRODUCT_SEARCH';
     const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
+    const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';
     const CLIENT_CATALOG = 'CLIENT_CATALOG';
     const CLIENT_PRODUCT_CATEGORY_FILTER = 'CLIENT_PRODUCT_CATEGORY_FILTER';
     const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
@@ -40,6 +44,7 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
         $this->addLocaleFacade($container);
         $this->addCategoryFacade($container);
         $this->addProductSearchFacade($container);
+        $this->addProductFacade($container);
         $this->addCategoryQueryContainer($container);
         $this->addCatalogClient($container);
         $this->addProductCategoryFilterClient($container);
@@ -56,6 +61,7 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
     public function providePersistenceLayerDependencies(Container $container)
     {
         $this->addCategoryQueryContainer($container);
+        $this->addProductCategoryQueryContainer($container);
 
         return $container;
     }
@@ -103,6 +109,20 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductCategoryQueryContainer(Container $container)
+    {
+        $container[static::QUERY_CONTAINER_PRODUCT_CATEGORY] = function (Container $container) {
+            return new ProductCategoryFilterGuiToProductCategoryQueryContainerBridge($container->getLocator()->productCategory()->queryContainer());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return void
      */
     protected function addLocaleFacade(Container $container)
@@ -133,6 +153,18 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container[static::FACADE_PRODUCT_SEARCH] = function (Container $container) {
             return new ProductCategoryFilterGuiToProductSearchFacadeBridge($container->getLocator()->productSearch()->facade());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addProductFacade(Container $container)
+    {
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
+            return new ProductCategoryFilterGuiToProductFacadeBridge($container->getLocator()->product()->facade());
         };
     }
 
