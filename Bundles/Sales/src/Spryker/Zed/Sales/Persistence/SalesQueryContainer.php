@@ -222,7 +222,9 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
-     * For performance reasons, the state history join is separated into this method.
+     * Note: For performance reasons, the state history join is separated into this method.
+     *
+     * {@inheritdoc}
      *
      * @api
      *
