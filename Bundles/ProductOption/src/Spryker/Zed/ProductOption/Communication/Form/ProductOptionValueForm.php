@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueOptionValueSku;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueValue;
-use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
