@@ -64,27 +64,32 @@ class GiftCardReplacer implements GiftCardReplacerInterface
      *
      * @return void
      */
-    protected function replaceGiftCardsTransaction(ArrayObject $giftCardPayments)
+    protected function replaceGiftCardsTransaction(array $giftCardPayments)
     {
         foreach ($giftCardPayments as $giftCardPayment) {
-            $giftCard = $this->giftCardReader->findByCode($giftCardPayment->getCode());
-            if (!$giftCard) {
+            $giftCardTransfer = $this->giftCardReader->findByCode($giftCardPayment->getCode());
+
+            if (!$giftCardTransfer) {
                 continue;
             }
 
-            if (!$giftCard->getReplacementPattern()) {
+            if (!$giftCardTransfer->getReplacementPattern()) {
                 continue;
             }
 
-            $newValue = $giftCard->getValue() - $giftCardPayment->getSpySalesPayment()->getAmount();
+            $newValue = $giftCardTransfer->getValue() - $giftCardPayment->getSpySalesPayment()->getAmount();
 
             if ($newValue > 0) {
+                $giftCardCode = $this->giftCardCodeGenerator->generateGiftCardCode(
+                    $giftCardTransfer->getReplacementPattern()
+                );
+
                 $giftCardTransfer = (new GiftCardTransfer())
-                    ->setCode($this->giftCardCodeGenerator->generateGiftCardCode($giftCard->getReplacementPattern()))
+                    ->setCode($giftCardCode)
                     ->setValue($newValue)
-                    ->setReplacementPattern($giftCard->getReplacementPattern())
+                    ->setReplacementPattern($giftCardTransfer->getReplacementPattern())
                     ->setName('Gift Card Replacement')
-                    ->setAttributes($giftCard->getAttributes())
+                    ->setAttributes($giftCardTransfer->getAttributes())
                     ->setIsActive(true);
 
                 $this->giftCardCreator->create($giftCardTransfer);

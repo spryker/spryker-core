@@ -128,7 +128,10 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getDecisionRulePlugins()
     {
-        return $this->getRecreateDecisionRulePlugins();
+        return [
+            new GiftCardIsActiveDecisionRulePlugin(),
+            new GiftCardIsUsedDecisionRulePlugin(),
+        ];
     }
 
     /**
@@ -137,16 +140,5 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
     protected function getPaymentSaverPlugins()
     {
         return [];
-    }
-
-    /**
-     * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardDecisionRulePluginInterface[]
-     */
-    protected function getRecreateDecisionRulePlugins()
-    {
-        return [
-            new GiftCardIsActiveDecisionRulePlugin(),
-            new GiftCardIsUsedDecisionRulePlugin(),
-        ];
     }
 }

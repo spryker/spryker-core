@@ -15,6 +15,7 @@ use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 use Spryker\Zed\GiftCard\Business\Exception\GiftCardNotFoundException;
 use Spryker\Zed\GiftCard\Business\Exception\GiftCardSalesMetadataNotFoundException;
 use Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface;
+use Zend\Stdlib\ArrayObject;
 
 class GiftCardReader implements GiftCardReaderInterface
 {
