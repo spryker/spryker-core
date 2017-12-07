@@ -19,7 +19,7 @@ class SetupHelper extends Module
     /**
      * @deprecated Please use the spryker/deploy module.
      */
-    const TEST_ENV_SCRIPT = 'setup_test';
+    const TEST_ENV_SCRIPT = './setup_test';
 
     /**
      * @var bool

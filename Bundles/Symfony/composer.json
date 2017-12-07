@@ -14,11 +14,11 @@
     "symfony/process": "^2.6.13 || ^3.0.0",
     "symfony/property-access": "^2.6.13 || ^3.0.0",
     "symfony/routing": "^2.6.13 || ^3.0.0",
-    "symfony/security": "^2.6.13 || ^3.0.0",
+    "symfony/security": "^2.6.13",
     "symfony/serializer": "^2.6.13 || ^3.0.0",
     "symfony/translation": "^2.6.13 || ^3.0.0",
-    "symfony/twig-bridge": "^2.7.0 || ^3.0.0",
-    "symfony/validator": "^2.6.13 || ^3.0.0",
+    "symfony/twig-bridge": "^2.7.0",
+    "symfony/validator": "^2.6.13",
     "symfony/yaml": "^2.6.13 || ^3.0.0"
   },
   "require-dev": {
