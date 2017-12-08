@@ -16,7 +16,7 @@ class AvailabilityStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\AvailabilityStorage\Storage\AvailabilityStorageReaderInterface
      */
-    public function createAvailabilityKeyValueStorage()
+    public function createAvailabilityStorageReader()
     {
         return new AvailabilityStorageReader($this->getStorage(), $this->getSynchronizationService());
     }

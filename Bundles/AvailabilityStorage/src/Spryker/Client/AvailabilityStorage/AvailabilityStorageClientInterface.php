@@ -17,7 +17,7 @@ interface AvailabilityStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
      */
-    public function getAvailabilityAbstractAsStorageTransfer($idProductAbstract);
+    public function getProductAvailabilityByIdProductAbstract($idProductAbstract);
 
     /**
      * @api

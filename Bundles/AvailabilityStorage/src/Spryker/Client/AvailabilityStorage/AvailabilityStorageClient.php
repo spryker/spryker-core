@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class AvailabilityStorageClient extends AbstractClient implements AvailabilityStorageClientInterface
 {
-
     /**
      * @api
      *
@@ -22,10 +21,10 @@ class AvailabilityStorageClient extends AbstractClient implements AvailabilitySt
      *
      * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
      */
-    public function getAvailabilityAbstractAsStorageTransfer($idProductAbstract)
+    public function getProductAvailabilityByIdProductAbstract($idProductAbstract)
     {
         return $this->getFactory()
-            ->createAvailabilityKeyValueStorage()
+            ->createAvailabilityStorageReader()
             ->getAvailabilityAbstractAsStorageTransfer($idProductAbstract);
     }
 
@@ -39,7 +38,7 @@ class AvailabilityStorageClient extends AbstractClient implements AvailabilitySt
     public function getAvailabilityAbstract($idProductAbstract)
     {
         return $this->getFactory()
-            ->createAvailabilityKeyValueStorage()
+            ->createAvailabilityStorageReader()
             ->getAvailabilityAbstract($idProductAbstract);
     }
 
