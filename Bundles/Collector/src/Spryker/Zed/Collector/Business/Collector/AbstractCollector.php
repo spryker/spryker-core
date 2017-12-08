@@ -53,18 +53,6 @@ abstract class AbstractCollector
      * @return array
      */
     abstract protected function collectItem($touchKey, array $collectItemData);
-
-    /**
-     * @param array $collectItemData
-     *
-     * @return bool
-     */
-    protected function isStorable(array $collectItemData)
-    {
-        // TODO: make this call abstract
-        return true;
-    }
-
     /**
      * @return string
      */
@@ -82,6 +70,16 @@ abstract class AbstractCollector
      * @return void
      */
     abstract protected function prepareCollectorScope(SpyTouchQuery $touchQuery, LocaleTransfer $locale);
+
+    /**
+     * @param array $collectItemData
+     *
+     * @return bool
+     */
+    protected function isStorable(array $collectItemData)
+    {
+        return true;
+    }
 
     /**
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $touchQueryContainer
@@ -130,7 +128,6 @@ abstract class AbstractCollector
      */
     protected function collectData(array $collectedSet, LocaleTransfer $locale, TouchUpdaterSet $touchUpdaterSet)
     {
-        // TODO: collapse these methods
         $setToExport = [];
 
         foreach ($collectedSet as $index => $collectedItemData) {
@@ -155,9 +152,9 @@ abstract class AbstractCollector
      *
      * @return string[]
      */
-    protected function collectDeletableData(array $collectedSet, LocaleTransfer $locale)
+    protected function collectExpiredData(array $collectedSet, LocaleTransfer $locale)
     {
-        $setToDelete = [];
+        $expiredData = [];
 
         foreach ($collectedSet as $index => $collectedItemData) {
             if ($this->isStorable($collectedItemData)) {
@@ -169,10 +166,10 @@ abstract class AbstractCollector
                 $locale->getLocaleName(),
                 $collectedItemData
             );
-            $setToDelete[] = $touchKey;
+            $expiredData[$touchKey] = $collectedItemData;
         }
 
-        return $setToDelete;
+        return $expiredData;
     }
 
     /**
