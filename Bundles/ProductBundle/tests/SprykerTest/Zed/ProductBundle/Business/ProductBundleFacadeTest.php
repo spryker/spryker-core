@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
 use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemGroupKeyExpander;
@@ -417,6 +418,8 @@ class ProductBundleFacadeTest extends Unit
 
         $productAbstractTransfer->setPrice($priceProductTransfer);
         $productAbstractTransfer->setAttributes([]);
+
+        $productAbstractTransfer->setStoreRelation((new StoreRelationTransfer())->setIdStores([]));
 
         $concreteProductCollection = [];
 

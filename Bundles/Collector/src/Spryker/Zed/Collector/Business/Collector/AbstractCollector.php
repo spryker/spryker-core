@@ -53,6 +53,7 @@ abstract class AbstractCollector
      * @return array
      */
     abstract protected function collectItem($touchKey, array $collectItemData);
+
     /**
      * @return string
      */
