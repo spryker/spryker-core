@@ -72,7 +72,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     public function placeOrder(QuoteTransfer $quoteTransfer)
     {
         $checkoutResponseTransfer = $this->createCheckoutResponseTransfer();
-        $checkoutResponseTransfer = $this->resetCheckoutResponseTransfer($checkoutResponseTransfer);
 
         if (!$this->checkPreConditions($quoteTransfer, $checkoutResponseTransfer)) {
             return $checkoutResponseTransfer;
@@ -167,25 +166,13 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
-     */
-    protected function resetCheckoutResponseTransfer(CheckoutResponseTransfer $checkoutResponseTransfer)
-    {
-        $checkoutResponseTransfer
-            ->setSaveOrder(new SaveOrderTransfer())
-            ->setIsSuccess(true);
-
-        return $checkoutResponseTransfer;
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     protected function createCheckoutResponseTransfer()
     {
-        return new CheckoutResponseTransfer();
+        return (new CheckoutResponseTransfer())
+            ->setSaveOrder(new SaveOrderTransfer())
+            ->setIsSuccess(true);
     }
 
     /**
