@@ -14,10 +14,10 @@ use Symfony\Component\Filesystem\Filesystem;
 class LogDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_QUEUE = 'queue client';
-    const LOG_LISTENERS = 'log listener';
     const FILESYSTEM = 'filesystem';
 
     const LOG_PROCESSORS = 'LOG_PROCESSORS';
+    const LOG_LISTENERS = 'LOG_LISTENERS';
     const LOG_HANDLERS = 'LOG_HANDLERS';
 
     /**
@@ -66,6 +66,20 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addFilesystem(Container $container)
+    {
+        $container[static::FILESYSTEM] = function () {
+            return new Filesystem();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addLogListener(Container $container)
     {
         $container[static::LOG_LISTENERS] = function () {
@@ -91,24 +105,18 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     protected function addLogHandlers(Container $container)
     {
         $container[static::LOG_HANDLERS] = function () {
-            return [];
+            return $this->getLogHandlers();
         };
 
         return $container;
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface[]
      */
-    protected function addFilesystem(Container $container)
+    protected function getLogHandlers()
     {
-        $container[static::FILESYSTEM] = function () {
-            return new Filesystem();
-        };
-
-        return $container;
+        return [];
     }
 
     /**
@@ -119,9 +127,17 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     protected function addProcessors(Container $container)
     {
         $container[static::LOG_PROCESSORS] = function () {
-            return [];
+            return $this->getLogProcessors();
         };
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface[]
+     */
+    protected function getLogProcessors()
+    {
+        return [];
     }
 }
