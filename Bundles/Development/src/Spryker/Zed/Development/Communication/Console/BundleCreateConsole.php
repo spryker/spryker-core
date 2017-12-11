@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  */
-class ModuleCreateConsole extends Console
+class BundleCreateConsole extends Console
 {
     const COMMAND_NAME = 'dev:module:create';
     const ARGUMENT_MODULE = 'module';
