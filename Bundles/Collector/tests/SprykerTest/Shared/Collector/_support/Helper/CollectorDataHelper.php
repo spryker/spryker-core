@@ -7,7 +7,9 @@
 namespace SprykerTest\Shared\Collector\Helper;
 
 use Codeception\Module;
+use Codeception\Util\Stub;
 use DateTime;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
@@ -16,7 +18,6 @@ use Spryker\Zed\Collector\Business\Model\BatchResult;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
-use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 use Symfony\Component\Console\Output\NullOutput;
 
@@ -28,33 +29,40 @@ class CollectorDataHelper extends Module
      * @param \Spryker\Zed\Kernel\Business\AbstractFacade $facade
      * @param string $facadeCollectorMethod
      * @param string $resourceType
+     * @param \DateTime $lastTouchedAt
      *
      * @return array
      */
-    public function runCollector(AbstractFacade $facade, $facadeCollectorMethod, $resourceType)
-    {
+    public function runCollector(
+        AbstractFacade $facade,
+        $facadeCollectorMethod,
+        $resourceType,
+        DateTime $lastTouchedAt
+    ) {
         $localeTransfer = $this->getLocaleFacade()->getCurrentLocale();
 
-        $baseQuery = $this->createTouchBaseQuery($resourceType, $localeTransfer);
-
-        $writerMock = $this->getWriterMock();
+        $baseQuery = $this->createTouchBaseQuery($resourceType, $localeTransfer, $lastTouchedAt);
 
         $collectedData = [];
-        $writerMock->method('write')->with(
-            $this->callback(function($data) use(&$collectedData) {
-                $collectedData[] = $data;
-                return $data;
-            }
-            ));
+        $writerMock = Stub::constructEmpty(
+            WriterInterface::class,
+            [],
+            [
+                'write' => function ($data) use (&$collectedData) {
+                    $collectedData[] = $data;
+                    return $data;
+                },
+            ]
+        );
 
         $facade->$facadeCollectorMethod(
             $baseQuery,
             $localeTransfer,
-            new BatchResult(),
+            $this->createBatchResult(),
             $this->getDataReaderMock(),
             $writerMock,
             $this->getTouchUpdaterMock(),
-            new NullOutput()
+            $this->createNullOutput()
         );
 
         return $collectedData;
@@ -81,40 +89,49 @@ class CollectorDataHelper extends Module
      */
     protected function getDataReaderMock()
     {
-        return $this->getMockBuilder(ReaderInterface::class)->getMock();
+        return Stub::constructEmpty(ReaderInterface::class);
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface
-     */
-    protected function getWriterMock()
-    {
-        return $this->getMockBuilder(WriterInterface::class)->getMock();
-    }
-
-    /**
-     * @return mixed
+     * @return \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface
      */
     protected function getTouchUpdaterMock()
     {
-        return $this->getMockBuilder(TouchUpdaterInterface::class)->getMock();
+        return Stub::constructEmpty(TouchUpdaterInterface::class);
     }
 
     /**
      * @param string $resourceType
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \DateTime $lastTouchedAt
      *
-     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function createTouchBaseQuery($resourceType, $localeTransfer)
+    protected function createTouchBaseQuery($resourceType, LocaleTransfer $localeTransfer, DateTime $lastTouchedAt)
     {
         return $this->getTouchQueryContainer()
             ->createBasicExportableQuery(
-            $resourceType,
-            $localeTransfer,
-            new DateTime('Yesterday')
-        )->withColumn(SpyTouchTableMap::COL_ID_TOUCH, CollectorConfig::COLLECTOR_TOUCH_ID)
+                $resourceType,
+                $localeTransfer,
+                $lastTouchedAt
+            )->withColumn(SpyTouchTableMap::COL_ID_TOUCH, CollectorConfig::COLLECTOR_TOUCH_ID)
          ->withColumn(SpyTouchTableMap::COL_ITEM_ID, CollectorConfig::COLLECTOR_RESOURCE_ID)
          ->setFormatter(new PropelArraySetFormatter());
+    }
+
+    /**
+     * @return \Symfony\Component\Console\Output\NullOutput
+     */
+    protected function createNullOutput()
+    {
+        return new NullOutput();
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Business\Model\BatchResult
+     */
+    protected function createBatchResult()
+    {
+        return new BatchResult();
     }
 }

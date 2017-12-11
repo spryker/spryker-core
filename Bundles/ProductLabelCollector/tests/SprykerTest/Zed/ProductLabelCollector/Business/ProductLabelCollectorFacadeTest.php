@@ -8,29 +8,11 @@ namespace SprykerTest\ProductLabelCollector\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
-use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
-use Orm\Zed\Touch\Persistence\SpyTouchQuery;
-use Propel\Runtime\Formatter\ArrayFormatter;
 use Spryker\Shared\ProductLabel\ProductLabelConstants;
-use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
-use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
-use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
-use Spryker\Zed\Collector\Business\Model\BatchResult;
-use Spryker\Zed\Collector\CollectorConfig;
-use Spryker\Zed\Locale\Business\LocaleFacade;
-use Spryker\Zed\ProductLabel\Business\ProductLabelFacade;
-use Spryker\Zed\ProductLabel\ProductLabelConfig;
-use Spryker\Zed\ProductLabelCollector\Business\ProductLabelCollectorFacade;
-use Spryker\Zed\ProductLabelCollector\Persistence\Collector\Propel\ProductAbstractRelationCollectorQuery;
-use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
-use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
-use Symfony\Component\Console\Output\NullOutput;
-use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
- * @group Zed
  * @group ProductLabelCollector
  * @group Business
  * @group Facade
@@ -39,6 +21,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductLabelCollectorFacadeTest extends Unit
 {
+    const METHOD_FOR_RELATION_COLLECTION = 'runProductAbstractRelationStorageCollector';
+
     /**
      * @var \SprykerTest\Zed\ProductLabelCollector\ProductLabelCollectorBusinessTester
      */
@@ -49,46 +33,38 @@ class ProductLabelCollectorFacadeTest extends Unit
      */
     public function testCollectRelationShouldWhenDeactivatedShouldRemoveInactiveRelations()
     {
+        $productTransfer = $this->tester->haveProduct();
+        $idProductAbstract = $productTransfer->getFkProductAbstract();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $idProductLabel = $productLabelTransfer->getIdProductLabel();
+
+        $this->tester->haveProductLabelToAbstractProductRelation($idProductLabel, $idProductAbstract);
+
+        $productLabelCollectorFacade = $this->getProductLabelCollectorFacade();
+
+        $data = $this->tester->runCollector(
+            $productLabelCollectorFacade,
+            static::METHOD_FOR_RELATION_COLLECTION,
+            ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
+            new DateTime('-10 Seconds')
+        );
+
+        $storageKey = key($data[0]);
+        $this->assertCount(1, $data[0][$storageKey]);
+
         $productLabelFacade = $this->getProductLabelFacade();
-        $productLabelTransfer = $productLabelFacade->findLabelById(1);
+        $productLabelTransfer = $productLabelFacade->findLabelById($idProductLabel);
         $productLabelTransfer->setIsActive(false);
         $productLabelFacade->updateLabel($productLabelTransfer);
 
-        $localeTransfer = (new LocaleFacade())->getCurrentLocale();
-
-        $touchQueryContainer = new TouchQueryContainer();
-        $baseQuery = $touchQueryContainer->createBasicExportableQuery(
+        $data = $this->tester->runCollector(
+            $productLabelCollectorFacade,
+            static::METHOD_FOR_RELATION_COLLECTION,
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
-            $localeTransfer,
-            new DateTime('Yesterday')
-        )->withColumn(SpyTouchTableMap::COL_ID_TOUCH, CollectorConfig::COLLECTOR_TOUCH_ID)
-         ->withColumn(SpyTouchTableMap::COL_ITEM_ID, CollectorConfig::COLLECTOR_RESOURCE_ID)
-         ->setFormatter(new PropelArraySetFormatter());
-
-        $dataReader = $this->getMockBuilder(ReaderInterface::class)->getMock();
-        $writerReader = $this->getMockBuilder(WriterInterface::class)->getMock();
-        $touchUpdater = $this->getMockBuilder(TouchUpdaterInterface::class)->getMock();
-
-        $collectedData = [];
-        $writerReader->method('write')->with(
-            $this->callback(function($data) use(&$collectedData) {
-                $collectedData[] = $data;
-                return $data;
-            }
-        ));
-
-        $productLabelCollectorFacade = new ProductLabelCollectorFacade();
-        $productLabelCollectorFacade->runProductAbstractRelationStorageCollector(
-            $baseQuery,
-            $localeTransfer,
-            new BatchResult(),
-            $dataReader,
-            $writerReader,
-            $touchUpdater,
-            new NullOutput()
+            new DateTime('-10 Second')
         );
 
-
+        $this->assertCount(0, $data[0][$storageKey]);
     }
 
     /**
@@ -97,5 +73,13 @@ class ProductLabelCollectorFacadeTest extends Unit
     public function getProductLabelFacade()
     {
         return $this->tester->getLocator()->productLabel()->facade();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelCollector\Business\ProductLabelCollectorFacadeInterface
+     */
+    public function getProductLabelCollectorFacade()
+    {
+        return $this->tester->getLocator()->productLabelCollector()->facade();
     }
 }
