@@ -104,7 +104,6 @@ class ProductMoneyCollectionDataProvider
                         $storeTransfer->getIdStore(),
                         $priceTypeTransfer,
                         $currencyTransfer
-
                     );
 
                     if (isset($existingCurrencyMap[$identifier])) {
@@ -180,8 +179,7 @@ class ProductMoneyCollectionDataProvider
         $idStore,
         PriceTypeTransfer $priceTypeTransfer,
         CurrencyTransfer $currencyTransfer
-    )
-    {
+    ) {
         return implode(
             '-',
             [

@@ -195,6 +195,8 @@ class ProductMoneyCollectionType extends AbstractCollectionType
 
     /**
      * @param array $priceTable
+     *
+     * @return void
      */
     protected function sortTable(array &$priceTable)
     {
