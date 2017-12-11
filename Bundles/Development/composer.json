@@ -3,7 +3,7 @@
   "description": "Development module",
   "license": "proprietary",
   "require": {
-    "php": "^7.1",
+    "php": ">=^7.1",
     "spryker/config": "^3.0.0",
     "spryker/graph": "^3.0.0",
     "spryker/kernel": "^3.0.0",
