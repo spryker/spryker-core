@@ -48,22 +48,14 @@ class DependencyTreeBuilderConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $application = '*';
         $module = '*';
-        $layer = '*';
 
-        if ($this->input->getOption(static::OPTION_APPLICATION)) {
-            $application = $this->input->getOption(static::OPTION_APPLICATION);
-        }
         if ($this->input->getOption(static::OPTION_MODULE)) {
             $module = $this->input->getOption(static::OPTION_MODULE);
-        }
-        if ($this->input->getOption(static::OPTION_LAYER)) {
-            $layer = $this->input->getOption(static::OPTION_LAYER);
         }
 
         $this->info('Build dependency tree.');
 
-        $this->getFacade()->buildDependencyTree($application, $module, $layer);
+        $this->getFacade()->buildDependencyTree($module);
     }
 }
