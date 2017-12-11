@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\GiftCard\Business\GiftCard;
 
-use ArrayObject;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -88,7 +87,7 @@ class GiftCardReplacer implements GiftCardReplacerInterface
     }
 
     /**
-     * @param GiftCardTransfer $giftCardTransferBase
+     * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransferBase
      * @param int $value
      *
      * @return void
@@ -115,7 +114,7 @@ class GiftCardReplacer implements GiftCardReplacerInterface
     }
 
     /**
-     * @param GiftCardTransfer $giftCardTransfer
+     * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
      *
      * @return string
      */

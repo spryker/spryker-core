@@ -12,10 +12,10 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Orm\Zed\GiftCard\Persistence\SpyGiftCard;
-use Spryker\Shared\GiftCard\GiftCardConfig;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleCheckerInterface;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface;
 use Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface;
+use Spryker\Zed\GiftCard\GiftCardConfig;
 
 class GiftCardCalculator implements GiftCardCalculatorInterface
 {
@@ -34,19 +34,25 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
      */
     protected $giftCardValueProvider;
 
+    /** @var \Spryker\Zed\GiftCard\GiftCardConfig */
+    protected $giftCardConfig;
+
     /**
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleCheckerInterface $giftCardDecisionRuleChecker
      * @param \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface $giftCardValueProvider
+     * @param \Spryker\Zed\GiftCard\GiftCardConfig $giftCardConfig
      */
     public function __construct(
         GiftCardReaderInterface $giftCardReader,
         GiftCardDecisionRuleCheckerInterface $giftCardDecisionRuleChecker,
-        GiftCardValueProviderPluginInterface $giftCardValueProvider
+        GiftCardValueProviderPluginInterface $giftCardValueProvider,
+        GiftCardConfig $giftCardConfig
     ) {
         $this->giftCardReader = $giftCardReader;
         $this->giftCardDecisionRuleChecker = $giftCardDecisionRuleChecker;
         $this->giftCardValueProvider = $giftCardValueProvider;
+        $this->giftCardConfig = $giftCardConfig;
     }
 
     /**
@@ -163,9 +169,9 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
             }
 
             $giftCardPaymentTransfer = (new PaymentTransfer())
-                ->setPaymentProvider(GiftCardConfig::PROVIDER_NAME)
-                ->setPaymentSelection(GiftCardConfig::PROVIDER_NAME)
-                ->setPaymentMethod(GiftCardConfig::PROVIDER_NAME)
+                ->setPaymentProvider($this->giftCardConfig->getPaymentProviderName())
+                ->setPaymentSelection($this->giftCardConfig->getPaymentProviderName())
+                ->setPaymentMethod($this->giftCardConfig->getPaymentMethodName())
                 ->setAvailableAmount($this->giftCardValueProvider->getValue($giftCard))
                 ->setIsLimitedAmount(true)
                 ->setGiftCard($giftCard);

@@ -13,10 +13,11 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\GiftCard\GiftCardConfig;
+use Spryker\Shared\GiftCard\GiftCardConfig as SharedGiftCardConfig;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleCheckerInterface;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface;
 use Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface;
+use Spryker\Zed\GiftCard\GiftCardConfig;
 
 class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
 {
@@ -35,19 +36,25 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
      */
     protected $giftCardValueProvider;
 
+    /** @var \Spryker\Zed\GiftCard\GiftCardConfig */
+    protected $giftCardConfig;
+
     /**
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleCheckerInterface $giftCardDecisionRuleChecker
      * @param \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface $giftCardValueProvider
+     * @param \Spryker\Zed\GiftCard\GiftCardConfig $giftCardConfig
      */
     public function __construct(
         GiftCardReaderInterface $giftCardReader,
         GiftCardDecisionRuleCheckerInterface $giftCardDecisionRuleChecker,
-        GiftCardValueProviderPluginInterface $giftCardValueProvider
+        GiftCardValueProviderPluginInterface $giftCardValueProvider,
+        GiftCardConfig $giftCardConfig
     ) {
         $this->giftCardReader = $giftCardReader;
         $this->giftCardDecisionRuleChecker = $giftCardDecisionRuleChecker;
         $this->giftCardValueProvider = $giftCardValueProvider;
+        $this->giftCardConfig = $giftCardConfig;
     }
 
     /**
@@ -67,7 +74,7 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
         $validPayments = new ArrayObject();
 
         foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
-            if (!($paymentTransfer->getPaymentProvider() === GiftCardConfig::PROVIDER_NAME)) {
+            if (!($paymentTransfer->getPaymentProvider() === $this->giftCardConfig->getPaymentProviderName())) {
                 $validPayments[] = $paymentTransfer;
                 continue;
             }
@@ -98,7 +105,7 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
     protected function hasGiftCardPayments(QuoteTransfer $quoteTransfer)
     {
         foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
-            if ($paymentTransfer->getPaymentProvider() === GiftCardConfig::PROVIDER_NAME) {
+            if ($paymentTransfer->getPaymentProvider() === $this->giftCardConfig->getPaymentProviderName()) {
                 return true;
             }
         }
@@ -120,7 +127,7 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
         if (!$this->giftCardDecisionRuleChecker->isApplicable($giftCardTransfer, $quoteTransfer)) {
             $error = new CheckoutErrorTransfer();
             $error->setMessage('Gift Card ' . $giftCardTransfer->getCode() . ' already used');
-            $error->setErrorCode(GiftCardConfig::ERROR_GIFT_CARD_ALREADY_USED);
+            $error->setErrorCode(SharedGiftCardConfig::ERROR_GIFT_CARD_ALREADY_USED);
 
             $result[] = $error;
         }
@@ -128,7 +135,7 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
         if ($this->giftCardValueProvider->getValue($giftCardTransfer) < $paymentTransfer->getAmount()) {
             $error = new CheckoutErrorTransfer();
             $error->setMessage('Gift Card ' . $giftCardTransfer->getCode() . ' used amount too high');
-            $error->setErrorCode(GiftCardConfig::ERROR_GIFT_CARD_AMOUNT_TOO_HIGH);
+            $error->setErrorCode(SharedGiftCardConfig::ERROR_GIFT_CARD_AMOUNT_TOO_HIGH);
 
             $result[] = $error;
         }

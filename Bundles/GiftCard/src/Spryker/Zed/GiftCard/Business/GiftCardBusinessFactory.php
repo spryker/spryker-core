@@ -122,7 +122,8 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
         return new GiftCardCalculator(
             $this->createGiftCardReader(),
             $this->createGiftCardDecisionRuleChecker(),
-            $this->getGiftCardValueProviderPlugin()
+            $this->getGiftCardValueProviderPlugin(),
+            $this->getConfig()
         );
     }
 

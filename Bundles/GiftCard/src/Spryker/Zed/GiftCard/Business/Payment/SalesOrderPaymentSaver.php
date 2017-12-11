@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCard;
-use Spryker\Shared\GiftCard\GiftCardConfig;
+use Spryker\Zed\GiftCard\GiftCardConfig;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
@@ -24,12 +24,19 @@ class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
      */
     protected $giftCardPaymentSaverPlugins;
 
+    /** @var \Spryker\Zed\GiftCard\GiftCardConfig */
+    protected $giftCardConfig;
+
     /**
      * @param \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface[] $giftCardPaymentSaverPlugins
+     * @param \Spryker\Zed\GiftCard\GiftCardConfig $giftCardConfig
      */
-    public function __construct(array $giftCardPaymentSaverPlugins)
-    {
+    public function __construct(
+        array $giftCardPaymentSaverPlugins,
+        GiftCardConfig $giftCardConfig
+    ) {
         $this->giftCardPaymentSaverPlugins = $giftCardPaymentSaverPlugins;
+        $this->giftCardConfig = $giftCardConfig;
     }
 
     /**
@@ -57,7 +64,7 @@ class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
         $result = new ArrayObject();
 
         foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
-            if ($paymentTransfer->getPaymentProvider() === GiftCardConfig::PROVIDER_NAME) {
+            if ($paymentTransfer->getPaymentProvider() === $this->giftCardConfig->getPaymentProviderName()) {
                 $result[] = $paymentTransfer;
             }
         }
