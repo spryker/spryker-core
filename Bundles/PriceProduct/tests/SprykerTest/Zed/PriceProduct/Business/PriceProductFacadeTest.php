@@ -257,7 +257,7 @@ class PriceProductFacadeTest extends Unit
 
         $productConcreteTransfer = $priceProductFacade->persistProductConcretePriceCollection($productConcreteTransfer);
 
-        $storePrices = $priceProductFacade->findPricesBySku($productConcreteTransfer->getSku());
+        $storePrices = $priceProductFacade->findPricesBySkuForCurrentStore($productConcreteTransfer->getSku());
 
         $this->assertCount(2, $storePrices);
     }
@@ -283,7 +283,7 @@ class PriceProductFacadeTest extends Unit
 
         $productConcreteTransfer = $priceProductFacade->persistProductConcretePriceCollection($productConcreteTransfer);
 
-        $storePrices = $priceProductFacade->findPricesBySkuGrouped($productConcreteTransfer->getSku());
+        $storePrices = $priceProductFacade->findPricesBySkuGroupedForCurrentStore($productConcreteTransfer->getSku());
 
         $this->assertCount(2, $storePrices);
 

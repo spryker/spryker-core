@@ -65,10 +65,11 @@ interface PriceProductQueryContainerInterface
      * @api
      *
      * @param string $sku
+     * @param int $idStore
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPricesForProductAbstractBySku($sku);
+    public function queryPricesForProductAbstractBySkuForStore($sku, $idStore);
 
     /**
      * @api
@@ -100,10 +101,11 @@ interface PriceProductQueryContainerInterface
      * @api
      *
      * @param string $sku
+     * @param int $idStore
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPricesForProductConcreteBySku($sku);
+    public function queryPricesForProductConcreteBySkuForStore($sku, $idStore);
 
     /**
      * @api

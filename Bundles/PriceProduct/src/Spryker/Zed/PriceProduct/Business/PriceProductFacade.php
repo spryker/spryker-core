@@ -233,11 +233,11 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findPricesBySku($sku)
+    public function findPricesBySkuForCurrentStore($sku)
     {
         return $this->getFactory()
             ->createReaderModel()
-            ->findPricesBySku($sku);
+            ->findPricesBySkuForCurrentStore($sku);
     }
 
     /**
@@ -249,11 +249,11 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @return array
      */
-    public function findPricesBySkuGrouped($sku)
+    public function findPricesBySkuGroupedForCurrentStore($sku)
     {
         return $this->getFactory()
             ->createPriceGrouper()
-            ->findPricesBySkuGrouped($sku);
+            ->findPricesBySkuGroupedForCurrentStore($sku);
     }
 
     /**

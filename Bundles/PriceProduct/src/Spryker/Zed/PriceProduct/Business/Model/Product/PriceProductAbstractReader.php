@@ -13,6 +13,7 @@ use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Propel\Runtime\Formatter\ArrayFormatter;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 
 class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
@@ -38,21 +39,29 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
     protected $priceProductCriteriaBuilder;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder
+     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         PriceProductQueryContainerInterface $priceProductQueryContainer,
         PriceProductMapperInterface $priceProductMapper,
         PriceProductToProductFacadeInterface $productFacade,
-        PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder
+        PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder,
+        PriceProductToStoreFacadeInterface $storeFacade
     ) {
         $this->priceProductQueryContainer = $priceProductQueryContainer;
         $this->priceProductMapper = $priceProductMapper;
         $this->productFacade = $productFacade;
         $this->priceProductCriteriaBuilder = $priceProductCriteriaBuilder;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -80,12 +89,14 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesBySku($sku)
+    public function findProductAbstractPricesBySkuForCurrentStore($sku)
     {
         $abstractSku = $this->findAbstractSku($sku);
 
+        $idStore = $this->storeFacade->getCurrentStore()->getIdStore();
+
         $productAbstractPriceEntities = $this->priceProductQueryContainer
-            ->queryPricesForProductAbstractBySku($abstractSku)
+            ->queryPricesForProductAbstractBySkuForStore($abstractSku, $idStore)
             ->find();
 
         return $this->priceProductMapper->mapPriceProductTransferCollection($productAbstractPriceEntities);

@@ -137,7 +137,7 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
      */
     protected function findPricesBySku($sku)
     {
-        return $this->priceProductFacade->findPricesBySkuGrouped($sku);
+        return $this->priceProductFacade->findPricesBySkuGroupedForCurrentStore($sku);
     }
 
     /**

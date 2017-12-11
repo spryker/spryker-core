@@ -38,9 +38,9 @@ class PriceGrouper implements PriceGrouperInterface
      *
      * @return array
      */
-    public function findPricesBySkuGrouped($sku)
+    public function findPricesBySkuGroupedForCurrentStore($sku)
     {
-        $priceProductTransfers = $this->priceReader->findPricesBySku($sku);
+        $priceProductTransfers = $this->priceReader->findPricesBySkuForCurrentStore($sku);
 
         $prices = [];
         foreach ($priceProductTransfers as $priceProductTransfer) {

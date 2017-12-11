@@ -24,7 +24,7 @@ interface PriceProductConcreteReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductConcretePricesBySku($sku);
+    public function findProductConcretePricesBySkuForCurrentStore($sku);
 
     /**
      * @param int $idProductConcrete

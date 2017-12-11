@@ -117,7 +117,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createPriceProductMapper(),
             $this->getProductFacade(),
-            $this->createProductCriteriaBuilder()
+            $this->createProductCriteriaBuilder(),
+            $this->getStoreFacade()
         );
     }
 
@@ -139,7 +140,11 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createPriceProductConcreteReader()
     {
-        return new PriceProductConcreteReader($this->getQueryContainer(), $this->createPriceProductMapper());
+        return new PriceProductConcreteReader(
+            $this->getQueryContainer(),
+            $this->createPriceProductMapper(),
+            $this->getStoreFacade()
+        );
     }
 
     /**

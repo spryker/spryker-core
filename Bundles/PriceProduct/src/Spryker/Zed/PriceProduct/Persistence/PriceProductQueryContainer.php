@@ -177,16 +177,18 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
      * @api
      *
      * @param string $sku
+     * @param int $idStore
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPricesForProductAbstractBySku($sku)
+    public function queryPricesForProductAbstractBySkuForStore($sku, $idStore)
     {
         return $this->getFactory()
             ->createPriceProductQuery()
             ->filterByPrice(null, Criteria::ISNOTNULL)
             ->joinWithPriceType()
             ->joinWithPriceProductStore()
+            ->where(SpyPriceProductStoreTableMap::COL_FK_STORE . ' = ?', $idStore)
             ->useSpyProductAbstractQuery()
                 ->filterBySku($sku)
             ->endUse();
@@ -223,16 +225,18 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
      * @api
      *
      * @param string $sku
+     * @param int $idStore
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryPricesForProductConcreteBySku($sku)
+    public function queryPricesForProductConcreteBySkuForStore($sku, $idStore)
     {
         return $this->getFactory()
             ->createPriceProductQuery()
             ->filterByPrice(null, Criteria::ISNOTNULL)
             ->joinWithPriceType()
             ->joinWithPriceProductStore()
+            ->where(SpyPriceProductStoreTableMap::COL_FK_STORE . ' = ?', $idStore)
             ->useProductQuery()
                 ->filterBySku($sku)
             ->endUse();

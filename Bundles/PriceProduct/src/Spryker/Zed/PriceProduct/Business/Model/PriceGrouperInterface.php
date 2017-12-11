@@ -14,5 +14,5 @@ interface PriceGrouperInterface
      *
      * @return array
      */
-    public function findPricesBySkuGrouped($sku);
+    public function findPricesBySkuGroupedForCurrentStore($sku);
 }

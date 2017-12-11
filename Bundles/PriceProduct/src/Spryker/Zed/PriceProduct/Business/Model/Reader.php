@@ -189,10 +189,10 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findPricesBySku($sku)
+    public function findPricesBySkuForCurrentStore($sku)
     {
-        $abstractPriceProductTransfers = $this->priceProductAbstractReader->findProductAbstractPricesBySku($sku);
-        $concretePriceProductTransfers = $this->priceProductConcreteReader->findProductConcretePricesBySku($sku);
+        $abstractPriceProductTransfers = $this->priceProductAbstractReader->findProductAbstractPricesBySkuForCurrentStore($sku);
+        $concretePriceProductTransfers = $this->priceProductConcreteReader->findProductConcretePricesBySkuForCurrentStore($sku);
 
         if (count($concretePriceProductTransfers) === 0) {
             return $abstractPriceProductTransfers;

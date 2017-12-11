@@ -24,7 +24,7 @@ interface PriceProductAbstractReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesBySku($sku);
+    public function findProductAbstractPricesBySkuForCurrentStore($sku);
 
     /**
      * @param string $sku

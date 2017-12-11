@@ -208,11 +208,11 @@ interface PriceProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findPricesBySku($sku);
+    public function findPricesBySkuForCurrentStore($sku);
 
     /**
      * Specification:
-     *  - Reads prices same as findPricesBySku, then groups by currency, price mode, price type.
+     *  - Reads prices same as findPricesBySku, then groups by currency, price mode, price type for current store.
      *  - Delegates call to findPricesBySku and groups result after by currency, price mode and price type.
      *
      * For example:
@@ -231,7 +231,7 @@ interface PriceProductFacadeInterface
      *
      * @return array
      */
-    public function findPricesBySkuGrouped($sku);
+    public function findPricesBySkuGroupedForCurrentStore($sku);
 
     /**
      * Specification:

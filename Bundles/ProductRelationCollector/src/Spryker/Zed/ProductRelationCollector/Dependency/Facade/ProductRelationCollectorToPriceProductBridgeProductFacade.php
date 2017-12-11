@@ -38,9 +38,9 @@ class ProductRelationCollectorToPriceProductBridgeProductFacade implements Produ
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findPricesBySku($sku)
+    public function findPricesBySkuForCurrentStore($sku)
     {
-        return $this->priceProductFacade->findPricesBySku($sku);
+        return $this->priceProductFacade->findPricesBySkuForCurrentStore($sku);
     }
 
     /**
@@ -48,8 +48,8 @@ class ProductRelationCollectorToPriceProductBridgeProductFacade implements Produ
      *
      * @return mixed
      */
-    public function findPricesBySkuGrouped($sku)
+    public function findPricesBySkuGroupedForCurrentStore($sku)
     {
-        return $this->priceProductFacade->findPricesBySkuGrouped($sku);
+        return $this->priceProductFacade->findPricesBySkuGroupedForCurrentStore($sku);
     }
 }

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Propel\Runtime\Formatter\ArrayFormatter;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 
 class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
@@ -26,15 +27,23 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     protected $priceProductMapper;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
+     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         PriceProductQueryContainerInterface $priceProductQueryContainer,
-        PriceProductMapperInterface $priceProductMapper
+        PriceProductMapperInterface $priceProductMapper,
+        PriceProductToStoreFacadeInterface $storeFacade
     ) {
         $this->priceProductQueryContainer = $priceProductQueryContainer;
         $this->priceProductMapper = $priceProductMapper;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -62,10 +71,12 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductConcretePricesBySku($sku)
+    public function findProductConcretePricesBySkuForCurrentStore($sku)
     {
+        $idStore = $this->storeFacade->getCurrentStore()->getIdStore();
+
         $productConcretePriceEntities = $this->priceProductQueryContainer
-            ->queryPricesForProductConcreteBySku($sku)
+            ->queryPricesForProductConcreteBySkuForStore($sku, $idStore)
             ->find();
 
         return $this->priceProductMapper->mapPriceProductTransferCollection($productConcretePriceEntities);
