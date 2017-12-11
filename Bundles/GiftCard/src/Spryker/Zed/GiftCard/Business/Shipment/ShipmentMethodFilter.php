@@ -24,10 +24,10 @@ class ShipmentMethodFilter implements ShipmentMethodFilterInterface
     public function filterShipmentMethods(ArrayObject $shipmentMethods, QuoteTransfer $quoteTransfer)
     {
         if ($this->containsOnlyGiftCardItems($quoteTransfer)) {
-            return $this->allowOnlyNoshipment($shipmentMethods);
+            return $this->allowOnlyNoShipment($shipmentMethods);
         }
 
-        return $this->disallowNoshipment($shipmentMethods);
+        return $this->disallowNoShipment($shipmentMethods);
     }
 
     /**
@@ -67,7 +67,7 @@ class ShipmentMethodFilter implements ShipmentMethodFilterInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      */
-    protected function allowOnlyNoshipment(ArrayObject $shipmentMethods)
+    protected function allowOnlyNoShipment(ArrayObject $shipmentMethods)
     {
         $result = new ArrayObject();
         foreach ($shipmentMethods as $shipmentMethod) {
@@ -84,7 +84,7 @@ class ShipmentMethodFilter implements ShipmentMethodFilterInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      */
-    protected function disallowNoshipment(ArrayObject $shipmentMethods)
+    protected function disallowNoShipment(ArrayObject $shipmentMethods)
     {
         $result = new ArrayObject();
         foreach ($shipmentMethods as $shipmentMethod) {
