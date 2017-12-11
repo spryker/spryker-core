@@ -225,10 +225,11 @@ interface DevelopmentFacadeInterface
      * @api
      *
      * @param string $directory
+     * @param array $options
      *
      * @return array
      */
-    public function runArchitectureSniffer($directory);
+    public function runArchitectureSniffer($directory, array $options = []);
 
     /**
      * Returns a list of all bundles in project and core namespaces
