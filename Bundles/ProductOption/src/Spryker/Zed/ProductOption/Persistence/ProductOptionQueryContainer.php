@@ -158,6 +158,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                 ->leftJoinWithProductOptionValuePrice()
                 ->orderByIdProductOptionValue()
                 ->useProductOptionValuePriceQuery(null, Criteria::LEFT_JOIN)
+                    ->orderByFkStore()
                     ->orderByFkCurrency()
                 ->endUse()
             ->endUse();
