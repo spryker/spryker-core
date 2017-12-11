@@ -169,11 +169,10 @@ class TaxProductConnectorFacadeTest extends Unit
         $productFacade = $this->createProductFacade();
         $productAbstractTransfer = new ProductAbstractTransfer();
         $productAbstractTransfer->setSku('test-sku-123');
+        $productAbstractTransfer->setStoreRelation((new StoreRelationTransfer())->setIdStores([]));
 
         $idProductAbstractTransfer = $productFacade->createProductAbstract($productAbstractTransfer);
         $productAbstractTransfer->setIdProductAbstract($idProductAbstractTransfer);
-
-        $productAbstractTransfer->setStoreRelation((new StoreRelationTransfer())->setIdStores([]));
 
         return $productAbstractTransfer;
     }
