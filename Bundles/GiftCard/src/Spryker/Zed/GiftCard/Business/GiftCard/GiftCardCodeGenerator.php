@@ -12,21 +12,28 @@ use Spryker\Zed\GiftCard\GiftCardConfig;
 class GiftCardCodeGenerator implements GiftCardCodeGeneratorInterface
 {
     /**
+     * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface
+     */
+    protected $giftCardReader;
+
+    /**
+     * @var \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardCodeCandidateValidationPluginInterface[]
+     */
+    protected $codeCandidateValidatorPlugins;
+
+    /**
      * @var \Spryker\Zed\GiftCard\GiftCardConfig
      */
     protected $giftCardConfig;
 
     /**
-     * @var \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface
-     */
-    private $giftCardReader;
-
-    /**
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
+     * @param \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardCodeCandidateValidationPluginInterface[] $codeCandidateValidatorPlugins
      * @param \Spryker\Zed\GiftCard\GiftCardConfig $giftCardConfig
      */
     public function __construct(
         GiftCardReaderInterface $giftCardReader,
+        array $codeCandidateValidatorPlugins,
         GiftCardConfig $giftCardConfig
     ) {
         $this->giftCardReader = $giftCardReader;
@@ -40,9 +47,6 @@ class GiftCardCodeGenerator implements GiftCardCodeGeneratorInterface
      */
     public function generateGiftCardCode($pattern)
     {
-        //TODO evaluate max tries
-        //TODO make sure to prevent gift card / voucher code collisions
-
         do {
             $candidate = $this->generateGiftCardCodeCandidate($pattern);
         } while ($this->giftCardReader->isPresent($candidate));
@@ -91,7 +95,9 @@ class GiftCardCodeGenerator implements GiftCardCodeGeneratorInterface
         $result = $this->generateRandomString($length);
 
         while (!$this->isValid($result)) {
-            $result = $this->generateRandomString(8);
+            $result = $this->generateRandomString(
+                $this->giftCardConfig->getCodeRandomPartLength()
+            );
         }
 
         return $result;
@@ -106,12 +112,25 @@ class GiftCardCodeGenerator implements GiftCardCodeGeneratorInterface
     protected function generateRandomString($length, $digitSpace = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ')
     {
         $result = '';
-        $max = mb_strlen($digitSpace, '8bit') - 1;
+        $max = $this->getStringLengthInBites($digitSpace) - 1;
+
         for ($i = 0; $i < $length; $i++) {
             $result .= $digitSpace[random_int(0, $max)];
         }
 
         return $result;
+    }
+
+    /**
+     * Note: Prevents wrong results from strlen (because of mbstring.func_overload)
+     *
+     * @param string $string
+     *
+     * @return int
+     */
+    private function getStringLengthInBites($string)
+    {
+        return mb_strlen($string, '8bit');
     }
 
     /**
@@ -121,8 +140,12 @@ class GiftCardCodeGenerator implements GiftCardCodeGeneratorInterface
      */
     protected function isValid($codeCandidate)
     {
-        //TODO inject custom code validation plugins
+        $result = true;
 
-        return true;
+        foreach ($this->codeCandidateValidatorPlugins as $codeCandidateValidationPlugin) {
+            $result &= $codeCandidateValidationPlugin->isValid($codeCandidate);
+        }
+
+        return (bool)$result;
     }
 }

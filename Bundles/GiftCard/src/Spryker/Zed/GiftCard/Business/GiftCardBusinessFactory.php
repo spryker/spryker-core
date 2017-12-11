@@ -59,6 +59,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     {
         return new GiftCardCodeGenerator(
             $this->createGiftCardReader(),
+            $this->getGiftCardCodeCandidateValidationPlugins(),
             $this->getConfig()
         );
     }
@@ -72,6 +73,14 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
             $this->getGiftCardAttributePlugins(),
             $this->getEncodingService()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardCodeCandidateValidationPluginInterface[]
+     */
+    protected function getGiftCardCodeCandidateValidationPlugins()
+    {
+        return $this->getProvidedDependency(GiftCardDependencyProvider::GIFT_CARD_CODE_CANDIDATE_VALIDATOR_PLUGINS);
     }
 
     /**

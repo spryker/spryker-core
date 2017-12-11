@@ -20,6 +20,7 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
     const GIFT_CARD_DECISION_RULE_PLUGINS = 'GIFT_CARD_DECISION_RULE_PLUGINS';
     const GIFT_CARD_VALUE_PROVIDER = 'GIFT_CARD_VALUE_PROVIDER';
     const GIFT_CARD_PAYMENT_SAVER_PLUGINS = 'GIFT_CARD_PAYMENT_SAVER_PLUGINS';
+    const GIFT_CARD_CODE_CANDIDATE_VALIDATOR_PLUGINS = 'GIFT_CARD_CODE_CANDIDATE_VALIDATOR_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -138,6 +139,14 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface[]
      */
     protected function getPaymentSaverPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardCodeCandidateValidationPluginInterface[]
+     */
+    protected function getGiftCardCodeValidationPlugins()
     {
         return [];
     }
