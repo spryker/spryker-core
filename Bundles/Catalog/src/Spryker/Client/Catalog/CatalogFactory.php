@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Catalog;
 
+use Spryker\Client\Catalog\Listing\CatalogViewModePersistence;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 
@@ -42,6 +43,14 @@ class CatalogFactory extends AbstractFactory
         }
 
         return $searchQuery;
+    }
+
+    /**
+     * @return \Spryker\Client\Catalog\Listing\CatalogViewModePersistenceInterface
+     */
+    public function createCatalogViewModePersistence()
+    {
+        return new CatalogViewModePersistence();
     }
 
     /**
