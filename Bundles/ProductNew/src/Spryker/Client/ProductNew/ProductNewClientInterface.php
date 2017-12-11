@@ -25,5 +25,5 @@ interface ProductNewClientInterface
      *
      * @return array
      */
-    public function findNewProducts(array $requestParameters);
+    public function findNewProducts(array $requestParameters = []);
 }
