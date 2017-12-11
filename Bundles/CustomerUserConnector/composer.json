@@ -3,7 +3,7 @@
   "description": "CustomerUserConnector module",
   "license": "proprietary",
   "require": {
-    "spryker/customer": "^6.3.0",
+    "spryker/customer": "^6.3.0 || ^7.0.0",
     "spryker/kernel": "^3.5.0",
     "spryker/user": "^3.0.0"
   },

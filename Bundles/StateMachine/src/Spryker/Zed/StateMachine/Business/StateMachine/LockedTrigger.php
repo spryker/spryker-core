@@ -132,7 +132,7 @@ class LockedTrigger implements TriggerInterface
     }
 
     /**
-     * @param string $identifier
+     * @param int $identifier
      * @param string $stateMachineName
      * @param string $processName
      *

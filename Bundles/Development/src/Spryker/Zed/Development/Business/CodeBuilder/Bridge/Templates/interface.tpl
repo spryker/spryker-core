@@ -5,8 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\{bundle}\Dependency\Facade;
+namespace {vendor}\{application}\{module}\Dependency\{toType};
 
-interface {bundle}To{toBundle}Interface
+interface {module}To{toModule}{toType}Interface
 {
 }

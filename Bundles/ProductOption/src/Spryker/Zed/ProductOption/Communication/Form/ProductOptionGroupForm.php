@@ -7,9 +7,10 @@
 namespace Spryker\Zed\ProductOption\Communication\Form;
 
 use ArrayObject;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueGroupName;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\ProductOption\ProductOptionConfig;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,6 +19,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()
+ */
 class ProductOptionGroupForm extends AbstractType
 {
     const FIELD_TAX_SET_FIELD = 'fkTaxSet';
@@ -120,6 +124,9 @@ class ProductOptionGroupForm extends AbstractType
         $builder->add(self::FIELD_NAME, 'text', [
             'label' => 'Group name translation key',
             'required' => true,
+            'attr' => [
+                'placeholder' => ProductOptionConfig::PRODUCT_OPTION_GROUP_NAME_TRANSLATION_PREFIX . '(your key)',
+            ],
             'constraints' => [
                 new NotBlank(),
                 new UniqueGroupName([

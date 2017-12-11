@@ -7,19 +7,19 @@
 
 namespace Spryker\Zed\Storage\Business\Model;
 
-use Spryker\Client\Storage\StorageClient;
+use Spryker\Client\Storage\StorageClientInterface;
 
-class Storage
+class Storage implements StorageInterface
 {
     /**
-     * @var \Spryker\Client\Storage\StorageClient
+     * @var \Spryker\Client\Storage\StorageClientInterface
      */
     private $storageClient;
 
     /**
-     * @param \Spryker\Client\Storage\StorageClient $storageClient
+     * @param \Spryker\Client\Storage\StorageClientInterface $storageClient
      */
-    public function __construct(StorageClient $storageClient)
+    public function __construct(StorageClientInterface $storageClient)
     {
         $this->storageClient = $storageClient;
     }
