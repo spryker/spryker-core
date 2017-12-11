@@ -228,6 +228,25 @@ class Reader implements ReaderInterface
                 $priceProductTransfers[$abstractKey] = $priceProductAbstractTransfer;
             }
         }
+
+        return $this->addConcreteNotMergedPrices($concretePriceProductTransfers, $priceProductTransfers);
+    }
+
+    /**
+     * @param array|\Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
+     * @param array|\Generated\Shared\Transfer\PriceProductTransfer[]  $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function addConcreteNotMergedPrices(array $concretePriceProductTransfers, array $priceProductTransfers)
+    {
+        foreach ($concretePriceProductTransfers as $concreteKey => $priceProductConcreteTransfer) {
+            if (isset($priceProductTransfers[$concreteKey])) {
+                continue;
+            }
+
+            $priceProductTransfers[$concreteKey] = $priceProductConcreteTransfer;
+        }
         return $priceProductTransfers;
     }
 
@@ -254,6 +273,10 @@ class Reader implements ReaderInterface
                 $priceProductAbstractTransfer,
                 $priceProductConcreteTransfer
             );
+        }
+
+        if (!isset($priceProductTransfers[$abstractKey])) {
+            $priceProductTransfers[$abstractKey] = $priceProductAbstractTransfer;
         }
 
         return $priceProductTransfers;
