@@ -101,17 +101,20 @@ class ProductMoneyCollectionDataProvider
             foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
                 foreach ($priceTypes as $priceTypeTransfer) {
                     $identifier = $this->buildItemIdentifier(
-                        $currencyTransfer->getIdCurrency(),
                         $storeTransfer->getIdStore(),
-                        $priceTypeTransfer->getName()
+                        $priceTypeTransfer,
+                        $currencyTransfer
+
                     );
 
                     if (isset($existingCurrencyMap[$identifier])) {
                         continue;
                     }
 
-                    $currentFormMoneyValueCollection->append(
-                        $this->mapProductMoneyValueTransfer($currencyTransfer, $storeTransfer, $priceTypeTransfer)
+                    $currentFormMoneyValueCollection[$identifier] = $this->mapProductMoneyValueTransfer(
+                        $currencyTransfer,
+                        $storeTransfer,
+                        $priceTypeTransfer
                     );
                 }
             }
@@ -154,10 +157,11 @@ class ProductMoneyCollectionDataProvider
         $currencyIndex = [];
         foreach ($submittedMoneyValueCollection as $priceProductTransfer) {
             $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
             $identifier = $this->buildItemIdentifier(
-                $moneyValueTransfer->getFkCurrency(),
                 $moneyValueTransfer->getFkStore(),
-                $priceProductTransfer->getPriceTypeName()
+                $priceProductTransfer->getPriceType(),
+                $moneyValueTransfer->getCurrency()
             );
 
             $currencyIndex[$identifier] = true;
@@ -166,14 +170,26 @@ class ProductMoneyCollectionDataProvider
     }
 
     /**
-     * @param int $idCurrency
      * @param int $idStore
-     * @param string $priceType
+     * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return string
      */
-    protected function buildItemIdentifier($idCurrency, $idStore, $priceType)
+    protected function buildItemIdentifier(
+        $idStore,
+        PriceTypeTransfer $priceTypeTransfer,
+        CurrencyTransfer $currencyTransfer
+    )
     {
-        return $idCurrency . '-' . $idStore . '-' . $priceType;
+        return implode(
+            '-',
+            [
+                $idStore,
+                $currencyTransfer->getIdCurrency(),
+                $priceTypeTransfer->getName(),
+                $priceTypeTransfer->getPriceModeConfiguration(),
+            ]
+        );
     }
 }

@@ -1,6 +1,7 @@
 
 {% set numberOfGrossPriceTypes = moneyValueFormViewCollection.vars.priceTypes.GROSS_MODE|length %}
 {% set numberOfNetPriceTypes = moneyValueFormViewCollection.vars.priceTypes.NET_MODE|length %}
+{% set currencies = moneyValueFormViewCollection.vars.currencies %}
 
 {% set priceModeGross = 'GROSS_MODE' %}
 {% set priceModeNet = 'NET_MODE' %}
@@ -36,7 +37,7 @@
     <tbody>
     {% for storeName, storeCurrencies in moneyValueFormViewCollection.vars.priceTable %}
 
-        {% for currency, priceModes in storeCurrencies %}
+        {% for currencyIsoCode, priceModes in storeCurrencies %}
             <tr>
                 {% if loop.first %}
                     <td style="background-color:#F5F5F6; text-align: center; vertical-align: middle; font-weight:bold" rowspan="{{ storeCurrencies|length }}">
@@ -45,10 +46,10 @@
                 {% endif %}
 
                 <td style="background-color:#F5F5F6; text-align: center; vertical-align: middle; font-weight:bold">
-                    {{ currency }}
+                    {{ currencies[currencyIsoCode].symbol }}
                 </td>
 
-               {% for priceMode, priceTypes in priceModes|sort|reverse %}
+               {% for priceMode, priceTypes in priceModes %}
                     {% for priceType, productMoneyValueForView in priceTypes %}
 
                         {% set moneyValue = productMoneyValueForView.moneyValue %}

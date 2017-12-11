@@ -115,14 +115,21 @@ class ProductMoneyCollectionType extends AbstractCollectionType
         ];
 
         $priceTable = [];
+        $currencies = [];
         foreach ($formViewCollection as $productMoneyTypeFormView) {
             $moneyValueFormView = $productMoneyTypeFormView['moneyValue'];
             $priceTypes = $this->buildPriceTypeList($productMoneyTypeFormView, $priceTypes);
             $priceTable = $this->buildPriceFormViewTable($productMoneyTypeFormView, $moneyValueFormView, $priceTable);
+
+            $currencyTransfer = $this->extractCurrencyTransfer($moneyValueFormView);
+            $currencies[$currencyTransfer->getCode()] = $currencyTransfer;
         }
+
+        $this->sortTable($priceTable);
 
         $formViewCollection->vars['priceTable'] = $priceTable;
         $formViewCollection->vars['priceTypes'] = $priceTypes;
+        $formViewCollection->vars['currencies'] = $currencies;
     }
 
     /**
@@ -174,16 +181,29 @@ class ProductMoneyCollectionType extends AbstractCollectionType
         $priceModeConfiguration = $priceTypeTransfer->getPriceModeConfiguration();
 
         $storeName = $moneyValueFormView->vars['store_name'];
-        $currencySymbol = $moneyValueFormView->vars['currency_symbol'];
+        $currencyIsoCode = $this->extractCurrencyTransfer($moneyValueFormView)->getCode();
 
         if ($priceModeConfiguration === $this->getPriceModeIdentifierForBothType()) {
-            $priceTable[$storeName][$currencySymbol][$netPriceModeIdentifier][$priceType] = $productMoneyTypeFormView;
-            $priceTable[$storeName][$currencySymbol][$grossPriceModeIdentifier][$priceType] = $productMoneyTypeFormView;
+            $priceTable[$storeName][$currencyIsoCode][$netPriceModeIdentifier][$priceType] = $productMoneyTypeFormView;
+            $priceTable[$storeName][$currencyIsoCode][$grossPriceModeIdentifier][$priceType] = $productMoneyTypeFormView;
         } else {
-            $priceTable[$storeName][$currencySymbol][$priceModeConfiguration][$priceType] = $productMoneyTypeFormView;
+            $priceTable[$storeName][$currencyIsoCode][$priceModeConfiguration][$priceType] = $productMoneyTypeFormView;
         }
 
         return $priceTable;
+    }
+
+    /**
+     * @param array $priceTable
+     */
+    protected function sortTable(array &$priceTable)
+    {
+        foreach ($priceTable as &$current) {
+            if (is_array($current)) {
+                $this->sortTable($current);
+            }
+        }
+        ksort($priceTable);
     }
 
     /**
@@ -240,5 +260,15 @@ class ProductMoneyCollectionType extends AbstractCollectionType
     protected function extractPriceTypeTransfer(FormView $productMoneyTypeFormView)
     {
         return $productMoneyTypeFormView->vars['price_type'];
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormView $moneyValueFormView
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function extractCurrencyTransfer(FormView $moneyValueFormView)
+    {
+        return $moneyValueFormView->vars['value']->getCurrency();
     }
 }
