@@ -75,6 +75,10 @@ class ProductAbstractStoreRelationSaver implements ProductAbstractStoreRelationS
      */
     protected function removeStores(array $idStores, $idProductAbstract)
     {
+        if (count($idStores) === 0) {
+            return;
+        }
+
         $this->queryContainer
             ->queryProductAbstractStoresByFkProductAbstractAndFkStores($idProductAbstract, $idStores)
             ->delete();

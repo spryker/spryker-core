@@ -12,9 +12,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 interface ProductManagementStoreConnectorQueryContainerInterface extends QueryContainerInterface
 {
     /**
-     * Specification:
-     * - Selects spy_product_abstract_store entities with the provided product abstract id.
-     *
      * @api
      *
      * @param int $idProductAbstract
@@ -24,11 +21,6 @@ interface ProductManagementStoreConnectorQueryContainerInterface extends QueryCo
     public function queryProductAbstractStoreByFkProductAbstract($idProductAbstract);
 
     /**
-     * Specification:
-     * - Selects spy_product_abstract_store entities.
-     * - Selected entities have to match the provided product abstract id.
-     * - Selected entities have to match also any of the provided store ids.
-     *
      * @api
      *
      * @param int $idProductAbstract
