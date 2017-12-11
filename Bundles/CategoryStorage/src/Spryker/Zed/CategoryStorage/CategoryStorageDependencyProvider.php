@@ -8,19 +8,21 @@
 namespace Spryker\Zed\CategoryStorage;
 
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\CategoryStorage\Dependency\QueryContainer\CategoryStorageToCategoryQueryContainerBridge;
 use Spryker\Zed\CategoryStorage\Dependency\QueryContainer\CategoryStorageToLocaleQueryContainerBridge;
-use Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSynchronizationBridge;
+use Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const SERVICE_UTIL_SYNCHRONIZATION = 'SERVICE_UTIL_SYNCHRONIZATION';
     const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
     const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
     const FACADE_CATEGORY = 'FACADE_CATEGORY';
+    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const STORE = 'store';
 
     /**
@@ -30,8 +32,12 @@ class CategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_SYNCHRONIZATION] = function (Container $container) {
-            return new CategoryStorageToUtilSynchronizationBridge($container->getLocator()->utilSynchronization()->service());
+        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+            return new CategoryStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
+        };
+
+        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+            return new CategoryStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
         };
 
         $container[static::STORE] = function (Container $container) {

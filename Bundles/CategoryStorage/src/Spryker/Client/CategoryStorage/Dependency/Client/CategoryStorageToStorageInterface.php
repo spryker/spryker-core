@@ -5,14 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CategoryStorage;
+namespace Spryker\Client\CategoryStorage\Dependency\Client;
 
-interface CategoryStorageClientInterface
+interface CategoryStorageToStorageInterface
 {
+
     /**
-     * @param string $locale
+     * @param string $key
      *
      * @return array
      */
-    public function getCategories($locale);
+    public function get($key);
+
 }

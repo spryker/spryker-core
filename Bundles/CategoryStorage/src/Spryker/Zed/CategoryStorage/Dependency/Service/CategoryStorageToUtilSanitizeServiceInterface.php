@@ -5,14 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CategoryStorage;
+namespace Spryker\Zed\CategoryStorage\Dependency\Service;
 
-interface CategoryStorageClientInterface
+interface CategoryStorageToUtilSanitizeServiceInterface
 {
+
     /**
-     * @param string $locale
+     * @param array $array
      *
      * @return array
      */
-    public function getCategories($locale);
+    public function arrayFilterRecursive(array $array);
 }

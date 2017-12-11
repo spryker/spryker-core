@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener;
 
 use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
+use Generated\Shared\Transfer\CategoryTreeStorageTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorage;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
@@ -63,25 +64,27 @@ abstract class AbstractCategoryTreeStorageListener extends AbstractPlugin implem
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryTreeStorageTransfers
+     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryNodeStorageTransfers
      * @param \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorage|null $spyCategoryTreeStorage
      * @param string $localeName
      *
      * @return void
      */
-    protected function storeDataSet(array $categoryTreeStorageTransfers, SpyCategoryTreeStorage $spyCategoryTreeStorage = null, $localeName)
+    protected function storeDataSet(array $categoryNodeStorageTransfers, SpyCategoryTreeStorage $spyCategoryTreeStorage = null, $localeName)
     {
         if ($spyCategoryTreeStorage === null) {
             $spyCategoryTreeStorage = new SpyCategoryTreeStorage();
         }
 
-        $categoryTreeNodeData = [];
-        foreach ($categoryTreeStorageTransfers as $categoryTreeStorageTransfer) {
-            $categoryTreeNodeData[] = $this->getFactory()->getUtilSynchronization()->arrayFilterRecursive($categoryTreeStorageTransfer->toArray());
+        $categoryTreeStorageTransfer = new CategoryTreeStorageTransfer();
+        foreach ($categoryNodeStorageTransfers as $categoryNodeStorageTransfer) {
+            $categoryTreeStorageTransfer->addCategoryNodeStorage($categoryNodeStorageTransfer);
         }
+
+        $data = $this->getFactory()->getUtilSanitizeService()->arrayFilterRecursive($categoryTreeStorageTransfer->toArray());
         $spyCategoryTreeStorage->setLocale($localeName);
         $spyCategoryTreeStorage->setStore($this->getStore()->getStoreName());
-        $spyCategoryTreeStorage->setData($categoryTreeNodeData);
+        $spyCategoryTreeStorage->setData($data);
         $spyCategoryTreeStorage->save();
     }
 

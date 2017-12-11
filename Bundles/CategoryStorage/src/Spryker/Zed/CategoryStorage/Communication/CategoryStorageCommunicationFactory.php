@@ -8,6 +8,8 @@
 namespace Spryker\Zed\CategoryStorage\Communication;
 
 use Spryker\Zed\CategoryStorage\CategoryStorageDependencyProvider;
+use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToEventBehaviorFacadeInterface;
+use Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -18,11 +20,19 @@ class CategoryStorageCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return \Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSynchronizationInterface
+     * @return CategoryStorageToUtilSanitizeServiceInterface
      */
-    public function getUtilSynchronization()
+    public function getUtilSanitizeService()
     {
-        return $this->getProvidedDependency(CategoryStorageDependencyProvider::SERVICE_UTIL_SYNCHRONIZATION);
+        return $this->getProvidedDependency(CategoryStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
+    }
+
+    /**
+     * @return CategoryStorageToEventBehaviorFacadeInterface
+     */
+    public function getEventBehaviorFacade()
+    {
+        return $this->getProvidedDependency(CategoryStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
 
     /**

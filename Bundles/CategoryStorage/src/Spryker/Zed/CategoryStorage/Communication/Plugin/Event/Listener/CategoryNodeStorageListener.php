@@ -30,12 +30,11 @@ class CategoryNodeStorageListener extends AbstractCategoryNodeStorageListener
     public function handleBulk(array $eventTransfers, $eventName)
     {
         //TODO Fix the queries
-        return;
 
         $this->preventTransaction();
-        $categoryNodeIds = $this->getFactory()->getUtilSynchronization()->getEventTransferIds($eventTransfers);
+        $categoryNodeIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE || $eventName === CategoryEvents::CATEGORY_NODE_UNPUBLISH) {
+        if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE) {
             $this->unpublish($categoryNodeIds);
         } else {
             $this->publish($categoryNodeIds);

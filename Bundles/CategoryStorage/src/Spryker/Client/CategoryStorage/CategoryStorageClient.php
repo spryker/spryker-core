@@ -14,4 +14,17 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CategoryStorageClient extends AbstractClient implements CategoryStorageClientInterface
 {
+
+    /**
+     * @param string $locale
+     *
+     * @return array
+     */
+    public function getCategories($locale)
+    {
+        return $this->getFactory()
+            ->createCategoryTreeStorageReader()
+            ->getCategories($locale);
+    }
+
 }

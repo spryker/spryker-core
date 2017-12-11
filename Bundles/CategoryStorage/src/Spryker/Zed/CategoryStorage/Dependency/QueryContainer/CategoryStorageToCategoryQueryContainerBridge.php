@@ -26,9 +26,9 @@ class CategoryStorageToCategoryQueryContainerBridge implements CategoryStorageTo
     /**
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    public function querySpyCategoryNode()
+    public function queryAllCategoryNodes()
     {
-        return $this->categoryQueryContainer->querySpyCategoryNode();
+        return $this->categoryQueryContainer->queryAllCategoryNodes();
     }
 
 }

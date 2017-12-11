@@ -30,14 +30,13 @@ class CategoryTreeStorageListener extends AbstractCategoryTreeStorageListener
     public function handleBulk(array $eventTransfers, $eventName)
     {
         //TODO Fix the queries
-        return;
 
         $this->preventTransaction();
         if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_DELETE) {
             $this->unpublish();
-        } else {
-            $this->publish();
         }
+
+        $this->publish();
     }
 
 }

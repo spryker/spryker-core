@@ -30,10 +30,9 @@ class CategoryNodeCategoryTemplateStorageListener extends AbstractCategoryNodeSt
     public function handleBulk(array $eventTransfers, $eventName)
     {
         //TODO Fix the queries
-        return;
 
         $this->preventTransaction();
-        $categoryTemplateIds = $this->getFactory()->getUtilSynchronization()->getEventTransferIds($eventTransfers);
+        $categoryTemplateIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
         $categoryNodeIds = $this->getQueryContainer()->queryCategoryNodeIdsByTemplateIds($categoryTemplateIds)->find()->getData();
 
         if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_DELETE) {

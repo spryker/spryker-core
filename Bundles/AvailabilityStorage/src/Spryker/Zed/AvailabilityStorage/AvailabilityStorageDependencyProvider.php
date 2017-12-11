@@ -40,6 +40,7 @@ class AvailabilityStorageDependencyProvider extends AbstractBundleDependencyProv
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new AvailabilityStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
         };
+
         $container[static::STORE] = function (Container $container) {
             return Store::getInstance();
         };

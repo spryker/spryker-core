@@ -88,7 +88,7 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
             return;
         }
 
-        $categoryTreeNodeData = $this->getFactory()->getUtilSynchronization()->arrayFilterRecursive($categoryNodeStorageTransfer->toArray());
+        $categoryTreeNodeData = $this->getFactory()->getUtilSanitizeService()->arrayFilterRecursive($categoryNodeStorageTransfer->toArray());
         $spyCategoryNodeStorageEntity->setFkCategoryNode($categoryNodeStorageTransfer->getNodeId());
         $spyCategoryNodeStorageEntity->setData($categoryTreeNodeData);
         $spyCategoryNodeStorageEntity->setStore($this->getStore()->getStoreName());

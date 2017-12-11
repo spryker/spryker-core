@@ -5,18 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryStorage\Dependency\Service;
+namespace Spryker\Zed\CategoryStorage\Dependency\Facade;
 
-interface CategoryStorageToUtilSynchronizationInterface
+interface CategoryStorageToEventBehaviorFacadeInterface
 {
-
-    /**
-     * @param array $array
-     *
-     * @return array
-     */
-    public function arrayFilterRecursive(array $array);
-
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
@@ -31,5 +23,4 @@ interface CategoryStorageToUtilSynchronizationInterface
      * @return array
      */
     public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
-
 }

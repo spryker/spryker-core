@@ -13,6 +13,6 @@ interface CategoryStorageToCategoryQueryContainerInterface
     /**
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    public function querySpyCategoryNode();
+    public function queryAllCategoryNodes();
 
 }

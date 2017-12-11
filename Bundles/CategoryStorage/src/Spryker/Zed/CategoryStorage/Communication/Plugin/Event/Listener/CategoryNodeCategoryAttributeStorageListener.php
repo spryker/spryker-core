@@ -31,10 +31,9 @@ class CategoryNodeCategoryAttributeStorageListener extends AbstractCategoryNodeS
     public function handleBulk(array $eventTransfers, $eventName)
     {
         //TODO Fix the queries
-        return;
 
         $this->preventTransaction();
-        $categoryIds = $this->getFactory()->getUtilSynchronization()->getEventTransferForeignKeys($eventTransfers, SpyCategoryAttributeTableMap::COL_FK_CATEGORY);
+        $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyCategoryAttributeTableMap::COL_FK_CATEGORY);
         $categoryNodeIds = $this->getQueryContainer()->queryCategoryNodeIdsByCategoryIds($categoryIds)->find()->getData();
 
         if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_DELETE) {

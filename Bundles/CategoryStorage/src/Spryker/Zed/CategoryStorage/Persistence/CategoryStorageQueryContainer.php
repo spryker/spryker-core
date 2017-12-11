@@ -47,7 +47,7 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
     {
         $query = $this->getFactory()
             ->getCategoryQueryContainer()
-            ->querySpyCategoryNode()
+            ->queryAllCategoryNodes()
             ->joinWithSpyUrl()
             ->joinWithCategory()
             ->joinWith('Category.Attribute')
@@ -69,7 +69,7 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
     {
         return $this->getFactory()
             ->getCategoryQueryContainer()
-            ->querySpyCategoryNode()
+            ->queryAllCategoryNodes()
             ->filterByIsRoot(true);
     }
 
@@ -95,7 +95,7 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
     {
         return $this->getFactory()
             ->getCategoryQueryContainer()
-            ->querySpyCategoryNode()
+            ->queryAllCategoryNodes()
             ->filterByFkCategory_In($categoryIds)
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::ID_CATEGORY_NODE)
             ->select([static::ID_CATEGORY_NODE]);
@@ -126,7 +126,7 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
     {
         return $this->getFactory()
             ->getCategoryQueryContainer()
-            ->querySpyCategoryNode()
+            ->queryAllCategoryNodes()
             ->useCategoryQuery()
                 ->filterByFkCategoryTemplate_In($categoryTemplateIds)
             ->endUse()
