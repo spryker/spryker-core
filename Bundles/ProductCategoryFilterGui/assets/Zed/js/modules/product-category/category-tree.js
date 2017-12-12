@@ -163,7 +163,7 @@ function setListeners() {
     window.document.addEventListener(
         'categoryChanged',
         function(e) {
-            $('#category-node-' + e.detail.idCategory + '_anchor i')
+            $("[data-id-category='" + e.detail.idCategory + "'] a i")
                 .removeClass(config.categoryTreeNodeTypes.default.icon)
                 .addClass(config.categoryTreeNodeTypes['edited-category'].icon);
             },
@@ -172,7 +172,7 @@ function setListeners() {
 
     window.document.addEventListener(
         'resetCategory', function(e) {
-            $('#category-node-' + e.detail.idCategory + '_anchor i')
+            $("[data-id-category='" + e.detail.idCategory + "'] a i")
                 .removeClass(config.categoryTreeNodeTypes['edited-category'].icon)
                 .addClass(config.categoryTreeNodeTypes.default.icon);
         },

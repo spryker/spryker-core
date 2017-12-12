@@ -17,16 +17,14 @@ var filterTextField = $('#product_category_filter_filter-autocomplete');
 $(document).ready(function() {
     addButton.on('click', function() {
         var currentList = Object.assign.apply(Object, filters.getAllFilters());
-        var productCountRegex = /\s*\((\d+)\)/;
-        var productCount = productCountRegex.exec(filterTextField.val())[1];
-        var filterToAdd = filterTextField.val().replace(productCountRegex, '');
+        var filterToAdd = filterTextField.val();
         if(currentList[filterToAdd] === true) {
             alert('Filter "'+ filterToAdd +'" already defined');
         } else if(currentList[filterToAdd] === false) {
             filters.removeFromInactiveList(filterToAdd);
-            filters.addToActiveList(filterToAdd, productCount);
+            filters.addToActiveList(filterToAdd);
         } else {
-            filters.addToActiveList(filterToAdd, productCount);
+            filters.addToActiveList(filterToAdd);
         }
 
         filterTextField.val('');

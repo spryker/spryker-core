@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductCategoryFilterGui\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Form\DataProvider\ProductCategoryFilterDataProvider;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Form\ProductCategoryFilterForm;
-use Spryker\Zed\ProductCategoryFilterGui\Communication\Formatter\SuggestionsFormatter;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Hydrator\ProductCategoryFilterTransferHydrator;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Table\CategoryRootNodeTable;
 use Spryker\Zed\ProductCategoryFilterGui\ProductCategoryFilterGuiDependencyProvider;
@@ -137,13 +136,5 @@ class ProductCategoryFilterGuiCommunicationFactory extends AbstractCommunication
     public function getUtilEncodingService()
     {
         return $this->getProvidedDependency(ProductCategoryFilterGuiDependencyProvider::SERVICE_UTIL_ENCODING);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductCategoryFilterGui\Communication\Formatter\SuggestionsFormatterInterface
-     */
-    public function createSuggestionsFormatter()
-    {
-        return new SuggestionsFormatter($this->getQueryContainer(), $this->getProductFacade());
     }
 }

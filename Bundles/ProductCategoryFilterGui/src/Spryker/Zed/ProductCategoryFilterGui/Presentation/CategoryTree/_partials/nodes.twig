@@ -2,7 +2,7 @@
     {% for categoryNode in categoryTree %}
         <li id="category-node-{{ categoryNode.id }}" data-id-category="{{ categoryNode.id_category }}"
             class="jstree-open {% if not categoryNode.is_active %}node-inactive{% endif %}"
-            {% if categoryNode.id in categoriesWithSpecificFilters %}data-jstree='{"type":"edited-category"}'{% endif %}
+            {% if categoryNode.id_category in categoriesWithSpecificFilters %}data-jstree='{"type":"edited-category"}'{% endif %}
         >
             {{ categoryNode.text }}
             {% include '@ProductCategoryFilterGui/CategoryTree/_partials/nodes.twig' with {categoryTree: categoryNode.children, categoriesWithSpecificFilters: categoriesWithSpecificFilters} %}

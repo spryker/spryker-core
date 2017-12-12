@@ -39,15 +39,12 @@ class CategoryExtractor implements AggregationExtractorInterface
         $parameterName = $this->facetConfigTransfer->getParameterName();
 
         $facetResultValueTransfers = $this->extractFacetData($aggregations);
-        $totalDocCount = $facetResultValueTransfers[static::DOC_COUNT];
-        unset($facetResultValueTransfers[static::DOC_COUNT]);
 
         $facetResultTransfer = new FacetSearchResultTransfer();
         $facetResultTransfer
             ->setName($parameterName)
             ->setValues($facetResultValueTransfers)
-            ->setConfig(clone $this->facetConfigTransfer)
-            ->setDocCount($totalDocCount);
+            ->setConfig(clone $this->facetConfigTransfer);
 
         if (isset($requestParameters[$parameterName])) {
             $facetResultTransfer->setActiveValue($requestParameters[$parameterName]);
@@ -64,7 +61,6 @@ class CategoryExtractor implements AggregationExtractorInterface
     protected function extractFacetData(array $aggregation)
     {
         $facetValues = new ArrayObject();
-        $totalDocCount = 0;
         foreach ($aggregation['buckets'] as $bucket) {
             $facetResultValueTransfer = new FacetSearchResultValueTransfer();
             $facetResultValueTransfer
@@ -72,10 +68,7 @@ class CategoryExtractor implements AggregationExtractorInterface
                 ->setDocCount($bucket[static::DOC_COUNT]);
 
             $facetValues->append($facetResultValueTransfer);
-            $totalDocCount += $bucket[static::DOC_COUNT];
         }
-
-        $facetValues[static::DOC_COUNT] = $totalDocCount;
 
         return $facetValues;
     }

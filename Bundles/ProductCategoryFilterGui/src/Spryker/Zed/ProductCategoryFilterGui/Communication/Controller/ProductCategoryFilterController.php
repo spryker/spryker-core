@@ -66,6 +66,8 @@ class ProductCategoryFilterController extends AbstractController
             $this->getFactory()
                 ->getProductCategoryFilterFacade()
                 ->$facadeFunction($productCategoryFilterTransfer);
+
+            $this->addSuccessMessage(sprintf('Category %s filters were updated successfully', $category->getName()));
         }
 
         $searchResultsForCategory = $this->getFactory()
@@ -97,11 +99,16 @@ class ProductCategoryFilterController extends AbstractController
     {
         $idCategory = $this->castId($request->query->get(self::PARAM_ID_CATEGORY_NODE));
 
+        $localeTransfer = $this->getCurrentLocale();
+        $category = $this->getCategory($idCategory, $localeTransfer->getIdLocale());
+
         $this->getFactory()
             ->getProductCategoryFilterFacade()
             ->deleteProductCategoryFilterByCategoryId($idCategory);
 
         $redirectUrl = self::REDIRECT_ADDRESS . '?' . self::PARAM_ID_CATEGORY_NODE . '=' . $idCategory;
+
+        $this->addSuccessMessage(sprintf('Category %s filters were deleted successfully', $category->getName()));
 
         return $this->redirectResponse($redirectUrl);
     }

@@ -6,23 +6,23 @@
             <ol class="dd-list">
                 {% if productCategoryFilters.filterDataArray is not empty %}
                     {% for filter, active in productCategoryFilters.filterDataArray if active %}
-                        <li data-count="{{ filter in allFilters|keys ? allFilters[filter].docCount : 0 }}" data-filter="{{ filter }}" class="filter-item dd-item {{ filter in allFilters|keys ? '' : 'non-filter-attribute' }}">
+                        <li data-filter="{{ filter }}" class="filter-item dd-item {{ filter in allFilters|keys ? '' : 'non-filter-attribute' }}">
                             <a class="btn btn-xs btn-outline btn-danger remove-product-category-filter" title="Remove Filter">
                                 <i class="fa fa-fw fa-trash"></i>
                             </a>
                             <div class="dd-handle">
-                                {{ filter }} ({{ filter in allFilters|keys ? allFilters[filter].docCount : 0 }})
+                                {{ filter }}
                             </div>
                         </li>
                     {% endfor %}
                 {% else %}
                     {% for filter in filters %}
-                        <li data-count="{{ filter.docCount }}" data-filter="{{ filter.name }}" class="filter-item dd-item">
+                        <li data-filter="{{ filter.name }}" class="filter-item dd-item">
                             <a class="btn btn-xs btn-outline btn-danger remove-product-category-filter" title="Remove Filter">
                                 <i class="fa fa-fw fa-trash"></i>
                             </a>
                             <div class="dd-handle">
-                                {{ filter.name }} ({{ filter.docCount }})
+                                {{ filter.name }}
                             </div>
                         </li>
                     {% endfor %}
@@ -39,12 +39,12 @@
         <div id="inactive-filters-container" class="dd">
             <ol class="dd-list">
                 {% for filter, active in productCategoryFilters.filterDataArray if not active %}
-                    <li data-count="{{ filter in allFilters|keys ? allFilters[filter].docCount : 0 }}" data-filter="{{ filter }}" class="filter-item dd-item {{ filter in allFilters|keys ? '' : 'non-filter-attribute' }}">
+                    <li data-filter="{{ filter }}" class="filter-item dd-item {{ filter in allFilters|keys ? '' : 'non-filter-attribute' }}">
                         <a class="btn btn-xs btn-outline btn-info re-add-product-category-filter" title="Re-add Filter">
                             <i class="fa fa-fw fa-plus-circle"></i>
                         </a>
                         <div class="dd-handle">
-                            {{ filter }} ({{ filter in allFilters|keys ? allFilters[filter].docCount : 0 }})
+                            {{ filter }}
                         </div>
                     </li>
                 {% endfor %}
