@@ -86,6 +86,15 @@ interface DevelopmentFacadeInterface
     public function getAllModules();
 
     /**
+     * @api
+     *
+     * @deprecated Use `getAllModules()` instead.
+     *
+     * @return array
+     */
+    public function getAllBundles();
+
+    /**
      * Specification:
      * - Builds the dependency tree for all modules if * is used as $module.
      * - Builds the dependency tree for specific module if $module is name of a module.
@@ -242,6 +251,15 @@ interface DevelopmentFacadeInterface
      * @return array
      */
     public function listAllModules();
+
+    /**
+     * @api
+     *
+     * @deprecated Use `listAllModules` instead.
+     *
+     * @return array
+     */
+    public function listAllBundles();
 
     /**
      * Returns all architecture rules

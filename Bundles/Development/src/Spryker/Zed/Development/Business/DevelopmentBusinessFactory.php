@@ -208,7 +208,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         $finderComposite = new FinderComposite();
         $finderComposite
             ->addFinder($this->createSprykerFinder())
-            ->addFinder($this->createSdkFinder());
+            ->addFinder($this->createSdkFinder())
+            ->addFinder($this->createShopFinder());
 
         return $finderComposite;
     }
