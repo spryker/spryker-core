@@ -14,11 +14,17 @@
         {% block widget_content %}
             {{ form_start(form) }}
 
-            {% for stock in form.stocks %}
+            {% for warehouse, stock in form.vars.storeTable %}
+                {% for country, stockForm in stock %}
+                    {{ form_row(stockForm.stockType ) }} {{ form_row(stockForm.quantity) }}  {{ form_row(stockForm.is_never_out_of_stock) }}
+                {% endfor %}
+            {% endfor %}
+
+           {# {% for stock in form.stocks %}
                 <h3>{{ stock.vars.store.name }}</h3>
                 {{ form_row(stock.stockType ) }} {{ form_row(stock.quantity) }}  {{ form_row(stock.is_never_out_of_stock) }}
                 {{ form_row(stock.fkStore ) }}
-            {% endfor %}
+            {% endfor %}#}
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
             {{ form_end(form) }}
