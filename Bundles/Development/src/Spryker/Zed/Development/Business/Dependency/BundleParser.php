@@ -23,7 +23,7 @@ class BundleParser implements BundleParserInterface
     /**
      * @var array
      */
-    protected $relevantBundleNamespaces = ['Spryker', 'Orm'];
+    protected $relevantBundleNamespaces = ['Spryker', 'SprykerEco', 'SprykerSdk', 'SprykerShop', 'Orm'];
 
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface
