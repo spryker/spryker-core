@@ -9,9 +9,10 @@ namespace Spryker\Zed\CmsStorage;
 
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToCmsBridge;
+use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\CmsStorage\Dependency\QueryContainer\CmsStorageToCmsQueryContainerBridge;
 use Spryker\Zed\CmsStorage\Dependency\QueryContainer\CmsStorageToLocaleQueryContainerBridge;
-use Spryker\Zed\CmsStorage\Dependency\Service\CmsStorageToUtilSynchronizationBridge;
+use Spryker\Zed\CmsStorage\Dependency\Service\CmsStorageToUtilSanitizeServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -20,7 +21,8 @@ class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
 
     const QUERY_CONTAINER_CMS_PAGE = 'QUERY_CONTAINER_CMS_PAGE';
     const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
-    const SERVICE_UTIL_SYNCHRONIZATION = 'SERVICE_UTIL_SYNCHRONIZATION';
+    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     const FACADE_CMS = 'FACADE_CMS';
     const STORE = 'store';
 
@@ -31,8 +33,12 @@ class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_SYNCHRONIZATION] = function (Container $container) {
-            return new CmsStorageToUtilSynchronizationBridge($container->getLocator()->utilSynchronization()->service());
+        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+            return new CmsStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
+        };
+
+        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+            return new CmsStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
         };
 
         $container[static::FACADE_CMS] = function (Container $container) {

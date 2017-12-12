@@ -13,7 +13,7 @@ interface CmsStorageToCmsQueryContainerInterface
     /**
      * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
-    public function queryCmsVersion();
+    public function queryAllCmsVersions();
 
     /**
      * @api

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\CmsStorage\Communication;
 
 use Spryker\Zed\CmsStorage\CmsStorageDependencyProvider;
+use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToEventBehaviorFacadeInterface;
+use Spryker\Zed\CmsStorage\Dependency\Service\CmsStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -18,13 +20,20 @@ class CmsStorageCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**
-     * @return \Spryker\Zed\CmsStorage\Dependency\Service\CmsStorageToUtilSynchronizationInterface
+     * @return CmsStorageToUtilSanitizeServiceInterface
      */
-    public function getUtilSynchronization()
+    public function getUtilSanitizeService()
     {
-        return $this->getProvidedDependency(CmsStorageDependencyProvider::SERVICE_UTIL_SYNCHRONIZATION);
+        return $this->getProvidedDependency(CmsStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
 
+    /**
+     * @return CmsStorageToEventBehaviorFacadeInterface
+     */
+    public function getEventBehaviorFacade()
+    {
+        return $this->getProvidedDependency(CmsStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
     /**
      * @return \Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToCmsInterface
      */

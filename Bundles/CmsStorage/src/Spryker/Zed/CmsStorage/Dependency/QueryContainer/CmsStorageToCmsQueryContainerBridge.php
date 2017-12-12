@@ -26,9 +26,9 @@ class CmsStorageToCmsQueryContainerBridge implements CmsStorageToCmsQueryContain
     /**
      * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
-    public function queryCmsVersion()
+    public function queryAllCmsVersions()
     {
-        return $this->queryContainer->queryCmsVersion();
+        return $this->queryContainer->queryAllCmsVersions();
     }
 
     /**

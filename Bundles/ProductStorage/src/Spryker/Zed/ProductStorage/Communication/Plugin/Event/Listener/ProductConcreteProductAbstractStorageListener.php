@@ -30,7 +30,7 @@ class ProductConcreteProductAbstractStorageListener extends AbstractProductConcr
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $productAbstractIds = $this->getFactory()->getUtilSynchronization()->getEventTransferIds($eventTransfers);
+        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
         if (empty($productAbstractIds)) {
             return;
         }

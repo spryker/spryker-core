@@ -32,7 +32,7 @@ class ProductConcreteLocalizedAttributesStorageListener extends AbstractProductC
     {
         $this->preventTransaction();
         $this->preventTransaction();
-        $productIds = $this->getFactory()->getUtilSynchronization()->getEventTransferForeignKeys(
+        $productIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventTransfers,
             SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT
         );

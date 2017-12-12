@@ -22,7 +22,7 @@ class CmsPageStorageListener extends AbstractCmsPageStorageListener implements E
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $cmsPageIds = $this->getFactory()->getUtilSynchronization()->getEventTransferIds($eventTransfers);
+        $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
         if ($eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE) {
             $this->publish($cmsPageIds);

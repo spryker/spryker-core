@@ -22,7 +22,7 @@ class CmsPageVersionStorageListener extends AbstractCmsPageStorageListener imple
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $cmsPageIds = $this->getFactory()->getUtilSynchronization()->getEventTransferForeignKeys($eventTransfers, SpyCmsVersionTableMap::COL_FK_CMS_PAGE);
+        $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyCmsVersionTableMap::COL_FK_CMS_PAGE);
 
         $this->publish($cmsPageIds);
     }

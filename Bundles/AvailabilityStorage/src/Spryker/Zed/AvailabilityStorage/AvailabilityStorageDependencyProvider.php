@@ -12,7 +12,6 @@ use Spryker\Zed\AvailabilityStorage\Dependency\Facade\AvailabilityStorageToEvent
 use Spryker\Zed\AvailabilityStorage\Dependency\QueryContainer\AvailabilityStorageToAvailabilityQueryContainerBridge;
 use Spryker\Zed\AvailabilityStorage\Dependency\QueryContainer\AvailabilityStorageToProductQueryContainerBridge;
 use Spryker\Zed\AvailabilityStorage\Dependency\Service\AvailabilityStorageToUtilSanitizeServiceBridge;
-use Spryker\Zed\AvailabilityStorage\Dependency\Service\AvailabilityStorageToUtilSynchronizationBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 

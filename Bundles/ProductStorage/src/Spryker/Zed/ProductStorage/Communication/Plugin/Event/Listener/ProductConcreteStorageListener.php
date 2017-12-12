@@ -31,7 +31,7 @@ class ProductConcreteStorageListener extends AbstractProductConcreteStorageListe
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $productIds = $this->getFactory()->getUtilSynchronization()->getEventTransferIds($eventTransfers);
+        $productIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
         if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_DELETE) {
             $this->unpublish($productIds);

@@ -31,7 +31,7 @@ class ProductAbstractLocalizedAttributesStorageListener extends AbstractProductA
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $productAbstractIds = $this->getFactory()->getUtilSynchronization()->getEventTransferForeignKeys(
+        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventTransfers,
             SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT
         );

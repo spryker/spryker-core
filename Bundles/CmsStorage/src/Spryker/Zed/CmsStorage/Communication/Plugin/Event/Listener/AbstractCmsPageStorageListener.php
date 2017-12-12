@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener;
 
-use Generated\Shared\Transfer\CmsPageDataTransfer;
+use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\CmsStorage\Persistence\SpyCmsPageStorage;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -77,7 +78,7 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet(SpyCmsPage $cmsPageEntity, SpyCmsPageStorage $cmsPageStorageEntity, $localeName)
+    protected function storeDataSet(SpyCmsPage $cmsPageEntity, SpyCmsPageStorage $cmsPageStorageEntity = null, $localeName)
     {
         if ($cmsPageStorageEntity === null) {
             $cmsPageStorageEntity = new SpyCmsPageStorage();
@@ -87,16 +88,9 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
             return;
         }
 
-        $url = $this->extractUrlByLocales($cmsPageEntity->getSpyUrls()->getData(), $localeName);
-        $cmsPageDataTransfer = new CmsPageDataTransfer();
-        $cmsPageDataTransfer->setIsActive($cmsPageEntity->getIsActive());
-        $cmsPageDataTransfer->setIdCmsPage($cmsPageEntity->getIdCmsPage());
-        $cmsPageDataTransfer->setValidFrom($cmsPageEntity->getValidFrom());
-        $cmsPageDataTransfer->setValidTo($cmsPageEntity->getValidTo());
-        $cmsPageDataTransfer->setUrl($url);
-        $cmsPageDataTransfer = $this->getFactory()->getCmsFacade()->expandCmsPageDataTransfer($cmsPageDataTransfer, $cmsPageEntity->getSpyCmsVersions()->getFirst()->getData(), $localeName);
+        $localeCmsPageDataTransfer = $this->getLocalCmsPageDataTransfer($cmsPageEntity, $localeName);
 
-        $cmsPageStorageEntity->setData($cmsPageDataTransfer->toArray());
+        $cmsPageStorageEntity->setData($localeCmsPageDataTransfer->toArray());
         $cmsPageStorageEntity->setFkCmsPage($cmsPageEntity->getIdCmsPage());
         $cmsPageStorageEntity->setStore($this->getStore()->getStoreName());
         $cmsPageStorageEntity->setLocale($localeName);
@@ -152,6 +146,32 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
         }
 
         return '';
+    }
+
+    /**
+     * @param SpyCmsPage $cmsPageEntity
+     * @param string $localeName
+     *
+     * @return LocaleCmsPageDataTransfer
+     */
+    protected function getLocalCmsPageDataTransfer(SpyCmsPage $cmsPageEntity, $localeName)
+    {
+        $url = $this->extractUrlByLocales($cmsPageEntity->getSpyUrls()
+            ->getData(), $localeName);
+        $cmsVersionDataTransfer = $this->getFactory()
+            ->getCmsFacade()
+            ->extractCmsVersionDataTransfer($cmsPageEntity->getSpyCmsVersions()->getFirst()->getData());
+        $localeCmsPageDataTransfer = $this->getFactory()
+            ->getCmsFacade()
+            ->extractLocaleCmsPageDataTransfer($cmsVersionDataTransfer, (new LocaleTransfer())->setLocaleName($localeName));
+
+        $localeCmsPageDataTransfer->setIsActive($cmsPageEntity->getIsActive());
+        $localeCmsPageDataTransfer->setIdCmsPage($cmsPageEntity->getIdCmsPage());
+        $localeCmsPageDataTransfer->setValidFrom($cmsPageEntity->getValidFrom());
+        $localeCmsPageDataTransfer->setValidTo($cmsPageEntity->getValidTo());
+        $localeCmsPageDataTransfer->setUrl($url);
+
+        return $localeCmsPageDataTransfer;
     }
 
 }

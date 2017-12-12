@@ -23,7 +23,7 @@ class CmsPageUrlStorageListener extends AbstractCmsPageStorageListener implement
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $cmsPageIds = $this->getFactory()->getUtilSynchronization()->getEventTransferForeignKeys($eventTransfers, SpyUrlTableMap::COL_FK_RESOURCE_PAGE);
+        $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyUrlTableMap::COL_FK_RESOURCE_PAGE);
 
         if (empty($cmsPageIds)) {
             return;

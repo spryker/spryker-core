@@ -55,7 +55,7 @@ class ProductAbstractUrlStorageListener extends AbstractProductAbstractStorageLi
             }
         }
 
-        return $this->getFactory()->getUtilSynchronization()->getEventTransferForeignKeys(
+        return $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $validEventTransfers,
             SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT
         );

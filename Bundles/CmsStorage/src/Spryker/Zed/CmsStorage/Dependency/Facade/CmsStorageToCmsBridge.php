@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\CmsStorage\Dependency\Facade;
 
-use Generated\Shared\Transfer\CmsPageDataTransfer;
+use Generated\Shared\Transfer\CmsVersionDataTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 class CmsStorageToCmsBridge implements CmsStorageToCmsInterface
 {
@@ -26,15 +27,24 @@ class CmsStorageToCmsBridge implements CmsStorageToCmsInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsPageDataTransfer $cmsPageDataTransfer
-     * @param string $data
-     * @param string $localeName
+     * @param string $cmsPageData
      *
-     * @return \Generated\Shared\Transfer\CmsPageDataTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
-    public function expandCmsPageDataTransfer(CmsPageDataTransfer $cmsPageDataTransfer, $data, $localeName)
+    public function extractCmsVersionDataTransfer($cmsPageData)
     {
-        return $this->cmsFacade->expandCmsPageDataTransfer($cmsPageDataTransfer, $data, $localeName);
+        return $this->cmsFacade->extractCmsVersionDataTransfer($cmsPageData);
+    }
+
+    /**
+     * @param CmsVersionDataTransfer $cmsVersionDataTransfer
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
+     */
+    public function extractLocaleCmsPageDataTransfer(CmsVersionDataTransfer $cmsVersionDataTransfer, LocaleTransfer $localeTransfer)
+    {
+        return $this->cmsFacade->extractLocaleCmsPageDataTransfer($cmsVersionDataTransfer, $localeTransfer);
     }
 
 }

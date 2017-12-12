@@ -31,7 +31,7 @@ class ProductAbstractStorageListener extends AbstractProductAbstractStorageListe
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $productAbstractIds = $this->getFactory()->getUtilSynchronization()->getEventTransferIds($eventTransfers);
+        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
         if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE) {
             $this->unpublish($productAbstractIds);

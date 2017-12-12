@@ -72,7 +72,7 @@ class CmsStorageQueryContainer extends AbstractQueryContainer implements CmsStor
     {
         $maxVersionQuery = $this->getFactory()
             ->getCmsQueryContainer()
-            ->queryCmsVersion()
+            ->queryAllCmsVersions()
             ->addSelfSelectColumns()
             ->clearSelectColumns()
             ->withColumn(sprintf('MAX(%s)', SpyCmsVersionTableMap::COL_VERSION))
