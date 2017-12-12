@@ -31,13 +31,21 @@ class UniqueGroupNameValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\UniqueGroupName');
         }
 
+        if (!$this->hasTranslationPrefix($value)) {
+            $value = $this->addTranslationPrefix($value);
+        }
+
         if (!$this->isGroupNameChanged($value, $constraint)) {
             return;
         }
 
         if (!$this->isUniqueGroupName($value, $constraint)) {
-            $this->buildViolation('Group with this translation key is already created.')
-                ->addViolation();
+            $this->buildViolation(
+                sprintf(
+                    'Group with "%s" translation key is already created.',
+                    $value
+                )
+            )->addViolation();
         }
     }
 
@@ -50,7 +58,7 @@ class UniqueGroupNameValidator extends ConstraintValidator
     protected function isUniqueGroupName($groupName, UniqueGroupName $constraint)
     {
         $numberOfDiscounts = $constraint->getProductOptionQueryContainer()
-            ->queryProductOptionGroupByName($this->addTranslationPrefix($groupName))
+            ->queryProductOptionGroupByName($groupName)
             ->count();
 
         return $numberOfDiscounts === 0;
@@ -79,8 +87,6 @@ class UniqueGroupNameValidator extends ConstraintValidator
             ->queryProductOptionGroupById($idProductOptionGroup)
             ->findOne();
 
-        $submittedGroupName = $this->addTranslationPrefix($submittedGroupName);
-
         if ($productOptionGroupEntity->getName() !== $submittedGroupName) {
             return true;
         }
@@ -96,5 +102,15 @@ class UniqueGroupNameValidator extends ConstraintValidator
     protected function addTranslationPrefix($groupName)
     {
         return ProductOptionConfig::PRODUCT_OPTION_GROUP_NAME_TRANSLATION_PREFIX . $groupName;
+    }
+
+    /**
+     * @param string $groupName
+     *
+     * @return bool
+     */
+    protected function hasTranslationPrefix($groupName)
+    {
+        return strpos($groupName, ProductOptionConfig::PRODUCT_OPTION_GROUP_NAME_TRANSLATION_PREFIX) === 0;
     }
 }

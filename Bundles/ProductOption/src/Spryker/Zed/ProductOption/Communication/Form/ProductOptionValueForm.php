@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueOptionValueSku;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueValue;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
+use Spryker\Zed\ProductOption\ProductOptionConfig;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -85,6 +86,14 @@ class ProductOptionValueForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ProductOptionValueTransfer::class,
+            'constraints' => [
+                new UniqueValue([
+                    UniqueValue::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer,
+                ]),
+                new UniqueOptionValueSku([
+                    UniqueOptionValueSku::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer,
+                ]),
+            ],
         ]);
     }
 
@@ -98,14 +107,14 @@ class ProductOptionValueForm extends AbstractType
         $builder->add(self::FIELD_VALUE, 'text', [
             'label' => 'Option name translation key',
             'required' => true,
+            'attr' => [
+                'placeholder' => ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX . '(your key)',
+            ],
             'constraints' => [
                 new NotBlank(),
                 new Regex([
                     'pattern' => self::ALPHA_NUMERIC_PATTERN,
                     'message' => 'Invalid key provided. Valid values "a-z", "0-9", ".", "_".',
-                ]),
-                new UniqueValue([
-                    UniqueValue::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer,
                 ]),
             ],
         ]);
@@ -125,9 +134,6 @@ class ProductOptionValueForm extends AbstractType
             'required' => true,
             'constraints' => [
                 new NotBlank(),
-                new UniqueOptionValueSku([
-                    UniqueOptionValueSku::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer,
-                ]),
             ],
         ]);
 
