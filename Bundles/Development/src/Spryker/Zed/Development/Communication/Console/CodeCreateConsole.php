@@ -18,8 +18,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CodeCreateConsole extends Console
 {
     const COMMAND_NAME = 'dev:bridge:create';
-    const OPTION_BUNDLE = 'from module';
-    const OPTION_TO_BUNDLE = 'to module';
+    const OPTION_BUNDLE = 'source module';
+    const OPTION_TO_BUNDLE = 'target module';
 
     /**
      * @return void
@@ -32,8 +32,8 @@ class CodeCreateConsole extends Console
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Create bridge and facade interface (Spryker core dev only)');
 
-        $this->addArgument(static::OPTION_BUNDLE, InputArgument::REQUIRED, 'Name of core module where the bridge should be created in');
-        $this->addArgument(static::OPTION_TO_BUNDLE, InputArgument::REQUIRED, 'Name of core module to which the module must be connected to');
+        $this->addArgument(static::OPTION_BUNDLE, InputArgument::REQUIRED, 'Core module where the bridge should be created in. Accepted format is "[VendorName.]ModuleName[.BridgeType]", i.e. "Spryker.MyModule.Facade".');
+        $this->addArgument(static::OPTION_TO_BUNDLE, InputArgument::REQUIRED, 'Core module to which the module must be connected to. Accepted format is "[VendorName.]ModuleName[.BridgeType]", i.e. "Spryker.MyModule.Facade".');
     }
 
     /**

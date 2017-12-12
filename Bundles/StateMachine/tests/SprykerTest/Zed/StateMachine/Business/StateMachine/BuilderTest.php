@@ -88,7 +88,7 @@ class BuilderTest extends Unit
         $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer();
         $process = $builder->createProcess($stateMachineProcessTransfer);
 
-        $this->assertTrue($process->getMain());
+        $this->assertTrue($process->getIsMain());
     }
 
     /**
@@ -103,7 +103,7 @@ class BuilderTest extends Unit
         $stateMachineProcessTransfer->setStateMachineName('Random');
         $process = $builder->createProcess($stateMachineProcessTransfer);
 
-        $this->assertTrue($process->getMain());
+        $this->assertTrue($process->getIsMain());
     }
 
     /**
@@ -118,7 +118,7 @@ class BuilderTest extends Unit
         $stateMachineProcessTransfer->setProcessName('Random');
         $process = $builder->createProcess($stateMachineProcessTransfer);
 
-        $this->assertTrue($process->getMain());
+        $this->assertTrue($process->getIsMain());
     }
 
     /**
@@ -130,7 +130,7 @@ class BuilderTest extends Unit
         $stateMachineProcessTransfer = $this->createStateMachineProcessTransfer();
         $process = $builder->createProcess($stateMachineProcessTransfer);
 
-        $manualEventsBySource = $process->getManualEventsBySource();
+        $manualEventsBySource = $process->getManuallyExecutableEventsBySource();
 
         $this->assertEquals('Foo 1 - action', $manualEventsBySource['Foo 1 - sub process state'][0]);
         $this->assertEquals('Leave Sub-process 2', $manualEventsBySource['Foo 1 - done'][0]);

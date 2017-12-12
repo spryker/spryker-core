@@ -226,7 +226,7 @@ class Condition implements ConditionInterface
 
     /**
      * @param string $stateMachineName
-     * @param string[] $states
+     * @param array $states Keys are state names, values are collections of TransitionInterface.
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
      * @return void

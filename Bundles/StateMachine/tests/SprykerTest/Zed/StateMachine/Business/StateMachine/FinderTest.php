@@ -64,6 +64,8 @@ class FinderTest extends StateMachineMocks
     }
 
     /**
+     * @uses ProcessInterface::getManuallyExecutableEventsBySource()
+     *
      * @return void
      */
     public function testGetManualEventsForStateMachineItemsShouldReturnManualEventsForGivenItems()
@@ -76,7 +78,7 @@ class FinderTest extends StateMachineMocks
         ];
 
         $processMock = $this->createProcessMock();
-        $processMock->method('getManualEventsBySource')->willReturn($manualEvents);
+        $processMock->method('getManuallyExecutableEventsBySource')->willReturn($manualEvents);
 
         $builderMock = $this->createBuilderMock();
         $builderMock->method('createProcess')->willReturn($processMock);

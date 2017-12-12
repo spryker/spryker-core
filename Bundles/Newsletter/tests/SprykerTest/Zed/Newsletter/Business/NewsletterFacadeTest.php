@@ -74,6 +74,27 @@ class NewsletterFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testSubscribeWithSingleOptInFailsWhenEmailIsInvalid()
+    {
+        // Assign
+        $subscriptionRequestTransfer = (new NewsletterSubscriptionRequestTransfer())
+            ->setNewsletterSubscriber($this->createInvalidSubscriber());
+
+        $this->addTestType1ToSubscriptionRequest($subscriptionRequestTransfer);
+        $this->addTestType2ToSubscriptionRequest($subscriptionRequestTransfer);
+
+        // Act
+        $actualResult = $this->newsletterFacade->subscribeWithSingleOptIn($subscriptionRequestTransfer);
+
+        // Assert
+        foreach ($actualResult->getSubscriptionResults() as $result) {
+            $this->assertFalse($result->getIsSuccess());
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function testSubscribeForAlreadySubscribedTypeShouldFail()
     {
         $request = new NewsletterSubscriptionRequestTransfer();
@@ -105,6 +126,27 @@ class NewsletterFacadeTest extends Unit
 
         foreach ($response->getSubscriptionResults() as $result) {
             $this->assertTrue($result->getIsSuccess(), $result->getErrorMessage());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testSubscribeWithDoubleOptInFailsWhenEmailIsInvalid()
+    {
+        // Assign
+        $subscriptionRequestTransfer = (new NewsletterSubscriptionRequestTransfer())
+            ->setNewsletterSubscriber($this->createInvalidSubscriber());
+
+        $this->addTestType1ToSubscriptionRequest($subscriptionRequestTransfer);
+        $this->addTestType2ToSubscriptionRequest($subscriptionRequestTransfer);
+
+        // Act
+        $actualResult = $this->newsletterFacade->subscribeWithDoubleOptIn($subscriptionRequestTransfer);
+
+        // Assert
+        foreach ($actualResult->getSubscriptionResults() as $result) {
+            $this->assertFalse($result->getIsSuccess());
         }
     }
 
@@ -295,6 +337,18 @@ class NewsletterFacadeTest extends Unit
         $subscriber = new NewsletterSubscriberTransfer();
         $subscriber->setEmail('example@spryker.com');
         $subscriber->setSubscriberKey('example@spryker.com');
+
+        return $subscriber;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\NewsletterSubscriberTransfer
+     */
+    protected function createInvalidSubscriber()
+    {
+        $subscriber = new NewsletterSubscriberTransfer();
+        $subscriber->setEmail('invalid<>example@spryker.com');
+        $subscriber->setSubscriberKey('invalid<>example@spryker.com');
 
         return $subscriber;
     }

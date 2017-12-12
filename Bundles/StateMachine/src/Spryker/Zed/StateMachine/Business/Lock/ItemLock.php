@@ -39,7 +39,7 @@ class ItemLock implements ItemLockInterface
     }
 
     /**
-     * @param int $identifier
+     * @param string $identifier
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\LockException
      *
@@ -70,7 +70,7 @@ class ItemLock implements ItemLockInterface
     }
 
     /**
-     * @param int $identifier
+     * @param string $identifier
      *
      * @return void
      */
