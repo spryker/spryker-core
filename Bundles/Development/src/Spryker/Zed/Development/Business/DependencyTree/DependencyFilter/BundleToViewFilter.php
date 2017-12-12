@@ -31,6 +31,6 @@ class BundleToViewFilter implements DependencyFilterInterface
      */
     public function filter(array $dependency)
     {
-        return ($dependency[DependencyTree::META_BUNDLE] !== $this->bundle);
+        return ($dependency[DependencyTree::META_MODULE] !== $this->bundle);
     }
 }

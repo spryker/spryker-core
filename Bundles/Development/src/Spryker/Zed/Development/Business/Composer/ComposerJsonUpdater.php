@@ -46,7 +46,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
      */
     public function update(array $bundles, $dryRun = false)
     {
-        $composerJsonFiles = $this->finder->find();
+        $composerJsonFiles = $this->finder->findAll();
 
         $processed = [];
         foreach ($composerJsonFiles as $composerJsonFile) {
