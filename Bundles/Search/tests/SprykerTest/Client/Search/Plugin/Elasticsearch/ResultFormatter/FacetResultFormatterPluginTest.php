@@ -133,7 +133,6 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         $expectedResult = [
             'foo' => (new FacetSearchResultTransfer())
                 ->setName('foo')
-                ->setDocCount(6)
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('a')
                     ->setDocCount(1))
@@ -198,7 +197,6 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         $expectedResult = [
             'foo' => (new FacetSearchResultTransfer())
                 ->setName('foo')
-                ->setDocCount(6)
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('a')
                     ->setDocCount(1))
@@ -211,7 +209,6 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                 ->setConfig($searchConfig->getFacetConfigBuilder()->get('foo')),
             'bar' => (new FacetSearchResultTransfer())
                 ->setName('bar')
-                ->setDocCount(60)
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('d')
                     ->setDocCount(10))
@@ -224,7 +221,6 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                 ->setConfig($searchConfig->getFacetConfigBuilder()->get('bar')),
             'baz' => (new FacetSearchResultTransfer())
                 ->setName('baz')
-                ->setDocCount(600)
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('g')
                     ->setDocCount(100))
@@ -269,7 +265,6 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         $expectedResult = [
             'foo' => (new FacetSearchResultTransfer())
                 ->setName('foo')
-                ->setDocCount(60)
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue(1)
                     ->setDocCount(10))
@@ -294,7 +289,6 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
 
         $aggregationResult = [
             PageIndexMap::INTEGER_FACET => [
-                'doc_count' => 50,
                 PageIndexMap::INTEGER_FACET . '-name' => [
                     'buckets' => [
                         [
@@ -333,7 +327,6 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         $expectedResult = [
             'foo' => (new FacetSearchResultTransfer())
                 ->setName('foo')
-                ->setDocCount(6)
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('a')
                     ->setDocCount(1))
@@ -346,7 +339,6 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                 ->setConfig($searchConfig->getFacetConfigBuilder()->get('foo')),
             'bar' => (new FacetSearchResultTransfer())
                 ->setName('bar')
-                ->setDocCount(60)
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('d')
                     ->setDocCount(10))
@@ -359,7 +351,6 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                 ->setConfig($searchConfig->getFacetConfigBuilder()->get('bar')),
             'baz' => (new RangeSearchResultTransfer())
                 ->setName('baz')
-                ->setDocCount(50)
                 ->setConfig($searchConfig->getFacetConfigBuilder()->get('baz'))
                 ->setMin(10)
                 ->setMax(20)
@@ -390,7 +381,6 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         $expectedResult = [
             'foo' => (new FacetSearchResultTransfer())
                 ->setName('foo')
-                ->setDocCount(60)
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('c1')
                     ->setDocCount(10))
@@ -501,7 +491,6 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         $expectedResult = [
             'foo' => (new FacetSearchResultTransfer())
                 ->setName('foo')
-                ->setDocCount(60)
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('a')
                     ->setDocCount(10))
@@ -514,7 +503,6 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                 ->setConfig($searchConfig->getFacetConfigBuilder()->get('foo')),
             'bar' => (new FacetSearchResultTransfer())
                 ->setName('bar')
-                ->setDocCount(150)
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('d')
                     ->setDocCount(40))
