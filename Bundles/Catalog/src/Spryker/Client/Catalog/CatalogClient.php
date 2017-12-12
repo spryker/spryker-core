@@ -8,6 +8,8 @@
 namespace Spryker\Client\Catalog;
 
 use Spryker\Client\Kernel\AbstractClient;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
@@ -74,5 +76,38 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
             ->getFactory()
             ->getSearchClient()
             ->search($searchQuery, $resultFormatters, $requestParameters);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return string
+     */
+    public function getCatalogViewMode(Request $request)
+    {
+        return $this->getFactory()
+            ->createCatalogViewModePersistence()
+            ->getViewMode($request);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $mode
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function setCatalogViewMode($mode, Response $response)
+    {
+        return $this->getFactory()
+            ->createCatalogViewModePersistence()
+            ->setViewMode($mode, $response);
     }
 }
