@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/ProductManagementStoreConnector.svg)](https://travis-ci.org/spryker/ProductManagementStoreConnector)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/ProductManagementStoreConnector/badge.svg)](https://coveralls.io/github/spryker/ProductManagementStoreConnector)
 
-ProductManagementStoreConnector module provides plugins to manage product abstract's store relations.
+ProductManagementStoreConnector module provides store relation management features.
 
 ## Installation
 

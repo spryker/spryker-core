@@ -12,7 +12,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/product": "If you need to use ProductAbstract plugins"
+    "spryker/product": "If you need to use plugins"
   },
   "autoload": {
     "psr-4": {
