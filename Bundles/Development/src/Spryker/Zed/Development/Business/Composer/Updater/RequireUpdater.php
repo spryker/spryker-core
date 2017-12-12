@@ -98,7 +98,7 @@ class RequireUpdater implements UpdaterInterface
             if ($dependency[DependencyTree::META_FOREIGN_BUNDLE] === 'external') {
                 continue;
             }
-            if ($dependency[DependencyTree::META_BUNDLE] === $bundleName) {
+            if ($dependency[DependencyTree::META_MODULE] === $bundleName) {
                 $dependentBundles[] = $dependency[DependencyTree::META_FOREIGN_BUNDLE];
             }
         }

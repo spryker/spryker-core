@@ -5,15 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Development\Business\Composer;
+namespace Spryker\Zed\Development\Business\DependencyTree;
 
-interface ComposerJsonUpdaterInterface
+interface AdjacencyMatrixBuilderInterface
 {
     /**
-     * @param array $bundles
-     * @param bool $dryRun
-     *
      * @return array
      */
-    public function update(array $bundles, $dryRun = false);
+    public function build();
 }

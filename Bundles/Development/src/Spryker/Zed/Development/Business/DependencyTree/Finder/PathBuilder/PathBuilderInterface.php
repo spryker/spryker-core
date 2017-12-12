@@ -5,15 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Development\Business\Composer;
+namespace Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder;
 
-interface ComposerJsonUpdaterInterface
+interface PathBuilderInterface
 {
     /**
-     * @param array $bundles
-     * @param bool $dryRun
+     * @param string $module
      *
      * @return array
      */
-    public function update(array $bundles, $dryRun = false);
+    public function buildPaths(string $module): array;
 }
