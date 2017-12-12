@@ -12,8 +12,8 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 /**
- * @method \Spryker\Zed\Api\ApiConfig getConfig()
- * @method \Spryker\Zed\Api\Persistence\ApiQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\PropelQueryBuilder\PropelQueryBuilderConfig getConfig()
+ * @method \Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainerInterface getQueryContainer()
  */
 class PaginationQueryMapper implements PaginationQueryMapperInterface
 {

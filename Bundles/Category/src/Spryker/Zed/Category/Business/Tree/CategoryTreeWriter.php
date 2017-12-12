@@ -63,7 +63,7 @@ class CategoryTreeWriter implements CategoryTreeWriterInterface
         ClosureTableWriterInterface $closureTableWriter,
         CategoryTreeReaderInterface $categoryTreeReader,
         NodeUrlManagerInterface $nodeUrlManager,
-        CategoryToTouchInterface  $touchFacade,
+        CategoryToTouchInterface $touchFacade,
         ConnectionInterface $connection
     ) {
         $this->nodeWriter = $nodeWriter;

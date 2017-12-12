@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 abstract class AbstractController
 {
     /**
-     * @var \Silex\Application
+     * @var \Spryker\Shared\Kernel\Communication\Application|\Silex\Application
      */
     private $application;
 
@@ -40,7 +40,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param \Silex\Application $application
+     * @param \Spryker\Shared\Kernel\Communication\Application|\Silex\Application $application
      *
      * @return $this
      */
@@ -64,7 +64,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Silex\Application
+     * @return \Spryker\Shared\Kernel\Communication\Application|\Silex\Application
      */
     protected function getApplication()
     {

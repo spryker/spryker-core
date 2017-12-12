@@ -12,7 +12,7 @@ use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\ProductImageCartConnector\Business\ProductImageCartConnectorFacade getFacade()
+ * @method \Spryker\Zed\ProductImageCartConnector\Business\ProductImageCartConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductImageCartConnector\Communication\ProductImageCartConnectorCommunicationFactory getFactory()
  */
 class ProductImageCartPlugin extends AbstractPlugin implements ItemExpanderPluginInterface

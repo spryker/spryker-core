@@ -27,7 +27,7 @@ use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferMapp
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  */

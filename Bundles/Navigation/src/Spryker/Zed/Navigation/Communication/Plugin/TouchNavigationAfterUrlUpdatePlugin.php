@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface;
 
 /**
- * @method \Spryker\Zed\Navigation\Business\NavigationFacade getFacade()
+ * @method \Spryker\Zed\Navigation\Business\NavigationFacadeInterface getFacade()
  * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Navigation\Communication\NavigationCommunicationFactory getFactory()
  */

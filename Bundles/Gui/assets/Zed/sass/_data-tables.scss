@@ -2,6 +2,14 @@ $data-table-selected-row-bg-color: rgba(#0088cc, .15);
 $data-table-selected-row-border-size: 1px;
 $data-table-selected-row-border-color: rgba(#0088cc, 1);
 
+.dataTables_scrollHeadInner {
+  width: 100% !important;
+
+  & > .table {
+    width: 100% !important;
+  }
+}
+
 table.dataTable tbody > tr {
   &,
   &:first-child {

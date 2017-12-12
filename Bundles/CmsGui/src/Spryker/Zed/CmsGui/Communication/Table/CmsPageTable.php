@@ -149,6 +149,7 @@ class CmsPageTable extends AbstractTable
             'Publish',
             [
                 'icon' => 'fa-upload',
+                'class' => 'safe-submit',
             ]
         );
     }

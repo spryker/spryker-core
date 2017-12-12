@@ -342,7 +342,7 @@ class Trigger implements TriggerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $itemsWithOnEnterEvent
+     * @param array $itemsWithOnEnterEvent Keys are event names, values are collections of StateMachineItem transfer objects
      *
      * @return bool
      */
@@ -389,7 +389,7 @@ class Trigger implements TriggerInterface
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
-     * @param string $identifier
+     * @param int $identifier
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
@@ -454,7 +454,7 @@ class Trigger implements TriggerInterface
     }
 
     /**
-     * @param int $idStateMachineItemState
+     * @param int|null $idStateMachineItemState
      * @param string $initialStateName
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\TriggerException

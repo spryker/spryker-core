@@ -11,7 +11,7 @@ use Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Newsletter\Business\NewsletterFacade getFacade()
+ * @method \Spryker\Zed\Newsletter\Business\NewsletterFacadeInterface getFacade()
  * @method \Spryker\Zed\Newsletter\Communication\NewsletterCommunicationFactory getFactory()
  */
 class NewsletterInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface

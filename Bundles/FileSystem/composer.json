@@ -2,11 +2,13 @@
   "name": "spryker/file-system",
   "description": "FileSystem module",
   "license": "proprietary",
+  "require": {
+    "spryker/flysystem": "^1.0.0",
+    "spryker/kernel": "^3.5.0"
+  },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/flysystem": "*",
     "spryker/flysystem-local-file-system": "*",
-    "spryker/kernel": "^3.5.0",
     "spryker/testify": "*"
   },
   "suggest": {

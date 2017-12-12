@@ -25,7 +25,7 @@ class Persistence implements PersistenceInterface
     protected $processEntityBuffer = [];
 
     /**
-     * @var \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @var \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState[]
      */
     protected $persistedStates;
 
@@ -97,7 +97,7 @@ class Persistence implements PersistenceInterface
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
-     * @param int $stateName
+     * @param string $stateName
      *
      * @return mixed
      */
@@ -220,11 +220,6 @@ class Persistence implements PersistenceInterface
                 ->requireIdentifier();
 
             $updatedStateMachineItemTransfer = $this->getProcessedStateMachineItemTransfer($stateMachineItemTransfer);
-
-            if ($updatedStateMachineItemTransfer === null) {
-                continue;
-            }
-
             $updatedStateMachineItems[] = $stateMachineItemTransfer->fromArray(
                 $updatedStateMachineItemTransfer->modifiedToArray(),
                 true

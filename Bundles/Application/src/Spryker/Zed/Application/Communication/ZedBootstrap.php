@@ -10,7 +10,6 @@ namespace Spryker\Zed\Application\Communication;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Communication\Application;
-use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
@@ -74,7 +73,6 @@ class ZedBootstrap
         }
 
         $this->registerServiceProvider();
-        $this->addVariablesToTwig();
     }
 
     /**
@@ -182,26 +180,6 @@ class ZedBootstrap
     private function enableHttpMethodParameterOverride()
     {
         Request::enableHttpMethodParameterOverride();
-    }
-
-    /**
-     * @return void
-     */
-    protected function addVariablesToTwig()
-    {
-        $application = $this->application;
-        $application['twig.global.variables'] = $application->share(
-            $application->extend('twig.global.variables', function (array $variables) {
-                $variables += [
-                    'environment' => APPLICATION_ENV,
-                    'store' => Store::getInstance()->getStoreName(),
-                    'title' => Config::get(KernelConstants::PROJECT_NAMESPACE) . ' | Zed | ' . ucfirst(APPLICATION_ENV),
-                    'currentController' => get_class($this),
-                ];
-
-                return $variables;
-            })
-        );
     }
 
     /**

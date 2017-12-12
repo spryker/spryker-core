@@ -10,4 +10,4 @@ composer require spryker/payolution
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/3rd-party_integration/integration_payment_payolution.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/3rd-party_integration/integration_payment_payolution.html)

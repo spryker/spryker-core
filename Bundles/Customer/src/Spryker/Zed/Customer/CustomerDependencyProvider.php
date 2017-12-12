@@ -12,18 +12,25 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberBridge;
+use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceBridge;
+use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_SEQUENCE_NUMBER = 'sequence number facade';
-    const FACADE_COUNTRY = 'country facade';
-    const FACADE_LOCALE = 'locale facade';
-    const FACADE_MAIL = 'mail facade';
-    const SERVICE_DATE_FORMATTER = 'date formatter service';
-    const QUERY_CONTAINER_LOCALE = 'locale query container';
-    const STORE = 'store';
+    const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
+    const FACADE_COUNTRY = 'FACADE_COUNTRY';
+    const FACADE_LOCALE = 'FACADE_LOCALE';
+    const FACADE_MAIL = 'FACADE_MAIL';
+
+    const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
+    const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
+    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+
+    const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+
+    const STORE = 'STORE';
 
     const PLUGINS_CUSTOMER_ANONYMIZER = 'PLUGINS_CUSTOMER_ANONYMIZER';
     const PLUGINS_CUSTOMER_TRANSFER_EXPANDER = 'PLUGINS_CUSTOMER_TRANSFER_EXPANDER';
@@ -57,6 +64,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addStore($container);
         $container = $this->addCustomerAnonymizerPlugins($container);
+        $container = $this->addUtilValidateService($container);
 
         return $container;
     }
@@ -77,6 +85,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addStore($container);
         $container = $this->addCustomerTransferExpanderPlugins($container);
+        $container = $this->addUtilSanitizeService($container);
 
         return $container;
     }
@@ -122,6 +131,20 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addUtilValidateService(Container $container)
+    {
+        $container[static::SERVICE_UTIL_VALIDATE] = function (Container $container) {
+            return new CustomerToUtilValidateServiceBridge($container->getLocator()->utilValidate()->service());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     public function addCustomerTransferExpanderPlugins(Container $container)
     {
         $container[static::PLUGINS_CUSTOMER_TRANSFER_EXPANDER] = function (Container $container) {
@@ -137,5 +160,19 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     protected function getCustomerTransferExpanderPlugins()
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilSanitizeService(Container $container)
+    {
+        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+            return new CustomerToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
+        };
+
+        return $container;
     }
 }

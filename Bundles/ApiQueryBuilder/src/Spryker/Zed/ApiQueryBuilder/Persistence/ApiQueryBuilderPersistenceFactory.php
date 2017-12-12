@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\ApiQueryBuilder\ApiQueryBuilderConfig getConfig()
- * @method \Spryker\Zed\ApiQueryBuilder\Persistence\ApiQueryBuilderQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ApiQueryBuilder\Persistence\ApiQueryBuilderQueryContainerInterface getQueryContainer()
  */
 class ApiQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
 {

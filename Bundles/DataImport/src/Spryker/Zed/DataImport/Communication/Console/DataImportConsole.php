@@ -16,7 +16,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\DataImport\Business\DataImportFacade getFacade()
+ * @method \Spryker\Zed\DataImport\Business\DataImportFacadeInterface getFacade()
  */
 class DataImportConsole extends Console
 {

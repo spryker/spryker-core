@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
- * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacade getFacade()
+ * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacadeInterface getFacade()
  */
 class TransferController extends AbstractController
 {

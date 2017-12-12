@@ -72,6 +72,22 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @param int $idOrder
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedExcludeFromCustomer($idOrder)
+    {
+        return $this->getFactory()
+            ->createOrderStateMachineFinder()
+            ->isOrderFlaggedExcludeFromCustomer($idOrder);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $eventId
      * @param array $orderItemIds
      * @param array $data
@@ -301,6 +317,22 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
         return $this->getFactory()
             ->createUtilReservation()
             ->sumReservedProductQuantitiesForSku($sku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return int
+     */
+    public function getOmsReservedProductQuantityForSku($sku)
+    {
+        return $this->getFactory()
+            ->createUtilReservation()
+            ->getOmsReservedProductQuantityForSku($sku);
     }
 
     /**

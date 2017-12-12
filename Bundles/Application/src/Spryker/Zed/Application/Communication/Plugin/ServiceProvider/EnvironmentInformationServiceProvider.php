@@ -13,7 +13,7 @@ use Spryker\Zed\Application\Business\Model\Twig\EnvironmentInfo;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  */
 class EnvironmentInformationServiceProvider extends AbstractPlugin implements ServiceProviderInterface

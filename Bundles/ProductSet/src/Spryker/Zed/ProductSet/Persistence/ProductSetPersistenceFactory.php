@@ -15,7 +15,7 @@ use Spryker\Zed\ProductSet\ProductSetDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductSet\ProductSetConfig getConfig()
- * @method \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface getQueryContainer()
  */
 class ProductSetPersistenceFactory extends AbstractPersistenceFactory
 {

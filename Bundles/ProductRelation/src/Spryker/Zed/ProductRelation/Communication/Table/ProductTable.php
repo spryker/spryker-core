@@ -149,7 +149,6 @@ class ProductTable extends AbstractProductTable
     {
         $config->setSearchable([
             SpyProductAbstractTableMap::COL_SKU,
-            SpyPriceProductTableMap::COL_PRICE,
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
         ]);
     }

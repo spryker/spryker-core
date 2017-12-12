@@ -92,4 +92,11 @@ interface FinderInterface
      * @return array
      */
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
+
+    /**
+     * @param int $idOrder
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedExcludeFromCustomer($idOrder);
 }
