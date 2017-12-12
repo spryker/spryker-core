@@ -29,7 +29,7 @@ class RedirectController extends AbstractController
     const MESSAGE_REDIRECT_CREATE_SUCCESS = 'Redirect was created successfully.';
     const MESSAGE_REDIRECT_UPDATE_SUCCESS = 'Redirect was updated successfully.';
     const MESSAGE_REDIRECT_DELETE_SUCCESS = 'Redirect was deleted successfully.';
-    const MESSAGE_ID_REDIRECT_EXTRACT_ERROR = 'Id redirect url is not set.';
+    const MESSAGE_ID_REDIRECT_EXTRACT_ERROR = 'ID redirect URL is not set.';
 
     /**
      * @return array
