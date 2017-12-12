@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductManagement;
 
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductManagement\Communication\Plugin\Form\SingleStoreRelationFormTypePlugin;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCategoryBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyBridge;
@@ -26,7 +26,6 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTaxBridge
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchBridge;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingBridge;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextBridge;
-use Spryker\Zed\ProductManagement\Exception\MissingStoreRelationFormTypePluginException;
 
 class ProductManagementDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -264,19 +263,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @throws \Spryker\Zed\Shipment\Exception\MissingStoreRelationFormTypePluginException
-     *
      * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
      */
     protected function createStoreRelationFormTypePlugin()
     {
-        throw new MissingStoreRelationFormTypePluginException(
-            sprintf(
-                'Missing instance of %s! You need to configure StoreRelationFormType ' .
-                'in your own ProductManagementDependencyProvider::createStoreRelationFormTypePlugin() ' .
-                'to be able to manage shipment prices.',
-                FormTypeInterface::class
-            )
-        );
+        return new SingleStoreRelationFormTypePlugin();
     }
 }

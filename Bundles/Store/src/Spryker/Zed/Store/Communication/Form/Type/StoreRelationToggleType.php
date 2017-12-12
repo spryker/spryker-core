@@ -72,7 +72,7 @@ class StoreRelationToggleType extends AbstractType
             static::FIELD_ID_STORES,
             ChoiceType::class,
             [
-                'label' => false,
+                'label' => 'Store relation',
                 'expanded' => true,
                 'multiple' => true,
                 'choices' => $this->getStoreNameMap(),
