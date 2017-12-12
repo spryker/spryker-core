@@ -45,7 +45,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
      *
      * @var array
      */
-    protected $whileListedTableAttributes;
+    protected $whiteListedTableAttributes;
 
     /**
      * @param \Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface $finder
@@ -59,7 +59,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
     ) {
         $this->finder = $finder;
         $this->utilTextService = $utilTextService;
-        $this->whileListedTableAttributes = $whileListedTableAttributes;
+        $this->whiteListedTableAttributes = $whileListedTableAttributes;
     }
 
     /**
@@ -194,15 +194,15 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
      */
     protected function retrieveToXmlElements(SimpleXMLElement $toXmlElement): ArrayObject
     {
-        $toXmlElementNames = new ArrayObject();
+        $toXmlElements = new ArrayObject();
         $toXmlElementChildren = $toXmlElement->children();
 
         foreach ($toXmlElementChildren as $toXmlChildTagName => $toXmlChildElement) {
             $toXmlElementName = $this->getElementName($toXmlChildElement, $toXmlChildTagName);
-            $toXmlElementNames[$toXmlElementName] = $toXmlChildElement;
+            $toXmlElements[$toXmlElementName] = $toXmlChildElement;
         }
 
-        return $toXmlElementNames;
+        return $toXmlElements;
     }
 
     /**
@@ -211,14 +211,38 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
      *
      * @return string
      */
-    protected function getElementName(SimpleXMLElement $fromXmlChildElement, $tagName): string
+    protected function getElementName(SimpleXMLElement $fromXmlChildElement, string $tagName): string
     {
         $elementName = (array)$fromXmlChildElement->attributes();
         $elementName = current($elementName);
+        $elementName = $this->buildCombinedNameIfNeeded($elementName, $tagName);
+        $elementName = $this->anonymizeNameIfNeeded($elementName);
+
+        return $elementName;
+    }
+
+    /**
+     * @param mixed $elementName
+     * @param string $tagName
+     *
+     * @return mixed
+     */
+    protected function buildCombinedNameIfNeeded($elementName, string $tagName)
+    {
         if (is_array($elementName) && isset($elementName['name'])) {
             $elementName = $tagName . '|' . $elementName['name'];
         }
 
+        return $elementName;
+    }
+
+    /**
+     * @param mixed $elementName
+     *
+     * @return string
+     */
+    protected function anonymizeNameIfNeeded($elementName): string
+    {
         if (empty($elementName) || is_array($elementName)) {
             $elementName = 'anonymous_' . $this->utilTextService->generateRandomString(32);
         }
@@ -235,27 +259,51 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
      */
     protected function validateAttributes(SimpleXMLElement $toXmlElement, SimpleXMLElement $fromXmlElement, string $fileName): SimpleXMLElement
     {
-        $toXmlAttributes = iterator_to_array($toXmlElement->attributes());
-
         foreach ($fromXmlElement->attributes() as $key => $value) {
-            if ($this->isAttributeValueChange($toXmlAttributes, $key, $value) && !$this->isWhiteListed($fileName, $key)) {
-                $this->addError(sprintf(
-                    'The attribute "%s" in one of your "%s" files has currently "%s" as value, if you would run the schema merger, this value would be overwritten with "%s". This can have weird side effects!',
-                    $key,
-                    $fileName,
-                    (string)$toXmlAttributes[$key],
-                    (string)$value
-                ));
-
-                continue;
-            }
-
-            if (!isset($toXmlAttributes[$key])) {
-                $toXmlElement->addAttribute($key, $value);
-            }
+            $this->validateAttribute($toXmlElement, $key, $value, $fileName);
+            $this->addAttribute($toXmlElement, $key, $value);
         }
 
         return $toXmlElement;
+    }
+
+    /**
+     * @param \SimpleXMLElement $toXmlElement
+     * @param string $key
+     * @param string $value
+     * @param string $fileName
+     *
+     * @return void
+     */
+    protected function validateAttribute(SimpleXMLElement $toXmlElement, string $key, string $value, string $fileName): void
+    {
+        $toXmlAttributes = iterator_to_array($toXmlElement->attributes());
+
+        if ($this->isAttributeValueChange($toXmlAttributes, $key, $value) && !$this->isWhiteListed($fileName, $key)) {
+            $this->addError(sprintf(
+                'The attribute "%s" in one of your "%s" files has currently "%s" as value, if you would run the schema merger, this value would be overwritten with "%s". This can have weird side effects!',
+                $key,
+                $fileName,
+                (string)$toXmlAttributes[$key],
+                (string)$value
+            ));
+        }
+    }
+
+    /**
+     * @param \SimpleXMLElement $toXmlElement
+     * @param string $key
+     * @param string $value
+     *
+     * @return void
+     */
+    protected function addAttribute(SimpleXMLElement $toXmlElement, string $key, string $value): void
+    {
+        $toXmlAttributes = iterator_to_array($toXmlElement->attributes());
+
+        if (!isset($toXmlAttributes[$key])) {
+            $toXmlElement->addAttribute($key, $value);
+        }
     }
 
     /**
@@ -278,7 +326,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
      */
     protected function isWhiteListed(string $fileName, string $key): bool
     {
-        if (isset($this->whileListedTableAttributes[$fileName]) && in_array($key, $this->whileListedTableAttributes[$fileName])) {
+        if (isset($this->whiteListedTableAttributes[$fileName]) && in_array($key, $this->whiteListedTableAttributes[$fileName])) {
             return true;
         }
 
