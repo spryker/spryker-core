@@ -19,7 +19,7 @@ interface DependencyTreeBuilderInterface
     /**
      * @param string $module
      *
-     * @return array
+     * @return void
      */
-    public function buildDependencyTree(string $module): array;
+    public function buildDependencyTree(string $module): void;
 }
