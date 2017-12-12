@@ -75,6 +75,10 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
      */
     protected function isCurrencyChanged(QuoteTransfer $quoteTransfer)
     {
+        if (!$quoteTransfer->getShipment()->getMethod()) {
+            return false;
+        }
+
         $shipmentCurrencyIsoCode = $quoteTransfer->getShipment()->getMethod()->getCurrencyIsoCode();
         if ($shipmentCurrencyIsoCode !== $quoteTransfer->getCurrency()->getCode()) {
             return true;
