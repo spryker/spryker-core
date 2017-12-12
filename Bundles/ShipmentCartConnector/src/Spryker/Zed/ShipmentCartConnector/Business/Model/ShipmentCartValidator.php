@@ -74,6 +74,10 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
      */
     protected function isCurrencyChanged(QuoteTransfer $quoteTransfer)
     {
+        if (!$quoteTransfer->getShipment()->getMethod()) {
+            return false;
+        }
+
         $shipmentCurrency = $quoteTransfer->getShipment()->getMethod()->getCurrencyIsoCode();
 
         if ($shipmentCurrency !== $quoteTransfer->getCurrency()->getCode()) {
