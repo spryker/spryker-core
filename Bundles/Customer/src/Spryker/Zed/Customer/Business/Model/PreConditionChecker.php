@@ -51,8 +51,25 @@ class PreConditionChecker implements PreConditionCheckerInterface
             return true;
         }
 
-        $result = true;
+        $result = $this->checkValidEmail($quoteTransfer, $checkoutResponseTransfer);
 
+        if ($quoteTransfer->getCustomer()->getIsGuest() === true) {
+            return $result;
+        }
+
+        $result &= $this->checkExistingEmail($quoteTransfer, $checkoutResponseTransfer);
+
+        return (bool)$result;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    protected function checkValidEmail(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
         if (!$this->utilValidateService->isEmailFormatValid($quoteTransfer->getCustomer()->getEmail())) {
             $this->addViolation(
                 $checkoutResponseTransfer,
@@ -60,13 +77,20 @@ class PreConditionChecker implements PreConditionCheckerInterface
                 static::ERROR_EMAIL_INVALID
             );
 
-            $result = false;
+            return false;
         }
 
-        if ($quoteTransfer->getCustomer()->getIsGuest() === true) {
-            return $result;
-        }
+        return true;
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    protected function checkExistingEmail(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
         if ($this->customer->hasEmail($quoteTransfer->getCustomer()->getEmail())) {
             $this->addViolation(
                 $checkoutResponseTransfer,
@@ -74,10 +98,10 @@ class PreConditionChecker implements PreConditionCheckerInterface
                 static::ERROR_EMAIL_UNIQUE
             );
 
-            $result = false;
+            return false;
         }
 
-        return $result;
+        return true;
     }
 
     /**
