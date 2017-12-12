@@ -36,12 +36,12 @@ class SimpleGraphBuilder implements GraphBuilderInterface
     public function build(array $dependencyTree)
     {
         foreach ($dependencyTree as $dependency) {
-            $this->graph->addNode($dependency[DependencyTree::META_BUNDLE], $this->getNodeAttributes($dependency));
+            $this->graph->addNode($dependency[DependencyTree::META_MODULE], $this->getNodeAttributes($dependency));
             $this->graph->addNode($dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->getForeignNodeAttributes($dependency));
         }
 
         foreach ($dependencyTree as $dependency) {
-            $this->graph->addEdge($dependency[DependencyTree::META_BUNDLE], $dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->getEdgeAttributes($dependency));
+            $this->graph->addEdge($dependency[DependencyTree::META_MODULE], $dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->getEdgeAttributes($dependency));
         }
 
         return $this->graph->render('svg');
@@ -55,9 +55,9 @@ class SimpleGraphBuilder implements GraphBuilderInterface
     private function getNodeAttributes(array $dependency)
     {
         $attributes = [];
-        if ($dependency[DependencyTree::META_BUNDLE_IS_ENGINE]) {
+        if ($dependency[DependencyTree::META_MODULE_IS_ENGINE]) {
             $attributes[static::FONT_COLOR] = static::ENGINE_BUNDLE_FONT_COLOR;
-            $attributes[static::LABEL] = $dependency[DependencyTree::META_BUNDLE] . static::ENGINE_BUNDLE_INFO_TEXT;
+            $attributes[static::LABEL] = $dependency[DependencyTree::META_MODULE] . static::ENGINE_BUNDLE_INFO_TEXT;
         }
 
         return $attributes;

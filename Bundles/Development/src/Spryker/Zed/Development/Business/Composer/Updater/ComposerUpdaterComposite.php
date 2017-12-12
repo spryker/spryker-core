@@ -9,7 +9,7 @@ namespace Spryker\Zed\Development\Business\Composer\Updater;
 
 use Symfony\Component\Finder\SplFileInfo;
 
-class ComposerUpdaterComposite implements UpdaterInterface
+class ComposerUpdaterComposite implements ComposerUpdaterCompositeInterface
 {
     /**
      * @var \Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface[]

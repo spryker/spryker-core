@@ -46,6 +46,15 @@ interface ProductLabelQueryContainerInterface
     /**
      * @api
      *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    public function queryActiveProductsLabelByIdProductAbstract($idProductAbstract);
+
+    /**
+     * @api
+     *
      * @param int $idProductLabel
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
