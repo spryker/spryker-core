@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Propel\Business;
 
+use Generated\Shared\Transfer\SchemaValidationTransfer;
+
 interface PropelFacadeInterface
 {
     /**
@@ -160,4 +162,15 @@ interface PropelFacadeInterface
      * @return void
      */
     public function importDatabase($backupPath);
+
+    /**
+     * Specification:
+     * - Validates all schema files.
+     * - When attribute value is changed in the same table, the returned transfer object contains all found errors.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SchemaValidationTransfer
+     */
+    public function validateSchemaFiles(): SchemaValidationTransfer;
 }

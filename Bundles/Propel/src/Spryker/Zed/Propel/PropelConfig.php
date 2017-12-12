@@ -124,4 +124,12 @@ class PropelConfig extends AbstractBundleConfig
 
         return $supportedEngines[$dbEngine];
     }
+
+    /**
+     * @return array
+     */
+    public function getWhitelistForAllowedAttributeValueChanges()
+    {
+        return [];
+    }
 }
