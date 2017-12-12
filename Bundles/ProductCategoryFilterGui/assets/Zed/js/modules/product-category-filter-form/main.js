@@ -38,7 +38,6 @@ $(document).ready(function() {
                 { detail: { idCategory: idCategory }}
                 );
             window.parent.document.dispatchEvent(event);
-            location.reload();
         });
     });
 

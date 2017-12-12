@@ -87,6 +87,7 @@ class ProductCategoryFilterController extends AbstractController
             'filters' => $filters,
             'productCategoryFilters' => $productCategoryFilterTransfer,
             'allFilters' => $searchResultsForCategory[FacetResultFormatterPlugin::NAME],
+            'nonSearchAttributes' => array_diff_key($productCategoryFilterTransfer->getFilterDataArray(), $searchResultsForCategory[FacetResultFormatterPlugin::NAME]),
         ]);
     }
 

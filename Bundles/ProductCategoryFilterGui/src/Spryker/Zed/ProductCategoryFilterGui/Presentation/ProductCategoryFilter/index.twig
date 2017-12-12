@@ -31,6 +31,16 @@
                         {% endfilter %}
                     </div>
                 {% endif %}
+                {% if nonSearchAttributes is not empty %}
+                    <div class="alert alert-info alert-dismissable">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        {% filter trans|raw %}
+                            <div>
+                                Please note, the category filters in <span class="non-filter-attribute">italics</span> will not be displayed in the shop. To display the filters please add them to global filter settings.
+                            </div>
+                        {% endfilter %}
+                    </div>
+                {% endif %}
                 {{ form_start(productCategoryFilterForm) }}
                 <div class="ibox-content">
                     <table width="100%">
@@ -44,8 +54,8 @@
                         </tr>
                     </table>
                 </div>
-                {{ form_end(productCategoryFilterForm) }}
                 {% include '@ProductCategoryFilterGui/ProductCategoryFilter/_partials/filters.twig' %}
+                {{ form_end(productCategoryFilterForm) }}
             </div>
         {% endblock %}
     </div>
