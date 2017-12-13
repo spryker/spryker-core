@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagementStoreConnector\Business\Model\ProductAbstractStoreRelation;
+namespace Spryker\Zed\Product\Business\Product\StoreRelation;
 
 use Generated\Shared\Transfer\StoreRelationTransfer;
 

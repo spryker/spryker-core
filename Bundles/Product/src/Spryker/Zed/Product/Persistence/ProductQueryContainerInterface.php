@@ -130,4 +130,23 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstractWithName($idLocale);
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery
+     */
+    public function queryProductAbstractStoreByFkProductAbstract($idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int[] $idStores
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery
+     */
+    public function queryProductAbstractStoresByFkProductAbstractAndFkStores($idProductAbstract, $idStores);
 }

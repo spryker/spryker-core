@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagementStoreConnector\Communication\Plugin;
+namespace Spryker\Zed\Product\Communication\Plugin;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
@@ -13,9 +13,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Business\Product\Observer\ProductAbstractReadObserverInterface;
 
 /**
- * @method \Spryker\Zed\ProductManagementStoreConnector\Business\ProductManagementStoreConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\Product\Business\ProductFacadeInterface getFacade()
+ * @method \Spryker\Zed\Product\Communication\ProductCommunicationFactory getFactory()
  */
-class ProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstractReadObserverInterface
+class StoreRelationProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstractReadObserverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer

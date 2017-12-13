@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagementStoreConnector;
+namespace Spryker\Zed\ProductManagement\Exception;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Exception;
 
-class ProductManagementStoreConnectorConfig extends AbstractBundleConfig
+class MissingStoreRelationFormTypePluginException extends Exception
 {
 }

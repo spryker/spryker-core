@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagementStoreConnector\Business\Model\ProductAbstractStoreRelation;
+namespace Spryker\Zed\Product\Business\Product\StoreRelation;
 
 use Generated\Shared\Transfer\StoreRelationTransfer;
-use Spryker\Zed\ProductManagementStoreConnector\Persistence\ProductManagementStoreConnectorQueryContainerInterface;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductAbstractStoreRelationReader implements ProductAbstractStoreRelationReaderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductManagementStoreConnector\Persistence\ProductManagementStoreConnectorQueryContainerInterface
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\ProductManagementStoreConnector\Persistence\ProductManagementStoreConnectorQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $queryContainer
      */
-    public function __construct(ProductManagementStoreConnectorQueryContainerInterface $queryContainer)
+    public function __construct(ProductQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
     }

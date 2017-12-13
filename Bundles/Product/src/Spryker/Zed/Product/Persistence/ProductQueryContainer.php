@@ -211,4 +211,37 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
                 ->endUse()
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, 'name');
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery
+     */
+    public function queryProductAbstractStoreByFkProductAbstract($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createProductAbstractStoreQuery()
+            ->filterByFkProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int[] $idStores
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery
+     */
+    public function queryProductAbstractStoresByFkProductAbstractAndFkStores($idProductAbstract, $idStores)
+    {
+        return $this->getFactory()->createProductAbstractStoreQuery()
+            ->filterByFkStore_In($idStores)
+            ->filterByFkProductAbstract($idProductAbstract);
+    }
 }

@@ -13,6 +13,7 @@ use Spryker\Zed\Store\Communication\Form\Type\StoreRelationToggleType;
 
 /**
  * @method \Spryker\Zed\Store\Business\StoreFacadeInterface getFacade()
+ * @method \Spryker\Zed\Store\Communication\StoreCommunicationFactory getFactory()
  */
 class StoreRelationToggleFormTypePlugin extends AbstractPlugin implements FormTypeInterface
 {

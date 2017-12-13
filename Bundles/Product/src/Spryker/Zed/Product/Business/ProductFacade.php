@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -783,5 +784,37 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()
             ->createAttributeEncoder()
             ->decodeAttributes($attributes);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelation
+     *
+     * @return void
+     */
+    public function saveProductAbstractStoreRelation(StoreRelationTransfer $storeRelation)
+    {
+        $this->getFactory()
+            ->createProductAbstractStoreRelationSaver()
+            ->save($storeRelation);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getProductAbstractStoreRelation(StoreRelationTransfer $storeRelationTransfer)
+    {
+        return $this->getFactory()
+            ->createProductAbstractStoreRelationReader()
+            ->getStoreRelation($storeRelationTransfer);
     }
 }

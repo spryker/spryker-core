@@ -16,11 +16,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\Store\Business\StoreFacadeInterface getFacade()
+ * @method \Spryker\Zed\Store\Communication\StoreCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Store\StoreConfig getConfig()
  */
 class StoreRelationToggleType extends AbstractType
 {
     const FIELD_ID_ENTITY = 'id_entity';
     const FIELD_ID_STORES = 'id_stores';
+    const FIELD_ID_STORES_DISABLED = 'id_stores_disabled';
+
+    const FORM_NAME = 'Store relation';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -68,15 +73,57 @@ class StoreRelationToggleType extends AbstractType
      */
     protected function addFieldIdStores(FormBuilderInterface $builder)
     {
+        if ($this->getConfig()->isMultiStorePerInstanceEnabled()) {
+            return $this->addFieldEditableIdStores($builder);
+        }
+
+        return $this->addFieldImmutableIdStores($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addFieldEditableIdStores(FormBuilderInterface $builder)
+    {
         $builder->add(
             static::FIELD_ID_STORES,
             ChoiceType::class,
             [
-                'label' => 'Store relation',
+                'label' => static::FORM_NAME,
                 'expanded' => true,
                 'multiple' => true,
                 'choices' => $this->getStoreNameMap(),
             ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addFieldImmutableIdStores(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_ID_STORES_DISABLED,
+            ChoiceType::class,
+            [
+                'label' => static::FORM_NAME,
+                'expanded' => true,
+                'disabled' => true,
+                'property_path' => static::FIELD_ID_STORES,
+                'multiple' => true,
+                'choices' => $this->getStoreNameMap(),
+            ]
+        );
+
+        $builder->add(static::FIELD_ID_STORES, HiddenType::class);
+        $builder->get(static::FIELD_ID_STORES)->addModelTransformer(
+            $this->getFactory()->createIdStoresDataTransformer()
         );
 
         return $this;

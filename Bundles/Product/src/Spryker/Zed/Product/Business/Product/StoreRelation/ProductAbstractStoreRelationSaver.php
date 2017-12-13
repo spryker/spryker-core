@@ -5,30 +5,30 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductManagementStoreConnector\Business\Model\ProductAbstractStoreRelation;
+namespace Spryker\Zed\Product\Business\Product\StoreRelation;
 
 use Generated\Shared\Transfer\StoreRelationTransfer;
-use Orm\Zed\ProductManagementStoreConnector\Persistence\SpyProductAbstractStore;
-use Spryker\Zed\ProductManagementStoreConnector\Persistence\ProductManagementStoreConnectorQueryContainerInterface;
+use Orm\Zed\Product\Persistence\SpyProductAbstractStore;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductAbstractStoreRelationSaver implements ProductAbstractStoreRelationSaverInterface
 {
     /**
-     * @var \Spryker\Zed\ProductManagementStoreConnector\Persistence\ProductManagementStoreConnectorQueryContainerInterface
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductManagementStoreConnector\Business\Model\ProductAbstractStoreRelation\ProductAbstractStoreRelationReaderInterface
+     * @var \Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReaderInterface
      */
     protected $productAbstractStoreRelationReader;
 
     /**
-     * @param \Spryker\Zed\ProductManagementStoreConnector\Persistence\ProductManagementStoreConnectorQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\ProductManagementStoreConnector\Business\Model\ProductAbstractStoreRelation\ProductAbstractStoreRelationReaderInterface $productAbstractStoreRelationReader
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReaderInterface $productAbstractStoreRelationReader
      */
     public function __construct(
-        ProductManagementStoreConnectorQueryContainerInterface $queryContainer,
+        ProductQueryContainerInterface $queryContainer,
         ProductAbstractStoreRelationReaderInterface $productAbstractStoreRelationReader
     ) {
         $this->queryContainer = $queryContainer;
