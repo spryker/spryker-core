@@ -83,6 +83,8 @@ class UrlStorageReader implements UrlStorageReaderInterface
                 'data' => $data,
             ];
         }
+
+        return [];
     }
 
     /**
@@ -101,10 +103,11 @@ class UrlStorageReader implements UrlStorageReaderInterface
 
     /**
      * @param array $urlDetails
+     * @param array $options
      *
      * @return \Generated\Shared\Transfer\UrlStorageResourceMapTransfer|null
      */
-    protected function getUrlStorageResourceMapTransfer(array $urlDetails, $options)
+    protected function getUrlStorageResourceMapTransfer(array $urlDetails, array $options = [])
     {
         $spyUrlTransfer = new SpyUrlTransfer();
         $spyUrlTransfer->fromArray($urlDetails, true);
@@ -116,6 +119,8 @@ class UrlStorageReader implements UrlStorageReaderInterface
                 return $pluginUrlStorageResourceMapTransfer;
             }
         }
+
+        return null;
     }
 
 }

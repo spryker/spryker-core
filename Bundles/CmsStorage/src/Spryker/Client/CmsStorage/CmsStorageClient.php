@@ -14,4 +14,19 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CmsStorageClient extends AbstractClient implements CmsStorageClientInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $data
+     *
+     * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
+     */
+    public function mapCmsPageStorageData(array $data)
+    {
+        return $this->getFactory()
+            ->createCmsPageStorageMapper()
+            ->mapCmsPageStorageData($data);
+    }
 }

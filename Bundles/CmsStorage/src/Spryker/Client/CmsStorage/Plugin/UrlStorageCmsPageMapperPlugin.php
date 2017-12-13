@@ -10,6 +10,7 @@ namespace Spryker\Client\CmsStorage\Plugin;
 use Generated\Shared\Transfer\SpyUrlTransfer;
 use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
+use Spryker\Shared\CmsStorage\CmsStorageConstants;
 use Spryker\Shared\Kernel\Store;
 
 class UrlStorageCmsPageMapperPlugin implements UrlStorageResourceMapperPluginInterface
@@ -27,13 +28,14 @@ class UrlStorageCmsPageMapperPlugin implements UrlStorageResourceMapperPluginInt
         $storeName = Store::getInstance()->getStoreName();
         if ($spyUrlTransfer->getFkResourcePage()) {
             $resourceKey = sprintf(
-                '%s.%s.resource.page.%d',
+                '%s:%s:%s:%d',
+                CmsStorageConstants::CMS_PAGE_RESOURCE_NAME,
                 strtolower($storeName),
                 $options['locale'],
                 $spyUrlTransfer->getFkResourcePage()
             );
             $urlStorageResourceMapTransfer->setResourceKey($resourceKey);
-            $urlStorageResourceMapTransfer->setType('page');
+            $urlStorageResourceMapTransfer->setType(CmsStorageConstants::CMS_PAGE_RESOURCE_NAME);
         }
 
         return $urlStorageResourceMapTransfer;

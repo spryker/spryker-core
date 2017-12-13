@@ -5,18 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CmsStorage;
+namespace Spryker\Client\CmsStorage\Mapper;
 
-interface CmsStorageClientInterface
+interface CmsPageStorageMapperInterface
 {
     /**
-     * Specification:
-     * - Maps raw CMS page storage data to transfer object.
-     *
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param array $data
      *
      * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
