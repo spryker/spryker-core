@@ -233,7 +233,7 @@ class Writer implements WriterInterface
     protected function handleStockUpdatePlugins($sku, StoreTransfer $storeTransfer)
     {
         foreach ($this->stockUpdateHandlerPlugins as $stockUpdateHandlerPlugin) {
-            if ($stockUpdateHandlerPlugin instanceof  StockUpdateHandlerStoreAwarePluginInterface) {
+            if ($stockUpdateHandlerPlugin instanceof StockUpdateHandlerStoreAwarePluginInterface) {
                 $stockUpdateHandlerPlugin->handleStock($sku, $storeTransfer);
             } else {
                 $stockUpdateHandlerPlugin->handle($sku);

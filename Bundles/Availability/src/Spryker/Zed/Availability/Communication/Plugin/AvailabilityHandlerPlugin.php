@@ -18,7 +18,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\ReservationStoreAwareHandlerPluginInterfac
  * @method \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface getFacade()
  * @method \Spryker\Zed\Availability\Communication\AvailabilityCommunicationFactory getFactory()
  */
-class AvailabilityHandlerPlugin extends AbstractPlugin implements ReservationHandlerPluginInterface, StockUpdateHandlerPluginInterface, ReservationStoreAwareHandlerPluginInterface
+class AvailabilityHandlerPlugin extends AbstractPlugin implements ReservationHandlerPluginInterface, StockUpdateHandlerPluginInterface, ReservationStoreAwareHandlerPluginInterface, StockUpdateHandlerStoreAwarePluginInterface
 {
     /**
      * @param string $sku

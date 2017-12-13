@@ -68,10 +68,7 @@ class StockSubForm extends AbstractType
      */
     protected function addStockTypeField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_STOCK_TYPE, 'text', [
-            'label' => 'Stock Type',
-            'disabled' => true,
-        ]);
+        $builder->add(static::FIELD_STOCK_TYPE, 'hidden');
 
         return $this;
     }
@@ -98,10 +95,7 @@ class StockSubForm extends AbstractType
      */
     protected function addFkStoreField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_FK_STORE, 'hidden', [
-            'label' => 'Store',
-            'disabled' => true,
-        ]);
+        $builder->add(static::FIELD_FK_STORE, 'hidden');
 
         return $this;
     }

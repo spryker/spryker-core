@@ -90,15 +90,16 @@ class AvailabilityStockFormDataProvider
                 if ($this->stockTypeExist($availabilityStockTransfer, $type, $storeTransfer->getName())) {
                     continue;
                 }
-                $stockProductTransfer = new StockProductTransfer();
-                $stockProductTransfer->setStockType($type);
-                $stockProductTransfer->setQuantity(0);
-                $stockProductTransfer->setStore($storeTransfer);
+
+                $stockProductTransfer = (new StockProductTransfer())
+                    ->setStockType($type)
+                    ->setQuantity(0)
+                    ->setFkStore($storeTransfer->getIdStore())
+                    ->setStore($storeTransfer);
 
                 $availabilityStockTransfer->addStockProduct($stockProductTransfer);
             }
         }
-
     }
 
     /**

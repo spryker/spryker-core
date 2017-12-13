@@ -238,7 +238,7 @@ class Reader implements ReaderInterface
     {
         $stockProductQuery = $this->queryContainer
             ->queryStockProductByStockAndProduct($idStockType, $idProduct)
-            ->filterByFkStore($idStore);
+            ->filterByFkStore((int)$idStore);
 
         if ($stockProductQuery->count() > 0) {
             throw new StockProductAlreadyExistsException(

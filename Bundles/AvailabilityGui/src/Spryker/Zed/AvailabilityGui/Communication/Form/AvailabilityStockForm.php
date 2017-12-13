@@ -68,21 +68,27 @@ class AvailabilityStockForm extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function finishView(FormView $view, FormInterface $form, array $options)
     {
-        parent::buildView($view, $form, $options);
+        parent::finishView($view, $form, $options);
 
         $stockTable = [];
-
-        foreach ($form->get(static::FIELD_STOCKS) as $stockFormType) {
+        $stores = [];
+        foreach ($view['stocks'] as $stockFormView) {
 
             /* @var $stockProductTransfer StockProductTransfer */
-            $stockProductTransfer = $stockFormType->getData();
+            $stockProductTransfer = $stockFormView->vars['value'];
 
-            $stockTable[$stockProductTransfer->getStockType()][$stockProductTransfer->getStore()->getName()] = $stockFormType;
+            $stockTable[$stockProductTransfer->getStockType()][$stockProductTransfer->getStore()->getName()] = $stockFormView;
+
+            ksort($stockTable[$stockProductTransfer->getStockType()]);
+
+            $stores[$stockProductTransfer->getStore()->getName()] = $stockProductTransfer->getStore()->getName();
         }
 
-        $view->vars['storeTable'] = $stockTable;
+        sort($stores);
 
+        $view->vars['storeTable'] = $stockTable;
+        $view->vars['stores'] = $stores;
     }
 }
