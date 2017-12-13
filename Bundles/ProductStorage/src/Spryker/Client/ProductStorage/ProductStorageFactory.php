@@ -34,7 +34,7 @@ class ProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceBridge
      */
-    protected function getSynchronizationService()
+    public function getSynchronizationService()
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }

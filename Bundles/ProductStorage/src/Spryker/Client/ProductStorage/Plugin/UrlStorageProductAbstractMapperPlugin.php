@@ -8,11 +8,19 @@
 namespace Spryker\Client\ProductStorage\Plugin;
 
 use Generated\Shared\Transfer\SpyUrlTransfer;
+use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
+use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\ProductStorage\ProductStorageFactory;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Product\ProductConfig;
+use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
-class UrlStorageProductAbstractMapperPlugin implements UrlStorageResourceMapperPluginInterface
+/**
+ * @method ProductStorageFactory getFactory()
+ */
+class UrlStorageProductAbstractMapperPlugin extends AbstractPlugin implements UrlStorageResourceMapperPluginInterface
 {
 
     /**
@@ -24,19 +32,38 @@ class UrlStorageProductAbstractMapperPlugin implements UrlStorageResourceMapperP
     public function map(SpyUrlTransfer $spyUrlTransfer, $options = [])
     {
         $urlStorageResourceMapTransfer = new UrlStorageResourceMapTransfer();
-        $storeName = Store::getInstance()->getStoreName();
-        if ($spyUrlTransfer->getFkResourceProductAbstract()) {
-            $resourceKey = sprintf(
-                '%s.%s.resource.product_abstract.%d',
-                strtolower($storeName),
-                $options['locale'],
-                $spyUrlTransfer->getFkResourceProductAbstract()
-            );
+        $idProductAbstract = $spyUrlTransfer->getFkResourceProductAbstract();
+        if ($idProductAbstract) {
+            $resourceKey = $this->generateKey($idProductAbstract, $options['locale']);
             $urlStorageResourceMapTransfer->setResourceKey($resourceKey);
-            $urlStorageResourceMapTransfer->setType('product_abstract');
+            $urlStorageResourceMapTransfer->setType(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT);
         }
 
         return $urlStorageResourceMapTransfer;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $locale
+     *
+     * @return string
+     */
+    protected function generateKey($idProductAbstract, $locale)
+    {
+        $synchronizationDataTransfer = new SynchronizationDataTransfer();
+        $synchronizationDataTransfer->setStore($this->getStoreName());
+        $synchronizationDataTransfer->setLocale($locale);
+        $synchronizationDataTransfer->setReference($idProductAbstract);
+
+        return $this->getFactory()->getSynchronizationService()->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_ABSTRACT_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStoreName()
+    {
+        return Store::getInstance()->getStoreName();
     }
 
 }
