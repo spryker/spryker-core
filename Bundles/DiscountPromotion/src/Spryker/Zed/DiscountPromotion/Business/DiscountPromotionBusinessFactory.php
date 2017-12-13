@@ -26,11 +26,11 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountPromotionCollectorStrategy()
     {
-         return new DiscountPromotionCollectorStrategy(
-             $this->getProductFacade(),
-             $this->getQueryContainer(),
-             $this->createPromotionAvailabilityCalculator()
-         );
+        return new DiscountPromotionCollectorStrategy(
+            $this->getProductFacade(),
+            $this->getQueryContainer(),
+            $this->createPromotionAvailabilityCalculator()
+        );
     }
 
     /**
