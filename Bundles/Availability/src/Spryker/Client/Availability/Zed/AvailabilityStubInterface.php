@@ -1,26 +1,20 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
-namespace Spryker\Zed\Availability\Business\Model;
+
+namespace Spryker\Client\Availability\Zed;
 
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 
-interface ProductReservationReaderInterface
+interface AvailabilityStubInterface
 {
-    /**
-     * @param int $idProductAbstract
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
-     */
-    public function getProductAbstractAvailability($idProductAbstract, $idLocale);
-
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function findProductConcreteAvailability(ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer);
 }
