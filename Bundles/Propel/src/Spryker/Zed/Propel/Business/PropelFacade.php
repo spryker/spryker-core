@@ -216,6 +216,8 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\SchemaValidationTransfer
