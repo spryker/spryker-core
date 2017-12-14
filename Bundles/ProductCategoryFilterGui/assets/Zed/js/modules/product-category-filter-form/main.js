@@ -32,13 +32,11 @@ $(document).ready(function() {
     });
 
     saveButton.on('click', function() {
-        $.post(form.attr('action'), form.serialize(), function() {
-            var event = new CustomEvent(
-                'categoryChanged',
-                { detail: { idCategory: idCategory }}
-                );
-            window.parent.document.dispatchEvent(event);
-        });
+        var event = new CustomEvent(
+            'categoryChanged',
+            { detail: { idCategory: idCategory }}
+        );
+        window.parent.document.dispatchEvent(event);
     });
 
     resetButton.on('click', function(e) {
