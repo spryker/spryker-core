@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
+    const MESSAGE_CUSTOMER_UPDATE_ERROR = 'Customer was not updated.';
+    const MESSAGE_CUSTOMER_UPDATE_SUCCESS = 'Customer was updated successfully.';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -40,18 +43,19 @@ class EditController extends AbstractController
             $customerTransfer = new CustomerTransfer();
             $customerTransfer->fromArray($form->getData(), true);
 
-            $this->getFacade()->updateCustomer($customerTransfer);
+            $customerResponseTransfer = $this->getFacade()->updateCustomer($customerTransfer);
+            if (!$customerResponseTransfer->getIsSuccess()) {
+                $this->addErrorMessage(static::MESSAGE_CUSTOMER_UPDATE_ERROR);
 
-            $defaultBilling = $customerTransfer->getBillingAddress() ?: null;
-            if (!$defaultBilling) {
-                $this->updateBillingAddress($idCustomer, $defaultBilling);
+                return $this->viewResponse([
+                    'form' => $form->createView(),
+                    'idCustomer' => $idCustomer,
+                ]);
             }
 
-            $defaultShipping = $customerTransfer->getShippingAddress() ?: null;
-            if (!$defaultShipping) {
-                $this->updateShippingAddress($idCustomer, $defaultShipping);
-            }
+            $this->updateCustomerAddresses($customerTransfer);
 
+            $this->addSuccessMessage(static::MESSAGE_CUSTOMER_UPDATE_SUCCESS);
             return $this->redirectResponse(
                 sprintf('/customer/view?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
             );
@@ -77,6 +81,24 @@ class EditController extends AbstractController
     protected function createAddressTransfer()
     {
         return new AddressTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    protected function updateCustomerAddresses(CustomerTransfer $customerTransfer)
+    {
+        $defaultBilling = $customerTransfer->getBillingAddress() ?: null;
+        if (!$defaultBilling) {
+            $this->updateBillingAddress($customerTransfer->getIdCustomer(), $defaultBilling);
+        }
+
+        $defaultShipping = $customerTransfer->getShippingAddress() ?: null;
+        if (!$defaultShipping) {
+            $this->updateShippingAddress($customerTransfer->getIdCustomer(), $defaultShipping);
+        }
     }
 
     /**
