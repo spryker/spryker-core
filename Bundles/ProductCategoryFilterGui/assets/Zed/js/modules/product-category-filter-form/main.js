@@ -11,7 +11,6 @@ var idCategory = $('#idCategory').val();
 var addButton = $('#addButton');
 var saveButton = $('#product-category-filter-save-btn');
 var resetButton = $('#reset-filters');
-var form = $('[name="product_category_filter"]');
 var filterTextField = $('#product_category_filter_filter-autocomplete');
 
 $(document).ready(function() {
