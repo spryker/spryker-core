@@ -11,7 +11,7 @@ use DateTime;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
-use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
@@ -25,7 +25,6 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyI
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -36,6 +35,9 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ */
 class ProductFormAdd extends AbstractType
 {
     const FIELD_SKU = 'sku';
@@ -99,18 +101,12 @@ class ProductFormAdd extends AbstractType
     protected $utilTextService;
 
     /**
-     * @var \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
-     */
-    protected $storeRelationFormTypePlugin;
-
-    /**
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface $utilTextService
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface $currencyFacade
-     * @param \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface $storeRelationFormTypePlugin
      */
     public function __construct(
         LocaleProvider $localeProvider,
@@ -118,8 +114,7 @@ class ProductFormAdd extends AbstractType
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductManagementToMoneyInterface $moneyFacade,
         ProductManagementToUtilTextInterface $utilTextService,
-        ProductManagementToCurrencyInterface $currencyFacade,
-        FormTypeInterface $storeRelationFormTypePlugin
+        ProductManagementToCurrencyInterface $currencyFacade
     ) {
         $this->localeProvider = $localeProvider;
         $this->productQueryContainer = $productQueryContainer;
@@ -127,7 +122,6 @@ class ProductFormAdd extends AbstractType
         $this->moneyFacade = $moneyFacade;
         $this->utilTextService = $utilTextService;
         $this->currencyFacade = $currencyFacade;
-        $this->storeRelationFormTypePlugin = $storeRelationFormTypePlugin;
     }
 
     /**
@@ -297,9 +291,10 @@ class ProductFormAdd extends AbstractType
      */
     protected function addStoreRelationForm(FormBuilderInterface $builder)
     {
+        // TODO: reduce dependencies
         $builder->add(
             static::FORM_STORE_RELATION,
-            $this->storeRelationFormTypePlugin->getType()
+            $this->getFactory()->getStoreRelationFormTypePlugin()->getType()
         );
 
         return $this;

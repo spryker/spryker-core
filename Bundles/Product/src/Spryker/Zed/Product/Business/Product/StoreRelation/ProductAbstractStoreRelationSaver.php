@@ -16,7 +16,7 @@ class ProductAbstractStoreRelationSaver implements ProductAbstractStoreRelationS
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
-    protected $queryContainer;
+    protected $productQueryContainer;
 
     /**
      * @var \Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReaderInterface
@@ -24,14 +24,14 @@ class ProductAbstractStoreRelationSaver implements ProductAbstractStoreRelationS
     protected $productAbstractStoreRelationReader;
 
     /**
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReaderInterface $productAbstractStoreRelationReader
      */
     public function __construct(
-        ProductQueryContainerInterface $queryContainer,
+        ProductQueryContainerInterface $productQueryContainer,
         ProductAbstractStoreRelationReaderInterface $productAbstractStoreRelationReader
     ) {
-        $this->queryContainer = $queryContainer;
+        $this->productQueryContainer = $productQueryContainer;
         $this->productAbstractStoreRelationReader = $productAbstractStoreRelationReader;
     }
 
@@ -60,10 +60,10 @@ class ProductAbstractStoreRelationSaver implements ProductAbstractStoreRelationS
     protected function addStores(array $idStores, $idProductAbstract)
     {
         foreach ($idStores as $idStore) {
-            $entity = new SpyProductAbstractStore();
-            $entity->setFkStore($idStore);
-            $entity->setFkProductAbstract($idProductAbstract);
-            $entity->save();
+            (new SpyProductAbstractStore())
+                ->setFkStore($idStore)
+                ->setFkProductAbstract($idProductAbstract)
+                ->save();
         }
     }
 
@@ -79,7 +79,7 @@ class ProductAbstractStoreRelationSaver implements ProductAbstractStoreRelationS
             return;
         }
 
-        $this->queryContainer
+        $this->productQueryContainer
             ->queryProductAbstractStoresByFkProductAbstractAndFkStores($idProductAbstract, $idStores)
             ->delete();
     }

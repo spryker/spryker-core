@@ -15,14 +15,14 @@ class ProductAbstractStoreRelationReader implements ProductAbstractStoreRelation
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
-    protected $queryContainer;
+    protected $productQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      */
-    public function __construct(ProductQueryContainerInterface $queryContainer)
+    public function __construct(ProductQueryContainerInterface $productQueryContainer)
     {
-        $this->queryContainer = $queryContainer;
+        $this->productQueryContainer = $productQueryContainer;
     }
 
     /**
@@ -46,7 +46,7 @@ class ProductAbstractStoreRelationReader implements ProductAbstractStoreRelation
      */
     protected function getIdStores($idProductAbstract)
     {
-        $productAbstractStoreCollection = $this->queryContainer
+        $productAbstractStoreCollection = $this->productQueryContainer
             ->queryProductAbstractStoreByFkProductAbstract($idProductAbstract)
             ->find();
 

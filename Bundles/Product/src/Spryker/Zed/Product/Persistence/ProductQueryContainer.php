@@ -234,6 +234,21 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      * @api
      *
      * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery
+     */
+    public function queryProductAbstractStoreWithStoresByFkProductAbstract($idProductAbstract)
+    {
+        return $this->queryProductAbstractStoreByFkProductAbstract($idProductAbstract)
+            ->leftJoinWithSpyStore();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
      * @param int[] $idStores
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery

@@ -25,7 +25,9 @@ class StoreRelationToggleType extends AbstractType
     const FIELD_ID_STORES = 'id_stores';
     const FIELD_ID_STORES_DISABLED = 'id_stores_disabled';
 
-    const FORM_NAME = 'Store relation';
+    const STORE_TOGGLE_NAME = 'Store relation';
+
+    const MESSAGE_MULTI_STORE_PER_INSTANCE_DISABLED = 'Multi-store per instance feature is disabled';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -91,7 +93,7 @@ class StoreRelationToggleType extends AbstractType
             static::FIELD_ID_STORES,
             ChoiceType::class,
             [
-                'label' => static::FORM_NAME,
+                'label' => static::STORE_TOGGLE_NAME,
                 'expanded' => true,
                 'multiple' => true,
                 'choices' => $this->getStoreNameMap(),
@@ -108,11 +110,13 @@ class StoreRelationToggleType extends AbstractType
      */
     protected function addFieldImmutableIdStores(FormBuilderInterface $builder)
     {
+        $storeToggleName = sprintf('%s (%s)', static::STORE_TOGGLE_NAME, static::MESSAGE_MULTI_STORE_PER_INSTANCE_DISABLED);
+
         $builder->add(
             static::FIELD_ID_STORES_DISABLED,
             ChoiceType::class,
             [
-                'label' => static::FORM_NAME,
+                'label' => $storeToggleName,
                 'expanded' => true,
                 'disabled' => true,
                 'property_path' => static::FIELD_ID_STORES,

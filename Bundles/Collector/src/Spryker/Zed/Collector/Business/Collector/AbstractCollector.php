@@ -75,7 +75,7 @@ abstract class AbstractCollector
     /**
      * @param array $collectItemData
      *
-     * @return bool
+     * @return bool True if the item can be exported; false if the item should be removed when stored.
      */
     protected function isStorable(array $collectItemData)
     {

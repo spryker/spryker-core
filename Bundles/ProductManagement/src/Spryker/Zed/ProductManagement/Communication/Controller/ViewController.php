@@ -69,6 +69,8 @@ class ViewController extends AddController
 
         $imageSets = $this->getProductImageSetCollection($imageSetCollection);
 
+        $relatedStoreNames = $this->getStoreNamesById($productAbstractTransfer->getStoreRelation()->getIdStores());
+
         return $this->viewResponse([
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
@@ -84,6 +86,7 @@ class ViewController extends AddController
             'imageUrlPrefix' => $this->getFactory()->getConfig()->getImageUrlPrefix(),
             'taxSet' => $this->getFactory()->getTaxFacade()->getTaxSet($productAbstractTransfer->getIdTaxSet()),
             'renderedPlugins' => $this->getRenderedProductAbstractViewPlugins($idProductAbstract),
+            'relatedStoreNames' => $relatedStoreNames,
         ]);
     }
 
@@ -273,5 +276,22 @@ class ViewController extends AddController
         }
 
         return $productAbstractRenderedPlugins;
+    }
+
+    /**
+     * @param int[] $idStores
+     *
+     * @return string[]
+     */
+    protected function getStoreNamesById(array $idStores)
+    {
+        // TODO: resolve store name when CORE-1752 is released
+
+        $storeNames = [];
+        foreach ($idStores as $idStore) {
+            $storeNames[] = $idStore;
+        }
+
+        return $storeNames;
     }
 }
