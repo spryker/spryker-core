@@ -44,7 +44,7 @@ class Calculator implements CalculatorInterface
      */
     public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer)
     {
-        $productEntities = $this->reader->getProductStocksForStore($sku, $storeTransfer);
+        $productEntities = $this->reader->findProductStocksForStore($sku, $storeTransfer);
 
         return $this->calculateTotalQuantity($productEntities);
     }

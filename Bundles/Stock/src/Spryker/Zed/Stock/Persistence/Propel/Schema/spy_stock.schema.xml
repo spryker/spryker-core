@@ -17,7 +17,6 @@
         <column name="fk_stock" type="INTEGER" required="true"/>
         <column name="quantity" type="INTEGER" defaultValue="0"/>
         <column name="is_never_out_of_stock" type="BOOLEAN" defaultValue="false"/>
-        <column name="fk_store" required="false" type="INTEGER"/>
 
         <foreign-key name="spy_stock_product-fk_product" foreignTable="spy_product" phpName="SpyProduct" refPhpName="StockProduct">
             <reference local="fk_product" foreign="id_product"/>
@@ -25,10 +24,6 @@
 
         <foreign-key name="spy_stock_product-fk_stock" foreignTable="spy_stock" phpName="Stock" refPhpName="StockProduct">
             <reference local="fk_stock" foreign="id_stock"/>
-        </foreign-key>
-
-        <foreign-key name="spy_stock_product-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="StockProduct">
-            <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
 
         <unique name="spy_stock_product-unique-fk_stock">
@@ -43,5 +38,24 @@
 
         <id-method-parameter value="spy_stock_product_pk_seq"/>
     </table>
+
+    <table name="spy_stock_product_store" phpName="SpyStockProductStore">
+        <column name="fk_store" type="INTEGER" required="true"/>
+        <column name="fk_stock_product" type="INTEGER" required="true"/>
+
+        <unique name="spy_stock_product_store-unique-fk_stock_product">
+            <unique-column name="fk_store"/>
+            <unique-column name="fk_stock_product"/>
+        </unique>
+
+        <foreign-key name="spy_stock_product_store-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="SpyStockProductStore">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+
+        <foreign-key name="spy_stock_product_store-fk_stock_product" foreignTable="spy_stock_product" phpName="StockProduct" refPhpName="SpyStockProductStore">
+            <reference local="fk_stock_product" foreign="id_stock_product"/>
+        </foreign-key>
+
+    <id-method-parameter value="spy_stock_product_store_pk_seq"/></table>
 
 </database>

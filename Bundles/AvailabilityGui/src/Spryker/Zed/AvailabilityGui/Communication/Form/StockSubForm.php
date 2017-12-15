@@ -8,6 +8,8 @@
 namespace Spryker\Zed\AvailabilityGui\Communication\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -19,7 +21,7 @@ class StockSubForm extends AbstractType
     const FIELD_QUANTITY = 'quantity';
     const FIELD_STOCK_TYPE = 'stockType';
     const FIELD_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
-    const FIELD_FK_STORE = 'fkStore';
+    const STORE_IDS = 'storeIds';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -31,8 +33,8 @@ class StockSubForm extends AbstractType
     {
         $this->addQuantityField($builder)
             ->addStockTypeField($builder)
-            ->addFkStoreField($builder)
-            ->addIsNeverOutOfStockCheckbox($builder);
+            ->addIsNeverOutOfStockCheckbox($builder)
+            ->addStoreSelectField($builder);
     }
 
     /**
@@ -68,7 +70,10 @@ class StockSubForm extends AbstractType
      */
     protected function addStockTypeField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_STOCK_TYPE, 'hidden');
+        $builder->add(static::FIELD_STOCK_TYPE, 'text', [
+            'label' => 'Stock Type',
+            'disabled' => true,
+        ]);
 
         return $this;
     }
@@ -93,20 +98,23 @@ class StockSubForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFkStoreField(FormBuilderInterface $builder)
+    protected function addStoreSelectField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_FK_STORE, 'hidden');
+        $builder->add(static::STORE_IDS, ChoiceType::class, [
+            'choices' => [
+                1 => 'DE',
+                2 => 'AT',
+                3 => 'US'
+            ],
+            'required' => false,
+            'multiple' => true,
+            'expanded' => true,
+            'label_attr' => array(
+                'class' => 'checkbox-inline'
+            ),
+            'label' => false,
+        ]);
 
         return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        parent::buildView($view, $form, $options);
-
-        $view->vars['store'] = $form->getData()->getStore();
     }
 }

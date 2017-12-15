@@ -40,6 +40,6 @@ class AvailabilityHandlerPlugin extends AbstractPlugin implements ReservationHan
      */
     public function handleStock($sku, StoreTransfer $storeTransfer)
     {
-        $this->getFacade()->updateAvailabilityForStore($sku, $storeTransfer);
+        //$this->getFacade()->updateAvailabilityForStore($sku, $storeTransfer);
     }
 }

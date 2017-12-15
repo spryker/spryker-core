@@ -72,24 +72,12 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     public function updateAvailability($sku)
     {
-        $quantityWithReservedItems = $this->getQuantity($this->sellable->calculateStockForProduct($sku));
+        foreach ((new StoreFacade())->getAllStores() as $storeTransfer) {
+            $quantity = $this->sellable->calculateStockForProduct($sku,  $storeTransfer);
+            $quantityWithReservedItems = $this->getQuantity($quantity);
 
-        $this->saveAndTouchAvailability($sku, $quantityWithReservedItems);
-    }
-
-    /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return mixed
-     */
-    public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer)
-    {
-        $quantityWithReservedItems = $this->getQuantity(
-            $this->sellable->calculateStockForProduct($sku, $storeTransfer)
-        );
-
-        $this->saveAndTouchAvailability($sku, $quantityWithReservedItems, $storeTransfer);
+            $this->saveAndTouchAvailability($sku, $quantityWithReservedItems, $storeTransfer);
+        }
     }
 
     /**
@@ -112,12 +100,8 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      * @return \Orm\Zed\Availability\Persistence\SpyAvailability
      */
-    protected function saveAndTouchAvailability($sku, $quantity, StoreTransfer $storeTransfer = null)
+    protected function saveAndTouchAvailability($sku, $quantity, StoreTransfer $storeTransfer)
     {
-        if (!$storeTransfer) {
-            $storeTransfer = $this->getCurrentStore();
-        }
-
         $currentQuantity = $this->findCurrentPhysicalQuantity($sku, $storeTransfer);
         $spyAvailabilityEntity = $this->prepareAvailabilityEntityForSave($sku, $quantity, $storeTransfer);
 
@@ -237,7 +221,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     public function getCurrentStore()
     {
-        return (new StoreFacade())->getCurrentStore();;
+        return (new StoreFacade())->getCurrentStore();
     }
 
     /**
@@ -298,9 +282,10 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     protected function createSpyAvailabilityAbstract($abstractSku, StoreTransfer $storeTransfer)
     {
-        $availableAbstractEntity = new SpyAvailabilityAbstract();
-        $availableAbstractEntity->setAbstractSku($abstractSku);
-        $availableAbstractEntity->setFkStore($storeTransfer->getIdStore());
+        $availableAbstractEntity = (new SpyAvailabilityAbstract())
+            ->setAbstractSku($abstractSku)
+            ->setFkStore($storeTransfer->getIdStore());
+
         $availableAbstractEntity->save();
 
         return $availableAbstractEntity;

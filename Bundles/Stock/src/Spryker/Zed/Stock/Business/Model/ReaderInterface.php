@@ -39,7 +39,7 @@ interface ReaderInterface
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
      */
-    public function getProductStocksForStore($sku, StoreTransfer $storeTransfer);
+    public function findProductStocksForStore($sku, StoreTransfer $storeTransfer);
 
     /**
      * @param string $sku
@@ -91,15 +91,6 @@ interface ReaderInterface
      * @return void
      */
     public function checkStockDoesNotExist($idStockType, $idProduct);
-
-    /**
-     * @param int $idStockType
-     * @param int $idProduct
-     * @param int $idStore
-     *
-     * @return void
-     */
-    public function checkStockDoesNotExistForStore($idStockType, $idProduct, $idStore);
 
     /**
      * @param int $idStockProduct

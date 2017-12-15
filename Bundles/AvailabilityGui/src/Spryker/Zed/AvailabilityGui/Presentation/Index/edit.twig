@@ -14,35 +14,11 @@
         {% block widget_content %}
             {{ form_start(form) }}
 
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th style="width: 100px; background-color:#FFF; border-top: 1px solid #FFF; border-left:1px solid #FFF;;"></th>
-                        {% for store in form.vars.stores %}
-                            <th>{{ store }}</th>
-                        {% endfor %}
-                    </tr>
-                </thead>
+            {% for stock in form.stocks %}
+                {{ form_row(stock.stockType ) }} {{ form_row(stock.quantity) }}  {{ form_row(stock.is_never_out_of_stock) }}
 
-                <tbody>
-                {% for warehouse, stock in form.vars.storeTable %}
-                    <tr>
-                    {% for country, stockForm in stock %}
-                        {% if loop.first %}
-                            <td style="background-color:#F5F5F6; text-align: center; vertical-align: middle; font-weight:bold">{{ warehouse }}</td>
-                        {% endif %}
-                        <td>
-                            {{ form_row(stockForm.quantity) }}
-                            {{ form_row(stockForm.is_never_out_of_stock) }}
-                            {{ form_row(stockForm.stockType ) }}
-                            {{ form_row(stockForm.fkStore) }}
-                        </td>
-                        {% do stockForm.setRendered %}
-                    {% endfor %}
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                {{ form_row(stock.storeIds) }}
+            {% endfor %}
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
             {{ form_end(form) }}

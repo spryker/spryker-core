@@ -85,7 +85,9 @@ class Reader implements ReaderInterface
         $idProduct = $this->productFacade->findProductConcreteIdBySku($sku);
         $stock = $this->queryContainer
             ->queryStockByNeverOutOfStockAllTypes($idProduct)
-            ->filterByFkStore($storeTransfer->getIdStore())
+            ->useSpyStockProductStoreQuery()
+                ->filterByFkStore($storeTransfer->getIdStore())
+            ->endUse()
             ->findOne();
 
         return ($stock !== null);
@@ -104,7 +106,9 @@ class Reader implements ReaderInterface
 
         $stockEntities = $this->queryContainer
             ->queryStockByProducts($productId)
-            ->filterByFkStore($this->getCurrentStore()->getIdStore())
+            ->useSpyStockProductStoreQuery()
+                ->filterByFkStore($this->getCurrentStore()->getIdStore())
+            ->endUse()
             ->find();
 
         if (count($stockEntities) < 1) {
@@ -121,20 +125,16 @@ class Reader implements ReaderInterface
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
      */
-    public function getProductStocksForStore($sku, StoreTransfer $storeTransfer)
+    public function findProductStocksForStore($sku, StoreTransfer $storeTransfer)
     {
         $productId = $this->productFacade->findProductConcreteIdBySku($sku);
 
-        $stockEntities = $this->queryContainer
+        return $this->queryContainer
             ->queryStockByProducts($productId)
-            ->filterByFkStore($storeTransfer->getIdStore())
+            ->useSpyStockProductStoreQuery()
+                ->filterByFkStore($storeTransfer->getIdStore())
+            ->endUse()
             ->find();
-
-        if (count($stockEntities) < 1) {
-            throw new InvalidArgumentException(self::MESSAGE_NO_RESULT);
-        }
-
-        return $stockEntities;
     }
 
     /**
@@ -142,7 +142,7 @@ class Reader implements ReaderInterface
      */
     public function getCurrentStore()
     {
-        return (new StoreFacade())->getCurrentStore();;
+        return (new StoreFacade())->getCurrentStore();
     }
 
     /**
@@ -172,7 +172,9 @@ class Reader implements ReaderInterface
     {
         return $this->queryContainer
                 ->queryStockProductBySkuAndType($sku, $stockType)
-                ->filterByFkStore($this->getCurrentStore()->getIdStore())
+                ->useSpyStockProductStoreQuery()
+                    ->filterByFkStore($this->getCurrentStore()->getIdStore())
+                ->endUse()
                 ->count() > 0;
     }
 
@@ -191,7 +193,9 @@ class Reader implements ReaderInterface
 
         $stockProductEntity = $this->queryContainer
             ->queryStockProductByStockAndProduct($idStockType, $idProduct)
-            ->filterByFkStore($this->getCurrentStore()->getIdStore())
+            ->useSpyStockProductStoreQuery()
+                ->filterByFkStore($this->getCurrentStore()->getIdStore())
+            ->endUse()
             ->findOne();
 
         if ($stockProductEntity === null) {
@@ -230,15 +234,13 @@ class Reader implements ReaderInterface
     /**
      * @param int $idStockType
      * @param int $idProduct
-     * @param int $idStore
      *
      * @return void
      */
-    public function checkStockDoesNotExistForStore($idStockType, $idProduct, $idStore)
+    public function checkStockDoesNotExistForStore($idStockType, $idProduct)
     {
         $stockProductQuery = $this->queryContainer
-            ->queryStockProductByStockAndProduct($idStockType, $idProduct)
-            ->filterByFkStore((int)$idStore);
+            ->queryStockProductByStockAndProduct($idStockType, $idProduct);
 
         if ($stockProductQuery->count() > 0) {
             throw new StockProductAlreadyExistsException(
@@ -299,24 +301,24 @@ class Reader implements ReaderInterface
     {
         $stockProducts = $this->queryContainer
             ->queryStockByIdProduct($idProductConcrete)
+            ->joinWithSpyStockProductStore()
             ->find();
 
         if (count($stockProducts) === 0) {
             throw new StockProductNotFoundException();
         }
 
-        $storeFacade = new StoreFacade();
-
         $products = [];
         foreach ($stockProducts as $stockProductEntity) {
-            $stockProductTransfer = new StockProductTransfer();
+            $stockProductTransfer = (new StockProductTransfer())
+                ->fromArray($stockProductEntity->toArray(), true);
 
-            if ($stockProductEntity->getFkStore()) {
-                $storeTransfer = $storeFacade->getStoreById($stockProductEntity->getFkStore());
-                $stockProductTransfer->setStore($storeTransfer);
+            $storeIds = [];
+            foreach ($stockProductEntity->getSpyStockProductStores() as $stockProductStoreEntity) {
+                $storeIds[] = $stockProductStoreEntity->getFkStore();
             }
 
-            $stockProductTransfer->fromArray($stockProductEntity->toArray(), true);
+            $stockProductTransfer->setStoreIds($storeIds);
 
             $products[] = $stockProductTransfer;
 

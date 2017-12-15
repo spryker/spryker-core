@@ -32,11 +32,4 @@ interface AvailabilityHandlerInterface
      */
     public function saveCurrentAvailability($sku, $quantity);
 
-    /**
-     * @param $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return mixed
-     */
-    public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer);
 }

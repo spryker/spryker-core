@@ -15,7 +15,6 @@ use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\Store\Business\StoreFacade;
 
 class AvailabilityTable extends AbstractTable
 {
@@ -74,7 +73,6 @@ class AvailabilityTable extends AbstractTable
         $config->setUrl($url);
 
         $config->setHeader([
-            AvailabilityQueryContainer::ID_STORE => 'Store',
             AvailabilityQueryContainer::CONCRETE_SKU => 'SKU',
             AvailabilityQueryContainer::CONCRETE_NAME => 'Name',
             AvailabilityQueryContainer::CONCRETE_AVAILABILITY => 'Availability',
@@ -119,10 +117,7 @@ class AvailabilityTable extends AbstractTable
         foreach ($queryResult as $productItem) {
             $isBundleProduct = $this->isBundleProduct($productItem[AvailabilityQueryContainer::ID_PRODUCT]);
 
-            $storeTransfer = (new StoreFacade())->getStoreById($productItem[AvailabilityQueryContainer::ID_STORE]);
-
             $result[] = [
-                AvailabilityQueryContainer::ID_STORE => $storeTransfer->getName(),
                 AvailabilityQueryContainer::CONCRETE_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
                 AvailabilityQueryContainer::CONCRETE_NAME => $productItem[AvailabilityQueryContainer::CONCRETE_NAME],
                 AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY],
