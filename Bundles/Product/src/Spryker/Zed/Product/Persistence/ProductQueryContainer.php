@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductQueryContainer extends AbstractQueryContainer implements ProductQueryContainerInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $concreteSku
@@ -38,6 +40,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
@@ -48,6 +52,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
@@ -58,6 +64,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -73,6 +81,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
@@ -83,6 +93,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
@@ -93,6 +105,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProduct
@@ -108,6 +122,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $sku
@@ -121,6 +137,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $sku
@@ -134,6 +152,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -152,6 +172,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -170,6 +192,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
@@ -180,6 +204,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -197,6 +223,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idLocale

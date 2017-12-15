@@ -12,6 +12,12 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 interface ProductAbstractReadObserverInterface
 {
     /**
+     * Specification:
+     * - Executed on retrieved persisted abstract product data.
+     * - Notifies registered observers in chain of responsibility.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer

@@ -13,12 +13,13 @@ interface ProductConcretePluginCreateInterface
 {
     /**
      * Specification:
-     * - Executed before and after an concrete product is created.
-     * - Can be used for persisting other concrete product related information to database or execute any other logic.
-     * - The ID of the concrete product is available only if the plugin executed on "after" event.
-     * - To inject instances of the plugin @see \Spryker\Zed\Product\ProductDependencyProvider.
+     * - Executed on "before" and/or on "after" event when a concrete product is created.
+     * - Can be used to persist additional concrete product related information.
+     * - The ID of the concrete product is available only if the plugin is executed on "after" event.
      *
      * @api
+     *
+     * @see \Spryker\Zed\Product\ProductDependencyProvider
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *

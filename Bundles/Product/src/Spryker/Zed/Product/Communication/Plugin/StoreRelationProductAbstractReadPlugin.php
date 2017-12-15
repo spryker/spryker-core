@@ -19,6 +19,8 @@ use Spryker\Zed\Product\Business\Product\Observer\ProductAbstractReadObserverInt
 class StoreRelationProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstractReadObserverInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
