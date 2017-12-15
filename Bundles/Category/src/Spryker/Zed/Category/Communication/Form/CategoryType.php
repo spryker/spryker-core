@@ -283,4 +283,14 @@ class CategoryType extends AbstractType
     {
         return 'category';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

@@ -173,4 +173,14 @@ class CmsPageAttributesFormType extends AbstractType
     {
         return 'cms_page_attributes';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

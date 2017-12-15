@@ -287,4 +287,14 @@ class CalculatorForm extends AbstractType
     {
         return 'discount_calculator';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

@@ -73,4 +73,14 @@ class Select2ComboBoxType extends AbstractType
     {
         return 'select2';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

@@ -121,4 +121,14 @@ class TaxRateForm extends AbstractType
     {
         return 'tax_rate';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

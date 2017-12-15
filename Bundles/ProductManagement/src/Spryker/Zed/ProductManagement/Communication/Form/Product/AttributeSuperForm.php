@@ -76,4 +76,14 @@ class AttributeSuperForm extends AttributeAbstractForm
     {
         return 'product_attribute_super';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

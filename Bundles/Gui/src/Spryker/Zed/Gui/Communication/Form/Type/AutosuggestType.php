@@ -75,4 +75,14 @@ class AutosuggestType extends AbstractType
     {
         return 'autosuggest';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

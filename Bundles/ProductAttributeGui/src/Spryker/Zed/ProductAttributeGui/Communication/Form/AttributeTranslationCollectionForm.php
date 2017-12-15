@@ -52,4 +52,14 @@ class AttributeTranslationCollectionForm extends AbstractType
     {
         return 'translation';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

@@ -357,4 +357,14 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
     {
         return 'navigation_node_localized_attributes';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

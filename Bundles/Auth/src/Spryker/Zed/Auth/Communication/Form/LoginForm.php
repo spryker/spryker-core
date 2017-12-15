@@ -87,4 +87,14 @@ class LoginForm extends AbstractType
     {
         return 'auth';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

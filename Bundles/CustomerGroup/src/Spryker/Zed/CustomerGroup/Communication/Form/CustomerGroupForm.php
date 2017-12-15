@@ -161,4 +161,14 @@ class CustomerGroupForm extends AbstractType
     {
         return 'customer_group';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

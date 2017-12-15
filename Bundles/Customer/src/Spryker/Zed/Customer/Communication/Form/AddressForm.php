@@ -337,4 +337,14 @@ class AddressForm extends AbstractType
     {
         return 'customer_address';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

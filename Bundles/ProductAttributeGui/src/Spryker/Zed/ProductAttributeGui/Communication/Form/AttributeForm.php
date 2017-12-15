@@ -224,4 +224,14 @@ class AttributeForm extends AbstractType
     {
         return 'attributeForm';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

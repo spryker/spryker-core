@@ -171,4 +171,14 @@ class ProductOptionValueForm extends AbstractType
     {
         return 'product_option';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

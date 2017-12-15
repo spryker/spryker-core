@@ -110,4 +110,14 @@ class CustomerUpdateForm extends CustomerForm
     {
         return 'customer';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

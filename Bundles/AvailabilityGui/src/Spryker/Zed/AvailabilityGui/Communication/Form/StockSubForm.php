@@ -91,4 +91,14 @@ class StockSubForm extends AbstractType
     {
         return 'stock_form';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

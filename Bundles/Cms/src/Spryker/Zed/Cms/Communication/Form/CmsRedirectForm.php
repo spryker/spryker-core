@@ -247,4 +247,14 @@ class CmsRedirectForm extends AbstractType
     {
         return 'cms_redirect';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

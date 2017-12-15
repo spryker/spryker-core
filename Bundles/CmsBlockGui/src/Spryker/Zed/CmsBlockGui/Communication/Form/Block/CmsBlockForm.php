@@ -323,4 +323,14 @@ class CmsBlockForm extends AbstractType
     {
         return 'cms_block';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

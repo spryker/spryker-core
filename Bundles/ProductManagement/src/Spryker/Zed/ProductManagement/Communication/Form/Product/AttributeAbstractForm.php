@@ -274,4 +274,14 @@ class AttributeAbstractForm extends AbstractSubForm
     {
         return 'product_attribute_abstract';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

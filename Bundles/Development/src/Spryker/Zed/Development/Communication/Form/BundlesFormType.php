@@ -60,4 +60,14 @@ class BundlesFormType extends AbstractType
     {
         return static::FORM_TYPE_NAME;
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

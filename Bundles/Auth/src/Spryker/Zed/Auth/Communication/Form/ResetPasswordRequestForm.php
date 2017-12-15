@@ -107,4 +107,14 @@ class ResetPasswordRequestForm extends AbstractType
     {
         return 'reset_password';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

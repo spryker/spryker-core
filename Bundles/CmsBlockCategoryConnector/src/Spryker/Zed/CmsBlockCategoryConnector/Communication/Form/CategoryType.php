@@ -137,4 +137,14 @@ class CategoryType extends AbstractType
     {
         return 'cms-blocks';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

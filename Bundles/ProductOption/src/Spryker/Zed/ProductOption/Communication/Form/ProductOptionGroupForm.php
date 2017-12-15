@@ -9,9 +9,7 @@ namespace Spryker\Zed\ProductOption\Communication\Form;
 use ArrayObject;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueGroupName;
-use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
-use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -269,5 +267,15 @@ class ProductOptionGroupForm extends AbstractType
     public function getBlockPrefix()
     {
         return 'product_option_general';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

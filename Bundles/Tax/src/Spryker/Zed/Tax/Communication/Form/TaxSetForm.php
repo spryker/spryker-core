@@ -108,4 +108,14 @@ class TaxSetForm extends AbstractType
     {
         return 'tax_set';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

@@ -166,4 +166,14 @@ class NavigationFormType extends AbstractType
     {
         return 'navigation';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

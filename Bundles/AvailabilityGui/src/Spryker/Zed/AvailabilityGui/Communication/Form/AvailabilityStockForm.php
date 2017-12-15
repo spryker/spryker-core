@@ -66,4 +66,14 @@ class AvailabilityStockForm extends AbstractType
     {
         return 'AvailabilityGui_stock';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

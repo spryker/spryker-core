@@ -173,4 +173,14 @@ class CategoryLocalizedAttributeType extends AbstractType
     {
         return 'localizedAttributes';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

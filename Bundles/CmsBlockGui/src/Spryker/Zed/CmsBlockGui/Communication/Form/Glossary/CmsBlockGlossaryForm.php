@@ -73,4 +73,14 @@ class CmsBlockGlossaryForm extends AbstractType
     {
         return 'cms_block_glossary';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

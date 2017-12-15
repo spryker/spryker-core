@@ -114,4 +114,14 @@ class DiscountForm extends AbstractType
     {
         return 'discount';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

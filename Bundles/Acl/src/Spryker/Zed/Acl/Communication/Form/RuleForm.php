@@ -155,4 +155,14 @@ class RuleForm extends AbstractType
     {
         return 'ruleset';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

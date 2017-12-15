@@ -155,4 +155,14 @@ class CmsBlockType extends AbstractType
     {
         return 'categories';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

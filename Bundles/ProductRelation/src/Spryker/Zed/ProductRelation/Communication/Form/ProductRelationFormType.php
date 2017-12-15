@@ -150,4 +150,14 @@ class ProductRelationFormType extends AbstractType
     {
         return 'product_relation';
     }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }
