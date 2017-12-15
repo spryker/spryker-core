@@ -2,6 +2,8 @@
 namespace SprykerTest\Zed\ProductManagement;
 
 use Codeception\Actor;
+use Pyz\Zed\ProductManagement\ProductManagementDependencyProvider;
+use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
 
 /**
  * Inherited Methods
@@ -25,4 +27,14 @@ class ProductManagementCommunicationTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @return void
+     */
+    public function registerProductManagementStoreRelationFormTypePlugin()
+    {
+        $this->setDependency(ProductManagementDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
+            return new StoreRelationToggleFormTypePlugin();
+        });
+    }
 }
