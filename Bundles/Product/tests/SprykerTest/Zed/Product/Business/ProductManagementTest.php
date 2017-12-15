@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Product\Business;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 
 /**
  * Auto-generated group annotations
@@ -122,6 +123,92 @@ class ProductManagementTest extends FacadeTestAbstract
         $isActive = $this->productFacade->isProductActive($this->productAbstractTransfer->getIdProductAbstract());
 
         $this->assertFalse($isActive);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductAbstractStoreRelationRetrievesRelatedStores()
+    {
+        // Assign
+        $idProductAbstract = 1;
+        $relatedStores = [1, 3];
+        $productAbstractRelationRequest = (new StoreRelationTransfer())
+            ->setIdEntity($idProductAbstract);
+        $expectedResult = (new StoreRelationTransfer())
+            ->setIdEntity($idProductAbstract)
+            ->setIdStores($relatedStores);
+
+        $this->productFacade->saveProductAbstractStoreRelation($expectedResult);
+
+        // Act
+        $actualResult = $this
+            ->productFacade
+            ->getProductAbstractStoreRelation($productAbstractRelationRequest);
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @dataProvider relationUpdate
+     *
+     * @reutrn void
+     *
+     * @param int[] $originalRelation
+     * @param int[] $modifiedRelation
+     *
+     * @return void
+     */
+    public function testSaveProductAbstractStoreRelation(array $originalRelation, array $modifiedRelation)
+    {
+        // Assign
+        $idProductAbstract = 1;
+        $productAbstractRelationRequest = (new StoreRelationTransfer())
+            ->setIdEntity($idProductAbstract);
+        $originalRelationTransfer = (new StoreRelationTransfer())
+            ->setIdEntity($idProductAbstract)
+            ->setIdStores($originalRelation);
+        $modifiedRelationTransfer = (new StoreRelationTransfer())
+            ->setIdEntity($idProductAbstract)
+            ->setIdStores($modifiedRelation);
+
+        $this->productFacade->saveProductAbstractStoreRelation($originalRelationTransfer);
+
+        // Act
+        $beforeSaveIdStores = $this
+            ->productFacade
+            ->getProductAbstractStoreRelation($productAbstractRelationRequest)
+            ->getIdStores();
+        $this->productFacade->saveProductAbstractStoreRelation($modifiedRelationTransfer);
+        $afterSaveIdStores = $this
+            ->productFacade
+            ->getProductAbstractStoreRelation($productAbstractRelationRequest)
+            ->getIdStores();
+
+        // Assert
+        sort($beforeSaveIdStores);
+        sort($afterSaveIdStores);
+        $this->assertEquals($originalRelation, $beforeSaveIdStores);
+        $this->assertEquals($modifiedRelation, $afterSaveIdStores);
+    }
+
+    /**
+     * @return array
+     */
+    public function relationUpdate()
+    {
+        return [
+            [
+                [1, 2, 3], [2],
+            ],
+            [
+                [1], [1, 2],
+            ],
+            [
+                [2], [1, 3],
+            ],
+        ];
     }
 
     /**
