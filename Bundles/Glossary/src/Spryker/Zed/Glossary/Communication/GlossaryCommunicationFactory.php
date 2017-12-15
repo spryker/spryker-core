@@ -55,6 +55,8 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `getTranslationAddForm()` instead.
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createTranslationAddForm()
@@ -65,6 +67,16 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getTranslationAddForm()
+    {
+        return $this->createTranslationAddForm();
+    }
+
+    /**
+     * @deprecated Use `getTranslationUpdateForm()` instead.
+     *
      * @param array $formData
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -77,6 +89,16 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param array $formData
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getTranslationUpdateForm(array $formData)
+    {
+        return $this->createTranslationUpdateForm($formData);
+    }
+
+    /**
      * @return \Spryker\Zed\Glossary\Communication\Form\DataProvider\TranslationFormDataProvider
      */
     public function createTranslationDataProvider()
@@ -85,6 +107,8 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     protected function createTranslationForm()
@@ -93,7 +117,9 @@ class GlossaryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Glossary\Communication\Form\UpdateTranslationForm
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
      */
     protected function createUpdateTranslationForm()
     {

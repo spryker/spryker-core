@@ -107,7 +107,7 @@ class ProductOptionGroupForm extends AbstractType
     protected function addValuesFields(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_VALUES, CollectionType::class, [
-            'entry_type' => $this->getFactory()->createProductOptionValueForm(),
+            'entry_type' => ProductOptionValueForm::class,
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,
@@ -137,7 +137,7 @@ class ProductOptionGroupForm extends AbstractType
     protected function addValueTranslationFields(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_VALUE_TRANSLATIONS, CollectionType::class, [
-            'entry_type' => $this->getFactory()->createProductOptionTranslationForm(),
+            'entry_type' => ProductOptionTranslationForm::class,
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,
@@ -157,7 +157,7 @@ class ProductOptionGroupForm extends AbstractType
     protected function addGroupNameTranslationFields(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_GROUP_NAME_TRANSLATIONS, CollectionType::class, [
-            'entry_type' => $this->getFactory()->createProductOptionTranslationForm(),
+            'entry_type' => ProductOptionTranslationForm::class,
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,

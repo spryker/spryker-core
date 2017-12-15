@@ -34,6 +34,8 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `getNavigationForm()` instead.
+     *
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
      * @param array|null $options
      *
@@ -45,6 +47,19 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
+     * @param array|null $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getNavigationForm(NavigationTransfer $data = null, array $options = [])
+    {
+        return $this->createNavigationForm($data, $options);
+    }
+
+    /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     protected function createNavigationFormType()
@@ -53,6 +68,8 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `getUpdateNavigationForm()` instead.
+     *
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
      * @param array|null $options
      *
@@ -64,11 +81,24 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\NavigationGui\Communication\Form\NavigationFormType
+     * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
+     * @param array|null $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getUpdateNavigationForm(NavigationTransfer $data = null, array $options = [])
+    {
+        return $this->createUpdateNavigationForm($data, $options);
+    }
+
+    /**
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
      */
     protected function createUpdateNavigationFormType()
     {
-        return new UpdateNavigationFormType($this->getQueryContainer());
+        return UpdateNavigationFormType::class;
     }
 
     /**
@@ -80,6 +110,8 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `getNavigationNodeForm()` instead.
+     *
      * @param \Generated\Shared\Transfer\NavigationNodeTransfer|null $data
      * @param array $options
      *
@@ -91,6 +123,19 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer|null $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getNavigationNodeForm(NavigationNodeTransfer $data = null, array $options = [])
+    {
+        return $this->createNavigationNodeForm($data, $options);
+    }
+
+    /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     protected function createNavigationNodeFormType()
@@ -107,6 +152,8 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     protected function createNavigationNodeLocalizedAttributesFormType()

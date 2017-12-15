@@ -30,6 +30,8 @@ use Symfony\Component\Form\FormInterface;
 class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
+     * @deprecated Use `getProductOptionGroupType()` instead.
+     *
      * @param \Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider $productOptionGroupDataProvider
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -49,6 +51,18 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param \Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider|null $productOptionGroupDataProvider
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getProductOptionGroupForm(ProductOptionGroupDataProvider $productOptionGroupDataProvider)
+    {
+        return $this->createProductOptionGroup($productOptionGroupDataProvider);
+    }
+
+    /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     public function createProductOptionValueForm()
@@ -57,6 +71,8 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     public function createProductOptionTranslationForm()

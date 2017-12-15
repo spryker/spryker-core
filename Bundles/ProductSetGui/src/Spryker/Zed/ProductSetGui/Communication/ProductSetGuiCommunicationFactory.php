@@ -50,6 +50,8 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `getProductSetForm()` instead.
+     *
      * @param array $data
      * @param array $options
      *
@@ -66,9 +68,33 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
+    public function getCreateProductSetForm(array $data = [], array $options = [])
+    {
+        return $this->createCreateProductSetForm($data, $options);
+    }
+
+    /**
+     * @deprecated Use `getUpdateProductSetForm()` instead.
+     *
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function createUpdateProductSetForm(array $data = [], array $options = [])
     {
         return $this->getFormFactory()->create($this->createUpdateProductSetFormType(), $data, $options);
+    }
+
+    /**
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getUpdateProductSetForm(array $data = [], array $options = [])
+    {
+        return $this->createUpdateProductSetForm($data, $options);
     }
 
     /**
@@ -157,6 +183,8 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     protected function createCreateProductSetFormType()
@@ -165,6 +193,8 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     protected function createUpdateProductSetFormType()
@@ -173,6 +203,8 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `getReorderProductSetsForm` instead.
+     *
      * @param array $data
      * @param array $options
      *
@@ -184,6 +216,19 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getReorderProductSetsForm(array $data = [], $options = [])
+    {
+        return $this->createReorderProductSetsForm($data, $options);
+    }
+
+    /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     protected function createReorderProductSetsFormType()

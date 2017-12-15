@@ -21,6 +21,8 @@ use Spryker\Zed\Money\MoneyDependencyProvider;
 class MoneyCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     public function createMoneyFormType()

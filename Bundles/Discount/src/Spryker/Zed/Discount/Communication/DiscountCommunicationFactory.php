@@ -55,6 +55,8 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     public function createGeneralFormType()
@@ -63,6 +65,8 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     public function createCalculatorFormType()
@@ -71,6 +75,8 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     public function createConditionsFormType()
@@ -79,6 +85,8 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     public function createVoucherFormType()

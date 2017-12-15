@@ -40,6 +40,8 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `getProductLabelAggregateForm()` instead.
+     *
      * @param \Generated\Shared\Transfer\ProductLabelAggregateFormTransfer $aggregateFormTransfer
      * @param array $options
      *
@@ -59,6 +61,21 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductLabelAggregateFormTransfer $aggregateFormTransfer
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getProductLabelAggregateForm(
+        ProductLabelAggregateFormTransfer $aggregateFormTransfer,
+        array $options = []
+    ) {
+        return $this->createProductLabelAggregateForm($aggregateFormTransfer, $options);
+    }
+
+    /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     protected function createProductLabelAggregateFormType()
@@ -67,6 +84,8 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     protected function createProductLabelFormType()
@@ -75,6 +94,8 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     protected function createProductLabelLocalizedAttributesFormType()
@@ -93,6 +114,8 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     protected function createRelatedProductFormType()

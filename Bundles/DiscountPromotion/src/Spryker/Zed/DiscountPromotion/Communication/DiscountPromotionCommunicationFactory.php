@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class DiscountPromotionCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     public function createDiscountFormPromotionType()

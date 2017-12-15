@@ -84,6 +84,8 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `getRelationForm()` instead.
+     *
      * @param \Spryker\Zed\ProductRelation\Communication\Form\DataProvider\ProductRelationTypeDataProviderInterface $productRelationFormTypeDataProvider
      * @param int|null $idProductRelation
      *
@@ -98,6 +100,19 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
             $productRelationFormTypeDataProvider->getData($idProductRelation),
             $productRelationFormTypeDataProvider->getOptions()
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\ProductRelation\Communication\Form\DataProvider\ProductRelationTypeDataProviderInterface $productRelationFormTypeDataProvider
+     * @param int|null $idProductRelation
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getRelationForm(
+        ProductRelationTypeDataProviderInterface $productRelationFormTypeDataProvider,
+        $idProductRelation = null
+    ) {
+        return $this->createRelationForm($productRelationFormTypeDataProvider, $idProductRelation);
     }
 
     /**
@@ -119,6 +134,8 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     protected function createRelationFormType()

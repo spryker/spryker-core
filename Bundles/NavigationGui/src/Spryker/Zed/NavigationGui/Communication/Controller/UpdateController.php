@@ -27,7 +27,7 @@ class UpdateController extends AbstractController
         $idNavigation = $this->castId($request->query->getInt(self::PARAM_ID_NAVIGATION));
         $navigationFormDataProvider = $this->getFactory()->createNavigationFormDataProvider();
         $navigationForm = $this->getFactory()
-            ->createUpdateNavigationForm(
+            ->getNavigationNodeForm(
                 $navigationFormDataProvider->getData($idNavigation),
                 $navigationFormDataProvider->getOptions()
             )

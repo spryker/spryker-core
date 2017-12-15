@@ -73,12 +73,25 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @deprecated Use `getAttributeForm()` instead.
+     *
      * @param array $data
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createAttributeForm(array $data = [], array $options = [])
+    {
+        return $this->getFormFactory()->create(AttributeForm::class, $data, $options);
+    }
+
+    /**
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getAttributeForm(array $data = [], array $options = [])
     {
         return $this->getFormFactory()->create(AttributeForm::class, $data, $options);
     }
@@ -125,6 +138,8 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @deprecated Use `getAttributeTranslationFormCollection` instead.
+     *
      * @param array $data
      * @param array $options
      *
@@ -136,6 +151,19 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getAttributeTranslationFormCollection(array $data = [], array $options = [])
+    {
+        return $this->createAttributeTranslationFormCollection($data, $options);
+    }
+
+    /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     public function createAttributeTranslationFormCollectionType()
@@ -152,6 +180,8 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @deprecated Use the FQCN directly.
+     *
      * @return string
      */
     protected function createAttributeFormType()
