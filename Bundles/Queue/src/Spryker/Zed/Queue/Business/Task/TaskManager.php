@@ -10,6 +10,7 @@ namespace Spryker\Zed\Queue\Business\Task;
 use Spryker\Client\Queue\QueueClientInterface;
 use Spryker\Zed\Queue\Business\Exception\MissingQueuePluginException;
 use Spryker\Zed\Queue\QueueConfig;
+use Spryker\Shared\Queue\QueueConfig as SHaredConfig;
 
 class TaskManager implements TaskManagerInterface
 {
@@ -42,10 +43,11 @@ class TaskManager implements TaskManagerInterface
 
     /**
      * @param string $queueName
+     * @param array $options
      *
      * @return void
      */
-    public function run($queueName)
+    public function run($queueName, array $options = [])
     {
         $processorPlugin = $this->getQueueProcessorPlugin($queueName);
         $queueOptions = $this->getQueueReceiverOptions($queueName);
@@ -59,7 +61,7 @@ class TaskManager implements TaskManagerInterface
             return;
         }
 
-        $this->postProcessMessages($processedMessages);
+        $this->postProcessMessages($processedMessages, $options);
     }
 
     /**
@@ -108,11 +110,16 @@ class TaskManager implements TaskManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueReceiveMessageTransfers
+     * @param array $options
      *
      * @return void
      */
-    protected function postProcessMessages(array $queueReceiveMessageTransfers)
+    protected function postProcessMessages(array $queueReceiveMessageTransfers, array $options = [])
     {
+        if (isset($options[SHaredConfig::CONFIG_QUEUE_OPTION_NO_ACK]) && $options[SHaredConfig::CONFIG_QUEUE_OPTION_NO_ACK]) {
+            return;
+        }
+
         foreach ($queueReceiveMessageTransfers as $queueReceiveMessageTransfer) {
             if ($queueReceiveMessageTransfer->getAcknowledge()) {
                 $this->client->acknowledge($queueReceiveMessageTransfer);

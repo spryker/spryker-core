@@ -46,7 +46,7 @@ class ProductSetUrlStorageListener extends AbstractProductSetStorageListener imp
      */
     protected function getValidProductSetIds(array $eventTransfers)
     {
-        $validEventTransfers = $this->getFactory()->getUtilSynchronization()->getEventTransfersByModifiedColumns(
+        $validEventTransfers = $this->getFactory()->getEventBehaviorFacade()->getEventTransfersByModifiedColumns(
             $eventTransfers,
             [
                 SpyUrlTableMap::COL_URL,
@@ -54,7 +54,7 @@ class ProductSetUrlStorageListener extends AbstractProductSetStorageListener imp
             ]
         );
 
-        return $this->getFactory()->getUtilSynchronization()->getEventTransferForeignKeys($validEventTransfers, SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_SET);
+        return $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($validEventTransfers, SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_SET);
     }
 
 }

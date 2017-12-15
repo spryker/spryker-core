@@ -34,9 +34,9 @@ class ProductSetStorageToProductSetQueryContainerBridge implements ProductSetSto
     /**
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetDataQuery
      */
-    public function queryProductSetData()
+    public function queryAllProductSetData()
     {
-        return $this->productSetQueryContainer->queryProductSetData();
+        return $this->productSetQueryContainer->queryAllProductSetData();
     }
 
 }

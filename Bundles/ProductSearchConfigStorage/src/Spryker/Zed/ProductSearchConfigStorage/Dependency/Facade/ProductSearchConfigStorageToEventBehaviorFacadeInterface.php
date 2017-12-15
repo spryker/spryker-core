@@ -5,18 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductSetStorage\Dependency\Service;
+namespace Spryker\Zed\ProductSearchConfigStorage\Dependency\Facade;
 
-interface ProductSetStorageToUtilSynchronizationInterface
+interface ProductSearchConfigStorageToEventBehaviorFacadeInterface
 {
-
-    /**
-     * @param array $array
-     *
-     * @return array
-     */
-    public function arrayFilterRecursive(array $array);
-
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
@@ -31,13 +23,4 @@ interface ProductSetStorageToUtilSynchronizationInterface
      * @return array
      */
     public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
-
-    /**
-     * @param array $eventTransfers
-     * @param array $columns
-     *
-     * @return \Generated\Shared\Transfer\EventEntityTransfer[]
-     */
-    public function getEventTransfersByModifiedColumns(array $eventTransfers, array $columns);
-
 }

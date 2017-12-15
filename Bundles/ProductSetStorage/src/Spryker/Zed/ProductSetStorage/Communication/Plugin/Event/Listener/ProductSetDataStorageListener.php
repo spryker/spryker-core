@@ -31,7 +31,7 @@ class ProductSetDataStorageListener extends AbstractProductSetStorageListener im
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $productSetIds = $this->getFactory()->getUtilSynchronization()->getEventTransferForeignKeys(
+        $productSetIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventTransfers,
             SpyProductSetDataTableMap::COL_FK_PRODUCT_SET
         );

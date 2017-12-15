@@ -35,9 +35,6 @@ class AbstractProductSetStorageListener extends AbstractPlugin
      */
     protected function publish(array $productSetIds)
     {
-        //TODO Fix the queries
-        return;
-
         $spyProductSetLocalizedEntities = $this->findProductSetLocalizedEntities($productSetIds);
         $spyProductSetStorageEntities = $this->findProductSetStorageEntitiesByProductSetIds($productSetIds);
 

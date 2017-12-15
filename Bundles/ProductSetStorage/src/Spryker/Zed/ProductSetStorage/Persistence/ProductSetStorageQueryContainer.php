@@ -35,7 +35,7 @@ class ProductSetStorageQueryContainer extends AbstractQueryContainer implements 
     {
         return $this->getFactory()
             ->getProductSetQueryContainer()
-            ->queryProductSetData()
+            ->queryAllProductSetData()
             ->joinWithSpyLocale()
             ->joinWithSpyProductSet()
             ->joinWith('SpyProductSet.SpyProductAbstractSet')

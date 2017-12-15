@@ -259,19 +259,9 @@ class SearchFactory extends AbstractFactory
     public function createCachedElasticsearchClient()
     {
         if (static::$searchClient === null) {
-            static::$searchClient = $this->createElasticsearchClient();
+            static::$searchClient = $this->getElasticsearchClient();
         }
 
         return static::$searchClient;
-    }
-
-    /**
-     * @return \Elastica\Client
-     */
-    public function createElasticsearchClient()
-    {
-        return new Client(
-            $this->getConfig()->getElasticsearchConfig()
-        );
     }
 }

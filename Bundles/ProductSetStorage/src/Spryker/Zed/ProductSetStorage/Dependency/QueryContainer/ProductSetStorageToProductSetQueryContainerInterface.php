@@ -22,6 +22,6 @@ interface ProductSetStorageToProductSetQueryContainerInterface
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetDataQuery
      */
-    public function queryProductSetData();
+    public function queryAllProductSetData();
 
 }

@@ -31,7 +31,7 @@ class ProductSetStorageListener extends AbstractProductSetStorageListener implem
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $productSetIds = $this->getFactory()->getUtilSynchronization()->getEventTransferIds($eventTransfers);
+        $productSetIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
         if ($eventName === ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DELETE || $eventName === ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_DELETE) {
             $this->unpublish($productSetIds);

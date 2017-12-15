@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductSetStorage\Dependency\Service;
+namespace Spryker\Zed\ProductPageSearch\Dependency\Service;
 
-class ProductSetStorageToUtilSynchronizationBridge implements ProductSetStorageToUtilSynchronizationInterface
+class ProductPageSearchToUtilSynchronizationBridge implements ProductPageSearchToUtilSynchronizationInterface
 {
 
     /**

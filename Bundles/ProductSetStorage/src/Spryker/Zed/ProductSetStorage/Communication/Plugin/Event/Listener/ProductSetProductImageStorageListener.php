@@ -30,7 +30,7 @@ class ProductSetProductImageStorageListener extends AbstractProductSetStorageLis
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $productImageIds = $this->getFactory()->getUtilSynchronization()->getEventTransferIds($eventTransfers);
+        $productImageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
         $productSetIds = $this->getQueryContainer()->queryProductSetIdsByProductImageIds($productImageIds)->find()->getData();
 
         $this->publish($productSetIds);
