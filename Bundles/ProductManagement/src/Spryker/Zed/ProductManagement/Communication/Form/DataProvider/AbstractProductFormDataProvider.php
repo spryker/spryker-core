@@ -251,7 +251,6 @@ class AbstractProductFormDataProvider
     protected function getAllIdStore()
     {
         // TODO: implement after CORE-1752 is released
-        // TODO: reduce dependencies with 3
         return [1, 2, 3];
     }
 

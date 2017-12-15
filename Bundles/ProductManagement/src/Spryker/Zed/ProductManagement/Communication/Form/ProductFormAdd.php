@@ -291,7 +291,6 @@ class ProductFormAdd extends AbstractType
      */
     protected function addStoreRelationForm(FormBuilderInterface $builder)
     {
-        // TODO: reduce dependencies
         $builder->add(
             static::FORM_STORE_RELATION,
             $this->getFactory()->getStoreRelationFormTypePlugin()->getType()
