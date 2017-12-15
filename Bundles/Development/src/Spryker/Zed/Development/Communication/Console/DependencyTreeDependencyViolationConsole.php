@@ -45,12 +45,17 @@ class DependencyTreeDependencyViolationConsole extends Console
     {
         $this->info('Find dependency violations');
 
-        $modules = $this->getFacade()->getAllBundles();
-
+        $modules = $this->getFacade()->getAllModules();
         $module = $input->getArgument(static::ARGUMENT_MODULE);
         if ($module) {
             $filter = new DashToCamelCase();
-            $modules = [ucfirst($filter->filter($module))];
+            $filteredModuleName = ucfirst($filter->filter($module));
+            if (!in_array($filteredModuleName, $modules)) {
+                $output->writeln(sprintf('Requested module <fg=green>%s</> not found in current scope.', $filteredModuleName));
+
+                return static::CODE_ERROR;
+            }
+            $modules = [$filteredModuleName];
         }
 
         $message = sprintf('Checking %d %s for dependency issues.', count($modules), (count($modules) === 1) ? 'Module (' . $modules[0] . ')' : 'Modules');
@@ -59,7 +64,7 @@ class DependencyTreeDependencyViolationConsole extends Console
         $count = 0;
         foreach ($modules as $module) {
             $violations = [];
-            $dependencies = $this->getFacade()->showOutgoingDependenciesForBundle($module);
+            $dependencies = $this->getFacade()->showOutgoingDependenciesForModule($module);
             $composerDependencies = $this->getFacade()->getComposerDependencyComparison($dependencies);
             foreach ($composerDependencies as $composerDependency) {
                 if (!$composerDependency['tests'] && !$composerDependency['src'] && ($composerDependency['composerRequire'] || $composerDependency['composerRequireDev'])) {

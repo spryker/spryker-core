@@ -26,6 +26,20 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return array
+     */
+    public function getApplications()
+    {
+        return [
+            'Client',
+            'Service',
+            'Shared',
+            'Yves',
+            'Zed',
+        ];
+    }
+
+    /**
      * @return string
      */
     public function getPathToCore()
@@ -34,23 +48,27 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated use getBundleDirectory() to get the path to core modules
-     *
      * @return string
      */
-    public function getBundleDirectory()
+    public function getPathToSdk()
     {
-        return $this->getConfig()->get(KernelConstants::SPRYKER_ROOT) . DIRECTORY_SEPARATOR;
+        return $this->getPathToRoot() . 'vendor/spryker-sdk/';
     }
 
     /**
-     * @deprecated use getBundleDirectory() to get the path to core modules
-     *
      * @return string
      */
-    public function getPathToSpryker()
+    public function getPathToShop()
     {
-        return $this->getPathToCore();
+        return $this->getPathToRoot() . 'vendor/spryker-shop/';
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathToEco()
+    {
+        return $this->getPathToRoot() . 'vendor/spryker-eco/';
     }
 
     /**
@@ -311,15 +329,5 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getArchitectureSnifferDefaultPriority()
     {
         return 2;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPathToShop()
-    {
-        $vendorDir = APPLICATION_VENDOR_DIR . DIRECTORY_SEPARATOR;
-
-        return $vendorDir . 'spryker/spryker-shop/Bundles/';
     }
 }
