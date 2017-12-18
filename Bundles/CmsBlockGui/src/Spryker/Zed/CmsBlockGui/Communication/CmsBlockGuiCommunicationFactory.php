@@ -78,6 +78,8 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `getCmsBlockForm()` instead.
+     *
      * @param \Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockFormDataProvider $cmsBlockFormDataProvider
      * @param int|null $idCmsBlock
      *
@@ -90,6 +92,17 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
             $cmsBlockFormDataProvider->getData($idCmsBlock),
             $cmsBlockFormDataProvider->getOptions()
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockFormDataProvider $cmsBlockFormDataProvider
+     * @param int|null $idCmsBlock
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCmsBlockForm(CmsBlockFormDataProvider $cmsBlockFormDataProvider, $idCmsBlock = null)
+    {
+        return $this->createCmsBlockForm($cmsBlockFormDataProvider, $idCmsBlock);
     }
 
     /**
@@ -124,6 +137,8 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `getCmsBlockGlossaryForm()` instead.
+     *
      * @param \Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockGlossaryFormDataProvider $cmsBlockGlossaryFormDataProvider
      * @param int $idCmsBlock
      *
@@ -142,6 +157,21 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param \Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockGlossaryFormDataProvider $cmsBlockGlossaryFormDataProvider
+     * @param int $idCmsBlock
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCmsBlockGlossaryForm(
+        CmsBlockGlossaryFormDataProvider $cmsBlockGlossaryFormDataProvider,
+        $idCmsBlock
+    ) {
+        return $this->createCmsBlockGlossaryForm($cmsBlockGlossaryFormDataProvider, $idCmsBlock);
+    }
+
+    /**
+     * @deprecated Use FQCN directly.
+     *
      * @return string
      */
     public function createCmsBlockGlossaryPlaceholderTranslationFormType()
