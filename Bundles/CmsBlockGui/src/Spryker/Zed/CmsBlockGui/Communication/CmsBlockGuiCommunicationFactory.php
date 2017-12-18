@@ -198,6 +198,8 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use FQCN directly.
+     *
      * @return string
      */
     public function createCmsBlockGlossaryPlaceholderFormType()
