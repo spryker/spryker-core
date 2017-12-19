@@ -38,6 +38,7 @@ class GiftCardCodeGenerator implements GiftCardCodeGeneratorInterface
     ) {
         $this->giftCardReader = $giftCardReader;
         $this->giftCardConfig = $giftCardConfig;
+        $this->codeCandidateValidatorPlugins = $codeCandidateValidatorPlugins;
     }
 
     /**

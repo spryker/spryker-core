@@ -34,6 +34,7 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDecisionRulePlugins($container);
         $container = $this->addPaymentSaverPlugins($container);
         $container = $this->addValueProvider($container);
+        $container = $this->addGiftCardCodeCandidateValidatorPlugins($container);
 
         return $container;
     }
@@ -103,6 +104,20 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::GIFT_CARD_VALUE_PROVIDER] = function (Container $container) {
             return $this->getValueProviderPlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGiftCardCodeCandidateValidatorPlugins(Container $container)
+    {
+        $container[static::GIFT_CARD_CODE_CANDIDATE_VALIDATOR_PLUGINS] = function (Container $container) {
+            return $this->getGiftCardCodeValidationPlugins();
         };
 
         return $container;
