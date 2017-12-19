@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Business;
 
+use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -277,10 +278,11 @@ interface OmsFacadeInterface
      * @api
      *
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function sumReservedProductQuantitiesForSku($sku);
+    public function sumReservedProductQuantitiesForSku($sku, StoreTransfer $storeTransfer = null);
 
     /**
      * Specification:
@@ -486,4 +488,14 @@ interface OmsFacadeInterface
      * @return void
      */
     public function sendOrderShippedMail(SpySalesOrder $salesOrderEntity);
+
+    /**
+     * Specification:
+     *  - Save reservation, this request normally comes from other store to synchronize reservation.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
+     */
+    public function saveReservation(OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer);
 }

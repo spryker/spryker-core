@@ -24,6 +24,7 @@ class AvailabilityAbstractTable extends AbstractTable
     const NOT_AVAILABLE = 'Not available';
     const IS_BUNDLE_PRODUCT = 'Is bundle product';
     const IS_NEVER_OUT_OF_STOCK = 'isNeverOutOfStock';
+    const URL_PARAM_ID_STORE = 'id-store';
 
     /**
      * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
@@ -31,11 +32,18 @@ class AvailabilityAbstractTable extends AbstractTable
     protected $queryProductAbstractAvailability;
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $queryProductAbstractAvailabilityGui
+     * @var int
      */
-    public function __construct(SpyProductAbstractQuery $queryProductAbstractAvailabilityGui)
+    protected $idStore;
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $queryProductAbstractAvailabilityGui
+     * @param int $idStore
+     */
+    public function __construct(SpyProductAbstractQuery $queryProductAbstractAvailabilityGui, $idStore)
     {
         $this->queryProductAbstractAvailability = $queryProductAbstractAvailabilityGui;
+        $this->idStore = $idStore;
     }
 
     /**
@@ -45,7 +53,12 @@ class AvailabilityAbstractTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $url = Url::generate('/availability-abstract-table');
+        $url = Url::generate(
+            '/availability-abstract-table',
+            [
+               static::URL_PARAM_ID_STORE => $this->idStore,
+            ]
+        );
 
         $config->setUrl($url);
         $config->setHeader([
@@ -168,6 +181,7 @@ class AvailabilityAbstractTable extends AbstractTable
             '/availability-gui/index/view',
             [
                 static::URL_PARAM_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
+                static::URL_PARAM_ID_STORE => $this->idStore,
             ]
         );
         return $this->generateViewButton($viewTaxSetUrl, 'View');

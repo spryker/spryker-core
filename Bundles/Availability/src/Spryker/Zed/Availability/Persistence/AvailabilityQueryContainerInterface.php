@@ -50,29 +50,35 @@ interface AvailabilityQueryContainerInterface
      *
      * @param int $idProductAbstract
      * @param int $idLocale
+     * @param null|int $idStore
+     * @param array $stockTypes
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
+    public function queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore = null, array $stockTypes = []);
 
     /**
      * @api
      *
      * @param int $idProductAbstract
      * @param int $idLocale
+     * @param int $idStore
+     * @param array $stockTypes
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
+    public function queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore, array $stockTypes);
 
     /**
      * @api
      *
      * @param int $idLocale
+     * @param int $idStore
+     * @param array $stockTypes
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryAvailabilityAbstractWithStockByIdLocale($idLocale);
+    public function queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, array $stockTypes);
 
     /**
      * @api

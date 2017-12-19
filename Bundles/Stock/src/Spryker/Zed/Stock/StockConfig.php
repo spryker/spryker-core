@@ -13,4 +13,23 @@ class StockConfig extends AbstractBundleConfig
 {
     const TOUCH_STOCK_TYPE = 'stock-type';
     const TOUCH_STOCK_PRODUCT = 'stock-product';
+
+    /**
+     * @return array
+     */
+    public function getStoreToWarehouseMapping()
+    {
+        return [
+           'DE' => [
+               'Warehouse1',
+               'Warehouse2'
+           ],
+           'AT' => [
+               'Warehouse2'
+           ],
+           'US' => [
+               'Warehouse2'
+           ]
+        ];
+    }
 }

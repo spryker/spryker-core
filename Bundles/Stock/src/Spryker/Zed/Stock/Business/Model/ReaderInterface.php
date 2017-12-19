@@ -18,6 +18,11 @@ interface ReaderInterface
     public function getStockTypes();
 
     /**
+     * @return array
+     */
+    public function getWarehouseToStoreMapping();
+
+    /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
@@ -48,6 +53,14 @@ interface ReaderInterface
      * @return bool
      */
     public function hasStockProduct($sku, $stockType);
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function hastStockProductInStore($sku, StoreTransfer $storeTransfer);
 
     /**
      * @param string $sku

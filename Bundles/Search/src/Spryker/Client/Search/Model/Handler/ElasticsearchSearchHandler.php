@@ -76,6 +76,8 @@ class ElasticsearchSearchHandler implements SearchHandlerInterface
     {
         try {
             $rawSearchResult = $this->searchableInterface->search($query);
+
+            $br =1;
         } catch (ResponseException $e) {
             $rawQuery = json_encode($query->toArray());
 

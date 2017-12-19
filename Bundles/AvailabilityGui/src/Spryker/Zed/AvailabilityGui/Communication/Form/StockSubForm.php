@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityGui\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,12 +16,14 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
 
+/**
+ * @method \Spryker\Zed\AvailabilityGui\Communication\AvailabilityGuiCommunicationFactory getFactory()
+ */
 class StockSubForm extends AbstractType
 {
     const FIELD_QUANTITY = 'quantity';
     const FIELD_STOCK_TYPE = 'stockType';
     const FIELD_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
-    const STORE_IDS = 'storeIds';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -33,8 +35,7 @@ class StockSubForm extends AbstractType
     {
         $this->addQuantityField($builder)
             ->addStockTypeField($builder)
-            ->addIsNeverOutOfStockCheckbox($builder)
-            ->addStoreSelectField($builder);
+            ->addIsNeverOutOfStockCheckbox($builder);
     }
 
     /**
@@ -94,27 +95,18 @@ class StockSubForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * {@inheritdoc}
      *
-     * @return $this
+     * @throws \Exception
      */
-    protected function addStoreSelectField(FormBuilderInterface $builder)
+    public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $builder->add(static::STORE_IDS, ChoiceType::class, [
-            'choices' => [
-                1 => 'DE',
-                2 => 'AT',
-                3 => 'US'
-            ],
-            'required' => false,
-            'multiple' => true,
-            'expanded' => true,
-            'label_attr' => array(
-                'class' => 'checkbox-inline'
-            ),
-            'label' => false,
-        ]);
+        /* @var $stockProductTransfer \Generated\Shared\Transfer\StockProductTransfer  */
+        $stockProductTransfer = $form->getViewData();
 
-        return $this;
+        $mapping = $this->getFactory()->getStockFacade()->getWarehouseToStoreMapping();
+
+        $view->vars['available_in_stores'] = $mapping[$stockProductTransfer->getStockType()];
+
     }
 }

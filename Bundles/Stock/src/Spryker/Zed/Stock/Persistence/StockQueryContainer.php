@@ -11,6 +11,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\Stock\Persistence\StockPersistenceFactory getFactory()
@@ -72,10 +73,32 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
         $query = $this->queryAllStockProducts();
         $query
             ->useSpyProductQuery()
-            ->filterBySku($sku)
+                ->filterBySku($sku)
             ->endUse()
             ->useStockQuery()
-            ->filterByName($type)
+               ->filterByName($type)
+            ->endUse();
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     * @param array $types
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     */
+    public function queryStockProductBySkuAndTypes($sku, array $types)
+    {
+        $query = $this->queryAllStockProducts();
+        $query
+            ->useSpyProductQuery()
+                 ->filterBySku($sku)
+            ->endUse()
+            ->useStockQuery()
+                ->filterByName($types, Criteria::IN)
             ->endUse();
 
         return $query;

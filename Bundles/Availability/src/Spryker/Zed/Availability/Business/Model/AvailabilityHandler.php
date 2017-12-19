@@ -82,13 +82,29 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return mixed
+     */
+    public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer)
+    {
+        $quantity = $this->sellable->calculateStockForProduct($sku, $storeTransfer);
+        $quantityWithReservedItems = $this->getQuantity($quantity);
+
+        $this->saveAndTouchAvailability($sku, $quantityWithReservedItems, $storeTransfer);
+    }
+
+    /**
+     * @param string $sku
      * @param int $quantity
      *
      * @return int
      */
     public function saveCurrentAvailability($sku, $quantity)
     {
-        $spyAvailabilityEntity = $this->saveAndTouchAvailability($sku, $quantity);
+        $storeTransfer = (new StoreFacade())->getCurrentStore();
+
+        $spyAvailabilityEntity = $this->saveAndTouchAvailability($sku, $quantity, $storeTransfer);
 
         return $spyAvailabilityEntity->getFkAvailabilityAbstract();
     }

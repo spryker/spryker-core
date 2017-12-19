@@ -50,7 +50,11 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductReservationReader()
     {
-        return new ProductReservationReader($this->getQueryContainer());
+        return new ProductReservationReader(
+            $this->getQueryContainer(),
+            $this->getStockFacade(),
+            $this->getStoreFacade()
+        );
     }
 
     /**
@@ -91,5 +95,13 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     public function createProductsAvailablePreCondition()
     {
         return new ProductsAvailableCheckoutPreCondition($this->createSellableModel(), $this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
+     */
+    public function getStoreFacade()
+    {
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_STORE);
     }
 }

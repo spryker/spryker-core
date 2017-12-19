@@ -10,8 +10,6 @@ namespace Spryker\Zed\AvailabilityGui\Communication\Form;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
 
 class AvailabilityStockForm extends AbstractType
 {

@@ -5,9 +5,12 @@
 
 {% block action %}
     {{ backActionButton('/availability-gui', 'List of product availability' | trans) }}
+
 {% endblock %}
 
 {% block content %}
+
+    {% include '@AvailabilityGui/_partials/store_switcher.twig' %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Abstract product availability' } %}
         {% block widget_content %}

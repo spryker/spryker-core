@@ -50,4 +50,18 @@ interface AvailabilityGuiToStockInterface
      * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function getStockProductsByIdProduct($idProductConcrete);
+
+    /**
+     * @return array
+     */
+    public function getWarehouseToStoreMapping();
+
+    /**
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getStoreToWarehouseMapping();
+
 }

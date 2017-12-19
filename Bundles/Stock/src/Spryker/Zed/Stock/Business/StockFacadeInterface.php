@@ -184,4 +184,23 @@ interface StockFacadeInterface
      * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function getStockProductsByIdProduct($idProductConcrete);
+
+    /**
+     *
+     * Specification:
+     *  - Returns stock mapping per store/warehouse pair
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getWarehouseToStoreMapping();
+
+    /**
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getStoreToWarehouseMapping();
 }

@@ -9,10 +9,12 @@ namespace Spryker\Zed\AvailabilityGui\Communication\Controller;
 
 use Generated\Shared\Transfer\AvailabilityStockTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityAbstractTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\Store\Business\StoreFacade;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,15 +22,28 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
+    const URL_PARAM_ID_STORE = 'id-store';
+
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $availabilityAbstractTable = $this->getAvailabilityAbstractTable();
+        $idStore = $request->query->get(static::URL_PARAM_ID_STORE);
+        if (!$idStore) {
+            $idStore = $this->getFactory()->getStoreFacade()->getCurrentStore()->getIdStore();
+        }
+
+        $availabilityAbstractTable = $this->getAvailabilityAbstractTable($idStore);
+
+        $stores = $this->getFactory()->getStoreFacade()->getAllStores();
 
         return [
             'indexTable' => $availabilityAbstractTable->render(),
+            'stores' => $stores,
+            'idStore' => $idStore,
         ];
     }
 
@@ -40,19 +55,31 @@ class IndexController extends AbstractController
     public function viewAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->query->getInt(AvailabilityAbstractTable::URL_PARAM_ID_PRODUCT_ABSTRACT));
-        $availabilityTable = $this->getAvailabilityTable($idProductAbstract);
+
+        $idStore = $request->query->get(static::URL_PARAM_ID_STORE);
+        if (!$idStore) {
+            $idStore = $this->getFactory()->getStoreFacade()->getCurrentStore()->getIdStore();
+        }
+
+        $availabilityTable = $this->getAvailabilityTable($idProductAbstract, $idStore);
+
         $localeTransfer = $this->getCurrentLocaleTransfer();
 
         $productAbstractAvailabilityTransfer = $this->getFactory()
             ->getAvailabilityFacade()
-            ->getProductAbstractAvailability($idProductAbstract, $localeTransfer->getIdLocale());
+            ->getProductAbstractAvailability($idProductAbstract, $localeTransfer->getIdLocale(), $idStore);
 
         $bundledProductAvailabilityTable = $this->getBundledProductAvailabilityTable();
+
+        $stores = $this->getFactory()->getStoreFacade()->getAllStores();
 
         return [
             'productAbstractAvailability' => $productAbstractAvailabilityTransfer,
             'indexTable' => $availabilityTable->render(),
             'bundledProductAvailabilityTable' => $bundledProductAvailabilityTable->render(),
+            'stores' => $stores,
+            'idStore' => $idStore,
+            'idProduct' => $idProductAbstract,
         ];
     }
 
@@ -86,11 +113,17 @@ class IndexController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function availabilityAbstractTableAction()
+    public function availabilityAbstractTableAction(Request $request)
     {
-        $availabilityAbstractTable = $this->getAvailabilityAbstractTable();
+        $idStore = $request->query->get(static::URL_PARAM_ID_STORE);
+        if (!$idStore) {
+            $idStore = $this->getFactory()->getStoreFacade()->getCurrentStore()->getIdStore();
+        }
+
+        $availabilityAbstractTable = $this->getAvailabilityAbstractTable($idStore);
 
         return $this->jsonResponse(
             $availabilityAbstractTable->fetchData()
@@ -105,7 +138,8 @@ class IndexController extends AbstractController
     public function availabilityTableAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->query->getInt(AvailabilityAbstractTable::URL_PARAM_ID_PRODUCT_ABSTRACT));
-        $availabilityTable = $this->getAvailabilityTable($idProductAbstract);
+        $storeName = $request->query->get(static::URL_PARAM_ID_STORE);
+        $availabilityTable = $this->getAvailabilityTable($idProductAbstract, $storeName);
 
         return $this->jsonResponse(
             $availabilityTable->fetchData()
@@ -135,13 +169,15 @@ class IndexController extends AbstractController
     }
 
     /**
+     * @param int $idStore
+     *
      * @return \Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityAbstractTable
      */
-    protected function getAvailabilityAbstractTable()
+    protected function getAvailabilityAbstractTable($idStore)
     {
         $localeTransfer = $this->getCurrentLocaleTransfer();
 
-        return $this->getFactory()->createAvailabilityAbstractTable($localeTransfer->getIdLocale());
+        return $this->getFactory()->createAvailabilityAbstractTable($localeTransfer->getIdLocale(), $idStore);
     }
 
     /**
@@ -156,14 +192,23 @@ class IndexController extends AbstractController
 
     /**
      * @param int $idProductAbstract
+     * @param int $idStore
      *
      * @return \Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityTable
      */
-    protected function getAvailabilityTable($idProductAbstract)
+    protected function getAvailabilityTable($idProductAbstract, $idStore)
     {
         $localeTransfer = $this->getCurrentLocaleTransfer();
 
-        return $this->getFactory()->createAvailabilityTable($idProductAbstract, $localeTransfer->getIdLocale());
+        if (!$idStore) {
+            $idStore = $this->getFactory()->getStoreFacade()->getCurrentStore()->getIdStore();
+        }
+
+        return $this->getFactory()->createAvailabilityTable(
+            $idProductAbstract,
+            $localeTransfer->getIdLocale(),
+            $idStore
+        );
     }
 
     /**

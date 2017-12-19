@@ -238,7 +238,9 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
             $this->createOrderStateMachineBuilder(),
             $this->getQueryContainer(),
-            $this->getReservationHandlerPlugins()
+            $this->getReservationHandlerPlugins(),
+            $this->getReservationSynchronizationPlugins(),
+            $this->getStoreFacade()
         );
     }
 
@@ -301,5 +303,21 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     protected function getMailFacade()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::FACADE_MAIL);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface
+     */
+    protected function getStoreFacade()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Plugin\ReservationSynchronizationPluginInterface[]
+     */
+    protected function getReservationSynchronizationPlugins()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION_SYNCHRONIZATION);
     }
 }

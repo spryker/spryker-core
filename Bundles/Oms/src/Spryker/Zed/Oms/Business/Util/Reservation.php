@@ -6,12 +6,12 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
+use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
-use Spryker\Zed\Oms\Dependency\Plugin\ReservationStoreAwareHandlerPluginInterface;
+use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
-use Spryker\Zed\Store\Business\StoreFacade;
 
 class Reservation implements ReservationInterface
 {
@@ -36,22 +36,38 @@ class Reservation implements ReservationInterface
     protected $reservationHandlerPlugins;
 
     /**
+     * @var \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
+     * @var array|\Spryker\Zed\Oms\Dependency\Plugin\ReservationSynchronizationPluginInterface[]
+     */
+    protected $reservationSynchronizationPlugins;
+
+    /**
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $activeProcesses
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface $builder
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[] $reservationHandlerPlugins
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\ReservationSynchronizationPluginInterface[] $reservationSynchronizationPlugins
+     * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ReadOnlyArrayObject $activeProcesses,
         BuilderInterface $builder,
         OmsQueryContainerInterface $queryContainer,
-        array $reservationHandlerPlugins
+        array $reservationHandlerPlugins,
+        array $reservationSynchronizationPlugins,
+        OmsToStoreFacadeInterface $storeFacade
     ) {
 
         $this->activeProcesses = $activeProcesses;
         $this->builder = $builder;
         $this->queryContainer = $queryContainer;
         $this->reservationHandlerPlugins = $reservationHandlerPlugins;
+        $this->reservationSynchronizationPlugins = $reservationSynchronizationPlugins;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -62,25 +78,51 @@ class Reservation implements ReservationInterface
      */
     public function updateReservationQuantity($sku, $storeName = null)
     {
-        $store = SpyStoreQuery::create()
-            ->filterByName($storeName)
-            ->findOne();
+        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
+        $currentStoreReserved = $this->sumReservedProductQuantitiesForSku($sku, $currentStoreTransfer->getName());
 
-        $storeTransfer = new StoreTransfer();
-        $storeTransfer->setIdStore($store->getIdStore());
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            if ($currentStoreTransfer->getIdStore() === $storeTransfer->getIdStore()) {
+                $this->saveReservation($sku, $storeTransfer->getIdStore(), $currentStoreReserved);
+                continue;
+            }
 
-        $this->saveReservation($sku, $store->getIdStore());
-        $this->handleReservationPlugins($sku, $storeTransfer);
+            $omsAvailabilityReservationRequest = (new OmsAvailabilityReservationRequestTransfer())
+                ->setSku($sku)->setCurrentStore($currentStoreTransfer)
+                ->setCurrentStoreReservationAmount($currentStoreReserved)
+                ->setSynchronizeToStore($storeTransfer);
+
+            $this->executeReservationSynchronizationPlugins($omsAvailabilityReservationRequest);
+        }
+
+        $this->handleReservationPlugins($sku);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
+     *
+     * @return void
+     */
+    public function saveReservationRequest(OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer)
+    {
+        $omsAvailabilityReservationRequestTransfer->requireSynchronizeToStore()->requireSku();
+
+        $storeTransfer = $omsAvailabilityReservationRequestTransfer->getSynchronizeToStore();
+        $this->saveReservation(
+            $omsAvailabilityReservationRequestTransfer->getSku(),
+            $storeTransfer->getIdStore(),
+            $omsAvailabilityReservationRequestTransfer->getCurrentStoreReservationAmount()
+        );
     }
 
     /**
      * @param string $sku
-     *
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      * @return int
      */
-    public function sumReservedProductQuantitiesForSku($sku)
+    public function sumReservedProductQuantitiesForSku($sku, StoreTransfer $storeTransfer = null)
     {
-        return $this->sumProductQuantitiesForSku($this->retrieveReservedStates(), $sku, false);
+        return $this->sumProductQuantitiesForSku($this->retrieveReservedStates(), $sku, false, $storeTransfer);
     }
 
     /**
@@ -107,14 +149,29 @@ class Reservation implements ReservationInterface
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    protected function sumProductQuantitiesForSku(array $states, $sku, $returnTest = true)
-    {
-        return (int)$this->queryContainer
-            ->sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest)
-            ->findOne();
+    protected function sumProductQuantitiesForSku(
+        array $states,
+        $sku,
+        $returnTest = true,
+        StoreTransfer $storeTransfer = null
+    ) {
+
+        $query = $this->queryContainer
+            ->sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest);
+
+        if ($storeTransfer) {
+            $query
+                ->useOrderQuery()
+                    ->filterByStore($storeTransfer->getName())
+                ->endUse();
+        }
+
+        return (int)$query->findOne();
+
     }
 
     /**
@@ -135,12 +192,12 @@ class Reservation implements ReservationInterface
     /**
      * @param string $sku
      * @param int $idStore
+     * @param int $reservationQuantity
      *
      * @return void
      */
-    protected function saveReservation($sku, $idStore)
+    protected function saveReservation($sku, $idStore, $reservationQuantity)
     {
-        $reservationQuantity = $this->sumReservedProductQuantitiesForSku($sku);
         $reservationEntity = $this->queryContainer
             ->createOmsProductReservationQuery($sku)
             ->filterByFkStore($idStore)
@@ -152,18 +209,25 @@ class Reservation implements ReservationInterface
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return void
      */
-    protected function handleReservationPlugins($sku, StoreTransfer $storeTransfer)
+    protected function handleReservationPlugins($sku)
     {
         foreach ($this->reservationHandlerPlugins as $reservationHandlerPluginInterface) {
-            if ($reservationHandlerPluginInterface instanceof ReservationStoreAwareHandlerPluginInterface) {
-                $reservationHandlerPluginInterface->handleStock($sku, $storeTransfer);
-            } else {
-                $reservationHandlerPluginInterface->handle($sku);
-            }
+            $reservationHandlerPluginInterface->handle($sku);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequest
+     *
+     * @return void
+     */
+    protected function executeReservationSynchronizationPlugins(OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequest)
+    {
+        foreach ($this->reservationSynchronizationPlugins as $reservationSynchronizationPlugin) {
+            $reservationSynchronizationPlugin->synchronize($omsAvailabilityReservationRequest);
         }
     }
 }

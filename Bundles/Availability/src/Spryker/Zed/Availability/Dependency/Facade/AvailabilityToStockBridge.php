@@ -94,4 +94,20 @@ class AvailabilityToStockBridge implements AvailabilityToStockInterface
     {
         return $this->stockFacade->getStockProductsByIdProduct($idProductConcrete);
     }
+
+    /**
+     * @return array
+     */
+    public function getWarehouseToStoreMapping()
+    {
+        return $this->stockFacade->getWarehouseToStoreMapping();
+    }
+
+    /**
+     * @return array
+     */
+    public function getStoreToWarehouseMapping()
+    {
+        return $this->stockFacade->getStoreToWarehouseMapping();
+    }
 }

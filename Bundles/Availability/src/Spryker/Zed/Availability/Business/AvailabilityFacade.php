@@ -109,14 +109,15 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @param int $idProductAbstract
      * @param int $idLocale
+     * @param null|int $idStore
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
-    public function getProductAbstractAvailability($idProductAbstract, $idLocale)
+    public function getProductAbstractAvailability($idProductAbstract, $idLocale, $idStore = null)
     {
         return $this->getFactory()
             ->createProductReservationReader()
-            ->getProductAbstractAvailability($idProductAbstract, $idLocale);
+            ->getProductAbstractAvailability($idProductAbstract, $idLocale, $idStore);
     }
 
     /**

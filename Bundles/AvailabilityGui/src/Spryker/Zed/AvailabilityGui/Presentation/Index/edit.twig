@@ -17,7 +17,12 @@
             {% for stock in form.stocks %}
                 {{ form_row(stock.stockType ) }} {{ form_row(stock.quantity) }}  {{ form_row(stock.is_never_out_of_stock) }}
 
-                {{ form_row(stock.storeIds) }}
+                <div class="form-group">
+                    {{ 'Available in stores' | trans }}:
+                    {% for store in stock.vars.available_in_stores %}
+                        <span class="badge"><strong>{{ store }}</strong></span>
+                    {% endfor %}
+                </div>
             {% endfor %}
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />

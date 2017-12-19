@@ -10,8 +10,9 @@ interface ProductReservationReaderInterface
     /**
      * @param int $idProductAbstract
      * @param int $idLocale
+     * @param null|int $idStore
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
-    public function getProductAbstractAvailability($idProductAbstract, $idLocale);
+    public function getProductAbstractAvailability($idProductAbstract, $idLocale, $idStore = null);
 }

@@ -17,5 +17,12 @@
         <property name="locale" type="Locale"/>
     </transfer>
 
+    <transfer name="OmsAvailabilityReservationRequest">
+        <property name="sku" type="string" />
+        <property name="currentStoreReservationAmount" type="int" />
+        <property name="currentStore" type="Store"/>
+        <property name="synchronizeToStore" type="Store"/>
+    </transfer>
+
 </transfers>
 

@@ -22,6 +22,7 @@ class AvailabilityTable extends AbstractTable
     const URL_PARAM_ID_PRODUCT = 'id-product';
     const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-abstract';
     const URL_PARAM_SKU = 'sku';
+    const URL_PARAM_ID_STORE = 'id-store';
     const URL_BACK_BUTTON = 'url-back-button';
 
     const IS_BUNDLE_PRODUCT = 'Is bundle product';
@@ -42,14 +43,21 @@ class AvailabilityTable extends AbstractTable
     protected $productBundleQueryContainer;
 
     /**
+     * @var string
+     */
+    protected $idStore;
+
+    /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $queryProductAbstractAvailabilityGui
      * @param int $idProductAbstract
      * @param \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer
+     * @param int $idStore
      */
     public function __construct(
         SpyProductAbstractQuery $queryProductAbstractAvailabilityGui,
         $idProductAbstract,
-        AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer
+        AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer,
+        $idStore
     ) {
 
         $this->setTableIdentifier('availability-table');
@@ -57,6 +65,7 @@ class AvailabilityTable extends AbstractTable
         $this->queryProductAbstractAvailability = $queryProductAbstractAvailabilityGui;
         $this->idProductAbstract = $idProductAbstract;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
+        $this->idStore = $idStore;
     }
 
     /**
@@ -68,6 +77,7 @@ class AvailabilityTable extends AbstractTable
     {
         $url = Url::generate('availability-table', [
             AvailabilityAbstractTable::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
+            static::URL_PARAM_ID_STORE => $this->idStore,
         ])->build();
 
         $config->setUrl($url);

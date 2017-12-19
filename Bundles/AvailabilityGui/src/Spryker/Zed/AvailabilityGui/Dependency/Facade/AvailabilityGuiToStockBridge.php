@@ -81,4 +81,23 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     {
         return $this->stockFacade->getStockProductsByIdProduct($idProductConcrete);
     }
+
+    /**
+     * @return array
+     */
+    public function getWarehouseToStoreMapping()
+    {
+        return $this->stockFacade->getWarehouseToStoreMapping();
+    }
+
+    /**
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getStoreToWarehouseMapping()
+    {
+        return $this->stockFacade->getStoreToWarehouseMapping();
+    }
 }

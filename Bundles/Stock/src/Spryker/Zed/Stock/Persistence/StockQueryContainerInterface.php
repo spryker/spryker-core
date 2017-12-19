@@ -52,6 +52,16 @@ interface StockQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param string $sku
+     * @param array $types
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     */
+    public function queryStockProductBySkuAndTypes($sku, array $types);
+
+    /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockQuery

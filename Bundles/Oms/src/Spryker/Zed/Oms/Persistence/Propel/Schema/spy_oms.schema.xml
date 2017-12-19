@@ -136,6 +136,7 @@
 
         <unique name="spy_oms_product_reservation-sku">
             <unique-column name="sku"/>
+            <unique-column name="fk_store"/>
         </unique>
 
         <foreign-key name="spy_oms_product_reservation-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="OmsProductReservation">

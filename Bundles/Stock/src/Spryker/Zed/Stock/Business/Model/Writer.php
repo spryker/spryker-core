@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
-use Orm\Zed\Stock\Persistence\SpyStockProductStore;
-use Orm\Zed\Stock\Persistence\SpyStockProductStoreQuery;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerStoreAwarePluginInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
@@ -74,7 +72,7 @@ class Writer implements WriterInterface
     public function createStockType(TypeTransfer $stockTypeTransfer)
     {
         $idStock = $this->handleDatabaseTransaction(function () use($stockTypeTransfer) {
-            $this->executeCreateStockTypeTransaction($stockTypeTransfer);
+            return $this->executeCreateStockTypeTransaction($stockTypeTransfer);
         });
 
         return $idStock;
@@ -105,7 +103,7 @@ class Writer implements WriterInterface
     public function createStockProduct(StockProductTransfer $transferStockProduct)
     {
         $idStockProduct = $this->handleDatabaseTransaction(function () use($transferStockProduct) {
-            $this->executeCreateStockProductTransaction($transferStockProduct);
+            return $this->executeCreateStockProductTransaction($transferStockProduct);
         });
 
         return $idStockProduct;
@@ -118,12 +116,11 @@ class Writer implements WriterInterface
      */
     protected function executeCreateStockProductTransaction(StockProductTransfer $transferStockProduct)
     {
-        $this->updateStoreStockRelation($transferStockProduct);
-
         $idStockType = $this->reader->getStockTypeIdByName($transferStockProduct->getStockType());
         $idProduct = $this->reader->getProductConcreteIdBySku($transferStockProduct->getSku());
         $this->reader->checkStockDoesNotExist($idStockType, $idProduct);
         $idStockProduct = $this->saveStockProduct($transferStockProduct, $idStockType, $idProduct);
+
         $this->handleStockUpdatePlugins($transferStockProduct->getSku());
 
         return $idStockProduct;
@@ -137,7 +134,7 @@ class Writer implements WriterInterface
     public function updateStockProduct(StockProductTransfer $transferStockProduct)
     {
         $idStockProduct = $this->handleDatabaseTransaction(function () use($transferStockProduct) {
-            $this->executeUpdateStockProductTransaction($transferStockProduct);
+            return $this->executeUpdateStockProductTransaction($transferStockProduct);
         });
 
         return $idStockProduct;
@@ -150,8 +147,6 @@ class Writer implements WriterInterface
      */
     protected function executeUpdateStockProductTransaction(StockProductTransfer $transferStockProduct)
     {
-        $this->updateStoreStockRelation($transferStockProduct);
-
         $idProduct = $this->reader->getProductConcreteIdBySku($transferStockProduct->getSku());
         $idStock = $this->reader->getStockTypeIdByName($transferStockProduct->getStockType());
         $stockProductEntity = $this->reader->getStockProductById($transferStockProduct->getIdStockProduct());
@@ -167,20 +162,6 @@ class Writer implements WriterInterface
         $this->handleStockUpdatePlugins($transferStockProduct->getSku());
 
         return $stockProductEntity->getPrimaryKey();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
-     *
-     * @return void
-     */
-    protected function updateStoreStockRelation(StockProductTransfer $stockProductTransfer)
-    {
-        SpyStockProductStoreQuery::create()
-            ->filterByFkStockProduct($stockProductTransfer->getIdStockProduct())
-            ->delete();
-
-        $this->createStockProductStoreRelation($stockProductTransfer->getStoreIds(), $stockProductTransfer->getIdStockProduct());
     }
 
     /**
@@ -292,8 +273,6 @@ class Writer implements WriterInterface
             ->setQuantity($transferStockProduct->getQuantity())
             ->save();
 
-        $this->createStockProductStoreRelation($transferStockProduct->getStoreIds(), $stockProductEntity->getIdStockProduct());
-
         $this->insertActiveTouchRecordStockProduct($stockProductEntity);
 
         return $stockProductEntity->getPrimaryKey();
@@ -332,21 +311,5 @@ class Writer implements WriterInterface
         }
 
         return $productConcreteTransfer;
-    }
-
-    /**
-     * @param array $storeIds
-     * @param int $idStockProduct
-     *
-     * @return void
-     */
-    protected function createStockProductStoreRelation(array $storeIds, $idStockProduct)
-    {
-        foreach ($storeIds as $storeId) {
-            (new SpyStockProductStore())
-                ->setFkStore($storeId)
-                ->setFkStockProduct($idStockProduct)
-                ->save();
-        }
     }
 }

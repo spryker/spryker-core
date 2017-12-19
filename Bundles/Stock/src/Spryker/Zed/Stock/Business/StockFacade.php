@@ -231,4 +231,60 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     {
         return $this->getFactory()->createReaderModel()->getStockProductsByIdProduct($idProductConcrete);
     }
+
+    /**
+     * Specification:
+     *  - Returns stock mapping per warehouse/store pair
+     *
+     *  [
+     *    'warehouse1' => ['DE', 'US'],
+     *    'warehouse2' => ['US']
+     * ]
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getWarehouseToStoreMapping()
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->getWarehouseToStoreMapping();
+    }
+
+    /**
+     * Specification:
+     *  - Returns stock configuration mock per store/warehouse pair:
+     *
+     * [
+     *     'DE' => ['Warehouse1']
+     *     'US' => [ 'Warehouse1', 'Warehouse2'],
+     * ]
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getStoreToWarehouseMapping()
+    {
+        return $this->getFactory()
+            ->getConfig()
+            ->getStoreToWarehouseMapping();
+    }
+
+    /**
+     * Specification:
+     *  - Returns true if product for given store have stock in any of it's warehouses
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function hasProductStockInStore($sku, StoreTransfer $storeTransfer)
+    {
+        return $this->getFactory()->createReaderModel()->hastStockProductInStore($sku, $storeTransfer);
+    }
 }
