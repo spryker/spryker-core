@@ -43,7 +43,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return array|\ArrayObject
      */
     protected function getCheckoutAvailabilityFailedItems(QuoteTransfer $quoteTransfer)
     {

@@ -17,12 +17,12 @@ use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
 class CustomerOrderSaver implements CustomerOrderSaverInterface
 {
     /**
-     * @var \Spryker\Zed\Customer\Business\Customer\Customer
+     * @var \Spryker\Zed\Customer\Business\Customer\CustomerInterface
      */
     protected $customer;
 
     /**
-     * @var \Spryker\Zed\Customer\Business\Customer\Address
+     * @var \Spryker\Zed\Customer\Business\Customer\AddressInterface
      */
     protected $address;
 

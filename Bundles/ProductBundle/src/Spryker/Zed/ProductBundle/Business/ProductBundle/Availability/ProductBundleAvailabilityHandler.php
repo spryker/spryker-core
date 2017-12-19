@@ -101,7 +101,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     /**
      * @param int $idConcreteProduct
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection|mixed
      */
     protected function getBundleItemsByIdProduct($idConcreteProduct)
     {

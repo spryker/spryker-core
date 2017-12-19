@@ -15,7 +15,7 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 class ProductOptionStorage implements ProductOptionStorageInterface
 {
     /**
-     * @var \Spryker\Client\Storage\StorageClientInterface
+     * @var \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageInterface
      */
     protected $storage;
 
