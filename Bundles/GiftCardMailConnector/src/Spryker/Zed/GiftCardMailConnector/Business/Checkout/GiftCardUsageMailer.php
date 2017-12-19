@@ -45,10 +45,13 @@ class GiftCardUsageMailer implements GiftCardUsageMailerInterface
     public function sendUsageNotification(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         $quoteTransfer->requireCustomer();
-        $quoteTransfer->getCustomer()->requireIdCustomer();
 
         $mailTransfer = new MailTransfer();
         $mailTransfer = $this->prepareMailTransfer($mailTransfer, $quoteTransfer);
+
+        if ($mailTransfer->getGiftCards()->count() === 0) {
+            return;
+        }
 
         $this->mailFacade->handleMail($mailTransfer);
     }

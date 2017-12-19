@@ -19,6 +19,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class BalanceCheckerApplicabilityPlugin extends AbstractPlugin implements GiftCardDecisionRulePluginInterface
 {
     /**
+     * Specification:
+     * - This decision rule is a part of gift card balance log strategy
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer

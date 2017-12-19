@@ -170,7 +170,8 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
         return new SalesOrderPreChecker(
             $this->createGiftCardReader(),
             $this->createGiftCardDecisionRuleChecker(),
-            $this->getGiftCardValueProviderPlugin()
+            $this->getGiftCardValueProviderPlugin(),
+            $this->getConfig()
         );
     }
 
@@ -180,7 +181,8 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderSaver()
     {
         return new SalesOrderPaymentSaver(
-            $this->getPaymentSaverPlugins()
+            $this->getPaymentSaverPlugins(),
+            $this->getConfig()
         );
     }
 
