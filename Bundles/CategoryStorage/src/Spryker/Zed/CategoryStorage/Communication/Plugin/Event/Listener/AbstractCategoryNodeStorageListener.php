@@ -125,7 +125,7 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
         $categoryNodeTree = [];
         $this->disableInstancePooling();
         foreach ($locales as $locale) {
-            $categoryNodes = $this->getQueryContainer()->queryCategoryNodeTree($locale->getIdLocale())->find()->toKeyIndex();
+            $categoryNodes = $this->getQueryContainer()->queryCategoryNode($locale->getIdLocale())->find()->toKeyIndex();
             foreach ($categoryNodeIds as $categoryNodeId) {
                 if (isset($categoryNodes[$categoryNodeId])) {
                     $categoryNodeTree[$categoryNodeId][$locale->getLocaleName()] = $this->mapToCategoryNodeStorageTransfer($categoryNodes, $categoryNodes[$categoryNodeId]);
