@@ -24,7 +24,7 @@ class UseStatement extends AbstractDependencyFinder
     {
         $content = $fileInfo->getContents();
 
-        if (preg_match_all('/use (Spryker|Orm)\\\(?<application>.*?)\\\(?<bundle>.*?)\\\(?<layerOrFileName>.*?);/', $content, $matches, PREG_SET_ORDER)) {
+        if (preg_match_all('/use (Spryker|SprykerSdk|SprykerShop|SprykerEco|Orm)\\\(?<application>.*?)\\\(?<bundle>.*?)\\\(?<layerOrFileName>.*?);/', $content, $matches, PREG_SET_ORDER)) {
             foreach ($matches as $match) {
                 $className = str_replace(['use ', ';'], '', $match[0]);
                 $toBundle = $match[static::BUNDLE];

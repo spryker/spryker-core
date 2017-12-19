@@ -14,6 +14,7 @@ use Spryker\Zed\Development\Business\CodeBuilder\Module\ModuleBuilder;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use Spryker\Zed\Development\Business\CodeTest\CodeTester;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonFinder;
+use Spryker\Zed\Development\Business\Composer\ComposerJsonFinderComposite;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\BranchAliasUpdater;
@@ -56,7 +57,12 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTreeBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\JsonDependencyTreeReader;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTreeWriter\JsonDependencyTreeWriter;
 use Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor;
-use Spryker\Zed\Development\Business\DependencyTree\Finder;
+use Spryker\Zed\Development\Business\DependencyTree\Finder\FileFinder;
+use Spryker\Zed\Development\Business\DependencyTree\Finder\FinderComposite;
+use Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\SprykerEcoPathBuilder;
+use Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\SprykerPathBuilder;
+use Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\SprykerSdkPathBuilder;
+use Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\SprykerShopPathBuilder;
 use Spryker\Zed\Development\Business\DependencyTree\ViolationChecker\DependencyViolationChecker;
 use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\BundleUsesConnector;
 use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\UseForeignConstants;
@@ -103,7 +109,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new CodeTester(
             $this->getConfig()->getPathToRoot(),
-            $this->getConfig()->getBundleDirectory()
+            $this->getConfig()->getPathToCore()
         );
     }
 
@@ -114,7 +120,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new PhpMdRunner(
             $this->getConfig()->getPathToRoot(),
-            $this->getConfig()->getBundleDirectory(),
+            $this->getConfig()->getPathToCore(),
             $this->getConfig()->getArchitectureStandard()
         );
     }
@@ -124,9 +130,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createBridgeBuilder()
     {
-        return new BridgeBuilder(
-            $this->getConfig()->getBundleDirectory()
-        );
+        return new BridgeBuilder($this->getConfig());
     }
 
     /**
@@ -135,7 +139,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createModuleBuilder()
     {
         return new ModuleBuilder(
-            $this->getConfig()->getBundleDirectory()
+            $this->getConfig()->getPathToCore()
         );
     }
 
@@ -148,23 +152,29 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\Dependency\BundleParser
+     * @return \Spryker\Zed\Development\Business\Dependency\BundleParserInterface
      */
     public function createDependencyBundleParser()
     {
-        $config = $this->getConfig();
-
-        return new BundleParser($config);
+        return new BundleParser(
+            $this->createDependencyTreeFinder(),
+            $this->getConfig()
+        );
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\Dependency\Manager
+     * @return \Spryker\Zed\Development\Business\Dependency\ManagerInterface
      */
     public function createDependencyManager()
     {
         $bundleParser = $this->createDependencyBundleParser();
 
-        return new Manager($bundleParser, $this->getConfig()->getBundleDirectory());
+        return new Manager($bundleParser, [
+            $this->getConfig()->getPathToCore(),
+            $this->getConfig()->getPathToShop(),
+            $this->getConfig()->getPathToSdk(),
+            $this->getConfig()->getPathToEco(),
+        ]);
     }
 
     /**
@@ -176,15 +186,11 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param string $application
-     * @param string $bundle
-     * @param string $layer
-     *
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyTreeBuilder
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyTreeBuilderInterface
      */
-    public function createDependencyTreeBuilder($application, $bundle, $layer)
+    public function createDependencyTreeBuilder()
     {
-        $finder = $this->createDependencyTreeFinder($application, $bundle, $layer);
+        $finder = $this->createDependencyTreeFinder();
         $report = $this->createDependencyTree();
         $writer = $this->createDependencyTreeWriter();
 
@@ -195,22 +201,109 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param string $application
-     * @param string $bundle
-     * @param string $layer
-     *
-     * @return \Spryker\Zed\Development\Business\DependencyTree\Finder
+     * @return \Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface
      */
-    protected function createDependencyTreeFinder($application, $bundle, $layer)
+    protected function createDependencyTreeFinder()
     {
-        $finder = new Finder(
-            $this->getConfig()->getBundleDirectory(),
-            $application,
-            $bundle,
-            $layer
+        $finderComposite = new FinderComposite();
+        $finderComposite
+            ->addFinder($this->createSprykerFinder())
+            ->addFinder($this->createSdkFinder())
+            ->addFinder($this->createShopFinder());
+
+        return $finderComposite;
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface
+     */
+    protected function createSprykerFinder()
+    {
+        $finder = new FileFinder(
+            $this->createSprykerPathBuilder()
         );
 
         return $finder;
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\PathBuilderInterface
+     */
+    protected function createSprykerPathBuilder()
+    {
+        return new SprykerPathBuilder(
+            $this->getConfig()->getPathToCore(),
+            $this->getConfig()->getApplications()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface
+     */
+    protected function createSdkFinder()
+    {
+        $finder = new FileFinder(
+            $this->createSprykerSdkPathBuilder()
+        );
+
+        return $finder;
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\PathBuilderInterface
+     */
+    protected function createSprykerSdkPathBuilder()
+    {
+        return new SprykerSdkPathBuilder(
+            $this->getConfig()->getPathToSdk(),
+            $this->getConfig()->getApplications()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface
+     */
+    protected function createEcoFinder()
+    {
+        $finder = new FileFinder(
+            $this->createSprykerEcoPathBuilder()
+        );
+
+        return $finder;
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\PathBuilderInterface
+     */
+    protected function createSprykerEcoPathBuilder()
+    {
+        return new SprykerEcoPathBuilder(
+            $this->getConfig()->getPathToEco(),
+            $this->getConfig()->getApplications()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface
+     */
+    protected function createShopFinder()
+    {
+        $finder = new FileFinder(
+            $this->createSprykerShopPathBuilder()
+        );
+
+        return $finder;
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder\PathBuilderInterface
+     */
+    protected function createSprykerShopPathBuilder()
+    {
+        return new SprykerShopPathBuilder(
+            $this->getConfig()->getPathToShop(),
+            $this->getConfig()->getApplications()
+        );
     }
 
     /**
@@ -340,7 +433,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @param string|bool $bundleToView
      *
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilter
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilterCompositeInterface
      */
     protected function createDetailedDependencyTreeFilter($bundleToView)
     {
@@ -376,7 +469,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\DetailedGraphBuilder
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\GraphBuilderInterface
      */
     protected function createOutgoingGraphBuilder()
     {
@@ -387,7 +480,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      * @param bool $showEngineBundle
      * @param string|bool $bundleToView
      *
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraphBuilder
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraphBuilderInterface
      */
     public function createSimpleDependencyGraphBuilder($showEngineBundle, $bundleToView)
     {
@@ -403,7 +496,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\SimpleGraphBuilder
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\GraphBuilderInterface
      */
     protected function createSimpleGraphBuilder()
     {
@@ -414,7 +507,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      * @param bool $showEngineBundle
      * @param string|bool $bundleToView
      *
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilter
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilterCompositeInterface
      */
     protected function createSimpleGraphDependencyTreeFilter($showEngineBundle, $bundleToView)
     {
@@ -468,7 +561,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @param string $bundleToView
      *
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraphBuilder
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraphBuilderInterface
      */
     public function createExternalDependencyGraphBuilder($bundleToView)
     {
@@ -481,7 +574,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\ExternalGraphBuilder
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\GraphBuilderInterface
      */
     protected function createExternalGraphBuilder()
     {
@@ -489,12 +582,12 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\AdjacencyMatrixBuilder
+     * @return \Spryker\Zed\Development\Business\DependencyTree\AdjacencyMatrixBuilderInterface
      */
     public function createAdjacencyMatrixBuilder()
     {
         $adjacencyMatrixBuilder = new AdjacencyMatrixBuilder(
-            $this->createDependencyManager()->collectAllBundles(),
+            $this->createDependencyManager()->collectAllModules(),
             $this->createDependencyTreeReader(),
             $this->createAdjacencyMatrixDependencyTreeFilter()
         );
@@ -503,7 +596,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilter
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilterInterface
      */
     protected function createAdjacencyMatrixDependencyTreeFilter()
     {
@@ -515,7 +608,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\ViolationChecker\DependencyViolationChecker
+     * @return \Spryker\Zed\Development\Business\DependencyTree\ViolationChecker\DependencyViolationCheckerInterface
      */
     public function createDependencyViolationChecker()
     {
@@ -527,7 +620,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinder
+     * @return \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinderInterface
      */
     protected function createViolationFinder()
     {
@@ -556,7 +649,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @param string $pattern
      *
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\ClassNameFilter
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface
      */
     protected function createDependencyTreeClassNameFilter($pattern)
     {
@@ -564,17 +657,17 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param string $bundleToView
+     * @param string $moduleToView
      *
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\BundleToViewFilter
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface
      */
-    protected function createDependencyTreeBundleToViewFilter($bundleToView)
+    protected function createDependencyTreeBundleToViewFilter($moduleToView)
     {
-        return new BundleToViewFilter($bundleToView);
+        return new BundleToViewFilter($moduleToView);
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\UseForeignConstants
+     * @return \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinderInterface
      */
     protected function createViolationFinderUseForeignConstants()
     {
@@ -582,7 +675,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\UseForeignException
+     * @return \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinderInterface
      */
     protected function createViolationFinderUseForeignException()
     {
@@ -590,7 +683,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\BundleUsesConnector
+     * @return \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinderInterface
      */
     protected function createViolationFinderBundleUsesConnector()
     {
@@ -598,7 +691,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\ConstantsToForeignConstantsFilter
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface
      */
     protected function createDependencyTreeConstantsToForeignConstantsFilter()
     {
@@ -606,7 +699,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\ForeignEngineBundleFilter
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface
      */
     protected function createDependencyTreeForeignEngineBundleFilter()
     {
@@ -616,7 +709,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\EngineBundleFilter
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface
      */
     protected function createDependencyTreeEngineBundleFilter()
     {
@@ -626,17 +719,17 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\InvalidForeignBundleFilter
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface
      */
     protected function createDependencyTreeInvalidForeignBundleFilter()
     {
         return new InvalidForeignBundleFilter(
-            $this->createDependencyManager()->collectAllBundles()
+            $this->createDependencyManager()->collectAllModules()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\ExternalDependencyFilter
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface
      */
     protected function createDependencyTreeExternalDependencyFilter()
     {
@@ -644,7 +737,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\InternalDependencyFilter
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface
      */
     protected function createDependencyTreeInternalDependencyFilter()
     {
@@ -652,7 +745,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilter
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilterCompositeInterface
      */
     protected function createDependencyTreeFilter()
     {
@@ -670,7 +763,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonUpdater
+     * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonUpdaterInterface
      */
     public function createComposerJsonUpdater()
     {
@@ -681,20 +774,46 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonFinder
+     * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface
+     */
+    protected function createComposerJsonFinderComposite()
+    {
+        $finderComposite = new ComposerJsonFinderComposite();
+        $finderComposite
+            ->addFinder($this->createComposerJsonFinder())
+            ->addFinder($this->createComposerJsonFinderSdk());
+
+        return $finderComposite;
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface
      */
     protected function createComposerJsonFinder()
     {
         $composerJsonFinder = new ComposerJsonFinder(
             $this->createFinder(),
-            $this->getConfig()->getBundleDirectory()
+            $this->getConfig()->getPathToCore()
         );
 
         return $composerJsonFinder;
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\Composer\Updater\ComposerUpdaterComposite
+     * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface
+     */
+    protected function createComposerJsonFinderSdk()
+    {
+        $composerJsonFinder = new ComposerJsonFinder(
+            $this->createFinder(),
+            $this->getConfig()->getPathToSdk()
+        );
+
+        return $composerJsonFinder;
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Composer\Updater\ComposerUpdaterCompositeInterface
      */
     protected function createComposerJsonUpdaterComposite()
     {
@@ -720,7 +839,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\Composer\Updater\DescriptionUpdater
+     * @return \Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface
      */
     protected function createComposerJsonDescriptionUpdater()
     {
@@ -728,7 +847,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\Composer\Updater\LicenseUpdater
+     * @return \Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface
      */
     protected function createComposerJsonLicenseUpdater()
     {
@@ -736,7 +855,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\Composer\Updater\RequireUpdater
+     * @return \Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface
      */
     protected function createComposerJsonRequireUpdater()
     {
@@ -747,7 +866,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\Composer\Updater\RequireExternalUpdater
+     * @return \Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface
      */
     protected function createComposerJsonRequireExternalUpdater()
     {
@@ -759,7 +878,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\Composer\Updater\StabilityUpdater
+     * @return \Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface
      */
     protected function createComposerJsonStabilityUpdater()
     {
@@ -767,7 +886,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater
+     * @return \Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface
      */
     protected function createComposerJsonAutoloadUpdater()
     {
@@ -775,7 +894,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\Composer\Updater\BranchAliasUpdater
+     * @return \Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface
      */
     protected function createComposerJsonBranchAliasUpdater()
     {
@@ -783,7 +902,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilter
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilterCompositeInterface
      */
     protected function createComposerJsonRequireUpdaterTreeFilter()
     {
@@ -796,11 +915,11 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\ComposerDependencyParser
+     * @return \Spryker\Zed\Development\Business\DependencyTree\ComposerDependencyParserInterface
      */
     public function createComposerDependencyParser()
     {
-        return new ComposerDependencyParser($this->createComposerJsonFinder());
+        return new ComposerDependencyParser($this->createComposerJsonFinderComposite());
     }
 
     /**
@@ -970,7 +1089,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface $bundleBuilder
      * @param array $options
      *
-     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
      */
     protected function createIdeAutoCompletionWriter(BundleBuilderInterface $bundleBuilder, array $options)
     {
@@ -1071,17 +1190,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createXmlReader() instead.
-     *
-     * @return \Zend\Config\Reader\Xml
-     */
-    protected function getXmlReader()
-    {
-        return $this->createXmlReader();
-    }
-
-    /**
-     * @return \Zend\Config\Reader\Xml
+     * @return \Zend\Config\Reader\ReaderInterface
      */
     protected function createXmlReader()
     {
@@ -1102,17 +1211,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createCamelCaseToDashFilter() instead.
-     *
-     * @return \Zend\Filter\Word\CamelCaseToDash
-     */
-    protected function getCamelCaseToDashFilter()
-    {
-        return $this->createCamelCaseToDashFilter();
-    }
-
-    /**
-     * @return \Zend\Filter\Word\CamelCaseToDash
+     * @return \Zend\Filter\FilterInterface
      */
     protected function createCamelCaseToDashFilter()
     {

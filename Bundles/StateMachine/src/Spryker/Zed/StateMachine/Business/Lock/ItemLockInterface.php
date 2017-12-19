@@ -8,14 +8,14 @@ namespace Spryker\Zed\StateMachine\Business\Lock;
 interface ItemLockInterface
 {
     /**
-     * @param int $identifier
+     * @param string $identifier
      *
      * @return bool
      */
     public function acquire($identifier);
 
     /**
-     * @param int $identifier
+     * @param string $identifier
      *
      * @return void
      */

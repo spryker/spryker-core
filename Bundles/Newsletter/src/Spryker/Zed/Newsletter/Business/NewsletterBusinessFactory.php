@@ -33,7 +33,8 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
             $this->createSubscriptionManager(),
             $this->createSubscriberManager(),
             $this->getQueryContainer(),
-            $this->getMailFacade()
+            $this->getMailFacade(),
+            $this->getUtilValidateService()
         );
     }
 
@@ -118,5 +119,13 @@ class NewsletterBusinessFactory extends AbstractBusinessFactory
     protected function getMailFacade()
     {
         return $this->getProvidedDependency(NewsletterDependencyProvider::FACADE_MAIL);
+    }
+
+    /**
+     * @return \Spryker\Zed\Newsletter\Dependency\Service\NewsletterToUtilValidateServiceInterface
+     */
+    protected function getUtilValidateService()
+    {
+        return $this->getProvidedDependency(NewsletterDependencyProvider::SERVICE_UTIL_VALIDATE);
     }
 }

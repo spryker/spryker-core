@@ -26,7 +26,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\Collector\\Helper\\": "tests/SprykerTest/Shared/Collector/_support/Helper/"
     }
   },
   "autoload-dev": {
