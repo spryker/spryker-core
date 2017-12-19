@@ -43,6 +43,29 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
+    public function queryCategoryNode($idLocale)
+    {
+        $query = $this->getFactory()
+            ->getCategoryQueryContainer()
+            ->queryAllCategoryNodes()
+            ->joinWithSpyUrl()
+            ->joinWithCategory()
+            ->joinWith('Category.Attribute')
+            ->joinWith('Category.CategoryTemplate')
+            ->where(SpyCategoryAttributeTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
+            ->where(SpyUrlTableMap::COL_FK_LOCALE . ' = ?', $idLocale)
+            ->where(SpyCategoryTableMap::COL_IS_ACTIVE . ' = ?', true);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
     public function queryCategoryNodeTree($idLocale)
     {
         $query = $this->getFactory()

@@ -36,9 +36,6 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     {
         $productViewTransfer->requireAttributeMap();
 
-        $selectedVariantNode = $this->getSelectedVariantNode($productViewTransfer);
-        $productViewTransfer = $this->setAvailableAttributes($selectedVariantNode, $productViewTransfer);
-
         if (
             count($productViewTransfer->getAttributeMap()->getProductConcreteIds()) === 1 ||
             count($productViewTransfer->getAttributeMap()->getSuperAttributes()) === 0
@@ -46,8 +43,14 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
             return $this->getFirstProductVariant($productViewTransfer, $locale);
         }
 
+        $selectedVariantNode = $this->getSelectedVariantNode($productViewTransfer);
+
         if ($productViewTransfer->getSelectedAttributes()) {
-            return $this->getSelectedProductVariant($productViewTransfer, $locale);
+            $productViewTransfer = $this->getSelectedProductVariant($productViewTransfer, $locale, $selectedVariantNode);
+        }
+
+        if (!$productViewTransfer->getIdProductConcrete()) {
+            $productViewTransfer = $this->setAvailableAttributes($selectedVariantNode, $productViewTransfer);
         }
 
         return $productViewTransfer;
@@ -157,6 +160,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
 
             $attributePath[] = $attributeName . ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER . $attributeValue;
         }
+
         return $attributePath;
     }
 
@@ -164,7 +168,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $locale
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     protected function getFirstProductVariant(ProductViewTransfer $productViewTransfer, $locale)
     {
@@ -173,7 +177,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
         $productConcreteStorageData = $this->productConcreteStorageReader->getProductConcreteStorageData($idProductConcrete, $locale);
 
         if (!$productConcreteStorageData) {
-            return null;
+            return $productViewTransfer;
         }
 
         return $this->mergeAbstractAndConcreteProducts($productViewTransfer, $productConcreteStorageData);
@@ -195,22 +199,21 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     /**
      * @param ProductViewTransfer $productViewTransfer
      * @param string $locale
+     * @param array $selectedVariantNode
      *
-     * @return ProductViewTransfer|null
+     * @return ProductViewTransfer
      */
-    public function getSelectedProductVariant(ProductViewTransfer $productViewTransfer, $locale)
+    protected function getSelectedProductVariant(ProductViewTransfer $productViewTransfer, $locale, array $selectedVariantNode)
     {
-        $selectedVariantNode = $this->getSelectedVariantNode($productViewTransfer);
-
         if (!$this->isProductConcreteNodeReached($selectedVariantNode)) {
-            return null;
+            return $productViewTransfer;
         }
 
         $idProductConcrete = $this->extractIdOfProductConcrete($selectedVariantNode);
-        $productConcreteStorageData = $this->getProductConcreteStorageData($idProductConcrete, $locale);
+        $productConcreteStorageData = $this->productConcreteStorageReader->getProductConcreteStorageData($idProductConcrete, $locale);
 
         if (!$productConcreteStorageData) {
-            return null;
+            return $productViewTransfer;
         }
 
         return $this->mergeAbstractAndConcreteProducts($productViewTransfer, $productConcreteStorageData);
@@ -225,7 +228,6 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     {
         return isset($selectedVariantNode[ProductConfig::VARIANT_LEAF_NODE_ID]);
     }
-
 
     /**
      * @param array $selectedVariantNode
