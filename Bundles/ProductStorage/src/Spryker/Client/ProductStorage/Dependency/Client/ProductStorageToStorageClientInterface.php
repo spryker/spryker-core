@@ -17,4 +17,11 @@ interface ProductStorageToStorageClientInterface
      */
     public function get($key);
 
+    /**
+     * @param array $keys
+     *
+     * @return array
+     */
+    public function getMulti(array $keys);
+
 }

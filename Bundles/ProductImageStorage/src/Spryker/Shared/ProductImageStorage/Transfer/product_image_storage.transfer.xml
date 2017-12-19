@@ -24,4 +24,10 @@
         <property name="imageSets" singular="imageSet" type="ProductImageSetStorage[]"/>
     </transfer>
 
+    <transfer name="ProductView">
+        <property name="idProductAbstract" type="int" />
+        <property name="idProductConcrete" type="int" />
+        <property name="images" singular="image" type="ProductImageStorage[]"/>
+    </transfer>
+
 </transfers>

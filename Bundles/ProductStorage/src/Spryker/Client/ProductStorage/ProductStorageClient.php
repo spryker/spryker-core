@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductStorage;
 
-use Generated\Shared\Transfer\ProductAbstractStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -15,38 +14,24 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ProductStorageClient extends AbstractClient implements ProductStorageClientInterface
 {
-
     /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     * @param string $locale
-     *
-     * @return ProductAbstractStorageTransfer
-     */
-    public function getProductAbstractFromStorageById($idProductAbstract, $locale)
-    {
-        return $this->getFactory()
-            ->createProductStorage()
-            ->getProductAbstractFromStorageById($idProductAbstract, $locale);
-    }
-
-    /**
-     * Specification:
-     * - Maps raw product data to StorageProductTransfer for the current locale.
-     * - Based on the super attributes and the selected attributes of the product the result might be or concrete product.
-     * - Executes a stack of \Spryker\Client\Product\Dependency\Plugin\StorageProductExpanderPluginInterface plugins that
-     * can expand the result with extra data.
+     * {@inheritdoc}
      *
      * @api
      *
      * @param array $data
      * @param array $selectedAttributes
      *
-     * @return \Generated\Shared\Transfer\StorageProductTransfer
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapStorageProductForCurrentLocale(array $data, array $selectedAttributes = [])
+    public function mapProductStorageDataForCurrentLocale(array $data, array $selectedAttributes = [])
     {
-        // TODO: Implement mapStorageProductForCurrentLocale() method.
+        $locale = $this->getFactory()
+            ->getLocaleClient()
+            ->getCurrentLocale();
+
+        return $this->getFactory()
+            ->createProductStorageDataMapper()
+            ->mapProductStorageData($locale, $data, $selectedAttributes);
     }
 }

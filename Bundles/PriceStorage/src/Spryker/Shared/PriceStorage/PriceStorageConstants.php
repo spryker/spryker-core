@@ -32,6 +32,14 @@ class PriceStorageConstants
      *
      * @api
      */
-    const PRICE_RESOURCE_NAME = 'price';
+    const PRICE_ABSTRACT_RESOURCE_NAME = 'price_abstract';
+
+    /**
+     * Specification:
+     * - Resource name, this will use for key generating
+     *
+     * @api
+     */
+    const PRICE_CONCRETE_RESOURCE_NAME = 'price_concrete';
 
 }

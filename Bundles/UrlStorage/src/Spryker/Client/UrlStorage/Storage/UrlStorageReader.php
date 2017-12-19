@@ -17,8 +17,6 @@ class UrlStorageReader implements UrlStorageReaderInterface
 {
 
     const URL = 'url';
-    const PS_PREFIX = 'ps:';
-    const KV_PREFIX = 'kv:';
 
     /**
      * @var \Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageInterface

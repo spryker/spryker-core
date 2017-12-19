@@ -7,39 +7,39 @@
 
 namespace Spryker\Client\AvailabilityStorage\Plugin;
 
-use Generated\Shared\Transfer\StorageProductTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Product\Dependency\Plugin\StorageProductExpanderPluginInterface;
+use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface;
 
 /**
  * @method \Spryker\Client\AvailabilityStorage\AvailabilityStorageFactory getFactory()
  */
-class StorageProductAvailabilityStorageExpanderPlugin extends AbstractPlugin implements StorageProductExpanderPluginInterface
+class StorageProductAvailabilityStorageExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\StorageProductTransfer $storageProductTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param array $productData
      * @param string $locale
      *
-     * @return \Generated\Shared\Transfer\StorageProductTransfer
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandStorageProduct(StorageProductTransfer $storageProductTransfer, array $productData, $locale)
+    public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $locale)
     {
         $storageAvailabilityTransfer = $this->getFactory()
             ->createAvailabilityStorageReader()
-            ->getAvailabilityAbstractAsStorageTransfer($storageProductTransfer->getIdProductAbstract());
+            ->getAvailabilityAbstractAsStorageTransfer($productViewTransfer->getIdProductAbstract());
 
-        if (!$storageProductTransfer->getIsVariant()) {
-            $storageProductTransfer->setAvailable($storageAvailabilityTransfer->getIsAbstractProductAvailable());
+        if (!$productViewTransfer->getIdProductConcrete()) {
+            $productViewTransfer->setAvailable($storageAvailabilityTransfer->getIsAbstractProductAvailable());
 
-            return $storageProductTransfer;
+            return $productViewTransfer;
         }
 
         $concreteProductAvailableItems = $storageAvailabilityTransfer->getConcreteProductAvailableItems();
-        if (isset($concreteProductAvailableItems[$storageProductTransfer->getSku()])) {
-            $storageProductTransfer->setAvailable($concreteProductAvailableItems[$storageProductTransfer->getSku()]);
+        if (isset($concreteProductAvailableItems[$productViewTransfer->getSku()])) {
+            $productViewTransfer->setAvailable($concreteProductAvailableItems[$productViewTransfer->getSku()]);
         }
 
-        return $storageProductTransfer;
+        return $productViewTransfer;
     }
 }

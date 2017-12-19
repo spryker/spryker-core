@@ -11,18 +11,15 @@ use Generated\Shared\Transfer\SpyUrlTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\ProductStorage\ProductStorageFactory;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Product\ProductConfig;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
 /**
- * @method ProductStorageFactory getFactory()
+ * @method \Spryker\Client\ProductStorage\ProductStorageFactory getFactory()
  */
 class UrlStorageProductAbstractMapperPlugin extends AbstractPlugin implements UrlStorageResourceMapperPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\SpyUrlTransfer $spyUrlTransfer
      * @param array $options
@@ -36,7 +33,7 @@ class UrlStorageProductAbstractMapperPlugin extends AbstractPlugin implements Ur
         if ($idProductAbstract) {
             $resourceKey = $this->generateKey($idProductAbstract, $options['locale']);
             $urlStorageResourceMapTransfer->setResourceKey($resourceKey);
-            $urlStorageResourceMapTransfer->setType(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT);
+            $urlStorageResourceMapTransfer->setType(ProductStorageConstants::PRODUCT_ABSTRACT_RESOURCE_NAME);
         }
 
         return $urlStorageResourceMapTransfer;
@@ -65,5 +62,4 @@ class UrlStorageProductAbstractMapperPlugin extends AbstractPlugin implements Ur
     {
         return Store::getInstance()->getStoreName();
     }
-
 }

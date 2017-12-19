@@ -13,4 +13,11 @@
         <property name="prices" singular="price" type="PriceStorage[]"/>
     </transfer>
 
+    <transfer name="ProductView">
+        <property name="idProductAbstract" type="int" />
+        <property name="idProductConcrete" type="int" />
+        <property name="defaultPrice" type="int"/>
+        <property name="prices" type="array" singular="price" />
+    </transfer>
+
 </transfers>
