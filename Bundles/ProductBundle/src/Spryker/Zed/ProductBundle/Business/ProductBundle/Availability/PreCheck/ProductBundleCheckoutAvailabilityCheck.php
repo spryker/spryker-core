@@ -20,7 +20,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function checkCheckoutAvailability(
         QuoteTransfer $quoteTransfer,
@@ -28,19 +28,22 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
     ) {
         $checkoutErrorMessages = $this->getCheckoutAvailabilityFailedItems($quoteTransfer);
 
-        if (count($checkoutErrorMessages) > 0) {
-            $checkoutResponseTransfer->setIsSuccess(false);
-
-            foreach ($checkoutErrorMessages as $checkoutErrorTransfer) {
-                $checkoutResponseTransfer->addError($checkoutErrorTransfer);
-            }
+        if (count($checkoutErrorMessages) === 0) {
+            return true;
         }
+
+        $checkoutResponseTransfer->setIsSuccess(false);
+        foreach ($checkoutErrorMessages as $checkoutErrorTransfer) {
+            $checkoutResponseTransfer->addError($checkoutErrorTransfer);
+        }
+
+        return false;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return array|\ArrayObject
      */
     protected function getCheckoutAvailabilityFailedItems(QuoteTransfer $quoteTransfer)
     {

@@ -30,7 +30,7 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
     }
 
     /**
-     * @return \Spryker\Client\Checkout\Zed\CheckoutStub
+     * @return \Spryker\Client\Checkout\Zed\CheckoutStubInterface
      */
     protected function getZedStub()
     {

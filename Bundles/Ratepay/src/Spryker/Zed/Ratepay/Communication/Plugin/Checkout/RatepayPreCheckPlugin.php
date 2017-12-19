@@ -25,7 +25,7 @@ class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPl
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return bool
      */
     public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
@@ -36,7 +36,7 @@ class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPl
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return bool
      */
     public function checkCondition(
         QuoteTransfer $quoteTransfer,
@@ -74,16 +74,15 @@ class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPl
 
         $ratepayResponseTransfer = $this->getFacade()->requestPayment($ratepayPaymentRequestTransfer);
         $this->getFacade()->updatePaymentMethodByPaymentResponse($ratepayResponseTransfer, $ratepayPaymentRequestTransfer->getOrderId());
-        $this->checkForErrors($ratepayResponseTransfer, $checkoutResponseTransfer);
 
-        return $checkoutResponseTransfer;
+        return $this->checkForErrors($ratepayResponseTransfer, $checkoutResponseTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\RatepayResponseTransfer $ratepayResponseTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     protected function checkForErrors(RatepayResponseTransfer $ratepayResponseTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
@@ -96,7 +95,10 @@ class RatepayPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPl
                 ->setErrorCode($ratepayResponseTransfer->getResultCode())
                 ->setMessage($errorMessage);
             $checkoutResponseTransfer->addError($error);
+            return false;
         }
+
+        return true;
     }
 
     /**

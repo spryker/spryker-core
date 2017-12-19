@@ -10,6 +10,9 @@ namespace Spryker\Zed\Sales\Business\Model\Order;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * @deprecated Use \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverInterface instead.
+ */
 interface OrderSaverInterface
 {
     /**
