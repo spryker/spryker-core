@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CarrierController extends AbstractController
 {
+    const MESSAGE_CARRIER_CREATE_SUCCESS = 'Carrier was created successfully.';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -42,6 +44,7 @@ class CarrierController extends AbstractController
             $this->getFacade()
                 ->createCarrier($carrierTransfer);
 
+            $this->addSuccessMessage(static::MESSAGE_CARRIER_CREATE_SUCCESS);
             return $this->redirectResponse('/shipment');
         }
 

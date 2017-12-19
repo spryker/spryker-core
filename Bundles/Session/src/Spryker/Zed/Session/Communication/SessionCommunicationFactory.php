@@ -12,6 +12,7 @@ use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
 use Spryker\Shared\Session\Model\SessionStorage\SessionStorageOptions;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Session\SessionDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Session\SessionConfig getConfig()
@@ -88,5 +89,13 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     protected function createSessionHandlerFactory()
     {
         return new SessionHandlerFactory($this->getConfig()->getSessionLifeTime());
+    }
+
+    /**
+     * @return \Spryker\Client\Session\SessionClientInterface
+     */
+    public function getSessionClient()
+    {
+        return $this->getProvidedDependency(SessionDependencyProvider::SESSION_CLIENT);
     }
 }

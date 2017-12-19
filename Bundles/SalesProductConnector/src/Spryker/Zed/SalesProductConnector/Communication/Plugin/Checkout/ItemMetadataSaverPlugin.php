@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * Requires Requires Checkout ^4.0.0
  *
- * @method \Spryker\Zed\SalesProductConnector\Business\SalesProductConnectorFacade getFacade()
+ * @method \Spryker\Zed\SalesProductConnector\Business\SalesProductConnectorFacadeInterface getFacade()
  */
 class ItemMetadataSaverPlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface
 {

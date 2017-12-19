@@ -81,20 +81,6 @@ interface CustomerFacadeInterface
      *
      * @api
      *
-     * @deprecated Use sendPasswordRestoreMail() instead
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
-     */
-    public function forgotPassword(CustomerTransfer $customerTransfer);
-
-    /**
-     * Specification:
-     * - Sends password restoration link via email using a freshly generated password restoration key.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
@@ -368,7 +354,7 @@ interface CustomerFacadeInterface
      */
     public function saveCustomerForOrder(
         QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer  $checkoutResponseTransfer
+        CheckoutResponseTransfer $checkoutResponseTransfer
     );
 
     /**
@@ -394,6 +380,7 @@ interface CustomerFacadeInterface
      * Specification:
      * - Checks required fields for an order placement (in a customer in the quote)
      * - Checks if a new customer has a not yet registered email.
+     * - Checks if a new customer or a guest user has a valid email address.
      *
      * @api
      *
@@ -404,7 +391,7 @@ interface CustomerFacadeInterface
      */
     public function checkOrderPreSaveConditions(
         QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer  $checkoutResponseTransfer
+        CheckoutResponseTransfer $checkoutResponseTransfer
     );
 
     /**

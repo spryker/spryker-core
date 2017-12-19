@@ -47,7 +47,8 @@ class SequenceNumberBusinessFactory extends AbstractBusinessFactory
         return new SequenceNumber(
             $generator,
             $settings,
-            Propel::getConnection()
+            Propel::getConnection(),
+            $this->getConfig()->getSequenceLimits()
         );
     }
 }

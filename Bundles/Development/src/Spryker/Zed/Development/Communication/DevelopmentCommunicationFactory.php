@@ -33,15 +33,15 @@ class DevelopmentCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $bundle
+     * @param string $module
      *
      * @return \Spryker\Zed\Development\Communication\Form\DataProvider\BundleFormDataProvider
      */
-    public function createBundleFormDataProvider(Request $request, $bundle)
+    public function createBundleFormDataProvider(Request $request, $module)
     {
         $bundleFormDataProvider = new BundleFormDataProvider(
             $request,
-            $this->getFacade()->showOutgoingDependenciesForBundle($bundle)
+            $this->getFacade()->showOutgoingDependenciesForModule($module)
         );
 
         return $bundleFormDataProvider;

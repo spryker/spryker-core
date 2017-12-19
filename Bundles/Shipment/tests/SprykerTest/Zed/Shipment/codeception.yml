@@ -42,6 +42,16 @@ suites:
                     depends: \SprykerTest\Shared\Testify\Helper\ZedBootstrap
                 - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
                     depends: \SprykerTest\Shared\Testify\Helper\BundleConfig
+                    serviceProvider:
+                      - Spryker\Shared\Application\ServiceProvider\FormFactoryServiceProvider
+                      - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\MvcRoutingServiceProvider
+                      - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RoutingServiceProvider
+                      - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider
+                      - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TranslationServiceProvider
+                      - Spryker\Zed\Gui\Communication\Plugin\ServiceProvider\GuiTwigExtensionServiceProvider
+                      - Spryker\Zed\Twig\Communication\Plugin\ServiceProvider\TwigServiceProvider
+                      - Spryker\Zed\ZedNavigation\Communication\Plugin\ServiceProvider\ZedNavigationServiceProvider
+                      - Spryker\Zed\Money\Communication\Plugin\ServiceProvider\TwigMoneyServiceProvider
 
     Presentation:
         path: Presentation

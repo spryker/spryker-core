@@ -12,10 +12,12 @@ use Spryker\Shared\Search\Provider\AbstractIndexClientProvider;
 class IndexClientProvider extends AbstractIndexClientProvider
 {
     /**
+     * @param null|string $index
+     *
      * @return \Elastica\Index
      */
-    public function getClient()
+    public function getClient($index = null)
     {
-        return $this->createZedClient();
+        return $this->createZedClient($index);
     }
 }

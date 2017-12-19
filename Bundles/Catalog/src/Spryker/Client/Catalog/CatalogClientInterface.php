@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\Catalog;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 interface CatalogClientInterface
 {
     /**
@@ -39,4 +42,30 @@ interface CatalogClientInterface
      * @return array
      */
     public function catalogSuggestSearch($searchString, array $requestParameters = []);
+
+    /**
+     * Specification:
+     *  - Reads current view mode as store in cookie, the view mode is listing mode for catalog.
+     *
+     * @api
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return string
+     */
+    public function getCatalogViewMode(Request $request);
+
+    /**
+     * Specification:
+     *  - Stores current catalog view mode to cookie.
+     *  - Updates Response object with cookie information.
+     *
+     * @api
+     *
+     * @param string $mode
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function setCatalogViewMode($mode, Response $response);
 }

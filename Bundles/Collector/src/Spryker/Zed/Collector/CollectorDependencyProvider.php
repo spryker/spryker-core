@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Collector;
 
 use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleBridge;
+use Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -18,6 +19,7 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
     const SEARCH_PLUGINS = 'search plugins';
     const STORAGE_PLUGINS = 'storage plugins';
     const FACADE_PROPEL = 'propel facade';
+    const FACADE_STORE = 'store facade';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -26,11 +28,9 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container = $this->provideLocaleFacade($container);
-
-        $container[self::QUERY_CONTAINER_TOUCH] = function (Container $container) {
-            return $container->getLocator()->touch()->queryContainer();
-        };
+        $container = $this->addLocaleFacade($container);
+        $container = $this->addStoreFacade($container);
+        $container = $this->addTouchQueryContainer($container);
 
         return $container;
     }
@@ -42,7 +42,7 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container = $this->provideLocaleFacade($container);
+        $container = $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -52,10 +52,50 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addTouchQueryContainer(Container $container)
+    {
+        $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+            return $container->getLocator()->touch()->queryContainer();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Use `addLocaleFacade()` instead.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     private function provideLocaleFacade(Container $container)
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        return $this->addLocaleFacade($container);
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container)
+    {
+        $container[static::FACADE_LOCALE] = function (Container $container) {
             return new CollectorToLocaleBridge($container->getLocator()->locale()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container)
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new CollectorToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
 
         return $container;

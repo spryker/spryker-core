@@ -117,7 +117,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createPreConditionChecker()
     {
-        return new PreConditionChecker($this->createCustomer());
+        return new PreConditionChecker($this->createCustomer(), $this->getUtilValidateService());
     }
 
     /**
