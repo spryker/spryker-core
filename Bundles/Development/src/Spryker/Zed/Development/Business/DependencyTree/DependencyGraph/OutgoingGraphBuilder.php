@@ -10,7 +10,7 @@ namespace Spryker\Zed\Development\Business\DependencyTree\DependencyGraph;
 use ArrayObject;
 use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
 use Spryker\Zed\Development\Business\Dependency\BundleParserInterface;
-use Spryker\Zed\Development\Business\Dependency\Manager;
+use Spryker\Zed\Development\Business\Dependency\ManagerInterface;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 
 class OutgoingGraphBuilder
@@ -31,7 +31,7 @@ class OutgoingGraphBuilder
     protected $bundleParser;
 
     /**
-     * @var \Spryker\Zed\Development\Business\Dependency\Manager
+     * @var \Spryker\Zed\Development\Business\Dependency\ManagerInterface
      */
     protected $dependencyManager;
 
@@ -44,10 +44,10 @@ class OutgoingGraphBuilder
      * @param string $bundleName
      * @param \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin $graph
      * @param \Spryker\Zed\Development\Business\Dependency\BundleParserInterface $bundleParser
-     * @param \Spryker\Zed\Development\Business\Dependency\Manager $dependencyManager
+     * @param \Spryker\Zed\Development\Business\Dependency\ManagerInterface $dependencyManager
      * @param array $bundlesToFilter
      */
-    public function __construct($bundleName, GraphPlugin $graph, BundleParserInterface $bundleParser, Manager $dependencyManager, array $bundlesToFilter = [])
+    public function __construct($bundleName, GraphPlugin $graph, BundleParserInterface $bundleParser, ManagerInterface $dependencyManager, array $bundlesToFilter = [])
     {
         $this->bundleName = $bundleName;
         $this->graph = $graph;

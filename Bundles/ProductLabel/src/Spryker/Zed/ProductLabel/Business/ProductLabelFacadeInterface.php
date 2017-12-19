@@ -66,6 +66,20 @@ interface ProductLabelFacadeInterface
 
     /**
      * Specification:
+     * - Finds all product active labels for the given abstract-product ID in the database.
+     * - Returns a collection of product-label IDs.
+     * - Returns an empty collection if either product-label or abstract-product are missing.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findActiveLabelIdsByIdProductAbstract($idProductAbstract);
+
+    /**
+     * Specification:
      * - Persists new product-label entity to database
      * - Touches product-label dictionary active
      *

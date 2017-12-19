@@ -9,11 +9,11 @@ namespace Spryker\Zed\Development\Business\IdeAutoCompletion\Generator;
 interface GeneratorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer[] $bundleTransferCollection
+     * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer[] $moduleTransferCollection
      *
      * @return string
      */
-    public function generate(array $bundleTransferCollection);
+    public function generate(array $moduleTransferCollection);
 
     /**
      * @return string
