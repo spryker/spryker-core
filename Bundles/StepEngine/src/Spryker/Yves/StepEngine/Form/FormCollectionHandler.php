@@ -11,7 +11,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 use Spryker\Yves\StepEngine\Exception\InvalidFormHandleRequest;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class FormCollectionHandler implements FormCollectionHandlerInterface
@@ -32,7 +32,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     protected $forms = [];
 
     /**
-     * @var \Symfony\Component\Form\FormTypeInterface[]
+     * @var mixed[]
      */
     protected $formTypes;
 
@@ -146,12 +146,12 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     }
 
     /**
-     * @param \Symfony\Component\Form\FormTypeInterface $formType
+     * @param \Symfony\Component\Form\FormTypeInterface|string $formType
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function createForm(FormTypeInterface $formType, AbstractTransfer $dataTransfer)
+    protected function createForm($formType, AbstractTransfer $dataTransfer)
     {
         $formOptions = [
             'data_class' => get_class($dataTransfer),
@@ -159,6 +159,10 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
 
         if ($this->dataProvider) {
             $formOptions = array_merge($formOptions, $this->dataProvider->getOptions($dataTransfer));
+        }
+
+        if ($formType instanceof FormInterface) {
+            return $formType;
         }
 
         return $this->formFactory->create($formType, null, $formOptions);
