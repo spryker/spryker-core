@@ -16,6 +16,7 @@ class AttributeValueTranslationForm extends AbstractType
     const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE = 'id_product_management_attribute_value';
     const FIELD_VALUE = 'value';
     const FIELD_TRANSLATION = 'translation';
+    const FIELD_FK_LOCALE = 'fk_locale';
 
     const GROUP_VALUE_TRANSLATIONS = 'value_translations_group';
 
