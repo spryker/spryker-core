@@ -61,6 +61,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
         if (!$this->forms) {
             $this->forms = $this->createForms($dataTransfer);
         }
+
         return $this->forms;
     }
 
