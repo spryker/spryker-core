@@ -29,8 +29,6 @@ class CategoryNodeCategoryStorageListener extends AbstractCategoryNodeStorageLis
      */
     public function handleBulk(array $eventTransfers, $eventName)
     {
-        //TODO Fix the queries
-
         $this->preventTransaction();
         $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
         $categoryNodeIds = $this->getQueryContainer()->queryCategoryNodeIdsByCategoryIds($categoryIds)->find()->getData();

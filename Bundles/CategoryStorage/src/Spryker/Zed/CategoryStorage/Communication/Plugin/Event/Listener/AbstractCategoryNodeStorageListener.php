@@ -37,13 +37,13 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param array $categoryNodeIds
      *
      * @return void
      */
-    protected function unpublish(array $productAbstractIds)
+    protected function unpublish(array $categoryNodeIds)
     {
-        $spyCategoryNodeStorageEntities = $this->findCategoryNodeStorageEntitiesByCategoryNodeIds($productAbstractIds);
+        $spyCategoryNodeStorageEntities = $this->findCategoryNodeStorageEntitiesByCategoryNodeIds($categoryNodeIds);
         foreach ($spyCategoryNodeStorageEntities as $spyCategoryNodeStorageEntity) {
             $spyCategoryNodeStorageEntity->delete();
         }

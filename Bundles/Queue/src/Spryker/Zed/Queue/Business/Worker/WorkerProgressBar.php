@@ -44,8 +44,6 @@ class WorkerProgressBar implements WorkerProgressBarInterface
     public function start($steps, $round)
     {
         if ($this->output->getVerbosity() === OutputInterface::VERBOSITY_NORMAL) {
-            $this->progressBar = null;
-
             return;
         }
 
@@ -136,7 +134,7 @@ class WorkerProgressBar implements WorkerProgressBarInterface
      */
     public function reset()
     {
-        unset($this->progressBar);
+        $this->progressBar = null;
     }
 
     /**

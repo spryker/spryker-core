@@ -130,7 +130,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     protected function storeDataSet(array $spyProductAbstractLocalizedEntity, SpyProductAbstractPageSearch $spyProductPageSearchEntity = null, $isRefresh = false)
     {
         if (!$this->isActive($spyProductAbstractLocalizedEntity)) {
-            if (!$$spyProductPageSearchEntity === null) {
+            if (!$spyProductPageSearchEntity === null) {
                 $spyProductPageSearchEntity->delete();
             }
 

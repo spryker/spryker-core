@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\PriceStorage\Persistence\PriceStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\PriceStorage\Communication\PriceStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\PriceStorage\PriceStorageConfig getConfig()
  */
 class AbstractPriceProductConcreteStorageListener extends AbstractPlugin
 {
@@ -92,7 +93,7 @@ class AbstractPriceProductConcreteStorageListener extends AbstractPlugin
                     ->setPrice($price)
                     ->setType($priceType)
             );
-            if ($priceType === 'DEFAULT') {
+            if ($priceType === $this->getConfig()->getDefaultPriceType()) {
                 $priceProductStorageTransfer->setDefaultPrice($price);
             }
         }

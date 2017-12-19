@@ -1,0 +1,56 @@
+<?php
+
+namespace Spryker\Zed\CmsBlockCategoryStorage;
+
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\CmsBlockCategoryStorage\Dependency\QueryContainer\CmsBlockCategoryStorageToCmsBlockCategoryConnectorQueryContainerBridge;
+use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Facade\CmsBlockCategoryStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToUtilSanitizeServiceBridge;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+
+class CmsBlockCategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
+{
+
+    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    const QUERY_CONTAINER_CMS_BLOCK_CATEGORY_CONNECTOR = 'QUERY_CONTAINER_CMS_BLOCK_CATEGORY_CONNECTOR';
+    const STORE = 'STORE';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+            return new CmsBlockCategoryStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
+        };
+
+        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+            return new CmsBlockCategoryStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
+        };
+
+        $container[static::STORE] = function (Container $container) {
+            return Store::getInstance();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container[static::QUERY_CONTAINER_CMS_BLOCK_CATEGORY_CONNECTOR] = function (Container $container) {
+            return new CmsBlockCategoryStorageToCmsBlockCategoryConnectorQueryContainerBridge($container->getLocator()->cmsBlockCategoryConnector()->queryContainer());
+        };
+
+        return $container;
+    }
+
+}
