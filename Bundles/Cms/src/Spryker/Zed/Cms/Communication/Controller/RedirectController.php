@@ -26,6 +26,11 @@ class RedirectController extends AbstractController
     const REQUEST_ID_URL = 'id-url';
     const REQUEST_ID_URL_REDIRECT = 'id-url-redirect';
 
+    const MESSAGE_REDIRECT_CREATE_SUCCESS = 'Redirect was created successfully.';
+    const MESSAGE_REDIRECT_UPDATE_SUCCESS = 'Redirect was updated successfully.';
+    const MESSAGE_REDIRECT_DELETE_SUCCESS = 'Redirect was deleted successfully.';
+    const MESSAGE_ID_REDIRECT_EXTRACT_ERROR = 'ID redirect URL is not set.';
+
     /**
      * @return array
      */
@@ -81,7 +86,8 @@ class RedirectController extends AbstractController
                 ->getUrlFacade()
                 ->createUrlRedirect($urlRedirectTransfer);
 
-            return $this->redirectResponse(self::REDIRECT_ADDRESS);
+            $this->addSuccessMessage(static::MESSAGE_REDIRECT_CREATE_SUCCESS);
+            return $this->redirectResponse(static::REDIRECT_ADDRESS);
         }
 
         return $this->viewResponse([
@@ -123,7 +129,8 @@ class RedirectController extends AbstractController
                 ->getUrlFacade()
                 ->updateUrlRedirect($urlRedirectTransfer);
 
-            return $this->redirectResponse(self::REDIRECT_ADDRESS);
+            $this->addSuccessMessage(static::MESSAGE_REDIRECT_UPDATE_SUCCESS);
+            return $this->redirectResponse(static::REDIRECT_ADDRESS);
         }
 
         return $this->viewResponse([
@@ -177,10 +184,10 @@ class RedirectController extends AbstractController
             throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
         }
 
-        $idUrlRedirect = $this->castId($request->request->get(self::REQUEST_ID_URL_REDIRECT));
+        $idUrlRedirect = $this->castId($request->request->get(static::REQUEST_ID_URL_REDIRECT));
 
         if ($idUrlRedirect === 0) {
-            $this->addErrorMessage('Id redirect url not set');
+            $this->addErrorMessage(static::MESSAGE_ID_REDIRECT_EXTRACT_ERROR);
 
             return $this->redirectResponse('/cms/redirect');
         }
@@ -190,6 +197,7 @@ class RedirectController extends AbstractController
 
         $this->getFactory()->getUrlFacade()->deleteUrlRedirect($urlRedirectTransfer);
 
+        $this->addSuccessMessage(static::MESSAGE_REDIRECT_DELETE_SUCCESS);
         return $this->redirectResponse('/cms/redirect');
     }
 }

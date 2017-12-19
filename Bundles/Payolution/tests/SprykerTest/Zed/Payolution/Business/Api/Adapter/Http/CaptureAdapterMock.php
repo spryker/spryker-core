@@ -14,8 +14,7 @@ class CaptureAdapterMock extends AbstractAdapterMock
      */
     public function getSuccessResponse()
     {
-        return
-            'P3_VALIDATION=ACK' . '&' .
+        return 'P3_VALIDATION=ACK' . '&' .
             'IDENTIFICATION_SHOPPERID=790' . '&' .
             'CLEARING_DESCRIPTOR=1913.4516.4962 inv-ins-test-default 795' . '&' .
             'PROCESSING_CONNECTORDETAIL_ConnectorTxID1=Tx-vdrmvfdg9ds' . '&' .
@@ -62,8 +61,7 @@ class CaptureAdapterMock extends AbstractAdapterMock
      */
     public function getFailureResponse()
     {
-        return
-            'TRANSACTION_CHANNEL=8a82941832d84c500132e875fc0c0648' . '&' .
+        return 'TRANSACTION_CHANNEL=8a82941832d84c500132e875fc0c0648' . '&' .
             'PRESENTATION_CURRENCY=EUR' . '&' .
             'IDENTIFICATION_UNIQUEID=8a8294494fd6cc31014fdf86bf2009ef' . '&' .
             'PAYMENT_CODE=VA.CP' . '&' .

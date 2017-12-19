@@ -22,6 +22,7 @@ use Spryker\Zed\Propel\Business\Model\PropelSchema;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaMerger;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaWriter;
+use Spryker\Zed\Propel\Business\Model\Schema\Validator\PropelSchemaValidator;
 use Spryker\Zed\Propel\Communication\Console\BuildModelConsole;
 use Spryker\Zed\Propel\Communication\Console\BuildSqlConsole;
 use Spryker\Zed\Propel\Communication\Console\ConvertConfigConsole;
@@ -33,6 +34,7 @@ use Spryker\Zed\Propel\Communication\Console\MigrationCheckConsole;
 use Spryker\Zed\Propel\Communication\Console\PostgresqlCompatibilityConsole;
 use Spryker\Zed\Propel\Communication\Console\PropelInstallConsole;
 use Spryker\Zed\Propel\Communication\Console\SchemaCopyConsole;
+use Spryker\Zed\Propel\PropelDependencyProvider;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -367,5 +369,27 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     protected function createAdapterFactory()
     {
         return new AdapterFactory();
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\Model\Schema\Validator\PropelSchemaValidatorInterface
+     */
+    public function createSchemaValidator()
+    {
+        $propelSchemaValidator = new PropelSchemaValidator(
+            $this->createGroupedSchemaFinder(),
+            $this->getUtilTextService(),
+            $this->getConfig()->getWhitelistForAllowedAttributeValueChanges()
+        );
+
+        return $propelSchemaValidator;
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceInterface
+     */
+    protected function getUtilTextService()
+    {
+        return $this->getProvidedDependency(PropelDependencyProvider::UTIL_TEXT_SERVICE);
     }
 }
