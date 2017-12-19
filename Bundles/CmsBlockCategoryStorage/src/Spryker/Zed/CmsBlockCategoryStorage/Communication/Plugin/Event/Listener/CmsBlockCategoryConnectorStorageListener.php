@@ -7,6 +7,7 @@
 namespace Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\Map\SpyCmsBlockCategoryConnectorTableMap;
+use Spryker\Zed\CmsBlockCategoryConnector\Dependency\CmsBlockCategoryConnectorEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CmsBlockCategoryConnectorStorageListener extends AbstractCmsBlockCategoryStorageListener
@@ -23,6 +24,12 @@ class CmsBlockCategoryConnectorStorageListener extends AbstractCmsBlockCategoryS
     {
         $this->preventTransaction();
         $idCategories = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY);
+
+        if ($eventName === CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_DELETE) {
+            $this->refreshOrUnpublish($idCategories);
+
+            return;
+        }
 
         $this->publish($idCategories);
     }

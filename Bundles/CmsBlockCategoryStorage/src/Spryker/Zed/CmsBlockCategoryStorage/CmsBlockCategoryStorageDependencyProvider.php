@@ -2,7 +2,6 @@
 
 namespace Spryker\Zed\CmsBlockCategoryStorage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsBlockCategoryStorage\Dependency\QueryContainer\CmsBlockCategoryStorageToCmsBlockCategoryConnectorQueryContainerBridge;
 use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Facade\CmsBlockCategoryStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToUtilSanitizeServiceBridge;
@@ -15,7 +14,6 @@ class CmsBlockCategoryStorageDependencyProvider extends AbstractBundleDependency
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const QUERY_CONTAINER_CMS_BLOCK_CATEGORY_CONNECTOR = 'QUERY_CONTAINER_CMS_BLOCK_CATEGORY_CONNECTOR';
-    const STORE = 'STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -30,10 +28,6 @@ class CmsBlockCategoryStorageDependencyProvider extends AbstractBundleDependency
 
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new CmsBlockCategoryStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
-
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
         };
 
         return $container;

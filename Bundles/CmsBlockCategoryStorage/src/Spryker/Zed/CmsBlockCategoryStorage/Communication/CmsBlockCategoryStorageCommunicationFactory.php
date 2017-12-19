@@ -2,7 +2,6 @@
 
 namespace Spryker\Zed\CmsBlockCategoryStorage\Communication;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsBlockCategoryStorage\CmsBlockCategoryStorageDependencyProvider;
 use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Facade\CmsBlockCategoryStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToUtilSanitizeServiceInterface;
@@ -30,13 +29,4 @@ class CmsBlockCategoryStorageCommunicationFactory extends AbstractCommunicationF
     {
         return $this->getProvidedDependency(CmsBlockCategoryStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
-
-    /**
-     * @return Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(CmsBlockCategoryStorageDependencyProvider::STORE);
-    }
-
 }

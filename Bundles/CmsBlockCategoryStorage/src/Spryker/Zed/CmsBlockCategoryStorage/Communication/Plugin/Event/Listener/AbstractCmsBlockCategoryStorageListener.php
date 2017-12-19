@@ -36,6 +36,27 @@ abstract class AbstractCmsBlockCategoryStorageListener extends AbstractPlugin im
     }
 
     /**
+     * @param array $categoryIds
+     *
+     * @return void
+     */
+    protected function refreshOrUnpublish(array $categoryIds)
+    {
+        $cmsBlockCategoriesTransfer = $this->getCmsBlockCategoriesTransfer($categoryIds);
+        $spyCmsBlockCategoryStorageEntities = $this->findCmsBlockCategoryStorageEntitiesByCategoryIds($categoryIds);
+
+        foreach ($spyCmsBlockCategoryStorageEntities as $spyCmsBlockCategoryStorageEntity) {
+            if (isset($cmsBlockCategoriesTransfer[$spyCmsBlockCategoryStorageEntity->getFkCategory()])) {
+                $this->storeData($cmsBlockCategoriesTransfer, $spyCmsBlockCategoryStorageEntities);
+
+                continue;
+            }
+
+            $spyCmsBlockCategoryStorageEntity->delete();
+        }
+    }
+
+    /**
      * @param CmsBlockCategoriesTransfer[] $cmsBlockCategoriesTransfer
      * @param array $spyCmsBlockCategoryStorageEntities
      *
@@ -89,7 +110,7 @@ abstract class AbstractCmsBlockCategoryStorageListener extends AbstractPlugin im
                 $cmsBlockPositionTransfer->setBlockNames($blockNames);
                 $cmsBlockCategoryTransfer->addCmsBlockCategory($cmsBlockPositionTransfer);
             }
-            $cmsBlockCategoriesTransfer[] = $cmsBlockCategoryTransfer;
+            $cmsBlockCategoriesTransfer[$categoryId] = $cmsBlockCategoryTransfer;
         }
 
         return $cmsBlockCategoriesTransfer;
