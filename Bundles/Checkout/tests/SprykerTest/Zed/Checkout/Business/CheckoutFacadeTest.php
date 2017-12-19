@@ -32,6 +32,7 @@ use Spryker\Zed\Checkout\Business\CheckoutBusinessFactory;
 use Spryker\Zed\Checkout\Business\CheckoutFacade;
 use Spryker\Zed\Checkout\CheckoutConfig;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeBridge;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Communication\Plugin\CustomerPreConditionCheckerPlugin;
@@ -41,7 +42,7 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 use Spryker\Zed\Oms\Business\OmsBusinessFactory;
-use Spryker\Zed\Oms\Communication\Plugin\Checkout\OmsPostSaveHookPlugin;
+use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
@@ -411,6 +412,10 @@ class CheckoutFacadeTest extends Unit
     {
         $container = new Container();
 
+        $container[CheckoutDependencyProvider::FACADE_OMS] = function (Container $container) {
+            return new CheckoutToOmsFacadeBridge(new OmsFacade());
+        };
+
         $container[CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS] = function (Container $container) {
             return [
                 new CustomerPreConditionCheckerPlugin(),
@@ -429,9 +434,7 @@ class CheckoutFacadeTest extends Unit
         };
 
         $container[CheckoutDependencyProvider::CHECKOUT_POST_HOOKS] = function (Container $container) {
-            return [
-                new OmsPostSaveHookPlugin(),
-            ];
+            return [];
         };
 
         $container[CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS] = function (Container $container) {

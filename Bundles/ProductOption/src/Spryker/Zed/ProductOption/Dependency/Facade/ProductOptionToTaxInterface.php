@@ -13,7 +13,7 @@ interface ProductOptionToTaxInterface
      * @param int $grossPrice
      * @param float $taxRate
      *
-     * @return int
+     * @return float
      */
     public function getTaxAmountFromGrossPrice($grossPrice, $taxRate);
 
