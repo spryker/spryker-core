@@ -233,8 +233,8 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param array|\Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
-     * @param array|\Generated\Shared\Transfer\PriceProductTransfer[]  $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
