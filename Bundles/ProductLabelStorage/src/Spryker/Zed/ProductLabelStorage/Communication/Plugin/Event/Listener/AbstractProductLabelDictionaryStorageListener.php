@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener;
 
+use \ArrayObject;
+use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
+use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -23,13 +27,13 @@ class AbstractProductLabelDictionaryStorageListener extends AbstractPlugin
     protected function publish()
     {
         $spyProductLabelLocalizedAttributeEntities = $this->findProductLabelLocalizedEntities();
-        $spyProductLabelLocalizedDictionaries = [];
+        $productLabelDictionaryItems = [];
         foreach ($spyProductLabelLocalizedAttributeEntities as $spyProductLabelLocalizedAttributeEntity) {
-            $spyProductLabelLocalizedDictionaries[$spyProductLabelLocalizedAttributeEntity['SpyLocale']['locale_name']][] = $spyProductLabelLocalizedAttributeEntity;
+            $localeName = $spyProductLabelLocalizedAttributeEntity->getSpyLocale()->getLocaleName();
+            $productLabelDictionaryItems[$localeName][] = $this->mapProductLabelDictionaryItem($spyProductLabelLocalizedAttributeEntity);
         }
 
-        $spyProductLabelDictionaryStorageEntities = $this->findProductLabelDictionaryStorageEntities();
-        $this->storeData($spyProductLabelLocalizedDictionaries, $spyProductLabelDictionaryStorageEntities);
+        $this->storeData($productLabelDictionaryItems);
     }
 
     /**
@@ -44,48 +48,75 @@ class AbstractProductLabelDictionaryStorageListener extends AbstractPlugin
     }
 
     /**
-     * @param array $spyProductLabelLocalizedDictionaries
-     * @param array $spyProductLabelStorageEntities
+     * @param ProductLabelDictionaryItemTransfer[] $productLabelDictionaryItems
      *
      * @return void
      */
-    protected function storeData(array $spyProductLabelLocalizedDictionaries, array $spyProductLabelStorageEntities)
+    protected function storeData(array $productLabelDictionaryItems)
     {
-        foreach ($spyProductLabelLocalizedDictionaries as $localeName => $spyProductLabelLocalizedDictionary) {
+        $spyProductLabelStorageEntities = $this->findProductLabelDictionaryStorageEntities();
+
+        foreach ($productLabelDictionaryItems as $localeName => $productLabelDictionaryItemTransfers) {
+            $productLabelDictionaryStorageTransfer = new ProductLabelDictionaryStorageTransfer();
+            $productLabelDictionaryStorageTransfer->setItems(new ArrayObject($productLabelDictionaryItemTransfers));
+
             if (isset($spyProductLabelStorageEntities[$localeName]))  {
-                $this->storeDataSet($spyProductLabelLocalizedDictionary, $spyProductLabelStorageEntities[$localeName], $localeName);
-            } else {
-                $this->storeDataSet($spyProductLabelLocalizedDictionary, null, $localeName);
+                $this->storeDataSet($productLabelDictionaryStorageTransfer, $localeName, $spyProductLabelStorageEntities[$localeName]);
+
+                continue;
             }
+
+            $this->storeDataSet($productLabelDictionaryStorageTransfer, $localeName);
         }
     }
 
     /**
-     * @param array $spyProductLabelLocalizedDictionary
-     * @param \Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage|null $spyProductLabelStorageEntity
+     * @param ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer
      * @param string $localeName
+     * @param \Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage|null $spyProductLabelStorageEntity
      *
      * @return void
      */
-    protected function storeDataSet(array $spyProductLabelLocalizedDictionary, SpyProductLabelDictionaryStorage $spyProductLabelStorageEntity = null, $localeName)
-    {
+    protected function storeDataSet(
+        ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer,
+        $localeName,
+        SpyProductLabelDictionaryStorage $spyProductLabelStorageEntity = null
+    ) {
         if ($spyProductLabelStorageEntity === null) {
             $spyProductLabelStorageEntity = new SpyProductLabelDictionaryStorage();
         }
 
-        $spyProductLabelLocalizedDictionary = $this->getFactory()->getUtilSanitizeService()->arrayFilterRecursive($spyProductLabelLocalizedDictionary);
-        $spyProductLabelStorageEntity->setData($spyProductLabelLocalizedDictionary);
+        $spyProductLabelStorageEntity->setData($productLabelDictionaryStorageTransfer->modifiedToArray());
         $spyProductLabelStorageEntity->setStore($this->getStoreName());
         $spyProductLabelStorageEntity->setLocale($localeName);
         $spyProductLabelStorageEntity->save();
     }
 
     /**
-     * @return array
+     * @return SpyProductLabelLocalizedAttributes[]
      */
     protected function findProductLabelLocalizedEntities()
     {
-        return $this->getQueryContainer()->queryProductLabelLocalizedAttributes()->find()->getData();
+        return $this->getQueryContainer()->queryProductLabelLocalizedAttributes()->find();
+    }
+
+    /**
+     * @param SpyProductLabelLocalizedAttributes $spyProductLabelLocalizedAttributeEntity
+     *
+     * @return ProductLabelDictionaryItemTransfer
+     */
+    protected function mapProductLabelDictionaryItem(SpyProductLabelLocalizedAttributes $spyProductLabelLocalizedAttributeEntity)
+    {
+        $productLabelDictionaryStorageTransfer = new ProductLabelDictionaryItemTransfer();
+        $productLabelDictionaryStorageTransfer
+            ->setName($spyProductLabelLocalizedAttributeEntity->getName())
+            ->setIdProductLabel($spyProductLabelLocalizedAttributeEntity->getFkProductLabel())
+            ->setKey($spyProductLabelLocalizedAttributeEntity->getSpyProductLabel()->getName())
+            ->setIsExclusive($spyProductLabelLocalizedAttributeEntity->getSpyProductLabel()->getIsExclusive())
+            ->setPosition($spyProductLabelLocalizedAttributeEntity->getSpyProductLabel()->getPosition())
+            ->setFrontEndReference($spyProductLabelLocalizedAttributeEntity->getSpyProductLabel()->getFrontEndReference());
+
+        return $productLabelDictionaryStorageTransfer;
     }
 
     /**

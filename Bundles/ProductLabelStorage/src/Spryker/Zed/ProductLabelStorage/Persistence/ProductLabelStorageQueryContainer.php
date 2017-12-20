@@ -89,8 +89,7 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
             ->getProductLabelQuery()
             ->queryAllLocalizedAttributesLabels()
             ->joinWithSpyLocale()
-            ->joinWithSpyProductLabel()
-            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+            ->joinWithSpyProductLabel();
     }
 
 }
