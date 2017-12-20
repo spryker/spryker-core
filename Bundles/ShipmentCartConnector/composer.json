@@ -8,7 +8,7 @@
     "spryker/shipment": "^6.2.0"
   },
   "require-dev": {
-    "spryker/cart": "*"
+    "spryker/cart": "^4.2.0"
   },
   "suggest": {
     "spryker/cart": "If you want to use shipment cart plugins."
