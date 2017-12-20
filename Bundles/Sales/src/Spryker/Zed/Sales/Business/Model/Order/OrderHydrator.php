@@ -61,7 +61,7 @@ class OrderHydrator implements OrderHydratorInterface
     {
         $orderEntity = $this->getOrderEntity($orderTransfer);
 
-        $this->queryContainer->queryOrderItemsStateHistoriesOrderedByNewestState($orderEntity->getItems());
+        $this->queryContainer->fillOrderItemsWithLatestStates($orderEntity->getItems());
 
         $orderTransfer = $this->createOrderTransfer($orderEntity);
 
@@ -118,7 +118,7 @@ class OrderHydrator implements OrderHydratorInterface
             );
         }
 
-        $this->queryContainer->queryOrderItemsStateHistoriesOrderedByNewestState($orderEntity->getItems());
+        $this->queryContainer->fillOrderItemsWithLatestStates($orderEntity->getItems());
 
         $orderTransfer = $this->createOrderTransfer($orderEntity);
 
