@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Availability\Business;
 
+use Spryker\Client\Availability\Zed\AvailabilityStub;
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
 use Spryker\Zed\Availability\Business\Model\ProductReservationReader;
@@ -51,6 +52,14 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     public function createProductReservationReader()
     {
         return new ProductReservationReader($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Client\Availability\Zed\AvailabilityStubInterface
+     */
+    public function createZedStub()
+    {
+        return new AvailabilityStub($this->getZedRequestClient());
     }
 
     /**
