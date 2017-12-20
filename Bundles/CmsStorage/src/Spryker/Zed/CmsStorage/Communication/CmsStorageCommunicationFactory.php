@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsStorage\Communication;
 
+use Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface;
 use Spryker\Zed\CmsStorage\CmsStorageDependencyProvider;
 use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\CmsStorage\Dependency\Service\CmsStorageToUtilSanitizeServiceInterface;
@@ -50,4 +51,11 @@ class CmsStorageCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(CmsStorageDependencyProvider::STORE);
     }
 
+    /**
+     * @return CmsPageDataExpanderPluginInterface[]
+     */
+    public function getContentWidgetDataExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CmsStorageDependencyProvider::PLUGIN_CONTENT_WIDGET_DATA_EXPANDER);
+    }
 }

@@ -32,4 +32,20 @@ interface CmsBlockEvents
      * @api
      */
     const ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_DELETE = 'Entity.spy_cms_block_glossary_key_mapping.delete';
+
+    /**
+     * Specification
+     * - This events will be used for spy_cms_block entity update
+     *
+     * @api
+     */
+    const ENTITY_SPY_CMS_BLOCK_UPDATE = 'Entity.spy_cms_block.update';
+
+    /**
+     * Specification
+     * - This events will be used for spy_cms_block entity deletion
+     *
+     * @api
+     */
+    const ENTITY_SPY_CMS_BLOCK_DELETE = 'Entity.spy_cms_block.delete';
 }

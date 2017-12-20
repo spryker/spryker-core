@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener;
 
+use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 
 class CmsBlockStorageListener extends AbstractCmsBlockStorageListener implements EventBulkHandlerInterface
@@ -21,6 +22,12 @@ class CmsBlockStorageListener extends AbstractCmsBlockStorageListener implements
     {
         $this->preventTransaction();
         $cmsBlockIds = $this->getFactory()->getEventBehaviourFacade()->getEventTransferIds($eventTransfers);
+
+        if ($eventName === CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_DELETE) {
+            $this->unpublish($cmsBlockIds);
+
+            return;
+        }
 
         $this->publish($cmsBlockIds);
     }

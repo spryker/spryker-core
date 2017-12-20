@@ -11,7 +11,7 @@ interface CmsBlockProductConnectorEvents
 
     /**
      * Specification
-     * - This events will be used for spy_cms_block_product entity creation
+     * - This events will be used for spy_cms_block_product_connector entity creation
      *
      * @api
      */
@@ -19,7 +19,7 @@ interface CmsBlockProductConnectorEvents
 
     /**
      * Specification
-     * - This events will be used for spy_cms_block_product entity update
+     * - This events will be used for spy_cms_block_product_connector entity update
      *
      * @api
      */
@@ -27,7 +27,7 @@ interface CmsBlockProductConnectorEvents
 
     /**
      * Specification
-     * - This events will be used for spy_cms_block_product entity deletion
+     * - This events will be used for spy_cms_block_product_connector entity deletion
      *
      * @api
      */

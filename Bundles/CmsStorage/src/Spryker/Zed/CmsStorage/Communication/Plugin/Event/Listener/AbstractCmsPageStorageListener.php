@@ -171,7 +171,12 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
         $localeCmsPageDataTransfer->setValidTo($cmsPageEntity->getValidTo());
         $localeCmsPageDataTransfer->setUrl($url);
 
-        return $localeCmsPageDataTransfer;
+        $expandedData = [];
+        foreach ($this->getFactory()->getContentWidgetDataExpanderPlugins() as $contentWidgetDataExpanderPlugin) {
+            $expandedData = $contentWidgetDataExpanderPlugin->expand($localeCmsPageDataTransfer->toArray(), (new LocaleTransfer())->setLocaleName($localeName));
+        }
+
+        return (new LocaleCmsPageDataTransfer())->fromArray($expandedData);
     }
 
 }

@@ -26,7 +26,7 @@ class CmsPageStorageListener extends AbstractCmsPageStorageListener implements E
 
         if ($eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE) {
             $this->publish($cmsPageIds);
-        } elseif ($eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE) {
+        } else if ($eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE) {
             $this->unpublish($cmsPageIds);
         }
     }

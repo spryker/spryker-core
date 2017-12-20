@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -105,6 +107,10 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
 
         if ($refresh) {
             $blockEntityArray = array_replace_recursive($cmsBlockStorageEntity->getData(), $blockEntityArray);
+        }
+
+        foreach ($this->getFactory()->getContentWidgetDataExpanderPlugins() as $contentWidgetDataExpanderPlugin) {
+            $blockEntityArray = $contentWidgetDataExpanderPlugin->expand($blockEntityArray);
         }
 
         $cmsBlockStorageEntity->setData($blockEntityArray);

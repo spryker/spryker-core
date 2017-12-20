@@ -11,7 +11,7 @@ interface CmsBlockCategoryConnectorEvents
 
     /**
      * Specification
-     * - This events will be used for spy_cms_block_category entity creation
+     * - This events will be used for spy_cms_block_category_connector entity creation
      *
      * @api
      */
@@ -19,7 +19,7 @@ interface CmsBlockCategoryConnectorEvents
 
     /**
      * Specification
-     * - This events will be used for spy_cms_block_category entity update
+     * - This events will be used for spy_cms_block_category_connector entity update
      *
      * @api
      */
@@ -27,7 +27,7 @@ interface CmsBlockCategoryConnectorEvents
 
     /**
      * Specification
-     * - This events will be used for spy_cms_block_category entity deletion
+     * - This events will be used for spy_cms_block_category_connector entity deletion
      *
      * @api
      */
@@ -35,7 +35,7 @@ interface CmsBlockCategoryConnectorEvents
 
     /**
      * Specification
-     * - This events will be used for spy_cms_block_category entity create
+     * - This events will be used for spy_cms_block_category_position entity create
      *
      * @api
      */
@@ -44,7 +44,7 @@ interface CmsBlockCategoryConnectorEvents
 
     /**
      * Specification
-     * - This events will be used for spy_cms_block_category entity update
+     * - This events will be used for spy_cms_block_category_position entity update
      *
      * @api
      */
@@ -52,7 +52,7 @@ interface CmsBlockCategoryConnectorEvents
 
     /**
      * Specification
-     * - This events will be used for spy_cms_block_category entity deletion
+     * - This events will be used for spy_cms_block_category_position entity deletion
      *
      * @api
      */

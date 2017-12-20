@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsStorage;
 
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface;
 use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToCmsBridge;
 use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\CmsStorage\Dependency\QueryContainer\CmsStorageToCmsQueryContainerBridge;
@@ -23,6 +24,7 @@ class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    const PLUGIN_CONTENT_WIDGET_DATA_EXPANDER = 'PLUGIN_CONTENT_WIDGET_DATA_EXPANDER';
     const FACADE_CMS = 'FACADE_CMS';
     const STORE = 'store';
 
@@ -43,6 +45,10 @@ class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[static::FACADE_CMS] = function (Container $container) {
             return new CmsStorageToCmsBridge($container->getLocator()->cms()->facade());
+        };
+
+        $container[static::PLUGIN_CONTENT_WIDGET_DATA_EXPANDER] = function (Container $container) {
+            return $this->getContentWidgetDataExpander();
         };
 
         $container[static::STORE] = function (Container $container) {
@@ -68,6 +74,14 @@ class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @return CmsPageDataExpanderPluginInterface[]
+     */
+    protected function getContentWidgetDataExpander()
+    {
+        return [];
     }
 
 }
