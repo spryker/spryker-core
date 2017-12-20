@@ -20,7 +20,7 @@ interface ProductOptionClientInterface
      * @api
      *
      * @param int $idAbstractProduct
-     * @param int $localeName
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\StorageProductOptionGroupCollectionTransfer
      */

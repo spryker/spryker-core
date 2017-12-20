@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddController extends AbstractController
 {
+    const MESSAGE_CUSTOMER_CREATE_SUCCESS = 'Customer was created successfully.';
+    const MESSAGE_CUSTOMER_CREATE_ERROR = 'Customer was not created.';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -37,8 +40,14 @@ class AddController extends AbstractController
             $customerTransfer = new CustomerTransfer();
             $customerTransfer->fromArray($form->getData(), true);
 
-            $this->getFacade()->registerCustomer($customerTransfer);
+            $customerResponseTransfer = $this->getFacade()->registerCustomer($customerTransfer);
 
+            if (!$customerResponseTransfer->getIsSuccess()) {
+                $this->addErrorMessage(static::MESSAGE_CUSTOMER_CREATE_ERROR);
+                return $this->redirectResponse('/customer');
+            }
+
+            $this->addSuccessMessage(static::MESSAGE_CUSTOMER_CREATE_SUCCESS);
             return $this->redirectResponse('/customer');
         }
 

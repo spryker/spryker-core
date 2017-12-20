@@ -64,7 +64,7 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
                 $productRelationTransfer = $this->mapProductRelationTransfer($productRelationEntity);
                 $this->productRelationWriter->updateRelation($productRelationTransfer);
             } catch (Exception $exception) {
-                $this->getLogger()->log($exception->getMessage(), ['exception' => $exception]);
+                $this->getLogger()->error($exception->getMessage(), ['exception' => $exception]);
                 continue;
             }
         }

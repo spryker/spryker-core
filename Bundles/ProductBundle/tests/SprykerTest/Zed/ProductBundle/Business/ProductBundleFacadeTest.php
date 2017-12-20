@@ -441,7 +441,7 @@ class ProductBundleFacadeTest extends Unit
     {
         $productFacade = $this->createProductFacade();
         $productAbstractTransfer = new ProductAbstractTransfer();
-        $productAbstractTransfer->setSku(123 . rand(1, 9999));
+        $productAbstractTransfer->setSku("random_" . sha1(random_bytes(50)));
 
         $priceProductTransfer = new PriceProductTransfer();
         $priceProductTransfer->setSkuProductAbstract($productAbstractTransfer->getSku());

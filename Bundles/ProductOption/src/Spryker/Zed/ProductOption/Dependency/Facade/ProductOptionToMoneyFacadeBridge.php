@@ -63,4 +63,26 @@ class ProductOptionToMoneyFacadeBridge implements ProductOptionToMoneyFacadeInte
     {
         return $this->moneyFacade->fromInteger($amount, $isoCode);
     }
+
+    /**
+     * @param float $amount
+     * @param string|null $isoCode
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromFloat($amount, $isoCode = null)
+    {
+        return $this->moneyFacade->fromFloat($amount, $isoCode);
+    }
+
+    /**
+     * @param string $amount
+     * @param string|null $isoCode
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromString($amount, $isoCode = null)
+    {
+        return $this->moneyFacade->fromString($amount, $isoCode);
+    }
 }

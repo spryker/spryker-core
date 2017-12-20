@@ -44,16 +44,16 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
 
         $messages = new ArrayObject();
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-             $currentItemQuantity = $this->calculateCurrentCartQuantityForGivenSku(
-                 $cartChangeTransfer,
-                 $itemTransfer->getSku()
-             );
+            $currentItemQuantity = $this->calculateCurrentCartQuantityForGivenSku(
+                $cartChangeTransfer,
+                $itemTransfer->getSku()
+            );
              $currentItemQuantity += $itemTransfer->getQuantity();
 
-             $isSellable = $this->availabilityFacade->isProductSellable(
-                 $itemTransfer->getSku(),
-                 $currentItemQuantity
-             );
+            $isSellable = $this->availabilityFacade->isProductSellable(
+                $itemTransfer->getSku(),
+                $currentItemQuantity
+            );
 
             if (!$isSellable) {
                 $stock = $this->availabilityFacade->calculateStockForProduct($itemTransfer->getSku());

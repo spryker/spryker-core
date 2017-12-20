@@ -141,13 +141,13 @@ class BuilderTest extends Unit
      */
     protected function createBuilder()
     {
-         return new Builder(
-             $this->createEvent(),
-             $this->createState(),
-             $this->createTransition(),
-             $this->createProcess(),
-             $this->createStateMachineConfig()
-         );
+        return new Builder(
+            $this->createEvent(),
+            $this->createState(),
+            $this->createTransition(),
+            $this->createProcess(),
+            $this->createStateMachineConfig()
+        );
     }
 
     /**

@@ -24,25 +24,25 @@ class PayolutionPreCheckPlugin extends BaseAbstractPlugin implements CheckoutPre
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return bool
      */
     public function execute(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
         $payolutionTransactionResponseTransfer = $this->getFacade()->preCheckPayment($quoteTransfer);
-        $this->checkForErrors($payolutionTransactionResponseTransfer, $checkoutResponseTransfer);
+        $isPassed = $this->checkForErrors($payolutionTransactionResponseTransfer, $checkoutResponseTransfer);
         $quoteTransfer->getPayment()->getPayolution()
             ->setPreCheckId($payolutionTransactionResponseTransfer->getIdentificationUniqueid());
 
-        return $checkoutResponseTransfer;
+        return $isPassed;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer $payolutionTransactionResponseTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     protected function checkForErrors(
         PayolutionTransactionResponseTransfer $payolutionTransactionResponseTransfer,
@@ -58,6 +58,9 @@ class PayolutionPreCheckPlugin extends BaseAbstractPlugin implements CheckoutPre
                 ->setErrorCode($errorCode)
                 ->setMessage($payolutionTransactionResponseTransfer->getProcessingReturn());
             $checkoutResponseTransfer->addError($error);
+            return false;
         }
+
+        return true;
     }
 }

@@ -37,4 +37,20 @@ interface ProductOptionToMoneyFacadeInterface
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
     public function fromInteger($amount, $isoCode = null);
+
+    /**
+     * @param float $amount
+     * @param string|null $isoCode
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromFloat($amount, $isoCode = null);
+
+    /**
+     * @param string $amount
+     * @param string|null $isoCode
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromString($amount, $isoCode = null);
 }

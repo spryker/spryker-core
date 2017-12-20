@@ -10,6 +10,14 @@ namespace Spryker\Zed\ProductOption\Dependency\Facade;
 interface ProductOptionToTaxFacadeInterface
 {
     /**
+     * @param int $grossPrice
+     * @param float $taxRate
+     *
+     * @return float
+     */
+    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate);
+
+    /**
      * @return string
      */
     public function getDefaultTaxCountryIso2Code();

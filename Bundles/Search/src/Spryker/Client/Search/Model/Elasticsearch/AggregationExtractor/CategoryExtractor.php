@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 
 class CategoryExtractor implements AggregationExtractorInterface
 {
+    const DOC_COUNT = 'doc_count';
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */
@@ -64,7 +65,7 @@ class CategoryExtractor implements AggregationExtractorInterface
             $facetResultValueTransfer = new FacetSearchResultValueTransfer();
             $facetResultValueTransfer
                 ->setValue($bucket['key'])
-                ->setDocCount($bucket['doc_count']);
+                ->setDocCount($bucket[static::DOC_COUNT]);
 
             $facetValues->append($facetResultValueTransfer);
         }

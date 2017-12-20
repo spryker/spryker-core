@@ -22,6 +22,17 @@ class ProductOptionToTaxFacadeBridge implements ProductOptionToTaxFacadeInterfac
     }
 
     /**
+     * @param int $grossPrice
+     * @param float $taxRate
+     *
+     * @return float
+     */
+    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate)
+    {
+        return $this->taxFacade->getTaxAmountFromGrossPrice($grossPrice, $taxRate);
+    }
+
+    /**
      * @return string
      */
     public function getDefaultTaxCountryIso2Code()
