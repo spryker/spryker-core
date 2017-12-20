@@ -23,37 +23,37 @@ class BraintreePreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreC
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return bool
      */
     public function execute(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
         $braintreeTransactionResponseTransfer = $this->getFacade()->preCheckPayment($quoteTransfer);
-        $this->checkForErrors($braintreeTransactionResponseTransfer, $checkoutResponseTransfer);
+        $isPassed = $this->checkForErrors($braintreeTransactionResponseTransfer, $checkoutResponseTransfer);
 
-        if (!$braintreeTransactionResponseTransfer->getIsSuccess()) {
-            return $checkoutResponseTransfer;
+        if (!$isPassed) {
+            return false;
         }
 
         $quoteTransfer->getPayment()->getBraintree()
             ->setTransactionId($braintreeTransactionResponseTransfer->getTransactionId());
 
-        return $checkoutResponseTransfer;
+        return true;
     }
 
     /**
      * @param \Generated\Shared\Transfer\BraintreeTransactionResponseTransfer $braintreeTransactionResponseTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     protected function checkForErrors(
         BraintreeTransactionResponseTransfer $braintreeTransactionResponseTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
         if ($braintreeTransactionResponseTransfer->getIsSuccess()) {
-            return;
+            return true;
         }
 
         $errorCode = $braintreeTransactionResponseTransfer->getCode() ?: 500;
@@ -62,5 +62,7 @@ class BraintreePreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreC
             ->setErrorCode($errorCode)
             ->setMessage($braintreeTransactionResponseTransfer->getMessage());
         $checkoutResponseTransfer->addError($error);
+
+        return false;
     }
 }

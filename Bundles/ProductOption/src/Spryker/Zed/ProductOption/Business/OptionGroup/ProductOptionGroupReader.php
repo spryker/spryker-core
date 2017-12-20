@@ -133,7 +133,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     }
 
     /**
-     * @param int $identifier
+     * @param int|string $identifier
      *
      * @return string
      */

@@ -10,6 +10,15 @@
         <property name="orderDirection" type="string" />
     </transfer>
 
+    <transfer name="SchemaValidation">
+        <property name="isSuccess" type="bool" />
+        <property name="validationErrors" singular="validationError" type="SchemaValidationError[]" />
+    </transfer>
+
+    <transfer name="SchemaValidationError">
+        <property name="message" type="string" />
+    </transfer>
+
 </transfers>
 
 

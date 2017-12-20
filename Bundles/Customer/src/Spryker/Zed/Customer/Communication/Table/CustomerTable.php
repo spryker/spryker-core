@@ -177,7 +177,7 @@ class CustomerTable extends AbstractTable
 
         $addresses = $customer->getAddresses();
         foreach ($addresses as $address) {
-            if ($address->getFkCountry() === $customer->getCountry()) {
+            if ($address->getFkCountry() === $customer->getVirtualColumn(self::COL_FK_COUNTRY)) {
                 return $address->getCountry()->getName();
             }
         }
