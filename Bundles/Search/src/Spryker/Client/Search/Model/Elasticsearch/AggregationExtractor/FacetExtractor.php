@@ -15,6 +15,8 @@ use Spryker\Client\Search\Model\Elasticsearch\Aggregation\StringFacetAggregation
 
 class FacetExtractor extends AbstractAggregationExtractor implements AggregationExtractorInterface
 {
+    const DOC_COUNT = 'doc_count';
+
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */
@@ -95,7 +97,6 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
         $facetResultValues = new ArrayObject();
         $nameFieldName = $this->getFieldNameWithNameSuffix($fieldName);
         $valueFieldName = $this->getFieldNameWithValueSuffix($fieldName);
-
         foreach ($aggregation[$nameFieldName]['buckets'] as $nameBucket) {
             if ($nameBucket['key'] !== $parameterName) {
                 continue;
