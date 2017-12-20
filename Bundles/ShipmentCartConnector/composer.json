@@ -5,7 +5,7 @@
   "require": {
     "spryker/kernel": "^3.13.0",
     "spryker/price": "^5.0.0",
-    "spryker/shipment": "^6.1.0"
+    "spryker/shipment": "^6.2.0"
   },
   "require-dev": {
     "spryker/cart": "*"
