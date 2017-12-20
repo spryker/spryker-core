@@ -10,6 +10,9 @@ namespace Spryker\Zed\Discount\Business\Persistence;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * @deprecated Use \Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaverInterface instead
+ */
 interface DiscountOrderSaverInterface
 {
     /**

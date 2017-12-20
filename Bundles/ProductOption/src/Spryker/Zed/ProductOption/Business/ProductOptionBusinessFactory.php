@@ -15,10 +15,11 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionItemSorter;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderHydrate;
-use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver as ObsoleteProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver;
+use Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
@@ -92,7 +93,17 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOptionOrderSaver()
     {
-        return new ProductOptionOrderSaver($this->getGlossaryFacade());
+        return new ObsoleteProductOptionOrderSaver($this->getGlossaryFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaverInterface
+     */
+    public function createPlaceOrderProductOptionOrderSaver()
+    {
+        return new ProductOptionOrderSaver(
+            $this->getGlossaryFacade()
+        );
     }
 
     /**

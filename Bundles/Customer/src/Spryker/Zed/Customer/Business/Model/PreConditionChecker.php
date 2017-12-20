@@ -43,33 +43,65 @@ class PreConditionChecker implements PreConditionCheckerInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function checkPreConditions(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         if ($this->hasIdCustomer($quoteTransfer)) {
-            return;
+            return true;
         }
 
+        $result = $this->checkValidEmail($quoteTransfer, $checkoutResponseTransfer);
+
+        if ($quoteTransfer->getCustomer()->getIsGuest() === true) {
+            return $result;
+        }
+
+        $result &= $this->checkExistingEmail($quoteTransfer, $checkoutResponseTransfer);
+
+        return (bool)$result;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    protected function checkValidEmail(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
         if (!$this->utilValidateService->isEmailFormatValid($quoteTransfer->getCustomer()->getEmail())) {
             $this->addViolation(
                 $checkoutResponseTransfer,
                 CustomerConfig::ERROR_CODE_CUSTOMER_INVALID_EMAIL,
                 static::ERROR_EMAIL_INVALID
             );
+
+            return false;
         }
 
-        if ($quoteTransfer->getCustomer()->getIsGuest() === true) {
-            return;
-        }
+        return true;
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    protected function checkExistingEmail(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
         if ($this->customer->hasEmail($quoteTransfer->getCustomer()->getEmail())) {
             $this->addViolation(
                 $checkoutResponseTransfer,
                 CustomerConfig::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED,
                 static::ERROR_EMAIL_UNIQUE
             );
+
+            return false;
         }
+
+        return true;
     }
 
     /**
