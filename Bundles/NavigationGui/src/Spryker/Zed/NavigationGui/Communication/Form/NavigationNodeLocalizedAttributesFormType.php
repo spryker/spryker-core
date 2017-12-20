@@ -124,7 +124,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
      */
     protected function addCmsPageUrlField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_CMS_PAGE_URL, new AutosuggestType(), [
+        $builder->add(self::FIELD_CMS_PAGE_URL, AutosuggestType::class, [
             'label' => 'CMS page URL',
             'attr' => [
                 'placeholder' => 'Type 3 letters to search by CMS page name.',
@@ -149,7 +149,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
      */
     protected function addCategoryUrlField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_CATEGORY_URL, new AutosuggestType(), [
+        $builder->add(self::FIELD_CATEGORY_URL, AutosuggestType::class, [
             'label' => 'Category URL',
             'attr' => [
                 'placeholder' => 'Type 3 letters to search by category name.',
