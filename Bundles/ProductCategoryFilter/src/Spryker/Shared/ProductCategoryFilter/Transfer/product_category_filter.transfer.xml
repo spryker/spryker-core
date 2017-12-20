@@ -5,7 +5,7 @@
 
     <transfer name="ProductCategoryFilter">
         <property name="idProductCategoryFilter" type="int" />
-        <property name="fkCategory" type="string" />
+        <property name="fkCategory" type="int" />
         <property name="filterData" type="string" />
         <property name="filterDataArray" type="array" />
     </transfer>
