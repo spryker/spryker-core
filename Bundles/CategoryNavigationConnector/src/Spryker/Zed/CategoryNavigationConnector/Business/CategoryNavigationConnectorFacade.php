@@ -24,13 +24,8 @@ class CategoryNavigationConnectorFacade extends AbstractFacade implements Catego
      */
     public function updateCategoryNavigationNodesIsActive(CategoryTransfer $categoryTransfer)
     {
-        $navigationNodes = $this->getFactory()
-            ->createNavigationNodeReader()
-            ->getNavigationNodesFromCategoryNodeId($categoryTransfer->getCategoryNode()->getIdCategoryNode());
-
-        foreach($navigationNodes as $navigationNode) {
-            $navigationNode->setIsActive($categoryTransfer->getIsActive());
-            $this->getFactory()->getNavigationFacade()->updateNavigationNode($navigationNode);
-        }
+        $this->getFactory()
+            ->createNavigationNodesIsActiveUpdater()
+            ->updateCategoryNodeNavigationNodes($categoryTransfer->getCategoryNode()->getIdCategoryNode(), $categoryTransfer->getIsActive());
     }
 }

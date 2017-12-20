@@ -1,11 +1,11 @@
 {
-  "name": "spryker/category-navigation-connector",
-  "description": "CategoryNavigationConnector module",
+  "name": "spryker/cms-navigation-connector",
+  "description": "CmsNavigationConnector module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
     "spryker/cms": "^6.0.0",
-    "spryker/navigation": "^4.0.0"
+    "spryker/navigation": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

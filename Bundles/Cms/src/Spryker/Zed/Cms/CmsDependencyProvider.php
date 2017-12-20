@@ -31,6 +31,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS = 'cms version post save plugins';
     const PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS = 'cms version transfer expander plugins';
     const PLUGINS_CMS_PAGE_DATA_EXPANDER = 'PLUGINS_CMS_PAGE_DATA_EXPANDER';
+    const PLUGINS_CMS_PAGE_POST_ACTIVATOR = 'PLUGINS_CMS_PAGE_POST_ACTIVATOR';
 
     const SERVICE_UTIL_ENCODING = 'util encoding service';
 
@@ -89,6 +90,10 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS] = function (Container $container) {
             return $this->getTransferExpanderPlugins($container);
+        };
+
+        $container[self::PLUGINS_CMS_PAGE_POST_ACTIVATOR] = function (Container $container) {
+            return $this->getCmsPagePostActivatorPlugins($container);
         };
 
         $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
@@ -162,6 +167,14 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
      */
     protected function getCmsPageDataExpanderPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Communication\Plugin\PostCmsPageActivatorPluginInterface[]
+     */
+    protected function getCmsPagePostActivatorPlugins()
     {
         return [];
     }

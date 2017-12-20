@@ -7,6 +7,8 @@
 namespace Spryker\Zed\Cms\Business\Page;
 
 use Exception;
+use Generated\Shared\Transfer\CmsPageTransfer;
+use Generated\Shared\Transfer\PageTransfer;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Exception\CannotActivatePageException;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
@@ -27,13 +29,20 @@ class CmsPageActivator implements CmsPageActivatorInterface
     protected $touchFacade;
 
     /**
+     * @var
+     */
+    protected $postCmsPageActivatorPlugins;
+
+    /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
+     * @param \Spryker\Zed\Cms\Communication\Plugin\PostCmsPageActivatorPluginInterface[] $postCmsPageActivatorPlugins
      */
-    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToTouchInterface $touchFacade)
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToTouchInterface $touchFacade, $postCmsPageActivatorPlugins)
     {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->touchFacade = $touchFacade;
+        $this->postCmsPageActivatorPlugins = $postCmsPageActivatorPlugins;
     }
 
     /**
@@ -66,6 +75,9 @@ class CmsPageActivator implements CmsPageActivatorInterface
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;
         }
+
+        $pageTransfer = (new PageTransfer())->fromArray($cmsPageEntity->toArray(), true);
+        $this->runPostActivatorPlugins($pageTransfer);
     }
 
     /**
@@ -114,6 +126,9 @@ class CmsPageActivator implements CmsPageActivatorInterface
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;
         }
+
+        $pageTransfer = (new PageTransfer())->fromArray($cmsPageEntity->toArray(), true);
+        $this->runPostActivatorPlugins($pageTransfer);
     }
 
     /**
@@ -148,5 +163,15 @@ class CmsPageActivator implements CmsPageActivatorInterface
     protected function countNumberOfGlossaryKeysForIdCmsPage($idCmsPage)
     {
         return $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($idCmsPage)->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
+     */
+    protected function runPostActivatorPlugins(PageTransfer $pageTransfer)
+    {
+        foreach($this->postCmsPageActivatorPlugins as $postCmsPageActivatorPlugin) {
+            $postCmsPageActivatorPlugin->execute($pageTransfer);
+        }
     }
 }
