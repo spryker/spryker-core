@@ -8,11 +8,13 @@
 namespace Spryker\Zed\Store\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Store\Communication\Form\DataProvider\StoreRelationToggleDataProvider;
 use Spryker\Zed\Store\Communication\Form\Transformer\IdStoresDataTransformer;
 
 /**
  * @method \Spryker\Zed\Store\StoreConfig getConfig()
  * @method \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Store\Business\StoreFacadeInterface getFacade()
  */
 class StoreCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -22,5 +24,13 @@ class StoreCommunicationFactory extends AbstractCommunicationFactory
     public function createIdStoresDataTransformer()
     {
         return new IdStoresDataTransformer();
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Communication\Form\DataProvider\StoreRelationToggleDataProviderInterface
+     */
+    public function createStoreRelationToggleDataProvider()
+    {
+        return new StoreRelationToggleDataProvider($this->getFacade());
     }
 }

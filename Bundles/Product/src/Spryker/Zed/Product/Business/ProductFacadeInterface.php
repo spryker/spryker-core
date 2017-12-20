@@ -705,6 +705,7 @@ interface ProductFacadeInterface
     /**
      * Specification:
      * - Populates the abstract product store relations in the provided store relation transfer.
+     * - Populates both transfer objects and id collection.
      * - Uses the provided entity id to identify the abstract product entity.
      *
      * @api

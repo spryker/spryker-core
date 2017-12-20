@@ -75,6 +75,7 @@
     <transfer name="StoreRelation">
         <property name="idEntity" type="int" />
         <property name="idStores" type="int[]" />
+        <property name="stores" type="Store[]" />
     </transfer>
 
 </transfers>

@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
@@ -69,7 +71,7 @@ class ViewController extends AddController
 
         $imageSets = $this->getProductImageSetCollection($imageSetCollection);
 
-        $relatedStoreNames = $this->getStoreNamesById($productAbstractTransfer->getStoreRelation()->getIdStores());
+        $relatedStoreNames = $this->getStoreNames($productAbstractTransfer->getStoreRelation()->getStores());
 
         return $this->viewResponse([
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
@@ -279,19 +281,14 @@ class ViewController extends AddController
     }
 
     /**
-     * @param int[] $idStores
+     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $stores
      *
      * @return string[]
      */
-    protected function getStoreNamesById(array $idStores)
+    protected function getStoreNames(ArrayObject $stores)
     {
-        // TODO: resolve store name when CORE-1752 is released
-
-        $storeNames = [];
-        foreach ($idStores as $idStore) {
-            $storeNames[] = $idStore;
-        }
-
-        return $storeNames;
+        return array_map(function (StoreTransfer $storeTransfer) {
+            return $storeTransfer->getName();
+        }, $stores->getArrayCopy());
     }
 }

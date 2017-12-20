@@ -11,7 +11,6 @@ use Everon\Component\Collection\Collection;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
@@ -208,7 +207,6 @@ class AbstractProductFormDataProvider
         $data = array_merge($data, $this->getGeneralAttributesDefaultFields());
         $data = array_merge($data, $this->getSeoDefaultFields());
         $data = array_merge($data, $this->getImagesDefaultFields());
-        $data = array_merge($data, $this->getStoreRelationDefaultFields());
 
         return $data;
     }
@@ -233,25 +231,6 @@ class AbstractProductFormDataProvider
     {
         $imageSetTransferCollection = $this->productImageFacade->getProductImagesSetCollectionByProductId($idProduct);
         return $this->getProductImageSetCollection($imageSetTransferCollection);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getStoreRelationDefaultFields()
-    {
-        return [
-            ProductFormAdd::FORM_STORE_RELATION => (new StoreRelationTransfer())->setIdStores($this->getAllIdStore()),
-        ];
-    }
-
-    /**
-     * @return int[]
-     */
-    protected function getAllIdStore()
-    {
-        // TODO: implement after CORE-1752 is released
-        return [1, 2, 3];
     }
 
     /**

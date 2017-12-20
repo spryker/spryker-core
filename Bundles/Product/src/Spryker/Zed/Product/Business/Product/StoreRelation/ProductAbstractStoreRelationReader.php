@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Product\Business\Product\StoreRelation;
 
+use ArrayObject;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductAbstractStoreRelationReader implements ProductAbstractStoreRelationReaderInterface
@@ -32,9 +34,12 @@ class ProductAbstractStoreRelationReader implements ProductAbstractStoreRelation
      */
     public function getStoreRelation(StoreRelationTransfer $storeRelationTransfer)
     {
-        $storeRelationTransfer->setIdStores(
-            $this->getIdStores($storeRelationTransfer->getIdEntity())
-        );
+        $storeTransferCollection = $this->getRelatedStores($storeRelationTransfer->getIdEntity());
+        $idStores = $this->getIdStores($storeTransferCollection);
+
+        $storeRelationTransfer
+            ->setStores($storeTransferCollection)
+            ->setIdStores($idStores);
 
         return $storeRelationTransfer;
     }
@@ -42,19 +47,37 @@ class ProductAbstractStoreRelationReader implements ProductAbstractStoreRelation
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
      */
-    protected function getIdStores($idProductAbstract)
+    protected function getRelatedStores($idProductAbstract)
     {
         $productAbstractStoreCollection = $this->productQueryContainer
-            ->queryProductAbstractStoreByFkProductAbstract($idProductAbstract)
+            ->queryProductAbstractStoreWithStoresByFkProductAbstract($idProductAbstract)
             ->find();
 
-        $idStores = [];
+        $relatedStores = new ArrayObject();
         foreach ($productAbstractStoreCollection as $productAbstractStoreEntity) {
-            $idStores[] = $productAbstractStoreEntity->getFkStore();
+            $relatedStores->append(
+                (new StoreTransfer())
+                    ->fromArray(
+                        $productAbstractStoreEntity->getSpyStore()->toArray(),
+                        true
+                    )
+            );
         }
 
-        return $idStores;
+        return $relatedStores;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $storeTransferCollection
+     *
+     * @return int[]
+     */
+    protected function getIdStores(ArrayObject $storeTransferCollection)
+    {
+        return array_map(function (StoreTransfer $storeTransfer) {
+            return $storeTransfer->getIdStore();
+        }, $storeTransferCollection->getArrayCopy());
     }
 }

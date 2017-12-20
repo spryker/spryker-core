@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -40,6 +42,13 @@ class StoreRelationToggleType extends AbstractType
         $this
             ->addFieldIdEntity($builder)
             ->addFieldIdStores($builder);
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                $this->setIntialData($event);
+            }
+        );
     }
 
     /**
@@ -54,6 +63,22 @@ class StoreRelationToggleType extends AbstractType
         $resolver->setDefaults([
             'data_class' => StoreRelationTransfer::class,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormEvent $event
+     *
+     * @return void
+     */
+    protected function setIntialData(FormEvent $event)
+    {
+        $dataProvider = $this->getFactory()->createStoreRelationToggleDataProvider();
+
+        if (count($event->getData()) !== 0) {
+            return;
+        }
+
+        $event->setData($dataProvider->getInitialData());
     }
 
     /**

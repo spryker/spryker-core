@@ -138,15 +138,6 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery
      */
-    public function queryProductAbstractStoreByFkProductAbstract($idProductAbstract);
-
-    /**
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery
-     */
     public function queryProductAbstractStoreWithStoresByFkProductAbstract($idProductAbstract);
 
     /**
