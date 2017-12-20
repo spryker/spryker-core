@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\AvailabilityStorage;
 
-use Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageBridge;
+use Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageClientBridge;
 use Spryker\Client\AvailabilityStorage\Dependency\Service\AvailabilityStorageToSynchronizationServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
@@ -39,7 +39,7 @@ class AvailabilityStorageDependencyProvider extends AbstractDependencyProvider
     protected function addStorageClient(Container $container): Container
     {
         $container[self::CLIENT_STORAGE] = function (Container $container) {
-            return new AvailabilityStorageToStorageBridge($container->getLocator()->storage()->client());
+            return new AvailabilityStorageToStorageClientBridge($container->getLocator()->storage()->client());
         };
 
         return $container;

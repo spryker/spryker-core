@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductCategoryStorage;
 
-use Spryker\Client\ProductCategoryStorage\Dependency\Client\ProductCategoryStorageToStorageBridge;
+use Spryker\Client\ProductCategoryStorage\Dependency\Client\ProductCategoryStorageToStorageClientBridge;
 use Spryker\Client\ProductCategoryStorage\Dependency\Service\ProductCategoryStorageToSynchronizationServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
@@ -38,7 +38,7 @@ class ProductCategoryStorageDependencyProvider extends AbstractDependencyProvide
     public function addStorageClient(Container $container)
     {
         $container[self::CLIENT_STORAGE] = function (Container $container) {
-            return new ProductCategoryStorageToStorageBridge($container->getLocator()->storage()->client());
+            return new ProductCategoryStorageToStorageClientBridge($container->getLocator()->storage()->client());
         };
 
         return $container;

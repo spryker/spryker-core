@@ -10,7 +10,7 @@ namespace Spryker\Client\AvailabilityStorage\Storage;
 use Generated\Shared\Transfer\SpyAvailabilityAbstractTransfer;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageInterface;
+use Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageClientInterface;
 use Spryker\Client\AvailabilityStorage\Dependency\Service\AvailabilityStorageToSynchronizationServiceInterface;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
 use Spryker\Shared\Kernel\Store;
@@ -18,7 +18,7 @@ use Spryker\Shared\Kernel\Store;
 class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
 {
     /**
-     * @var \Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageInterface
+     * @var \Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageClientInterface
      */
     protected $storageClient;
 
@@ -28,10 +28,10 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
     protected $synchronizationService;
 
     /**
-     * @param \Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageInterface $storageClient
+     * @param \Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\AvailabilityStorage\Dependency\Service\AvailabilityStorageToSynchronizationServiceInterface $synchronizationService
      */
-    public function __construct(AvailabilityStorageToStorageInterface $storageClient, AvailabilityStorageToSynchronizationServiceInterface $synchronizationService)
+    public function __construct(AvailabilityStorageToStorageClientInterface $storageClient, AvailabilityStorageToSynchronizationServiceInterface $synchronizationService)
     {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;

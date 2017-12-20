@@ -22,7 +22,7 @@ class ProductCategoryStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductCategoryStorage\Dependency\Client\ProductCategoryStorageToStorageInterface
+     * @return \Spryker\Client\ProductCategoryStorage\Dependency\Client\ProductCategoryStorageToStorageClientInterface
      */
     protected function getStorage()
     {

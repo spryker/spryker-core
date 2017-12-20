@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\AvailabilityStorage\Dependency\Client;
+namespace Spryker\Client\ProductCategoryStorage\Dependency\Client;
 
-class AvailabilityStorageToStorageBridge implements AvailabilityStorageToStorageInterface
+class ProductCategoryStorageToStorageClientBridge implements ProductCategoryStorageToStorageClientInterface
 {
 
     /**

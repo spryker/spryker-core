@@ -22,7 +22,7 @@ class AvailabilityStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageInterface
+     * @return \Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageClientInterface
      */
     protected function getStorage()
     {

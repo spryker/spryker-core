@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductCategoryStorage\Storage;
 
 use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Spryker\Client\ProductCategoryStorage\Dependency\Client\ProductCategoryStorageToStorageInterface;
+use Spryker\Client\ProductCategoryStorage\Dependency\Client\ProductCategoryStorageToStorageClientInterface;
 use Spryker\Client\ProductCategoryStorage\Dependency\Service\ProductCategoryStorageToSynchronizationServiceInterface;
 use Spryker\Shared\ProductCategoryStorage\ProductCategoryStorageConfig;
 use Spryker\Shared\Kernel\Store;
@@ -17,7 +17,7 @@ use Spryker\Shared\Kernel\Store;
 class ProductAbstractCategoryStorageReader implements ProductAbstractCategoryStorageReaderInterface
 {
     /**
-     * @var \Spryker\Client\ProductCategoryStorage\Dependency\Client\ProductCategoryStorageToStorageInterface
+     * @var \Spryker\Client\ProductCategoryStorage\Dependency\Client\ProductCategoryStorageToStorageClientInterface
      */
     protected $storageClient;
 
@@ -27,10 +27,10 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
     protected $synchronizationService;
 
     /**
-     * @param \Spryker\Client\ProductCategoryStorage\Dependency\Client\ProductCategoryStorageToStorageInterface $storageClient
+     * @param \Spryker\Client\ProductCategoryStorage\Dependency\Client\ProductCategoryStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductCategoryStorage\Dependency\Service\ProductCategoryStorageToSynchronizationServiceInterface $synchronizationService
      */
-    public function __construct(ProductCategoryStorageToStorageInterface $storageClient, ProductCategoryStorageToSynchronizationServiceInterface $synchronizationService)
+    public function __construct(ProductCategoryStorageToStorageClientInterface $storageClient, ProductCategoryStorageToSynchronizationServiceInterface $synchronizationService)
     {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
