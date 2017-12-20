@@ -210,7 +210,8 @@ class UserForm extends AbstractType
                 'label' => 'Assigned groups',
                 'multiple' => true,
                 'expanded' => true,
-                'choices' => $choices,
+                'choices' => array_flip($choices),
+                'choices_as_values' => true,
             ]);
 
         return $this;

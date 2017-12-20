@@ -96,7 +96,8 @@ class CustomerForm extends AbstractType
             ->add(self::FIELD_SALUTATION, ChoiceType::class, [
                 'label' => 'Salutation',
                 'placeholder' => '-select-',
-                'choices' => $choices,
+                'choices' => array_flip($choices),
+                'choices_as_values' => true,
             ]);
 
         return $this;

@@ -110,7 +110,8 @@ class MethodForm extends AbstractType
         $builder->add(self::FIELD_CARRIER_FIELD, ChoiceType::class, [
             'label' => 'Carrier',
             'placeholder' => 'Select one',
-            'choices' => $options[self::OPTION_CARRIER_CHOICES],
+            'choices' => array_flip($options[self::OPTION_CARRIER_CHOICES]),
+            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
                 new Required(),
@@ -168,7 +169,8 @@ class MethodForm extends AbstractType
         $builder->add(self::FIELD_AVAILABILITY_PLUGIN_FIELD, ChoiceType::class, [
             'label' => 'Availability Plugin',
             'placeholder' => 'Select one',
-            'choices' => $options[self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST],
+            'choices' => array_flip($options[self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST]),
+            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -186,7 +188,8 @@ class MethodForm extends AbstractType
         $builder->add(self::FIELD_PRICE_PLUGIN_FIELD, ChoiceType::class, [
             'label' => 'Price Plugin',
             'placeholder' => 'Select one',
-            'choices' => $options[self::OPTION_PRICE_PLUGIN_CHOICE_LIST],
+            'choices' => array_flip($options[self::OPTION_PRICE_PLUGIN_CHOICE_LIST]),
+            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -204,7 +207,8 @@ class MethodForm extends AbstractType
         $builder->add(self::FIELD_DELIVERY_TIME_PLUGIN_FIELD, ChoiceType::class, [
             'label' => 'Delivery Time Plugin',
             'placeholder' => 'Select one',
-            'choices' => $options[self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST],
+            'choices' => array_flip($options[self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST]),
+            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -250,7 +254,8 @@ class MethodForm extends AbstractType
             ChoiceType::class,
             [
                 'label' => 'Tax set',
-                'choices' => $options[self::OPTION_TAX_SETS],
+                'choices' => array_flip($options[self::OPTION_TAX_SETS]),
+                'choices_as_values' => true,
             ]
         );
 

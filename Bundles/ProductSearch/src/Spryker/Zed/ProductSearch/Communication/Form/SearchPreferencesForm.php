@@ -114,7 +114,8 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
     protected function addFullTextField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_FULL_TEXT, ChoiceType::class, [
-            'choices' => $this->getYesNoChoices(),
+            'choices' => array_flip($this->getYesNoChoices()),
+            'choices_as_values' => true,
         ]);
 
         $this->addBoolModelTransformer($builder, self::FIELD_FULL_TEXT);
@@ -130,7 +131,8 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
     protected function addFullTextBoostedField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_FULL_TEXT_BOOSTED, ChoiceType::class, [
-            'choices' => $this->getYesNoChoices(),
+            'choices' => array_flip($this->getYesNoChoices()),
+            'choices_as_values' => true,
         ]);
 
         $this->addBoolModelTransformer($builder, self::FIELD_FULL_TEXT_BOOSTED);
@@ -146,7 +148,8 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
     protected function addSuggestionTermsField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_SUGGESTION_TERMS, ChoiceType::class, [
-            'choices' => $this->getYesNoChoices(),
+            'choices' => array_flip($this->getYesNoChoices()),
+            'choices_as_values' => true,
         ]);
 
         $this->addBoolModelTransformer($builder, self::FIELD_SUGGESTION_TERMS);
@@ -162,7 +165,8 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
     protected function addCompletionTermsField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_COMPLETION_TERMS, ChoiceType::class, [
-            'choices' => $this->getYesNoChoices(),
+            'choices' => array_flip($this->getYesNoChoices()),
+            'choices_as_values' => true,
         ]);
 
         $this->addBoolModelTransformer($builder, self::FIELD_COMPLETION_TERMS);

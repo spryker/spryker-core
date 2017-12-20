@@ -176,7 +176,8 @@ class CreditCardSubForm extends AbstractSubForm
             ChoiceType::class,
             [
                 'label' => false,
-                'choices' => $options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_EXPIRES_CHOICES_MONTH],
+                'choices' => array_flip($options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_EXPIRES_CHOICES_MONTH]),
+                'choices_as_values' => true,
                 'required' => true,
                 'constraints' => [
                     $this->createNotBlankConstraint(),
@@ -200,7 +201,8 @@ class CreditCardSubForm extends AbstractSubForm
             ChoiceType::class,
             [
                 'label' => false,
-                'choices' => $options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_EXPIRES_CHOICES_YEAR],
+                'choices' => array_flip($options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_EXPIRES_CHOICES_YEAR]),
+                'choices_as_values' => true,
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Expires year',

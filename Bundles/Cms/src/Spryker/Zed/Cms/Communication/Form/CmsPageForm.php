@@ -132,7 +132,8 @@ class CmsPageForm extends AbstractType
     {
         $builder->add(static::FIELD_FK_TEMPLATE, ChoiceType::class, [
             'label' => 'Template',
-            'choices' => $choices,
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
         ]);
 
         return $this;
@@ -163,7 +164,8 @@ class CmsPageForm extends AbstractType
     {
         $builder->add(static::FIELD_FK_LOCALE, ChoiceType::class, [
             'label' => 'Locale',
-            'choices' => $availableLocales,
+            'choices' => array_flip($availableLocales),
+            'choices_as_values' => true,
         ]);
 
         return $this;

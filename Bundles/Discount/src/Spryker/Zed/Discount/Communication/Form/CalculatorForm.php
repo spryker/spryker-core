@@ -191,7 +191,8 @@ class CalculatorForm extends AbstractType
             'expanded' => true,
             'multiple' => false,
             'label' => 'Discount collection type',
-            'choices' => $this->getFactory()->createCalculatorFormDataProvider()->getOptions()[static::OPTION_COLLECTOR_TYPE_CHOICES],
+            'choices' => array_flip($this->getFactory()->createCalculatorFormDataProvider()->getOptions()[static::OPTION_COLLECTOR_TYPE_CHOICES]),
+            'choices_as_values' => true,
             'attr' => [
                 'class' => 'inline-radio',
             ],

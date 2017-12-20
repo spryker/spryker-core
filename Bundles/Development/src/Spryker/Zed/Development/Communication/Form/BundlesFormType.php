@@ -45,7 +45,8 @@ class BundlesFormType extends AbstractType
         $builder->add(static::EXCLUDED_BUNDLES, ChoiceType::class, [
             'expanded' => true,
             'multiple' => true,
-            'choices' => $options[static::BUNDLE_NAME_CHOICES],
+            'choices' => array_flip($options[static::BUNDLE_NAME_CHOICES]),
+            'choices_as_values' => true,
         ]);
 
         $builder->add(static::SHOW_INCOMING, CheckboxType::class, [

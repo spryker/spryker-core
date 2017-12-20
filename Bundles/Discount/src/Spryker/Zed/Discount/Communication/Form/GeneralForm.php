@@ -58,7 +58,8 @@ class GeneralForm extends AbstractType
     {
         $builder->add(static::FIELD_DISCOUNT_TYPE, ChoiceType::class, [
             'label' => 'Discount Type',
-            'choices' => $this->getVoucherChoices(),
+            'choices' => array_flip($this->getVoucherChoices()),
+            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],
@@ -127,10 +128,11 @@ class GeneralForm extends AbstractType
             'expanded' => true,
             'multiple' => false,
             'label' => false,
-            'choices' => [
+            'choices' => array_flip([
                 self::NON_EXCLUSIVE,
                 self::EXCLUSIVE,
-            ],
+            ]),
+            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],

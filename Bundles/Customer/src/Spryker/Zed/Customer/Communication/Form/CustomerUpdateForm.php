@@ -78,7 +78,8 @@ class CustomerUpdateForm extends CustomerForm
         $builder->add(self::FIELD_DEFAULT_BILLING_ADDRESS, ChoiceType::class, [
             'label' => 'Billing Address',
             'placeholder' => 'Select one',
-            'choices' => $choices,
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -96,7 +97,8 @@ class CustomerUpdateForm extends CustomerForm
         $builder->add(self::FIELD_DEFAULT_SHIPPING_ADDRESS, ChoiceType::class, [
             'label' => 'Shipping Address',
             'placeholder' => 'Select one',
-            'choices' => $choices,
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
             'required' => false,
         ]);
 

@@ -73,7 +73,8 @@ class TaxRateForm extends AbstractType
             'expanded' => false,
             'multiple' => false,
             'label' => 'Country',
-            'choices' => $this->getFactory()->createTaxRateFormDataProvider()->getOptions()[self::FIELD_COUNTRY],
+            'choices' => array_flip($this->getFactory()->createTaxRateFormDataProvider()->getOptions()[self::FIELD_COUNTRY]),
+            'choices_as_values' => true,
             'constraints' => [
                 new GreaterThan([
                     'value' => 0,

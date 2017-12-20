@@ -152,7 +152,8 @@ class AttributeForm extends AbstractType
     {
         $builder->add(self::FIELD_INPUT_TYPE, ChoiceType::class, [
             'label' => 'Input type',
-            'choices' => $options[self::OPTION_ATTRIBUTE_TYPE_CHOICES],
+            'choices' => array_flip($options[self::OPTION_ATTRIBUTE_TYPE_CHOICES]),
+            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],

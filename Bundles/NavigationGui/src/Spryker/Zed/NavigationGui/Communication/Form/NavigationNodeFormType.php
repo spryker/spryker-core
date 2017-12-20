@@ -85,12 +85,13 @@ class NavigationNodeFormType extends AbstractType
             ->add(self::FIELD_NODE_TYPE, ChoiceType::class, [
                 'label' => 'Type',
                 'placeholder' => 'Label',
-                'choices' => [
+                'choices' => array_flip([
                     self::NODE_TYPE_CATEGORY => 'Category',
                     self::NODE_TYPE_CMS_PAGE => 'CMS page',
                     self::NODE_TYPE_LINK => 'Link',
                     self::NODE_TYPE_EXTERNAL_URL => 'External URL',
-                ],
+                ]),
+                'choices_as_values' => true,
                 'choice_attr' => [
                     'Category' => ['data-url' => '/search-for-category'],
                     'CMS page' => ['data-url' => '/search-for-cms'],

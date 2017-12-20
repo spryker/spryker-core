@@ -123,7 +123,8 @@ class AddressForm extends AbstractType
         $builder->add(self::FIELD_SALUTATION, ChoiceType::class, [
             'label' => 'Salutation',
             'placeholder' => '-select-',
-            'choices' => $choices,
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -206,7 +207,8 @@ class AddressForm extends AbstractType
         $builder->add(self::FIELD_FK_COUNTRY, ChoiceType::class, [
             'label' => 'Country',
             'placeholder' => '-select-',
-            'choices' => $choices,
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],

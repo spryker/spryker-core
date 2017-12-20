@@ -52,7 +52,8 @@ class UserUpdateForm extends UserForm
         $builder->remove(self::FIELD_PASSWORD);
 
         $builder->add(self::FIELD_STATUS, ChoiceType::class, [
-            'choices' => $options[self::OPTION_STATUS_CHOICES],
+            'choices' => array_flip($options[self::OPTION_STATUS_CHOICES]),
+            'choices_as_values' => true,
         ]);
     }
 }

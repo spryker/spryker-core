@@ -59,7 +59,8 @@ class CmsVersionFormType extends AbstractType
 
         $builder->add('version', ChoiceType::class, [
             'label' => false,
-            'choices' => $choices,
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
             'required' => true,
             'constraints' => [
                 new Required(),

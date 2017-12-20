@@ -92,7 +92,8 @@ class VoucherForm extends AbstractType
                 'label' => 'Add Random Generated Code Length',
                 'placeholder' => 'No additional random characters',
                 'required' => false,
-                'choices' => $this->createCodeLengthRangeList(),
+                'choices' => array_flip($this->createCodeLengthRangeList()),
+                'choices_as_values' => true,
             ]
         );
 

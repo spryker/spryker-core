@@ -107,7 +107,8 @@ class CmsBlockForm extends AbstractType
     {
         $builder->add(static::FIELD_FK_TEMPLATE, ChoiceType::class, [
             'label' => 'Template',
-            'choices' => $choices[static::OPTION_TEMPLATE_CHOICES],
+            'choices' => array_flip($choices[static::OPTION_TEMPLATE_CHOICES]),
+            'choices_as_values' => true,
             'constraints' => [
                 new Callback([
                     'callback' => function ($name, ExecutionContextInterface $context) {
