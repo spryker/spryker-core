@@ -9,13 +9,12 @@ namespace Spryker\Zed\Propel;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceBridge;
 use Spryker\Zed\Propel\Dependency\Facade\PropelToLogBridge;
+use Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceBridge;
 
 class PropelDependencyProvider extends AbstractBundleDependencyProvider
 {
     const UTIL_TEXT_SERVICE = 'util text service';
-
     const FACADE_LOG = 'FACADE_LOG';
 
     /**
