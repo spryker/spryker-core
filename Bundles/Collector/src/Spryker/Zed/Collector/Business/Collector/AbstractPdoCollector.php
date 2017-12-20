@@ -106,9 +106,22 @@ abstract class AbstractPdoCollector extends AbstractDatabaseCollector
         $this->queryBuilder
             ->setCriteriaBuilder($this->criteriaBuilder)
             ->setLocale($locale)
+            ->setStore($this->findCurrentStore())
             ->prepare();
 
         $this->ensureCollectorColumnsAreSelected();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     */
+    protected function findCurrentStore()
+    {
+        if ($this->storeFacade === null) {
+            return null;
+        }
+
+        return $this->storeFacade->getCurrentStore();
     }
 
     /**

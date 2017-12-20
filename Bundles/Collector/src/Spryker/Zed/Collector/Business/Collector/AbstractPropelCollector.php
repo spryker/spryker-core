@@ -79,6 +79,19 @@ abstract class AbstractPropelCollector extends AbstractDatabaseCollector
 
         $this->queryBuilder
             ->setLocale($locale)
+            ->setStore($this->findCurrentStore())
             ->prepare();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     */
+    protected function findCurrentStore()
+    {
+        if ($this->storeFacade === null) {
+            return null;
+        }
+
+        return $this->storeFacade->getCurrentStore();
     }
 }
