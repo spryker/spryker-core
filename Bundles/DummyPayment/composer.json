@@ -3,7 +3,7 @@
   "description": "DummyPayment module",
   "license": "proprietary",
   "require": {
-    "spryker/checkout": "^3.0.0",
+    "spryker/checkout": "^3.0.0 || ^4.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/oms": "^6.0.0 || ^7.0.0",
     "spryker/payment": "^3.0.0 || ^4.0.0",

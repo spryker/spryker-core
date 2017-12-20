@@ -14,8 +14,7 @@ class ReAuthorizationAdapterMock extends AbstractAdapterMock
      */
     public function getSuccessResponse()
     {
-        return
-            'PROCESSING_RISK_SCORE=0' . '&' .
+        return 'PROCESSING_RISK_SCORE=0' . '&' .
             'P3_VALIDATION=ACK' . '&' .
             'IDENTIFICATION_SHOPPERID=1279' . '&' .
             'CLEARING_DESCRIPTOR=1916.6340.7778 inv-ins-test-default 1284' . '&' .
@@ -63,8 +62,7 @@ class ReAuthorizationAdapterMock extends AbstractAdapterMock
      */
     public function getFailureResponse()
     {
-        return
-            'TRANSACTION_CHANNEL=8a82941832d84c500132e875fc0c0648' . '&' .
+        return 'TRANSACTION_CHANNEL=8a82941832d84c500132e875fc0c0648' . '&' .
             'PRESENTATION_CURRENCY=EUR' . '&' .
             'IDENTIFICATION_UNIQUEID=8a82944a4fe06456014fef00b16f0ea1' . '&' .
             'PAYMENT_CODE=VA.PA' . '&' .

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Sales\Communication\Plugin;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -19,15 +18,16 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class SalesOrderExpanderPlugin extends AbstractPlugin implements CheckoutPreSaveHookInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function preSave(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function preSave(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFacade()->expandSalesOrder($quoteTransfer, $checkoutResponseTransfer);
+        return $this->getFacade()->expandSalesOrder($quoteTransfer);
     }
 }

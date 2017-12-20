@@ -140,7 +140,7 @@ class ProductOptionValueSaver implements ProductOptionValueSaverInterface
     }
 
     /**
-     * @param int $idProductOptionValue
+     * @param int|mixed $idProductOptionValue
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
      */

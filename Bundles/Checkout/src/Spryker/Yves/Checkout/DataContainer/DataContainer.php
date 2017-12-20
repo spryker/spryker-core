@@ -14,7 +14,7 @@ use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 class DataContainer implements DataContainerInterface
 {
     /**
-     * @var \Spryker\Client\Quote\QuoteClientInterface
+     * @var \Spryker\Yves\Checkout\Dependency\Client\CheckoutToQuoteInterface
      */
     protected $quoteClient;
 

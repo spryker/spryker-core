@@ -54,7 +54,7 @@ interface ProductOptionToMoneyInterface
     public function fromFloat($amount, $isoCode = null);
 
     /**
-     * @param float $amount
+     * @param string $amount
      * @param string|null $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
