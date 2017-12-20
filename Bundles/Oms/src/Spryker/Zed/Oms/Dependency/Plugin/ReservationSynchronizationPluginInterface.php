@@ -11,6 +11,12 @@ use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
 interface ReservationSynchronizationPluginInterface
 {
     /**
+     * Specification:
+     *  - Request to synchronize reservation for other store.
+     *  - This is useful when stores shares stocks and you want to make sure it's updated in other stores also.
+     *
+     *
+     *
      * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
      *
      * @return void

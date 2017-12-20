@@ -79,17 +79,18 @@ class Reservation implements ReservationInterface
     public function updateReservationQuantity($sku, $storeName = null)
     {
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
-        $currentStoreReserved = $this->sumReservedProductQuantitiesForSku($sku, $currentStoreTransfer->getName());
+        $currentStoreReservationAmount = $this->sumReservedProductQuantitiesForSku($sku, $currentStoreTransfer->getName());
 
         foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
             if ($currentStoreTransfer->getIdStore() === $storeTransfer->getIdStore()) {
-                $this->saveReservation($sku, $storeTransfer->getIdStore(), $currentStoreReserved);
+                $this->saveReservation($sku, $storeTransfer->getIdStore(), $currentStoreReservationAmount);
                 continue;
             }
 
             $omsAvailabilityReservationRequest = (new OmsAvailabilityReservationRequestTransfer())
-                ->setSku($sku)->setCurrentStore($currentStoreTransfer)
-                ->setCurrentStoreReservationAmount($currentStoreReserved)
+                ->setSku($sku)
+                ->setCurrentStore($currentStoreTransfer)
+                ->setCurrentStoreReservationAmount($currentStoreReservationAmount)
                 ->setSynchronizeToStore($storeTransfer);
 
             $this->executeReservationSynchronizationPlugins($omsAvailabilityReservationRequest);
