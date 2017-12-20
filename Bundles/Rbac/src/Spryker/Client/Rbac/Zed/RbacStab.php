@@ -8,7 +8,7 @@ use Spryker\Client\Rbac\RbacClientInterface;
 
 class RbacStab implements RbacStabInterface
 {
-    public function can(RbacRequestTransfer $requestTransfer)
+    public function getIsAllowed(RbacRequestTransfer $requestTransfer)
     {
         return true;
     }

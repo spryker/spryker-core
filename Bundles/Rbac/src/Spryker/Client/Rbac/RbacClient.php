@@ -18,6 +18,12 @@ class RbacClient extends AbstractClient implements RbacClientInterface
      */
     public function can($right, array $options)
     {
+        $hasRight = $this->hasRight($right);
+
+        if ($hasRight === false) {
+            return false;
+        }
+
         $rbacRequestTransfer = new RbacRequestTransfer();
         $rbacRequestTransfer->setRight($right);
         $rbacRequestTransfer->setOptions($options);
@@ -25,6 +31,24 @@ class RbacClient extends AbstractClient implements RbacClientInterface
 
         return $this->getFactory()
             ->createZedStub()
-            ->can($rbacRequestTransfer);
+            ->getIsAllowed($rbacRequestTransfer);
+    }
+
+    /**
+     * Specification:
+     * - KV lookup
+     *
+     * @param string $right
+     *
+     * @return bool
+     */
+    public function hasRight($right)
+    {
+        return true;
+    }
+
+    public function getIsAllowed($right, array $options)
+    {
+
     }
 }

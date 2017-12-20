@@ -11,5 +11,5 @@ interface RbacStabInterface
      *
      * @return bool
      */
-    public function can(RbacRequestTransfer $requestTransfer);
+    public function getIsAllowed(RbacRequestTransfer $requestTransfer);
 }
