@@ -406,7 +406,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('foo')
-                    ->setParameterName('foo')
+                    ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
                     ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
                     ->setIsMultiValued(true)
@@ -414,7 +414,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
-                    ->setParameterName('bar')
+                    ->setParameterName('bar-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
                     ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
             );

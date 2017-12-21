@@ -18,9 +18,7 @@ use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 class ProductOptionGroupIdHydratorPlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {
     /**
-     * Specification:
-     *   - Its a plugin which hydrates OrderTransfer when order read is persistence,
-     *   - Can be used to add additional data to OrderTransfer
+     * {@inheritdoc}
      *
      * @api
      *

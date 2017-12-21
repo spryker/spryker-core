@@ -11,7 +11,7 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 use Spryker\Zed\ProductOption\Business\Exception\AbstractProductNotFoundException;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException;
 use Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaver;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use SprykerTest\Zed\ProductOption\Business\MockProvider;
 
@@ -90,13 +90,13 @@ class AbstractProductOptionSaverTest extends MockProvider
 
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface|null $productOptionContainerMock
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface|null $touchFacadeMock
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface|null $touchFacadeMock
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface
      */
     protected function createAbstractProductOptionSaver(
         ProductOptionQueryContainerInterface $productOptionContainerMock = null,
-        ProductOptionToTouchInterface $touchFacadeMock = null
+        ProductOptionToTouchFacadeInterface $touchFacadeMock = null
     ) {
 
         if (!$productOptionContainerMock) {

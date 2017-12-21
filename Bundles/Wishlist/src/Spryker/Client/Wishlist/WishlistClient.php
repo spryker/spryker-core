@@ -10,7 +10,6 @@ namespace Spryker\Client\Wishlist;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
-use Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -144,20 +143,6 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     public function removeItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollection)
     {
         return $this->getZedStub()->removeItemCollection($wishlistItemTransferCollection);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer
-     */
-    public function moveToCart(WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer)
-    {
-        return $this->createCartHandler()->moveToCart($wishlistMoveToCartRequestTransfer);
     }
 
     /**

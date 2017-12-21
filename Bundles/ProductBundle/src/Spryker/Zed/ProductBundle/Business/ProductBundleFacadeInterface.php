@@ -249,4 +249,18 @@ interface ProductBundleFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateProductBundleIds(OrderTransfer $orderTransfer);
+
+    /**
+     * Specification:
+     *  - Filter bundle items after cart item reload operation is called.
+     *  - Bundled items are removed from cart
+     *  - Bundle item are added as new add so new prices can be assigned.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function filterBundleItemsOnCartReload(QuoteTransfer $quoteTransfer);
 }

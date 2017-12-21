@@ -27,4 +27,13 @@ interface StoreReaderInterface
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getStoreById($idStore);
+
+    /**
+     * @param string $storeName
+     *
+     * @throws \Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreByName($storeName);
 }

@@ -96,7 +96,7 @@ class ProductBundleReader implements ProductBundleReaderInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection|mixed
+     * @return mixed|mixed[]|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|mixed
      */
     protected function findBundledProducts($idProductConcrete)
     {

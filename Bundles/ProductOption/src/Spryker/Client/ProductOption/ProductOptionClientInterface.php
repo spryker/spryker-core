@@ -11,9 +11,11 @@ namespace Spryker\Client\ProductOption;
 interface ProductOptionClientInterface
 {
     /**
-     *
      * Specification:
-     *   - Reads product option from Yves store
+     * - Reads product options from storage.
+     * - Selects store price according the current price mode, and current currency.
+     * - Removes options without price.
+     * - Removes product option groups without product options.
      *
      * @api
      *

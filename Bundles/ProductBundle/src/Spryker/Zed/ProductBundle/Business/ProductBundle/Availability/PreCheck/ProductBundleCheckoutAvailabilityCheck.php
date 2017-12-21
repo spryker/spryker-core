@@ -73,7 +73,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
 
     /**
      * @param \ArrayObject $currentCartItems
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle[] $bundledItems
+     * @param mixed|mixed[]|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection $bundledItems
      *
      * @return bool
      */

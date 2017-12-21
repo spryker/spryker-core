@@ -94,6 +94,24 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves active shipment method buy id shipment method.
+     * - Calculates shipment method delivery time using its assigned ShipmentMethodDeliveryTimePluginInterface plugin.
+     * - Selects shipment method price for the provided currency and current store.
+     * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
+     * - Excludes shipment methods which do not have a valid price as a result.
+     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin requirements.
+     *
+     * @api
+     *
+     * @param int $idShipmentMethod
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
      * - Retrieves a shipment method from database by ID.
      *
      * @api
@@ -215,4 +233,14 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     public function transformShipmentMethodEntityToShipmentMethodTransfer(SpyShipmentMethod $shipmentMethodEntity);
+
+    /**
+     * Specification:
+     * - Returns shipment expense type, used to identify expense used for shipment.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getShipmentExpenseTypeIdentifier();
 }

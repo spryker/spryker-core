@@ -18,12 +18,16 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CartItemPricePlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFacade()->addGrossPriceToItems($cartChangeTransfer);
+        return $this->getFacade()->addPriceToItems($cartChangeTransfer);
     }
 }
