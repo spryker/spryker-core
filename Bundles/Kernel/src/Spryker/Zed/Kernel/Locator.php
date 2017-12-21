@@ -13,6 +13,7 @@ use Spryker\Shared\Kernel\AbstractLocatorLocator;
 use Spryker\Shared\Kernel\BundleProxy;
 use Spryker\Zed\Kernel\Business\FacadeLocator;
 use Spryker\Zed\Kernel\Persistence\QueryContainerLocator;
+use Spryker\Zed\Kernel\Persistence\RepositoryLocator;
 
 class Locator extends AbstractLocatorLocator
 {
@@ -28,6 +29,7 @@ class Locator extends AbstractLocatorLocator
                 new QueryContainerLocator(),
                 new ClientLocator(),
                 new ServiceLocator(),
+                new RepositoryLocator()
             ];
         }
         $bundleProxy->setLocator($this->locator);

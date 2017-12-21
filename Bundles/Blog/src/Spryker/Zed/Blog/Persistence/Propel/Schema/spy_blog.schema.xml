@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\Blog\Persistence" package="src.Orm.Zed.Blog.Persistence" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd">
+
+    <table name="spy_blog" phpName="SpyBlog">
+        <column name="id_blog" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="text" type="INTEGER" required="true" defaultValue="0"/>
+
+        <id-method-parameter value="spy_blog_pk_seq"/>
+    </table>
+
+    <table name="spy_blog_comment" phpName="SpyBlogComment">
+        <column name="id_blog_comment" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_blog" required="true" type="INTEGER" />
+        <column name="author" type="VARCHAR" size="255" required="true"/>
+        <column name="message" type="INTEGER"/>
+
+        <foreign-key name="spy_blog_comment-fk_blog" foreignTable="spy_blog">
+            <reference local="fk_blog" foreign="id_blog"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_blog_comment_pk_seq"/>
+    </table>
+
+</database>
