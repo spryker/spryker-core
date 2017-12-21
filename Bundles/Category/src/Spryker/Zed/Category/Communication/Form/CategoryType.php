@@ -238,7 +238,8 @@ class CategoryType extends AbstractType
     {
         $builder->add(static::FIELD_TEMPLATE, Select2ComboBoxType::class, [
             'label' => 'Template',
-            'choices' => $choices,
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
             'required' => true,
             'constraints' => [
                 new NotBlank(),

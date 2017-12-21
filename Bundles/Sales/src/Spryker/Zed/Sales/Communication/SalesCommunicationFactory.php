@@ -28,6 +28,8 @@ use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
 class SalesCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
+     * @deprecated Use `getCustomerForm()` instead.
+     *
      * @param array $formData
      * @param array $formOptions
      *
@@ -36,6 +38,17 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function createCustomerForm(array $formData = [], array $formOptions = [])
     {
         return $this->getFormFactory()->create(CustomerForm::class, $formData, $formOptions);
+    }
+
+    /**
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCustomerForm(array $formData = [], array $formOptions = [])
+    {
+        return $this->createCustomerForm($formData, $formOptions);
     }
 
     /**
@@ -55,6 +68,8 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `getAddressForm()` instead.
+     *
      * @param array $formData
      * @param array $formOptions
      *
@@ -71,9 +86,33 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
+    public function getAddressForm(array $formData = [], array $formOptions = [])
+    {
+        return $this->createAddressForm($formData, $formOptions);
+    }
+
+    /**
+     * @deprecated Use `getCommentForm()` instead.
+     *
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function createCommentForm(array $formData = [], array $formOptions = [])
     {
         return $this->getFormFactory()->create(CommentForm::class, $formData, $formOptions);
+    }
+
+    /**
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCommentForm(array $formData = [], array $formOptions = [])
+    {
+        return $this->createCommentForm($formData, $formOptions);
     }
 
     /**
@@ -119,10 +158,9 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
         $formCollection = [];
         $orderItemSplitDataProvider = $this->createOrderItemSplitDataProvider();
         foreach ($orderItems as $itemTransfer) {
-            $formType = new OrderItemSplitForm();
             $formCollection[$itemTransfer->getIdSalesOrderItem()] = $this
                 ->getFormFactory()
-                ->create($formType, $orderItemSplitDataProvider->getData($itemTransfer), $orderItemSplitDataProvider->getOptions())
+                ->create(OrderItemSplitForm::class, $orderItemSplitDataProvider->getData($itemTransfer), $orderItemSplitDataProvider->getOptions())
                 ->createView();
         }
 
