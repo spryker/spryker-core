@@ -30,6 +30,7 @@ class ProductManagementProductEditCest
     public function breadcrumbIsVisible(ProductManagementCommunicationTester $i)
     {
         $i->registerProductManagementStoreRelationFormTypePlugin();
+        $i->registerMoneyCollectionFormTypePlugin();
 
         $i->listDataTable(ProductManagementProductListPage::URL . '/index/table');
         $i->clickDataTableEditButton();

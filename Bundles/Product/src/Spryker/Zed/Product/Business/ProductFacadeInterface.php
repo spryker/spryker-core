@@ -638,6 +638,23 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
+     * - Returns an array of productIds as keys with array of attribute keys as values of a persisted products.
+     * - The attribute keys is a combination of the abstract product's attribute keys and all its existing concretes' attribute keys.
+     * - If $localeTransfer is provided then localized abstract and concrete attribute keys are also part of the result.
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return array
+     */
+    public function getCombinedAbstractAttributeKeysForProductIds($productIds, LocaleTransfer $localeTransfer = null);
+
+    /**
+     * Specification:
      * - Returns an associative array of attribute key - attribute value pairs of the persisted concrete product.
      * - The result is a combination of the concrete product's attributes and its abstract product's attributes.
      * - Includes localized abstract product and concrete products attribute keys when $localeTransfer is provided.

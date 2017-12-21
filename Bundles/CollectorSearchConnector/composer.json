@@ -5,7 +5,7 @@
   "require": {
     "spryker/collector": "^5.0.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/search": "^6.0.0"
+    "spryker/search": "^6.0.0 || ^7.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

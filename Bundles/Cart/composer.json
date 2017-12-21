@@ -11,7 +11,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/price": "*",
+    "spryker/price-product": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",

@@ -53,6 +53,11 @@ class Operation implements OperationInterface
     protected $postSavePlugins = [];
 
     /**
+     * @var \Spryker\Zed\Cart\Dependency\PreReloadItemsPluginInterface[]
+     */
+    protected $preReloadPlugins = [];
+
+    /**
      * @param \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface $cartStorageProvider
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface $calculationFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
@@ -117,14 +122,19 @@ class Operation implements OperationInterface
      */
     public function reloadItems(QuoteTransfer $quoteTransfer)
     {
+        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($quoteTransfer->toArray(), true);
+
+        $quoteTransfer = $this->executePreReloadPlugins($quoteTransfer);
+
         $cartChangeTransfer = new CartChangeTransfer();
         $cartChangeTransfer->setItems($quoteTransfer->getItems());
 
         $quoteTransfer->setItems(new ArrayObject());
+
         $cartChangeTransfer->setQuote($quoteTransfer);
 
         if (!$this->preCheckCart($cartChangeTransfer)) {
-            return $cartChangeTransfer->getQuote();
+            return $originalQuoteTransfer;
         }
 
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
@@ -201,6 +211,20 @@ class Operation implements OperationInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executePreReloadPlugins(QuoteTransfer $quoteTransfer)
+    {
+        foreach ($this->preReloadPlugins as $reloadPlugin) {
+            $quoteTransfer = $reloadPlugin->preReloadItems($quoteTransfer);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
      * @param string $message
      * @param array $parameters
      *
@@ -223,5 +247,15 @@ class Operation implements OperationInterface
     protected function recalculate(QuoteTransfer $quoteTransfer)
     {
         return $this->calculationFacade->recalculate($quoteTransfer);
+    }
+
+    /**
+     * @param array $preReloadPlugins
+     *
+     * @return void
+     */
+    public function setPreReloadLoadPlugins(array $preReloadPlugins)
+    {
+        $this->preReloadPlugins = $preReloadPlugins;
     }
 }

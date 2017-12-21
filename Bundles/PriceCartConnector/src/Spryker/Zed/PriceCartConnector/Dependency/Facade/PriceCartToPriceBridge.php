@@ -23,24 +23,26 @@ class PriceCartToPriceBridge implements PriceCartToPriceInterface
     }
 
     /**
-     * @param string $sku
-     * @param string|null $priceType
-     *
-     * @return bool
+     * @return string
      */
-    public function hasValidPrice($sku, $priceType = null)
+    public function getNetPriceModeIdentifier()
     {
-        return $this->priceFacade->hasValidPrice($sku, $priceType);
+        return $this->priceFacade->getNetPriceModeIdentifier();
     }
 
     /**
-     * @param string $sku
-     * @param string|null $priceType
-     *
-     * @return int
+     * @return string
      */
-    public function getPriceBySku($sku, $priceType = null)
+    public function getGrossPriceModeIdentifier()
     {
-        return $this->priceFacade->getPriceBySku($sku, $priceType);
+        return $this->priceFacade->getGrossPriceModeIdentifier();
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultPriceMode()
+    {
+        return $this->priceFacade->getDefaultPriceMode();
     }
 }

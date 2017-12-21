@@ -722,6 +722,28 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * Specification:
+     * - Returns an array of productIds as keys with array of attribute keys as values of a persisted products.
+     * - The attribute keys is a combination of the abstract product's attribute keys and all its existing concretes' attribute keys.
+     * - If $localeTransfer is provided then localized abstract and concrete attribute keys are also part of the result.
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return array
+     */
+    public function getCombinedAbstractAttributeKeysForProductIds($productIds, LocaleTransfer $localeTransfer = null)
+    {
+        return $this->getFactory()
+            ->createAttributeLoader()
+            ->getCombinedAbstractAttributeKeysForProductIds($productIds, $localeTransfer);
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @api

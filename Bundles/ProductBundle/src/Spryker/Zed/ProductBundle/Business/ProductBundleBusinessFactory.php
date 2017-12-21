@@ -16,6 +16,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpan
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemGroupKeyExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartPostSaveUpdate;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleImageCartExpander;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundlePreReloadUpdater;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleOrderSaver;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
@@ -61,9 +62,10 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductBundleCartExpander(
             $this->getQueryContainer(),
-            $this->getPriceFacade(),
+            $this->getPriceProductFacade(),
             $this->getProductFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->getPriceFacade()
         );
     }
 
@@ -172,7 +174,26 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductBundlesSalesOrderHydrate()
     {
-        return new ProductBundlesSalesOrderHydrate($this->getSalesQueryContainer(), $this->createProductBundlePriceCalculator());
+        return new ProductBundlesSalesOrderHydrate(
+            $this->getSalesQueryContainer(),
+            $this->createProductBundlePriceCalculator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundlePreReloadUpdaterInterface
+     */
+    public function createProductBundlePreReloadUpdater()
+    {
+        return new ProductBundlePreReloadUpdater();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleIdHydratorInterface
+     */
+    public function createProductBundlesIdHydrator()
+    {
+        return new ProductBundleIdHydrator($this->getProductQueryContainer());
     }
 
     /**
@@ -192,11 +213,11 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface
+     * @return \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface
      */
-    protected function getPriceFacade()
+    protected function getPriceProductFacade()
     {
-        return $this->getProvidedDependency(ProductBundleDependencyProvider::FACADE_PRICE);
+        return $this->getProvidedDependency(ProductBundleDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 
     /**
@@ -248,12 +269,10 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleIdHydratorInterface
+     * @return \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceInterface
      */
-    public function createProductBundlesIdHydrator()
+    protected function getPriceFacade()
     {
-        return new ProductBundleIdHydrator(
-            $this->getProductQueryContainer()
-        );
+        return $this->getProvidedDependency(ProductBundleDependencyProvider::FACADE_PRICE);
     }
 }

@@ -8,10 +8,14 @@
 namespace SprykerTest\Zed\ProductBundle\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -56,11 +60,15 @@ class ProductBundleFacadeTest extends Unit
         $productConcreteTransfer = $this->createProductBundle($bundlePrice);
 
         $cartChangeTransfer = new CartChangeTransfer();
-        $cartChangeTransfer->setQuote(new QuoteTransfer());
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode('EUR');
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setCurrency($currencyTransfer);
+        $cartChangeTransfer->setQuote($quoteTransfer);
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setQuantity(1);
-        $itemTransfer->setUnitGrossPrice($productConcreteTransfer->getPrice()->getPrice());
+        $itemTransfer->setUnitGrossPrice($productConcreteTransfer->getPrices()[0]->getPrice());
         $itemTransfer->setId($productConcreteTransfer->getIdProductConcrete());
         $itemTransfer->setSku($productConcreteTransfer->getSku());
 
@@ -370,6 +378,29 @@ class ProductBundleFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testFilterBundleItemsOnCartReloadShouldRemoveBundleItems()
+    {
+        $productBundleFacade = $this->createProductBundleFacade();
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withBundleItem([
+                ItemTransfer::BUNDLE_ITEM_IDENTIFIER => 1,
+            ])->withItem([
+                ItemTransfer::RELATED_BUNDLE_ITEM_IDENTIFIER => 1,
+            ])->withAnotherItem([
+                ItemTransfer::SKU => '123',
+            ])
+            ->build();
+
+        $updatedQuoteTransfer = $productBundleFacade->filterBundleItemsOnCartReload($quoteTransfer);
+
+        $this->assertCount(0, $updatedQuoteTransfer->getBundleItems());
+        $this->assertCount(2, $updatedQuoteTransfer->getItems());
+    }
+
+    /**
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundleFacade
      */
     protected function createProductBundleFacade()
@@ -411,12 +442,28 @@ class ProductBundleFacadeTest extends Unit
     {
         $productFacade = $this->createProductFacade();
         $productAbstractTransfer = new ProductAbstractTransfer();
-        $productAbstractTransfer->setSku(123 . rand(1, 9999));
+        $productAbstractTransfer->setSku("random_" . sha1(random_bytes(50)));
 
         $priceProductTransfer = new PriceProductTransfer();
-        $priceProductTransfer->setPrice($price);
+        $priceProductTransfer->setSkuProductAbstract($productAbstractTransfer->getSku());
 
-        $productAbstractTransfer->setPrice($priceProductTransfer);
+        $priceTypeTransfer = new PriceTypeTransfer();
+        $priceTypeTransfer->setName($this->getLocator()->priceProduct()->facade()->getDefaultPriceTypeName());
+        $priceProductTransfer->setPriceType($priceTypeTransfer);
+
+        $currencyTransfer = $this->getLocator()->currency()->facade()->fromIsoCode('EUR');
+        $storeTransfer = $this->getLocator()->store()->facade()->getCurrentStore();
+
+        $moneyValueTransfer = (new MoneyValueTransfer())
+            ->setCurrency($currencyTransfer)
+            ->setFkCurrency($currencyTransfer->getIdCurrency())
+            ->setFkStore($storeTransfer->getIdStore())
+            ->setNetAmount($price)
+            ->setGrossAmount($price);
+
+        $priceProductTransfer->setMoneyValue($moneyValueTransfer);
+
+        $productAbstractTransfer->addPrice($priceProductTransfer);
         $productAbstractTransfer->setAttributes([]);
 
         $productAbstractTransfer->setStoreRelation((new StoreRelationTransfer())->setIdStores([]));
@@ -432,7 +479,7 @@ class ProductBundleFacadeTest extends Unit
         $productConcreteTransfer->addStock($stockProductTransfer);
         $productConcreteTransfer->setSku($sku);
         $productConcreteTransfer->setIsActive(false);
-        $productConcreteTransfer->setPrice($productAbstractTransfer->getPrice());
+        $productConcreteTransfer->setPrices($productAbstractTransfer->getPrices());
         $productConcreteTransfer->setLocalizedAttributes($productAbstractTransfer->getLocalizedAttributes());
 
         $concreteProductCollection[] = $productConcreteTransfer;

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
@@ -20,14 +20,14 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface $glossaryFacade
      */
-    public function __construct(ProductOptionToGlossaryInterface $glossaryFacade)
+    public function __construct(ProductOptionToGlossaryFacadeInterface $glossaryFacade)
     {
         $this->glossaryFacade = $glossaryFacade;
     }

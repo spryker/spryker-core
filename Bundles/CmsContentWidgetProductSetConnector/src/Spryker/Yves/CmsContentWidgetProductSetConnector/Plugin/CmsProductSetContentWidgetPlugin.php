@@ -15,7 +15,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig_Environment;
 
 /**
- * @method \Spryker\Yves\CmsContentWidgetProductSetConnector\CmsContentWidgetProductSetConnectorConnectorFactory getFactory()
+ * @method \Spryker\Yves\CmsContentWidgetProductSetConnector\CmsContentWidgetProductSetConnectorFactory getFactory()
  */
 class CmsProductSetContentWidgetPlugin extends AbstractPlugin implements CmsContentWidgetPluginInterface
 {

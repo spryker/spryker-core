@@ -1,0 +1,57 @@
+{% embed '@Gui/Partials/widget.twig' with {widget_title: 'Active filters' | trans} %}
+
+    {% block widget_content %}
+        <button id="remove-all-filters" class="btn btn-sm btn-danger">{{ 'Remove all' | trans }}</button>
+        <div id="filters-container" class="dd">
+            <ol class="dd-list">
+                {% if productCategoryFilters.filterDataArray is not empty %}
+                    {% for filter, active in productCategoryFilters.filterDataArray if active %}
+                        <li data-filter="{{ filter }}" class="filter-item dd-item {{ filter in allFilters|keys ? '' : 'non-filter-attribute' }}">
+                            <a class="btn btn-xs btn-outline btn-danger remove-product-category-filter" title="Remove Filter">
+                                <i class="fa fa-fw fa-trash"></i>
+                            </a>
+                            <div class="dd-handle">
+                                {{ filter }}
+                            </div>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    {% for filter in filters %}
+                        <li data-filter="{{ filter.name }}" class="filter-item dd-item">
+                            <a class="btn btn-xs btn-outline btn-danger remove-product-category-filter" title="Remove Filter">
+                                <i class="fa fa-fw fa-trash"></i>
+                            </a>
+                            <div class="dd-handle">
+                                {{ filter.name }}
+                            </div>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            </ol>
+        </div>
+    {% endblock %}
+
+{% endembed %}
+
+{% embed '@Gui/Partials/widget.twig' with {widget_title: 'Inactive filters' | trans} %}
+
+    {% block widget_content %}
+        <div id="inactive-filters-container" class="dd">
+            <ol class="dd-list">
+                {% for filter, active in productCategoryFilters.filterDataArray if not active %}
+                    <li data-filter="{{ filter }}" class="filter-item dd-item {{ filter in allFilters|keys ? '' : 'non-filter-attribute' }}">
+                        <a class="btn btn-xs btn-outline btn-info re-add-product-category-filter" title="Re-add Filter">
+                            <i class="fa fa-fw fa-plus-circle"></i>
+                        </a>
+                        <div class="dd-handle">
+                            {{ filter }}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ol>
+        </div>
+
+    {% endblock %}
+
+{% endembed %}
+<input type="submit" id="product-category-filter-save-btn" class="btn btn-sm btn-primary" value="{{ 'Save' | trans }}"/>

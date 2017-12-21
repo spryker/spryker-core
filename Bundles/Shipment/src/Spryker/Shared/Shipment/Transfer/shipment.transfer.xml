@@ -28,6 +28,7 @@
         <property name="deliveryTime" type="int" />
         <property name="prices" type="MoneyValue[]" singular="price" />
         <property name="storeCurrencyPrice" type="int" />
+        <property name="currencyIsoCode" type="string" />
     </transfer>
 
     <transfer name="Order">
