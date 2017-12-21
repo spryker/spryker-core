@@ -8,10 +8,9 @@
 namespace Spryker\Zed\ProductCategoryFilterGui\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductCategoryFilterForm extends AbstractType
 {
@@ -19,20 +18,11 @@ class ProductCategoryFilterForm extends AbstractType
     const FIELD_FILTERS = 'filters';
 
     /**
-     * @return string The name of this type
+     * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'product_category_filter';
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
     }
 
     /**

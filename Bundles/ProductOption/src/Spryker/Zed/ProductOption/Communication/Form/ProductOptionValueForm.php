@@ -8,12 +8,10 @@
 namespace Spryker\Zed\ProductOption\Communication\Form;
 
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
-use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueOptionValueSku;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueValue;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
-use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -125,7 +123,7 @@ class ProductOptionValueForm extends AbstractType
     {
         $builder->add(
             static::FIELD_PRICES,
-            $this->moneyCollectionFormTypePlugin->getType(),
+            $this->getFactory()->getMoneyCollectionFormTypePlugin()->getType(),
             [
                     static::OPTION_AMOUNT_PER_STORE => true,
             ]
