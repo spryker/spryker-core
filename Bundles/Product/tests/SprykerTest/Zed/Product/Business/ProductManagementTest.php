@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\Product\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
@@ -137,7 +138,8 @@ class ProductManagementTest extends FacadeTestAbstract
             ->setIdEntity($idProductAbstract);
         $expectedResult = (new StoreRelationTransfer())
             ->setIdEntity($idProductAbstract)
-            ->setIdStores($relatedStores);
+            ->setIdStores($relatedStores)
+            ->setStores(new ArrayObject());
 
         $this->productFacade->saveProductAbstractStoreRelation($expectedResult);
 
@@ -147,6 +149,8 @@ class ProductManagementTest extends FacadeTestAbstract
             ->getProductAbstractStoreRelation($productAbstractRelationRequest);
 
         // Assert
+        $actualResult->setStores(new ArrayObject());
+
         $this->assertEquals($expectedResult, $actualResult);
     }
 
