@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Shared\CmsPageSearch\CmsPageSearchConstants;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\CmsCollector\Persistence\Collector\AbstractCmsVersionPageCollector;
-use Spryker\Zed\CmsCollector\Persistence\Collector\Search\Propel\CmsVersionPageCollectorQuery;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 use Spryker\Zed\Search\Dependency\Plugin\namedPageMapInterface;
 
@@ -22,7 +20,12 @@ use Spryker\Zed\Search\Dependency\Plugin\namedPageMapInterface;
  */
 class CmsDataPageMapBuilder implements NamedPageMapInterface
 {
-
+    const COL_URL = 'url';
+    const COL_IS_ACTIVE = 'is_active';
+    const COL_DATA = 'data';
+    const COL_VALID_FROM = 'valid_from';
+    const COL_VALID_TO = 'valid_to';
+    const COL_IS_SEARCHABLE = 'is_searchable';
     const TYPE_CMS_PAGE = 'cms_page';
     const TYPE = 'type';
     const ID_CMS_PAGE = 'id_cms_page';
@@ -51,7 +54,7 @@ class CmsDataPageMapBuilder implements NamedPageMapInterface
             ->addSearchResultData($pageMapTransfer, static::ID_CMS_PAGE, $cmsPageData['id_cms_page'])
             ->addSearchResultData($pageMapTransfer, static::NAME, $cmsPageData['name'])
             ->addSearchResultData($pageMapTransfer, static::TYPE, static::TYPE_CMS_PAGE)
-            ->addSearchResultData($pageMapTransfer, CmsVersionPageCollectorQuery::COL_URL, $cmsPageData[CmsVersionPageCollectorQuery::COL_URL])
+            ->addSearchResultData($pageMapTransfer, static::COL_URL, $cmsPageData[static::COL_URL])
             ->addFullTextBoosted($pageMapTransfer, $cmsPageData['name'])
             ->addFullText($pageMapTransfer, $cmsPageData['meta_title'])
             ->addFullText($pageMapTransfer, $cmsPageData['meta_keywords'])
@@ -71,15 +74,15 @@ class CmsDataPageMapBuilder implements NamedPageMapInterface
      */
     protected function setActiveInDateRange(array $cmsPageData, PageMapTransfer $pageMapTransfer)
     {
-        if ($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_FROM]) {
+        if ($cmsPageData[static::COL_VALID_FROM]) {
             $pageMapTransfer->setActiveFrom(
-                (new DateTime($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_FROM]))->format('Y-m-d')
+                (new DateTime($cmsPageData[static::COL_VALID_FROM]))->format('Y-m-d')
             );
         }
 
-        if ($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_TO]) {
+        if ($cmsPageData[static::COL_VALID_TO]) {
             $pageMapTransfer->setActiveTo(
-                (new DateTime($cmsPageData[AbstractCmsVersionPageCollector::COL_VALID_TO]))->format('Y-m-d')
+                (new DateTime($cmsPageData[static::COL_VALID_TO]))->format('Y-m-d')
             );
         }
     }

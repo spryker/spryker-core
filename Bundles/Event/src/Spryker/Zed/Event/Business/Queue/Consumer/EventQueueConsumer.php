@@ -17,6 +17,9 @@ use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
 
 class EventQueueConsumer implements EventQueueConsumerInterface
 {
+
+    const EVENT_TRANSFERS = 'eventTransfers';
+    const EVENT_MESSAGES = 'eventMessages';
     /**
      * @var \Spryker\Zed\Event\Business\Logger\EventLoggerInterface
      */
@@ -54,17 +57,18 @@ class EventQueueConsumer implements EventQueueConsumerInterface
             );
 
             if (!$this->isMessageBodyValid($eventQueueSentMessageBodyTransfer)) {
-                $this->markMessageAsFailed($queueMessageTransfer);
+                $this->markMessageAsFailed($queueMessageTransfer, 'Message body is not valid');
                 continue;
             }
 
             try {
-                $events = $this->mapEventTransfer($eventQueueSentMessageBodyTransfer);
-                $bulkListener[$eventQueueSentMessageBodyTransfer->getListenerClassName()][$eventQueueSentMessageBodyTransfer->getEventName()][] = $events;
+                $eventTransfer = $this->mapEventTransfer($eventQueueSentMessageBodyTransfer);
+                $bulkListener[$eventQueueSentMessageBodyTransfer->getListenerClassName()][$eventQueueSentMessageBodyTransfer->getEventName()][static::EVENT_TRANSFERS][] = $eventTransfer;
+                $bulkListener[$eventQueueSentMessageBodyTransfer->getListenerClassName()][$eventQueueSentMessageBodyTransfer->getEventName()][static::EVENT_MESSAGES][] = $queueMessageTransfer;
 
                 $listener = $this->createEventListener($eventQueueSentMessageBodyTransfer->getListenerClassName());
                 if ($listener instanceof EventHandlerInterface) {
-                    $listener->handle($events, $eventQueueSentMessageBodyTransfer->getEventName());
+                    $listener->handle($eventTransfer, $eventQueueSentMessageBodyTransfer->getEventName());
                 }
 
                 $this->logConsumerAction(
@@ -77,55 +81,52 @@ class EventQueueConsumer implements EventQueueConsumerInterface
 
                 $queueMessageTransfer->setAcknowledge(true);
             } catch (Exception $exception) {
-                $this->logConsumerAction(
-                    sprintf(
-                        'Failed to handle "%s" for listener "%s". Exception: "%s", "%s".',
-                        $eventQueueSentMessageBodyTransfer->getEventName(),
-                        $eventQueueSentMessageBodyTransfer->getListenerClassName(),
-                        $exception->getMessage(),
-                        $exception->getTraceAsString()
-                    )
+                $errorMessage = sprintf(
+                    'Failed to handle "%s" for listener "%s". Exception: "%s", "%s".',
+                    $eventQueueSentMessageBodyTransfer->getEventName(),
+                    $eventQueueSentMessageBodyTransfer->getListenerClassName(),
+                    $exception->getMessage(),
+                    $exception->getTraceAsString()
                 );
-                $this->markMessageAsFailed($queueMessageTransfer);
+                $this->logConsumerAction($errorMessage);
+                $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
             }
         }
 
-        foreach ($bulkListener as $listenerClassName => $events) {
-            $this->handleBulk($queueMessageTransfers, $events, $listenerClassName);
+        foreach ($bulkListener as $listenerClassName => $eventItems) {
+            $this->handleBulk($eventItems, $listenerClassName);
         }
 
         return $queueMessageTransfers;
     }
 
     /**
-     * @param array $queueMessageTransfers
-     * @param array $events
+     * @param array $eventItems
      * @param string $listenerClassName
      *
      * @return void
      */
-    protected function handleBulk(array $queueMessageTransfers, array $events, $listenerClassName)
+    protected function handleBulk(array $eventItems, $listenerClassName)
     {
         $listener = $this->createEventListener($listenerClassName);
         if (!($listener instanceof EventBulkHandlerInterface)) {
             return;
         }
 
-        foreach ($events as $eventName => $eventTransfers) {
+        foreach ($eventItems as $eventName => $eventItem) {
             try {
-                $listener->handleBulk($eventTransfers, $eventName);
-            } catch (Exception $exception) {
-                $this->logConsumerAction(
-                    sprintf(
-                        'Failed to handle "%s" for listener "%s". Exception: "%s", "%s".',
-                        $eventName,
-                        $listenerClassName,
-                        $exception->getMessage(),
-                        $exception->getTraceAsString()
-                    )
+                $listener->handleBulk($eventItem[static::EVENT_TRANSFERS], $eventName);
+            } catch (\Throwable $throwable) {
+                $errorMessage = sprintf(
+                    'Failed to handle "%s" for listener "%s". Exception: "%s", "%s".',
+                    $eventName,
+                    $listenerClassName,
+                    $throwable->getMessage(),
+                    $throwable->getTraceAsString()
                 );
-                foreach ($queueMessageTransfers as $queueMessageTransfer) {
-                    $this->markMessageAsFailed($queueMessageTransfer);
+                $this->logConsumerAction($errorMessage);
+                foreach ($eventItem[static::EVENT_MESSAGES] as $queueMessageTransfer) {
+                    $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
                 }
             }
         }
@@ -220,14 +221,29 @@ class EventQueueConsumer implements EventQueueConsumerInterface
 
     /**
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
+     * @param string $errorMessage
      *
      * @return void
      */
-    protected function markMessageAsFailed(QueueReceiveMessageTransfer $queueMessageTransfer)
+    protected function markMessageAsFailed(QueueReceiveMessageTransfer $queueMessageTransfer, $errorMessage = '')
     {
+        $this->setMessageError($queueMessageTransfer, $errorMessage);
         $queueMessageTransfer->setAcknowledge(false);
         $queueMessageTransfer->setReject(true);
         $queueMessageTransfer->setHasError(true);
+    }
+
+    /**
+     * @param QueueReceiveMessageTransfer $queueMessageTransfer
+     * @param string $errorMessage
+     *
+     * @return void
+     */
+    protected function setMessageError(QueueReceiveMessageTransfer $queueMessageTransfer, $errorMessage = '')
+    {
+        $queueMessageBody = $this->utilEncodingService->decodeJson($queueMessageTransfer->getQueueMessage()->getBody(), true);
+        $queueMessageBody['errorMessage'] = $errorMessage;
+        $queueMessageTransfer->getQueueMessage()->setBody($this->utilEncodingService->encodeJson($queueMessageBody));
     }
 
     /**
