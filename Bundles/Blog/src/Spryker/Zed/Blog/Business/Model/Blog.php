@@ -32,7 +32,7 @@ class Blog
      */
     public function save(BlogTransfer $blogTransfer)
     {
-        return $this->blogRepository->persistBlog($blogTransfer);
+        return $this->blogRepository->saveBlog($blogTransfer);
 
     }
 
@@ -54,6 +54,15 @@ class Blog
     public function filterBlogPosts(BlogCriteriaFilterTransfer $blogCriteriaFilterTransfer)
     {
         return $this->blogRepository->filterBlogPosts($blogCriteriaFilterTransfer);
+    }
+
+
+    /**
+     * @param $id
+     */
+    public function removeBlogById($id)
+    {
+        $this->blogRepository->removeBlogById($id);
     }
 
 }

@@ -57,13 +57,27 @@ class BlogFacadeTest extends Unit
 
         $blogCriteriaFilterTransfer = (new BlogCriteriaFilterTransfer())
             ->setName('Blog name')
-            ->setOffset(0)
+            ->setOffset(2)
             ->setLimit(2);
 
         $blogCollection = $this->createBlogFacade()->filterBlogPosts($blogCriteriaFilterTransfer);
 
         $this->assertCount(2, $blogCollection);
 
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveBlogByIdShouldDropExistingBlog()
+    {
+        $blogTransfer = $this->createBlog();
+
+        $this->createBlogFacade()->removeBlogById($blogTransfer->getIdBlog());
+
+        $blogTransfer = $this->createBlogFacade()->findBlogById($blogTransfer->getIdBlog());
+
+        $this->assertNull($blogTransfer);
     }
 
     /**

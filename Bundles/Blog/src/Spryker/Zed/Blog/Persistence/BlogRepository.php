@@ -9,6 +9,7 @@ namespace Spryker\Zed\Blog\Persistence;
 use Generated\Shared\Transfer\BlogCommentTransfer;
 use Generated\Shared\Transfer\BlogCriteriaFilterTransfer;
 use Generated\Shared\Transfer\BlogTransfer;
+use Orm\Zed\Blog\Persistence\Map\SpyBlogTableMap;
 use Orm\Zed\Blog\Persistence\SpyBlog;
 use Orm\Zed\Blog\Persistence\SpyBlogComment;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -112,11 +113,13 @@ class BlogRepository extends AbstractRepository implements BlogRepositoryInterfa
      *
      * @return \Generated\Shared\Transfer\BlogTransfer
      */
-    public function persistBlog(BlogTransfer $blogTransfer)
+    public function saveBlog(BlogTransfer $blogTransfer)
     {
         $blogTransfer->requireName()->requireText();
 
         return $this->handleDatabaseTransaction(function () use ($blogTransfer) {
+
+            $this->getFactory()->createBlogPluginExecutor()->executeBlogPreSavePlugins($blogTransfer);
 
             $blogEntity = $this->getFactory()
                 ->createBlogMapper()
@@ -127,11 +130,13 @@ class BlogRepository extends AbstractRepository implements BlogRepositoryInterfa
             if (count($blogTransfer->getComments()) > 0) {
                 foreach ($blogTransfer->getComments() as $commentTransfer) {
                     $commentTransfer->setFkBlog($blogEntity->getPrimaryKey());
-                    $this->persistBlogComment($commentTransfer);
+                    $this->saveBlogComment($commentTransfer);
                 }
             }
 
             $blogTransfer->setIdBlog($blogEntity->getPrimaryKey());
+
+            $this->getFactory()->createBlogPluginExecutor()->executeBlogPostSavePlugins($blogTransfer);
 
             return $blogTransfer;
         });
@@ -142,7 +147,7 @@ class BlogRepository extends AbstractRepository implements BlogRepositoryInterfa
      *
      * @return \Generated\Shared\Transfer\BlogCommentTransfer
      */
-    public function persistBlogComment(BlogCommentTransfer $blogCommentTransfer)
+    public function saveBlogComment(BlogCommentTransfer $blogCommentTransfer)
     {
         $blogCommentTransfer->requireMessage()->requireAuthor();
 
@@ -155,5 +160,23 @@ class BlogRepository extends AbstractRepository implements BlogRepositoryInterfa
         $blogCommentTransfer->setIdComment($blogCommentEntity->getPrimaryKey());
 
         return $blogCommentTransfer;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return void
+     */
+    public function removeBlogById($id)
+    {
+        $this->handleDatabaseTransaction(function () use ($id) {
+            $this->getFactory()->createBlogCommentQuery()
+                ->filterByFkBlog($id)
+                ->delete();
+
+            $this->getFactory()->createBlogQuery()
+                ->filterByIdBlog($id)
+                ->delete();
+        });
     }
 }

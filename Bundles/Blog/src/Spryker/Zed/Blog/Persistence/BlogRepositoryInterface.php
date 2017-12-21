@@ -24,14 +24,14 @@ interface BlogRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\BlogTransfer
      */
-    public function persistBlog(BlogTransfer $blogTransfer);
+    public function saveBlog(BlogTransfer $blogTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\BlogCommentTransfer $blogCommentTransfer
      *
      * @return \Generated\Shared\Transfer\BlogCommentTransfer
      */
-    public function persistBlogComment(BlogCommentTransfer $blogCommentTransfer);
+    public function saveBlogComment(BlogCommentTransfer $blogCommentTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\BlogCriteriaFilterTransfer $blogCriteriaFilterTransfer
@@ -39,4 +39,11 @@ interface BlogRepositoryInterface
      * @return \Generated\Shared\Transfer\BlogCriteriaFilterTransfer[]
      */
     public function filterBlogPosts(BlogCriteriaFilterTransfer $blogCriteriaFilterTransfer);
+
+    /**
+     * @param int $id
+     *
+     * @return void
+     */
+    public function removeBlogById($id);
 }

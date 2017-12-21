@@ -6,10 +6,13 @@
 
 namespace Spryker\Zed\Blog\Persistence;
 
+use Orm\Zed\Blog\Persistence\SpyBlogCommentQuery;
 use Orm\Zed\Blog\Persistence\SpyBlogQuery;
+use Spryker\Zed\Blog\Persistence\Plugins\BlogPluginExecutor;
 use Spryker\Zed\Blog\Persistence\Propel\Mapper\BlogMapper;
 use Spryker\Zed\Blog\Persistence\Propel\Mapper\CommentMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Blog\BlogDependencyProvider;
 
 class BlogPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -19,6 +22,14 @@ class BlogPersistenceFactory extends AbstractPersistenceFactory
     public function createBlogQuery()
     {
         return SpyBlogQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Blog\Persistence\SpyBlogCommentQuery
+     */
+    public function createBlogCommentQuery()
+    {
+        return SpyBlogCommentQuery::create();
     }
 
     /**
@@ -35,5 +46,29 @@ class BlogPersistenceFactory extends AbstractPersistenceFactory
     public function createCommentMapper()
     {
         return new CommentMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Blog\Persistence\Plugins\BlogPluginExecutorInterface
+     */
+    public function createBlogPluginExecutor()
+    {
+        return new BlogPluginExecutor($this->getBlogPreSavePlugins(), $this->getBlogPostSavePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Blog\Dependency\Plugin\PreSaveBlogPluginInterface[]
+     */
+    protected function getBlogPreSavePlugins()
+    {
+        return $this->getProvidedDependency(BlogDependencyProvider::PLUGIN_PRE_SAVE_BLOG);
+    }
+
+    /**
+     * @return \Spryker\Zed\Blog\Dependency\Plugin\PostSaveBlogPluginInterface[]
+     */
+    protected function getBlogPostSavePlugins()
+    {
+        return $this->getProvidedDependency(BlogDependencyProvider::PLUGIN_POST_SAVE_BLOG);
     }
 }

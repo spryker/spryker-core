@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Blog\Business\BlogBusinessFactory getFactory()
+ * @method \Spryker\Zed\Blog\Persistence\BlogRepositoryInterface getRepository()
  */
 class BlogFacade extends AbstractFacade
 {
@@ -24,6 +25,9 @@ class BlogFacade extends AbstractFacade
      */
     public function save(BlogTransfer $blogTransfer)
     {
+        //Using repository directly
+        //$this->getRepository()->saveBlog($blogTransfer);
+
         return $this->getFactory()
             ->createBlog()
             ->save($blogTransfer);
@@ -55,6 +59,20 @@ class BlogFacade extends AbstractFacade
         return $this->getFactory()
             ->createBlog()
             ->filterBlogPosts($blogCriteriaFilterTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $id
+     *
+     * @return void
+     */
+    public function removeBlogById($id)
+    {
+        $this->getFactory()
+            ->createBlog()
+            ->removeBlogById($id);
     }
 
 }
