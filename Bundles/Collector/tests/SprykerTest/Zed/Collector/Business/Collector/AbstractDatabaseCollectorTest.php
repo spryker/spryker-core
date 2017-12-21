@@ -115,6 +115,7 @@ class AbstractDatabaseCollectorTest extends Unit
      */
     public function testA()
     {
+        // TODO: add tests
         $this->sut->exportDataToStore(
             new ArrayBatchIterator([]),
             $this->touchUpdaterMock,
