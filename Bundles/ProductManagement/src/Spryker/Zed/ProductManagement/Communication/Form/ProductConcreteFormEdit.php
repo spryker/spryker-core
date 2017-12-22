@@ -193,11 +193,11 @@ class ProductConcreteFormEdit extends ProductFormAdd
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm
+     * @return string
      */
     protected function createGeneralForm()
     {
-        return new ConcreteGeneralForm();
+        return ConcreteGeneralForm::class;
     }
 
     /**

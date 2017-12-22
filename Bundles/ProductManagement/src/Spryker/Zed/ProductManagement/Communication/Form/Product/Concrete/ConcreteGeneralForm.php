@@ -20,6 +20,10 @@ class ConcreteGeneralForm extends GeneralForm
 {
     const FIELD_IS_SEARCHABLE = 'is_searchable';
 
+    public function __construct()
+    {
+    }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options

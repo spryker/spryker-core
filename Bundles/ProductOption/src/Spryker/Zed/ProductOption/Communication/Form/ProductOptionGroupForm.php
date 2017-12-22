@@ -10,6 +10,7 @@ use ArrayObject;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueGroupName;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -179,7 +180,7 @@ class ProductOptionGroupForm extends AbstractType
     {
         $builder->add(
             self::FIELD_TAX_SET_FIELD,
-            'choice',
+            ChoiceType::class,
             [
                 'label' => 'Tax set',
                 'choices' => $options[self::OPTION_TAX_SETS],

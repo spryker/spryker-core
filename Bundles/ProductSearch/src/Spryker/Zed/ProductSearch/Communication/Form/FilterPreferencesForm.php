@@ -152,7 +152,7 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
     {
         $builder->add(self::FIELD_TRANSLATIONS, CollectionType::class, [
             'entry_type' => AttributeTranslationForm::class,
-            'options' => $options[self::OPTION_ATTRIBUTE_TRANSLATION_COLLECTION_OPTIONS],
+            'entry_options' => $options[self::OPTION_ATTRIBUTE_TRANSLATION_COLLECTION_OPTIONS],
         ]);
 
         return $this;
