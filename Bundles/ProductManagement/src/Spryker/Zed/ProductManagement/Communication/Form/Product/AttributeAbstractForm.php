@@ -21,6 +21,10 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
+ */
 class AttributeAbstractForm extends AbstractSubForm
 {
     const FIELD_NAME = 'name';
@@ -35,24 +39,9 @@ class AttributeAbstractForm extends AbstractSubForm
     const VALIDATION_GROUP_ATTRIBUTE_VALUE = 'validation_group_attribute_value';
 
     /**
-     * @var array
-     */
-    protected $attributeValues;
-
-    /**
-     * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface
-     */
-    protected $productManagementQueryContainer;
-
-    /**
      * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $localeTransfer;
-
-    /**
-     * @var \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider
-     */
-    protected $localeProvider;
 
     /**
      * @param string $name
@@ -216,7 +205,8 @@ class AttributeAbstractForm extends AbstractSubForm
                 $input = Select2ComboBoxType::class;
                 $config['multiple'] = false;
                 $config['placeholder'] = '-';
-                $config['choices'] = $this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale);
+                $config['choices'] = array_flip($this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale));
+                $config['choices_as_values'] = true;
 
                 if ($allowInput) {
                     $config['attr']['tags'] = true;

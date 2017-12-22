@@ -55,7 +55,9 @@ class AttributeSuperForm extends AttributeAbstractForm
         $input = Select2ComboBoxType::class;
         $config['multiple'] = true;
         $config['placeholder'] = '-';
-        $config['choices'] = $this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale);
+        $config['choices'] = array_flip($this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale));
+        $config['choices_as_values'] = true;
+
         $config['attr']['tags'] = false;
 
         if ($isDisabled) {
