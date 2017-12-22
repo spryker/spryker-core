@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface;
+use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface as ObsoleteCheckoutSaveOrderInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -39,7 +40,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     protected $postSaveHookStack;
 
     /**
-     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface[]
+     * @var \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface[]|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface[]
      */
     protected $preSaveStack;
 
@@ -48,7 +49,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface[] $preConditionStack
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface[]|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $saveOrderStack
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface[] $postSaveHookStack
-     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface[] $preSave
+     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface[]|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface[] $preSave
      */
     public function __construct(
         CheckoutToOmsFacadeInterface $omsFacade,
@@ -77,7 +78,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
             return $checkoutResponseTransfer;
         }
 
-        $quoteTransfer = $this->doPreSave($quoteTransfer);
+        $quoteTransfer = $this->doPreSave($quoteTransfer, $checkoutResponseTransfer);
         $quoteTransfer = $this->doSaveOrder($quoteTransfer, $checkoutResponseTransfer);
 
         $this->runStateMachine($checkoutResponseTransfer->getSaveOrder());
@@ -177,13 +178,18 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function doPreSave(QuoteTransfer $quoteTransfer)
+    protected function doPreSave(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         foreach ($this->preSaveStack as $preSavePlugin) {
-            $quoteTransfer = $preSavePlugin->preSave($quoteTransfer);
+            if ($preSavePlugin instanceof CheckoutPreSaveHookInterface) {
+                $quoteTransfer = $preSavePlugin->preSave($quoteTransfer, $checkoutResponseTransfer);
+            } else {
+                $quoteTransfer = $preSavePlugin->preSave($quoteTransfer);
+            }
         }
 
         return $quoteTransfer;
