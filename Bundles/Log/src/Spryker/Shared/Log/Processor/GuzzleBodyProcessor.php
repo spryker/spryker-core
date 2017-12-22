@@ -5,12 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Application\Log\Processor;
+namespace Spryker\Shared\Log\Processor;
 
-use Spryker\Service\UtilEncoding\Model\Json;
 use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 
-class GuzzleBodyProcessor
+class GuzzleBodyProcessor implements ProcessorInterface
 {
     const EXTRA = 'guzzle-body';
     const RECORD_CONTEXT = 'context';
@@ -47,15 +46,14 @@ class GuzzleBodyProcessor
     }
 
     /**
-     * @param string|array $body
+     * @param string $body
      *
      * @return array
      */
     protected function prepareBody($body)
     {
         if ($this->isJson($body)) {
-            $jsonUtil = new Json();
-            $body = $jsonUtil->decode($body, true);
+            $body = json_decode($body, true);
         }
 
         if (is_array($body)) {

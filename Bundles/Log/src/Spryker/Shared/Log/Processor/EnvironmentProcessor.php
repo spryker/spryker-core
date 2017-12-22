@@ -5,14 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Application\Log\Processor;
+namespace Spryker\Shared\Log\Processor;
 
 use Spryker\Shared\Kernel\Store;
 
-/**
- * @deprecated Use `EnvironmentProcessor` of Log module instead.
- */
-class EnvironmentProcessor
+class EnvironmentProcessor implements ProcessorInterface
 {
     const EXTRA = 'environment';
 

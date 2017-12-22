@@ -5,12 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Application\Log\Processor;
+namespace Spryker\Shared\Log\Processor;
 
-/**
- * @deprecated Use `ResponseProcessorPlugin` from Log module instead.
- */
-class ResponseProcessor
+class ResponseProcessor implements ProcessorInterface
 {
     const EXTRA = 'response';
     const CONTEXT_KEY = 'response';

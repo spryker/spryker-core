@@ -5,16 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Application\Log\Processor;
+namespace Spryker\Shared\Log\Processor;
 
 use Spryker\Service\UtilNetwork\UtilNetworkService;
 use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @deprecated Use `RequestProcessorPlugin` from Log module instead.
- */
-class RequestProcessor
+class RequestProcessor implements ProcessorInterface
 {
     const EXTRA = 'request';
     const CONTEXT_KEY = 'request';
@@ -49,10 +46,10 @@ class RequestProcessor
      */
     public function __invoke(array $record)
     {
-        $record[self::RECORD_EXTRA][static::EXTRA] = $this->getData($record);
+        $record[static::RECORD_EXTRA][static::EXTRA] = $this->getData($record);
 
-        if (isset($record[self::RECORD_CONTEXT][static::CONTEXT_KEY])) {
-            unset($record[self::RECORD_CONTEXT][static::CONTEXT_KEY]);
+        if (isset($record[static::RECORD_CONTEXT][static::CONTEXT_KEY])) {
+            unset($record[static::RECORD_CONTEXT][static::CONTEXT_KEY]);
         }
 
         return $record;
@@ -72,15 +69,10 @@ class RequestProcessor
             static::REQUEST_PARAMS => $this->getRequestParams(),
         ];
 
-        $request = $this->findRequest((array)$record[self::RECORD_CONTEXT]);
+        $request = $this->findRequest((array)$record[static::RECORD_CONTEXT]);
         if ($request && $request->getSession() !== null) {
-            $sessionId = $request->getSession()->getId();
-            $fields[static::SESSION_ID] = $sessionId;
-
-            $userTransfer = $this->findUser($request);
-            if ($userTransfer) {
-                $fields[static::USERNAME] = $userTransfer->getUsername();
-            }
+            $this->addSessionId($request, $fields);
+            $this->addUsername($request, $fields);
         }
 
         return $fields;
@@ -91,7 +83,13 @@ class RequestProcessor
      */
     protected function getRequestParams()
     {
-        return $this->sanitizer->sanitize($_REQUEST);
+        $request = Request::createFromGlobals();
+        $all = array_merge(
+            $request->request->all(),
+            $request->query->all()
+        );
+
+        return $this->sanitizer->sanitize($all);
     }
 
     /**
@@ -105,7 +103,7 @@ class RequestProcessor
     /**
      * @param array $context
      *
-     * @return bool|\Symfony\Component\HttpFoundation\Request|null
+     * @return \Symfony\Component\HttpFoundation\Request|null
      */
     protected function findRequest(array $context)
     {
@@ -124,5 +122,35 @@ class RequestProcessor
     protected function findUser(Request $request)
     {
         return $request->getSession()->get(static::SESSION_KEY_USER);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param array $fields
+     *
+     * @return array
+     */
+    protected function addSessionId(Request $request, array $fields)
+    {
+        $sessionId = $request->getSession()->getId();
+        $fields[static::SESSION_ID] = $sessionId;
+
+        return $fields;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param array $fields
+     *
+     * @return array
+     */
+    protected function addUsername(Request $request, array $fields)
+    {
+        $userTransfer = $this->findUser($request);
+        if ($userTransfer) {
+            $fields[static::USERNAME] = $userTransfer->getUsername();
+        }
+
+        return $fields;
     }
 }

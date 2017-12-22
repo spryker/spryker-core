@@ -5,33 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Application\Log\Processor;
+namespace Spryker\Zed\Propel\Communication\Plugin\Log;
 
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
-use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
+use Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use `EntityProcessorPlugin` from Propel module instead.
+ * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
+ * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  */
-class EntitySanitizerProcessor
+class EntityProcessorPlugin extends AbstractPlugin implements LogProcessorPluginInterface
 {
     const EXTRA = 'entity';
     const CONTEXT_KEY = 'entity';
     const RECORD_CONTEXT = 'context';
     const RECORD_EXTRA = 'extra';
-
-    /**
-     * @var \Spryker\Shared\Log\Sanitizer\SanitizerInterface
-     */
-    protected $sanitizer;
-
-    /**
-     * @param \Spryker\Shared\Log\Sanitizer\SanitizerInterface $sanitizer
-     */
-    public function __construct(SanitizerInterface $sanitizer)
-    {
-        $this->sanitizer = $sanitizer;
-    }
 
     /**
      * @param array $record
@@ -47,7 +36,7 @@ class EntitySanitizerProcessor
 
         $contextData = $entity->toArray();
         $contextData['class'] = get_class($entity);
-        $sanitizedData = $this->sanitizer->sanitize($contextData);
+        $sanitizedData = $this->getFactory()->getLogFacade()->sanitize($contextData);
 
         $record[static::RECORD_EXTRA][static::EXTRA] = $sanitizedData;
 
@@ -64,6 +53,7 @@ class EntitySanitizerProcessor
         if (!empty($context[static::CONTEXT_KEY])) {
             return $context[static::CONTEXT_KEY];
         }
+
         if (current($context) instanceof ActiveRecordInterface) {
             return current($context);
         }
