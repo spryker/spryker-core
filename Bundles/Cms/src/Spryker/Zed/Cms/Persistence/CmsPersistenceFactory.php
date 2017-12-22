@@ -15,7 +15,6 @@ use Orm\Zed\Cms\Persistence\SpyCmsVersionQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\Cms\CmsConfig getConfig()

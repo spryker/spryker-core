@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CmsNavigationConnector\Business;
 
 use Spryker\Zed\CmsNavigationConnector\Business\Model\NavigationNodeReader;
@@ -7,6 +12,9 @@ use Spryker\Zed\CmsNavigationConnector\Business\Model\NavigationNodesIsActiveUpd
 use Spryker\Zed\CmsNavigationConnector\CmsNavigationConnectorDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
+/**
+ * @method \Spryker\Zed\CmsNavigationConnector\CmsNavigationConnectorConfig getConfig()
+ */
 class CmsNavigationConnectorBusinessFactory extends AbstractBusinessFactory
 {
     /**

@@ -8,7 +8,6 @@ namespace Spryker\Zed\Cms\Business\Page;
 
 use Exception;
 use Generated\Shared\Transfer\CmsPageTransfer;
-use Generated\Shared\Transfer\PageTransfer;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Exception\CannotActivatePageException;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
@@ -29,7 +28,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
     protected $touchFacade;
 
     /**
-     * @var
+     * @var \Spryker\Zed\Cms\Communication\Plugin\PostCmsPageActivatorPluginInterface[]
      */
     protected $postCmsPageActivatorPlugins;
 
@@ -76,8 +75,8 @@ class CmsPageActivator implements CmsPageActivatorInterface
             throw $exception;
         }
 
-        $pageTransfer = (new PageTransfer())->fromArray($cmsPageEntity->toArray(), true);
-        $this->runPostActivatorPlugins($pageTransfer);
+        $cmsPageTransfer = (new CmsPageTransfer())->fromArray($cmsPageEntity->toArray(), true);
+        $this->runPostActivatorPlugins($cmsPageTransfer);
     }
 
     /**
@@ -127,8 +126,8 @@ class CmsPageActivator implements CmsPageActivatorInterface
             throw $exception;
         }
 
-        $pageTransfer = (new PageTransfer())->fromArray($cmsPageEntity->toArray(), true);
-        $this->runPostActivatorPlugins($pageTransfer);
+        $cmsPageTransfer = (new CmsPageTransfer())->fromArray($cmsPageEntity->toArray(), true);
+        $this->runPostActivatorPlugins($cmsPageTransfer);
     }
 
     /**
@@ -166,12 +165,14 @@ class CmsPageActivator implements CmsPageActivatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     *
+     * @return void
      */
-    protected function runPostActivatorPlugins(PageTransfer $pageTransfer)
+    protected function runPostActivatorPlugins(CmsPageTransfer $cmsPageTransfer)
     {
-        foreach($this->postCmsPageActivatorPlugins as $postCmsPageActivatorPlugin) {
-            $postCmsPageActivatorPlugin->execute($pageTransfer);
+        foreach ($this->postCmsPageActivatorPlugins as $postCmsPageActivatorPlugin) {
+            $postCmsPageActivatorPlugin->execute($cmsPageTransfer);
         }
     }
 }

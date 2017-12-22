@@ -93,7 +93,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::PLUGINS_CMS_PAGE_POST_ACTIVATOR] = function (Container $container) {
-            return $this->getCmsPagePostActivatorPlugins($container);
+            return $this->getCmsPagePostActivatorPlugins();
         };
 
         $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {

@@ -1,44 +1,44 @@
 <?php
 
-namespace SprykerTest\Zed\CategoryNavigationConnector\Business;
+namespace SprykerTest\Zed\CmsNavigationConnector\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\CmsPageAttributesTransfer;
+use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
-use Generated\Shared\Transfer\NodeTransfer;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group CategoryNavigationConnector
+ * @group CmsNavigationConnector
  * @group Business
  * @group Facade
- * @group CategoryNavigationConnectorFacadeTest
+ * @group CmsNavigationConnectorFacadeTest
  * Add your own group annotations below this line
  */
-class CategoryNavigationConnectorFacadeTest extends Unit
+class CmsNavigationConnectorFacadeTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\CategoryNavigationConnector\CategoryNavigationConnectorBusinessTester
+     * @var \SprykerTest\Zed\CmsNavigationConnector\CmsNavigationConnectorBusinessTester
      */
     protected $tester;
 
     /**
      * @return void
      */
-    public function testSetNavigationNodeToActiveWhenCategoryIsActive()
+    public function testSetNavigationNodeToActiveWhenCmsIsActive()
     {
-        $this->setUpNavigationNodeCategoryTest(true);
+        $this->setUpNavigationNodeCmsTest(true);
     }
 
     /**
      * @return void
      */
-    public function testSetNavigationNodeToInactiveWhenCategoryIsInactive()
+    public function testSetNavigationNodeToInactiveWhenCmsIsInactive()
     {
-        $this->setUpNavigationNodeCategoryTest(false);
+        $this->setUpNavigationNodeCmsTest(false);
     }
 
     /**
@@ -46,16 +46,16 @@ class CategoryNavigationConnectorFacadeTest extends Unit
      *
      * @return void
      */
-    protected function setUpNavigationNodeCategoryTest($isActive)
+    protected function setUpNavigationNodeCmsTest($isActive)
     {
         // Arrange
         $locale = $this->tester->haveLocale();
-        $category = $this->tester->haveLocalizedCategory([ 'locale' => $locale, CategoryTransfer::CATEGORY_NODE => [ NodeTransfer::IS_ROOT => false ], CategoryTransfer::IS_ACTIVE => $isActive ]);
+        $cmsPage = $this->tester->haveCmsPage([CmsPageTransfer::IS_ACTIVE => $isActive, CmsPageTransfer::FK_TEMPLATE => 1, CmsPageAttributesTransfer::FK_LOCALE => $locale->getIdLocale(), CmsPageAttributesTransfer::LOCALE_NAME => $locale->getLocaleName()]);
         $navigation = $this->tester->haveNavigation();
 
         /** @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface $urlQueryContainer */
         $urlQueryContainer = $this->tester->getLocator()->url()->queryContainer();
-        $urls = $urlQueryContainer->queryUrls()->filterByFkResourceCategorynode($category->getCategoryNode()->getIdCategoryNode())->find();
+        $urls = $urlQueryContainer->queryUrls()->filterByFkResourcePage($cmsPage->getFkPage())->find();
 
         $navigationNodes = [];
 
@@ -69,7 +69,7 @@ class CategoryNavigationConnectorFacadeTest extends Unit
         }
 
         // Act
-        $this->tester->getFacade()->updateCategoryNavigationNodesIsActive($category);
+        $this->tester->getFacade()->updateCmsPageNavigationNodesIsActive($cmsPage);
 
         // Assert
 
