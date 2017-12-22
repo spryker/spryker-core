@@ -12,15 +12,41 @@ interface CmsBlockStorageClientInterface
 
     /**
      * Specification:
-     * - Returns cms block data from the storage with the given
-     * block name
+     * - Find blocks by provided array of names with a single multi request to a storage
      *
      * @api
      *
-     * @param string $blockKey
+     * @param string[] $blockNames
+     * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\SpyCmsBlockTransfer
+     * @return array
      */
-    public function getBlockByKey($blockKey);
+    public function findBlocksByNames($blockNames, $localeName);
+
+    /**
+     * Specification:
+     * - Find blocs by required options
+     * - Return only block names which fit to all provided options
+     *
+     * @api
+     *
+     * @param array $options
+     * @param string $localName
+     *
+     * @return array
+     */
+    public function findBlockNamesByOptions(array $options, $localName);
+
+    /**
+     * Specification:
+     * - Prepare a valid block key by provided name
+     *
+     * @api
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public function generateBlockNameKey($name);
 
 }

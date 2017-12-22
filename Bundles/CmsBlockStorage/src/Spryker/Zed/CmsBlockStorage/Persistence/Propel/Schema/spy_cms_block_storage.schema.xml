@@ -7,7 +7,7 @@
         <column name="name" type="VARCHAR" required="true"/>
         <id-method-parameter value="spy_cms_block_storage_pk_seq"/>
         <behavior name="synchronization">
-            <parameter name="resource" value="cms-block"/>
+            <parameter name="resource" value="cms_block"/>
             <parameter name="key_suffix_column" value="name"/>
             <parameter name="queue_group" value="sync.storage.cms"/>
         </behavior>

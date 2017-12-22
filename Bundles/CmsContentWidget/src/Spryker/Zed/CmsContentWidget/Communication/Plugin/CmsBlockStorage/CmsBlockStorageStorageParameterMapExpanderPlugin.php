@@ -29,16 +29,14 @@ class CmsBlockStorageStorageParameterMapExpanderPlugin extends AbstractPlugin im
      */
     public function expand(array $collectedData)
     {
-        $locales = Store::getInstance()->getLocales();
+        //TODO Fix this for all locales
+        $locale = Store::getInstance()->getCurrentLocale();
         $placeholders = $this->gePlaceholders($collectedData);
 
         $cmsBlockData['placeholders'] = $placeholders;
-        foreach ($locales as $locale) {
-            $localeTransfer = (new LocaleTransfer())->setLocaleName($locale);
-            $data[$locale] = $this->getFacade()->expandCmsBlockCollectorData($cmsBlockData, $localeTransfer);
-            $collectedData[CmsContentWidgetConfig::CMS_CONTENT_WIDGET_PARAMETER_MAP][$locale] = $data[$locale][CmsContentWidgetConfig::CMS_CONTENT_WIDGET_PARAMETER_MAP];
-        }
-
+        $localeTransfer = (new LocaleTransfer())->setLocaleName($locale);
+        $data = $this->getFacade()->expandCmsBlockCollectorData($cmsBlockData, $localeTransfer);
+        $collectedData[CmsContentWidgetConfig::CMS_CONTENT_WIDGET_PARAMETER_MAP] = $data[CmsContentWidgetConfig::CMS_CONTENT_WIDGET_PARAMETER_MAP];
 
         return $collectedData;
     }

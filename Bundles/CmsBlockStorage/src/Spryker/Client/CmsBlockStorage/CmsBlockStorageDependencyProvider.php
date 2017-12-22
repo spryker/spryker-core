@@ -9,7 +9,6 @@ namespace Spryker\Client\CmsBlockStorage;
 
 use Spryker\Client\CmsBlockStorage\Dependency\Client\CmsBlockStorageToStorageBridge;
 use Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToSynchronizationServiceBridge;
-use Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilSynchronizationServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -18,7 +17,6 @@ class CmsBlockStorageDependencyProvider extends AbstractDependencyProvider
 
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
-    const SERVICE_UTIL_SYNCHRONIZATION = 'SERVICE_UTIL_SYNCHRONIZATION';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -33,10 +31,6 @@ class CmsBlockStorageDependencyProvider extends AbstractDependencyProvider
 
         $container[self::SERVICE_SYNCHRONIZATION] = function (Container $container) {
             return new CmsBlockStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
-        };
-
-        $container[self::SERVICE_UTIL_SYNCHRONIZATION] = function (Container $container) {
-            return new CmsBlockStorageToUtilSynchronizationServiceBridge($container->getLocator()->utilSynchronization()->service());
         };
 
         return $container;

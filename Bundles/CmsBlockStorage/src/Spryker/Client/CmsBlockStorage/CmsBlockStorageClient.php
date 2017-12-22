@@ -20,15 +20,49 @@ class CmsBlockStorageClient extends AbstractClient implements CmsBlockStorageCli
      *
      * @api
      *
-     * @param string $blockKey
+     * @param string[] $blockNames
+     * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\SpyCmsBlockTransfer
+     * @return array
      */
-    public function getBlockByKey($blockKey)
+    public function findBlocksByNames($blockNames, $localeName)
     {
         return $this->getFactory()
-            ->createCmsBlockKeyValueStorage()
-            ->getBlockByKey($blockKey);
+            ->createCmsBlockStorage()
+            ->getBlocksByNames($blockNames, $localeName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $options
+     * @param string $localName
+     *
+     * @return array
+     */
+    public function findBlockNamesByOptions(array $options, $localName)
+    {
+        return $this->getFactory()
+            ->createCmsBlockStorage()
+            ->getBlockNamesByOptions($options, $localName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public function generateBlockNameKey($name)
+    {
+        return $this->getFactory()
+            ->createCmsBlockStorage()
+            ->generateBlockNameKey($name);
     }
 
 }

@@ -32,6 +32,6 @@ class CmsBlockStorageConstants
      *
      * @api
      */
-    const CMS_BLOCK_RESOURCE_NAME = 'cms-block';
+    const CMS_BLOCK_RESOURCE_NAME = 'cms_block';
 
 }

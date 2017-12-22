@@ -27,13 +27,22 @@ class CmsBlockStorageToStorageBridge implements CmsBlockStorageToStorageInterfac
 
     /**
      * @param string $key
-     * @param string $prefix
      *
      * @return array
      */
-    public function get($key, $prefix = '')
+    public function get($key)
     {
-        return $this->storageClient->get($key, $prefix);
+        return $this->storageClient->get($key);
+    }
+
+    /**
+     * @param array $keys
+     *
+     * @return array
+     */
+    public function getMulti(array $keys)
+    {
+        return $this->storageClient->getMulti($keys);
     }
 
 }

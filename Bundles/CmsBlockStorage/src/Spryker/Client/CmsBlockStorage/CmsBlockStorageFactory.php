@@ -7,18 +7,18 @@
 
 namespace Spryker\Client\CmsBlockStorage;
 
-use Spryker\Client\CmsBlockStorage\Storage\CmsBlockKeyValueStorage;
+use Spryker\Client\CmsBlockStorage\Storage\CmsBlockStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class CmsBlockStorageFactory extends AbstractFactory
 {
 
     /**
-     * @return \Spryker\Client\CmsBlockStorage\Storage\CmsBlockKeyValueStorageInterface
+     * @return \Spryker\Client\CmsBlockStorage\Storage\CmsBlockStorageInterface
      */
-    public function createCmsBlockKeyValueStorage()
+    public function createCmsBlockStorage()
     {
-        return new CmsBlockKeyValueStorage($this->getStorage(), $this->getSynchronizationService(), $this->getUtilSynchronizationService());
+        return new CmsBlockStorage($this->getStorage(), $this->getSynchronizationService());
     }
 
     /**
@@ -35,14 +35,6 @@ class CmsBlockStorageFactory extends AbstractFactory
     protected function getSynchronizationService()
     {
         return $this->getProvidedDependency(CmsBlockStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
-    }
-
-    /**
-     * @return \Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilSynchronizationServiceInterface
-     */
-    protected function getUtilSynchronizationService()
-    {
-        return $this->getProvidedDependency(CmsBlockStorageDependencyProvider::SERVICE_UTIL_SYNCHRONIZATION);
     }
 
 }
