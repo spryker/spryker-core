@@ -183,7 +183,8 @@ class ProductOptionGroupForm extends AbstractType
             ChoiceType::class,
             [
                 'label' => 'Tax set',
-                'choices' => $options[self::OPTION_TAX_SETS],
+                'choices' => array_flip($options[self::OPTION_TAX_SETS]),
+                'choices_as_values' => true,
             ]
         );
 
