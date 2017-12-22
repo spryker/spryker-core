@@ -93,21 +93,38 @@ interface ProductOptionQueryContainerInterface
      * @api
      *
      * @param int $idProductOptionGroup
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup);
+
+    /**
+     * @api
+     *
+     * @param int $idProductOptionGroup
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryActiveProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup);
+
+    /**
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery
+     */
+    public function queryProductOptionValuePricesByIdProductOptionValue($idProductOptionValue);
+
+    /**
+     * @api
+     *
+     * @param int $idProductOptionGroup
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
      */
     public function queryAbstractProductsByOptionGroupId($idProductOptionGroup, LocaleTransfer $localeTransfer);
-
-    /**
-     * @api
-     *
-     * @param string $term
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    public function queryProductsAbstractBySearchTerm($term, LocaleTransfer $localeTransfer);
 
     /**
      * @api
@@ -119,13 +136,6 @@ interface ProductOptionQueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductsAbstractBySearchTermForAssignment($term, $idProductOptionGroup, LocaleTransfer $localeTransfer);
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
-     */
-    public function queryProductOptionGroupWithValues();
 
     /**
      * @api

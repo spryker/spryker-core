@@ -12,12 +12,28 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 interface PriceCartConnectorFacadeInterface
 {
     /**
+     * Specification:
+     *  - Adds product prices to item, based on currency, price mode and price type.
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
-     * @param string|null $grossPriceType
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param string|null $priceType
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function addGrossPriceToItems(CartChangeTransfer $change, $grossPriceType = null);
+    public function addPriceToItems(CartChangeTransfer $cartChangeTransfer, $priceType = null);
+
+    /**
+     * Specification:
+     *  - Validates product prices, checks if prices are valid for current currency, price mode, price type combination
+     *  - Writes error message to response transfer if not valid.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validatePrices(CartChangeTransfer $cartChangeTransfer);
 }

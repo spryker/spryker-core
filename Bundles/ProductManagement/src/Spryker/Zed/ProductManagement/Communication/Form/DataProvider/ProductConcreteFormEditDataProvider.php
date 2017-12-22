@@ -17,13 +17,11 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\BundledProductForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\PriceForm as ConcretePriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface;
@@ -43,7 +41,6 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface $priceFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface $productImageFacade
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
@@ -59,7 +56,6 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductQueryContainerInterface $productQueryContainer,
         StockQueryContainerInterface $stockQueryContainer,
-        ProductManagementToPriceInterface $priceFacade,
         ProductManagementToProductInterface $productFacade,
         ProductManagementToProductImageInterface $productImageFacade,
         LocaleProvider $localeProvider,
@@ -75,7 +71,6 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $productManagementQueryContainer,
             $productQueryContainer,
             $stockQueryContainer,
-            $priceFacade,
             $productFacade,
             $productImageFacade,
             $localeProvider,
@@ -113,10 +108,6 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         $formData = parent::getDefaultFormFields();
 
         unset($formData[ProductFormAdd::FORM_PRICE_AND_TAX]);
-        $formData[ProductFormAdd::FORM_PRICE_AND_TAX] = [
-            ConcretePriceForm::FIELD_PRICE => 0,
-            ConcretePriceForm::FIELD_PRICES => $this->getDefaultPricesData(),
-        ];
 
         $formData[ProductFormAdd::FORM_PRICE_AND_STOCK] = $this->getDefaultStockFields();
         $formData[ProductConcreteFormEdit::FIELD_ID_PRODUCT_CONCRETE] = null;
@@ -212,24 +203,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      */
     protected function appendVariantPriceAndStock(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productTransfer, array $formData)
     {
-        $priceTransfer = $this->priceFacade->findProductConcretePrice($productTransfer->getIdProductConcrete());
-        if ($priceTransfer) {
-            $formData[ProductFormAdd::FORM_PRICE_AND_TAX][ConcretePriceForm::FIELD_PRICE] = $priceTransfer->getPrice();
-        }
-
-        $defaultPriceTypeName = $this->priceFacade->getDefaultPriceTypeName();
-        $priceTypes = $this->priceFacade->getPriceTypeValues();
-
-        foreach ($priceTypes as $priceType) {
-            if ($priceType === $defaultPriceTypeName) {
-                continue;
-            }
-
-            $priceTransfer = $this->priceFacade->findProductConcretePrice($productTransfer->getIdProductConcrete(), $priceType);
-
-            $formData[ProductFormAdd::FORM_PRICE_AND_TAX][ConcretePriceForm::FIELD_PRICES][$priceType] = $priceTransfer ? $priceTransfer->getPrice() : null;
-        }
-
+        $formData[ProductFormAdd::FIELD_PRICES] = $productTransfer->getPrices();
         $stockType = $this->stockQueryContainer->queryAllStockTypes()->find()->getData();
         $this->productStockHelper->addMissingStockTypes($productTransfer, $stockType);
 

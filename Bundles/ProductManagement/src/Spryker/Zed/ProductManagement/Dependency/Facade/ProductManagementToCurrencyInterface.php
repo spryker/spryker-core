@@ -13,4 +13,14 @@ interface ProductManagementToCurrencyInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getCurrent();
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
+     */
+    public function getAllStoresWithCurrencies();
+
+    /**
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function getDefaultCurrencyForCurrentStore();
 }

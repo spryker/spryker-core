@@ -144,7 +144,7 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
-     * @return string
+     * @return int
      */
     protected function getAdditionalRelationCountColumn(SpyProductAbstract $productAbstractEntity)
     {

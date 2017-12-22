@@ -35,11 +35,11 @@ class ProductSetGuiToUrlBridge implements ProductSetGuiToUrlInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer Deprecated: String format is accepted for BC reasons only.
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return bool
      */
-    public function hasUrl($urlTransfer)
+    public function hasUrl(UrlTransfer $urlTransfer)
     {
         return $this->urlFacade->hasUrl($urlTransfer);
     }

@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CartItemProductOptionPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer

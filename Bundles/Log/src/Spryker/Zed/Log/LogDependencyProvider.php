@@ -14,8 +14,11 @@ use Symfony\Component\Filesystem\Filesystem;
 class LogDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_QUEUE = 'queue client';
-    const LOG_LISTENERS = 'log listener';
     const FILESYSTEM = 'filesystem';
+
+    const LOG_PROCESSORS = 'LOG_PROCESSORS';
+    const LOG_LISTENERS = 'LOG_LISTENERS';
+    const LOG_HANDLERS = 'LOG_HANDLERS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -25,6 +28,8 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = $this->addQueueClient($container);
+        $container = $this->addLogHandlers($container);
+        $container = $this->addProcessors($container);
 
         return $container;
     }
@@ -61,20 +66,6 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addLogListener(Container $container)
-    {
-        $container[static::LOG_LISTENERS] = function () {
-            return $this->getLogListeners();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addFilesystem(Container $container)
     {
         $container[static::FILESYSTEM] = function () {
@@ -85,9 +76,67 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLogListener(Container $container)
+    {
+        $container[static::LOG_LISTENERS] = function () {
+            return $this->getLogListeners();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\Log\Business\Model\LogListener\LogListenerInterface[]
      */
     protected function getLogListeners()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLogHandlers(Container $container)
+    {
+        $container[static::LOG_HANDLERS] = function () {
+            return $this->getLogHandlers();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface[]
+     */
+    protected function getLogHandlers()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container*
+     */
+    protected function addProcessors(Container $container)
+    {
+        $container[static::LOG_PROCESSORS] = function () {
+            return $this->getLogProcessors();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface[]
+     */
+    protected function getLogProcessors()
     {
         return [];
     }

@@ -61,6 +61,10 @@ class CurrencyReader implements CurrencyReaderInterface
      */
     public function getByIdCurrency($idCurrency)
     {
+        if (isset(static::$currencyCache[$idCurrency])) {
+            return static::$currencyCache[$idCurrency];
+        }
+
         $currencyEntity = $this->currencyQueryContainer
             ->queryCurrencyByIdCurrency($idCurrency)
             ->findOne();
@@ -71,7 +75,11 @@ class CurrencyReader implements CurrencyReaderInterface
             );
         }
 
-        return $this->currencyMapper->mapEntityToTransfer($currencyEntity);
+        $currencyTransfer = $this->currencyMapper->mapEntityToTransfer($currencyEntity);
+
+        static::$currencyCache[$idCurrency] = $currencyTransfer;
+
+        return $currencyTransfer;
     }
 
     /**
@@ -125,6 +133,17 @@ class CurrencyReader implements CurrencyReaderInterface
         static::$currencyCache[$isoCode] = $currencyTransfer;
 
         return $currencyTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function getDefaultCurrencyForCurrentStore()
+    {
+        $defaultCurrencyIsoCode = $this->storeFacade->getCurrentStore()
+            ->getDefaultCurrencyIsoCode();
+
+        return $this->getByIsoCode($defaultCurrencyIsoCode);
     }
 
     /**
