@@ -73,13 +73,15 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
                         $twig->addGlobal($name, $value);
                     }
 
-                    $callback = function () use ($app) {
-                        $fragmentHandler = new FragmentHandler($app['request_stack'], $app['fragment.renderers']);
+                    if (class_exists('\Symfony\Bridge\Twig\Extension\HttpKernelRuntime')) {
+                        $callback = function () use ($app) {
+                            $fragmentHandler = new FragmentHandler($app['request_stack'], $app['fragment.renderers']);
 
-                        return new HttpKernelRuntime($fragmentHandler);
-                    };
-                    $factoryLoader = new FactoryRuntimeLoader([HttpKernelRuntime::class => $callback]);
-                    $twig->addRuntimeLoader($factoryLoader);
+                            return new HttpKernelRuntime($fragmentHandler);
+                        };
+                        $factoryLoader = new FactoryRuntimeLoader([HttpKernelRuntime::class => $callback]);
+                        $twig->addRuntimeLoader($factoryLoader);
+                    }
 
                     return $twig;
                 }
