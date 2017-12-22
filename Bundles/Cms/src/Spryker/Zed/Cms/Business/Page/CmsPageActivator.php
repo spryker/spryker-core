@@ -8,6 +8,7 @@ namespace Spryker\Zed\Cms\Business\Page;
 
 use Exception;
 use Generated\Shared\Transfer\CmsPageTransfer;
+use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Exception\CannotActivatePageException;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
@@ -75,8 +76,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
             throw $exception;
         }
 
-        $cmsPageTransfer = (new CmsPageTransfer())->fromArray($cmsPageEntity->toArray(), true);
-        $this->runPostActivatorPlugins($cmsPageTransfer);
+        $this->runPostActivatorPlugins($this->generateCmsPageTransferFromEntity($cmsPageEntity));
     }
 
     /**
@@ -126,8 +126,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
             throw $exception;
         }
 
-        $cmsPageTransfer = (new CmsPageTransfer())->fromArray($cmsPageEntity->toArray(), true);
-        $this->runPostActivatorPlugins($cmsPageTransfer);
+        $this->runPostActivatorPlugins($this->generateCmsPageTransferFromEntity($cmsPageEntity));
     }
 
     /**
@@ -152,6 +151,19 @@ class CmsPageActivator implements CmsPageActivatorInterface
             );
         }
         return $cmsPageEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
+     *
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     */
+    protected function generateCmsPageTransferFromEntity(SpyCmsPage $cmsPageEntity)
+    {
+        $cmsPageTransfer = (new CmsPageTransfer())->fromArray($cmsPageEntity->toArray(), true);
+        $cmsPageTransfer->setFkPage($cmsPageEntity->getIdCmsPage());
+
+        return $cmsPageTransfer;
     }
 
     /**
