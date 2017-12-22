@@ -14,9 +14,12 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Twig\Business\Model\RouteResolver;
+use Symfony\Bridge\Twig\Extension\HttpKernelRuntime;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Twig\RuntimeLoader\FactoryRuntimeLoader;
 use Twig_Environment;
 use Twig_Loader_Chain;
 
@@ -69,6 +72,14 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
                     foreach ($app['twig.global.variables'] as $name => $value) {
                         $twig->addGlobal($name, $value);
                     }
+
+                    $callback = function () use ($app) {
+                        $fragmentHandler = new FragmentHandler($app['request_stack'], $app['fragment.renderers']);
+
+                        return new HttpKernelRuntime($fragmentHandler);
+                    };
+                    $factoryLoader = new FactoryRuntimeLoader([HttpKernelRuntime::class => $callback]);
+                    $twig->addRuntimeLoader($factoryLoader);
 
                     return $twig;
                 }
