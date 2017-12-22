@@ -4,7 +4,7 @@
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
-    "spryker/cms": "^6.0.0",
+    "spryker/category": "^4.0.0",
     "spryker/navigation": "^4.0.0"
   },
   "require-dev": {

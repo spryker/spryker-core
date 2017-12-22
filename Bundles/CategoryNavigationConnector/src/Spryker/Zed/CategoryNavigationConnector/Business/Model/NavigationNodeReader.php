@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CategoryNavigationConnector\Business\Model;
 
 use Generated\Shared\Transfer\NavigationNodeTransfer;
@@ -11,11 +16,11 @@ use Spryker\Zed\CategoryNavigationConnector\Dependency\QueryContainer\CategoryNa
  */
 class NavigationNodeReader implements NavigationNodeReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\CategoryNavigationConnector\Dependency\QueryContainer\CategoryNavigationConnectorToCategoryQueryContainerInterface
      */
     protected $categoryQueryContainer;
+
     /**
      * @var \Spryker\Zed\CategoryNavigationConnector\Dependency\QueryContainer\CategoryNavigationConnectorToNavigationQueryContainerInterface
      */
@@ -42,7 +47,7 @@ class NavigationNodeReader implements NavigationNodeReaderInterface
         $urlEntities = $this->categoryQueryContainer->queryResourceUrlByCategoryNodeId($idCategoryNode)->find();
         foreach ($urlEntities as $url) {
             $navigationNodeEntities = $this->navigationQueryContainer->queryNavigationNodeByFkUrl($url->getIdUrl())->find();
-            foreach($navigationNodeEntities as $navigationNode) {
+            foreach ($navigationNodeEntities as $navigationNode) {
                 $navigationNodes[] = (new NavigationNodeTransfer())->fromArray($navigationNode->toArray(), true);
             }
         }

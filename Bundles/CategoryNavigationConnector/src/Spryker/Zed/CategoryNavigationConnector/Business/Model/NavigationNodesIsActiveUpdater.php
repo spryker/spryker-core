@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CategoryNavigationConnector\Business\Model;
 
 use Spryker\Zed\CategoryNavigationConnector\Dependency\Facade\CategoryNavigationConnectorToNavigationFacadeInterface;
@@ -29,11 +34,13 @@ class NavigationNodesIsActiveUpdater implements NavigationNodesIsActiveUpdaterIn
     /**
      * @param int $idCategoryNode
      * @param bool $isActive
+     *
+     * @return void
      */
     public function updateCategoryNodeNavigationNodes($idCategoryNode, $isActive)
     {
         $navigationNodes = $this->navigationNodeReader->getNavigationNodesFromCategoryNodeId($idCategoryNode);
-        foreach($navigationNodes as $navigationNode) {
+        foreach ($navigationNodes as $navigationNode) {
             $navigationNode->setIsActive($isActive);
             $this->navigationFacade->updateNavigationNode($navigationNode);
         }

@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Zed\CategoryNavigationConnector;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,8 +17,8 @@ namespace SprykerTest\Zed\CategoryNavigationConnector;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class CategoryNavigationConnectorBusinessTester extends \Codeception\Actor
+ */
+class CategoryNavigationConnectorBusinessTester extends Actor
 {
     use _generated\CategoryNavigationConnectorBusinessTesterActions;
 

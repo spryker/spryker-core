@@ -8,12 +8,10 @@
 namespace Spryker\Zed\CategoryNavigationConnector\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\CategoryNavigationConnector\CategoryNavigationConnectorDependencyProvider;
 
 /**
  * @method \Spryker\Zed\CategoryNavigationConnector\CategoryNavigationConnectorConfig getConfig()
  */
 class CategoryNavigationConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
-
 }
