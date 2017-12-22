@@ -7,23 +7,24 @@
 
 namespace Spryker\Client\ProductStorage\Storage;
 
+use Generated\Shared\Transfer\ProductAbstractStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
-class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterface
+class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterface
 {
-    /**
-     * @var ProductStorageToSynchronizationServiceInterface
-     */
-    protected $synchronizationService;
-
     /**
      * @var ProductStorageToStorageClientInterface
      */
     protected $storageClient;
+
+    /**
+     * @var ProductStorageToSynchronizationServiceInterface
+     */
+    protected $synchronizationService;
 
     /**
      * @var Store
@@ -46,21 +47,21 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProductAbstract
      * @param string $localeName
      *
      * @return array
      */
-    public function getProductConcreteStorageData($idProductConcrete, $localeName)
+    public function getProductAbstractStorageData($idProductAbstract, $localeName)
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setStore($this->store->getStoreName())
+            ->setReference($idProductAbstract)
             ->setLocale($localeName)
-            ->setReference($idProductConcrete);
+            ->setStore($this->store->getStoreName());
 
         $key = $this->synchronizationService
-            ->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_CONCRETE_RESOURCE_NAME)
+            ->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_ABSTRACT_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
 
         return $this->storageClient->get($key);

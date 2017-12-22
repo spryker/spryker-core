@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
 /**
@@ -52,7 +51,9 @@ class UrlStorageProductAbstractMapperPlugin extends AbstractPlugin implements Ur
         $synchronizationDataTransfer->setLocale($locale);
         $synchronizationDataTransfer->setReference($idProductAbstract);
 
-        return $this->getFactory()->getSynchronizationService()->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_ABSTRACT_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
+        return $this->getFactory()
+            ->getSynchronizationService()
+            ->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_ABSTRACT_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
     }
 
     /**
@@ -60,6 +61,8 @@ class UrlStorageProductAbstractMapperPlugin extends AbstractPlugin implements Ur
      */
     protected function getStoreName()
     {
-        return Store::getInstance()->getStoreName();
+        return $this->getFactory()
+            ->getStore()
+            ->getStoreName();
     }
 }

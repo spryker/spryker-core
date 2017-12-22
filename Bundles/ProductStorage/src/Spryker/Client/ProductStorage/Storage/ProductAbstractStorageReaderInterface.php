@@ -7,16 +7,13 @@
 
 namespace Spryker\Client\ProductStorage\Storage;
 
-use Generated\Shared\Transfer\ProductAbstractStorageTransfer;
-
-interface ProductStorageInterface
+interface ProductAbstractStorageReaderInterface
 {
-
     /**
      * @param int $idProductAbstract
-     * @param string $locale
+     * @param string $localeName
      *
-     * @return ProductAbstractStorageTransfer
+     * @return array
      */
-    public function getProductAbstractFromStorageById($idProductAbstract, $locale);
+    public function getProductAbstractStorageData($idProductAbstract, $localeName);
 }

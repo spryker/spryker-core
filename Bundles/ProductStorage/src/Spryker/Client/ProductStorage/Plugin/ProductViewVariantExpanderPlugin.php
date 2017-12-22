@@ -20,14 +20,14 @@ class ProductViewVariantExpanderPlugin extends AbstractPlugin implements Product
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param array $productData
-     * @param string $locale
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $locale)
+    public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $localeName)
     {
         return $this->getFactory()
             ->createVariantExpander()
-            ->expandProductVariantData($productViewTransfer, $locale);
+            ->expandProductVariantData($productViewTransfer, $localeName);
     }
 }

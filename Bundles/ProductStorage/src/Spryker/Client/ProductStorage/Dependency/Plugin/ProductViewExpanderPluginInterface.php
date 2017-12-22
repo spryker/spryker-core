@@ -19,9 +19,9 @@ interface ProductViewExpanderPluginInterface
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param array $productData
-     * @param string $locale
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $locale);
+    public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $localeName);
 }

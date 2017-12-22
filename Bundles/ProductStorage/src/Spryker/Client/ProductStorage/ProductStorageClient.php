@@ -19,19 +19,50 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
+     * @param int $idProductAbstract
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getProductAbstractStorageData($idProductAbstract, $localeName)
+    {
+        return $this->getFactory()
+            ->createProductAbstractStorageReader()
+            ->getProductAbstractStorageData($idProductAbstract, $localeName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getProductConcreteStorageData($idProductConcrete, $localeName)
+    {
+        return $this->getFactory()
+            ->createProductConcreteStorageReader()
+            ->getProductConcreteStorageData($idProductConcrete, $localeName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param array $data
+     * @param string $localeName
      * @param array $selectedAttributes
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapProductStorageDataForCurrentLocale(array $data, array $selectedAttributes = [])
+    public function mapProductStorageData(array $data, $localeName, array $selectedAttributes = [])
     {
-        $locale = $this->getFactory()
-            ->getLocaleClient()
-            ->getCurrentLocale();
-
         return $this->getFactory()
             ->createProductStorageDataMapper()
-            ->mapProductStorageData($locale, $data, $selectedAttributes);
+            ->mapProductStorageData($localeName, $data, $selectedAttributes);
     }
 }

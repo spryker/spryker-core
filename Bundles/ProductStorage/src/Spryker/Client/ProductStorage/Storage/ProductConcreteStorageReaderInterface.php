@@ -14,9 +14,9 @@ interface ProductConcreteStorageReaderInterface
 {
     /**
      * @param int $idProductConcrete
-     * @param string $locale
+     * @param string $localeName
      *
      * @return array
      */
-    public function getProductConcreteStorageData($idProductConcrete, $locale);
+    public function getProductConcreteStorageData($idProductConcrete, $localeName);
 }

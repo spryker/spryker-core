@@ -11,21 +11,10 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductStorage\Mapper\ProductVariantExpander;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapper;
 use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader;
-use Spryker\Client\ProductStorage\Storage\ProductStorage;
+use Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReader;
 
 class ProductStorageFactory extends AbstractFactory
 {
-    /**
-     * @return \Spryker\Client\ProductStorage\Storage\ProductStorageInterface
-     */
-    public function createProductStorage()
-    {
-        return new ProductStorage(
-            $this->getStorageClient(),
-            $this->getSynchronizationService()
-        );
-    }
-
     /**
      * @return \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface
      */
@@ -53,11 +42,23 @@ class ProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface
      */
-    public function createProductConcreteStorage()
+    public function createProductConcreteStorageReader()
     {
         return new ProductConcreteStorageReader(
-            $this->getSynchronizationService(),
             $this->getStorageClient(),
+            $this->getSynchronizationService(),
+            $this->getStore()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReaderInterface
+     */
+    public function createProductAbstractStorageReader()
+    {
+        return new ProductAbstractStorageReader(
+            $this->getStorageClient(),
+            $this->getSynchronizationService(),
             $this->getStore()
         );
     }
@@ -83,7 +84,7 @@ class ProductStorageFactory extends AbstractFactory
      */
     public function createVariantExpander()
     {
-        return new ProductVariantExpander($this->createProductConcreteStorage());
+        return new ProductVariantExpander($this->createProductConcreteStorageReader());
     }
 
     /**

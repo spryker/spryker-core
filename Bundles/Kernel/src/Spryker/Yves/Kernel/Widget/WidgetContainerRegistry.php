@@ -7,26 +7,9 @@
 
 namespace Spryker\Yves\Kernel\Widget;
 
-use Silex\Application;
-
 class WidgetContainerRegistry implements WidgetContainerRegistryInterface
 {
-
-    protected const WIDGET_CONTAINER_STACK = 'widget_container_stack';
-
-    /**
-     * @var \Silex\Application
-     */
-    protected $application;
-
-    /**
-     * @param \Silex\Application $application
-     */
-    public function __construct(Application $application)
-    {
-        $this->application = $application;
-        $this->initializeWidgetContainerService();
-    }
+    protected static $widgetContainerStack = [];
 
     /**
      * @param \Spryker\Yves\Kernel\Widget\WidgetContainerInterface $widgetContainer
@@ -35,11 +18,7 @@ class WidgetContainerRegistry implements WidgetContainerRegistryInterface
      */
     public function add(WidgetContainerInterface $widgetContainer)
     {
-        $this->application[static::WIDGET_CONTAINER_STACK] = $this->application->extend(static::WIDGET_CONTAINER_STACK, function ($stack) use ($widgetContainer) {
-            $stack[] = $widgetContainer;
-
-            return $stack;
-        });
+        static::$widgetContainerStack[] = $widgetContainer;
     }
 
     /**
@@ -47,11 +26,7 @@ class WidgetContainerRegistry implements WidgetContainerRegistryInterface
      */
     public function removeLastAdded()
     {
-        $this->application[static::WIDGET_CONTAINER_STACK] = $this->application->extend(static::WIDGET_CONTAINER_STACK, function ($stack) {
-            array_pop($stack);
-
-            return $stack;
-        });
+        array_pop(static::$widgetContainerStack);
     }
 
     /**
@@ -59,23 +34,6 @@ class WidgetContainerRegistry implements WidgetContainerRegistryInterface
      */
     public function getLastAdded()
     {
-        $stack = $this->application[static::WIDGET_CONTAINER_STACK];
-
-        return $stack ? end($stack) : null;
+        return static::$widgetContainerStack ? end(static::$widgetContainerStack) : null;
     }
-
-    /**
-     * @return void
-     */
-    protected function initializeWidgetContainerService()
-    {
-        if (isset($this->application[static::WIDGET_CONTAINER_STACK])) {
-            return;
-        }
-
-        $this->application[static::WIDGET_CONTAINER_STACK] = $this->application->share(function () {
-            return [];
-        });
-    }
-
 }

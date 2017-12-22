@@ -14,16 +14,16 @@ use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInt
 /**
  * @method \Spryker\Client\AvailabilityStorage\AvailabilityStorageFactory getFactory()
  */
-class StorageProductAvailabilityStorageExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
+class ProductViewAvailabilityStorageExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param array $productData
-     * @param string $locale
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $locale)
+    public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $localeName)
     {
         $storageAvailabilityTransfer = $this->getFactory()
             ->createAvailabilityStorageReader()

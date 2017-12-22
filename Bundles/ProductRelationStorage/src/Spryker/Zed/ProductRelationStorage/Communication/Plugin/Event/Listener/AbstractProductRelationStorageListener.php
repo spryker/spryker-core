@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductRelationStorageTransfer;
 use Generated\Shared\Transfer\StorageProductRelationsTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTypeTableMap;
 use Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorage;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -142,7 +143,11 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
                         StorageProductRelationsTransfer::IS_ACTIVE => $productRelation->getIsActive(),
                     ];
                 }
-                $results[$relationProduct[SpyProductRelationTypeTableMap::COL_KEY]][StorageProductRelationsTransfer::ABSTRACT_PRODUCTS][] = $relationProduct[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT];
+                $relationName = $relationProduct[SpyProductRelationTypeTableMap::COL_KEY];
+                $idProductAbstract = $relationProduct[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT];
+                $order = $relationProduct[SpyProductRelationProductAbstractTableMap::COL_ORDER];
+
+                $results[$relationName][StorageProductRelationsTransfer::ABSTRACT_PRODUCTS][$idProductAbstract] = $order;
             }
         }
 
