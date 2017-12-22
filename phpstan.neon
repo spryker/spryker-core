@@ -3,7 +3,7 @@ parameters:
         - '#Class PHP_CodeSniffer\\Config not found#'
         - '#Parameter \$resolver of method [a-zA-Z0-9\\]+\:\:setDefaultOptions\(\) has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface\.#'
 
-    reportUnmatchedIgnoredErrors: true
+    reportUnmatchedIgnoredErrors: false
 
     excludes_analyse:
         - %rootDir%/../../../vendor/spryker/spryker/Bundles/Development/tests/Unit/Spryker/Zed/Development/Business/DependencyTree/DependencyFinder/Fixtures/*
