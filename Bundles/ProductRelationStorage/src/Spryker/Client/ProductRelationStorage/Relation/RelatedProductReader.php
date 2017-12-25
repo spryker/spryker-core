@@ -75,6 +75,10 @@ class RelatedProductReader implements RelatedProductReaderInterface
     {
         $productAbstractRelationStorageTransfer = $this->productAbstractRelationStorageReader->findProductAbstractRelation($idProductAbstract, $localeName);
 
+        if (!$productAbstractRelationStorageTransfer) {
+            return [];
+        }
+
         foreach ($productAbstractRelationStorageTransfer->getProductRelations() as $productRelationStorageTransfer) {
             if ($productRelationStorageTransfer->getKey() !== ProductRelationTypes::TYPE_RELATED_PRODUCTS) {
                 continue;

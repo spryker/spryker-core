@@ -115,6 +115,10 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
     {
         $productAbstractRelationStorageTransfer = $this->productAbstractRelationStorageReader->findProductAbstractRelation($idProductAbstract, $localeName);
 
+        if (!$productAbstractRelationStorageTransfer) {
+            return [];
+        }
+
         foreach ($productAbstractRelationStorageTransfer->getProductRelations() as $productRelationStorageTransfer) {
             if ($productRelationStorageTransfer->getKey() !== ProductRelationTypes::TYPE_UP_SELLING) {
                 continue;
