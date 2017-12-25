@@ -37,6 +37,8 @@ class ProductSetPageSearchEventSubscriber extends AbstractPlugin implements Even
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
+            ->addListenerQueued(ProductSetEvents::PRODUCT_SET_PUBLISH, new ProductSetPageSearchListener())
+            ->addListenerQueued(ProductSetEvents::PRODUCT_SET_UNPUBLISH, new ProductSetPageSearchListener())
             ->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_CREATE, new ProductSetPageSearchListener())
             ->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_UPDATE, new ProductSetPageSearchListener())
             ->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DELETE, new ProductSetPageSearchListener())

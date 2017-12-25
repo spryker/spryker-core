@@ -11,6 +11,22 @@ interface ProductOptionEvents
 {
     /**
      * Specification
+     * - This events will be used for product_abstract_option publishing
+     *
+     * @api
+     */
+    const PRODUCT_ABSTRACT_PRODUCT_OPTION_PUBLISH = 'ProductOption.product_abstract_option.publish';
+
+    /**
+     * Specification
+     * - This events will be used for product_abstract_option publishing
+     *
+     * @api
+     */
+    const PRODUCT_ABSTRACT_PRODUCT_OPTION_UNPUBLISH = 'ProductOption.product_abstract_option.unpublish';
+
+    /**
+     * Specification
      * - This events will be used for spy_product_abstract_product_option_group entity creation
      *
      * @api

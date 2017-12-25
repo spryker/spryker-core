@@ -10,6 +10,38 @@ interface ProductReviewEvents
 {
     /**
      * Specification
+     * - This events will be used for spy_product_review publishing
+     *
+     * @api
+     */
+    const PRODUCT_ABSTRACT_REVIEW_PUBLISH = 'ProductReview.product_abstract_review.publish';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_review un-publishing
+     *
+     * @api
+     */
+    const PRODUCT_ABSTRACT_REVIEW_UNPUBLISH = 'ProductReview.product_abstract_review.unpublish';
+
+    /**
+     * Specification
+     * - This events will be used for product_review publishing
+     *
+     * @api
+     */
+    const PRODUCT_REVIEW_PUBLISH = 'ProductReview.product_review.publish';
+
+    /**
+     * Specification
+     * - This events will be used for product_review un-publishing
+     *
+     * @api
+     */
+    const PRODUCT_REVIEW_UNPUBLISH = 'ProductReview.product_review.unpublish';
+
+    /**
+     * Specification
      * - This events will be used for spy_product_review entity creation
      *
      * @api

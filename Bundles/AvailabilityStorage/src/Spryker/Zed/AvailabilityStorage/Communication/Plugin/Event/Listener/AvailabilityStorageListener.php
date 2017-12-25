@@ -33,13 +33,16 @@ class AvailabilityStorageListener extends AbstractAvailabilityStorageListener im
         $this->preventTransaction();
         $availabilityIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_UPDATE ||
-            $eventName === AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_CREATE
+        if (
+            $eventName === AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE ||
+            $eventName === AvailabilityEvents::AVAILABILITY_ABSTRACT_UNPUBLISH
         ) {
-            $this->publish($availabilityIds);
-        } elseif($eventName === AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE) {
             $this->unpublish($availabilityIds);
+
+            return;
         }
+
+        $this->publish($availabilityIds);
     }
 
 }

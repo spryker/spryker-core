@@ -24,9 +24,15 @@ class CmsPageSearchListener extends AbstractCmsPageSearchListener implements Eve
         $this->preventTransaction();
         $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE ) {
+        if (
+            $eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE ||
+            $eventName === CmsEvents::CMS_VERSION_PUBLISH
+        ) {
             $this->publish($cmsPageIds);
-        } elseif ($eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE) {
+        } elseif (
+            $eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE ||
+            $eventName === CmsEvents::CMS_VERSION_UNPUBLISH
+        ) {
             $this->unpublish($cmsPageIds);
         }
     }

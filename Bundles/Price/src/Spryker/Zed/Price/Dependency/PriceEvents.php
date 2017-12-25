@@ -10,6 +10,38 @@ namespace Spryker\Zed\Price\Dependency;
 interface PriceEvents
 {
     /**
+ * Specification
+ * - This events will be used for price_abstract publishing
+ *
+ * @api
+ */
+    const PRICE_ABSTRACT_PUBLISH = 'Price.price_abstract.publish';
+
+    /**
+     * Specification
+     * - This events will be used for price_abstract un-publishing
+     *
+     * @api
+     */
+    const PRICE_ABSTRACT_UNPUBLISH = 'Price.price_abstract.unpublish';
+
+    /**
+     * Specification
+     * - This events will be used for price_concrete publishing
+     *
+     * @api
+     */
+    const PRICE_CONCRETE_PUBLISH = 'Price.price_concrete.publish';
+
+    /**
+     * Specification
+     * - This events will be used for price_concrete un-publishing
+     *
+     * @api
+     */
+    const PRICE_CONCRETE_UNPUBLISH = 'Price.price_concrete.unpublish';
+
+    /**
      * Specification
      * - This events will be used for spy_price_product entity creation
      *

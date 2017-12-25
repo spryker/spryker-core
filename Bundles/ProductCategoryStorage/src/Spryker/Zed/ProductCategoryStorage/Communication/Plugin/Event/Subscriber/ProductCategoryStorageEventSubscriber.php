@@ -16,6 +16,7 @@ use Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event\Listener\Categ
 use Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event\Listener\CategoryNodeStorageListener;
 use Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event\Listener\CategoryStorageListener;
 use Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event\Listener\CategoryUrlStorageListener;
+use Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event\Listener\ProductCategoryPublishStorageListener;
 use Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event\Listener\ProductCategoryStorageListener;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
@@ -35,6 +36,8 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
+            ->addListenerQueued(ProductCategoryEvents::PRODUCT_CATEGORY_PUBLISH, new ProductCategoryPublishStorageListener())
+            ->addListenerQueued(ProductCategoryEvents::PRODUCT_CATEGORY_UNPUBLISH, new ProductCategoryPublishStorageListener())
             ->addListenerQueued(ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_CREATE, new ProductCategoryStorageListener())
             ->addListenerQueued(ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_UPDATE, new ProductCategoryStorageListener())
             ->addListenerQueued(ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_DELETE, new ProductCategoryStorageListener())

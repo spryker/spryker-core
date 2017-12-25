@@ -11,6 +11,7 @@ use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductGroup\Dependency\ProductGroupEvents;
+use Spryker\Zed\ProductGroupStorage\Communication\Plugin\Event\Listener\ProductAbstractGroupPublishStorageListener;
 use Spryker\Zed\ProductGroupStorage\Communication\Plugin\Event\Listener\ProductAbstractGroupStorageListener;
 
 /**
@@ -29,6 +30,8 @@ class ProductGroupStorageEventSubscriber extends AbstractPlugin implements Event
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
+            ->addListenerQueued(ProductGroupEvents::PRODUCT_GROUP_PUBLISH, new ProductAbstractGroupPublishStorageListener())
+            ->addListenerQueued(ProductGroupEvents::PRODUCT_GROUP_UNPUBLISH, new ProductAbstractGroupPublishStorageListener())
             ->addListenerQueued(ProductGroupEvents::ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_CREATE, new ProductAbstractGroupStorageListener())
             ->addListenerQueued(ProductGroupEvents::ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_UPDATE, new ProductAbstractGroupStorageListener())
             ->addListenerQueued(ProductGroupEvents::ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_DELETE, new ProductAbstractGroupStorageListener());

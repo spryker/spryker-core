@@ -31,6 +31,8 @@ class NavigationStorageEventSubscriber extends AbstractPlugin implements EventSu
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
+            ->addListenerQueued(NavigationEvents::NAVIGATION_KEY_PUBLISH, new NavigationStorageListener())
+            ->addListenerQueued(NavigationEvents::NAVIGATION_KEY_UNPUBLISH, new NavigationStorageListener())
             ->addListenerQueued(NavigationEvents::ENTITY_SPY_NAVIGATION_CREATE, new NavigationStorageListener())
             ->addListenerQueued(NavigationEvents::ENTITY_SPY_NAVIGATION_UPDATE, new NavigationStorageListener())
             ->addListenerQueued(NavigationEvents::ENTITY_SPY_NAVIGATION_DELETE, new NavigationStorageListener())

@@ -29,6 +29,8 @@ class CmsBlockStorageEventSubscriber extends AbstractPlugin implements EventSubs
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
+            ->addListenerQueued(CmsBlockEvents::CMS_BLOCK_PUBLISH, new CmsBlockStorageListener())
+            ->addListenerQueued(CmsBlockEvents::CMS_BLOCK_UNPUBLISH, new CmsBlockStorageListener())
             ->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_UPDATE, new CmsBlockStorageListener())
             ->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_DELETE, new CmsBlockStorageListener())
             ->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_CREATE, new CmsBlockGlossaryKeyMappingBlockStorageListener())

@@ -33,7 +33,10 @@ class ProductConcreteStorageListener extends AbstractProductConcreteStorageListe
         $this->preventTransaction();
         $productIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_DELETE) {
+        if (
+            $eventName === ProductEvents::ENTITY_SPY_PRODUCT_DELETE ||
+            $eventName === ProductEvents::PRODUCT_CONCRETE_UNPUBLISH
+        ) {
             $this->unpublish($productIds);
         } else {
             $this->publish($productIds);

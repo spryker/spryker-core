@@ -32,6 +32,8 @@ class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscr
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
+            ->addListenerQueued(CmsEvents::CMS_VERSION_PUBLISH, new CmsPageSearchListener())
+            ->addListenerQueued(CmsEvents::CMS_VERSION_UNPUBLISH, new CmsPageSearchListener())
             ->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_CREATE, new CmsPageSearchListener())
             ->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE, new CmsPageSearchListener())
             ->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE, new CmsPageSearchListener())

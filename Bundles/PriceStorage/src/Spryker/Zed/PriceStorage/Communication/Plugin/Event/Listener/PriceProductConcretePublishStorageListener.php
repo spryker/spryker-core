@@ -33,7 +33,10 @@ class PriceProductConcretePublishStorageListener extends AbstractPriceProductCon
         $this->preventTransaction();
         $concreteIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === PriceEvents::ENTITY_SPY_PRICE_TYPE_DELETE || $eventName === PriceEvents::ENTITY_SPY_PRICE_PRODUCT_DELETE) {
+        if ($eventName === PriceEvents::ENTITY_SPY_PRICE_TYPE_DELETE ||
+            $eventName === PriceEvents::ENTITY_SPY_PRICE_PRODUCT_DELETE ||
+            $eventName === PriceEvents::PRICE_CONCRETE_UNPUBLISH
+        ) {
             $this->unpublish($concreteIds);
 
             return;

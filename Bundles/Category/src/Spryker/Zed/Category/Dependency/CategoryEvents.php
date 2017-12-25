@@ -136,4 +136,36 @@ interface CategoryEvents
      * @api
      */
     const ENTITY_SPY_CATEGORY_TEMPLATE_DELETE = 'Entity.spy_category_template.delete';
+
+    /**
+     * Specification
+     * - This events will be used for CategoryNode publish
+     *
+     * @api
+     */
+    const CATEGORY_NODE_PUBLISH = 'Category.node.publish';
+
+    /**
+     * Specification
+     * - This events will be used for CategoryNode publish
+     *
+     * @api
+     */
+    const CATEGORY_NODE_UNPUBLISH = 'Category.node.unpublish';
+
+    /**
+     * Specification
+     * - This events will be used for CategoryTree publish
+     *
+     * @api
+     */
+    const CATEGORY_TREE_PUBLISH = 'Category.tree.publish';
+
+    /**
+     * Specification
+     * - This events will be used for CategoryTree publish
+     *
+     * @api
+     */
+    const CATEGORY_TREE_UNPUBLISH = 'Category.tree.unpublish';
 }

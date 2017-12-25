@@ -11,6 +11,7 @@ use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductReview\Dependency\ProductReviewEvents;
+use Spryker\Zed\ProductReviewStorage\Communication\Plugin\Event\Listener\ProductReviewPublishStorageListener;
 use Spryker\Zed\ProductReviewStorage\Communication\Plugin\Event\Listener\ProductReviewStorageListener;
 
 /**
@@ -29,6 +30,8 @@ class ProductReviewStorageEventSubscriber extends AbstractPlugin implements Even
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
+            ->addListenerQueued(ProductReviewEvents::PRODUCT_ABSTRACT_REVIEW_PUBLISH, new ProductReviewPublishStorageListener())
+            ->addListenerQueued(ProductReviewEvents::PRODUCT_ABSTRACT_REVIEW_UNPUBLISH, new ProductReviewPublishStorageListener())
             ->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_CREATE, new ProductReviewStorageListener())
             ->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_UPDATE, new ProductReviewStorageListener())
             ->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_DELETE, new ProductReviewStorageListener());

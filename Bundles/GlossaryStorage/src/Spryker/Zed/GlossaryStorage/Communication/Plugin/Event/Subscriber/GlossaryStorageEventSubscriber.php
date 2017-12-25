@@ -30,6 +30,8 @@ class GlossaryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
+            ->addListenerQueued(GlossaryEvents::GLOSSARY_KEY_PUBLISH, new GlossaryKeyStorageListener())
+            ->addListenerQueued(GlossaryEvents::GLOSSARY_KEY_UNPUBLISH, new GlossaryKeyStorageListener())
             ->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_CREATE, new GlossaryKeyStorageListener())
             ->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_UPDATE, new GlossaryKeyStorageListener())
             ->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_DELETE, new GlossaryKeyStorageListener())

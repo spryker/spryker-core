@@ -11,6 +11,22 @@ interface ProductSearchEvents
 {
     /**
      * Specification
+     * - This events will be used for product search config publishing
+     *
+     * @api
+     */
+    const PRODUCT_SEARCH_CONFIG_PUBLISH = 'ProductSearch.config.publish';
+
+    /**
+     * Specification
+     * - This events will be used for product search config publishing
+     *
+     * @api
+     */
+    const PRODUCT_SEARCH_CONFIG_UNPUBLISH = 'ProductSearch.config.unpublish';
+
+    /**
+     * Specification
      * - This events will be used for spy_product_search_attribute entity creation
      *
      * @api

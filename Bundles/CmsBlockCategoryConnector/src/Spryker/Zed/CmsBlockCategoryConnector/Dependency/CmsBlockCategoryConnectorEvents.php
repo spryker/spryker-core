@@ -8,6 +8,21 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Dependency;
 
 interface CmsBlockCategoryConnectorEvents
 {
+    /**
+     * Specification
+     * - This events will be used for CmsBlockCategory connector publishing
+     *
+     * @api
+     */
+    const CMS_BLOCK_CATEGORY_CONNECTOR_PUBLISH = 'CmsBlockCategory.connector.publish';
+
+    /**
+     * Specification
+     * - This events will be used for CmsBlockCategory connector un-publishing
+     *
+     * @api
+     */
+    const CMS_BLOCK_CATEGORY_CONNECTOR_UNPUBLISH = 'CmsBlockCategory.connector.unpublish';
 
     /**
      * Specification

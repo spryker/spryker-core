@@ -31,6 +31,8 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
     {
         $eventCollection
             ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new UrlStorageListener())
+            ->addListenerQueued(UrlEvents::URL_PUBLISH, new UrlStorageListener())
+            ->addListenerQueued(UrlEvents::URL_UNPUBLISH, new UrlStorageListener())
             ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new UrlStorageListener())
             ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new UrlStorageListener())
             ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_CREATE, new RedirectStorageListener())

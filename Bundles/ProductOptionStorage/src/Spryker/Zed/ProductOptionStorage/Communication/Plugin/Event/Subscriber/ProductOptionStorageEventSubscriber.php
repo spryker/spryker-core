@@ -32,6 +32,8 @@ class ProductOptionStorageEventSubscriber extends AbstractPlugin implements Even
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
+            ->addListenerQueued(ProductOptionEvents::PRODUCT_ABSTRACT_PRODUCT_OPTION_PUBLISH, new ProductOptionPublishStorageListener())
+            ->addListenerQueued(ProductOptionEvents::PRODUCT_ABSTRACT_PRODUCT_OPTION_UNPUBLISH, new ProductOptionPublishStorageListener())
             ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_CREATE, new ProductOptionStorageListener())
             ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_UPDATE, new ProductOptionStorageListener())
             ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_DELETE, new ProductOptionStorageListener())

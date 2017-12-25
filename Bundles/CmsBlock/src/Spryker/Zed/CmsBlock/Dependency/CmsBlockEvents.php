@@ -11,6 +11,22 @@ interface CmsBlockEvents
 {
     /**
      * Specification
+     * - This events will be used for CmsBlock publishing
+     *
+     * @api
+     */
+    const CMS_BLOCK_PUBLISH = 'CmsBlock.block.publish';
+
+    /**
+     * Specification
+     * - This events will be used for CmsBlock un-publishing
+     *
+     * @api
+     */
+    const CMS_BLOCK_UNPUBLISH = 'CmsBlock.block.unpublish';
+
+    /**
+     * Specification
      * - This events will be used for spy_cms_block_glossary_key_mapping entity creation
      *
      * @api

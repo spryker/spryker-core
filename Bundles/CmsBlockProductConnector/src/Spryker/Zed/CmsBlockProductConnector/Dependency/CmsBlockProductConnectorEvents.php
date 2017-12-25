@@ -8,7 +8,21 @@ namespace Spryker\Zed\CmsBlockProductConnector\Dependency;
 
 interface CmsBlockProductConnectorEvents
 {
+    /**
+     * Specification
+     * - This events will be used for CmsBlockProduct connector publishing
+     *
+     * @api
+     */
+    const CMS_BLOCK_PRODUCT_CONNECTOR_PUBLISH = 'CmsBlockProduct.connector.publish';
 
+    /**
+     * Specification
+     * - This events will be used for CmsBlockProduct connector un-publishing
+     *
+     * @api
+     */
+    const CMS_BLOCK_PRODUCT_CONNECTOR_UNPUBLISH = 'CmsBlockProduct.connector.unpublish';
     /**
      * Specification
      * - This events will be used for spy_cms_block_product_connector entity creation

@@ -11,7 +11,9 @@ use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Price\Dependency\PriceEvents;
+use Spryker\Zed\PriceStorage\Communication\Plugin\Event\Listener\PriceProductAbstractPublishStorageListener;
 use Spryker\Zed\PriceStorage\Communication\Plugin\Event\Listener\PriceProductAbstractStorageListener;
+use Spryker\Zed\PriceStorage\Communication\Plugin\Event\Listener\PriceProductConcretePublishStorageListener;
 use Spryker\Zed\PriceStorage\Communication\Plugin\Event\Listener\PriceProductConcreteStorageListener;
 use Spryker\Zed\PriceStorage\Communication\Plugin\Event\Listener\PriceTypeProductAbstractStorageListener;
 use Spryker\Zed\PriceStorage\Communication\Plugin\Event\Listener\PriceTypeProductConcreteStorageListener;
@@ -32,6 +34,10 @@ class PriceStorageEventSubscriber extends AbstractPlugin implements EventSubscri
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
+            ->addListenerQueued(PriceEvents::PRICE_ABSTRACT_PUBLISH, new PriceProductAbstractPublishStorageListener())
+            ->addListenerQueued(PriceEvents::PRICE_ABSTRACT_UNPUBLISH, new PriceProductAbstractPublishStorageListener())
+            ->addListenerQueued(PriceEvents::PRICE_CONCRETE_PUBLISH, new PriceProductConcretePublishStorageListener())
+            ->addListenerQueued(PriceEvents::PRICE_CONCRETE_UNPUBLISH, new PriceProductConcretePublishStorageListener())
             ->addListenerQueued(PriceEvents::ENTITY_SPY_PRICE_PRODUCT_CREATE, new PriceProductAbstractStorageListener())
             ->addListenerQueued(PriceEvents::ENTITY_SPY_PRICE_PRODUCT_CREATE, new PriceProductConcreteStorageListener())
             ->addListenerQueued(PriceEvents::ENTITY_SPY_PRICE_PRODUCT_UPDATE, new PriceProductAbstractStorageListener())

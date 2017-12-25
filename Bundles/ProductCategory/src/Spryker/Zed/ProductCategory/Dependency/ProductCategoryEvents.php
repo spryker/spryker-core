@@ -14,6 +14,22 @@ interface ProductCategoryEvents
 
     /**
      * Specification
+     * - This events will be used for product_category publishing
+     *
+     * @api
+     */
+    const PRODUCT_CATEGORY_PUBLISH = 'ProductCategory.category.publish';
+
+    /**
+     * Specification
+     * - This events will be used for product_category un-publishing
+     *
+     * @api
+     */
+    const PRODUCT_CATEGORY_UNPUBLISH = 'ProductCategory.category.unpublish';
+
+    /**
+     * Specification
      * - This events will be used for spy_product_category entity creation
      *
      * @api

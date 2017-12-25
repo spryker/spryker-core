@@ -24,9 +24,15 @@ class CmsPageStorageListener extends AbstractCmsPageStorageListener implements E
         $this->preventTransaction();
         $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE) {
+        if (
+            $eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE ||
+            $eventName === CmsEvents::CMS_VERSION_PUBLISH
+        ) {
             $this->publish($cmsPageIds);
-        } else if ($eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE) {
+        } else if (
+            $eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE ||
+            $eventName === CmsEvents::CMS_VERSION_UNPUBLISH
+        ) {
             $this->unpublish($cmsPageIds);
         }
     }

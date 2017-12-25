@@ -35,6 +35,8 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
         $this->addCategoryTreeEvents($eventCollection);
 
         $eventCollection
+            ->addListenerQueued(CategoryEvents::CATEGORY_NODE_PUBLISH, new CategoryNodeStorageListener())
+            ->addListenerQueued(CategoryEvents::CATEGORY_NODE_UNPUBLISH, new CategoryNodeStorageListener())
             ->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_CREATE, new CategoryNodeStorageListener())
             ->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_UPDATE, new CategoryNodeStorageListener())
             ->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE, new CategoryNodeStorageListener())
@@ -59,6 +61,8 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     protected function addCategoryTreeEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
+            ->addListenerQueued(CategoryEvents::CATEGORY_TREE_PUBLISH, new CategoryTreeStorageListener())
+            ->addListenerQueued(CategoryEvents::CATEGORY_TREE_UNPUBLISH, new CategoryTreeStorageListener())
             ->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_CREATE, new CategoryTreeStorageListener())
             ->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_UPDATE, new CategoryTreeStorageListener())
             ->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_DELETE, new CategoryTreeStorageListener())

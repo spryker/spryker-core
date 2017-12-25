@@ -29,6 +29,8 @@ class ProductReviewSearchEventSubscriber extends AbstractPlugin implements Event
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
+            ->addListenerQueued(ProductReviewEvents::PRODUCT_REVIEW_PUBLISH, new ProductReviewSearchListener())
+            ->addListenerQueued(ProductReviewEvents::PRODUCT_REVIEW_UNPUBLISH, new ProductReviewSearchListener())
             ->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_CREATE, new ProductReviewSearchListener())
             ->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_UPDATE, new ProductReviewSearchListener())
             ->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_DELETE, new ProductReviewSearchListener());

@@ -35,6 +35,22 @@ interface CmsEvents
 
     /**
      * Specification
+     * - This events will be used for cms version publish
+     *
+     * @api
+     */
+    const CMS_VERSION_PUBLISH = 'Cms.version.publish';
+
+    /**
+     * Specification
+     * - This events will be used for cms version publish
+     *
+     * @api
+     */
+    const CMS_VERSION_UNPUBLISH = 'Cms.version.unpublish';
+
+    /**
+     * Specification
      * - This events will be used for spy_cms_version entity creation
      *
      * @api

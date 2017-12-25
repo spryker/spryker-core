@@ -33,11 +33,16 @@ class UrlStorageListener extends AbstractUrlStorageListener implements EventBulk
         $this->preventTransaction();
         $urlIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === UrlEvents::ENTITY_SPY_URL_CREATE || $eventName === UrlEvents::ENTITY_SPY_URL_UPDATE ) {
-            $this->publish($urlIds);
-        } elseif($eventName === UrlEvents::ENTITY_SPY_URL_DELETE) {
+
+        if( $eventName === UrlEvents::ENTITY_SPY_URL_DELETE ||
+            $eventName === UrlEvents::URL_UNPUBLISH
+        ) {
             $this->unpublish($urlIds);
+
+            return;
         }
+
+        $this->publish($urlIds);
     }
 
 }
