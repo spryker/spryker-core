@@ -189,6 +189,7 @@ class Worker implements WorkerInterface
         if ($message->getQueueMessage() !== null) {
             $this->queueClient->reject($message);
             for ($i = 0; $i < $numberOfWorkers; $i++) {
+                usleep((int)$this->queueConfig->getQueueProcessTriggerInterval());
                 $processes[] = $this->processManager->triggerQueueProcess($command, $queue);
             }
         } else {

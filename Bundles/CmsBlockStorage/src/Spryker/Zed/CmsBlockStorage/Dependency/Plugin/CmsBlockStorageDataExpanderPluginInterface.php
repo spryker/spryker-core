@@ -18,7 +18,9 @@ interface CmsBlockStorageDataExpanderPluginInterface
      *
      * @param array $cmsBlockData
      *
+     * @param string $localeName
+     *
      * @return array
      */
-    public function expand(array $cmsBlockData);
+    public function expand(array $cmsBlockData, $localeName);
 }

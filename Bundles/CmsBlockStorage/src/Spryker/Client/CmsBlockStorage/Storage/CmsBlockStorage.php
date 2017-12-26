@@ -46,7 +46,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
         $searchKeys = [];
 
         foreach ($blockNames as $blockName) {
-            $searchKeys[] = $this->generateKey($blockName);
+            $searchKeys[] = $this->generateKey($blockName, CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME, $localeName);
         }
 
         $resultArray = $this->storageClient->getMulti($searchKeys) ?: [];
@@ -134,6 +134,8 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     {
         foreach ($blockName as $item) {
             if (!is_array($item)) {
+                $blockOptionNames[] = $item;
+
                 continue;
             }
 
@@ -187,13 +189,15 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     /**
      * @param string $blockKey
      * @param string $resourceName
+     * @param string $localeName
      *
      * @return string
      */
-    protected function generateKey($blockKey, $resourceName = CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME)
+    protected function generateKey($blockKey, $resourceName = CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME, $localeName = null)
     {
         $blockName = $this->generateBlockNameKey($blockKey);
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
+        $synchronizationDataTransfer->setLocale($localeName);
         $synchronizationDataTransfer->setReference($blockName);
 
         return $this->synchronizationService->getStorageKeyBuilder($resourceName)->generateKey($synchronizationDataTransfer);

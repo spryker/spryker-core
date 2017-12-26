@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -37,7 +36,7 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
     protected function publish(array $cmsBlockIds)
     {
         $blockEntities = $this->findCmsBlockEntities($cmsBlockIds);
-        $blockStorageEntities = $this->findCmsBlockStorageEntities($cmsBlockIds);
+        $blockStorageEntities = $this->findCmsStorageEntities($cmsBlockIds);
 
         $this->storeData($blockEntities, $blockStorageEntities);
     }
@@ -53,7 +52,7 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
      */
     protected function unpublish(array $cmsBlockIds)
     {
-        $blockStorageEntities = $this->findCmsBlockStorageEntities($cmsBlockIds);
+        $blockStorageEntities = $this->findCmsStorageEntities($cmsBlockIds);
         foreach ($blockStorageEntities as $blockStorageEntity) {
             $blockStorageEntity->delete();
         }
@@ -62,59 +61,46 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
     /**
      * @param array $blockEntities
      * @param array $blockStorageEntities
-     * @param bool $createIfNotExists
-     * @param bool $refresh
      *
      * @return void
      */
-    protected function storeData(array $blockEntities, array $blockStorageEntities, $createIfNotExists = true, $refresh = false)
+    protected function storeData(array $blockEntities, array $blockStorageEntities)
     {
+        $localeNames = $this->getStore()->getLocales();
+
         foreach ($blockEntities as $blockEntityArray) {
-            $idCmsBlock = $blockEntityArray[static::ID_CMS_BLOCK];
-            if (isset($blockStorageEntities[$idCmsBlock])) {
-                $this->storeDataSet($blockEntityArray, $blockStorageEntities[$idCmsBlock], $refresh);
-            } elseif ($createIfNotExists) {
-                $this->storeDataSet($blockEntityArray, null, $refresh);
+            foreach ($localeNames as $localeName) {
+                $idCmsBlock = $blockEntityArray[static::ID_CMS_BLOCK];
+                if (isset($blockStorageEntities[$idCmsBlock][$localeName])) {
+                    $this->storeDataSet($blockEntityArray, $blockStorageEntities[$idCmsBlock][$localeName], $localeName);
+                } else {
+                    $this->storeDataSet($blockEntityArray, null, $localeName);
+                }
             }
         }
     }
 
     /**
      * @param array $blockEntityArray
-     * @param \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage|null $blockStorageEntity
-     * @param bool $refresh
-     *
-     * @return void
-     */
-    protected function storeDataSet(array $blockEntityArray, SpyCmsBlockStorage $blockStorageEntity = null, $refresh = false)
-    {
-        $this->saveCmsBlockStorageDataSet($blockEntityArray, $blockStorageEntity, $refresh);
-    }
-
-    /**
-     * @param array $blockEntityArray
      * @param \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage|null $cmsBlockStorageEntity
-     * @param bool $refresh
+     * @param string $localeName
      *
      * @return void
      */
-    protected function saveCmsBlockStorageDataSet(array $blockEntityArray, $cmsBlockStorageEntity = null, $refresh = false)
+    protected function storeDataSet(array $blockEntityArray, SpyCmsBlockStorage $cmsBlockStorageEntity = null, $localeName)
     {
         if ($cmsBlockStorageEntity === null) {
             $cmsBlockStorageEntity = new SpyCmsBlockStorage();
         }
+
         $blockEntityArray = $this->getFactory()->getUtilSynchronization()->arrayFilterRecursive($blockEntityArray);
-
-        if ($refresh) {
-            $blockEntityArray = array_replace_recursive($cmsBlockStorageEntity->getData(), $blockEntityArray);
-        }
-
         foreach ($this->getFactory()->getContentWidgetDataExpanderPlugins() as $contentWidgetDataExpanderPlugin) {
-            $blockEntityArray = $contentWidgetDataExpanderPlugin->expand($blockEntityArray);
+            $blockEntityArray = $contentWidgetDataExpanderPlugin->expand($blockEntityArray, $localeName);
         }
 
         $cmsBlockStorageEntity->setData($blockEntityArray);
         $cmsBlockStorageEntity->setFkCmsBlock($blockEntityArray[static::ID_CMS_BLOCK]);
+        $cmsBlockStorageEntity->setLocale($localeName);
         $cmsBlockStorageEntity->setName($blockEntityArray['name']);
         $cmsBlockStorageEntity->save();
     }
@@ -134,8 +120,22 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
      *
      * @return array
      */
-    protected function findCmsBlockStorageEntities(array $cmsBlockIds)
+    protected function findCmsStorageEntities(array $cmsBlockIds)
     {
-        return $this->getQueryContainer()->queryCmsStorageEntities($cmsBlockIds)->find()->toKeyIndex(static::FK_CMS_BLOCK);
+        $spyCmsBlockStorageEntities = $this->getQueryContainer()->queryCmsStorageEntities($cmsBlockIds)->find();
+        $cmsBlockStorageEntitiesByIdAndLocale = [];
+        foreach ($spyCmsBlockStorageEntities as $spyCmsBlockStorageEntity) {
+            $cmsBlockStorageEntitiesByIdAndLocale[$spyCmsBlockStorageEntity->getFkCmsBlock()][$spyCmsBlockStorageEntity->getLocale()] = $spyCmsBlockStorageEntity;
+        }
+
+        return $cmsBlockStorageEntitiesByIdAndLocale;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    protected function getStore()
+    {
+        return Store::getInstance();
     }
 }

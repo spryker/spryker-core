@@ -20,21 +20,21 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CmsBlockStorageStorageParameterMapExpanderPlugin extends AbstractPlugin implements CmsBlockStorageDataExpanderPluginInterface
 {
+
     /**
      * @api
      *
      * @param array $collectedData
+     * @param string $localeName
      *
      * @return array
      */
-    public function expand(array $collectedData)
+    public function expand(array $collectedData, $localeName)
     {
-        //TODO Fix this for all locales
-        $locale = Store::getInstance()->getCurrentLocale();
         $placeholders = $this->gePlaceholders($collectedData);
 
         $cmsBlockData['placeholders'] = $placeholders;
-        $localeTransfer = (new LocaleTransfer())->setLocaleName($locale);
+        $localeTransfer = (new LocaleTransfer())->setLocaleName($localeName);
         $data = $this->getFacade()->expandCmsBlockCollectorData($cmsBlockData, $localeTransfer);
         $collectedData[CmsContentWidgetConfig::CMS_CONTENT_WIDGET_PARAMETER_MAP] = $data[CmsContentWidgetConfig::CMS_CONTENT_WIDGET_PARAMETER_MAP];
 
