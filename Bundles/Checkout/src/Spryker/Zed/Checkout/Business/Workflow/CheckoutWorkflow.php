@@ -185,13 +185,28 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     protected function doPreSave(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         foreach ($this->preSaveStack as $preSavePlugin) {
-            if ($preSavePlugin instanceof CheckoutPreSaveHookInterface) {
-                $quoteTransfer = $preSavePlugin->preSave($quoteTransfer, $checkoutResponseTransfer);
-            } else {
-                $quoteTransfer = $preSavePlugin->preSave($quoteTransfer);
-            }
+            $quoteTransfer = $this->doPreSaveExecutePlugin($preSavePlugin, $quoteTransfer, $checkoutResponseTransfer);
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface $preSavePlugin
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function doPreSaveExecutePlugin(
+        $preSavePlugin,
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ) {
+        if ($preSavePlugin instanceof CheckoutPreSaveHookInterface) {
+            return $preSavePlugin->preSave($quoteTransfer, $checkoutResponseTransfer);
+        }
+
+        return $preSavePlugin->preSave($quoteTransfer);
     }
 }
