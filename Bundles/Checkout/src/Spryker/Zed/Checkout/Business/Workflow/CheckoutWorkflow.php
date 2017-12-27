@@ -194,7 +194,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     /**
      * @param \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface|\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface $preSavePlugin
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer Deprecated: Will be removed with CheckoutPreSaveHookInterface (LTS)
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
