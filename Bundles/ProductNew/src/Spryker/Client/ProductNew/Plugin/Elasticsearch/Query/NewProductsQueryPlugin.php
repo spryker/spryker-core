@@ -81,7 +81,7 @@ class NewProductsQueryPlugin extends AbstractPlugin implements QueryInterface
             ->getLabelNewName();
 
         $storageProductLabelTransfer = $this->getFactory()
-            ->getProductLabelClient()
+            ->getProductLabelStorageClient()
             ->findLabelByName($labelName, $localeName);
 
         $stringFacetFieldFilter = $this->createStringFacetFieldFilter(ProductLabelFacetConfigTransferBuilderPlugin::NAME);

@@ -9,15 +9,15 @@ namespace Spryker\Client\ProductNew;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\ProductLabel\ProductLabelClient;
+use Spryker\Client\ProductNew\Dependency\Client\ProductNewToProductLabelStorageClientBridge;
+use Spryker\Client\ProductNew\Dependency\Client\ProductNewToSearchClientBridge;
 use Spryker\Client\ProductNew\Plugin\Elasticsearch\Query\NewProductsQueryPlugin;
-use Spryker\Client\Search\SearchClient;
 use Spryker\Shared\Kernel\Store;
 
 class ProductNewDependencyProvider extends AbstractDependencyProvider
 {
     const CLIENT_SEARCH = 'CLIENT_SEARCH';
-    const CLIENT_PRODUCT_LABEL = 'CLIENT_PRODUCT_LABEL';
+    const CLIENT_PRODUCT_LABEL_STORAGE = 'CLIENT_PRODUCT_LABEL_STORAGE';
     const STORE = 'STORE';
     const NEW_PRODUCTS_QUERY_PLUGIN = 'NEW_PRODUCTS_QUERY_PLUGIN';
     const NEW_PRODUCTS_QUERY_EXPANDER_PLUGINS = 'NEW_PRODUCTS_QUERY_EXPANDER_PLUGINS';
@@ -31,7 +31,7 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addSearchClient($container);
-        $container = $this->addProductLabelClient($container);
+        $container = $this->addProductLabelStorageClient($container);
         $container = $this->addStore($container);
         $container = $this->addNewProductsQueryPlugin($container);
         $container = $this->addNewProductsQueryExpanderPlugins($container);
@@ -47,9 +47,8 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSearchClient(Container $container)
     {
-        $container[self::CLIENT_SEARCH] = function () {
-            // TODO: use bridge + locator
-            return new SearchClient();
+        $container[self::CLIENT_SEARCH] = function (Container $container) {
+            return new ProductNewToSearchClientBridge($container->getLocator()->search()->client());
         };
 
         return $container;
@@ -60,11 +59,10 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addProductLabelClient(Container $container)
+    protected function addProductLabelStorageClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT_LABEL] = function () {
-            // TODO: use bridge + locator
-            return new ProductLabelClient();
+        $container[self::CLIENT_PRODUCT_LABEL_STORAGE] = function (Container $container) {
+            return new ProductNewToProductLabelStorageClientBridge($container->getLocator()->productLabelStorage()->client());
         };
 
         return $container;
@@ -78,7 +76,6 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
     protected function addStore(Container$container)
     {
         $container[self::STORE] = function () {
-            // TODO: use bridge + locator + new store module
             return Store::getInstance();
         };
 

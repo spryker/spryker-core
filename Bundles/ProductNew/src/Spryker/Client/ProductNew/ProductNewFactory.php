@@ -8,6 +8,8 @@
 namespace Spryker\Client\ProductNew;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductNew\Dependency\Client\ProductNewToProductLabelStorageClientInterface;
+use Spryker\Client\ProductNew\Dependency\Client\ProductNewToSearchClientInterface;
 
 class ProductNewFactory extends AbstractFactory
 {
@@ -28,11 +30,11 @@ class ProductNewFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductLabel\ProductLabelClientInterface
+     * @return ProductNewToProductLabelStorageClientInterface
      */
-    public function getProductLabelClient()
+    public function getProductLabelStorageClient()
     {
-        return $this->getProvidedDependency(ProductNewDependencyProvider::CLIENT_PRODUCT_LABEL);
+        return $this->getProvidedDependency(ProductNewDependencyProvider::CLIENT_PRODUCT_LABEL_STORAGE);
     }
 
     /**
@@ -52,7 +54,7 @@ class ProductNewFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\SearchClientInterface
+     * @return ProductNewToSearchClientInterface
      */
     public function getSearchClient()
     {
