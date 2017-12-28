@@ -31,15 +31,4 @@ class CmsContentWidgetProductSetConnectorToProductBridge implements CmsContentWi
     {
         return $this->productClient->getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
     }
-
-    /**
-     * @param array $data
-     * @param array $selectedAttributes
-     *
-     * @return \Generated\Shared\Transfer\StorageProductTransfer
-     */
-    public function mapStorageProductForCurrentLocale(array $data, array $selectedAttributes = [])
-    {
-        return $this->productClient->mapStorageProductForCurrentLocale($data, $selectedAttributes);
-    }
 }
