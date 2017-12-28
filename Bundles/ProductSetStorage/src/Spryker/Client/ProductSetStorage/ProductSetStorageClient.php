@@ -14,4 +14,36 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ProductSetStorageClient extends AbstractClient implements ProductSetStorageClientInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $productSetStorageData
+     *
+     * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer
+     */
+    public function mapProductSetStorageDataToTransfer(array $productSetStorageData)
+    {
+        return $this
+            ->getFactory()
+            ->createProductSetStorageMapper()
+            ->mapDataToTransfer($productSetStorageData);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductSet
+     *
+     * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer|null
+     */
+    public function getProductSetByIdProductSet($idProductSet, $localeName)
+    {
+        return $this->getFactory()
+            ->createProductSetStorage()
+            ->getProductSetByIdProductSet($idProductSet, $localeName);
+    }
 }

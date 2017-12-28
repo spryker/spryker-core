@@ -8,11 +8,19 @@
 namespace Spryker\Client\ProductSetStorage\Plugin;
 
 use Generated\Shared\Transfer\SpyUrlTransfer;
+use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
+use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\ProductSetStorage\ProductSetStorageFactory;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
-use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\ProductSetStorage\ProductSetStorageConstants;
 
-class UrlStorageProductSetMapperPlugin implements UrlStorageResourceMapperPluginInterface
+/**
+ * Class UrlStorageProductSetMapperPlugin
+ *
+ * @method ProductSetStorageFactory getFactory()
+ */
+class UrlStorageProductSetMapperPlugin extends AbstractPlugin implements UrlStorageResourceMapperPluginInterface
 {
 
     /**
@@ -24,19 +32,42 @@ class UrlStorageProductSetMapperPlugin implements UrlStorageResourceMapperPlugin
     public function map(SpyUrlTransfer $spyUrlTransfer, $options = [])
     {
         $urlStorageResourceMapTransfer = new UrlStorageResourceMapTransfer();
-        $storeName = Store::getInstance()->getStoreName();
-        if ($spyUrlTransfer->getFkResourceProductSet()) {
-            $resourceKey = sprintf(
-                '%s.%s.resource.product_set.%d',
-                strtolower($storeName),
-                $options['locale'],
-                $spyUrlTransfer->getFkResourceProductSet()
-            );
+        $idProductSet = $spyUrlTransfer->getFkResourceProductSet();
+        if ($idProductSet) {
+            $resourceKey = $this->generateKey($idProductSet, $options['locale']);
             $urlStorageResourceMapTransfer->setResourceKey($resourceKey);
-            $urlStorageResourceMapTransfer->setType('product_set');
+            $urlStorageResourceMapTransfer->setType(ProductSetStorageConstants::PRODUCT_SET_RESOURCE_NAME);
         }
 
         return $urlStorageResourceMapTransfer;
+    }
+
+    /**
+     * @param int $idProductSet
+     * @param string $locale
+     *
+     * @return string
+     */
+    protected function generateKey($idProductSet, $locale)
+    {
+        $synchronizationDataTransfer = new SynchronizationDataTransfer();
+        $synchronizationDataTransfer->setStore($this->getStoreName());
+        $synchronizationDataTransfer->setLocale($locale);
+        $synchronizationDataTransfer->setReference($idProductSet);
+
+        return $this->getFactory()
+            ->getSynchronizationService()
+            ->getStorageKeyBuilder(ProductSetStorageConstants::PRODUCT_SET_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStoreName()
+    {
+        return $this->getFactory()
+            ->getStore()
+            ->getStoreName();
     }
 
 }
