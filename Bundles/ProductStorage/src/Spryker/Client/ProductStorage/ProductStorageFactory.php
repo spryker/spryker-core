@@ -92,7 +92,7 @@ class ProductStorageFactory extends AbstractFactory
      */
     protected function getStorageProductExpanderPlugins()
     {
-        return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGIN_STORAGE_PRODUCT_EXPANDERS);
+        return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGIN_PRODUCT_VIEW_EXPANDERS);
     }
 
     /**

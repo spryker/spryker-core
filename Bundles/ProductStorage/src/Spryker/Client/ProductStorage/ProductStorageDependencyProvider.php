@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleBridge;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientBridge;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceBridge;
-use Spryker\Client\ProductStorage\Plugin\ProductViewVariantExpanderPlugin;
 use Spryker\Shared\Kernel\Store;
 
 class ProductStorageDependencyProvider extends AbstractDependencyProvider
@@ -21,7 +20,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     const STORE = 'STORE';
-    const PLUGIN_STORAGE_PRODUCT_EXPANDERS = 'PLUGIN_STORAGE_PRODUCT_EXPANDERS';
+    const PLUGIN_PRODUCT_VIEW_EXPANDERS = 'PLUGIN_STORAGE_PRODUCT_EXPANDERS';
     const SERVICE_ENCODING = 'SERVICE_ENCODING';
 
     /**
@@ -104,7 +103,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductViewExpanderPlugins(Container $container)
     {
-        $container[static::PLUGIN_STORAGE_PRODUCT_EXPANDERS] = function () {
+        $container[static::PLUGIN_PRODUCT_VIEW_EXPANDERS] = function () {
             return $this->getProductViewExpanderPlugins();
         };
 
