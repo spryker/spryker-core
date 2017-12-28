@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\ProductRelationStorage;
 
-use Spryker\Client\PriceStorage\Plugin\ProductViewPriceExpanderPlugin;
-use Spryker\Client\ProductImageStorage\Plugin\ProductViewImageExpanderPlugin;
 use Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientInterface;
 use Spryker\Client\ProductRelationStorage\Relation\RelatedProductReader;
 use Spryker\Client\ProductRelationStorage\Relation\RelatedProductReaderInterface;
@@ -81,10 +79,6 @@ class ProductRelationStorageFactory extends AbstractFactory
      */
     protected function getRelatedProductExpanderPlugins()
     {
-        // TODO: get from project level dependency provider
-        return [
-            new ProductViewPriceExpanderPlugin(),
-            new ProductViewImageExpanderPlugin(),
-        ];
+        return $this->getProvidedDependency(ProductRelationStorageDependencyProvider::PLUGIN_RELATED_PRODUCT_EXPANDERS);
     }
 }
