@@ -22,10 +22,10 @@ class CustomerPreConditionCheckerPlugin extends AbstractPlugin implements Checko
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->getFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
+        return $this->getFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
     }
 }

@@ -23,11 +23,11 @@ interface SortConfigBuilderInterface
     /**
      * @api
      *
-     * @param string $parameterName
+     * @param string $name
      *
      * @return \Generated\Shared\Transfer\SortConfigTransfer|null
      */
-    public function get($parameterName);
+    public function get($name);
 
     /**
      * @api

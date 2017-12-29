@@ -32,7 +32,7 @@ class CheckoutGrandTotalPreCondition implements CheckoutGrandTotalPreConditionIn
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function validateCheckoutGrandTotal(
         QuoteTransfer $quoteTransfer,
@@ -49,7 +49,10 @@ class CheckoutGrandTotalPreCondition implements CheckoutGrandTotalPreConditionIn
                 ->setMessage('Checkout grand total changed.');
 
             $checkoutResponseTransfer->addError($error);
+            return false;
         }
+
+        return true;
     }
 
     /**

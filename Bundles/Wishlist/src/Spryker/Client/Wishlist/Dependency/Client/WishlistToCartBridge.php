@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 class WishlistToCartBridge implements WishlistToCartInterface
 {
     /**
-     * @var \Spryker\Client\Product\ProductClientInterface
+     * @var \Spryker\Client\Cart\CartClientInterface
      */
     protected $cartClient;
 

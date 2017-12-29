@@ -68,11 +68,29 @@
 
     <transfer name="ProductOptionValue">
         <property name="idProductOptionValue" type="int" />
-        <property name="price" type="int" />
+        <property name="prices" type="MoneyValue[]" singular="price" />
         <property name="sku" type="string" />
         <property name="fkProductOptionGroup" type="int" />
         <property name="value" type="string" />
         <property name="optionHash" type="string" />
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="idEntity" type="int" />
+        <property name="fkCurrency" type="int" />
+        <property name="fkStore"  type="int"/>
+        <property name="currency" type="Currency" />
+        <property name="netAmount" type="int" />
+        <property name="grossAmount" type="int" />
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string" />
+    </transfer>
+
+    <transfer name="Money">
+        <property name="amount" type="string" />
+        <property name="currency" type="Currency" />
     </transfer>
 
     <transfer name="ProductOptionTranslation">
@@ -113,7 +131,16 @@
         <property name="idProductOptionValue" type="int" />
         <property name="sku" type="string" />
         <property name="price" type="int" />
+        <property name="prices" type="array" />
         <property name="value" type="string" />
+    </transfer>
+
+    <transfer name="ProductOptionValueStorePricesRequest">
+        <property name="prices" type="MoneyValue[]" singular="price" />
+    </transfer>
+
+    <transfer name="ProductOptionValueStorePricesResponse">
+        <property name="storePrices" type="array" />
     </transfer>
 
 </transfers>

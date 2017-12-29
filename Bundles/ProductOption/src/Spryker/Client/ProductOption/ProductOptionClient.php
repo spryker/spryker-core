@@ -15,13 +15,12 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductOptionClient extends AbstractClient implements ProductOptionClientInterface
 {
     /**
-     * Specification:
-     *   - Reads product option from Yves store
+     * {@inheritdoc}
      *
      * @api
      *
      * @param int $idAbstractProduct
-     * @param int $localeName
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\StorageProductOptionGroupCollectionTransfer
      */

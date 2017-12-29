@@ -29,6 +29,8 @@ class ProductManagementProductCreateCest
      */
     public function breadcrumbIsVisible(ProductManagementCommunicationTester $i)
     {
+        $i->registerMoneyCollectionFormTypePlugin();
+
         $i->amOnPage(ProductManagementProductCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Create a Product');
     }

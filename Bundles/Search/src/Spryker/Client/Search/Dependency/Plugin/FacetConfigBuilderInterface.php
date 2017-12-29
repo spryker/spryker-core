@@ -22,11 +22,11 @@ interface FacetConfigBuilderInterface
     /**
      * @api
      *
-     * @param string $paramName
+     * @param string $facetName
      *
      * @return \Generated\Shared\Transfer\FacetConfigTransfer|null
      */
-    public function get($paramName);
+    public function get($facetName);
 
     /**
      * @api

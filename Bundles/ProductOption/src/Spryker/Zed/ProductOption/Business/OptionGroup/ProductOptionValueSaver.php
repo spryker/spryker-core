@@ -10,19 +10,24 @@ use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
 
 class ProductOptionValueSaver implements ProductOptionValueSaverInterface
 {
     /**
+     * @var \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceSaverInterface
+     */
+    protected $productOptionPriceSaver;
+
+    /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
     protected $productOptionQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface
      */
     protected $touchFacade;
 
@@ -32,15 +37,18 @@ class ProductOptionValueSaver implements ProductOptionValueSaverInterface
     protected $translationSaver;
 
     /**
+     * @param \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceSaverInterface $productOptionPriceSaver
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface $touchFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface $touchFacade
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface $translationSaver
      */
     public function __construct(
+        ProductOptionValuePriceSaverInterface $productOptionPriceSaver,
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
-        ProductOptionToTouchInterface $touchFacade,
+        ProductOptionToTouchFacadeInterface $touchFacade,
         TranslationSaverInterface $translationSaver
     ) {
+        $this->productOptionPriceSaver = $productOptionPriceSaver;
         $this->productOptionQueryContainer = $productOptionQueryContainer;
         $this->touchFacade = $touchFacade;
         $this->translationSaver = $translationSaver;
@@ -54,7 +62,7 @@ class ProductOptionValueSaver implements ProductOptionValueSaverInterface
     public function saveProductOptionValue(ProductOptionValueTransfer $productOptionValueTransfer)
     {
         $productOptionValueTransfer->requireFkProductOptionGroup()
-            ->requirePrice()
+            ->requirePrices()
             ->requireSku()
             ->requireValue();
 
@@ -63,6 +71,7 @@ class ProductOptionValueSaver implements ProductOptionValueSaverInterface
         $producOptionValueEntity->save();
 
         $productOptionValueTransfer->setIdProductOptionValue($producOptionValueEntity->getIdProductOptionValue());
+        $this->productOptionPriceSaver->save($productOptionValueTransfer);
 
         return $producOptionValueEntity->getIdProductOptionValue();
     }
@@ -140,14 +149,14 @@ class ProductOptionValueSaver implements ProductOptionValueSaverInterface
     }
 
     /**
-     * @param int $idProductOptionValue
+     * @param int|mixed $idProductOptionValue
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
      */
     protected function getProductOptionValueById($idProductOptionValue)
     {
         $productOptionValueEntity = $this->productOptionQueryContainer
-            ->queryProductOptionByValueId((int)$idProductOptionValue)
+            ->queryProductOptionByValueId($idProductOptionValue)
             ->findOne();
 
         return $productOptionValueEntity;

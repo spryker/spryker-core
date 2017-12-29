@@ -23,7 +23,8 @@ class ProductRelationFactory extends AbstractFactory
         return new ProductRelationStorage(
             $this->getStorage(),
             $this->createProductRelationKeyBuilder(),
-            $localeName
+            $localeName,
+            $this->getPriceProductClient()
         );
     }
 
@@ -49,5 +50,13 @@ class ProductRelationFactory extends AbstractFactory
     public function getLocaleClient()
     {
         return $this->getProvidedDependency(ProductRelationDependencyProvider::CLIENT_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductRelation\Dependency\Client\ProductRelationToPriceProductInterface
+     */
+    public function getPriceProductClient()
+    {
+        return $this->getProvidedDependency(ProductRelationDependencyProvider::CLIENT_PRICE_PRODUCT);
     }
 }

@@ -170,7 +170,8 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
         return new AvailableProductTable(
             $this->createRelatedProductTableQueryBuilder(),
             $this->getMoneyFacade(),
-            $idProductLabel
+            $idProductLabel,
+            $this->getPriceProductFacade()
         );
     }
 
@@ -184,7 +185,8 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
         return new AssignedProductTable(
             $this->createRelatedProductTableQueryBuilder(),
             $this->getMoneyFacade(),
-            $idProductLabel
+            $idProductLabel,
+            $this->getPriceProductFacade()
         );
     }
 
@@ -198,7 +200,8 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
         return new RelatedProductOverviewTable(
             $this->createRelatedProductTableQueryBuilder(),
             $this->getMoneyFacade(),
-            $idProductLabel
+            $idProductLabel,
+            $this->getPriceProductFacade()
         );
     }
 
@@ -229,5 +232,13 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     protected function getMoneyFacade()
     {
         return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::FACADE_MONEY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductFacadeInterface
+     */
+    protected function getPriceProductFacade()
+    {
+        return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 }

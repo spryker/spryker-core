@@ -48,14 +48,17 @@ class ProductOptionEditCest
 
         $i->assertEquals($idTaxSet, $i->grabValueFrom('#product_option_general_fkTaxSet'));
 
-        $i->click('//*[@id="product_option_general_productOptionValues_1"]/div[4]/div/input');
+        $i->click('//*[@id="product_option_general_productOptionValues_0_prices_0_gross_amount"]');
         $i->submitProductGroupForm();
         $i->see(ProductOptionEditPage::PRODUCT_GROUP_EDIT_SUCCESS_MESSAGE);
 
-        $updatedOptionValueAmount = 25.00;
-        $i->fillField('#product_option_general_productOptionValues_0_price', $updatedOptionValueAmount);
+        $updatedOptionValueNetAmount = '27.00';
+        $updatedOptionValueGrossAmount = '32.00';
+        $i->fillField('#product_option_general_productOptionValues_0_prices_0_net_amount', $updatedOptionValueNetAmount);
+        $i->fillField('#product_option_general_productOptionValues_0_prices_0_gross_amount', $updatedOptionValueGrossAmount);
         $i->submitProductGroupForm();
-        $i->assertEquals($updatedOptionValueAmount, $i->grabValueFrom('#product_option_general_productOptionValues_0_price'));
+        $i->assertEquals($updatedOptionValueNetAmount, $i->grabValueFrom('#product_option_general_productOptionValues_0_prices_0_net_amount'));
+        $i->assertEquals($updatedOptionValueGrossAmount, $i->grabValueFrom('#product_option_general_productOptionValues_0_prices_0_gross_amount'));
 
         $i->wait(1);
 

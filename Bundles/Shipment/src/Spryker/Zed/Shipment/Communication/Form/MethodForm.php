@@ -156,6 +156,7 @@ class MethodForm extends AbstractType
             $this->moneyCollectionFormTypePlugin->getType(),
             [
                 ShipmentConstants::OPTION_AMOUNT_PER_STORE => true,
+                'required' => false,
             ]
         );
 

@@ -30,7 +30,7 @@ use Symfony\Component\Form\FormInterface;
 class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @param \Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider|null $productOptionGroupDataProvider
+     * @param \Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider $productOptionGroupDataProvider
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -64,7 +64,11 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductOptionValueForm()
     {
-        return new ProductOptionValueForm($this->getQueryContainer(), $this->createPriceTranformer());
+        return new ProductOptionValueForm(
+            $this->getMoneyCollectionFormTypePlugin(),
+            $this->getQueryContainer(),
+            $this->createPriceTranformer()
+        );
     }
 
     /**
@@ -128,6 +132,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductOptionListTable(
             $this->getQueryContainer(),
+            $this->getCurrencyFacade(),
             $this->getMoneyFacade()
         );
     }
@@ -175,7 +180,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface
      */
     public function getTaxFacade()
     {
@@ -183,7 +188,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface
      */
     public function getLocaleFacade()
     {
@@ -191,7 +196,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyFacadeInterface
      */
     public function getMoneyFacade()
     {
@@ -199,7 +204,15 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface
+     */
+    public function getCurrencyFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface
      */
     public function getGlossaryFacade()
     {
@@ -207,10 +220,18 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingServiceInterface
      */
     public function getUtilEncodingService()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    public function getMoneyCollectionFormTypePlugin()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::MONEY_COLLECTION_FORM_TYPE_PLUGIN);
     }
 }

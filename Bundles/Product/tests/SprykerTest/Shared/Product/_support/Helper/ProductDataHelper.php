@@ -35,6 +35,7 @@ class ProductDataHelper extends Module
             ->seed($productConcreteOverride)
             ->build();
 
+        $productConcreteTransfer->setAbstractSku($productAbstractTransfer->getSku());
         $productFacade->createProductConcrete($productConcreteTransfer);
 
         $this->debug(sprintf(

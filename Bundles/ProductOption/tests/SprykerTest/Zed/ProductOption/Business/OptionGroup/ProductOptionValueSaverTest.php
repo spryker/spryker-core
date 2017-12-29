@@ -6,12 +6,11 @@
 
 namespace SprykerTest\Zed\ProductOption\Business\OptionGroup;
 
+use ArrayObject;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver;
-use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface;
-use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use SprykerTest\Zed\ProductOption\Business\MockProvider;
 
 /**
@@ -27,32 +26,39 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
 class ProductOptionValueSaverTest extends MockProvider
 {
     /**
+     * @uses ProductOptionValueSaver::createProductOptionValueEntity()
+     * @uses SpyProductOptionValue::save()
+     *
      * @return void
      */
-    public function testSaveProductOptionValueShouldPersistProvidedOptionValue()
+    public function testSaveProductOptionValuePersistsProvidedOptionValue()
     {
-        $productOptionGroupSaverMock = $this->createProductOptionValueSaver();
-
+        // Assign
         $productOptionValueEntity = $this->createProductOptionValueEntityMock();
 
-        $productOptionValueEntity->expects($this->once())
-            ->method('save');
-
-        $productOptionGroupSaverMock
-            ->expects($this->once())
+        $productOptionValueSaver = $this->createProductOptionValueSaver();
+        $productOptionValueSaver
+            ->expects($this->any())
             ->method('createProductOptionValueEntity')
             ->willReturn($productOptionValueEntity);
 
-        $productOptionValueTransfer = new ProductOptionValueTransfer();
-        $productOptionValueTransfer->setFkProductOptionGroup(1);
-        $productOptionValueTransfer->setSku('testing_sku');
-        $productOptionValueTransfer->setPrice(120);
-        $productOptionValueTransfer->setValue('value');
+        $productOptionValueTransfer = (new ProductOptionValueTransfer())
+            ->setFkProductOptionGroup(1)
+            ->setSku('testing_sku')
+            ->setPrices(new ArrayObject([new MoneyValueTransfer()]))
+            ->setValue('value');
 
-        $productOptionGroupSaverMock->saveProductOptionValue($productOptionValueTransfer);
+        // Assert
+        $productOptionValueEntity->expects($this->once())
+            ->method('save');
+
+        // Act
+        $productOptionValueSaver->saveProductOptionValue($productOptionValueTransfer);
     }
 
     /**
+     * @uses SpyProductOptionValue::save()
+     *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue
      */
     protected function createProductOptionValueEntityMock()
@@ -63,41 +69,20 @@ class ProductOptionValueSaverTest extends MockProvider
     }
 
     /**
-     * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface|null $productOptionContainerMock
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface|null $touchFacadeMock
-     * @param \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface|null $translationSaverMock
+     * @uses ProductOptionValueSaver::createProductOptionValueEntity()
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface
      */
-    protected function createProductOptionValueSaver(
-        ProductOptionQueryContainerInterface $productOptionContainerMock = null,
-        ProductOptionToTouchInterface $touchFacadeMock = null,
-        TranslationSaverInterface $translationSaverMock = null
-    ) {
-
-        if (!$productOptionContainerMock) {
-            $productOptionContainerMock = $this->createProductOptionQueryContainerMock();
-        }
-
-        if (!$touchFacadeMock) {
-            $touchFacadeMock = $this->createTouchFacadeMock();
-        }
-
-        if (!$translationSaverMock) {
-            $translationSaverMock = $this->createTranslationSaverMock();
-        }
-
+    protected function createProductOptionValueSaver()
+    {
         return $this->getMockBuilder(ProductOptionValueSaver::class)
             ->setConstructorArgs([
-                $productOptionContainerMock,
-                $touchFacadeMock,
-                $translationSaverMock,
+                $this->createProductOptionValuePriceSaverMock(),
+                $this->createProductOptionQueryContainerMock(),
+                $this->createTouchFacadeMock(),
+                $this->createTranslationSaverMock(),
             ])
-            ->setMethods([
-                'getProductAbstractBySku',
-                'getOptionGroupById',
-                'createProductOptionValueEntity',
-            ])
+            ->setMethods(['createProductOptionValueEntity'])
             ->getMock();
     }
 }
