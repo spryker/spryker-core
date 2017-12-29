@@ -3,7 +3,9 @@
 namespace Spryker\Zed\ProductReviewSearch\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade;
 use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToEventBehaviorFacadeInterface;
+use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToProductPageSearchFacadeInterface;
 use Spryker\Zed\ProductReviewSearch\Dependency\Service\ProductReviewSearchToUtilSanitizeServiceInterface;
 use Spryker\Zed\ProductReviewSearch\ProductReviewSearchDependencyProvider;
 
@@ -44,6 +46,14 @@ class ProductReviewSearchCommunicationFactory extends AbstractCommunicationFacto
     public function getUtilEncoding()
     {
         return $this->getProvidedDependency(ProductReviewSearchDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return ProductReviewSearchToProductPageSearchFacadeInterface
+     */
+    public function getProductPageSearchFacade()
+    {
+        return $this->getProvidedDependency(ProductReviewSearchDependencyProvider::FACADE_PRODUCT_PAGE_SEARCH);
     }
 
 }

@@ -6,6 +6,7 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToEventBehaviorFacadeBridge;
+use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToProductPageSearchFacadeBridge;
 use Spryker\Zed\ProductReviewSearch\Dependency\QueryContainer\ProductReviewSearchToProductReviewQueryContainerBridge;
 use Spryker\Zed\ProductReviewSearch\Dependency\Service\ProductReviewSearchToUtilEncodingBridge;
 use Spryker\Zed\ProductReviewSearch\Dependency\Service\ProductReviewSearchToUtilSanitizeServiceBridge;
@@ -14,6 +15,7 @@ class ProductReviewSearchDependencyProvider extends AbstractBundleDependencyProv
 {
     const QUERY_CONTAINER_PRODUCT_REVIEW = 'QUERY_CONTAINER_PRODUCT_REVIEW';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    const FACADE_PRODUCT_PAGE_SEARCH = 'FACADE_PRODUCT_PAGE_SEARCH';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     const STORE = 'STORE';
@@ -39,6 +41,10 @@ class ProductReviewSearchDependencyProvider extends AbstractBundleDependencyProv
 
         $container[static::STORE] = function (Container $container) {
             return Store::getInstance();
+        };
+
+        $container[static::FACADE_PRODUCT_PAGE_SEARCH] = function (Container $container) {
+            return new ProductReviewSearchToProductPageSearchFacadeBridge($container->getLocator()->productPageSearch()->facade());
         };
 
         return $container;

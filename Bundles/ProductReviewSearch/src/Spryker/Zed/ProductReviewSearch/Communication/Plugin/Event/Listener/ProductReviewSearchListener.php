@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductReviewSearch\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
+use Spryker\Shared\ProductReviewSearch\ProductReviewSearchConfig;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
@@ -31,8 +32,15 @@ class ProductReviewSearchListener extends AbstractProductReviewSearchListener
     {
         $this->preventTransaction();
         $productReviewIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $productAbstractIds = $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransferForeignKeys($eventTransfers, SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT);
 
         $this->publish($productReviewIds);
+
+        if (!empty($productAbstractIds)) {
+            $this->getFactory()->getProductPageSearchFacade()->refresh($productAbstractIds, [ProductReviewSearchConfig::PLUGIN_PRODUCT_PAGE_RATING_DATA]);
+        }
     }
 
 }

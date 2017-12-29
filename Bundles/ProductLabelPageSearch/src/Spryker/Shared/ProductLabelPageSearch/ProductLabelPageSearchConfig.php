@@ -10,6 +10,9 @@ namespace Spryker\Shared\ProductLabelPageSearch;
 interface ProductLabelPageSearchConfig
 {
 
+    /**
+     * TODO add specification
+     */
     const PLUGIN_PRODUCT_LABEL_PAGE_DATA = 'PLUGIN_PRODUCT_LABEL_PAGE_DATA';
 
 }

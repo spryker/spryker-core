@@ -22,4 +22,11 @@ interface ProductReviewSearchQueryContainerInterface extends QueryContainerInter
      * @return SpyProductReviewQuery
      */
     public function queryProductReviewsByIdProductReviews(array $productReviewIds);
+
+    /**
+     * @param int $idAbstractProduct
+     *
+     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria|SpyProductReviewQuery
+     */
+    public function queryProductReviewRatingByIdAbstractProduct($idAbstractProduct);
 }

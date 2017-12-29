@@ -2,6 +2,7 @@
 
 namespace Spryker\Zed\ProductReviewSearch\Persistence;
 
+use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -12,15 +13,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductReviewSearchQueryContainer extends AbstractQueryContainer implements ProductReviewSearchQueryContainerInterface
 {
 
-    const FIELD_ID_PRODUCT_REVIEW = 'id_product_review';
-    const FIELD_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
-    const FIELD_FK_LOCALE = 'fk_locale';
-    const FIELD_CUSTOMER_REFERENCE = 'customer_reference';
-    const FIELD_CREATED_AT = 'created_at';
-    const FIELD_RATING = 'rating';
-    const FIELD_NICKNAME = 'nickname';
-    const FIELD_SUMMARY = 'summary';
-    const FIELD_DESCRIPTION = 'description';
+    const FIELD_FK_PRODUCT_ABSTRACT = ProductPageSearchTransfer::ID_PRODUCT_ABSTRACT;
+    const FIELD_AVERAGE_RATING = ProductPageSearchTransfer::AVERAGE_RATING;
+    const FIELD_COUNT = ProductPageSearchTransfer::REVIEW_COUNT;
 
     /**
      * @param array $productReviewIds
@@ -46,14 +41,24 @@ class ProductReviewSearchQueryContainer extends AbstractQueryContainer implement
             ->getProductReviewQuery()
             ->queryProductReview()
             ->filterByIdProductReview_In($productReviewIds);
-//            ->withColumn(SpyProductReviewTableMap::COL_ID_PRODUCT_REVIEW, static::FIELD_ID_PRODUCT_REVIEW)
-//            ->withColumn(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT, static::FIELD_FK_PRODUCT_ABSTRACT)
-//            ->withColumn(SpyProductReviewTableMap::COL_FK_LOCALE, static::FIELD_FK_LOCALE)
-//            ->withColumn(SpyProductReviewTableMap::COL_CUSTOMER_REFERENCE, static::FIELD_CUSTOMER_REFERENCE)
-//            ->withColumn(SpyProductReviewTableMap::COL_CREATED_AT, static::FIELD_CREATED_AT)
-//            ->withColumn(SpyProductReviewTableMap::COL_RATING, static::FIELD_RATING)
-//            ->withColumn(SpyProductReviewTableMap::COL_NICKNAME, static::FIELD_NICKNAME)
-//            ->withColumn(SpyProductReviewTableMap::COL_SUMMARY, static::FIELD_SUMMARY)
-//            ->withColumn(SpyProductReviewTableMap::COL_DESCRIPTION, static::FIELD_DESCRIPTION);
+    }
+
+    /**
+     * @param int $idAbstractProduct
+     *
+     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria|SpyProductReviewQuery
+     */
+    public function queryProductReviewRatingByIdAbstractProduct($idAbstractProduct)
+    {
+        return $this->getFactory()
+            ->getProductReviewQuery()
+            ->queryProductReview()
+            ->filterByFkProductAbstract($idAbstractProduct)
+            ->filterByStatus(SpyProductReviewTableMap::COL_STATUS_APPROVED)
+            ->withColumn(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT, static::FIELD_FK_PRODUCT_ABSTRACT)
+            ->withColumn(sprintf('AVG(%s)', SpyProductReviewTableMap::COL_RATING), static::FIELD_AVERAGE_RATING)
+            ->withColumn(sprintf('COUNT(%s)', SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT), static::FIELD_COUNT)
+            ->select([static::FIELD_FK_PRODUCT_ABSTRACT, static::FIELD_AVERAGE_RATING, static::FIELD_COUNT])
+            ->groupBy(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT);
     }
 }
