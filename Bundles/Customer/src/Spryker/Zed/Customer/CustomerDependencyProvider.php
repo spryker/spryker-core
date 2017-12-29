@@ -83,6 +83,10 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->utilDateTime()->service();
         };
 
+        $container[static::FACADE_LOCALE] = function (Container $container) {
+            return new CustomerToLocaleBridge($container->getLocator()->locale()->facade());
+        };
+
         $container = $this->addStore($container);
         $container = $this->addCustomerTransferExpanderPlugins($container);
         $container = $this->addUtilSanitizeService($container);

@@ -29,4 +29,12 @@ class CustomerToLocaleBridge implements CustomerToLocaleInterface
     {
         return $this->localeFacade->getCurrentLocale();
     }
+
+    /**
+     * @return array
+     */
+    public function getAvailableLocales()
+    {
+        return $this->localeFacade->getAvailableLocales();
+    }
 }

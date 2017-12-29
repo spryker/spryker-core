@@ -13,4 +13,9 @@ interface CustomerToLocaleInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale();
+
+    /**
+     * @return array
+     */
+    public function getAvailableLocales();
 }
