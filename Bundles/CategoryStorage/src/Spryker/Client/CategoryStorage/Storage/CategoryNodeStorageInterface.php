@@ -5,19 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CategoryStorage;
+namespace Spryker\Client\CategoryStorage\Storage;
 
 use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 
-interface CategoryStorageClientInterface
+interface CategoryNodeStorageInterface
 {
-    /**
-     * @param string $locale
-     *
-     * @return array
-     */
-    public function getCategories($locale);
-
     /**
      * @param int $idCategoryNode
      * @param string $localeName

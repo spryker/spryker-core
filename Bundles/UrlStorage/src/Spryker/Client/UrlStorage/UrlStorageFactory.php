@@ -29,7 +29,7 @@ class UrlStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageInterface
      */
-    protected function getStorageClient()
+    public function getStorageClient()
     {
         return $this->getProvidedDependency(UrlStorageDependencyProvider::CLIENT_STORAGE);
     }
@@ -37,7 +37,7 @@ class UrlStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServiceInterface
      */
-    protected function getSynchronizationService()
+    public function getSynchronizationService()
     {
         return $this->getProvidedDependency(UrlStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
@@ -45,7 +45,7 @@ class UrlStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface[]
      */
-    protected function getUrlStorageResourceMapperPlugins()
+    public function getUrlStorageResourceMapperPlugins()
     {
         return $this->getProvidedDependency(UrlStorageDependencyProvider::PLUGINS_URL_STORAGE_RESOURCE_MAPPER);
     }
@@ -53,7 +53,7 @@ class UrlStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    protected function getStore()
+    public function getStore()
     {
         return $this->getProvidedDependency(UrlStorageDependencyProvider::STORE);
     }

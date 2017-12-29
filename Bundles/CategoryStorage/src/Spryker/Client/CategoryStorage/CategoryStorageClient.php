@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CategoryStorage;
 
+use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -27,4 +28,16 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
             ->getCategories($locale);
     }
 
+    /**
+     * @param int $idCategoryNode
+     * @param string $localeName
+     *
+     * @return CategoryNodeStorageTransfer
+     */
+    public function getCategoryNodeById($idCategoryNode, $localeName)
+    {
+        return $this->getFactory()
+            ->createCategoryNodeStorage()
+            ->getCategoryNodeById($idCategoryNode, $localeName);
+    }
 }

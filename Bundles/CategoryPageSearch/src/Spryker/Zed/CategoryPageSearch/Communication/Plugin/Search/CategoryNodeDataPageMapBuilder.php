@@ -9,16 +9,13 @@ namespace Spryker\Zed\CategoryPageSearch\Communication\Plugin\Search;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
-use Pyz\Zed\Collector\Persistence\Search\Pdo\PostgreSql\CategoryNodeCollectorQuery;
 use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 
-/**
- * @method \Pyz\Zed\Collector\Communication\CollectorCommunicationFactory getFactory()
- */
-class CategoryNodeDataPageMapBuilder implements NamedPageMapInterface
+class CategoryNodeDataPageMapBuilder extends AbstractPlugin implements NamedPageMapInterface
 {
 
     const TYPE_CATEGORY = 'category';
@@ -36,7 +33,7 @@ class CategoryNodeDataPageMapBuilder implements NamedPageMapInterface
             ->setStore(Store::getInstance()->getStoreName())
             ->setLocale($localeTransfer->getLocaleName())
             ->setType(static::TYPE_CATEGORY)
-            ->setIsActive($categoryData['spy_category'][CategoryNodeCollectorQuery::COL_IS_ACTIVE] && $categoryData['spy_category'][CategoryNodeCollectorQuery::COL_IS_SEARCHABLE]);
+            ->setIsActive($categoryData['spy_category']['is_active'] && $categoryData['spy_category']['is_searchable']);
 
         $categoryAttribute = $categoryData['spy_category']['spy_category_attributes'][0];
 

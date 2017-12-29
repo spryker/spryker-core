@@ -34,4 +34,12 @@ class UrlStorageConstants
      */
     const URL_RESOURCE_NAME = 'url';
 
+    /**
+     * Specification:
+     * - Resource name, this will use for key generating
+     *
+     * @api
+     */
+    const REDIRECT_RESOURCE_NAME = 'redirect';
+
 }
