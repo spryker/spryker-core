@@ -42,16 +42,12 @@ abstract class AbstractProductReviewSearchListener extends AbstractPlugin implem
      */
     protected function storeData(array $productReviewEntities, array $spyProductReviewSearchEntities)
     {
-        $localeNames = $this->getStore()->getLocales();
-
         foreach ($productReviewEntities as $productReviewEntity) {
-            foreach ($localeNames as $localeName) {
-                $idProduct = $productReviewEntity->getIdProductReview();
-                if (isset($spyProductReviewSearchEntities[$idProduct][$localeName]))  {
-                    $this->storeDataSet($productReviewEntity, $spyProductReviewSearchEntities[$idProduct][$localeName], $localeName);
-                } else {
-                    $this->storeDataSet($productReviewEntity, null, $localeName);
-                }
+            $idProductReview = $productReviewEntity->getIdProductReview();
+            if (isset($spyProductReviewSearchEntities[$idProductReview]))  {
+                $this->storeDataSet($productReviewEntity, $spyProductReviewSearchEntities[$idProductReview]);
+            } else {
+                $this->storeDataSet($productReviewEntity, null);
             }
         }
     }
@@ -59,11 +55,10 @@ abstract class AbstractProductReviewSearchListener extends AbstractPlugin implem
     /**
      * @param SpyProductReview $productReviewEntity
      * @param SpyProductReviewSearch|null $spyProductReviewSearchEntity
-     * @param string $localeName
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductReview $productReviewEntity, SpyProductReviewSearch $spyProductReviewSearchEntity = null, $localeName)
+    protected function storeDataSet(SpyProductReview $productReviewEntity, SpyProductReviewSearch $spyProductReviewSearchEntity = null)
     {
         if ($spyProductReviewSearchEntity === null) {
             $spyProductReviewSearchEntity = new SpyProductReviewSearch();
@@ -77,27 +72,24 @@ abstract class AbstractProductReviewSearchListener extends AbstractPlugin implem
             return;
         }
 
-        $result = $this->mapToSearchData($productReviewEntity, $localeName);
+        $result = $this->mapToSearchData($productReviewEntity);
 
         $spyProductReviewSearchEntity->setFkProductReview($productReviewEntity->getIdProductReview());
         $spyProductReviewSearchEntity->setData($result);
         $spyProductReviewSearchEntity->setStructuredData($this->getFactory()->getUtilEncoding()->encodeJson($productReviewEntity->toArray()));
-        $spyProductReviewSearchEntity->setLocale($localeName);
         $spyProductReviewSearchEntity->setStore($this->getStore()->getStoreName());
         $spyProductReviewSearchEntity->save();
     }
 
     /**
      * @param SpyProductReview $productReviewEntity
-     * @param string $localeName
      *
      * @return array
      */
-    protected function mapToSearchData(SpyProductReview $productReviewEntity, $localeName)
+    protected function mapToSearchData(SpyProductReview $productReviewEntity)
     {
         return [
             ProductReviewIndexMap::STORE => $this->getStore()->getStoreName(),
-            ProductReviewIndexMap::LOCALE => $localeName,
             ProductReviewIndexMap::ID_PRODUCT_ABSTRACT => $productReviewEntity->getFkProductAbstract(),
             ProductReviewIndexMap::RATING => $productReviewEntity->getRating(),
             ProductReviewIndexMap::SEARCH_RESULT_DATA => $this->getSearchResultData($productReviewEntity),

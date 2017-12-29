@@ -14,7 +14,6 @@
         <behavior name="synchronization">
             <parameter name="resource" value="product_review"/>
             <parameter name="store" required="true"/>
-            <parameter name="locale" required="true"/>
             <parameter name="key_suffix_column" value="fk_product_review"/>
             <parameter name="queue_group" value="sync.search.product"/>
             <parameter name="params" value='{"type":"product-review"}'/>
