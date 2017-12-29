@@ -10,6 +10,6 @@ class PermissionStub implements PermissionStubInterface
 {
     public function getIsAllowed(PermissionRequestTransfer $requestTransfer)
     {
-        return true;
+        return false;
     }
 }
