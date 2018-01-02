@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductOptionTaxRateCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
     /**
-     * This plugin makes calculations based on the given quote. The result is added to the quote.
+     * {@inheritdoc}
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

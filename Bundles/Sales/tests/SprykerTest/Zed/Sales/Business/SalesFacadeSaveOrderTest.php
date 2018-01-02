@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
@@ -145,7 +146,16 @@ class SalesFacadeSaveOrderTest extends Unit
      */
     private function getValidBaseResponseTransfer()
     {
-        return new CheckoutResponseTransfer();
+        return (new CheckoutResponseTransfer())
+            ->setSaveOrder(new SaveOrderTransfer());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    private function createSaveOrderTransfer()
+    {
+        return new SaveOrderTransfer();
     }
 
     /**
@@ -255,7 +265,7 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return void
      */
-    public function testSaveOrderCreatesOrderAndSavesFields()
+    public function testSaveOrderCreatesOrderAndSavesFieldsDeprecated()
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
@@ -263,6 +273,26 @@ class SalesFacadeSaveOrderTest extends Unit
 
         $orderQuery = SpySalesOrderQuery::create()
             ->filterByPrimaryKey($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder());
+
+        $orderEntity = $orderQuery->findOne();
+        $this->assertNotNull($orderEntity);
+
+        $this->assertSame('max@mustermann.de', $orderEntity->getEmail());
+        $this->assertSame('Max', $orderEntity->getFirstName());
+        $this->assertSame('Mustermann', $orderEntity->getLastName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderCreatesOrderAndSavesFields()
+    {
+        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $saveOrderTransfer = $this->createSaveOrderTransfer();
+        $this->salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+
+        $orderQuery = SpySalesOrderQuery::create()
+            ->filterByPrimaryKey($saveOrderTransfer->getIdSalesOrder());
 
         $orderEntity = $orderQuery->findOne();
         $this->assertNotNull($orderEntity);

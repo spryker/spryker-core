@@ -95,4 +95,12 @@ class LogConfig extends AbstractBundleConfig
 
         return array_unique($logFileDirectories);
     }
+
+    /**
+     * @return string
+     */
+    public function getQueueName()
+    {
+        return $this->get(LogConstants::LOG_QUEUE_NAME);
+    }
 }

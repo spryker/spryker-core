@@ -8,9 +8,12 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Everon\Component\Collection\Collection;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
@@ -18,10 +21,8 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractFo
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
-use Spryker\Zed\ProductManagement\Communication\Form\Product\PriceForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface;
@@ -89,11 +90,6 @@ class AbstractProductFormDataProvider
     protected $productImageFacade;
 
     /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface
-     */
-    protected $priceFacade;
-
-    /**
      * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]|\Everon\Component\Collection\CollectionInterface
      */
     protected $attributeTransferCollection;
@@ -118,7 +114,6 @@ class AbstractProductFormDataProvider
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface $priceFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface $productImageFacade
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
@@ -133,7 +128,6 @@ class AbstractProductFormDataProvider
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductQueryContainerInterface $productQueryContainer,
         StockQueryContainerInterface $stockQueryContainer,
-        ProductManagementToPriceInterface $priceFacade,
         ProductManagementToProductInterface $productFacade,
         ProductManagementToProductImageInterface $productImageFacade,
         LocaleProvider $localeProvider,
@@ -149,7 +143,6 @@ class AbstractProductFormDataProvider
         $this->stockQueryContainer = $stockQueryContainer;
         $this->productImageFacade = $productImageFacade;
         $this->localeProvider = $localeProvider;
-        $this->priceFacade = $priceFacade;
         $this->productFacade = $productFacade;
         $this->currentLocale = $currentLocale;
         $this->attributeTransferCollection = new Collection($attributeCollection);
@@ -197,11 +190,6 @@ class AbstractProductFormDataProvider
             ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT => null,
             ProductFormAdd::FIELD_SKU => null,
             ProductFormAdd::FORM_ATTRIBUTE_SUPER => $this->getAttributeVariantDefaultFields(),
-            ProductFormAdd::FORM_PRICE_AND_TAX => [
-                PriceForm::FIELD_PRICE => 0,
-                PriceForm::FIELD_PRICES => $this->getDefaultPricesData(),
-                PriceForm::FIELD_TAX_RATE => 0,
-            ],
         ];
 
         $data = array_merge($data, $this->getGeneralAttributesDefaultFields());
@@ -209,6 +197,25 @@ class AbstractProductFormDataProvider
         $data = array_merge($data, $this->getImagesDefaultFields());
 
         return $data;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer
+     */
+    protected function mapMoneyTransfer(CurrencyTransfer $currencyTransfer, StoreTransfer $storeTransfer = null)
+    {
+        $moneyValueTransfer = new MoneyValueTransfer();
+        $moneyValueTransfer->setCurrency($currencyTransfer);
+        $moneyValueTransfer->setFkCurrency($currencyTransfer->getIdCurrency());
+
+        if ($storeTransfer) {
+            $moneyValueTransfer->setFkStore($storeTransfer->getIdStore());
+        }
+
+        return $moneyValueTransfer;
     }
 
     /**
@@ -754,25 +761,5 @@ class AbstractProductFormDataProvider
         }
 
         return $url;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDefaultPricesData()
-    {
-        $priceData = [];
-        $defaultPriceTypeName = $this->priceFacade->getDefaultPriceTypeName();
-        $priceTypes = $this->priceFacade->getPriceTypeValues();
-
-        foreach ($priceTypes as $priceType) {
-            if ($priceType === $defaultPriceTypeName) {
-                continue;
-            }
-
-            $priceData[$priceType] = null;
-        }
-
-        return $priceData;
     }
 }

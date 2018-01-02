@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 
 interface CustomerFacadeInterface
 {
@@ -344,6 +345,8 @@ interface CustomerFacadeInterface
      *
      * @api
      *
+     * @deprecated Use saveOrderCustomer() instead
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
@@ -356,6 +359,26 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
+     * - Does nothing if customer is guest.
+     * - Registers customer if it does not exist in persistent storage.
+     * - Updates customer if it exists in persistent storage.
+     * - Updates customer addresses.
+     *
+     * @see CustomerFacadeInterface::registerCustomer()
+     * @see CustomerFacadeInterface::updateCustomer()
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveOrderCustomer(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
+
+    /**
+     * Specification:
+     * - Checks required fields for an order placement (in a customer in the quote)
      * - Checks if a new customer has a not yet registered email.
      * - Checks if a new customer or a guest user has a valid email address.
      *
@@ -364,7 +387,7 @@ interface CustomerFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function checkOrderPreSaveConditions(
         QuoteTransfer $quoteTransfer,

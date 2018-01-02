@@ -23,7 +23,7 @@
         <property name="errors" type="CheckoutError[]" singular="error" />
         <property name="isExternalRedirect" type="bool" />
         <property name="redirectUrl" type="string" />
-        <property name="saveOrder" type="SaveOrder" />
+        <property name="saveOrder" type="SaveOrder" deprecated="Use SaveOrderTransfer directly/decoupled from the checkout response" />
     </transfer>
 
     <transfer name="Comment">

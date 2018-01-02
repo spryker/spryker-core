@@ -13,13 +13,15 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * Deprecated: Please use \Spryker\Zed\Sales\Communication\Plugin\Checkout\SalesOrderExpanderPlugin instead.
+ *
  * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
  */
 class SalesOrderExpanderPlugin extends AbstractPlugin implements CheckoutPreSaveHookInterface
 {
     /**
-     * @api
+     * {@inheritdoc}
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer

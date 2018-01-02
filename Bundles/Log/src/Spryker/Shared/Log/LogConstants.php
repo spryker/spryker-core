@@ -148,4 +148,20 @@ interface LogConstants
      * @api
      */
     const LOG_SANITIZED_VALUE = 'LOG_SANITIZED_VALUE';
+
+    /**
+     * Specification:
+     * - Name of the queue to send logs to.
+     *
+     * @api
+     */
+    const LOG_QUEUE_NAME = 'LOG:LOG_QUEUE_NAME';
+
+    /**
+     * Specification:
+     * - Name of the error queue to send errors to.
+     *
+     * @api
+     */
+    const LOG_ERROR_QUEUE_NAME = 'LOG:LOG_ERROR_QUEUE_NAME';
 }

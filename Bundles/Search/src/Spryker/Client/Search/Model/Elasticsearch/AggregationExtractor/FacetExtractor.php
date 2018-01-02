@@ -15,6 +15,8 @@ use Spryker\Client\Search\Model\Elasticsearch\Aggregation\StringFacetAggregation
 
 class FacetExtractor extends AbstractAggregationExtractor implements AggregationExtractorInterface
 {
+    const DOC_COUNT = 'doc_count';
+
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */
@@ -50,13 +52,14 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
     public function extractDataFromAggregations(array $aggregations, array $requestParameters)
     {
         $parameterName = $this->facetConfigTransfer->getParameterName();
+        $name = $this->facetConfigTransfer->getName();
         $fieldName = $this->facetConfigTransfer->getFieldName();
 
-        $facetResultValueTransfers = $this->extractFacetData($aggregations, $parameterName, $fieldName);
+        $facetResultValueTransfers = $this->extractFacetData($aggregations, $name, $fieldName);
 
         $facetResultTransfer = new FacetSearchResultTransfer();
         $facetResultTransfer
-            ->setName($parameterName)
+            ->setName($name)
             ->setValues($facetResultValueTransfers)
             ->setConfig(clone $this->facetConfigTransfer);
 
@@ -69,35 +72,34 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
 
     /**
      * @param array $aggregation
-     * @param string $parameterName
+     * @param string $name
      * @param string $fieldName
      *
      * @return \ArrayObject
      */
-    protected function extractFacetData(array $aggregation, $parameterName, $fieldName)
+    protected function extractFacetData(array $aggregation, $name, $fieldName)
     {
         if ($this->facetConfigTransfer->getAggregationParams()) {
             return $this->extractStandaloneFacetDataBuckets($aggregation, $fieldName);
         }
 
-        return $this->extractFacetDataBuckets($aggregation, $parameterName, $fieldName);
+        return $this->extractFacetDataBuckets($aggregation, $name, $fieldName);
     }
 
     /**
      * @param array $aggregation
-     * @param string $parameterName
+     * @param string $name
      * @param string $fieldName
      *
      * @return \ArrayObject
      */
-    protected function extractFacetDataBuckets(array $aggregation, $parameterName, $fieldName)
+    protected function extractFacetDataBuckets(array $aggregation, $name, $fieldName)
     {
         $facetResultValues = new ArrayObject();
         $nameFieldName = $this->getFieldNameWithNameSuffix($fieldName);
         $valueFieldName = $this->getFieldNameWithValueSuffix($fieldName);
-
         foreach ($aggregation[$nameFieldName]['buckets'] as $nameBucket) {
-            if ($nameBucket['key'] !== $parameterName) {
+            if ($nameBucket['key'] !== $name) {
                 continue;
             }
 

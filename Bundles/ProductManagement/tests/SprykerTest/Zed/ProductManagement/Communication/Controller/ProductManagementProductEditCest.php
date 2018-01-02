@@ -29,6 +29,8 @@ class ProductManagementProductEditCest
      */
     public function breadcrumbIsVisible(ProductManagementCommunicationTester $i)
     {
+        $i->registerMoneyCollectionFormTypePlugin();
+
         $i->listDataTable(ProductManagementProductListPage::URL . '/index/table');
         $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Edit Product');

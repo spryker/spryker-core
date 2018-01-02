@@ -33,13 +33,13 @@ class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInt
     }
 
     /**
-     * @param string $paramName
+     * @param string $facetName
      *
      * @return \Generated\Shared\Transfer\FacetConfigTransfer|null
      */
-    public function get($paramName)
+    public function get($facetName)
     {
-        return isset($this->facetConfigTransfers[$paramName]) ? $this->facetConfigTransfers[$paramName] : null;
+        return isset($this->facetConfigTransfers[$facetName]) ? $this->facetConfigTransfers[$facetName] : null;
     }
 
     /**
@@ -67,9 +67,9 @@ class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInt
     {
         $activeFacets = [];
 
-        foreach ($this->facetConfigTransfers as $facetName => $facet) {
-            if (array_key_exists($facetName, $requestParameters)) {
-                $activeFacets[$facetName] = $facet;
+        foreach ($this->facetConfigTransfers as $facetName => $facetConfigTransfer) {
+            if (array_key_exists($facetConfigTransfer->getParameterName(), $requestParameters)) {
+                $activeFacets[$facetName] = $facetConfigTransfer;
             }
         }
 

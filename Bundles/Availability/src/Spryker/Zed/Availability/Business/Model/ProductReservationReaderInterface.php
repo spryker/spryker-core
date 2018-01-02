@@ -5,6 +5,8 @@
  */
 namespace Spryker\Zed\Availability\Business\Model;
 
+use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
+
 interface ProductReservationReaderInterface
 {
     /**
@@ -14,4 +16,11 @@ interface ProductReservationReaderInterface
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
     public function getProductAbstractAvailability($idProductAbstract, $idLocale);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     */
+    public function findProductConcreteAvailability(ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer);
 }
