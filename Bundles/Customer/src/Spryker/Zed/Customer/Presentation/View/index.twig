@@ -53,7 +53,7 @@
                     </tr>
                     <tr>
                         <th>{{ 'Locale' | trans }}</th>
-                        <td>{{ customer.locale }}</td>
+                        <td>{{ customer.locale.localeName }}</td>
                     </tr>
                     <tr>
                         <th>{{ 'Phone' | trans }}</th>
@@ -61,7 +61,7 @@
                     </tr>
                     <tr>
                         <th>{{ 'Date of birth' | trans }}</th>
-                        <td>{{ customer.dateOfBirth }}</td>
+                        <td>{{ customer.dateOfBirth | formatDate }}</td>
                     </tr>
                     <tr>
                         <th>{{ 'Registered at' | trans }}</th>

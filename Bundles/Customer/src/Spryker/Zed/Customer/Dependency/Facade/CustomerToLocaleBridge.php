@@ -37,4 +37,14 @@ class CustomerToLocaleBridge implements CustomerToLocaleInterface
     {
         return $this->localeFacade->getAvailableLocales();
     }
+
+    /**
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleById($idLocale)
+    {
+        return $this->localeFacade->getLocaleById($idLocale);
+    }
 }

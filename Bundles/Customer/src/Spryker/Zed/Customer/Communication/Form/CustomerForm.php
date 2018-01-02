@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer\Communication\Form;
 
 use DateTime;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -38,7 +39,7 @@ class CustomerForm extends AbstractType
     const FIELD_COMPANY = 'company';
     const FIELD_PHONE = 'phone';
     const FIELD_DATE_OF_BIRTH = 'date_of_birth';
-    const FIELD_FK_LOCALE = 'fk_locale';
+    const FIELD_LOCALE = 'locale';
 
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
@@ -46,11 +47,20 @@ class CustomerForm extends AbstractType
     protected $customerQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
+     * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
      */
-    public function __construct(CustomerQueryContainerInterface $customerQueryContainer)
-    {
+    protected $localeFacade;
+
+    /**
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
+     * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface $localeFacade
+     */
+    public function __construct(
+        CustomerQueryContainerInterface $customerQueryContainer,
+        CustomerToLocaleInterface $localeFacade
+    ) {
         $this->customerQueryContainer = $customerQueryContainer;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -91,7 +101,7 @@ class CustomerForm extends AbstractType
             ->addDateOfBirthField($builder)
             ->addPhoneField($builder)
             ->addCompanyField($builder)
-            ->addFkLocaleField($builder, $options[static::OPTION_LOCALE_CHOICES])
+            ->addLocaleField($builder, $options[static::OPTION_LOCALE_CHOICES])
             ->addSendPasswordField($builder);
     }
 
@@ -217,7 +227,7 @@ class CustomerForm extends AbstractType
             new Length(['max' => 100]),
         ];
 
-        $builder->add(self::FIELD_COMPANY, 'text', [
+        $builder->add(static::FIELD_COMPANY, 'text', [
             'label' => 'Company',
             'required' => false,
             'constraints' => $companyConstraints,
@@ -237,7 +247,7 @@ class CustomerForm extends AbstractType
             new Length(['max' => 255]),
         ];
 
-        $builder->add(self::FIELD_PHONE, 'text', [
+        $builder->add(static::FIELD_PHONE, 'text', [
             'label' => 'Phone',
             'required' => false,
             'constraints' => $phoneConstraints,
@@ -252,15 +262,18 @@ class CustomerForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFkLocaleField(FormBuilderInterface $builder, array $choices)
+    protected function addLocaleField(FormBuilderInterface $builder, array $choices)
     {
-        $builder->add(static::FIELD_FK_LOCALE, ChoiceType::class, [
+        $builder->add(static::FIELD_LOCALE, ChoiceType::class, [
             'label' => 'Locale',
             'placeholder' => 'Select one',
             'choices' => $choices,
             'required' => false,
 
         ]);
+
+        $builder->get(static::FIELD_LOCALE)
+            ->addModelTransformer($this->createLocaleModelTransformer());
 
         return $this;
     }
@@ -273,7 +286,7 @@ class CustomerForm extends AbstractType
     protected function addDateOfBirthField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_DATE_OF_BIRTH, DateType::class, [
-            'label' => 'Date of Birth',
+            'label' => 'Date of birth',
             'widget' => 'single_text',
             'required' => false,
             'attr' => [
@@ -331,13 +344,32 @@ class CustomerForm extends AbstractType
     protected function createDateTimeModelTransformer()
     {
         return new CallbackTransformer(
-            function ($value) {
-                if ($value !== null) {
-                    return new DateTime($value);
+            function ($dateAsString) {
+                if ($dateAsString !== null) {
+                    return new DateTime($dateAsString);
                 }
             },
-            function ($value) {
-                return $value;
+            function ($dateAsObject) {
+                return $dateAsObject;
+            }
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createLocaleModelTransformer()
+    {
+        return new CallbackTransformer(
+            function ($localeAsObject) {
+                if ($localeAsObject !== null) {
+                    return $localeAsObject->getIdLocale();
+                }
+            },
+            function ($localeAsInt) {
+                if ($localeAsInt !== null) {
+                    return $this->localeFacade->getLocaleById($localeAsInt);
+                }
             }
         );
     }

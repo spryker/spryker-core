@@ -83,13 +83,10 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->utilDateTime()->service();
         };
 
-        $container[static::FACADE_LOCALE] = function (Container $container) {
-            return new CustomerToLocaleBridge($container->getLocator()->locale()->facade());
-        };
-
         $container = $this->addStore($container);
         $container = $this->addCustomerTransferExpanderPlugins($container);
         $container = $this->addUtilSanitizeService($container);
+        $container = $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -175,6 +172,20 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
             return new CustomerToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container)
+    {
+        $container[static::FACADE_LOCALE] = function (Container $container) {
+            return new CustomerToLocaleBridge($container->getLocator()->locale()->facade());
         };
 
         return $container;

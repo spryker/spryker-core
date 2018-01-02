@@ -18,4 +18,11 @@ interface CustomerToLocaleInterface
      * @return array
      */
     public function getAvailableLocales();
+
+    /**
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleById($idLocale);
 }

@@ -53,7 +53,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerForm(array $data = [], array $options = [])
     {
-        $customerFormType = new CustomerForm($this->getQueryContainer());
+        $customerFormType = new CustomerForm($this->getQueryContainer(), $this->getLocaleFacade());
 
         return $this->getFormFactory()->create($customerFormType, $data, $options);
     }
@@ -74,7 +74,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerUpdateForm(array $data = [], array $options = [])
     {
-        $customerFormType = new CustomerUpdateForm($this->getQueryContainer());
+        $customerFormType = new CustomerUpdateForm($this->getQueryContainer(), $this->getLocaleFacade());
 
         return $this->getFormFactory()->create($customerFormType, $data, $options);
     }

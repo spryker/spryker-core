@@ -124,6 +124,7 @@ class Customer implements CustomerInterface
         $customerTransfer->fromArray($customerEntity->toArray(), true);
 
         $customerTransfer = $this->attachAddresses($customerTransfer, $customerEntity);
+        $customerTransfer = $this->attachLocale($customerTransfer, $customerEntity);
 
         return $customerTransfer;
     }
@@ -412,6 +413,10 @@ class Customer implements CustomerInterface
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
         $customerEntity = $this->getCustomer($customerTransfer);
         $customerEntity->fromArray($customerTransfer->modifiedToArray());
+
+        if ($customerTransfer->getLocale() !== null) {
+            $customerEntity->setFkLocale($customerTransfer->getLocale()->getIdLocale());
+        }
 
         $customerResponseTransfer = $this->validateCustomerEmail($customerResponseTransfer, $customerEntity);
         if ($customerResponseTransfer->getIsSuccess() !== true) {
