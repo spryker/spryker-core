@@ -1,10 +1,11 @@
 'use strict';
 
+var safeSubmitSelector = '.safe-submit';
 var safeDatetimeSelector = '.safe-datetime[type=date], .safe-datetime[type=datetime], .safe-datetime[type=datetime-local]';
 
 /* Prevent .save-submit items to be pressed twice */
 function addSafeSubmitCheck() { 
-    $('body').on('click', '.safe-submit', function () {
+    $('body').on('click', safeSubmitSelector, function () {
         var $item = $(this);
         var $forms = $item.parents('form');
         var isValid = true;
