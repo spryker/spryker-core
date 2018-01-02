@@ -124,6 +124,7 @@ class Customer implements CustomerInterface
         $customerTransfer->fromArray($customerEntity->toArray(), true);
 
         $customerTransfer = $this->attachAddresses($customerTransfer, $customerEntity);
+        $customerTransfer = $this->attachLocale($customerTransfer, $customerEntity);
 
         return $customerTransfer;
     }

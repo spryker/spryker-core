@@ -273,7 +273,7 @@ class CustomerForm extends AbstractType
     protected function addDateOfBirthField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_DATE_OF_BIRTH, DateType::class, [
-            'label' => 'Date of Birth',
+            'label' => 'Date of birth',
             'widget' => 'single_text',
             'required' => false,
             'attr' => [
