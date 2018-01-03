@@ -160,6 +160,10 @@ class Customer implements CustomerInterface
         $customerEntity = new SpyCustomer();
         $customerEntity->fromArray($customerTransfer->toArray());
 
+        if ($customerTransfer->getLocale() !== null) {
+            $this->addLocaleByLocaleName($customerEntity, $customerTransfer->getLocale()->getLocaleName());
+        }
+
         $this->addLocale($customerEntity);
 
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
@@ -218,6 +222,21 @@ class Customer implements CustomerInterface
         }
 
         $localeName = $this->store->getCurrentLocale();
+        $localeEntity = $this->localeQueryContainer->queryLocaleByName($localeName)->findOne();
+
+        if ($localeEntity) {
+            $customerEntity->setLocale($localeEntity);
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     * @param string $localeName
+     *
+     * @return void
+     */
+    protected function addLocaleByLocaleName(SpyCustomer $customerEntity, $localeName)
+    {
         $localeEntity = $this->localeQueryContainer->queryLocaleByName($localeName)->findOne();
 
         if ($localeEntity) {
@@ -415,7 +434,7 @@ class Customer implements CustomerInterface
         $customerEntity->fromArray($customerTransfer->modifiedToArray());
 
         if ($customerTransfer->getLocale() !== null) {
-            $customerEntity->setFkLocale($customerTransfer->getLocale()->getIdLocale());
+            $this->addLocaleByLocaleName($customerEntity, $customerTransfer->getLocale()->getLocaleName());
         }
 
         $customerResponseTransfer = $this->validateCustomerEmail($customerResponseTransfer, $customerEntity);
