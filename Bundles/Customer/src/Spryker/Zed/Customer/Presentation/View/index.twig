@@ -18,6 +18,8 @@
 
         {% block widget_content %}
 
+            {% set customerLocale = customer.locale.localeName | default(null) %}
+
             <div class="row">
                 <table class="table">
                     <thead></thead>
@@ -53,7 +55,7 @@
                     </tr>
                     <tr>
                         <th>{{ 'Locale' | trans }}</th>
-                        <td>{{ customer.locale.localeName }}</td>
+                        <td>{{ customerLocale }}</td>
                     </tr>
                     <tr>
                         <th>{{ 'Phone' | trans }}</th>
