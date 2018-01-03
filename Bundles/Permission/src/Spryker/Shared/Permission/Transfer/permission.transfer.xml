@@ -5,7 +5,7 @@
 
     <transfer name="PermissionRequest">
         <property name="permissionKey" type="string" />
-        <property name="options" type="array" singular="option" />
+        <property name="context" type="mixed" />
     </transfer>
 
 </transfers>

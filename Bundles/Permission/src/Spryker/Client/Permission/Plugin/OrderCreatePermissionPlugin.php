@@ -1,14 +1,19 @@
 <?php
 
 
-namespace Spryker\Client\Rbac\Plugin;
+namespace Spryker\Client\Permission\Plugin;
 
 
 use Spryker\Client\Permission\Plugin\ExecutionAwarePermissionPluginInterface;
 use Spryker\Client\Permission\Plugin\PermissionPluginInterface;
 
+/**
+ * @example
+ */
 class OrderCreatePermissionPlugin implements PermissionPluginInterface, ExecutionAwarePermissionPluginInterface
 {
+    const PERMISSION_KEY = 'order.create';
+
     const OPTION_CART_GRAND_TOTAL = 1000;
 
     /**
@@ -58,6 +63,6 @@ class OrderCreatePermissionPlugin implements PermissionPluginInterface, Executio
      */
     public function getKey()
     {
-        return 'order.create';
+        return static::PERMISSION_KEY;
     }
 }

@@ -1,12 +1,10 @@
 <?php
 
 
-namespace Spryker\Client\Permission;
+namespace Spryker\Shared\Kernel\Permission;
 
 
-use Spryker\Shared\Kernel\Permission\PermissionInterface;
-
-interface PermissionClientInterface extends PermissionInterface
+interface PermissionInterface
 {
     /**
      * @param string $permissionKey

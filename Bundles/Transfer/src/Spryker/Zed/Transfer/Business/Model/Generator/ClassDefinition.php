@@ -512,6 +512,17 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param array $property
      *
+     * @return bool
+     */
+    private function isMixed(array $property)
+    {
+        return $property['type'] === 'mixed';
+    }
+
+
+    /**
+     * @param array $property
+     *
      * @return int
      */
     private function isTypedArray(array $property)
@@ -538,6 +549,10 @@ class ClassDefinition implements ClassDefinitionInterface
             $this->hasArrayObject = true;
 
             return 'ArrayObject';
+        }
+
+        if ($this->isMixed($property)) {
+            return '';
         }
 
         return $property['type'];

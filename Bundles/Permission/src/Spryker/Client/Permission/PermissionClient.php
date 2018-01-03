@@ -13,22 +13,21 @@ class PermissionClient extends AbstractClient implements PermissionClientInterfa
 {
     /**
      * @param string $permissionKey
-     * @param array $options
+     * @param array|mixed|null $context
      *
      * @return bool
      */
-    public function can($permissionKey, array $options)
+    public function can($permissionKey, $context = null)
     {
         $hasRight = $this->hasPermission($permissionKey);
 
         if ($hasRight === false) {
-            return false;
+            return true;
         }
 
         $permissionRequestTransfer = new PermissionRequestTransfer();
         $permissionRequestTransfer->setPermissionKey($permissionKey);
-        $permissionRequestTransfer->setOptions($options);
-
+        $permissionRequestTransfer->setContext($context);
 
         return $this->getFactory()
             ->createZedStub()
@@ -45,6 +44,7 @@ class PermissionClient extends AbstractClient implements PermissionClientInterfa
      */
     public function hasPermission($permission)
     {
+        //go to the user session and check the permission
         return true;
     }
 

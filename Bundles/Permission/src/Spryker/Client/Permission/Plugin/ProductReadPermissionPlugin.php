@@ -2,6 +2,9 @@
 
 namespace Spryker\Client\Permission\Plugin;
 
+/**
+ * @example
+ */
 class ProductReadPermissionPlugin implements PermissionPluginInterface
 {
     public function getKey()
