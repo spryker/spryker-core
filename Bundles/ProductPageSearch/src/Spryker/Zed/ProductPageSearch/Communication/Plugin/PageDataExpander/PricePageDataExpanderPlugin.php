@@ -26,14 +26,11 @@ class PricePageDataExpanderPlugin extends AbstractPlugin implements ProductPageD
      */
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer)
     {
-        $price = $this->getFactory()->getPriceFacade()->getPriceBySku($productData['SpyProductAbstract']['sku']);
-        $priceProducts = $this->getFactory()->getPriceFacade()->findPricesBySku($productData['SpyProductAbstract']['sku']);
+        $price = (int)$this->getFactory()->getPriceProductFacade()->findPriceBySku($productData['SpyProductAbstract']['sku']);
+        $pricesGrouped = $this->getFactory()->getPriceProductFacade()->findPricesBySkuGroupedForCurrentStore($productData['SpyProductAbstract']['sku']);
 
         $productAbstractPageSearchTransfer->setPrice($price);
-
-        foreach ($priceProducts as $priceProduct) {
-            $productAbstractPageSearchTransfer->addPriceProducts($priceProduct);
-        }
+        $productAbstractPageSearchTransfer->setPrices($pricesGrouped);
     }
 
 }

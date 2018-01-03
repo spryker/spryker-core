@@ -20,7 +20,7 @@
         <property name="type" type="string" />
         <property name="isFeatured" type="bool" />
         <property name="isActive" type="bool" />
-        <property name="priceProducts" type="PriceProduct[]" />
+        <property name="prices" type="array" />
         <property name="price" type="int" />
         <property name="allParentCategoryIds" type="array" />
         <property name="boostedCategoryNames" type="array" />

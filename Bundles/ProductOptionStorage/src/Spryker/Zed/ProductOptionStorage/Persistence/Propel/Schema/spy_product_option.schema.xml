@@ -19,4 +19,9 @@
         </behavior>
     </table>
 
+    <table name="spy_product_option_value_price">
+        <behavior name="event">
+            <parameter name="spy_product_option_value_price_all" column="*"/>
+        </behavior>
+    </table>
 </database>

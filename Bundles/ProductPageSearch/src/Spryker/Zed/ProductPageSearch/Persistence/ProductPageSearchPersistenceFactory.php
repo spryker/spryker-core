@@ -36,7 +36,7 @@ class ProductPageSearchPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageToPriceQueryContainerInterface
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageToPriceProductQueryContainerInterface
      */
     public function getPriceQueryContainer()
     {

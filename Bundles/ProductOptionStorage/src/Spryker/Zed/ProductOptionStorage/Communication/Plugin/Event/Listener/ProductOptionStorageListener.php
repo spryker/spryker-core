@@ -35,7 +35,7 @@ class ProductOptionStorageListener extends AbstractProductOptionStorageListener 
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventTransfers, SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_ABSTRACT);
 
-        $this->refresh($productAbstractIds);
+        $this->publish($productAbstractIds);
     }
 
 }

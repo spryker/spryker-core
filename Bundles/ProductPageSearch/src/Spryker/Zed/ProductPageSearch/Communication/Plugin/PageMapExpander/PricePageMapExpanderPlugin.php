@@ -51,18 +51,19 @@ class PricePageMapExpanderPlugin extends AbstractPlugin implements ProductPageMa
      */
     protected function setPricesByType(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $productData)
     {
-        $prices = [];
-        foreach ($productData['price_products'] as $priceProduct) {
-            $prices[$priceProduct['price_type_name']] = $priceProduct['price'];
 
-            $pageMapBuilder->addIntegerFacet(
-                $pageMapTransfer,
-                sprintf('price.%s', $priceProduct['price_type_name']),
-                $priceProduct['price']
-            );
+
+        foreach ($productData['prices'] as $currencyIsoCode => $pricesByPriceMode) {
+            foreach ($pricesByPriceMode as $priceMode => $pricesByType) {
+                foreach ($pricesByType as $priceType => $price) {
+                    $facetName = $this->getFactory()->getCatalogPriceProductConnectorClient()->buildPricedIdentifierFor($priceType, $currencyIsoCode, $priceMode);
+                    $pageMapBuilder->addIntegerFacet($pageMapTransfer, $facetName, $price);
+                    $pageMapBuilder->addIntegerSort($pageMapTransfer, $facetName, $price);
+                }
+            }
         }
 
-        $pageMapBuilder->addSearchResultData($pageMapTransfer, 'prices', $prices);
+        $pageMapBuilder->addSearchResultData($pageMapTransfer, 'prices', $productData['prices']);
     }
 
 }

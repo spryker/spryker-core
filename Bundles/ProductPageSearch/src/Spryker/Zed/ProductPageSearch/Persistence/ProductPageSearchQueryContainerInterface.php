@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductPageSearchQueryContainerInterface extends QueryContainerInterface
@@ -93,5 +94,12 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
      */
     public function queryCategoryAttributesByLocale(LocaleTransfer $localeTransfer);
+
+    /**
+     * @param array $priceProductIds
+     *
+     * @return SpyPriceProductQuery
+     */
+    public function queryAllProductAbstractIdsByPriceProductIds(array $priceProductIds);
 
 }

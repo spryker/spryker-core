@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductPageSearch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
-use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
@@ -104,10 +104,27 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
     {
         return $this->getFactory()
             ->getPriceQueryContainer()
-            ->queryAllPriceProducts()
+            ->queryPriceProduct()
             ->select([SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT])
             ->addAnd(SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT, null, Criteria::NOT_EQUAL)
             ->filterByFkPriceType_In($priceTypeIds);
+    }
+
+    /**
+     * @api
+     *
+     * @param array $priceProductIds
+     *
+     * @return \Orm\Zed\PriceStorage\Persistence\SpyPriceAbstractStorageQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryAllProductAbstractIdsByPriceProductIds(array $priceProductIds)
+    {
+        return $this->getFactory()
+            ->getPriceQueryContainer()
+            ->queryPriceProduct()
+            ->select([SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->addAnd(SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT, null, Criteria::NOT_EQUAL)
+            ->filterByIdPriceProduct_In($priceProductIds);
     }
 
     /**

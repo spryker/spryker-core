@@ -34,7 +34,7 @@ class ProductOptionPublishStorageListener extends AbstractProductOptionStorageLi
             ->getEventBehaviorFacade()
             ->getEventTransferIds($eventTransfers);
 
-        $this->refresh($productAbstractIds);
+        $this->publish($productAbstractIds);
     }
 
 }

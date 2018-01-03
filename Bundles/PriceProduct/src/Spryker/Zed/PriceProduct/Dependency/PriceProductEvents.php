@@ -88,4 +88,28 @@ interface PriceProductEvents
      * @api
      */
     const ENTITY_SPY_PRICE_TYPE_DELETE = 'Entity.spy_price_type.delete';
+
+    /**
+     * Specification
+     * - This events will be used for spy_price_product_store entity creation
+     *
+     * @api
+     */
+    const ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE = 'Entity.spy_price_product_store.create';
+
+    /**
+     * Specification
+     * - This events will be used for spy_price_product_store entity changes
+     *
+     * @api
+     */
+    const ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE = 'Entity.spy_price_product_store.update';
+
+    /**
+     * Specification
+     * - This events will be used for spy_price_product_store entity deletion
+     *
+     * @api
+     */
+    const ENTITY_SPY_PRICE_PRODUCT_STORE_DELETE = 'Entity.spy_price_product_store.delete';
 }

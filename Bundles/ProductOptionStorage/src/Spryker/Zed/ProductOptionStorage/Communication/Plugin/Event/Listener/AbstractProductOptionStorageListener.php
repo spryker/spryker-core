@@ -8,9 +8,11 @@
 namespace Spryker\Zed\ProductOptionStorage\Communication\Plugin\Event\Listener;
 
 use ArrayObject;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorageTransfer;
+use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -27,7 +29,7 @@ class AbstractProductOptionStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function refresh(array $productAbstractIds)
+    protected function publish(array $productAbstractIds)
     {
         $productOptionEntities = $this->findProductOptionAbstractEntities($productAbstractIds);
         $productOptions = [];
@@ -152,13 +154,50 @@ class AbstractProductOptionStorageListener extends AbstractPlugin
             foreach ($productOption['SpyProductOptionGroup']['SpyProductOptionValues'] as $productOptionValue) {
                 $productOptionGroupStorageTransfer->addProductOptionValue((new ProductOptionValueStorageTransfer())->setIdProductOptionValue($productOptionValue['id_product_option_value'])
                     ->setSku($productOptionValue['sku'])
-                    ->setPrice($productOptionValue['price'])
+                    ->setPrices($this->getPrices($productOptionValue['ProductOptionValuePrices']))
                     ->setValue($productOptionValue['value']));
             }
             $productOptionGroupStorageTransfers[] = $productOptionGroupStorageTransfer;
         }
 
         return $productOptionGroupStorageTransfers;
+    }
+
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice[] $objectCollection
+     *
+     * @return array
+     */
+    protected function getPrices(array $prices)
+    {
+        $moneyValueCollection = $this->transformPriceEntityCollectionToMoneyValueTransferCollection($prices);
+
+        $priceResponse = $this->getFactory()->getProductOptionFacade()->getProductOptionValueStorePrices(
+            (new ProductOptionValueStorePricesRequestTransfer())->setPrices($moneyValueCollection)
+        );
+
+        return $priceResponse->getStorePrices();
+    }
+
+    /**
+     * @param array $prices
+     *
+     * @return ArrayObject
+     */
+    protected function transformPriceEntityCollectionToMoneyValueTransferCollection(array $prices)
+    {
+        $moneyValueCollection = new ArrayObject();
+        foreach ($prices as $price) {
+            $moneyValueCollection->append(
+                (new MoneyValueTransfer())
+                    ->fromArray($price, true)
+                    ->setNetAmount($price['net_price'])
+                    ->setGrossAmount($price['gross_price'])
+            );
+        }
+
+        return $moneyValueCollection;
     }
 
 }

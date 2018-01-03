@@ -11,7 +11,7 @@ use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Price\Dependency\PriceEvents;
+use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\ProductCategory\Dependency\ProductCategoryEvents;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
@@ -20,6 +20,7 @@ use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPag
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageImageSetProductImageSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageImageSetSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageLocalizedAttributesSearchListener;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPagePriceProductStoreSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPagePriceSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPagePriceTypeSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductAbstractListener;
@@ -64,7 +65,7 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
             ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new ProductPageUrlSearchListener())
             ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductPageUrlSearchListener());
 
-        $this->addPriceEvents($eventCollection);
+        $this->addPriceProductEvents($eventCollection);
         $this->addProductImageEvents($eventCollection);
         $this->addProductCategoryEvents($eventCollection);
 
@@ -76,14 +77,18 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
      *
      * @return void
      */
-    protected function addPriceEvents(EventCollectionInterface $eventCollection)
+    protected function addPriceProductEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(PriceEvents::ENTITY_SPY_PRICE_PRODUCT_CREATE, new ProductPagePriceSearchListener())
-            ->addListenerQueued(PriceEvents::ENTITY_SPY_PRICE_PRODUCT_UPDATE, new ProductPagePriceSearchListener())
-            ->addListenerQueued(PriceEvents::ENTITY_SPY_PRICE_PRODUCT_DELETE, new ProductPagePriceSearchListener())
-            ->addListenerQueued(PriceEvents::ENTITY_SPY_PRICE_TYPE_UPDATE, new ProductPagePriceTypeSearchListener())
-            ->addListenerQueued(PriceEvents::ENTITY_SPY_PRICE_TYPE_DELETE, new ProductPagePriceTypeSearchListener());
+            ->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_CREATE, new ProductPagePriceSearchListener())
+            ->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_UPDATE, new ProductPagePriceSearchListener())
+            ->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DELETE, new ProductPagePriceSearchListener())
+            ->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_TYPE_UPDATE, new ProductPagePriceTypeSearchListener())
+            ->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE, new ProductPagePriceTypeSearchListener())
+            ->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE, new ProductPagePriceProductStoreSearchListener())
+            ->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE, new ProductPagePriceProductStoreSearchListener())
+            ->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_DELETE, new ProductPagePriceProductStoreSearchListener())
+        ;
     }
 
     /**

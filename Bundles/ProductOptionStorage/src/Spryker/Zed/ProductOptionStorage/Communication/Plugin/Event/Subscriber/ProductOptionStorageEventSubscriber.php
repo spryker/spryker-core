@@ -14,6 +14,7 @@ use Spryker\Zed\ProductOption\Dependency\ProductOptionEvents;
 use Spryker\Zed\ProductOptionStorage\Communication\Plugin\Event\Listener\ProductOptionGroupStorageListener;
 use Spryker\Zed\ProductOptionStorage\Communication\Plugin\Event\Listener\ProductOptionPublishStorageListener;
 use Spryker\Zed\ProductOptionStorage\Communication\Plugin\Event\Listener\ProductOptionStorageListener;
+use Spryker\Zed\ProductOptionStorage\Communication\Plugin\Event\Listener\ProductOptionValuePriceStorageListener;
 use Spryker\Zed\ProductOptionStorage\Communication\Plugin\Event\Listener\ProductOptionValueStorageListener;
 
 /**
@@ -41,7 +42,11 @@ class ProductOptionStorageEventSubscriber extends AbstractPlugin implements Even
             ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_GROUP_DELETE, new ProductOptionGroupStorageListener())
             ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_CREATE, new ProductOptionValueStorageListener())
             ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_UPDATE, new ProductOptionValueStorageListener())
-            ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_DELETE, new ProductOptionValueStorageListener());
+            ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_DELETE, new ProductOptionValueStorageListener())
+            ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_CREATE, new ProductOptionValuePriceStorageListener())
+            ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_UPDATE, new ProductOptionValuePriceStorageListener())
+            ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_DELETE, new ProductOptionValuePriceStorageListener())
+        ;
 
         return $eventCollection;
     }

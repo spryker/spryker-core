@@ -16,9 +16,10 @@ use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander\ProductI
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageMapExpander\PricePageMapExpanderPlugin;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageMapExpander\ProductCategoryPageMapExpanderPlugin;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageMapExpander\ProductImagePageMapExpanderPlugin;
+use Spryker\Zed\ProductPageSearch\Dependency\Client\ProductPageSearchToCatalogPriceProductConnectorClientBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToCategoryBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToEventBehaviorFacadeBridge;
-use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceBridge;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceProductBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
@@ -26,7 +27,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageSearchToC
 use Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageSearchToProductCategoryQueryContainerBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageSearchToProductImageQueryContainerBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageSearchToProductQueryContainerBridge;
-use Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageToPriceQueryContainerBridge;
+use Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageToPriceProductQueryContainerBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilSanitizeServiceBridge;
 
@@ -39,8 +40,9 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
     const QUERY_CONTAINER_PRICE = 'QUERY_CONTAINER_PRICE';
     const SERVICE_UTIL_ENCODING = 'util encoding service';
+    const CLIENT_CATALOG_PRICE_PRODUCT_CONNECTOR = 'CLIENT_CATALOG_PRICE_PRODUCT_CONNECTOR';
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
-    const FACADE_PRICE = 'FACADE_PRICE';
+    const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
     const FACADE_PRODUCT_SEARCH = 'FACADE_PRODUCT_SEARCH';
     const FACADE_SEARCH = 'FACADE_SEARCH';
     const FACADE_CATEGORY = 'FACADE_CATEGORY';
@@ -64,6 +66,10 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductPageSearchToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
         };
 
+        $container[static::CLIENT_CATALOG_PRICE_PRODUCT_CONNECTOR] = function (Container $container) {
+            return new ProductPageSearchToCatalogPriceProductConnectorClientBridge($container->getLocator()->catalogPriceProductConnector()->client());
+        };
+
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new ProductPageSearchToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
         };
@@ -72,8 +78,8 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductPageSearchToProductSearchBridge($container->getLocator()->productSearch()->facade());
         };
 
-        $container[self::FACADE_PRICE] = function (Container $container) {
-            return new ProductPageSearchToPriceBridge($container->getLocator()->price()->facade());
+        $container[self::FACADE_PRICE_PRODUCT] = function (Container $container) {
+            return new ProductPageSearchToPriceProductBridge($container->getLocator()->priceProduct()->facade());
         };
 
         $container[self::FACADE_CATEGORY] = function (Container $container) {
@@ -141,7 +147,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         };
 
         $container[self::QUERY_CONTAINER_PRICE] = function (Container $container) {
-            return new ProductPageToPriceQueryContainerBridge($container->getLocator()->price()->queryContainer());
+            return new ProductPageToPriceProductQueryContainerBridge($container->getLocator()->price()->queryContainer());
         };
 
         $container[self::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {

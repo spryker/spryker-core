@@ -40,7 +40,7 @@ class ProductOptionValueStorageListener extends AbstractProductOptionStorageList
             ->find()
             ->getData();
 
-        $this->refresh($productAbstractIds);
+        $this->publish($productAbstractIds);
     }
 
 }

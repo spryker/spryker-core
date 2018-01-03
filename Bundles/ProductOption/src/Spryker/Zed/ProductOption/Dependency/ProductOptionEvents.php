@@ -96,4 +96,29 @@ interface ProductOptionEvents
      * @api
      */
     const ENTITY_SPY_PRODUCT_OPTION_VALUE_DELETE = 'Entity.spy_product_option_value.delete';
+
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_option_value_price entity creation
+     *
+     * @api
+     */
+    const ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_CREATE = 'Entity.spy_product_option_value_price.create';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_option_value_price entity change
+     *
+     * @api
+     */
+    const ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_UPDATE = 'Entity.spy_product_option_value_price.update';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_option_value_price entity deletion
+     *
+     * @api
+     */
+    const ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_DELETE = 'Entity.spy_product_option_value_price.delete';
 }
