@@ -39,6 +39,8 @@ class CodeStyleSnifferConsole extends Console
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Sniff and fix code style for project or core');
 
+        $this->addAlias();
+
         $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of module to fix code style for');
         $this->addOption(static::OPTION_CORE, 'c', InputOption::VALUE_NONE, 'Core (instead of Project)');
         $this->addOption(static::OPTION_SNIFFS, 's', InputOption::VALUE_OPTIONAL, 'Specific sniffs to run, comma separated list of codes');
@@ -101,5 +103,15 @@ class CodeStyleSnifferConsole extends Console
         $normalized = ucfirst($normalized);
 
         return $normalized;
+    }
+
+    /**
+     * @deprecated Remove this in next major. Only for BC reasons. Please use new command name `code:sniff:style` (short `c:s:s`) instead.
+     *
+     * @return void
+     */
+    protected function addAlias(): void
+    {
+        $this->setAliases(['code:sniff:style']);
     }
 }

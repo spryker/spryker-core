@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddController extends AbstractController
 {
+    const MESSAGE_CUSTOMER_GROUP_CREATE_SUCCESS = 'Customer group was created successfully.';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -39,6 +41,7 @@ class AddController extends AbstractController
 
             $this->getFacade()->add($customerGroupTransfer);
 
+            $this->addSuccessMessage(static::MESSAGE_CUSTOMER_GROUP_CREATE_SUCCESS);
             return $this->redirectResponse('/customer-group');
         }
 

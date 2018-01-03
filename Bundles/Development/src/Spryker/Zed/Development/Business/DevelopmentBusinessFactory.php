@@ -131,9 +131,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createBridgeBuilder()
     {
-        return new BridgeBuilder(
-            $this->getConfig()->getPathToCore()
-        );
+        return new BridgeBuilder($this->getConfig());
     }
 
     /**
@@ -211,7 +209,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         $finderComposite = new FinderComposite();
         $finderComposite
             ->addFinder($this->createSprykerFinder())
-            ->addFinder($this->createSdkFinder());
+            ->addFinder($this->createSdkFinder())
+            ->addFinder($this->createShopFinder());
 
         return $finderComposite;
     }
@@ -259,16 +258,6 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new SprykerSdkPathBuilder(
             $this->getConfig()->getPathToSdk(),
             $this->getConfig()->getApplications()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Development\Business\Phpstan\PhpstanRunner
-     */
-    public function createPhpstanRunner()
-    {
-        return new PhpstanRunner(
-            $this->getConfig()
         );
     }
 

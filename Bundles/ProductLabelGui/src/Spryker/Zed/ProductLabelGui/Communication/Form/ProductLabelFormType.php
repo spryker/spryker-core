@@ -172,7 +172,7 @@ class ProductLabelFormType extends AbstractType
                 'widget' => 'single_text',
                 'required' => false,
                 'attr' => [
-                    'class' => 'js-valid-from-date-picker',
+                    'class' => 'js-valid-from-date-picker safe-datetime',
                 ],
             ]
         );
@@ -197,7 +197,7 @@ class ProductLabelFormType extends AbstractType
                 'widget' => 'single_text',
                 'required' => false,
                 'attr' => [
-                    'class' => 'js-valid-to-date-picker',
+                    'class' => 'js-valid-to-date-picker safe-datetime',
                 ],
             ]
         );

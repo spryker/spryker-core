@@ -45,8 +45,6 @@ class SalesFacadeTest extends Unit
         $productTransfer = $this->tester->haveProduct();
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
 
-        $checkoutResponseTransfer = $this->tester->haveOrder();
-
         $salesOrderEntity = $this->tester->create();
 
         $salesFacade = $this->createSalesFacade();

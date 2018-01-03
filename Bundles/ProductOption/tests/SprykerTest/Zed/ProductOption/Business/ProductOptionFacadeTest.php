@@ -7,23 +7,23 @@
 
 namespace SprykerTest\Zed\ProductOption\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
+use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\Country\Persistence\SpyCountryQuery;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
-use Orm\Zed\Tax\Persistence\SpyTaxRate;
-use Orm\Zed\Tax\Persistence\SpyTaxSet;
-use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
+use Spryker\Shared\Price\PriceConfig;
+use Spryker\Shared\ProductOption\ProductOptionConstants;
+use Spryker\Zed\Currency\Business\CurrencyFacade;
 use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
+use Spryker\Zed\Store\Business\StoreFacade;
+use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
 
 /**
  * Auto-generated group annotations
@@ -38,6 +38,16 @@ use Spryker\Zed\ProductOption\Business\ProductOptionFacade;
 class ProductOptionFacadeTest extends Unit
 {
     const DEFAULT_LOCALE_ISO_CODE = 'en_US';
+
+    const DEFAULT_ID_CURRENCY = 5;
+    const DEFAULT_ID_STORE = null;
+    const DEFAULT_NET_PRICE = 100;
+    const DEFAULT_GROSS_PRICE = 200;
+
+    /**
+     * @var \SprykerTest\Zed\ProductOption\ProductOptionBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -62,9 +72,70 @@ class ProductOptionFacadeTest extends Unit
         $productOptionValues = $productOptionGroupEntity->getSpyProductOptionValues();
         $productOptionValueEntity = $productOptionValues[0];
 
-        $this->assertSame($productOptionValueEntity->getPrice(), $productOptionValueTransfer->getPrice());
         $this->assertEquals($productOptionValueTransfer->getValue(), $productOptionValueEntity->getValue());
         $this->assertEquals($productOptionValueTransfer->getSku(), $productOptionValueEntity->getSku());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveProductOptionGroupUpdatesCurrencyPrices()
+    {
+        // Assign
+        $expectedNetResult = 5;
+        $expectedGrossResult = 6;
+        $productOptionFacade = $this->createProductOptionFacade();
+
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
+        $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
+
+        $productOptionValueTransfer->setPrices(new ArrayObject());
+        $this->tester->addPrice(
+            $productOptionValueTransfer,
+            static::DEFAULT_ID_STORE,
+            static::DEFAULT_ID_CURRENCY,
+            $expectedNetResult,
+            $expectedGrossResult
+        );
+
+        // Act
+        $idProductOptionGroup = $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
+
+        // Assert
+        $productOptionPriceEntity = $this->tester->getFirstProductOptionValuePriceByIdProductOptionGroup($idProductOptionGroup);
+        $actualNetPrice = $productOptionPriceEntity->getNetPrice();
+        $actualGrossPrice = $productOptionPriceEntity->getGrossPrice();
+
+        $this->assertSame($expectedNetResult, $actualNetPrice);
+        $this->assertSame($expectedGrossResult, $actualGrossPrice);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveProductOptionGroupInsertsNewCurrencyPrices()
+    {
+        // Assign
+        $expectedNetResult = static::DEFAULT_NET_PRICE;
+        $expectedGrossResult = static::DEFAULT_GROSS_PRICE;
+        $productOptionFacade = $this->createProductOptionFacade();
+
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
+        $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
+
+        // Act
+        $idProductOptionGroup = $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
+
+        // Assert
+        $productOptionPriceEntity = $this->tester->getFirstProductOptionValuePriceByIdProductOptionGroup($idProductOptionGroup);
+        $actualNetPrice = $productOptionPriceEntity->getNetPrice();
+        $actualGrossPrice = $productOptionPriceEntity->getGrossPrice();
+
+        $this->assertSame($expectedNetResult, $actualNetPrice);
+        $this->assertSame($expectedGrossResult, $actualGrossPrice);
     }
 
     /**
@@ -80,7 +151,7 @@ class ProductOptionFacadeTest extends Unit
         $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
         $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
 
-        $productAbstractEntity = $this->createProductAbstract('testingSku');
+        $productAbstractEntity = $this->tester->createProductAbstract('testingSku');
 
         $productOptionGroupTransfer->setProductsToBeAssigned([$productAbstractEntity->getIdProductAbstract()]);
 
@@ -105,7 +176,7 @@ class ProductOptionFacadeTest extends Unit
         $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
         $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
 
-        $productAbstractEntity = $this->createProductAbstract('testingSku');
+        $productAbstractEntity = $this->tester->createProductAbstract('testingSku');
 
         $productOptionGroupTransfer->setProductsToBeAssigned([$productAbstractEntity->getIdProductAbstract()]);
 
@@ -133,7 +204,7 @@ class ProductOptionFacadeTest extends Unit
         $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
         $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
 
-        $productAbstractEntity = $this->createProductAbstract('testingSku');
+        $productAbstractEntity = $this->tester->createProductAbstract('testingSku');
 
         $productOptionGroupTransfer->setProductsToBeAssigned([$productAbstractEntity->getIdProductAbstract()]);
 
@@ -153,7 +224,7 @@ class ProductOptionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveOptionValueShouldPersistOption()
+    public function testSaveProductOptionValuePersistsOption()
     {
         $productOptionFacade = $this->createProductOptionFacade();
 
@@ -168,12 +239,69 @@ class ProductOptionFacadeTest extends Unit
 
         $this->assertNotEmpty($idProductOptionGroup);
 
-        $productOptionValueEntity = SpyProductOptionValueQuery::create()
-            ->findOneByIdProductOptionValue($idProductOptionValue);
+        $productOptionValueEntity = $this->tester->findOneProductOptionValueById($idProductOptionValue);
 
         $this->assertEquals($productOptionValueTransfer->getSku(), $productOptionValueEntity->getSku());
         $this->assertEquals($productOptionValueTransfer->getValue(), $productOptionValueEntity->getValue());
-        $this->assertSame($productOptionValueTransfer->getPrice(), $productOptionValueEntity->getPrice());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveProductOptionValueUpdatesCurrencyPrices()
+    {
+        // Assign
+        $expectedNetResult = 5;
+        $expectedGrossResult = 6;
+        $productOptionFacade = $this->createProductOptionFacade();
+
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionValueTransfer->setFkProductOptionGroup($this->tester->haveProductOptionGroup()->getIdProductOptionGroup());
+        $productOptionFacade->saveProductOptionValue($productOptionValueTransfer);
+
+        $productOptionValueTransfer->setPrices(new ArrayObject());
+        $this->tester->addPrice(
+            $productOptionValueTransfer,
+            static::DEFAULT_ID_STORE,
+            static::DEFAULT_ID_CURRENCY,
+            $expectedNetResult,
+            $expectedGrossResult
+        );
+
+        // Act
+        $idProductOptionValue = $productOptionFacade->saveProductOptionValue($productOptionValueTransfer);
+
+        // Assert
+        $productOptionPriceEntity = $this->tester->getFirstProductOptionValuePriceByIdProductOptionValue($idProductOptionValue);
+        $actualNetPrice = $productOptionPriceEntity->getNetPrice();
+        $actualGrossPrice = $productOptionPriceEntity->getGrossPrice();
+
+        $this->assertSame($expectedNetResult, $actualNetPrice);
+        $this->assertSame($expectedGrossResult, $actualGrossPrice);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveProductOptionValueInsertsNewCurrencyPrices()
+    {
+        // Assign
+        $expectedNetResult = static::DEFAULT_NET_PRICE;
+        $expectedGrossResult = static::DEFAULT_GROSS_PRICE;
+        $productOptionFacade = $this->createProductOptionFacade();
+        $productOptionValueTransfer = $this->createProductOptionValueTransfer();
+        $productOptionValueTransfer->setFkProductOptionGroup($this->tester->haveProductOptionGroup()->getIdProductOptionGroup());
+
+        // Act
+        $idProductOptionValue = $productOptionFacade->saveProductOptionValue($productOptionValueTransfer);
+
+        // Assert
+        $productOptionPriceEntity = $this->tester->getFirstProductOptionValuePriceByIdProductOptionValue($idProductOptionValue);
+        $actualNetPrice = $productOptionPriceEntity->getNetPrice();
+        $actualGrossPrice = $productOptionPriceEntity->getGrossPrice();
+
+        $this->assertSame($expectedNetResult, $actualNetPrice);
+        $this->assertSame($expectedGrossResult, $actualGrossPrice);
     }
 
     /**
@@ -195,7 +323,6 @@ class ProductOptionFacadeTest extends Unit
 
         $this->assertEquals($idOfPersistedOptionValue, $productOptionTransfer->getIdProductOptionValue());
         $this->assertEquals($productOptionValueTransfer->getValue(), $productOptionTransfer->getValue());
-        $this->assertSame($productOptionValueTransfer->getPrice(), $productOptionTransfer->getUnitGrossPrice());
         $this->assertEquals($productOptionValueTransfer->getSku(), $productOptionTransfer->getSku());
     }
 
@@ -221,6 +348,176 @@ class ProductOptionFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGetProductOptionGroupByIdReturnsAllCurrencies()
+    {
+        // Assign
+        $productOptionGroupTransfer = $this->tester->haveProductOptionGroupWithValues(
+            [],
+            [
+                [
+                    [],
+                    [
+                        [ProductOptionGroupDataHelper::CURRENCY_CODE => 'EUR'],
+                        [ProductOptionGroupDataHelper::CURRENCY_CODE => 'USD'],
+                    ],
+                ],
+            ]
+        );
+
+        $expectedCurrencies = ['EUR', 'USD'];
+
+        // Act
+        $this->tester->enablePropelInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
+        $actualProductGroupOption = $this->createProductOptionFacade()->getProductOptionGroupById($productOptionGroupTransfer->getIdProductOptionGroup());
+
+        // Assert
+        $actualCurrencies = array_map(
+            function (MoneyValueTransfer $moneyValueTransfer) {
+                return $moneyValueTransfer->getCurrency()->getCode();
+            },
+            $actualProductGroupOption->getProductOptionValues()[0]->getPrices()->getArrayCopy()
+        );
+
+        $this->assertEquals($expectedCurrencies, $actualCurrencies);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOptionValueByIdReturnsRequestCurrencyAndStorePrices()
+    {
+        // Assign
+        $expectedGrossAmount = 1144;
+        $expectedNetAmount = 2233;
+
+        $this->mockStoreFacadeDefaultStore('DE');
+        $this->mockCurrencyFacadeDefaultCurrency('USD');
+
+        $productOptionGroupTransfer = $this->tester->haveProductOptionGroupWithValues(
+            [],
+            [
+                [
+                    [],
+                    [
+                        [
+                            ProductOptionGroupDataHelper::CURRENCY_CODE => 'EUR',
+                            ProductOptionGroupDataHelper::STORE_NAME => 'DE',
+                        ],
+                        [
+                            ProductOptionGroupDataHelper::CURRENCY_CODE => 'USD',
+                            ProductOptionGroupDataHelper::STORE_NAME => 'DE',
+                            MoneyValueTransfer::GROSS_AMOUNT => $expectedGrossAmount,
+                            MoneyValueTransfer::NET_AMOUNT => $expectedNetAmount,
+                        ],
+                    ],
+                ],
+            ]
+        );
+
+        // Act
+        $this->tester->enablePropelInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
+        $actualProductOptionValue = $this->createProductOptionFacade()->getProductOptionValueById(
+            $productOptionGroupTransfer->getProductOptionValues()[0]->getIdProductOptionValue()
+        );
+
+        // Assert
+        $this->assertEquals($expectedGrossAmount, $actualProductOptionValue->getUnitGrossPrice());
+        $this->assertEquals($expectedNetAmount, $actualProductOptionValue->getUnitNetPrice());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOptionValueByIdReturnsDefaultStorePricesWhenPriceNotFoundForCurrentCurrency()
+    {
+        // Assign
+        $expectedGrossAmount = 1144;
+        $expectedNetAmount = 2233;
+
+        $this->mockStoreFacadeDefaultStore('DE');
+        $this->mockCurrencyFacadeDefaultCurrency('USD');
+
+        $productOptionGroupTransfer = $this->tester->haveProductOptionGroupWithValues(
+            [],
+            [
+                [
+                    [],
+                    [
+                        [
+                            ProductOptionGroupDataHelper::CURRENCY_CODE => 'EUR',
+                            ProductOptionGroupDataHelper::STORE_NAME => 'DE',
+                        ],
+                        [
+                            ProductOptionGroupDataHelper::CURRENCY_CODE => 'USD',
+                            ProductOptionGroupDataHelper::STORE_NAME => null,
+                            MoneyValueTransfer::GROSS_AMOUNT => $expectedGrossAmount,
+                            MoneyValueTransfer::NET_AMOUNT => $expectedNetAmount,
+                        ],
+                    ],
+                ],
+            ]
+        );
+
+        // Act
+        $this->tester->enablePropelInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
+        $actualProductOptionValue = $this->createProductOptionFacade()->getProductOptionValueById(
+            $productOptionGroupTransfer->getProductOptionValues()[0]->getIdProductOptionValue()
+        );
+
+        // Assert
+        $this->assertEquals($expectedGrossAmount, $actualProductOptionValue->getUnitGrossPrice());
+        $this->assertEquals($expectedNetAmount, $actualProductOptionValue->getUnitNetPrice());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOptionValueByIdReturnsMixedPricesWhenPricesAreNotFullyDefined()
+    {
+        // Assign
+        $expectedGrossAmount = 1144;
+        $expectedNetAmount = 2233;
+
+        $this->mockStoreFacadeDefaultStore('DE');
+        $this->mockCurrencyFacadeDefaultCurrency('USD');
+
+        $productOptionGroupTransfer = $this->tester->haveProductOptionGroupWithValues(
+            [],
+            [
+                [
+                    [],
+                    [
+                        [
+                            ProductOptionGroupDataHelper::CURRENCY_CODE => 'USD',
+                            ProductOptionGroupDataHelper::STORE_NAME => 'DE',
+                            MoneyValueTransfer::GROSS_AMOUNT => null,
+                            MoneyValueTransfer::NET_AMOUNT => $expectedNetAmount,
+                        ],
+                        [
+                            ProductOptionGroupDataHelper::CURRENCY_CODE => 'USD',
+                            ProductOptionGroupDataHelper::STORE_NAME => null,
+                            MoneyValueTransfer::GROSS_AMOUNT => $expectedGrossAmount,
+                            MoneyValueTransfer::NET_AMOUNT => null,
+                        ],
+                    ],
+                ],
+            ]
+        );
+
+        // Act
+        $this->tester->enablePropelInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
+        $actualProductOptionValue = $this->createProductOptionFacade()->getProductOptionValueById(
+            $productOptionGroupTransfer->getProductOptionValues()[0]->getIdProductOptionValue()
+        );
+
+        // Assert
+        $this->assertEquals($expectedGrossAmount, $actualProductOptionValue->getUnitGrossPrice());
+        $this->assertEquals($expectedNetAmount, $actualProductOptionValue->getUnitNetPrice());
+    }
+
+    /**
+     * @return void
+     */
     public function testCalculateTaxRateForProductOptionShouldSetRateToProvidedOptions()
     {
         $iso2Code = 'DE';
@@ -232,17 +529,14 @@ class ProductOptionFacadeTest extends Unit
         $productOptionGroupTransfer = $this->createProductOptionGroupTransfer($productOptionValueTransfer);
         $productOptionGroupTransfer->addProductOptionValue($productOptionValueTransfer);
 
-        $taxSetEntity = $this->createTaxSet($iso2Code, $taxRate);
+        $taxSetEntity = $this->tester->createTaxSet($iso2Code, $taxRate);
 
         $productOptionGroupTransfer->setFkTaxSet($taxSetEntity->getIdTaxSet());
 
         $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
 
         $quoteTransfer = new QuoteTransfer();
-
-        $addressTransfer = new AddressTransfer();
-        $addressTransfer->setIso2Code($iso2Code);
-        $quoteTransfer->setShippingAddress($addressTransfer);
+        $quoteTransfer->setShippingAddress($this->tester->createAddressTransfer($iso2Code));
 
         $productOptionTransfer = new ProductOptionTransfer();
         $productOptionTransfer->setIdProductOptionValue($productOptionValueTransfer->getIdProductOptionValue());
@@ -302,7 +596,7 @@ class ProductOptionFacadeTest extends Unit
         $idOfPersistedOptionGroup = $productOptionFacade->saveProductOptionGroup($productOptionGroupTransfer);
 
         $testSku = 'testing-sku';
-        $productAbstractEntity = $this->createProductAbstract($testSku);
+        $productAbstractEntity = $this->tester->createProductAbstract($testSku);
 
         $productOptionFacade->addProductAbstractToProductOptionGroup(
             $productAbstractEntity->getSku(),
@@ -318,46 +612,148 @@ class ProductOptionFacadeTest extends Unit
     }
 
     /**
-     * @param string $iso2Code
-     * @param int $taxRate
-     *
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSet
+     * @return void
      */
-    protected function createTaxSet($iso2Code, $taxRate)
+    public function testGetProductOptionValueStorePricesReturnsFormattedPrices()
     {
-        $countryEntity = SpyCountryQuery::create()->findOneByIso2Code($iso2Code);
+        // Assign
+        $idCurrentStore = $this->getCurrentIdStore();
+        $prices = new ArrayObject();
+        $prices->append(
+            (new MoneyValueTransfer())
+                ->setFkCurrency(93)
+                ->setFkStore($idCurrentStore)
+                ->setGrossAmount(100)
+                ->setNetAmount(200)
+        );
+        $prices->append(
+            (new MoneyValueTransfer())
+                ->setFkCurrency(250)
+                ->setFkStore($idCurrentStore)
+                ->setGrossAmount(300)
+                ->setNetAmount(400)
+        );
+        $request = (new ProductOptionValueStorePricesRequestTransfer())->setPrices($prices);
+        $expectedResult = [
+            'EUR' => [
+                PriceConfig::PRICE_MODE_GROSS => [ProductOptionConstants::AMOUNT => 100],
+                PriceConfig::PRICE_MODE_NET => [ProductOptionConstants::AMOUNT => 200],
+            ],
+            'USD' => [
+                PriceConfig::PRICE_MODE_GROSS => [ProductOptionConstants::AMOUNT => 300],
+                PriceConfig::PRICE_MODE_NET => [ProductOptionConstants::AMOUNT => 400],
+            ],
+        ];
 
-        $taxRateEntity = new SpyTaxRate();
-        $taxRateEntity->setName('test rate');
-        $taxRateEntity->setCountry($countryEntity);
-        $taxRateEntity->setRate($taxRate);
-        $taxRateEntity->save();
+        // Act
+        $actualResult = $this->createProductOptionFacade()->getProductOptionValueStorePrices($request)->getStorePrices();
 
-        $taxSetEntity = new SpyTaxSet();
-        $taxSetEntity->setName('test tax set');
-        $taxSetEntity->save();
-
-        $taxSetTaxRateEntity = new SpyTaxSetTax();
-        $taxSetTaxRateEntity->setFkTaxSet($taxSetEntity->getIdTaxSet());
-        $taxSetTaxRateEntity->setFkTaxRate($taxRateEntity->getIdTaxRate());
-        $taxSetTaxRateEntity->save();
-
-        return $taxSetEntity;
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
     }
 
     /**
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
+     * @return void
      */
-    protected function createProductAbstract($sku)
+    public function testGetProductOptionValueStorePricesReturnsDefaultStoreCurrencyWhenCurrencyNotExistsInCurrentStore()
     {
-        $productAbstractEntity = new SpyProductAbstract();
-        $productAbstractEntity->setSku($sku);
-        $productAbstractEntity->setAttributes('');
-        $productAbstractEntity->save();
+        // Assign
+        $idCurrentStore = $this->getCurrentIdStore();
+        $prices = new ArrayObject();
+        $prices->append(
+            (new MoneyValueTransfer())
+                ->setFkCurrency(93)
+                ->setFkStore($idCurrentStore)
+                ->setGrossAmount(100)
+                ->setNetAmount(200)
+        );
+        $prices->append(
+            (new MoneyValueTransfer())
+                ->setFkCurrency(250)
+                ->setFkStore(static::DEFAULT_ID_STORE)
+                ->setGrossAmount(300)
+                ->setNetAmount(400)
+        );
+        $request = (new ProductOptionValueStorePricesRequestTransfer())->setPrices($prices);
+        $expectedResult = [
+            'EUR' => [
+                PriceConfig::PRICE_MODE_GROSS => [ProductOptionConstants::AMOUNT => 100],
+                PriceConfig::PRICE_MODE_NET => [ProductOptionConstants::AMOUNT => 200],
+            ],
+            'USD' => [
+                PriceConfig::PRICE_MODE_GROSS => [ProductOptionConstants::AMOUNT => 300],
+                PriceConfig::PRICE_MODE_NET => [ProductOptionConstants::AMOUNT => 400],
+            ],
+        ];
 
-        return $productAbstractEntity;
+        // Act
+        $actualResult = $this->createProductOptionFacade()->getProductOptionValueStorePrices($request)->getStorePrices();
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOptionValueStorePricesReturnsADefaultStorePriceWhenACurrencyPriceIsNull()
+    {
+        // Assign
+        $idCurrentStore = $this->getCurrentIdStore();
+        $prices = new ArrayObject();
+        $prices->append(
+            (new MoneyValueTransfer())
+                ->setFkCurrency(93)
+                ->setFkStore($idCurrentStore)
+                ->setGrossAmount(100)
+                ->setNetAmount(null)
+        );
+        $prices->append(
+            (new MoneyValueTransfer())
+                ->setFkCurrency(250)
+                ->setFkStore($idCurrentStore)
+                ->setGrossAmount(null)
+                ->setNetAmount(400)
+        );
+        $prices->append(
+            (new MoneyValueTransfer())
+                ->setFkCurrency(93)
+                ->setFkStore(static::DEFAULT_ID_STORE)
+                ->setGrossAmount(500)
+                ->setNetAmount(600)
+        );
+        $prices->append(
+            (new MoneyValueTransfer())
+                ->setFkCurrency(250)
+                ->setFkStore(static::DEFAULT_ID_STORE)
+                ->setGrossAmount(700)
+                ->setNetAmount(800)
+        );
+        $request = (new ProductOptionValueStorePricesRequestTransfer())->setPrices($prices);
+        $expectedResult = [
+            'EUR' => [
+                PriceConfig::PRICE_MODE_GROSS => [ProductOptionConstants::AMOUNT => 100],
+                PriceConfig::PRICE_MODE_NET => [ProductOptionConstants::AMOUNT => 600],
+            ],
+            'USD' => [
+                PriceConfig::PRICE_MODE_GROSS => [ProductOptionConstants::AMOUNT => 700],
+                PriceConfig::PRICE_MODE_NET => [ProductOptionConstants::AMOUNT => 400],
+            ],
+        ];
+
+        // Act
+        $actualResult = $this->createProductOptionFacade()->getProductOptionValueStorePrices($request)->getStorePrices();
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return int
+     */
+    protected function getCurrentIdStore()
+    {
+        return $this->tester->getLocator()->store()->facade()->getCurrentStore()->getIdStore();
     }
 
     /**
@@ -395,8 +791,16 @@ class ProductOptionFacadeTest extends Unit
     {
         $productOptionValueTransfer = new ProductOptionValueTransfer();
         $productOptionValueTransfer->setValue('value.translation.key');
-        $productOptionValueTransfer->setPrice(1000);
+        $productOptionValueTransfer->setPrices(new ArrayObject());
         $productOptionValueTransfer->setSku('sku_for_testing');
+
+        $this->tester->addPrice(
+            $productOptionValueTransfer,
+            static::DEFAULT_ID_STORE,
+            static::DEFAULT_ID_CURRENCY,
+            static::DEFAULT_NET_PRICE,
+            static::DEFAULT_GROSS_PRICE
+        );
 
         return $productOptionValueTransfer;
     }
@@ -412,13 +816,54 @@ class ProductOptionFacadeTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
+     * @uses StoreFacadeInterface::getCurrentStore()
+     *
+     * @param string $storeName
+     *
+     * @return void
      */
-    protected function createLocaleTransfer()
+    protected function mockStoreFacadeDefaultStore($storeName)
     {
-        $localeTransfer = new LocaleTransfer();
-        $localeTransfer->setLocaleName(self::DEFAULT_LOCALE_ISO_CODE);
+        $storeTransfer = $this->tester->getLocator()->store()->facade()->getStoreByName($storeName);
 
-        return $localeTransfer;
+        $storeFacadeMock = $this->getMockBuilder(StoreFacade::class)
+            ->setMethods(['getCurrentStore'])
+            ->getMock();
+
+        $storeFacadeMock
+            ->expects($this->any())
+            ->method('getCurrentStore')
+            ->willReturn($storeTransfer);
+
+        $this->tester->setDependencyStoreFacade($storeFacadeMock);
+    }
+
+    /**
+     * @uses CurrencyFacadeInterface::getCurrent()
+     * @uses CurrencyFacadeInterface::fromIsoCode()
+     *
+     * @param string $currencyCode
+     *
+     * @return void
+     */
+    protected function mockCurrencyFacadeDefaultCurrency($currencyCode)
+    {
+        $currencyTransfer = $this->tester->getLocator()->currency()->facade()->fromIsoCode($currencyCode);
+
+        $currencyFacadeMock = $this->getMockBuilder(CurrencyFacade::class)
+            ->setMethods(['getCurrent', 'fromIsoCode'])
+            ->getMock();
+
+        $currencyFacadeMock
+            ->expects($this->any())
+            ->method('getCurrent')
+            ->willReturn($currencyTransfer);
+
+        $currencyFacadeMock
+            ->expects($this->any())
+            ->method('fromIsoCode')
+            ->willReturn($currencyTransfer);
+
+        $this->tester->setDependencyCurrencyFacade($currencyFacadeMock);
     }
 }

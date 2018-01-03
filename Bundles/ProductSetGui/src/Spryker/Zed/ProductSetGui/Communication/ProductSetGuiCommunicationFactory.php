@@ -206,7 +206,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductAbstractTableHelper(
             $this->getProductImageFacade(),
-            $this->getPriceFacade(),
+            $this->getPriceProductFacade(),
             $this->getMoneyFacade()
         );
     }
@@ -252,11 +252,11 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceInterface
+     * @return \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceProductFacadeInterface
      */
-    protected function getPriceFacade()
+    protected function getPriceProductFacade()
     {
-        return $this->getProvidedDependency(ProductSetGuiDependencyProvider::FACADE_PRICE);
+        return $this->getProvidedDependency(ProductSetGuiDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 
     /**

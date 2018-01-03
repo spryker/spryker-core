@@ -29,7 +29,7 @@ class CurrencyDecisionRuleTest extends BaseRuleTester
     public function testDecisionRuleWhenCurrencyMatchesShouldReturnTrue()
     {
         $comparatorMock = $this->createComparatorMock();
-        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer  $clauseTransfer, $currency) {
+        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $currency) {
             return $clauseTransfer->getValue() === $currency;
         });
 

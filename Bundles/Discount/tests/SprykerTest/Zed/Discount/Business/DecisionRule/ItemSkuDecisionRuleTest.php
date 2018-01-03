@@ -29,7 +29,7 @@ class ItemSkuDecisionRuleTest extends BaseRuleTester
     public function testDecisionRuleWhenCurrentItemSkuMatchesShouldReturnTrue()
     {
         $comparatorMock = $this->createComparatorMock();
-        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer  $clauseTransfer, $itemSku) {
+        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $itemSku) {
             return $clauseTransfer->getValue() === $itemSku;
         });
 

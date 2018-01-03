@@ -8,9 +8,11 @@
 namespace Spryker\Zed\ProductOption\Communication\Form;
 
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueOptionValueSku;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueValue;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
+use Spryker\Zed\ProductOption\ProductOptionConfig;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,12 +24,13 @@ class ProductOptionValueForm extends AbstractType
 {
     const FIELD_VALUE = 'value';
     const FIELD_SKU = 'sku';
-    const FIELD_PRICE = 'price';
+    const FIELD_PRICES = 'prices';
     const FIELD_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
     const FIELD_OPTION_HASH = 'optionHash';
 
+    const OPTION_AMOUNT_PER_STORE = 'amount_per_store';
+
     const ALPHA_NUMERIC_PATTERN = '/^[a-z0-9\.\_]+$/';
-    const NUMERIC_PATTERN = '/[0-9\.\,]+/';
 
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
@@ -40,13 +43,21 @@ class ProductOptionValueForm extends AbstractType
     protected $priceTransformer;
 
     /**
+     * @var \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected $moneyCollectionFormTypePlugin;
+
+    /**
+     * @param \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface $moneyCollectionFormTypePlugin
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      * @param \Symfony\Component\Form\DataTransformerInterface $priceTransformer
      */
     public function __construct(
+        FormTypeInterface $moneyCollectionFormTypePlugin,
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
         DataTransformerInterface $priceTransformer
     ) {
+        $this->moneyCollectionFormTypePlugin = $moneyCollectionFormTypePlugin;
         $this->productOptionQueryContainer = $productOptionQueryContainer;
         $this->priceTransformer = $priceTransformer;
     }
@@ -61,7 +72,7 @@ class ProductOptionValueForm extends AbstractType
     {
         $this->addNameField($builder)
             ->addSkuField($builder)
-            ->addPrice($builder)
+            ->addPricesField($builder)
             ->addIdProductOptionValue($builder)
             ->addFormHash($builder);
     }
@@ -75,6 +86,14 @@ class ProductOptionValueForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ProductOptionValueTransfer::class,
+            'constraints' => [
+                new UniqueValue([
+                    UniqueValue::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer,
+                ]),
+                new UniqueOptionValueSku([
+                    UniqueOptionValueSku::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer,
+                ]),
+            ],
         ]);
     }
 
@@ -88,14 +107,14 @@ class ProductOptionValueForm extends AbstractType
         $builder->add(self::FIELD_VALUE, 'text', [
             'label' => 'Option name translation key',
             'required' => true,
+            'attr' => [
+                'placeholder' => ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX . '(your key)',
+            ],
             'constraints' => [
                 new NotBlank(),
                 new Regex([
                     'pattern' => self::ALPHA_NUMERIC_PATTERN,
                     'message' => 'Invalid key provided. Valid values "a-z", "0-9", ".", "_".',
-                ]),
-                new UniqueValue([
-                    UniqueValue::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer,
                 ]),
             ],
         ]);
@@ -115,9 +134,6 @@ class ProductOptionValueForm extends AbstractType
             'required' => true,
             'constraints' => [
                 new NotBlank(),
-                new UniqueOptionValueSku([
-                    UniqueOptionValueSku::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer,
-                ]),
             ],
         ]);
 
@@ -129,22 +145,15 @@ class ProductOptionValueForm extends AbstractType
      *
      * @return $this
      */
-    protected function addPrice(FormBuilderInterface $builder)
+    protected function addPricesField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PRICE, 'text', [
-            'label' => 'Price',
-            'required' => true,
-            'constraints' => [
-                new NotBlank(),
-                new Regex([
-                    'pattern' => self::NUMERIC_PATTERN,
-                    'message' => 'Invalid price provided. Valid values "0-9", ".", ",".',
-                ]),
-            ],
-        ]);
-
-        $builder->get(self::FIELD_PRICE)
-            ->addModelTransformer($this->priceTransformer);
+        $builder->add(
+            static::FIELD_PRICES,
+            $this->moneyCollectionFormTypePlugin->getType(),
+            [
+                    static::OPTION_AMOUNT_PER_STORE => true,
+            ]
+        );
 
         return $this;
     }

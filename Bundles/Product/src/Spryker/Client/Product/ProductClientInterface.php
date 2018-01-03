@@ -10,6 +10,9 @@ namespace Spryker\Client\Product;
 interface ProductClientInterface
 {
     /**
+     * Specification:
+     * - Read abstract product data from yves storage, based on provided
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -20,6 +23,9 @@ interface ProductClientInterface
     public function getProductAbstractFromStorageById($idProductAbstract, $locale);
 
     /**
+     * Specification:
+     * - Read abstract product data from yves storage, based on current shop selected locale
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -29,6 +35,9 @@ interface ProductClientInterface
     public function getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
 
     /**
+     * Specification:
+     * - Read attribute map from storage, based on current shop selected locale
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -38,6 +47,9 @@ interface ProductClientInterface
     public function getAttributeMapByIdProductAbstractForCurrentLocale($idProductAbstract);
 
     /**
+     * Specification:
+     * - Read attribute map from storage, based on provided
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -48,6 +60,9 @@ interface ProductClientInterface
     public function getAttributeMapByIdAndLocale($idProductAbstract, $locale);
 
     /**
+     * Specification:
+     * - Read concrete product data from yves storage, based on current shop selected locale
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -57,6 +72,9 @@ interface ProductClientInterface
     public function getProductConcreteByIdForCurrentLocale($idProductConcrete);
 
     /**
+     * Specification:
+     * - Read concrete product data from yves storage, based on provided locale
+     *
      * @api
      *
      * @param int $idProductConcrete

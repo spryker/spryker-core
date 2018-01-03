@@ -67,9 +67,9 @@ class DependencyTreeBuilder implements DependencyTreeBuilderInterface
     /**
      * @param string $module
      *
-     * @return array
+     * @return void
      */
-    public function buildDependencyTree(string $module): array
+    public function buildDependencyTree(string $module): void
     {
         foreach ($this->finder->find($module) as $fileInfo) {
             foreach ($this->dependencyChecker as $dependencyChecker) {

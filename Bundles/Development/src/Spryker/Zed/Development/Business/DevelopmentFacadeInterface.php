@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Development\Business;
 
 use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
 interface DevelopmentFacadeInterface
 {
@@ -22,16 +20,6 @@ interface DevelopmentFacadeInterface
      * @return void
      */
     public function checkCodeStyle($module = null, array $options = []);
-
-    /**
-     * @api
-     *
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return int
-     */
-    public function runPhpstan(InputInterface $input, OutputInterface $output);
 
     /**
      * @api
@@ -96,6 +84,15 @@ interface DevelopmentFacadeInterface
      * @return array
      */
     public function getAllModules();
+
+    /**
+     * @api
+     *
+     * @deprecated Use `getAllModules()` instead.
+     *
+     * @return array
+     */
+    public function getAllBundles();
 
     /**
      * Specification:
@@ -240,10 +237,11 @@ interface DevelopmentFacadeInterface
      * @api
      *
      * @param string $directory
+     * @param array $options
      *
      * @return array
      */
-    public function runArchitectureSniffer($directory);
+    public function runArchitectureSniffer($directory, array $options = []);
 
     /**
      * Returns a list of all modules in project and core namespaces
@@ -253,6 +251,15 @@ interface DevelopmentFacadeInterface
      * @return array
      */
     public function listAllModules();
+
+    /**
+     * @api
+     *
+     * @deprecated Use `listAllModules` instead.
+     *
+     * @return array
+     */
+    public function listAllBundles();
 
     /**
      * Returns all architecture rules

@@ -18,6 +18,10 @@ use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
 class MoneyCollectionFormTypePlugin extends AbstractPlugin implements FormTypeInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getType()

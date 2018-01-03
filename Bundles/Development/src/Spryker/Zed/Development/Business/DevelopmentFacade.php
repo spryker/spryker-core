@@ -132,6 +132,18 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
+     * @deprecated Use `getAllModules()` instead.
+     *
+     * @return array
+     */
+    public function getAllBundles()
+    {
+        return $this->getAllModules();
+    }
+
+    /**
+     * @api
+     *
      * @param string $module
      *
      * @return void
@@ -319,6 +331,18 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     public function listAllModules()
     {
         return $this->getFactory()->createArchitectureBundleFinder()->find();
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Use `listAllModules` instead.
+     *
+     * @return array
+     */
+    public function listAllBundles()
+    {
+        return $this->listAllModules();
     }
 
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Shared\Kernel\ClassResolver;
 
 class ClassInfo
 {
+    const TEST_NAMESPACE_SUFFIX = 'Test';
     const KEY_NAMESPACE = 0;
     const KEY_APPLICATION = 1;
     const KEY_BUNDLE = 2;
@@ -47,7 +48,7 @@ class ClassInfo
 
         if ($this->isFullyQualifiedClassName($callerClass)) {
             $callerClassParts = explode('\\', ltrim($callerClass, '\\'));
-            $callerClassParts = $this->removeTestNamespace($callerClassParts);
+            $callerClassParts = $this->adjustTestNamespace($callerClassParts);
         }
 
         $this->callerClassParts = $callerClassParts;
@@ -117,21 +118,49 @@ class ClassInfo
      *
      * @return array
      */
-    private function removeTestNamespace(array $callerClassParts)
+    protected function adjustTestNamespace(array $callerClassParts)
     {
-        $namespace = $callerClassParts[self::KEY_NAMESPACE];
-        $namespaceLength = strlen($namespace);
+        // Support obsolete test namespace convention: Unit\PyzTest\Zed\..
+        if ($this->isTestNamespace($callerClassParts[self::KEY_APPLICATION], self::TEST_NAMESPACE_SUFFIX)) {
+            array_shift($callerClassParts);
+        }
 
-        $testNamespaceSuffix = 'Test';
+        if ($this->isTestNamespace($callerClassParts[self::KEY_NAMESPACE], self::TEST_NAMESPACE_SUFFIX)) {
+            $callerClassParts = $this->removeTestNamespaceSuffix($callerClassParts, self::TEST_NAMESPACE_SUFFIX);
+        }
+
+        return $callerClassParts;
+    }
+
+    /**
+     * @param string $rootNamespace
+     * @param string $testNamespaceSuffix
+     *
+     * @return bool
+     */
+    protected function isTestNamespace($rootNamespace, $testNamespaceSuffix)
+    {
+        $rootNamespaceLength = strlen($rootNamespace);
         $testNamespaceSuffixLength = strlen($testNamespaceSuffix);
 
-        if ($testNamespaceSuffixLength < $namespaceLength) {
-            $isTestNamespace = substr_compare($namespace, $testNamespaceSuffix, $namespaceLength - $testNamespaceSuffixLength, $testNamespaceSuffixLength) === 0;
-            if ($isTestNamespace) {
-                $namespaceWithoutTestSuffix = substr($namespace, 0, -$testNamespaceSuffixLength);
-                $callerClassParts[self::KEY_NAMESPACE] = $namespaceWithoutTestSuffix;
-            }
+        if ($testNamespaceSuffixLength >= $rootNamespaceLength) {
+            return false;
         }
+
+        return substr_compare($rootNamespace, $testNamespaceSuffix, $rootNamespaceLength - $testNamespaceSuffixLength, $testNamespaceSuffixLength) === 0;
+    }
+
+    /**
+     * @param array $callerClassParts
+     * @param string $testNamespaceSuffix
+     *
+     * @return array
+     */
+    protected function removeTestNamespaceSuffix(array $callerClassParts, $testNamespaceSuffix)
+    {
+        $namespace = $callerClassParts[self::KEY_NAMESPACE];
+        $namespaceWithoutTestSuffix = substr($namespace, 0, -strlen($testNamespaceSuffix));
+        $callerClassParts[self::KEY_NAMESPACE] = $namespaceWithoutTestSuffix;
 
         return $callerClassParts;
     }

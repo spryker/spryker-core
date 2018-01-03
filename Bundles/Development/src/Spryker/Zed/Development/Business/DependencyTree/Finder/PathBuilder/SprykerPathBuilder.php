@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\Development\Business\DependencyTree\Finder\PathBuilder;
 
+use Zend\Filter\FilterChain;
+use Zend\Filter\StringToLower;
+use Zend\Filter\Word\CamelCaseToDash;
+
 class SprykerPathBuilder implements PathBuilderInterface
 {
     /**
@@ -36,12 +40,35 @@ class SprykerPathBuilder implements PathBuilderInterface
      */
     public function buildPaths(string $module): array
     {
+        $filteredModule = $this->filterModule($module);
+
         $paths = [];
         foreach ($this->applications as $application) {
+            $paths[] = sprintf('%s/%s/src/Spryker/%s/%s', $this->basePath, $filteredModule, $application, $module);
             $paths[] = sprintf('%s/%s/src/Spryker/%s/%s', $this->basePath, $module, $application, $module);
+            $paths[] = sprintf('%s/%s/src/SprykerTest/%s/%s', $this->basePath, $filteredModule, $application, $module);
             $paths[] = sprintf('%s/%s/src/SprykerTest/%s/%s', $this->basePath, $module, $application, $module);
         }
 
         return $paths;
+    }
+
+    /**
+     * @param string $module
+     *
+     * @return string
+     */
+    protected function filterModule(string $module): string
+    {
+        if ($module === '*') {
+            return $module;
+        }
+
+        $filterChain = new FilterChain();
+        $filterChain
+            ->attach(new CamelCaseToDash())
+            ->attach(new StringToLower());
+
+        return $filterChain->filter($module);
     }
 }

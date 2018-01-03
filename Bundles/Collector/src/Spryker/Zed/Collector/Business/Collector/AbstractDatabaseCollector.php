@@ -55,6 +55,11 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
         LocaleTransfer $locale,
         OutputInterface $output
     ) {
+        if ($batchCollection->count() === 0) {
+            return;
+        }
+        $output->write(PHP_EOL);
+
         $progressBar = $this->startProgressBar($batchCollection, $batchResult, $output);
 
         foreach ($batchCollection as $batch) {
@@ -69,7 +74,6 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
         }
 
         $progressBar->finish();
-        $output->writeln('');
     }
 
     /**

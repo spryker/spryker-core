@@ -162,7 +162,7 @@ class GeneralForm extends AbstractType
             'widget' => 'single_text',
             'required' => true,
             'attr' => [
-                'class' => 'datepicker',
+                'class' => 'datepicker safe-datetime',
             ],
         ]);
 
@@ -180,7 +180,7 @@ class GeneralForm extends AbstractType
             'widget' => 'single_text',
             'required' => true,
             'attr' => [
-                'class' => 'datepicker',
+                'class' => 'datepicker safe-datetime',
             ],
         ]);
 

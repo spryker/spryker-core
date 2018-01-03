@@ -181,6 +181,24 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
 
     /**
      * Specification:
+     * - Returns a filtered list of keys that exists in the persisted product attribute key list
+     *
+     * @api
+     *
+     * @param string $searchText
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function suggestProductSearchAttributeKeys($searchText = '', $limit = 10)
+    {
+        return $this->getFactory()
+            ->createAttributeReader()
+            ->suggestKeys($searchText, $limit);
+    }
+
+    /**
+     * Specification:
      * - Searches for an existing product attribute key entity by the provided key in database or create it if does not exist.
      * - Creates a new product search attribute entity with the given data and the found/created attribute key entity.
      * - Creates a glossary key for the search attribute key if does not exist already.

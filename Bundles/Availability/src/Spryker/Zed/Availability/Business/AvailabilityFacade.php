@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Availability\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -57,13 +58,13 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function checkoutAvailabilityPreCondition(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
-        $this->getFactory()
+        return $this->getFactory()
             ->createProductsAvailablePreCondition()
             ->checkCondition($quoteTransfer, $checkoutResponseTransfer);
     }
@@ -99,6 +100,23 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
         return $this->getFactory()
             ->createProductReservationReader()
             ->getProductAbstractAvailability($idProductAbstract, $idLocale);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     */
+    public function findProductConcreteAvailability(
+        ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
+    ) {
+        return $this->getFactory()
+            ->createProductReservationReader()
+            ->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
     }
 
     /**

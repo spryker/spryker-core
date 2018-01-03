@@ -138,4 +138,119 @@ interface SearchFacadeInterface
      * @return void
      */
     public function generatePageIndexMap(LoggerInterface $messenger);
+
+    /**
+     * Specification:
+     * - Creates a Snapshot.
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function createSnapshot($repositoryName, $snapshotName, $options = []);
+
+    /**
+     * Specification:
+     * - Checks if a Snapshot exists.
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     *
+     * @return bool
+     */
+    public function existsSnapshot($repositoryName, $snapshotName);
+
+    /**
+     * Specification:
+     * - Deletes a Snapshot.
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     *
+     * @return bool
+     */
+    public function deleteSnapshot($repositoryName, $snapshotName);
+
+    /**
+     * Specification:
+     * - Checks if a Snapshot repository exists.
+     *
+     * @api
+     *
+     * @
+     *
+     * @param string $repositoryName
+     *
+     * @return bool
+     */
+    public function existsSnapshotRepository($repositoryName);
+
+    /**
+     * Specification:
+     * - Creates a Snapshot repository.
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $type
+     * @param array $settings
+     *
+     * @return bool
+     */
+    public function createSnapshotRepository($repositoryName, $type = 'fs', $settings = []);
+
+    /**
+     * Specification:
+     * - Restores a Snapshot.
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function restoreSnapshot($repositoryName, $snapshotName, $options = []);
+
+    /**
+     * Specification:
+     * - Closes an Index.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function closeIndex();
+
+    /**
+     * Specification:
+     * - Closes all indices.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function closeAllIndices();
+
+    /**
+     * Specification:
+     * - Copies one index to another index.
+     *
+     * @api
+     *
+     * @param string $source
+     * @param string $target
+     *
+     * @return bool
+     */
+    public function copyIndex($source, $target);
 }
