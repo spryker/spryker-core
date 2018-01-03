@@ -127,6 +127,16 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Development\Business\Phpstan\PhpstanRunnerInterface
+     */
+    public function createPhpstanRunner()
+    {
+        return new PhpstanRunner(
+            $this->getConfig()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder
      */
     public function createBridgeBuilder()
