@@ -31,11 +31,6 @@ class BundleParser implements BundleParserInterface
     protected $finder;
 
     /**
-     * @var \Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface
-     */
-    protected $finder;
-
-    /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
      */
     protected $config;
