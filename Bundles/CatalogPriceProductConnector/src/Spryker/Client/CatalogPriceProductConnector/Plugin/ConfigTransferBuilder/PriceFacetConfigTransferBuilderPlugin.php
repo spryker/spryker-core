@@ -5,17 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Catalog\Plugin\ConfigTransferBuilder;
+namespace Spryker\Client\CatalogPriceProductConnector\Plugin\ConfigTransferBuilder;
 
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Catalog\Dependency\Plugin\FacetConfigTransferBuilderPluginInterface;
+use Spryker\Client\CatalogPriceProductConnector\CatalogPriceProductConnectorFactory;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\Search\SearchConfig;
 
+/**
+ * @method CatalogPriceProductConnectorFactory getFactory()
+ */
 class PriceFacetConfigTransferBuilderPlugin extends AbstractPlugin implements FacetConfigTransferBuilderPluginInterface
 {
-    const NAME = 'price';
     const PARAMETER_NAME = 'price';
 
     /**
@@ -23,8 +26,12 @@ class PriceFacetConfigTransferBuilderPlugin extends AbstractPlugin implements Fa
      */
     public function build()
     {
+        $priceIdentifier = $this->getFactory()
+            ->createPriceIdentifierBuilder()
+            ->buildIdentifierForCurrentCurrency();
+
         return (new FacetConfigTransfer())
-            ->setName(static::NAME)
+            ->setName($priceIdentifier)
             ->setParameterName(static::PARAMETER_NAME)
             ->setFieldName(PageIndexMap::INTEGER_FACET)
             ->setType(SearchConfig::FACET_TYPE_PRICE_RANGE);

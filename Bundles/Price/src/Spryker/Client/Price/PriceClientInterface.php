@@ -43,4 +43,14 @@ interface PriceClientInterface
      * @return string
      */
     public function getNetPriceModeIdentifier();
+
+    /**
+     * Specification:
+     *  - Returns all available price modes
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getPriceModes();
 }

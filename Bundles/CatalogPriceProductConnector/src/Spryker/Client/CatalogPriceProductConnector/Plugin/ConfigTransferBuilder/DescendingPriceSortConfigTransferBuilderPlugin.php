@@ -5,16 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Catalog\Plugin\ConfigTransferBuilder;
+namespace Spryker\Client\CatalogPriceProductConnector\Plugin\ConfigTransferBuilder;
 
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\SortConfigTransfer;
 use Spryker\Client\Catalog\Dependency\Plugin\SortConfigTransferBuilderPluginInterface;
+use Spryker\Client\CatalogPriceProductConnector\CatalogPriceProductConnectorFactory;
 use Spryker\Client\Kernel\AbstractPlugin;
 
+/**
+ * @method CatalogPriceProductConnectorFactory getFactory()
+ */
 class DescendingPriceSortConfigTransferBuilderPlugin extends AbstractPlugin implements SortConfigTransferBuilderPluginInterface
 {
-    const NAME = 'price';
     const PARAMETER_NAME = 'price_desc';
 
     /**
@@ -22,8 +25,12 @@ class DescendingPriceSortConfigTransferBuilderPlugin extends AbstractPlugin impl
      */
     public function build()
     {
+        $priceIdentifier = $this->getFactory()
+            ->createPriceIdentifierBuilder()
+            ->buildIdentifierForCurrentCurrency();
+
         return (new SortConfigTransfer())
-            ->setName(static::NAME)
+            ->setName($priceIdentifier)
             ->setParameterName(static::PARAMETER_NAME)
             ->setFieldName(PageIndexMap::INTEGER_SORT)
             ->setIsDescending(true);
