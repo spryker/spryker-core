@@ -400,7 +400,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorClient
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorService
      */
     protected function createLocatorServiceChecker()
     {

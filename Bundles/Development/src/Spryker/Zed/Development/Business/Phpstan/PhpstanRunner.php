@@ -261,7 +261,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         $modules = [];
         foreach ($directories as $dir) {
-            $modules[] = $dir->getFileName();
+            $modules[] = $dir->getFilename();
         }
 
         return $modules;

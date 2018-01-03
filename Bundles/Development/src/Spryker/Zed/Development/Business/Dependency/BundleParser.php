@@ -204,11 +204,14 @@ class BundleParser implements BundleParserInterface
     /**
      * @param string $module
      *
-     * @return \Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\SplFileInfo[]|\Symfony\Component\Finder\Finder
      */
     protected function findAllFilesOfBundle($module)
     {
         $finder = new Finder($this->config->getPathToCore(), '*', $module);
+        if ($finder === null) {
+            return [];
+        }
 
         return $finder->getFiles();
     }
