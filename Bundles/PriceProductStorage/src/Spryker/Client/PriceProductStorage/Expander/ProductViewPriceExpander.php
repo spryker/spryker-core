@@ -74,7 +74,7 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
         $priceAbstractData = $this->getPriceAbstractData($productViewTransfer);
         $priceConcreteData = $this->getPriceConcreteData($productViewTransfer);
 
-        $productViewPriceData = array_replace_recursive($priceAbstractData->toArray(), $priceConcreteData->toArray());
+        $productViewPriceData = array_replace_recursive($priceAbstractData->getPrices(), $priceConcreteData->getPrices());
 
         return $productViewPriceData;
     }
