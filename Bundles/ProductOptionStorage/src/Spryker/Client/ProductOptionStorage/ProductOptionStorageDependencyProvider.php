@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductOptionStorage;
 
+use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToCurrencyClientBridge;
+use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToPriceClientBridge;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageBridge;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
@@ -17,6 +19,8 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
 {
 
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    const CLIENT_PRICE = 'CLIENT_PRICE';
+    const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
     const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     const STORE = 'STORE';
 
@@ -28,6 +32,8 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addStorageClient($container);
+        $container = $this->addPriceClient($container);
+        $container = $this->addCurrencyClient($container);
         $container = $this->addSynchronizationService($container);
         $container = $this->addStore($container);
 
@@ -43,6 +49,34 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container[self::CLIENT_STORAGE] = function (Container $container) {
             return new ProductOptionStorageToStorageBridge($container->getLocator()->storage()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPriceClient(Container $container)
+    {
+        $container[static::CLIENT_PRICE] = function (Container $container) {
+            return new ProductOptionStorageToPriceClientBridge($container->getLocator()->price()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCurrencyClient(Container $container)
+    {
+        $container[static::CLIENT_CURRENCY] = function (Container $container) {
+            return new ProductOptionStorageToCurrencyClientBridge($container->getLocator()->currency()->client());
         };
 
         return $container;

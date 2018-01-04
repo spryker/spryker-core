@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductOptionStorage;
 
+use Spryker\Client\ProductOptionStorage\Price\ValuePriceReader;
+use Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface;
 use Spryker\Client\ProductOptionStorage\Storage\ProductOptionStorageReader;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Shared\Kernel\Store;
@@ -19,7 +21,7 @@ class ProductOptionStorageFactory extends AbstractFactory
      */
     public function createProductOptionStorageReader()
     {
-        return new ProductOptionStorageReader($this->getStorage(), $this->getSynchronizationService(), $this->getStore());
+        return new ProductOptionStorageReader($this->getStorage(), $this->getSynchronizationService(),  $this->createValuePriceReader(), $this->getStore());
     }
 
     /**
@@ -46,4 +48,30 @@ class ProductOptionStorageFactory extends AbstractFactory
         return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::STORE);
     }
 
+    /**
+     * @return ValuePriceReaderInterface
+     */
+    protected function createValuePriceReader()
+    {
+        return new ValuePriceReader(
+            $this->getCurrencyClient(),
+            $this->getPriceClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToPriceClientInterface
+     */
+    protected function getPriceClient()
+    {
+        return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::CLIENT_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToCurrencyClientInterface
+     */
+    protected function getCurrencyClient()
+    {
+        return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::CLIENT_CURRENCY);
+    }
 }

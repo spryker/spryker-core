@@ -6,6 +6,7 @@
     <transfer name="ProductOptionValueStorage">
         <property name="idProductOptionValue" type="int" />
         <property name="sku" type="string" />
+        <property name="price" type="int" />
         <property name="prices" type="array" />
         <property name="value" type="string" />
     </transfer>

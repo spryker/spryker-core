@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface;
 use Spryker\Shared\ProductOptionStorage\ProductOptionStorageConfig;
 use Spryker\Shared\Kernel\Store;
 
@@ -27,6 +28,11 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     protected $synchronizationService;
 
     /**
+     * @var ValuePriceReaderInterface
+     */
+    protected $valuePriceReader;
+
+    /**
      * @var Store
      */
     protected $store;
@@ -34,15 +40,18 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     /**
      * @param \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface $storageClient
      * @param \Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface $synchronizationService
+     * @param ValuePriceReaderInterface $valuePriceReader
      * @param Store $store
      */
     public function __construct(
         ProductOptionStorageToStorageInterface $storageClient,
         ProductOptionStorageToSynchronizationServiceInterface $synchronizationService,
+        ValuePriceReaderInterface $valuePriceReader,
         Store $store
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
+        $this->valuePriceReader = $valuePriceReader;
         $this->store = $store;
     }
 
@@ -61,9 +70,24 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
             return null;
         }
 
-        $productAbstractOptionStorageTransfer = new ProductAbstractOptionStorageTransfer();
+        return $this->mapToProductAbstractOptionStorageTransfer($productAbstractOptionStorageData);
+    }
 
-        return $productAbstractOptionStorageTransfer->fromArray($productAbstractOptionStorageData, true);
+    /**
+     * @param $productAbstractOptionStorageData
+     *
+     * @return ProductAbstractOptionStorageTransfer
+     */
+    protected function mapToProductAbstractOptionStorageTransfer($productAbstractOptionStorageData)
+    {
+        $productAbstractOptionStorageTransfer = new ProductAbstractOptionStorageTransfer();
+        $productAbstractOptionStorageTransfer->fromArray($productAbstractOptionStorageData, true);
+
+        foreach ($productAbstractOptionStorageTransfer->getProductOptionGroups() as $productOptionGroup) {
+            $this->valuePriceReader->resolvePrices($productOptionGroup);
+        }
+
+        return $productAbstractOptionStorageTransfer;
     }
 
     /**
