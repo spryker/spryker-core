@@ -186,11 +186,25 @@ class AbstractCmsPageSearchListener extends AbstractPlugin
         $localeCmsPageDataTransfer->setIsActive($cmsPageEntity->getIsActive());
         $localeCmsPageDataTransfer->setIsSearchable($cmsPageEntity->getIsSearchable());
         $localeCmsPageDataTransfer->setIdCmsPage($cmsPageEntity->getIdCmsPage());
-        $localeCmsPageDataTransfer->setValidFrom($cmsPageEntity->getValidFrom()->format('c'));
-        $localeCmsPageDataTransfer->setValidTo($cmsPageEntity->getValidTo()->format('c'));
+        $localeCmsPageDataTransfer->setValidFrom($this->convertDateTimeToString($cmsPageEntity->getValidFrom()));
+        $localeCmsPageDataTransfer->setValidTo($this->convertDateTimeToString($cmsPageEntity->getValidTo()));
         $localeCmsPageDataTransfer->setUrl($url);
 
         return $localeCmsPageDataTransfer;
+    }
+
+    /**
+     * @param \DateTime|null $dateTime
+     *
+     * @return null|string
+     */
+    protected function convertDateTimeToString(\DateTime $dateTime = null)
+    {
+        if (!$dateTime) {
+            return null;
+        }
+
+        return $dateTime->format('c');
     }
 
 }

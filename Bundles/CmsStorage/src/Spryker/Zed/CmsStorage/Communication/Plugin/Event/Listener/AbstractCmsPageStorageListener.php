@@ -167,8 +167,8 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
 
         $localeCmsPageDataTransfer->setIsActive($cmsPageEntity->getIsActive());
         $localeCmsPageDataTransfer->setIdCmsPage($cmsPageEntity->getIdCmsPage());
-        $localeCmsPageDataTransfer->setValidFrom($cmsPageEntity->getValidFrom()->format('c'));
-        $localeCmsPageDataTransfer->setValidTo($cmsPageEntity->getValidTo()->format('c'));
+        $localeCmsPageDataTransfer->setValidFrom($this->convertDateTimeToString($cmsPageEntity->getValidFrom()));
+        $localeCmsPageDataTransfer->setValidTo($this->convertDateTimeToString($cmsPageEntity->getValidTo()));
         $localeCmsPageDataTransfer->setUrl($url);
 
         $expandedData = [];
@@ -177,6 +177,20 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
         }
 
         return (new LocaleCmsPageDataTransfer())->fromArray($expandedData);
+    }
+
+    /**
+     * @param \DateTime|null $dateTime
+     *
+     * @return null|string
+     */
+    protected function convertDateTimeToString(\DateTime $dateTime = null)
+    {
+        if (!$dateTime) {
+            return null;
+        }
+
+        return $dateTime->format('c');
     }
 
 }
