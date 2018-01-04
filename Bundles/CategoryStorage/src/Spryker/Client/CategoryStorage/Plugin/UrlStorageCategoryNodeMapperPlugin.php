@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
 use Spryker\Client\CategoryStorage\CategoryStorageFactory;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
-use Spryker\Shared\Category\CategoryConfig;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Shared\Kernel\Store;
 
@@ -38,7 +37,7 @@ class UrlStorageCategoryNodeMapperPlugin extends AbstractPlugin implements UrlSt
         if ($idCategoryNode) {
             $resourceKey = $this->generateKey($idCategoryNode, $options['locale']);
             $urlStorageResourceMapTransfer->setResourceKey($resourceKey);
-            $urlStorageResourceMapTransfer->setType(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE);
+            $urlStorageResourceMapTransfer->setType(CategoryStorageConstants::CATEGORY_NODE_RESOURCE_NAME);
         }
 
         return $urlStorageResourceMapTransfer;

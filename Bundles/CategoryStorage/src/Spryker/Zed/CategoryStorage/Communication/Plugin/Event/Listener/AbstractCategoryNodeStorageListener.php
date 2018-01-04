@@ -30,10 +30,10 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
      */
     protected function publish(array $categoryNodeIds)
     {
-        $categoryTrees = $this->getCategoryTrees($categoryNodeIds);
+        $categoryNodes = $this->getCategoryNodes($categoryNodeIds);
         $spyCategoryNodeStorageEntities = $this->findCategoryNodeStorageEntitiesByCategoryNodeIds($categoryNodeIds);
 
-        $this->storeData($categoryTrees, $spyCategoryNodeStorageEntities);
+        $this->storeData($categoryNodes, $spyCategoryNodeStorageEntities);
     }
 
     /**
@@ -50,19 +50,19 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
     }
 
     /**
-     * @param array $categoryTrees
+     * @param array $categoryNodes
      * @param array $spyCategoryNodeStorageEntities
      *
      * @return void
      */
-    protected function storeData(array $categoryTrees, array $spyCategoryNodeStorageEntities)
+    protected function storeData(array $categoryNodes, array $spyCategoryNodeStorageEntities)
     {
-        foreach ($categoryTrees as $categoryNodeId => $categoryTreeWithLocales) {
-            foreach ($categoryTreeWithLocales as $localeName => $categoryTreeWithLocale) {
+        foreach ($categoryNodes as $categoryNodeId => $categoryNodeWithLocales) {
+            foreach ($categoryNodeWithLocales as $localeName => $categoryNodeWithLocale) {
                 if (isset($spyCategoryNodeStorageEntities[$categoryNodeId][$localeName]))  {
-                    $this->storeDataSet($categoryTreeWithLocale, $spyCategoryNodeStorageEntities[$categoryNodeId][$localeName], $localeName);
+                    $this->storeDataSet($categoryNodeWithLocale, $spyCategoryNodeStorageEntities[$categoryNodeId][$localeName], $localeName);
                 } else {
-                    $this->storeDataSet($categoryTreeWithLocale, null, $localeName);
+                    $this->storeDataSet($categoryNodeWithLocale, null, $localeName);
                 }
             }
         }
@@ -88,9 +88,9 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
             return;
         }
 
-        $categoryTreeNodeData = $this->getFactory()->getUtilSanitizeService()->arrayFilterRecursive($categoryNodeStorageTransfer->toArray());
+        $categoryNodeNodeData = $this->getFactory()->getUtilSanitizeService()->arrayFilterRecursive($categoryNodeStorageTransfer->toArray());
         $spyCategoryNodeStorageEntity->setFkCategoryNode($categoryNodeStorageTransfer->getNodeId());
-        $spyCategoryNodeStorageEntity->setData($categoryTreeNodeData);
+        $spyCategoryNodeStorageEntity->setData($categoryNodeNodeData);
         $spyCategoryNodeStorageEntity->setStore($this->getStore()->getStoreName());
         $spyCategoryNodeStorageEntity->setLocale($localeName);
         $spyCategoryNodeStorageEntity->save();
@@ -117,7 +117,7 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
      *
      * @return array
      */
-    protected function getCategoryTrees(array $categoryNodeIds)
+    protected function getCategoryNodes(array $categoryNodeIds)
     {
         $localeNames = $this->getStore()->getLocales();
         $locales = $this->getQueryContainer()->queryLocalesWithLocaleNames($localeNames)->find();
@@ -150,6 +150,7 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
         $categoryNodeStorageTransfer = new CategoryNodeStorageTransfer();
         /** @var \Orm\Zed\Category\Persistence\SpyCategoryAttribute $attribute */
         $attribute = $categoryNode->getCategory()->getAttributes()->getFirst();
+        $categoryNodeStorageTransfer->setIdCategory($categoryNode->getFkCategory());
         $categoryNodeStorageTransfer->setNodeId($categoryNode->getIdCategoryNode());
         $categoryNodeStorageTransfer->setUrl($categoryNode->getSpyUrls()->getFirst()->getUrl());
         $categoryNodeStorageTransfer->setName($attribute->getName());
@@ -189,9 +190,9 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
         $children = [];
         foreach ($categoryNodes as $categoryNode) {
             if ($categoryNode->getFkParentCategoryNode() === $idCategoryNode) {
-                $categoryTreeStorageTransfer = $this->mapToCategoryNodeStorageTransfer($categoryNodes, $categoryNode, true, false);
+                $categoryNodeStorageTransfer = $this->mapToCategoryNodeStorageTransfer($categoryNodes, $categoryNode, true, false);
 
-                $children[] = $categoryTreeStorageTransfer;
+                $children[] = $categoryNodeStorageTransfer;
             }
         }
 
@@ -213,9 +214,9 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
         $parents = [];
         foreach ($categoryNodes as $categoryNode) {
             if ($categoryNode->getIdCategoryNode() === $fkCategoryNodeParent) {
-                $categoryTreeStorageTransfer = $this->mapToCategoryNodeStorageTransfer($categoryNodes, $categoryNode, false, true);
+                $categoryNodeStorageTransfer = $this->mapToCategoryNodeStorageTransfer($categoryNodes, $categoryNode, false, true);
 
-                $parents[] = $categoryTreeStorageTransfer;
+                $parents[] = $categoryNodeStorageTransfer;
             }
         }
 

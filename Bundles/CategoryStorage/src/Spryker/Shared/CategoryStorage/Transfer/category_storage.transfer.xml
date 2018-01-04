@@ -8,6 +8,7 @@
     </transfer>
 
     <transfer name="CategoryNodeStorage">
+        <property name="idCategory" type="int"/>
         <property name="nodeId" type="int"/>
         <property name="name" type="string"/>
         <property name="url" type="string"/>
