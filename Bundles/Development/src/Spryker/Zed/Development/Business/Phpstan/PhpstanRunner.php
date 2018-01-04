@@ -95,7 +95,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
         $output->writeln('Checking ' . $path);
 
         $process = $this->getProcess($command);
-        $process->run(function ($type, $buffer) use ($input, $output) {
+        $process->run(function ($type, $buffer) use ($output) {
             $output->write($buffer);
         });
 
