@@ -14,6 +14,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -227,7 +228,7 @@ class CustomerForm extends AbstractType
             new Length(['max' => 100]),
         ];
 
-        $builder->add(static::FIELD_COMPANY, 'text', [
+        $builder->add(static::FIELD_COMPANY, TextType::class, [
             'label' => 'Company',
             'required' => false,
             'constraints' => $companyConstraints,
@@ -247,7 +248,7 @@ class CustomerForm extends AbstractType
             new Length(['max' => 255]),
         ];
 
-        $builder->add(static::FIELD_PHONE, 'text', [
+        $builder->add(static::FIELD_PHONE, TextType::class, [
             'label' => 'Phone',
             'required' => false,
             'constraints' => $phoneConstraints,
