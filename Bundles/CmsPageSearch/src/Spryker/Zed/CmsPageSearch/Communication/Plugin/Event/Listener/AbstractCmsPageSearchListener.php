@@ -186,8 +186,8 @@ class AbstractCmsPageSearchListener extends AbstractPlugin
         $localeCmsPageDataTransfer->setIsActive($cmsPageEntity->getIsActive());
         $localeCmsPageDataTransfer->setIsSearchable($cmsPageEntity->getIsSearchable());
         $localeCmsPageDataTransfer->setIdCmsPage($cmsPageEntity->getIdCmsPage());
-        $localeCmsPageDataTransfer->setValidFrom($cmsPageEntity->getValidFrom());
-        $localeCmsPageDataTransfer->setValidTo($cmsPageEntity->getValidTo());
+        $localeCmsPageDataTransfer->setValidFrom($cmsPageEntity->getValidFrom()->format('c'));
+        $localeCmsPageDataTransfer->setValidTo($cmsPageEntity->getValidTo()->format('c'));
         $localeCmsPageDataTransfer->setUrl($url);
 
         return $localeCmsPageDataTransfer;

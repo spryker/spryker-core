@@ -71,10 +71,20 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
      */
     protected function getProductViewPrices(ProductViewTransfer $productViewTransfer)
     {
-        $priceAbstractData = $this->getPriceAbstractData($productViewTransfer);
-        $priceConcreteData = $this->getPriceConcreteData($productViewTransfer);
+        $priceProductAbstractStorageTransfer = $this->getPriceAbstractData($productViewTransfer);
+        if (!$priceProductAbstractStorageTransfer) {
+            return [];
+        }
 
-        $productViewPriceData = array_replace_recursive($priceAbstractData->getPrices(), $priceConcreteData->getPrices());
+        $priceProductConcreteStorageTransfer = $this->getPriceConcreteData($productViewTransfer);
+        if (!$priceProductConcreteStorageTransfer) {
+            return $priceProductAbstractStorageTransfer->getPrices();
+        }
+
+        $productViewPriceData = array_replace_recursive(
+            $priceProductAbstractStorageTransfer->getPrices(),
+            $priceProductConcreteStorageTransfer->getPrices()
+        );
 
         return $productViewPriceData;
     }
@@ -82,7 +92,7 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
     /**
      * @param ProductViewTransfer $productViewTransfer
      *
-     * @return PriceProductStorageTransfer
+     * @return PriceProductStorageTransfer|null
      */
     protected function getPriceAbstractData(ProductViewTransfer $productViewTransfer)
     {
@@ -92,20 +102,14 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
     /**
      * @param ProductViewTransfer $productViewTransfer
      *
-     * @return PriceProductStorageTransfer
+     * @return PriceProductStorageTransfer|null
      */
     protected function getPriceConcreteData(ProductViewTransfer $productViewTransfer)
     {
         if (!$productViewTransfer->getIdProductConcrete()) {
-            return new PriceProductStorageTransfer();
+            return null;
         }
 
-        $priceConcreteStorageTransfer = $this->priceConcreteStorageReader->findPriceConcreteStorageTransfer($productViewTransfer->getIdProductConcrete());
-
-        if (!$priceConcreteStorageTransfer) {
-            return new PriceProductStorageTransfer();
-        }
-
-        return $priceConcreteStorageTransfer;
+        return $this->priceConcreteStorageReader->findPriceConcreteStorageTransfer($productViewTransfer->getIdProductConcrete());
     }
 }
