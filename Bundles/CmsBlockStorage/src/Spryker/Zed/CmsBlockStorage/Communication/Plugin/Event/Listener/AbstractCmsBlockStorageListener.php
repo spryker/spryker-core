@@ -93,6 +93,14 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
             $cmsBlockStorageEntity = new SpyCmsBlockStorage();
         }
 
+        if (!$blockEntityArray['is_active']) {
+            if (!$cmsBlockStorageEntity->isNew()) {
+                $cmsBlockStorageEntity->delete();
+            }
+
+            return;
+        }
+
         $blockEntityArray = $this->getFactory()->getUtilSynchronization()->arrayFilterRecursive($blockEntityArray);
         foreach ($this->getFactory()->getContentWidgetDataExpanderPlugins() as $contentWidgetDataExpanderPlugin) {
             $blockEntityArray = $contentWidgetDataExpanderPlugin->expand($blockEntityArray, $localeName);

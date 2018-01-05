@@ -147,7 +147,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         };
 
         $container[self::QUERY_CONTAINER_PRICE] = function (Container $container) {
-            return new ProductPageToPriceProductQueryContainerBridge($container->getLocator()->price()->queryContainer());
+            return new ProductPageToPriceProductQueryContainerBridge($container->getLocator()->priceProduct()->queryContainer());
         };
 
         $container[self::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
