@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\CategoryStorage\Plugin;
 
-use Generated\Shared\Transfer\SpyUrlTransfer;
+use Generated\Shared\Transfer\SpyUrlEntityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
 use Spryker\Client\CategoryStorage\CategoryStorageFactory;
@@ -25,15 +25,15 @@ class UrlStorageCategoryNodeMapperPlugin extends AbstractPlugin implements UrlSt
 {
 
     /**
-     * @param \Generated\Shared\Transfer\SpyUrlTransfer $spyUrlTransfer
+     * @param \Generated\Shared\Transfer\SpyUrlEntityTransfer $spyUrlEntityTransfer
      * @param array $options
      *
      * @return \Generated\Shared\Transfer\UrlStorageResourceMapTransfer
      */
-    public function map(SpyUrlTransfer $spyUrlTransfer, $options = [])
+    public function map(SpyUrlEntityTransfer $spyUrlEntityTransfer, $options = [])
     {
         $urlStorageResourceMapTransfer = new UrlStorageResourceMapTransfer();
-        $idCategoryNode = $spyUrlTransfer->getFkResourceCategorynode();
+        $idCategoryNode = $spyUrlEntityTransfer->getFkResourceCategorynode();
         if ($idCategoryNode) {
             $resourceKey = $this->generateKey($idCategoryNode, $options['locale']);
             $urlStorageResourceMapTransfer->setResourceKey($resourceKey);

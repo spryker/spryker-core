@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\UrlStorage\Storage;
 
-use Generated\Shared\Transfer\SpyUrlTransfer;
+use Generated\Shared\Transfer\SpyUrlEntityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageInterface;
 use Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServiceInterface;
@@ -107,7 +107,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
      */
     protected function getUrlStorageResourceMapTransfer(array $urlDetails, array $options = [])
     {
-        $spyUrlTransfer = new SpyUrlTransfer();
+        $spyUrlTransfer = new SpyUrlEntityTransfer();
         $spyUrlTransfer->fromArray($urlDetails, true);
 
         foreach ($this->urlStorageResourceMapperPlugins as $urlStorageResourceMapperPlugin) {

@@ -7,33 +7,34 @@
 
 namespace Spryker\Client\CmsStorage\Plugin;
 
-use Generated\Shared\Transfer\SpyUrlTransfer;
+use Generated\Shared\Transfer\SpyUrlEntityTransfer;
+use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
+use Spryker\Client\CmsStorage\CmsStorageFactory;
+use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
 use Spryker\Shared\CmsStorage\CmsStorageConstants;
-use Spryker\Shared\Kernel\Store;
 
-class UrlStorageCmsPageMapperPlugin implements UrlStorageResourceMapperPluginInterface
+/**
+ * Class UrlStorageCmsPageMapperPlugin
+ *
+ * @method CmsStorageFactory getFactory()
+ */
+class UrlStorageCmsPageMapperPlugin extends AbstractPlugin implements UrlStorageResourceMapperPluginInterface
 {
 
     /**
-     * @param \Generated\Shared\Transfer\SpyUrlTransfer $spyUrlTransfer
+     * @param \Generated\Shared\Transfer\SpyUrlEntityTransfer $spyUrlEntityTransfer
      * @param array $options
      *
      * @return \Generated\Shared\Transfer\UrlStorageResourceMapTransfer
      */
-    public function map(SpyUrlTransfer $spyUrlTransfer, $options = [])
+    public function map(SpyUrlEntityTransfer $spyUrlEntityTransfer, $options = [])
     {
         $urlStorageResourceMapTransfer = new UrlStorageResourceMapTransfer();
-        $storeName = Store::getInstance()->getStoreName();
-        if ($spyUrlTransfer->getFkResourcePage()) {
-            $resourceKey = sprintf(
-                '%s:%s:%s:%d',
-                CmsStorageConstants::CMS_PAGE_RESOURCE_NAME,
-                strtolower($storeName),
-                $options['locale'],
-                $spyUrlTransfer->getFkResourcePage()
-            );
+        $idCmsPage = $spyUrlEntityTransfer->getFkResourcePage();
+        if ($idCmsPage) {
+            $resourceKey = $this->generateKey($idCmsPage, $options['locale']);
             $urlStorageResourceMapTransfer->setResourceKey($resourceKey);
             $urlStorageResourceMapTransfer->setType(CmsStorageConstants::CMS_PAGE_RESOURCE_NAME);
         }
@@ -41,4 +42,31 @@ class UrlStorageCmsPageMapperPlugin implements UrlStorageResourceMapperPluginInt
         return $urlStorageResourceMapTransfer;
     }
 
+    /**
+     * @param int $idProductSet
+     * @param string $locale
+     *
+     * @return string
+     */
+    protected function generateKey($idProductSet, $locale)
+    {
+        $synchronizationDataTransfer = new SynchronizationDataTransfer();
+        $synchronizationDataTransfer->setStore($this->getStoreName());
+        $synchronizationDataTransfer->setLocale($locale);
+        $synchronizationDataTransfer->setReference($idProductSet);
+
+        return $this->getFactory()
+            ->getSynchronizationService()
+            ->getStorageKeyBuilder(CmsStorageConstants::CMS_PAGE_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStoreName()
+    {
+        return $this->getFactory()
+            ->getStore()
+            ->getStoreName();
+    }
 }

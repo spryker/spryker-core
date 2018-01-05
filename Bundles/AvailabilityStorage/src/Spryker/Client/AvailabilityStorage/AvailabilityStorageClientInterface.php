@@ -24,7 +24,7 @@ interface AvailabilityStorageClientInterface
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractTransfer
+     * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
      */
     public function getAvailabilityAbstract($idProductAbstract);
 

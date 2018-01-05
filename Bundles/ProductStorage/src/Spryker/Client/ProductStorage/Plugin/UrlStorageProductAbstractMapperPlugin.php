@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductStorage\Plugin;
 
-use Generated\Shared\Transfer\SpyUrlTransfer;
+use Generated\Shared\Transfer\SpyUrlEntityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -20,15 +20,15 @@ use Spryker\Shared\ProductStorage\ProductStorageConstants;
 class UrlStorageProductAbstractMapperPlugin extends AbstractPlugin implements UrlStorageResourceMapperPluginInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyUrlTransfer $spyUrlTransfer
+     * @param \Generated\Shared\Transfer\SpyUrlEntityTransfer $spyUrlEntityTransfer
      * @param array $options
      *
      * @return \Generated\Shared\Transfer\UrlStorageResourceMapTransfer
      */
-    public function map(SpyUrlTransfer $spyUrlTransfer, $options = [])
+    public function map(SpyUrlEntityTransfer $spyUrlEntityTransfer, $options = [])
     {
         $urlStorageResourceMapTransfer = new UrlStorageResourceMapTransfer();
-        $idProductAbstract = $spyUrlTransfer->getFkResourceProductAbstract();
+        $idProductAbstract = $spyUrlEntityTransfer->getFkResourceProductAbstract();
         if ($idProductAbstract) {
             $resourceKey = $this->generateKey($idProductAbstract, $options['locale']);
             $urlStorageResourceMapTransfer->setResourceKey($resourceKey);

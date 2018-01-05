@@ -19,4 +19,20 @@ class CmsStorageFactory extends AbstractFactory
     {
         return new CmsPageStorageMapper();
     }
+
+    /**
+     * @return \Spryker\Client\CmsStorage\Dependency\Service\CmsStorageToSynchronizationServiceBridge
+     */
+    public function getSynchronizationService()
+    {
+        return $this->getProvidedDependency(CmsStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore()
+    {
+        return $this->getProvidedDependency(CmsStorageDependencyProvider::STORE);
+    }
 }

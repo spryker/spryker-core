@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\AvailabilityStorage\Storage;
 
-use Generated\Shared\Transfer\SpyAvailabilityAbstractTransfer;
+use Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageClientInterface;
@@ -63,19 +63,19 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractTransfer
+     * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
      */
     public function getAvailabilityAbstract($idProductAbstract)
     {
         $key = $this->generateKey($idProductAbstract);
         $availability = $this->storageClient->get($key);
 
-        $spyAvailabilityAbstractTransfer = new SpyAvailabilityAbstractTransfer();
+        $spyAvailabilityAbstractEntityTransfer = new SpyAvailabilityAbstractEntityTransfer();
         if ($availability === null) {
-            return $spyAvailabilityAbstractTransfer;
+            return $spyAvailabilityAbstractEntityTransfer;
         }
 
-        return $spyAvailabilityAbstractTransfer->fromArray($availability, true);
+        return $spyAvailabilityAbstractEntityTransfer->fromArray($availability, true);
     }
 
     /**

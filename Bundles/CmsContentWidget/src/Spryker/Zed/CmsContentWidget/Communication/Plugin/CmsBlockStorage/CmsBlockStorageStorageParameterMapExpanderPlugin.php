@@ -8,9 +8,8 @@
 namespace Spryker\Zed\CmsContentWidget\Communication\Plugin\CmsBlockStorage;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\SpyCmsBlockTransfer;
+use Generated\Shared\Transfer\SpyCmsBlockEntityTransfer;
 use Spryker\Shared\CmsContentWidget\CmsContentWidgetConfig;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -49,8 +48,8 @@ class CmsBlockStorageStorageParameterMapExpanderPlugin extends AbstractPlugin im
     protected function gePlaceholders(array $collectedData)
     {
         $placeholders = [];
-        $spyCmsBlockTransfer = (new SpyCmsBlockTransfer())->fromArray($collectedData);
-        foreach ($spyCmsBlockTransfer->getSpyCmsBlockGlossaryKeyMappings() as $keyMapping) {
+        $spyCmsBlockEntityTransfer = (new SpyCmsBlockEntityTransfer())->fromArray($collectedData);
+        foreach ($spyCmsBlockEntityTransfer->getSpyCmsBlockGlossaryKeyMappings() as $keyMapping) {
             $placeholders[$keyMapping->getPlaceholder()] = $keyMapping->getGlossaryKey()->getKey();
         }
 
