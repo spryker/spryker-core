@@ -44,41 +44,101 @@ class LogFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use createEnvironmentProcessorPublic() instead
+     *
      * @return \Spryker\Shared\Log\Processor\ProcessorInterface
      */
-    public function createEnvironmentProcessor()
+    protected function createEnvironmentProcessor()
+    {
+        return $this->createEnvironmentProcessorPublic();
+    }
+
+    /**
+     * Deprecated: Will be renamed to createEnvironmentProcessor() in the next major
+     *
+     * @return \Spryker\Shared\Log\Processor\ProcessorInterface
+     */
+    public function createEnvironmentProcessorPublic()
     {
         return new EnvironmentProcessor();
     }
 
     /**
+     * @deprecated Use createRequestProcessorPublic() instead
+     *
      * @return \Spryker\Shared\Log\Processor\ProcessorInterface
      */
-    public function createRequestProcessor()
+    protected function createRequestProcessor()
+    {
+        return $this->createRequestProcessorPublic();
+    }
+
+    /**
+     * Deprecated: Will be renamed to createRequestProcessor() in the next major
+     *
+     * @return \Spryker\Shared\Log\Processor\ProcessorInterface
+     */
+    public function createRequestProcessorPublic()
     {
         return new RequestProcessor($this->createSanitizer());
     }
 
     /**
+     * @deprecated Use createResponseProcessorPublic() instead
+     *
      * @return \Spryker\Shared\Log\Processor\ProcessorInterface
      */
-    public function createResponseProcessor()
+    protected function createResponseProcessor()
+    {
+        return $this->createResponseProcessorPublic();
+    }
+
+    /**
+     * Deprecated: Will be renamed to createResponseProcessor() in the next major release
+     *
+     * @return \Spryker\Shared\Log\Processor\ProcessorInterface
+     */
+    public function createResponseProcessorPublic()
     {
         return new ResponseProcessor();
     }
 
     /**
+     * @deprecated Use createServerProcessorPublic() instead
+     *
      * @return \Spryker\Shared\Log\Processor\ProcessorInterface
      */
-    public function createServerProcessor()
+    protected function createServerProcessor()
+    {
+        return $this->createServerProcessorPublic();
+    }
+
+    /**
+     * Deprecated: Will be renamed to createServerProcessor() in the next major release
+     *
+     * @return \Spryker\Shared\Log\Processor\ProcessorInterface
+     */
+    public function createServerProcessorPublic()
     {
         return new ServerProcessor();
     }
 
     /**
+     * @deprecated Use createGuzzleBodyProcessorPublic() instead
+     *
      * @return \Spryker\Shared\Log\Processor\ProcessorInterface
      */
-    public function createGuzzleBodyProcessor()
+    protected function createGuzzleBodyProcessor()
+    {
+        return $this->createGuzzleBodyProcessorPublic();
+    }
+
+    /**
+     * Deprecated: Will be renamed to createGuzzleBodyProcessor() in the next major release
+     *
+     * @return \Spryker\Shared\Log\Processor\ProcessorInterface
+     */
+    public function createGuzzleBodyProcessorPublic()
     {
         return new GuzzleBodyProcessor($this->createSanitizer());
     }
@@ -159,9 +219,21 @@ class LogFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use createBufferedQueueHandlerPublic() instead
+     *
      * @return \Monolog\Handler\HandlerInterface
      */
-    public function createBufferedQueueHandler()
+    protected function createBufferedQueueHandler()
+    {
+        return $this->createBufferedQueueHandlerPublic();
+    }
+
+    /**
+     * Deprecated: Will be renamed to createBufferedQueueHandler() in the next major release
+     *
+     * @return \Monolog\Handler\HandlerInterface
+     */
+    public function createBufferedQueueHandlerPublic()
     {
         return new BufferHandler($this->createQueueHandler());
     }

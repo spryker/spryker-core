@@ -22,6 +22,6 @@ class ResponseProcessorPlugin extends AbstractPlugin implements LogProcessorPlug
      */
     public function __invoke(array $data)
     {
-        return $this->getFactory()->createResponseProcessor()->__invoke($data);
+        return $this->getFactory()->createResponseProcessorPublic()->__invoke($data);
     }
 }

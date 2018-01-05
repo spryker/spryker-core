@@ -24,6 +24,6 @@ class EnvironmentProcessorPlugin extends AbstractPlugin implements LogProcessorP
      */
     public function __invoke(array $data)
     {
-        return $this->getFactory()->createEnvironmentProcessor()->__invoke($data);
+        return $this->getFactory()->createEnvironmentProcessorPublic()->__invoke($data);
     }
 }
