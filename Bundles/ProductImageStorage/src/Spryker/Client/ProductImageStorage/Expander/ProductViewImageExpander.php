@@ -67,6 +67,10 @@ class ProductViewImageExpander implements ProductViewImageExpanderInterface
             $productConcreteImageSetCollection = $this->productConcreteImageSetReader
                 ->findProductImageConcreteStorageTransfer($productViewTransfer->getIdProductConcrete(), $locale);
 
+            if (!$productConcreteImageSetCollection) {
+                return null;
+            }
+
             return $this->getImageSetImages($productConcreteImageSetCollection->getImageSets(), $imageSetName);
         }
 

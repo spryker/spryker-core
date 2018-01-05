@@ -43,17 +43,17 @@ class UrlStorageCmsPageMapperPlugin extends AbstractPlugin implements UrlStorage
     }
 
     /**
-     * @param int $idProductSet
+     * @param int $idCmsPage
      * @param string $locale
      *
      * @return string
      */
-    protected function generateKey($idProductSet, $locale)
+    protected function generateKey($idCmsPage, $locale)
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setStore($this->getStoreName());
         $synchronizationDataTransfer->setLocale($locale);
-        $synchronizationDataTransfer->setReference($idProductSet);
+        $synchronizationDataTransfer->setReference($idCmsPage);
 
         return $this->getFactory()
             ->getSynchronizationService()
