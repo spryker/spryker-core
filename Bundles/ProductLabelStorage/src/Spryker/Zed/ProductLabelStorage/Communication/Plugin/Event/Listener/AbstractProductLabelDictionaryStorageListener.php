@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use \DateTime;
+use Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabel;
 
 /**
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
@@ -30,7 +32,15 @@ class AbstractProductLabelDictionaryStorageListener extends AbstractPlugin
         $productLabelDictionaryItems = [];
         foreach ($spyProductLabelLocalizedAttributeEntities as $spyProductLabelLocalizedAttributeEntity) {
             $localeName = $spyProductLabelLocalizedAttributeEntity->getSpyLocale()->getLocaleName();
-            $productLabelDictionaryItems[$localeName][] = $this->mapProductLabelDictionaryItem($spyProductLabelLocalizedAttributeEntity);
+            if ($this->isValidByDate($spyProductLabelLocalizedAttributeEntity)) {
+                $productLabelDictionaryItems[$localeName][] = $this->mapProductLabelDictionaryItem($spyProductLabelLocalizedAttributeEntity);
+            }
+        }
+
+        if (!$productLabelDictionaryItems) {
+            $this->deleteStorageData();
+
+            return;
         }
 
         $this->storeData($productLabelDictionaryItems);
@@ -40,6 +50,14 @@ class AbstractProductLabelDictionaryStorageListener extends AbstractPlugin
      * @return void
      */
     protected function unpublish()
+    {
+        $this->deleteStorageData();
+    }
+
+    /**
+     * @return void
+     */
+    protected function deleteStorageData()
     {
         $spyProductStorageEntities = $this->findProductLabelDictionaryStorageEntities();
         foreach ($spyProductStorageEntities as $spyProductStorageEntity) {
@@ -139,6 +157,59 @@ class AbstractProductLabelDictionaryStorageListener extends AbstractPlugin
     protected function getStoreName()
     {
         return $this->getFactory()->getStore()->getStoreName();
+    }
+
+    /**
+     * @param SpyProductLabelLocalizedAttributes $spyProductLabelLocalizedAttributes
+     *
+     * @return bool
+     */
+    protected function isValidByDate(SpyProductLabelLocalizedAttributes $spyProductLabelLocalizedAttributes)
+    {
+        $isValidFromDate = $this->isValidByDateFrom($spyProductLabelLocalizedAttributes->getSpyProductLabel());
+        $isValidToDate = $this->isValidByDateTo($spyProductLabelLocalizedAttributes->getSpyProductLabel());
+
+        return ($isValidFromDate && $isValidToDate);
+    }
+
+    /**
+     * @param SpyProductLabel $productLabel
+     *
+     * @return bool
+     */
+    protected function isValidByDateFrom(SpyProductLabel $productLabel)
+    {
+        if (!$productLabel->getValidFrom()) {
+            return true;
+        }
+
+        $now = new DateTime();
+
+        if ($now < $productLabel->getValidFrom()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param SpyProductLabel $productLabel
+     *
+     * @return bool
+     */
+    protected function isValidByDateTo(SpyProductLabel $productLabel)
+    {
+        if (!$productLabel->getValidTo()) {
+            return true;
+        }
+
+        $now = new DateTime();
+
+        if ($productLabel->getValidTo() < $now) {
+            return false;
+        }
+
+        return true;
     }
 
 }

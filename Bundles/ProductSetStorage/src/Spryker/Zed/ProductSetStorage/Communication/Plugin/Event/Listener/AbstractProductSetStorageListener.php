@@ -49,8 +49,10 @@ class AbstractProductSetStorageListener extends AbstractPlugin
     protected function unpublish(array $productSetIds)
     {
         $spyProductSetStorageEntities = $this->findProductSetStorageEntitiesByProductSetIds($productSetIds);
-        foreach ($spyProductSetStorageEntities as $spyProductSetStorageEntity) {
-            $spyProductSetStorageEntity->delete();
+        foreach ($spyProductSetStorageEntities as $spyProductSetStorageEntityLocales) {
+            foreach ($spyProductSetStorageEntityLocales as $spyProductSetStorageEntityLocale) {
+                $spyProductSetStorageEntityLocale->delete();
+            }
         }
     }
 

@@ -45,8 +45,10 @@ class AbstractProductSetPageSearchListener extends AbstractPlugin
     protected function unpublish(array $productAbstractIds)
     {
         $spyProductSetPageSearchEntities = $this->findProductSetPageSearchEntitiesByProductAbstractIds($productAbstractIds);
-        foreach ($spyProductSetPageSearchEntities as $spyProductSetPageSearchEntity) {
-            $spyProductSetPageSearchEntity->delete();
+        foreach ($spyProductSetPageSearchEntities as $spyProductSetPageSearchEntityLocales) {
+            foreach ($spyProductSetPageSearchEntityLocales as $spyProductSetPageSearchEntityLocale) {
+                $spyProductSetPageSearchEntityLocale->delete();
+            }
         }
     }
 

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductLabelStorage\Persistence;
 
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -89,7 +90,8 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
             ->getProductLabelQuery()
             ->queryAllLocalizedAttributesLabels()
             ->joinWithSpyLocale()
-            ->joinWithSpyProductLabel();
+            ->joinWithSpyProductLabel()
+            ->addAnd(SpyProductLabelTableMap::COL_IS_ACTIVE, true, Criteria::EQUAL);
     }
 
 }
