@@ -63,6 +63,9 @@ interface CompanyRoleFacadeInterface
     public function saveCompanyUser(CompanyUserTransfer $companyUserTransfer);
 
     /**
+     * Specification:
+     * - Hydrates a list of assigned to a company user rights
+     *
      * @param CompanyUserTransfer $companyUserTransfer
      *
      * @return CompanyUserTransfer
