@@ -5,7 +5,6 @@ namespace Spryker\Zed\CompanyRole\Business;
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\ResponseTransfer;
 
 interface CompanyRoleFacadeInterface
 {
@@ -54,13 +53,19 @@ interface CompanyRoleFacadeInterface
 
     /**
      * Specification:
-     * - Removes
-     * - Loops over CompanyUserTransfer::companyRoleCollection
-     * -
+     * - Removes related to the company user roles
+     * - Creates relations roles to the company user according CompanyUserTransfer::companyRoleCollection
      *
      * @param CompanyUserTransfer $companyUserTransfer
      *
      * @return void
      */
-    public function assignToCompanyUser(CompanyUserTransfer $companyUserTransfer);
+    public function saveCompanyUser(CompanyUserTransfer $companyUserTransfer);
+
+    /**
+     * @param CompanyUserTransfer $companyUserTransfer
+     *
+     * @return CompanyUserTransfer
+     */
+    public function hydrateCompanyUser(CompanyUserTransfer $companyUserTransfer);
 }

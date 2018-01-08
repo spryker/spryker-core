@@ -4,12 +4,12 @@ namespace Spryker\Zed\CompanyUser\Dependency;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 
-interface CompanyUserSavePluginInterface
+interface CompanyUserHydrationPluginInterface
 {
     /**
      * @param CompanyUserTransfer $companyUserTransfer
      *
-     * @return void
+     * @return CompanyUserTransfer
      */
-    public function save(CompanyUserTransfer $companyUserTransfer);
+    public function hydrate(CompanyUserTransfer $companyUserTransfer);
 }
