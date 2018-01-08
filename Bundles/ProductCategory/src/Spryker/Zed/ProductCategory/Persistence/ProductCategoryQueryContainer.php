@@ -23,7 +23,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductCategoryQueryContainer extends AbstractQueryContainer implements ProductCategoryQueryContainerInterface
 {
     const COL_CATEGORY_NAME = 'category_name';
-    const VIRT_COLUMN_ID_CATEGORY_NODE = 'id_category_node';
+    const VIRTUAL_COLUMN_ID_CATEGORY_NODE = 'id_category_node';
 
     /**
      * @api
@@ -271,7 +271,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
                 ->useNodeQuery()
                     ->withColumn(
                         SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
-                        static::VIRT_COLUMN_ID_CATEGORY_NODE
+                        static::VIRTUAL_COLUMN_ID_CATEGORY_NODE
                     )
                     ->filterByIdCategoryNode($idsCategoryNode, Criteria::IN)
                 ->endUse()

@@ -18,7 +18,6 @@ class ProductDependencyProvider extends AbstractDependencyProvider
     const CLIENT_LOCALE = 'client locale';
     const KV_STORAGE = 'kv storage';
     const SERVICE_ENCODING = 'util encoding';
-    const PLUGIN_STORAGE_PRODUCT_EXPANDERS = 'PLUGIN_STORAGE_PRODUCT_EXPANDERS';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -30,7 +29,6 @@ class ProductDependencyProvider extends AbstractDependencyProvider
         $container = $this->addStorageClient($container);
         $container = $this->addLocaleClient($container);
         $container = $this->addUtilEncodingService($container);
-        $container = $this->addStorageProductExpanderPlugins($container);
 
         return $container;
     }
@@ -75,27 +73,5 @@ class ProductDependencyProvider extends AbstractDependencyProvider
         };
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addStorageProductExpanderPlugins(Container $container)
-    {
-        $container[self::PLUGIN_STORAGE_PRODUCT_EXPANDERS] = function (Container $container) {
-            return $this->getStorageProductExpanderPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Client\Product\Dependency\Plugin\StorageProductExpanderPluginInterface[]
-     */
-    protected function getStorageProductExpanderPlugins()
-    {
-        return [];
     }
 }

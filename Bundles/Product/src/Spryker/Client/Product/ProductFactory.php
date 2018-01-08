@@ -11,8 +11,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Product\KeyBuilder\AttributeMapResourceKeyBuilder;
 use Spryker\Client\Product\KeyBuilder\ProductAbstractResourceKeyBuilder;
 use Spryker\Client\Product\KeyBuilder\ProductConcreteResourceKeyBuilder;
-use Spryker\Client\Product\Mapper\AttributeVariantMapper;
-use Spryker\Client\Product\Mapper\StorageProductMapper;
 use Spryker\Client\Product\Storage\AttributeMapStorage;
 use Spryker\Client\Product\Storage\ProductAbstractStorage;
 use Spryker\Client\Product\Storage\ProductConcreteStorage;
@@ -108,33 +106,5 @@ class ProductFactory extends AbstractFactory
     public function getLocaleClient()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::CLIENT_LOCALE);
-    }
-
-    /**
-     * @param string $locale
-     *
-     * @return \Spryker\Client\Product\Mapper\StorageProductMapperInterface
-     */
-    public function createStorageProductMapper($locale)
-    {
-        return new StorageProductMapper($this->createAttributeVariantMapper($locale), $this->getStorageProductExpanderPlugins(), $locale);
-    }
-
-    /**
-     * @param string $locale
-     *
-     * @return \Spryker\Client\Product\Mapper\AttributeVariantMapperInterface
-     */
-    protected function createAttributeVariantMapper($locale)
-    {
-        return new AttributeVariantMapper($this->createProductConcreteStorage($locale), $this->createAttributeMapStorage($locale));
-    }
-
-    /**
-     * @return \Spryker\Client\Product\Dependency\Plugin\StorageProductExpanderPluginInterface[]
-     */
-    protected function getStorageProductExpanderPlugins()
-    {
-        return $this->getProvidedDependency(ProductDependencyProvider::PLUGIN_STORAGE_PRODUCT_EXPANDERS);
     }
 }
