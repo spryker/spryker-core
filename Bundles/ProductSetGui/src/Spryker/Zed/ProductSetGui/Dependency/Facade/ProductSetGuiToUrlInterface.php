@@ -19,9 +19,9 @@ interface ProductSetGuiToUrlInterface
     public function findUrl(UrlTransfer $urlTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer Deprecated: String format is accepted for BC reasons only.
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return bool
      */
-    public function hasUrl($urlTransfer);
+    public function hasUrl(UrlTransfer $urlTransfer);
 }

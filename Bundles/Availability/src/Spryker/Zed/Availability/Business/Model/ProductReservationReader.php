@@ -7,6 +7,9 @@
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
+use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
@@ -70,6 +73,26 @@ class ProductReservationReader implements ProductReservationReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     */
+    public function findProductConcreteAvailability(ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer)
+    {
+        $productConcreteAvailabilityRequestTransfer->requireSku();
+
+        $availabilityEntity = $this->availabilityQueryContainer
+            ->querySpyAvailabilityBySku($productConcreteAvailabilityRequestTransfer->getSku())
+            ->findOne();
+
+        if (!$availabilityEntity) {
+            return null;
+        }
+
+        return $this->mapProductConcreteAvailabilityEntityToTransfer($availabilityEntity);
+    }
+
+    /**
      * @param string $reservationQuantity
      *
      * @return int
@@ -99,6 +122,18 @@ class ProductReservationReader implements ProductReservationReaderInterface
         }
 
         return $reservation;
+    }
+
+    /**
+     * @param \Orm\Zed\Availability\Persistence\SpyAvailability $availabilityEntity
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
+     */
+    protected function mapProductConcreteAvailabilityEntityToTransfer(SpyAvailability $availabilityEntity)
+    {
+        return (new ProductConcreteAvailabilityTransfer())
+            ->setAvailability($availabilityEntity->getQuantity())
+            ->setIsNeverOutOfStock($availabilityEntity->getIsNeverOutOfStock());
     }
 
     /**

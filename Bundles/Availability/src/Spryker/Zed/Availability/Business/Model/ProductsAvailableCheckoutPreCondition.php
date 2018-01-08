@@ -38,10 +38,11 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
-     * @return void
+     * @return bool
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
+        $isPassed = true;
         $groupedItemQuantities = $this->groupItemsBySku($quoteTransfer->getItems());
 
         foreach ($groupedItemQuantities as $sku => $quantity) {
@@ -49,7 +50,10 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
                 continue;
             }
             $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse);
+            $isPassed = false;
         }
+
+        return $isPassed;
     }
 
     /**

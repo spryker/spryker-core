@@ -36,7 +36,7 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
     {
         $rangeResultTransfer = new RangeSearchResultTransfer();
         $rangeResultTransfer
-            ->setName($this->facetConfigTransfer->getParameterName())
+            ->setName($this->facetConfigTransfer->getName())
             ->setConfig(clone $this->facetConfigTransfer);
 
         $rangeResultTransfer = $this->setRangeResultValues($rangeResultTransfer, $aggregations, $requestParameters);
@@ -89,7 +89,7 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
      */
     protected function extractRangeData(array $aggregation)
     {
-        $parameterName = $this->facetConfigTransfer->getParameterName();
+        $name = $this->facetConfigTransfer->getName();
         $fieldName = $this->getNestedFieldName($this->facetConfigTransfer);
 
         $nameFieldName = $fieldName . NumericFacetAggregation::NAME_SUFFIX;
@@ -103,7 +103,7 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
         }
 
         foreach ($aggregation[$nameFieldName]['buckets'] as $nameBucket) {
-            if ($nameBucket['key'] !== $parameterName) {
+            if ($nameBucket['key'] !== $name) {
                 continue;
             }
 

@@ -9,6 +9,9 @@ namespace Spryker\Shared\Application\Log\Processor;
 
 use Spryker\Service\UtilNetwork\Model\Host;
 
+/**
+ * @deprecated Use `ServerProcessorPlugin` from Log module instead.
+ */
 class ServerProcessor
 {
     const EXTRA = 'server';

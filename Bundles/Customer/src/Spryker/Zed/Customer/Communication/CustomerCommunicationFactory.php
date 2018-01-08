@@ -53,7 +53,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerForm(array $data = [], array $options = [])
     {
-        $customerFormType = new CustomerForm($this->getQueryContainer());
+        $customerFormType = new CustomerForm($this->getQueryContainer(), $this->getLocaleFacade());
 
         return $this->getFormFactory()->create($customerFormType, $data, $options);
     }
@@ -63,7 +63,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerFormDataProvider()
     {
-        return new CustomerFormDataProvider($this->getQueryContainer());
+        return new CustomerFormDataProvider($this->getQueryContainer(), $this->getLocaleFacade());
     }
 
     /**
@@ -74,7 +74,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerUpdateForm(array $data = [], array $options = [])
     {
-        $customerFormType = new CustomerUpdateForm($this->getQueryContainer());
+        $customerFormType = new CustomerUpdateForm($this->getQueryContainer(), $this->getLocaleFacade());
 
         return $this->getFormFactory()->create($customerFormType, $data, $options);
     }
@@ -84,7 +84,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerUpdateFormDataProvider()
     {
-        return new CustomerUpdateFormDataProvider($this->getQueryContainer());
+        return new CustomerUpdateFormDataProvider($this->getQueryContainer(), $this->getLocaleFacade());
     }
 
     /**
@@ -126,6 +126,14 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     public function getCustomerTransferExpanderPlugins()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_TRANSFER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
+     */
+    protected function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_LOCALE);
     }
 
     /**

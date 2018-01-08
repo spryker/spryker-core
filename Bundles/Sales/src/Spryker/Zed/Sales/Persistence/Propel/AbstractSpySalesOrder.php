@@ -119,7 +119,7 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
      * This is for BC reasons, because we don't have database foreign key from fk_customer anymore.
      * Will be removed in the future. Please migrate away from requiring this field.
      *
-     * @deprecated Will be removed in the next major.
+     * Deprecated: Will be removed in the next major. Parent method will be called instead (no code change from usage side).
      *
      * @param string $keyType (optional) One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME,
      *                    TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.

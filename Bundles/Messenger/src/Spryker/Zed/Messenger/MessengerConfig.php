@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Messenger;
 
-use Spryker\Shared\Messenger\MessengerConstants;
+use Spryker\Shared\Messenger\MessengerConfig as SharedMessengerConfig;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MessengerConfig extends AbstractBundleConfig
@@ -15,7 +15,7 @@ class MessengerConfig extends AbstractBundleConfig
     /**
      * @var string
      */
-    protected static $messageTray = MessengerConstants::SESSION_TRAY;
+    protected static $messageTray = SharedMessengerConfig::SESSION_TRAY;
 
     /**
      * @param string $messageTray
@@ -33,7 +33,7 @@ class MessengerConfig extends AbstractBundleConfig
     public static function getTray()
     {
         if (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') {
-            return MessengerConstants::IN_MEMORY_TRAY;
+            return SharedMessengerConfig::IN_MEMORY_TRAY;
         }
         return self::$messageTray;
     }

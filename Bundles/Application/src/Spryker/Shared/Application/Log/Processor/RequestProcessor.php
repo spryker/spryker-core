@@ -11,6 +11,9 @@ use Spryker\Service\UtilNetwork\UtilNetworkService;
 use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Use `RequestProcessorPlugin` from Log module instead.
+ */
 class RequestProcessor
 {
     const EXTRA = 'request';

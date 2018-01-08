@@ -16,12 +16,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ProductLabelAggregateFormType extends AbstractType
 {
     /**
-     * @var \Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelFormType
+     * @var \Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelFormType|\Symfony\Component\Form\FormTypeInterface
      */
     protected $productLabelFormType;
 
     /**
-     * @var \Spryker\Zed\ProductLabelGui\Communication\Form\RelatedProductFormType
+     * @var \Spryker\Zed\ProductLabelGui\Communication\Form\RelatedProductFormType|\Symfony\Component\Form\FormTypeInterface
      */
     protected $relatedProductFormType;
 
