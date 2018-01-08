@@ -11,6 +11,14 @@ interface ProductSearchEvents
 {
     /**
      * Specification
+     * - This events will be used for synchronization_filter publishing
+     *
+     * @api
+     */
+    const SYNCHRONIZATION_FILTER_PUBLISH = 'ProductSearch.synchronization_filter.publish';
+
+    /**
+     * Specification
      * - This events will be used for product search config publishing
      *
      * @api

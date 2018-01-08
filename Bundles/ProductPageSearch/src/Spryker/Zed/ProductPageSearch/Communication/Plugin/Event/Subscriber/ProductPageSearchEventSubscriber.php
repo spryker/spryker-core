@@ -29,6 +29,7 @@ use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPag
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductConcreteSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductImageSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageUrlSearchListener;
+use Spryker\Zed\ProductSearch\Dependency\ProductSearchEvents;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
 /**
@@ -62,6 +63,7 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
             ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_CREATE, new ProductPageProductConcreteLocalizedAttributesSearchListener())
             ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_UPDATE, new ProductPageProductConcreteLocalizedAttributesSearchListener())
             ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_DELETE, new ProductPageProductConcreteLocalizedAttributesSearchListener())
+            ->addListenerQueued(ProductSearchEvents::SYNCHRONIZATION_FILTER_PUBLISH, new ProductPageProductAbstractListener())
             ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new ProductPageUrlSearchListener())
             ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductPageUrlSearchListener());
 

@@ -8,12 +8,15 @@
 namespace Spryker\Zed\ProductSearch\Business\Marker;
 
 use Exception;
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelJoin;
 use Spryker\Shared\ProductSearch\ProductSearchConfig;
+use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToEventFacadeInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface;
+use Spryker\Zed\ProductSearch\Dependency\ProductSearchEvents;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 
@@ -27,17 +30,24 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
     protected $touchFacade;
 
     /**
+     * @var ProductSearchToEventFacadeInterface
+     */
+    protected $eventFacade;
+
+    /**
      * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
     protected $productSearchQueryContainer;
 
     /**
      * @param \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface $touchFacade
+     * @param ProductSearchToEventFacadeInterface $eventFacade
      * @param \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface $productSearchQuery
      */
-    public function __construct(ProductSearchToTouchInterface $touchFacade, ProductSearchQueryContainerInterface $productSearchQuery)
+    public function __construct(ProductSearchToTouchInterface $touchFacade, ProductSearchToEventFacadeInterface $eventFacade, ProductSearchQueryContainerInterface $productSearchQuery)
     {
         $this->touchFacade = $touchFacade;
+        $this->eventFacade = $eventFacade;
         $this->productSearchQueryContainer = $productSearchQuery;
     }
 
@@ -111,17 +121,37 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
     /**
      * @param array $attributeNames
      *
-     * @return void
+     * @return array
      */
-    protected function touchProductAbstractByAttributeNames(array $attributeNames)
+    protected function getProductAbstractIdsByAttributeNames(array $attributeNames)
     {
-        $productAbstractIds = $this->productSearchQueryContainer
+        return $this->productSearchQueryContainer
             ->queryProductAbstractByAttributeName($attributeNames)
             ->select(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->setFormatter(new PropelArraySetFormatter())
             ->find();
+    }
 
+    /**
+     * @param array $productAbstractIds
+     *
+     * @return void
+     */
+    protected function touchProductAbstractByIds(array $productAbstractIds)
+    {
         $this->touchFacade->bulkTouchSetActive(ProductSearchConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $productAbstractIds);
+    }
+
+    /**
+     * @param array $productAbstractIds
+     *
+     * @return void
+     */
+    protected function triggerSynchronizationFilterEvents(array $productAbstractIds)
+    {
+        foreach ($productAbstractIds as $productAbstractId) {
+            $this->eventFacade->trigger(ProductSearchEvents::SYNCHRONIZATION_FILTER_PUBLISH, (new EventEntityTransfer())->setId($productAbstractId));
+        }
     }
 
     /**
