@@ -8,7 +8,9 @@
 namespace Spryker\Zed\ProductLabelSearch\Communication\Plugin\PageDataExpander;
 
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelQuery;
 use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface;
 
 /**
@@ -25,8 +27,74 @@ class ProductLabelDataExpanderPlugin extends AbstractPlugin implements ProductPa
      */
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer)
     {
-        $labelIds = $this->getFactory()->getProductLabelFacade()->findLabelIdsByIdProductAbstract($productData['fk_product_abstract']);
-        $productAbstractPageSearchTransfer->setLabelIds($labelIds);
+        $allLabelIds = $this->getFactory()->getProductLabelFacade()->findLabelIdsByIdProductAbstract($productData['fk_product_abstract']);
+        //TODO move this to QueryContainer
+        $labelEntities = SpyProductLabelQuery::create()
+            ->filterByIdProductLabel_In($allLabelIds)
+            ->filterByIsActive(true)
+            ->find();
+
+        $activeLabelIds = [];
+        foreach ($labelEntities as $labelEntity) {
+            if ($this->isValidByDate($labelEntity)) {
+                $activeLabelIds[] = $labelEntity->getIdProductLabel();
+            }
+        }
+
+        $productAbstractPageSearchTransfer->setLabelIds($activeLabelIds);
+    }
+
+    /**
+     * @param SpyProductLabel $spyProductLabel
+     *
+     * @return bool
+     */
+    protected function isValidByDate(SpyProductLabel $spyProductLabel)
+    {
+        $isValidFromDate = $this->isValidByDateFrom($spyProductLabel);
+        $isValidToDate = $this->isValidByDateTo($spyProductLabel);
+
+        return ($isValidFromDate && $isValidToDate);
+    }
+
+    /**
+     * @param SpyProductLabel $productLabel
+     *
+     * @return bool
+     */
+    protected function isValidByDateFrom(SpyProductLabel $productLabel)
+    {
+        if (!$productLabel->getValidFrom()) {
+            return true;
+        }
+
+        $now = new \DateTime();
+
+        if ($now < $productLabel->getValidFrom()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param SpyProductLabel $productLabel
+     *
+     * @return bool
+     */
+    protected function isValidByDateTo(SpyProductLabel $productLabel)
+    {
+        if (!$productLabel->getValidTo()) {
+            return true;
+        }
+
+        $now = new \DateTime();
+
+        if ($productLabel->getValidTo() < $now) {
+            return false;
+        }
+
+        return true;
     }
 
 }
