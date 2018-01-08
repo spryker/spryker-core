@@ -49,4 +49,18 @@ class LogFacade extends AbstractFacade implements LogFacadeInterface
     {
         $this->getFactory()->createLogListener()->stopListener();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    public function sanitize(array $data)
+    {
+        return $this->getFactory()->createSanitizer()->sanitize($data);
+    }
 }

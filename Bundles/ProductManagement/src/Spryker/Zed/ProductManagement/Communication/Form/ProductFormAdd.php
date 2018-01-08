@@ -366,7 +366,7 @@ class ProductFormAdd extends AbstractType
             'widget' => 'single_text',
             'required' => false,
             'attr' => [
-                'class' => 'datepicker js-from-date',
+                'class' => 'datepicker js-from-date safe-datetime',
             ],
             'constraints' => [
                 $this->createNewFromRangeConstraint(),
@@ -390,7 +390,7 @@ class ProductFormAdd extends AbstractType
             'widget' => 'single_text',
             'required' => false,
             'attr' => [
-                'class' => 'datepicker js-to-date',
+                'class' => 'datepicker js-to-date safe-datetime',
             ],
             'constraints' => [
                 $this->createNewToFieldRangeConstraint(),
