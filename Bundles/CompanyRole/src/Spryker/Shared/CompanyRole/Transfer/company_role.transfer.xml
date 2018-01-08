@@ -11,6 +11,10 @@
         <property name="idCompanyRole" type="int" />
         <property name="name" type="string" />
         <property name="isDefault" type="bool" />
+        <property name="permissionCollection" type="PermissionCollection" />
+    </transfer>
+
+    <transfer name="PermissionCollection">
         <property name="permissions" type="Permission[]" singular="permission" />
     </transfer>
 

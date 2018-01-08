@@ -8,4 +8,13 @@
         <property name="context" type="mixed" />
     </transfer>
 
+    <transfer name="Permission">
+        <property name="key" type="string "/>
+        <property name="config" type="[]" />
+    </transfer>
+
+    <transfer name="PermissionCollection">
+        <property name="permissions" type="Permission[]" singular="permission" />
+    </transfer>
+
 </transfers>
