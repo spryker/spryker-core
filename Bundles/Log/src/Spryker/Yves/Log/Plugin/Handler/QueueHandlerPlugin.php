@@ -28,7 +28,7 @@ class QueueHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInter
     protected function getHandler()
     {
         if (!$this->handler) {
-            $this->handler = $this->getFactory()->createBufferedQueueHandler();
+            $this->handler = $this->getFactory()->createBufferedQueueHandlerPublic();
         }
 
         return $this->handler;

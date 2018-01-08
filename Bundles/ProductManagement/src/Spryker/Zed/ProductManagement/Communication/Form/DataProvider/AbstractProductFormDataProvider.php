@@ -756,7 +756,7 @@ class AbstractProductFormDataProvider
     {
         $url = $baseUrl;
 
-        if (strpos($url, '/') === 0) {
+        if (preg_match("#^\/(?!/).*$#", $url) === 1) {
             $url = $this->imageUrlPrefix . $url;
         }
 

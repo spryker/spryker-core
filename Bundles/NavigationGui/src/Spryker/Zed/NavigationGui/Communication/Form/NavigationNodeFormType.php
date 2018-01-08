@@ -162,7 +162,7 @@ class NavigationNodeFormType extends AbstractType
             'widget' => 'single_text',
             'required' => false,
             'attr' => [
-                'class' => 'datepicker',
+                'class' => 'datepicker safe-datetime',
             ],
             'constraints' => [
                 $this->createValidFromRangeConstraint(),
@@ -187,7 +187,7 @@ class NavigationNodeFormType extends AbstractType
             'widget' => 'single_text',
             'required' => false,
             'attr' => [
-                'class' => 'datepicker',
+                'class' => 'datepicker safe-datetime',
             ],
             'constraints' => [
                 $this->createValidToFieldRangeConstraint(),
