@@ -2,11 +2,13 @@
 
 namespace Spryker\Zed\CmsBlockCategoryStorage\Persistence;
 
+use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\Map\SpyCmsBlockCategoryConnectorTableMap;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\Map\SpyCmsBlockCategoryPositionTableMap;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery;
 use Orm\Zed\CmsBlockCategoryStorage\Persistence\SpyCmsBlockCategoryStorageQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -41,6 +43,11 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
             ->queryCmsBlockCategoryConnector()
             ->innerJoinCmsBlockCategoryPosition()
             ->innerJoinCmsBlock()
+            ->addJoin(
+                [SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY, SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY_TEMPLATE],
+                [SpyCategoryTableMap::COL_ID_CATEGORY, SpyCategoryTableMap::COL_FK_CATEGORY_TEMPLATE],
+                Criteria::INNER_JOIN
+            )
             ->withColumn(SpyCmsBlockCategoryPositionTableMap::COL_NAME, static::POSITION)
             ->withColumn(SpyCmsBlockTableMap::COL_NAME, static::NAME)
             ->filterByFkCategory_In($categoryIds);
