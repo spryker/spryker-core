@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
 use Generated\Shared\Transfer\ComposerDependencyCollectionTransfer;
 use Generated\Shared\Transfer\ComposerDependencyTransfer;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface;
+use Spryker\Zed\Development\Business\Exception\DependencyTree\InvalidComposerJsonException;
 use Symfony\Component\Finder\SplFileInfo;
 use Zend\Filter\FilterChain;
 use Zend\Filter\Word\DashToCamelCase;
@@ -267,6 +268,14 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
             $content = file_get_contents($composerJsonFile);
             $content = json_decode($content, true);
 
+            if (json_last_error()) {
+                throw new InvalidComposerJsonException(sprintf(
+                    'Unable to parse %s: %s.',
+                    $composerJsonFile,
+                    json_last_error_msg()
+                ));
+            }
+
             $require = isset($content['require']) ? $content['require'] : [];
             $this->addComposerDependencies($require, $composerDependencies);
 
@@ -290,7 +299,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
     protected function addComposerDependencies(array $require, ComposerDependencyCollectionTransfer $composerDependencyCollectionTransfer, $isDev = false)
     {
         foreach ($require as $package => $version) {
-            if (strpos($package, 'spryker/') !== 0) {
+            if (strpos($package, 'spryker') !== 0) {
                 continue;
             }
             $bundle = $this->getBundleName($package);
@@ -313,7 +322,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
     protected function addSuggestedDependencies(array $require, ComposerDependencyCollectionTransfer $composerDependencyCollectionTransfer)
     {
         foreach ($require as $package => $version) {
-            if (strpos($package, 'spryker/') !== 0) {
+            if (strpos($package, 'spryker') !== 0) {
                 continue;
             }
             $bundle = $this->getBundleName($package);
@@ -349,7 +358,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
      */
     protected function getBundleName($package)
     {
-        $name = substr($package, 8);
+        $name = substr($package, strpos($package, '/') + 1);
         $filter = new SeparatorToCamelCase('-');
         $name = ucfirst($filter->filter($name));
 

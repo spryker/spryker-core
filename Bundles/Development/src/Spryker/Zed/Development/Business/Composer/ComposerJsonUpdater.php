@@ -9,6 +9,7 @@ namespace Spryker\Zed\Development\Business\Composer;
 
 use RuntimeException;
 use Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface;
+use Spryker\Zed\Development\Business\Exception\DependencyTree\InvalidComposerJsonException;
 use Symfony\Component\Finder\SplFileInfo;
 use Zend\Filter\Word\CamelCaseToDash;
 
@@ -82,7 +83,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
         $composerJson = $composerJsonFile->getContents();
         $composerJsonArray = json_decode($composerJson, true);
 
-        $this->assertCorrectName($composerJsonArray['name'], $composerJsonFile->getRelativePath());
+        $this->assertCorrectName($composerJsonArray['name'], $composerJsonFile);
 
         $composerJsonArray = $this->updater->update($composerJsonArray, $composerJsonFile);
         $composerJsonArray = $this->clean($composerJsonArray);
@@ -185,18 +186,27 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 
     /**
      * @param string $vendorName
-     * @param string $bundleName
+     * @param SplFileInfo $composerJsonFile
      *
      * @throws \RuntimeException
      *
      * @return void
      */
-    protected function assertCorrectName($vendorName, $bundleName)
+    protected function assertCorrectName($vendorName, SplFileInfo $composerJsonFile)
     {
         $filter = new CamelCaseToDash();
-        $bundleName = strtolower($filter->filter($bundleName));
+        $moduleName = strtolower($filter->filter($composerJsonFile->getRelativePath()));
 
-        $expected = 'spryker/' . $bundleName;
+        if (!preg_match('/vendor\/spryker\/([a-z_-]+)\/Bundles\/\w+\/composer.json$/', $composerJsonFile->getRealPath(), $matches)) {
+            throw new InvalidComposerJsonException(sprintf(
+                'Unable to locate core name from %s.',
+                $composerJsonFile->getRealPath()
+            ));
+        }
+
+        $applicationName = $matches[1];
+
+        $expected = $applicationName . '/' . $moduleName;
         if ($vendorName !== $expected) {
             throw new RuntimeException(sprintf('Invalid composer name, expected %s, got %s', $expected, $vendorName));
         }
