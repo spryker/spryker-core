@@ -26,6 +26,7 @@ class CustomerStub implements CustomerStubInterface
 
     /**
      * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
+     * @param array $defaultAddressChangePlugins
      */
     public function __construct(ZedRequestClient $zedStub, array $defaultAddressChangePlugins = [])
     {

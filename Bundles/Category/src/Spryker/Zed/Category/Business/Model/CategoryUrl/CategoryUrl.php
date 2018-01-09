@@ -43,6 +43,7 @@ class CategoryUrl implements CategoryUrlInterface
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface $urlFacade
      * @param \Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface $urlPathGenerator
+     * @param array $categoryUrlPathPlugins
      */
     public function __construct(
         CategoryQueryContainerInterface $queryContainer,

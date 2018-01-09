@@ -12,7 +12,7 @@ use Elastica\Query\BoolQuery;
 use Elastica\Query\Match;
 use Elastica\Suggest;
 use Generated\Shared\Search\PageIndexMap;
-use Spryker\Shared\ProductSearch\ProductSearchConfig;
+use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 
 class ProductCatalogSearchQueryPlugin extends CatalogSearchQueryPlugin
 {
@@ -39,7 +39,7 @@ class ProductCatalogSearchQueryPlugin extends CatalogSearchQueryPlugin
     protected function setTypeFilter(BoolQuery $boolQuery)
     {
         $typeFilter = (new Match())
-            ->setField(PageIndexMap::TYPE, ProductSearchConfig::PRODUCT_ABSTRACT_PAGE_SEARCH_TYPE);
+            ->setField(PageIndexMap::TYPE, ProductPageSearchConstants::PRODUCT_ABSTRACT_RESOURCE_NAME);
 
         $boolQuery->addMust($typeFilter);
     }

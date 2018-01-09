@@ -29,8 +29,6 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated use Spryker\Shared\Search\Provider\SearchClientProvider to get search client Instance instead.
-     *
      * @return array
      */
     public function getElasticsearchConfig()

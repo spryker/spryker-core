@@ -22,5 +22,5 @@ interface CustomerSessionGetPluginInterface
      *
      * @return void
      */
-    public function executes(CustomerTransfer $customerTransfer);
+    public function execute(CustomerTransfer $customerTransfer);
 }
