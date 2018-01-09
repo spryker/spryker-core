@@ -10,6 +10,8 @@ interface CompanySavePluginInterface
     /**
      * CompanyTransfer $companyTransfer
      *
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
      * @return void
      */
     public function save(CompanyTransfer $companyTransfer);

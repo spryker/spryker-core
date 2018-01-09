@@ -42,7 +42,7 @@ interface CompanyFacadeInterface
 
     /**
      * Specification:
-     * - Assign stores to company
+     * - Assigns stores to company
      *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer[] ...$storeTransfer
