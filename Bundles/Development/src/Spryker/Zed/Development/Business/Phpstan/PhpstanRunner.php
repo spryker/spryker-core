@@ -82,10 +82,10 @@ class PhpstanRunner implements PhpstanRunnerInterface
      */
     protected function runCommand($path, $configFilePath, InputInterface $input, OutputInterface $output)
     {
-        $command = 'php -d memory_limit=' . static::MEMORY_LIMIT . ' vendor/bin/phpstan analyze --no-progress -c %s %s -l %s';
+        $command = 'php -d memory_limit=%s vendor/bin/phpstan analyze --no-progress -c %s %s -l %s';
 
         $level = $input->getOption('level') ?: $this->config->getPhpstanLevel();
-        $command = sprintf($command, $configFilePath, $path, $level);
+        $command = sprintf($command, static::MEMORY_LIMIT, $configFilePath, $path, $level);
 
         if ($input->getOption(static::OPTION_DRY_RUN)) {
             $output->writeln($command);
