@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CompanyUnitAddress\Persistence" package="src.Orm.Zed.CompanyUnitAddress.Persistence">
+
+    <table name="spy_company_unit_address" idMethod="native" phpName="SpyCompanyUnitAddress">
+        <column name="id_company_unit_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+
+        <column name="fk_business_unit" required="true" type="INTEGER"/>
+        <column name="fk_country" type="INTEGER" required="true"/>
+        <column name="fk_region" type="INTEGER"/>
+
+        <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, Ms"/>
+        <column name="first_name" required="true" size="100" type="VARCHAR"/>
+        <column name="last_name" required="true" size="100" type="VARCHAR"/>
+        <column name="address1" size="255" type="VARCHAR"/>
+        <column name="address2" size="255" type="VARCHAR"/>
+        <column name="address3" size="255" type="VARCHAR"/>
+        <column name="company" size="255" type="VARCHAR"/>
+        <column name="city" size="255" type="VARCHAR"/>
+        <column name="zip_code" size="15" type="VARCHAR"/>
+        <column name="phone" size="255" type="VARCHAR"/>
+        <column name="comment" size="255" type="VARCHAR"/>
+        <column name="deleted_at" required="false" type="TIMESTAMP"/>
+        <column name="anonymized_at" required="false" type="TIMESTAMP" default="NULL"/>
+
+        <foreign-key name="spy_company_unit_address-fk_business_unit" foreignTable="spy_company_business_unit" phpName="CompanyBusinessUnit" refPhpName="CompanyUnitAddress" onDelete="CASCADE">
+            <reference foreign="id_company_business_unit" local="fk_business_unit"/>
+        </foreign-key>
+        <foreign-key name="spy_company_unit_address-fk_region" foreignTable="spy_region" phpName="Region" refPhpName="CompanyUnitAddress">
+            <reference local="fk_region" foreign="id_region"/>
+        </foreign-key>
+        <foreign-key name="spy_company_unit_address-fk_country" foreignTable="spy_country" phpName="Country" refPhpName="CompanyUnitAddress">
+            <reference local="fk_country" foreign="id_country"/>
+        </foreign-key>
+        <index name="spy_company_unit_address-fk_business_unit">
+            <index-column name="fk_business_unit"/>
+        </index>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_company_unit_address_pk_seq"/>
+    </table>
+
+</database>
