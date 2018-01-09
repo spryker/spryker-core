@@ -31,7 +31,7 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
     protected function addCompanySavePlugins(Container $container)
     {
         $container[static::PLUGINS_COMPANY_SAVE] = function (Container $container) {
-            return $this->getCompanyUserSavePlugins();
+            return $this->getCompanySavePlugins();
         };
 
         return $container;
@@ -40,7 +40,7 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\Company\Dependency\CompanySavePluginInterface[]
      */
-    protected function getCompanyUserSavePlugins()
+    protected function getCompanySavePlugins()
     {
         return [];
     }

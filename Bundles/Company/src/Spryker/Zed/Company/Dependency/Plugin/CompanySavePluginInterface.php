@@ -8,6 +8,8 @@ interface CompanySavePluginInterface
 {
 
     /**
+     * Specification:
+     * -
      * CompanyTransfer $companyTransfer
      *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
