@@ -8,19 +8,16 @@
 namespace Spryker\Zed\ProductImageStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\ProductImageStorage\Dependency\Service\ProductImageStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\ProductImageStorage\ProductImageStorageDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductImageStorage\ProductImageStorageConfig getConfig()
  */
 class ProductImageStorageCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
-     * @return ProductImageStorageToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\ProductImageStorage\Dependency\Service\ProductImageStorageToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -28,7 +25,7 @@ class ProductImageStorageCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return ProductImageStorageToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
@@ -50,5 +47,4 @@ class ProductImageStorageCommunicationFactory extends AbstractCommunicationFacto
     {
         return $this->getProvidedDependency(ProductImageStorageDependencyProvider::FACADE_PRODUCT_IMAGE);
     }
-
 }

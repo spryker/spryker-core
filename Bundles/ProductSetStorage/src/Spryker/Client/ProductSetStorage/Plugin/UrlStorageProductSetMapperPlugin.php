@@ -11,25 +11,21 @@ use Generated\Shared\Transfer\SpyUrlEntityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\ProductSetStorage\ProductSetStorageFactory;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
 use Spryker\Shared\ProductSetStorage\ProductSetStorageConstants;
 
 /**
- * Class UrlStorageProductSetMapperPlugin
- *
- * @method ProductSetStorageFactory getFactory()
+ * @method \Spryker\Client\ProductSetStorage\ProductSetStorageFactory getFactory()
  */
 class UrlStorageProductSetMapperPlugin extends AbstractPlugin implements UrlStorageResourceMapperPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\SpyUrlEntityTransfer $spyUrlEntityTransfer
      * @param array $options
      *
      * @return \Generated\Shared\Transfer\UrlStorageResourceMapTransfer
      */
-    public function map(SpyUrlEntityTransfer $spyUrlEntityTransfer, $options = [])
+    public function map(SpyUrlEntityTransfer $spyUrlEntityTransfer, array $options = [])
     {
         $urlStorageResourceMapTransfer = new UrlStorageResourceMapTransfer();
         $idProductSet = $spyUrlEntityTransfer->getFkResourceProductSet();
@@ -69,5 +65,4 @@ class UrlStorageProductSetMapperPlugin extends AbstractPlugin implements UrlStor
             ->getStore()
             ->getStoreName();
     }
-
 }

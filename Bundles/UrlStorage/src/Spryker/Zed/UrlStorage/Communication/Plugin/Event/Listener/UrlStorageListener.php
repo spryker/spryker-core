@@ -17,7 +17,6 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class UrlStorageListener extends AbstractUrlStorageListener implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -33,8 +32,7 @@ class UrlStorageListener extends AbstractUrlStorageListener implements EventBulk
         $this->preventTransaction();
         $urlIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-
-        if( $eventName === UrlEvents::ENTITY_SPY_URL_DELETE ||
+        if ($eventName === UrlEvents::ENTITY_SPY_URL_DELETE ||
             $eventName === UrlEvents::URL_UNPUBLISH
         ) {
             $this->unpublish($urlIds);
@@ -44,5 +42,4 @@ class UrlStorageListener extends AbstractUrlStorageListener implements EventBulk
 
         $this->publish($urlIds);
     }
-
 }

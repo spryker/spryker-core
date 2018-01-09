@@ -7,15 +7,14 @@
 
 namespace Spryker\Client\ProductReviewStorage;
 
-use Spryker\Client\ProductReviewStorage\Dependency\Client\ProductReviewStorageToStorageBridge;
-use Spryker\Client\ProductReviewStorage\Dependency\Service\ProductReviewStorageToSynchronizationServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductReviewStorage\Dependency\Client\ProductReviewStorageToStorageBridge;
+use Spryker\Client\ProductReviewStorage\Dependency\Service\ProductReviewStorageToSynchronizationServiceBridge;
 use Spryker\Shared\Kernel\Store;
 
 class ProductReviewStorageDependencyProvider extends AbstractDependencyProvider
 {
-
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     const STORE = 'STORE';
@@ -35,9 +34,9 @@ class ProductReviewStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addStorageClient(Container $container): Container
     {
@@ -49,9 +48,9 @@ class ProductReviewStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addSynchronizationService(Container $container): Container
     {
@@ -63,9 +62,9 @@ class ProductReviewStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addStore(Container $container): Container
     {
@@ -75,5 +74,4 @@ class ProductReviewStorageDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

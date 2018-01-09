@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductOptionStorage\Dependency\QueryContainer;
 
 class ProductOptionStorageToProductOptionQueryContainerBridge implements ProductOptionStorageToProductOptionQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
@@ -46,5 +45,4 @@ class ProductOptionStorageToProductOptionQueryContainerBridge implements Product
     {
         return $this->productOptionQueryContainer->queryAllProductOptionValues();
     }
-
 }

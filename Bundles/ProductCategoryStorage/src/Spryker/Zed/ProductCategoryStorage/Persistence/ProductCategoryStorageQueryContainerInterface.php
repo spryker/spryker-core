@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductCategoryStorageQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -89,5 +88,4 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryCategoryIdsByNodeIds(array $nodeIds);
-
 }

@@ -1,23 +1,21 @@
 <?php
+
 /**
- * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\PriceProductStorage\Dependency\Client;
 
-use Spryker\Client\PriceProduct\PriceProductClientInterface;
-
 class PriceProductStorageToPriceProductBridge implements PriceProductStorageToPriceProductInterface
 {
-
     /**
-     * @var PriceProductClientInterface
+     * @var \Spryker\Client\PriceProduct\PriceProductClientInterface
      */
     protected $priceProductClient;
 
     /**
-     * @param PriceProductClientInterface $priceProductClient
+     * @param \Spryker\Client\PriceProduct\PriceProductClientInterface $priceProductClient
      */
     public function __construct($priceProductClient)
     {

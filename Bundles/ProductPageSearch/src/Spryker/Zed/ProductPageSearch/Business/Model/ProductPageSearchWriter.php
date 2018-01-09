@@ -17,7 +17,6 @@ use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEnco
  */
 class ProductPageSearchWriter implements ProductPageSearchWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface
      */
@@ -38,7 +37,7 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
      *
      * @return void
      */
-    public function save(ProductPageSearchTransfer $productPageSearchTransfer, SpyProductAbstractPageSearch $productPageSearchEntity = null, array $data)
+    public function save(ProductPageSearchTransfer $productPageSearchTransfer, SpyProductAbstractPageSearch $productPageSearchEntity, array $data)
     {
         if ($productPageSearchEntity === null) {
             $productPageSearchEntity = new SpyProductAbstractPageSearch();
@@ -63,5 +62,4 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
         $productPageSearchEntity->setLocale($productPageSearchTransfer->getLocale());
         $productPageSearchEntity->save();
     }
-
 }

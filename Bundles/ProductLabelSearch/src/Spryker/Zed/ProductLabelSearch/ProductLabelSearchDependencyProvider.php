@@ -16,7 +16,6 @@ use Spryker\Zed\ProductLabelSearch\Dependency\Service\ProductLabelSearchToUtilSa
 
 class ProductLabelSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
@@ -47,5 +46,4 @@ class ProductLabelSearchDependencyProvider extends AbstractBundleDependencyProvi
 
         return $container;
     }
-
 }

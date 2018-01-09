@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AbstractRedirectStorageListener extends AbstractPlugin
 {
-
     const ID_URL_REDIRECT = 'id_url_redirect';
     const FK_URL_REDIRECT = 'fkUrlRedirect';
 
@@ -109,5 +108,4 @@ class AbstractRedirectStorageListener extends AbstractPlugin
     {
         return $this->getFactory()->getStore()->getStoreName();
     }
-
 }

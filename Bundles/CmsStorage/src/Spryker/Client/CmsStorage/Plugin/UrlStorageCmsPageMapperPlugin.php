@@ -10,26 +10,22 @@ namespace Spryker\Client\CmsStorage\Plugin;
 use Generated\Shared\Transfer\SpyUrlEntityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
-use Spryker\Client\CmsStorage\CmsStorageFactory;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
 use Spryker\Shared\CmsStorage\CmsStorageConstants;
 
 /**
- * Class UrlStorageCmsPageMapperPlugin
- *
- * @method CmsStorageFactory getFactory()
+ * @method \Spryker\Client\CmsStorage\CmsStorageFactory getFactory()
  */
 class UrlStorageCmsPageMapperPlugin extends AbstractPlugin implements UrlStorageResourceMapperPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\SpyUrlEntityTransfer $spyUrlEntityTransfer
      * @param array $options
      *
      * @return \Generated\Shared\Transfer\UrlStorageResourceMapTransfer
      */
-    public function map(SpyUrlEntityTransfer $spyUrlEntityTransfer, $options = [])
+    public function map(SpyUrlEntityTransfer $spyUrlEntityTransfer, array $options = [])
     {
         $urlStorageResourceMapTransfer = new UrlStorageResourceMapTransfer();
         $idCmsPage = $spyUrlEntityTransfer->getFkResourcePage();

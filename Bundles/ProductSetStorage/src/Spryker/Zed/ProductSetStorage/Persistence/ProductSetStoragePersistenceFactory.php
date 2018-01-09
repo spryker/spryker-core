@@ -13,11 +13,10 @@ use Spryker\Zed\ProductSetStorage\ProductSetStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductSetStorage\ProductSetStorageConfig getConfig()
- * @method \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface getQueryContainer()
  */
 class ProductSetStoragePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\ProductSetStorage\Persistence\SpyProductSetStorageQuery
      */
@@ -41,5 +40,4 @@ class ProductSetStoragePersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(ProductSetStorageDependencyProvider::QUERY_CONTAINER_PRODUCT_IMAGE);
     }
-
 }

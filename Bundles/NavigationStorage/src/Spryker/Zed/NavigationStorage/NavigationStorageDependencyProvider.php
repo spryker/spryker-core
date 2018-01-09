@@ -18,7 +18,6 @@ use Spryker\Zed\NavigationStorage\Dependency\Service\NavigationStorageToUtilSani
 
 class NavigationStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_NAVIGATION = 'QUERY_CONTAINER_NAVIGATION';
     const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
     const FACADE_NAVIGATION = 'FACADE_NAVIGATION';
@@ -69,5 +68,4 @@ class NavigationStorageDependencyProvider extends AbstractBundleDependencyProvid
 
         return $container;
     }
-
 }

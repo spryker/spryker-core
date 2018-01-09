@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductCategoryStorage\Dependency\QueryContainer;
 
 class ProductCategoryStorageToProductQueryContainerBridge implements ProductCategoryStorageToProductQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -30,5 +29,4 @@ class ProductCategoryStorageToProductQueryContainerBridge implements ProductCate
     {
         return $this->productQueryContainer->queryAllProductAbstractLocalizedAttributes();
     }
-
 }

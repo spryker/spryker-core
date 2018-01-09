@@ -18,7 +18,6 @@ use Spryker\Zed\ProductReviewSearch\Communication\Plugin\Event\Listener\ProductR
  */
 class ProductReviewSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -37,5 +36,4 @@ class ProductReviewSearchEventSubscriber extends AbstractPlugin implements Event
 
         return $eventCollection;
     }
-
 }

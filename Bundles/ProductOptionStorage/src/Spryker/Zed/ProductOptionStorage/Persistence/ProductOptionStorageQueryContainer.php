@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductOptionStorageQueryContainer extends AbstractQueryContainer implements ProductOptionStorageQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -108,5 +107,4 @@ class ProductOptionStorageQueryContainer extends AbstractQueryContainer implemen
             ->addAnd(SpyProductOptionGroupTableMap::COL_ACTIVE, true, Criteria::EQUAL)
             ->addAnd(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE, $productOptionValueIds, Criteria::IN);
     }
-
 }

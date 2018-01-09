@@ -9,12 +9,10 @@ namespace Spryker\Client\CategoryStorage\Dependency\Service;
 
 interface CategoryStorageToSynchronizationServiceInterface
 {
-
     /**
      * @param string $resourceName
      *
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */
     public function getStorageKeyBuilder($resourceName);
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CmsBlockStorageQueryContainer extends AbstractQueryContainer implements CmsBlockStorageQueryContainerInterface
 {
-
     /**
      * @api
      *

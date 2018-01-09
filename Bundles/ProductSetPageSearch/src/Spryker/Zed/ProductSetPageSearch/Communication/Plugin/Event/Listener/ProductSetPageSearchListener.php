@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductSetPageSearchListener extends AbstractProductSetPageSearchListener implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -42,5 +41,4 @@ class ProductSetPageSearchListener extends AbstractProductSetPageSearchListener 
             $this->publish($productSetIds);
         }
     }
-
 }

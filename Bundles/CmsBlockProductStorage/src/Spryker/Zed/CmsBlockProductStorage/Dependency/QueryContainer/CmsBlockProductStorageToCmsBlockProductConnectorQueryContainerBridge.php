@@ -15,7 +15,7 @@ class CmsBlockProductStorageToCmsBlockProductConnectorQueryContainerBridge imple
     protected $cmsBlockProductConnectorQueryContainer;
 
     /**
-     * @param $cmsBlockProductConnectorQueryContainerFacade
+     * @param \Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorQueryContainerInterface $cmsBlockProductConnectorQueryContainerFacade
      */
     public function __construct($cmsBlockProductConnectorQueryContainerFacade)
     {

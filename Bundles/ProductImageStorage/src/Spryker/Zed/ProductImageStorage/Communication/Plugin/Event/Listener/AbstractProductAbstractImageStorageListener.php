@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AbstractProductAbstractImageStorageListener extends AbstractPlugin
 {
-
     /**
      * @param array $productAbstractIds
      *
@@ -43,6 +42,7 @@ class AbstractProductAbstractImageStorageListener extends AbstractPlugin
     /**
      * @param array $spyProductAbstractLocalizedEntities
      * @param array $spyProductAbstractImageStorageEntities
+     * @param array $imagesSets
      *
      * @return void
      */
@@ -51,7 +51,7 @@ class AbstractProductAbstractImageStorageListener extends AbstractPlugin
         foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
             $idProduct = $spyProductAbstractLocalizedEntity->getFkProductAbstract();
             $localeName = $spyProductAbstractLocalizedEntity->getLocale()->getLocaleName();
-            if (isset($spyProductAbstractImageStorageEntities[$idProduct][$localeName]))  {
+            if (isset($spyProductAbstractImageStorageEntities[$idProduct][$localeName])) {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, $spyProductAbstractImageStorageEntities[$idProduct][$localeName], $imagesSets);
             } else {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, null, $imagesSets);
@@ -66,7 +66,7 @@ class AbstractProductAbstractImageStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, SpyProductAbstractImageStorage $spyProductAbstractImageStorage = null, array $imageSets)
+    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, SpyProductAbstractImageStorage $spyProductAbstractImageStorage, array $imageSets)
     {
         if ($spyProductAbstractImageStorage === null) {
             $spyProductAbstractImageStorage = new SpyProductAbstractImageStorage();
@@ -153,5 +153,4 @@ class AbstractProductAbstractImageStorageListener extends AbstractPlugin
     {
         return $this->getFactory()->getStore()->getStoreName();
     }
-
 }

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -9,20 +10,17 @@ namespace Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Event\Listene
 use Generated\Shared\Transfer\CmsBlockCategoriesTransfer;
 use Generated\Shared\Transfer\CmsBlockCategoryTransfer;
 use Orm\Zed\CmsBlockCategoryStorage\Persistence\SpyCmsBlockCategoryStorage;
-use Spryker\Zed\CmsBlockCategoryStorage\Communication\CmsBlockCategoryStorageCommunicationFactory;
-use Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * Class AbstractCmsBlockCategoryStorageListener
  *
- * @method CmsBlockCategoryStorageCommunicationFactory getFactory()
- * @method CmsBlockCategoryStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsBlockCategoryStorage\Communication\CmsBlockCategoryStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface getQueryContainer()
  */
 abstract class AbstractCmsBlockCategoryStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-
     /**
      * @param array $categoryIds
      *
@@ -57,7 +55,7 @@ abstract class AbstractCmsBlockCategoryStorageListener extends AbstractPlugin im
     }
 
     /**
-     * @param CmsBlockCategoriesTransfer[] $cmsBlockCategoriesTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockCategoriesTransfer[] $cmsBlockCategoriesTransfer
      * @param array $spyCmsBlockCategoryStorageEntities
      *
      * @return void
@@ -74,8 +72,8 @@ abstract class AbstractCmsBlockCategoryStorageListener extends AbstractPlugin im
     }
 
     /**
-     * @param CmsBlockCategoriesTransfer $cmsBlockCategoriesTransfer
-     * @param SpyCmsBlockCategoryStorage|null $spyCmsBlockCategoryStorage
+     * @param \Generated\Shared\Transfer\CmsBlockCategoriesTransfer $cmsBlockCategoriesTransfer
+     * @param \Orm\Zed\CmsBlockCategoryStorage\Persistence\SpyCmsBlockCategoryStorage|null $spyCmsBlockCategoryStorage
      *
      * @return void
      */

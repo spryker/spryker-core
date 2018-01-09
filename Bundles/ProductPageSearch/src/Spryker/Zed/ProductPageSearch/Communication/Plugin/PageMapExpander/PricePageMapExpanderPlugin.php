@@ -16,11 +16,10 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 /**
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  */
 class PricePageMapExpanderPlugin extends AbstractPlugin implements ProductPageMapExpanderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
@@ -51,8 +50,6 @@ class PricePageMapExpanderPlugin extends AbstractPlugin implements ProductPageMa
      */
     protected function setPricesByType(PageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $productData)
     {
-
-
         foreach ($productData['prices'] as $currencyIsoCode => $pricesByPriceMode) {
             foreach ($pricesByPriceMode as $priceMode => $pricesByType) {
                 foreach ($pricesByType as $priceType => $price) {
@@ -65,5 +62,4 @@ class PricePageMapExpanderPlugin extends AbstractPlugin implements ProductPageMa
 
         $pageMapBuilder->addSearchResultData($pageMapTransfer, 'prices', $productData['prices']);
     }
-
 }

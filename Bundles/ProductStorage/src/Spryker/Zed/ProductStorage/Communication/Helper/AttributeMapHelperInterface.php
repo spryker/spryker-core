@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductStorage\Communication\Helper;
 
 interface AttributeMapHelperInterface
 {
-
     /**
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -17,5 +16,4 @@ interface AttributeMapHelperInterface
      * @return array
      */
     public function generateAttributeMap($idProductAbstract, $idLocale);
-
 }

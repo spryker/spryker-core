@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AbstractAvailabilityStorageListener extends AbstractPlugin
 {
-
     const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const ID_AVAILABILITY_ABSTRACT = 'id_availability_abstract';
     const FK_AVAILABILITY_ABSTRACT = 'fkAvailabilityAbstract';
@@ -110,5 +109,4 @@ class AbstractAvailabilityStorageListener extends AbstractPlugin
     {
         return $this->getFactory()->getStore()->getStoreName();
     }
-
 }

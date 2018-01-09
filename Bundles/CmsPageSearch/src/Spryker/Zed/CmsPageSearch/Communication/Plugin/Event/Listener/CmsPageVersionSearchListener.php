@@ -12,7 +12,6 @@ use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 
 class CmsPageVersionSearchListener extends AbstractCmsPageSearchListener implements EventBulkHandlerInterface
 {
-
     /**
      * @param array $eventTransfers
      * @param string $eventName
@@ -26,5 +25,4 @@ class CmsPageVersionSearchListener extends AbstractCmsPageSearchListener impleme
 
         $this->publish($cmsPageIds);
     }
-
 }

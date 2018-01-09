@@ -15,7 +15,7 @@ class CmsBlockCategoryStorageToCmsBlockCategoryConnectorQueryContainerBridge imp
     protected $cmsBlockCategoryConnectorQueryContainer;
 
     /**
-     * @param $cmsBlockCategoryConnectorQueryContainerFacade
+     * @param \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface $cmsBlockCategoryConnectorQueryContainerFacade
      */
     public function __construct($cmsBlockCategoryConnectorQueryContainerFacade)
     {

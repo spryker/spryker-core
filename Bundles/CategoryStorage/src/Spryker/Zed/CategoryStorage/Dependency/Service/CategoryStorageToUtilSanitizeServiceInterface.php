@@ -9,7 +9,6 @@ namespace Spryker\Zed\CategoryStorage\Dependency\Service;
 
 interface CategoryStorageToUtilSanitizeServiceInterface
 {
-
     /**
      * @param array $array
      *

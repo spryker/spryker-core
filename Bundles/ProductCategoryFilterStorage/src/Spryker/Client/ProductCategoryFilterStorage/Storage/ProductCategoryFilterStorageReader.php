@@ -22,19 +22,19 @@ class ProductCategoryFilterStorageReader implements ProductCategoryFilterStorage
     protected $storageClient;
 
     /**
-     * @var ProductCategoryFilterStorageToSynchronizationServiceInterface
+     * @var \Spryker\Client\ProductCategoryFilterStorage\Dependency\Service\ProductCategoryFilterStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
     /**
-     * @param ProductCategoryFilterStorageToStorageInterface $storageClient
-     * @param ProductCategoryFilterStorageToSynchronizationServiceInterface $synchronizationService
-     * @param Store $store
+     * @param \Spryker\Client\ProductCategoryFilterStorage\Dependency\Client\ProductCategoryFilterStorageToStorageInterface $storageClient
+     * @param \Spryker\Client\ProductCategoryFilterStorage\Dependency\Service\ProductCategoryFilterStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(ProductCategoryFilterStorageToStorageInterface $storageClient, ProductCategoryFilterStorageToSynchronizationServiceInterface $synchronizationService, Store $store)
     {
@@ -46,7 +46,7 @@ class ProductCategoryFilterStorageReader implements ProductCategoryFilterStorage
     /**
      * @param int $idCategory
      *
-     * @return ProductCategoryFilterStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductCategoryFilterStorageTransfer|null
      */
     public function getProductCategoryFilter($idCategory)
     {
@@ -74,5 +74,4 @@ class ProductCategoryFilterStorageReader implements ProductCategoryFilterStorage
 
         return $this->synchronizationService->getStorageKeyBuilder(ProductCategoryFilterStorageConfig::PRODUCT_CATEGORY_FILTER_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
     }
-
 }

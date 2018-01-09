@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductReviewSearchListener extends AbstractProductReviewSearchListener
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -42,5 +41,4 @@ class ProductReviewSearchListener extends AbstractProductReviewSearchListener
             $this->getFactory()->getProductPageSearchFacade()->refresh($productAbstractIds, [ProductReviewSearchConfig::PLUGIN_PRODUCT_PAGE_RATING_DATA]);
         }
     }
-
 }

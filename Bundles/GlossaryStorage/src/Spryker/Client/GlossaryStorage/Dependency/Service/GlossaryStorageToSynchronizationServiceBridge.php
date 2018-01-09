@@ -9,7 +9,6 @@ namespace Spryker\Client\GlossaryStorage\Dependency\Service;
 
 class GlossaryStorageToSynchronizationServiceBridge implements GlossaryStorageToSynchronizationServiceInterface
 {
-
     /**
      * @var \Spryker\Service\Synchronization\SynchronizationServiceInterface
      */
@@ -34,5 +33,4 @@ class GlossaryStorageToSynchronizationServiceBridge implements GlossaryStorageTo
     {
         return $this->synchronizationService->getStorageKeyBuilder($resourceName);
     }
-
 }

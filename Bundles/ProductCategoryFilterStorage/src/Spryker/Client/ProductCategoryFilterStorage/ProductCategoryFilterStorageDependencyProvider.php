@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Client\ProductCategoryFilterStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
@@ -29,9 +34,9 @@ class ProductCategoryFilterStorageDependencyProvider extends AbstractDependencyP
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addStorageClient(Container $container): Container
     {
@@ -43,9 +48,9 @@ class ProductCategoryFilterStorageDependencyProvider extends AbstractDependencyP
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addSynchronizationService(Container $container): Container
     {
@@ -57,9 +62,9 @@ class ProductCategoryFilterStorageDependencyProvider extends AbstractDependencyP
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addStore(Container $container): Container
     {

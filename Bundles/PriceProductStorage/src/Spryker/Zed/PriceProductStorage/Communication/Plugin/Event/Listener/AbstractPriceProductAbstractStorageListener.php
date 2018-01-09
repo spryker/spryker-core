@@ -19,7 +19,6 @@ use Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContaine
  */
 class AbstractPriceProductAbstractStorageListener extends AbstractPlugin
 {
-
     /**
      * @param array $productAbstractIds
      *
@@ -71,7 +70,7 @@ class AbstractPriceProductAbstractStorageListener extends AbstractPlugin
     /**
      * @param int $idProductAbstract
      * @param array $prices
-     * @param SpyPriceProductAbstractStorage|null $spyPriceProductStorageEntity
+     * @param \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage|null $spyPriceProductStorageEntity
      *
      * @return void
      */
@@ -128,5 +127,4 @@ class AbstractPriceProductAbstractStorageListener extends AbstractPlugin
     {
         return $this->getFactory()->getStore()->getStoreName();
     }
-
 }

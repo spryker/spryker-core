@@ -1,21 +1,23 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CmsBlockCategoryStorage\Communication;
 
 use Spryker\Zed\CmsBlockCategoryStorage\CmsBlockCategoryStorageDependencyProvider;
-use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Facade\CmsBlockCategoryStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CmsBlockCategoryStorage\CmsBlockCategoryStorageConfig getConfig()
  */
 class CmsBlockCategoryStorageCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
-     * @return CmsBlockCategoryStorageToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -23,7 +25,7 @@ class CmsBlockCategoryStorageCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @return CmsBlockCategoryStorageToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\CmsBlockCategoryStorage\Dependency\Facade\CmsBlockCategoryStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {

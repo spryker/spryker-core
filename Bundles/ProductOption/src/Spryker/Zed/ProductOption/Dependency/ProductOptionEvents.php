@@ -97,7 +97,6 @@ interface ProductOptionEvents
      */
     const ENTITY_SPY_PRODUCT_OPTION_VALUE_DELETE = 'Entity.spy_product_option_value.delete';
 
-
     /**
      * Specification
      * - This events will be used for spy_product_option_value_price entity creation

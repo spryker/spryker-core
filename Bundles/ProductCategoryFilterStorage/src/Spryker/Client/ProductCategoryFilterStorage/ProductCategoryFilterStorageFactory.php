@@ -1,16 +1,19 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Client\ProductCategoryFilterStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductCategoryFilterStorage\Storage\ProductCategoryFilterStorageReader;
-use Spryker\Shared\Kernel\Store;
 
 class ProductCategoryFilterStorageFactory extends AbstractFactory
 {
-
     /**
-     * @return ProductCategoryFilterStorageReader
+     * @return \Spryker\Client\ProductCategoryFilterStorage\Storage\ProductCategoryFilterStorageReader
      */
     public function createProductCategoryFilterStorageReader()
     {
@@ -38,7 +41,7 @@ class ProductCategoryFilterStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return Store
+     * @return \Spryker\Shared\Kernel\Store
      */
     protected function getStore()
     {

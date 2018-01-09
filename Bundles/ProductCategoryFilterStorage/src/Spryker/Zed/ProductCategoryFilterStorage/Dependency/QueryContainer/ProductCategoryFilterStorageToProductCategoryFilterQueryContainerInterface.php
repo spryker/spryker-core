@@ -9,12 +9,10 @@ namespace Spryker\Zed\ProductCategoryFilterStorage\Dependency\QueryContainer;
 
 interface ProductCategoryFilterStorageToProductCategoryFilterQueryContainerInterface
 {
-
     /**
      * @api
      *
      * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
      */
     public function queryProductCategoryFilter();
-
 }

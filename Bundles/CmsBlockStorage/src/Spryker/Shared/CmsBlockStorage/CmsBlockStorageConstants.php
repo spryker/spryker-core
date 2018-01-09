@@ -9,7 +9,6 @@ namespace Spryker\Shared\CmsBlockStorage;
 
 class CmsBlockStorageConstants
 {
-
     /**
      * Specification:
      * - Queue name as used for processing cms block messages
@@ -33,5 +32,4 @@ class CmsBlockStorageConstants
      * @api
      */
     const CMS_BLOCK_RESOURCE_NAME = 'cms_block';
-
 }

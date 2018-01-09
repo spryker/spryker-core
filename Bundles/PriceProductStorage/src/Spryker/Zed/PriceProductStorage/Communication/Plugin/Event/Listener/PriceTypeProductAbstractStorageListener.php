@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class PriceTypeProductAbstractStorageListener extends AbstractPriceProductAbstractStorageListener implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -36,9 +35,8 @@ class PriceTypeProductAbstractStorageListener extends AbstractPriceProductAbstra
 
         if ($eventName === PriceProductEvents::ENTITY_SPY_PRICE_TYPE_CREATE || $eventName === PriceProductEvents::ENTITY_SPY_PRICE_TYPE_UPDATE) {
             $this->publish($productAbstractIds);
-        } elseif($eventName === PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE) {
+        } elseif ($eventName === PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE) {
             $this->unpublish($productAbstractIds);
         }
     }
-
 }

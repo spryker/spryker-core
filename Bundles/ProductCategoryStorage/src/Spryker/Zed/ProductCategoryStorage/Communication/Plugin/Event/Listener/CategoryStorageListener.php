@@ -18,7 +18,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class CategoryStorageListener extends AbstractProductCategoryStorageListener implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -65,5 +64,4 @@ class CategoryStorageListener extends AbstractProductCategoryStorageListener imp
 
         return $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($validEventTransfers);
     }
-
 }

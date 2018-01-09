@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductRelationStorage\Dependency\Client;
 
 class ProductRelationStorageToStorageClientBridge implements ProductRelationStorageToStorageClientInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -34,5 +33,4 @@ class ProductRelationStorageToStorageClientBridge implements ProductRelationStor
     {
         return $this->storageClient->get($key);
     }
-
 }

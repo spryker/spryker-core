@@ -23,8 +23,7 @@ class CmsBlockStorageListener extends AbstractCmsBlockStorageListener implements
         $this->preventTransaction();
         $cmsBlockIds = $this->getFactory()->getEventBehaviourFacade()->getEventTransferIds($eventTransfers);
 
-        if (
-            $eventName === CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_DELETE ||
+        if ($eventName === CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_DELETE ||
             $eventName === CmsBlockEvents::CMS_BLOCK_UNPUBLISH
         ) {
             $this->unpublish($cmsBlockIds);

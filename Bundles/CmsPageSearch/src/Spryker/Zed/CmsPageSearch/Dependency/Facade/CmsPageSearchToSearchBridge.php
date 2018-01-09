@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class CmsPageSearchToSearchBridge implements CmsPageSearchToSearchInterface
 {
-
     /**
      * @var \Spryker\Zed\Search\Business\SearchFacadeInterface
      */
@@ -38,5 +37,4 @@ class CmsPageSearchToSearchBridge implements CmsPageSearchToSearchInterface
     {
         return $this->searchFacade->transformPageMapToDocumentByMapperName($data, $localeTransfer, $mapperName);
     }
-
 }

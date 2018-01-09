@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductImageStorage\Dependency\Service;
 
 class ProductImageStorageToSynchronizationServiceBridge implements ProductImageStorageToSynchronizationServiceInterface
 {
-
     /**
      * @var \Spryker\Service\Synchronization\SynchronizationServiceInterface
      */
@@ -34,5 +33,4 @@ class ProductImageStorageToSynchronizationServiceBridge implements ProductImageS
     {
         return $this->synchronizationService->getStorageKeyBuilder($resourceName);
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class NavigationNodeLocalizedAttributeStorageListener extends AbstractNavigationStorageListener
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -35,5 +34,4 @@ class NavigationNodeLocalizedAttributeStorageListener extends AbstractNavigation
 
         $this->publish($navigationIds);
     }
-
 }

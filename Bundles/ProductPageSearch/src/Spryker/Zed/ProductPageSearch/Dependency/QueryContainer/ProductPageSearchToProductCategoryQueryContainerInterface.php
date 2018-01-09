@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductPageSearch\Dependency\QueryContainer;
 
 interface ProductPageSearchToProductCategoryQueryContainerInterface
 {
-
     /**
      * @param int $idProductAbstract
      * @param array $idsCategoryNode
@@ -22,5 +21,4 @@ interface ProductPageSearchToProductCategoryQueryContainerInterface
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function queryProductCategoryMappings();
-
 }

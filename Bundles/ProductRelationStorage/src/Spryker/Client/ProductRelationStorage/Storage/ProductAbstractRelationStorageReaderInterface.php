@@ -16,5 +16,4 @@ interface ProductAbstractRelationStorageReaderInterface
      * @return \Generated\Shared\Transfer\ProductAbstractRelationStorageTransfer|null
      */
     public function findProductAbstractRelation($idProductAbstract, $locale);
-
 }

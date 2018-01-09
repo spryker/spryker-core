@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -49,5 +48,4 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
 
         return $eventCollection;
     }
-
 }

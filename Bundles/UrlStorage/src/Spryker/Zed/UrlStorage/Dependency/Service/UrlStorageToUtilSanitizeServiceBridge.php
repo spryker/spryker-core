@@ -9,14 +9,13 @@ namespace Spryker\Zed\UrlStorage\Dependency\Service;
 
 class UrlStorageToUtilSanitizeServiceBridge implements UrlStorageToUtilSanitizeServiceInterface
 {
-
     /**
      * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
      */
     protected $utilSanitizeService;
 
     /**
-     * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
+     * @param \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
      */
     public function __construct($utilSanitizeService)
     {
@@ -32,5 +31,4 @@ class UrlStorageToUtilSanitizeServiceBridge implements UrlStorageToUtilSanitizeS
     {
         return $this->utilSanitizeService->arrayFilterRecursive($array);
     }
-
 }

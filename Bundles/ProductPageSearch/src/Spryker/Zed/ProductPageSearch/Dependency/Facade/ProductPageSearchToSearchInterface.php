@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductPageSearchToSearchInterface
 {
-
     /**
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -22,5 +21,4 @@ interface ProductPageSearchToSearchInterface
      * @return array
      */
     public function transformPageMapToDocumentByMapperName(array $data, LocaleTransfer $localeTransfer, $mapperName);
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelSearch\Dependency\Service;
 
 interface ProductLabelSearchToUtilSanitizeServiceInterface
 {
-
     /**
      * @param array $array
      *

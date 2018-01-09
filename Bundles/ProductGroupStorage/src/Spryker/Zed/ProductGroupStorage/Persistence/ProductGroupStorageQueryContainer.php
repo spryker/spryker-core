@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductGroupStorageQueryContainer extends AbstractQueryContainer implements ProductGroupStorageQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -94,5 +93,4 @@ class ProductGroupStorageQueryContainer extends AbstractQueryContainer implement
             ->joinWithSpyProductAbstract()
             ->filterByFkProductAbstract_In($productAbstractIds);
     }
-
 }

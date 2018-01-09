@@ -9,7 +9,6 @@ namespace Spryker\Zed\CategoryStorage\Dependency\QueryContainer;
 
 class CategoryStorageToCategoryQueryContainerBridge implements CategoryStorageToCategoryQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -30,5 +29,4 @@ class CategoryStorageToCategoryQueryContainerBridge implements CategoryStorageTo
     {
         return $this->categoryQueryContainer->queryAllCategoryNodes();
     }
-
 }

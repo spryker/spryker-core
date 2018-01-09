@@ -14,11 +14,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
- * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  */
 class CategoryStoragePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery
      */
@@ -50,5 +49,4 @@ class CategoryStoragePersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(CategoryStorageDependencyProvider::QUERY_CONTAINER_CATEGORY);
     }
-
 }

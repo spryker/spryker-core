@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductImageStorage\Dependency\QueryContainer;
 
 interface ProductImageStorageToProductImageQueryContainerInterface
 {
-
     /**
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
      */
     public function queryProductImageSetToProductImage();
-
 }

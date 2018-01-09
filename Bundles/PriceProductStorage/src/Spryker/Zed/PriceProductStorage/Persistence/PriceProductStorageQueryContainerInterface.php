@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface PriceProductStorageQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -55,7 +54,7 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryAllProductIdsByPriceProductIds(array  $priceProductIds);
+    public function queryAllProductIdsByPriceProductIds(array $priceProductIds);
 
     /**
      * @api
@@ -64,8 +63,7 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryAllProductAbstractIdsByPriceProductIds(array  $priceProductIds);
-
+    public function queryAllProductAbstractIdsByPriceProductIds(array $priceProductIds);
 
     /**
      * @api
@@ -84,5 +82,4 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
      * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorageQuery
      */
     public function queryPriceConcreteStorageByProductIds(array $productConcreteIds);
-
 }

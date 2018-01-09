@@ -9,7 +9,6 @@ namespace Spryker\Client\AvailabilityStorage;
 
 interface AvailabilityStorageClientInterface
 {
-
     /**
      * @api
      *
@@ -27,5 +26,4 @@ interface AvailabilityStorageClientInterface
      * @return \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer
      */
     public function getAvailabilityAbstract($idProductAbstract);
-
 }

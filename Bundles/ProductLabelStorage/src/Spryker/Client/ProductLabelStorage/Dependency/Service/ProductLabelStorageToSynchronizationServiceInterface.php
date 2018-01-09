@@ -9,12 +9,10 @@ namespace Spryker\Client\ProductLabelStorage\Dependency\Service;
 
 interface ProductLabelStorageToSynchronizationServiceInterface
 {
-
     /**
      * @param string $resourceName
      *
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */
     public function getStorageKeyBuilder($resourceName);
-
 }

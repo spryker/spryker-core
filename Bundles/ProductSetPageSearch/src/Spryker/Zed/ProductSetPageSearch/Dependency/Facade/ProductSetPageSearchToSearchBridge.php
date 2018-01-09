@@ -12,7 +12,6 @@ use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
 class ProductSetPageSearchToSearchBridge implements ProductSetPageSearchToSearchInterface
 {
-
     /**
      * @var \Spryker\Zed\Search\Business\SearchFacadeInterface
      */
@@ -51,5 +50,4 @@ class ProductSetPageSearchToSearchBridge implements ProductSetPageSearchToSearch
     {
         return $this->searchFacade->transformPageMapToDocumentByMapperName($data, $localeTransfer, $mapperName);
     }
-
 }

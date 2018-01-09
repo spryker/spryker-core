@@ -9,7 +9,6 @@ namespace Spryker\Client\UrlStorage\Dependency\Client;
 
 class UrlStorageToStorageBridge implements UrlStorageToStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -34,5 +33,4 @@ class UrlStorageToStorageBridge implements UrlStorageToStorageInterface
     {
         return $this->storageClient->get($key);
     }
-
 }

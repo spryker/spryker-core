@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductCategoryStorage\Dependency\QueryContainer;
 
 interface ProductCategoryStorageToCategoryQueryContainerInterface
 {
-
     /**
      * @param int $idNode
      * @param int $idLocale
@@ -42,5 +41,4 @@ interface ProductCategoryStorageToCategoryQueryContainerInterface
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryAllCategoryNodes();
-
 }

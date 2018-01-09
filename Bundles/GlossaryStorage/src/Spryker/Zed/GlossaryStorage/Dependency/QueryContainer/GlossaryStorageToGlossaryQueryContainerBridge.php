@@ -9,7 +9,6 @@ namespace Spryker\Zed\GlossaryStorage\Dependency\QueryContainer;
 
 class GlossaryStorageToGlossaryQueryContainerBridge implements GlossaryStorageToGlossaryQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface
      */
@@ -30,5 +29,4 @@ class GlossaryStorageToGlossaryQueryContainerBridge implements GlossaryStorageTo
     {
         return $this->glossaryQueryContainer->queryTranslations();
     }
-
 }

@@ -20,7 +20,6 @@ use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
  */
 class ProductSetPageMapPlugin extends AbstractPlugin implements NamedPageMapInterface
 {
-
     const FILTERED_KEYS = [
         'locale',
         'store',
@@ -39,9 +38,9 @@ class ProductSetPageMapPlugin extends AbstractPlugin implements NamedPageMapInte
     public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $locale)
     {
         $pageMapTransfer = (new PageMapTransfer())
-            ->setStore($data['store'])
-            ->setLocale($locale->getLocaleName())
-            ->setType('product_set');
+        ->setStore($data['store'])
+        ->setLocale($locale->getLocaleName())
+        ->setType('product_set');
 
         $pageMapBuilder->addIntegerSort($pageMapTransfer, 'weight', $data['weight']);
         $this->mapProductSetStorageTransfer($pageMapTransfer, $pageMapBuilder, $data);
@@ -72,5 +71,4 @@ class ProductSetPageMapPlugin extends AbstractPlugin implements NamedPageMapInte
     {
         return ProductSetPageSearchConstants::PRODUCT_SET_RESOURCE_NAME;
     }
-
 }

@@ -24,7 +24,6 @@ interface ProductPageSearchToEventBehaviorFacadeInterface
      */
     public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
 
-
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param array $columns

@@ -1,14 +1,17 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Client\ProductSetPageSearch;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductSetPageSearch\Dependency\Client\ProductSetPageSearchToProductSetStorageClientInterface;
 use Spryker\Client\ProductSetPageSearch\Plugin\Elasticsearch\Query\ProductSetPageSearchListQueryPlugin;
 
 class ProductSetPageSearchFactory extends AbstractFactory
 {
-
     /**
      * @param int|null $limit
      * @param int|null $offset
@@ -51,11 +54,10 @@ class ProductSetPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return ProductSetPageSearchToProductSetStorageClientInterface
+     * @return \Spryker\Client\ProductSetPageSearch\Dependency\Client\ProductSetPageSearchToProductSetStorageClientInterface
      */
     public function getProductSetStorageClient()
     {
         return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::CLIENT_PRODUCT_SET_STORAGE);
     }
-
 }

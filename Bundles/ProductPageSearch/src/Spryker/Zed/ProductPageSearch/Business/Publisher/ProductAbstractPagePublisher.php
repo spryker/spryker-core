@@ -16,7 +16,6 @@ use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInt
 
 class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface
      */
@@ -112,9 +111,9 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
             $idProduct = $spyProductAbstractLocalizedEntity['fk_product_abstract'];
             $localeName = $spyProductAbstractLocalizedEntity['Locale']['locale_name'];
-            if (isset($spyProductAbstractSearchEntities[$idProduct][$localeName]))  {
+            if (isset($spyProductAbstractSearchEntities[$idProduct][$localeName])) {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, $spyProductAbstractSearchEntities[$idProduct][$localeName], $isRefresh);
-            } elseif(!$isRefresh) {
+            } elseif (!$isRefresh) {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, null, false);
             }
         }
@@ -196,7 +195,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param $pageDataExpanderPluginName
+     * @param string $pageDataExpanderPluginName
      *
      * @throws \Spryker\Zed\ProductPageSearch\Business\Exception\PluginNotFoundException
      *
@@ -247,5 +246,4 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
         return $productAbstractSearchEntitiesByIdAndLocale;
     }
-
 }

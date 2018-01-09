@@ -9,14 +9,13 @@ namespace Spryker\Zed\CmsStorage\Dependency\Service;
 
 class CmsStorageToUtilSanitizeServiceBridge implements CmsStorageToUtilSanitizeServiceInterface
 {
-
     /**
      * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
      */
     protected $utilSanitizeService;
 
     /**
-     * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
+     * @param \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
      */
     public function __construct($utilSanitizeService)
     {
@@ -32,5 +31,4 @@ class CmsStorageToUtilSanitizeServiceBridge implements CmsStorageToUtilSanitizeS
     {
         return $this->utilSanitizeService->arrayFilterRecursive($array);
     }
-
 }

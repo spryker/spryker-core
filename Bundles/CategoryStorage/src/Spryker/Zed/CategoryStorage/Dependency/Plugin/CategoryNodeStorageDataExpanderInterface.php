@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -10,11 +11,12 @@ use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 
 interface CategoryNodeStorageDataExpanderInterface
 {
-
     /**
-     * @param CategoryNodeStorageTransfer $categoryNodeStorageTransfer
+     * @api
      *
-     * @return CategoryNodeStorageTransfer
+     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer $categoryNodeStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
     public function expandCategoryNodeStorageData(CategoryNodeStorageTransfer $categoryNodeStorageTransfer);
 }

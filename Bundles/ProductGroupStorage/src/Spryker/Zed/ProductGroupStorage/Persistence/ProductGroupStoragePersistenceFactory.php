@@ -13,11 +13,10 @@ use Spryker\Zed\ProductGroupStorage\ProductGroupStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductGroupStorage\ProductGroupStorageConfig getConfig()
- * @method \Spryker\Zed\ProductGroupStorage\Persistence\ProductGroupStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductGroupStorage\Persistence\ProductGroupStorageQueryContainerInterface getQueryContainer()
  */
 class ProductGroupStoragePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductGroupStorage\Dependency\QueryContainer\ProductGroupStorageToProductGroupQueryContainerInterface
      */
@@ -41,5 +40,4 @@ class ProductGroupStoragePersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyProductAbstractGroupStorageQuery::create();
     }
-
 }

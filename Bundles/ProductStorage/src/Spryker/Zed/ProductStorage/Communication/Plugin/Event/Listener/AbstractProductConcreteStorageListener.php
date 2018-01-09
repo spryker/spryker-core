@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AbstractProductConcreteStorageListener extends AbstractPlugin
 {
-
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
     const COL_ID_PRODUCT = 'id_product';
@@ -71,7 +70,7 @@ class AbstractProductConcreteStorageListener extends AbstractPlugin
         foreach ($spyProductConcreteLocalizedEntities as $spyProductConcreteLocalizedEntity) {
             $idProduct = $spyProductConcreteLocalizedEntity[static::COL_FK_PRODUCT];
             $localeName = $spyProductConcreteLocalizedEntity['Locale']['locale_name'];
-            if (isset($spyProductConcreteStorageEntities[$idProduct][$localeName]))  {
+            if (isset($spyProductConcreteStorageEntities[$idProduct][$localeName])) {
                 $this->storeDataSet($spyProductConcreteLocalizedEntity, $spyProductConcreteStorageEntities[$idProduct][$localeName]);
             } else {
                 $this->storeDataSet($spyProductConcreteLocalizedEntity);
@@ -133,11 +132,11 @@ class AbstractProductConcreteStorageListener extends AbstractPlugin
     }
 
     /**
-     * @param array $collectItemData
+     * @param array $spyProductConcreteLocalizedEntity
      *
      * @return array
      */
-    protected function getConcreteAttributes($spyProductConcreteLocalizedEntity)
+    protected function getConcreteAttributes(array $spyProductConcreteLocalizedEntity)
     {
         $abstractAttributesData = $this->getFactory()->getProductFacade()->decodeProductAttributes($spyProductConcreteLocalizedEntity['SpyProduct']['SpyProductAbstract']['attributes']);
         $concreteAttributesData = $this->getFactory()->getProductFacade()->decodeProductAttributes($spyProductConcreteLocalizedEntity['SpyProduct']['attributes']);
@@ -237,5 +236,4 @@ class AbstractProductConcreteStorageListener extends AbstractPlugin
     {
         return $this->getFactory()->getStore()->getStoreName();
     }
-
 }

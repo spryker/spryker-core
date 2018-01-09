@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\RawProductAttributesTransfer;
 
 interface ProductPageSearchToProductInterface
 {
-
     /**
      * @param string $attributes
      *
@@ -33,5 +32,4 @@ interface ProductPageSearchToProductInterface
      * @return array
      */
     public function generateAttributePermutations(array $superAttributes, $idProductConcrete);
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductOptionStorageQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -56,5 +55,4 @@ interface ProductOptionStorageQueryContainerInterface extends QueryContainerInte
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
      */
     public function queryProductAbstractIdsByProductValueOptionByIds(array $productOptionValuesIds);
-
 }

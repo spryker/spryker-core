@@ -9,7 +9,6 @@ namespace Spryker\Shared\AvailabilityStorage;
 
 class AvailabilityStorageConstants
 {
-
     /**
      * Specification:
      * - Queue name as used for processing availability messages
@@ -33,5 +32,4 @@ class AvailabilityStorageConstants
      * @api
      */
     const AVAILABILITY_RESOURCE_NAME = 'availability';
-
 }

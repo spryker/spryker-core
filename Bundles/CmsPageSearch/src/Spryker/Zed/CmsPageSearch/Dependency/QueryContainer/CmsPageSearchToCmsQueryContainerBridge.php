@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsPageSearch\Dependency\QueryContainer;
 
 class CmsPageSearchToCmsQueryContainerBridge implements CmsPageSearchToCmsQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -38,5 +37,4 @@ class CmsPageSearchToCmsQueryContainerBridge implements CmsPageSearchToCmsQueryC
     {
         return $this->queryContainer->queryPages();
     }
-
 }

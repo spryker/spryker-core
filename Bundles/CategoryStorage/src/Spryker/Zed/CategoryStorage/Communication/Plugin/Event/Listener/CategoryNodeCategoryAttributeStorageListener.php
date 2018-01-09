@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class CategoryNodeCategoryAttributeStorageListener extends AbstractCategoryNodeStorageListener
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -40,5 +39,4 @@ class CategoryNodeCategoryAttributeStorageListener extends AbstractCategoryNodeS
             $this->publish($categoryNodeIds);
         }
     }
-
 }

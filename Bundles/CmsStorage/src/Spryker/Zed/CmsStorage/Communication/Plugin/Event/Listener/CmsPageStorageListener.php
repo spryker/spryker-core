@@ -12,7 +12,6 @@ use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 
 class CmsPageStorageListener extends AbstractCmsPageStorageListener implements EventBulkHandlerInterface
 {
-
     /**
      * @param array $eventTransfers
      * @param string $eventName
@@ -24,17 +23,14 @@ class CmsPageStorageListener extends AbstractCmsPageStorageListener implements E
         $this->preventTransaction();
         $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if (
-            $eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE ||
+        if ($eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE ||
             $eventName === CmsEvents::CMS_VERSION_PUBLISH
         ) {
             $this->publish($cmsPageIds);
-        } else if (
-            $eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE ||
+        } elseif ($eventName === CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE ||
             $eventName === CmsEvents::CMS_VERSION_UNPUBLISH
         ) {
             $this->unpublish($cmsPageIds);
         }
     }
-
 }

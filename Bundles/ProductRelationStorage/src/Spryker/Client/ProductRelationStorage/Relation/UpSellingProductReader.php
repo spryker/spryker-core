@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -11,30 +11,29 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientInterface;
 use Spryker\Client\ProductRelationStorage\Storage\ProductAbstractRelationStorageReaderInterface;
-use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface;
 use Spryker\Shared\ProductRelation\ProductRelationTypes;
 
 class UpSellingProductReader implements UpSellingProductReaderInterface
 {
     /**
-     * @var ProductAbstractRelationStorageReaderInterface
+     * @var \Spryker\Client\ProductRelationStorage\Storage\ProductAbstractRelationStorageReaderInterface
      */
     protected $productAbstractRelationStorageReader;
 
     /**
-     * @var ProductRelationStorageToProductStorageClientInterface
+     * @var \Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientInterface
      */
     protected $productStorageClient;
 
     /**
-     * @var ProductViewExpanderPluginInterface[]
+     * @var \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
     protected $productViewExpanderPlugins;
 
     /**
-     * @param ProductAbstractRelationStorageReaderInterface $productAbstractRelationStorageReader
-     * @param ProductRelationStorageToProductStorageClientInterface $productStorageClient
-     * @param ProductViewExpanderPluginInterface[] $productViewExpanderPlugins
+     * @param \Spryker\Client\ProductRelationStorage\Storage\ProductAbstractRelationStorageReaderInterface $productAbstractRelationStorageReader
+     * @param \Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientInterface $productStorageClient
+     * @param \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[] $productViewExpanderPlugins
      */
     public function __construct(
         ProductAbstractRelationStorageReaderInterface $productAbstractRelationStorageReader,
@@ -47,10 +46,10 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $localeName
      *
-     * @return ProductViewTransfer[]
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
     public function findUpSellingProducts(QuoteTransfer $quoteTransfer, $localeName)
     {
@@ -68,11 +67,11 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    protected function findSubjectProductAbstractIds(QuoteTransfer $quoteTransfer): array
+    protected function findSubjectProductAbstractIds(QuoteTransfer $quoteTransfer)
     {
         $productAbstractIds = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
@@ -90,12 +89,12 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
     }
 
     /**
-     * @param $localeName
-     * @param $productAbstractIds
+     * @param string $localeName
+     * @param array $productAbstractIds
      *
      * @return array
      */
-    protected function findRelationIds($localeName, $productAbstractIds): array
+    protected function findRelationIds($localeName, array $productAbstractIds)
     {
         $relationIds = [];
         foreach ($productAbstractIds as $idProductAbstract) {
@@ -150,9 +149,9 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
      * @param string $localeName
      * @param array $productStorageData
      *
-     * @return ProductViewTransfer
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    protected function createProductView($localeName, array $productStorageData): ProductViewTransfer
+    protected function createProductView($localeName, array $productStorageData)
     {
         $productViewTransfer = new ProductViewTransfer();
         $productViewTransfer->fromArray($productStorageData, true);

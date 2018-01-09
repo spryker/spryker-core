@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsPageSearch\Communication\Plugin\Event\Listener;
 
+use DateTime;
 use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
@@ -21,7 +22,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class AbstractCmsPageSearchListener extends AbstractPlugin
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -79,7 +79,7 @@ class AbstractCmsPageSearchListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet(SpyCmsPage $cmsPageEntity, SpyCmsPageSearch $cmsPageStorageEntity = null, $localeName)
+    protected function storeDataSet(SpyCmsPage $cmsPageEntity, SpyCmsPageSearch $cmsPageStorageEntity, $localeName)
     {
         if ($cmsPageStorageEntity === null) {
             $cmsPageStorageEntity = new SpyCmsPageSearch();
@@ -102,6 +102,7 @@ class AbstractCmsPageSearchListener extends AbstractPlugin
 
     /**
      * @param \Generated\Shared\Transfer\LocaleCmsPageDataTransfer $cmsPageDataTransfer
+     * @param string $localeName
      *
      * @return array
      */
@@ -151,7 +152,7 @@ class AbstractCmsPageSearchListener extends AbstractPlugin
 
     /**
      * @param \Orm\Zed\Url\Persistence\SpyUrl[] $spyUrls
-     * @param $localeName
+     * @param string $localeName
      *
      * @return string
      */
@@ -167,10 +168,10 @@ class AbstractCmsPageSearchListener extends AbstractPlugin
     }
 
     /**
-     * @param SpyCmsPage $cmsPageEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      * @param string $localeName
      *
-     * @return LocaleCmsPageDataTransfer
+     * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
      */
     protected function getLocalCmsPageDataTransfer(SpyCmsPage $cmsPageEntity, $localeName)
     {
@@ -198,7 +199,7 @@ class AbstractCmsPageSearchListener extends AbstractPlugin
      *
      * @return null|string
      */
-    protected function convertDateTimeToString(\DateTime $dateTime = null)
+    protected function convertDateTimeToString(DateTime $dateTime = null)
     {
         if (!$dateTime) {
             return null;
@@ -206,5 +207,4 @@ class AbstractCmsPageSearchListener extends AbstractPlugin
 
         return $dateTime->format('c');
     }
-
 }

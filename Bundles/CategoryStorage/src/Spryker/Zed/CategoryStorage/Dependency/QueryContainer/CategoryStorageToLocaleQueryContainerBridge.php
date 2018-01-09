@@ -9,7 +9,6 @@ namespace Spryker\Zed\CategoryStorage\Dependency\QueryContainer;
 
 class CategoryStorageToLocaleQueryContainerBridge implements CategoryStorageToLocaleQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
      */
@@ -30,5 +29,4 @@ class CategoryStorageToLocaleQueryContainerBridge implements CategoryStorageToLo
     {
         return $this->localeQueryContainer->queryLocales();
     }
-
 }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CmsStorageToCmsInterface
 {
-
     /**
      * @param string $cmsPageData
      *
@@ -27,5 +26,4 @@ interface CmsStorageToCmsInterface
      * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
      */
     public function extractLocaleCmsPageDataTransfer(CmsVersionDataTransfer $cmsVersionDataTransfer, LocaleTransfer $localeTransfer);
-
 }

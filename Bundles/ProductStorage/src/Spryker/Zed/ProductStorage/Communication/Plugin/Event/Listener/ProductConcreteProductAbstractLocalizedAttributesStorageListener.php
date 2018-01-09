@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductConcreteProductAbstractLocalizedAttributesStorageListener extends AbstractProductConcreteStorageListener implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -42,5 +41,4 @@ class ProductConcreteProductAbstractLocalizedAttributesStorageListener extends A
         $productIds = $this->getQueryContainer()->queryProductIdsByProductAbstractIds($productAbstractIds)->find()->getData();
         $this->publish($productIds);
     }
-
 }

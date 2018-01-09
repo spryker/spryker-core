@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\Customer;
 
-use Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface;
-use Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -52,7 +50,7 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return CustomerSessionGetPluginInterface[]
+     * @return \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface[]
      */
     protected function getCustomerSessionGetPlugins()
     {
@@ -60,7 +58,7 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return CustomerSessionGetPluginInterface[]
+     * @return \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface[]
      */
     protected function getCustomerSessionSetPlugins()
     {
@@ -68,7 +66,7 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return DefaultAddressChangePluginInterface[]
+     * @return \Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface[]
      */
     protected function getDefaultAddressChangePlugins()
     {

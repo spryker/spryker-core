@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CategoryStorageQueryContainer extends AbstractQueryContainer implements CategoryStorageQueryContainerInterface
 {
-
     const ID_CATEGORY_NODE = 'idCategoryNode';
 
     /**
@@ -156,5 +155,4 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::ID_CATEGORY_NODE)
             ->select([static::ID_CATEGORY_NODE]);
     }
-
 }

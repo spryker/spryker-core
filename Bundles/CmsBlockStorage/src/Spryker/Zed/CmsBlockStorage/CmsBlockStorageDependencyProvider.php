@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CmsBlockStorage;
 
 use Spryker\Zed\CmsBlockStorage\Dependency\Facade\CmsBlockStorageToEventBehaviorFacadeBridge;
-use Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface;
 use Spryker\Zed\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilSanitizeServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -38,7 +37,7 @@ class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilSanitizeService(Container $container): Container
+    protected function addUtilSanitizeService(Container $container)
     {
         $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
             return new CmsBlockStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
@@ -52,7 +51,7 @@ class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addEventBehaviourFacade(Container $container): Container
+    protected function addEventBehaviourFacade(Container $container)
     {
         $container[static::FACADE_EVENT_BEHAVIOUR] = function (Container $container) {
             return new CmsBlockStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
@@ -61,9 +60,14 @@ class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    protected function addContentWidgetDataExpanderPlugin($container)
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addContentWidgetDataExpanderPlugin(Container $container)
     {
-        $container[static::PLUGIN_CONTENT_WIDGET_DATA_EXPANDER] = function (Container $container) {
+        $container[static::PLUGIN_CONTENT_WIDGET_DATA_EXPANDER] = function () {
             return $this->getContentWidgetDataExpanderPlugins();
         };
 
@@ -71,7 +75,7 @@ class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return CmsBlockStorageDataExpanderPluginInterface[]
+     * @return \Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface[]
      */
     protected function getContentWidgetDataExpanderPlugins()
     {

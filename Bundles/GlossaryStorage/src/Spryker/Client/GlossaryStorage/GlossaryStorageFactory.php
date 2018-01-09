@@ -8,13 +8,12 @@
 namespace Spryker\Client\GlossaryStorage;
 
 use Spryker\Client\GlossaryStorage\Storage\GlossaryStorage;
-use Spryker\Client\GlossaryStorage\Storage\GlossaryStorageInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class GlossaryStorageFactory extends AbstractFactory
 {
     /**
-     * @return GlossaryStorageInterface
+     * @return \Spryker\Client\GlossaryStorage\Storage\GlossaryStorageInterface
      */
     public function createTranslator()
     {
@@ -39,5 +38,4 @@ class GlossaryStorageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(GlossaryStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
-
 }

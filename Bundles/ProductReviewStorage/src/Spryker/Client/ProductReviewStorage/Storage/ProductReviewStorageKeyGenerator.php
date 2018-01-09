@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -14,18 +14,18 @@ use Spryker\Shared\Kernel\Store;
 class ProductReviewStorageKeyGenerator implements ProductReviewStorageKeyGeneratorInterface
 {
     /**
-     * @var ProductReviewStorageToSynchronizationServiceInterface
+     * @var \Spryker\Client\ProductReviewStorage\Dependency\Service\ProductReviewStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
     /**
-     * @param ProductReviewStorageToSynchronizationServiceInterface $synchronizationService
-     * @param Store $store
+     * @param \Spryker\Client\ProductReviewStorage\Dependency\Service\ProductReviewStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(ProductReviewStorageToSynchronizationServiceInterface $synchronizationService, Store $store)
     {

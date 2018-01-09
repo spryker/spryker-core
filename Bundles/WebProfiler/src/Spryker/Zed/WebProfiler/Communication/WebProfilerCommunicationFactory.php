@@ -1,14 +1,14 @@
 <?php
 
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\WebProfiler\Communication;
 
-use Spryker\Zed\WebProfiler\WebProfilerDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\WebProfiler\WebProfilerDependencyProvider;
 
 /**
  * @method \Spryker\Zed\WebProfiler\WebProfilerConfig getConfig()

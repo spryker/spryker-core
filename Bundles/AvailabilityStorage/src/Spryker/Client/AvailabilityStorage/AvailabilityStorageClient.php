@@ -41,5 +41,4 @@ class AvailabilityStorageClient extends AbstractClient implements AvailabilitySt
             ->createAvailabilityStorageReader()
             ->getAvailabilityAbstract($idProductAbstract);
     }
-
 }

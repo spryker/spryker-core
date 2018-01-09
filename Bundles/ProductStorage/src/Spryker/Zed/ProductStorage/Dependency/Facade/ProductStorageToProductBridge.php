@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\RawProductAttributesTransfer;
 
 class ProductStorageToProductBridge implements ProductStorageToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -55,5 +54,4 @@ class ProductStorageToProductBridge implements ProductStorageToProductInterface
     {
         return $this->productFacade->generateAttributePermutations($superAttributes, $idProductConcrete);
     }
-
 }

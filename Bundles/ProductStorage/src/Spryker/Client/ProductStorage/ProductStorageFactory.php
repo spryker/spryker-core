@@ -8,10 +8,10 @@
 namespace Spryker\Client\ProductStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductStorage\Mapper\ProductVariantExpander;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapper;
-use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader;
+use Spryker\Client\ProductStorage\Mapper\ProductVariantExpander;
 use Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReader;
+use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader;
 
 class ProductStorageFactory extends AbstractFactory
 {

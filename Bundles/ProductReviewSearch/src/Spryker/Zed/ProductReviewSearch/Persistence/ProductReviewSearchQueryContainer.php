@@ -1,10 +1,14 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\ProductReviewSearch\Persistence;
 
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
-use Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -12,12 +16,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductReviewSearchQueryContainer extends AbstractQueryContainer implements ProductReviewSearchQueryContainerInterface
 {
-
     const FIELD_FK_PRODUCT_ABSTRACT = ProductPageSearchTransfer::ID_PRODUCT_ABSTRACT;
     const FIELD_AVERAGE_RATING = ProductPageSearchTransfer::AVERAGE_RATING;
     const FIELD_COUNT = ProductPageSearchTransfer::REVIEW_COUNT;
 
     /**
+     * @api
+     *
      * @param array $productReviewIds
      *
      * @return $this|\Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearchQuery
@@ -31,9 +36,11 @@ class ProductReviewSearchQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * @api
+     *
      * @param array $productReviewIds
      *
-     * @return SpyProductReviewQuery
+     * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
      */
     public function queryProductReviewsByIdProductReviews(array $productReviewIds)
     {
@@ -44,9 +51,11 @@ class ProductReviewSearchQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * @api
+     *
      * @param int $idAbstractProduct
      *
-     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria|SpyProductReviewQuery
+     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
      */
     public function queryProductReviewRatingByIdAbstractProduct($idAbstractProduct)
     {

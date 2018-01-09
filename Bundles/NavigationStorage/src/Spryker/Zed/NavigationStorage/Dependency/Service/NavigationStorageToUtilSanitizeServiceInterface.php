@@ -9,7 +9,6 @@ namespace Spryker\Zed\NavigationStorage\Dependency\Service;
 
 interface NavigationStorageToUtilSanitizeServiceInterface
 {
-
     /**
      * @param array $array
      *

@@ -8,19 +8,16 @@
 namespace Spryker\Zed\NavigationStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\NavigationStorage\Dependency\Service\NavigationStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\NavigationStorage\NavigationStorageDependencyProvider;
 
 /**
- * @method \Spryker\Zed\NavigationStorage\Persistence\NavigationStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\NavigationStorage\Persistence\NavigationStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\NavigationStorage\NavigationStorageConfig getConfig()
  */
 class NavigationStorageCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
-     * @return NavigationStorageToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\NavigationStorage\Dependency\Service\NavigationStorageToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -28,7 +25,7 @@ class NavigationStorageCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return NavigationStorageToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
@@ -50,5 +47,4 @@ class NavigationStorageCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(NavigationStorageDependencyProvider::STORE);
     }
-
 }

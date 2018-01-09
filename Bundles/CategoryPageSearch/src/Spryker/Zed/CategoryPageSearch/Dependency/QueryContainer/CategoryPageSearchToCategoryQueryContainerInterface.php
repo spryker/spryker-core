@@ -9,10 +9,8 @@ namespace Spryker\Zed\CategoryPageSearch\Dependency\QueryContainer;
 
 interface CategoryPageSearchToCategoryQueryContainerInterface
 {
-
     /**
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryAllCategoryNodes();
-
 }

@@ -8,7 +8,6 @@ namespace Spryker\Zed\ProductReviewSearch\Dependency\Service;
 
 class ProductReviewSearchToUtilEncodingBridge implements ProductReviewSearchToUtilEncodingInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -46,5 +45,4 @@ class ProductReviewSearchToUtilEncodingBridge implements ProductReviewSearchToUt
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
-
 }

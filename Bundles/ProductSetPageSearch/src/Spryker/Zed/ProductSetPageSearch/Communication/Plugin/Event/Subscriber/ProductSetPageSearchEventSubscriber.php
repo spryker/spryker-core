@@ -26,7 +26,6 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class ProductSetPageSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -72,5 +71,4 @@ class ProductSetPageSearchEventSubscriber extends AbstractPlugin implements Even
             ->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_UPDATE, new ProductSetPageProductImageSetImageSearchListener())
             ->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_DELETE, new ProductSetPageProductImageSetImageSearchListener());
     }
-
 }

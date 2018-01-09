@@ -13,11 +13,10 @@ use Spryker\Zed\ProductRelationStorage\ProductRelationStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductRelationStorage\ProductRelationStorageConfig getConfig()
- * @method \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainerInterface getQueryContainer()
  */
 class ProductRelationStoragePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductRelationStorage\Dependency\QueryContainer\ProductRelationStorageToProductRelationQueryContainerInterface
      */
@@ -41,5 +40,4 @@ class ProductRelationStoragePersistenceFactory extends AbstractPersistenceFactor
     {
         return SpyProductAbstractRelationStorageQuery::create();
     }
-
 }

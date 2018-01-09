@@ -35,7 +35,7 @@ abstract class AbstractProductReviewSearchListener extends AbstractPlugin implem
     }
 
     /**
-     * @param SpyProductReview[] $productReviewEntities
+     * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview[] $productReviewEntities
      * @param array $spyProductReviewSearchEntities
      *
      * @return void
@@ -44,7 +44,7 @@ abstract class AbstractProductReviewSearchListener extends AbstractPlugin implem
     {
         foreach ($productReviewEntities as $productReviewEntity) {
             $idProductReview = $productReviewEntity->getIdProductReview();
-            if (isset($spyProductReviewSearchEntities[$idProductReview]))  {
+            if (isset($spyProductReviewSearchEntities[$idProductReview])) {
                 $this->storeDataSet($productReviewEntity, $spyProductReviewSearchEntities[$idProductReview]);
             } else {
                 $this->storeDataSet($productReviewEntity, null);
@@ -53,8 +53,8 @@ abstract class AbstractProductReviewSearchListener extends AbstractPlugin implem
     }
 
     /**
-     * @param SpyProductReview $productReviewEntity
-     * @param SpyProductReviewSearch|null $spyProductReviewSearchEntity
+     * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
+     * @param \Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearch|null $spyProductReviewSearchEntity
      *
      * @return void
      */
@@ -82,7 +82,7 @@ abstract class AbstractProductReviewSearchListener extends AbstractPlugin implem
     }
 
     /**
-     * @param SpyProductReview $productReviewEntity
+     * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
      *
      * @return array
      */
@@ -93,7 +93,7 @@ abstract class AbstractProductReviewSearchListener extends AbstractPlugin implem
             ProductReviewIndexMap::ID_PRODUCT_ABSTRACT => $productReviewEntity->getFkProductAbstract(),
             ProductReviewIndexMap::RATING => $productReviewEntity->getRating(),
             ProductReviewIndexMap::SEARCH_RESULT_DATA => $this->getSearchResultData($productReviewEntity),
-            ProductReviewIndexMap::CREATED_AT => $productReviewEntity->getCreatedAt()->format('Y-m-d H:i:s')
+            ProductReviewIndexMap::CREATED_AT => $productReviewEntity->getCreatedAt()->format('Y-m-d H:i:s'),
         ];
     }
 
@@ -122,7 +122,7 @@ abstract class AbstractProductReviewSearchListener extends AbstractPlugin implem
     }
 
     /**
-     * @param SpyProductReview $spyProductReview
+     * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $spyProductReview
      *
      * @return array
      */

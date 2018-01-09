@@ -14,12 +14,12 @@ use Spryker\Shared\Product\ProductConfig;
 class ProductVariantExpander implements ProductVariantExpanderInterface
 {
     /**
-     * @var ProductConcreteStorageReaderInterface
+     * @var \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface
      */
     protected $productConcreteStorageReader;
 
     /**
-     * @param ProductConcreteStorageReaderInterface $productConcreteStorageReader
+     * @param \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface $productConcreteStorageReader
      */
     public function __construct(ProductConcreteStorageReaderInterface $productConcreteStorageReader)
     {
@@ -36,8 +36,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     {
         $productViewTransfer->requireAttributeMap();
 
-        if (
-            count($productViewTransfer->getAttributeMap()->getProductConcreteIds()) === 1 ||
+        if (count($productViewTransfer->getAttributeMap()->getProductConcreteIds()) === 1 ||
             count($productViewTransfer->getAttributeMap()->getSuperAttributes()) === 0
         ) {
             return $this->getFirstProductVariant($productViewTransfer, $locale);
@@ -57,7 +56,7 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     }
 
     /**
-     * @param ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return array
      */
@@ -198,11 +197,11 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     }
 
     /**
-     * @param ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $locale
      * @param array $selectedVariantNode
      *
-     * @return ProductViewTransfer
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     protected function getSelectedProductVariant(ProductViewTransfer $productViewTransfer, $locale, array $selectedVariantNode)
     {
@@ -243,5 +242,4 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
 
         return $selectedVariantNode[ProductConfig::VARIANT_LEAF_NODE_ID];
     }
-    
 }

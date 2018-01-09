@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductSearchConfigStorage\Dependency\Facade;
 
 interface ProductSearchConfigStorageToProductSearchToProductSearchInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer[]
      */
     public function getProductSearchAttributeList();
-
 }

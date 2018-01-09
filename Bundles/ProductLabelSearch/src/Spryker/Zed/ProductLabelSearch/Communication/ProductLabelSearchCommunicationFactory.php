@@ -8,8 +8,6 @@
 namespace Spryker\Zed\ProductLabelSearch\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToEventBehaviorFacadeInterface;
-use Spryker\Zed\ProductLabelSearch\Dependency\Service\ProductLabelSearchToUtilSanitizeServiceInterface;
 use Spryker\Zed\ProductLabelSearch\ProductLabelSearchDependencyProvider;
 
 /**
@@ -17,9 +15,8 @@ use Spryker\Zed\ProductLabelSearch\ProductLabelSearchDependencyProvider;
  */
 class ProductLabelSearchCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
-     * @return ProductLabelSearchToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\ProductLabelSearch\Dependency\Service\ProductLabelSearchToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -27,7 +24,7 @@ class ProductLabelSearchCommunicationFactory extends AbstractCommunicationFactor
     }
 
     /**
-     * @return ProductLabelSearchToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
@@ -49,5 +46,4 @@ class ProductLabelSearchCommunicationFactory extends AbstractCommunicationFactor
     {
         return $this->getProvidedDependency(ProductLabelSearchDependencyProvider::FACADE_PRODUCT_PAGE_SEARCH);
     }
-
 }

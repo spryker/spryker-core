@@ -9,11 +9,10 @@ namespace Spryker\Zed\AvailabilityStorage\Dependency\QueryContainer;
 
 interface AvailabilityStorageToAvailabilityQueryContainerInterface
 {
-
     /**
      * @api
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */
-    public  function queryAllAvailabilityAbstracts();
+    public function queryAllAvailabilityAbstracts();
 }

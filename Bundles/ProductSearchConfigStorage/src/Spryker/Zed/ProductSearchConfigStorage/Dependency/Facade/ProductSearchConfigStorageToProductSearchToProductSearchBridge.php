@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSearchConfigStorage\Dependency\Facade;
 
 class ProductSearchConfigStorageToProductSearchToProductSearchBridge implements ProductSearchConfigStorageToProductSearchToProductSearchInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface
      */
@@ -30,5 +29,4 @@ class ProductSearchConfigStorageToProductSearchToProductSearchBridge implements 
     {
         return $this->productSearchFacade->getProductSearchAttributeList();
     }
-
 }

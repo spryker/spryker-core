@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetPageSearch\Dependency\QueryContainer;
 
 interface ProductSetPageSearchToProductSetQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -23,5 +22,4 @@ interface ProductSetPageSearchToProductSetQueryContainerInterface
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetDataQuery
      */
     public function queryAllProductSetData();
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductConcreteImageSetProductImageStorageListener extends AbstractProductConcreteImageStorageListener implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -35,5 +34,4 @@ class ProductConcreteImageSetProductImageStorageListener extends AbstractProduct
 
         $this->publish($productIds);
     }
-
 }

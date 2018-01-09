@@ -13,12 +13,10 @@ namespace Spryker\Zed\ProductLabelSearch\Dependency\Facade;
  */
 interface ProductLabelSearchToProductLabelInterface
 {
-
     /**
      * @param int $idProductAbstract
      *
      * @return int[]
      */
     public function findLabelIdsByIdProductAbstract($idProductAbstract);
-
 }

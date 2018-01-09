@@ -17,24 +17,24 @@ use Spryker\Shared\ProductGroupStorage\ProductGroupStorageConstants;
 class ProductGroupStorageReader implements ProductGroupStorageReaderInterface
 {
     /**
-     * @var ProductGroupStorageToStorageClientInterface
+     * @var \Spryker\Client\ProductGroupStorage\Dependency\Client\ProductGroupStorageToStorageClientInterface
      */
     protected $storageClient;
 
     /**
-     * @var ProductGroupStorageToSynchronizationServiceInterface
+     * @var \Spryker\Client\ProductGroupStorage\Dependency\Service\ProductGroupStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
     /**
-     * @param ProductGroupStorageToStorageClientInterface $storageClient
-     * @param ProductGroupStorageToSynchronizationServiceInterface $synchronizationService
-     * @param Store $store
+     * @param \Spryker\Client\ProductGroupStorage\Dependency\Client\ProductGroupStorageToStorageClientInterface $storageClient
+     * @param \Spryker\Client\ProductGroupStorage\Dependency\Service\ProductGroupStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         ProductGroupStorageToStorageClientInterface $storageClient,
@@ -50,7 +50,7 @@ class ProductGroupStorageReader implements ProductGroupStorageReaderInterface
      * @param int $idProductAbstract
      * @param string $localeName
      *
-     * @return ProductAbstractGroupStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractGroupStorageTransfer
      */
     public function findProductGroupItemsByIdProductAbstract($idProductAbstract, $localeName)
     {
@@ -63,7 +63,6 @@ class ProductGroupStorageReader implements ProductGroupStorageReaderInterface
         $key = $this->synchronizationService
             ->getStorageKeyBuilder(ProductGroupStorageConstants::PRODUCT_GROUP_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
-
 
         $productGroupData = $this->storageClient->get($key);
         $productAbstractGroupStorageTransfer = new ProductAbstractGroupStorageTransfer;

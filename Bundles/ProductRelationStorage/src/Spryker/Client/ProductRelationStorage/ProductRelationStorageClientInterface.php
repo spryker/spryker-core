@@ -30,7 +30,7 @@ interface ProductRelationStorageClientInterface
      *
      * @api
      *
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]

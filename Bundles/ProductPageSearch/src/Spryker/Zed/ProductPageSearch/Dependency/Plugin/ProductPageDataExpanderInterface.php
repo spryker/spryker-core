@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductPageSearchTransfer;
 
 interface ProductPageDataExpanderInterface
 {
-
     /**
      * @api
      *
@@ -21,5 +20,4 @@ interface ProductPageDataExpanderInterface
      * @return void
      */
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer);
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class CategoryAttributeStorageListener extends AbstractProductCategoryStorageListener implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -58,11 +57,10 @@ class CategoryAttributeStorageListener extends AbstractProductCategoryStorageLis
         $validEventTransfers = $this->getFactory()->getEventBehaviorFacade()->getEventTransfersByModifiedColumns(
             $eventTransfers,
             [
-                SpyCategoryAttributeTableMap::COL_NAME
+                SpyCategoryAttributeTableMap::COL_NAME,
             ]
         );
 
         return $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($validEventTransfers, SpyCategoryAttributeTableMap::COL_FK_CATEGORY);
     }
-
 }

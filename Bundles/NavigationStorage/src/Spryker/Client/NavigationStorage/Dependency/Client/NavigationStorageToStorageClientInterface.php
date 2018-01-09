@@ -9,12 +9,10 @@ namespace Spryker\Client\NavigationStorage\Dependency\Client;
 
 interface NavigationStorageToStorageClientInterface
 {
-
     /**
      * @param string $key
      *
      * @return array
      */
     public function get($key);
-
 }

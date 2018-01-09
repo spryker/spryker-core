@@ -16,7 +16,6 @@ use Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface
 
 class AttributeMapHelper implements AttributeMapHelperInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface
      */
@@ -210,5 +209,4 @@ class AttributeMapHelper implements AttributeMapHelperInterface
 
         return $concreteProductIds;
     }
-
 }

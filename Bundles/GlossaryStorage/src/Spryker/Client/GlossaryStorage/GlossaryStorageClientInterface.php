@@ -9,7 +9,6 @@ namespace Spryker\Client\GlossaryStorage;
 
 interface GlossaryStorageClientInterface
 {
-
     /**
      * @api
      *
@@ -20,5 +19,4 @@ interface GlossaryStorageClientInterface
      * @return string
      */
     public function translate($id, $localeName, array $parameters = []);
-
 }

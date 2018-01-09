@@ -9,7 +9,6 @@ namespace Spryker\Shared\CategoryStorage;
 
 class CategoryStorageConstants
 {
-
     /**
      * Specification:
      * - Queue name as used for processing cms block messages
@@ -34,7 +33,6 @@ class CategoryStorageConstants
      */
     const CATEGORY_NODE_RESOURCE_NAME = 'category_node';
 
-
     /**
      * Specification:
      * - Resource name, this will use for key generating
@@ -42,5 +40,4 @@ class CategoryStorageConstants
      * @api
      */
     const CATEGORY_TREE_RESOURCE_NAME = 'category_tree';
-
 }

@@ -24,7 +24,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AbstractProductRelationStorageListener extends AbstractPlugin
 {
-
     /**
      * @param array $productAbstractIds
      *
@@ -47,6 +46,7 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
     /**
      * @param array $spyProductAbstractLocalizedEntities
      * @param array $spyProductAbstractRelationStorageEntities
+     * @param array $productRelations
      *
      * @return void
      */
@@ -55,7 +55,7 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
         foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
             $idProduct = $spyProductAbstractLocalizedEntity->getFkProductAbstract();
             $localeName = $spyProductAbstractLocalizedEntity->getLocale()->getLocaleName();
-            if (isset($spyProductAbstractRelationStorageEntities[$idProduct][$localeName]))  {
+            if (isset($spyProductAbstractRelationStorageEntities[$idProduct][$localeName])) {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, $spyProductAbstractRelationStorageEntities[$idProduct][$localeName], $productRelations);
             } else {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, null, $productRelations);
@@ -70,7 +70,7 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, SpyProductAbstractRelationStorage $spyProductAbstractRelationStorageEntity = null, array $productRelations)
+    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, SpyProductAbstractRelationStorage $spyProductAbstractRelationStorageEntity, array $productRelations)
     {
         if ($spyProductAbstractRelationStorageEntity === null) {
             $spyProductAbstractRelationStorageEntity = new SpyProductAbstractRelationStorage();
@@ -213,5 +213,4 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
     {
         return $this->getFactory()->getStore()->getStoreName();
     }
-
 }

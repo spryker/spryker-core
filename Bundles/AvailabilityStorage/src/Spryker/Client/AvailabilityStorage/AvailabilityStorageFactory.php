@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 class AvailabilityStorageFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\AvailabilityStorage\Storage\AvailabilityStorageReaderInterface
      */
@@ -36,5 +35,4 @@ class AvailabilityStorageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(AvailabilityStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
-
 }

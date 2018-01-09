@@ -27,20 +27,20 @@ class LabelDictionary implements LabelDictionaryInterface
     protected $dictionaryKeyStrategy;
 
     /**
-     * @var ProductLabelStorageToSynchronizationServiceInterface
+     * @var \Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
     /**
      * @param \Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientInterface $storageClient
-     * @param ProductLabelStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductLabelStorage\Storage\Dictionary\KeyStrategyInterface $dictionaryKeyStrategy
-     * @param Store $store
+     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         ProductLabelStorageToStorageClientInterface $storageClient,
@@ -110,7 +110,7 @@ class LabelDictionary implements LabelDictionaryInterface
     /**
      * @param string $localeName
      *
-     * @return ProductLabelDictionaryStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer
      */
     protected function readLabelDictionary($localeName)
     {

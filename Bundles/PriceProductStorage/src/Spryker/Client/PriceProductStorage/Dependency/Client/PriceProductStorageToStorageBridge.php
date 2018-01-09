@@ -9,7 +9,6 @@ namespace Spryker\Client\PriceProductStorage\Dependency\Client;
 
 class PriceProductStorageToStorageBridge implements PriceProductStorageToStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -34,5 +33,4 @@ class PriceProductStorageToStorageBridge implements PriceProductStorageToStorage
     {
         return $this->storageClient->get($key);
     }
-
 }

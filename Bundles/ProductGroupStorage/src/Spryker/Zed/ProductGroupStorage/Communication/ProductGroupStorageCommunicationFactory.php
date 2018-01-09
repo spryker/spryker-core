@@ -8,19 +8,16 @@
 namespace Spryker\Zed\ProductGroupStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductGroupStorage\Dependency\Facade\ProductGroupStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\ProductGroupStorage\Dependency\Service\ProductGroupStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\ProductGroupStorage\ProductGroupStorageDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductGroupStorage\Persistence\ProductGroupStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductGroupStorage\Persistence\ProductGroupStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductGroupStorage\ProductGroupStorageConfig getConfig()
  */
 class ProductGroupStorageCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
-     * @return ProductGroupStorageToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\ProductGroupStorage\Dependency\Service\ProductGroupStorageToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -28,7 +25,7 @@ class ProductGroupStorageCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return ProductGroupStorageToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\ProductGroupStorage\Dependency\Facade\ProductGroupStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
@@ -42,5 +39,4 @@ class ProductGroupStorageCommunicationFactory extends AbstractCommunicationFacto
     {
         return $this->getProvidedDependency(ProductGroupStorageDependencyProvider::STORE);
     }
-
 }

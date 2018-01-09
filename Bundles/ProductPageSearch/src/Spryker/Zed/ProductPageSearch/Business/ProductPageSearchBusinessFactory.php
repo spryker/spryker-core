@@ -16,11 +16,10 @@ use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
- * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  */
 class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductPageSearch\Business\Publisher\ProductAbstractPagePublisherInterface
      */
@@ -106,5 +105,4 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER);
     }
-
 }

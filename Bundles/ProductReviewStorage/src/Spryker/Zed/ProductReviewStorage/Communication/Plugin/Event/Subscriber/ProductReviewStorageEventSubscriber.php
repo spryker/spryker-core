@@ -19,7 +19,6 @@ use Spryker\Zed\ProductReviewStorage\Communication\Plugin\Event\Listener\Product
  */
 class ProductReviewStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -38,5 +37,4 @@ class ProductReviewStorageEventSubscriber extends AbstractPlugin implements Even
 
         return $eventCollection;
     }
-
 }

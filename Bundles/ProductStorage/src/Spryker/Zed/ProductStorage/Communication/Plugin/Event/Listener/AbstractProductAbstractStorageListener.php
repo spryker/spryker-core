@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AbstractProductAbstractStorageListener extends AbstractPlugin
 {
-
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
     const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
@@ -65,7 +64,7 @@ class AbstractProductAbstractStorageListener extends AbstractPlugin
         foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
             $idProduct = $spyProductAbstractLocalizedEntity['SpyProductAbstract'][static::COL_ID_PRODUCT_ABSTRACT];
             $localeName = $spyProductAbstractLocalizedEntity['Locale']['locale_name'];
-            if (isset($spyProductAbstractStorageEntities[$idProduct][$localeName]))  {
+            if (isset($spyProductAbstractStorageEntities[$idProduct][$localeName])) {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, $spyProductAbstractStorageEntities[$idProduct][$localeName]);
             } else {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity);
@@ -120,6 +119,7 @@ class AbstractProductAbstractStorageListener extends AbstractPlugin
 
     /**
      * @param array $spyProductAbstractLocalizedEntity
+     * @param \Generated\Shared\Transfer\ProductAbstractStorageTransfer|null $productStorageTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
      */
@@ -237,5 +237,4 @@ class AbstractProductAbstractStorageListener extends AbstractPlugin
     {
         return $this->getFactory()->getStore()->getStoreName();
     }
-
 }

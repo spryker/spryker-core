@@ -18,7 +18,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 abstract class AbstractGlossaryTranslationStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -111,5 +110,4 @@ abstract class AbstractGlossaryTranslationStorageListener extends AbstractPlugin
 
         return $glossaryStorageEntitiesByIdAndLocale;
     }
-
 }

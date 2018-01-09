@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Client\ProductSetPageSearch;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
@@ -31,7 +36,7 @@ class ProductSetPageSearchDependencyProvider extends AbstractDependencyProvider
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function provideSearchClient(Container $container)
     {
@@ -45,7 +50,7 @@ class ProductSetPageSearchDependencyProvider extends AbstractDependencyProvider
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function provideProductSetListResultFormatterPlugins(Container $container)
     {
@@ -59,7 +64,7 @@ class ProductSetPageSearchDependencyProvider extends AbstractDependencyProvider
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function provideProductSetListQueryExpanderPlugins(Container $container)
     {
@@ -71,9 +76,9 @@ class ProductSetPageSearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function provideProductSetStorageClient(Container $container)
     {

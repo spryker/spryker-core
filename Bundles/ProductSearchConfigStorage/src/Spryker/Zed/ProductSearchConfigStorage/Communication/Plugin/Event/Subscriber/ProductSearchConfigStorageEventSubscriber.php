@@ -19,7 +19,6 @@ use Spryker\Zed\ProductSearchConfigStorage\Communication\Plugin\Event\Listener\P
  */
 class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -41,5 +40,4 @@ class ProductSearchConfigStorageEventSubscriber extends AbstractPlugin implement
 
         return $eventCollection;
     }
-
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductConcreteProductAbstractUrlStorageListener extends AbstractProductConcreteStorageListener implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -61,5 +60,4 @@ class ProductConcreteProductAbstractUrlStorageListener extends AbstractProductCo
             SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT
         );
     }
-
 }

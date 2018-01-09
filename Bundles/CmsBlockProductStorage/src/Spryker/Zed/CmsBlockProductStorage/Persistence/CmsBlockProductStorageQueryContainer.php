@@ -1,9 +1,13 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CmsBlockProductStorage\Persistence;
 
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
-use Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -14,9 +18,11 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
     const NAME = 'name';
 
     /**
+     * @api
+     *
      * @param array $productIds
      *
-     * @return $this|SpyCmsBlockProductStorageQuery
+     * @return $this|\Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorageQuery
      */
     public function queryCmsBlockProductStorageByIds(array $productIds)
     {
@@ -26,6 +32,8 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * @api
+     *
      * @param array $productIds
      *
      * @return $this|\Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
