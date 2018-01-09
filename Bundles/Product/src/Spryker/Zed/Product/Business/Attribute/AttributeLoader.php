@@ -55,7 +55,7 @@ class AttributeLoader implements AttributeLoaderInterface
     {
         $productAbstractEntity = $this->getProductAbstractEntity($productAbstractTransfer);
 
-        return $this->getCombinedAbstractAttributeKeysForEntity($productAbstractEntity);
+        return $this->getCombinedAbstractAttributeKeysForEntity($productAbstractEntity, $localeTransfer);
     }
 
     /**
@@ -81,7 +81,7 @@ class AttributeLoader implements AttributeLoaderInterface
      *
      * @return array
      */
-    protected function getCombinedAbstractAttributeKeysForEntity(SpyProductAbstract $productAbstractEntity, LocaleTransfer $localeTransfer = null)
+    protected function getCombinedAbstractAttributeKeysForEntity(SpyProductAbstract $productAbstractEntity, LocaleTransfer $localeTransfer)
     {
         $rawProductAttributesTransfer = new RawProductAttributesTransfer();
         $rawProductAttributesTransfer->setAbstractAttributes($this->getAbstractAttributes($productAbstractEntity));
