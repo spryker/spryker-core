@@ -9,5 +9,9 @@ namespace Spryker\Shared\WebProfiler;
 
 interface WebProfilerConstants
 {
+    /**
+     * Specification:
+     * - Enable/disable web profiler.
+     */
     const ENABLE_WEB_PROFILER = 'WEBPROFILER:ENABLE_WEB_PROFILER';
 }
