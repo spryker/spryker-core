@@ -11,7 +11,6 @@ use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 
 interface WidgetFactoryInterface
 {
-
     /**
      * @param string $widgetClassName
      * @param array $arguments
@@ -21,5 +20,4 @@ interface WidgetFactoryInterface
      * @return \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface
      */
     public function build(string $widgetClassName, array $arguments = []): WidgetPluginInterface;
-
 }

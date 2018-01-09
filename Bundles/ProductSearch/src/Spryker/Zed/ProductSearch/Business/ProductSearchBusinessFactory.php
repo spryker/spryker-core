@@ -303,5 +303,4 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_EVENT);
     }
-
 }

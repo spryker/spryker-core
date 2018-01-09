@@ -186,9 +186,10 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 
     /**
      * @param string $vendorName
-     * @param SplFileInfo $composerJsonFile
+     * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
      *
      * @throws \RuntimeException
+     * @throws \Spryker\Zed\Development\Business\Exception\DependencyTree\InvalidComposerJsonException
      *
      * @return void
      */

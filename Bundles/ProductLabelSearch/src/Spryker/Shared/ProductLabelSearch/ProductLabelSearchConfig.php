@@ -9,7 +9,5 @@ namespace Spryker\Shared\ProductLabelSearch;
 
 interface ProductLabelSearchConfig
 {
-
     const PLUGIN_PRODUCT_LABEL_DATA = 'PLUGIN_PRODUCT_LABEL_DATA';
-
 }

@@ -24,6 +24,6 @@ class ServerProcessorPlugin extends AbstractPlugin implements LogProcessorPlugin
      */
     public function __invoke(array $data)
     {
-        return $this->getFactory()->createServerProcessor()->__invoke($data);
+        return $this->getFactory()->createServerProcessorPublic()->__invoke($data);
     }
 }

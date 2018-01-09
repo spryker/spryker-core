@@ -9,7 +9,6 @@ namespace Spryker\Yves\Kernel\Widget;
 
 interface WidgetContainerRegistryInterface
 {
-
     /**
      * @param \Spryker\Yves\Kernel\Widget\WidgetContainerInterface $widgetContainer
      *
@@ -26,5 +25,4 @@ interface WidgetContainerRegistryInterface
      * @return \Spryker\Yves\Kernel\Widget\WidgetContainerInterface|null
      */
     public function getLastAdded();
-
 }

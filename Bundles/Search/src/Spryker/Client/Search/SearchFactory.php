@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Search;
 
-use Elastica\Client;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilder;

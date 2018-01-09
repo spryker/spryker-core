@@ -10,12 +10,11 @@ namespace Spryker\Client\CatalogPriceProductConnector\Plugin\ConfigTransferBuild
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Catalog\Dependency\Plugin\FacetConfigTransferBuilderPluginInterface;
-use Spryker\Client\CatalogPriceProductConnector\CatalogPriceProductConnectorFactory;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\Search\SearchConfig;
 
 /**
- * @method CatalogPriceProductConnectorFactory getFactory()
+ * @method \Spryker\Client\CatalogPriceProductConnector\CatalogPriceProductConnectorFactory getFactory()
  */
 class PriceFacetConfigTransferBuilderPlugin extends AbstractPlugin implements FacetConfigTransferBuilderPluginInterface
 {

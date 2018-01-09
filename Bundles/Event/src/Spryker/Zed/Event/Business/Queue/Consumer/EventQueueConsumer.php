@@ -14,10 +14,10 @@ use Spryker\Zed\Event\Business\Logger\EventLoggerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
 use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
+use Throwable;
 
 class EventQueueConsumer implements EventQueueConsumerInterface
 {
-
     const EVENT_TRANSFERS = 'eventTransfers';
     const EVENT_MESSAGES = 'eventMessages';
     /**
@@ -116,7 +116,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
         foreach ($eventItems as $eventName => $eventItem) {
             try {
                 $listener->handleBulk($eventItem[static::EVENT_TRANSFERS], $eventName);
-            } catch (\Throwable $throwable) {
+            } catch (Throwable $throwable) {
                 $errorMessage = sprintf(
                     'Failed to handle "%s" for listener "%s". Exception: "%s", "%s".',
                     $eventName,
@@ -234,7 +234,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     }
 
     /**
-     * @param QueueReceiveMessageTransfer $queueMessageTransfer
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
      * @param string $errorMessage
      *
      * @return void

@@ -63,10 +63,10 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @api
      *
-     * @param OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      * @param int $idCustomer
      *
-     * @return OrderListTransfer
+     * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getPaginatedCustomerOrders(OrderListTransfer $orderListTransfer, $idCustomer)
     {

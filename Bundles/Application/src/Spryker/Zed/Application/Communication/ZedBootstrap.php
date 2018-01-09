@@ -138,7 +138,6 @@ class ZedBootstrap
     }
 
     /**
-     *
      * @return void
      */
     protected function registerApiServiceProvider()
@@ -149,7 +148,6 @@ class ZedBootstrap
     }
 
     /**
-     *
      * @return \Silex\ServiceProviderInterface[]
      */
     protected function getApiServiceProvider()

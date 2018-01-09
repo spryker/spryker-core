@@ -9,7 +9,6 @@ namespace Spryker\Yves\Kernel\Widget;
 
 class WidgetCollection implements WidgetContainerInterface
 {
-
     /**
      * @var \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface[]
      */
@@ -22,6 +21,7 @@ class WidgetCollection implements WidgetContainerInterface
     {
         $this->addWidgets($widgetPlugins);
     }
+
     /**
      * @param string $name
      *
@@ -65,5 +65,4 @@ class WidgetCollection implements WidgetContainerInterface
         // TODO: make sure $widgetClass implements WidgetPluginInterface
         $this->widgets[$widgetClass::getName()] = $widgetClass;
     }
-
 }

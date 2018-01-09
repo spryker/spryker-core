@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -55,7 +56,6 @@ interface CmsBlockCategoryConnectorEvents
      * @api
      */
     const ENTITY_SPY_CMS_BLOCK_CATEGORY_POSITION_CREATE = 'Entity.spy_cms_block_category_position.create';
-
 
     /**
      * Specification

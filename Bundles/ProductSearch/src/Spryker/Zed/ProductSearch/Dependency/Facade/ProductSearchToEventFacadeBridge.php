@@ -8,17 +8,16 @@
 namespace Spryker\Zed\ProductSearch\Dependency\Facade;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
-use Spryker\Zed\Event\Business\EventFacadeInterface;
 
 class ProductSearchToEventFacadeBridge implements ProductSearchToEventFacadeInterface
 {
     /**
-     * @var EventFacadeInterface
+     * @var \Spryker\Zed\Event\Business\EventFacadeInterface
      */
     protected $eventFacade;
 
     /**
-     * @param EventFacadeInterface $eventFacade
+     * @param \Spryker\Zed\Event\Business\EventFacadeInterface $eventFacade
      */
     public function __construct($eventFacade)
     {

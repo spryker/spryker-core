@@ -10,11 +10,10 @@ namespace Spryker\Client\CatalogPriceProductConnector\Plugin\ConfigTransferBuild
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\SortConfigTransfer;
 use Spryker\Client\Catalog\Dependency\Plugin\SortConfigTransferBuilderPluginInterface;
-use Spryker\Client\CatalogPriceProductConnector\CatalogPriceProductConnectorFactory;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
- * @method CatalogPriceProductConnectorFactory getFactory()
+ * @method \Spryker\Client\CatalogPriceProductConnector\CatalogPriceProductConnectorFactory getFactory()
  */
 class DescendingPriceSortConfigTransferBuilderPlugin extends AbstractPlugin implements SortConfigTransferBuilderPluginInterface
 {

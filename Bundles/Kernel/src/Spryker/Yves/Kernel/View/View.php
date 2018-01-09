@@ -12,7 +12,6 @@ use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 
 class View implements ViewInterface, WidgetContainerInterface
 {
-
     /**
      * @var string
      */
@@ -138,5 +137,4 @@ class View implements ViewInterface, WidgetContainerInterface
         // TODO: customize exception
         throw new Exception('This is a ready only object.');
     }
-
 }

@@ -324,6 +324,8 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
      * @param string $url
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer

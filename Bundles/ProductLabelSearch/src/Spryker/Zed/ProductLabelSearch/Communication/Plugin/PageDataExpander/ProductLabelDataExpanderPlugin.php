@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelSearch\Communication\Plugin\PageDataExpander;
 
+use DateTime;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -18,7 +19,6 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
  */
 class ProductLabelDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
-
     /**
      * @param array $productData
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
@@ -45,7 +45,7 @@ class ProductLabelDataExpanderPlugin extends AbstractPlugin implements ProductPa
     }
 
     /**
-     * @param SpyProductLabel $spyProductLabel
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $spyProductLabel
      *
      * @return bool
      */
@@ -58,7 +58,7 @@ class ProductLabelDataExpanderPlugin extends AbstractPlugin implements ProductPa
     }
 
     /**
-     * @param SpyProductLabel $productLabel
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabel
      *
      * @return bool
      */
@@ -68,7 +68,7 @@ class ProductLabelDataExpanderPlugin extends AbstractPlugin implements ProductPa
             return true;
         }
 
-        $now = new \DateTime();
+        $now = new DateTime();
 
         if ($now < $productLabel->getValidFrom()) {
             return false;
@@ -78,7 +78,7 @@ class ProductLabelDataExpanderPlugin extends AbstractPlugin implements ProductPa
     }
 
     /**
-     * @param SpyProductLabel $productLabel
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel $productLabel
      *
      * @return bool
      */
@@ -88,7 +88,7 @@ class ProductLabelDataExpanderPlugin extends AbstractPlugin implements ProductPa
             return true;
         }
 
-        $now = new \DateTime();
+        $now = new DateTime();
 
         if ($productLabel->getValidTo() < $now) {
             return false;
@@ -96,5 +96,4 @@ class ProductLabelDataExpanderPlugin extends AbstractPlugin implements ProductPa
 
         return true;
     }
-
 }
