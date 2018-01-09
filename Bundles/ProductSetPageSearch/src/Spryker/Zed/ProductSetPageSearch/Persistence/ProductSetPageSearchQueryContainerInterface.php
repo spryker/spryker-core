@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductSetPageSearchQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -24,11 +23,11 @@ interface ProductSetPageSearchQueryContainerInterface extends QueryContainerInte
     /**
      * @api
      *
-     * @param $productSetIds
+     * @param array $productSetIds
      *
      * @return \Orm\Zed\ProductSetPageSearch\Persistence\SpyProductSetPageSearchQuery
      */
-    public function queryProductSetPageSearchPageByIds($productSetIds);
+    public function queryProductSetPageSearchPageByIds(array $productSetIds);
 
     /**
      * @api
@@ -47,5 +46,4 @@ interface ProductSetPageSearchQueryContainerInterface extends QueryContainerInte
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
      */
     public function queryProductSetIdsByProductImageSetToProductImageIds(array $productImageSetToProductImageIds);
-
 }

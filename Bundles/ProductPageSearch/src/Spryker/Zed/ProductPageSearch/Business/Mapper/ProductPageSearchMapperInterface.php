@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductPageSearchTransfer;
 
 interface ProductPageSearchMapperInterface
 {
-
     /**
      * @param array $productAbstractLocalizedData
      *
@@ -32,5 +31,4 @@ interface ProductPageSearchMapperInterface
      * @return array
      */
     public function mapToSearchData(ProductPageSearchTransfer $productPageSearchTransfer);
-
 }

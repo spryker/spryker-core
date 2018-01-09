@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 class CmsBlockStorageFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\CmsBlockStorage\Storage\CmsBlockStorageInterface
      */
@@ -36,5 +35,4 @@ class CmsBlockStorageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CmsBlockStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
-
 }

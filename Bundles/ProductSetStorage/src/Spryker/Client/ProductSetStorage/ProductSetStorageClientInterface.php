@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductSetStorage;
 
 interface ProductSetStorageClientInterface
 {
-
     /**
      * Specification:
      * - Maps raw product set storage data to transfer object.

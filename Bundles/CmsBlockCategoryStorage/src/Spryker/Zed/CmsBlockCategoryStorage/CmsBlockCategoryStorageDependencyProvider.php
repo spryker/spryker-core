@@ -1,16 +1,20 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CmsBlockCategoryStorage;
 
-use Spryker\Zed\CmsBlockCategoryStorage\Dependency\QueryContainer\CmsBlockCategoryStorageToCmsBlockCategoryConnectorQueryContainerBridge;
 use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Facade\CmsBlockCategoryStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\CmsBlockCategoryStorage\Dependency\QueryContainer\CmsBlockCategoryStorageToCmsBlockCategoryConnectorQueryContainerBridge;
 use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToUtilSanitizeServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CmsBlockCategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const QUERY_CONTAINER_CMS_BLOCK_CATEGORY_CONNECTOR = 'QUERY_CONTAINER_CMS_BLOCK_CATEGORY_CONNECTOR';
@@ -46,5 +50,4 @@ class CmsBlockCategoryStorageDependencyProvider extends AbstractBundleDependency
 
         return $container;
     }
-
 }

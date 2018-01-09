@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class UrlStorageClient extends AbstractClient implements UrlStorageClientInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ class UrlStorageClient extends AbstractClient implements UrlStorageClientInterfa
             ->createUrlStorageReader()
             ->matchUrl($url, $localeName);
     }
-
 }

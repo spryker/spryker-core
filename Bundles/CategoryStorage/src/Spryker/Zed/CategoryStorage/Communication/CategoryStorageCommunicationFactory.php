@@ -8,19 +8,16 @@
 namespace Spryker\Zed\CategoryStorage\Communication;
 
 use Spryker\Zed\CategoryStorage\CategoryStorageDependencyProvider;
-use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
  */
 class CategoryStorageCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
-     * @return CategoryStorageToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -28,7 +25,7 @@ class CategoryStorageCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CategoryStorageToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
@@ -42,5 +39,4 @@ class CategoryStorageCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(CategoryStorageDependencyProvider::STORE);
     }
-
 }

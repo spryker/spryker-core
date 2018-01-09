@@ -1,21 +1,24 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\ProductCategoryFilterStorage\Persistence;
 
 use Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductCategoryFilterStorage\Dependency\QueryContainer\ProductCategoryFilterStorageToProductCategoryFilterQueryContainerInterface;
 use Spryker\Zed\ProductCategoryFilterStorage\ProductCategoryFilterStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductCategoryFilterStorage\ProductCategoryFilterStorageConfig getConfig()
- * @method \Spryker\Zed\ProductCategoryFilterStorage\Persistence\ProductCategoryFilterStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductCategoryFilterStorage\Persistence\ProductCategoryFilterStorageQueryContainerInterface getQueryContainer()
  */
 class ProductCategoryFilterStoragePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
-     * @return SpyProductCategoryFilterStorageQuery
+     * @return \Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorageQuery
      */
     public function createSpyProductCategoryFilterStorageQuery()
     {
@@ -23,7 +26,7 @@ class ProductCategoryFilterStoragePersistenceFactory extends AbstractPersistence
     }
 
     /**
-     * @return ProductCategoryFilterStorageToProductCategoryFilterQueryContainerInterface
+     * @return \Spryker\Zed\ProductCategoryFilterStorage\Dependency\QueryContainer\ProductCategoryFilterStorageToProductCategoryFilterQueryContainerInterface
      */
     public function getProductCategoryFilterQuery()
     {

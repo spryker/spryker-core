@@ -9,12 +9,10 @@ namespace Spryker\Client\GlossaryStorage\Dependency\Client;
 
 interface GlossaryStorageToStorageClientInterface
 {
-
     /**
      * @param string $key
      *
      * @return array
      */
     public function get($key);
-
 }

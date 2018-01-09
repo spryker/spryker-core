@@ -1,14 +1,12 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\ProductImageStorage\Expander;
 
-use Generated\Shared\Transfer\ProductImageSetStorageTransfer;
-use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductImageStorage\Storage\ProductAbstractImageStorageReaderInterface;
 use Spryker\Client\ProductImageStorage\Storage\ProductConcreteImageStorageReaderInterface;
@@ -17,18 +15,18 @@ use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
 class ProductViewImageExpander implements ProductViewImageExpanderInterface
 {
     /**
-     * @var ProductAbstractImageStorageReaderInterface
+     * @var \Spryker\Client\ProductImageStorage\Storage\ProductAbstractImageStorageReaderInterface
      */
     protected $productAbstractImageSetReader;
 
     /**
-     * @var ProductConcreteImageStorageReaderInterface
+     * @var \Spryker\Client\ProductImageStorage\Storage\ProductConcreteImageStorageReaderInterface
      */
     protected $productConcreteImageSetReader;
 
     /**
-     * @param ProductAbstractImageStorageReaderInterface $productAbstractImageSetReader
-     * @param ProductConcreteImageStorageReaderInterface $productConcreteImageSetReader
+     * @param \Spryker\Client\ProductImageStorage\Storage\ProductAbstractImageStorageReaderInterface $productAbstractImageSetReader
+     * @param \Spryker\Client\ProductImageStorage\Storage\ProductConcreteImageStorageReaderInterface $productConcreteImageSetReader
      */
     public function __construct(ProductAbstractImageStorageReaderInterface $productAbstractImageSetReader, ProductConcreteImageStorageReaderInterface $productConcreteImageSetReader)
     {
@@ -37,11 +35,11 @@ class ProductViewImageExpander implements ProductViewImageExpanderInterface
     }
 
     /**
-     * @param ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $locale
      * @param string $imageSetName
      *
-     * @return ProductViewTransfer
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     public function expandProductViewImageData(ProductViewTransfer $productViewTransfer, $locale, $imageSetName = ProductImageStorageConfig::DEFAULT_IMAGE_SET_NAME)
     {
@@ -55,11 +53,11 @@ class ProductViewImageExpander implements ProductViewImageExpanderInterface
     }
 
     /**
-     * @param ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $locale
      * @param string $imageSetName
      *
-     * @return ProductImageStorageTransfer[]|null
+     * @return \Generated\Shared\Transfer\ProductImageStorageTransfer[]|null
      */
     protected function getImages(ProductViewTransfer $productViewTransfer, $locale, $imageSetName)
     {
@@ -81,10 +79,10 @@ class ProductViewImageExpander implements ProductViewImageExpanderInterface
     }
 
     /**
-     * @param ProductImageSetStorageTransfer[] $imageSetStorageCollection
+     * @param \Generated\Shared\Transfer\ProductImageSetStorageTransfer[] $imageSetStorageCollection
      * @param string $imageSetName
      *
-     * @return ProductImageStorageTransfer[]|null
+     * @return \Generated\Shared\Transfer\ProductImageStorageTransfer[]|null
      */
     protected function getImageSetImages($imageSetStorageCollection, $imageSetName)
     {

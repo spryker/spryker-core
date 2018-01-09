@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface;
-use Spryker\Shared\ProductOptionStorage\ProductOptionStorageConfig;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\ProductOptionStorage\ProductOptionStorageConfig;
 
 class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
 {
@@ -28,20 +28,20 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     protected $synchronizationService;
 
     /**
-     * @var ValuePriceReaderInterface
+     * @var \Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface
      */
     protected $valuePriceReader;
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
     /**
      * @param \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface $storageClient
      * @param \Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface $synchronizationService
-     * @param ValuePriceReaderInterface $valuePriceReader
-     * @param Store $store
+     * @param \Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface $valuePriceReader
+     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         ProductOptionStorageToStorageInterface $storageClient,
@@ -74,11 +74,11 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     }
 
     /**
-     * @param $productAbstractOptionStorageData
+     * @param array $productAbstractOptionStorageData
      *
-     * @return ProductAbstractOptionStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
      */
-    protected function mapToProductAbstractOptionStorageTransfer($productAbstractOptionStorageData)
+    protected function mapToProductAbstractOptionStorageTransfer(array $productAbstractOptionStorageData)
     {
         $productAbstractOptionStorageTransfer = new ProductAbstractOptionStorageTransfer();
         $productAbstractOptionStorageTransfer->fromArray($productAbstractOptionStorageData, true);
@@ -108,5 +108,4 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
             ->getStorageKeyBuilder(ProductOptionStorageConfig::PRODUCT_ABSTRACT_OPTION_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
     }
-
 }

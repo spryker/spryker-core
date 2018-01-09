@@ -14,11 +14,10 @@ use Spryker\Zed\UrlStorage\UrlStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\UrlStorage\UrlStorageConfig getConfig()
- * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface getQueryContainer()
  */
 class UrlStoragePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorageQuery
      */
@@ -42,5 +41,4 @@ class UrlStoragePersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(UrlStorageDependencyProvider::QUERY_CONTAINER_URL);
     }
-
 }

@@ -9,12 +9,10 @@ namespace Spryker\Zed\CategoryStorage\Dependency\QueryContainer;
 
 interface CategoryStorageToLocaleQueryContainerInterface
 {
-
     /**
      * @api
      *
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
     public function queryLocales();
-
 }

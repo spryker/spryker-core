@@ -20,7 +20,6 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
  */
 class AvailabilityStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -40,5 +39,4 @@ class AvailabilityStorageEventSubscriber extends AbstractPlugin implements Event
 
         return $eventCollection;
     }
-
 }

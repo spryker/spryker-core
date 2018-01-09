@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetPageSearch\Dependency\QueryContainer;
 
 class ProductSetPageSearchToProductSetQueryContainerBridge implements ProductSetPageSearchToProductSetQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface
      */
@@ -38,5 +37,4 @@ class ProductSetPageSearchToProductSetQueryContainerBridge implements ProductSet
     {
         return $this->productSetQueryContainer->queryAllProductSetData();
     }
-
 }

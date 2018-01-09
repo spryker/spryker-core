@@ -17,7 +17,6 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class RedirectStorageListener extends AbstractRedirectStorageListener implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -35,9 +34,8 @@ class RedirectStorageListener extends AbstractRedirectStorageListener implements
 
         if ($eventName === UrlEvents::ENTITY_SPY_URL_REDIRECT_CREATE || $eventName === UrlEvents::ENTITY_SPY_URL_REDIRECT_UPDATE) {
             $this->publish($redirectIds);
-        } elseif($eventName === UrlEvents::ENTITY_SPY_URL_REDIRECT_DELETE) {
+        } elseif ($eventName === UrlEvents::ENTITY_SPY_URL_REDIRECT_DELETE) {
             $this->unpublish($redirectIds);
         }
     }
-
 }

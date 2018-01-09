@@ -8,18 +8,16 @@
 namespace Spryker\Zed\AvailabilityStorage\Communication;
 
 use Spryker\Zed\AvailabilityStorage\AvailabilityStorageDependencyProvider;
-use Spryker\Zed\AvailabilityStorage\Dependency\Facade\AvailabilityStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\AvailabilityStorage\Dependency\Service\AvailabilityStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\AvailabilityStorage\AvailabilityStorageConfig getConfig()
  */
 class AvailabilityStorageCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return AvailabilityStorageToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\AvailabilityStorage\Dependency\Service\AvailabilityStorageToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -27,7 +25,7 @@ class AvailabilityStorageCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return AvailabilityStorageToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\AvailabilityStorage\Dependency\Facade\AvailabilityStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
@@ -41,5 +39,4 @@ class AvailabilityStorageCommunicationFactory extends AbstractCommunicationFacto
     {
         return $this->getProvidedDependency(AvailabilityStorageDependencyProvider::STORE);
     }
-
 }

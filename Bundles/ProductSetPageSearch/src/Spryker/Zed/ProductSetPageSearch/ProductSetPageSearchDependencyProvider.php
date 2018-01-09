@@ -20,7 +20,6 @@ use Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUt
 
 class ProductSetPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
     const QUERY_CONTAINER_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
     const SERVICE_UTIL_SYNCHRONIZATION = 'SERVICE_UTIL_SYNCHRONIZATION';
@@ -86,5 +85,4 @@ class ProductSetPageSearchDependencyProvider extends AbstractBundleDependencyPro
 
         return $container;
     }
-
 }

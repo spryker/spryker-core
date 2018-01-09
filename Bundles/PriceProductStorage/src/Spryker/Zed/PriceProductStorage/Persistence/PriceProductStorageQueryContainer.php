@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class PriceProductStorageQueryContainer extends AbstractQueryContainer implements PriceProductStorageQueryContainerInterface
 {
-
     const ID_PRODUCT_ABSTRACT = 'idProductAbstract';
     const ID_PRODUCT_CONCRETE = 'idProductConcrete';
     const SKU = 'sku';
@@ -40,7 +39,7 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
             ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::SKU)
             ->select([
                 static::ID_PRODUCT_ABSTRACT,
-                static::SKU
+                static::SKU,
             ]);
     }
 
@@ -99,7 +98,7 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryAllProductIdsByPriceProductIds(array  $priceProductIds)
+    public function queryAllProductIdsByPriceProductIds(array $priceProductIds)
     {
         return $this->getFactory()
             ->getPriceProductQueryContainer()
@@ -110,11 +109,13 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * @api
+     *
      * @param array $priceProductIds
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryAllProductAbstractIdsByPriceProductIds(array  $priceProductIds)
+    public function queryAllProductAbstractIdsByPriceProductIds(array $priceProductIds)
     {
         return $this->getFactory()
             ->getPriceProductQueryContainer()
@@ -141,7 +142,7 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
             ->withColumn(SpyProductTableMap::COL_SKU, static::SKU)
             ->select([
                 static::ID_PRODUCT_CONCRETE,
-                static::SKU
+                static::SKU,
             ]);
     }
 
@@ -158,5 +159,4 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
             ->createSpyPriceConcreteStorageQuery()
             ->filterByFkProduct_In($productConcreteIds);
     }
-
 }

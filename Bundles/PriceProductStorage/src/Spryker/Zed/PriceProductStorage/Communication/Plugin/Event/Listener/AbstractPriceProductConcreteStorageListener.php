@@ -19,7 +19,6 @@ use Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContaine
  */
 class AbstractPriceProductConcreteStorageListener extends AbstractPlugin
 {
-
     /**
      * @param array $productConcreteIds
      *
@@ -33,7 +32,6 @@ class AbstractPriceProductConcreteStorageListener extends AbstractPlugin
         foreach ($skus as $idProductConcrete => $sku) {
             $priceProducts[$idProductConcrete] = $this->getFactory()->getPriceProductFacade()->findPricesBySkuGroupedForCurrentStore($sku);
         }
-
 
         $spyPriceProductStorageEntities = $this->findPriceConcreteStorageEntitiesByProductConcreteIds($productConcreteIds);
         $this->storeData($priceProducts, $spyPriceProductStorageEntities);
@@ -72,7 +70,7 @@ class AbstractPriceProductConcreteStorageListener extends AbstractPlugin
     /**
      * @param int $idProductConcrete
      * @param array $prices
-     * @param SpyPriceProductConcreteStorage|null $spyPriceProductStorageEntity
+     * @param \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorage|null $spyPriceProductStorageEntity
      *
      * @return void
      */
@@ -129,5 +127,4 @@ class AbstractPriceProductConcreteStorageListener extends AbstractPlugin
     {
         return $this->getFactory()->getStore()->getStoreName();
     }
-
 }

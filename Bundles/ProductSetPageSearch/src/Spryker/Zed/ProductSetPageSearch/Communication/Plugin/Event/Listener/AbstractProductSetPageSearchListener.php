@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AbstractProductSetPageSearchListener extends AbstractPlugin
 {
-
     const COL_ID_PRODUCT_SET = 'id_product_set';
 
     /**
@@ -63,7 +62,7 @@ class AbstractProductSetPageSearchListener extends AbstractPlugin
         foreach ($spyProductSetLocalizedEntities as $spyProductSetLocalizedEntity) {
             $idProductSet = $spyProductSetLocalizedEntity['SpyProductSet'][static::COL_ID_PRODUCT_SET];
             $localeName = $spyProductSetLocalizedEntity['SpyLocale']['locale_name'];
-            if (isset($spyProductSetStorageEntities[$idProductSet][$localeName]))  {
+            if (isset($spyProductSetStorageEntities[$idProductSet][$localeName])) {
                 $this->storeDataSet($spyProductSetLocalizedEntity, $spyProductSetStorageEntities[$idProductSet][$localeName]);
             } else {
                 $this->storeDataSet($spyProductSetLocalizedEntity);
@@ -201,5 +200,4 @@ class AbstractProductSetPageSearchListener extends AbstractPlugin
 
         return $result;
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Client\UrlStorage;
 
 interface UrlStorageClientInterface
 {
-
     /**
      * @api
      *
@@ -19,5 +18,4 @@ interface UrlStorageClientInterface
      * @return array
      */
     public function matchUrl($url, $localeName);
-
 }

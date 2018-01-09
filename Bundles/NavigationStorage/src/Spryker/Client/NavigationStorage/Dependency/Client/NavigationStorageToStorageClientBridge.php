@@ -9,7 +9,6 @@ namespace Spryker\Client\NavigationStorage\Dependency\Client;
 
 class NavigationStorageToStorageClientBridge implements NavigationStorageToStorageClientInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -34,5 +33,4 @@ class NavigationStorageToStorageClientBridge implements NavigationStorageToStora
     {
         return $this->storageClient->get($key);
     }
-
 }

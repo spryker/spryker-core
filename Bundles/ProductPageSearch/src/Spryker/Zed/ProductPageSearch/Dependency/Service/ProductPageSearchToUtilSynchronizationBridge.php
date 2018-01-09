@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductPageSearch\Dependency\Service;
 
 class ProductPageSearchToUtilSynchronizationBridge implements ProductPageSearchToUtilSynchronizationInterface
 {
-
     /**
      * @var \Spryker\Service\UtilSynchronization\UtilSynchronizationServiceInterface
      */
@@ -64,5 +63,4 @@ class ProductPageSearchToUtilSynchronizationBridge implements ProductPageSearchT
     {
         return $this->utilSynchronization->getEventTransfersByModifiedColumns($eventTransfers, $columns);
     }
-
 }

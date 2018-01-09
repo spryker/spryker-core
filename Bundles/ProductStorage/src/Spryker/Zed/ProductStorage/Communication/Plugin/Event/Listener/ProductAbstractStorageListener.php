@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductAbstractStorageListener extends AbstractProductAbstractStorageListener implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -33,8 +32,7 @@ class ProductAbstractStorageListener extends AbstractProductAbstractStorageListe
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if (
-            $eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE ||
+        if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE ||
             $eventName === ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH
         ) {
             $this->unpublish($productAbstractIds);
@@ -42,5 +40,4 @@ class ProductAbstractStorageListener extends AbstractProductAbstractStorageListe
             $this->publish($productAbstractIds);
         }
     }
-
 }

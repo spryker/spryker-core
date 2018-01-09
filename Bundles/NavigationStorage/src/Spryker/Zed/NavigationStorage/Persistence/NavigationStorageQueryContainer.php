@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class NavigationStorageQueryContainer extends AbstractQueryContainer implements NavigationStorageQueryContainerInterface
 {
-
     const FK_NAVIGATION = 'fkNavigation';
 
     /**
@@ -63,5 +62,4 @@ class NavigationStorageQueryContainer extends AbstractQueryContainer implements 
             ->withColumn('DISTINCT ' . SpyNavigationNodeTableMap::COL_FK_NAVIGATION, static::FK_NAVIGATION)
             ->select([static::FK_NAVIGATION]);
     }
-
 }

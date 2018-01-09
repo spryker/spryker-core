@@ -7,11 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Dependency\QueryContainer;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-
 interface ProductPageSearchToCategoryQueryContainerInterface
 {
-
     /**
      * @param int $idLocale
      *
@@ -44,5 +41,4 @@ interface ProductPageSearchToCategoryQueryContainerInterface
      * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
      */
     public function queryClosureTableByNodeId($idNode);
-
 }

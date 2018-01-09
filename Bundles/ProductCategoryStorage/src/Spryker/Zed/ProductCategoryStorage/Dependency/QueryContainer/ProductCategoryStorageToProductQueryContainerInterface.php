@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductCategoryStorage\Dependency\QueryContainer;
 
 interface ProductCategoryStorageToProductQueryContainerInterface
 {
-
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
     public function queryAllProductAbstractLocalizedAttributes();
-
 }

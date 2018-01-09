@@ -12,7 +12,6 @@ use Spryker\Client\UrlStorage\Storage\UrlStorageReader;
 
 class UrlStorageFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\UrlStorage\Storage\UrlStorageReaderInterface
      */
@@ -57,5 +56,4 @@ class UrlStorageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(UrlStorageDependencyProvider::STORE);
     }
-
 }

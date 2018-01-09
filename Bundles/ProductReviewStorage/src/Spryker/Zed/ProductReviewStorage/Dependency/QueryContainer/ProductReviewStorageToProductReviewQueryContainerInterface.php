@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductReviewStorage\Dependency\QueryContainer;
 
 interface ProductReviewStorageToProductReviewQueryContainerInterface
 {
-
     /**
      * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
      */

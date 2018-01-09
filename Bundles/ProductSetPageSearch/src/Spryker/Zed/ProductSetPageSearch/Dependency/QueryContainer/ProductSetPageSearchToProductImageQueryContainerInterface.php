@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetPageSearch\Dependency\QueryContainer;
 
 interface ProductSetPageSearchToProductImageQueryContainerInterface
 {
-
     /**
      * @param int $idProductImageSet
      *
@@ -21,5 +20,4 @@ interface ProductSetPageSearchToProductImageQueryContainerInterface
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
      */
     public function queryProductImageSetToProductImage();
-
 }

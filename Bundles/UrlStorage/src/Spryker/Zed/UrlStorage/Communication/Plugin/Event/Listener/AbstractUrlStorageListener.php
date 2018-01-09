@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AbstractUrlStorageListener extends AbstractPlugin
 {
-
     const ID_URL = 'id_url';
     const FK_URL = 'fkUrl';
 
@@ -151,5 +150,4 @@ class AbstractUrlStorageListener extends AbstractPlugin
     {
         return $this->getFactory()->getStore()->getStoreName();
     }
-
 }

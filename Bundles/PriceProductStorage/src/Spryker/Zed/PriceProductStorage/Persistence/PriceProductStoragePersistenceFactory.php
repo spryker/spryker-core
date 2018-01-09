@@ -14,11 +14,10 @@ use Spryker\Zed\PriceProductStorage\PriceProductStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\PriceProductStorage\PriceProductStorageConfig getConfig()
- * @method \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface getQueryContainer()
  */
 class PriceProductStoragePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorageQuery
      */
@@ -50,5 +49,4 @@ class PriceProductStoragePersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(PriceProductStorageDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
-
 }

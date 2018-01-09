@@ -12,7 +12,6 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 
 class ProductPageSearchToProductSearchBridge implements ProductPageSearchToProductSearchInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface
      */
@@ -39,5 +38,4 @@ class ProductPageSearchToProductSearchBridge implements ProductPageSearchToProdu
     {
         return $this->productSearchFacade->mapDynamicProductAttributes($pageMapBuilder, $pageMapTransfer, $attributes);
     }
-
 }

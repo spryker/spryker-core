@@ -19,13 +19,13 @@ class ProductAbstractReviewStorageReader implements ProductAbstractReviewStorage
     protected $storageClient;
 
     /**
-     * @var ProductReviewStorageKeyGeneratorInterface
+     * @var \Spryker\Client\ProductReviewStorage\Storage\ProductReviewStorageKeyGeneratorInterface
      */
     protected $productReviewStorageKeyGenerator;
 
     /**
      * @param \Spryker\Client\ProductReviewStorage\Dependency\Client\ProductReviewStorageToStorageInterface $storageClient
-     * @param ProductReviewStorageKeyGeneratorInterface $productReviewStorageKeyGenerator
+     * @param \Spryker\Client\ProductReviewStorage\Storage\ProductReviewStorageKeyGeneratorInterface $productReviewStorageKeyGenerator
      */
     public function __construct(ProductReviewStorageToStorageInterface $storageClient, ProductReviewStorageKeyGeneratorInterface $productReviewStorageKeyGenerator)
     {
@@ -48,7 +48,7 @@ class ProductAbstractReviewStorageReader implements ProductAbstractReviewStorage
     /**
      * @param string $key
      *
-     * @return ProductReviewStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductReviewStorageTransfer|null
      */
     protected function findProductReviewProductStorageTransfer($key)
     {
@@ -63,5 +63,4 @@ class ProductAbstractReviewStorageReader implements ProductAbstractReviewStorage
 
         return $ProductReviewStorageTransfer;
     }
-
 }

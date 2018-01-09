@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductImageStorage\Dependency\Facade;
 
 class ProductImageStorageToProductImageBridge implements ProductImageStorageToProductImageInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface
      */
@@ -45,5 +44,4 @@ class ProductImageStorageToProductImageBridge implements ProductImageStorageToPr
     {
         return $this->productImageFacade->getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale);
     }
-
 }

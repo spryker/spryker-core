@@ -18,7 +18,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductPageCategorySearchListener extends AbstractProductPageSearchListener implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -65,5 +64,4 @@ class ProductPageCategorySearchListener extends AbstractProductPageSearchListene
 
         return $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($validEventTransfers);
     }
-
 }

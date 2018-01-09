@@ -12,24 +12,20 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
-use Spryker\Client\UrlStorage\UrlStorageFactory;
 use Spryker\Shared\UrlStorage\UrlStorageConstants;
 
 /**
- * Class UrlStorageRedirectMapperPlugin
- *
- * @method UrlStorageFactory getFactory()
+ * @method \Spryker\Client\UrlStorage\UrlStorageFactory getFactory()
  */
 class UrlStorageRedirectMapperPlugin extends AbstractPlugin implements UrlStorageResourceMapperPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\SpyUrlEntityTransfer $spyUrlEntityTransfer
      * @param array $options
      *
      * @return \Generated\Shared\Transfer\UrlStorageResourceMapTransfer
      */
-    public function map(SpyUrlEntityTransfer $spyUrlEntityTransfer, $options = [])
+    public function map(SpyUrlEntityTransfer $spyUrlEntityTransfer, array $options = [])
     {
         $urlStorageResourceMapTransfer = new UrlStorageResourceMapTransfer();
         $idRedirectUrl = $spyUrlEntityTransfer->getFkResourceRedirect();
@@ -43,7 +39,7 @@ class UrlStorageRedirectMapperPlugin extends AbstractPlugin implements UrlStorag
     }
 
     /**
-     * @param $idRedirectUrl
+     * @param int $idRedirectUrl
      *
      * @return mixed
      */
@@ -67,5 +63,4 @@ class UrlStorageRedirectMapperPlugin extends AbstractPlugin implements UrlStorag
             ->getStore()
             ->getStoreName();
     }
-
 }

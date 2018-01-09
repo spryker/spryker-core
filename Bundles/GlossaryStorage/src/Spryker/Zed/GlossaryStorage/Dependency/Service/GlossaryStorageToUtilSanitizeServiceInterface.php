@@ -9,7 +9,6 @@ namespace Spryker\Zed\GlossaryStorage\Dependency\Service;
 
 interface GlossaryStorageToUtilSanitizeServiceInterface
 {
-
     /**
      * @param array $array
      *

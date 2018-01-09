@@ -9,12 +9,10 @@ namespace Spryker\Client\CmsBlockStorage\Dependency\Service;
 
 interface CmsBlockStorageToSynchronizationServiceInterface
 {
-
     /**
      * @param string $resourceName
      *
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */
     public function getStorageKeyBuilder($resourceName);
-
 }

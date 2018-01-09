@@ -9,7 +9,6 @@ namespace Spryker\Client\CmsBlockStorage\Dependency\Client;
 
 class CmsBlockStorageToStorageBridge implements CmsBlockStorageToStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -44,5 +43,4 @@ class CmsBlockStorageToStorageBridge implements CmsBlockStorageToStorageInterfac
     {
         return $this->storageClient->getMulti($keys);
     }
-
 }

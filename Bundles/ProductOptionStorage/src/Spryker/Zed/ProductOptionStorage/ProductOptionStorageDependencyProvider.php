@@ -18,7 +18,6 @@ use Spryker\Zed\ProductOptionStorage\Dependency\Service\ProductOptionStorageToUt
 
 class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const QUERY_CONTAINER_PRODUCT_OPTION = 'QUERY_CONTAINER_PRODUCT_OPTION';
     const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
@@ -69,5 +68,4 @@ class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyPro
 
         return $container;
     }
-
 }

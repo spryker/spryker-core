@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface NavigationStorageQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -38,5 +37,4 @@ interface NavigationStorageQueryContainerInterface extends QueryContainerInterfa
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
      */
     public function queryNavigationIdsByNavigationNodeIds(array $navigationNodeIds);
-
 }

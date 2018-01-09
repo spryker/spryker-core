@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductLabelStorageQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -52,5 +51,4 @@ interface ProductLabelStorageQueryContainerInterface extends QueryContainerInter
      * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelLocalizedAttributesQuery
      */
     public function queryProductLabelLocalizedAttributes();
-
 }

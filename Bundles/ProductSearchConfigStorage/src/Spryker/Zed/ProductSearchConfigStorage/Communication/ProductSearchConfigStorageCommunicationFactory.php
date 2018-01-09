@@ -8,18 +8,16 @@
 namespace Spryker\Zed\ProductSearchConfigStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductSearchConfigStorage\Dependency\Facade\ProductSearchConfigStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\ProductSearchConfigStorage\Dependency\Service\ProductSearchConfigStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\ProductSearchConfigStorage\ProductSearchConfigStorageDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductSearchConfigStorage\Persistence\ProductSearchConfigStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductSearchConfigStorage\Persistence\ProductSearchConfigStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSearchConfigStorage\ProductSearchConfigStorageConfig getConfig()
  */
 class ProductSearchConfigStorageCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return ProductSearchConfigStorageToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\ProductSearchConfigStorage\Dependency\Service\ProductSearchConfigStorageToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -27,7 +25,7 @@ class ProductSearchConfigStorageCommunicationFactory extends AbstractCommunicati
     }
 
     /**
-     * @return ProductSearchConfigStorageToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\ProductSearchConfigStorage\Dependency\Facade\ProductSearchConfigStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
@@ -57,5 +55,4 @@ class ProductSearchConfigStorageCommunicationFactory extends AbstractCommunicati
     {
         return $this->getProvidedDependency(ProductSearchConfigStorageDependencyProvider::FACADE_PRODUCT_SEARCH);
     }
-
 }

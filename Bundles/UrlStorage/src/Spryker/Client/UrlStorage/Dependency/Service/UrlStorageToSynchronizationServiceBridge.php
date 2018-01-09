@@ -9,7 +9,6 @@ namespace Spryker\Client\UrlStorage\Dependency\Service;
 
 class UrlStorageToSynchronizationServiceBridge implements UrlStorageToSynchronizationServiceInterface
 {
-
     /**
      * @var \Spryker\Service\Synchronization\SynchronizationServiceInterface
      */
@@ -34,5 +33,4 @@ class UrlStorageToSynchronizationServiceBridge implements UrlStorageToSynchroniz
     {
         return $this->synchronizationService->getStorageKeyBuilder($resourceName);
     }
-
 }

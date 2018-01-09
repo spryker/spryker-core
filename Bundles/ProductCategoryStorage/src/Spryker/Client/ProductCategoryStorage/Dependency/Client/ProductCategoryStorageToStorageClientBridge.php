@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductCategoryStorage\Dependency\Client;
 
 class ProductCategoryStorageToStorageClientBridge implements ProductCategoryStorageToStorageClientInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -34,5 +33,4 @@ class ProductCategoryStorageToStorageClientBridge implements ProductCategoryStor
     {
         return $this->storageClient->get($key);
     }
-
 }

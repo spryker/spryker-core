@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class CategoryNodeStorageListener extends AbstractCategoryNodeStorageListener
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -32,8 +31,7 @@ class CategoryNodeStorageListener extends AbstractCategoryNodeStorageListener
         $this->preventTransaction();
         $categoryNodeIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if (
-            $eventName === CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE ||
+        if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE ||
             $eventName === CategoryEvents::CATEGORY_NODE_UNPUBLISH
         ) {
             $this->unpublish($categoryNodeIds);
@@ -41,5 +39,4 @@ class CategoryNodeStorageListener extends AbstractCategoryNodeStorageListener
             $this->publish($categoryNodeIds);
         }
     }
-
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\CategoryStorage\Storage;
 
-use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 use Generated\Shared\Transfer\CategoryTreeStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInterface;
@@ -40,7 +39,7 @@ class CategoryTreeStorageReader implements CategoryTreeStorageReaderInterface
     /**
      * @param string $locale
      *
-     * @return CategoryNodeStorageTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */
     public function getCategories($locale)
     {
@@ -71,5 +70,4 @@ class CategoryTreeStorageReader implements CategoryTreeStorageReaderInterface
 
         return $this->synchronizationService->getStorageKeyBuilder(CategoryStorageConstants::CATEGORY_TREE_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
     }
-
 }

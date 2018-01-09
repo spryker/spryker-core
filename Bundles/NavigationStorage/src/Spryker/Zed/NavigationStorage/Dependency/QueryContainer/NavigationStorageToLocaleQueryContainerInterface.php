@@ -9,12 +9,10 @@ namespace Spryker\Zed\NavigationStorage\Dependency\QueryContainer;
 
 interface NavigationStorageToLocaleQueryContainerInterface
 {
-
     /**
      * @api
      *
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
     public function queryLocales();
-
 }

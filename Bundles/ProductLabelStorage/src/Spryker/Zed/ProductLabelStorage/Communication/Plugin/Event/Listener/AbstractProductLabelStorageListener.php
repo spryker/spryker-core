@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AbstractProductLabelStorageListener extends AbstractPlugin
 {
-
     /**
      * @param array $productAbstractIds
      *
@@ -41,6 +40,7 @@ class AbstractProductLabelStorageListener extends AbstractPlugin
     /**
      * @param array $spyProductAbstractLocalizedEntities
      * @param array $spyProductAbstractLabelStorageEntities
+     * @param array $productLabelsIds
      *
      * @return void
      */
@@ -49,7 +49,7 @@ class AbstractProductLabelStorageListener extends AbstractPlugin
         foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
             $idProduct = $spyProductAbstractLocalizedEntity->getFkProductAbstract();
             $localeName = $spyProductAbstractLocalizedEntity->getLocale()->getLocaleName();
-            if (isset($spyProductAbstractLabelStorageEntities[$idProduct][$localeName]))  {
+            if (isset($spyProductAbstractLabelStorageEntities[$idProduct][$localeName])) {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, $spyProductAbstractLabelStorageEntities[$idProduct][$localeName], $productLabelsIds);
             } else {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, null, $productLabelsIds);
@@ -64,7 +64,7 @@ class AbstractProductLabelStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, SpyProductAbstractLabelStorage $spyProductAbstractLabelStorageEntity = null, array $productLabelsIds)
+    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, SpyProductAbstractLabelStorage $spyProductAbstractLabelStorageEntity, array $productLabelsIds)
     {
         if ($spyProductAbstractLabelStorageEntity === null) {
             $spyProductAbstractLabelStorageEntity = new SpyProductAbstractLabelStorage();
@@ -132,5 +132,4 @@ class AbstractProductLabelStorageListener extends AbstractPlugin
     {
         return $this->getFactory()->getStore()->getStoreName();
     }
-
 }

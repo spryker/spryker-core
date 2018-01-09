@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductOptionStorage\Dependency\QueryContainer;
 
 interface ProductOptionStorageToProductOptionQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ interface ProductOptionStorageToProductOptionQueryContainerInterface
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
      */
     public function queryAllProductOptionValues();
-
 }

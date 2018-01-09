@@ -17,7 +17,6 @@ use Spryker\Zed\ProductLabelStorage\Dependency\Service\ProductLabelStorageToUtil
 
 class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const QUERY_CONTAINER_PRODUCT_LABEL = 'QUERY_CONTAINER_PRODUCT_LABEL';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
@@ -64,5 +63,4 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
 
         return $container;
     }
-
 }

@@ -9,14 +9,13 @@ namespace Spryker\Zed\ProductLabelSearch\Dependency\Service;
 
 class ProductLabelSearchToUtilSanitizeServiceBridge implements ProductLabelSearchToUtilSanitizeServiceInterface
 {
-
     /**
      * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
      */
     protected $utilSanitizeService;
 
     /**
-     * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
+     * @param \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
      */
     public function __construct($utilSanitizeService)
     {
@@ -32,5 +31,4 @@ class ProductLabelSearchToUtilSanitizeServiceBridge implements ProductLabelSearc
     {
         return $this->utilSanitizeService->arrayFilterRecursive($array);
     }
-
 }

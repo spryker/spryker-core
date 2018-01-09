@@ -7,20 +7,17 @@
 
 namespace Spryker\Zed\GlossaryStorage\Communication;
 
-use Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\GlossaryStorage\GlossaryStorageDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
- * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
  */
 class GlossaryStorageCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
-     * @return GlossaryStorageToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -28,7 +25,7 @@ class GlossaryStorageCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return GlossaryStorageToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {

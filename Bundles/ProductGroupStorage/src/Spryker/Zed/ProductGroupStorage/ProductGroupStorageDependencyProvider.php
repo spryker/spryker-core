@@ -17,7 +17,6 @@ use Spryker\Zed\ProductGroupStorage\Dependency\Service\ProductGroupStorageToUtil
 
 class ProductGroupStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const QUERY_CONTAINER_PRODUCT_GROUP = 'QUERY_CONTAINER_PRODUCT_GROUP';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
@@ -63,5 +62,4 @@ class ProductGroupStorageDependencyProvider extends AbstractBundleDependencyProv
 
         return $container;
     }
-
 }

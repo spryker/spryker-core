@@ -11,12 +11,10 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductSearchConfigStorageQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
      * @return \Orm\Zed\ProductSearchConfigStorage\Persistence\SpyProductSearchConfigStorageQuery
      */
     public function queryProductSearchConfigStorage();
-
 }

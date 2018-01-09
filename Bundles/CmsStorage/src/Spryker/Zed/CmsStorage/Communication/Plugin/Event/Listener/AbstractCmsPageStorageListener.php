@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener;
 
+use DateTime;
 use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
@@ -20,7 +21,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class AbstractCmsPageStorageListener extends AbstractPlugin
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -78,7 +78,7 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet(SpyCmsPage $cmsPageEntity, SpyCmsPageStorage $cmsPageStorageEntity = null, $localeName)
+    protected function storeDataSet(SpyCmsPage $cmsPageEntity, SpyCmsPageStorage $cmsPageStorageEntity, $localeName)
     {
         if ($cmsPageStorageEntity === null) {
             $cmsPageStorageEntity = new SpyCmsPageStorage();
@@ -133,7 +133,7 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
 
     /**
      * @param \Orm\Zed\Url\Persistence\SpyUrl[] $spyUrls
-     * @param $localeName
+     * @param string $localeName
      *
      * @return string
      */
@@ -149,10 +149,10 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
     }
 
     /**
-     * @param SpyCmsPage $cmsPageEntity
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      * @param string $localeName
      *
-     * @return LocaleCmsPageDataTransfer
+     * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
      */
     protected function getLocalCmsPageDataTransfer(SpyCmsPage $cmsPageEntity, $localeName)
     {
@@ -184,7 +184,7 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
      *
      * @return null|string
      */
-    protected function convertDateTimeToString(\DateTime $dateTime = null)
+    protected function convertDateTimeToString(DateTime $dateTime = null)
     {
         if (!$dateTime) {
             return null;
@@ -192,5 +192,4 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
 
         return $dateTime->format('c');
     }
-
 }

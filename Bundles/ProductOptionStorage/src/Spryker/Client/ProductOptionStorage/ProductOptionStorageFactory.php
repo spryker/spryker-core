@@ -7,21 +7,18 @@
 
 namespace Spryker\Client\ProductOptionStorage;
 
-use Spryker\Client\ProductOptionStorage\Price\ValuePriceReader;
-use Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface;
-use Spryker\Client\ProductOptionStorage\Storage\ProductOptionStorageReader;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Shared\Kernel\Store;
+use Spryker\Client\ProductOptionStorage\Price\ValuePriceReader;
+use Spryker\Client\ProductOptionStorage\Storage\ProductOptionStorageReader;
 
 class ProductOptionStorageFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\ProductOptionStorage\Storage\ProductOptionStorageReaderInterface
      */
     public function createProductOptionStorageReader()
     {
-        return new ProductOptionStorageReader($this->getStorage(), $this->getSynchronizationService(),  $this->createValuePriceReader(), $this->getStore());
+        return new ProductOptionStorageReader($this->getStorage(), $this->getSynchronizationService(), $this->createValuePriceReader(), $this->getStore());
     }
 
     /**
@@ -41,7 +38,7 @@ class ProductOptionStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return Store
+     * @return \Spryker\Shared\Kernel\Store
      */
     protected function getStore()
     {
@@ -49,7 +46,7 @@ class ProductOptionStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return ValuePriceReaderInterface
+     * @return \Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface
      */
     protected function createValuePriceReader()
     {

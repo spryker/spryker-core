@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CmsBlockStorageQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -29,5 +28,4 @@ interface CmsBlockStorageQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
     public function queryBlockWithRelationsByIds(array $cmsBlockIds);
-
 }

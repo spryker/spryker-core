@@ -25,7 +25,6 @@ use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceTyp
  */
 class PriceProductStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -55,10 +54,8 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
             ->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_DELETE, new PriceProductStoreConcreteStorageListener())
             ->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE, new PriceProductStoreAbstractStorageListener())
             ->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE, new PriceProductStoreAbstractStorageListener())
-            ->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_DELETE, new PriceProductStoreAbstractStorageListener())
-        ;
+            ->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_DELETE, new PriceProductStoreAbstractStorageListener());
 
         return $eventCollection;
     }
-
 }

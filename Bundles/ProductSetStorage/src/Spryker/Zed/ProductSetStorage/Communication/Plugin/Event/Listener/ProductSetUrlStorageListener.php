@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductSetUrlStorageListener extends AbstractProductSetStorageListener implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -56,5 +55,4 @@ class ProductSetUrlStorageListener extends AbstractProductSetStorageListener imp
 
         return $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($validEventTransfers, SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_SET);
     }
-
 }

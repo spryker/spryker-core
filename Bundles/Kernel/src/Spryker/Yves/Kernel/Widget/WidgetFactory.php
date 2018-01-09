@@ -12,7 +12,6 @@ use Spryker\Yves\Kernel\Exception\InvalidWidgetPluginException;
 
 class WidgetFactory implements WidgetFactoryInterface
 {
-
     /**
      * @var array
      */
@@ -109,5 +108,4 @@ class WidgetFactory implements WidgetFactoryInterface
     {
         static::$widgetCache[$cacheKey] = $widget;
     }
-
 }

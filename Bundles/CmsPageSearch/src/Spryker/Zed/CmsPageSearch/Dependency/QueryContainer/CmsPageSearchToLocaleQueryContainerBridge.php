@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsPageSearch\Dependency\QueryContainer;
 
 class CmsPageSearchToLocaleQueryContainerBridge implements CmsPageSearchToLocaleQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
      */
@@ -30,5 +29,4 @@ class CmsPageSearchToLocaleQueryContainerBridge implements CmsPageSearchToLocale
     {
         return $this->localeQueryContainer->queryLocales();
     }
-
 }

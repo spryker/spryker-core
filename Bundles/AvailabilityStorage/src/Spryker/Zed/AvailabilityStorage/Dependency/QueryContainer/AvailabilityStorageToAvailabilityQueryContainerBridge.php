@@ -9,7 +9,6 @@ namespace Spryker\Zed\AvailabilityStorage\Dependency\QueryContainer;
 
 class AvailabilityStorageToAvailabilityQueryContainerBridge implements AvailabilityStorageToAvailabilityQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
      */
@@ -32,5 +31,4 @@ class AvailabilityStorageToAvailabilityQueryContainerBridge implements Availabil
     {
         return $this->availabilityQueryContainer->queryAllAvailabilityAbstracts();
     }
-
 }

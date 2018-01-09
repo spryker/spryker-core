@@ -9,17 +9,14 @@ namespace Spryker\Zed\AvailabilityStorage\Persistence;
 
 use Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorageQuery;
 use Spryker\Zed\AvailabilityStorage\AvailabilityStorageDependencyProvider;
-use Spryker\Zed\AvailabilityStorage\Dependency\QueryContainer\AvailabilityStorageToAvailabilityQueryContainerInterface;
-use Spryker\Zed\AvailabilityStorage\Dependency\QueryContainer\AvailabilityStorageToProductQueryContainerInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\AvailabilityStorage\AvailabilityStorageConfig getConfig()
- * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface getQueryContainer()
  */
 class AvailabilityStoragePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorageQuery
      */
@@ -29,7 +26,7 @@ class AvailabilityStoragePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return AvailabilityStorageToProductQueryContainerInterface
+     * @return \Spryker\Zed\AvailabilityStorage\Dependency\QueryContainer\AvailabilityStorageToProductQueryContainerInterface
      */
     public function getProductQueryContainer()
     {
@@ -37,11 +34,10 @@ class AvailabilityStoragePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return AvailabilityStorageToAvailabilityQueryContainerInterface
+     * @return \Spryker\Zed\AvailabilityStorage\Dependency\QueryContainer\AvailabilityStorageToAvailabilityQueryContainerInterface
      */
     public function getAvailabilityQueryContainer()
     {
         return $this->getProvidedDependency(AvailabilityStorageDependencyProvider::QUERY_CONTAINER_AVAILABILITY);
     }
-
 }

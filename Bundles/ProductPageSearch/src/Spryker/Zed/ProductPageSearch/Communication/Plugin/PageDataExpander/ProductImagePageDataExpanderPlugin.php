@@ -14,11 +14,10 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
 /**
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  */
 class ProductImagePageDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
-
     /**
      * @param array $productData
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
@@ -56,5 +55,4 @@ class ProductImagePageDataExpanderPlugin extends AbstractPlugin implements Produ
 
         return $result;
     }
-
 }

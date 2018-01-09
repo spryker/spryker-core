@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 
 interface ProductOptionStorageToProductOptionFacadeInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer
      *

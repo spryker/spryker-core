@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductOptionStorage\Dependency\Service;
 
 interface ProductOptionStorageToUtilSanitizeServiceInterface
 {
-
     /**
      * @param array $array
      *

@@ -8,8 +8,6 @@
 namespace Spryker\Client\Customer\Session;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface;
-use Spryker\Client\Customer\Dependency\Plugin\CustomerSessionSetPluginInterface;
 use Spryker\Client\Session\SessionClientInterface;
 
 class CustomerSession implements CustomerSessionInterface
@@ -22,26 +20,25 @@ class CustomerSession implements CustomerSessionInterface
     private $sessionClient;
 
     /**
-     * @var CustomerSessionGetPluginInterface[]
+     * @var \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface[]
      */
     protected $customerSessionGetPlugins;
 
     /**
-     * @var CustomerSessionSetPluginInterface[]
+     * @var \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionSetPluginInterface[]
      */
     protected $customerSessionSetPlugins;
 
     /**
      * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
-     * @param CustomerSessionGetPluginInterface[] $customerSessionGetPlugins
-     * @param CustomerSessionSetPluginInterface[] $customerSessionSetPlugins
+     * @param \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface[] $customerSessionGetPlugins
+     * @param \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionSetPluginInterface[] $customerSessionSetPlugins
      */
     public function __construct(
         SessionClientInterface $sessionClient,
         array $customerSessionGetPlugins = [],
         array $customerSessionSetPlugins = []
-    )
-    {
+    ) {
         $this->sessionClient = $sessionClient;
         $this->customerSessionGetPlugins = $customerSessionGetPlugins;
         $this->customerSessionSetPlugins = $customerSessionSetPlugins;

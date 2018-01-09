@@ -9,14 +9,13 @@ namespace Spryker\Zed\NavigationStorage\Dependency\Service;
 
 class NavigationStorageToUtilSanitizeServiceBridge implements NavigationStorageToUtilSanitizeServiceInterface
 {
-
     /**
      * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
      */
     protected $utilSanitizeService;
 
     /**
-     * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
+     * @param \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
      */
     public function __construct($utilSanitizeService)
     {
@@ -32,5 +31,4 @@ class NavigationStorageToUtilSanitizeServiceBridge implements NavigationStorageT
     {
         return $this->utilSanitizeService->arrayFilterRecursive($array);
     }
-
 }

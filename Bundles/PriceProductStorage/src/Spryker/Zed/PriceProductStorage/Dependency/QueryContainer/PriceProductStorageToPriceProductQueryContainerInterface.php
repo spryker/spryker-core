@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProductStorage\Dependency\QueryContainer;
 
 interface PriceProductStorageToPriceProductQueryContainerInterface
 {
-
     /**
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */

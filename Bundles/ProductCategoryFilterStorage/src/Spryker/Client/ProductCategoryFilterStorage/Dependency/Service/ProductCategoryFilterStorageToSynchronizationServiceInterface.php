@@ -9,12 +9,10 @@ namespace Spryker\Client\ProductCategoryFilterStorage\Dependency\Service;
 
 interface ProductCategoryFilterStorageToSynchronizationServiceInterface
 {
-
     /**
      * @param string $resourceName
      *
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */
     public function getStorageKeyBuilder($resourceName);
-
 }

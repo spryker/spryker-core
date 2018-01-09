@@ -1,8 +1,12 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Client\ProductGroupStorage;
 
-use Generated\Shared\Transfer\ProductAbstractGroupStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -10,12 +14,13 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ProductGroupStorageClient extends AbstractClient implements ProductGroupStorageClientInterface
 {
-
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      * @param string $localeName
      *
-     * @return ProductAbstractGroupStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractGroupStorageTransfer
      */
     public function findProductGroupItemsByIdProductAbstract($idProductAbstract, $localeName)
     {
@@ -23,5 +28,4 @@ class ProductGroupStorageClient extends AbstractClient implements ProductGroupSt
             ->createProductGroupStorage()
             ->findProductGroupItemsByIdProductAbstract($idProductAbstract, $localeName);
     }
-
 }

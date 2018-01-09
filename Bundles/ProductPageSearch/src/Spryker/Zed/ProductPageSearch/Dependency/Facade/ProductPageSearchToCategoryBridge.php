@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductPageSearch\Dependency\Facade;
 
 class ProductPageSearchToCategoryBridge implements ProductPageSearchToCategoryInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Business\CategoryFacadeInterface
      */
@@ -32,5 +31,4 @@ class ProductPageSearchToCategoryBridge implements ProductPageSearchToCategoryIn
     {
         return $this->categoryFacade->getAllNodesByIdCategory($idCategory);
     }
-
 }

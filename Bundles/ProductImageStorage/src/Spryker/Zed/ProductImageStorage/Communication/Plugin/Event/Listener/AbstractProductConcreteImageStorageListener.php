@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AbstractProductConcreteImageStorageListener extends AbstractPlugin
 {
-
     /**
      * @param array $productIds
      *
@@ -47,6 +46,7 @@ class AbstractProductConcreteImageStorageListener extends AbstractPlugin
     /**
      * @param array $spyProductConcreteLocalizedEntities
      * @param array $spyProductConcreteImageStorageEntities
+     * @param array $imagesSets
      *
      * @return void
      */
@@ -55,7 +55,7 @@ class AbstractProductConcreteImageStorageListener extends AbstractPlugin
         foreach ($spyProductConcreteLocalizedEntities as $spyProductConcreteLocalizedEntity) {
             $idProduct = $spyProductConcreteLocalizedEntity->getFkProduct();
             $localeName = $spyProductConcreteLocalizedEntity->getLocale()->getLocaleName();
-            if (isset($spyProductConcreteImageStorageEntities[$idProduct][$localeName]))  {
+            if (isset($spyProductConcreteImageStorageEntities[$idProduct][$localeName])) {
                 $this->storeDataSet($spyProductConcreteLocalizedEntity, $spyProductConcreteImageStorageEntities[$idProduct][$localeName], $imagesSets);
             } else {
                 $this->storeDataSet($spyProductConcreteLocalizedEntity, null, $imagesSets);
@@ -70,7 +70,7 @@ class AbstractProductConcreteImageStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductLocalizedAttributes $spyProductLocalizedEntity, SpyProductConcreteImageStorage $spyProductConcreteImageStorage = null, array $imageSets)
+    protected function storeDataSet(SpyProductLocalizedAttributes $spyProductLocalizedEntity, SpyProductConcreteImageStorage $spyProductConcreteImageStorage, array $imageSets)
     {
         if ($spyProductConcreteImageStorage === null) {
             $spyProductConcreteImageStorage = new SpyProductConcreteImageStorage();
@@ -159,5 +159,4 @@ class AbstractProductConcreteImageStorageListener extends AbstractPlugin
     {
         return $this->getFactory()->getStore()->getStoreName();
     }
-
 }

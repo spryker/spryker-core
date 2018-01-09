@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductPageSearch\Dependency\QueryContainer;
 
 interface ProductPageToPriceProductQueryContainerInterface
 {
-
     /**
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
     public function queryPriceProduct();
-
 }

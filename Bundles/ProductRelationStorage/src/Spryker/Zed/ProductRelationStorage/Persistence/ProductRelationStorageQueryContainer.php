@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductRelationStorageQueryContainer extends AbstractQueryContainer implements ProductRelationStorageQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -76,5 +75,4 @@ class ProductRelationStorageQueryContainer extends AbstractQueryContainer implem
             ->queryAllProductRelations()
             ->filterByFkProductAbstract_In($productAbstractIds);
     }
-
 }

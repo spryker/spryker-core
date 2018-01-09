@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\RawProductAttributesTransfer;
 
 class ProductPageSearchToProductBridge implements ProductPageSearchToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -55,5 +54,4 @@ class ProductPageSearchToProductBridge implements ProductPageSearchToProductInte
     {
         return $this->productFacade->generateAttributePermutations($superAttributes, $idProductConcrete);
     }
-
 }

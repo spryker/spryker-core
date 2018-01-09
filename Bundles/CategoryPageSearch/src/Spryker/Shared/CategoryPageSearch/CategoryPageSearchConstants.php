@@ -9,7 +9,6 @@ namespace Spryker\Shared\CategoryPageSearch;
 
 class CategoryPageSearchConstants
 {
-
     /**
      * Specification:
      * - Queue name as used for processing cms block messages
@@ -33,5 +32,4 @@ class CategoryPageSearchConstants
      * @api
      */
     const CATEGORY_NODE_RESOURCE_NAME = 'category_node';
-
 }

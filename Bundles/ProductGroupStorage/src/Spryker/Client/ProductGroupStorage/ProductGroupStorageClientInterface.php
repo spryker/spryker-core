@@ -1,16 +1,21 @@
 <?php
 
-namespace Spryker\Client\ProductGroupStorage;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
-use Generated\Shared\Transfer\ProductAbstractGroupStorageTransfer;
+namespace Spryker\Client\ProductGroupStorage;
 
 interface ProductGroupStorageClientInterface
 {
     /**
+     * @api
+     *
      * @param int $idProductAbstract
      * @param string $localeName
      *
-     * @return ProductAbstractGroupStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractGroupStorageTransfer
      */
     public function findProductGroupItemsByIdProductAbstract($idProductAbstract, $localeName);
 }

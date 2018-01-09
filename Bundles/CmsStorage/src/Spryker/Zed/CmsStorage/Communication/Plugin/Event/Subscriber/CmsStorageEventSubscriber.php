@@ -21,7 +21,6 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -44,5 +43,4 @@ class CmsStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
 
         return $eventCollection;
     }
-
 }

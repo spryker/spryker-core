@@ -18,7 +18,6 @@ use Spryker\Zed\ProductImageStorage\Dependency\Service\ProductImageStorageToUtil
 
 class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
@@ -68,5 +67,4 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
 
         return $container;
     }
-
 }

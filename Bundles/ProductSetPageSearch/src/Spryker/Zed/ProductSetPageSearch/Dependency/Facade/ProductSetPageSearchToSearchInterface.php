@@ -12,7 +12,6 @@ use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
 interface ProductSetPageSearchToSearchInterface
 {
-
     /**
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
      * @param array $data
@@ -32,5 +31,4 @@ interface ProductSetPageSearchToSearchInterface
      * @return array
      */
     public function transformPageMapToDocumentByMapperName(array $data, LocaleTransfer $localeTransfer, $mapperName);
-
 }

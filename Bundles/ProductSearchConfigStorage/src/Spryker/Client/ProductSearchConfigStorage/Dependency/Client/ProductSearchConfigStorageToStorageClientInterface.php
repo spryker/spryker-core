@@ -9,12 +9,10 @@ namespace Spryker\Client\ProductSearchConfigStorage\Dependency\Client;
 
 interface ProductSearchConfigStorageToStorageClientInterface
 {
-
     /**
      * @param string $key
      *
      * @return array
      */
     public function get($key);
-
 }

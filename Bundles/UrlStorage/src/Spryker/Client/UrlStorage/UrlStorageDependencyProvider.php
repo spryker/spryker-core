@@ -15,7 +15,6 @@ use Spryker\Shared\Kernel\Store;
 
 class UrlStorageDependencyProvider extends AbstractDependencyProvider
 {
-
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     const PLUGINS_URL_STORAGE_RESOURCE_MAPPER = 'PLUGINS_URL_STORAGE_RESOURCE_MAPPER';
@@ -54,5 +53,4 @@ class UrlStorageDependencyProvider extends AbstractDependencyProvider
     {
         return [];
     }
-
 }

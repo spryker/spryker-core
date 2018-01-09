@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetPageSearch\Dependency\QueryContainer;
 
 class ProductSetPageSearchToProductImageQueryContainerBridge implements ProductSetPageSearchToProductImageQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
      */
@@ -42,5 +41,4 @@ class ProductSetPageSearchToProductImageQueryContainerBridge implements ProductS
     {
         return $this->productImageQueryContainer->queryProductImageSetToProductImage();
     }
-
 }

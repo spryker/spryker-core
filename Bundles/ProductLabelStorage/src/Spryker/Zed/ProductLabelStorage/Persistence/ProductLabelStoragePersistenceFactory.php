@@ -14,11 +14,10 @@ use Spryker\Zed\ProductLabelStorage\ProductLabelStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductLabelStorage\ProductLabelStorageConfig getConfig()
- * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
  */
 class ProductLabelStoragePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductLabelQueryContainerInterface
      */
@@ -50,5 +49,4 @@ class ProductLabelStoragePersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyProductLabelDictionaryStorageQuery::create();
     }
-
 }

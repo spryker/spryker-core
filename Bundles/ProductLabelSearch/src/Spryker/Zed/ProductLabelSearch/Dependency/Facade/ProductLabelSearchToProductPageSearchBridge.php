@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelSearch\Dependency\Facade;
 
 class ProductLabelSearchToProductPageSearchBridge implements ProductLabelSearchToProductPageSearchInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface
      */
@@ -33,5 +32,4 @@ class ProductLabelSearchToProductPageSearchBridge implements ProductLabelSearchT
     {
         $this->productPageSearchFacade->refresh($productAbstractIds, $pageDataExpanderPluginNames);
     }
-
 }

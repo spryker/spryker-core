@@ -10,27 +10,23 @@ namespace Spryker\Client\CategoryStorage\Plugin;
 use Generated\Shared\Transfer\SpyUrlEntityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
-use Spryker\Client\CategoryStorage\CategoryStorageFactory;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Shared\Kernel\Store;
 
 /**
- * Class UrlStorageCategoryNodeMapperPlugin
- *
- * @method CategoryStorageFactory getFactory()
+ * @method \Spryker\Client\CategoryStorage\CategoryStorageFactory getFactory()
  */
 class UrlStorageCategoryNodeMapperPlugin extends AbstractPlugin implements UrlStorageResourceMapperPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\SpyUrlEntityTransfer $spyUrlEntityTransfer
      * @param array $options
      *
      * @return \Generated\Shared\Transfer\UrlStorageResourceMapTransfer
      */
-    public function map(SpyUrlEntityTransfer $spyUrlEntityTransfer, $options = [])
+    public function map(SpyUrlEntityTransfer $spyUrlEntityTransfer, array $options = [])
     {
         $urlStorageResourceMapTransfer = new UrlStorageResourceMapTransfer();
         $idCategoryNode = $spyUrlEntityTransfer->getFkResourceCategorynode();
@@ -66,5 +62,4 @@ class UrlStorageCategoryNodeMapperPlugin extends AbstractPlugin implements UrlSt
     {
         return Store::getInstance()->getStoreName();
     }
-
 }

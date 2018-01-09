@@ -9,7 +9,6 @@ namespace Spryker\Zed\CategoryPageSearch\Dependency\QueryContainer;
 
 class CategoryPageSearchToLocaleQueryContainerBridge implements CategoryPageSearchToLocaleQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
      */
@@ -30,5 +29,4 @@ class CategoryPageSearchToLocaleQueryContainerBridge implements CategoryPageSear
     {
         return $this->localeQueryContainer->queryLocales();
     }
-
 }

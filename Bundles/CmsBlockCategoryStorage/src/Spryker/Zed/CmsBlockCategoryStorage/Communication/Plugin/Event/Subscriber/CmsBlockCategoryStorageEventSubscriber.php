@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CmsBlockCategoryStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -30,7 +29,6 @@ class CmsBlockCategoryStorageEventSubscriber extends AbstractPlugin implements E
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
-
         $eventCollection
             ->addListenerQueued(CmsBlockCategoryConnectorEvents::CMS_BLOCK_CATEGORY_CONNECTOR_PUBLISH, new CmsBlockCategoryConnectorPublishStorageListener())
             ->addListenerQueued(CmsBlockCategoryConnectorEvents::CMS_BLOCK_CATEGORY_CONNECTOR_UNPUBLISH, new CmsBlockCategoryConnectorPublishStorageListener())

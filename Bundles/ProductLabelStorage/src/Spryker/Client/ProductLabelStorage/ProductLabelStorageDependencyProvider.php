@@ -7,10 +7,10 @@
 
 namespace Spryker\Client\ProductLabelStorage;
 
-use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientBridge;
-use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientBridge;
+use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceBridge;
 use Spryker\Shared\Kernel\Store;
 
 class ProductLabelStorageDependencyProvider extends AbstractDependencyProvider
@@ -34,9 +34,9 @@ class ProductLabelStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addStorageClient(Container $container): Container
     {
@@ -48,9 +48,9 @@ class ProductLabelStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addSynchronizationService(Container $container): Container
     {
@@ -62,9 +62,9 @@ class ProductLabelStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addStore(Container $container): Container
     {

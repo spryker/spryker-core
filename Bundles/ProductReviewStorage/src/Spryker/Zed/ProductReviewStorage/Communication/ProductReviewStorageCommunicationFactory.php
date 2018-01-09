@@ -1,21 +1,23 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\ProductReviewStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductReviewStorage\Dependency\Facade\ProductReviewStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\ProductReviewStorage\Dependency\Service\ProductReviewStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\ProductReviewStorage\ProductReviewStorageDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductReviewStorage\Persistence\ProductReviewStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductReviewStorage\Persistence\ProductReviewStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductReviewStorage\ProductReviewStorageConfig getConfig()
  */
 class ProductReviewStorageCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
-     * @return ProductReviewStorageToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\ProductReviewStorage\Dependency\Service\ProductReviewStorageToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -23,7 +25,7 @@ class ProductReviewStorageCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
-     * @return ProductReviewStorageToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\ProductReviewStorage\Dependency\Facade\ProductReviewStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
@@ -37,5 +39,4 @@ class ProductReviewStorageCommunicationFactory extends AbstractCommunicationFact
     {
         return $this->getProvidedDependency(ProductReviewStorageDependencyProvider::STORE);
     }
-
 }

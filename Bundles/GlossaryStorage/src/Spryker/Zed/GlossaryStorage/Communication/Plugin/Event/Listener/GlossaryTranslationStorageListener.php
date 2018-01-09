@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class GlossaryTranslationStorageListener extends AbstractGlossaryTranslationStorageListener
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -34,5 +33,4 @@ class GlossaryTranslationStorageListener extends AbstractGlossaryTranslationStor
 
         $this->publish($glossaryKeyIds);
     }
-
 }

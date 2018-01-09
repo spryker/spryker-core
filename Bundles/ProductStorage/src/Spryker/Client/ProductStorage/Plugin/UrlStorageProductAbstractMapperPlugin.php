@@ -25,7 +25,7 @@ class UrlStorageProductAbstractMapperPlugin extends AbstractPlugin implements Ur
      *
      * @return \Generated\Shared\Transfer\UrlStorageResourceMapTransfer
      */
-    public function map(SpyUrlEntityTransfer $spyUrlEntityTransfer, $options = [])
+    public function map(SpyUrlEntityTransfer $spyUrlEntityTransfer, array $options = [])
     {
         $urlStorageResourceMapTransfer = new UrlStorageResourceMapTransfer();
         $idProductAbstract = $spyUrlEntityTransfer->getFkResourceProductAbstract();

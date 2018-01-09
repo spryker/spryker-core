@@ -9,15 +9,12 @@ namespace Spryker\Client\ProductReviewStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductReviewStorage\Storage\ProductAbstractReviewStorageReader;
-use Spryker\Client\ProductReviewStorage\Storage\ProductAbstractReviewStorageReaderInterface;
 use Spryker\Client\ProductReviewStorage\Storage\ProductReviewStorageKeyGenerator;
-use Spryker\Client\ProductReviewStorage\Storage\ProductReviewStorageKeyGeneratorInterface;
-use Spryker\Shared\Kernel\Store;
 
 class ProductReviewStorageFactory extends AbstractFactory
 {
     /**
-     * @return ProductAbstractReviewStorageReaderInterface
+     * @return \Spryker\Client\ProductReviewStorage\Storage\ProductAbstractReviewStorageReaderInterface
      */
     public function createProductConcreteImageStorageReader()
     {
@@ -25,7 +22,7 @@ class ProductReviewStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return ProductReviewStorageKeyGeneratorInterface
+     * @return \Spryker\Client\ProductReviewStorage\Storage\ProductReviewStorageKeyGeneratorInterface
      */
     protected function createProductReviewStorageKeyGenerator()
     {
@@ -49,7 +46,7 @@ class ProductReviewStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return Store
+     * @return \Spryker\Shared\Kernel\Store
      */
     protected function getStore()
     {

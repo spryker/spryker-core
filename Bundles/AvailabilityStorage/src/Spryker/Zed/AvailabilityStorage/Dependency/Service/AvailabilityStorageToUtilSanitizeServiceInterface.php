@@ -9,7 +9,6 @@ namespace Spryker\Zed\AvailabilityStorage\Dependency\Service;
 
 interface AvailabilityStorageToUtilSanitizeServiceInterface
 {
-
     /**
      * @param array $array
      *

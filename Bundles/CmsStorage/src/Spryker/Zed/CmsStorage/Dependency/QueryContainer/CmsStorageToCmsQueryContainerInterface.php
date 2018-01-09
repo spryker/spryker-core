@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsStorage\Dependency\QueryContainer;
 
 interface CmsStorageToCmsQueryContainerInterface
 {
-
     /**
      * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
@@ -21,5 +20,4 @@ interface CmsStorageToCmsQueryContainerInterface
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     public function queryPages();
-
 }

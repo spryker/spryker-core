@@ -9,7 +9,6 @@ namespace Spryker\Zed\UrlStorage\Dependency\QueryContainer;
 
 class UrlStorageToUrlQueryContainerBridge implements UrlStorageToUrlQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -38,5 +37,4 @@ class UrlStorageToUrlQueryContainerBridge implements UrlStorageToUrlQueryContain
     {
         return $this->urlQueryContainer->queryRedirects();
     }
-
 }

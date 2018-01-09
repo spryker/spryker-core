@@ -30,7 +30,7 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
     protected $touchFacade;
 
     /**
-     * @var ProductSearchToEventFacadeInterface
+     * @var \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToEventFacadeInterface
      */
     protected $eventFacade;
 
@@ -41,7 +41,7 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
 
     /**
      * @param \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface $touchFacade
-     * @param ProductSearchToEventFacadeInterface $eventFacade
+     * @param \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToEventFacadeInterface $eventFacade
      * @param \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface $productSearchQuery
      */
     public function __construct(ProductSearchToTouchInterface $touchFacade, ProductSearchToEventFacadeInterface $eventFacade, ProductSearchQueryContainerInterface $productSearchQuery)

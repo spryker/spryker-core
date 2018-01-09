@@ -46,9 +46,9 @@ class ValuePriceReader implements ValuePriceReaderInterface
     }
 
     /**
-     * @param ProductOptionGroupStorageTransfer $productOptionGroupStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductOptionGroupStorageTransfer $productOptionGroupStorageTransfer
      *
-     * @return ProductOptionGroupStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductOptionGroupStorageTransfer
      */
     public function resolvePrices(ProductOptionGroupStorageTransfer $productOptionGroupStorageTransfer)
     {
@@ -56,7 +56,7 @@ class ValuePriceReader implements ValuePriceReaderInterface
         $currentPriceMode = $this->getCurrentPriceMode();
 
         foreach ($productOptionGroupStorageTransfer->getProductOptionValues() as $productOptionValue) {
-            $this->resolveValuePrice($productOptionValue, $currentCurrencyCode,$currentPriceMode);
+            $this->resolveValuePrice($productOptionValue, $currentCurrencyCode, $currentPriceMode);
         }
 
         return $productOptionGroupStorageTransfer;

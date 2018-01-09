@@ -15,7 +15,6 @@ use Spryker\Shared\Kernel\Store;
 
 class UrlStorageReader implements UrlStorageReaderInterface
 {
-
     const URL = 'url';
 
     /**
@@ -113,12 +112,10 @@ class UrlStorageReader implements UrlStorageReaderInterface
         foreach ($this->urlStorageResourceMapperPlugins as $urlStorageResourceMapperPlugin) {
             $pluginUrlStorageResourceMapTransfer = $urlStorageResourceMapperPlugin->map($spyUrlTransfer, $options);
             if (!empty($pluginUrlStorageResourceMapTransfer->getResourceKey())) {
-
                 return $pluginUrlStorageResourceMapTransfer;
             }
         }
 
         return null;
     }
-
 }

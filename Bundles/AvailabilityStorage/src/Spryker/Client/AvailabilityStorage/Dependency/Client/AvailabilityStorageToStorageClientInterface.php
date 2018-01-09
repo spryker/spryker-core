@@ -9,12 +9,10 @@ namespace Spryker\Client\AvailabilityStorage\Dependency\Client;
 
 interface AvailabilityStorageToStorageClientInterface
 {
-
     /**
      * @param string $key
      *
      * @return array
      */
     public function get($key);
-
 }

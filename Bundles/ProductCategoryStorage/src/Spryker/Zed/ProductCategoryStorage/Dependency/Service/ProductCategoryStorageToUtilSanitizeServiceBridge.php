@@ -9,14 +9,13 @@ namespace Spryker\Zed\ProductCategoryStorage\Dependency\Service;
 
 class ProductCategoryStorageToUtilSanitizeServiceBridge implements ProductCategoryStorageToUtilSanitizeServiceInterface
 {
-
     /**
      * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
      */
     protected $utilSanitizeService;
 
     /**
-     * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
+     * @param \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
      */
     public function __construct($utilSanitizeService)
     {
@@ -32,5 +31,4 @@ class ProductCategoryStorageToUtilSanitizeServiceBridge implements ProductCatego
     {
         return $this->utilSanitizeService->arrayFilterRecursive($array);
     }
-
 }

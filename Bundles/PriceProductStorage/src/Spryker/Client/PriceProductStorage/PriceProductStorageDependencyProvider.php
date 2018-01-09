@@ -7,16 +7,15 @@
 
 namespace Spryker\Client\PriceProductStorage;
 
+use Spryker\Client\Kernel\AbstractDependencyProvider;
+use Spryker\Client\Kernel\Container;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductBridge;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageBridge;
 use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceBridge;
-use Spryker\Client\Kernel\AbstractDependencyProvider;
-use Spryker\Client\Kernel\Container;
 use Spryker\Shared\Kernel\Store;
 
 class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
 {
-
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
     const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
@@ -38,9 +37,9 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addStorageClient(Container $container): Container
     {
@@ -52,9 +51,9 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addPriceProductClient(Container $container): Container
     {
@@ -66,9 +65,9 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addSynchronizationService(Container $container): Container
     {
@@ -80,9 +79,9 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addStore(Container $container): Container
     {
@@ -92,5 +91,4 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

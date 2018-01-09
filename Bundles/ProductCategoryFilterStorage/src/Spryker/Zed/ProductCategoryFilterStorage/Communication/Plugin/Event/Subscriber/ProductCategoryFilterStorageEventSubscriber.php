@@ -18,7 +18,6 @@ use Spryker\Zed\ProductCategoryFilterStorage\Communication\Plugin\Event\Listener
  */
 class ProductCategoryFilterStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -31,10 +30,8 @@ class ProductCategoryFilterStorageEventSubscriber extends AbstractPlugin impleme
         $eventCollection
             ->addListenerQueued(ProductCategoryFilterEvents::ENTITY_SPY_PRODUCT_CATEGORY_FILTER_CREATE, new ProductCategoryFilterPublishStorageListener())
             ->addListenerQueued(ProductCategoryFilterEvents::ENTITY_SPY_PRODUCT_CATEGORY_FILTER_UPDATE, new ProductCategoryFilterPublishStorageListener())
-            ->addListenerQueued(ProductCategoryFilterEvents::ENTITY_SPY_PRODUCT_CATEGORY_FILTER_DELETE, new ProductCategoryFilterPublishStorageListener())
-            ;
+            ->addListenerQueued(ProductCategoryFilterEvents::ENTITY_SPY_PRODUCT_CATEGORY_FILTER_DELETE, new ProductCategoryFilterPublishStorageListener());
 
         return $eventCollection;
     }
-
 }

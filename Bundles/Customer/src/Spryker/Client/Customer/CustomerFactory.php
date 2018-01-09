@@ -7,9 +7,6 @@
 
 namespace Spryker\Client\Customer;
 
-use Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface;
-use Spryker\Client\Customer\Dependency\Plugin\CustomerSessionSetPluginInterface;
-use Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface;
 use Spryker\Client\Customer\Session\CustomerSession;
 use Spryker\Client\Customer\Zed\CustomerStub;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -40,7 +37,7 @@ class CustomerFactory extends AbstractFactory
     }
 
     /**
-     * @return CustomerSessionGetPluginInterface[]
+     * @return \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface[]
      */
     public function getCustomerSessionGetPlugins()
     {
@@ -48,7 +45,7 @@ class CustomerFactory extends AbstractFactory
     }
 
     /**
-     * @return CustomerSessionSetPluginInterface[]
+     * @return \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionSetPluginInterface[]
      */
     public function getCustomerSessionSetPlugin()
     {
@@ -56,7 +53,7 @@ class CustomerFactory extends AbstractFactory
     }
 
     /**
-     * @return DefaultAddressChangePluginInterface[]
+     * @return \Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface[]
      */
     public function getDefaultAddressChangePlugins()
     {

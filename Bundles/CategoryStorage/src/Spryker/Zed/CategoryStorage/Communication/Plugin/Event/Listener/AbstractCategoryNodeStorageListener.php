@@ -20,7 +20,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -59,7 +58,7 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
     {
         foreach ($categoryNodes as $categoryNodeId => $categoryNodeWithLocales) {
             foreach ($categoryNodeWithLocales as $localeName => $categoryNodeWithLocale) {
-                if (isset($spyCategoryNodeStorageEntities[$categoryNodeId][$localeName]))  {
+                if (isset($spyCategoryNodeStorageEntities[$categoryNodeId][$localeName])) {
                     $this->storeDataSet($categoryNodeWithLocale, $spyCategoryNodeStorageEntities[$categoryNodeId][$localeName], $localeName);
                 } else {
                     $this->storeDataSet($categoryNodeWithLocale, null, $localeName);
@@ -71,10 +70,11 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
     /**
      * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer $categoryNodeStorageTransfer
      * @param \Orm\Zed\CategoryStorage\Persistence\SpyCategoryNodeStorage|null $spyCategoryNodeStorageEntity
+     * @param string $localeName
      *
      * @return void
      */
-    protected function storeDataSet(CategoryNodeStorageTransfer $categoryNodeStorageTransfer, SpyCategoryNodeStorage $spyCategoryNodeStorageEntity = null, $localeName)
+    protected function storeDataSet(CategoryNodeStorageTransfer $categoryNodeStorageTransfer, SpyCategoryNodeStorage $spyCategoryNodeStorageEntity, $localeName)
     {
         if ($spyCategoryNodeStorageEntity === null) {
             $spyCategoryNodeStorageEntity = new SpyCategoryNodeStorage();
@@ -180,7 +180,7 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
     }
 
     /**
-     * @param $idCategoryNode
+     * @param int $idCategoryNode
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode[] $categoryNodes
      *
      * @return array
@@ -200,7 +200,7 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
     }
 
     /**
-     * @param $fkCategoryNodeParent
+     * @param int $fkCategoryNodeParent
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode[] $categoryNodes
      *
      * @return array
@@ -230,5 +230,4 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
     {
         return $this->getFactory()->getStore();
     }
-
 }

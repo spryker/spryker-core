@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductLabelStorageQueryContainer extends AbstractQueryContainer implements ProductLabelStorageQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -93,5 +92,4 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
             ->joinWithSpyProductLabel()
             ->addAnd(SpyProductLabelTableMap::COL_IS_ACTIVE, true, Criteria::EQUAL);
     }
-
 }

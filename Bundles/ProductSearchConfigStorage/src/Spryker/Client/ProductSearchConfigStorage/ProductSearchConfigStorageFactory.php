@@ -8,13 +8,11 @@
 namespace Spryker\Client\ProductSearchConfigStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductSearchConfigStorage\Dependency\Client\ProductSearchConfigStorageToStorageClientInterface;
-use Spryker\Client\ProductSearchConfigStorage\Dependency\Service\ProductSearchConfigStorageToSynchronizationServiceInterface;
 
 class ProductSearchConfigStorageFactory extends AbstractFactory
 {
     /**
-     * @return ProductSearchConfigStorageToStorageClientInterface
+     * @return \Spryker\Client\ProductSearchConfigStorage\Dependency\Client\ProductSearchConfigStorageToStorageClientInterface
      */
     public function getStorageClient()
     {
@@ -22,7 +20,7 @@ class ProductSearchConfigStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return ProductSearchConfigStorageToSynchronizationServiceInterface
+     * @return \Spryker\Client\ProductSearchConfigStorage\Dependency\Service\ProductSearchConfigStorageToSynchronizationServiceInterface
      */
     public function getSynchronizationService()
     {

@@ -25,7 +25,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 abstract class AbstractNavigationStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -80,7 +79,7 @@ abstract class AbstractNavigationStorageListener extends AbstractPlugin implemen
      *
      * @return void
      */
-    protected function storeDataSet(NavigationTreeTransfer $navigationTreeByLocaleTransfer, SpyNavigationStorage $spyNavigationStorage = null, $localeName)
+    protected function storeDataSet(NavigationTreeTransfer $navigationTreeByLocaleTransfer, SpyNavigationStorage $spyNavigationStorage, $localeName)
     {
         if ($spyNavigationStorage === null) {
             $spyNavigationStorage = new SpyNavigationStorage();
@@ -114,7 +113,6 @@ abstract class AbstractNavigationStorageListener extends AbstractPlugin implemen
                 $localeTransfer = (new LocaleTransfer())->fromArray($locale->toArray(), true);
                 $navigationTrees[$navigationId][$localeTransfer->getLocaleName()] = $this->getFactory()->getNavigationFacade()->findNavigationTree($navigationTransfer, $localeTransfer);
             }
-
         }
 
         return $navigationTrees;
@@ -199,5 +197,4 @@ abstract class AbstractNavigationStorageListener extends AbstractPlugin implemen
 
         return $url;
     }
-
 }

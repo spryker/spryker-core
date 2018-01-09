@@ -46,7 +46,7 @@ class AbstractProductCategoryFilterStorageListener extends AbstractPlugin
         foreach ($productCategoryFilters as $idCategory => $filterData) {
             //TODO use utilEncoding
             $filterDataArray = json_decode($filterData, true);
-            if (isset($categoryFilterStorageEntitiesByCategoryIds[$idCategory]))  {
+            if (isset($categoryFilterStorageEntitiesByCategoryIds[$idCategory])) {
                 $this->storeDataSet($idCategory, $filterDataArray, $categoryFilterStorageEntitiesByCategoryIds[$idCategory]);
             } else {
                 $this->storeDataSet($idCategory, $filterDataArray);
@@ -57,7 +57,7 @@ class AbstractProductCategoryFilterStorageListener extends AbstractPlugin
     /**
      * @param int $idCategory
      * @param array $filterData
-     * @param SpyProductCategoryFilterStorage|null $spyProductCategoryFilterStorage
+     * @param \Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorage|null $spyProductCategoryFilterStorage
      *
      * @return void
      */
@@ -108,5 +108,4 @@ class AbstractProductCategoryFilterStorageListener extends AbstractPlugin
     {
         return $this->getFactory()->getStore()->getStoreName();
     }
-
 }

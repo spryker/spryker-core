@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CmsBlockStorageClient extends AbstractClient implements CmsBlockStorageClientInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -64,5 +63,4 @@ class CmsBlockStorageClient extends AbstractClient implements CmsBlockStorageCli
             ->createCmsBlockStorage()
             ->generateBlockNameKey($name);
     }
-
 }

@@ -20,7 +20,6 @@ use Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\Navigation
  */
 class NavigationStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -45,5 +44,4 @@ class NavigationStorageEventSubscriber extends AbstractPlugin implements EventSu
 
         return $eventCollection;
     }
-
 }

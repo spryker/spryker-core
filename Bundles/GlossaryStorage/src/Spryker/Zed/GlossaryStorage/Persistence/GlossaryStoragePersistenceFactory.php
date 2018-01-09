@@ -13,11 +13,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
- * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
  */
 class GlossaryStoragePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorageQuery
      */
@@ -33,5 +32,4 @@ class GlossaryStoragePersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(GlossaryStorageDependencyProvider::QUERY_CONTAINER_GLOSSARY);
     }
-
 }

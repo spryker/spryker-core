@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductCategoryStorage\Dependency\QueryContainer;
 
 interface ProductCategoryStorageToProductCategoryQueryContainerInterface
 {
-
     /**
      * @param int $idProductAbstract
      *
@@ -23,5 +22,4 @@ interface ProductCategoryStorageToProductCategoryQueryContainerInterface
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function queryProductCategoryMappings();
-
 }

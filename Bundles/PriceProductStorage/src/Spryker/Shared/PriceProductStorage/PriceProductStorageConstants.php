@@ -9,7 +9,6 @@ namespace Spryker\Shared\PriceProductStorage;
 
 class PriceProductStorageConstants
 {
-
     /**
      * Specification:
      * - Queue name as used for processing price messages
@@ -41,5 +40,4 @@ class PriceProductStorageConstants
      * @api
      */
     const PRICE_CONCRETE_RESOURCE_NAME = 'price_product_concrete';
-
 }

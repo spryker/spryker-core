@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductPageSearch\Dependency\QueryContainer;
 
 class ProductPageSearchToCategoryQueryContainerBridge implements ProductPageSearchToCategoryQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -63,5 +62,4 @@ class ProductPageSearchToCategoryQueryContainerBridge implements ProductPageSear
     {
         return $this->categoryQueryContainer->queryClosureTableByNodeId($idNode);
     }
-
 }

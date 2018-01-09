@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductPageSearch\Dependency\QueryContainer;
 
 class ProductPageToPriceProductQueryContainerBridge implements ProductPageToPriceProductQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface
      */
@@ -30,5 +29,4 @@ class ProductPageToPriceProductQueryContainerBridge implements ProductPageToPric
     {
         return $this->priceProductQueryContainer->queryPriceProduct();
     }
-
 }

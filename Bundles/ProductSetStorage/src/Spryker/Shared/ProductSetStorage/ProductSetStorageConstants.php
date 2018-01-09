@@ -16,5 +16,4 @@ class ProductSetStorageConstants
      * @api
      */
     const PRODUCT_SET_RESOURCE_NAME = 'product_set';
-
 }

@@ -1,8 +1,12 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Client\ProductCategoryFilterStorage;
 
-use Generated\Shared\Transfer\ProductCategoryFilterStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -10,11 +14,12 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ProductCategoryFilterStorageClient extends AbstractClient implements ProductCategoryFilterStorageClientInterface
 {
-
     /**
+     * @api
+     *
      * @param int $idCategory
      *
-     * @return ProductCategoryFilterStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductCategoryFilterStorageTransfer|null
      */
     public function getProductCategoryFilterByIdCategory($idCategory)
     {
@@ -22,5 +27,4 @@ class ProductCategoryFilterStorageClient extends AbstractClient implements Produ
             ->createProductCategoryFilterStorageReader()
             ->getProductCategoryFilter($idCategory);
     }
-
 }

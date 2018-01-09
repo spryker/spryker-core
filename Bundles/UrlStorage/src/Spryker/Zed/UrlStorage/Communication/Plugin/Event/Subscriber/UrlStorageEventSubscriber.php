@@ -19,7 +19,6 @@ use Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\UrlStorageListene
  */
 class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -41,5 +40,4 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
 
         return $eventCollection;
     }
-
 }

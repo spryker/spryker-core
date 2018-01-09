@@ -21,7 +21,6 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -44,5 +43,4 @@ class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscr
 
         return $eventCollection;
     }
-
 }

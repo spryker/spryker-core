@@ -58,6 +58,8 @@ class PriceClient extends AbstractClient implements PriceClientInterface
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getPriceModes()

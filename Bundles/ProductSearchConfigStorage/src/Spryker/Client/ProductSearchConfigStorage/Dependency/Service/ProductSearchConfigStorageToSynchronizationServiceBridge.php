@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductSearchConfigStorage\Dependency\Service;
 
 class ProductSearchConfigStorageToSynchronizationServiceBridge implements ProductSearchConfigStorageToSynchronizationServiceInterface
 {
-
     /**
      * @var \Spryker\Service\Synchronization\SynchronizationServiceInterface
      */
@@ -34,5 +33,4 @@ class ProductSearchConfigStorageToSynchronizationServiceBridge implements Produc
     {
         return $this->synchronizationService->getStorageKeyBuilder($resourceName);
     }
-
 }

@@ -7,18 +7,15 @@
 
 namespace Spryker\Zed\ProductCategoryFilterStorage\Dependency\QueryContainer;
 
-use Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface;
-
 class ProductCategoryFilterStorageToProductCategoryFilterQueryContainerBridge implements ProductCategoryFilterStorageToProductCategoryFilterQueryContainerInterface
 {
-
     /**
-     * @var ProductCategoryFilterQueryContainerInterface
+     * @var \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface
      */
     protected $productCategoryFilter;
 
     /**
-     * @param ProductCategoryFilterQueryContainerInterface $productCategoryFilter
+     * @param \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface $productCategoryFilter
      */
     public function __construct($productCategoryFilter)
     {
@@ -32,5 +29,4 @@ class ProductCategoryFilterStorageToProductCategoryFilterQueryContainerBridge im
     {
         return $this->productCategoryFilter->queryProductCategoryFilter();
     }
-
 }

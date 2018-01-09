@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsStorage\Dependency\QueryContainer;
 
 class CmsStorageToCmsQueryContainerBridge implements CmsStorageToCmsQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -38,5 +37,4 @@ class CmsStorageToCmsQueryContainerBridge implements CmsStorageToCmsQueryContain
     {
         return $this->queryContainer->queryPages();
     }
-
 }

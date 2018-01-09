@@ -18,7 +18,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductLabelDictionaryStorageListener extends AbstractProductLabelDictionaryStorageListener implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -34,8 +33,7 @@ class ProductLabelDictionaryStorageListener extends AbstractProductLabelDictiona
         $this->preventTransaction();
         $productLabelsCount = SpyProductLabelQuery::create()->count();
 
-        if (
-            ($eventName === ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE || $eventName === ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH) &&
+        if (($eventName === ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE || $eventName === ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH) &&
             $productLabelsCount === 0
         ) {
             $this->unpublish();
@@ -43,5 +41,4 @@ class ProductLabelDictionaryStorageListener extends AbstractProductLabelDictiona
             $this->publish();
         }
     }
-
 }

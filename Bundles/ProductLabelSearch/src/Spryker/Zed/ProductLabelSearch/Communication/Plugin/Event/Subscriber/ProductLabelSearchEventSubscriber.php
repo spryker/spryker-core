@@ -19,7 +19,6 @@ use Spryker\Zed\ProductLabelSearch\Communication\Plugin\Event\Listener\ProductLa
  */
 class ProductLabelSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -35,10 +34,8 @@ class ProductLabelSearchEventSubscriber extends AbstractPlugin implements EventS
             ->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE, new ProductLabelProductAbstractSearchListener())
             ->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_CREATE, new ProductLabelSearchListener())
             ->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_UPDATE, new ProductLabelSearchListener())
-            ->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE, new ProductLabelSearchListener())
-        ;
+            ->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE, new ProductLabelSearchListener());
 
         return $eventCollection;
     }
-
 }

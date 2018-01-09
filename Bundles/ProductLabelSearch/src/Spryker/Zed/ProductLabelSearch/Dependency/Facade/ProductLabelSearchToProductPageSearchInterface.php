@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelSearch\Dependency\Facade;
 
 interface ProductLabelSearchToProductPageSearchInterface
 {
-
     /**
      * @param array $productAbstractIds
      * @param array $pageDataExpanderPluginNames
@@ -17,5 +16,4 @@ interface ProductLabelSearchToProductPageSearchInterface
      * @return void
      */
     public function refresh(array $productAbstractIds, $pageDataExpanderPluginNames = []);
-
 }

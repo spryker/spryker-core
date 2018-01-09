@@ -1,21 +1,24 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\ProductReviewSearch\Persistence;
 
 use Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearchQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductReviewSearch\Dependency\QueryContainer\ProductReviewSearchToProductReviewQueryContainerInterface;
 use Spryker\Zed\ProductReviewSearch\ProductReviewSearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductReviewSearch\ProductReviewSearchConfig getConfig()
- * @method \Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContainerInterface getQueryContainer()
  */
 class ProductReviewSearchPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
-     * @return SpyProductReviewSearchQuery
+     * @return \Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearchQuery
      */
     public function createSpyProductReviewSearchQuery()
     {
@@ -23,7 +26,7 @@ class ProductReviewSearchPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return ProductReviewSearchToProductReviewQueryContainerInterface
+     * @return \Spryker\Zed\ProductReviewSearch\Dependency\QueryContainer\ProductReviewSearchToProductReviewQueryContainerInterface
      */
     public function getProductReviewQuery()
     {

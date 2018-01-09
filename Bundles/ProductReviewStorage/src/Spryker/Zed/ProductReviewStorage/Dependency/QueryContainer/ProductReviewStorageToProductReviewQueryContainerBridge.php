@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductReviewStorage\Dependency\QueryContainer;
 
 class ProductReviewStorageToProductReviewQueryContainerBridge implements ProductReviewStorageToProductReviewQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductReview\Persistence\ProductReviewQueryContainerInterface
      */
@@ -30,5 +29,4 @@ class ProductReviewStorageToProductReviewQueryContainerBridge implements Product
     {
         return $this->productReviewQueryContainer->queryProductReview();
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearchFacadeInterface
 {
-
     /**
      * @api
      *
@@ -57,5 +56,4 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
             ->createProductAbstractPagePublisher()
             ->unpublish($productAbstractIds);
     }
-
 }

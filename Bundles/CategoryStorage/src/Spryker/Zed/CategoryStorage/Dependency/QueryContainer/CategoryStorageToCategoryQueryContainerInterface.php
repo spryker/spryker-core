@@ -9,10 +9,8 @@ namespace Spryker\Zed\CategoryStorage\Dependency\QueryContainer;
 
 interface CategoryStorageToCategoryQueryContainerInterface
 {
-
     /**
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryAllCategoryNodes();
-
 }

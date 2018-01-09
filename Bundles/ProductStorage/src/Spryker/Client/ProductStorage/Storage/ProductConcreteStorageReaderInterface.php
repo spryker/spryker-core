@@ -7,9 +7,6 @@
 
 namespace Spryker\Client\ProductStorage\Storage;
 
-use Generated\Shared\Transfer\ProductAbstractStorageTransfer;
-use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
-
 interface ProductConcreteStorageReaderInterface
 {
     /**

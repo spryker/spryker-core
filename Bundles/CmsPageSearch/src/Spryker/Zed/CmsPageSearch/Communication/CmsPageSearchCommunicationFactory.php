@@ -8,18 +8,16 @@
 namespace Spryker\Zed\CmsPageSearch\Communication;
 
 use Spryker\Zed\CmsPageSearch\CmsPageSearchDependencyProvider;
-use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToEventBehaviorFacadeInterface;
-use Spryker\Zed\CmsPageSearch\Dependency\Service\CmsPageSearchToUtilSanitizeServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CmsPageSearch\CmsPageSearchConfig getConfig()
  */
 class CmsPageSearchCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return CmsPageSearchToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\CmsPageSearch\Dependency\Service\CmsPageSearchToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -27,7 +25,7 @@ class CmsPageSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CmsPageSearchToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
@@ -65,5 +63,4 @@ class CmsPageSearchCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(CmsPageSearchDependencyProvider::FACADE_SEARCH);
     }
-
 }

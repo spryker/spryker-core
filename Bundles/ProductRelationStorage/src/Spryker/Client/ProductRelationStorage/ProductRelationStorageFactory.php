@@ -7,19 +7,16 @@
 
 namespace Spryker\Client\ProductRelationStorage;
 
+use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientInterface;
 use Spryker\Client\ProductRelationStorage\Relation\RelatedProductReader;
-use Spryker\Client\ProductRelationStorage\Relation\RelatedProductReaderInterface;
 use Spryker\Client\ProductRelationStorage\Relation\UpSellingProductReader;
-use Spryker\Client\ProductRelationStorage\Relation\UpSellingProductReaderInterface;
 use Spryker\Client\ProductRelationStorage\Storage\ProductAbstractRelationStorageReader;
-use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface;
 
 class ProductRelationStorageFactory extends AbstractFactory
 {
     /**
-     * @return RelatedProductReaderInterface
+     * @return \Spryker\Client\ProductRelationStorage\Relation\RelatedProductReaderInterface
      */
     public function createRelatedProductReader()
     {
@@ -31,7 +28,7 @@ class ProductRelationStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return UpSellingProductReaderInterface
+     * @return \Spryker\Client\ProductRelationStorage\Relation\UpSellingProductReaderInterface
      */
     public function createUpSellingProductReader()
     {
@@ -67,7 +64,7 @@ class ProductRelationStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return ProductRelationStorageToProductStorageClientInterface
+     * @return \Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientInterface
      */
     public function getProductStorageClient(): ProductRelationStorageToProductStorageClientInterface
     {
@@ -75,7 +72,7 @@ class ProductRelationStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return ProductViewExpanderPluginInterface[]
+     * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
     protected function getRelatedProductExpanderPlugins()
     {

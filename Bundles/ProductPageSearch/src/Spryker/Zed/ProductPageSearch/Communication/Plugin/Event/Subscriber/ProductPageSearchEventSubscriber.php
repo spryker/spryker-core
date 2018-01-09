@@ -34,11 +34,10 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  */
 class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -89,8 +88,7 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
             ->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE, new ProductPagePriceTypeSearchListener())
             ->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE, new ProductPagePriceProductStoreSearchListener())
             ->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE, new ProductPagePriceProductStoreSearchListener())
-            ->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_DELETE, new ProductPagePriceProductStoreSearchListener())
-        ;
+            ->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_DELETE, new ProductPagePriceProductStoreSearchListener());
     }
 
     /**
@@ -128,5 +126,4 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
             ->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_UPDATE, new ProductPageCategoryNodeSearchListener())
             ->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE, new ProductPageCategoryNodeSearchListener());
     }
-
 }

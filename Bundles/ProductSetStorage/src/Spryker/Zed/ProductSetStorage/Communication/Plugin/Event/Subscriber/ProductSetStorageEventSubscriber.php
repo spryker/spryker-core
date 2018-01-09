@@ -26,7 +26,6 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -60,5 +59,4 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
 
         return $eventCollection;
     }
-
 }

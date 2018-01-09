@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CmsStorage;
 
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface;
 use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToCmsBridge;
 use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\CmsStorage\Dependency\QueryContainer\CmsStorageToCmsQueryContainerBridge;
@@ -19,7 +18,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_CMS_PAGE = 'QUERY_CONTAINER_CMS_PAGE';
     const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
@@ -77,11 +75,10 @@ class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return CmsPageDataExpanderPluginInterface[]
+     * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
      */
     protected function getContentWidgetDataExpander()
     {
         return [];
     }
-
 }

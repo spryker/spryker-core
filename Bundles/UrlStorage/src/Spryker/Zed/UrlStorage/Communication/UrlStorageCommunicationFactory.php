@@ -8,19 +8,16 @@
 namespace Spryker\Zed\UrlStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\UrlStorage\UrlStorageDependencyProvider;
 
 /**
- * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\UrlStorage\UrlStorageConfig getConfig()
  */
 class UrlStorageCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
-     * @return UrlStorageToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -28,7 +25,7 @@ class UrlStorageCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return UrlStorageToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
@@ -42,5 +39,4 @@ class UrlStorageCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(UrlStorageDependencyProvider::STORE);
     }
-
 }

@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener;
 
-use \ArrayObject;
+use ArrayObject;
+use DateTime;
 use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
 use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use \DateTime;
 use Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabel;
 
 /**
@@ -22,7 +22,6 @@ use Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabel;
  */
 class AbstractProductLabelDictionaryStorageListener extends AbstractPlugin
 {
-
     /**
      * @return void
      */
@@ -66,7 +65,7 @@ class AbstractProductLabelDictionaryStorageListener extends AbstractPlugin
     }
 
     /**
-     * @param ProductLabelDictionaryItemTransfer[] $productLabelDictionaryItems
+     * @param \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[] $productLabelDictionaryItems
      *
      * @return void
      */
@@ -78,7 +77,7 @@ class AbstractProductLabelDictionaryStorageListener extends AbstractPlugin
             $productLabelDictionaryStorageTransfer = new ProductLabelDictionaryStorageTransfer();
             $productLabelDictionaryStorageTransfer->setItems(new ArrayObject($productLabelDictionaryItemTransfers));
 
-            if (isset($spyProductLabelStorageEntities[$localeName]))  {
+            if (isset($spyProductLabelStorageEntities[$localeName])) {
                 $this->storeDataSet($productLabelDictionaryStorageTransfer, $localeName, $spyProductLabelStorageEntities[$localeName]);
 
                 continue;
@@ -89,7 +88,7 @@ class AbstractProductLabelDictionaryStorageListener extends AbstractPlugin
     }
 
     /**
-     * @param ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer
      * @param string $localeName
      * @param \Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage|null $spyProductLabelStorageEntity
      *
@@ -111,7 +110,7 @@ class AbstractProductLabelDictionaryStorageListener extends AbstractPlugin
     }
 
     /**
-     * @return SpyProductLabelLocalizedAttributes[]
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes[]
      */
     protected function findProductLabelLocalizedEntities()
     {
@@ -119,9 +118,9 @@ class AbstractProductLabelDictionaryStorageListener extends AbstractPlugin
     }
 
     /**
-     * @param SpyProductLabelLocalizedAttributes $spyProductLabelLocalizedAttributeEntity
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes $spyProductLabelLocalizedAttributeEntity
      *
-     * @return ProductLabelDictionaryItemTransfer
+     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer
      */
     protected function mapProductLabelDictionaryItem(SpyProductLabelLocalizedAttributes $spyProductLabelLocalizedAttributeEntity)
     {
@@ -160,7 +159,7 @@ class AbstractProductLabelDictionaryStorageListener extends AbstractPlugin
     }
 
     /**
-     * @param SpyProductLabelLocalizedAttributes $spyProductLabelLocalizedAttributes
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes $spyProductLabelLocalizedAttributes
      *
      * @return bool
      */
@@ -173,7 +172,7 @@ class AbstractProductLabelDictionaryStorageListener extends AbstractPlugin
     }
 
     /**
-     * @param SpyProductLabel $productLabel
+     * @param \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabel $productLabel
      *
      * @return bool
      */
@@ -193,7 +192,7 @@ class AbstractProductLabelDictionaryStorageListener extends AbstractPlugin
     }
 
     /**
-     * @param SpyProductLabel $productLabel
+     * @param \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabel $productLabel
      *
      * @return bool
      */
@@ -211,5 +210,4 @@ class AbstractProductLabelDictionaryStorageListener extends AbstractPlugin
 
         return true;
     }
-
 }

@@ -19,7 +19,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductLabelSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -40,10 +39,8 @@ class ProductLabelSearchListener extends AbstractPlugin implements EventBulkHand
             ->withColumn(SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT, 'fkProductAbstract')
             ->select(['fkProductAbstract'])
             ->find()
-            ->getData()
-        ;
+            ->getData();
 
         $this->getFactory()->getProductPageSearchFacade()->refresh($productAbstractIds, [ProductLabelSearchConfig::PLUGIN_PRODUCT_LABEL_DATA]);
     }
-
 }

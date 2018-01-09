@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -8,20 +9,17 @@ namespace Spryker\Zed\CmsBlockProductStorage\Communication\Plugin\Event\Listener
 
 use Generated\Shared\Transfer\CmsBlockProductTransfer;
 use Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorage;
-use Spryker\Zed\CmsBlockProductStorage\Communication\CmsBlockProductStorageCommunicationFactory;
-use Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * Class AbstractCmsBlockProductStorageListener
  *
- * @method CmsBlockProductStorageCommunicationFactory getFactory()
- * @method CmsBlockProductStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsBlockProductStorage\Communication\CmsBlockProductStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainerInterface getQueryContainer()
  */
 abstract class AbstractCmsBlockProductStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-
     /**
      * @param array $productAbstractIds
      *
@@ -56,7 +54,7 @@ abstract class AbstractCmsBlockProductStorageListener extends AbstractPlugin imp
     }
 
     /**
-     * @param CmsBlockProductTransfer[] $cmsBlockProductsTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockProductTransfer[] $cmsBlockProductsTransfer
      * @param array $spyCmsBlockProductStorageEntities
      *
      * @return void
@@ -73,8 +71,8 @@ abstract class AbstractCmsBlockProductStorageListener extends AbstractPlugin imp
     }
 
     /**
-     * @param CmsBlockProductTransfer $cmsBlockProductsTransfer
-     * @param SpyCmsBlockProductStorage|null $spyCmsBlockProductStorage
+     * @param \Generated\Shared\Transfer\CmsBlockProductTransfer $cmsBlockProductsTransfer
+     * @param \Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorage|null $spyCmsBlockProductStorage
      *
      * @return void
      */

@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class CategoryNodeCategoryTemplateSearchListener extends AbstractCategoryNodeSearchListener
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -39,5 +38,4 @@ class CategoryNodeCategoryTemplateSearchListener extends AbstractCategoryNodeSea
             $this->publish($categoryNodeIds);
         }
     }
-
 }

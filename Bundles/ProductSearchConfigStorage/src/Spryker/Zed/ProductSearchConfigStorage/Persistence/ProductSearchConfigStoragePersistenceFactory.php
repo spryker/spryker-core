@@ -13,11 +13,10 @@ use Spryker\Zed\ProductSearchConfigStorage\ProductSearchConfigStorageDependencyP
 
 /**
  * @method \Spryker\Zed\ProductSearchConfigStorage\ProductSearchConfigStorageConfig getConfig()
- * @method \Spryker\Zed\ProductSearchConfigStorage\Persistence\ProductSearchConfigStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductSearchConfigStorage\Persistence\ProductSearchConfigStorageQueryContainerInterface getQueryContainer()
  */
 class ProductSearchConfigStoragePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductSearchConfigStorage\Dependency\QueryContainer\ProductSearchConfigStorageToProductSearchQueryContainerInterface
      */
@@ -33,5 +32,4 @@ class ProductSearchConfigStoragePersistenceFactory extends AbstractPersistenceFa
     {
         return SpyProductSearchConfigStorageQuery::create();
     }
-
 }

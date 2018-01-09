@@ -41,7 +41,7 @@ abstract class AbstractProductReviewStorageListener extends AbstractPlugin imple
     {
         foreach ($productReviewEntities as $productReviewEntity) {
             $idProduct = $productReviewEntity['idProductAbstract'];
-            if (isset($spyProductAbstractReviewStorageEntities[$idProduct]))  {
+            if (isset($spyProductAbstractReviewStorageEntities[$idProduct])) {
                 $this->storeDataSet($productReviewEntity, $spyProductAbstractReviewStorageEntities[$idProduct]);
             } else {
                 $this->storeDataSet($productReviewEntity);
@@ -51,7 +51,7 @@ abstract class AbstractProductReviewStorageListener extends AbstractPlugin imple
 
     /**
      * @param array $productReview
-     * @param SpyProductAbstractReviewStorage|null $spyProductAbstractReviewStorageEntity
+     * @param \Orm\Zed\ProductReviewStorage\Persistence\SpyProductAbstractReviewStorage|null $spyProductAbstractReviewStorageEntity
      *
      * @return void
      */
@@ -92,5 +92,4 @@ abstract class AbstractProductReviewStorageListener extends AbstractPlugin imple
     {
         return $this->getFactory()->getStore()->getStoreName();
     }
-
 }

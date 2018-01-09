@@ -8,7 +8,6 @@ namespace Spryker\Zed\ProductPageSearch\Dependency\Service;
 
 class ProductPageSearchToUtilEncodingBridge implements ProductPageSearchToUtilEncodingInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -46,5 +45,4 @@ class ProductPageSearchToUtilEncodingBridge implements ProductPageSearchToUtilEn
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
-
 }

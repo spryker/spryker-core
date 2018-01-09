@@ -21,7 +21,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductSetPageSearchQueryContainer extends AbstractQueryContainer implements ProductSetPageSearchQueryContainerInterface
 {
-
     const FK_PRODUCT_RESOURCE_SET = 'fkProductSet';
 
     /**
@@ -57,11 +56,11 @@ class ProductSetPageSearchQueryContainer extends AbstractQueryContainer implemen
     /**
      * @api
      *
-     * @param $productSetIds
+     * @param array $productSetIds
      *
      * @return \Orm\Zed\ProductSetPageSearch\Persistence\SpyProductSetPageSearchQuery
      */
-    public function queryProductSetPageSearchPageByIds($productSetIds)
+    public function queryProductSetPageSearchPageByIds(array $productSetIds)
     {
         return $this->getFactory()
             ->createProductSetPageSearch()
@@ -105,5 +104,4 @@ class ProductSetPageSearchQueryContainer extends AbstractQueryContainer implemen
 
         return $query;
     }
-
 }

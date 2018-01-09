@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class CmsStorageToCmsBridge implements CmsStorageToCmsInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Business\CmsFacadeInterface
      */
@@ -37,8 +36,8 @@ class CmsStorageToCmsBridge implements CmsStorageToCmsInterface
     }
 
     /**
-     * @param CmsVersionDataTransfer $cmsVersionDataTransfer
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $cmsVersionDataTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
      */
@@ -46,5 +45,4 @@ class CmsStorageToCmsBridge implements CmsStorageToCmsInterface
     {
         return $this->cmsFacade->extractLocaleCmsPageDataTransfer($cmsVersionDataTransfer, $localeTransfer);
     }
-
 }

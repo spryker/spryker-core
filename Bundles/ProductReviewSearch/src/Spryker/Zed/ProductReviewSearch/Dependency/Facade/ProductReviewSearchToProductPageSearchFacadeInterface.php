@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductReviewSearch\Dependency\Facade;
 
 interface ProductReviewSearchToProductPageSearchFacadeInterface
 {
-
     /**
      * @param array $productAbstractIds
      * @param array $pageDataExpanderPluginNames
@@ -17,5 +16,4 @@ interface ProductReviewSearchToProductPageSearchFacadeInterface
      * @return void
      */
     public function refresh(array $productAbstractIds, $pageDataExpanderPluginNames = []);
-
 }

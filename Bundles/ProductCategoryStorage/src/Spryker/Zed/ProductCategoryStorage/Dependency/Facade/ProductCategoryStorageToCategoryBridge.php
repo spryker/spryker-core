@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductCategoryStorage\Dependency\Facade;
 
 class ProductCategoryStorageToCategoryBridge implements ProductCategoryStorageToCategoryInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Business\CategoryFacadeInterface
      */
@@ -32,5 +31,4 @@ class ProductCategoryStorageToCategoryBridge implements ProductCategoryStorageTo
     {
         return $this->categoryFacade->getAllNodesByIdCategory($idCategory);
     }
-
 }

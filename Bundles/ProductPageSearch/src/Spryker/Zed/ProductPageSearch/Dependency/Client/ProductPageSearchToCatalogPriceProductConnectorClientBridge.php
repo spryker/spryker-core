@@ -1,23 +1,21 @@
 <?php
+
 /**
- * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductPageSearch\Dependency\Client;
 
-use Spryker\Client\CatalogPriceProductConnector\CatalogPriceProductConnectorClientInterface;
-
 class ProductPageSearchToCatalogPriceProductConnectorClientBridge implements ProductPageSearchToCatalogPriceProductConnectorClientInterface
 {
-
     /**
-     * @var CatalogPriceProductConnectorClientInterface
+     * @var \Spryker\Client\CatalogPriceProductConnector\CatalogPriceProductConnectorClientInterface
      */
     protected $catalogPriceProductConnectorClient;
 
     /**
-     * @param CatalogPriceProductConnectorClientInterface $catalogPriceProductConnectorClient
+     * @param \Spryker\Client\CatalogPriceProductConnector\CatalogPriceProductConnectorClientInterface $catalogPriceProductConnectorClient
      */
     public function __construct($catalogPriceProductConnectorClient)
     {
@@ -35,5 +33,4 @@ class ProductPageSearchToCatalogPriceProductConnectorClientBridge implements Pro
     {
         return $this->catalogPriceProductConnectorClient->buildPricedIdentifierFor($priceType, $currencyIsoCode, $priceMode);
     }
-
 }

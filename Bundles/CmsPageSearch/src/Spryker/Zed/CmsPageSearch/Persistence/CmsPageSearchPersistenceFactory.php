@@ -13,11 +13,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CmsPageSearch\CmsPageSearchConfig getConfig()
- * @method \Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface getQueryContainer()
  */
 class CmsPageSearchPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearchQuery
      */
@@ -41,5 +40,4 @@ class CmsPageSearchPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(CmsPageSearchDependencyProvider::QUERY_CONTAINER_CMS_PAGE);
     }
-
 }

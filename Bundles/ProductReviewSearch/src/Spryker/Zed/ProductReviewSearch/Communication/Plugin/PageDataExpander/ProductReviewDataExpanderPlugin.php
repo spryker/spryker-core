@@ -18,7 +18,6 @@ use Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContaine
  */
 class ProductReviewDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
-
     /**
      * @param array $productData
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
@@ -34,5 +33,4 @@ class ProductReviewDataExpanderPlugin extends AbstractPlugin implements ProductP
         $productAbstractPageSearchTransfer->setAverageRating($productReviewArray[ProductReviewSearchQueryContainer::FIELD_AVERAGE_RATING]);
         $productAbstractPageSearchTransfer->setReviewCount($productReviewArray[ProductReviewSearchQueryContainer::FIELD_COUNT]);
     }
-
 }

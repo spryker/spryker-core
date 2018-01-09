@@ -9,12 +9,10 @@ namespace Spryker\Zed\CmsStorage\Dependency\QueryContainer;
 
 interface CmsStorageToLocaleQueryContainerInterface
 {
-
     /**
      * @api
      *
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
     public function queryLocales();
-
 }

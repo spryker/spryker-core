@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductSetStorage\Storage;
 
 interface ProductSetStorageReaderInterface
 {
-
     /**
      * @param int $idProductSet
      * @param string $localeName

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetStorage\Dependency\QueryContainer;
 
 class ProductSetStorageToProductSetQueryContainerBridge implements ProductSetStorageToProductSetQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainerInterface
      */
@@ -38,5 +37,4 @@ class ProductSetStorageToProductSetQueryContainerBridge implements ProductSetSto
     {
         return $this->productSetQueryContainer->queryAllProductSetData();
     }
-
 }

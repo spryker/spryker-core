@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -10,30 +10,29 @@ namespace Spryker\Client\ProductRelationStorage\Relation;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientInterface;
 use Spryker\Client\ProductRelationStorage\Storage\ProductAbstractRelationStorageReaderInterface;
-use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface;
 use Spryker\Shared\ProductRelation\ProductRelationTypes;
 
 class RelatedProductReader implements RelatedProductReaderInterface
 {
     /**
-     * @var ProductAbstractRelationStorageReaderInterface
+     * @var \Spryker\Client\ProductRelationStorage\Storage\ProductAbstractRelationStorageReaderInterface
      */
     protected $productAbstractRelationStorageReader;
 
     /**
-     * @var ProductRelationStorageToProductStorageClientInterface
+     * @var \Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientInterface
      */
     protected $productStorageClient;
 
     /**
-     * @var ProductViewExpanderPluginInterface[]
+     * @var \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
     protected $productViewExpanderPlugins;
 
     /**
-     * @param ProductAbstractRelationStorageReaderInterface $productAbstractRelationStorageReader
-     * @param ProductRelationStorageToProductStorageClientInterface $productStorageClient
-     * @param ProductViewExpanderPluginInterface[] $productViewExpanderPlugins
+     * @param \Spryker\Client\ProductRelationStorage\Storage\ProductAbstractRelationStorageReaderInterface $productAbstractRelationStorageReader
+     * @param \Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientInterface $productStorageClient
+     * @param \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[] $productViewExpanderPlugins
      */
     public function __construct(
         ProductAbstractRelationStorageReaderInterface $productAbstractRelationStorageReader,
@@ -49,7 +48,7 @@ class RelatedProductReader implements RelatedProductReaderInterface
      * @param int $idProductAbstract
      * @param string $localeName
      *
-     * @return ProductViewTransfer[]
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
     public function findRelatedProducts($idProductAbstract, $localeName)
     {
@@ -110,7 +109,7 @@ class RelatedProductReader implements RelatedProductReaderInterface
      * @param string $localeName
      * @param array $productStorageData
      *
-     * @return ProductViewTransfer
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     protected function createProductView($localeName, array $productStorageData)
     {

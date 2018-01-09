@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Queue\Business\Task;
 
 use Spryker\Client\Queue\QueueClientInterface;
+use Spryker\Shared\Queue\QueueConfig as SHaredConfig;
 use Spryker\Zed\Queue\Business\Exception\MissingQueuePluginException;
 use Spryker\Zed\Queue\QueueConfig;
-use Spryker\Shared\Queue\QueueConfig as SHaredConfig;
 
 class TaskManager implements TaskManagerInterface
 {

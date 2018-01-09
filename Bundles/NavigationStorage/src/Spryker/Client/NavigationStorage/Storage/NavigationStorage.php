@@ -16,14 +16,13 @@ use Spryker\Shared\NavigationStorage\NavigationStorageConstants;
 
 class NavigationStorage implements NavigationStorageInterface
 {
-
     /**
-     * @var NavigationStorageToStorageClientInterface
+     * @var \Spryker\Client\NavigationStorage\Dependency\Client\NavigationStorageToStorageClientInterface
      */
     protected $storageClient;
 
     /**
-     * @var NavigationStorageToSynchronizationServiceInterface
+     * @var \Spryker\Client\NavigationStorage\Dependency\Service\NavigationStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
 
@@ -33,8 +32,8 @@ class NavigationStorage implements NavigationStorageInterface
     protected $translations = [];
 
     /**
-     * @param NavigationStorageToStorageClientInterface $storageClient
-     * @param NavigationStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\NavigationStorage\Dependency\Client\NavigationStorageToStorageClientInterface $storageClient
+     * @param \Spryker\Client\NavigationStorage\Dependency\Service\NavigationStorageToSynchronizationServiceInterface $synchronizationService
      */
     public function __construct(NavigationStorageToStorageClientInterface $storageClient, NavigationStorageToSynchronizationServiceInterface $synchronizationService)
     {
@@ -74,8 +73,8 @@ class NavigationStorage implements NavigationStorageInterface
     }
 
     /**
-     * @param $keyName
-     * @param $localeName
+     * @param string $keyName
+     * @param string $localeName
      *
      * @return string
      */
@@ -96,5 +95,4 @@ class NavigationStorage implements NavigationStorageInterface
     {
         return Store::getInstance()->getStoreName();
     }
-
 }

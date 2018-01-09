@@ -9,7 +9,6 @@ namespace Spryker\Zed\Queue\Business\Task;
 
 interface TaskManagerInterface
 {
-
     /**
      * @param string $queueName
      * @param array $options

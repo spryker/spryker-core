@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\ProductCategoryFilterStorage\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -9,8 +14,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductCategoryFilterStorageQueryContainer extends AbstractQueryContainer implements ProductCategoryFilterStorageQueryContainerInterface
 {
-
     /**
+     * @api
+     *
      * @param array $idCategories
      *
      * @return $this|\Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorageQuery
@@ -23,6 +29,8 @@ class ProductCategoryFilterStorageQueryContainer extends AbstractQueryContainer 
     }
 
     /**
+     * @api
+     *
      * @param array $categoryIds
      *
      * @return $this|\Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery

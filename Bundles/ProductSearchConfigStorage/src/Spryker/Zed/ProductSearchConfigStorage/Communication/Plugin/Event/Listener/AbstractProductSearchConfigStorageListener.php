@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AbstractProductSearchConfigStorageListener extends AbstractPlugin
 {
-
     /**
      * @return void
      */
@@ -51,7 +50,7 @@ class AbstractProductSearchConfigStorageListener extends AbstractPlugin
     }
 
     /**
-     * @param array $productSearchConfigs
+     * @param \Generated\Shared\Transfer\ProductSearchConfigStorageTransfer $searchConfigExtensionTransfer
      * @param \Orm\Zed\ProductSearchConfigStorage\Persistence\SpyProductSearchConfigStorage|null $spyProductSearchConfigStorageEntity
      *
      * @return void
@@ -82,5 +81,4 @@ class AbstractProductSearchConfigStorageListener extends AbstractPlugin
     {
         return $this->getFactory()->getStore()->getStoreName();
     }
-
 }

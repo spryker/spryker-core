@@ -20,7 +20,6 @@ use Spryker\Zed\ProductRelationStorage\Communication\Plugin\Event\Listener\Produ
  */
 class ProductRelationStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -42,5 +41,4 @@ class ProductRelationStorageEventSubscriber extends AbstractPlugin implements Ev
 
         return $eventCollection;
     }
-
 }

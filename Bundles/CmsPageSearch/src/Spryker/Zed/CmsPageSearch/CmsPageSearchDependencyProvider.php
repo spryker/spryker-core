@@ -20,7 +20,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_CMS_PAGE = 'QUERY_CONTAINER_CMS_PAGE';
     const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
     const SERVICE_UTIL_SYNCHRONIZATION = 'SERVICE_UTIL_SYNCHRONIZATION';
@@ -82,5 +81,4 @@ class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

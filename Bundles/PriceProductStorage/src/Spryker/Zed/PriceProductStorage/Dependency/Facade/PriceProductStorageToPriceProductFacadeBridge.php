@@ -7,18 +7,15 @@
 
 namespace Spryker\Zed\PriceProductStorage\Dependency\Facade;
 
-use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
-
 class PriceProductStorageToPriceProductFacadeBridge
 {
-
     /**
-     * @var PriceProductFacadeInterface
+     * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
      */
     protected $priceProductFacade;
 
     /**
-     * @param PriceProductFacadeInterface $priceProductFacade
+     * @param \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface $priceProductFacade
      */
     public function __construct($priceProductFacade)
     {

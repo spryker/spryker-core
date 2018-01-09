@@ -7,15 +7,12 @@
 
 namespace Spryker\Client\CategoryStorage\Storage;
 
-use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
-
 interface CategoryTreeStorageReaderInterface
 {
-
     /**
      * @param string $locale
      *
-     * @return CategoryNodeStorageTransfer[]
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
      */
     public function getCategories($locale);
 }

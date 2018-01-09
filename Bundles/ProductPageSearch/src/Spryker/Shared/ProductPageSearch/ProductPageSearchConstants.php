@@ -9,7 +9,6 @@ namespace Spryker\Shared\ProductPageSearch;
 
 class ProductPageSearchConstants
 {
-
     /**
      * Specification:
      * - Queue name as used for processing Product messages
@@ -33,5 +32,4 @@ class ProductPageSearchConstants
      * @api
      */
     const PRODUCT_ABSTRACT_RESOURCE_NAME = 'product_abstract';
-
 }

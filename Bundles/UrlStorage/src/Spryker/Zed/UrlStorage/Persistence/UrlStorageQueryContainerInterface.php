@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface UrlStorageQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -47,5 +46,4 @@ interface UrlStorageQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlRedirectStorageQuery
      */
     public function queryRedirectStorageByIds(array $redirectIds);
-
 }

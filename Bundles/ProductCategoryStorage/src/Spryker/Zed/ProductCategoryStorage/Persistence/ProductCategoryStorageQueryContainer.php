@@ -18,7 +18,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implements ProductCategoryStorageQueryContainerInterface
 {
-
     const FK_CATEGORY = 'fkCategory';
 
     /**
@@ -154,5 +153,4 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
             ->filterByIdCategoryNode_In($nodeIds)
             ->select(SpyCategoryNodeTableMap::COL_FK_CATEGORY);
     }
-
 }

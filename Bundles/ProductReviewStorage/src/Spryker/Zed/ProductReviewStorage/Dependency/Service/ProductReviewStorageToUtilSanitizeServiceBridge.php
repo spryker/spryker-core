@@ -9,14 +9,13 @@ namespace Spryker\Zed\ProductReviewStorage\Dependency\Service;
 
 class ProductReviewStorageToUtilSanitizeServiceBridge implements ProductReviewStorageToUtilSanitizeServiceInterface
 {
-
     /**
      * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
      */
     protected $utilSanitizeService;
 
     /**
-     * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
+     * @param \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
      */
     public function __construct($utilSanitizeService)
     {
@@ -32,5 +31,4 @@ class ProductReviewStorageToUtilSanitizeServiceBridge implements ProductReviewSt
     {
         return $this->utilSanitizeService->arrayFilterRecursive($array);
     }
-
 }

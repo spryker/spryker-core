@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CmsPageSearchQueryContainer extends AbstractQueryContainer implements CmsPageSearchQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -83,5 +82,4 @@ class CmsPageSearchQueryContainer extends AbstractQueryContainer implements CmsP
 
         return $queryString;
     }
-
 }

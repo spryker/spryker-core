@@ -21,7 +21,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 abstract class AbstractCategoryTreeStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -70,7 +69,7 @@ abstract class AbstractCategoryTreeStorageListener extends AbstractPlugin implem
      *
      * @return void
      */
-    protected function storeDataSet(array $categoryNodeStorageTransfers, SpyCategoryTreeStorage $spyCategoryTreeStorage = null, $localeName)
+    protected function storeDataSet(array $categoryNodeStorageTransfers, SpyCategoryTreeStorage $spyCategoryTreeStorage, $localeName)
     {
         if ($spyCategoryTreeStorage === null) {
             $spyCategoryTreeStorage = new SpyCategoryTreeStorage();
@@ -123,7 +122,7 @@ abstract class AbstractCategoryTreeStorageListener extends AbstractPlugin implem
     }
 
     /**
-     * @param $idCategoryNode
+     * @param int $idCategoryNode
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode[] $categoryNodes
      *
      * @return array
@@ -176,5 +175,4 @@ abstract class AbstractCategoryTreeStorageListener extends AbstractPlugin implem
 
         return $categoryNodeStorageTransfer;
     }
-
 }

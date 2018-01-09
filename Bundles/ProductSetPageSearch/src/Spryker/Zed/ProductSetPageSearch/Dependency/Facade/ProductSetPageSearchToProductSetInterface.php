@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetPageSearch\Dependency\Facade;
 
 interface ProductSetPageSearchToProductSetInterface
 {
-
     /**
      * @api
      *
@@ -19,5 +18,4 @@ interface ProductSetPageSearchToProductSetInterface
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function getCombinedProductSetImageSets($idProductSet, $idLocale);
-
 }

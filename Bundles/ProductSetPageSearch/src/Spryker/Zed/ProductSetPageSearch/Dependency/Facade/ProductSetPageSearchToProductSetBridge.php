@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetPageSearch\Dependency\Facade;
 
 class ProductSetPageSearchToProductSetBridge implements ProductSetPageSearchToProductSetInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSet\Business\ProductSetFacadeInterface
      */
@@ -33,5 +32,4 @@ class ProductSetPageSearchToProductSetBridge implements ProductSetPageSearchToPr
     {
         return $this->productSetFacade->getCombinedProductSetImageSets($idProductSet, $idLocale);
     }
-
 }

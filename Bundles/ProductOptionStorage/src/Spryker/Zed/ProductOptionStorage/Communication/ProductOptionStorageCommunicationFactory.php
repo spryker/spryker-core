@@ -8,20 +8,16 @@
 namespace Spryker\Zed\ProductOptionStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface;
-use Spryker\Zed\ProductOptionStorage\Dependency\Service\ProductOptionStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\ProductOptionStorage\ProductOptionStorageDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductOptionStorage\ProductOptionStorageConfig getConfig()
  */
 class ProductOptionStorageCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
-     * @return ProductOptionStorageToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\ProductOptionStorage\Dependency\Service\ProductOptionStorageToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -29,7 +25,7 @@ class ProductOptionStorageCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
-     * @return ProductOptionStorageToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
@@ -45,11 +41,10 @@ class ProductOptionStorageCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
-     * @return ProductOptionStorageToProductOptionFacadeInterface
+     * @return \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface
      */
     public function getProductOptionFacade()
     {
         return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::FACADE_PRODUCT_OPTION);
     }
-
 }

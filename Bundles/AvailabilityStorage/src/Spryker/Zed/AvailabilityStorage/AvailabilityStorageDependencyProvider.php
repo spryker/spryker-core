@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Container;
 
 class AvailabilityStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_AVAILABILITY = 'QUERY_CONTAINER_AVAILABILITY';
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
@@ -48,9 +47,9 @@ class AvailabilityStorageDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
@@ -64,5 +63,4 @@ class AvailabilityStorageDependencyProvider extends AbstractBundleDependencyProv
 
         return $container;
     }
-
 }

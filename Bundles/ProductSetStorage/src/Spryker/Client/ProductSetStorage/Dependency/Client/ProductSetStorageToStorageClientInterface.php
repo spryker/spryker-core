@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductSetStorage\Dependency\Client;
 
 interface ProductSetStorageToStorageClientInterface
 {
-
     /**
      * @param string $key
      *
@@ -23,5 +22,4 @@ interface ProductSetStorageToStorageClientInterface
      * @return array
      */
     public function getMulti(array $keys);
-
 }

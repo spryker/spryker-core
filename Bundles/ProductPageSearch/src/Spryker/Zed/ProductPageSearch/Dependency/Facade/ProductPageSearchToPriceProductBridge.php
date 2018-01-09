@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductPageSearch\Dependency\Facade;
 
 class ProductPageSearchToPriceProductBridge implements ProductPageSearchToPriceProductInterface
 {
-
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
      */
@@ -43,5 +42,4 @@ class ProductPageSearchToPriceProductBridge implements ProductPageSearchToPriceP
     {
         return $this->priceProductFacade->findPricesBySkuGroupedForCurrentStore($sku);
     }
-
 }

@@ -7,15 +7,12 @@
 
 namespace Spryker\Client\ProductCategoryFilterStorage\Storage;
 
-use Generated\Shared\Transfer\ProductCategoryFilterStorageTransfer;
-
 interface ProductCategoryFilterStorageReaderInterface
 {
-
     /**
      * @param int $idCategory
      *
-     * @return ProductCategoryFilterStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductCategoryFilterStorageTransfer|null
      */
     public function getProductCategoryFilter($idCategory);
 }

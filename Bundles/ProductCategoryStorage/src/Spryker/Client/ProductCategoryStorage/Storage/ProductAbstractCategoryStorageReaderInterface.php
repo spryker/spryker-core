@@ -16,5 +16,4 @@ interface ProductAbstractCategoryStorageReaderInterface
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
      */
     public function findProductAbstractCategory($idProductAbstract, $locale);
-
 }

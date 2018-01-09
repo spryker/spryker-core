@@ -8,19 +8,16 @@
 namespace Spryker\Zed\ProductRelationStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductRelationStorage\Dependency\Facade\ProductRelationStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\ProductRelationStorage\Dependency\Service\ProductRelationStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\ProductRelationStorage\ProductRelationStorageDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductRelationStorage\ProductRelationStorageConfig getConfig()
  */
 class ProductRelationStorageCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
-     * @return ProductRelationStorageToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\ProductRelationStorage\Dependency\Service\ProductRelationStorageToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -28,12 +25,13 @@ class ProductRelationStorageCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @return ProductRelationStorageToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\ProductRelationStorage\Dependency\Facade\ProductRelationStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
         return $this->getProvidedDependency(ProductRelationStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
+
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
@@ -41,5 +39,4 @@ class ProductRelationStorageCommunicationFactory extends AbstractCommunicationFa
     {
         return $this->getProvidedDependency(ProductRelationStorageDependencyProvider::STORE);
     }
-
 }

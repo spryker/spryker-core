@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelationStorage\Dependency\QueryContainer;
 
 interface ProductRelationStorageToProductRelationQueryContainerInterface
 {
-
     /**
      * @param int $idProductRelation
      * @param int $idLocale
@@ -22,5 +21,4 @@ interface ProductRelationStorageToProductRelationQueryContainerInterface
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
      */
     public function queryAllProductRelations();
-
 }

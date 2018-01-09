@@ -8,20 +8,16 @@
 namespace Spryker\Zed\ProductPageSearch\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductPageSearch\Dependency\Client\ProductPageSearchToCatalogPriceProductConnectorClientInterface;
-use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToEventBehaviorFacadeInterface;
-use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilSanitizeServiceInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  */
 class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
-     * @return ProductPageSearchToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -29,12 +25,13 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return ProductPageSearchToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
+
     /**
      * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchInterface
      */
@@ -92,11 +89,10 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return ProductPageSearchToCatalogPriceProductConnectorClientInterface
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Client\ProductPageSearchToCatalogPriceProductConnectorClientInterface
      */
     public function getCatalogPriceProductConnectorClient()
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::CLIENT_CATALOG_PRICE_PRODUCT_CONNECTOR);
     }
-
 }

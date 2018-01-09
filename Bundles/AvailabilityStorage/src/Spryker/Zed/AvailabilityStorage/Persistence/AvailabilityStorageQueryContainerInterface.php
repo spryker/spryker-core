@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\AvailabilityStorage\Persistence;
 
-use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface AvailabilityStorageQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -32,9 +30,11 @@ interface AvailabilityStorageQueryContainerInterface extends QueryContainerInter
     public function queryAvailabilityStorageByAvailabilityAbstractIds(array $availabilityAbstractIds);
 
     /**
+     * @api
+     *
      * @param array $availabilityAbstractIds
      *
-     * @return SpyAvailabilityAbstractQuery
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */
     public function queryAvailabilityAbstractWithRelationsByIds(array $availabilityAbstractIds);
 
@@ -55,5 +55,4 @@ interface AvailabilityStorageQueryContainerInterface extends QueryContainerInter
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstractWithProductByAbstractProductIds(array $abstractProductIds);
-
 }

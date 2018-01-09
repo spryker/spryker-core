@@ -17,7 +17,6 @@ use Spryker\Zed\ProductSetStorage\Dependency\Service\ProductSetStorageToUtilSani
 
 class ProductSetStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
     const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
@@ -64,5 +63,4 @@ class ProductSetStorageDependencyProvider extends AbstractBundleDependencyProvid
 
         return $container;
     }
-
 }

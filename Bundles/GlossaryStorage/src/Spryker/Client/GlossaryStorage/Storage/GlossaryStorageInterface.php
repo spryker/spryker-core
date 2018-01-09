@@ -9,7 +9,6 @@ namespace Spryker\Client\GlossaryStorage\Storage;
 
 interface GlossaryStorageInterface
 {
-
     /**
      * @param string $keyName
      * @param string $localeName

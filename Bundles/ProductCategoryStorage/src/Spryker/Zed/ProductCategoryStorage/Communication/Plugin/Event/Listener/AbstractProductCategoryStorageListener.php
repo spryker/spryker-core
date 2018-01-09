@@ -22,7 +22,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AbstractProductCategoryStorageListener extends AbstractPlugin
 {
-
     const ID_CATEGORY_NODE = 'id_category_node';
     const FK_CATEGORY = 'fk_category';
     const NAME = 'name';
@@ -61,6 +60,7 @@ class AbstractProductCategoryStorageListener extends AbstractPlugin
     /**
      * @param array $spyProductAbstractLocalizedEntities
      * @param array $spyProductAbstractStorageEntities
+     * @param array $categories
      *
      * @return void
      */
@@ -69,7 +69,7 @@ class AbstractProductCategoryStorageListener extends AbstractPlugin
         foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
             $idProduct = $spyProductAbstractLocalizedEntity->getFkProductAbstract();
             $localeName = $spyProductAbstractLocalizedEntity->getLocale()->getLocaleName();
-            if (isset($spyProductAbstractStorageEntities[$idProduct][$localeName]))  {
+            if (isset($spyProductAbstractStorageEntities[$idProduct][$localeName])) {
                 $this->refreshDataSet($spyProductAbstractLocalizedEntity, $spyProductAbstractStorageEntities[$idProduct][$localeName], $categories);
             } else {
                 $this->refreshDataSet($spyProductAbstractLocalizedEntity, null, $categories);
@@ -84,7 +84,7 @@ class AbstractProductCategoryStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function refreshDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, SpyProductAbstractCategoryStorage $spyProductAbstractCategoryStorageEntity = null, array $categories)
+    protected function refreshDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, SpyProductAbstractCategoryStorage $spyProductAbstractCategoryStorageEntity, array $categories)
     {
         if ($spyProductAbstractCategoryStorageEntity === null) {
             $spyProductAbstractCategoryStorageEntity = new SpyProductAbstractCategoryStorage();
@@ -257,5 +257,4 @@ class AbstractProductCategoryStorageListener extends AbstractPlugin
 
         return array_unique($relatedCategoryIds);
     }
-
 }

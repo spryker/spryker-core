@@ -16,7 +16,6 @@ use Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceBri
 
 class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
@@ -57,5 +56,4 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

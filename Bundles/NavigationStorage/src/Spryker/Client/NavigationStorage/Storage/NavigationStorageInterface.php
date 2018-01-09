@@ -9,7 +9,6 @@ namespace Spryker\Client\NavigationStorage\Storage;
 
 interface NavigationStorageInterface
 {
-
     /**
      * @param string $navigationKey
      * @param string $localeName

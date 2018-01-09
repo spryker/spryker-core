@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStorageQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -87,5 +86,4 @@ class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStor
 
         return $queryUrlRedirect;
     }
-
 }

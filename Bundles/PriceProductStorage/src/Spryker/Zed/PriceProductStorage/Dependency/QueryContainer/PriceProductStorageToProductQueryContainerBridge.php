@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProductStorage\Dependency\QueryContainer;
 
 class PriceProductStorageToProductQueryContainerBridge implements PriceProductStorageToProductQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */

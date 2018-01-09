@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class AvailabilityStorageListener extends AbstractAvailabilityStorageListener implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -33,8 +32,7 @@ class AvailabilityStorageListener extends AbstractAvailabilityStorageListener im
         $this->preventTransaction();
         $availabilityIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if (
-            $eventName === AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE ||
+        if ($eventName === AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE ||
             $eventName === AvailabilityEvents::AVAILABILITY_ABSTRACT_UNPUBLISH
         ) {
             $this->unpublish($availabilityIds);
@@ -44,5 +42,4 @@ class AvailabilityStorageListener extends AbstractAvailabilityStorageListener im
 
         $this->publish($availabilityIds);
     }
-
 }

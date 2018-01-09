@@ -13,11 +13,10 @@ use Spryker\Zed\NavigationStorage\NavigationStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\NavigationStorage\NavigationStorageConfig getConfig()
- * @method \Spryker\Zed\NavigationStorage\Persistence\NavigationStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\NavigationStorage\Persistence\NavigationStorageQueryContainerInterface getQueryContainer()
  */
 class NavigationStoragePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\NavigationStorage\Persistence\SpyNavigationStorageQuery
      */
@@ -41,5 +40,4 @@ class NavigationStoragePersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(NavigationStorageDependencyProvider::QUERY_CONTAINER_NAVIGATION);
     }
-
 }

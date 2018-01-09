@@ -9,7 +9,6 @@ namespace Spryker\Zed\CategoryPageSearch\Dependency\Service;
 
 interface CategoryPageSearchToUtilSanitizeServiceInterface
 {
-
     /**
      * @param array $array
      *

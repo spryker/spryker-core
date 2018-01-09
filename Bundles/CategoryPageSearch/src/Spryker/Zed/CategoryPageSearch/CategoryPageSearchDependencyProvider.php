@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
@@ -76,5 +75,4 @@ class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvi
 
         return $container;
     }
-
 }

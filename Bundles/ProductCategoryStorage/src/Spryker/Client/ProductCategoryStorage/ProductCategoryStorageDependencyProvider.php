@@ -7,10 +7,10 @@
 
 namespace Spryker\Client\ProductCategoryStorage;
 
-use Spryker\Client\ProductCategoryStorage\Dependency\Client\ProductCategoryStorageToStorageClientBridge;
-use Spryker\Client\ProductCategoryStorage\Dependency\Service\ProductCategoryStorageToSynchronizationServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductCategoryStorage\Dependency\Client\ProductCategoryStorageToStorageClientBridge;
+use Spryker\Client\ProductCategoryStorage\Dependency\Service\ProductCategoryStorageToSynchronizationServiceBridge;
 
 class ProductCategoryStorageDependencyProvider extends AbstractDependencyProvider
 {

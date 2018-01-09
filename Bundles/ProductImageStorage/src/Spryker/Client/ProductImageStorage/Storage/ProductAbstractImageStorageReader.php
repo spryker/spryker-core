@@ -19,13 +19,13 @@ class ProductAbstractImageStorageReader implements ProductAbstractImageStorageRe
     protected $storageClient;
 
     /**
-     * @var ProductImageStorageKeyGeneratorInterface
+     * @var \Spryker\Client\ProductImageStorage\Storage\ProductImageStorageKeyGeneratorInterface
      */
     protected $productImageStorageKeyGenerator;
 
     /**
      * @param \Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToStorageInterface $storageClient
-     * @param ProductImageStorageKeyGeneratorInterface $productImageStorageKeyGenerator
+     * @param \Spryker\Client\ProductImageStorage\Storage\ProductImageStorageKeyGeneratorInterface $productImageStorageKeyGenerator
      */
     public function __construct(ProductImageStorageToStorageInterface $storageClient, ProductImageStorageKeyGeneratorInterface $productImageStorageKeyGenerator)
     {
@@ -49,7 +49,7 @@ class ProductAbstractImageStorageReader implements ProductAbstractImageStorageRe
     /**
      * @param string $key
      *
-     * @return ProductAbstractImageStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductAbstractImageStorageTransfer|null
      */
     protected function findProductImageProductStorageTransfer($key)
     {
@@ -64,5 +64,4 @@ class ProductAbstractImageStorageReader implements ProductAbstractImageStorageRe
 
         return $productImageStorageTransfer;
     }
-
 }

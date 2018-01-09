@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
     const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
     const FACADE_CATEGORY = 'FACADE_CATEGORY';
@@ -64,5 +63,4 @@ class CategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

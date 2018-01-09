@@ -18,7 +18,6 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class CategoryUrlStorageListener extends AbstractProductCategoryStorageListener implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -67,5 +66,4 @@ class CategoryUrlStorageListener extends AbstractProductCategoryStorageListener 
 
         return $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($validEventTransfers, SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE);
     }
-
 }

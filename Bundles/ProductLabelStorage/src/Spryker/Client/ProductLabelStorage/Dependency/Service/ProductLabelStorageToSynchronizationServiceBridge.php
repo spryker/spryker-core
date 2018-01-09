@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductLabelStorage\Dependency\Service;
 
 class ProductLabelStorageToSynchronizationServiceBridge implements ProductLabelStorageToSynchronizationServiceInterface
 {
-
     /**
      * @var \Spryker\Service\Synchronization\SynchronizationServiceInterface
      */
@@ -32,5 +31,4 @@ class ProductLabelStorageToSynchronizationServiceBridge implements ProductLabelS
     {
         return $this->synchronizationService->getStorageKeyBuilder($resourceName);
     }
-
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\ProductStorage\Dependency\Service\ProductStorageToUtilSanitizeSe
 
 class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
@@ -63,5 +62,4 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

@@ -10,7 +10,6 @@ namespace Spryker\Client\Customer\Zed;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
-use Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface;
 
 class CustomerStub implements CustomerStubInterface
 {
@@ -20,12 +19,13 @@ class CustomerStub implements CustomerStubInterface
     protected $zedStub;
 
     /**
-     * @var DefaultAddressChangePluginInterface[]
+     * @var \Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface[]
      */
     protected $defaultAddressChangePlugins;
 
     /**
      * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
+     * @param \Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface[] $defaultAddressChangePlugins
      */
     public function __construct(ZedRequestClient $zedStub, array $defaultAddressChangePlugins = [])
     {
@@ -152,7 +152,6 @@ class CustomerStub implements CustomerStubInterface
     {
         $customerTransfer = $this->zedStub->call('/customer/gateway/update-address-and-customer-default-addresses', $addressTransfer);
 
-        //TODO is this code allow here?
         $this->callDefaultAddressChangePlugins($customerTransfer);
 
         return $customerTransfer;
@@ -167,7 +166,6 @@ class CustomerStub implements CustomerStubInterface
     {
         $customerTransfer = $this->zedStub->call('/customer/gateway/create-address-and-update-customer-default-addresses', $addressTransfer);
 
-        //TODO is this code allow here?
         $this->callDefaultAddressChangePlugins($customerTransfer);
 
         return $customerTransfer;
@@ -234,7 +232,7 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return void
      */

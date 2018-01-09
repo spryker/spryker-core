@@ -14,10 +14,8 @@ use ArrayAccess;
  */
 interface ViewInterface extends ArrayAccess
 {
-
     /**
      * @return string|null
      */
     public function getTemplate();
-
 }

@@ -13,13 +13,12 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CmsStorage\CmsStorageConfig getConfig()
- * @method \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface getQueryContainer()
  */
 class CmsStoragePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
-     * @return SpyCmsPageStorageQuery
+     * @return \Orm\Zed\CmsStorage\Persistence\SpyCmsPageStorageQuery
      */
     public function createSpyCmsStorageQuery()
     {
@@ -41,5 +40,4 @@ class CmsStoragePersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(CmsStorageDependencyProvider::QUERY_CONTAINER_CMS_PAGE);
     }
-
 }

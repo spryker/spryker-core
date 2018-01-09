@@ -9,14 +9,13 @@ namespace Spryker\Zed\CategoryPageSearch\Dependency\Service;
 
 class CategoryPageSearchToUtilSanitizeServiceBridge implements CategoryPageSearchToUtilSanitizeServiceInterface
 {
-
     /**
      * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
      */
     protected $utilSanitizeService;
 
     /**
-     * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
+     * @param \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
      */
     public function __construct($utilSanitizeService)
     {
@@ -32,5 +31,4 @@ class CategoryPageSearchToUtilSanitizeServiceBridge implements CategoryPageSearc
     {
         return $this->utilSanitizeService->arrayFilterRecursive($array);
     }
-
 }

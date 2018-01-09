@@ -19,13 +19,13 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
     protected $storageClient;
 
     /**
-     * @var PriceProductStorageKeyGeneratorInterface
+     * @var \Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGeneratorInterface
      */
     protected $priceStorageKeyGenerator;
 
     /**
      * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageInterface $storageClient
-     * @param PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator
+     * @param \Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator
      */
     public function __construct(PriceProductStorageToStorageInterface $storageClient, PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator)
     {
@@ -48,7 +48,7 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
     /**
      * @param string $key
      *
-     * @return PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
      */
     protected function findPriceProductStorageTransfer($key)
     {
@@ -63,5 +63,4 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
 
         return $priceProductStorageTransfer;
     }
-
 }

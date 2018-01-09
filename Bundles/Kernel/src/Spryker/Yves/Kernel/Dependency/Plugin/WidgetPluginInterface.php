@@ -14,7 +14,6 @@ use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
  */
 interface WidgetPluginInterface extends WidgetContainerInterface
 {
-
     /**
      * TODO: add specification
      *
@@ -32,5 +31,4 @@ interface WidgetPluginInterface extends WidgetContainerInterface
      * @return string
      */
     public static function getTemplate(): string;
-
 }

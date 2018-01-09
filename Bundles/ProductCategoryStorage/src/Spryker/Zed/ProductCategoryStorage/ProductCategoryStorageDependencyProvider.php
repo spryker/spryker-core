@@ -11,15 +11,14 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryBridge;
+use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\ProductCategoryStorage\Dependency\QueryContainer\ProductCategoryStorageToCategoryQueryContainerBridge;
 use Spryker\Zed\ProductCategoryStorage\Dependency\QueryContainer\ProductCategoryStorageToProductCategoryQueryContainerBridge;
 use Spryker\Zed\ProductCategoryStorage\Dependency\QueryContainer\ProductCategoryStorageToProductQueryContainerBridge;
-use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Service\ProductCategoryStorageToUtilSanitizeServiceBridge;
 
 class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';
     const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
@@ -75,5 +74,4 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
 
         return $container;
     }
-
 }

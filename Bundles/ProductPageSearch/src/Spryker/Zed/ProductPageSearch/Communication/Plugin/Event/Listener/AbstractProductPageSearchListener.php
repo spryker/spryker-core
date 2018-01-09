@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AbstractProductPageSearchListener extends AbstractPlugin
 {
-
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**
@@ -57,5 +56,4 @@ class AbstractProductPageSearchListener extends AbstractPlugin
 
         return array_unique($relatedCategoryIds);
     }
-
 }

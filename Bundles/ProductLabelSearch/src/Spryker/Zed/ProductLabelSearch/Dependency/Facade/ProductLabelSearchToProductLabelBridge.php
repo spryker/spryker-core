@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelSearch\Dependency\Facade;
 
 class ProductLabelSearchToProductLabelBridge implements ProductLabelSearchToProductLabelInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
      */
@@ -32,5 +31,4 @@ class ProductLabelSearchToProductLabelBridge implements ProductLabelSearchToProd
     {
         return $this->productLabelFacade->findLabelIdsByIdProductAbstract($idProductAbstract);
     }
-
 }

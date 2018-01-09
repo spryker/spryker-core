@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsPageSearch\Dependency\QueryContainer;
 
 interface CmsPageSearchToCmsQueryContainerInterface
 {
-
     /**
      * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
@@ -21,5 +20,4 @@ interface CmsPageSearchToCmsQueryContainerInterface
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
     public function queryPages();
-
 }

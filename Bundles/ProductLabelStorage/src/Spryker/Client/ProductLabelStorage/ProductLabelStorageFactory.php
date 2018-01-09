@@ -10,15 +10,12 @@ namespace Spryker\Client\ProductLabelStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductLabelStorage\Storage\Dictionary\DictionaryFactory;
 use Spryker\Client\ProductLabelStorage\Storage\LabelDictionaryReader;
-use Spryker\Client\ProductLabelStorage\Storage\LabelDictionaryReaderInterface;
 use Spryker\Client\ProductLabelStorage\Storage\ProductAbstractLabelReader;
-use Spryker\Client\ProductLabelStorage\Storage\ProductAbstractLabelReaderInterface;
-use Spryker\Shared\Kernel\Store;
 
 class ProductLabelStorageFactory extends AbstractFactory
 {
     /**
-     * @return ProductAbstractLabelReaderInterface
+     * @return \Spryker\Client\ProductLabelStorage\Storage\ProductAbstractLabelReaderInterface
      */
     public function createProductAbstractLabelStorageReader()
     {
@@ -47,7 +44,7 @@ class ProductLabelStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return Store
+     * @return \Spryker\Shared\Kernel\Store
      */
     public function getStore()
     {
@@ -55,7 +52,7 @@ class ProductLabelStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return LabelDictionaryReaderInterface
+     * @return \Spryker\Client\ProductLabelStorage\Storage\LabelDictionaryReaderInterface
      */
     public function createLabelDictionaryReader()
     {
@@ -63,7 +60,7 @@ class ProductLabelStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return DictionaryFactory
+     * @return \Spryker\Client\ProductLabelStorage\Storage\Dictionary\DictionaryFactory
      */
     protected function createDictionaryFactory()
     {

@@ -17,11 +17,10 @@ use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 /**
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  */
 class ProductPageMapPlugin extends AbstractPlugin implements NamedPageMapInterface
 {
-
     /**
      * @api
      *
@@ -88,5 +87,4 @@ class ProductPageMapPlugin extends AbstractPlugin implements NamedPageMapInterfa
     {
         return ProductPageSearchConstants::PRODUCT_ABSTRACT_RESOURCE_NAME;
     }
-
 }

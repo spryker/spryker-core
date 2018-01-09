@@ -33,7 +33,6 @@ use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilSani
 
 class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
     const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';
@@ -188,5 +187,4 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             new ProductImagePageMapExpanderPlugin(),
         ];
     }
-
 }

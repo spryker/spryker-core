@@ -15,7 +15,7 @@ class PriceProductStorageToEventBehaviorFacadeBridge implements PriceProductStor
     protected $eventBehaviorFacade;
 
     /**
-     * @var \Spryker\Zed\EventBehavior\Business\EventBehaviorFacadeInterface $eventBehaviorFacade
+     * @param \Spryker\Zed\EventBehavior\Business\EventBehaviorFacadeInterface $eventBehaviorFacade
      */
     public function __construct($eventBehaviorFacade)
     {

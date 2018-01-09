@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class CmsPageSearchToCmsBridge implements CmsPageSearchToCmsInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Business\CmsFacadeInterface
      */
@@ -37,8 +36,8 @@ class CmsPageSearchToCmsBridge implements CmsPageSearchToCmsInterface
     }
 
     /**
-     * @param CmsVersionDataTransfer $cmsVersionDataTransfer
-     * @param LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $cmsVersionDataTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
      */
@@ -46,5 +45,4 @@ class CmsPageSearchToCmsBridge implements CmsPageSearchToCmsInterface
     {
         return $this->cmsFacade->extractLocaleCmsPageDataTransfer($cmsVersionDataTransfer, $localeTransfer);
     }
-
 }

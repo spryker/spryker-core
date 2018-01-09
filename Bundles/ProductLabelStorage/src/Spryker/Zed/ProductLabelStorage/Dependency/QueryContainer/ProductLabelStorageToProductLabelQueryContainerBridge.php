@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer;
 
 class ProductLabelStorageToProductLabelQueryContainerBridge implements ProductLabelStorageToProductLabelQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface
      */
@@ -38,5 +37,4 @@ class ProductLabelStorageToProductLabelQueryContainerBridge implements ProductLa
     {
         return $this->productLabelQueryContainer->queryAllLocalizedAttributesLabels();
     }
-
 }

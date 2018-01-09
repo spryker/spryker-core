@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CmsBlockStorage\Communication;
 
 use Spryker\Zed\CmsBlockStorage\CmsBlockStorageDependencyProvider;
-use Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -34,7 +33,7 @@ class CmsBlockStorageCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CmsBlockStorageDataExpanderPluginInterface[]
+     * @return \Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface[]
      */
     public function getContentWidgetDataExpanderPlugins()
     {

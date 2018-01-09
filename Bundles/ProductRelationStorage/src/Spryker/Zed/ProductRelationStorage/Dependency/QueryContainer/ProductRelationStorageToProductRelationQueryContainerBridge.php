@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelationStorage\Dependency\QueryContainer;
 
 class ProductRelationStorageToProductRelationQueryContainerBridge implements ProductRelationStorageToProductRelationQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface
      */
@@ -41,5 +40,4 @@ class ProductRelationStorageToProductRelationQueryContainerBridge implements Pro
     {
         return $this->productRelationQueryContainer->queryAllProductRelations();
     }
-
 }

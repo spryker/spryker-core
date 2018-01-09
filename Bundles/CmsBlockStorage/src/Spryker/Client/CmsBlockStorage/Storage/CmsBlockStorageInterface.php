@@ -9,7 +9,6 @@ namespace Spryker\Client\CmsBlockStorage\Storage;
 
 interface CmsBlockStorageInterface
 {
-
     /**
      * @param string[] $blockNames
      * @param string $localeName
@@ -32,5 +31,4 @@ interface CmsBlockStorageInterface
      * @return string
      */
     public function generateBlockNameKey($name);
-
 }

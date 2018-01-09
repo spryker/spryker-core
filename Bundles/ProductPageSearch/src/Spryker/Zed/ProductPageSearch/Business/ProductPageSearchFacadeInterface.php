@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductPageSearch\Business;
 
 interface ProductPageSearchFacadeInterface
 {
-
     /**
      * @api
      *
@@ -37,5 +36,4 @@ interface ProductPageSearchFacadeInterface
      * @return void
      */
     public function unpublish(array $productAbstractIds);
-
 }

@@ -14,14 +14,13 @@ use Spryker\Shared\GlossaryStorage\GlossaryStorageConstants;
 
 class GlossaryStorage implements GlossaryStorageInterface
 {
-
     /**
-     * @var GlossaryStorageToStorageClientInterface
+     * @var \Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageClientInterface
      */
     protected $storageClient;
 
     /**
-     * @var GlossaryStorageToSynchronizationServiceInterface
+     * @var \Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
 
@@ -31,8 +30,8 @@ class GlossaryStorage implements GlossaryStorageInterface
     protected $translations = [];
 
     /**
-     * @param GlossaryStorageToStorageClientInterface $storageClient
-     * @param GlossaryStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageClientInterface $storageClient
+     * @param \Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToSynchronizationServiceInterface $synchronizationService
      */
     public function __construct(GlossaryStorageToStorageClientInterface $storageClient, GlossaryStorageToSynchronizationServiceInterface $synchronizationService)
     {
@@ -83,8 +82,8 @@ class GlossaryStorage implements GlossaryStorageInterface
     }
 
     /**
-     * @param $keyName
-     * @param $localeName
+     * @param string $keyName
+     * @param string $localeName
      *
      * @return string
      */
@@ -98,7 +97,7 @@ class GlossaryStorage implements GlossaryStorageInterface
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @return null|string
      */

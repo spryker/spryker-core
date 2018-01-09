@@ -22,7 +22,6 @@ use Spryker\Zed\ProductOptionStorage\Communication\Plugin\Event\Listener\Product
  */
 class ProductOptionStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -45,10 +44,8 @@ class ProductOptionStorageEventSubscriber extends AbstractPlugin implements Even
             ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_DELETE, new ProductOptionValueStorageListener())
             ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_CREATE, new ProductOptionValuePriceStorageListener())
             ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_UPDATE, new ProductOptionValuePriceStorageListener())
-            ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_DELETE, new ProductOptionValuePriceStorageListener())
-        ;
+            ->addListenerQueued(ProductOptionEvents::ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_DELETE, new ProductOptionValuePriceStorageListener());
 
         return $eventCollection;
     }
-
 }

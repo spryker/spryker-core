@@ -1,13 +1,12 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\PriceProductStorage\Expander;
 
-use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface;
@@ -16,40 +15,39 @@ use Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterfa
 class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
 {
     /**
-     * @var PriceAbstractStorageReaderInterface
+     * @var \Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface
      */
     protected $priceAbstractStorageReader;
 
     /**
-     * @var PriceConcreteStorageReaderInterface
+     * @var \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface
      */
     protected $priceConcreteStorageReader;
 
     /**
-     * @var PriceProductStorageToPriceProductInterface
+     * @var \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface
      */
     protected $priceProductClient;
 
     /**
-     * @param PriceAbstractStorageReaderInterface $priceAbstractStorageReader
-     * @param PriceConcreteStorageReaderInterface $priceConcreteStorageReader
-     * @param PriceProductStorageToPriceProductInterface $priceProductClient
+     * @param \Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface $priceAbstractStorageReader
+     * @param \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface $priceConcreteStorageReader
+     * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface $priceProductClient
      */
     public function __construct(
         PriceAbstractStorageReaderInterface $priceAbstractStorageReader,
         PriceConcreteStorageReaderInterface $priceConcreteStorageReader,
         PriceProductStorageToPriceProductInterface $priceProductClient
-    )
-    {
+    ) {
         $this->priceAbstractStorageReader = $priceAbstractStorageReader;
         $this->priceConcreteStorageReader = $priceConcreteStorageReader;
         $this->priceProductClient = $priceProductClient;
     }
 
     /**
-     * @param ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return ProductViewTransfer
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     public function expandProductViewPriceData(ProductViewTransfer $productViewTransfer)
     {
@@ -65,7 +63,7 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
     }
 
     /**
-     * @param ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
      * @return array
      */
@@ -90,9 +88,9 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
     }
 
     /**
-     * @param ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
      */
     protected function getPriceAbstractData(ProductViewTransfer $productViewTransfer)
     {
@@ -100,9 +98,9 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
     }
 
     /**
-     * @param ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
      */
     protected function getPriceConcreteData(ProductViewTransfer $productViewTransfer)
     {

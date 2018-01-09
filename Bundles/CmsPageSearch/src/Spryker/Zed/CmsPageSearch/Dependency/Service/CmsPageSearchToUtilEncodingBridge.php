@@ -8,7 +8,6 @@ namespace Spryker\Zed\CmsPageSearch\Dependency\Service;
 
 class CmsPageSearchToUtilEncodingBridge implements CmsPageSearchToUtilEncodingInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -46,5 +45,4 @@ class CmsPageSearchToUtilEncodingBridge implements CmsPageSearchToUtilEncodingIn
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
-
 }

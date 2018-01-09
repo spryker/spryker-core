@@ -7,17 +7,16 @@
 
 namespace Spryker\Client\ProductOptionStorage;
 
+use Spryker\Client\Kernel\AbstractDependencyProvider;
+use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToCurrencyClientBridge;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToPriceClientBridge;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageBridge;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceBridge;
-use Spryker\Client\Kernel\AbstractDependencyProvider;
-use Spryker\Client\Kernel\Container;
 use Spryker\Shared\Kernel\Store;
 
 class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
 {
-
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const CLIENT_PRICE = 'CLIENT_PRICE';
     const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
@@ -109,5 +108,4 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

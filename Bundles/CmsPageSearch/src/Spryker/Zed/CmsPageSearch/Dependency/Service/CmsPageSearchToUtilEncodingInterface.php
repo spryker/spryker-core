@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsPageSearch\Dependency\Service;
 
 interface CmsPageSearchToUtilEncodingInterface
 {
-
     /**
      * @param mixed $value
      * @param int|null $options
@@ -28,5 +27,4 @@ interface CmsPageSearchToUtilEncodingInterface
      * @return array
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
-
 }

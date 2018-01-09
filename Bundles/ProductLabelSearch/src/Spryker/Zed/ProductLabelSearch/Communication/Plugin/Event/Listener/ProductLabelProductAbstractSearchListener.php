@@ -18,7 +18,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductLabelProductAbstractSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -38,5 +37,4 @@ class ProductLabelProductAbstractSearchListener extends AbstractPlugin implement
 
         $this->getFactory()->getProductPageSearchFacade()->refresh($productAbstractIds, [ProductLabelSearchConfig::PLUGIN_PRODUCT_LABEL_DATA]);
     }
-
 }

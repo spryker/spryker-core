@@ -9,12 +9,10 @@ namespace Spryker\Client\ProductImageStorage\Dependency\Client;
 
 interface ProductImageStorageToStorageInterface
 {
-
     /**
      * @param string $key
      *
      * @return array
      */
     public function get($key);
-
 }

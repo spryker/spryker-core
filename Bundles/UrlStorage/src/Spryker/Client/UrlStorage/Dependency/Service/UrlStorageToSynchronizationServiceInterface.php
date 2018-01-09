@@ -9,12 +9,10 @@ namespace Spryker\Client\UrlStorage\Dependency\Service;
 
 interface UrlStorageToSynchronizationServiceInterface
 {
-
     /**
      * @param string $resourceName
      *
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */
     public function getStorageKeyBuilder($resourceName);
-
 }

@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CmsBlockStorageStorageParameterMapExpanderPlugin extends AbstractPlugin implements CmsBlockStorageDataExpanderPluginInterface
 {
-
     /**
      * @api
      *

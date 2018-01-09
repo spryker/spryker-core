@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Shared\CmsPageSearch\CmsPageSearchConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
-use Spryker\Zed\Search\Dependency\Plugin\namedPageMapInterface;
+use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 
 /**
  * @method \Spryker\Zed\Collector\Communication\CollectorCommunicationFactory getFactory()
@@ -94,5 +94,4 @@ class CmsDataPageMapBuilder implements NamedPageMapInterface
     {
         return CmsPageSearchConstants::CMS_PAGE_RESOURCE_NAME;
     }
-
 }

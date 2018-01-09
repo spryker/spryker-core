@@ -9,15 +9,13 @@ namespace Spryker\Zed\ProductPageSearch\Business\Attribute;
 
 interface ProductPageAttributeInterface
 {
-
     /**
-     * @param $abstractAttributesData
-     * @param $abstractLocalizedAttributesData
-     * @param $concreteAttributesData
-     * @param $concreteLocalizedAttributesData
+     * @param string $abstractAttributesData
+     * @param string $abstractLocalizedAttributesData
+     * @param string $concreteAttributesData
+     * @param string $concreteLocalizedAttributesData
      *
      * @return array
      */
     public function getCombinedProductAttributes($abstractAttributesData, $abstractLocalizedAttributesData, $concreteAttributesData, $concreteLocalizedAttributesData);
-
 }

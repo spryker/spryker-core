@@ -8,19 +8,17 @@
 namespace Spryker\Zed\CategoryPageSearch\Communication;
 
 use Spryker\Zed\CategoryPageSearch\CategoryPageSearchDependencyProvider;
-use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToEventBehaviorFacadeInterface;
-use Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilSanitizeServiceInterface;
 use Spryker\Zed\CmsPageSearch\CmsPageSearchDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryPageSearch\CategoryPageSearchConfig getConfig()
  */
 class CategoryPageSearchCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return CategoryPageSearchToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -28,7 +26,7 @@ class CategoryPageSearchCommunicationFactory extends AbstractCommunicationFactor
     }
 
     /**
-     * @return CategoryPageSearchToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
@@ -58,5 +56,4 @@ class CategoryPageSearchCommunicationFactory extends AbstractCommunicationFactor
     {
         return $this->getProvidedDependency(CmsPageSearchDependencyProvider::FACADE_SEARCH);
     }
-
 }

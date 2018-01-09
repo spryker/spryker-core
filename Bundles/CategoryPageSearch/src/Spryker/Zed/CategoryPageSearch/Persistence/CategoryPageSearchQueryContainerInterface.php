@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -64,5 +63,4 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryCategoryNodeIdsByTemplateIds(array $categoryTemplateIds);
-
 }

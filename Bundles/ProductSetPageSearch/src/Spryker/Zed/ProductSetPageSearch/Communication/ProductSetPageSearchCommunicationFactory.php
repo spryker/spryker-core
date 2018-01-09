@@ -9,20 +9,17 @@ namespace Spryker\Zed\ProductSetPageSearch\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Search\ProductSetPageMapPlugin;
-use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToEventBehaviorFacadeInterface;
-use Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilSanitizeServiceInterface;
 use Spryker\Zed\ProductSetPageSearch\ProductSetPageSearchDependencyProvider;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
 
 /**
- * @method \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSetPageSearch\ProductSetPageSearchConfig getConfig()
  */
 class ProductSetPageSearchCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
-     * @return ProductSetPageSearchToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -30,7 +27,7 @@ class ProductSetPageSearchCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
-     * @return ProductSetPageSearchToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
@@ -92,5 +89,4 @@ class ProductSetPageSearchCommunicationFactory extends AbstractCommunicationFact
     {
         return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::QUERY_CONTAINER_PRODUCT_IMAGE);
     }
-
 }

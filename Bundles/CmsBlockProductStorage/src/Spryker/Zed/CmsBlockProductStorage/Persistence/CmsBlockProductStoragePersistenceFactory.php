@@ -1,20 +1,24 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CmsBlockProductStorage\Persistence;
 
 use Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorageQuery;
 use Spryker\Zed\CmsBlockProductStorage\CmsBlockProductStorageDependencyProvider;
-use Spryker\Zed\CmsBlockProductStorage\Dependency\QueryContainer\CmsBlockProductStorageToCmsBlockProductConnectorQueryContainerInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CmsBlockProductStorage\CmsBlockProductStorageConfig getConfig()
- * @method \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainerInterface getQueryContainer()
  */
 class CmsBlockProductStoragePersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return SpyCmsBlockProductStorageQuery
+     * @return \Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorageQuery
      */
     public function createSpyCmsBlockProductStorageQuery()
     {
@@ -22,7 +26,7 @@ class CmsBlockProductStoragePersistenceFactory extends AbstractPersistenceFactor
     }
 
     /**
-     * @return CmsBlockProductStorageToCmsBlockProductConnectorQueryContainerInterface
+     * @return \Spryker\Zed\CmsBlockProductStorage\Dependency\QueryContainer\CmsBlockProductStorageToCmsBlockProductConnectorQueryContainerInterface
      */
     public function getCmsBlockProductConnectorQuery()
     {

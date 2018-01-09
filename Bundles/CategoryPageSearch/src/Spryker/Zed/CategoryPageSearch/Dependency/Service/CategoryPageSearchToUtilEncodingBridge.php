@@ -8,7 +8,6 @@ namespace Spryker\Zed\CategoryPageSearch\Dependency\Service;
 
 class CategoryPageSearchToUtilEncodingBridge implements CategoryPageSearchToUtilEncodingInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -46,5 +45,4 @@ class CategoryPageSearchToUtilEncodingBridge implements CategoryPageSearchToUtil
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
-
 }

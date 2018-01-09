@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetPageSearch\Dependency\Service;
 
 interface ProductSetPageSearchToUtilEncodingInterface
 {
-
     /**
      * @param mixed $value
      * @param int|null $options
@@ -28,5 +27,4 @@ interface ProductSetPageSearchToUtilEncodingInterface
      * @return array
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
-
 }

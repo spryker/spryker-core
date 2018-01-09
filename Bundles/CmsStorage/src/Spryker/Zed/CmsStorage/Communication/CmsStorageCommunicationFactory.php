@@ -7,21 +7,17 @@
 
 namespace Spryker\Zed\CmsStorage\Communication;
 
-use Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface;
 use Spryker\Zed\CmsStorage\CmsStorageDependencyProvider;
-use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\CmsStorage\Dependency\Service\CmsStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CmsStorage\CmsStorageConfig getConfig()
  */
 class CmsStorageCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
-     * @return CmsStorageToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\CmsStorage\Dependency\Service\CmsStorageToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -29,12 +25,13 @@ class CmsStorageCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CmsStorageToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
         return $this->getProvidedDependency(CmsStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
+
     /**
      * @return \Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToCmsInterface
      */
@@ -52,7 +49,7 @@ class CmsStorageCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return CmsPageDataExpanderPluginInterface[]
+     * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
      */
     public function getContentWidgetDataExpanderPlugins()
     {

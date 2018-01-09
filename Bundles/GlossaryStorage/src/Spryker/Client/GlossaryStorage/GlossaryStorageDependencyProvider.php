@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\Container;
 
 class GlossaryStorageDependencyProvider extends AbstractDependencyProvider
 {
-
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
@@ -35,5 +34,4 @@ class GlossaryStorageDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

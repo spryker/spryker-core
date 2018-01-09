@@ -9,7 +9,6 @@ namespace Spryker\Client\CmsStorage\Dependency\Service;
 
 class CmsStorageToSynchronizationServiceBridge implements CmsStorageToSynchronizationServiceInterface
 {
-
     /**
      * @var \Spryker\Service\Synchronization\SynchronizationServiceInterface
      */
@@ -34,5 +33,4 @@ class CmsStorageToSynchronizationServiceBridge implements CmsStorageToSynchroniz
     {
         return $this->synchronizationService->getStorageKeyBuilder($resourceName);
     }
-
 }

@@ -9,12 +9,10 @@ namespace Spryker\Zed\CategoryPageSearch\Dependency\QueryContainer;
 
 interface CategoryPageSearchToLocaleQueryContainerInterface
 {
-
     /**
      * @api
      *
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
     public function queryLocales();
-
 }

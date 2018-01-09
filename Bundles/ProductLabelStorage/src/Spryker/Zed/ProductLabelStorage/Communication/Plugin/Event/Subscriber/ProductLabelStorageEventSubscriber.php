@@ -20,7 +20,6 @@ use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductL
  */
 class ProductLabelStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -47,5 +46,4 @@ class ProductLabelStorageEventSubscriber extends AbstractPlugin implements Event
 
         return $eventCollection;
     }
-
 }

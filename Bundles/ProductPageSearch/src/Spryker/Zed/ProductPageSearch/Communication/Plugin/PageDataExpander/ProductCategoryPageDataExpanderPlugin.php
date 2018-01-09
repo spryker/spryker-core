@@ -16,11 +16,10 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
 /**
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  */
 class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
-
     const RESULT_FIELD_PRODUCT_ORDER = 'product_order';
 
     /**
@@ -189,8 +188,9 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
 
     /**
      * @param array $directParentCategories
-     * @param $idProductAbstract
+     * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *
      * @return void
      */
@@ -236,5 +236,4 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
             )
             ->find();
     }
-
 }

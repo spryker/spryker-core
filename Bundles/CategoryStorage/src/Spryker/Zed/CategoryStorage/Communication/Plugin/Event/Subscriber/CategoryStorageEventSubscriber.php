@@ -22,7 +22,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -73,5 +72,4 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
             ->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE, new CategoryTreeStorageListener())
             ->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_DELETE, new CategoryTreeStorageListener());
     }
-
 }

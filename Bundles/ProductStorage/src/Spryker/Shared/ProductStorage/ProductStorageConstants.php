@@ -9,7 +9,6 @@ namespace Spryker\Shared\ProductStorage;
 
 class ProductStorageConstants
 {
-
     /**
      * Specification:
      * - Queue name as used for processing Product messages
@@ -41,5 +40,4 @@ class ProductStorageConstants
      * @api
      */
     const PRODUCT_CONCRETE_RESOURCE_NAME = 'product_concrete';
-
 }

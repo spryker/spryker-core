@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\ProductSetStorage\Storage;
 
-use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
-use Generated\Shared\Transfer\ProductSetStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductSetStorage\Dependency\Client\ProductSetStorageToStorageClientInterface;
 use Spryker\Client\ProductSetStorage\Dependency\Service\ProductSetStorageToSynchronizationServiceInterface;
@@ -19,29 +17,30 @@ use Spryker\Shared\ProductSetStorage\ProductSetStorageConstants;
 class ProductSetStorageReader implements ProductSetStorageReaderInterface
 {
     /**
-     * @var ProductSetStorageToStorageClientInterface
+     * @var \Spryker\Client\ProductSetStorage\Dependency\Client\ProductSetStorageToStorageClientInterface
      */
     protected $storageClient;
 
     /**
-     * @var ProductSetStorageToSynchronizationServiceInterface
+     * @var \Spryker\Client\ProductSetStorage\Dependency\Service\ProductSetStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
     /**
-     * @var ProductSetStorageMapperInterface
+     * @var \Spryker\Client\ProductSetStorage\Mapper\ProductSetStorageMapperInterface
      */
     protected $productSetStorageMapper;
 
     /**
-     * @param ProductSetStorageToStorageClientInterface $storageClient
-     * @param ProductSetStorageToSynchronizationServiceInterface $synchronizationService
-     * @param Store $store
+     * @param \Spryker\Client\ProductSetStorage\Dependency\Client\ProductSetStorageToStorageClientInterface $storageClient
+     * @param \Spryker\Client\ProductSetStorage\Dependency\Service\ProductSetStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Client\ProductSetStorage\Mapper\ProductSetStorageMapperInterface $productSetStorageMapper
      */
     public function __construct(
         ProductSetStorageToStorageClientInterface $storageClient,
@@ -59,7 +58,7 @@ class ProductSetStorageReader implements ProductSetStorageReaderInterface
      * @param int $idProductAbstract
      * @param string $localeName
      *
-     * @return ProductSetDataStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer
      */
     public function getProductSetByIdProductSet($idProductAbstract, $localeName)
     {
@@ -72,7 +71,6 @@ class ProductSetStorageReader implements ProductSetStorageReaderInterface
         $key = $this->synchronizationService
             ->getStorageKeyBuilder(ProductSetStorageConstants::PRODUCT_SET_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
-
 
         $productSet = $this->storageClient->get($key);
 

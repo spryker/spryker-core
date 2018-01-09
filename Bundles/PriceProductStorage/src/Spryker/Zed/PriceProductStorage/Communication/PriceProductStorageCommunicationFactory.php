@@ -8,20 +8,16 @@
 namespace Spryker\Zed\PriceProductStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface;
-use Spryker\Zed\PriceProductStorage\Dependency\Service\PriceProductStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\PriceProductStorage\PriceProductStorageDependencyProvider;
 
 /**
- * @method \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\PriceProductStorage\PriceProductStorageConfig getConfig()
  */
 class PriceProductStorageCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
-     * @return PriceProductStorageToUtilSanitizeServiceInterface
+     * @return \Spryker\Zed\PriceProductStorage\Dependency\Service\PriceProductStorageToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService()
     {
@@ -29,7 +25,7 @@ class PriceProductStorageCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return PriceProductStorageToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
@@ -37,7 +33,7 @@ class PriceProductStorageCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return PriceProductStorageToPriceProductFacadeInterface
+     * @return \Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface
      */
     public function getPriceProductFacade()
     {
@@ -51,5 +47,4 @@ class PriceProductStorageCommunicationFactory extends AbstractCommunicationFacto
     {
         return $this->getProvidedDependency(PriceProductStorageDependencyProvider::STORE);
     }
-
 }

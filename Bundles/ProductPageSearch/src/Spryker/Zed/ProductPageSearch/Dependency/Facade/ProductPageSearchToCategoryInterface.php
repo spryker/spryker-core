@@ -9,12 +9,10 @@ namespace Spryker\Zed\ProductPageSearch\Dependency\Facade;
 
 interface ProductPageSearchToCategoryInterface
 {
-
     /**
      * @param int $idCategory
      *
      * @return \Generated\Shared\Transfer\NodeTransfer[]
      */
     public function getAllNodesByIdCategory($idCategory);
-
 }

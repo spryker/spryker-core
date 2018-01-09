@@ -16,5 +16,4 @@ class NavigationStorageConstants
      * @api
      */
     const RESOURCE_NAME = 'navigation';
-
 }

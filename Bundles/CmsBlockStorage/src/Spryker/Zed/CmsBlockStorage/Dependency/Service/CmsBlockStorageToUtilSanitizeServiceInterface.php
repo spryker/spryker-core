@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockStorage\Dependency\Service;
 
 interface CmsBlockStorageToUtilSanitizeServiceInterface
 {
-
     /**
      * @param array $array
      *

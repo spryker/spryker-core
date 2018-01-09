@@ -9,7 +9,6 @@ namespace Spryker\Zed\CategoryPageSearch\Dependency\Service;
 
 interface CategoryPageSearchToUtilEncodingInterface
 {
-
     /**
      * @param mixed $value
      * @param int|null $options
@@ -28,5 +27,4 @@ interface CategoryPageSearchToUtilEncodingInterface
      * @return array
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
-
 }

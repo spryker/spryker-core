@@ -1,24 +1,23 @@
 <?php
+
 /**
- * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOptionStorage\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
-use Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface;
 
 class ProductOptionStorageToProductOptionFacadeBridge implements ProductOptionStorageToProductOptionFacadeInterface
 {
-
     /**
-     * @var ProductOptionFacadeInterface
+     * @var \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface
      */
     protected $productOptionFacade;
 
     /**
-     * @param ProductOptionFacadeInterface $productOptionFacade
+     * @param \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface $productOptionFacade
      */
     public function __construct($productOptionFacade)
     {

@@ -9,15 +9,12 @@ namespace Spryker\Client\ProductSetStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductSetStorage\Mapper\ProductSetStorageMapper;
-use Spryker\Client\ProductSetStorage\Mapper\ProductSetStorageMapperInterface;
 use Spryker\Client\ProductSetStorage\Storage\ProductSetStorageReader;
-use Spryker\Client\ProductSetStorage\Storage\ProductSetStorageReaderInterface;
 
 class ProductSetStorageFactory extends AbstractFactory
 {
-
     /**
-     * @return ProductSetStorageReaderInterface
+     * @return \Spryker\Client\ProductSetStorage\Storage\ProductSetStorageReaderInterface
      */
     public function createProductSetStorage()
     {
@@ -54,7 +51,7 @@ class ProductSetStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return ProductSetStorageMapperInterface
+     * @return \Spryker\Client\ProductSetStorage\Mapper\ProductSetStorageMapperInterface
      */
     public function createProductSetStorageMapper()
     {

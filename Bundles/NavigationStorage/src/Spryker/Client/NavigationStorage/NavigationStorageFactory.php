@@ -1,16 +1,19 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Client\NavigationStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\NavigationStorage\Storage\NavigationStorage;
-use Spryker\Client\NavigationStorage\Storage\NavigationStorageInterface;
 
 class NavigationStorageFactory extends AbstractFactory
 {
-
     /**
-     * @return NavigationStorageInterface
+     * @return \Spryker\Client\NavigationStorage\Storage\NavigationStorageInterface
      */
     public function createNavigationStorage()
     {

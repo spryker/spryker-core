@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CmsStorageQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -38,5 +37,4 @@ interface CmsStorageQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
     public function queryLocalesWithLocaleNames(array $localeNames);
-
 }

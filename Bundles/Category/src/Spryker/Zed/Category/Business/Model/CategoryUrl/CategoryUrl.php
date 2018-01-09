@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
-use Spryker\Zed\Category\Dependency\Plugin\CategoryUrlPathPluginInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
 
 class CategoryUrl implements CategoryUrlInterface
@@ -35,7 +34,7 @@ class CategoryUrl implements CategoryUrlInterface
     protected $urlPathGenerator;
 
     /**
-     * @var CategoryUrlPathPluginInterface[]
+     * @var \Spryker\Zed\Category\Dependency\Plugin\CategoryUrlPathPluginInterface[]
      */
     protected $categoryUrlPathPlugins;
 
@@ -43,6 +42,7 @@ class CategoryUrl implements CategoryUrlInterface
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface $urlFacade
      * @param \Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface $urlPathGenerator
+     * @param array $categoryUrlPathPlugins
      */
     public function __construct(
         CategoryQueryContainerInterface $queryContainer,

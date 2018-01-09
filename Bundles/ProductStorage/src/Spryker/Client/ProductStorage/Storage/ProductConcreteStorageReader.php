@@ -16,24 +16,24 @@ use Spryker\Shared\ProductStorage\ProductStorageConstants;
 class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterface
 {
     /**
-     * @var ProductStorageToSynchronizationServiceInterface
+     * @var \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
 
     /**
-     * @var ProductStorageToStorageClientInterface
+     * @var \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface
      */
     protected $storageClient;
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
     /**
-     * @param ProductStorageToStorageClientInterface $storageClient
-     * @param ProductStorageToSynchronizationServiceInterface $synchronizationService
-     * @param Store $store
+     * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
+     * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         ProductStorageToStorageClientInterface $storageClient,

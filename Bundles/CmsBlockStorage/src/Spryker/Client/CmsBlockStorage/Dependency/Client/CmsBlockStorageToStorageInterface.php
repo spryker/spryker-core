@@ -9,7 +9,6 @@ namespace Spryker\Client\CmsBlockStorage\Dependency\Client;
 
 interface CmsBlockStorageToStorageInterface
 {
-
     /**
      * @param string $key
      *
@@ -23,5 +22,4 @@ interface CmsBlockStorageToStorageInterface
      * @return array
      */
     public function getMulti(array $keys);
-
 }

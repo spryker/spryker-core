@@ -19,7 +19,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class AvailabilityProductStorageListener extends AbstractAvailabilityStorageListener implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
@@ -117,5 +116,4 @@ class AvailabilityProductStorageListener extends AbstractAvailabilityStorageList
     {
         return $this->getQueryContainer()->queryAvailabilityStorageByProductAbstractIds($abstractProductIds)->find()->toKeyIndex(static::FK_PRODUCT_ABSTRACT);
     }
-
 }

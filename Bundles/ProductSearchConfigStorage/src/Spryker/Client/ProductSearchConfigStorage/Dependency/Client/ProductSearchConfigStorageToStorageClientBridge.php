@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductSearchConfigStorage\Dependency\Client;
 
 class ProductSearchConfigStorageToStorageClientBridge implements ProductSearchConfigStorageToStorageClientInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -34,5 +33,4 @@ class ProductSearchConfigStorageToStorageClientBridge implements ProductSearchCo
     {
         return $this->storageClient->get($key);
     }
-
 }

@@ -9,12 +9,10 @@ namespace Spryker\Client\UrlStorage\Dependency\Client;
 
 interface UrlStorageToStorageInterface
 {
-
     /**
      * @param string $key
      *
      * @return array
      */
     public function get($key);
-
 }

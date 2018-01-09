@@ -13,11 +13,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CategoryPageSearch\CategoryPageSearchConfig getConfig()
- * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface getQueryContainer()
  */
 class CategoryPageSearchPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearchQuery
      */
@@ -41,5 +40,4 @@ class CategoryPageSearchPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::QUERY_CONTAINER_CATEGORY);
     }
-
 }

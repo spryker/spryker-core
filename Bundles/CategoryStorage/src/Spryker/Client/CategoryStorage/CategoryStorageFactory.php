@@ -8,16 +8,13 @@
 namespace Spryker\Client\CategoryStorage;
 
 use Spryker\Client\CategoryStorage\Storage\CategoryNodeStorage;
-use Spryker\Client\CategoryStorage\Storage\CategoryNodeStorageInterface;
 use Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReader;
-use Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReaderInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class CategoryStorageFactory extends AbstractFactory
 {
-
     /**
-     * @return CategoryTreeStorageReaderInterface
+     * @return \Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReaderInterface
      */
     public function createCategoryTreeStorageReader()
     {
@@ -28,7 +25,7 @@ class CategoryStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return CategoryNodeStorageInterface
+     * @return \Spryker\Client\CategoryStorage\Storage\CategoryNodeStorageInterface
      */
     public function createCategoryNodeStorage()
     {

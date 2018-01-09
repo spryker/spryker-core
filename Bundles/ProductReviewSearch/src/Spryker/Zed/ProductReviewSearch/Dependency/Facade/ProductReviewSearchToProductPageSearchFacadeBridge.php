@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductReviewSearch\Dependency\Facade;
 
 class ProductReviewSearchToProductPageSearchFacadeBridge implements ProductReviewSearchToProductPageSearchFacadeInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface
      */
@@ -33,5 +32,4 @@ class ProductReviewSearchToProductPageSearchFacadeBridge implements ProductRevie
     {
         $this->productPageSearchFacade->refresh($productAbstractIds, $pageDataExpanderPluginNames);
     }
-
 }

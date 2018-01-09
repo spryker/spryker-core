@@ -13,11 +13,10 @@ use Spryker\Zed\ProductSetPageSearch\ProductSetPageSearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductSetPageSearch\ProductSetPageSearchConfig getConfig()
- * @method \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface getQueryContainer()
  */
 class ProductSetPageSearchPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\ProductSetPageSearch\Persistence\SpyProductSetPageSearchQuery
      */
@@ -41,5 +40,4 @@ class ProductSetPageSearchPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::QUERY_CONTAINER_PRODUCT_SET);
     }
-
 }

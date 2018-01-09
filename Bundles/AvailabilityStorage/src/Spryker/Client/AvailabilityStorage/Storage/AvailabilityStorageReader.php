@@ -93,5 +93,4 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
 
         return $this->synchronizationService->getStorageKeyBuilder(AvailabilityStorageConstants::AVAILABILITY_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
     }
-
 }

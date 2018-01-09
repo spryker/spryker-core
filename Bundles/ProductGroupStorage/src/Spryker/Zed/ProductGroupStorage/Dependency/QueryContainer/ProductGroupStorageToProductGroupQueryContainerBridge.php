@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductGroupStorage\Dependency\QueryContainer;
 
 class ProductGroupStorageToProductGroupQueryContainerBridge implements ProductGroupStorageToProductGroupQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductGroup\Persistence\ProductGroupQueryContainerInterface
      */
@@ -32,5 +31,4 @@ class ProductGroupStorageToProductGroupQueryContainerBridge implements ProductGr
     {
         return $this->productGroupQueryContainer->queryAllProductAbstractGroups();
     }
-
 }

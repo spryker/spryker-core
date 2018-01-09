@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class CategoryPageSearchToSearchBridge implements CategoryPageSearchToSearchInterface
 {
-
     /**
      * @var \Spryker\Zed\Search\Business\SearchFacadeInterface
      */
@@ -38,5 +37,4 @@ class CategoryPageSearchToSearchBridge implements CategoryPageSearchToSearchInte
     {
         return $this->searchFacade->transformPageMapToDocumentByMapperName($data, $localeTransfer, $mapperName);
     }
-
 }

@@ -18,7 +18,6 @@ use Spryker\Zed\PriceProductStorage\Dependency\Service\PriceProductStorageToUtil
 
 class PriceProductStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_PRICE_PRODUCT = 'QUERY_CONTAINER_PRICE_PRODUCT';
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
@@ -69,5 +68,4 @@ class PriceProductStorageDependencyProvider extends AbstractBundleDependencyProv
 
         return $container;
     }
-
 }

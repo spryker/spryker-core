@@ -22,7 +22,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 abstract class AbstractCategoryNodeSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -61,7 +60,7 @@ abstract class AbstractCategoryNodeSearchListener extends AbstractPlugin impleme
     {
         foreach ($categoryTrees as $categoryNodeId => $categoryTreeWithLocales) {
             foreach ($categoryTreeWithLocales as $localeName => $categoryTreeWithLocale) {
-                if (isset($spyCategoryNodePageSearchEntities[$categoryNodeId][$localeName]))  {
+                if (isset($spyCategoryNodePageSearchEntities[$categoryNodeId][$localeName])) {
                     $this->storeDataSet($categoryTreeWithLocale, $spyCategoryNodePageSearchEntities[$categoryNodeId][$localeName], $localeName);
                 } else {
                     $this->storeDataSet($categoryTreeWithLocale, null, $localeName);
@@ -73,10 +72,11 @@ abstract class AbstractCategoryNodeSearchListener extends AbstractPlugin impleme
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $spyCategoryNodeEntity
      * @param \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch|null $spyCategoryNodePageSearchEntity
+     * @param string $localeName
      *
      * @return void
      */
-    protected function storeDataSet(SpyCategoryNode $spyCategoryNodeEntity, SpyCategoryNodePageSearch $spyCategoryNodePageSearchEntity = null, $localeName)
+    protected function storeDataSet(SpyCategoryNode $spyCategoryNodeEntity, SpyCategoryNodePageSearch $spyCategoryNodePageSearchEntity, $localeName)
     {
         if ($spyCategoryNodePageSearchEntity === null) {
             $spyCategoryNodePageSearchEntity = new SpyCategoryNodePageSearch();
@@ -102,7 +102,7 @@ abstract class AbstractCategoryNodeSearchListener extends AbstractPlugin impleme
 
     /**
      * @param array $categoryNodeData
-     * @param $localeName
+     * @param string $localeName
      *
      * @return mixed
      */
@@ -164,5 +164,4 @@ abstract class AbstractCategoryNodeSearchListener extends AbstractPlugin impleme
     {
         return $this->getFactory()->getStore();
     }
-
 }

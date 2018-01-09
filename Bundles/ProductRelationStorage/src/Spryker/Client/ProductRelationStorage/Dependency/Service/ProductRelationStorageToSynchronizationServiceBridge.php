@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductRelationStorage\Dependency\Service;
 
 class ProductRelationStorageToSynchronizationServiceBridge implements ProductRelationStorageToSynchronizationServiceInterface
 {
-
     /**
      * @var \Spryker\Service\Synchronization\SynchronizationServiceInterface
      */
@@ -34,5 +33,4 @@ class ProductRelationStorageToSynchronizationServiceBridge implements ProductRel
     {
         return $this->synchronizationService->getStorageKeyBuilder($resourceName);
     }
-
 }

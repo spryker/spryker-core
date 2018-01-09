@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class GlossaryStorageQueryContainer extends AbstractQueryContainer implements GlossaryStorageQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -48,5 +47,4 @@ class GlossaryStorageQueryContainer extends AbstractQueryContainer implements Gl
             ->addAnd('fk_glossary_key', $glossaryKeyIds, Criteria::IN)
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
     }
-
 }

@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class GlossaryStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -40,5 +39,4 @@ class GlossaryStorageEventSubscriber extends AbstractPlugin implements EventSubs
 
         return $eventCollection;
     }
-
 }

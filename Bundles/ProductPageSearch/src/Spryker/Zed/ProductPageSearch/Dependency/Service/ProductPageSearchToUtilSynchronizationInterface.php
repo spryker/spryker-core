@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductPageSearch\Dependency\Service;
 
 interface ProductPageSearchToUtilSynchronizationInterface
 {
-
     /**
      * @param array $array
      *
@@ -39,5 +38,4 @@ interface ProductPageSearchToUtilSynchronizationInterface
      * @return \Generated\Shared\Transfer\EventEntityTransfer[]
      */
     public function getEventTransfersByModifiedColumns(array $eventTransfers, array $columns);
-
 }

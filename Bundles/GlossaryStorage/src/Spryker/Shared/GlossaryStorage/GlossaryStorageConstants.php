@@ -9,7 +9,6 @@ namespace Spryker\Shared\GlossaryStorage;
 
 class GlossaryStorageConstants
 {
-
     /**
      * Specification:
      * - Queue name as used for processing translation messages
@@ -33,5 +32,4 @@ class GlossaryStorageConstants
      * @api
      */
     const RESOURCE_NAME = 'translation';
-
 }

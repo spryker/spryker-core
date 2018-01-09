@@ -9,7 +9,6 @@ namespace Spryker\Zed\AvailabilityStorage\Dependency\QueryContainer;
 
 class AvailabilityStorageToProductQueryContainerBridge implements AvailabilityStorageToProductQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -30,5 +29,4 @@ class AvailabilityStorageToProductQueryContainerBridge implements AvailabilitySt
     {
         return $this->productQueryContainer->queryProductAbstract();
     }
-
 }

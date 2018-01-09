@@ -9,7 +9,6 @@ namespace Spryker\Zed\GlossaryStorage\Persistence;
 
 interface GlossaryStorageQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -27,5 +26,4 @@ interface GlossaryStorageQueryContainerInterface
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryGlossaryTranslation(array $glossaryKeyIds);
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductOptionGroupStorageListener extends AbstractProductOptionStorageListener implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -41,5 +40,4 @@ class ProductOptionGroupStorageListener extends AbstractProductOptionStorageList
 
         $this->publish($productAbstractIds);
     }
-
 }

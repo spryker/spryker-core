@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductStorage\Dependency\QueryContainer;
 
 interface ProductStorageToProductQueryContainerInterface
 {
-
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
@@ -29,5 +28,4 @@ interface ProductStorageToProductQueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function queryProduct();
-
 }

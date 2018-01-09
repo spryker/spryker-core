@@ -252,6 +252,8 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
     /**
      * @param string $moduleName
      *
+     * @throws \Spryker\Zed\Development\Business\Exception\DependencyTree\InvalidComposerJsonException
+     *
      * @return \Generated\Shared\Transfer\ComposerDependencyCollectionTransfer
      */
     protected function getParsedComposerDependenciesForBundle($moduleName)

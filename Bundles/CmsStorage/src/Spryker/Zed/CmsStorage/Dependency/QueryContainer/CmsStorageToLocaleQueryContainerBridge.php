@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsStorage\Dependency\QueryContainer;
 
 class CmsStorageToLocaleQueryContainerBridge implements CmsStorageToLocaleQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
      */
@@ -30,5 +29,4 @@ class CmsStorageToLocaleQueryContainerBridge implements CmsStorageToLocaleQueryC
     {
         return $this->localeQueryContainer->queryLocales();
     }
-
 }

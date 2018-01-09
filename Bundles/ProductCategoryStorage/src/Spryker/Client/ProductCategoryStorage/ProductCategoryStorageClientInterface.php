@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductCategoryStorage;
 
 interface ProductCategoryStorageClientInterface
 {
-
     /**
      * Specification:
      * - TODO: add specification
@@ -22,5 +21,4 @@ interface ProductCategoryStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
      */
     public function findProductAbstractCategory($idProductAbstract, $locale);
-
 }

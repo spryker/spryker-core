@@ -9,7 +9,6 @@ namespace Spryker\Shared\UrlStorage;
 
 class UrlStorageConstants
 {
-
     /**
      * Specification:
      * - Queue name as used for processing url messages
@@ -41,5 +40,4 @@ class UrlStorageConstants
      * @api
      */
     const REDIRECT_RESOURCE_NAME = 'redirect';
-
 }

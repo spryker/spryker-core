@@ -25,7 +25,6 @@ use Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener\ProductI
  */
 class ProductImageStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -57,5 +56,4 @@ class ProductImageStorageEventSubscriber extends AbstractPlugin implements Event
 
         return $eventCollection;
     }
-
 }

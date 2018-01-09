@@ -24,7 +24,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductPageSearchQueryContainer extends AbstractQueryContainer implements ProductPageSearchQueryContainerInterface
 {
-
     const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
     const FK_CATEGORY = 'fkCategory';
 
@@ -66,11 +65,11 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
     /**
      * @api
      *
-     * @param $productAbstractIds
+     * @param array $productAbstractIds
      *
      * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery
      */
-    public function queryProductAbstractSearchPageByIds($productAbstractIds)
+    public function queryProductAbstractSearchPageByIds(array $productAbstractIds)
     {
         return $this->getFactory()
             ->createProductAbstractPageSearch()
@@ -212,5 +211,4 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
             ->queryAllCategoryAttributes()
             ->filterByFkLocale($localeTransfer->getIdLocale());
     }
-
 }

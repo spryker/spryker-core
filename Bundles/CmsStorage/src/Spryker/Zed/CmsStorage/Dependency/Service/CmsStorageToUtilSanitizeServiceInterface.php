@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsStorage\Dependency\Service;
 
 interface CmsStorageToUtilSanitizeServiceInterface
 {
-
     /**
      * @param array $array
      *

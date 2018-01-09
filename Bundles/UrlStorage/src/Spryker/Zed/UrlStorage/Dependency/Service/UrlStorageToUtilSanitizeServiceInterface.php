@@ -9,7 +9,6 @@ namespace Spryker\Zed\UrlStorage\Dependency\Service;
 
 interface UrlStorageToUtilSanitizeServiceInterface
 {
-
     /**
      * @param array $array
      *

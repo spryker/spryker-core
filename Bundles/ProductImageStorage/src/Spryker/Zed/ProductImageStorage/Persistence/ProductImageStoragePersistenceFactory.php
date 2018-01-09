@@ -14,11 +14,10 @@ use Spryker\Zed\ProductImageStorage\ProductImageStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductImageStorage\ProductImageStorageConfig getConfig()
- * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface getQueryContainer()
  */
 class ProductImageStoragePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductImageStorage\Dependency\QueryContainer\ProductImageStorageToProductQueryContainerInterface
      */
@@ -50,5 +49,4 @@ class ProductImageStoragePersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyProductConcreteImageStorageQuery::create();
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsPageSearch\Dependency\Service;
 
 interface CmsPageSearchToUtilSanitizeServiceInterface
 {
-
     /**
      * @param array $array
      *

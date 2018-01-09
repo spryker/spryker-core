@@ -9,14 +9,13 @@ namespace Spryker\Zed\ProductSetPageSearch\Dependency\Service;
 
 class ProductSetPageSearchToUtilSanitizeServiceBridge implements ProductSetPageSearchToUtilSanitizeServiceInterface
 {
-
     /**
      * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
      */
     protected $utilSanitizeService;
 
     /**
-     * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
+     * @param \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService
      */
     public function __construct($utilSanitizeService)
     {
@@ -32,5 +31,4 @@ class ProductSetPageSearchToUtilSanitizeServiceBridge implements ProductSetPageS
     {
         return $this->utilSanitizeService->arrayFilterRecursive($array);
     }
-
 }

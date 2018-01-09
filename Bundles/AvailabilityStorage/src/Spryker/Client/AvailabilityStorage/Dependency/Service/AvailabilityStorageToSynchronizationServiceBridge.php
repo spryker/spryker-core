@@ -9,7 +9,6 @@ namespace Spryker\Client\AvailabilityStorage\Dependency\Service;
 
 class AvailabilityStorageToSynchronizationServiceBridge implements AvailabilityStorageToSynchronizationServiceInterface
 {
-
     /**
      * @var \Spryker\Service\Synchronization\SynchronizationServiceInterface
      */
@@ -34,5 +33,4 @@ class AvailabilityStorageToSynchronizationServiceBridge implements AvailabilityS
     {
         return $this->synchronizationService->getStorageKeyBuilder($resourceName);
     }
-
 }

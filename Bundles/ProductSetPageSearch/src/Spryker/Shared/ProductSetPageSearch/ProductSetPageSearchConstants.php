@@ -9,7 +9,6 @@ namespace Spryker\Shared\ProductSetPageSearch;
 
 class ProductSetPageSearchConstants
 {
-
     /**
      * Specification:
      * - Resource name, this will use for key generating
@@ -17,5 +16,4 @@ class ProductSetPageSearchConstants
      * @api
      */
     const PRODUCT_SET_RESOURCE_NAME = 'product_set';
-
 }

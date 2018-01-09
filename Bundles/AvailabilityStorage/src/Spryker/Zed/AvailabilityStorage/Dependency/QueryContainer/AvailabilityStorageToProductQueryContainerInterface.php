@@ -9,12 +9,10 @@ namespace Spryker\Zed\AvailabilityStorage\Dependency\QueryContainer;
 
 interface AvailabilityStorageToProductQueryContainerInterface
 {
-
     /**
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstract();
-
 }

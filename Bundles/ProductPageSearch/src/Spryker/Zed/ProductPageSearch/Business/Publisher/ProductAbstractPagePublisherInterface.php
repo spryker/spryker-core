@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductPageSearch\Business\Publisher;
 
 interface ProductAbstractPagePublisherInterface
 {
-
     /**
      * @param array $productAbstractIds
      *
@@ -31,5 +30,4 @@ interface ProductAbstractPagePublisherInterface
      * @return void
      */
     public function unpublish(array $productAbstractIds);
-
 }

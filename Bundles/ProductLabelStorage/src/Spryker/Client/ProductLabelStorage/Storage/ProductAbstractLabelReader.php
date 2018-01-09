@@ -22,7 +22,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     protected $storageClient;
 
     /**
-     * @var ProductLabelStorageToSynchronizationServiceInterface
+     * @var \Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
 
@@ -32,15 +32,15 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     protected $labelDictionaryReader;
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
     /**
      * @param \Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientInterface $storageClient
-     * @param ProductLabelStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductLabelStorage\Storage\LabelDictionaryReaderInterface $labelDictionaryReader
-     * @param Store $store
+     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         ProductLabelStorageToStorageClientInterface $storageClient,

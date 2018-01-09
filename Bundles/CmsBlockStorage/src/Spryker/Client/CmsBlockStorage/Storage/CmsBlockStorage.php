@@ -14,7 +14,6 @@ use Spryker\Shared\CmsBlockStorage\CmsBlockStorageConstants;
 
 class CmsBlockStorage implements CmsBlockStorageInterface
 {
-
     /**
      * @var \Spryker\Client\CmsBlockStorage\Dependency\Client\CmsBlockStorageToStorageInterface
      */
@@ -93,7 +92,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
         $searchKeys = [];
 
         foreach ($idResources as $id) {
-            $searchKeys[] = $this->generateKey($id, 'cms_block'. '_' . $optionKey);
+            $searchKeys[] = $this->generateKey($id, 'cms_block' . '_' . $optionKey);
         }
 
         $blockNames = $this->storageClient->getMulti($searchKeys);
@@ -152,7 +151,6 @@ class CmsBlockStorage implements CmsBlockStorageInterface
         return $blockOptionNames;
     }
 
-
     /**
      * @param array|null $array
      *
@@ -189,7 +187,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     /**
      * @param string $blockKey
      * @param string $resourceName
-     * @param string $localeName
+     * @param string|null $localeName
      *
      * @return string
      */

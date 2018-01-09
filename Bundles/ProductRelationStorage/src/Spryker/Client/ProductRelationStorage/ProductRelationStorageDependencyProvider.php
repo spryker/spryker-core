@@ -7,12 +7,11 @@
 
 namespace Spryker\Client\ProductRelationStorage;
 
+use Spryker\Client\Kernel\AbstractDependencyProvider;
+use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientBridge;
 use Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToStorageClientBridge;
 use Spryker\Client\ProductRelationStorage\Dependency\Service\ProductRelationStorageToSynchronizationServiceBridge;
-use Spryker\Client\Kernel\AbstractDependencyProvider;
-use Spryker\Client\Kernel\Container;
-use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface;
 
 class ProductRelationStorageDependencyProvider extends AbstractDependencyProvider
 {
@@ -79,9 +78,9 @@ class ProductRelationStorageDependencyProvider extends AbstractDependencyProvide
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addRelatedProductExpanderPlugins(Container $container)
     {
@@ -93,7 +92,7 @@ class ProductRelationStorageDependencyProvider extends AbstractDependencyProvide
     }
 
     /**
-     * @return ProductViewExpanderPluginInterface[]
+     * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
     protected function getRelatedProductExpanderPlugins()
     {

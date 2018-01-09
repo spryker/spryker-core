@@ -1,22 +1,21 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\ProductSetPageSearch\Dependency\Client;
 
-use Spryker\Client\ProductSetStorage\ProductSetStorageClientInterface;
-
 class ProductSetPageSearchToProductSetStorageClientBridge implements ProductSetPageSearchToProductSetStorageClientInterface
 {
     /**
-     * @var ProductSetStorageClientInterface
+     * @var \Spryker\Client\ProductSetStorage\ProductSetStorageClientInterface
      */
     protected $productSetPageStorageClient;
 
     /**
-     * @param ProductSetStorageClientInterface $productSetPageStorageClient
+     * @param \Spryker\Client\ProductSetStorage\ProductSetStorageClientInterface $productSetPageStorageClient
      */
     public function __construct($productSetPageStorageClient)
     {
@@ -32,5 +31,4 @@ class ProductSetPageSearchToProductSetStorageClientBridge implements ProductSetP
     {
         return $this->productSetPageStorageClient->mapProductSetStorageDataToTransfer($productSetStorageData);
     }
-
 }

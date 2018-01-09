@@ -15,7 +15,6 @@ use Spryker\Yves\Kernel\Exception\InvalidWidgetPluginException;
 
 abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPluginInterface, ArrayAccess
 {
-
     /**
      * @var array
      */
@@ -152,5 +151,4 @@ abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPlug
             ));
         }
     }
-
 }

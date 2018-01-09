@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductCategoryFilterStorage\Dependency\Client;
 
 class ProductCategoryFilterStorageToStorageBridge implements ProductCategoryFilterStorageToStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -34,5 +33,4 @@ class ProductCategoryFilterStorageToStorageBridge implements ProductCategoryFilt
     {
         return $this->storageClient->get($key);
     }
-
 }

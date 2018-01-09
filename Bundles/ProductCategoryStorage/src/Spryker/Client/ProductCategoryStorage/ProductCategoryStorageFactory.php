@@ -7,12 +7,11 @@
 
 namespace Spryker\Client\ProductCategoryStorage;
 
-use Spryker\Client\ProductCategoryStorage\Storage\ProductAbstractCategoryStorageReader;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductCategoryStorage\Storage\ProductAbstractCategoryStorageReader;
 
 class ProductCategoryStorageFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\ProductCategoryStorage\Storage\ProductAbstractCategoryStorageReaderInterface
      */
@@ -36,5 +35,4 @@ class ProductCategoryStorageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
-
 }

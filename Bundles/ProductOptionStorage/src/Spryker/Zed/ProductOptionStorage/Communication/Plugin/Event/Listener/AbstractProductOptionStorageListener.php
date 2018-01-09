@@ -23,7 +23,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AbstractProductOptionStorageListener extends AbstractPlugin
 {
-
     /**
      * @param array $productAbstractIds
      *
@@ -46,6 +45,7 @@ class AbstractProductOptionStorageListener extends AbstractPlugin
     /**
      * @param array $spyProductAbstractLocalizedEntities
      * @param array $spyProductAbstractOptionStorageEntities
+     * @param array $productOptions
      *
      * @return void
      */
@@ -54,7 +54,7 @@ class AbstractProductOptionStorageListener extends AbstractPlugin
         foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
             $idProduct = $spyProductAbstractLocalizedEntity->getFkProductAbstract();
             $localeName = $spyProductAbstractLocalizedEntity->getLocale()->getLocaleName();
-            if (isset($spyProductAbstractOptionStorageEntities[$idProduct][$localeName]))  {
+            if (isset($spyProductAbstractOptionStorageEntities[$idProduct][$localeName])) {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, $spyProductAbstractOptionStorageEntities[$idProduct][$localeName], $productOptions);
             } else {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, null, $productOptions);
@@ -69,7 +69,7 @@ class AbstractProductOptionStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, SpyProductAbstractOptionStorage $spyProductAbstractOptionStorageEntity = null, array $productOptions)
+    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, SpyProductAbstractOptionStorage $spyProductAbstractOptionStorageEntity, array $productOptions)
     {
         if ($spyProductAbstractOptionStorageEntity === null) {
             $spyProductAbstractOptionStorageEntity = new SpyProductAbstractOptionStorage();
@@ -163,9 +163,8 @@ class AbstractProductOptionStorageListener extends AbstractPlugin
         return $productOptionGroupStorageTransfers;
     }
 
-
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice[] $objectCollection
+     * @param array $prices
      *
      * @return array
      */
@@ -183,7 +182,7 @@ class AbstractProductOptionStorageListener extends AbstractPlugin
     /**
      * @param array $prices
      *
-     * @return ArrayObject
+     * @return \ArrayObject
      */
     protected function transformPriceEntityCollectionToMoneyValueTransferCollection(array $prices)
     {
@@ -199,5 +198,4 @@ class AbstractProductOptionStorageListener extends AbstractPlugin
 
         return $moneyValueCollection;
     }
-
 }

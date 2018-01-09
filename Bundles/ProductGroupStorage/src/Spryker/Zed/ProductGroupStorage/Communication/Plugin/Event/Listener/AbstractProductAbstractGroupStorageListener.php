@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AbstractProductAbstractGroupStorageListener extends AbstractPlugin
 {
-
     /**
      * @param array $productAbstractIds
      *
@@ -41,6 +40,7 @@ class AbstractProductAbstractGroupStorageListener extends AbstractPlugin
     /**
      * @param array $spyProductAbstractLocalizedEntities
      * @param array $spyProductAbstractGroupStorageEntities
+     * @param array $groupedProductAbstractIds
      *
      * @return void
      */
@@ -49,7 +49,7 @@ class AbstractProductAbstractGroupStorageListener extends AbstractPlugin
         foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
             $idProduct = $spyProductAbstractLocalizedEntity->getFkProductAbstract();
             $localeName = $spyProductAbstractLocalizedEntity->getLocale()->getLocaleName();
-            if (isset($spyProductAbstractGroupStorageEntities[$idProduct][$localeName]))  {
+            if (isset($spyProductAbstractGroupStorageEntities[$idProduct][$localeName])) {
                 $this->refreshDataSet($spyProductAbstractLocalizedEntity, $spyProductAbstractGroupStorageEntities[$idProduct][$localeName], $groupedProductAbstractIds);
             } else {
                 $this->refreshDataSet($spyProductAbstractLocalizedEntity, null, $groupedProductAbstractIds);
@@ -64,7 +64,7 @@ class AbstractProductAbstractGroupStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function refreshDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, SpyProductAbstractGroupStorage $spyProductStorageGroupEntity = null, array $groupedProductAbstractIds)
+    protected function refreshDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, SpyProductAbstractGroupStorage $spyProductStorageGroupEntity, array $groupedProductAbstractIds)
     {
         if ($spyProductStorageGroupEntity === null) {
             $spyProductStorageGroupEntity = new SpyProductAbstractGroupStorage();
@@ -166,12 +166,12 @@ class AbstractProductAbstractGroupStorageListener extends AbstractPlugin
     }
 
     /**
-     * @param $groupedProductAbstractIds
-     * @param $productAbstractIds
+     * @param array $groupedProductAbstractIds
+     * @param array $productAbstractIds
      *
      * @return array
      */
-    protected function getProductAbstractIds($groupedProductAbstractIds, $productAbstractIds)
+    protected function getProductAbstractIds(array $groupedProductAbstractIds, array $productAbstractIds)
     {
         $allProductAbstractId = [];
         foreach ($groupedProductAbstractIds as $groupedProductAbstractId) {
@@ -262,5 +262,4 @@ class AbstractProductAbstractGroupStorageListener extends AbstractPlugin
     {
         return $this->getFactory()->getStore()->getStoreName();
     }
-
 }

@@ -30,5 +30,4 @@ class ProductCategoryStorageClient extends AbstractClient implements ProductCate
             ->createProductCategoryStorageReader()
             ->findProductAbstractCategory($idProductAbstract, $locale);
     }
-
 }

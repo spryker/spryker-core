@@ -9,12 +9,11 @@ namespace Spryker\Client\ProductImageStorage\Plugin;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\ProductImageStorage\ProductImageStorageFactory;
 use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
 
 /**
- * @method ProductImageStorageFactory getFactory()
+ * @method \Spryker\Client\ProductImageStorage\ProductImageStorageFactory getFactory()
  */
 class ProductViewImageExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {

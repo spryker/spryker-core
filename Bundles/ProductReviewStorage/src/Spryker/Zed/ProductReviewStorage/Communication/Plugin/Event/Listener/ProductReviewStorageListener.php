@@ -16,7 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductReviewStorageListener extends AbstractProductReviewStorageListener
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -34,5 +33,4 @@ class ProductReviewStorageListener extends AbstractProductReviewStorageListener
 
         $this->publish($productAbstractIds);
     }
-
 }

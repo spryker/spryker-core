@@ -9,7 +9,6 @@ namespace Spryker\Zed\CategoryPageSearch\Dependency\QueryContainer;
 
 class CategoryPageSearchToCategoryQueryContainerBridge implements CategoryPageSearchToCategoryQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -30,5 +29,4 @@ class CategoryPageSearchToCategoryQueryContainerBridge implements CategoryPageSe
     {
         return $this->categoryQueryContainer->queryAllCategoryNodes();
     }
-
 }

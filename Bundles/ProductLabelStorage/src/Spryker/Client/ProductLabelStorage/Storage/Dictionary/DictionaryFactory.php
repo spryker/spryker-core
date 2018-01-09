@@ -8,9 +8,7 @@
 namespace Spryker\Client\ProductLabelStorage\Storage\Dictionary;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductLabelStorage\ProductLabelStorageDependencyProvider;
-use Spryker\Shared\Kernel\Store;
 
 class DictionaryFactory extends AbstractFactory
 {
@@ -86,7 +84,7 @@ class DictionaryFactory extends AbstractFactory
     }
 
     /**
-     * @return ProductLabelStorageToSynchronizationServiceInterface
+     * @return \Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface
      */
     protected function getSynchronizationService()
     {
@@ -94,7 +92,7 @@ class DictionaryFactory extends AbstractFactory
     }
 
     /**
-     * @return Store
+     * @return \Spryker\Shared\Kernel\Store
      */
     protected function getStore()
     {

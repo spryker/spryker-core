@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductCategoryStorage\Dependency\Client\ProductCategoryStorageToStorageClientInterface;
 use Spryker\Client\ProductCategoryStorage\Dependency\Service\ProductCategoryStorageToSynchronizationServiceInterface;
-use Spryker\Shared\ProductCategoryStorage\ProductCategoryStorageConfig;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\ProductCategoryStorage\ProductCategoryStorageConfig;
 
 class ProductAbstractCategoryStorageReader implements ProductAbstractCategoryStorageReaderInterface
 {
@@ -76,5 +76,4 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
             ->getStorageKeyBuilder(ProductCategoryStorageConfig::PRODUCT_ABSTRACT_CATEGORY_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
     }
-
 }

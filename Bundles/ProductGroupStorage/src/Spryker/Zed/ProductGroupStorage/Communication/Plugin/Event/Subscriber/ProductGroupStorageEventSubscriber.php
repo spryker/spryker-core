@@ -19,7 +19,6 @@ use Spryker\Zed\ProductGroupStorage\Communication\Plugin\Event\Listener\ProductA
  */
 class ProductGroupStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-
     /**
      * @api
      *
@@ -38,5 +37,4 @@ class ProductGroupStorageEventSubscriber extends AbstractPlugin implements Event
 
         return $eventCollection;
     }
-
 }

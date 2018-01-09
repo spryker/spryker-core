@@ -17,7 +17,6 @@ use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEnco
 
 class ProductPageSearchMapper implements ProductPageSearchMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductPageSearch\Business\Attribute\ProductPageAttributeInterface
      */
@@ -134,6 +133,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
 
     /**
      * @param array $concreteProducts
+     * @param int $idLocale
      *
      * @return array
      */
@@ -169,13 +169,13 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     /**
      * @param array $concreteProductLocalizedAttributes
      * @param int $idLocale
-     * @param $concreteNames
-     * @param $concreteDescriptions
-     * @param $concreteLocalizedAttributes
+     * @param array $concreteNames
+     * @param array $concreteDescriptions
+     * @param array $concreteLocalizedAttributes
      *
      * @return void
      */
-    protected function setConcreteLocalizedProductData(array $concreteProductLocalizedAttributes, $idLocale, &$concreteNames, &$concreteDescriptions, &$concreteLocalizedAttributes)
+    protected function setConcreteLocalizedProductData(array $concreteProductLocalizedAttributes, $idLocale, array &$concreteNames, array &$concreteDescriptions, array &$concreteLocalizedAttributes)
     {
         $concreteNames = [];
         foreach ($concreteProductLocalizedAttributes as $concreteProductLocalizedAttribute) {
@@ -194,5 +194,4 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     {
         return $this->store->getStoreName();
     }
-
 }

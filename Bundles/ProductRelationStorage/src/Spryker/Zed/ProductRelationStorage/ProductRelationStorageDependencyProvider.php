@@ -17,7 +17,6 @@ use Spryker\Zed\ProductRelationStorage\Dependency\Service\ProductRelationStorage
 
 class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const QUERY_CONTAINER_PRODUCT_RELATION = 'QUERY_CONTAINER_PRODUCT_RELATION';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
@@ -63,5 +62,4 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
 
         return $container;
     }
-
 }

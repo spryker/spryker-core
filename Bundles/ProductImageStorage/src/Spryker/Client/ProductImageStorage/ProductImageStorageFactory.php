@@ -7,21 +7,16 @@
 
 namespace Spryker\Client\ProductImageStorage;
 
-use Spryker\Client\ProductImageStorage\Expander\ProductViewImageExpander;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductImageStorage\Expander\ProductViewImageExpanderInterface;
+use Spryker\Client\ProductImageStorage\Expander\ProductViewImageExpander;
 use Spryker\Client\ProductImageStorage\Storage\ProductAbstractImageStorageReader;
-use Spryker\Client\ProductImageStorage\Storage\ProductAbstractImageStorageReaderInterface;
 use Spryker\Client\ProductImageStorage\Storage\ProductConcreteImageStorageReader;
-use Spryker\Client\ProductImageStorage\Storage\ProductConcreteImageStorageReaderInterface;
 use Spryker\Client\ProductImageStorage\Storage\ProductImageStorageKeyGenerator;
-use Spryker\Client\ProductImageStorage\Storage\ProductImageStorageKeyGeneratorInterface;
-use Spryker\Shared\Kernel\Store;
 
 class ProductImageStorageFactory extends AbstractFactory
 {
     /**
-     * @return ProductViewImageExpanderInterface
+     * @return \Spryker\Client\ProductImageStorage\Expander\ProductViewImageExpanderInterface
      */
     public function createProductViewImageExpander()
     {
@@ -29,7 +24,7 @@ class ProductImageStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return ProductAbstractImageStorageReaderInterface
+     * @return \Spryker\Client\ProductImageStorage\Storage\ProductAbstractImageStorageReaderInterface
      */
     protected function createProductAbstractImageStorageReader()
     {
@@ -37,7 +32,7 @@ class ProductImageStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return ProductConcreteImageStorageReaderInterface
+     * @return \Spryker\Client\ProductImageStorage\Storage\ProductConcreteImageStorageReaderInterface
      */
     protected function createProductConcreteImageStorageReader()
     {
@@ -45,7 +40,7 @@ class ProductImageStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return ProductImageStorageKeyGeneratorInterface
+     * @return \Spryker\Client\ProductImageStorage\Storage\ProductImageStorageKeyGeneratorInterface
      */
     protected function createProductImageStorageKeyGenerator()
     {
@@ -69,7 +64,7 @@ class ProductImageStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return Store
+     * @return \Spryker\Shared\Kernel\Store
      */
     protected function getStore()
     {

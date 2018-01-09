@@ -15,9 +15,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 
+/**
+ * @method \Spryker\Zed\CategoryPageSearch\Communication\CategoryPageSearchCommunicationFactory getFactory()
+ */
 class CategoryNodeDataPageMapBuilder extends AbstractPlugin implements NamedPageMapInterface
 {
-
     const TYPE_CATEGORY = 'category';
 
     /**
@@ -62,5 +64,4 @@ class CategoryNodeDataPageMapBuilder extends AbstractPlugin implements NamedPage
     {
         return CategoryPageSearchConstants::CATEGORY_NODE_RESOURCE_NAME;
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductCategoryStorage\Dependency\QueryContainer;
 
 class ProductCategoryStorageToProductCategoryQueryContainerBridge implements ProductCategoryStorageToProductCategoryQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface
      */
@@ -40,5 +39,4 @@ class ProductCategoryStorageToProductCategoryQueryContainerBridge implements Pro
     {
         return $this->productCategoryQueryContainer->queryProductCategoryMappings();
     }
-
 }

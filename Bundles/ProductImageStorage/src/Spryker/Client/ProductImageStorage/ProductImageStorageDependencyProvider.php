@@ -7,15 +7,14 @@
 
 namespace Spryker\Client\ProductImageStorage;
 
-use Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToStorageBridge;
-use Spryker\Client\ProductImageStorage\Dependency\Service\ProductImageStorageToSynchronizationServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToStorageBridge;
+use Spryker\Client\ProductImageStorage\Dependency\Service\ProductImageStorageToSynchronizationServiceBridge;
 use Spryker\Shared\Kernel\Store;
 
 class ProductImageStorageDependencyProvider extends AbstractDependencyProvider
 {
-
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     const STORE = 'STORE';
@@ -35,9 +34,9 @@ class ProductImageStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addStorageClient(Container $container): Container
     {
@@ -49,9 +48,9 @@ class ProductImageStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addSynchronizationService(Container $container): Container
     {
@@ -63,9 +62,9 @@ class ProductImageStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addStore(Container $container): Container
     {
@@ -75,5 +74,4 @@ class ProductImageStorageDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

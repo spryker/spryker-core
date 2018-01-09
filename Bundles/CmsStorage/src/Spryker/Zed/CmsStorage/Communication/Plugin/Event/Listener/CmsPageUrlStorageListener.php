@@ -13,7 +13,6 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 
 class CmsPageUrlStorageListener extends AbstractCmsPageStorageListener implements EventBulkHandlerInterface
 {
-
     /**
      * @param array $eventTransfers
      * @param string $eventName
@@ -35,5 +34,4 @@ class CmsPageUrlStorageListener extends AbstractCmsPageStorageListener implement
             $this->publish($cmsPageIds);
         }
     }
-
 }

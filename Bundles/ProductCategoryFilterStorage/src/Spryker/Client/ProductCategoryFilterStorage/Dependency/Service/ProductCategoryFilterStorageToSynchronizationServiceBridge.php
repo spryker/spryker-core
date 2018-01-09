@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductCategoryFilterStorage\Dependency\Service;
 
 class ProductCategoryFilterStorageToSynchronizationServiceBridge implements ProductCategoryFilterStorageToSynchronizationServiceInterface
 {
-
     /**
      * @var \Spryker\Service\Synchronization\SynchronizationServiceInterface
      */
@@ -34,5 +33,4 @@ class ProductCategoryFilterStorageToSynchronizationServiceBridge implements Prod
     {
         return $this->synchronizationService->getStorageKeyBuilder($resourceName);
     }
-
 }

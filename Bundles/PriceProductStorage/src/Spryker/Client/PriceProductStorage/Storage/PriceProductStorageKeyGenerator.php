@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -14,18 +14,18 @@ use Spryker\Shared\Kernel\Store;
 class PriceProductStorageKeyGenerator implements PriceProductStorageKeyGeneratorInterface
 {
     /**
-     * @var PriceProductStorageToSynchronizationServiceInterface
+     * @var \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
     /**
-     * @param PriceProductStorageToSynchronizationServiceInterface $synchronizationService
-     * @param Store $store
+     * @param \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(PriceProductStorageToSynchronizationServiceInterface $synchronizationService, Store $store)
     {

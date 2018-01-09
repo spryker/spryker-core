@@ -12,7 +12,6 @@ use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductIn
 
 class ProductPageAttribute implements ProductPageAttributeInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductInterface
      */
@@ -27,10 +26,10 @@ class ProductPageAttribute implements ProductPageAttributeInterface
     }
 
     /**
-     * @param $abstractAttributesData
-     * @param $abstractLocalizedAttributesData
-     * @param $concreteAttributesData
-     * @param $concreteLocalizedAttributesData
+     * @param string $abstractAttributesData
+     * @param string $abstractLocalizedAttributesData
+     * @param string $concreteAttributesData
+     * @param string $concreteLocalizedAttributesData
      *
      * @return array
      */
@@ -79,5 +78,4 @@ class ProductPageAttribute implements ProductPageAttributeInterface
 
         return $result;
     }
-
 }

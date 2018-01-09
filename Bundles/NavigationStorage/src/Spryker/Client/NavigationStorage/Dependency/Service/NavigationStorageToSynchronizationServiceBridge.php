@@ -9,7 +9,6 @@ namespace Spryker\Client\NavigationStorage\Dependency\Service;
 
 class NavigationStorageToSynchronizationServiceBridge implements NavigationStorageToSynchronizationServiceInterface
 {
-
     /**
      * @var \Spryker\Service\Synchronization\SynchronizationServiceInterface
      */
@@ -34,5 +33,4 @@ class NavigationStorageToSynchronizationServiceBridge implements NavigationStora
     {
         return $this->synchronizationService->getStorageKeyBuilder($resourceName);
     }
-
 }

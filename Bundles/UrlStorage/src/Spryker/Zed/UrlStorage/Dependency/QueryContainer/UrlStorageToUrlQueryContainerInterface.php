@@ -9,7 +9,6 @@ namespace Spryker\Zed\UrlStorage\Dependency\QueryContainer;
 
 interface UrlStorageToUrlQueryContainerInterface
 {
-
     /**
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
@@ -19,5 +18,4 @@ interface UrlStorageToUrlQueryContainerInterface
      * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
      */
     public function queryRedirects();
-
 }
