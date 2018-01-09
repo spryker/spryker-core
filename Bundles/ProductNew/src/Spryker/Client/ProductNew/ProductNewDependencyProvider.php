@@ -47,7 +47,7 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSearchClient(Container $container)
     {
-        $container[self::CLIENT_SEARCH] = function (Container $container) {
+        $container[static::CLIENT_SEARCH] = function (Container $container) {
             return new ProductNewToSearchClientBridge($container->getLocator()->search()->client());
         };
 
@@ -61,7 +61,7 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductLabelStorageClient(Container $container)
     {
-        $container[self::CLIENT_PRODUCT_LABEL_STORAGE] = function (Container $container) {
+        $container[static::CLIENT_PRODUCT_LABEL_STORAGE] = function (Container $container) {
             return new ProductNewToProductLabelStorageClientBridge($container->getLocator()->productLabelStorage()->client());
         };
 
@@ -75,7 +75,7 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStore(Container $container)
     {
-        $container[self::STORE] = function () {
+        $container[static::STORE] = function () {
             return Store::getInstance();
         };
 
@@ -89,7 +89,7 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addNewProductsQueryPlugin(Container $container)
     {
-        $container[self::NEW_PRODUCTS_QUERY_PLUGIN] = function () {
+        $container[static::NEW_PRODUCTS_QUERY_PLUGIN] = function () {
             return $this->getNewProductsQueryPlugin();
         };
 
@@ -103,7 +103,7 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addNewProductsQueryExpanderPlugins(Container $container)
     {
-        $container[self::NEW_PRODUCTS_QUERY_EXPANDER_PLUGINS] = function () {
+        $container[static::NEW_PRODUCTS_QUERY_EXPANDER_PLUGINS] = function () {
             return $this->getNewProductsQueryExpanderPlugins();
         };
 
@@ -117,7 +117,7 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addNewProductsResultFormatterPlugins(Container $container)
     {
-        $container[self::NEW_PRODUCTS_RESULT_FORMATTER_PLUGINS] = function () {
+        $container[static::NEW_PRODUCTS_RESULT_FORMATTER_PLUGINS] = function () {
             return $this->getNewProductsResultFormatterPlugins();
         };
 

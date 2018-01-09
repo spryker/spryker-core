@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\OrderTransfer;
 interface SalesClientInterface
 {
     /**
+     * Specification:
+     * - Returns the sales orders for the given customer and filters.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
@@ -23,7 +26,7 @@ interface SalesClientInterface
 
     /**
      * Specification:
-     * - Returns paginated orders
+     * - Returns the sales orders for the given customer and filters.
      *
      * @api
      *
@@ -34,6 +37,9 @@ interface SalesClientInterface
     public function getPaginatedOrder(OrderListTransfer $orderListTransfer);
 
     /**
+     * Specification:
+     * - Returns details for the given order id.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

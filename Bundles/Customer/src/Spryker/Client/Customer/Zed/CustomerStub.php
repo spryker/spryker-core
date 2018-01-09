@@ -19,18 +19,11 @@ class CustomerStub implements CustomerStubInterface
     protected $zedStub;
 
     /**
-     * @var \Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface[]
-     */
-    protected $defaultAddressChangePlugins;
-
-    /**
      * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
-     * @param \Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface[] $defaultAddressChangePlugins
      */
-    public function __construct(ZedRequestClient $zedStub, array $defaultAddressChangePlugins = [])
+    public function __construct(ZedRequestClient $zedStub)
     {
         $this->zedStub = $zedStub;
-        $this->defaultAddressChangePlugins = $defaultAddressChangePlugins;
     }
 
     /**
@@ -150,11 +143,7 @@ class CustomerStub implements CustomerStubInterface
      */
     public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
-        $customerTransfer = $this->zedStub->call('/customer/gateway/update-address-and-customer-default-addresses', $addressTransfer);
-
-        $this->callDefaultAddressChangePlugins($customerTransfer);
-
-        return $customerTransfer;
+        return $this->zedStub->call('/customer/gateway/update-address-and-customer-default-addresses', $addressTransfer);
     }
 
     /**
@@ -164,11 +153,7 @@ class CustomerStub implements CustomerStubInterface
      */
     public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
-        $customerTransfer = $this->zedStub->call('/customer/gateway/create-address-and-update-customer-default-addresses', $addressTransfer);
-
-        $this->callDefaultAddressChangePlugins($customerTransfer);
-
-        return $customerTransfer;
+        return $this->zedStub->call('/customer/gateway/create-address-and-update-customer-default-addresses', $addressTransfer);
     }
 
     /**
@@ -229,17 +214,5 @@ class CustomerStub implements CustomerStubInterface
     public function anonymizeCustomer(CustomerTransfer $customerTransfer)
     {
         return $this->zedStub->call('/customer/gateway/anonymize-customer', $customerTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return void
-     */
-    protected function callDefaultAddressChangePlugins(CustomerTransfer $customerTransfer)
-    {
-        foreach ($this->defaultAddressChangePlugins as $defaultAddressChangePlugin) {
-            $defaultAddressChangePlugin->process($customerTransfer);
-        }
     }
 }

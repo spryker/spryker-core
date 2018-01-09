@@ -7,8 +7,6 @@
 
 namespace Spryker\Yves\Kernel\Widget;
 
-use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
-
 interface WidgetFactoryInterface
 {
     /**
@@ -19,5 +17,5 @@ interface WidgetFactoryInterface
      *
      * @return \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface
      */
-    public function build(string $widgetClassName, array $arguments = []): WidgetPluginInterface;
+    public function build(string $widgetClassName, array $arguments = []);
 }

@@ -9,26 +9,25 @@ namespace Spryker\Yves\Kernel\Dependency\Plugin;
 
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 
-/**
- * TODO: write where/how this class used
- */
 interface WidgetPluginInterface extends WidgetContainerInterface
 {
     /**
-     * TODO: add specification
+     * Specification:
+     * - Returns the name of the widget as it's used in templates.
      *
      * @api
      *
      * @return string
      */
-    public static function getName(): string;
+    public static function getName();
 
     /**
-     * TODO: add specification
+     * Specification:
+     * - Returns the the template file path to render the widget.
      *
      * @api
      *
      * @return string
      */
-    public static function getTemplate(): string;
+    public static function getTemplate();
 }

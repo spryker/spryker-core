@@ -58,6 +58,8 @@ class PriceClient extends AbstractClient implements PriceClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return string[]

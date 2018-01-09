@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Queue\Business\Task;
 
 use Spryker\Client\Queue\QueueClientInterface;
-use Spryker\Shared\Queue\QueueConfig as SHaredConfig;
+use Spryker\Shared\Queue\QueueConfig as SharedConfig;
 use Spryker\Zed\Queue\Business\Exception\MissingQueuePluginException;
 use Spryker\Zed\Queue\QueueConfig;
 
@@ -116,7 +116,7 @@ class TaskManager implements TaskManagerInterface
      */
     protected function postProcessMessages(array $queueReceiveMessageTransfers, array $options = [])
     {
-        if (isset($options[SHaredConfig::CONFIG_QUEUE_OPTION_NO_ACK]) && $options[SHaredConfig::CONFIG_QUEUE_OPTION_NO_ACK]) {
+        if (isset($options[SharedConfig::CONFIG_QUEUE_OPTION_NO_ACK]) && $options[SharedConfig::CONFIG_QUEUE_OPTION_NO_ACK]) {
             return;
         }
 

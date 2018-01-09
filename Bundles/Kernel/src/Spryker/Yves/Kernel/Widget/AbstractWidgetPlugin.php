@@ -8,10 +8,11 @@
 namespace Spryker\Yves\Kernel\Widget;
 
 use ArrayAccess;
-use Exception;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
 use Spryker\Yves\Kernel\Exception\InvalidWidgetPluginException;
+use Spryker\Yves\Kernel\Exception\MissingWidgetPluginException;
+use Spryker\Yves\Kernel\Exception\ReadOnlyException;
 
 abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPluginInterface, ArrayAccess
 {
@@ -30,7 +31,7 @@ abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPlug
      *
      * @return bool
      */
-    public function hasWidget(string $name): bool
+    public function hasWidget(string $name)
     {
         return isset($this->widgets[$name]);
     }
@@ -38,22 +39,30 @@ abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPlug
     /**
      * @param string $name
      *
+     * @throws \Spryker\Yves\Kernel\Exception\MissingWidgetPluginException
+     *
      * @return string
      */
-    public function getWidgetClassName(string $name): string
+    public function getWidgetClassName(string $name)
     {
-        // TODO: throw custom exception if not exists
+        if (!isset($this->widgets[$name])) {
+            throw new MissingWidgetPluginException(sprintf(
+                'Missing "%s" widget plugin. You need to register your sub-widgets in order to use them. You can use $this->addWidgets() and $this->addWidget() methods.',
+                $name
+            ));
+        }
+
         return $this->widgets[$name];
     }
 
     /**
-     * @param array $widgetClasses
+     * @param array $widgetClassNames
      *
      * @return $this
      */
-    protected function addWidgets(array $widgetClasses)
+    protected function addWidgets(array $widgetClassNames)
     {
-        foreach ($widgetClasses as $widgetClass) {
+        foreach ($widgetClassNames as $widgetClass) {
             $this->addWidget($widgetClass);
         }
 
@@ -111,27 +120,25 @@ abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPlug
      * @param mixed $offset
      * @param mixed $value
      *
-     * @throws \Exception
+     * @throws \Spryker\Yves\Kernel\Exception\ReadOnlyException
      *
      * @return void
      */
     public function offsetSet($offset, $value)
     {
-        // TODO: customize exception
-        throw new Exception('This is a ready only object.');
+        throw new ReadOnlyException('This is a read only object.');
     }
 
     /**
      * @param mixed $offset
      *
-     * @throws \Exception
+     * @throws \Spryker\Yves\Kernel\Exception\ReadOnlyException
      *
      * @return void
      */
     public function offsetUnset($offset)
     {
-        // TODO: customize exception
-        throw new Exception('This is a ready only object.');
+        throw new ReadOnlyException('This is a read only object.');
     }
 
     /**

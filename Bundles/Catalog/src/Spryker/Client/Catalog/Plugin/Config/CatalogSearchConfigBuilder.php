@@ -21,6 +21,8 @@ class CatalogSearchConfigBuilder extends AbstractPlugin implements SearchConfigB
 {
     const DEFAULT_ITEMS_PER_PAGE = 12;
     const VALID_ITEMS_PER_PAGE_OPTIONS = [12, 24, 36];
+    const PARAMETER_NAME_PAGE = 'page';
+    const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
 
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface $facetConfigBuilder
@@ -58,10 +60,10 @@ class CatalogSearchConfigBuilder extends AbstractPlugin implements SearchConfigB
     public function buildPaginationConfig(PaginationConfigBuilderInterface $paginationConfigBuilder)
     {
         $paginationConfigTransfer = (new PaginationConfigTransfer())
-            ->setParameterName('page')
-            ->setItemsPerPageParameterName('ipp')
-            ->setDefaultItemsPerPage(self::DEFAULT_ITEMS_PER_PAGE)
-            ->setValidItemsPerPageOptions(self::VALID_ITEMS_PER_PAGE_OPTIONS);
+            ->setParameterName(static::PARAMETER_NAME_PAGE)
+            ->setItemsPerPageParameterName(static::PARAMETER_NAME_ITEMS_PER_PAGE)
+            ->setDefaultItemsPerPage(static::DEFAULT_ITEMS_PER_PAGE)
+            ->setValidItemsPerPageOptions(static::VALID_ITEMS_PER_PAGE_OPTIONS);
 
         $paginationConfigBuilder->setPagination($paginationConfigTransfer);
     }

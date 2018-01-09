@@ -10,11 +10,11 @@ namespace Spryker\Zed\PriceProduct\Dependency;
 interface PriceProductEvents
 {
     /**
- * Specification
- * - This events will be used for price_abstract publishing
- *
- * @api
- */
+     * Specification
+     * - This events will be used for price_abstract publishing
+     *
+     * @api
+     */
     const PRICE_ABSTRACT_PUBLISH = 'Price.price_abstract.publish';
 
     /**
