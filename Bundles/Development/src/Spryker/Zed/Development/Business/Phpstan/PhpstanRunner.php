@@ -19,6 +19,7 @@ use Zend\Filter\Word\CamelCaseToDash;
 
 class PhpstanRunner implements PhpstanRunnerInterface
 {
+    const DEFAULT_LEVEL = 'defaultLevel';
     use PathTrait;
 
     const MEMORY_LIMIT = '512M';
@@ -51,9 +52,9 @@ class PhpstanRunner implements PhpstanRunnerInterface
     {
         $module = $input->getOption(static::OPTION_MODULE);
 
-        $message = 'Run PHPMD in PROJECT level';
+        $message = 'Run PHPStan in PROJECT level';
         if ($module) {
-            $message = 'Run PHPMD in module ' . $module;
+            $message = 'Run PHPStan in module ' . $module;
         }
 
         $output->writeln($message);
@@ -84,7 +85,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
     {
         $command = 'php -d memory_limit=%s vendor/bin/phpstan analyze --no-progress -c %s %s -l %s';
 
-        $level = $input->getOption('level') ?: $this->config->getPhpstanLevel();
+        $level = $input->getOption('level') ?: $this->getDefaultLevel($configFilePath);
         $command = sprintf($command, static::MEMORY_LIMIT, $configFilePath, $path, $level);
 
         if ($input->getOption(static::OPTION_DRY_RUN)) {
@@ -92,7 +93,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
             return static::CODE_SUCCESS;
         }
 
-        $output->writeln('Checking ' . $path);
+        $output->writeln(sprintf('Checking %s (level %s)', $path, $level));
 
         $process = $this->getProcess($command);
         $process->run(function ($type, $buffer) use ($output) {
@@ -265,5 +266,26 @@ class PhpstanRunner implements PhpstanRunnerInterface
         }
 
         return $modules;
+    }
+
+    /**
+     * @param string $configFilePath
+     *
+     * @return int
+     */
+    protected function getDefaultLevel($configFilePath)
+    {
+        $configLevel = $this->config->getPhpstanLevel();
+
+        $directory = dirname($configFilePath) . DIRECTORY_SEPARATOR;
+        $configFile = $directory . 'phpstan.json';
+        if (!file_exists($configFile)) {
+            return $configLevel;
+        }
+
+        $content = file_get_contents($configFile);
+        $json = json_decode($content, true);
+
+        return $json[static::DEFAULT_LEVEL];
     }
 }

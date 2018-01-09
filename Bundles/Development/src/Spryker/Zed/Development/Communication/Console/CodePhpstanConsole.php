@@ -36,9 +36,9 @@ class CodePhpstanConsole extends Console
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Run Phpstan for project or core');
 
-        $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of module to run Phpstan for. You can use dot syntax for namespaced ones, e.g. `SprykerEco.FooBar`. `Spryker.core` is reserverd for CORE internal usage.');
+        $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of module to run PHPStan for. You can use dot syntax for namespaced ones, e.g. `SprykerEco.FooBar`. `Spryker.core` is reserverd for CORE internal usage.');
         $this->addOption(static::OPTION_FORMAT, 'f', InputOption::VALUE_OPTIONAL, 'Output format [text, xml, json, md]');
-        $this->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only');
+        $this->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-run the command, display it only');
         $this->addOption(static::OPTION_LEVEL, 'l', InputOption::VALUE_OPTIONAL, 'Level of rule options - the higher the stricter');
     }
 
