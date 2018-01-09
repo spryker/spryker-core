@@ -72,8 +72,6 @@ class CmsNavigationConnectorFacadeTest extends Unit
         $this->tester->getFacade()->updateCmsPageNavigationNodesIsActive($cmsPage);
 
         // Assert
-
-        /** @var \Spryker\Zed\Navigation\Business\NavigationFacadeInterface $navigationFacade */
         $navigationFacade = $this->tester->getLocator()->navigation()->facade();
         foreach ($navigationNodes as $navigationNode) {
             $navigationNode = $navigationFacade->findNavigationNode($navigationNode);

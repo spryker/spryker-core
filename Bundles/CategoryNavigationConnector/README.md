@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/CategoryNavigationConnector.svg)](https://travis-ci.org/spryker/CategoryNavigationConnector)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/CategoryNavigationConnector/badge.svg)](https://coveralls.io/github/spryker/CategoryNavigationConnector)
 
-{{ADD DESCRIPTION HERE}}
+This module provides a connection between CMS and Category modules, it provides plugins that update navigation nodes when categories get updated
 
 ## Installation
 
