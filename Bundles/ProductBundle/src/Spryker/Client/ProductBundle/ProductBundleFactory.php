@@ -17,7 +17,6 @@ class ProductBundleFactory extends AbstractFactory
      */
     public function createProductBundleGrouper()
     {
-        // TODO: get rid of cross layer instantiation
         return new ProductBundleGrouper();
     }
 }
