@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Event\Business\Queue\Consumer;
 
-use Exception;
 use Generated\Shared\Transfer\EventQueueSendMessageBodyTransfer;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Spryker\Zed\Event\Business\Logger\EventLoggerInterface;
@@ -80,7 +79,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                 );
 
                 $queueMessageTransfer->setAcknowledge(true);
-            } catch (Exception $exception) {
+            } catch (Throwable $exception) {
                 $errorMessage = sprintf(
                     'Failed to handle "%s" for listener "%s". Exception: "%s", "%s".',
                     $eventQueueSentMessageBodyTransfer->getEventName(),
