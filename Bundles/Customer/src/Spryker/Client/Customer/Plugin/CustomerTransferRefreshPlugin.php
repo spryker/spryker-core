@@ -21,7 +21,7 @@ class CustomerTransferRefreshPlugin extends AbstractPlugin implements CustomerSe
      *
      * @return void
      */
-    public function executes(CustomerTransfer $customerTransfer)
+    public function execute(CustomerTransfer $customerTransfer)
     {
         if ($customerTransfer && $customerTransfer->getIsDirty()) {
             $customerTransfer = $this->getClient()->getCustomerById($customerTransfer->getIdCustomer());

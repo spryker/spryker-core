@@ -7,7 +7,10 @@
 
 namespace Spryker\Yves\Kernel\View;
 
-use Exception;
+use Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface;
+use Spryker\Yves\Kernel\Exception\InvalidWidgetPluginException;
+use Spryker\Yves\Kernel\Exception\MissingWidgetPluginException;
+use Spryker\Yves\Kernel\Exception\ReadOnlyException;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 
 class View implements ViewInterface, WidgetContainerInterface
@@ -29,7 +32,7 @@ class View implements ViewInterface, WidgetContainerInterface
 
     /**
      * @param array $data
-     * @param \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface[] $widgetPlugins
+     * @param string[] $widgetPlugins
      * @param string|null $template
      */
     public function __construct(array $data = [], array $widgetPlugins = [], string $template = null)
@@ -52,7 +55,7 @@ class View implements ViewInterface, WidgetContainerInterface
      *
      * @return bool
      */
-    public function hasWidget(string $name): bool
+    public function hasWidget(string $name)
     {
         return isset($this->widgets[$name]);
     }
@@ -60,35 +63,44 @@ class View implements ViewInterface, WidgetContainerInterface
     /**
      * @param string $name
      *
+     * @throws \Spryker\Yves\Kernel\Exception\MissingWidgetPluginException
+     *
      * @return string
      */
-    public function getWidgetClassName(string $name): string
+    public function getWidgetClassName(string $name)
     {
-        // TODO: throw custom exception if not exists
+        if (!isset($this->widgets[$name])) {
+            throw new MissingWidgetPluginException(sprintf(
+                'Missing "%s" widget plugin. You need to register the widgets in the constructor of the View in order to use them.',
+                $name
+            ));
+        }
+
         return $this->widgets[$name];
     }
 
     /**
-     * @param string[] $widgetBuilderPlugins
+     * @param string[] $widgetClassNames
      *
      * @return void
      */
-    protected function addWidgets(array $widgetBuilderPlugins): void
+    protected function addWidgets(array $widgetClassNames)
     {
-        foreach ($widgetBuilderPlugins as $widgetClass) {
-            $this->addWidget($widgetClass);
+        foreach ($widgetClassNames as $widgetClassName) {
+            $this->addWidget($widgetClassName);
         }
     }
 
     /**
-     * @param string $widgetClass
+     * @param string $widgetClassName
      *
      * @return void
      */
-    protected function addWidget(string $widgetClass): void
+    protected function addWidget(string $widgetClassName)
     {
-        // TODO: make sure $widgetClass implements WidgetPluginInterface
-        $this->widgets[$widgetClass::getName()] = $widgetClass;
+        $this->assertClassIsWidgetPlugin($widgetClassName);
+
+        $this->widgets[$widgetClassName::getName()] = $widgetClassName;
     }
 
     /**
@@ -115,26 +127,42 @@ class View implements ViewInterface, WidgetContainerInterface
      * @param mixed $offset
      * @param mixed $value
      *
-     * @throws \Exception
+     * @throws \Spryker\Yves\Kernel\Exception\ReadOnlyException
      *
      * @return void
      */
     public function offsetSet($offset, $value)
     {
-        // TODO: customize exception
-        throw new Exception('This is a ready only object.');
+        throw new ReadOnlyException('This is a read only object.');
     }
 
     /**
      * @param mixed $offset
      *
-     * @throws \Exception
+     * @throws \Spryker\Yves\Kernel\Exception\ReadOnlyException
      *
      * @return void
      */
     public function offsetUnset($offset)
     {
-        // TODO: customize exception
-        throw new Exception('This is a ready only object.');
+        throw new ReadOnlyException('This is a read only object.');
+    }
+
+    /**
+     * @param string $widgetClassName
+     *
+     * @throws \Spryker\Yves\Kernel\Exception\InvalidWidgetPluginException
+     *
+     * @return void
+     */
+    protected function assertClassIsWidgetPlugin(string $widgetClassName)
+    {
+        if (!is_subclass_of($widgetClassName, WidgetPluginInterface::class)) {
+            throw new InvalidWidgetPluginException(sprintf(
+                'Invalid widget plugin %s. This class needs to implement %s.',
+                $widgetClassName,
+                WidgetPluginInterface::class
+            ));
+        }
     }
 }

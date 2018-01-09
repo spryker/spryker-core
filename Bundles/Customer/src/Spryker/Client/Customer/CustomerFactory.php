@@ -39,7 +39,7 @@ class CustomerFactory extends AbstractFactory
     public function createSessionCustomerSession()
     {
         return new CustomerSession(
-            $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_SESSION),
+            $this->getSessionClient(),
             $this->getCustomerSessionGetPlugins(),
             $this->getCustomerSessionSetPlugin()
         );
@@ -67,5 +67,13 @@ class CustomerFactory extends AbstractFactory
     public function getDefaultAddressChangePlugins()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_DEFAULT_ADDRESS_CHANGE);
+    }
+
+    /**
+     * @return \Spryker\Client\Session\SessionClientInterface
+     */
+    protected function getSessionClient()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_SESSION);
     }
 }

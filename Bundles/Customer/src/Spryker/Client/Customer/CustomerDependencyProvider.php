@@ -26,25 +26,11 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $container[static::PLUGINS_DEFAULT_ADDRESS_CHANGE] = function (Container $container) {
-            return $this->getDefaultAddressChangePlugins();
-        };
-
-        $container[self::SERVICE_SESSION] = function (Container $container) {
-            return $container->getLocator()->session()->client();
-        };
-
-        $container[self::SERVICE_ZED] = function (Container $container) {
-            return $container->getLocator()->zedRequest()->client();
-        };
-
-        $container[self::PLUGINS_CUSTOMER_SESSION_GET] = function (Container $container) {
-            return $this->getCustomerSessionGetPlugins();
-        };
-
-        $container[self::PLUGINS_CUSTOMER_SESSION_SET] = function (Container $container) {
-            return $this->getCustomerSessionSetPlugins();
-        };
+        $container = $this->addDefaultAddressChangePlugins($container);
+        $container = $this->addSessionClient($container);
+        $container = $this->addZedRequestClient($container);
+        $container = $this->addCustomerSessionGetPlugins($container);
+        $container = $this->addCustomerSessionSetPlugins($container);
 
         return $container;
     }
@@ -71,5 +57,75 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
     protected function getDefaultAddressChangePlugins()
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addDefaultAddressChangePlugins(Container $container)
+    {
+        $container[static::PLUGINS_DEFAULT_ADDRESS_CHANGE] = function () {
+            return $this->getDefaultAddressChangePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addSessionClient(Container $container)
+    {
+        $container[static::SERVICE_SESSION] = function (Container $container) {
+            return $container->getLocator()->session()->client();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addZedRequestClient(Container $container)
+    {
+        $container[static::SERVICE_ZED] = function (Container $container) {
+            return $container->getLocator()->zedRequest()->client();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCustomerSessionGetPlugins(Container $container)
+    {
+        $container[static::PLUGINS_CUSTOMER_SESSION_GET] = function () {
+            return $this->getCustomerSessionGetPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCustomerSessionSetPlugins(Container $container)
+    {
+        $container[static::PLUGINS_CUSTOMER_SESSION_SET] = function () {
+            return $this->getCustomerSessionSetPlugins();
+        };
+
+        return $container;
     }
 }

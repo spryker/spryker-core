@@ -12,9 +12,8 @@ use Generated\Shared\Transfer\CustomerTransfer;
 interface CustomerSessionSetPluginInterface
 {
     /**
-     * Specification
-     *  - executes custom operation after it writes
-     *    the customer to session
+     * Specification:
+     *  - Executes custom operation after it writes the customer to session.
      *
      * @api
      *

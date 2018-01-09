@@ -13,7 +13,8 @@ interface ProductBundleClientInterface
 {
     /**
      * Specification:
-     * - TODO provide specification
+     * - Groups bundled items with bundle.
+     * - Groups based on SKU and/or their selected product options.
      *
      * @api
      *

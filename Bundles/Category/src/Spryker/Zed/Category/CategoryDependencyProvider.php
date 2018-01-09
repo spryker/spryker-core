@@ -39,37 +39,14 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_TOUCH] = function (Container $container) {
-            return new CategoryToTouchBridge($container->getLocator()->touch()->facade());
-        };
-
-        $container[self::FACADE_LOCALE] = function (Container $container) {
-            return new CategoryToLocaleBridge($container->getLocator()->locale()->facade());
-        };
-
-        $container[self::FACADE_URL] = function (Container $container) {
-            return new CategoryToUrlBridge($container->getLocator()->url()->facade());
-        };
-
-        $container[static::FACADE_EVENT] = function (Container $container) {
-            return new CategoryToEventBridge($container->getLocator()->event()->facade());
-        };
-
-        $container[self::PLUGIN_GRAPH] = function () {
-            return $this->createGraphPlugin();
-        };
-
-        $container[static::PLUGIN_STACK_RELATION_DELETE] = Container::share(function () {
-            return $this->getRelationDeletePluginStack();
-        });
-
-        $container[static::PLUGIN_STACK_RELATION_UPDATE] = Container::share(function () {
-            return $this->getRelationUpdatePluginStack();
-        });
-
-        $container[static::PLUGINS_CATEGORY_URL_PATH] = Container::share(function () {
-            return $this->getCategoryUrlPathPlugins();
-        });
+        $container = $this->addTouchFacade($container);
+        $container = $this->addLocaleFacade($container);
+        $container = $this->addUrlFacade($container);
+        $container = $this->addEventFacade($container);
+        $container = $this->addGraphPlugin($container);
+        $container = $this->addRelationDeletePluginStack($container);
+        $container = $this->addRelationUpdatePluginStack($container);
+        $container = $this->addCategoryUrlPathPlugins($container);
 
         return $container;
     }
@@ -105,14 +82,8 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
-            return new CategoryToLocaleBridge($container->getLocator()->locale()->facade());
-        };
-
-        $container[static::PLUGIN_STACK_RELATION_READ] = Container::share(function () {
-            return $this->getRelationReadPluginStack();
-        });
-
+        $container = $this->addLocaleFacade($container);
+        $container = $this->addRelationReadPluginStack($container);
         $container = $this->addCategoryFormPlugins($container);
 
         return $container;
@@ -128,6 +99,132 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::PLUGIN_CATEGORY_FORM_PLUGINS] = function (Container $container) {
             return $this->getCategoryFormPlugins();
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTouchFacade(Container $container)
+    {
+        $container[self::FACADE_TOUCH] = function (Container $container) {
+            return new CategoryToTouchBridge($container->getLocator()->touch()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container)
+    {
+        $container[self::FACADE_LOCALE] = function (Container $container) {
+            return new CategoryToLocaleBridge($container->getLocator()->locale()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUrlFacade(Container $container)
+    {
+        $container[self::FACADE_URL] = function (Container $container) {
+            return new CategoryToUrlBridge($container->getLocator()->url()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventFacade(Container $container)
+    {
+        $container[static::FACADE_EVENT] = function (Container $container) {
+            return new CategoryToEventBridge($container->getLocator()->event()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGraphPlugin(Container $container)
+    {
+        $container[self::PLUGIN_GRAPH] = function () {
+            return $this->createGraphPlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRelationDeletePluginStack(Container $container)
+    {
+        $container[static::PLUGIN_STACK_RELATION_DELETE] = Container::share(function () {
+            return $this->getRelationDeletePluginStack();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRelationUpdatePluginStack(Container $container)
+    {
+        $container[static::PLUGIN_STACK_RELATION_UPDATE] = Container::share(function () {
+            return $this->getRelationUpdatePluginStack();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryUrlPathPlugins(Container $container)
+    {
+        $container[static::PLUGINS_CATEGORY_URL_PATH] = Container::share(function () {
+            return $this->getCategoryUrlPathPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRelationReadPluginStack(Container $container)
+    {
+        $container[static::PLUGIN_STACK_RELATION_READ] = Container::share(function () {
+            return $this->getRelationReadPluginStack();
+        });
 
         return $container;
     }

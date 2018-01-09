@@ -5,14 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Kernel\View;
+namespace Spryker\Yves\Kernel\Exception;
 
-use ArrayAccess;
+use Exception;
 
-interface ViewInterface extends ArrayAccess
+class MissingWidgetPluginException extends Exception
 {
-    /**
-     * @return string|null
-     */
-    public function getTemplate();
 }

@@ -23,7 +23,7 @@ class WidgetFactory implements WidgetFactoryInterface
      *
      * @return \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface
      */
-    public function build(string $widgetClassName, array $arguments = []): WidgetPluginInterface
+    public function build(string $widgetClassName, array $arguments = [])
     {
         $cacheKey = $this->generateCacheKey($widgetClassName, $arguments);
         $widget = $this->getCachedWidget($cacheKey);
@@ -31,8 +31,8 @@ class WidgetFactory implements WidgetFactoryInterface
             return $widget;
         }
 
-        $this->assertInterface($widgetClassName);
-        $this->assertInitialize($widgetClassName);
+        $this->assertClassIsWidgetPlugin($widgetClassName);
+        $this->assertInitializeExists($widgetClassName);
 
         $widget = new $widgetClassName();
         call_user_func_array([$widget, 'initialize'], $arguments);
@@ -49,7 +49,7 @@ class WidgetFactory implements WidgetFactoryInterface
      *
      * @return void
      */
-    protected function assertInterface(string $widgetClassName)
+    protected function assertClassIsWidgetPlugin(string $widgetClassName)
     {
         if (!is_subclass_of($widgetClassName, WidgetPluginInterface::class)) {
             throw new InvalidWidgetPluginException(sprintf(
@@ -67,11 +67,11 @@ class WidgetFactory implements WidgetFactoryInterface
      *
      * @return void
      */
-    protected function assertInitialize(string $widgetClassName)
+    protected function assertInitializeExists(string $widgetClassName)
     {
         if (!method_exists($widgetClassName, 'initialize')) {
             throw new InvalidWidgetPluginException(sprintf(
-                'Widget %s needs to implement custom initialize() method with its valid widget input parameters.',
+                'Widget %s needs to define and implement custom initialize() method with its custom widget input parameters.',
                 $widgetClassName
             ));
         }
@@ -83,7 +83,7 @@ class WidgetFactory implements WidgetFactoryInterface
      *
      * @return string
      */
-    protected function generateCacheKey(string $widgetClassName, array $arguments): string
+    protected function generateCacheKey(string $widgetClassName, array $arguments)
     {
         return md5($widgetClassName . serialize($arguments));
     }
@@ -104,7 +104,7 @@ class WidgetFactory implements WidgetFactoryInterface
      *
      * @return void
      */
-    protected function cacheWidget(string $cacheKey, WidgetPluginInterface $widget): void
+    protected function cacheWidget(string $cacheKey, WidgetPluginInterface $widget)
     {
         static::$widgetCache[$cacheKey] = $widget;
     }

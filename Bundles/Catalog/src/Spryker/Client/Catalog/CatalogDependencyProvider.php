@@ -53,7 +53,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSearchClient(Container $container): Container
     {
-        $container[self::CLIENT_SEARCH] = function (Container $container) {
+        $container[static::CLIENT_SEARCH] = function (Container $container) {
             return $container->getLocator()->search()->client();
         };
 
@@ -67,7 +67,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCatalogSearchQueryPlugin(Container $container): Container
     {
-        $container[self::CATALOG_SEARCH_QUERY_PLUGIN] = function () {
+        $container[static::CATALOG_SEARCH_QUERY_PLUGIN] = function () {
             return $this->createCatalogSearchQueryPlugin();
         };
 
@@ -81,7 +81,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCatalogSearchQueryExpanderPlugins(Container $container): Container
     {
-        $container[self::CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS] = function () {
+        $container[static::CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS] = function () {
             return $this->createCatalogSearchQueryExpanderPlugins();
         };
 
@@ -95,7 +95,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCatalogSerachResultFormatterPlugins(Container $container): Container
     {
-        $container[self::CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS] = function () {
+        $container[static::CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS] = function () {
             return $this->createCatalogSearchResultFormatterPlugins();
         };
 
@@ -109,7 +109,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSuggestionQueryPlugin(Container $container): Container
     {
-        $container[self::SUGGESTION_QUERY_PLUGIN] = function () {
+        $container[static::SUGGESTION_QUERY_PLUGIN] = function () {
             return $this->createSuggestionQueryPlugin();
         };
 
@@ -123,7 +123,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSuggestionQueryExpanderPlugins(Container $container): Container
     {
-        $container[self::SUGGESTION_QUERY_EXPANDER_PLUGINS] = function () {
+        $container[static::SUGGESTION_QUERY_EXPANDER_PLUGINS] = function () {
             return $this->createSuggestionQueryExpanderPlugins();
         };
 
@@ -137,7 +137,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSuggestionResultFormatterPlugins(Container $container): Container
     {
-        $container[self::SUGGESTION_RESULT_FORMATTER_PLUGINS] = function () {
+        $container[static::SUGGESTION_RESULT_FORMATTER_PLUGINS] = function () {
             return $this->createSuggestionResultFormatterPlugins();
         };
 
@@ -151,7 +151,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addFacetConfigTransferBuilderPlugins(Container $container): Container
     {
-        $container[self::PLUGIN_FACET_CONFIG_TRANSFER_BUILDERS] = function () {
+        $container[static::PLUGIN_FACET_CONFIG_TRANSFER_BUILDERS] = function () {
             return $this->getFacetConfigTransferBuilderPlugins();
         };
 
@@ -165,7 +165,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSortConfigTransferBuilderPlugins(Container $container): Container
     {
-        $container[self::PLUGIN_SORT_CONFIG_TRANSFER_BUILDERS] = function () {
+        $container[static::PLUGIN_SORT_CONFIG_TRANSFER_BUILDERS] = function () {
             return $this->getSortConfigTransferBuilderPlugins();
         };
 

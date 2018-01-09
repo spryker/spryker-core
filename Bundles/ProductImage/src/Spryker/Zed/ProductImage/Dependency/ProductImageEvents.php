@@ -11,7 +11,7 @@ interface ProductImageEvents
 {
     /**
      * Specification
-     * - This events will be used for product_abstract_image publishing
+     * - This event will be used for product_abstract_image publishing
      *
      * @api
      */
@@ -19,7 +19,7 @@ interface ProductImageEvents
 
     /**
      * Specification
-     * - This events will be used for product_abstract_image un-publishing
+     * - This event will be used for product_abstract_image un-publishing
      *
      * @api
      */
@@ -27,7 +27,7 @@ interface ProductImageEvents
 
     /**
      * Specification
-     * - This events will be used for product_concrete_image publishing
+     * - This event will be used for product_concrete_image publishing
      *
      * @api
      */
@@ -35,7 +35,7 @@ interface ProductImageEvents
 
     /**
      * Specification
-     * - This events will be used for product_concrete_image un-publishing
+     * - This event will be used for product_concrete_image un-publishing
      *
      * @api
      */
@@ -43,7 +43,7 @@ interface ProductImageEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_image entity creation
+     * - This event will be used for spy_product_image entity creation
      *
      * @api
      */
@@ -51,7 +51,7 @@ interface ProductImageEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_image entity changes
+     * - This event will be used for spy_product_image entity changes
      *
      * @api
      */
@@ -59,7 +59,7 @@ interface ProductImageEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_image entity deletion
+     * - This event will be used for spy_product_image entity deletion
      *
      * @api
      */
@@ -67,7 +67,7 @@ interface ProductImageEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_image_set entity creation
+     * - This event will be used for spy_product_image_set entity creation
      *
      * @api
      */
@@ -75,7 +75,7 @@ interface ProductImageEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_image_set entity changes
+     * - This event will be used for spy_product_image_set entity changes
      *
      * @api
      */
@@ -83,7 +83,7 @@ interface ProductImageEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_image_set entity deletion
+     * - This event will be used for spy_product_image_set entity deletion
      *
      * @api
      */
@@ -91,7 +91,7 @@ interface ProductImageEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_image_set_to_product_image entity creation
+     * - This event will be used for spy_product_image_set_to_product_image entity creation
      *
      * @api
      */
@@ -99,7 +99,7 @@ interface ProductImageEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_image_set_to_product_image entity changes
+     * - This event will be used for spy_product_image_set_to_product_image entity changes
      *
      * @api
      */
@@ -107,7 +107,7 @@ interface ProductImageEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_image_set_to_product_image entity deletion
+     * - This event will be used for spy_product_image_set_to_product_image entity deletion
      *
      * @api
      */

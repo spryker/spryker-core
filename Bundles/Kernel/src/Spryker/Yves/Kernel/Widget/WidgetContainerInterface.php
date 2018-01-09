@@ -14,12 +14,12 @@ interface WidgetContainerInterface
      *
      * @return bool
      */
-    public function hasWidget(string $name): bool;
+    public function hasWidget(string $name);
 
     /**
      * @param string $name
      *
      * @return string
      */
-    public function getWidgetClassName(string $name): string;
+    public function getWidgetClassName(string $name);
 }

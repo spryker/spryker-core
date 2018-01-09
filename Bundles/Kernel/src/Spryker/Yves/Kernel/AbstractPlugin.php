@@ -118,7 +118,6 @@ abstract class AbstractPlugin
      */
     protected function getApplication()
     {
-        // TODO: check this later because Pimple is extending AbstractPlugin
         return (new Pimple())->getApplication();
     }
 

@@ -72,7 +72,7 @@ class CustomerSession implements CustomerSessionInterface
         }
 
         foreach ($this->customerSessionGetPlugins as $customerSessionGetPlugin) {
-            $customerSessionGetPlugin->executes($customerTransfer);
+            $customerSessionGetPlugin->execute($customerTransfer);
         }
 
         return $customerTransfer;

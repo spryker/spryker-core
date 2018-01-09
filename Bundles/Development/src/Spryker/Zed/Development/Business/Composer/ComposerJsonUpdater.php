@@ -185,31 +185,42 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
     }
 
     /**
-     * @param string $vendorName
+     * @param string $composerName
      * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
      *
      * @throws \RuntimeException
-     * @throws \Spryker\Zed\Development\Business\Exception\DependencyTree\InvalidComposerJsonException
      *
      * @return void
      */
-    protected function assertCorrectName($vendorName, SplFileInfo $composerJsonFile)
+    protected function assertCorrectName($composerName, SplFileInfo $composerJsonFile)
     {
         $filter = new CamelCaseToDash();
         $moduleName = strtolower($filter->filter($composerJsonFile->getRelativePath()));
 
+        $organization = $this->getOrganizationFromComposerJsonFile($composerJsonFile);
+
+        $expected = $organization . '/' . $moduleName;
+        if ($composerName !== $expected) {
+            throw new RuntimeException(sprintf('Invalid composer name, expected %s, got %s', $expected, $composerName));
+        }
+    }
+
+    /**
+     * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
+     *
+     * @throws \Spryker\Zed\Development\Business\Exception\DependencyTree\InvalidComposerJsonException
+     *
+     * @return mixed
+     */
+    protected function getOrganizationFromComposerJsonFile(SplFileInfo $composerJsonFile)
+    {
         if (!preg_match('/vendor\/spryker\/([a-z_-]+)\/Bundles\/\w+\/composer.json$/', $composerJsonFile->getRealPath(), $matches)) {
             throw new InvalidComposerJsonException(sprintf(
-                'Unable to locate core name from %s.',
+                'Unable to locate organization name from %s.',
                 $composerJsonFile->getRealPath()
             ));
         }
 
-        $applicationName = $matches[1];
-
-        $expected = $applicationName . '/' . $moduleName;
-        if ($vendorName !== $expected) {
-            throw new RuntimeException(sprintf('Invalid composer name, expected %s, got %s', $expected, $vendorName));
-        }
+        return $matches[1];
     }
 }
