@@ -9,7 +9,7 @@
 
     <transfer name="CompanyUnitAddress">
         <property name="idCompanyUnitAddress" type="int"/>
-        <property name="fkBusinessUnit" type="int"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
         <property name="fkCountry" type="int"/>
         <property name="fkRegion" type="int"/>
         <property name="address1" type="string"/>
