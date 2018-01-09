@@ -1,6 +1,5 @@
 parameters:
     ignoreErrors:
-            - '#Anonymous function has an unused use \$input.#'
             - '#Class PHP_CodeSniffer\\Config not found#'
 
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php

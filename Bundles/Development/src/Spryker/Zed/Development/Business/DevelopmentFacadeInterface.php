@@ -274,6 +274,9 @@ interface DevelopmentFacadeInterface
     public function getArchitectureRules();
 
     /**
+     * Specification:
+     * - Runs PHPStan static code analyzing tool.
+     *
      * @api
      *
      * @param \Symfony\Component\Console\Input\InputInterface $input
