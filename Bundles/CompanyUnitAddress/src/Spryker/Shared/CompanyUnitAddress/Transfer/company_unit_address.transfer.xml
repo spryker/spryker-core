@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="defaultBillingAddress" type="int" />
+    </transfer>
+
+    <transfer name="CompanyUnitAddress">
+        <property name="idCompanyUnitAddress" type="int"/>
+        <property name="fkBusinessUnit" type="int"/>
+        <property name="fkCountry" type="int"/>
+        <property name="fkRegion" type="int"/>
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="company" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="phone" type="string"/>
+        <property name="comment" type="string"/>
+        <property name="isDeleted" type="bool"/>
+        <property name="isDefaultBilling" type="bool"/>
+        <property name="anonymizedAt" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUnitAddressCollection">
+        <property name="companyUnitAddresses" type="CompanyUnitAddress[]" singular="companyUnitAddress"/>
+    </transfer>
+
+    <!-- Infrastructure -->
+    <transfer name="Response">
+        <property name="code" type="int"/>
+        <property name="errors" type="ResponseError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="ResponseError">
+        <property name="message" type="string"/>
+    </transfer>
+    <!-- /Infrastructure -->
+</transfers>
