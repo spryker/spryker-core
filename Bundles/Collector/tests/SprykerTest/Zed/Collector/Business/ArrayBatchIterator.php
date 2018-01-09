@@ -54,7 +54,7 @@ class ArrayBatchIterator implements CountableIteratorInterface
      */
     public function valid()
     {
-        return ($this->currentElement + 1 < $this->count());
+        return ($this->currentElement + 1 <= $this->count());
     }
 
     /**

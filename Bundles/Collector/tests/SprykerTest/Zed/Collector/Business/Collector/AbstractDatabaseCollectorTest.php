@@ -14,6 +14,8 @@ use Spryker\Zed\Collector\Business\Exporter\Reader\Storage\RedisReader;
 use Spryker\Zed\Collector\Business\Exporter\Writer\AbstractTouchUpdater;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\RedisWriter;
 use Spryker\Zed\Collector\Business\Model\BatchResult;
+use Spryker\Zed\Collector\CollectorConfig;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use SprykerTest\Zed\Collector\Business\ArrayBatchIterator;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\NullOutput;
@@ -36,7 +38,7 @@ class AbstractDatabaseCollectorTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\Collector\Business\Collector\AbstractDatabaseCollector
+     * @var \Spryker\Zed\Collector\Business\Collector\AbstractDatabaseCollector|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $sut;
 
@@ -71,6 +73,11 @@ class AbstractDatabaseCollectorTest extends Unit
     protected $touchUpdaterMock;
 
     /**
+     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $touchQueryContainerMock;
+
+    /**
      * @uses AbstractDatabaseCollector::startProgressBar()
      *
      * @return void
@@ -98,11 +105,17 @@ class AbstractDatabaseCollectorTest extends Unit
             ->getMockBuilder(AbstractTouchUpdater::class)
             ->disableOriginalConstructor()
             ->getMock();
+        $this->touchQueryContainerMock = $this
+            ->getMockBuilder(TouchQueryContainer::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->sut = $this
             ->getMockBuilder(AbstractDatabaseCollector::class)
-            ->setMethods(['startProgressBar'])
+            ->setMethods(['startProgressBar', 'isStorable', 'collectKey', 'processCollectedItem'])
             ->getMockForAbstractClass();
+
+        $this->sut->setTouchQueryContainer($this->touchQueryContainerMock);
 
         $this->sut
             ->expects($this->any())
@@ -113,11 +126,106 @@ class AbstractDatabaseCollectorTest extends Unit
     /**
      * @return void
      */
-    public function testA()
+    public function testExportDataToStoreWritesStorableData()
     {
-        // TODO: add tests
+        // Assign
+        $this->sut
+            ->expects($this->any())
+            ->method('isStorable')
+            ->willReturn(true);
+
+        $this->sut
+            ->expects($this->any())
+            ->method('collectKey')
+            ->willReturn('touchKey1');
+
+        $this->sut
+            ->expects($this->any())
+            ->method('processCollectedItem')
+            ->willReturn([]);
+
+        $batchCollection = [
+            [
+                0 => [
+                    CollectorConfig::COLLECTOR_RESOURCE_ID => 1,
+                ],
+            ],
+        ];
+
+        // Assert
+        $this->touchUpdaterMock
+            ->expects($this->exactly(1))
+            ->method('bulkUpdate');
+        $this->writerMock
+            ->expects($this->exactly(1))
+            ->method('write');
+
+        $this->touchUpdaterMock
+            ->expects($this->exactly(0))
+            ->method('deleteTouchKeyEntities');
+        $this->writerMock
+            ->expects($this->exactly(0))
+            ->method('delete');
+
+        // Act
         $this->sut->exportDataToStore(
-            new ArrayBatchIterator([]),
+            new ArrayBatchIterator($batchCollection),
+            $this->touchUpdaterMock,
+            new BatchResult(),
+            $this->readerMock,
+            $this->writerMock,
+            $this->localeTransfer,
+            $this->output
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExportDataToStoreDeletesNotStorableData()
+    {
+        // Assign
+        $this->sut
+            ->expects($this->any())
+            ->method('isStorable')
+            ->willReturn(false);
+
+        $this->sut
+            ->expects($this->any())
+            ->method('collectKey')
+            ->willReturn('touchKey1');
+
+        $this->sut
+            ->expects($this->any())
+            ->method('processCollectedItem')
+            ->willReturn([]);
+
+        $batchCollection = [
+            [
+                0 => [
+                    CollectorConfig::COLLECTOR_RESOURCE_ID => 1,
+                ],
+            ],
+        ];
+
+        // Assert
+        $this->touchUpdaterMock
+            ->expects($this->exactly(0))
+            ->method('bulkUpdate');
+        $this->writerMock
+            ->expects($this->exactly(0))
+            ->method('write');
+
+        $this->touchUpdaterMock
+            ->expects($this->exactly(1))
+            ->method('deleteTouchKeyEntities');
+        $this->writerMock
+            ->expects($this->exactly(1))
+            ->method('delete');
+
+        // Act
+        $this->sut->exportDataToStore(
+            new ArrayBatchIterator($batchCollection),
             $this->touchUpdaterMock,
             new BatchResult(),
             $this->readerMock,
