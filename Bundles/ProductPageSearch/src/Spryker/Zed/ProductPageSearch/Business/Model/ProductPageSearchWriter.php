@@ -32,12 +32,12 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productPageSearchTransfer
-     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch|null $productPageSearchEntity
      * @param array $data
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch|null $productPageSearchEntity
      *
      * @return void
      */
-    public function save(ProductPageSearchTransfer $productPageSearchTransfer, SpyProductAbstractPageSearch $productPageSearchEntity, array $data)
+    public function save(ProductPageSearchTransfer $productPageSearchTransfer, array $data, SpyProductAbstractPageSearch $productPageSearchEntity = null)
     {
         if ($productPageSearchEntity === null) {
             $productPageSearchEntity = new SpyProductAbstractPageSearch();

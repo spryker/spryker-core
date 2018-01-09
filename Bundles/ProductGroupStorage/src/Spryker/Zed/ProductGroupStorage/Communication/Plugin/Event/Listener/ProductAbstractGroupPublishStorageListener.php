@@ -31,6 +31,6 @@ class ProductAbstractGroupPublishStorageListener extends AbstractProductAbstract
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        $this->refresh($productAbstractIds);
+        $this->publish($productAbstractIds);
     }
 }

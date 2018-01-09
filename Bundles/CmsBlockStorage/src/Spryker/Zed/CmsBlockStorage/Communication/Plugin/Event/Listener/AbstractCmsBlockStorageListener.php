@@ -21,7 +21,6 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
     use DatabaseTransactionHandlerTrait;
 
     const ID_CMS_BLOCK = 'id_cms_block';
-    const FK_CMS_BLOCK = 'fkCmsBlock';
 
     /**
      * Specification:
@@ -72,9 +71,9 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
             foreach ($localeNames as $localeName) {
                 $idCmsBlock = $blockEntityArray[static::ID_CMS_BLOCK];
                 if (isset($blockStorageEntities[$idCmsBlock][$localeName])) {
-                    $this->storeDataSet($blockEntityArray, $blockStorageEntities[$idCmsBlock][$localeName], $localeName);
+                    $this->storeDataSet($blockEntityArray, $localeName, $blockStorageEntities[$idCmsBlock][$localeName]);
                 } else {
-                    $this->storeDataSet($blockEntityArray, null, $localeName);
+                    $this->storeDataSet($blockEntityArray, $localeName);
                 }
             }
         }
@@ -82,12 +81,12 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
 
     /**
      * @param array $blockEntityArray
-     * @param \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage|null $cmsBlockStorageEntity
      * @param string $localeName
+     * @param \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage|null $cmsBlockStorageEntity
      *
      * @return void
      */
-    protected function storeDataSet(array $blockEntityArray, SpyCmsBlockStorage $cmsBlockStorageEntity, $localeName)
+    protected function storeDataSet(array $blockEntityArray, $localeName, SpyCmsBlockStorage $cmsBlockStorageEntity = null)
     {
         if ($cmsBlockStorageEntity === null) {
             $cmsBlockStorageEntity = new SpyCmsBlockStorage();

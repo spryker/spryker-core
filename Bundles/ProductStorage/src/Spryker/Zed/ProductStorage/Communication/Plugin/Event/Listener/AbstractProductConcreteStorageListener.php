@@ -18,11 +18,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AbstractProductConcreteStorageListener extends AbstractPlugin
 {
-    const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
-    const COL_ID_PRODUCT = 'id_product';
     const COL_FK_PRODUCT = 'fk_product';
-    const FK_PRODUCT_ABSTRACT = 'fkProductConcrete';
     const CONCRETE_DESCRIPTION = 'description';
     const ABSTRACT_DESCRIPTION = 'abstract_description';
     const ABSTRACT_ATTRIBUTES = 'abstract_attributes';

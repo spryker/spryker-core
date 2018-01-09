@@ -64,9 +64,9 @@ abstract class AbstractNavigationStorageListener extends AbstractPlugin implemen
         foreach ($navigationTreeTransfers as $navigationTreeTransfer) {
             foreach ($navigationTreeTransfer as $localeName => $navigationTreeByLocaleTransfer) {
                 if (isset($spyNavigationMenuTranslationStorageEntities[$navigationTreeByLocaleTransfer->getNavigation()->getIdNavigation()][$localeName])) {
-                    $this->storeDataSet($navigationTreeByLocaleTransfer, $spyNavigationMenuTranslationStorageEntities[$navigationTreeByLocaleTransfer->getNavigation()->getIdNavigation()][$localeName], $localeName);
+                    $this->storeDataSet($navigationTreeByLocaleTransfer, $localeName, $spyNavigationMenuTranslationStorageEntities[$navigationTreeByLocaleTransfer->getNavigation()->getIdNavigation()][$localeName]);
                 } else {
-                    $this->storeDataSet($navigationTreeByLocaleTransfer, null, $localeName);
+                    $this->storeDataSet($navigationTreeByLocaleTransfer, $localeName);
                 }
             }
         }
@@ -74,12 +74,12 @@ abstract class AbstractNavigationStorageListener extends AbstractPlugin implemen
 
     /**
      * @param \Generated\Shared\Transfer\NavigationTreeTransfer $navigationTreeByLocaleTransfer
-     * @param \Orm\Zed\NavigationStorage\Persistence\SpyNavigationStorage|null $spyNavigationStorage
      * @param string $localeName
+     * @param \Orm\Zed\NavigationStorage\Persistence\SpyNavigationStorage|null $spyNavigationStorage
      *
      * @return void
      */
-    protected function storeDataSet(NavigationTreeTransfer $navigationTreeByLocaleTransfer, SpyNavigationStorage $spyNavigationStorage, $localeName)
+    protected function storeDataSet(NavigationTreeTransfer $navigationTreeByLocaleTransfer, $localeName, SpyNavigationStorage $spyNavigationStorage = null)
     {
         if ($spyNavigationStorage === null) {
             $spyNavigationStorage = new SpyNavigationStorage();

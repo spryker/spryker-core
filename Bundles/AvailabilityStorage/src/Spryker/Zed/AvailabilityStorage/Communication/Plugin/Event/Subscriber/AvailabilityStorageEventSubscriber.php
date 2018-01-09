@@ -29,14 +29,73 @@ class AvailabilityStorageEventSubscriber extends AbstractPlugin implements Event
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(AvailabilityEvents::AVAILABILITY_ABSTRACT_PUBLISH, new AvailabilityStorageListener())
-            ->addListenerQueued(AvailabilityEvents::AVAILABILITY_ABSTRACT_UNPUBLISH, new AvailabilityStorageListener())
-            ->addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_CREATE, new AvailabilityStorageListener())
-            ->addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_UPDATE, new AvailabilityStorageListener())
-            ->addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE, new AvailabilityStorageListener())
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new AvailabilityProductStorageListener());
+        $this->addAvailabilityAbstractPublishListener($eventCollection);
+        $this->addAvailabilityAbstractUnPublishListener($eventCollection);
+        $this->addAvailabilityAbstractCreateListener($eventCollection);
+        $this->addAvailabilityAbstractUpdateListener($eventCollection);
+        $this->addAvailabilityAbstractDeleteListener($eventCollection);
+        $this->addProductUpdateListener($eventCollection);
 
         return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addAvailabilityAbstractPublishListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(AvailabilityEvents::AVAILABILITY_ABSTRACT_PUBLISH, new AvailabilityStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addAvailabilityAbstractUnPublishListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(AvailabilityEvents::AVAILABILITY_ABSTRACT_UNPUBLISH, new AvailabilityStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addAvailabilityAbstractCreateListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_CREATE, new AvailabilityStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addAvailabilityAbstractUpdateListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_UPDATE, new AvailabilityStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addAvailabilityAbstractDeleteListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE, new AvailabilityStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductUpdateListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new AvailabilityProductStorageListener());
     }
 }

@@ -64,9 +64,9 @@ class AbstractCmsPageSearchListener extends AbstractPlugin
             foreach ($localeNames as $localeName) {
                 $idCmsPage = $cmsPageEntity->getIdCmsPage();
                 if (isset($cmsPageStorageEntities[$idCmsPage][$localeName])) {
-                    $this->storeDataSet($cmsPageEntity, $cmsPageStorageEntities[$idCmsPage][$localeName], $localeName);
+                    $this->storeDataSet($cmsPageEntity, $localeName, $cmsPageStorageEntities[$idCmsPage][$localeName]);
                 } else {
-                    $this->storeDataSet($cmsPageEntity, null, $localeName);
+                    $this->storeDataSet($cmsPageEntity, $localeName);
                 }
             }
         }
@@ -74,12 +74,12 @@ class AbstractCmsPageSearchListener extends AbstractPlugin
 
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
-     * @param \Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearch|null $cmsPageStorageEntity
      * @param string $localeName
+     * @param \Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearch|null $cmsPageStorageEntity
      *
      * @return void
      */
-    protected function storeDataSet(SpyCmsPage $cmsPageEntity, SpyCmsPageSearch $cmsPageStorageEntity, $localeName)
+    protected function storeDataSet(SpyCmsPage $cmsPageEntity, $localeName, SpyCmsPageSearch $cmsPageStorageEntity = null)
     {
         if ($cmsPageStorageEntity === null) {
             $cmsPageStorageEntity = new SpyCmsPageSearch();

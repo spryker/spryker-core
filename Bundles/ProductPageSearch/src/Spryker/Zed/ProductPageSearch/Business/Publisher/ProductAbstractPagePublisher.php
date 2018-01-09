@@ -139,7 +139,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         $productPageSearchTransfer = $this->getProductPageSearchTransfer($spyProductAbstractLocalizedEntity, $spyProductPageSearchEntity, $isRefresh);
         $data = $this->productPageSearchMapper->mapToSearchData($productPageSearchTransfer);
 
-        $this->productPageSearchWriter->save($productPageSearchTransfer, $spyProductPageSearchEntity, $data);
+        $this->productPageSearchWriter->save($productPageSearchTransfer, $data, $spyProductPageSearchEntity);
     }
 
     /**

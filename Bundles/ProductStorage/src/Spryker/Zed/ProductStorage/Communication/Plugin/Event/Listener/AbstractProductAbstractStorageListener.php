@@ -20,7 +20,6 @@ class AbstractProductAbstractStorageListener extends AbstractPlugin
 {
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
-    const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
 
     /**
      * @var array

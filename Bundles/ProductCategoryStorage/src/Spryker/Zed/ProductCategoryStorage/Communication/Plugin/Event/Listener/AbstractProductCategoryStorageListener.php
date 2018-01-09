@@ -70,21 +70,21 @@ class AbstractProductCategoryStorageListener extends AbstractPlugin
             $idProduct = $spyProductAbstractLocalizedEntity->getFkProductAbstract();
             $localeName = $spyProductAbstractLocalizedEntity->getLocale()->getLocaleName();
             if (isset($spyProductAbstractStorageEntities[$idProduct][$localeName])) {
-                $this->refreshDataSet($spyProductAbstractLocalizedEntity, $spyProductAbstractStorageEntities[$idProduct][$localeName], $categories);
+                $this->refreshDataSet($spyProductAbstractLocalizedEntity, $categories, $spyProductAbstractStorageEntities[$idProduct][$localeName]);
             } else {
-                $this->refreshDataSet($spyProductAbstractLocalizedEntity, null, $categories);
+                $this->refreshDataSet($spyProductAbstractLocalizedEntity, $categories);
             }
         }
     }
 
     /**
      * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity
-     * @param \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage|null $spyProductAbstractCategoryStorageEntity
      * @param array $categories
+     * @param \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage|null $spyProductAbstractCategoryStorageEntity
      *
      * @return void
      */
-    protected function refreshDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, SpyProductAbstractCategoryStorage $spyProductAbstractCategoryStorageEntity, array $categories)
+    protected function refreshDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $categories, SpyProductAbstractCategoryStorage $spyProductAbstractCategoryStorageEntity = null)
     {
         if ($spyProductAbstractCategoryStorageEntity === null) {
             $spyProductAbstractCategoryStorageEntity = new SpyProductAbstractCategoryStorage();

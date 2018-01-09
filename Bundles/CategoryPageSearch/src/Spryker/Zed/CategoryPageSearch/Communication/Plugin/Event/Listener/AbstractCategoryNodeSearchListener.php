@@ -61,9 +61,9 @@ abstract class AbstractCategoryNodeSearchListener extends AbstractPlugin impleme
         foreach ($categoryTrees as $categoryNodeId => $categoryTreeWithLocales) {
             foreach ($categoryTreeWithLocales as $localeName => $categoryTreeWithLocale) {
                 if (isset($spyCategoryNodePageSearchEntities[$categoryNodeId][$localeName])) {
-                    $this->storeDataSet($categoryTreeWithLocale, $spyCategoryNodePageSearchEntities[$categoryNodeId][$localeName], $localeName);
+                    $this->storeDataSet($categoryTreeWithLocale, $localeName, $spyCategoryNodePageSearchEntities[$categoryNodeId][$localeName]);
                 } else {
-                    $this->storeDataSet($categoryTreeWithLocale, null, $localeName);
+                    $this->storeDataSet($categoryTreeWithLocale, $localeName);
                 }
             }
         }
@@ -71,12 +71,12 @@ abstract class AbstractCategoryNodeSearchListener extends AbstractPlugin impleme
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $spyCategoryNodeEntity
-     * @param \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch|null $spyCategoryNodePageSearchEntity
      * @param string $localeName
+     * @param \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch|null $spyCategoryNodePageSearchEntity
      *
      * @return void
      */
-    protected function storeDataSet(SpyCategoryNode $spyCategoryNodeEntity, SpyCategoryNodePageSearch $spyCategoryNodePageSearchEntity, $localeName)
+    protected function storeDataSet(SpyCategoryNode $spyCategoryNodeEntity, $localeName, SpyCategoryNodePageSearch $spyCategoryNodePageSearchEntity = null)
     {
         if ($spyCategoryNodePageSearchEntity === null) {
             $spyCategoryNodePageSearchEntity = new SpyCategoryNodePageSearch();

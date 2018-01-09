@@ -44,8 +44,7 @@ class AbstractProductCategoryFilterStorageListener extends AbstractPlugin
     protected function storeData(array $productCategoryFilters, array $categoryFilterStorageEntitiesByCategoryIds)
     {
         foreach ($productCategoryFilters as $idCategory => $filterData) {
-            //TODO use utilEncoding
-            $filterDataArray = json_decode($filterData, true);
+            $filterDataArray = $this->getFactory()->getUtilEncoding()->decodeJson($filterData, true);
             if (isset($categoryFilterStorageEntitiesByCategoryIds[$idCategory])) {
                 $this->storeDataSet($idCategory, $filterDataArray, $categoryFilterStorageEntitiesByCategoryIds[$idCategory]);
             } else {

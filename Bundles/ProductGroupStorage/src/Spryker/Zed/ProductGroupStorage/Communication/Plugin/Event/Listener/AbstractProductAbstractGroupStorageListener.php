@@ -23,7 +23,7 @@ class AbstractProductAbstractGroupStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function refresh(array $productAbstractIds)
+    protected function publish(array $productAbstractIds)
     {
         $groupedProductAbstractIds = $this->getGroupedProductAbstractIdsByGroupIds($productAbstractIds);
         $allProductAbstractIds = $this->getProductAbstractIds($groupedProductAbstractIds, $productAbstractIds);
@@ -34,7 +34,7 @@ class AbstractProductAbstractGroupStorageListener extends AbstractPlugin
         $spyProductAbstractLocalizedAttributeEntities = $this->findProductAbstractLocalizedWithEntities($allProductAbstractIds);
         $spyProductAbstractGroupStorageEntities = $this->findProductAbstractGroupStorageEntitiesByProductAbstractIds($allProductAbstractIds);
 
-        $this->refreshData($spyProductAbstractLocalizedAttributeEntities, $spyProductAbstractGroupStorageEntities, $groupedProductAbstractIds);
+        $this->storeData($spyProductAbstractLocalizedAttributeEntities, $spyProductAbstractGroupStorageEntities, $groupedProductAbstractIds);
     }
 
     /**
@@ -44,27 +44,27 @@ class AbstractProductAbstractGroupStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function refreshData(array $spyProductAbstractLocalizedEntities, array $spyProductAbstractGroupStorageEntities, array $groupedProductAbstractIds)
+    protected function storeData(array $spyProductAbstractLocalizedEntities, array $spyProductAbstractGroupStorageEntities, array $groupedProductAbstractIds)
     {
         foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
             $idProduct = $spyProductAbstractLocalizedEntity->getFkProductAbstract();
             $localeName = $spyProductAbstractLocalizedEntity->getLocale()->getLocaleName();
             if (isset($spyProductAbstractGroupStorageEntities[$idProduct][$localeName])) {
-                $this->refreshDataSet($spyProductAbstractLocalizedEntity, $spyProductAbstractGroupStorageEntities[$idProduct][$localeName], $groupedProductAbstractIds);
+                $this->storeDataSet($spyProductAbstractLocalizedEntity, $groupedProductAbstractIds, $spyProductAbstractGroupStorageEntities[$idProduct][$localeName]);
             } else {
-                $this->refreshDataSet($spyProductAbstractLocalizedEntity, null, $groupedProductAbstractIds);
+                $this->storeDataSet($spyProductAbstractLocalizedEntity, $groupedProductAbstractIds);
             }
         }
     }
 
     /**
      * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity
-     * @param \Orm\Zed\ProductGroupStorage\Persistence\SpyProductAbstractGroupStorage|null $spyProductStorageGroupEntity
      * @param array $groupedProductAbstractIds
+     * @param \Orm\Zed\ProductGroupStorage\Persistence\SpyProductAbstractGroupStorage|null $spyProductStorageGroupEntity
      *
      * @return void
      */
-    protected function refreshDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, SpyProductAbstractGroupStorage $spyProductStorageGroupEntity, array $groupedProductAbstractIds)
+    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $groupedProductAbstractIds, SpyProductAbstractGroupStorage $spyProductStorageGroupEntity = null)
     {
         if ($spyProductStorageGroupEntity === null) {
             $spyProductStorageGroupEntity = new SpyProductAbstractGroupStorage();

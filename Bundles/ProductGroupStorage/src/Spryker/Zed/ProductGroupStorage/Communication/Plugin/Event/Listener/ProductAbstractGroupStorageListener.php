@@ -32,6 +32,6 @@ class ProductAbstractGroupStorageListener extends AbstractProductAbstractGroupSt
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_ABSTRACT);
 
-        $this->refresh($productAbstractIds);
+        $this->publish($productAbstractIds);
     }
 }

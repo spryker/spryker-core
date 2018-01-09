@@ -56,21 +56,21 @@ class AbstractProductConcreteImageStorageListener extends AbstractPlugin
             $idProduct = $spyProductConcreteLocalizedEntity->getFkProduct();
             $localeName = $spyProductConcreteLocalizedEntity->getLocale()->getLocaleName();
             if (isset($spyProductConcreteImageStorageEntities[$idProduct][$localeName])) {
-                $this->storeDataSet($spyProductConcreteLocalizedEntity, $spyProductConcreteImageStorageEntities[$idProduct][$localeName], $imagesSets);
+                $this->storeDataSet($spyProductConcreteLocalizedEntity, $imagesSets, $spyProductConcreteImageStorageEntities[$idProduct][$localeName]);
             } else {
-                $this->storeDataSet($spyProductConcreteLocalizedEntity, null, $imagesSets);
+                $this->storeDataSet($spyProductConcreteLocalizedEntity, $imagesSets);
             }
         }
     }
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes $spyProductLocalizedEntity
-     * @param \Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage|null $spyProductConcreteImageStorage
      * @param array $imageSets
+     * @param \Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage|null $spyProductConcreteImageStorage
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductLocalizedAttributes $spyProductLocalizedEntity, SpyProductConcreteImageStorage $spyProductConcreteImageStorage, array $imageSets)
+    protected function storeDataSet(SpyProductLocalizedAttributes $spyProductLocalizedEntity, array $imageSets, SpyProductConcreteImageStorage $spyProductConcreteImageStorage = null)
     {
         if ($spyProductConcreteImageStorage === null) {
             $spyProductConcreteImageStorage = new SpyProductConcreteImageStorage();

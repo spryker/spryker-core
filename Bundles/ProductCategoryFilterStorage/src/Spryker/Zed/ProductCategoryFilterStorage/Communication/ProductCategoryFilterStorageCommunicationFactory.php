@@ -25,6 +25,14 @@ class ProductCategoryFilterStorageCommunicationFactory extends AbstractCommunica
     }
 
     /**
+     * @return \Spryker\Zed\ProductCategoryFilterStorage\Dependency\Service\ProductCategoryFilterStorageToUtilEncodingInterface
+     */
+    public function getUtilEncoding()
+    {
+        return $this->getProvidedDependency(ProductCategoryFilterStorageDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductCategoryFilterStorage\Dependency\Facade\ProductCategoryFilterStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()

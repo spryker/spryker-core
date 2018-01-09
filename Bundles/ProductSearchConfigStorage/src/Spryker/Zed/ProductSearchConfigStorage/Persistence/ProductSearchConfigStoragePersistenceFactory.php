@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSearchConfigStorage\Persistence;
 
 use Orm\Zed\ProductSearchConfigStorage\Persistence\SpyProductSearchConfigStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductSearchConfigStorage\ProductSearchConfigStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductSearchConfigStorage\ProductSearchConfigStorageConfig getConfig()
@@ -17,14 +16,6 @@ use Spryker\Zed\ProductSearchConfigStorage\ProductSearchConfigStorageDependencyP
  */
 class ProductSearchConfigStoragePersistenceFactory extends AbstractPersistenceFactory
 {
-    /**
-     * @return \Spryker\Zed\ProductSearchConfigStorage\Dependency\QueryContainer\ProductSearchConfigStorageToProductSearchQueryContainerInterface
-     */
-    public function getProductSearchQuery()
-    {
-        return $this->getProvidedDependency(ProductSearchConfigStorageDependencyProvider::QUERY_CONTAINER_PRODUCT_SEARCH);
-    }
-
     /**
      * @return \Orm\Zed\ProductSearchConfigStorage\Persistence\SpyProductSearchConfigStorageQuery
      */

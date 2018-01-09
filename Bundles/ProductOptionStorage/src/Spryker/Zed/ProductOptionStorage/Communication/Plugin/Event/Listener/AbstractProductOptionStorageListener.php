@@ -55,21 +55,21 @@ class AbstractProductOptionStorageListener extends AbstractPlugin
             $idProduct = $spyProductAbstractLocalizedEntity->getFkProductAbstract();
             $localeName = $spyProductAbstractLocalizedEntity->getLocale()->getLocaleName();
             if (isset($spyProductAbstractOptionStorageEntities[$idProduct][$localeName])) {
-                $this->storeDataSet($spyProductAbstractLocalizedEntity, $spyProductAbstractOptionStorageEntities[$idProduct][$localeName], $productOptions);
+                $this->storeDataSet($spyProductAbstractLocalizedEntity, $productOptions, $spyProductAbstractOptionStorageEntities[$idProduct][$localeName]);
             } else {
-                $this->storeDataSet($spyProductAbstractLocalizedEntity, null, $productOptions);
+                $this->storeDataSet($spyProductAbstractLocalizedEntity, $productOptions);
             }
         }
     }
 
     /**
      * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity
-     * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage|null $spyProductAbstractOptionStorageEntity
      * @param array $productOptions
+     * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage|null $spyProductAbstractOptionStorageEntity
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, SpyProductAbstractOptionStorage $spyProductAbstractOptionStorageEntity, array $productOptions)
+    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $productOptions, SpyProductAbstractOptionStorage $spyProductAbstractOptionStorageEntity = null)
     {
         if ($spyProductAbstractOptionStorageEntity === null) {
             $spyProductAbstractOptionStorageEntity = new SpyProductAbstractOptionStorage();

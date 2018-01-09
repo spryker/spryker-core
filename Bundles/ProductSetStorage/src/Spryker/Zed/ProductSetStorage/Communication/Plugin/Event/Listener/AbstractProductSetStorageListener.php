@@ -82,12 +82,11 @@ class AbstractProductSetStorageListener extends AbstractPlugin
      */
     protected function storeDataSet(array $spyProductSetLocalizedEntity, SpyProductSetStorage $spyProductSetStorageEntity = null)
     {
-        //TODO refactor this
-        //TODO isActive is missing
         $productSetStorageTransfer = new ProductSetDataStorageTransfer();
         if ($spyProductSetStorageEntity === null) {
             $spyProductSetStorageEntity = new SpyProductSetStorage();
         }
+
         $productSetStorageTransfer->fromArray($spyProductSetLocalizedEntity, true);
         $productSetStorageTransfer->fromArray($spyProductSetLocalizedEntity['SpyProductSet'], true);
         $productAbstractIds = [];
@@ -95,19 +94,7 @@ class AbstractProductSetStorageListener extends AbstractPlugin
             $productAbstractIds[] = $productAbstract['fk_product_abstract'];
         }
 
-        $productImageSet = new ArrayObject();
-        foreach ($spyProductSetLocalizedEntity['SpyProductSet']['SpyProductImageSets'] as $spyProductImageSets) {
-            $productImageSetStorageTransfer = new ProductImageSetStorageTransfer();
-            $productImageSetStorageTransfer->setName($spyProductImageSets['name']);
-            foreach ($spyProductImageSets['SpyProductImageSetToProductImages'] as $productImageSetToProductImage) {
-                $productImageStorageTransfer = new ProductImageStorageTransfer();
-                $productImageStorageTransfer->setIdProductImage($productImageSetToProductImage['SpyProductImage']['id_product_image']);
-                $productImageStorageTransfer->setExternalUrlSmall($productImageSetToProductImage['SpyProductImage']['external_url_small']);
-                $productImageStorageTransfer->setExternalUrlLarge($productImageSetToProductImage['SpyProductImage']['external_url_large']);
-                $productImageSetStorageTransfer->addImage($productImageStorageTransfer);
-            }
-            $productImageSet[] = $productImageSetStorageTransfer;
-        }
+        $productImageSet = $this->getProductImageSets($spyProductSetLocalizedEntity);
 
         $productSetStorageTransfer->setProductAbstractIds($productAbstractIds);
         $productSetStorageTransfer->setImageSets($productImageSet);
@@ -150,5 +137,29 @@ class AbstractProductSetStorageListener extends AbstractPlugin
     protected function getStoreName()
     {
         return $this->getFactory()->getStore()->getStoreName();
+    }
+
+    /**
+     * @param array $spyProductSetLocalizedEntity
+     *
+     * @return array|\ArrayObject
+     */
+    protected function getProductImageSets(array $spyProductSetLocalizedEntity)
+    {
+        $productImageSet = new ArrayObject();
+        foreach ($spyProductSetLocalizedEntity['SpyProductSet']['SpyProductImageSets'] as $spyProductImageSets) {
+            $productImageSetStorageTransfer = new ProductImageSetStorageTransfer();
+            $productImageSetStorageTransfer->setName($spyProductImageSets['name']);
+            foreach ($spyProductImageSets['SpyProductImageSetToProductImages'] as $productImageSetToProductImage) {
+                $productImageStorageTransfer = new ProductImageStorageTransfer();
+                $productImageStorageTransfer->setIdProductImage($productImageSetToProductImage['SpyProductImage']['id_product_image']);
+                $productImageStorageTransfer->setExternalUrlSmall($productImageSetToProductImage['SpyProductImage']['external_url_small']);
+                $productImageStorageTransfer->setExternalUrlLarge($productImageSetToProductImage['SpyProductImage']['external_url_large']);
+                $productImageSetStorageTransfer->addImage($productImageStorageTransfer);
+            }
+            $productImageSet[] = $productImageSetStorageTransfer;
+        }
+
+        return $productImageSet;
     }
 }

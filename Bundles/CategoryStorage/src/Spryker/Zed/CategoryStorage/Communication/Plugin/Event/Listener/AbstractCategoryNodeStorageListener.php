@@ -59,9 +59,9 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
         foreach ($categoryNodes as $categoryNodeId => $categoryNodeWithLocales) {
             foreach ($categoryNodeWithLocales as $localeName => $categoryNodeWithLocale) {
                 if (isset($spyCategoryNodeStorageEntities[$categoryNodeId][$localeName])) {
-                    $this->storeDataSet($categoryNodeWithLocale, $spyCategoryNodeStorageEntities[$categoryNodeId][$localeName], $localeName);
+                    $this->storeDataSet($categoryNodeWithLocale, $localeName, $spyCategoryNodeStorageEntities[$categoryNodeId][$localeName]);
                 } else {
-                    $this->storeDataSet($categoryNodeWithLocale, null, $localeName);
+                    $this->storeDataSet($categoryNodeWithLocale, $localeName);
                 }
             }
         }
@@ -69,12 +69,12 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
 
     /**
      * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer $categoryNodeStorageTransfer
-     * @param \Orm\Zed\CategoryStorage\Persistence\SpyCategoryNodeStorage|null $spyCategoryNodeStorageEntity
      * @param string $localeName
+     * @param \Orm\Zed\CategoryStorage\Persistence\SpyCategoryNodeStorage|null $spyCategoryNodeStorageEntity
      *
      * @return void
      */
-    protected function storeDataSet(CategoryNodeStorageTransfer $categoryNodeStorageTransfer, SpyCategoryNodeStorage $spyCategoryNodeStorageEntity, $localeName)
+    protected function storeDataSet(CategoryNodeStorageTransfer $categoryNodeStorageTransfer, $localeName, SpyCategoryNodeStorage $spyCategoryNodeStorageEntity = null)
     {
         if ($spyCategoryNodeStorageEntity === null) {
             $spyCategoryNodeStorageEntity = new SpyCategoryNodeStorage();

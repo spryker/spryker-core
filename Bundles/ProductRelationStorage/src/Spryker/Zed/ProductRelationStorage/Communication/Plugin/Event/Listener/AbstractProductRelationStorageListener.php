@@ -56,21 +56,21 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
             $idProduct = $spyProductAbstractLocalizedEntity->getFkProductAbstract();
             $localeName = $spyProductAbstractLocalizedEntity->getLocale()->getLocaleName();
             if (isset($spyProductAbstractRelationStorageEntities[$idProduct][$localeName])) {
-                $this->storeDataSet($spyProductAbstractLocalizedEntity, $spyProductAbstractRelationStorageEntities[$idProduct][$localeName], $productRelations);
+                $this->storeDataSet($spyProductAbstractLocalizedEntity, $productRelations, $spyProductAbstractRelationStorageEntities[$idProduct][$localeName]);
             } else {
-                $this->storeDataSet($spyProductAbstractLocalizedEntity, null, $productRelations);
+                $this->storeDataSet($spyProductAbstractLocalizedEntity, $productRelations);
             }
         }
     }
 
     /**
      * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity
-     * @param \Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorage|null $spyProductAbstractRelationStorageEntity
      * @param array $productRelations
+     * @param \Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorage|null $spyProductAbstractRelationStorageEntity
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, SpyProductAbstractRelationStorage $spyProductAbstractRelationStorageEntity, array $productRelations)
+    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $productRelations, SpyProductAbstractRelationStorage $spyProductAbstractRelationStorageEntity = null)
     {
         if ($spyProductAbstractRelationStorageEntity === null) {
             $spyProductAbstractRelationStorageEntity = new SpyProductAbstractRelationStorage();

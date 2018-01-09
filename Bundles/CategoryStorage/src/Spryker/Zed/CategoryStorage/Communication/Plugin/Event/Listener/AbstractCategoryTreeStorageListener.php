@@ -55,21 +55,21 @@ abstract class AbstractCategoryTreeStorageListener extends AbstractPlugin implem
     {
         foreach ($categoryTrees as $localeName => $categoryTreeByLocale) {
             if (isset($spyCategoryStorageEntities[$localeName])) {
-                $this->storeDataSet($categoryTreeByLocale, $spyCategoryStorageEntities[$localeName], $localeName);
+                $this->storeDataSet($categoryTreeByLocale, $localeName, $spyCategoryStorageEntities[$localeName]);
             } else {
-                $this->storeDataSet($categoryTreeByLocale, null, $localeName);
+                $this->storeDataSet($categoryTreeByLocale, $localeName);
             }
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryNodeStorageTransfers
-     * @param \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorage|null $spyCategoryTreeStorage
      * @param string $localeName
+     * @param \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorage|null $spyCategoryTreeStorage
      *
      * @return void
      */
-    protected function storeDataSet(array $categoryNodeStorageTransfers, SpyCategoryTreeStorage $spyCategoryTreeStorage, $localeName)
+    protected function storeDataSet(array $categoryNodeStorageTransfers, $localeName, SpyCategoryTreeStorage $spyCategoryTreeStorage = null)
     {
         if ($spyCategoryTreeStorage === null) {
             $spyCategoryTreeStorage = new SpyCategoryTreeStorage();
