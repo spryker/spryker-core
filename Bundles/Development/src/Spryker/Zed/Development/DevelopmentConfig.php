@@ -16,10 +16,20 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class DevelopmentConfig extends AbstractBundleConfig
 {
     const BUNDLE_PLACEHOLDER = '[BUNDLE]';
-    const APPLICATION_NAMESPACES = ['Orm'];
-    const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared'];
+    const APPLICATION_NAMESPACES = [
+        'Orm',
+    ];
+    const APPLICATION_LAYERS = [
+        'Client',
+        'Service',
+        'Shared',
+        'Yves',
+        'Zed',
+    ];
 
     /**
+     * Gets path to application root directory.
+     *
      * @return string
      */
     public function getPathToRoot()
@@ -28,20 +38,28 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * Gets Application layers.
+     *
      * @return array
      */
     public function getApplications()
     {
-        return [
-            'Client',
-            'Service',
-            'Shared',
-            'Yves',
-            'Zed',
-        ];
+        return static::APPLICATION_LAYERS;
     }
 
     /**
+     * Gets Application namespaces.
+     *
+     * @return array
+     */
+    public function getApplicationNamespaces()
+    {
+        return static::APPLICATION_NAMESPACES;
+    }
+
+    /**
+     * Gets path to Spryker core modules.
+     *
      * @return string
      */
     public function getPathToCore()
@@ -50,6 +68,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * Gets path to SprykerSdk core modules.
+     *
      * @return string
      */
     public function getPathToSdk()
@@ -58,6 +78,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * Gets path to SprykerShop core modules.
+     *
      * @return string
      */
     public function getPathToShop()
@@ -66,6 +88,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * Gets path to SprykerEco core modules.
+     *
      * @return string
      */
     public function getPathToEco()
@@ -98,6 +122,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * Gets path to Application's composer.lock file.
+     *
      * @return string
      */
     public function getPathToComposerLock()
@@ -120,6 +146,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * Gets path to module config that holds information about engine modules.
+     *
      * @return string
      */
     public function getPathToBundleConfig()
@@ -334,6 +362,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * Gets PHPStan default level. The higher, the better.
+     *
      * @return int
      */
     public function getPhpstanLevel()
