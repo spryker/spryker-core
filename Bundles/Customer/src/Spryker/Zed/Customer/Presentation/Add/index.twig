@@ -26,3 +26,8 @@
     {% endembed %}
 
 {% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-customer-main.js"></script>
+{% endblock %}

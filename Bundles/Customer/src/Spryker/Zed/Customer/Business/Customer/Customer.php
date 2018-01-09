@@ -124,6 +124,7 @@ class Customer implements CustomerInterface
         $customerTransfer->fromArray($customerEntity->toArray(), true);
 
         $customerTransfer = $this->attachAddresses($customerTransfer, $customerEntity);
+        $customerTransfer = $this->attachLocale($customerTransfer, $customerEntity);
 
         return $customerTransfer;
     }
@@ -158,6 +159,10 @@ class Customer implements CustomerInterface
 
         $customerEntity = new SpyCustomer();
         $customerEntity->fromArray($customerTransfer->toArray());
+
+        if ($customerTransfer->getLocale() !== null) {
+            $this->addLocaleByLocaleName($customerEntity, $customerTransfer->getLocale()->getLocaleName());
+        }
 
         $this->addLocale($customerEntity);
 
@@ -217,6 +222,21 @@ class Customer implements CustomerInterface
         }
 
         $localeName = $this->store->getCurrentLocale();
+        $localeEntity = $this->localeQueryContainer->queryLocaleByName($localeName)->findOne();
+
+        if ($localeEntity) {
+            $customerEntity->setLocale($localeEntity);
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     * @param string $localeName
+     *
+     * @return void
+     */
+    protected function addLocaleByLocaleName(SpyCustomer $customerEntity, $localeName)
+    {
         $localeEntity = $this->localeQueryContainer->queryLocaleByName($localeName)->findOne();
 
         if ($localeEntity) {
@@ -412,6 +432,10 @@ class Customer implements CustomerInterface
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
         $customerEntity = $this->getCustomer($customerTransfer);
         $customerEntity->fromArray($customerTransfer->modifiedToArray());
+
+        if ($customerTransfer->getLocale() !== null) {
+            $this->addLocaleByLocaleName($customerEntity, $customerTransfer->getLocale()->getLocaleName());
+        }
 
         $customerResponseTransfer = $this->validateCustomerEmail($customerResponseTransfer, $customerEntity);
         if ($customerResponseTransfer->getIsSuccess() !== true) {
