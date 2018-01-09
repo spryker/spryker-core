@@ -8,12 +8,12 @@
 namespace Spryker\Client\ProductBundle;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouper;
+use Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper;
 
 class ProductBundleFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouperInterface
+     * @return \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouperInterface
      */
     public function createProductBundleGrouper()
     {
