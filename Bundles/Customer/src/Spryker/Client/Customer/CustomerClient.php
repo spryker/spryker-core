@@ -349,7 +349,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
         return $this->getFactory()
-            ->createZedCustomerStub()
+            ->createCustomerAddress()
             ->updateAddressAndCustomerDefaultAddresses($addressTransfer);
     }
 
@@ -365,7 +365,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
         return $this->getFactory()
-            ->createZedCustomerStub()
+            ->createCustomerAddress()
             ->createAddressAndUpdateCustomerDefaultAddresses($addressTransfer);
     }
 
