@@ -1,0 +1,44 @@
+{
+  "name": "spryker/cms-block-storage",
+  "description": "CmsBlockStorage bundle",
+  "license": "proprietary",
+  "require": {
+    "spryker/cms": "^5.0.0",
+    "spryker/kernel": "^3.4.0",
+    "spryker/propel-orm": "^1.1.0",
+    "spryker/glossary": "^3.1.0",
+    "spryker/storage": "^3.1.0",
+    "spryker/synchronization": "^0.1.0",
+    "spryker/synchronization-behavior" : "^0.1.0",
+    "spryker/event-behavior" : "^0.1.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "^3.0.0",
+    "spryker/silex": "^2.0.0",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/event": "If you want to use the listeners"
+  },
+  "autoload": {
+    "psr-0": {
+      "Spryker": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Functional": "tests/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.1.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
