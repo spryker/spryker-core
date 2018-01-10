@@ -3,7 +3,6 @@
 
 namespace Spryker\Client\Permission;
 
-use Generated\Shared\Transfer\PermissionRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -12,8 +11,12 @@ use Spryker\Client\Kernel\AbstractClient;
 class PermissionClient extends AbstractClient implements PermissionClientInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $permissionKey
-     * @param array|mixed|null $context
+     * @param string|int|array|null $context
      *
      * @return bool
      */

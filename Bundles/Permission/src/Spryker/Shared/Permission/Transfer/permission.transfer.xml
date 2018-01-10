@@ -10,7 +10,7 @@
 
     <transfer name="Permission">
         <property name="key" type="string "/>
-        <property name="config" type="[]" />
+        <property name="configuration" type="[]" />
     </transfer>
 
     <transfer name="PermissionCollection">

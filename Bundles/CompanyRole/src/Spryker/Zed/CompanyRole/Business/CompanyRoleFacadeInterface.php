@@ -12,9 +12,11 @@ interface CompanyRoleFacadeInterface
      * Specification:
      * - Creates a company role
      *
+     * @api
+     *
      * @param CompanyRoleTransfer $companyRoleTransfer
      *
-     * @return void
+     * @return CompanyRoleTransfer
      */
     public function create(CompanyRoleTransfer $companyRoleTransfer);
 
@@ -23,6 +25,8 @@ interface CompanyRoleFacadeInterface
      * - Finds a company role by CompanyRoleTransfer::idCompanyRole in the transfer
      * - Updates fields in a company role entity
      * - Finds/creates permissions according CompanyRoleTransfer::permission and updates configuration in them
+     *
+     * @api
      *
      * @param CompanyRoleTransfer $companyRoleTransfer
      *
@@ -35,6 +39,8 @@ interface CompanyRoleFacadeInterface
      * - Finds a company role by CompanyRoleTransfer::idCompanyRole
      * - Deletes the company role
      *
+     * @api
+     *
      * @param CompanyRoleTransfer $companyRoleTransfer
      *
      * @return void
@@ -43,18 +49,10 @@ interface CompanyRoleFacadeInterface
 
     /**
      * Specification:
-     * - Finds all assigned roles to the company user
-     *
-     * @param int $idCompanyUser
-     *
-     * @return CompanyRoleCollectionTransfer
-     */
-    public function findByIdCompanyUser($idCompanyUser);
-
-    /**
-     * Specification:
      * - Removes related to the company user roles
      * - Creates relations roles to the company user according CompanyUserTransfer::companyRoleCollection
+     *
+     * @api
      *
      * @param CompanyUserTransfer $companyUserTransfer
      *
@@ -65,6 +63,8 @@ interface CompanyRoleFacadeInterface
     /**
      * Specification:
      * - Hydrates a list of assigned to a company user rights
+     *
+     * @api
      *
      * @param CompanyUserTransfer $companyUserTransfer
      *

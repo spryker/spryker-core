@@ -7,13 +7,17 @@ namespace Spryker\Client\Permission;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientBridge;
-use Spryker\Client\Permission\Plugin\ProductReadPermissionPlugin;
 
 class PermissionDependencyProvider extends AbstractDependencyProvider
 {
     const PLUGINS_PERMISSION = 'PLUGINS_PERMISSION';
     const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = parent::provideServiceLayerDependencies($container);
@@ -43,7 +47,7 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
     protected function getPermissionPlugins()
     {
         return [
-            new ProductReadPermissionPlugin()
+            new \Spryker\Client\CheckoutPermissionConnector\Plugin\CheckoutPlaceOrderPermissionPlugin()
         ];
     }
 

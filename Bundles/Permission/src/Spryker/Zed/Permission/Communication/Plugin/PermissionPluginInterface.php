@@ -1,14 +1,12 @@
 <?php
 
-namespace Spryker\Client\Permission\Plugin;
+namespace Spryker\Zed\Permission\Communication\Plugin;
 
 interface PermissionPluginInterface
 {
     /**
      * Specification:
-     * - Defines a permission plugin
-     *
-     * @api
+     * - The is used to identify the permission
      *
      * @return string
      */
