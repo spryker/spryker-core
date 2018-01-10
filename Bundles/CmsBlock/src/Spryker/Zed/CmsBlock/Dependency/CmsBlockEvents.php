@@ -11,6 +11,22 @@ interface CmsBlockEvents
 {
     /**
      * Specification
+     * - This events will be used for CmsBlock publishing
+     *
+     * @api
+     */
+    const CMS_BLOCK_PUBLISH = 'CmsBlock.block.publish';
+
+    /**
+     * Specification
+     * - This events will be used for CmsBlock un-publishing
+     *
+     * @api
+     */
+    const CMS_BLOCK_UNPUBLISH = 'CmsBlock.block.unpublish';
+
+    /**
+     * Specification
      * - This events will be used for spy_cms_block_glossary_key_mapping entity creation
      *
      * @api
@@ -32,4 +48,20 @@ interface CmsBlockEvents
      * @api
      */
     const ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_DELETE = 'Entity.spy_cms_block_glossary_key_mapping.delete';
+
+    /**
+     * Specification
+     * - This events will be used for spy_cms_block entity update
+     *
+     * @api
+     */
+    const ENTITY_SPY_CMS_BLOCK_UPDATE = 'Entity.spy_cms_block.update';
+
+    /**
+     * Specification
+     * - This events will be used for spy_cms_block entity deletion
+     *
+     * @api
+     */
+    const ENTITY_SPY_CMS_BLOCK_DELETE = 'Entity.spy_cms_block.delete';
 }

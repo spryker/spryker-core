@@ -11,6 +11,38 @@ interface ProductLabelEvents
 {
     /**
      * Specification
+     * - This events will be used for product_abstract_label publishing
+     *
+     * @api
+     */
+    const PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH = 'ProductLabel.product_abstract_label.publish';
+
+    /**
+     * Specification
+     * - This events will be used for product_abstract_label un-publishing
+     *
+     * @api
+     */
+    const PRODUCT_LABEL_PRODUCT_ABSTRACT_UNPUBLISH = 'ProductLabel.product_abstract_label.unpublish';
+
+    /**
+     * Specification
+     * - This events will be used for product_label_dictionary publishing
+     *
+     * @api
+     */
+    const PRODUCT_LABEL_DICTIONARY_PUBLISH = 'ProductLabel.product_label_dictionary.publish';
+
+    /**
+     * Specification
+     * - This events will be used for product_label_dictionary un-publishing
+     *
+     * @api
+     */
+    const PRODUCT_LABEL_DICTIONARY_UNPUBLISH = 'ProductLabel.product_label_dictionary.unpublish';
+
+    /**
+     * Specification
      * - This events will be used for spy_product_label_product_abstract entity creation
      *
      * @api
