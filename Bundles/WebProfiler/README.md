@@ -2,12 +2,13 @@
 [![Build Status](https://travis-ci.org/spryker/WebProfiler.svg)](https://travis-ci.org/spryker/WebProfiler)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/WebProfiler/badge.svg)](https://coveralls.io/github/spryker/WebProfiler)
 
-{{ADD DESCRIPTION HERE}}
+The WebProfiler includes a profiler bar at the bottom of the page to analyze the request during local development.
 
 ## Installation
 
+This is a require-dev module:
 ```
-composer require spryker/web-profiler
+composer require --dev spryker/web-profiler
 ```
 
 ## Documentation
