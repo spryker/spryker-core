@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener;
 
 use Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer;
-use Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorage;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -34,43 +33,47 @@ class AbstractProductLabelStorageListener extends AbstractPlugin
         $spyProductAbstractLocalizedAttributeEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
         $spyProductAbstractLabelStorageEntities = $this->findProductAbstractLabelStorageEntitiesByProductAbstractIds($productAbstractIds);
 
-        $this->storeData($spyProductAbstractLocalizedAttributeEntities, $spyProductAbstractLabelStorageEntities, $groupedLabelsByProductAbstractId);
+        $foundProductAbstractIds = [];
+        foreach ($spyProductAbstractLocalizedAttributeEntities as $spyProductAbstractLocalizedAttributeEntity) {
+            $foundProductAbstractIds[] = $spyProductAbstractLocalizedAttributeEntity->getFkProductAbstract();
+        }
+
+        $uniqueProductAbstractIds = array_unique($foundProductAbstractIds);
+        $this->storeData($uniqueProductAbstractIds, $spyProductAbstractLabelStorageEntities, $groupedLabelsByProductAbstractId);
     }
 
     /**
-     * @param array $spyProductAbstractLocalizedEntities
+     * @param array $uniqueProductAbstractIds
      * @param array $spyProductAbstractLabelStorageEntities
      * @param array $productLabelsIds
      *
      * @return void
      */
-    protected function storeData(array $spyProductAbstractLocalizedEntities, array $spyProductAbstractLabelStorageEntities, array $productLabelsIds)
+    protected function storeData(array $uniqueProductAbstractIds, array $spyProductAbstractLabelStorageEntities, array $productLabelsIds)
     {
-        foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
-            $idProduct = $spyProductAbstractLocalizedEntity->getFkProductAbstract();
-            $localeName = $spyProductAbstractLocalizedEntity->getLocale()->getLocaleName();
-            if (isset($spyProductAbstractLabelStorageEntities[$idProduct][$localeName])) {
-                $this->storeDataSet($spyProductAbstractLocalizedEntity, $productLabelsIds, $spyProductAbstractLabelStorageEntities[$idProduct][$localeName]);
+        foreach ($uniqueProductAbstractIds as $productAbstractId) {
+            if (isset($spyProductAbstractLabelStorageEntities[$productAbstractId])) {
+                $this->storeDataSet($productAbstractId, $productLabelsIds, $spyProductAbstractLabelStorageEntities[$productAbstractId]);
             } else {
-                $this->storeDataSet($spyProductAbstractLocalizedEntity, $productLabelsIds);
+                $this->storeDataSet($productAbstractId, $productLabelsIds);
             }
         }
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity
+     * @param int $productAbstractId
      * @param array $productLabelsIds
      * @param \Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorage|null $spyProductAbstractLabelStorageEntity
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $productLabelsIds, SpyProductAbstractLabelStorage $spyProductAbstractLabelStorageEntity = null)
+    protected function storeDataSet($productAbstractId, array $productLabelsIds, SpyProductAbstractLabelStorage $spyProductAbstractLabelStorageEntity = null)
     {
         if ($spyProductAbstractLabelStorageEntity === null) {
             $spyProductAbstractLabelStorageEntity = new SpyProductAbstractLabelStorage();
         }
 
-        if (empty($productLabelsIds[$spyProductAbstractLocalizedEntity->getFkProductAbstract()])) {
+        if (empty($productLabelsIds[$productAbstractId])) {
             if (!$spyProductAbstractLabelStorageEntity->isNew()) {
                 $spyProductAbstractLabelStorageEntity->delete();
             }
@@ -79,13 +82,12 @@ class AbstractProductLabelStorageListener extends AbstractPlugin
         }
 
         $productAbstractLabelStorageTransfer = new ProductAbstractLabelStorageTransfer();
-        $productAbstractLabelStorageTransfer->setIdProductAbstract($spyProductAbstractLocalizedEntity->getFkProductAbstract());
-        $productAbstractLabelStorageTransfer->setProductLabelIds($productLabelsIds[$spyProductAbstractLocalizedEntity->getFkProductAbstract()]);
+        $productAbstractLabelStorageTransfer->setIdProductAbstract($productAbstractId);
+        $productAbstractLabelStorageTransfer->setProductLabelIds($productLabelsIds[$productAbstractId]);
 
-        $spyProductAbstractLabelStorageEntity->setFkProductAbstract($spyProductAbstractLocalizedEntity->getFkProductAbstract());
+        $spyProductAbstractLabelStorageEntity->setFkProductAbstract($productAbstractId);
         $spyProductAbstractLabelStorageEntity->setData($productAbstractLabelStorageTransfer->toArray());
         $spyProductAbstractLabelStorageEntity->setStore($this->getStoreName());
-        $spyProductAbstractLabelStorageEntity->setLocale($spyProductAbstractLocalizedEntity->getLocale()->getLocaleName());
         $spyProductAbstractLabelStorageEntity->save();
     }
 
@@ -117,12 +119,12 @@ class AbstractProductLabelStorageListener extends AbstractPlugin
     protected function findProductAbstractLabelStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {
         $productAbstractLabelStorageEntities = $this->getQueryContainer()->queryProductAbstractLabelStorageByIds($productAbstractIds)->find();
-        $productAbstractStorageLabelEntitiesByIdAndLocale = [];
+        $productAbstractStorageLabelEntitiesById = [];
         foreach ($productAbstractLabelStorageEntities as $productAbstractLabelStorageEntity) {
-            $productAbstractStorageLabelEntitiesByIdAndLocale[$productAbstractLabelStorageEntity->getFkProductAbstract()][$productAbstractLabelStorageEntity->getLocale()] = $productAbstractLabelStorageEntity;
+            $productAbstractStorageLabelEntitiesById[$productAbstractLabelStorageEntity->getFkProductAbstract()] = $productAbstractLabelStorageEntity;
         }
 
-        return $productAbstractStorageLabelEntitiesByIdAndLocale;
+        return $productAbstractStorageLabelEntitiesById;
     }
 
     /**

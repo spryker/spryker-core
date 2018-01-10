@@ -75,6 +75,10 @@ class ProductViewImageExpander implements ProductViewImageExpanderInterface
         $productAbstractImageSetCollection = $this->productAbstractImageSetReader
             ->findProductImageAbstractStorageTransfer($productViewTransfer->getIdProductAbstract(), $locale);
 
+        if (!$productAbstractImageSetCollection) {
+            return null;
+        }
+
         return $this->getImageSetImages($productAbstractImageSetCollection->getImageSets(), $imageSetName);
     }
 

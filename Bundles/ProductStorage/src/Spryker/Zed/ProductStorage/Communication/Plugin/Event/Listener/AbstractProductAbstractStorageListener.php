@@ -36,6 +36,10 @@ class AbstractProductAbstractStorageListener extends AbstractPlugin
         $spyProductAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
         $spyProductAbstractStorageEntities = $this->findProductStorageEntitiesByProductAbstractIds($productAbstractIds);
 
+        if (!$spyProductAbstractLocalizedEntities) {
+            $this->deleteStorageData($spyProductAbstractStorageEntities);
+        }
+
         $this->storeData($spyProductAbstractLocalizedEntities, $spyProductAbstractStorageEntities);
     }
 
@@ -47,8 +51,20 @@ class AbstractProductAbstractStorageListener extends AbstractPlugin
     protected function unpublish(array $productAbstractIds)
     {
         $spyProductStorageEntities = $this->findProductStorageEntitiesByProductAbstractIds($productAbstractIds);
-        foreach ($spyProductStorageEntities as $spyProductStorageEntity) {
-            $spyProductStorageEntity->delete();
+        $this->deleteStorageData($spyProductStorageEntities);
+    }
+
+    /**
+     * @param array $spyProductAbstractStorageEntities
+     *
+     * @return void
+     */
+    protected function deleteStorageData(array $spyProductAbstractStorageEntities)
+    {
+        foreach ($spyProductAbstractStorageEntities as $spyProductStorageLocalizedEntities) {
+            foreach ($spyProductStorageLocalizedEntities as $spyProductAbstractStorageEntity) {
+                $spyProductAbstractStorageEntity->delete();
+            }
         }
     }
 

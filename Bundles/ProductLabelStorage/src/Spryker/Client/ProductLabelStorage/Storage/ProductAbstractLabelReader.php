@@ -62,7 +62,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      */
     public function findLabelsByIdProductAbstract($idProductAbstract, $localeName)
     {
-        $idsProductLabel = $this->findIdsProductLabelByIdAbstractProduct($idProductAbstract, $localeName);
+        $idsProductLabel = $this->findIdsProductLabelByIdAbstractProduct($idProductAbstract);
 
         if (!$idsProductLabel) {
             return [];
@@ -73,16 +73,14 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
 
     /**
      * @param int $idProductAbstract
-     * @param string $localeName
      *
      * @return array
      */
-    protected function findIdsProductLabelByIdAbstractProduct($idProductAbstract, $localeName)
+    protected function findIdsProductLabelByIdAbstractProduct($idProductAbstract)
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
             ->setStore($this->store->getStoreName())
-            ->setLocale($localeName)
             ->setReference($idProductAbstract);
 
         $storageKey = $this->synchronizationService

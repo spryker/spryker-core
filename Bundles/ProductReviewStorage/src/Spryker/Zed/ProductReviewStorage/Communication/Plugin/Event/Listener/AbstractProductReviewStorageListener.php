@@ -26,9 +26,25 @@ abstract class AbstractProductReviewStorageListener extends AbstractPlugin imple
     protected function publish(array $productAbstractIds)
     {
         $productReviewEntities = $this->getQueryContainer()->queryProductReviewsByIdProductAbstracts($productAbstractIds)->find()->toArray();
-        $productReviewStorageEntitiesByProductAbstractIds = $this->findProductReviewStorageEntitiesByProductAbstractIds($productAbstractIds);
+        $productReviewStorageEntities = $this->findProductReviewStorageEntitiesByProductAbstractIds($productAbstractIds);
 
-        $this->storeData($productReviewEntities, $productReviewStorageEntitiesByProductAbstractIds);
+        if (!$productReviewEntities) {
+            $this->deleteStorageData($productReviewStorageEntities);
+        }
+
+        $this->storeData($productReviewEntities, $productReviewStorageEntities);
+    }
+
+    /**
+     * @param array $productReviewStorageEntities
+     *
+     * @return void
+     */
+    protected function deleteStorageData(array $productReviewStorageEntities)
+    {
+        foreach ($productReviewStorageEntities as $productReviewStorageEntity) {
+            $productReviewStorageEntity->delete();
+        }
     }
 
     /**
@@ -77,12 +93,12 @@ abstract class AbstractProductReviewStorageListener extends AbstractPlugin imple
     protected function findProductReviewStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {
         $productAbstractReviewStorageEntities = $this->getQueryContainer()->queryProductAbstractReviewStorageByIds($productAbstractIds)->find();
-        $productAbstractStorageReviewEntitiesByIdAndLocale = [];
+        $productAbstractStorageReviewEntitiesById = [];
         foreach ($productAbstractReviewStorageEntities as $productAbstractReviewStorageEntity) {
-            $productAbstractStorageReviewEntitiesByIdAndLocale[$productAbstractReviewStorageEntity->getFkProductAbstract()] = $productAbstractReviewStorageEntity;
+            $productAbstractStorageReviewEntitiesById[$productAbstractReviewStorageEntity->getFkProductAbstract()] = $productAbstractReviewStorageEntity;
         }
 
-        return $productAbstractStorageReviewEntitiesByIdAndLocale;
+        return $productAbstractStorageReviewEntitiesById;
     }
 
     /**

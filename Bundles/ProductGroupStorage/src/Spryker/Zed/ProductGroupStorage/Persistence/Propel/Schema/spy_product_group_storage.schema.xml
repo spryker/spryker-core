@@ -12,7 +12,6 @@
         <behavior name="synchronization">
             <parameter name="resource" value="product_abstract_group"/>
             <parameter name="store" required="true"/>
-            <parameter name="locale" required="true"/>
             <parameter name="key_suffix_column" value="fk_product_abstract"/>
             <parameter name="queue_group" value="sync.storage.product"/>
         </behavior>

@@ -54,7 +54,7 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
     public function findUpSellingProducts(QuoteTransfer $quoteTransfer, $localeName)
     {
         $productAbstractIds = $this->findSubjectProductAbstractIds($quoteTransfer);
-        $relationIds = $this->findRelationIds($localeName, $productAbstractIds);
+        $relationIds = $this->findRelationIds($productAbstractIds);
         $productAbstractIds = $this->getSortedProductAbstractIds($relationIds);
 
         $relatedProducts = [];
@@ -89,16 +89,15 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
     }
 
     /**
-     * @param string $localeName
      * @param array $productAbstractIds
      *
      * @return array
      */
-    protected function findRelationIds($localeName, array $productAbstractIds)
+    protected function findRelationIds(array $productAbstractIds)
     {
         $relationIds = [];
         foreach ($productAbstractIds as $idProductAbstract) {
-            $relationIds = array_replace($relationIds, $this->getRelationIds($idProductAbstract, $localeName));
+            $relationIds = array_replace($relationIds, $this->getRelationIds($idProductAbstract));
         }
 
         return $relationIds;
@@ -106,13 +105,12 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
 
     /**
      * @param int $idProductAbstract
-     * @param string $localeName
      *
      * @return array
      */
-    protected function getRelationIds($idProductAbstract, $localeName)
+    protected function getRelationIds($idProductAbstract)
     {
-        $productAbstractRelationStorageTransfer = $this->productAbstractRelationStorageReader->findProductAbstractRelation($idProductAbstract, $localeName);
+        $productAbstractRelationStorageTransfer = $this->productAbstractRelationStorageReader->findProductAbstractRelation($idProductAbstract);
 
         if (!$productAbstractRelationStorageTransfer) {
             return [];

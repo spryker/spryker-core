@@ -38,13 +38,12 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
 
     /**
      * @param int $idProductAbstract
-     * @param string $locale
      *
      * @return \Generated\Shared\Transfer\ProductAbstractRelationStorageTransfer|null
      */
-    public function findProductAbstractRelation($idProductAbstract, $locale)
+    public function findProductAbstractRelation($idProductAbstract)
     {
-        $key = $this->generateKey($idProductAbstract, $locale);
+        $key = $this->generateKey($idProductAbstract);
         $productAbstractRelationStorageData = $this->storageClient->get($key);
 
         if (!$productAbstractRelationStorageData) {
@@ -58,18 +57,16 @@ class ProductAbstractRelationStorageReader implements ProductAbstractRelationSto
 
     /**
      * @param int $idProductAbstract
-     * @param string $locale
      *
      * @return string
      */
-    protected function generateKey($idProductAbstract, $locale)
+    protected function generateKey($idProductAbstract)
     {
         $store = Store::getInstance()->getStoreName();
 
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
             ->setStore($store)
-            ->setLocale($locale)
             ->setReference($idProductAbstract);
 
         return $this->synchronizationService

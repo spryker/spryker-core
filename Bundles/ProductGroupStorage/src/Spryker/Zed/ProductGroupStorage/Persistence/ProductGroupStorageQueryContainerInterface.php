@@ -34,7 +34,7 @@ interface ProductGroupStorageQueryContainerInterface extends QueryContainerInter
      *
      * @param array $productAbstractIds
      *
-     * @return \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorageQuery
+     * @return \Orm\Zed\ProductGroupStorage\Persistence\SpyProductAbstractGroupStorageQuery
      */
     public function queryProductAbstractGroupStorageByIds(array $productAbstractIds);
 

@@ -16,7 +16,7 @@ interface ProductLabelStorageQueryContainerInterface extends QueryContainerInter
      *
      * @param array $productAbstractIds
      *
-     * @return \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorageQuery
+     * @return \Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery
      */
     public function queryProductAbstractLabelStorageByIds(array $productAbstractIds);
 

@@ -40,6 +40,10 @@ class AbstractProductConcreteStorageListener extends AbstractPlugin
         $spyProductConcreteLocalizedEntities = $this->findProductLocalizedEntities($productIds);
         $spyProductConcreteStorageEntities = $this->findProductStorageEntitiesByProductConcreteIds($productIds);
 
+        if (!$spyProductConcreteLocalizedEntities) {
+            $this->deleteStorageData($spyProductConcreteStorageEntities);
+        }
+
         $this->storeData($spyProductConcreteLocalizedEntities, $spyProductConcreteStorageEntities);
     }
 
@@ -51,8 +55,20 @@ class AbstractProductConcreteStorageListener extends AbstractPlugin
     protected function unpublish(array $productIds)
     {
         $spyProductStorageEntities = $this->findProductStorageEntitiesByProductConcreteIds($productIds);
-        foreach ($spyProductStorageEntities as $spyProductStorageEntity) {
-            $spyProductStorageEntity->delete();
+        $this->deleteStorageData($spyProductStorageEntities);
+    }
+
+    /**
+     * @param array $spyProductConcreteStorageEntities
+     *
+     * @return void
+     */
+    protected function deleteStorageData(array $spyProductConcreteStorageEntities)
+    {
+        foreach ($spyProductConcreteStorageEntities as $spyProductConcreteStorageLocalizedEntities) {
+            foreach ($spyProductConcreteStorageLocalizedEntities as $spyProductConcreteStorageEntity) {
+                $spyProductConcreteStorageEntity->delete();
+            }
         }
     }
 

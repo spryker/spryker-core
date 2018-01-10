@@ -52,7 +52,7 @@ class RelatedProductReader implements RelatedProductReaderInterface
      */
     public function findRelatedProducts($idProductAbstract, $localeName)
     {
-        $relationIds = $this->getRelationIds($idProductAbstract, $localeName);
+        $relationIds = $this->getRelationIds($idProductAbstract);
         $productAbstractIds = $this->getSortedProductAbstractIds($relationIds);
 
         $relatedProducts = [];
@@ -66,13 +66,12 @@ class RelatedProductReader implements RelatedProductReaderInterface
 
     /**
      * @param int $idProductAbstract
-     * @param string $localeName
      *
      * @return array
      */
-    protected function getRelationIds($idProductAbstract, $localeName)
+    protected function getRelationIds($idProductAbstract)
     {
-        $productAbstractRelationStorageTransfer = $this->productAbstractRelationStorageReader->findProductAbstractRelation($idProductAbstract, $localeName);
+        $productAbstractRelationStorageTransfer = $this->productAbstractRelationStorageReader->findProductAbstractRelation($idProductAbstract);
 
         if (!$productAbstractRelationStorageTransfer) {
             return [];

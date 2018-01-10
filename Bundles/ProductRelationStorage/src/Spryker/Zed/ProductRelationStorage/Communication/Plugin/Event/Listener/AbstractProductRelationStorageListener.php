@@ -52,14 +52,19 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
      */
     protected function storeData(array $spyProductAbstractLocalizedEntities, array $spyProductAbstractRelationStorageEntities, array $productRelations)
     {
+        $storedEntities = [];
         foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
             $idProduct = $spyProductAbstractLocalizedEntity->getFkProductAbstract();
-            $localeName = $spyProductAbstractLocalizedEntity->getLocale()->getLocaleName();
-            if (isset($spyProductAbstractRelationStorageEntities[$idProduct][$localeName])) {
-                $this->storeDataSet($spyProductAbstractLocalizedEntity, $productRelations, $spyProductAbstractRelationStorageEntities[$idProduct][$localeName]);
+            if (in_array($idProduct, $storedEntities)) {
+                continue;
+            }
+
+            if (isset($spyProductAbstractRelationStorageEntities[$idProduct])) {
+                $this->storeDataSet($spyProductAbstractLocalizedEntity, $productRelations, $spyProductAbstractRelationStorageEntities[$idProduct]);
             } else {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, $productRelations);
             }
+            $storedEntities[] = $idProduct;
         }
     }
 
@@ -92,7 +97,6 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
         $spyProductAbstractRelationStorageEntity->setFkProductAbstract($spyProductAbstractLocalizedEntity->getFkProductAbstract());
         $spyProductAbstractRelationStorageEntity->setData($productAbstractRelationStorageTransfer->toArray());
         $spyProductAbstractRelationStorageEntity->setStore($this->getStoreName());
-        $spyProductAbstractRelationStorageEntity->setLocale($spyProductAbstractLocalizedEntity->getLocale()->getLocaleName());
         $spyProductAbstractRelationStorageEntity->save();
     }
 
@@ -198,12 +202,12 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
     protected function findProductStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {
         $productAbstractRelationStorageEntities = $this->getQueryContainer()->queryProductAbstractRelationStorageByIds($productAbstractIds)->find();
-        $productAbstractStorageRelationEntitiesByIdAndLocale = [];
+        $productAbstractStorageRelationEntitiesById = [];
         foreach ($productAbstractRelationStorageEntities as $productAbstractRelationStorageEntity) {
-            $productAbstractStorageRelationEntitiesByIdAndLocale[$productAbstractRelationStorageEntity->getFkProductAbstract()][$productAbstractRelationStorageEntity->getLocale()] = $productAbstractRelationStorageEntity;
+            $productAbstractStorageRelationEntitiesById[$productAbstractRelationStorageEntity->getFkProductAbstract()] = $productAbstractRelationStorageEntity;
         }
 
-        return $productAbstractStorageRelationEntitiesByIdAndLocale;
+        return $productAbstractStorageRelationEntitiesById;
     }
 
     /**

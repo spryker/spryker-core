@@ -65,6 +65,10 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         $spyProductAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
         $spyProductAbstractSearchEntities = $this->findProductPageSearchEntitiesByProductAbstractIds($productAbstractIds);
 
+        if (!$spyProductAbstractLocalizedEntities) {
+            $this->deleteSearchData($spyProductAbstractSearchEntities);
+        }
+
         $this->storeData($spyProductAbstractLocalizedEntities, $spyProductAbstractSearchEntities);
     }
 
@@ -94,8 +98,20 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     public function unpublish(array $productAbstractIds)
     {
         $spyProductPageSearchEntities = $this->findProductPageSearchEntitiesByProductAbstractIds($productAbstractIds);
-        foreach ($spyProductPageSearchEntities as $spyProductPageSearchEntity) {
-            $spyProductPageSearchEntity->delete();
+        $this->deleteSearchData($spyProductPageSearchEntities);
+    }
+
+    /**
+     * @param array $spyProductAbstractSearchEntities
+     *
+     * @return void
+     */
+    protected function deleteSearchData(array $spyProductAbstractSearchEntities)
+    {
+        foreach ($spyProductAbstractSearchEntities as $spyProductAbstractSearchLocalizedEntities) {
+            foreach ($spyProductAbstractSearchLocalizedEntities as $spyProductAbstractSearchLocalizedEntity) {
+                $spyProductAbstractSearchLocalizedEntity->delete();
+            }
         }
     }
 

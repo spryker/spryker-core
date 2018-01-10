@@ -105,12 +105,12 @@ abstract class AbstractProductReviewSearchListener extends AbstractPlugin implem
     protected function findProductReviewSearchEntitiesByProductReviewIds(array $productReviewIds)
     {
         $productReviewSearchEntities = $this->getQueryContainer()->queryProductReviewSearchByIds($productReviewIds)->find();
-        $productReviewSearchReviewEntitiesByIdAndLocale = [];
+        $productReviewSearchReviewEntitiesById = [];
         foreach ($productReviewSearchEntities as $productReviewReviewSearchEntity) {
-            $productReviewSearchReviewEntitiesByIdAndLocale[$productReviewReviewSearchEntity->getFkProductReview()][$productReviewReviewSearchEntity->getLocale()] = $productReviewReviewSearchEntity;
+            $productReviewSearchReviewEntitiesById[$productReviewReviewSearchEntity->getFkProductReview()] = $productReviewReviewSearchEntity;
         }
 
-        return $productReviewSearchReviewEntitiesByIdAndLocale;
+        return $productReviewSearchReviewEntitiesById;
     }
 
     /**

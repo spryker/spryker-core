@@ -18,14 +18,13 @@ class ProductGroupStorageClient extends AbstractClient implements ProductGroupSt
      * @api
      *
      * @param int $idProductAbstract
-     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractGroupStorageTransfer
      */
-    public function findProductGroupItemsByIdProductAbstract($idProductAbstract, $localeName)
+    public function findProductGroupItemsByIdProductAbstract($idProductAbstract)
     {
         return $this->getFactory()
             ->createProductGroupStorage()
-            ->findProductGroupItemsByIdProductAbstract($idProductAbstract, $localeName);
+            ->findProductGroupItemsByIdProductAbstract($idProductAbstract);
     }
 }

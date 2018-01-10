@@ -85,7 +85,6 @@ class ProductOptionStorageQueryContainer extends AbstractQueryContainer implemen
             ->queryAllProductAbstractProductOptionGroups()
             ->joinSpyProductOptionGroup()
             ->select([SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_ABSTRACT])
-            ->addAnd(SpyProductOptionGroupTableMap::COL_ACTIVE, true, Criteria::EQUAL)
             ->filterByFkProductOptionGroup_In($productOptionGroupsIds);
     }
 

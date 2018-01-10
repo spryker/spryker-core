@@ -39,7 +39,25 @@ class AbstractProductOptionStorageListener extends AbstractPlugin
         $spyProductAbstractLocalizedAttributeEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
         $spyProductAbstractOptionStorageEntities = $this->findProductStorageOptionEntitiesByProductAbstractIds($productAbstractIds);
 
+        if (!$spyProductAbstractLocalizedAttributeEntities) {
+            $this->deleteStorageData($spyProductAbstractOptionStorageEntities);
+        }
+
         $this->storeData($spyProductAbstractLocalizedAttributeEntities, $spyProductAbstractOptionStorageEntities, $productOptions);
+    }
+
+    /**
+     * @param array $spyProductAbstractOptionStorageEntities
+     *
+     * @return void
+     */
+    protected function deleteStorageData(array $spyProductAbstractOptionStorageEntities)
+    {
+        foreach ($spyProductAbstractOptionStorageEntities as $spyProductAbstractOptionStorageLocalizedEntities) {
+            foreach ($spyProductAbstractOptionStorageLocalizedEntities as $spyProductAbstractOptionStorageLocalizedEntity) {
+                $spyProductAbstractOptionStorageLocalizedEntity->delete();
+            }
+        }
     }
 
     /**

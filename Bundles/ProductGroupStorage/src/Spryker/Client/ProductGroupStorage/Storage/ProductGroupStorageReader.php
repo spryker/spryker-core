@@ -48,16 +48,14 @@ class ProductGroupStorageReader implements ProductGroupStorageReaderInterface
 
     /**
      * @param int $idProductAbstract
-     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractGroupStorageTransfer
      */
-    public function findProductGroupItemsByIdProductAbstract($idProductAbstract, $localeName)
+    public function findProductGroupItemsByIdProductAbstract($idProductAbstract)
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
             ->setReference($idProductAbstract)
-            ->setLocale($localeName)
             ->setStore($this->store->getStoreName());
 
         $key = $this->synchronizationService
