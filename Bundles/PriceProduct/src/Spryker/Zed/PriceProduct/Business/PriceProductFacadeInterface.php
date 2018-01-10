@@ -212,8 +212,8 @@ interface PriceProductFacadeInterface
 
     /**
      * Specification:
-     *  - Reads prices same as findPricesBySku, then groups by currency, price mode, price type for current store.
-     *  - Delegates call to findPricesBySku and groups result after by currency, price mode and price type.
+     *  - Reads prices same as findPricesBySkuGroupedForCurrentStore, then groups by currency, price mode, price type for current store.
+     *  - Delegates call to findPricesBySkuGroupedForCurrentStore and groups result after by currency, price mode and price type.
      *
      * For example:
      *   $result = [

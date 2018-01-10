@@ -19,6 +19,7 @@
         <column name="registration_key" size="150" type="VARCHAR" default="NULL"/>
         <column name="default_billing_address" type="INTEGER"/>
         <column name="default_shipping_address" type="INTEGER"/>
+        <column name="phone" size="255" type="VARCHAR"/>
         <column name="anonymized_at" required="false" type="TIMESTAMP" default="NULL"/>
         <behavior name="timestampable"/>
         <unique name="spy_customer-email">

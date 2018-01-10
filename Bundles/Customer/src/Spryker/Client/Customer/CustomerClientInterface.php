@@ -348,4 +348,15 @@ interface CustomerClientInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function anonymizeCustomer(CustomerTransfer $customerTransfer);
+
+    /**
+     * Specification:
+     * - Marks a customer as dirty.
+     * - Customer will be reloaded from Zed with next request.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function markCustomerAsDirty();
 }

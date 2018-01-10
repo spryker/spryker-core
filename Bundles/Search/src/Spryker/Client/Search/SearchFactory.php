@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Search;
 
-use Elastica\Client;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilder;
@@ -259,19 +258,9 @@ class SearchFactory extends AbstractFactory
     public function createCachedElasticsearchClient()
     {
         if (static::$searchClient === null) {
-            static::$searchClient = $this->createElasticsearchClient();
+            static::$searchClient = $this->getElasticsearchClient();
         }
 
         return static::$searchClient;
-    }
-
-    /**
-     * @return \Elastica\Client
-     */
-    public function createElasticsearchClient()
-    {
-        return new Client(
-            $this->getConfig()->getElasticsearchConfig()
-        );
     }
 }

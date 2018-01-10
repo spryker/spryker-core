@@ -15,6 +15,14 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 class PriceConfig extends AbstractBundleConfig
 {
     /**
+     * @return string[]
+     */
+    public function getPriceModes()
+    {
+        return $this->getSharedConfig()->getPriceModes();
+    }
+
+    /**
      * @return string
      */
     public function getDefaultPriceMode()

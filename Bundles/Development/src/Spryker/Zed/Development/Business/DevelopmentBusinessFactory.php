@@ -768,7 +768,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createComposerJsonUpdater()
     {
         return new ComposerJsonUpdater(
-            $this->createComposerJsonFinder(),
+            $this->createComposerJsonFinderComposite(),
             $this->createComposerJsonUpdaterComposite()
         );
     }
@@ -779,9 +779,9 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createComposerJsonFinderComposite()
     {
         $finderComposite = new ComposerJsonFinderComposite();
-        $finderComposite
-            ->addFinder($this->createComposerJsonFinder())
-            ->addFinder($this->createComposerJsonFinderSdk());
+        $finderComposite->addFinder($this->createComposerJsonFinder());
+        $finderComposite->addFinder($this->createComposerJsonFinderSdk());
+        $finderComposite->addFinder($this->createComposerJsonFinderShop());
 
         return $finderComposite;
     }
@@ -807,6 +807,19 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         $composerJsonFinder = new ComposerJsonFinder(
             $this->createFinder(),
             $this->getConfig()->getPathToSdk()
+        );
+
+        return $composerJsonFinder;
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface
+     */
+    protected function createComposerJsonFinderShop()
+    {
+        $composerJsonFinder = new ComposerJsonFinder(
+            $this->createFinder(),
+            $this->getConfig()->getPathToShop()
         );
 
         return $composerJsonFinder;
