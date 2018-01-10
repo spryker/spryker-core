@@ -38,7 +38,12 @@ class IndexController extends AbstractController
 
         $availabilityAbstractTable = $this->getAvailabilityAbstractTable($idStore);
 
-        $stores = $this->getFactory()->getStoreFacade()->getAllStores();
+        $storeTransfer = $this->getFactory()->getStoreFacade()->getCurrentStore();
+
+        $stores[] = $storeTransfer;
+        foreach ($storeTransfer->getSharedPersistenceWithStores() as $storeName) {
+            $stores[] = $this->getFactory()->getStoreFacade()->getStoreByName($storeName);
+        }
 
         return [
             'indexTable' => $availabilityAbstractTable->render(),
@@ -67,11 +72,16 @@ class IndexController extends AbstractController
 
         $productAbstractAvailabilityTransfer = $this->getFactory()
             ->getAvailabilityFacade()
-            ->getProductAbstractAvailability($idProductAbstract, $localeTransfer->getIdLocale(), $idStore);
+            ->findProductAbstractAvailability($idProductAbstract, $localeTransfer->getIdLocale(), $idStore);
 
-        $bundledProductAvailabilityTable = $this->getBundledProductAvailabilityTable();
+        $bundledProductAvailabilityTable = $this->getBundledProductAvailabilityTable($idStore);
 
-        $stores = $this->getFactory()->getStoreFacade()->getAllStores();
+        $storeTransfer = $this->getFactory()->getStoreFacade()->getCurrentStore();
+
+        $stores[] = $storeTransfer;
+        foreach ($storeTransfer->getSharedPersistenceWithStores() as $storeName) {
+            $stores[] = $this->getFactory()->getStoreFacade()->getStoreByName($storeName);
+        }
 
         return [
             'productAbstractAvailability' => $productAbstractAvailabilityTransfer,
@@ -154,6 +164,7 @@ class IndexController extends AbstractController
     public function bundledProductAvailabilityTableAction(Request $request)
     {
         $idBundleProduct = $request->query->getInt(BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_BUNDLE);
+        $idStore = $this->castId($request->query->getInt(BundledProductAvailabilityTable::URL_PARAM_ID_STORE));
 
         if (!$idBundleProduct) {
             return $this->jsonResponse([]);
@@ -161,7 +172,7 @@ class IndexController extends AbstractController
 
         $idBundleProduct = $this->castId($idBundleProduct);
         $idBundleProductAbstract = $this->castId($request->query->getInt(BundledProductAvailabilityTable::URL_PARAM_BUNDLE_ID_PRODUCT_ABSTRACT));
-        $bundledProductAvailabilityTable = $this->getBundledProductAvailabilityTable($idBundleProduct, $idBundleProductAbstract);
+        $bundledProductAvailabilityTable = $this->getBundledProductAvailabilityTable($idStore, $idBundleProduct, $idBundleProductAbstract);
 
         return $this->jsonResponse(
             $bundledProductAvailabilityTable->fetchData()
@@ -212,18 +223,20 @@ class IndexController extends AbstractController
     }
 
     /**
+     * @param int $idStore
      * @param int|null $idProductBundle
      * @param int|null $idBundleProductAbstract
      *
      * @return \Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable
      */
-    protected function getBundledProductAvailabilityTable($idProductBundle = null, $idBundleProductAbstract = null)
+    protected function getBundledProductAvailabilityTable($idStore, $idProductBundle = null, $idBundleProductAbstract = null)
     {
         $localeTransfer = $this->getCurrentLocaleTransfer();
 
         return $this->getFactory()
             ->createBundledProductAvailabilityTable(
                 $localeTransfer->getIdLocale(),
+                $idStore,
                 $idProductBundle,
                 $idBundleProductAbstract
             );

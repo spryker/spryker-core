@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Spryker\Zed\Store\Business\StoreFacade;
 
 class ProductBundleReader implements ProductBundleReaderInterface
 {
@@ -112,8 +113,10 @@ class ProductBundleReader implements ProductBundleReaderInterface
      */
     protected function findOrCreateProductBundleAvailabilityEntity(ProductConcreteTransfer $productConcreteTransfer)
     {
+        $storeTransfer = (new StoreFacade())->getCurrentStore();
+
         return $this->availabilityQueryContainer
-            ->querySpyAvailabilityBySku($productConcreteTransfer->getSku())
+            ->querySpyAvailabilityBySku($productConcreteTransfer->getSku(), $storeTransfer->getIdStore())
             ->findOneOrCreate();
     }
 }

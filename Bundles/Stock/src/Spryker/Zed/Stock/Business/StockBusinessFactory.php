@@ -39,7 +39,8 @@ class StockBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getProductFacade(),
             $this->createStockProductTransferMapper(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getStoreFacade()
         );
     }
 
@@ -86,5 +87,13 @@ class StockBusinessFactory extends AbstractBusinessFactory
     protected function getStockUpdateHandlerPlugins()
     {
         return $this->getProvidedDependency(StockDependencyProvider::PLUGINS_STOCK_UPDATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface
+     */
+    protected function getStoreFacade()
+    {
+        return $this->getProvidedDependency(StockDependencyProvider::FACADE_STORE);
     }
 }

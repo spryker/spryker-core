@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface ProductBundleToAvailabilityInterface
 {
     /**
@@ -34,8 +36,9 @@ interface ProductBundleToAvailabilityInterface
     /**
      * @param string $sku
      * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function saveProductAvailability($sku, $quantity);
+    public function saveProductAvailability($sku, $quantity, StoreTransfer $storeTransfer);
 }

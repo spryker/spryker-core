@@ -18,9 +18,9 @@ use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
 use Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapperInterface;
 use Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface;
+use Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 use Spryker\Zed\Stock\StockConfig;
-use Spryker\Zed\Store\Business\StoreFacade;
 
 class Reader implements ReaderInterface
 {
@@ -48,21 +48,29 @@ class Reader implements ReaderInterface
     protected $stockConfig;
 
     /**
+     * @var \Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface $productFacade
      * @param \Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapperInterface $transferMapper
      * @param \Spryker\Zed\Stock\StockConfig $stockConfig
+     * @param \Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         StockQueryContainerInterface $queryContainer,
         StockToProductInterface $productFacade,
         StockProductTransferMapperInterface $transferMapper,
-        StockConfig $stockConfig
+        StockConfig $stockConfig,
+        StockToStoreFacadeInterface $storeFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->productFacade = $productFacade;
         $this->transferMapper = $transferMapper;
         $this->stockConfig = $stockConfig;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -88,7 +96,13 @@ class Reader implements ReaderInterface
     public function getWarehouseToStoreMapping()
     {
         $mapping = [];
+        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
+        $sharedPersistenceWithStores = $currentStoreTransfer->getSharedPersistenceWithStores();
+        $sharedPersistenceWithStores[] = $currentStoreTransfer->getName();
         foreach ($this->stockConfig->getStoreToWarehouseMapping() as $storeName => $warehouses) {
+            if (!in_array($storeName, $sharedPersistenceWithStores)) {
+                continue;
+            }
             foreach ($warehouses as $warehouse) {
                 $mapping[$warehouse][$storeName] = $storeName;
             }
@@ -106,7 +120,7 @@ class Reader implements ReaderInterface
     public function isNeverOutOfStock($sku, StoreTransfer $storeTransfer = null)
     {
         if (!$storeTransfer) {
-            $storeTransfer = $this->getCurrentStore();
+            $storeTransfer = $this->storeFacade->getCurrentStore();
         }
 
         $idProduct = $this->productFacade->findProductConcreteIdBySku($sku);
@@ -172,14 +186,6 @@ class Reader implements ReaderInterface
     protected function getStoreWarehouses($storeName)
     {
         return $this->stockConfig->getStoreToWarehouseMapping()[$storeName];
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getCurrentStore()
-    {
-        return (new StoreFacade())->getCurrentStore();
     }
 
     /**

@@ -126,6 +126,24 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
+     */
+    public function findProductAbstractAvailability($idProductAbstract, $idLocale, $idStore)
+    {
+        return $this->getFactory()
+            ->createProductReservationReader()
+            ->findProductAbstractAvailability($idProductAbstract, $idLocale, $idStore);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
@@ -161,13 +179,14 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @param string $sku
      * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
      */
-    public function saveProductAvailability($sku, $quantity)
+    public function saveProductAvailability($sku, $quantity, StoreTransfer $storeTransfer = null)
     {
         return $this->getFactory()
             ->createAvailabilityHandler()
-            ->saveCurrentAvailability($sku, $quantity);
+            ->saveCurrentAvailability($sku, $quantity, $storeTransfer);
     }
 }

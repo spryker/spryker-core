@@ -105,8 +105,9 @@ class StockSubForm extends AbstractType
         $stockProductTransfer = $form->getViewData();
 
         $mapping = $this->getFactory()->getStockFacade()->getWarehouseToStoreMapping();
-
-        $view->vars['available_in_stores'] = $mapping[$stockProductTransfer->getStockType()];
+        if (isset($mapping[$stockProductTransfer->getStockType()])) {
+            $view->vars['available_in_stores'] = $mapping[$stockProductTransfer->getStockType()];
+        }
 
     }
 }

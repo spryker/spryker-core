@@ -73,6 +73,34 @@ class ProductReservationReader implements ProductReservationReaderInterface
     }
 
     /**
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
+     */
+    public function findProductAbstractAvailability($idProductAbstract, $idLocale, $idStore)
+    {
+        $storeTransfer = $this->storeFacade->getStoreById($idStore);
+        $stockTypes = $this->stockFacade->getStoreToWarehouseMapping()[$storeTransfer->getName()];
+
+        $productAbstractEntity = $this->availabilityQueryContainer
+            ->queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale(
+                $idProductAbstract,
+                $idLocale,
+                $idStore,
+                $stockTypes
+            )
+            ->findOne();
+
+        if (!$productAbstractEntity) {
+            return null;
+        }
+
+        return $this->mapAbstractProductAvailabilityEntityToTransfer($productAbstractEntity);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
@@ -81,8 +109,10 @@ class ProductReservationReader implements ProductReservationReaderInterface
     {
         $productConcreteAvailabilityRequestTransfer->requireSku();
 
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+
         $availabilityEntity = $this->availabilityQueryContainer
-            ->querySpyAvailabilityBySku($productConcreteAvailabilityRequestTransfer->getSku())
+            ->querySpyAvailabilityBySku($productConcreteAvailabilityRequestTransfer->getSku(), $storeTransfer->getIdStore())
             ->findOne();
 
         if (!$availabilityEntity) {

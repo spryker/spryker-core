@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\TypeTransfer;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
-use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerStoreAwarePluginInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 

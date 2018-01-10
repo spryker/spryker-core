@@ -7,9 +7,13 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeBridge;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Spryker\Zed\Store\Business\StoreFacade;
 
 class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandlerInterface
 {
@@ -39,18 +43,26 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     protected static $bundledItemEntityCache = [];
 
     /**
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer,
         ProductBundleToAvailabilityInterface $availabilityFacade,
-        ProductBundleQueryContainerInterface $productBundleQueryContainer
+        ProductBundleQueryContainerInterface $productBundleQueryContainer,
+        ProductBundleToStoreFacadeInterface $storeFacade
     ) {
         $this->availabilityQueryContainer = $availabilityQueryContainer;
         $this->availabilityFacade = $availabilityFacade;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -90,12 +102,13 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
 
     /**
      * @param string $bundleProductSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return void
      */
-    public function removeBundleAvailability($bundleProductSku)
+    public function removeBundleAvailability($bundleProductSku, StoreTransfer $storeTransfer)
     {
-        $this->availabilityFacade->saveProductAvailability($bundleProductSku, 0);
+        $this->availabilityFacade->saveProductAvailability($bundleProductSku, 0, $storeTransfer);
     }
 
     /**
@@ -138,25 +151,42 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      */
     protected function updateBundleProductAvailability($bundleItems, $bundleProductSku)
     {
-        $bundleAvailabilityQuantity = 0;
-        foreach ($bundleItems as $bundleItemEntity) {
-            $bundledItemSku = $bundleItemEntity->getSpyProductRelatedByFkBundledProduct()
-                ->getSku();
+        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
 
-            $bundledProductAvailabilityEntity = $this->findBundledItemAvailabilityEntityBySku($bundledItemSku);
+        $stores = $currentStoreTransfer->getSharedPersistenceWithStores();
+        $stores[] = $this->storeFacade->getCurrentStore()->getName();
 
-            if ($bundledProductAvailabilityEntity === null || $bundledProductAvailabilityEntity->getIsNeverOutOfStock()) {
-                continue;
+        foreach ($stores as $storeName) {
+
+            $storeTransfer = $this->storeFacade->getStoreByName($storeName);
+            $bundleAvailabilityQuantity = 0;
+            foreach ($bundleItems as $bundleItemEntity) {
+                $bundledItemSku = $bundleItemEntity->getSpyProductRelatedByFkBundledProduct()
+                    ->getSku();
+
+                $bundledProductAvailabilityEntity = $this->findBundledItemAvailabilityEntityBySku(
+                    $bundledItemSku,
+                    $storeTransfer->getIdStore()
+                );
+
+                if ($bundledProductAvailabilityEntity === null || $bundledProductAvailabilityEntity->getIsNeverOutOfStock()) {
+                    continue;
+                }
+
+                $bundledItemQuantity = (int)floor($bundledProductAvailabilityEntity->getQuantity() / $bundleItemEntity->getQuantity());
+
+                if ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity == 0) {
+                    $bundleAvailabilityQuantity = $bundledItemQuantity;
+                }
             }
 
-            $bundledItemQuantity = (int)floor($bundledProductAvailabilityEntity->getQuantity() / $bundleItemEntity->getQuantity());
-
-            if ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity == 0) {
-                $bundleAvailabilityQuantity = $bundledItemQuantity;
-            }
+            $this->availabilityFacade->saveProductAvailability(
+                $bundleProductSku,
+                $bundleAvailabilityQuantity,
+                $storeTransfer
+            );
         }
 
-        $this->availabilityFacade->saveProductAvailability($bundleProductSku, $bundleAvailabilityQuantity);
     }
 
     /**
@@ -173,13 +203,14 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
 
     /**
      * @param string $bundledItemSku
+     * @param int $idStore
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailability
      */
-    protected function findBundledItemAvailabilityEntityBySku($bundledItemSku)
+    protected function findBundledItemAvailabilityEntityBySku($bundledItemSku, $idStore)
     {
         return $this->availabilityQueryContainer
-            ->querySpyAvailabilityBySku($bundledItemSku)
+            ->querySpyAvailabilityBySku($bundledItemSku, $idStore)
             ->findOne();
     }
 }

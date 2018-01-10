@@ -11,10 +11,11 @@ interface ProductBundleToAvailabilityQueryContainerInterface
 {
     /**
      * @param string $sku
+     * @param int $idStore
      *
      * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
-    public function querySpyAvailabilityBySku($sku);
+    public function querySpyAvailabilityBySku($sku, $idStore);
 
     /**
      * @param int $idAvailabilityAbstract

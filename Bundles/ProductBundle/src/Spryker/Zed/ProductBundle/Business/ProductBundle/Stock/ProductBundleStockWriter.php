@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Throwable;
@@ -38,18 +39,26 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     protected $productBundleAvailabilityHandler;
 
     /**
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface $stockQueryContainer
      * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandler
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToStockQueryContainerInterface $stockQueryContainer,
-        ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandler
+        ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandler,
+        ProductBundleToStoreFacadeInterface $storeFacade
     ) {
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->stockQueryContainer = $stockQueryContainer;
         $this->productBundleAvailabilityHandler = $productBundleAvailabilityHandler;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -279,7 +288,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     /**
      * @param int $idProduct
      *
-     * @return mixed|mixed[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|mixed
+     * @return mixed|mixed[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Stock\Persistence\SpyStockProduct[]
      */
     protected function findProductStocks($idProduct)
     {
@@ -305,7 +314,16 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             $productConcreteTransfer->addStock($stockTransfer);
         }
 
-        $this->productBundleAvailabilityHandler->removeBundleAvailability($productConcreteTransfer->getSku());
+        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
+        $this->productBundleAvailabilityHandler->removeBundleAvailability($productConcreteTransfer->getSku(), $currentStoreTransfer);
+
+        foreach ($currentStoreTransfer->getSharedPersistenceWithStores() as $storeName) {
+            $storeTransfer = $this->storeFacade->getStoreByName($storeName);
+            $this->productBundleAvailabilityHandler->removeBundleAvailability(
+                $productConcreteTransfer->getSku(),
+                $storeTransfer
+            );
+        }
     }
 
     /**

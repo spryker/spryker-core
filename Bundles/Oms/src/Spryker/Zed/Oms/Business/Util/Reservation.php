@@ -79,7 +79,7 @@ class Reservation implements ReservationInterface
     public function updateReservationQuantity($sku, $storeName = null)
     {
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
-        $currentStoreReservationAmount = $this->sumReservedProductQuantitiesForSku($sku, $currentStoreTransfer->getName());
+        $currentStoreReservationAmount = $this->sumReservedProductQuantitiesForSku($sku, $currentStoreTransfer);
 
         foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
             if ($currentStoreTransfer->getIdStore() === $storeTransfer->getIdStore()) {
@@ -89,8 +89,8 @@ class Reservation implements ReservationInterface
 
             $omsAvailabilityReservationRequest = (new OmsAvailabilityReservationRequestTransfer())
                 ->setSku($sku)
-                ->setCurrentStore($currentStoreTransfer)
-                ->setCurrentStoreReservationAmount($currentStoreReservationAmount)
+                ->setStore($currentStoreTransfer)
+                ->setReservationAmount($currentStoreReservationAmount)
                 ->setSynchronizeToStore($storeTransfer);
 
             $this->executeReservationSynchronizationPlugins($omsAvailabilityReservationRequest);
@@ -107,12 +107,17 @@ class Reservation implements ReservationInterface
     public function saveReservationRequest(OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer)
     {
         $omsAvailabilityReservationRequestTransfer->requireSynchronizeToStore()->requireSku();
-
         $storeTransfer = $omsAvailabilityReservationRequestTransfer->getSynchronizeToStore();
+
+        $originStoreTransfer = $omsAvailabilityReservationRequestTransfer->getStore();
+        if (!in_array($storeTransfer->getName(), $originStoreTransfer->getSharedPersistenceWithStores())) {
+            return;
+        }
+
         $this->saveReservation(
             $omsAvailabilityReservationRequestTransfer->getSku(),
             $storeTransfer->getIdStore(),
-            $omsAvailabilityReservationRequestTransfer->getCurrentStoreReservationAmount()
+            $omsAvailabilityReservationRequestTransfer->getReservationAmount()
         );
     }
 

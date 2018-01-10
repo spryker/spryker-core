@@ -27,7 +27,8 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     {
         return new Sellable(
             $this->getOmsFacade(),
-            $this->getStockFacade()
+            $this->getStockFacade(),
+            $this->getStoreFacade()
         );
     }
 
@@ -41,7 +42,8 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->getStockFacade(),
             $this->getTouchFacade(),
             $this->getQueryContainer(),
-            $this->getProductFacade()
+            $this->getProductFacade(),
+            $this->getStoreFacade()
         );
     }
 

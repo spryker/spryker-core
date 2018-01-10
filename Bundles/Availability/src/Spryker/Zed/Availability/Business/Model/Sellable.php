@@ -10,6 +10,7 @@ namespace Spryker\Zed\Availability\Business\Model;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacade;
 
 class Sellable implements SellableInterface
@@ -25,15 +26,23 @@ class Sellable implements SellableInterface
     protected $stockFacade;
 
     /**
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface $omsFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         AvailabilityToOmsInterface $omsFacade,
-        AvailabilityToStockInterface $stockFacade
+        AvailabilityToStockInterface $stockFacade,
+        AvailabilityToStoreFacadeInterface $storeFacade
     ) {
         $this->omsFacade = $omsFacade;
         $this->stockFacade = $stockFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -46,7 +55,7 @@ class Sellable implements SellableInterface
     public function isProductSellable($sku, $quantity, StoreTransfer $storeTransfer = null)
     {
         if (!$storeTransfer) {
-            $storeTransfer = (new StoreFacade())->getCurrentStore();
+            $storeTransfer = $this->storeFacade->getCurrentStore();
         }
 
         if ($this->stockFacade->isNeverOutOfStock($sku, $storeTransfer)) {
@@ -66,7 +75,7 @@ class Sellable implements SellableInterface
     public function calculateStockForProduct($sku, StoreTransfer $storeTransfer = null)
     {
         if (!$storeTransfer) {
-            $storeTransfer = (new StoreFacade())->getCurrentStore();
+            $storeTransfer = $this->storeFacade->getCurrentStore();
         }
 
         $physicalItems = $this->stockFacade->calculateProductStockForStore($sku, $storeTransfer);

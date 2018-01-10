@@ -10,12 +10,15 @@ namespace Spryker\Zed\Stock;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Stock\Dependency\Facade\StockToProductBridge;
+use Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeBridge;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchBridge;
 
 class StockDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FACADE_TOUCH = 'facade touch';
     const FACADE_PRODUCT = 'facade product';
+    const FACADE_STORE = 'facade store';
+
     const PLUGINS_STOCK_UPDATE = 'stock update plugins';
 
     /**
@@ -37,6 +40,8 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getStockUpdateHandlerPlugins($container);
         };
 
+        $container = $this->addStoreFacade($container);
+
         return $container;
     }
 
@@ -48,5 +53,19 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
     protected function getStockUpdateHandlerPlugins($container)
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container)
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new StockToStoreFacadeBridge($container->getLocator()->store()->facade());
+        };
+
+        return $container;
     }
 }

@@ -13,9 +13,9 @@ use Spryker\Shared\Availability\AvailabilityConfig;
 use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
-use Spryker\Zed\Store\Business\StoreFacade;
 
 class AvailabilityHandler implements AvailabilityHandlerInterface
 {
@@ -45,24 +45,32 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected $productFacade;
 
     /**
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface $touchFacade
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface $productFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         SellableInterface $sellable,
         AvailabilityToStockInterface $stockFacade,
         AvailabilityToTouchInterface $touchFacade,
         AvailabilityQueryContainerInterface $queryContainer,
-        AvailabilityToProductInterface $productFacade
+        AvailabilityToProductInterface $productFacade,
+        AvailabilityToStoreFacadeInterface $storeFacade
     ) {
         $this->sellable = $sellable;
         $this->stockFacade = $stockFacade;
         $this->touchFacade = $touchFacade;
         $this->queryContainer = $queryContainer;
         $this->productFacade = $productFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -72,19 +80,23 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     public function updateAvailability($sku)
     {
-        foreach ((new StoreFacade())->getAllStores() as $storeTransfer) {
-            $quantity = $this->sellable->calculateStockForProduct($sku,  $storeTransfer);
-            $quantityWithReservedItems = $this->getQuantity($quantity);
+        $storeTransfer = $this->storeFacade->getCurrentStore();
 
-            $this->saveAndTouchAvailability($sku, $quantityWithReservedItems, $storeTransfer);
+        $this->updateAvailabilityForStore($sku, $storeTransfer);
+
+        $sharedStores = $storeTransfer->getSharedPersistenceWithStores();
+        foreach ($sharedStores as $storeName) {
+            $storeTransfer = $this->storeFacade->getStoreByName($storeName);
+            $this->updateAvailabilityForStore($sku, $storeTransfer);
         }
+
     }
 
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return mixed
+     * @return void
      */
     public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer)
     {
@@ -97,12 +109,15 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     /**
      * @param string $sku
      * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
      */
-    public function saveCurrentAvailability($sku, $quantity)
+    public function saveCurrentAvailability($sku, $quantity, StoreTransfer $storeTransfer = null)
     {
-        $storeTransfer = (new StoreFacade())->getCurrentStore();
+        if (!$storeTransfer) {
+            $storeTransfer = $this->storeFacade->getCurrentStore();
+        }
 
         $spyAvailabilityEntity = $this->saveAndTouchAvailability($sku, $quantity, $storeTransfer);
 
@@ -143,8 +158,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     protected function prepareAvailabilityEntityForSave($sku, $quantity, StoreTransfer $storeTransfer)
     {
-        $spyAvailabilityEntity = $this->querySpyAvailabilityBySku($sku)
-            ->filterByFkStore($storeTransfer->getIdStore())
+        $spyAvailabilityEntity = $this->querySpyAvailabilityBySku($sku, $storeTransfer)
             ->findOneOrCreate();
 
         if ($spyAvailabilityEntity->isNew()) {
@@ -183,13 +197,14 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
-    protected function querySpyAvailabilityBySku($sku)
+    protected function querySpyAvailabilityBySku($sku, StoreTransfer $storeTransfer)
     {
         return $this->queryContainer
-            ->querySpyAvailabilityBySku($sku);
+            ->querySpyAvailabilityBySku($sku, $storeTransfer->getIdStore());
     }
 
     /**
@@ -221,8 +236,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected function findCurrentPhysicalQuantity($sku, StoreTransfer $storeTransfer)
     {
         $oldQuantity = null;
-        $availabilityEntity = $this->querySpyAvailabilityBySku($sku)
-            ->filterByFkStore($storeTransfer->getIdStore())
+        $availabilityEntity = $this->querySpyAvailabilityBySku($sku, $storeTransfer)
             ->findOne();
 
         if ($availabilityEntity !== null) {
@@ -230,14 +244,6 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         }
 
         return $oldQuantity;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getCurrentStore()
-    {
-        return (new StoreFacade())->getCurrentStore();
     }
 
     /**

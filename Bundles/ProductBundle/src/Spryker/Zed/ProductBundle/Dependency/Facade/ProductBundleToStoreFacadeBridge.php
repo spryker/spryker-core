@@ -4,14 +4,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AvailabilityGui\Dependency\Facade;
+namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
-class AvailabilityToStoreFacadeBridge implements AvailabilityToStoreFacadeInterface
+class ProductBundleToStoreFacadeBridge implements ProductBundleToStoreFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
-    protected $storeFacade;
+     protected $storeFacade;
 
     /**
      * @param \Spryker\Zed\Store\Business\StoreFacadeInterface $storeFacade
@@ -19,14 +19,6 @@ class AvailabilityToStoreFacadeBridge implements AvailabilityToStoreFacadeInterf
     public function __construct($storeFacade)
     {
         $this->storeFacade = $storeFacade;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
-     */
-    public function getAllStores()
-    {
-        return $this->storeFacade->getAllStores();
     }
 
     /**
@@ -38,16 +30,6 @@ class AvailabilityToStoreFacadeBridge implements AvailabilityToStoreFacadeInterf
     }
 
     /**
-     * @param int $idStore
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getStoreById($idStore)
-    {
-        return $this->storeFacade->getStoreById($idStore);
-    }
-
-    /**
      * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
@@ -56,5 +38,4 @@ class AvailabilityToStoreFacadeBridge implements AvailabilityToStoreFacadeInterf
     {
         return $this->storeFacade->getStoreByName($storeName);
     }
-
 }

@@ -67,6 +67,7 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param int $idLocale
+     * @param int $idStore
      * @param int|null $idAbstractProductBundle
      * @param int|null $idBundleProductAbstract
      *
@@ -74,15 +75,29 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createBundledProductAvailabilityTable(
         $idLocale,
+        $idStore,
         $idAbstractProductBundle = null,
         $idBundleProductAbstract = null
     ) {
+
+        $storeTransfer = $this->getStoreFacade()->getStoreById($idStore);
+        $stockTypes = $this->getStockFacade()->getStoreToWarehouseMapping()[$storeTransfer->getName()];
+
+        $availabilityAbstractQuery = $this->getAvailabilityQueryContainer()
+            ->queryAvailabilityWithStockByIdProductAbstractAndIdLocale(
+                $idAbstractProductBundle,
+                $idLocale,
+                $idStore,
+                $stockTypes
+            );
+
         return new BundledProductAvailabilityTable(
-            $this->getAvailabilityQueryContainer(),
+            $availabilityAbstractQuery,
             $this->getProductBundleQueryContainer(),
-            $idLocale,
+            $idStore,
             $idAbstractProductBundle,
             $idBundleProductAbstract
+
         );
     }
 

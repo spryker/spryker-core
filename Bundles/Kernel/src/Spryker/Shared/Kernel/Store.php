@@ -93,6 +93,11 @@ class Store
     protected $currencyIsoCodes = [];
 
     /**
+     * @var string[]
+     */
+    protected $sharedPersistenceWithStores = [];
+
+    /**
      * @return \Spryker\Shared\Kernel\Store
      */
     public static function getInstance()
@@ -399,5 +404,13 @@ class Store
         }
 
         return $defaultCurrencyCode;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getSharedPersistenceWithStores()
+    {
+        return $this->sharedPersistenceWithStores;
     }
 }

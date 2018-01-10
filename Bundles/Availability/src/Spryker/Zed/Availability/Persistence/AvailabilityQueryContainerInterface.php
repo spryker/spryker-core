@@ -13,10 +13,11 @@ interface AvailabilityQueryContainerInterface
      * @api
      *
      * @param string $sku
+     * @param int $idStore
      *
      * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
-    public function querySpyAvailabilityBySku($sku);
+    public function querySpyAvailabilityBySku($sku, $idStore);
 
     /**
      * @api
@@ -67,7 +68,7 @@ interface AvailabilityQueryContainerInterface
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore, array $stockTypes);
+    public function queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore, array $stockTypes = []);
 
     /**
      * @api
@@ -84,26 +85,29 @@ interface AvailabilityQueryContainerInterface
      * @api
      *
      * @param int $idLocale
+     * @param array $stockTypes
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryAvailabilityWithStockByIdLocale($idLocale);
+    public function queryAvailabilityWithStockByIdLocale($idLocale, array $stockTypes = []);
 
     /**
      * @api
      *
      * @param int $idLocale
+     * @param array $stockTypes
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale);
+    public function querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale, array $stockTypes = []);
 
     /**
      * @api
+     * @param array $stockTypes
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function querySpyProductAbstractAvailabilityWithStock();
+    public function querySpyProductAbstractAvailabilityWithStock(array $stockTypes = []);
 
     /**
      * @api

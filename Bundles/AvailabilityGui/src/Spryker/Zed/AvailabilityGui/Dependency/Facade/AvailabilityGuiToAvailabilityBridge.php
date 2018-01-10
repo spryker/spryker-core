@@ -33,4 +33,16 @@ class AvailabilityGuiToAvailabilityBridge implements AvailabilityGuiToAvailabili
     {
         return $this->availabilityFacade->getProductAbstractAvailability($idProductAbstract, $idLocale, $idStore);
     }
+
+    /**
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
+     */
+    public function findProductAbstractAvailability($idProductAbstract, $idLocale, $idStore)
+    {
+        return $this->availabilityFacade->findProductAbstractAvailability($idProductAbstract, $idLocale, $idStore);
+    }
 }

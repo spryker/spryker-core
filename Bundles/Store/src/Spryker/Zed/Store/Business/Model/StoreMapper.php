@@ -36,6 +36,7 @@ class StoreMapper implements StoreMapperInterface
         $storeName = $storeEntity->getName();
 
         $currencyTransfer = (new StoreTransfer())
+            ->setSharedPersistenceWithStores($this->storeConfigurationProvider->getSharedPersistenceWithStores())
             ->setSelectedCurrencyIsoCode($this->storeConfigurationProvider->getCurrentStoreSelectedCurrencyIsoCode())
             ->setDefaultCurrencyIsoCode($this->storeConfigurationProvider->getDefaultCurrencyFor($storeName))
             ->setAvailableCurrencyIsoCodes($this->storeConfigurationProvider->getAvailableCurrenciesFor($storeName))

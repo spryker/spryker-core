@@ -59,4 +59,9 @@ interface StoreConfigurationProviderInterface
      * @return string
      */
     public function getCurrentStoreSelectedCurrencyIsoCode();
+
+    /**
+     * @return string[]
+     */
+    public function getSharedPersistenceWithStores();
 }

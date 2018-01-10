@@ -104,6 +104,14 @@ class StoreConfigurationProvider implements StoreConfigurationProviderInterface
     }
 
     /**
+     * @return string[]
+     */
+    public function getSharedPersistenceWithStores()
+    {
+        return $this->store->getSharedPersistenceWithStores();
+    }
+
+    /**
      * @param string $storeName
      *
      * @return array

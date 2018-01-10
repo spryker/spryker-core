@@ -108,6 +108,19 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
+     *  - Reads product availability data from persistence, stock, reservation, availability.
+     *  - Returns data for selected abstract product.
+     *
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
+     */
+    public function findProductAbstractAvailability($idProductAbstract, $idLocale, $idStore);
+
+    /**
+     * Specification:
      *  - Finds product concrete availability as is stored in persistence.
      *
      * @api
@@ -142,8 +155,9 @@ interface AvailabilityFacadeInterface
      *
      * @param string $sku
      * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
      */
-    public function saveProductAvailability($sku, $quantity);
+    public function saveProductAvailability($sku, $quantity, StoreTransfer $storeTransfer = null);
 }

@@ -135,7 +135,7 @@ class AvailabilityTable extends AbstractTable
                 AvailabilityQueryContainer::RESERVATION_QUANTITY => ($isBundleProduct) ? 'N/A' : $productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY] ?: 0,
                 static::IS_BUNDLE_PRODUCT => ($isBundleProduct) ? 'Yes' : 'No',
                 AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => ($productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET]) ? 'Yes' : 'No',
-                static::TABLE_COL_ACTION => $this->createEditButton($productItem, $isBundleProduct),
+                static::TABLE_COL_ACTION => $this->createButtons($productItem, $isBundleProduct),
             ];
         }
 
@@ -162,7 +162,7 @@ class AvailabilityTable extends AbstractTable
      *
      * @return string
      */
-    protected function createEditButton(array $productAbstract, $isBundle)
+    protected function createButtons(array $productAbstract, $isBundle)
     {
         $availabilityEditUrl = Url::generate(
             '/availability-gui/index/edit',
@@ -182,6 +182,7 @@ class AvailabilityTable extends AbstractTable
                 [
                     BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_BUNDLE => $productAbstract[AvailabilityQueryContainer::ID_PRODUCT],
                     BundledProductAvailabilityTable::URL_PARAM_BUNDLE_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
+                    static::URL_PARAM_ID_STORE => $this->idStore,
                 ]
             );
 

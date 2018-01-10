@@ -27,10 +27,11 @@ interface AvailabilityHandlerInterface
     /**
      * @param string $sku
      * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
      */
-    public function saveCurrentAvailability($sku, $quantity);
+    public function saveCurrentAvailability($sku, $quantity, StoreTransfer $storeTransfer = null);
 
     /**
      * @param string $sku
