@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/PriceProduct.svg)](https://travis-ci.org/spryker/PriceProduct)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/PriceProduct/badge.svg)](https://coveralls.io/github/spryker/PriceProduct)
 
-{{ADD DESCRIPTION HERE}}
+PriceProduct provides product price related functionality, price persistence, current price resolvers per currency/price mode.
 
 ## Installation
 
