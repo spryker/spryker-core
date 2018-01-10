@@ -7,7 +7,9 @@
 
 namespace Spryker\Shared\ProductImage;
 
-interface ProductImageConfig
+use Spryker\Shared\Kernel\AbstractBundleConfig;
+
+class ProductImageConfig extends AbstractBundleConfig
 {
     const DEFAULT_IMAGE_SET_NAME = 'default';
 }

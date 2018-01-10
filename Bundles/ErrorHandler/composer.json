@@ -29,12 +29,6 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ],
   "extra": {
     "branch-alias": {
       "dev-master": "2.0.x-dev"

@@ -51,7 +51,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addSearchClient(Container $container): Container
+    protected function addSearchClient(Container $container)
     {
         $container[static::CLIENT_SEARCH] = function (Container $container) {
             return $container->getLocator()->search()->client();
@@ -65,7 +65,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addCatalogSearchQueryPlugin(Container $container): Container
+    protected function addCatalogSearchQueryPlugin(Container $container)
     {
         $container[static::CATALOG_SEARCH_QUERY_PLUGIN] = function () {
             return $this->createCatalogSearchQueryPlugin();
@@ -79,7 +79,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addCatalogSearchQueryExpanderPlugins(Container $container): Container
+    protected function addCatalogSearchQueryExpanderPlugins(Container $container)
     {
         $container[static::CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS] = function () {
             return $this->createCatalogSearchQueryExpanderPlugins();
@@ -93,7 +93,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addCatalogSerachResultFormatterPlugins(Container $container): Container
+    protected function addCatalogSerachResultFormatterPlugins(Container $container)
     {
         $container[static::CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS] = function () {
             return $this->createCatalogSearchResultFormatterPlugins();
@@ -107,7 +107,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addSuggestionQueryPlugin(Container $container): Container
+    protected function addSuggestionQueryPlugin(Container $container)
     {
         $container[static::SUGGESTION_QUERY_PLUGIN] = function () {
             return $this->createSuggestionQueryPlugin();
@@ -121,7 +121,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addSuggestionQueryExpanderPlugins(Container $container): Container
+    protected function addSuggestionQueryExpanderPlugins(Container $container)
     {
         $container[static::SUGGESTION_QUERY_EXPANDER_PLUGINS] = function () {
             return $this->createSuggestionQueryExpanderPlugins();
@@ -135,7 +135,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addSuggestionResultFormatterPlugins(Container $container): Container
+    protected function addSuggestionResultFormatterPlugins(Container $container)
     {
         $container[static::SUGGESTION_RESULT_FORMATTER_PLUGINS] = function () {
             return $this->createSuggestionResultFormatterPlugins();
@@ -149,7 +149,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addFacetConfigTransferBuilderPlugins(Container $container): Container
+    protected function addFacetConfigTransferBuilderPlugins(Container $container)
     {
         $container[static::PLUGIN_FACET_CONFIG_TRANSFER_BUILDERS] = function () {
             return $this->getFacetConfigTransferBuilderPlugins();
@@ -163,7 +163,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addSortConfigTransferBuilderPlugins(Container $container): Container
+    protected function addSortConfigTransferBuilderPlugins(Container $container)
     {
         $container[static::PLUGIN_SORT_CONFIG_TRANSFER_BUILDERS] = function () {
             return $this->getSortConfigTransferBuilderPlugins();
