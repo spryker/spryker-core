@@ -46,7 +46,7 @@ interface CompanyFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return bool
+     * @return void
      */
-    public function delete(CompanyTransfer $companyTransfer): bool;
+    public function delete(CompanyTransfer $companyTransfer): void;
 }
