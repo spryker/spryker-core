@@ -11,6 +11,22 @@ interface AvailabilityEvents
 {
     /**
      * Specification
+     * - This events will be used for spy_availability_abstract publishing
+     *
+     * @api
+     */
+    const AVAILABILITY_ABSTRACT_PUBLISH = 'Entity.spy_availability_abstract.publish';
+
+    /**
+     * Specification
+     * - This events will be used for spy_availability_abstract un-publishing
+     *
+     * @api
+     */
+    const AVAILABILITY_ABSTRACT_UNPUBLISH = 'Entity.spy_availability_abstract.unpublish';
+
+    /**
+     * Specification
      * - This events will be used for spy_availability_abstract entity creation
      *
      * @api

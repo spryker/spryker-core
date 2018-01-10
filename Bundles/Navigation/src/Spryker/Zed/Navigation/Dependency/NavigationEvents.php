@@ -11,6 +11,22 @@ interface NavigationEvents
 {
     /**
      * Specification
+     * - This events will be used for navigation key publishing
+     *
+     * @api
+     */
+    const NAVIGATION_KEY_PUBLISH = 'Navigation.key.publish';
+
+    /**
+     * Specification
+     * - This events will be used for navigation key un-publishing
+     *
+     * @api
+     */
+    const NAVIGATION_KEY_UNPUBLISH = 'Navigation.key.unpublish';
+
+    /**
+     * Specification
      * - This events will be used for spy_navigation entity creation
      *
      * @api

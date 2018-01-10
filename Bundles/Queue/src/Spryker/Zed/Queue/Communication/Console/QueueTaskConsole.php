@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\Queue\Communication\Console;
 
+use Spryker\Shared\Queue\QueueConfig;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -20,6 +22,9 @@ class QueueTaskConsole extends Console
     const COMMAND_NAME = 'queue:task:start';
     const DESCRIPTION = 'Start queue task for specific queue';
 
+    const OPTION_NO_ACK = 'no-ack';
+    const OPTION_NO_ACK_SHORT = 'k';
+
     /**
      * @return void
      */
@@ -27,6 +32,7 @@ class QueueTaskConsole extends Console
     {
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::DESCRIPTION);
+        $this->addOption(static::OPTION_NO_ACK, static::OPTION_NO_ACK_SHORT, InputOption::VALUE_NONE, 'Disable the acknowledgment to keep the message in queue');
         $this->addArgument('queue', InputArgument::REQUIRED, 'Name of the queue for receiving the messages');
 
         parent::configure();
@@ -40,7 +46,11 @@ class QueueTaskConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getFacade()->startTask($input->getArgument('queue'));
+        $options = [
+            QueueConfig::CONFIG_QUEUE_OPTION_NO_ACK => $input->getOption(static::OPTION_NO_ACK),
+        ];
+
+        $this->getFacade()->startTask($input->getArgument('queue'), $options);
 
         return static::CODE_SUCCESS;
     }

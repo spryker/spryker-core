@@ -21,14 +21,15 @@ class QueueFacade extends AbstractFacade implements QueueFacadeInterface
      * @api
      *
      * @param string $queueName
+     * @param array $options
      *
      * @return void
      */
-    public function startTask($queueName)
+    public function startTask($queueName, array $options = [])
     {
         $this->getFactory()
             ->createTask()
-            ->run($queueName);
+            ->run($queueName, $options);
     }
 
     /**
