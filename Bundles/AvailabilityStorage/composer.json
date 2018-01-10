@@ -14,7 +14,7 @@
   },
   "require-dev": {
     "spryker/event": "*",
-    "spryker-shop/product-storage": "*"
+    "spryker/product-storage": "*"
   },
   "suggest": {
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
