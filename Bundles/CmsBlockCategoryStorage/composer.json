@@ -3,19 +3,23 @@
   "description": "CmsBlockCategoryStorage module",
   "license": "proprietary",
   "require": {
+    "spryker/category": "^4.3.0",
+    "spryker/cms-block": "^1.5.0",
+    "spryker/cms-block-category-connector": "^2.1.0",
+    "spryker/event-behavior": "^0.1.2",
+    "spryker/kernel": "^3.16.0",
+    "spryker/propel-orm": "^1.5.0",
+    "spryker/util-sanitize": "^2.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/event": "*"
+  },
+  "suggest": {
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
   },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

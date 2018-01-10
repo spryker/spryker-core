@@ -1,14 +1,21 @@
 {
-  "name": "spryker/cms-block-storage",
-  "description": "CmsBlockStorage module",
+  "name": "spryker/product-page-search",
+  "description": "ProductPageSearch module",
   "license": "proprietary",
   "require": {
-    "spryker/cms-block": "^1.5.0",
+    "spryker/catalog-price-product-connector": "^1.1.0",
+    "spryker/category": "^4.3.0",
     "spryker/event-behavior": "^0.1.2",
     "spryker/kernel": "^3.16.0",
+    "spryker/price-product": "^1.1.0",
+    "spryker/product": "^5.5.0",
+    "spryker/product-category": "^4.5.0",
+    "spryker/product-image": "^3.5.0",
+    "spryker/product-search": "^5.4.0",
     "spryker/propel-orm": "^1.5.0",
-    "spryker/storage": "^3.4.0",
-    "spryker/synchronization": "^0.2.0",
+    "spryker/search": "^7.0.0",
+    "spryker/url": "^3.3.0",
+    "spryker/util-encoding": "^2.0.0",
     "spryker/util-sanitize": "^2.1.0"
   },
   "require-dev": {
@@ -26,7 +33,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "0.1.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   },
   "config": {

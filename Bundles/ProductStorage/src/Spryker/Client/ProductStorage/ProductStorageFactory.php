@@ -64,14 +64,6 @@ class ProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductStorage\Dependency\Service\ProductToUtilEncodingInterface
-     */
-    protected function getUtilEncodingService()
-    {
-        return $this->getProvidedDependency(ProductStorageDependencyProvider::SERVICE_ENCODING);
-    }
-
-    /**
      * @return \Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface
      */
     public function createProductStorageDataMapper()

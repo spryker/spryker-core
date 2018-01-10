@@ -21,7 +21,6 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     const STORE = 'STORE';
     const PLUGIN_PRODUCT_VIEW_EXPANDERS = 'PLUGIN_STORAGE_PRODUCT_EXPANDERS';
-    const SERVICE_ENCODING = 'SERVICE_ENCODING';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -32,7 +31,6 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
-        $container = $this->addEncodingService($container);
         $container = $this->addLocaleClient($container);
         $container = $this->addStore($container);
         $container = $this->addProductViewExpanderPlugins($container);
@@ -116,19 +114,5 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     protected function getProductViewExpanderPlugins()
     {
         return [];
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addEncodingService(Container $container)
-    {
-        $container[static::SERVICE_ENCODING] = function (Container $container) {
-            return new ProductStorageToSynchronizationServiceBridge($container->getLocator()->encoding()->service());
-        };
-
-        return $container;
     }
 }

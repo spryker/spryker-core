@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CategoryPageSearch\Communication;
 
 use Spryker\Zed\CategoryPageSearch\CategoryPageSearchDependencyProvider;
-use Spryker\Zed\CmsPageSearch\CmsPageSearchDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -38,7 +37,7 @@ class CategoryPageSearchCommunicationFactory extends AbstractCommunicationFactor
      */
     public function getUtilEncoding()
     {
-        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::SERVICE_UTIL_ENCODING);
+        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**
@@ -54,6 +53,6 @@ class CategoryPageSearchCommunicationFactory extends AbstractCommunicationFactor
      */
     public function getSearchFacade()
     {
-        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::FACADE_SEARCH);
+        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::FACADE_SEARCH);
     }
 }
