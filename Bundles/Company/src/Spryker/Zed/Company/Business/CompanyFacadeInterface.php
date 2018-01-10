@@ -33,9 +33,9 @@ interface CompanyFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyTransfer
+     * @return void
      */
-    public function update(CompanyTransfer $companyTransfer): CompanyTransfer;
+    public function update(CompanyTransfer $companyTransfer): void;
 
     /**
      * Specification:
