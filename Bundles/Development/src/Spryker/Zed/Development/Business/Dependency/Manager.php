@@ -20,7 +20,7 @@ class Manager implements ManagerInterface
     protected $moduleParser;
 
     /**
-     * @var string
+     * @var string[]
      */
     protected $moduleDirectories;
 

@@ -80,6 +80,7 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleMethodGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter;
 use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
+use Spryker\Zed\Development\Business\Phpstan\PhpstanRunner;
 use Spryker\Zed\Development\Business\Stability\StabilityCalculator;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -122,6 +123,16 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()->getPathToRoot(),
             $this->getConfig()->getPathToCore(),
             $this->getConfig()->getArchitectureStandard()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Phpstan\PhpstanRunnerInterface
+     */
+    public function createPhpstanRunner()
+    {
+        return new PhpstanRunner(
+            $this->getConfig()
         );
     }
 
@@ -389,7 +400,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorClient
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorService
      */
     protected function createLocatorServiceChecker()
     {
