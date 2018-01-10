@@ -19,9 +19,9 @@ interface CompanyFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function create(CompanyTransfer $companyTransfer);
+    public function create(CompanyTransfer $companyTransfer): CompanyTransfer;
 
     /**
      * Specification:
@@ -35,7 +35,7 @@ interface CompanyFacadeInterface
      *
      * @return void
      */
-    public function update(CompanyTransfer $companyTransfer);
+    public function update(CompanyTransfer $companyTransfer): void;
 
     /**
      * Specification:
@@ -48,5 +48,5 @@ interface CompanyFacadeInterface
      *
      * @return void
      */
-    public function delete(CompanyTransfer $companyTransfer);
+    public function delete(CompanyTransfer $companyTransfer): void;
 }
