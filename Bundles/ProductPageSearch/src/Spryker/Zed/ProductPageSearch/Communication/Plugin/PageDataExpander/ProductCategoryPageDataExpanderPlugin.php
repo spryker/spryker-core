@@ -209,7 +209,7 @@ class ProductCategoryPageDataExpanderPlugin extends AbstractPlugin implements Pr
         $sortedCategories = [];
         foreach ($productCategoryEntities as $productCategoryEntity) {
             $idCategoryNode = $productCategoryEntity->getVirtualColumn(
-                ProductCategoryQueryContainer::VIRT_COLUMN_ID_CATEGORY_NODE
+                ProductCategoryQueryContainer::VIRTUAL_COLUMN_ID_CATEGORY_NODE
             );
 
             $productOrder = (int)$productCategoryEntity->getProductOrder() ?: $maxProductOrder;
