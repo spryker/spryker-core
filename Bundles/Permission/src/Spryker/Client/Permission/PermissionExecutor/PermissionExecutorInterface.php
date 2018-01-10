@@ -1,14 +1,13 @@
 <?php
 
+namespace Spryker\Client\Permission\PermissionExecutor;
 
-namespace Spryker\Shared\Kernel\Permission;
 
-
-interface PermissionInterface
+interface PermissionExecutorInterface
 {
     /**
      * @param string $permissionKey
-     * @param array|mixed|null $context
+     * @param mixed|array|null $context
      *
      * @return bool
      */

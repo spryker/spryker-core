@@ -4,9 +4,7 @@
 namespace Spryker\Client\Permission;
 
 
-use Spryker\Shared\Kernel\Permission\PermissionInterface;
-
-interface PermissionClientInterface extends PermissionInterface
+interface PermissionClientInterface
 {
     /**
      * @param string $permissionKey

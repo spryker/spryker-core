@@ -4,7 +4,7 @@
 namespace Spryker\Client\Permission\Plugin;
 
 
-interface ExecutionAwarePermissionPluginInterface
+interface ExecutionAwarePermissionPluginInterface extends PermissionPluginInterface
 {
     /**
      * @param array $options
