@@ -19,9 +19,9 @@ interface CompanyBusinessUnitFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return void
+     * @return CompanyBusinessUnitTransfer
      */
-    public function create(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer);
+    public function create(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitTransfer;
 
     /**
      * Specification:

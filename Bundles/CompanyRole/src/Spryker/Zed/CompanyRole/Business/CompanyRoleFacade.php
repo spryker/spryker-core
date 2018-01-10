@@ -17,9 +17,9 @@ class CompanyRoleFacade
      *
      * @return CompanyRoleTransfer
      */
-    public function create(CompanyRoleTransfer $companyRoleTransfer)
+    public function create(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer
     {
-        return new CompanyRoleTransfer();
+        return $companyRoleTransfer->setIdCompanyRole(1);
     }
 
     /**
@@ -73,7 +73,7 @@ class CompanyRoleFacade
      *
      * @return CompanyUserTransfer
      */
-    public function hydrateCompanyUser(CompanyUserTransfer $companyUserTransfer)
+    public function hydrateCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
     {
         return $companyUserTransfer->setCompanyRoleCollection(new CompanyRoleCollectionTransfer());
     }

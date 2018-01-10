@@ -10,6 +10,7 @@ use Spryker\Client\Permission\Plugin\PermissionPluginInterface;
 class CheckoutPlaceOrderPermissionPlugin implements PermissionPluginInterface
 {
     const KEY = 'permission.checkout.placeOrder';
+
     /**
      * @return string
      */

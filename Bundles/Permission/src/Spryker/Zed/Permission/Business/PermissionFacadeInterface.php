@@ -14,7 +14,7 @@ interface PermissionFacadeInterface
      *
      * @return PermissionCollectionTransfer
      */
-    public function findAll();
+    public function findAll(): PermissionCollectionTransfer;
 
     /**
      * Specification:

@@ -18,7 +18,7 @@ interface CompanyRoleFacadeInterface
      *
      * @return CompanyRoleTransfer
      */
-    public function create(CompanyRoleTransfer $companyRoleTransfer);
+    public function create(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer;
 
     /**
      * Specification:
@@ -70,5 +70,5 @@ interface CompanyRoleFacadeInterface
      *
      * @return CompanyUserTransfer
      */
-    public function hydrateCompanyUser(CompanyUserTransfer $companyUserTransfer);
+    public function hydrateCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
 }
