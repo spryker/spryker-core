@@ -163,6 +163,51 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     }
 
     /**
+     * @api
+     *
+     * @param int $idCmsBlock
+     * @param int[] $idStores
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
+     */
+    public function queryCmsBlockStoreByFkCmsBlockAndFkStores($idCmsBlock, array $idStores)
+    {
+        return $this
+            ->createCmsBlockStoreQuery()
+            ->filterByFkCmsBlock($idCmsBlock)
+            ->filterByFkStore_In($idStores);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCmsBlock
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
+     */
+    public function queryCmsBlockStoreWithStoresByFkCmsBlock($idCmsBlock)
+    {
+        return $this
+            ->createCmsBlockStoreQuery()
+            ->filterByFkCmsBlock($idCmsBlock)
+            ->leftJoinWithSpyStore();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCmsBlock
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
+     */
+    public function queryCmsBlockStoreByFkCmsBlock($idCmsBlock)
+    {
+        return $this
+            ->createCmsBlockStoreQuery()
+            ->filterByFkCmsBlock($idCmsBlock);
+    }
+
+    /**
      * @return \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface
      */
     protected function getGlossaryQueryContainer()
@@ -186,5 +231,15 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     {
         return $this->getFactory()
             ->createCmsBlockGlossaryKeyMappingQuery();
+    }
+
+    /**
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
+     */
+    protected function createCmsBlockStoreQuery()
+    {
+        return $this
+            ->getFactory()
+            ->createCmsBlockStoreQuery();
     }
 }

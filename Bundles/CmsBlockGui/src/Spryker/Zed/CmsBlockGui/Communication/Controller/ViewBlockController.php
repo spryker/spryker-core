@@ -48,6 +48,8 @@ class ViewBlockController extends AbstractController
             'cmsBlock' => $cmsBlockTransfer,
             'cmsBlockGlossary' => $cmsBlockGlossary,
             'renderedPlugins' => $this->getRenderedViewPlugins($idCmsBlock),
+            // TODO: make this work
+            'relatedStoreNames' => ['TO', 'DO'],
         ]);
     }
 

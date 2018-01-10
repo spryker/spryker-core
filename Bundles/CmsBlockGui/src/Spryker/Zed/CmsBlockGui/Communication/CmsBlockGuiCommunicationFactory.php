@@ -87,7 +87,8 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         $cmsBlockForm = new CmsBlockForm(
             $this->getCmsBlockQueryContainer(),
-            $this->getCmsBlockFormPlugins()
+            $this->getCmsBlockFormPlugins(),
+            $this->getStoreRelationFormTypePlugin()
         );
 
         return $this->getFormFactory()->create(
@@ -105,7 +106,10 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
         $cmsBlockQuery = $this->getCmsBlockQueryContainer()
             ->queryCmsBlockWithTemplate();
 
-        return new CmsBlockTable($cmsBlockQuery);
+        return new CmsBlockTable(
+            $cmsBlockQuery,
+            $this->getCmsBlockQueryContainer()
+        );
     }
 
     /**
@@ -188,5 +192,13 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsBlockGlossaryPlaceholderFormType()
     {
         return new CmsBlockGlossaryPlaceholderForm();
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    public function getStoreRelationFormTypePlugin()
+    {
+        return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
     }
 }

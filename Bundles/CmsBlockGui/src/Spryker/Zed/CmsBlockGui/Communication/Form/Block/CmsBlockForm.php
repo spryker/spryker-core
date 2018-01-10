@@ -11,6 +11,7 @@ use DateTime;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,6 +30,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class CmsBlockForm extends AbstractType
 {
     const FIELD_ID_CMS_BLOCK = 'idCmsBlock';
+    const FIELD_STORE_RELATION = 'storeRelation';
     const FIELD_FK_TEMPLATE = 'fkTemplate';
     const FIELD_NAME = 'name';
     const FIELD_IS_ACTIVE = 'is_active';
@@ -50,15 +52,23 @@ class CmsBlockForm extends AbstractType
     protected $formPlugins;
 
     /**
+     * @var \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected $storeRelationFormTypePlugin;
+
+    /**
      * @param \Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer
      * @param \Spryker\Zed\CmsBlockGui\Communication\Plugin\CmsBlockFormPluginInterface[] $formPlugins
+     * @param \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface $storeRelationFormTypePlugin
      */
     public function __construct(
         CmsBlockGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer,
-        array $formPlugins
+        array $formPlugins,
+        FormTypeInterface $storeRelationFormTypePlugin
     ) {
         $this->cmsBlockQueryContainer = $cmsBlockQueryContainer;
         $this->formPlugins = $formPlugins;
+        $this->storeRelationFormTypePlugin = $storeRelationFormTypePlugin;
     }
 
     /**
@@ -106,6 +116,7 @@ class CmsBlockForm extends AbstractType
     {
         $this
             ->addIdCmsBlockField($builder)
+            ->addStoreRelationForm($builder)
             ->addFkTemplateField($builder, $options)
             ->addNameField($builder)
             ->addValidFromField($builder)
@@ -121,6 +132,24 @@ class CmsBlockForm extends AbstractType
     protected function addIdCmsBlockField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_CMS_BLOCK, 'hidden');
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addStoreRelationForm(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_STORE_RELATION,
+            $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
+            [
+                'label' => false,
+            ]
+        );
 
         return $this;
     }

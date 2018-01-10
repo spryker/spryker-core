@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsBlock\Business;
 
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 
 interface CmsBlockFacadeInterface
 {
@@ -63,6 +64,32 @@ interface CmsBlockFacadeInterface
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
+
+    /**
+     * Specification:
+     * - Updates CMS Block's store relations using the provided store ID collection.
+     * - Identifies CMS Block using the provided entity ID.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     *
+     * @return void
+     */
+    public function updateCmsBlockStoreRelation(StoreRelationTransfer $storeRelationTransfer);
+
+    /**
+     * Specification:
+     * - Retrieves store relation for the CMS block identified by the provided entity ID.
+     * - Populates store ID collection and store transfer collection.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getCmsBlockStoreRelation(StoreRelationTransfer $storeRelationTransfer);
 
     /**
      * Specification:
