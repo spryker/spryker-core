@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -9,7 +8,7 @@ namespace Spryker\Zed\CompanyBusinessUnit\Business;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
-interface CompanyBusinessUnitFacadeInterface
+class CompanyBusinessUnitFacade implements CompanyBusinessUnitFacadeInterface
 {
     /**
      * Specification:
@@ -21,7 +20,10 @@ interface CompanyBusinessUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    public function create(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitTransfer;
+    public function create(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitTransfer
+    {
+        return new CompanyBusinessUnitTransfer();
+    }
 
     /**
      * Specification:
@@ -34,7 +36,9 @@ interface CompanyBusinessUnitFacadeInterface
      *
      * @return void
      */
-    public function update(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): void;
+    public function update(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): void
+    {
+    }
 
     /**
      * Specification:
@@ -47,5 +51,7 @@ interface CompanyBusinessUnitFacadeInterface
      *
      * @return void
      */
-    public function delete(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): void;
+    public function delete(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): void
+    {
+    }
 }
