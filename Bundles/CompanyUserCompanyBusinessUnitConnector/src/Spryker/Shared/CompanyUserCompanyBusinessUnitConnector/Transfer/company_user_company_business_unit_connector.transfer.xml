@@ -7,10 +7,4 @@
         <property name="fkCompanyBusinessUnit" type="int"/>
     </transfer>
 
-    <transfer name="CompanyUserCompanyBusinessUnitConnectionUpdate">
-        <property name="idCompanyUser" type="int"/>
-        <property name="idCompanyBusinessUnitToAssign" type="array"/>
-        <property name="idCompanyBusinessUnitToDeAssign" type="array"/>
-    </transfer>
-
 </transfers>
