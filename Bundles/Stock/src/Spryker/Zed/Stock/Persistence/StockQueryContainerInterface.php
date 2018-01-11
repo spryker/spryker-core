@@ -78,6 +78,15 @@ interface StockQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param array $names
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
+     */
+    public function queryStockByNames(array $names);
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryAllStockProducts();
@@ -102,8 +111,9 @@ interface StockQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param int $idProduct
+     * @param array $types
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
-    public function queryStockByIdProduct($idProduct);
+    public function queryStockByIdProduct($idProduct, array $types);
 }

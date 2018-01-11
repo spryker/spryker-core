@@ -170,6 +170,7 @@ class AvailabilityTable extends AbstractTable
                 static::URL_PARAM_ID_PRODUCT => $productAbstract[AvailabilityQueryContainer::ID_PRODUCT],
                 static::URL_PARAM_SKU => $productAbstract[AvailabilityQueryContainer::CONCRETE_SKU],
                 static::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
+                static::URL_PARAM_ID_STORE => $this->idStore,
             ]
         );
 

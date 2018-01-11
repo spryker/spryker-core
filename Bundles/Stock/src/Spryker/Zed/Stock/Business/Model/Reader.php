@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use InvalidArgumentException;
 use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
@@ -78,16 +79,30 @@ class Reader implements ReaderInterface
      */
     public function getStockTypes()
     {
-        $types = [];
         $stockTypes = $this->queryContainer
             ->queryAllStockTypes()
             ->find();
 
-        foreach ($stockTypes as $stockType) {
-            $types[$stockType->getName()] = $stockType->getName();
-        }
+       return $this->mapStockTypes($stockTypes);
+    }
 
-        return $types;
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return array
+     */
+    public function getStockTypesForStore(StoreTransfer $storeTransfer)
+    {
+        $storeTransfer->requireName();
+
+        $warehouses = $this->stockConfig->getStoreToWarehouseMapping()[$storeTransfer->getName()];
+
+        $stockTypes = $this->queryContainer
+            ->queryStockByNames($warehouses)
+            ->find();
+
+        return $this->mapStockTypes($stockTypes);
+
     }
 
     /**
@@ -331,19 +346,20 @@ class Reader implements ReaderInterface
 
     /**
      * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]|null
      */
-    public function getStockProductsByIdProduct($idProductConcrete)
+    public function findStockProductsByIdProduct($idProductConcrete, StoreTransfer $storeTransfer)
     {
+        $types = $this->stockConfig->getStoreToWarehouseMapping()[$storeTransfer->getName()];
+
         $stockProducts = $this->queryContainer
-            ->queryStockByIdProduct($idProductConcrete)
+            ->queryStockByIdProduct($idProductConcrete, $types)
             ->find();
 
-        if (count($stockProducts) === 0) {
-            throw new StockProductNotFoundException();
+        if (!$stockProducts) {
+            return null;
         }
 
         $products = [];
@@ -394,5 +410,19 @@ class Reader implements ReaderInterface
         }
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $stockTypes
+     *
+     * @return array
+     */
+    protected function mapStockTypes(ObjectCollection $stockTypes)
+    {
+        $types = [];
+        foreach ($stockTypes as $stockType) {
+            $types[$stockType->getName()] = $stockType->getName();
+        }
+        return $types;
     }
 }

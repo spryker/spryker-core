@@ -217,19 +217,32 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     *
      * Specification:
      *  - Returns stock product by givent id product
      *
      * @api
      *
      * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
-    public function getStockProductsByIdProduct($idProductConcrete)
+    public function findStockProductsByIdProduct($idProductConcrete, StoreTransfer $storeTransfer)
     {
-        return $this->getFactory()->createReaderModel()->getStockProductsByIdProduct($idProductConcrete);
+        return $this->getFactory()->createReaderModel()->findStockProductsByIdProduct($idProductConcrete, $storeTransfer);
+    }
+
+    /**
+     * Specification:
+     *  - Gets stock types for store
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return array
+     */
+    public function getStockTypesForStore(StoreTransfer $storeTransfer)
+    {
+        return $this->getFactory()->createReaderModel()->getStockTypesForStore($storeTransfer);
     }
 
     /**

@@ -101,10 +101,13 @@ class IndexController extends AbstractController
     public function editAction(Request $request)
     {
         $idProduct = $this->castId($request->query->getInt(AvailabilityTable::URL_PARAM_ID_PRODUCT));
+        $idStore = $this->castId($request->query->getInt(AvailabilityTable::URL_PARAM_ID_STORE));
         $idProductAbstract = $this->castId($request->query->getInt(AvailabilityTable::URL_PARAM_ID_PRODUCT_ABSTRACT));
         $sku = $request->query->get(AvailabilityTable::URL_PARAM_SKU);
 
-        $availabilityStockForm = $this->getFactory()->createAvailabilityStockForm($idProduct, $sku);
+        $storeTransfer = $this->getFactory()->getStoreFacade()->getStoreById($idStore);
+
+        $availabilityStockForm = $this->getFactory()->createAvailabilityStockForm($idProduct, $sku, $storeTransfer);
         $availabilityStockForm->handleRequest($request);
 
         if ($availabilityStockForm->isValid()) {

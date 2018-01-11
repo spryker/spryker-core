@@ -27,7 +27,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
      */
     public function queryStockByNeverOutOfStockAllTypes($idProduct)
     {
-        return $this->getFactory()->createStockProductQuery()
+        return $this->getFactory()
+            ->createStockProductQuery()
             ->filterByIsNeverOutOfStock(true)
             ->filterByFkProduct($idProduct);
     }
@@ -41,7 +42,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
      */
     public function queryStockByProducts($idProduct)
     {
-        return $this->getFactory()->createStockProductQuery()
+        return $this->getFactory()
+            ->createStockProductQuery()
             ->filterByFkProduct($idProduct);
     }
 
@@ -55,7 +57,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
      */
     public function queryStockProductByStockAndProduct($idStock, $idProduct)
     {
-        return $this->getFactory()->createStockProductQuery()
+        return $this->getFactory()
+            ->createStockProductQuery()
             ->filterByFkStock($idStock)
             ->filterByFkProduct($idProduct);
     }
@@ -130,6 +133,19 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     /**
      * @api
      *
+     * @param array $names
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
+     */
+    public function queryStockByNames(array $names)
+    {
+        return $this->getFactory()->createStockQuery()
+            ->filterByName($names, Criteria::IN);
+    }
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryAllStockProducts()
@@ -172,14 +188,16 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
      * @api
      *
      * @param int $idProduct
+     * @param array $types
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
-    public function queryStockByIdProduct($idProduct)
+    public function queryStockByIdProduct($idProduct, array $types)
     {
         return $this->queryStockByProducts($idProduct)
               ->useStockQuery()
                   ->withColumn(SpyStockTableMap::COL_NAME, 'stockType')
+                ->filterByName($types, Criteria::IN)
               ->endUse()
                 ->useSpyProductQuery()
                 ->withColumn(SpyProductTableMap::COL_SKU, 'sku')

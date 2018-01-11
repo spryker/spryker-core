@@ -92,7 +92,7 @@ class AvailabilityToStockBridge implements AvailabilityToStockInterface
      */
     public function getStockProductsByIdProduct($idProductConcrete)
     {
-        return $this->stockFacade->getStockProductsByIdProduct($idProductConcrete);
+        return $this->stockFacade->findStockProductsByIdProduct($idProductConcrete);
     }
 
     /**

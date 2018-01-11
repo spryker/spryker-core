@@ -189,6 +189,7 @@ class BundledProductAvailabilityTable extends AbstractTable
                 static::URL_PARAM_ID_PRODUCT => $productItem[AvailabilityQueryContainer::ID_PRODUCT],
                 static::URL_PARAM_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
                 static::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idBundleProductAbstract,
+                static::URL_PARAM_ID_STORE => $this->idStore,
             ]
         );
 

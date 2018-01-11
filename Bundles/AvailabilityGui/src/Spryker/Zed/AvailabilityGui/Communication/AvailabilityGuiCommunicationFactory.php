@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityGui\Communication;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\AvailabilityGui\AvailabilityGuiDependencyProvider;
 use Spryker\Zed\AvailabilityGui\Communication\Form\AvailabilityStockForm;
 use Spryker\Zed\AvailabilityGui\Communication\Form\DataProvider\AvailabilityStockFormDataProvider;
@@ -104,14 +105,15 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int $idProduct
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createAvailabilityStockForm($idProduct, $sku)
+    public function createAvailabilityStockForm($idProduct, $sku, StoreTransfer $storeTransfer)
     {
         $availabilityForm = new AvailabilityStockForm();
 
-        $availabilityGuiStockFormDataProvider = $this->createAvailabilityGuiStockFormDataProvider();
+        $availabilityGuiStockFormDataProvider = $this->createAvailabilityGuiStockFormDataProvider($storeTransfer);
 
         return $this->getFormFactory()->create(
             $availabilityForm,
@@ -121,11 +123,12 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @return \Spryker\Zed\AvailabilityGui\Communication\Form\DataProvider\AvailabilityStockFormDataProvider
      */
-    public function createAvailabilityGuiStockFormDataProvider()
+    public function createAvailabilityGuiStockFormDataProvider(StoreTransfer $storeTransfer)
     {
-        return new AvailabilityStockFormDataProvider($this->getStockFacade());
+        return new AvailabilityStockFormDataProvider($this->getStockFacade(), $storeTransfer);
     }
 
     /**

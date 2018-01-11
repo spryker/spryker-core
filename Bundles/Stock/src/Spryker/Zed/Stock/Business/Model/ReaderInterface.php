@@ -18,6 +18,13 @@ interface ReaderInterface
     public function getStockTypes();
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return array
+     */
+    public function getStockTypesForStore(StoreTransfer $storeTransfer);
+
+    /**
      * @return array
      */
     public function getWarehouseToStoreMapping();
@@ -116,12 +123,11 @@ interface ReaderInterface
 
     /**
      * @param int $idProductConcrete
-     *
-     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
-    public function getStockProductsByIdProduct($idProductConcrete);
+    public function findStockProductsByIdProduct($idProductConcrete, StoreTransfer $storeTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer

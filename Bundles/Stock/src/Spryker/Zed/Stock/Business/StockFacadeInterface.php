@@ -180,10 +180,21 @@ interface StockFacadeInterface
      * @api
      *
      * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
-    public function getStockProductsByIdProduct($idProductConcrete);
+    public function findStockProductsByIdProduct($idProductConcrete, StoreTransfer $storeTransfer);
+
+    /**
+     * Specification:
+     *  - Gets stocks for store
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return array
+     */
+    public function getStockTypesForStore(StoreTransfer $storeTransfer);
 
     /**
      *
