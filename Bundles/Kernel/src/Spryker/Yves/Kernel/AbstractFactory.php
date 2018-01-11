@@ -185,30 +185,4 @@ abstract class AbstractFactory implements FactoryInterface
     {
         return new DependencyProviderResolver();
     }
-
-    /**
-     * @return PermissionInterface
-     */
-    public function getYvesPermission()
-    {
-        return $this->createPermissionFactory()
-            ->createYvesPermission();
-    }
-
-    /**
-     * @return PermissionFactoryInterface
-     */
-    protected function createPermissionFactory()
-    {
-        $permissionFactoryClass = $this->getPermissionFactoryClass();
-        return new $permissionFactoryClass;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getPermissionFactoryClass()
-    {
-        return Config::get(KernelConstants::PERMISSION_FACTORY_CLASS, PermissionMockFactory::class);
-    }
 }

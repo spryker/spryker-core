@@ -1,10 +1,10 @@
 {
-  "name": "spryker/company-user",
-  "description": "CompanyUser module",
+  "name": "spryker/checkout-permission-connector",
+  "description": "CheckoutPermissionConnector module",
   "license": "proprietary",
   "require": {
-    "spryker/company": "*",
-    "spryker/customer": "*"
+    "spryker/permission": "*",
+    "spryker/checkout": "*"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

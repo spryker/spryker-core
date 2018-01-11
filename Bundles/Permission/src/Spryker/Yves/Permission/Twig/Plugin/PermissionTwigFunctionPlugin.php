@@ -11,6 +11,15 @@ use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
  */
 class PermissionTwigFunctionPlugin extends AbstractPlugin implements TwigFunctionPluginInterface
 {
+    /**
+     * @example for a twig template
+     * {{if (can('permission.allow.product.price'))}}
+     *      {% productAbstract.price %}
+     * {{ endif }}
+     *
+     * @param Application $application
+     * @return array
+     */
     public function getFunctions(Application $application)
     {
         return [
