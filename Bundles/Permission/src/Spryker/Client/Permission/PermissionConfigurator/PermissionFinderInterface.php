@@ -15,5 +15,5 @@ interface PermissionFinderInterface
      *
      * @return ExecutablePermissionPluginInterface
      */
-    public function getPermissionPlugin($permissionKey);
+    public function findPermissionPlugin($permissionKey);
 }

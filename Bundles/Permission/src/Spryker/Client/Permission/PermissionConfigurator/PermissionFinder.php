@@ -26,12 +26,12 @@ class PermissionFinder implements PermissionFinderInterface
      *
      * @throws \Exception
      *
-     * @return ExecutablePermissionPluginInterface
+     * @return ExecutablePermissionPluginInterface|null
      */
-    public function getPermissionPlugin($permissionKey)
+    public function findPermissionPlugin($permissionKey)
     {
         if (!isset($this->executablePermissionPlugins[$permissionKey])) {
-            throw new \Exception('Permission is not registered');
+            return null;
         }
 
         return $this->executablePermissionPlugins[$permissionKey];
