@@ -40,7 +40,7 @@ class PermissionExecutor implements PermissionExecutorInterface
      *
      * @return bool
      */
-    public function can($permissionKey, $context = null)
+    public function can($permissionKey, $context = null): bool
     {
         $permissionCollectionTransfer = $this->findPermissions($permissionKey);
 
@@ -52,20 +52,24 @@ class PermissionExecutor implements PermissionExecutorInterface
     }
 
     /**
+     * If one of the permission configurations wins, then a subject has the permission
+     * Example: even if an admin user assigned to a junior sales manager role (with up to 1000 euro order),
+     *  the user could perform actions as an admin.
+     *
      * @param PermissionCollectionTransfer $permissionCollectionTransfer
      * @param null $context
      *
      * @return bool
      */
-    protected function executePermissionCollection(PermissionCollectionTransfer $permissionCollectionTransfer, $context = null)
+    protected function executePermissionCollection(PermissionCollectionTransfer $permissionCollectionTransfer, $context = null): bool
     {
+        $hasPermission = false;
+
         foreach ($permissionCollectionTransfer->getPermissions() as $permissionTransfer) {
-            if (!$this->executePermission($permissionTransfer, $context)) {
-                return false;
-            }
+            $hasPermission |= $this->executePermission($permissionTransfer, $context);
         }
 
-        return true;
+        return (bool)$hasPermission;
     }
 
     /**
@@ -74,7 +78,7 @@ class PermissionExecutor implements PermissionExecutorInterface
      *
      * @return bool
      */
-    protected function executePermission(PermissionTransfer $permissionTransfer, $context = null)
+    protected function executePermission(PermissionTransfer $permissionTransfer, $context = null): bool
     {
         $permissionPlugin = $this->permissionFinder->getPermissionPlugin($permissionTransfer);
 
@@ -94,7 +98,7 @@ class PermissionExecutor implements PermissionExecutorInterface
      *
      * @return PermissionCollectionTransfer
      */
-    protected function findPermissions($permissionKey)
+    protected function findPermissions($permissionKey): PermissionCollectionTransfer
     {
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 

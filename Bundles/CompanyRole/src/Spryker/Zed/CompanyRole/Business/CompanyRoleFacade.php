@@ -5,8 +5,9 @@ namespace Spryker\Zed\CompanyRole\Business;
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
-class CompanyRoleFacade
+class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInterface
 {
     /**
      * {@inheritdoc}
