@@ -3,6 +3,7 @@
   "description": "CompanyUserCompanyBusinessUnitConnector module",
   "license": "proprietary",
   "require": {
+    "spryker/company-business-unit": "0.0.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

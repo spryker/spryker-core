@@ -3,12 +3,16 @@
   "description": "CheckoutPermissionConnector module",
   "license": "proprietary",
   "require": {
-    "spryker/permission": "*",
-    "spryker/checkout": "*"
+    "spryker/kernel": "^3.0.0",
+    "spryker/permission": "0.0.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/checkout": "*"
+  },
+  "suggest": {
+    "spryker/checkout": "^4.0.0 If you want to use the permission plugin"
   },
   "autoload": {
     "psr-4": {
