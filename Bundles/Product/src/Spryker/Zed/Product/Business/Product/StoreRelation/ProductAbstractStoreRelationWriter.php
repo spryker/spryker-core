@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstractStore;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
-class ProductAbstractStoreRelationSaver implements ProductAbstractStoreRelationSaverInterface
+class ProductAbstractStoreRelationWriter implements ProductAbstractStoreRelationWriterInterface
 {
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface

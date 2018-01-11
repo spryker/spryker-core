@@ -103,25 +103,28 @@ abstract class AbstractPdoCollector extends AbstractDatabaseCollector
         $this->criteriaBuilder
             ->setParameterCollection($touchParameters);
 
+        $this->setQueryBuilderStore();
         $this->queryBuilder
             ->setCriteriaBuilder($this->criteriaBuilder)
             ->setLocale($locale)
-            ->setStore($this->findCurrentStore())
             ->prepare();
 
         $this->ensureCollectorColumnsAreSelected();
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     * @return void
      */
-    protected function findCurrentStore()
+    protected function setQueryBuilderStore()
     {
-        if ($this->storeFacade === null) {
-            return null;
+        // PHPStan needs AbstractPdoCollector type match also to allow access to queryBuilder property
+        if ($this instanceof StoreAwareCollectorInterface && $this instanceof AbstractPdoCollector) {
+            $this->queryBuilder->setStore($this->getCurrentStore());
+
+            return;
         }
 
-        return $this->storeFacade->getCurrentStore();
+        $this->queryBuilder->setStore(null);
     }
 
     /**
