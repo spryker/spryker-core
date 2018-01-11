@@ -24,6 +24,7 @@ class CmsBlockCollectorBusinessFactory extends AbstractBusinessFactory
     {
         $cmsBlockCollector = new CmsBlockCollector(
             $this->getUtilDataReaderService(),
+            $this->getStoreFacade(),
             $this->getCollectorDataExpanderPlugins()
         );
 

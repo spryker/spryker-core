@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CmsBlockCollector;
 
 use Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockCollectorToCollectorBridge;
-use Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeBridge;
+use Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockCollectorToStoreFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -33,24 +33,10 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addUtilDataReaderService($container);
         $container = $this->addCollectorFacade($container);
+        $container = $this->addStoreFacade($container);
         $container = $this->addTouchQueryContainer($container);
         $container = $this->addCollectorDataExpanderPlugins($container);
         $container = $this->addStoreFacade($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addStoreFacade(Container $container)
-    {
-        $container[static::FACADE_STORE] = function (Container $container) {
-            // TODO: replace this with the findCurrentStore solution
-            return new CollectorToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
 
         return $container;
     }
@@ -64,6 +50,20 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container)
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new CmsBlockCollectorToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
 
         return $container;
