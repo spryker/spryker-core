@@ -7,12 +7,12 @@
 namespace Spryker\Zed\CompanyBusinessUnit\Business;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
-class CompanyBusinessUnitFacade implements CompanyBusinessUnitFacadeInterface
+class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusinessUnitFacadeInterface
 {
     /**
-     * Specification:
-     * - Creates a company business unit
+     * {@inheritdoc}
      *
      * @api
      *
@@ -26,9 +26,7 @@ class CompanyBusinessUnitFacade implements CompanyBusinessUnitFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Finds a company business unit by CompanyBusinessUnitTransfer::idCompanyBusinessUnit in the transfer
-     * - Updates fields in a company business unit entity
+     * {@inheritdoc}
      *
      * @api
      *
@@ -41,9 +39,7 @@ class CompanyBusinessUnitFacade implements CompanyBusinessUnitFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Finds a company business unit by CompanyBusinessUnitTransfer::idCompanyBusinessUnit in the transfer
-     * - Deletes the company business unit
+     * {@inheritdoc}
      *
      * @api
      *
