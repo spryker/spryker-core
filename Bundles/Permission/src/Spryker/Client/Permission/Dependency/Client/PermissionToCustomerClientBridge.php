@@ -26,7 +26,8 @@ class PermissionToCustomerClientBridge implements PermissionToCustomerClientInte
     }
 
     /**
-     * @example
+     * @deprecated The concept of the getting information from the session will be changed.
+     * Please avoid to use this method directly.
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
