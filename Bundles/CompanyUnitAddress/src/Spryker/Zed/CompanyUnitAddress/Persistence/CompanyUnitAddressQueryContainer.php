@@ -6,6 +6,8 @@
 
 namespace Spryker\Zed\CompanyUnitAddress\Persistence;
 
-class CompanyUnitAddressQueryContainer implements CompanyUnitAddressQueryContainerInterface
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+
+class CompanyUnitAddressQueryContainer extends AbstractQueryContainer implements CompanyUnitAddressQueryContainerInterface
 {
 }
