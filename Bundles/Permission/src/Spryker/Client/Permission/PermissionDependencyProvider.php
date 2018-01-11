@@ -1,9 +1,13 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Client\Permission;
 
-
+use Spryker\Client\CheckoutPermissionConnector\Plugin\CheckoutPlaceOrderPermissionPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientBridge;
@@ -14,9 +18,9 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
     const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     public function provideServiceLayerDependencies(Container $container)
     {
@@ -28,9 +32,9 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addPermissionPlugins(Container $container)
     {
@@ -47,14 +51,14 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
     protected function getPermissionPlugins()
     {
         return [
-            new \Spryker\Client\CheckoutPermissionConnector\Plugin\CheckoutPlaceOrderPermissionPlugin()
+            new CheckoutPlaceOrderPermissionPlugin(),
         ];
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addCustomerClient(Container $container)
     {

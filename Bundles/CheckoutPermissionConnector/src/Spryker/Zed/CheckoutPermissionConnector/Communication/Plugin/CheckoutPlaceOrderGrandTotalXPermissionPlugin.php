@@ -1,12 +1,17 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CheckoutPermissionConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface;
 
 /**
@@ -19,8 +24,8 @@ class CheckoutPlaceOrderGrandTotalXPermissionPlugin extends AbstractPlugin imple
     const CONFIG_FIELD_AMOUNT = 'CONFIG_FIELD_AMOUNT';
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return bool
      */
@@ -41,7 +46,7 @@ class CheckoutPlaceOrderGrandTotalXPermissionPlugin extends AbstractPlugin imple
     }
 
     /**
-     * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return void
      */
@@ -76,7 +81,7 @@ class CheckoutPlaceOrderGrandTotalXPermissionPlugin extends AbstractPlugin imple
     public function getConfigurationSignature()
     {
         return [
-            static::CONFIG_FIELD_AMOUNT => ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT
+            static::CONFIG_FIELD_AMOUNT => ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT,
         ];
     }
 

@@ -1,15 +1,20 @@
 <?php
 
-namespace Spryker\Zed\CheckoutPermissionConnector\Dependency;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
-
-use Spryker\Zed\Permission\Business\PermissionFacadeInterface;
+namespace Spryker\Zed\CheckoutPermissionConnector\Dependency\Facade;
 
 class CheckoutPermissionConnectorToFacadeBridge
 {
-    /** @var  PermissionFacadeInterface */
+    /** @var \Spryker\Zed\Permission\Business\PermissionFacadeInterface */
     protected $permissionFacade;
 
+    /**
+     * @param \Spryker\Zed\Permission\Business\PermissionFacadeInterface $permissionFacade
+     */
     public function __construct($permissionFacade)
     {
         $this->permissionFacade = $permissionFacade;

@@ -1,20 +1,21 @@
 <?php
 
-namespace Spryker\Client\Permission\PermissionFinder;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
-use Generated\Shared\Transfer\PermissionTransfer;
-use Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface;
-use Spryker\Client\Permission\Plugin\PermissionPluginInterface;
+namespace Spryker\Client\Permission\PermissionFinder;
 
 class PermissionFinder implements PermissionFinderInterface
 {
     /**
-     * @var ExecutablePermissionPluginInterface[]
+     * @var \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface[]
      */
     protected $executablePermissionPlugins;
 
     /**
-     * @param ExecutablePermissionPluginInterface[] $permissionPlugins
+     * @param \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface[] $permissionPlugins
      */
     public function __construct(array $permissionPlugins)
     {
@@ -24,9 +25,7 @@ class PermissionFinder implements PermissionFinderInterface
     /**
      * @param string $permissionKey
      *
-     * @throws \Exception
-     *
-     * @return ExecutablePermissionPluginInterface|null
+     * @return \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface|null
      */
     public function findPermissionPlugin($permissionKey)
     {
@@ -38,9 +37,9 @@ class PermissionFinder implements PermissionFinderInterface
     }
 
     /**
-     * @param PermissionPluginInterface[] $permissionPlugins
+     * @param \Spryker\Client\Permission\Plugin\PermissionPluginInterface[] $permissionPlugins
      *
-     * @return ExecutablePermissionPluginInterface[]
+     * @return \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface[]
      */
     protected function indexPermissions(array $permissionPlugins)
     {

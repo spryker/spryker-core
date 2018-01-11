@@ -1,9 +1,12 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Client\Permission\PermissionExecutor;
 
-
-use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientInterface;
@@ -13,18 +16,18 @@ use Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface;
 class PermissionExecutor implements PermissionExecutorInterface
 {
     /**
-     * @var PermissionFinderInterface
+     * @var \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface
      */
     protected $permissionFinder;
 
     /**
-     * @var PermissionToCustomerClientInterface
+     * @var \Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientInterface
      */
     protected $customerClient;
 
     /**
-     * @param PermissionToCustomerClientInterface $customerClient
-     * @param PermissionFinderInterface $permissionConfigurator
+     * @param \Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientInterface $customerClient
+     * @param \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface $permissionConfigurator
      */
     public function __construct(
         PermissionToCustomerClientInterface $customerClient,
@@ -56,8 +59,8 @@ class PermissionExecutor implements PermissionExecutorInterface
      * Example: even if an admin user assigned to a junior sales manager role (with up to 1000 euro order),
      *  the user could perform actions as an admin.
      *
-     * @param PermissionCollectionTransfer $permissionCollectionTransfer
-     * @param null $context
+     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
+     * @param string|int|array|null $context
      *
      * @return bool
      */
@@ -73,8 +76,8 @@ class PermissionExecutor implements PermissionExecutorInterface
     }
 
     /**
-     * @param PermissionTransfer $permissionTransfer
-     * @param null $context
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
+     * @param string|int|array|null $context
      *
      * @return bool
      */
@@ -96,17 +99,17 @@ class PermissionExecutor implements PermissionExecutorInterface
     /**
      * @param string $permissionKey
      *
-     * @return PermissionCollectionTransfer
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     protected function findPermissions($permissionKey): PermissionCollectionTransfer
     {
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 
         $companyUser = $this->customerClient->getCompanyUser();
-        /** @var CompanyRoleTransfer $companyRole */
+        /** @var \Generated\Shared\Transfer\CompanyRoleTransfer $companyRole */
         foreach ($companyUser->getCompanyRoleCollection() as $companyRole) {
 
-            /** @var PermissionTransfer $permission */
+            /** @var \Generated\Shared\Transfer\PermissionTransfer $permission */
             foreach ($companyRole->getPermissionCollection() as $permission) {
                 if ($permission->getKey() === $permissionKey) {
                     $permissionCollectionTransfer->addPermission($permission);
@@ -116,5 +119,4 @@ class PermissionExecutor implements PermissionExecutorInterface
 
         return $permissionCollectionTransfer;
     }
-
 }

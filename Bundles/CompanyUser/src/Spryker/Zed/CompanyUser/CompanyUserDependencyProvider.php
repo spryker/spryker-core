@@ -1,8 +1,12 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CompanyUser;
 
-use Spryker\Zed\CompanyUser\Dependency\CompanyUserHydrationPluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -12,9 +16,9 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CUSTOMER_HYDRATE = 'PLUGINS_CUSTOMER_HYDRATE';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
@@ -25,11 +29,10 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addCustomerSavePlugins(Container $container)
     {
@@ -40,6 +43,11 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addUserDaveHydrationPlugins(Container $container)
     {
         $container[static::PLUGINS_CUSTOMER_HYDRATE] = function (Container $container) {
@@ -57,9 +65,8 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
         return [];
     }
 
-
     /**
-     * @return CompanyUserHydrationPluginInterface[]
+     * @return \Spryker\Zed\CompanyUser\Dependency\CompanyUserHydrationPluginInterface[]
      */
     protected function getCompanyUserHydrationPlugins()
     {

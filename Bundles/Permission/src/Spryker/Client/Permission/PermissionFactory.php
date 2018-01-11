@@ -1,23 +1,20 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Client\Permission;
 
-
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientInterface;
-use Spryker\Client\Permission\PermissionFinder\PermissionFinder;
-use Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface;
 use Spryker\Client\Permission\PermissionExecutor\PermissionExecutor;
-use Spryker\Client\Permission\PermissionExecutor\PermissionExecutorInterface;
-use Spryker\Client\Permission\Plugin\PermissionPluginInterface;
-use Spryker\Client\Permission\Zed\PermissionStub;
-use Spryker\Client\Permission\Zed\PermissionStubInterface;
+use Spryker\Client\Permission\PermissionFinder\PermissionFinder;
 
 class PermissionFactory extends AbstractFactory
 {
     /**
-     * @return PermissionToCustomerClientInterface
+     * @return \Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientInterface
      */
     public function getCustomerClient()
     {
@@ -25,7 +22,7 @@ class PermissionFactory extends AbstractFactory
     }
 
     /**
-     * @return PermissionFinderInterface
+     * @return \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface
      */
     public function createPermissionConfigurator()
     {
@@ -35,7 +32,7 @@ class PermissionFactory extends AbstractFactory
     }
 
     /**
-     * @return PermissionExecutorInterface
+     * @return \Spryker\Client\Permission\PermissionExecutor\PermissionExecutorInterface
      */
     public function createPermissionExecutor()
     {
@@ -46,7 +43,7 @@ class PermissionFactory extends AbstractFactory
     }
 
     /**
-     * @return PermissionPluginInterface[]
+     * @return \Spryker\Client\Permission\Plugin\PermissionPluginInterface[]
      */
     protected function getPermissionPlugins()
     {

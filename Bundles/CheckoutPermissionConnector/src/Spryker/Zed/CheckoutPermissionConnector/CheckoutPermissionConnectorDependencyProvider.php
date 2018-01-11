@@ -1,7 +1,11 @@
 <?php
 
-namespace Spryker\Zed\CheckoutPermissionConnector;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Zed\CheckoutPermissionConnector;
 
 use Spryker\Zed\CheckoutPermissionConnector\Dependency\CheckoutPermissionConnectorToFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -12,9 +16,9 @@ class CheckoutPermissionConnectorDependencyProvider extends AbstractBundleDepend
     const FACADE_PERMISSION = 'FACADE_PERMISSION';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
@@ -25,9 +29,9 @@ class CheckoutPermissionConnectorDependencyProvider extends AbstractBundleDepend
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addPermissionFacade(Container $container)
     {

@@ -1,8 +1,12 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CompanyRole\Business;
 
-use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 
@@ -14,9 +18,9 @@ interface CompanyRoleFacadeInterface
      *
      * @api
      *
-     * @param CompanyRoleTransfer $companyRoleTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
-     * @return CompanyRoleTransfer
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
     public function create(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer;
 
@@ -28,7 +32,7 @@ interface CompanyRoleFacadeInterface
      *
      * @api
      *
-     * @param CompanyRoleTransfer $companyRoleTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
      * @return void
      */
@@ -41,7 +45,7 @@ interface CompanyRoleFacadeInterface
      *
      * @api
      *
-     * @param CompanyRoleTransfer $companyRoleTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
      * @return void
      */
@@ -54,7 +58,7 @@ interface CompanyRoleFacadeInterface
      *
      * @api
      *
-     * @param CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return void
      */
@@ -66,9 +70,9 @@ interface CompanyRoleFacadeInterface
      *
      * @api
      *
-     * @param CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return CompanyUserTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
     public function hydrateCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
 }
