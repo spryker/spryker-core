@@ -27,7 +27,7 @@ interface CompanyFacadeInterface
      * Specification:
      * - Finds a company by CompanyTransfer::idCompany in the transfer
      * - Updates fields in a company entity
-     * - Updates relation to stores
+     * - Updates relations to stores
      *
      * @api
      *

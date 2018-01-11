@@ -7,12 +7,12 @@
 namespace Spryker\Zed\Company\Business;
 
 use Generated\Shared\Transfer\CompanyTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
-class CompanyFacade implements CompanyFacadeInterface
+class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
 {
     /**
-     * Specification:
-     * - Creates a company
+     * {@inheritdoc}
      *
      * @api
      *
@@ -26,10 +26,7 @@ class CompanyFacade implements CompanyFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Finds a company by CompanyTransfer::idCompany in the transfer
-     * - Updates fields in a company entity
-     * - Updates relation to stores
+     * {@inheritdoc}
      *
      * @api
      *
@@ -42,9 +39,7 @@ class CompanyFacade implements CompanyFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Finds a company by CompanyTransfer::idCompany in the transfer
-     * - Deletes the company
+     * {@inheritdoc}
      *
      * @api
      *
