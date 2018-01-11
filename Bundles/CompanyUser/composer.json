@@ -3,7 +3,7 @@
   "description": "CompanyUser module",
   "license": "proprietary",
   "require": {
-    "spryker/company": "0.0.1",
+    "spryker/company": "^0.0.1",
     "spryker/kernel": "^3.0.0",
     "spryker/customer": "^7.0.0"
   },

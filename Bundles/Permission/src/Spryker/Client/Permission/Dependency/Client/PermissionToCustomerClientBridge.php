@@ -37,7 +37,7 @@ class PermissionToCustomerClientBridge implements PermissionToCustomerClientInte
         $companyRole = (new CompanyRoleTransfer())
             ->setName('manager')
             ->setIdCompanyRole(1)
-            ->setIsDefault(0)
+            ->setIsDefault(false)
             ->setPermissionCollection(new PermissionCollectionTransfer());
 
         $companyRoleCollection = (new CompanyRoleCollectionTransfer())

@@ -3,7 +3,7 @@
   "description": "CompanyUnitAddress module",
   "license": "proprietary",
   "require": {
-    "spryker/company-business-unit": "0.0.1",
+    "spryker/company-business-unit": "^0.0.1",
     "spryker/country": "^3.0.0"
   },
   "require-dev": {
