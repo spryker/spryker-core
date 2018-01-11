@@ -12,12 +12,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 interface ProductAbstractUpdateObserverInterface
 {
     /**
-     * Specification:
-     * - Executed on "before" and/or on "after" event when an abstract product is updated.
-     * - Notifies registered observers in chain of responsibility.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer

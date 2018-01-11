@@ -820,7 +820,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function saveProductAbstractStoreRelation(StoreRelationTransfer $storeRelation)
     {
         $this->getFactory()
-            ->createProductAbstractStoreRelationSaver()
+            ->createProductAbstractStoreRelationWriter()
             ->save($storeRelation);
     }
 

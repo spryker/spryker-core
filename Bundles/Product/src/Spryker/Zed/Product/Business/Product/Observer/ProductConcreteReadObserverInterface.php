@@ -12,12 +12,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 interface ProductConcreteReadObserverInterface
 {
     /**
-     * Specification:
-     * - Executed on retrieved persisted concrete product data.
-     * - Notifies registered observers in chain of responsibility.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

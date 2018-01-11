@@ -12,12 +12,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 interface ProductConcreteUpdateObserverInterface
 {
     /**
-     * Specification:
-     * - Executed on "before" and/or on "after" event when an concrete product is updated.
-     * - Notifies registered observers in chain of responsibility.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

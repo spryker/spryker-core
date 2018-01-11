@@ -9,7 +9,7 @@ namespace Spryker\Zed\Product\Business\Product\StoreRelation;
 
 use Generated\Shared\Transfer\StoreRelationTransfer;
 
-interface ProductAbstractStoreRelationSaverInterface
+interface ProductAbstractStoreRelationWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
