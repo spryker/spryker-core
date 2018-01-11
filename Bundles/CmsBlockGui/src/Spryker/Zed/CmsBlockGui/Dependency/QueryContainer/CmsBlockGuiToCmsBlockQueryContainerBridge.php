@@ -49,8 +49,6 @@ class CmsBlockGuiToCmsBlockQueryContainerBridge implements CmsBlockGuiToCmsBlock
     }
 
     /**
-     * @api
-     *
      * @param int $idCmsBlock
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery

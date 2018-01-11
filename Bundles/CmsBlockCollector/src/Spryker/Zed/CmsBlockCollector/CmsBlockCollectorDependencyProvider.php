@@ -33,7 +33,6 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addUtilDataReaderService($container);
         $container = $this->addCollectorFacade($container);
-        $container = $this->addStoreFacade($container);
         $container = $this->addTouchQueryContainer($container);
         $container = $this->addCollectorDataExpanderPlugins($container);
         $container = $this->addStoreFacade($container);
