@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/CompanyRole.svg)](https://travis-ci.org/spryker/CompanyRole)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/CompanyRole/badge.svg)](https://coveralls.io/github/spryker/CompanyRole)
 
-{{ADD DESCRIPTION HERE}}
+Company role modules provides role management tooling.
 
 ## Installation
 

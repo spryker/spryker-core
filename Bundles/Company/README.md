@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/Company.svg)](https://travis-ci.org/spryker/Company)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/Company/badge.svg)](https://coveralls.io/github/spryker/Company)
 
-{{ADD DESCRIPTION HERE}}
+Company module provides basic functionality to manage a B2B company.
 
 ## Installation
 
