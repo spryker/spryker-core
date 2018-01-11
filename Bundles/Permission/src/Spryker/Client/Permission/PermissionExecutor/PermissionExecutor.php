@@ -80,7 +80,7 @@ class PermissionExecutor implements PermissionExecutorInterface
      */
     protected function executePermission(PermissionTransfer $permissionTransfer, $context = null): bool
     {
-        $permissionPlugin = $this->permissionFinder->getPermissionPlugin($permissionTransfer);
+        $permissionPlugin = $this->permissionFinder->findPermissionPlugin($permissionTransfer);
 
         if (!$permissionPlugin) {
             return true;
