@@ -26,10 +26,4 @@ interface KernelConstants
     const AUTO_LOADER_UNRESOLVABLE_CACHE_ENABLED = 'ENABLE_AUTO_LOADER_UNRESOLVABLE_CACHE';
     const AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER = 'AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER';
     const AUTO_LOADER_CACHE_FILE_NO_LOCK = 'AUTO_LOADER_CACHE_FILE_NO_LOCK';
-
-    /**
-     * Specification:
-     * - References to a class, which supports \Spryker\Shared\Kernel\Permission\PermissionFactoryInterface
-     */
-    const PERMISSION_FACTORY_CLASS = 'PERMISSION_FACTORY_CLASS';
 }
