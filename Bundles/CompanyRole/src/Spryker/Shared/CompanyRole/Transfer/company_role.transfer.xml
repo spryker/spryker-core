@@ -28,7 +28,7 @@
         <property name="companyRoleCollection" type="CompanyRoleCollection" />
     </transfer>
 
-    <!-- Infrastructure -->
+    <!-- Infrastructure (under discussion) -->
     <transfer name="Response">
         <property name="code" type="int" />
         <property name="errors" type="ResponseError[]" singular="error" />

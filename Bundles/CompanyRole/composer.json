@@ -3,6 +3,8 @@
   "description": "CompanyRole module",
   "license": "proprietary",
   "require": {
+    "spryker/company": "*",
+    "spryker/permission": "*"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
