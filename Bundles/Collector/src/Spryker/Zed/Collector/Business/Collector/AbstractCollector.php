@@ -18,7 +18,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
 use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\CollectorConfig;
-use Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeInterface;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractCollectorQuery;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -46,11 +45,6 @@ abstract class AbstractCollector
      * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $locale;
-
-    /**
-     * @var \Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeInterface|null
-     */
-    protected $storeFacade;
 
     /**
      * @param string $touchKey
@@ -86,16 +80,6 @@ abstract class AbstractCollector
     protected function isStorable(array $collectItemData)
     {
         return true;
-    }
-
-    /**
-     * @param \Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeInterface $storeFacade
-     *
-     * @return void
-     */
-    public function setStoreFacade(CollectorToStoreFacadeInterface $storeFacade)
-    {
-        $this->storeFacade = $storeFacade;
     }
 
     /**

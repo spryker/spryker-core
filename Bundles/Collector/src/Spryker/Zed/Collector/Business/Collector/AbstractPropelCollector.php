@@ -77,21 +77,24 @@ abstract class AbstractPropelCollector extends AbstractDatabaseCollector
 
         $this->queryBuilder->setTouchQuery($touchQuery);
 
+        $this->setQueryBuilderStore();
         $this->queryBuilder
             ->setLocale($locale)
-            ->setStore($this->findCurrentStore())
             ->prepare();
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     * @return void
      */
-    protected function findCurrentStore()
+    protected function setQueryBuilderStore()
     {
-        if ($this->storeFacade === null) {
-            return null;
+        // PHPStan needs AbstractPropelCollector type match also to allow access to queryBuilder property
+        if ($this instanceof StoreAwareCollectorInterface && $this instanceof AbstractPropelCollector) {
+            $this->queryBuilder->setStore($this->getCurrentStore());
+
+            return;
         }
 
-        return $this->storeFacade->getCurrentStore();
+        $this->queryBuilder->setStore(null);
     }
 }
