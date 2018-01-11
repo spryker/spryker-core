@@ -8,15 +8,10 @@
 namespace Spryker\Yves\Kernel;
 
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\ContainerGlobals;
 use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjector;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
-use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Shared\Kernel\Permission\PermissionFactoryInterface;
-use Spryker\Shared\Kernel\Permission\PermissionInterface;
-use Spryker\Shared\Kernel\Permission\PermissionMockFactory;
 use Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Yves\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException;

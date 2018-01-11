@@ -519,7 +519,6 @@ class ClassDefinition implements ClassDefinitionInterface
         return $property['type'] === 'mixed';
     }
 
-
     /**
      * @param array $property
      *
