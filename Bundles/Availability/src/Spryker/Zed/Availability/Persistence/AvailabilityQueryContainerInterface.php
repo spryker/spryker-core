@@ -103,6 +103,7 @@ interface AvailabilityQueryContainerInterface
 
     /**
      * @api
+     *
      * @param array $stockTypes
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery

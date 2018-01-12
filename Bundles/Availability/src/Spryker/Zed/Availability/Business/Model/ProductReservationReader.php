@@ -41,8 +41,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
         AvailabilityQueryContainerInterface $availabilityQueryContainer,
         AvailabilityToStockInterface $stockFacade,
         AvailabilityToStoreFacadeInterface $storeFacade
-    )
-    {
+    ) {
         $this->availabilityQueryContainer = $availabilityQueryContainer;
         $this->stockFacade = $stockFacade;
         $this->storeFacade = $storeFacade;

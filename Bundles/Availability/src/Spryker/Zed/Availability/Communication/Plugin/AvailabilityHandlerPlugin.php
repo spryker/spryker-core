@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Availability\Communication\Plugin;
 
-use Generated\Shared\Transfer\StockProductTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
 use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface;

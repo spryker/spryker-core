@@ -29,7 +29,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
 
     const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
     const PLUGINS_RESERVATION = 'PLUGIN_RESERVATION';
-    const PLUGINS_RESERVATION_SYNCHRONIZATION = 'PLUGINS_RESERVATION_SYNCHRONIZATION';
+    const PLUGINS_RESERVATION_EXPORT = 'PLUGINS_RESERVATION_EXPORT';
 
     const FACADE_MAIL = 'FACADE_MAIL';
     const FACADE_SALES = 'FACADE_SALES';
@@ -86,7 +86,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
             return new OmsToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
 
-        $container = $this->addReservationSynchronizationPlugins($container);
+        $container = $this->addReservationExportPlugins($container);
 
         return $container;
     }
@@ -142,23 +142,23 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Dependency\Plugin\ReservationSynchronizationPluginInterface[]
-     */
-    protected function getReservationSynchronizationPlugins()
-    {
-         return [];
-    }
-
-    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addReservationSynchronizationPlugins(Container $container)
+    protected function addReservationExportPlugins(Container $container)
     {
-        $container[static::PLUGINS_RESERVATION_SYNCHRONIZATION] = function (Container $container) {
-            return $this->getReservationSynchronizationPlugins($container);
+        $container[static::PLUGINS_RESERVATION_EXPORT] = function (Container $container) {
+            return $this->getReservationExportPlugins();
         };
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Plugin\ReservationExportPluginInterface[]
+     */
+    protected function getReservationExportPlugins()
+    {
+        return [];
     }
 }

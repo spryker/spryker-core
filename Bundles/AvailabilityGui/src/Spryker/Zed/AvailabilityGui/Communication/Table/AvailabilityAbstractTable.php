@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\AvailabilityGui\Communication\Table;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
+use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -32,18 +34,28 @@ class AvailabilityAbstractTable extends AbstractTable
     protected $queryProductAbstractAvailability;
 
     /**
-     * @var int
+     * @var \Generated\Shared\Transfer\StoreTransfer
      */
-    protected $idStore;
+    protected $storeTransfer;
+
+    /**
+     * @var \Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityGuiToOmsFacadeInterface
+     */
+    protected $omsFacade;
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $queryProductAbstractAvailabilityGui
-     * @param int $idStore
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface $omsFacade
      */
-    public function __construct(SpyProductAbstractQuery $queryProductAbstractAvailabilityGui, $idStore)
-    {
+    public function __construct(
+        SpyProductAbstractQuery $queryProductAbstractAvailabilityGui,
+        StoreTransfer $storeTransfer,
+        AvailabilityGuiToOmsFacadeInterface $omsFacade
+    ) {
         $this->queryProductAbstractAvailability = $queryProductAbstractAvailabilityGui;
-        $this->idStore = $idStore;
+        $this->storeTransfer = $storeTransfer;
+        $this->omsFacade = $omsFacade;
     }
 
     /**
@@ -56,7 +68,7 @@ class AvailabilityAbstractTable extends AbstractTable
         $url = Url::generate(
             '/availability-abstract-table',
             [
-               static::URL_PARAM_ID_STORE => $this->idStore,
+               static::URL_PARAM_ID_STORE => $this->storeTransfer->getIdStore(),
             ]
         );
 
@@ -181,7 +193,7 @@ class AvailabilityAbstractTable extends AbstractTable
             '/availability-gui/index/view',
             [
                 static::URL_PARAM_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
-                static::URL_PARAM_ID_STORE => $this->idStore,
+                static::URL_PARAM_ID_STORE => $this->storeTransfer->getIdStore(),
             ]
         );
         return $this->generateViewButton($viewTaxSetUrl, 'View');
@@ -225,11 +237,10 @@ class AvailabilityAbstractTable extends AbstractTable
     {
         $reservation = 0;
         foreach ($reservationItems as $item) {
-            $value = explode(':', $item);
+            list($sku, $quantity) = explode(':', $item);
 
-            if (count($value) > 1) {
-                $reservation += (int)$value[1];
-            }
+            $reservation += (int)$quantity;
+            $reservation += $this->omsFacade->getReservationsFromOtherStores($sku, $this->storeTransfer);
         }
 
         return $reservation;

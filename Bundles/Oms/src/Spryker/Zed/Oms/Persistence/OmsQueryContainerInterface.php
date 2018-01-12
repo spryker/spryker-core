@@ -197,4 +197,56 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
      */
     public function createOmsProductReservationQuery($sku);
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     * @param string $storeName
+     *
+     * @return $this|\Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
+     */
+    public function queryOmsProductReservationStoreBySkuForStore($sku, $storeName);
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
+     */
+    public function queryOmsProductReservationStoreBySku($sku);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
+     */
+    public function queryMaxReservationChangeVersion();
+
+    /**
+     * @api
+     *
+     * @param int $lastExportedVersion
+     * @param int $maxVisibleVersion
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersionQuery
+     */
+    public function queryReservationChangeVersion($lastExportedVersion, $maxVisibleVersion);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationLastExportedVersionQuery
+     */
+    public function queryOmsProductReservationLastExportedVersion();
+
+    /**
+     * @api
+     *
+     * @param int $idOmsProductReservation
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
+     */
+    public function queryOmsProductReservationById($idOmsProductReservation);
 }

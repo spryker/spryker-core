@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -12,10 +13,10 @@ use Spryker\Zed\Oms\Dependency\Plugin\ReservationSynchronizationPluginInterface;
 
 /**
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
+ * @method \Spryker\Zed\Oms\Communication\OmsCommunicationFactory getFactory()
  */
 class SynchronizeReservationWithStorePlugin extends AbstractPlugin implements ReservationSynchronizationPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
      *

@@ -9,13 +9,12 @@ namespace Spryker\Zed\Stock\Business\Model;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class Writer implements WriterInterface
 {
@@ -70,7 +69,7 @@ class Writer implements WriterInterface
      */
     public function createStockType(TypeTransfer $stockTypeTransfer)
     {
-        $idStock = $this->handleDatabaseTransaction(function () use($stockTypeTransfer) {
+        $idStock = $this->handleDatabaseTransaction(function () use ($stockTypeTransfer) {
             return $this->executeCreateStockTypeTransaction($stockTypeTransfer);
         });
 
@@ -101,7 +100,7 @@ class Writer implements WriterInterface
      */
     public function createStockProduct(StockProductTransfer $transferStockProduct)
     {
-        $idStockProduct = $this->handleDatabaseTransaction(function () use($transferStockProduct) {
+        $idStockProduct = $this->handleDatabaseTransaction(function () use ($transferStockProduct) {
             return $this->executeCreateStockProductTransaction($transferStockProduct);
         });
 
@@ -132,7 +131,7 @@ class Writer implements WriterInterface
      */
     public function updateStockProduct(StockProductTransfer $transferStockProduct)
     {
-        $idStockProduct = $this->handleDatabaseTransaction(function () use($transferStockProduct) {
+        $idStockProduct = $this->handleDatabaseTransaction(function () use ($transferStockProduct) {
             return $this->executeUpdateStockProductTransaction($transferStockProduct);
         });
 
@@ -172,7 +171,7 @@ class Writer implements WriterInterface
      */
     public function decrementStock($sku, $stockType, $decrementBy = 1)
     {
-        $this->handleDatabaseTransaction(function () use($sku, $stockType, $decrementBy) {
+        $this->handleDatabaseTransaction(function () use ($sku, $stockType, $decrementBy) {
             $this->executeDecrementStockTransaction($sku, $stockType, $decrementBy);
         });
     }
@@ -205,7 +204,7 @@ class Writer implements WriterInterface
      */
     public function incrementStock($sku, $stockType, $incrementBy = 1)
     {
-        $this->handleDatabaseTransaction(function () use($sku, $stockType, $incrementBy) {
+        $this->handleDatabaseTransaction(function () use ($sku, $stockType, $incrementBy) {
             $this->executeIncrementStockTransaction($sku, $stockType, $incrementBy);
         });
     }

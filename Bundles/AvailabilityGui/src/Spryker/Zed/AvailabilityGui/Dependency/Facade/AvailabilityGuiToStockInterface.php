@@ -65,8 +65,8 @@ interface AvailabilityGuiToStockInterface
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
      * @return array
      */
     public function getStockTypesForStore(StoreTransfer $storeTransfer);
-
 }

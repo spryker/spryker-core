@@ -57,7 +57,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @return int
      */
-    public function calculateProductStockForStore($sku,  StoreTransfer $storeTransfer)
+    public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer)
     {
         return $this->getFactory()->createCalculatorModel()->calculateProductStockForStore($sku, $storeTransfer);
     }
@@ -235,6 +235,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     /**
      * Specification:
      *  - Gets stock types for store
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *

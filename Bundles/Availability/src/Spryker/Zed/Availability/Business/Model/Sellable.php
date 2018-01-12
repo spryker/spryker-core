@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
-use Spryker\Zed\Store\Business\StoreFacade;
 
 class Sellable implements SellableInterface
 {

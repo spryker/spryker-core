@@ -89,7 +89,6 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             $storeTransfer = $this->storeFacade->getStoreByName($storeName);
             $this->updateAvailabilityForStore($sku, $storeTransfer);
         }
-
     }
 
     /**
@@ -127,8 +126,8 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     /**
      * @param string $sku
      * @param int $quantity
-     *
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailability
      */
     protected function saveAndTouchAvailability($sku, $quantity, StoreTransfer $storeTransfer)
@@ -271,6 +270,8 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @throws \Spryker\Zed\Availability\Business\Exception\ProductNotFoundException
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract
      */

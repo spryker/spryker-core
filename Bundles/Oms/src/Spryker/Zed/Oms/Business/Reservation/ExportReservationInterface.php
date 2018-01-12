@@ -5,10 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Stock\Business\Exception;
+namespace Spryker\Zed\Oms\Business\Reservation;
 
-use Exception;
-
-class StockToStoreToWarehouseMappingMissingException extends Exception
+interface ExportReservationInterface
 {
+    /**
+     * @return void
+     */
+    public function exportReservation();
 }

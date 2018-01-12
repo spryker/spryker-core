@@ -5,12 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Stock\Dependency\Facade;
+namespace Spryker\Zed\Oms\Business\Reservation;
 
-interface StockToStoreFacadeInterface
+interface ReservationVersionHandlerInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @param string $sku
+     *
+     * @return void
      */
-    public function getCurrentStore();
+    public function saveReservationVersion($sku);
 }

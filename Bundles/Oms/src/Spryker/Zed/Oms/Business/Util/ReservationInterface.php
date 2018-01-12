@@ -6,22 +6,20 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
-use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 interface ReservationInterface
 {
     /**
      * @param string $sku
-     * @param null|string $storeName
      *
      * @return void
      */
-    public function updateReservationQuantity($sku, $storeName = null);
+    public function updateReservationQuantity($sku);
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
      */
@@ -36,9 +34,10 @@ interface ReservationInterface
     public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return void
+     * @return int
      */
-    public function saveReservationRequest(OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer);
+    public function getReservationsFromOtherStores($sku, StoreTransfer $storeTransfer);
 }

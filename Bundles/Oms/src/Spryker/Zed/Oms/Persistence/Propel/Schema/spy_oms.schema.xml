@@ -146,23 +146,43 @@
         <id-method-parameter value="spy_oms_product_reservation_pk_seq"/>
     </table>
 
-    <table name="spy_oms_product_reservation_store" phpName="SpyOmsProductReservation" identifierQuoting="true">
-        <column name="id_oms_product_reservation" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+    <table name="spy_oms_product_reservation_store" phpName="SpyOmsProductReservationStore" identifierQuoting="true">
+        <column name="id_oms_product_reservation_store" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="store" type="VARCHAR" size="255" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
-        <column name="reservation_quantity" type="INTEGER" required="true" default="0"/>
-        <column name="store_name" required="false" type="INTEGER"/>
+        <column name="reservation_quantity" type="INTEGER" required="true"/>
+        <column name="version" type="BIGINT" required="true"/>
 
-        <unique name="spy_oms_product_reservation-sku">
+        <index name="spy_oms_product_reservation_store-version">
+            <index-column name="version"/>
+        </index>
+
+        <index name="spy_oms_product_reservation_store-sku">
+            <index-column name="sku"/>
+        </index>
+
+        <index name="spy_oms_product_reservation_store-store">
+            <index-column name="store"/>
+        </index>
+
+        <unique name="spy_oms_product_reservation_store-unique-store-sku">
+            <unique-column name="store"/>
             <unique-column name="sku"/>
-            <unique-column name="fk_store"/>
         </unique>
-
-        <foreign-key name="spy_oms_product_reservation-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="OmsProductReservation">
-            <reference local="fk_store" foreign="id_store"/>
-        </foreign-key>
-
-        <id-method-parameter value="spy_oms_product_reservation_pk_seq"/>
+        <behavior name="timestampable"/>
+        <id-method-parameter value="spy_oms_product_reservation_store_pk_seq"/>
     </table>
 
+    <table name="spy_oms_product_reservation_change_version" phpName="SpyOmsProductReservationChangeVersion" identifierQuoting="true">
+        <column name="version" required="true" type="BIGINT" autoIncrement="true" primaryKey="true"/>
+        <column name="id_oms_product_reservation_id" required="true" type="INTEGER"/>
+        <behavior name="timestampable"/>
+        <id-method-parameter value="spy_oms_product_reservation_change_version_pk_seq"/>
+    </table>
+
+    <table name="spy_oms_product_reservation_last_exported_version" phpName="SpyOmsProductReservationLastExportedVersion" identifierQuoting="true">
+        <behavior name="timestampable"/>
+        <column name="version" type="BIGINT" required="true"/>
+    </table>
 
 </database>

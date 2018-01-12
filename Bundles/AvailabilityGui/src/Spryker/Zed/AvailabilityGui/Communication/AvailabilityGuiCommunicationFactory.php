@@ -35,7 +35,11 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
         $queryProductAbstractAvailabilityGui = $this->getAvailabilityQueryContainer()
             ->queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, $stockTypes);
 
-        return new AvailabilityAbstractTable($queryProductAbstractAvailabilityGui, $idStore);
+        return new AvailabilityAbstractTable(
+            $queryProductAbstractAvailabilityGui,
+            $storeTransfer,
+            $this->getOmsFacade()
+        );
     }
 
     /**
@@ -62,7 +66,8 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
             $queryProductAbstractAvailability,
             $idProductAbstract,
             $this->getProductBundleQueryContainer(),
-            $idStore
+            $storeTransfer,
+            $this->getOmsFacade()
         );
     }
 
@@ -95,10 +100,10 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
         return new BundledProductAvailabilityTable(
             $availabilityAbstractQuery,
             $this->getProductBundleQueryContainer(),
-            $idStore,
+            $storeTransfer,
+            $this->getOmsFacade(),
             $idAbstractProductBundle,
             $idBundleProductAbstract
-
         );
     }
 
@@ -124,6 +129,7 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
      * @return \Spryker\Zed\AvailabilityGui\Communication\Form\DataProvider\AvailabilityStockFormDataProvider
      */
     public function createAvailabilityGuiStockFormDataProvider(StoreTransfer $storeTransfer)
@@ -177,5 +183,13 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getStoreFacade()
     {
         return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface
+     */
+    protected function getOmsFacade()
+    {
+        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::FACADE_OMS);
     }
 }

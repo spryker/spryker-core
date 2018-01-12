@@ -9,11 +9,9 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
-use Spryker\Zed\Store\Business\StoreFacade;
 
 class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandlerInterface
 {
@@ -157,7 +155,6 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
         $stores[] = $this->storeFacade->getCurrentStore()->getName();
 
         foreach ($stores as $storeName) {
-
             $storeTransfer = $this->storeFacade->getStoreByName($storeName);
             $bundleAvailabilityQuantity = 0;
             foreach ($bundleItems as $bundleItemEntity) {
@@ -186,7 +183,6 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
                 $storeTransfer
             );
         }
-
     }
 
     /**

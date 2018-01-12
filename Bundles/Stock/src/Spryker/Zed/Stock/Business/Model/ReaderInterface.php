@@ -46,7 +46,6 @@ interface ReaderInterface
 
     /**
      * @param string $sku
-     *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]

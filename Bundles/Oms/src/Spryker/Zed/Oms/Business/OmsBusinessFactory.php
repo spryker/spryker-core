@@ -20,6 +20,9 @@ use Spryker\Zed\Oms\Business\Process\Event;
 use Spryker\Zed\Oms\Business\Process\Process;
 use Spryker\Zed\Oms\Business\Process\State;
 use Spryker\Zed\Oms\Business\Process\Transition;
+use Spryker\Zed\Oms\Business\Reservation\ExportReservation;
+use Spryker\Zed\Oms\Business\Reservation\ReservationVersionHandler;
+use Spryker\Zed\Oms\Business\Reservation\ReservationWriter;
 use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Business\Util\OrderItemMatrix;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
@@ -239,9 +242,32 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createOrderStateMachineBuilder(),
             $this->getQueryContainer(),
             $this->getReservationHandlerPlugins(),
-            $this->getReservationSynchronizationPlugins(),
             $this->getStoreFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Reservation\ReservationVersionHandlerInterface
+     */
+    public function createReservationVersionHandler()
+    {
+        return new ReservationVersionHandler($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Reservation\ReservationWriterInterface
+     */
+    public function createReservationWriter()
+    {
+        return new ReservationWriter($this->getStoreFacade(), $this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Reservation\ExportReservationInterface
+     */
+    public function createExportReservation()
+    {
+        return new ExportReservation($this->getStoreFacade(), $this->getQueryContainer(), $this->getReservationExportPlugins());
     }
 
     /**
@@ -314,10 +340,10 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Dependency\Plugin\ReservationSynchronizationPluginInterface[]
+     * @return \Spryker\Zed\Oms\Dependency\Plugin\ReservationExportPluginInterface[]
      */
-    protected function getReservationSynchronizationPlugins()
+    protected function getReservationExportPlugins()
     {
-        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION_SYNCHRONIZATION);
+        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION_EXPORT);
     }
 }

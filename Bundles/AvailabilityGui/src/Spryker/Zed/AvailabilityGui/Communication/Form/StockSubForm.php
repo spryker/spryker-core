@@ -8,8 +8,6 @@
 namespace Spryker\Zed\AvailabilityGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -97,17 +95,15 @@ class StockSubForm extends AbstractType
     /**
      * {@inheritdoc}
      *
-     * @throws \Exception
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        /* @var $stockProductTransfer \Generated\Shared\Transfer\StockProductTransfer  */
+        /** @var \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer */
         $stockProductTransfer = $form->getViewData();
 
         $mapping = $this->getFactory()->getStockFacade()->getWarehouseToStoreMapping();
         if (isset($mapping[$stockProductTransfer->getStockType()])) {
             $view->vars['available_in_stores'] = $mapping[$stockProductTransfer->getStockType()];
         }
-
     }
 }

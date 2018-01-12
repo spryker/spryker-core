@@ -9,6 +9,7 @@ namespace Spryker\Zed\AvailabilityGui;
 
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToAvailabilityBridge;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToLocaleBridge;
+use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeBridge;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockBridge;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityToStoreFacadeBridge;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToAvailabilityQueryContainerBridge;
@@ -22,6 +23,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_STOCK = 'stock facade';
     const FACADE_AVAILABILITY = 'availability facade';
     const FACADE_STORE = 'store facade';
+    const FACADE_OMS = 'oms facade';
 
     const QUERY_CONTAINER_AVAILABILITY = 'availability query container';
     const QUERY_CONTAINER_PRODUCT_BUNDLE = 'product bundle query container';
@@ -49,6 +51,7 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQueryContainerAvailability($container);
         $container = $this->addQueryContainerProductBundle($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addOmsFacade($container);
 
         return $container;
     }
@@ -128,6 +131,19 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new AvailabilityGuiToLocaleBridge($container->getLocator()->locale()->facade());
+        };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOmsFacade(Container $container)
+    {
+        $container[static::FACADE_OMS] = function (Container $container) {
+            return new AvailabilityGuiToOmsFacadeBridge($container->getLocator()->oms()->facade());
         };
         return $container;
     }

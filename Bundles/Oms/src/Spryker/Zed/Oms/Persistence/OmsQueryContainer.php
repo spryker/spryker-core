@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Oms\Persistence;
 
 use DateTime;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationChangeVersionTableMap;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
@@ -19,6 +21,14 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContainerInterface
 {
+    const VERSION = 'version';
+    const ID_OMS_PRODUCT_RESERVATION = 'idOmsProductReservation';
+    const RESERVATION_QUANTITY = 'reservationQuantity';
+    const SKU = 'sku';
+    const STORE = 'store';
+    const ID_OMS_PRODUCT_RESERVATION_STORE = 'idOmsProductReservationStore';
+    const LAST_UPDATE = 'lastUpdate';
+
     /**
      * @api
      *
@@ -373,5 +383,109 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         return $this->getFactory()
             ->createOmsProductReservationQuery()
             ->filterBySku($sku);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     * @param string $storeName
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
+     */
+    public function queryOmsProductReservationStoreBySkuForStore($sku, $storeName)
+    {
+        return $this->getFactory()->createOmsProductReservationStoreQuery()
+            ->filterBySku($sku)
+            ->filterByStore($storeName);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
+     */
+    public function queryOmsProductReservationStoreBySku($sku)
+    {
+        return $this->getFactory()
+            ->createOmsProductReservationStoreQuery()
+            ->filterBySku($sku);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
+     */
+    public function queryMaxReservationChangeVersion()
+    {
+        return $this->getFactory()
+            ->createOmsProductReservationChangeVersionQuery()
+            ->withColumn(
+                sprintf(
+                    'MAX(%s)',
+                    SpyOmsProductReservationChangeVersionTableMap::COL_VERSION
+                ),
+                static::VERSION
+            )
+            ->select([static::VERSION]);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $lastExportedVersion
+     * @param int $maxVisibleVersion
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
+     */
+    public function queryReservationChangeVersion($lastExportedVersion, $maxVisibleVersion)
+    {
+        $query = $this->getFactory()
+            ->createOmsProductReservationQuery()
+            ->addJoin(
+                SpyOmsProductReservationTableMap::COL_ID_OMS_PRODUCT_RESERVATION,
+                SpyOmsProductReservationChangeVersionTableMap::COL_ID_OMS_PRODUCT_RESERVATION_ID,
+                Criteria::LEFT_JOIN
+            )
+            ->withColumn(SpyOmsProductReservationTableMap::COL_ID_OMS_PRODUCT_RESERVATION, static::ID_OMS_PRODUCT_RESERVATION)
+            ->withColumn(SpyOmsProductReservationTableMap::COL_SKU, static::SKU)
+            ->withColumn(SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY, static::RESERVATION_QUANTITY)
+            ->withColumn(sprintf('MAX(%s)', SpyOmsProductReservationChangeVersionTableMap::COL_VERSION), static::VERSION)
+            ->select([
+                static::ID_OMS_PRODUCT_RESERVATION,
+                static::SKU,
+                static::RESERVATION_QUANTITY,
+                static::VERSION,
+            ])
+            ->groupBy(static::ID_OMS_PRODUCT_RESERVATION)
+            ->where(static::VERSION . ' > ' . $this->getConnection()->quote($lastExportedVersion))
+            ->where(static::VERSION . ' <= ' . $this->getConnection()->quote($maxVisibleVersion));
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationLastExportedVersionQuery
+     */
+    public function queryOmsProductReservationLastExportedVersion()
+    {
+        return $this->getFactory()->createOmsProductReservationExportedVersionQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idOmsProductReservation
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
+     */
+    public function queryOmsProductReservationById($idOmsProductReservation)
+    {
+        return $this->getFactory()->createOmsProductReservationQuery()->filterByIdOmsProductReservation($idOmsProductReservation);
     }
 }

@@ -5,24 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Stock\Business\Model;
+namespace Spryker\Zed\AvailabilityGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\StoreTransfer;
 
-interface CalculatorInterface
+interface AvailabilityGuiToOmsFacadeInterface
 {
-    /**
-     * @param string $sku
-     *
-     * @return int
-     */
-    public function calculateStockForProduct($sku);
-
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer);
+    public function getReservationsFromOtherStores($sku, StoreTransfer $storeTransfer);
 }

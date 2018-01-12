@@ -25,7 +25,7 @@ interface StockFacadeInterface
      *
      * @return bool
      */
-    public function isNeverOutOfStock($skum,  StoreTransfer $storeTransfer = null);
+    public function isNeverOutOfStock($skum, StoreTransfer $storeTransfer = null);
 
     /**
      * Specification:
@@ -47,7 +47,7 @@ interface StockFacadeInterface
      *
      * @return int
      */
-    public function calculateProductStockForStore($sku,  StoreTransfer $storeTransfer);
+    public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer);
 
     /**
      * Specification:
@@ -190,6 +190,8 @@ interface StockFacadeInterface
      * Specification:
      *  - Gets stocks for store
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return array
@@ -208,7 +210,6 @@ interface StockFacadeInterface
     public function getWarehouseToStoreMapping();
 
     /**
-     *
      * @api
      *
      * @return array

@@ -33,6 +33,9 @@ class StockConfig extends AbstractBundleConfig
      *       ],
      * ];
      *
+     * @throws \Spryker\Zed\Stock\Business\Exception\StockToStoreToWarehouseMappingMissingException
+     *
+     * @return array
      */
     public function getStoreToWarehouseMapping()
     {

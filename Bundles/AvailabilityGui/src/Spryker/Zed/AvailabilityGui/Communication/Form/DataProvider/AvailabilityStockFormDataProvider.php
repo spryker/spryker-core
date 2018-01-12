@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\AvailabilityStockTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterface;
-use Spryker\Zed\Store\Business\StoreFacade;
 
 class AvailabilityStockFormDataProvider
 {
@@ -21,6 +20,7 @@ class AvailabilityStockFormDataProvider
      * @var \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterface
      */
     protected $stockFacade;
+
     /**
      * @var \Generated\Shared\Transfer\StoreTransfer
      */

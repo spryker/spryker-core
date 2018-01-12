@@ -11,8 +11,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use InvalidArgumentException;
-use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
-use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
@@ -83,7 +82,7 @@ class Reader implements ReaderInterface
             ->queryAllStockTypes()
             ->find();
 
-       return $this->mapStockTypes($stockTypes);
+        return $this->mapStockTypes($stockTypes);
     }
 
     /**
@@ -102,7 +101,6 @@ class Reader implements ReaderInterface
             ->find();
 
         return $this->mapStockTypes($stockTypes);
-
     }
 
     /**
@@ -161,7 +159,6 @@ class Reader implements ReaderInterface
     public function getStocksProduct($sku)
     {
         $productId = $this->productFacade->findProductConcreteIdBySku($sku);
-
         $stockEntities = $this->queryContainer
             ->queryStockByProducts($productId)
             ->find();
@@ -175,7 +172,6 @@ class Reader implements ReaderInterface
 
     /**
      * @param string $sku
-     *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
@@ -246,11 +242,12 @@ class Reader implements ReaderInterface
         }
 
         $storeWarehouseMapping = $this->stockConfig->getStoreToWarehouseMapping()[$storeTransfer->getName()];
-        $idPriceProduct = $this->queryContainer->queryStockProductBySkuAndTypes($sku, $storeWarehouseMapping)
-            ->select(SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT)
+        $idProduct = $this->queryContainer
+            ->queryStockProductBySkuAndTypes($sku, $storeWarehouseMapping)
+            ->select(SpyProductTableMap::COL_ID_PRODUCT)
             ->findOne();
 
-        return $idPriceProduct !== null;
+        return $idProduct !== null;
     }
 
     /**
@@ -368,7 +365,6 @@ class Reader implements ReaderInterface
                 ->fromArray($stockProductEntity->toArray(), true);
 
             $products[] = $stockProductTransfer;
-
         }
 
         return $products;

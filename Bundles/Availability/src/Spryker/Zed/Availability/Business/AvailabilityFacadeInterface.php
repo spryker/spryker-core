@@ -111,6 +111,8 @@ interface AvailabilityFacadeInterface
      *  - Reads product availability data from persistence, stock, reservation, availability.
      *  - Returns data for selected abstract product.
      *
+     * @api
+     *
      * @param int $idProductAbstract
      * @param int $idLocale
      * @param int $idStore

@@ -311,7 +311,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
      */
@@ -544,15 +544,58 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Save reservation, this request normally comes from other store to synchronize reservation.
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return void
+     */
+    public function handleReservation($sku)
+    {
+        $this->getFactory()->createReservationVersionHandler()->saveReservationVersion($sku);
+    }
+
+    /**
+     * {@inheritdoc}
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
+     *
+     * @return void
      */
-    public function saveReservation(OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer)
+    public function importReservation(
+        OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
+    ) {
+        $this->getFactory()->createReservationWriter()->saveReservationRequest($omsAvailabilityReservationRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function exportReservation()
     {
-        $this->getFactory()->createUtilReservation()->saveReservationRequest($omsAvailabilityReservationRequestTransfer);
+        $this->getFactory()->createExportReservation()->exportReservation();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function getReservationsFromOtherStores($sku, StoreTransfer $storeTransfer)
+    {
+        return $this->getFactory()->createUtilReservation()->getReservationsFromOtherStores($sku, $storeTransfer);
     }
 }

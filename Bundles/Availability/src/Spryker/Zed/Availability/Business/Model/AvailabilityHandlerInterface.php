@@ -40,5 +40,4 @@ interface AvailabilityHandlerInterface
      * @return mixed
      */
     public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer);
-
 }

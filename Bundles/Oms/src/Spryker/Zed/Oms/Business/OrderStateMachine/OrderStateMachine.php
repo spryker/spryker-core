@@ -827,7 +827,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         }
 
         $orderItem->save();
-        $this->updateReservation($process, $sourceState, $targetState, $orderItem->getSku(), $orderItem->getOrder()->getStore());
+        $this->updateReservation($process, $sourceState, $targetState, $orderItem->getSku());
         $log->save($orderItem);
     }
 
@@ -884,18 +884,16 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param string $sourceStateId
      * @param string $targetStateId
      * @param string $sku
-     * @param string $storeName
      *
      * @return void
-     * @throws \Exception
      */
-    protected function updateReservation(ProcessInterface $process, $sourceStateId, $targetStateId, $sku, $storeName)
+    protected function updateReservation(ProcessInterface $process, $sourceStateId, $targetStateId, $sku)
     {
         $sourceStateIsReserved = $process->getStateFromAllProcesses($sourceStateId)->isReserved();
         $targetStateIsReserved = $process->getStateFromAllProcesses($targetStateId)->isReserved();
 
         if ($sourceStateIsReserved !== $targetStateIsReserved) {
-            $this->reservation->updateReservationQuantity($sku, $storeName);
+            $this->reservation->updateReservationQuantity($sku);
         }
     }
 }

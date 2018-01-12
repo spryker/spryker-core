@@ -9,12 +9,10 @@ namespace Spryker\Zed\AvailabilityGui\Communication\Controller;
 
 use Generated\Shared\Transfer\AvailabilityStockTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
-use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityAbstractTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Store\Business\StoreFacade;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -127,6 +125,7 @@ class IndexController extends AbstractController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function availabilityAbstractTableAction(Request $request)

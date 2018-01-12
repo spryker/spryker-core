@@ -278,7 +278,7 @@ interface OmsFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
      */
@@ -491,11 +491,49 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
-     *  - Save reservation, this request normally comes from other store to synchronize reservation.
+     *  - Handles stores stock reservation in reservation version table
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return void
+     */
+    public function handleReservation($sku);
+
+    /**
+     * Specification:
+     *  - Writes reservation from other store to synchronize it.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
+     *
+     * @return void
      */
-    public function saveReservation(OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer);
+    public function importReservation(
+        OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
+    );
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function exportReservation();
+
+    /**
+     * Specification:
+     *  - Reads reservation about from as it was set from other stores when stock is shared
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function getReservationsFromOtherStores($sku, StoreTransfer $storeTransfer);
 }

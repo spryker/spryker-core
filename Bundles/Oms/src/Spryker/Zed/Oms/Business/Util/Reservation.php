@@ -6,9 +6,7 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
-use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
@@ -41,16 +39,10 @@ class Reservation implements ReservationInterface
     protected $storeFacade;
 
     /**
-     * @var array|\Spryker\Zed\Oms\Dependency\Plugin\ReservationSynchronizationPluginInterface[]
-     */
-    protected $reservationSynchronizationPlugins;
-
-    /**
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $activeProcesses
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface $builder
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[] $reservationHandlerPlugins
-     * @param \Spryker\Zed\Oms\Dependency\Plugin\ReservationSynchronizationPluginInterface[] $reservationSynchronizationPlugins
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface $storeFacade
      */
     public function __construct(
@@ -58,7 +50,6 @@ class Reservation implements ReservationInterface
         BuilderInterface $builder,
         OmsQueryContainerInterface $queryContainer,
         array $reservationHandlerPlugins,
-        array $reservationSynchronizationPlugins,
         OmsToStoreFacadeInterface $storeFacade
     ) {
 
@@ -66,64 +57,32 @@ class Reservation implements ReservationInterface
         $this->builder = $builder;
         $this->queryContainer = $queryContainer;
         $this->reservationHandlerPlugins = $reservationHandlerPlugins;
-        $this->reservationSynchronizationPlugins = $reservationSynchronizationPlugins;
         $this->storeFacade = $storeFacade;
     }
 
     /**
      * @param string $sku
-     * @param null|string $storeName
      *
      * @return void
      */
-    public function updateReservationQuantity($sku, $storeName = null)
+    public function updateReservationQuantity($sku)
     {
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
         $currentStoreReservationAmount = $this->sumReservedProductQuantitiesForSku($sku, $currentStoreTransfer);
 
-        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
-            if ($currentStoreTransfer->getIdStore() === $storeTransfer->getIdStore()) {
-                $this->saveReservation($sku, $storeTransfer->getIdStore(), $currentStoreReservationAmount);
-                continue;
-            }
-
-            $omsAvailabilityReservationRequest = (new OmsAvailabilityReservationRequestTransfer())
-                ->setSku($sku)
-                ->setStore($currentStoreTransfer)
-                ->setReservationAmount($currentStoreReservationAmount)
-                ->setSynchronizeToStore($storeTransfer);
-
-            $this->executeReservationSynchronizationPlugins($omsAvailabilityReservationRequest);
+        $this->saveReservation($sku, $currentStoreTransfer->getIdStore(), $currentStoreReservationAmount);
+        foreach ($currentStoreTransfer->getSharedPersistenceWithStores() as $storeName) {
+            $storeTransfer = $this->storeFacade->getStoreByName($storeName);
+            $this->saveReservation($sku, $storeTransfer->getIdStore(), $currentStoreReservationAmount);
         }
 
         $this->handleReservationPlugins($sku);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
-     *
-     * @return void
-     */
-    public function saveReservationRequest(OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer)
-    {
-        $omsAvailabilityReservationRequestTransfer->requireSynchronizeToStore()->requireSku();
-        $storeTransfer = $omsAvailabilityReservationRequestTransfer->getSynchronizeToStore();
-
-        $originStoreTransfer = $omsAvailabilityReservationRequestTransfer->getStore();
-        if (!in_array($storeTransfer->getName(), $originStoreTransfer->getSharedPersistenceWithStores())) {
-            return;
-        }
-
-        $this->saveReservation(
-            $omsAvailabilityReservationRequestTransfer->getSku(),
-            $storeTransfer->getIdStore(),
-            $omsAvailabilityReservationRequestTransfer->getReservationAmount()
-        );
-    }
-
-    /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     *
      * @return int
      */
     public function sumReservedProductQuantitiesForSku($sku, StoreTransfer $storeTransfer = null)
@@ -148,14 +107,39 @@ class Reservation implements ReservationInterface
             return 0;
         }
 
-        return $reservationEntity->getReservationQuantity();
+        $reservationQuantity = $reservationEntity->getReservationQuantity();
+        $reservationQuantity += $this->getReservationsFromOtherStores($sku, $storeTransfer);
+
+        return $reservationQuantity;
+    }
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function getReservationsFromOtherStores($sku, StoreTransfer $storeTransfer)
+    {
+        $reservationQuantity = 0;
+        $reservationStores = $this->queryContainer
+            ->queryOmsProductReservationStoreBySku($sku)
+            ->find();
+
+        foreach ($reservationStores as $omsProductReservationStoreEntity) {
+            if ($omsProductReservationStoreEntity->getStore() !== $storeTransfer->getName()) {
+                continue;
+            }
+            $reservationQuantity += $omsProductReservationStoreEntity->getReservationQuantity();
+        }
+        return $reservationQuantity;
     }
 
     /**
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
      */
@@ -177,7 +161,6 @@ class Reservation implements ReservationInterface
         }
 
         return (int)$query->findOne();
-
     }
 
     /**
@@ -222,18 +205,6 @@ class Reservation implements ReservationInterface
     {
         foreach ($this->reservationHandlerPlugins as $reservationHandlerPluginInterface) {
             $reservationHandlerPluginInterface->handle($sku);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequest
-     *
-     * @return void
-     */
-    protected function executeReservationSynchronizationPlugins(OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequest)
-    {
-        foreach ($this->reservationSynchronizationPlugins as $reservationSynchronizationPlugin) {
-            $reservationSynchronizationPlugin->synchronize($omsAvailabilityReservationRequest);
         }
     }
 }
