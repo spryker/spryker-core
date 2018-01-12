@@ -56,4 +56,18 @@ class PriceClient extends AbstractClient implements PriceClientInterface
             ->getModuleConfig()
             ->getNetPriceModeIdentifier();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getPriceModes()
+    {
+        return $this->getFactory()
+            ->getModuleConfig()
+            ->getPriceModes();
+    }
 }

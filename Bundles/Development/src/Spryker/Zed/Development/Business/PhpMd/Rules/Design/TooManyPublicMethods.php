@@ -65,7 +65,9 @@ class TooManyPublicMethods extends AbstractRule implements ClassAware
     {
         $count = 0;
         foreach ($node->getMethods() as $method) {
-            if ($method->getNode()->isPublic() && preg_match($this->ignoreRegexp, $method->getName()) === 0) {
+            /** @var \PHPStan\Reflection\Php\PhpMethodReflection $node */
+            $node = $method->getNode();
+            if ($node->isPublic() && preg_match($this->ignoreRegexp, $method->getName()) === 0) {
                 ++$count;
             }
         }

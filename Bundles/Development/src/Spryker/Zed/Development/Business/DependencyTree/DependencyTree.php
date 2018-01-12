@@ -15,6 +15,7 @@ class DependencyTree extends AbstractDependencyTree
     const META_FILE = 'file';
     const META_IN_TEST = 'in test';
     const META_IS_OPTIONAL = 'is optional';
+    const META_ORGANIZATION = 'organization';
     const META_CLASS_NAME = 'class name';
     const META_FOREIGN_BUNDLE = 'foreign bundle';
     const META_FOREIGN_BUNDLE_IS_ENGINE = 'foreign bundle is engine';
@@ -61,6 +62,7 @@ class DependencyTree extends AbstractDependencyTree
         $bundle = $this->fileInfoExtractor->getBundleNameFromFileInfo($fileInfo);
         $layer = $this->fileInfoExtractor->getLayerNameFromFileInfo($fileInfo);
         $className = $this->fileInfoExtractor->getClassNameFromFile($fileInfo);
+        $organization = $this->fileInfoExtractor->getOrganizationFromFile($fileInfo);
 
         if ($this->isSelfReference($bundle, $to)) {
             return;
@@ -68,6 +70,7 @@ class DependencyTree extends AbstractDependencyTree
 
         $dependency = $dependency + [
             static::META_FILE => $fileInfo->getFilename(),
+            static::META_ORGANIZATION => $organization,
             static::META_CLASS_NAME => $className,
             static::META_FOREIGN_BUNDLE => $to,
             static::META_FOREIGN_BUNDLE_IS_ENGINE => $this->isEngineBundle($to),

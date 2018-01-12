@@ -19,6 +19,22 @@ interface UrlEvents
 
     /**
      * Specification
+     * - This events will be used for Url publishing
+     *
+     * @api
+     */
+    const URL_PUBLISH = 'Url.publish';
+
+    /**
+     * Specification
+     * - This events will be used for Url un-publishing
+     *
+     * @api
+     */
+    const URL_UNPUBLISH = 'Url.unpublish';
+
+    /**
+     * Specification
      * - This events will be used for spy_url entity changes
      *
      * @api

@@ -25,6 +25,38 @@ interface ProductEvents
     const PRODUCT_CONCRETE_READ = 'Product.product_concrete.read';
 
     /**
+     * Specification
+     * - This events will be used for product_abstract publishing
+     *
+     * @api
+     */
+    const PRODUCT_ABSTRACT_PUBLISH = 'Product.product_abstract.publish';
+
+    /**
+     * Specification
+     * - This events will be used for product_abstract un-publishing
+     *
+     * @api
+     */
+    const PRODUCT_ABSTRACT_UNPUBLISH = 'Product.product_abstract.unpublish';
+
+    /**
+     * Specification
+     * - This events will be used for product_abstract publishing
+     *
+     * @api
+     */
+    const PRODUCT_CONCRETE_PUBLISH = 'Product.product_concrete.publish';
+
+    /**
+     * Specification
+     * - This events will be used for product_abstract un-publishing
+     *
+     * @api
+     */
+    const PRODUCT_CONCRETE_UNPUBLISH = 'Product.product_concrete.unpublish';
+
+    /**
      * Specification:
      * - Represents spy_product entity creation.
      *

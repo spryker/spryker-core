@@ -11,6 +11,22 @@ interface ProductSetEvents
 {
     /**
      * Specification
+     * - This events will be used for product_set publishing
+     *
+     * @api
+     */
+    const PRODUCT_SET_PUBLISH = 'ProductSet.product_set.publish';
+
+    /**
+     * Specification
+     * - This events will be used for product_set un-publishing
+     *
+     * @api
+     */
+    const PRODUCT_SET_UNPUBLISH = 'ProductSet.product_set.unpublish';
+
+    /**
+     * Specification
      * - This events will be used for spy_product_set entity creation
      *
      * @api

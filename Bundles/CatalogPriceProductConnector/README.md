@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/CatalogPriceProductConnector.svg)](https://travis-ci.org/spryker/CatalogPriceProductConnector)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/CatalogPriceProductConnector/badge.svg)](https://coveralls.io/github/spryker/CatalogPriceProductConnector)
 
-{{ADD DESCRIPTION HERE}}
+CatalogPriceProductConnector provides price related functionality to catalog features. It contains catalog price formatting, currency logic.
 
 ## Installation
 

@@ -185,7 +185,22 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
     {
         $wishlistOverviewResponse = $this->getZedStub()->getWishlistOverview($wishlistOverviewRequestTransfer);
+
         return $this->getFactory()->createProductStorage()->expandProductDetails($wishlistOverviewResponse);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
+     */
+    public function getWishlistOverviewWithoutProductDetails(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
+    {
+        return $this->getZedStub()->getWishlistOverview($wishlistOverviewRequestTransfer);
     }
 
     /**
