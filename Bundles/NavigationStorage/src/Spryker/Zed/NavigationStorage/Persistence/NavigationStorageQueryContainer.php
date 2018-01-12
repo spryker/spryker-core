@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\NavigationStorage\Persistence;
 
+use Orm\Zed\Navigation\Persistence\Base\SpyNavigationNodeLocalizedAttributes;
+use Orm\Zed\Navigation\Persistence\Map\SpyNavigationNodeLocalizedAttributesTableMap;
 use Orm\Zed\Navigation\Persistence\Map\SpyNavigationNodeTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -59,6 +61,25 @@ class NavigationStorageQueryContainer extends AbstractQueryContainer implements 
             ->getNavigationQueryContainer()
             ->queryNavigationNode()
             ->filterByIdNavigationNode_In($navigationNodeIds)
+            ->withColumn('DISTINCT ' . SpyNavigationNodeTableMap::COL_FK_NAVIGATION, static::FK_NAVIGATION)
+            ->select([static::FK_NAVIGATION]);
+    }
+
+    /**
+     * @api
+     *
+     * @param array $urlIds
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryNavigationIdsByUrlIds(array $urlIds)
+    {
+        return $this->getFactory()
+            ->getNavigationQueryContainer()
+            ->queryNavigationNode()
+            ->useSpyNavigationNodeLocalizedAttributesQuery()
+                ->filterByFkUrl_In($urlIds)
+            ->endUse()
             ->withColumn('DISTINCT ' . SpyNavigationNodeTableMap::COL_FK_NAVIGATION, static::FK_NAVIGATION)
             ->select([static::FK_NAVIGATION]);
     }
