@@ -10,7 +10,6 @@ namespace Spryker\Client\Permission;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientBridge;
-use Spryker\Client\Permission\Plugin\PermissionPluginInterface;
 
 class PermissionDependencyProvider extends AbstractDependencyProvider
 {
@@ -46,7 +45,7 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return PermissionPluginInterface[]
+     * @return \Spryker\Client\Permission\Plugin\PermissionPluginInterface[]
      */
     protected function getPermissionPlugins()
     {
