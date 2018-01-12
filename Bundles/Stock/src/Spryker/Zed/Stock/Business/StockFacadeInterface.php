@@ -20,12 +20,24 @@ interface StockFacadeInterface
      *
      * @api
      *
-     * @param $skum
+     * @param $sku
+     *
+     * @return bool
+     */
+    public function isNeverOutOfStock($sku);
+
+    /**
+     * Specification:
+     * - Checks if the concrete product with the provided SKU has any stock type that is set as "never out of stock".
+     *
+     * @api
+     *
+     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return bool
      */
-    public function isNeverOutOfStock($skum, StoreTransfer $storeTransfer = null);
+    public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer = null);
 
     /**
      * Specification:
@@ -180,11 +192,23 @@ interface StockFacadeInterface
      * @api
      *
      * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function getStockProductsByIdProduct($idProductConcrete);
+
+    /**
+     * Specification:
+     *  - Returns stock product by given id product
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
-    public function findStockProductsByIdProduct($idProductConcrete, StoreTransfer $storeTransfer);
+    public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer);
 
     /**
      * Specification:

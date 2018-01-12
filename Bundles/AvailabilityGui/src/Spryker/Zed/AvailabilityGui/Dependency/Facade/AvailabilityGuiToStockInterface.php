@@ -51,7 +51,7 @@ interface AvailabilityGuiToStockInterface
      *
      * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
-    public function findStockProductsByIdProduct($idProductConcrete, StoreTransfer $storeTransfer);
+    public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer);
 
     /**
      * @return array

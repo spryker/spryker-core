@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Store\Business\Model;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface;
 use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 use Spryker\Zed\Store\Persistence\StoreQueryContainerInterface;
@@ -145,5 +146,20 @@ class StoreReader implements StoreReaderInterface
         static::$storeCache[$storeName] = $storeTransfer;
 
         return $storeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer)
+    {
+        $stores = [];
+        foreach ($storeTransfer->getSharedPersistenceWithStores() as $storeName) {
+            $stores[] = $this->getStoreByName($storeName);
+        }
+
+        return $stores;
     }
 }

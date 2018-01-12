@@ -29,11 +29,18 @@ interface AvailabilityToStockInterface
 
     /**
      * @param string $sku
+     *
+     * @return bool
+     */
+    public function isNeverOutOfStock($sku);
+
+    /**
+     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return bool
      */
-    public function isNeverOutOfStock($sku, StoreTransfer $storeTransfer = null);
+    public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer = null);
 
     /**
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
@@ -53,13 +60,6 @@ interface AvailabilityToStockInterface
      * @return array
      */
     public function getAvailableStockTypes();
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
-     */
-    public function getStockProductsByIdProduct($idProductConcrete);
 
     /**
      * @return array

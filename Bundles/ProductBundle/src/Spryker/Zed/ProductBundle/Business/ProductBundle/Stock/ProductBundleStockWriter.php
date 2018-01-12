@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Stock;
 use Exception;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface;
@@ -317,13 +318,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
         $this->productBundleAvailabilityHandler->removeBundleAvailability($productConcreteTransfer->getSku(), $currentStoreTransfer);
 
-        foreach ($currentStoreTransfer->getSharedPersistenceWithStores() as $storeName) {
-            $storeTransfer = $this->storeFacade->getStoreByName($storeName);
-            $this->productBundleAvailabilityHandler->removeBundleAvailability(
-                $productConcreteTransfer->getSku(),
-                $storeTransfer
-            );
-        }
+        $this->removeBundleStockFromSharedStores($productConcreteTransfer, $currentStoreTransfer);
     }
 
     /**
@@ -347,5 +342,24 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             $productStockEntity->save();
         }
         return $bundleTotalStockPerWarehouse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $currentStoreTransfer
+     *
+     * @return void
+     */
+    protected function removeBundleStockFromSharedStores(
+        ProductConcreteTransfer $productConcreteTransfer,
+        StoreTransfer $currentStoreTransfer
+    ) {
+        foreach ($currentStoreTransfer->getSharedPersistenceWithStores() as $storeName) {
+            $storeTransfer = $this->storeFacade->getStoreByName($storeName);
+            $this->productBundleAvailabilityHandler->removeBundleAvailability(
+                $productConcreteTransfer->getSku(),
+                $storeTransfer
+            );
+        }
     }
 }

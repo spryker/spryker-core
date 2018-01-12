@@ -48,13 +48,23 @@ class AvailabilityToStockBridge implements AvailabilityToStockInterface
 
     /**
      * @param string $sku
+     *
+     * @return bool
+     */
+    public function isNeverOutOfStock($sku)
+    {
+        return $this->stockFacade->isNeverOutOfStock($sku);
+    }
+
+    /**
+     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return bool
      */
-    public function isNeverOutOfStock($sku, StoreTransfer $storeTransfer = null)
+    public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer = null)
     {
-        return $this->stockFacade->isNeverOutOfStock($sku, $storeTransfer);
+        return $this->stockFacade->isNeverOutOfStockForStore($sku, $storeTransfer);
     }
 
     /**
@@ -83,16 +93,6 @@ class AvailabilityToStockBridge implements AvailabilityToStockInterface
     public function getAvailableStockTypes()
     {
         return $this->stockFacade->getAvailableStockTypes();
-    }
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
-     */
-    public function getStockProductsByIdProduct($idProductConcrete)
-    {
-        return $this->stockFacade->findStockProductsByIdProduct($idProductConcrete);
     }
 
     /**

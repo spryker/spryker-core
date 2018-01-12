@@ -73,28 +73,32 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      * @api
      *
      * @param int $idAvailabilityAbstract
+     * @param int $idStore
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */
-    public function queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract)
+    public function queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract, $idStore)
     {
         return $this->getFactory()
             ->createSpyAvailabilityAbstractQuery()
-            ->filterByIdAvailabilityAbstract($idAvailabilityAbstract);
+            ->filterByIdAvailabilityAbstract($idAvailabilityAbstract)
+            ->filterByFkStore($idStore);
     }
 
     /**
      * @api
      *
      * @param int $idAvailabilityAbstract
+     * @param int $idStore
      *
      * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
-    public function querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract)
+    public function querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract, $idStore)
     {
         return $this->getFactory()
             ->createSpyAvailabilityQuery()
             ->filterByFkAvailabilityAbstract($idAvailabilityAbstract)
+            ->filterByFkStore($idStore)
             ->withColumn('SUM(' . SpyAvailabilityTableMap::COL_QUANTITY . ')', static::SUM_QUANTITY)
             ->select([static::SUM_QUANTITY]);
     }

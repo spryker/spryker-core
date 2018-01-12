@@ -44,7 +44,7 @@ class AvailabilityStockFormDataProvider
      */
     public function getData($idProduct, $sku)
     {
-        $stockProducts = $this->stockFacade->findStockProductsByIdProduct($idProduct, $this->storeTransfer);
+        $stockProducts = $this->stockFacade->findStockProductsByIdProductForStore($idProduct, $this->storeTransfer);
 
         $availabilityGuiStockTransfer = (new AvailabilityStockTransfer())->setSku($sku);
 

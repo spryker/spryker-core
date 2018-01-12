@@ -7,6 +7,7 @@
 namespace SprykerTest\Zed\Availability\Business\Model;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
@@ -16,6 +17,7 @@ use Spryker\Zed\Availability\Business\Model\SellableInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 
@@ -85,6 +87,7 @@ class AvailabilityHandlerTest extends Unit
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface|null $touchFacade
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface|null $availabilityQueryContainer
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface|null $availabilityToProductFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface|null $availabilityToStoreFacade
      *
      * @return \Spryker\Zed\Availability\Business\Model\AvailabilityHandler
      */
@@ -93,7 +96,8 @@ class AvailabilityHandlerTest extends Unit
         AvailabilityToStockInterface $stockFacade = null,
         AvailabilityToTouchInterface $touchFacade = null,
         AvailabilityQueryContainerInterface $availabilityQueryContainer = null,
-        AvailabilityToProductInterface $availabilityToProductFacade = null
+        AvailabilityToProductInterface $availabilityToProductFacade = null,
+        AvailabilityToStoreFacadeInterface $availabilityToStoreFacade = null
     ) {
 
         if ($sellable === null) {
@@ -116,12 +120,19 @@ class AvailabilityHandlerTest extends Unit
             $availabilityToProductFacade = $this->createAvailabilityToProductFacade();
         }
 
+        if ($availabilityToStoreFacade === null) {
+            $availabilityToStoreFacade = $this->createStoreFacade();
+            $availabilityToStoreFacade->method('getCurrentStore')
+                ->willReturn($this->createStoreTransfer());
+        }
+
         return new AvailabilityHandler(
             $sellable,
             $stockFacade,
             $touchFacade,
             $availabilityQueryContainer,
-            $availabilityToProductFacade
+            $availabilityToProductFacade,
+            $availabilityToStoreFacade
         );
     }
 
@@ -205,6 +216,14 @@ class AvailabilityHandlerTest extends Unit
     }
 
     /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function createStoreTransfer()
+    {
+        return new StoreTransfer();
+    }
+
+    /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Availability\Persistence\SpyAvailability
      */
     protected function createAvailabilityEntityMock()
@@ -228,6 +247,15 @@ class AvailabilityHandlerTest extends Unit
     protected function createAvailabilityToProductFacade()
     {
         return $this->getMockBuilder(AvailabilityToProductInterface::class)
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
+     */
+    protected function createStoreFacade()
+    {
+        return $this->getMockBuilder(AvailabilityToStoreFacadeInterface::class)
             ->getMock();
     }
 }

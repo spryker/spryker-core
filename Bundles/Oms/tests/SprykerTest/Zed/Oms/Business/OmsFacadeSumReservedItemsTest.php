@@ -8,6 +8,7 @@ namespace SprykerTest\Zed\Oms\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery;
@@ -53,7 +54,8 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $this->createTestOrder();
 
         $omsFacade = $this->createOmsFacade();
-        $reservationQuantity = $omsFacade->getOmsReservedProductQuantityForSku(self::ORDER_ITEM_SKU);
+        $storeTransfer = (new StoreTransfer())->setName('DE');
+        $reservationQuantity = $omsFacade->getOmsReservedProductQuantityForSku(self::ORDER_ITEM_SKU, $storeTransfer);
 
         $this->assertSame(50, $reservationQuantity);
     }

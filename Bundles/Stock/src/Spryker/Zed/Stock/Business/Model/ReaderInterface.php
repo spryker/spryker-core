@@ -31,11 +31,18 @@ interface ReaderInterface
 
     /**
      * @param string $sku
+     *
+     * @return bool
+     */
+    public function isNeverOutOfStock($sku);
+
+    /**
+     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return bool
      */
-    public function isNeverOutOfStock($sku, StoreTransfer $storeTransfer = null);
+    public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer = null);
 
     /**
      * @param string $sku
@@ -122,11 +129,20 @@ interface ReaderInterface
 
     /**
      * @param int $idProductConcrete
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException
      *
      * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
-    public function findStockProductsByIdProduct($idProductConcrete, StoreTransfer $storeTransfer);
+    public function getStockProductsByIdProduct($idProductConcrete);
+
+    /**
+     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]|null
+     */
+    public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer

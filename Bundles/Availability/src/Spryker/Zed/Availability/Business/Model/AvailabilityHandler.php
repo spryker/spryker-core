@@ -166,7 +166,9 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         }
 
         $spyAvailabilityEntity->setQuantity($quantity);
-        $spyAvailabilityEntity->setIsNeverOutOfStock($this->stockFacade->isNeverOutOfStock($sku));
+        $spyAvailabilityEntity->setIsNeverOutOfStock(
+            $this->stockFacade->isNeverOutOfStockForStore($sku, $storeTransfer)
+        );
 
         return $spyAvailabilityEntity;
     }
@@ -254,13 +256,11 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     public function updateAbstractAvailabilityQuantity($idAvailabilityAbstract, StoreTransfer $storeTransfer)
     {
         $availabilityAbstractEntity = $this->queryContainer
-            ->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract)
-            ->filterByFkStore($storeTransfer->getIdStore())
+            ->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract, $storeTransfer->getIdStore())
             ->findOne();
 
         $sumQuantity = (int)$this->queryContainer
-            ->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract)
-            ->filterByFkStore($storeTransfer->getIdStore())
+            ->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract, $storeTransfer->getIdStore())
             ->findOne();
 
         $availabilityAbstractEntity->setQuantity($sumQuantity);

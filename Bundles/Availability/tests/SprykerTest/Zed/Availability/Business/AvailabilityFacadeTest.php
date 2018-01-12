@@ -10,7 +10,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use InvalidArgumentException;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
@@ -91,16 +90,6 @@ class AvailabilityFacadeTest extends Unit
         $calculatedQuantity = $availabilityFacade->calculateStockForProduct(self::CONCRETE_SKU);
 
         $this->assertSame($quantity, $calculatedQuantity);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCalculateStockWhenProductDoesNotExistsShouldThrowException()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $availabilityFacade = $this->createAvailabilityFacade();
-        $availabilityFacade->calculateStockForProduct(self::CONCRETE_SKU);
     }
 
     /**
@@ -226,7 +215,7 @@ class AvailabilityFacadeTest extends Unit
         $productEntity->save();
 
         $stockEntity = new SpyStock();
-        $stockEntity->setName('test-case-warehause');
+        $stockEntity->setName('Warehouse1-demo');
         $stockEntity->save();
 
         $stockProductEntity = new SpyStockProduct();

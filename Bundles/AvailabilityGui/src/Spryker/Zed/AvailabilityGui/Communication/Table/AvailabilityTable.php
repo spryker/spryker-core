@@ -45,11 +45,6 @@ class AvailabilityTable extends AbstractTable
     protected $productBundleQueryContainer;
 
     /**
-     * @var string
-     */
-    protected $idStore;
-
-    /**
      * @var \Generated\Shared\Transfer\StoreTransfer
      */
     protected $storeTransfer;
@@ -92,7 +87,7 @@ class AvailabilityTable extends AbstractTable
     {
         $url = Url::generate('availability-table', [
             AvailabilityAbstractTable::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
-            static::URL_PARAM_ID_STORE => $this->idStore,
+            static::URL_PARAM_ID_STORE => $this->storeTransfer->getIdStore(),
         ])->build();
 
         $config->setUrl($url);

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Stock;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Spryker\Zed\Stock\Business\Exception\StockToStoreToWarehouseMappingMissingException;
 
 class StockConfig extends AbstractBundleConfig
 {
@@ -33,16 +32,15 @@ class StockConfig extends AbstractBundleConfig
      *       ],
      * ];
      *
-     * @throws \Spryker\Zed\Stock\Business\Exception\StockToStoreToWarehouseMappingMissingException
-     *
      * @return array
      */
     public function getStoreToWarehouseMapping()
     {
-        throw new StockToStoreToWarehouseMappingMissingException(
-            sprintf(
-                'Store to warehouse mapping is not provided. Provide configuration in project StockConfig file by extending getStoreToWarehouseMapping() core method.'
-            )
-        );
+        return [
+            'DE' => [
+                'Warehouse1-demo',
+                'Warehouse2-demo',
+            ],
+        ];
     }
 }

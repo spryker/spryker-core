@@ -79,9 +79,9 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
      *
      * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
-    public function findStockProductsByIdProduct($idProductConcrete, StoreTransfer $storeTransfer)
+    public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer)
     {
-        return $this->stockFacade->findStockProductsByIdProduct($idProductConcrete, $storeTransfer);
+        return $this->stockFacade->findStockProductsByIdProductForStore($idProductConcrete, $storeTransfer);
     }
 
     /**

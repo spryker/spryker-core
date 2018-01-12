@@ -25,13 +25,28 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      * @api
      *
      * @param string $sku
+     *
+     * @return bool
+     */
+    public function isNeverOutOfStock($sku)
+    {
+        return $this->getFactory()->createReaderModel()->isNeverOutOfStock($sku);
+    }
+
+    /**
+     * Specification:
+     * - Checks if the concrete product with the provided SKU has any stock type that is set as "never out of stock".
+     *
+     * @api
+     *
+     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return bool
      */
-    public function isNeverOutOfStock($sku, StoreTransfer $storeTransfer = null)
+    public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer = null)
     {
-        return $this->getFactory()->createReaderModel()->isNeverOutOfStock($sku, $storeTransfer);
+        return $this->getFactory()->createReaderModel()->isNeverOutOfStockForStore($sku, $storeTransfer);
     }
 
     /**
@@ -218,7 +233,24 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
 
     /**
      * Specification:
-     *  - Returns stock product by givent id product
+     *  - Returns stock product by given id product
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function getStockProductsByIdProduct($idProductConcrete)
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->getStockProductsByIdProduct($idProductConcrete);
+    }
+
+    /**
+     * Specification:
+     *  - Returns stock product by given id product
      *
      * @api
      *
@@ -227,9 +259,11 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
-    public function findStockProductsByIdProduct($idProductConcrete, StoreTransfer $storeTransfer)
+    public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer)
     {
-        return $this->getFactory()->createReaderModel()->findStockProductsByIdProduct($idProductConcrete, $storeTransfer);
+        return $this->getFactory()
+            ->createReaderModel()
+            ->findStockProductsByIdProductForStore($idProductConcrete, $storeTransfer);
     }
 
     /**

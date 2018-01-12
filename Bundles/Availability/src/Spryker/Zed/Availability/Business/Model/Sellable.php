@@ -57,7 +57,7 @@ class Sellable implements SellableInterface
             $storeTransfer = $this->storeFacade->getCurrentStore();
         }
 
-        if ($this->stockFacade->isNeverOutOfStock($sku, $storeTransfer)) {
+        if ($this->stockFacade->isNeverOutOfStockForStore($sku, $storeTransfer)) {
             return true;
         }
         $realStock = $this->calculateStockForProduct($sku, $storeTransfer);
@@ -78,7 +78,6 @@ class Sellable implements SellableInterface
         }
 
         $physicalItems = $this->stockFacade->calculateProductStockForStore($sku, $storeTransfer);
-
         $reservedItems = $this->omsFacade->getOmsReservedProductQuantityForSku($sku, $storeTransfer);
 
         return $physicalItems - $reservedItems;

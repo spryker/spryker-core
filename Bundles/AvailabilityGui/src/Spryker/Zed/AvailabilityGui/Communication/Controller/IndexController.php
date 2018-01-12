@@ -29,19 +29,13 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idStore = $request->query->get(static::URL_PARAM_ID_STORE);
-        if (!$idStore) {
-            $idStore = $this->getFactory()->getStoreFacade()->getCurrentStore()->getIdStore();
-        }
+        $idStore = $this->extractStoreId($request);
 
         $availabilityAbstractTable = $this->getAvailabilityAbstractTable($idStore);
 
         $storeTransfer = $this->getFactory()->getStoreFacade()->getCurrentStore();
-
+        $stores = $this->getFactory()->getStoreFacade()->getStoresWithSharedPersistence($storeTransfer);
         $stores[] = $storeTransfer;
-        foreach ($storeTransfer->getSharedPersistenceWithStores() as $storeName) {
-            $stores[] = $this->getFactory()->getStoreFacade()->getStoreByName($storeName);
-        }
 
         return [
             'indexTable' => $availabilityAbstractTable->render(),
@@ -59,10 +53,7 @@ class IndexController extends AbstractController
     {
         $idProductAbstract = $this->castId($request->query->getInt(AvailabilityAbstractTable::URL_PARAM_ID_PRODUCT_ABSTRACT));
 
-        $idStore = $request->query->get(static::URL_PARAM_ID_STORE);
-        if (!$idStore) {
-            $idStore = $this->getFactory()->getStoreFacade()->getCurrentStore()->getIdStore();
-        }
+        $idStore = $this->extractStoreId($request);
 
         $availabilityTable = $this->getAvailabilityTable($idProductAbstract, $idStore);
 
@@ -75,11 +66,8 @@ class IndexController extends AbstractController
         $bundledProductAvailabilityTable = $this->getBundledProductAvailabilityTable($idStore);
 
         $storeTransfer = $this->getFactory()->getStoreFacade()->getCurrentStore();
-
+        $stores = $this->getFactory()->getStoreFacade()->getStoresWithSharedPersistence($storeTransfer);
         $stores[] = $storeTransfer;
-        foreach ($storeTransfer->getSharedPersistenceWithStores() as $storeName) {
-            $stores[] = $this->getFactory()->getStoreFacade()->getStoreByName($storeName);
-        }
 
         return [
             'productAbstractAvailability' => $productAbstractAvailabilityTransfer,
@@ -130,10 +118,7 @@ class IndexController extends AbstractController
      */
     public function availabilityAbstractTableAction(Request $request)
     {
-        $idStore = $request->query->get(static::URL_PARAM_ID_STORE);
-        if (!$idStore) {
-            $idStore = $this->getFactory()->getStoreFacade()->getCurrentStore()->getIdStore();
-        }
+        $idStore = $this->extractStoreId($request);
 
         $availabilityAbstractTable = $this->getAvailabilityAbstractTable($idStore);
 
@@ -150,8 +135,8 @@ class IndexController extends AbstractController
     public function availabilityTableAction(Request $request)
     {
         $idProductAbstract = $this->castId($request->query->getInt(AvailabilityAbstractTable::URL_PARAM_ID_PRODUCT_ABSTRACT));
-        $storeName = $request->query->get(static::URL_PARAM_ID_STORE);
-        $availabilityTable = $this->getAvailabilityTable($idProductAbstract, $storeName);
+        $idStore = $this->castId($request->query->getInt(static::URL_PARAM_ID_STORE));
+        $availabilityTable = $this->getAvailabilityTable($idProductAbstract, $idStore);
 
         return $this->jsonResponse(
             $availabilityTable->fetchData()
@@ -276,5 +261,19 @@ class IndexController extends AbstractController
     protected function isStockProductTransferValid(StockProductTransfer $stockProductTransfer)
     {
         return $stockProductTransfer->getIdStockProduct() === null && ((int)$stockProductTransfer->getQuantity() !== 0) || $stockProductTransfer->getIsNeverOutOfStock();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return int|mixed
+     */
+    protected function extractStoreId(Request $request)
+    {
+        $idStore = $request->query->getInt(static::URL_PARAM_ID_STORE);
+        if (!$idStore) {
+            $idStore = $this->getFactory()->getStoreFacade()->getCurrentStore()->getIdStore();
+        }
+        return $this->castId($idStore);
     }
 }

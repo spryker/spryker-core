@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\AvailabilityGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class AvailabilityToStoreFacadeBridge implements AvailabilityToStoreFacadeInterface
 {
     /**
@@ -56,5 +58,15 @@ class AvailabilityToStoreFacadeBridge implements AvailabilityToStoreFacadeInterf
     public function getStoreByName($storeName)
     {
         return $this->storeFacade->getStoreByName($storeName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer)
+    {
+        return $this->storeFacade->getStoresWithSharedPersistence($storeTransfer);
     }
 }

@@ -180,8 +180,27 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
      */
     public function queryStockProductByIdStockProduct($idStockProduct)
     {
-        return $this->getFactory()->createStockProductQuery()
+        return $this->getFactory()
+            ->createStockProductQuery()
             ->filterByIdStockProduct($idStockProduct);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     */
+    public function queryStockByIdProduct($idProduct)
+    {
+        return $this->queryStockByProducts($idProduct)
+            ->useStockQuery()
+                ->withColumn(SpyStockTableMap::COL_NAME, 'stockType')
+            ->endUse()
+            ->useSpyProductQuery()
+                ->withColumn(SpyProductTableMap::COL_SKU, 'sku')
+            ->endUse();
     }
 
     /**
@@ -192,15 +211,15 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
-    public function queryStockByIdProduct($idProduct, array $types)
+    public function queryStockByIdProductAndTypes($idProduct, array $types)
     {
         return $this->queryStockByProducts($idProduct)
               ->useStockQuery()
                   ->withColumn(SpyStockTableMap::COL_NAME, 'stockType')
-                ->filterByName($types, Criteria::IN)
+                  ->filterByName($types, Criteria::IN)
               ->endUse()
-                ->useSpyProductQuery()
-                ->withColumn(SpyProductTableMap::COL_SKU, 'sku')
-            ->endUse();
+              ->useSpyProductQuery()
+                  ->withColumn(SpyProductTableMap::COL_SKU, 'sku')
+              ->endUse();
     }
 }
