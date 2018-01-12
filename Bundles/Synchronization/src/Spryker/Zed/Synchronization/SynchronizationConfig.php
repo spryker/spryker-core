@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SynchronizationConfig extends AbstractBundleConfig
 {
+    const DEFAULT_SYNC_STORAGE_QUEUE_MESSAGE_CHUNK_SIZE = 10000;
+    const DEFAULT_SYNC_SEARCH_QUEUE_MESSAGE_CHUNK_SIZE = 10000;
+
     /**
      * @param string $queueName
      *
@@ -33,5 +36,21 @@ class SynchronizationConfig extends AbstractBundleConfig
         }
 
         return $numberOfWorker;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSyncStorageQueueMessageChunkSize()
+    {
+        return static::DEFAULT_SYNC_STORAGE_QUEUE_MESSAGE_CHUNK_SIZE;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSyncSearchQueueMessageChunkSize()
+    {
+        return static::DEFAULT_SYNC_SEARCH_QUEUE_MESSAGE_CHUNK_SIZE;
     }
 }

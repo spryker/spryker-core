@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -58,6 +59,23 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getPaginatedCustomerOrders(OrderListTransfer $orderListTransfer, $idCustomer)
+    {
+        return $this->getFactory()
+            ->createPaginatedCustomerOrderReader()
+            ->getOrders($orderListTransfer, $idCustomer);
+    }
+
+    /**
      * Specification:
      *  - Returns the order for the given customer id and sales order id.
      *  - Aggregates order totals calls -> SalesAggregator
@@ -76,13 +94,11 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Saves order and items to database
-     * - Sets "is test" flag
-     * - Updates checkout response with saved order data
-     * - Sets initial state for state machine
+     * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Use saveSalesOrder() instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -94,6 +110,23 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         $this->getFactory()
             ->createOrderSaver()
             ->saveOrder($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    {
+        $this->getFactory()
+            ->createSalesOrderSaver()
+            ->saveOrderSales($quoteTransfer, $saveOrderTransfer);
     }
 
     /**
@@ -194,11 +227,11 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer|null $checkoutResponseTransfer Deprecated: Parameter is not used
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function expandSalesOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function expandSalesOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer = null)
     {
         return $this->getFactory()
             ->createOrderExpander()

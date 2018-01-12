@@ -3,11 +3,13 @@
   "description": "Currency module",
   "license": "proprietary",
   "require": {
-    "spryker/kernel": "^3.11.0",
+    "spryker/kernel": "^3.15.0",
+    "spryker/messenger": "^3.1.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/session": "^3.0.0",
     "spryker/store": "^1.1.0",
-    "spryker/symfony": "^3.0.0"
+    "spryker/symfony": "^3.0.0",
+    "spryker/zed-request": "^3.2.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -15,8 +17,7 @@
     "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/transfer": "*",
-    "spryker/twig": "*",
-    "spryker/zed-request": "*"
+    "spryker/twig": "*"
   },
   "suggest": {
     "spryker/silex": "If you want to use ServiceProvider.",
@@ -39,12 +40,6 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ],
   "extra": {
     "branch-alias": {
       "dev-master": "2.0.x-dev"

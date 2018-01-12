@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductManagement\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
+use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\Price\ProductMoneyCollectionDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductConcreteFormEditDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormAddDataProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\ProductFormEditDataProvider;
@@ -106,7 +107,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getProductQueryContainer(),
             $this->getStockQueryContainer(),
-            $this->getPriceFacade(),
             $this->getProductFacade(),
             $this->getProductImageFacade(),
             $this->createLocaleProvider(),
@@ -130,7 +130,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getProductQueryContainer(),
             $this->getStockQueryContainer(),
-            $this->getPriceFacade(),
             $this->getProductFacade(),
             $this->getProductImageFacade(),
             $this->createLocaleProvider(),
@@ -154,7 +153,6 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getProductQueryContainer(),
             $this->getStockQueryContainer(),
-            $this->getPriceFacade(),
             $this->getProductFacade(),
             $this->getProductImageFacade(),
             $this->createLocaleProvider(),
@@ -165,6 +163,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getStore(),
             $this->createProductStockHelper()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\Price\ProductMoneyCollectionDataProvider
+     */
+    public function createMoneyCollectionMultiStoreDataProvider()
+    {
+        return new ProductMoneyCollectionDataProvider($this->getCurrencyFacade(), $this->getPriceProductFacade());
     }
 
     /**
@@ -232,11 +238,11 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface
      */
-    public function getPriceFacade()
+    public function getPriceProductFacade()
     {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRICE);
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 
     /**
@@ -373,10 +379,11 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         return new BundledProductTable(
             $this->getProductQueryContainer(),
             $this->getUtilEncoding(),
-            $this->getPriceFacade(),
+            $this->getPriceProductFacade(),
             $this->getMoneyFacade(),
             $this->getAvailabilityFacade(),
             $this->getLocaleFacade()->getCurrentLocale(),
+            $this->getPriceFacade(),
             $idProductConcrete
         );
     }
@@ -476,5 +483,21 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     protected function getStore()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface
+     */
+    public function getPriceFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    public function getMoneyFormTypePlugin()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGIN_MONEY_FORM_TYPE);
     }
 }

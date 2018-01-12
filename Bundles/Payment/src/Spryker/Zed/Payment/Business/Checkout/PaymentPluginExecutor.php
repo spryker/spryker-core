@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentSaverInterface;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 class PaymentPluginExecutor implements PaymentPluginExecutorInterface
@@ -46,12 +47,11 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function executePreCheckPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->executePluginsForType(
-            PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS,
+        return $this->executePreCheckPluginsForPayment(
             $quoteTransfer,
             $checkoutResponseTransfer
         );
@@ -135,6 +135,88 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
     }
 
     /**
+     * @deprecated Use executePreConditionPluginsForPayments() instead. Will be removed along with QuoteTransfer::getPayment().
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    protected function executePreCheckPluginsForPayment(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ) {
+        $isPassed = true;
+        $pluginType = PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS;
+        $paymentProvider = $quoteTransfer->getPayment()->getPaymentProvider();
+
+        if ($this->hasPlugin($pluginType, $paymentProvider)) {
+            $plugin = $this->findPlugin($pluginType, $paymentProvider);
+            $isPassed &= $this->executePreCheckPluginPayment($quoteTransfer, $checkoutResponseTransfer, $plugin);
+        }
+
+        return $isPassed && $this->executePreCheckPluginsForPayments($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    protected function executePreCheckPluginsForPayments(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ) {
+        $isPassed = true;
+        $pluginType = PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS;
+
+        foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
+            if (!$this->hasPlugin($pluginType, $paymentTransfer->getPaymentProvider())) {
+                continue;
+            }
+
+            $plugin = $this->findPlugin($pluginType, $paymentTransfer->getPaymentProvider());
+            $isPassed &= $this->executePreCheckPluginPayment($quoteTransfer, $checkoutResponseTransfer, $plugin);
+        }
+
+        return (bool)$isPassed;
+    }
+
+    /**
+     * @deprecated Use executePreCheckPluginPaymentPlugin() instead.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface $plugin
+     *
+     * @return bool
+     */
+    protected function executePreCheckPluginPayment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer, CheckoutPreCheckPluginInterface $plugin)
+    {
+        $errorCount = $checkoutResponseTransfer->getErrors()->count();
+        $result = $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
+        
+        if ($result === null) {
+            return $errorCount === $checkoutResponseTransfer->getErrors()->count();
+        }
+        
+        return $result;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface $plugin
+     *
+     * @return bool
+     */
+    protected function executePreCheckPluginPaymentPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer, CheckoutPreCheckPluginInterface $plugin)
+    {
+        return $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
      * @param string $pluginType
      * @param string $provider
      *
@@ -149,7 +231,7 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
      * @param string $pluginType
      * @param string $provider
      *
-     * @return \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface
+     * @return \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface|\Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface
      */
     protected function findPlugin($pluginType, $provider)
     {

@@ -28,6 +28,8 @@ class ProductManagementProductConcreteViewCest
      */
     public function breadcrumbIsVisible(ProductManagementPresentationTester $i)
     {
+        $i->registerMoneyCollectionFormTypePlugin();
+
         $i->amOnPage(ProductManagementProductListPage::URL);
         $i->clickDataTableViewButton();
         $i->clickDataTableViewButton(1, 'product-variant-table_wrapper');

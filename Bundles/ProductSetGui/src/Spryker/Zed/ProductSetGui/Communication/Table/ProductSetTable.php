@@ -128,7 +128,7 @@ class ProductSetTable extends AbstractTable
     }
 
     /**
-     * @param string $status
+     * @param bool $status
      *
      * @return string
      */

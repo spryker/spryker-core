@@ -43,7 +43,7 @@ class SynchronizationToSearchBridge implements SynchronizationToSearchInterface
      */
     public function write(array $dataSet, $typeName = null, $indexName = null)
     {
-        $this->searchClient->write($dataSet, $typeName, $indexName);
+        return $this->searchClient->write($dataSet, $typeName, $indexName);
     }
 
     /**
@@ -55,6 +55,6 @@ class SynchronizationToSearchBridge implements SynchronizationToSearchInterface
      */
     public function delete(array $dataSet, $typeName = null, $indexName = null)
     {
-        $this->searchClient->delete($dataSet, $typeName, $indexName);
+        return $this->searchClient->delete($dataSet, $typeName, $indexName);
     }
 }

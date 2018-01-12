@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Availability\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface AvailabilityFacadeInterface
@@ -51,7 +52,7 @@ interface AvailabilityFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function checkoutAvailabilityPreCondition(
         QuoteTransfer $quoteTransfer,
@@ -86,6 +87,18 @@ interface AvailabilityFacadeInterface
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
     public function getProductAbstractAvailability($idProductAbstract, $idLocale);
+
+    /**
+     * Specification:
+     *  - Finds product concrete availability as is stored in persistence.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     */
+    public function findProductConcreteAvailability(ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer);
 
     /**
      *

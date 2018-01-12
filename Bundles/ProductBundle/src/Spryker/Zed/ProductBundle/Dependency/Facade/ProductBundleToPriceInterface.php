@@ -10,10 +10,12 @@ namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 interface ProductBundleToPriceInterface
 {
     /**
-     * @param string $sku
-     * @param string|null $priceType
-     *
-     * @return int
+     * @return string
      */
-    public function getPriceBySku($sku, $priceType = null);
+    public function getNetPriceModeIdentifier();
+
+    /**
+     * @return string
+     */
+    public function getGrossPriceModeIdentifier();
 }

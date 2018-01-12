@@ -31,7 +31,7 @@
 
     <table name="spy_product_option_value" idMethod="native" allowPkInsert="true" phpName="SpyProductOptionValue">
         <column name="id_product_option_value" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="price" type="INTEGER"/>
+        <column name="price" type="INTEGER" description="Deprecated"/>
         <column name="sku" required="true" type="VARCHAR" size="255"/>
         <column name="value" required="true" type="VARCHAR" size="255"/>
         <column name="fk_product_option_group" type="integer" required="true"/>
@@ -47,6 +47,33 @@
         </foreign-key>
 
         <id-method-parameter value="spy_product_option_value_pk_seq"/>
+    </table>
+
+    <table name="spy_product_option_value_price" identifierQuoting="true">
+        <column name="id_product_option_value_price" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_currency" required="true" type="INTEGER"/>
+        <column name="fk_store" type="INTEGER"/>
+        <column name="fk_product_option_value" required="true" type="INTEGER"/>
+        <column name="gross_price" type="INTEGER"/>
+        <column name="net_price" type="INTEGER"/>
+
+        <foreign-key name="spy_product_option_value_price-fk_currency" foreignTable="spy_currency" phpName="Currency" refPhpName="ProductOptionValuePrice">
+            <reference local="fk_currency" foreign="id_currency"/>
+        </foreign-key>
+        <foreign-key name="spy_product_option_value_price-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="ProductOptionValuePrice">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+        <foreign-key name="spy_product_option_value_price-fk_product_option_value" foreignTable="spy_product_option_value" phpName="ProductOptionValue" refPhpName="ProductOptionValuePrice" onDelete="cascade">
+            <reference local="fk_product_option_value" foreign="id_product_option_value"/>
+        </foreign-key>
+
+        <unique name="spy_product_option_value_price-fk_value-fk_store-fk_currency">
+            <unique-column name="fk_product_option_value"/>
+            <unique-column name="fk_store"/>
+            <unique-column name="fk_currency"/>
+        </unique>
+
+        <id-method-parameter value="spy_product_option_value_price_pk_seq"/>
     </table>
 
 </database>

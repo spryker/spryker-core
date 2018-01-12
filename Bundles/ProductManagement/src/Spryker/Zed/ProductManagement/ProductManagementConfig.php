@@ -20,10 +20,7 @@ class ProductManagementConfig extends AbstractBundleConfig
      */
     public function getImageUrlPrefix()
     {
-        return $this->getConfig()->hasKey(ProductManagementConstants::BASE_URL_YVES)
-            ? $this->get(ProductManagementConstants::BASE_URL_YVES)
-            // @deprecated this is just for backward compatibility
-            : $this->get(ProductManagementConstants::HOST_YVES);
+        return $this->get(ProductManagementConstants::BASE_URL_YVES);
     }
 
     /**
@@ -31,9 +28,6 @@ class ProductManagementConfig extends AbstractBundleConfig
      */
     public function getHostYves()
     {
-        return $this->getConfig()->hasKey(ProductManagementConstants::BASE_URL_YVES)
-            ? $this->get(ProductManagementConstants::BASE_URL_YVES)
-            // @deprecated this is just for backward compatibility
-            : $this->get(ProductManagementConstants::HOST_YVES);
+        return $this->get(ProductManagementConstants::BASE_URL_YVES);
     }
 }

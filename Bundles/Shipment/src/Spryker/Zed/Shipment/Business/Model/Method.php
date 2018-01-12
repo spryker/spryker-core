@@ -177,6 +177,9 @@ class Method implements MethodInterface
             ->setStoreCurrencyPrice($storeCurrencyPrice)
             ->setDeliveryTime(
                 $this->getDeliveryTime($shipmentMethodEntity, $quoteTransfer)
+            )
+            ->setCurrencyIsoCode(
+                $quoteTransfer->getCurrency()->getCode()
             );
 
         return $shipmentMethodTransfer;
@@ -219,7 +222,7 @@ class Method implements MethodInterface
     public function findShipmentMethodTransferById($idShipmentMethod)
     {
         $shipmentMethodEntity = $this->queryContainer
-            ->queryMethodByIdMethod($idShipmentMethod)
+            ->queryActiveMethodsWithMethodPricesAndCarrierById($idShipmentMethod)
             ->findOne();
 
         if (!$shipmentMethodEntity) {
@@ -287,6 +290,27 @@ class Method implements MethodInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer)
+    {
+        $idStoreCurrent = $this->storeFacade->getCurrentStore()->getIdStore();
+
+        $shipmentMethodEntity = $this->queryContainer
+            ->queryMethodByIdMethod($idShipmentMethod)
+            ->findOne();
+
+        if (!$shipmentMethodEntity) {
+            return null;
+        }
+
+        return $this->findAvailableMethod($shipmentMethodEntity, $quoteTransfer, $idStoreCurrent);
     }
 
     /**

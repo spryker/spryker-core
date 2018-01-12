@@ -45,20 +45,20 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
     {
         $this->assertSortConfigTransfer($sortConfigTransfer);
 
-        $this->sortConfigTransfers[$sortConfigTransfer->getParameterName()] = $sortConfigTransfer;
+        $this->sortConfigTransfers[$sortConfigTransfer->getName()] = $sortConfigTransfer;
 
         return $this;
     }
 
     /**
-     * @param string $parameterName
+     * @param string $name
      *
      * @return \Generated\Shared\Transfer\SortConfigTransfer|null
      */
-    public function get($parameterName)
+    public function get($name)
     {
-        if (isset($this->sortConfigTransfers[$parameterName])) {
-            return $this->sortConfigTransfers[$parameterName];
+        if (isset($this->sortConfigTransfers[$name])) {
+            return $this->sortConfigTransfers[$name];
         }
 
         return null;

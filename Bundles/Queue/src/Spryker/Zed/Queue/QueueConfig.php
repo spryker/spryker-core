@@ -14,6 +14,7 @@ class QueueConfig extends AbstractBundleConfig
 {
     const DEFAULT_QUEUE_OUTPUT_FILE_NAME = 'queue.log';
     const DEFAULT_INTERVAL_MILLISECONDS = 1000;
+    const DEFAULT_PROCESS_TRIGGER_INTERVAL_MICROSECONDS = 1000;
     const DEFAULT_THRESHOLD = 59;
 
     /**
@@ -88,7 +89,15 @@ class QueueConfig extends AbstractBundleConfig
      */
     public function getQueueWorkerInterval()
     {
-        return $this->get(QueueConstants::QUEUE_WORKER_INTERVAL_MILLISECONDS, self::DEFAULT_INTERVAL_MILLISECONDS);
+        return $this->get(QueueConstants::QUEUE_WORKER_INTERVAL_MILLISECONDS, static::DEFAULT_INTERVAL_MILLISECONDS);
+    }
+
+    /**
+     * @return int
+     */
+    public function getQueueProcessTriggerInterval()
+    {
+        return $this->get(QueueConstants::QUEUE_PROCESS_TRIGGER_INTERVAL_MICROSECONDS, static::DEFAULT_PROCESS_TRIGGER_INTERVAL_MICROSECONDS);
     }
 
     /**
@@ -96,7 +105,7 @@ class QueueConfig extends AbstractBundleConfig
      */
     public function getQueueWorkerOutputFileName()
     {
-        return $this->get(QueueConstants::QUEUE_WORKER_OUTPUT_FILE_NAME, self::DEFAULT_QUEUE_OUTPUT_FILE_NAME);
+        return $this->get(QueueConstants::QUEUE_WORKER_OUTPUT_FILE_NAME, static::DEFAULT_QUEUE_OUTPUT_FILE_NAME);
     }
 
     /**
@@ -112,7 +121,7 @@ class QueueConfig extends AbstractBundleConfig
      */
     public function getQueueWorkerMaxThreshold()
     {
-        return $this->get(QueueConstants::QUEUE_WORKER_MAX_THRESHOLD_SECONDS, self::DEFAULT_THRESHOLD);
+        return $this->get(QueueConstants::QUEUE_WORKER_MAX_THRESHOLD_SECONDS, static::DEFAULT_THRESHOLD);
     }
 
     /**

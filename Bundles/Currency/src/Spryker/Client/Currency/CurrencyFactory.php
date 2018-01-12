@@ -20,6 +20,7 @@ class CurrencyFactory extends AbstractFactory
     {
         return new CurrencyBuilder(
             $this->getInternationalization(),
+            $this->getStore()->getDefaultCurrencyCode(),
             $this->createCurrencyPersistence()->getCurrentCurrencyIsoCode()
         );
     }

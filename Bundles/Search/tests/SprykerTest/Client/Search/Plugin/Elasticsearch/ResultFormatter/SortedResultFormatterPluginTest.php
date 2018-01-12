@@ -117,7 +117,7 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
             ->getSortConfigBuilder()
             ->addSort((new SortConfigTransfer())
                 ->setName('foo')
-                ->setParameterName('foo')
+                ->setParameterName('foo-param')
                 ->setFieldName('foo'));
 
         return $searchConfig;
