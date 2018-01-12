@@ -33,7 +33,9 @@ class ProductSearchAttributeMapMarker extends AbstractAttributeMarker
      */
     protected function processAttributes(array $attributeNames)
     {
-        $this->touchProductAbstractByAttributeNames($attributeNames);
+        $productAbstractIds = $this->getProductAbstractIdsByAttributeNames($attributeNames);
+        $this->touchProductAbstractByIds($productAbstractIds);
+        $this->triggerSynchronizationFilterEvents($productAbstractIds);
         $this->markProductSearchAttributeMapAsSynced();
         $this->clearProductSearchAttributeMapArchive();
     }

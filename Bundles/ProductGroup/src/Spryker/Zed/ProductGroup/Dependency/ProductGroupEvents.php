@@ -11,6 +11,22 @@ interface ProductGroupEvents
 {
     /**
      * Specification
+     * - This events will be used for product_abstract_group publishing
+     *
+     * @api
+     */
+    const PRODUCT_GROUP_PUBLISH = 'ProductGroup.product_abstract_group.publish';
+
+    /**
+     * Specification
+     * - This events will be used for product_abstract_group un-publishing
+     *
+     * @api
+     */
+    const PRODUCT_GROUP_UNPUBLISH = 'ProductGroup.product_abstract_group.unpublish';
+
+    /**
+     * Specification
      * - This events will be used for spy_product_abstract_group entity creation
      *
      * @api

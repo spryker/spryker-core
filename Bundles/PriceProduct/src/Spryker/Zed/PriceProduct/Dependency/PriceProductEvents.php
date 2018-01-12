@@ -11,6 +11,38 @@ interface PriceProductEvents
 {
     /**
      * Specification
+     * - This events will be used for price_abstract publishing
+     *
+     * @api
+     */
+    const PRICE_ABSTRACT_PUBLISH = 'Price.price_abstract.publish';
+
+    /**
+     * Specification
+     * - This events will be used for price_abstract un-publishing
+     *
+     * @api
+     */
+    const PRICE_ABSTRACT_UNPUBLISH = 'Price.price_abstract.unpublish';
+
+    /**
+     * Specification
+     * - This events will be used for price_concrete publishing
+     *
+     * @api
+     */
+    const PRICE_CONCRETE_PUBLISH = 'Price.price_concrete.publish';
+
+    /**
+     * Specification
+     * - This events will be used for price_concrete un-publishing
+     *
+     * @api
+     */
+    const PRICE_CONCRETE_UNPUBLISH = 'Price.price_concrete.unpublish';
+
+    /**
+     * Specification
      * - This events will be used for spy_price_product entity creation
      *
      * @api
@@ -56,4 +88,28 @@ interface PriceProductEvents
      * @api
      */
     const ENTITY_SPY_PRICE_TYPE_DELETE = 'Entity.spy_price_type.delete';
+
+    /**
+     * Specification
+     * - This events will be used for spy_price_product_store entity creation
+     *
+     * @api
+     */
+    const ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE = 'Entity.spy_price_product_store.create';
+
+    /**
+     * Specification
+     * - This events will be used for spy_price_product_store entity changes
+     *
+     * @api
+     */
+    const ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE = 'Entity.spy_price_product_store.update';
+
+    /**
+     * Specification
+     * - This events will be used for spy_price_product_store entity deletion
+     *
+     * @api
+     */
+    const ENTITY_SPY_PRICE_PRODUCT_STORE_DELETE = 'Entity.spy_price_product_store.delete';
 }

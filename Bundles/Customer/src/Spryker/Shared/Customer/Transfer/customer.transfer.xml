@@ -69,6 +69,8 @@
         <property name="anonymizedAt" type="string" />
         <property name="fkUser" type="int" />
         <property name="username" type="string" />
+        <property name="phone" type="string" />
+        <property name="isDirty" type="bool" />
     </transfer>
 
     <transfer name="CustomerError">
