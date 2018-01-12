@@ -7,10 +7,10 @@
 
 namespace Spryker\Client\Permission;
 
-use Spryker\Client\CheckoutPermissionConnector\Plugin\CheckoutPlaceOrderPermissionPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientBridge;
+use Spryker\Client\Permission\Plugin\PermissionPluginInterface;
 
 class PermissionDependencyProvider extends AbstractDependencyProvider
 {
@@ -46,13 +46,11 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return array
+     * @return PermissionPluginInterface[]
      */
     protected function getPermissionPlugins()
     {
-        return [
-            new CheckoutPlaceOrderPermissionPlugin(),
-        ];
+        return [];
     }
 
     /**

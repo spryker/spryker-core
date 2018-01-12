@@ -18,7 +18,7 @@ class PermissionFacade implements PermissionFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function findAll()
+    public function findAll(): PermissionCollectionTransfer
     {
         return new PermissionCollectionTransfer();
     }
