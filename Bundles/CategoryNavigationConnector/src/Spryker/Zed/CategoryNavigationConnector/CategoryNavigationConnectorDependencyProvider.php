@@ -26,18 +26,46 @@ class CategoryNavigationConnectorDependencyProvider extends AbstractBundleDepend
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        $this->addCategoryQueryContainer($container);
+        $this->addNavigationQueryContainer($container);
+        $this->addNavigationFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return void
+     */
+    protected function addCategoryQueryContainer(Container $container)
+    {
         $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
             return new CategoryNavigationConnectorToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
         };
+    }
 
+    /**
+     * @param Container $container
+     *
+     * @return void
+     */
+    protected function addNavigationQueryContainer(Container $container)
+    {
         $container[self::QUERY_CONTAINER_NAVIGATION] = function (Container $container) {
             return new CategoryNavigationConnectorToNavigationQueryContainerBridge($container->getLocator()->navigation()->queryContainer());
         };
+    }
 
+    /**
+     * @param Container $container
+     *
+     * @return void
+     */
+    protected function addNavigationFacade(Container $container)
+    {
         $container[self::FACADE_NAVIGATION] = function (Container $container) {
             return new CategoryNavigationConnectorToNavigationFacadeBridge($container->getLocator()->navigation()->facade());
         };
-
-        return $container;
     }
 }

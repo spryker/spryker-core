@@ -96,7 +96,7 @@ class CategoryDataHelper extends Module
         $categoryTransfer = (new CategoryBuilder($seedData))->build();
         $categoryTransfer->setIdCategory(null);
 
-        if (empty($seedData[CategoryTransfer::FK_CATEGORY_TEMPLATE])) {
+        if (!isset($seedData[CategoryTransfer::FK_CATEGORY_TEMPLATE])) {
             $categoryTemplateTransfer = $this->haveCategoryTemplate();
             $categoryTransfer->setFkCategoryTemplate($categoryTemplateTransfer->getIdCategoryTemplate());
         }

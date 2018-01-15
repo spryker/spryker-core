@@ -40,9 +40,9 @@ class NavigationNodesIsActiveUpdater implements NavigationNodesIsActiveUpdaterIn
     public function updateCategoryNodeNavigationNodes($idCategoryNode, $isActive)
     {
         $navigationNodes = $this->navigationNodeReader->getNavigationNodesFromCategoryNodeId($idCategoryNode);
-        foreach ($navigationNodes as $navigationNode) {
-            $navigationNode->setIsActive($isActive);
-            $this->navigationFacade->updateNavigationNode($navigationNode);
+        foreach ($navigationNodes as $navigationNodeTransfer) {
+            $navigationNodeTransfer->setIsActive($isActive);
+            $this->navigationFacade->updateNavigationNode($navigationNodeTransfer);
         }
     }
 }

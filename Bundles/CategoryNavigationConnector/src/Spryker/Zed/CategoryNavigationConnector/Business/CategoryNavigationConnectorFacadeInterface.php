@@ -19,7 +19,7 @@ interface CategoryNavigationConnectorFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return mixed
+     * @return void
      */
     public function updateCategoryNavigationNodesIsActive(CategoryTransfer $categoryTransfer);
 }

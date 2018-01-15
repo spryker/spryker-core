@@ -26,18 +26,46 @@ class CmsNavigationConnectorDependencyProvider extends AbstractBundleDependencyP
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        $this->addCmsQueryContainer($container);
+        $this->addNavigationQueryContainer($container);
+        $this->addNavigationFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return void
+     */
+    protected function addCmsQueryContainer(Container $container)
+    {
         $container[self::QUERY_CONTAINER_CMS] = function (Container $container) {
             return new CmsNavigationConnectorToCmsQueryContainerBridge($container->getLocator()->cms()->queryContainer());
         };
+    }
 
+    /**
+     * @param Container $container
+     *
+     * @return void
+     */
+    protected function addNavigationQueryContainer(Container $container)
+    {
         $container[self::QUERY_CONTAINER_NAVIGATION] = function (Container $container) {
             return new CmsNavigationConnectorToNavigationQueryContainerBridge($container->getLocator()->navigation()->queryContainer());
         };
+    }
 
+    /**
+     * @param Container $container
+     *
+     * @return void
+     */
+    protected function addNavigationFacade(Container $container)
+    {
         $container[self::FACADE_NAVIGATION] = function (Container $container) {
             return new CmsNavigationConnectorToNavigationFacadeBridge($container->getLocator()->navigation()->facade());
         };
-
-        return $container;
     }
 }
