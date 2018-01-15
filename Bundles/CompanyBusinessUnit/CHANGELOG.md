@@ -1,3 +1,3 @@
 # CompanyBusinessUnit Changelog
 
-[Release Changelog](https://github.com/spryker/CompanyBusinessUnit/releases)
+[Release Changelog](https://github.com/spryker/company-business-unit/releases)

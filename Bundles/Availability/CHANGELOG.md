@@ -1,3 +1,3 @@
 # Availability Changelog
 
-[Availability Changelog](https://github.com/spryker/Availability/releases)
+[Release Changelog](https://github.com/spryker/availability/releases)

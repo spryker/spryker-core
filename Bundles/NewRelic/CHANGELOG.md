@@ -1,3 +1,3 @@
 # NewRelic Changelog
 
-[NewRelic Changelog](https://github.com/spryker/NewRelic/releases)
+[Release Changelog](https://github.com/spryker/new-relic/releases)

@@ -1,3 +1,3 @@
 # SalesProductConnector Changelog
 
-[Release Changelog](https://github.com/spryker/SalesProductConnector/releases)
+[Release Changelog](https://github.com/spryker/sales-product-connector/releases)

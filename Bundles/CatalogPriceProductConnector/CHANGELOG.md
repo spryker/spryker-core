@@ -1,3 +1,3 @@
 # CatalogPriceProductConnector Changelog
 
-[Release Changelog](https://github.com/spryker/CatalogPriceProductConnector/releases)
+[Release Changelog](https://github.com/spryker/catalog-price-product-connector/releases)

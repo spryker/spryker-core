@@ -1,3 +1,3 @@
 # Money Changelog
 
-[Money Changelog](https://github.com/spryker/Money/releases)
+[Release Changelog](https://github.com/spryker/money/releases)

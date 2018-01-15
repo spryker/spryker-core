@@ -1,3 +1,3 @@
 # CmsBlockStorage Changelog
 
-[Release Changelog](https://github.com/spryker/CmsBlockStorage/releases)
+[Release Changelog](https://github.com/spryker/cms-block-storage/releases)

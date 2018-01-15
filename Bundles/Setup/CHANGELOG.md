@@ -1,3 +1,3 @@
 # Setup Changelog
 
-[Setup Changelog](https://github.com/spryker/Setup/releases)
+[Release Changelog](https://github.com/spryker/setup/releases)

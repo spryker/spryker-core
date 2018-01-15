@@ -1,3 +1,3 @@
 # ProductSetStorage Changelog
 
-[Release Changelog](https://github.com/spryker/ProductSetStorage/releases)
+[Release Changelog](https://github.com/spryker/product-set-storage/releases)
