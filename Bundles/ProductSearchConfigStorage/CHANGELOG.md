@@ -1,3 +1,3 @@
 # ProductSearchConfigStorage Changelog
 
-[Release Changelog](https://github.com/spryker/ProductSearchConfigStorage/releases)
+[Release Changelog](https://github.com/spryker/product-search-config-storage/releases)

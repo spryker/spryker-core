@@ -1,3 +1,3 @@
 # ProductGroupStorage Changelog
 
-[Release Changelog](https://github.com/spryker/ProductGroupStorage/releases)
+[Release Changelog](https://github.com/spryker/product-group-storage/releases)

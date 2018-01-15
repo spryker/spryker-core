@@ -1,3 +1,3 @@
 # PriceProduct Changelog
 
-[Release Changelog](https://github.com/spryker/PriceProduct/releases)
+[Release Changelog](https://github.com/spryker/price-product/releases)

@@ -1,3 +1,3 @@
 # ProductOptionStorage Changelog
 
-[Release Changelog](https://github.com/spryker/ProductOptionStorage/releases)
+[Release Changelog](https://github.com/spryker/product-option-storage/releases)

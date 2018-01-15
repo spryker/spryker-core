@@ -1,3 +1,3 @@
-# Sql Criteria Builder Changelog
+# SqlCriteriaBuilder Changelog
 
-[Sql Criteria Builder Changelog](https://github.com/oliwierptak/everon-criteria-builder/releases)
+[Release Changelog](https://github.com/spryker/sql-criteria-builder/releases)

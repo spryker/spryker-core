@@ -1,3 +1,3 @@
 # Transfer Changelog
 
-[Transfer Changelog](https://github.com/spryker/Transfer/releases)
+[Release Changelog](https://github.com/spryker/transfer/releases)

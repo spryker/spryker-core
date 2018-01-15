@@ -1,3 +1,3 @@
 # ProductCartConnector Changelog
 
-[ProductCartConnector Changelog](https://github.com/spryker/ProductCartConnector/releases)
+[Release Changelog](https://github.com/spryker/product-cart-connector/releases)

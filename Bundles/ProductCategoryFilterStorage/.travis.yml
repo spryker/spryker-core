@@ -14,7 +14,6 @@ env:
         - APPLICATION_STORE=DE
 
 install:
-    - composer self-update && composer --version
     - composer install --no-interaction --prefer-dist
 
 script:

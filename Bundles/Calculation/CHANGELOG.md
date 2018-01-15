@@ -1,3 +1,3 @@
 # Calculation Changelog
 
-[Calculation Changelog](https://github.com/spryker/Calculation/releases)
+[Release Changelog](https://github.com/spryker/calculation/releases)

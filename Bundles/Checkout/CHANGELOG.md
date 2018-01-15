@@ -1,3 +1,3 @@
 # Checkout Changelog
 
-[Checkout Changelog](https://github.com/spryker/Checkout/releases)
+[Release Changelog](https://github.com/spryker/checkout/releases)

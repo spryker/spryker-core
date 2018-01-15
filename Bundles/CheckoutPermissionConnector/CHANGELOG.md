@@ -1,3 +1,3 @@
 # CheckoutPermissionConnector Changelog
 
-[Release Changelog](https://github.com/spryker/CheckoutPermissionConnector/releases)
+[Release Changelog](https://github.com/spryker/checkout-permission-connector/releases)
