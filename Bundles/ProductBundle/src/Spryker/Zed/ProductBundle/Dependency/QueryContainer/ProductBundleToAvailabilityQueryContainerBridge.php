@@ -24,6 +24,7 @@ class ProductBundleToAvailabilityQueryContainerBridge implements ProductBundleTo
 
     /**
      * @param string $sku
+     * @param int $idStore
      *
      * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
@@ -34,21 +35,23 @@ class ProductBundleToAvailabilityQueryContainerBridge implements ProductBundleTo
 
     /**
      * @param int $idAvailabilityAbstract
+     * @param int $idStore;
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */
-    public function queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract)
+    public function queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract, $idStore)
     {
-        return $this->queryContainer->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract);
+        return $this->queryContainer->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract, $idStore);
     }
 
     /**
      * @param int $idAvailabilityAbstract
+     * @param int $idStore
      *
      * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
-    public function querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract)
+    public function querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract, $idStore)
     {
-        return $this->queryContainer->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract);
+        return $this->queryContainer->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract, $idStore);
     }
 }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Availability\Dependency\Facade;
 interface AvailabilityToStoreFacadeInterface
 {
     /**
-     * @param $idStore
+     * @param int $idStore
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */

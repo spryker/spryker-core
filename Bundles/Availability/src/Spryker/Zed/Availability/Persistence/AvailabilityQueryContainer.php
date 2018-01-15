@@ -44,8 +44,10 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      * @api
      *
      * @param string $sku
+     * @param int $idStore
      *
      * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      */
     public function querySpyAvailabilityBySku($sku, $idStore)
     {
@@ -107,7 +109,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      * @api
      *
      * @param int $idLocale
-     * @param $idStore
+     * @param int $idStore
      * @param array $stockTypes
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery

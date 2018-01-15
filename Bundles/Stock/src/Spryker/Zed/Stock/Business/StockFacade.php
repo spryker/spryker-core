@@ -320,20 +320,4 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
             ->getConfig()
             ->getStoreToWarehouseMapping();
     }
-
-    /**
-     * Specification:
-     *  - Returns true if product for given store have stock in any of it's warehouses
-     *
-     * @api
-     *
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return bool
-     */
-    public function hasProductStockInStore($sku, StoreTransfer $storeTransfer)
-    {
-        return $this->getFactory()->createReaderModel()->hastStockProductInStore($sku, $storeTransfer);
-    }
 }

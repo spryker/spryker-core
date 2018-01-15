@@ -23,7 +23,7 @@ class AvailabilityToStoreFacadeBridge implements AvailabilityToStoreFacadeInterf
     }
 
     /**
-     * @param $idStore
+     * @param int $idStore
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
