@@ -1,0 +1,40 @@
+{
+  "name": "spryker/product-label-storage",
+  "description": "ProductLabelStorage module",
+  "license": "proprietary",
+  "require": {
+    "spryker/event-behavior": "^0.1.2",
+    "spryker/kernel": "^3.16.0",
+    "spryker/product": "^5.5.0",
+    "spryker/product-label": "^2.4.0",
+    "spryker/propel-orm": "^1.5.0",
+    "spryker/storage": "^3.4.0",
+    "spryker/synchronization": "^0.2.0",
+    "spryker/util-sanitize": "^2.1.0"
+  },
+  "require-dev": {
+    "spryker/catalog": "*",
+    "spryker/event": "*",
+    "spryker/search": "*"
+  },
+  "suggest": {
+    "spryker/catalog": "If you want to use Catalog plugins, minimum required version: 5.2.0",
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
+    "spryker/search": "If you want to use Search plugins, minimum required version: 7.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

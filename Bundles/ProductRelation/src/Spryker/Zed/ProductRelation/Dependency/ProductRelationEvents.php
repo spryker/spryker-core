@@ -11,6 +11,22 @@ interface ProductRelationEvents
 {
     /**
      * Specification
+     * - This events will be used for product_abstract_relation publishing
+     *
+     * @api
+     */
+    const PRODUCT_ABSTRACT_RELATION_PUBLISH = 'ProductRelation.product_abstract_relation.publish';
+
+    /**
+     * Specification
+     * - This events will be used for product_abstract_relation un-publishing
+     *
+     * @api
+     */
+    const PRODUCT_ABSTRACT_RELATION_UNPUBLISH = 'ProductRelation.product_abstract_relation.unpublish';
+
+    /**
+     * Specification
      * - This events will be used for spy_product_relation_product_abstract entity creation
      *
      * @api

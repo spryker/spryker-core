@@ -9,6 +9,7 @@ namespace Spryker\Zed\Development\Business\DependencyTree;
 
 use Exception;
 use Symfony\Component\Finder\SplFileInfo;
+use Zend\Filter\Word\CamelCaseToDash;
 
 class FileInfoExtractor
 {
@@ -66,6 +67,19 @@ class FileInfoExtractor
     public function getClassNameFromFile(SplFileInfo $fileInfo)
     {
         return substr(implode('\\', $this->getClassNameParts($fileInfo)), 0, -4);
+    }
+
+    /**
+     * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
+     *
+     * @return string
+     */
+    public function getOrganizationFromFile(SplFileInfo $fileInfo)
+    {
+        $classNameParts = $this->getClassNameParts($fileInfo);
+        $filter = new CamelCaseToDash();
+
+        return strtolower($filter->filter($classNameParts[0]));
     }
 
     /**

@@ -18,11 +18,18 @@ class CustomerFormDataProvider extends AbstractCustomerDataProvider
     protected $customerQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
+     * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
      */
-    public function __construct($customerQueryContainer)
+    protected $localeFacade;
+
+    /**
+     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
+     * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface $localeFacade
+     */
+    public function __construct($customerQueryContainer, $localeFacade)
     {
         $this->customerQueryContainer = $customerQueryContainer;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -41,6 +48,7 @@ class CustomerFormDataProvider extends AbstractCustomerDataProvider
         return [
             CustomerForm::OPTION_SALUTATION_CHOICES => $this->getSalutationChoices(),
             CustomerForm::OPTION_GENDER_CHOICES => $this->getGenderChoices(),
+            CustomerForm::OPTION_LOCALE_CHOICES => $this->getLocaleChoices(),
         ];
     }
 
@@ -52,5 +60,13 @@ class CustomerFormDataProvider extends AbstractCustomerDataProvider
         $genderSet = SpyCustomerTableMap::getValueSet(SpyCustomerTableMap::COL_GENDER);
 
         return array_combine($genderSet, $genderSet);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getLocaleChoices()
+    {
+        return $this->localeFacade->getAvailableLocales();
     }
 }

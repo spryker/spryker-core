@@ -80,6 +80,7 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleMethodGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter;
 use Spryker\Zed\Development\Business\PhpMd\PhpMdRunner;
+use Spryker\Zed\Development\Business\Phpstan\PhpstanRunner;
 use Spryker\Zed\Development\Business\Stability\StabilityCalculator;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -122,6 +123,16 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()->getPathToRoot(),
             $this->getConfig()->getPathToCore(),
             $this->getConfig()->getArchitectureStandard()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Phpstan\PhpstanRunnerInterface
+     */
+    public function createPhpstanRunner()
+    {
+        return new PhpstanRunner(
+            $this->getConfig()
         );
     }
 
@@ -389,7 +400,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorClient
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorService
      */
     protected function createLocatorServiceChecker()
     {
@@ -768,7 +779,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createComposerJsonUpdater()
     {
         return new ComposerJsonUpdater(
-            $this->createComposerJsonFinder(),
+            $this->createComposerJsonFinderComposite(),
             $this->createComposerJsonUpdaterComposite()
         );
     }
@@ -779,9 +790,9 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createComposerJsonFinderComposite()
     {
         $finderComposite = new ComposerJsonFinderComposite();
-        $finderComposite
-            ->addFinder($this->createComposerJsonFinder())
-            ->addFinder($this->createComposerJsonFinderSdk());
+        $finderComposite->addFinder($this->createComposerJsonFinder());
+        $finderComposite->addFinder($this->createComposerJsonFinderSdk());
+        $finderComposite->addFinder($this->createComposerJsonFinderShop());
 
         return $finderComposite;
     }
@@ -807,6 +818,19 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         $composerJsonFinder = new ComposerJsonFinder(
             $this->createFinder(),
             $this->getConfig()->getPathToSdk()
+        );
+
+        return $composerJsonFinder;
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface
+     */
+    protected function createComposerJsonFinderShop()
+    {
+        $composerJsonFinder = new ComposerJsonFinder(
+            $this->createFinder(),
+            $this->getConfig()->getPathToShop()
         );
 
         return $composerJsonFinder;
