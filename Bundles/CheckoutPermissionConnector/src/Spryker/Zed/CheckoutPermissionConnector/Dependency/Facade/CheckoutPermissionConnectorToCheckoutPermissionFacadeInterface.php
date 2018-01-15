@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CheckoutPermissionConnector\Dependency\Facade;
 
-interface CheckoutPermissionConnectorToFacadeInterface
+interface CheckoutPermissionConnectorToCheckoutPermissionFacadeInterface
 {
     /**
      * @param string $permissionKey
