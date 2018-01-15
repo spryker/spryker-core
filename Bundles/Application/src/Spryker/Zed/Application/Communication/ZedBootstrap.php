@@ -11,6 +11,7 @@ use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Application\ApplicationDependencyProvider;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
@@ -117,7 +118,7 @@ class ZedBootstrap
      */
     protected function getServiceProvider()
     {
-        return [];
+        return $this->getProvidedDependency(ApplicationDependencyProvider::SERVICE_PROVIDER);
     }
 
     /**
@@ -125,7 +126,7 @@ class ZedBootstrap
      */
     protected function getInternalCallServiceProvider()
     {
-        return [];
+        return $this->getProvidedDependency(ApplicationDependencyProvider::INTERNAL_CALL_SERVICE_PROVIDER);
     }
 
     /**
@@ -133,7 +134,25 @@ class ZedBootstrap
      */
     protected function getInternalCallServiceProviderWithAuthentication()
     {
-        return [];
+        return $this->getProvidedDependency(ApplicationDependencyProvider::INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION);
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerApiServiceProvider()
+    {
+        foreach ($this->getApiServiceProvider() as $provider) {
+            $this->application->register($provider);
+        }
+    }
+
+    /**
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    protected function getApiServiceProvider()
+    {
+        return $this->getProvidedDependency(ApplicationDependencyProvider::SERVICE_PROVIDER_API);
     }
 
     /**

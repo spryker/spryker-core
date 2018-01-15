@@ -14,6 +14,7 @@
     "spryker/cms": "*",
     "spryker/cms-block-collector": "*",
     "spryker/cms-block-gui": "*",
+    "spryker/cms-block-storage": "*",
     "spryker/cms-collector": "*",
     "spryker/cms-gui": "*",
     "spryker/code-sniffer": "*",
@@ -25,6 +26,7 @@
   "suggest": {
     "spryker/cms-block-collector": "If you want to expand CMS block collector with content widget mapping, provides plugin.",
     "spryker/cms-block-gui": "If you want to use content widgets with CMS blocks.",
+    "spryker/cms-block-storage": "If you want to use CmsBlockStorage plugins, minimum required version: 1.2.0.",
     "spryker/cms-collector": "If you want to expand cms pages collector with content widget mapping, provides plugin.",
     "spryker/cms-gui": "If you want to use content widgets with CMS pages.",
     "spryker/cms": "If you want to use CmsPageParameterMapExpanderPlugin plugin.",

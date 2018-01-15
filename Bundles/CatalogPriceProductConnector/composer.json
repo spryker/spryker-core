@@ -9,13 +9,15 @@
     "spryker/price-product": "^1.0.0"
   },
   "require-dev": {
+    "spryker/catalog": "*",
     "spryker/code-sniffer": "*",
     "spryker/elastica": "*",
     "spryker/search": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/search": "If you want to use Search plugins",
+    "spryker/catalog": "If you want to use Catalog plugins, minimum required version: 5.2.0.",
+    "spryker/search": "If you want to use Search plugins.",
     "spryker/elastica": "If you want to use Elastica plugins.",
     "spryker/config": "If you want to use Config plugins."
   },

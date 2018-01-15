@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class EventConfig extends AbstractBundleConfig
 {
+    const DEFAULT_EVENT_MESSAGE_CHUNK_SIZE = 1000;
+
     /**
      * @return string|null
      */
@@ -34,5 +36,13 @@ class EventConfig extends AbstractBundleConfig
         }
 
         return $this->getConfig()->get(EventConstants::LOGGER_ACTIVE, false);
+    }
+
+    /**
+     * @return int
+     */
+    public function getEventQueueMessageChunkSize()
+    {
+        return static::DEFAULT_EVENT_MESSAGE_CHUNK_SIZE;
     }
 }

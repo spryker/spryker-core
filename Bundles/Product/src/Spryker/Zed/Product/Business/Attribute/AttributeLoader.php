@@ -55,7 +55,7 @@ class AttributeLoader implements AttributeLoaderInterface
     {
         $productAbstractEntity = $this->getProductAbstractEntity($productAbstractTransfer);
 
-        return $this->getCombinedAbstractAttributeKeysForEntity($productAbstractEntity);
+        return $this->getCombinedAbstractAttributeKeysForEntity($productAbstractEntity, $localeTransfer);
     }
 
     /**
@@ -77,7 +77,7 @@ class AttributeLoader implements AttributeLoaderInterface
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer Deprecated: default null will be removed in the next major
      *
      * @return array
      */
