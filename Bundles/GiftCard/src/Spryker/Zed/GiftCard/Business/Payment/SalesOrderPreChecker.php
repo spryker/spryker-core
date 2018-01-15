@@ -58,15 +58,14 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
     }
 
     /**
-     * @void
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
-     * @return void
+     * @return bool
      */
     public function precheckSalesOrderGiftCards(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
+        $result = true;
         if (!$this->hasGiftCardPayments($quoteTransfer)) {
             return;
         }
@@ -90,11 +89,14 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
             }
 
             foreach ($errors as $error) {
+                $result = false;
                 $checkoutResponse->addError($error);
             }
         }
 
         $quoteTransfer->setPayments($validPayments);
+
+        return $result;
     }
 
     /**

@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\GiftCardMailConnector\Business\Carrier;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\MailTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCard;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\GiftCard\Business\Exception\GiftCardSalesMetadataNotFoundException;
@@ -79,9 +81,8 @@ class GiftCardCarrier implements GiftCardCarrierInterface
             new GiftCardTransfer()
         );
 
-        $customerTransfer = $this->getCustomerTransfer(
-            $salesOrderItemGiftCard->getSpySalesOrderItem()->getOrder()->getCustomerReference()
-        );
+        $salesOrderEntity = $salesOrderItemGiftCard->getSpySalesOrderItem()->getOrder();
+        $customerTransfer = $this->getCustomerTransfer($salesOrderEntity);
 
         $mailTransfer = $mailTransfer
             ->setType(GiftCardDeliveryMailTypePlugin::MAIL_TYPE)
@@ -92,13 +93,30 @@ class GiftCardCarrier implements GiftCardCarrierInterface
     }
 
     /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected function getCustomerTransfer(SpySalesOrder $salesOrderEntity)
+    {
+        if ($salesOrderEntity->getCustomerReference()) {
+            return $this->findCustomerTransfer($salesOrderEntity->getCustomerReference());
+        }
+
+        return (new CustomerTransfer())
+            ->setEmail($salesOrderEntity->getEmail())
+            ->setLastName($salesOrderEntity->getLastName())
+            ->setFirstName($salesOrderEntity->getFirstName());
+    }
+
+    /**
      * @param string $customerReference
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    protected function getCustomerTransfer($customerReference)
+    protected function findCustomerTransfer($customerReference)
     {
         $customerTransfer = $this->customerFacade->findByReference($customerReference);
 

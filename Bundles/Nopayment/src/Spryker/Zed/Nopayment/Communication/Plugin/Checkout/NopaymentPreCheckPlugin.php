@@ -25,7 +25,7 @@ class NopaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheck
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return void
      */
     public function execute(
         QuoteTransfer $quoteTransfer,
@@ -38,6 +38,6 @@ class NopaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheck
             $checkoutResponseTransfer->addError($error);
         }
 
-        return $checkoutResponseTransfer;
+        return;
     }
 }

@@ -1,5 +1,8 @@
 <div>
-    {% for giftCard in mail.giftCards %}
-        <div style="text-align: center;">{{ giftCard.code }}</div><br />
-    {% endfor %}
+        <div style="text-align: center;">
+        {{ 'mail.giftCard.delivery.text' | trans }}
+        {% for giftCard in mail.giftCards %}
+                {{ giftCard.code }}<br />
+        {% endfor %}
+        </div>
 </div>
