@@ -34,7 +34,7 @@ class CategoryNavigationConnectorDependencyProvider extends AbstractBundleDepend
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return void
      */
@@ -46,7 +46,7 @@ class CategoryNavigationConnectorDependencyProvider extends AbstractBundleDepend
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return void
      */
@@ -58,7 +58,7 @@ class CategoryNavigationConnectorDependencyProvider extends AbstractBundleDepend
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return void
      */
