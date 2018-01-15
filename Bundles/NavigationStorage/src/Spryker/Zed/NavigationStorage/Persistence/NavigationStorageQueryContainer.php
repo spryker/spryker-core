@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\NavigationStorage\Persistence;
 
-use Orm\Zed\Navigation\Persistence\Base\SpyNavigationNodeLocalizedAttributes;
-use Orm\Zed\Navigation\Persistence\Map\SpyNavigationNodeLocalizedAttributesTableMap;
 use Orm\Zed\Navigation\Persistence\Map\SpyNavigationNodeTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 

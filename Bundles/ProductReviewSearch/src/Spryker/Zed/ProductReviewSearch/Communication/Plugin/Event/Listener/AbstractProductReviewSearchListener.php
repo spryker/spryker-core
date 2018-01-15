@@ -39,7 +39,7 @@ abstract class AbstractProductReviewSearchListener extends AbstractPlugin implem
     }
 
     /**
-     * @param SpyProductReviewSearch[] $productReviewSearchEntities
+     * @param \Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearch[] $productReviewSearchEntities
      *
      * @return void
      */

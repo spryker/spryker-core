@@ -7,17 +7,16 @@
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
-use Spryker\Zed\Event\Business\EventFacadeInterface;
 
 class ProductOptionToEventFacadeBridge implements ProductOptionToEventFacadeInterface
 {
     /**
-     * @var EventFacadeInterface
+     * @var \Spryker\Zed\Event\Business\EventFacadeInterface
      */
     protected $eventFacade;
 
     /**
-     * @param EventFacadeInterface $eventFacade
+     * @param \Spryker\Zed\Event\Business\EventFacadeInterface $eventFacade
      */
     public function __construct($eventFacade)
     {
@@ -26,7 +25,7 @@ class ProductOptionToEventFacadeBridge implements ProductOptionToEventFacadeInte
 
     /**
      * @param string $eventName
-     * @param TransferInterface $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
      *
      * @return void
      */
@@ -34,5 +33,4 @@ class ProductOptionToEventFacadeBridge implements ProductOptionToEventFacadeInte
     {
         $this->eventFacade->trigger($eventName, $eventTransfer);
     }
-
 }

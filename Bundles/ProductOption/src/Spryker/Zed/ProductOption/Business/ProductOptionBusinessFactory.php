@@ -23,7 +23,6 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver;
 use Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaver;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
@@ -197,7 +196,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductOptionToEventFacadeInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface
      */
     protected function getEventFacade()
     {

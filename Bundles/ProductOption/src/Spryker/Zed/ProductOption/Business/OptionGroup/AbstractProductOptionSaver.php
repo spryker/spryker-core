@@ -32,14 +32,14 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
     protected $touchFacade;
 
     /**
-     * @var ProductOptionToEventFacadeInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface
      */
     protected $eventFacade;
 
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface $touchFacade
-     * @param ProductOptionToEventFacadeInterface $eventFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface $eventFacade
      */
     public function __construct(
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
