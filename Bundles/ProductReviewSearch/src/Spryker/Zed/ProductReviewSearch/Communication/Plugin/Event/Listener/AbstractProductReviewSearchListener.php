@@ -31,7 +31,23 @@ abstract class AbstractProductReviewSearchListener extends AbstractPlugin implem
         $productReviewEntities = $this->getQueryContainer()->queryProductReviewsByIdProductReviews($productReviewIds)->find()->getData();
         $productReviewSearchEntitiesByProductReviewIds = $this->findProductReviewSearchEntitiesByProductReviewIds($productReviewIds);
 
+        if (!$productReviewEntities) {
+            $this->deleteSearchData($productReviewSearchEntitiesByProductReviewIds);
+        }
+
         $this->storeData($productReviewEntities, $productReviewSearchEntitiesByProductReviewIds);
+    }
+
+    /**
+     * @param SpyProductReviewSearch[] $productReviewSearchEntities
+     *
+     * @return void
+     */
+    protected function deleteSearchData(array $productReviewSearchEntities)
+    {
+        foreach ($productReviewSearchEntities as $productReviewSearchEntity) {
+            $productReviewSearchEntity->delete();
+        }
     }
 
     /**
