@@ -10,6 +10,10 @@ namespace Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsVersionTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 
+/**
+ * @method \Spryker\Zed\CmsStorage\Communication\CmsStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface getQueryContainer()
+ */
 class CmsPageVersionStorageListener extends AbstractCmsPageStorageListener implements EventBulkHandlerInterface
 {
     /**
