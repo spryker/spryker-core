@@ -10,6 +10,10 @@ namespace Spryker\Zed\CmsPageSearch\Communication\Plugin\Event\Listener;
 use Spryker\Zed\Cms\Dependency\CmsEvents;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 
+/**
+ * @method \Spryker\Zed\CmsPageSearch\Communication\CmsPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface getQueryContainer()
+ */
 class CmsPageSearchListener extends AbstractCmsPageSearchListener implements EventBulkHandlerInterface
 {
     /**

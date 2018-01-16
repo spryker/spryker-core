@@ -11,6 +11,10 @@ use Orm\Zed\CmsBlockProductConnector\Persistence\Map\SpyCmsBlockProductConnector
 use Spryker\Zed\CmsBlockProductConnector\Dependency\CmsBlockProductConnectorEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
+/**
+ * @method \Spryker\Zed\CmsBlockProductStorage\Communication\CmsBlockProductStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainerInterface getQueryContainer()
+ */
 class CmsBlockProductConnectorStorageListener extends AbstractCmsBlockProductStorageListener
 {
     use DatabaseTransactionHandlerTrait;

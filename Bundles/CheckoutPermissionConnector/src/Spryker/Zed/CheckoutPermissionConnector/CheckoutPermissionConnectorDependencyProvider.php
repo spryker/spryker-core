@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CheckoutPermissionConnector;
 
-use Spryker\Zed\CheckoutPermissionConnector\Dependency\CheckoutPermissionConnectorToFacadeBridge;
+use Spryker\Zed\CheckoutPermissionConnector\Dependency\Facade\CheckoutPermissionConnectorToCheckoutPermissionFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -36,7 +36,7 @@ class CheckoutPermissionConnectorDependencyProvider extends AbstractBundleDepend
     protected function addPermissionFacade(Container $container)
     {
         $container[static::FACADE_PERMISSION] = function (Container $container) {
-            return new CheckoutPermissionConnectorToFacadeBridge($container->getLocator()->permission()->facade());
+            return new CheckoutPermissionConnectorToCheckoutPermissionFacadeBridge($container->getLocator()->permission()->facade());
         };
 
         return $container;
