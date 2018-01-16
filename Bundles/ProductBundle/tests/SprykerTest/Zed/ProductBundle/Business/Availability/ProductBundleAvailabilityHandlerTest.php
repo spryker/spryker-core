@@ -117,7 +117,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         if ($storeFacadeMock === null) {
             $storeFacadeMock = $this->createStoreFacadeMock();
             $storeTransfer = (new StoreBuilder([
-                StoreTransfer::ID_STORE => self::ID_STORE
+                StoreTransfer::ID_STORE => self::ID_STORE,
             ]))
             ->build();
             $storeFacadeMock->method('getCurrentStore')->willReturn($storeTransfer);
@@ -153,6 +153,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     {
         return $this->getMockBuilder(ProductBundleQueryContainerInterface::class)->getMock();
     }
+
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
      */
@@ -197,6 +198,4 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $productBundleAvailabilityHandlerMock->method('findBundledItemAvailabilityEntityBySku')
             ->willReturn($availabilityEntity);
     }
-
-
 }

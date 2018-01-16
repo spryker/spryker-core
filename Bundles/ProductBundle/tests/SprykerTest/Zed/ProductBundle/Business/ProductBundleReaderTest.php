@@ -94,8 +94,8 @@ class ProductBundleReaderTest extends Unit
     /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface|null $productBundleQueryContainerMock
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface|null $productBundleToAvailabilityQueryContainerMock
-     *
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
+     *
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function createProductBundleReader(
@@ -115,7 +115,7 @@ class ProductBundleReaderTest extends Unit
         if ($storeFacadeMock === null) {
             $storeFacadeMock = $this->createStoreFacadeMock();
             $storeTransfer = (new StoreBuilder([
-                StoreTransfer::ID_STORE => self::ID_STORE
+                StoreTransfer::ID_STORE => self::ID_STORE,
             ]))
                 ->build();
             $storeFacadeMock->method('getCurrentStore')->willReturn($storeTransfer);

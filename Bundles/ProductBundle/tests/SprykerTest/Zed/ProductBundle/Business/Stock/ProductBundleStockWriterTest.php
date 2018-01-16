@@ -138,7 +138,7 @@ class ProductBundleStockWriterTest extends Unit
         if ($storeFacadeMock === null) {
             $storeFacadeMock = $this->createStoreFacadeMock();
             $storeTransfer = (new StoreBuilder([
-                StoreTransfer::ID_STORE => self::ID_STORE
+                StoreTransfer::ID_STORE => self::ID_STORE,
             ]))
                 ->build();
             $storeFacadeMock->method('getCurrentStore')->willReturn($storeTransfer);

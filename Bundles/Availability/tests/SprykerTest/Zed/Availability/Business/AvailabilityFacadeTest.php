@@ -15,7 +15,6 @@ use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Zed\Availability\Business\AvailabilityFacade;
