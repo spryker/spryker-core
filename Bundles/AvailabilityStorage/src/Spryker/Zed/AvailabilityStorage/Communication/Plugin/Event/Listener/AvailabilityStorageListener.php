@@ -9,28 +9,17 @@ namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\AvailabilityStorage\Communication\AvailabilityStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacadeInterface getFacade()
  */
-class AvailabilityStorageListener extends AbstractAvailabilityStorageListener implements EventBulkHandlerInterface
+class AvailabilityStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
-
-    /**
-     * @var bool
-     */
-    protected $isSendingToQueue = true;
-
-    /**
-     * @param bool $isSendingToQueue
-     */
-    public function __construct($isSendingToQueue = true)
-    {
-        $this->isSendingToQueue = $isSendingToQueue;
-    }
 
     /**
      * @api
@@ -48,11 +37,11 @@ class AvailabilityStorageListener extends AbstractAvailabilityStorageListener im
         if ($eventName === AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE ||
             $eventName === AvailabilityEvents::AVAILABILITY_ABSTRACT_UNPUBLISH
         ) {
-            $this->unpublish($availabilityIds, $this->isSendingToQueue);
+            $this->getFacade()->unpublish($availabilityIds, $this->isSendingToQueue);
 
             return;
         }
 
-        $this->publish($availabilityIds, $this->isSendingToQueue);
+        $this->getFacade()->publish($availabilityIds, $this->isSendingToQueue);
     }
 }

@@ -10,14 +10,16 @@ namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\AvailabilityStorage\Communication\AvailabilityStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacadeInterface getFacade()
  */
-class AvailabilityProductStorageListener extends AbstractAvailabilityStorageListener implements EventBulkHandlerInterface
+class AvailabilityProductStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -65,7 +67,7 @@ class AvailabilityProductStorageListener extends AbstractAvailabilityStorageList
         }
 
         $abstractAvailabilityIds = $this->findAvailabilityAbstractBySkus($abstractProductSkus);
-        $this->publish($abstractAvailabilityIds, $this->isSendingToQueue);
+        $this->getFacade()->publish($abstractAvailabilityIds, $this->isSendingToQueue);
         $this->unpublishByAbstractProductIds($abstractProductIds);
     }
 

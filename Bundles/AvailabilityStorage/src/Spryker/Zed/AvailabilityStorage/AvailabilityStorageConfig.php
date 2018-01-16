@@ -11,4 +11,21 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class AvailabilityStorageConfig extends AbstractBundleConfig
 {
+
+    protected static $isSendingToQueue ;
+    /**
+     * @return bool
+     */
+    public static function isSendingToQueue()
+    {
+
+    }
+
+    /**
+     * @return bool
+     */
+    public static function setSendingToQueue($sendingToQueue)
+    {
+
+    }
 }

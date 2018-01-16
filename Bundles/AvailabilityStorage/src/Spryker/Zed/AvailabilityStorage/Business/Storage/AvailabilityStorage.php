@@ -5,20 +5,27 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\AvailabilityStorage\Business\Storage;
 
 use Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorage;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\AvailabilityStorage\Communication\AvailabilityStorageCommunicationFactory getFactory()
- */
-class AbstractAvailabilityStorageListener extends AbstractPlugin
+class AvailabilityStorage implements AvailabilityStorageInterface
 {
     const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const ID_AVAILABILITY_ABSTRACT = 'id_availability_abstract';
     const FK_AVAILABILITY_ABSTRACT = 'fkAvailabilityAbstract';
+
+    /**
+     * @var Store
+     */
+    protected $store;
+
+    /**
+     * @var AvailabilityStorageQueryContainerInterface
+     */
+    protected $queryContainer;
 
     /**
      * @var bool
@@ -26,15 +33,24 @@ class AbstractAvailabilityStorageListener extends AbstractPlugin
     protected $isSendingToQueue = true;
 
     /**
+     * @param Store $store
+     * @param AvailabilityStorageQueryContainerInterface $queryContainer
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(Store $store, AvailabilityStorageQueryContainerInterface $queryContainer, $isSendingToQueue = true)
+    {
+        $this->store = $store;
+        $this->queryContainer = $queryContainer;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
+
+    /**
      * @param array $availabilityIds
-     * @param bool $sendingToQueue
      *
      * @return void
      */
-    protected function publish(array $availabilityIds, $sendingToQueue = true)
+    public function publish(array $availabilityIds)
     {
-        $this->isSendingToQueue = $sendingToQueue;
-
         $spyAvailabilityEntities = $this->findAvailabilityAbstractEntities($availabilityIds);
         $spyAvailabilityStorageEntities = $this->findAvailabilityStorageEntitiesByAvailabilityAbstractIds($availabilityIds);
 
@@ -46,11 +62,10 @@ class AbstractAvailabilityStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function unpublish(array $availabilityIds, $sendingToQueue = true)
+    public function unpublish(array $availabilityIds)
     {
         $spyAvailabilityStorageEntities = $this->findAvailabilityStorageEntitiesByAvailabilityAbstractIds($availabilityIds);
         foreach ($spyAvailabilityStorageEntities as $spyAvailabilityStorageEntity) {
-            $spyAvailabilityStorageEntity->setIsSendingToQueue($sendingToQueue);
             $spyAvailabilityStorageEntity->delete();
         }
     }
@@ -99,7 +114,7 @@ class AbstractAvailabilityStorageListener extends AbstractPlugin
      */
     protected function findAvailabilityAbstractEntities(array $availabilityIds)
     {
-        return $this->getQueryContainer()->queryAvailabilityAbstractWithRelationsByIds($availabilityIds)->find()->getData();
+        return $this->queryContainer->queryAvailabilityAbstractWithRelationsByIds($availabilityIds)->find()->getData();
     }
 
     /**
@@ -109,7 +124,7 @@ class AbstractAvailabilityStorageListener extends AbstractPlugin
      */
     protected function findAvailabilityStorageEntitiesByAvailabilityAbstractIds(array $availabilityAbstractIds)
     {
-        return $this->getQueryContainer()->queryAvailabilityStorageByAvailabilityAbstractIds($availabilityAbstractIds)->find()->toKeyIndex(static::FK_AVAILABILITY_ABSTRACT);
+        return $this->queryContainer->queryAvailabilityStorageByAvailabilityAbstractIds($availabilityAbstractIds)->find()->toKeyIndex(static::FK_AVAILABILITY_ABSTRACT);
     }
 
     /**
@@ -117,6 +132,6 @@ class AbstractAvailabilityStorageListener extends AbstractPlugin
      */
     protected function getStoreName()
     {
-        return $this->getFactory()->getStore()->getStoreName();
+        return $this->store->getStoreName();
     }
 }
