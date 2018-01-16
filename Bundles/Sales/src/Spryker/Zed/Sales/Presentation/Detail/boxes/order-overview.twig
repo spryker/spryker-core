@@ -16,7 +16,7 @@
                     </p>
                 {% endif %}
                 <p><b>{{ 'Customer name' | trans }}:</b>
-                    {% if order.customerReference %}
+                    {% if order.customerReference and order.fkCustomer %}
                         <a href="{{ url('/customer/view', {'id-customer': order.fkCustomer}) }}" target="_blank">{{ order.salutation }} {{ order.firstName }} {{ order.lastName }}</a>
                     {% else %}
                         {{ order.salutation }} {{ order.firstName }} {{ order.lastName }}
