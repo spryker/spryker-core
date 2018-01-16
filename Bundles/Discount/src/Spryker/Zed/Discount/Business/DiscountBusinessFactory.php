@@ -35,6 +35,8 @@ use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapper;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderHydrate;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver as ObsoleteDiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Persistence\DiscountPersist;
+use Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationReader;
+use Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationWriter;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverter;
@@ -317,7 +319,11 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountConfiguratorHydrate()
     {
-        $discountConfiguratorHydrate = new DiscountConfiguratorHydrate($this->getQueryContainer(), $this->createDiscountEntityMapper());
+        $discountConfiguratorHydrate = new DiscountConfiguratorHydrate(
+            $this->getQueryContainer(),
+            $this->createDiscountEntityMapper(),
+            $this->createDiscountStoreRelationReader()
+        );
         $discountConfiguratorHydrate->setDiscountConfigurationExpanderPlugins($this->getConfigurationExpanderPlugins());
 
         return $discountConfiguratorHydrate;
@@ -328,7 +334,11 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountPersist()
     {
-        $discountPersist = new DiscountPersist($this->createVoucherEngine(), $this->getQueryContainer());
+        $discountPersist = new DiscountPersist(
+            $this->createVoucherEngine(),
+            $this->getQueryContainer(),
+            $this->createDiscountStoreRelationWriter()
+        );
 
         $discountPersist->setDiscountPostCreatePlugins($this->getDiscountPostCreatePlugins());
         $discountPersist->setDiscountPostUpdatePlugins($this->getDiscountPostUpdatePlugins());
@@ -571,5 +581,24 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function getCurrencyFacade()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationWriterInterface
+     */
+    protected function createDiscountStoreRelationWriter()
+    {
+        return new DiscountStoreRelationWriter(
+            $this->getQueryContainer(),
+            $this->createDiscountStoreRelationReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationReaderInterface
+     */
+    protected function createDiscountStoreRelationReader()
+    {
+        return new DiscountStoreRelationReader($this->getQueryContainer());
     }
 }

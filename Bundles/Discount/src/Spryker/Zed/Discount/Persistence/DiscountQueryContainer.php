@@ -247,4 +247,35 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
             ->createDiscountAmountQuery()
             ->filterByIdDiscountAmount($idDiscountAmount);
     }
+
+    /**
+     * @api
+     *
+     * @param int $idDiscount
+     * @param int[] $idStores
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery
+     */
+    public function queryDiscountStoreByFkDiscountAndFkStores($idDiscount, array $idStores)
+    {
+        return $this->getFactory()
+            ->createDiscountStoreQuery()
+            ->filterByFkDiscount($idDiscount)
+            ->filterByFkStore_In($idStores);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idDiscount
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery
+     */
+    public function queryDiscountStoreWithStoresByFkDiscount($idDiscount)
+    {
+        return $this->getFactory()
+            ->createDiscountStoreQuery()
+            ->leftJoinWithSpyStore()
+            ->filterByFkDiscount($idDiscount);
+    }
 }

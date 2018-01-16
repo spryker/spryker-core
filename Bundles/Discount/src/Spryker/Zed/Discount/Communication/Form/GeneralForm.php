@@ -10,6 +10,7 @@ namespace Spryker\Zed\Discount\Communication\Form;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Communication\Form\Constraint\UniqueDiscountName;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -20,6 +21,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class GeneralForm extends AbstractType
 {
+    const FIELD_STORE_RELATION = 'store_relation';
     const FIELD_DISCOUNT_TYPE = 'discount_type';
     const FIELD_DISPLAY_NAME = 'display_name';
     const FIELD_DESCRIPTION = 'description';
@@ -35,11 +37,20 @@ class GeneralForm extends AbstractType
     protected $discountQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
+     * @var \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
      */
-    public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
-    {
+    protected $storeRelationFormTypePlugin;
+
+    /**
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
+     * @param \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface $storeRelationFormTypePlugin
+     */
+    public function __construct(
+        DiscountQueryContainerInterface $discountQueryContainer,
+        FormTypeInterface $storeRelationFormTypePlugin
+    ) {
         $this->discountQueryContainer = $discountQueryContainer;
+        $this->storeRelationFormTypePlugin = $storeRelationFormTypePlugin;
     }
 
     /**
@@ -50,12 +61,32 @@ class GeneralForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addDiscountType($builder)
+        $this
+            ->addStoreRelationField($builder)
+            ->addDiscountType($builder)
             ->addDisplayNameField($builder)
             ->addDescriptionField($builder)
             ->addExclusive($builder)
             ->addValidFromField($builder)
             ->addValidToField($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addStoreRelationField(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_STORE_RELATION,
+            $this->storeRelationFormTypePlugin->getType(),
+            [
+                'label' => false,
+            ]
+        );
+
+        return $this;
     }
 
     /**

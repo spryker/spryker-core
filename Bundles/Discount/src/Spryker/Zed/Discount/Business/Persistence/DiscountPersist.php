@@ -32,6 +32,11 @@ class DiscountPersist implements DiscountPersistInterface
     protected $discountQueryContainer;
 
     /**
+     * @var \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationWriterInterface
+     */
+    protected $discountStoreRelationWriter;
+
+    /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface[]
      */
     protected $discountPostCreatePlugins = [];
@@ -44,13 +49,16 @@ class DiscountPersist implements DiscountPersistInterface
     /**
      * @param \Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface $voucherEngine
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationWriterInterface $discountStoreRelationWriter
      */
     public function __construct(
         VoucherEngineInterface $voucherEngine,
-        DiscountQueryContainerInterface $discountQueryContainer
+        DiscountQueryContainerInterface $discountQueryContainer,
+        DiscountStoreRelationWriterInterface $discountStoreRelationWriter
     ) {
         $this->voucherEngine = $voucherEngine;
         $this->discountQueryContainer = $discountQueryContainer;
+        $this->discountStoreRelationWriter = $discountStoreRelationWriter;
     }
 
     /**
@@ -87,6 +95,7 @@ class DiscountPersist implements DiscountPersistInterface
         $discountEntity->save();
 
         $this->saveDiscountMoneyValues($discountEntity, $discountConfiguratorTransfer);
+        $this->saveDiscountStoreRelation($discountEntity, $discountConfiguratorTransfer);
 
         $discountConfiguratorTransfer->getDiscountGeneral()->setIdDiscount($discountEntity->getIdDiscount());
 
@@ -145,6 +154,7 @@ class DiscountPersist implements DiscountPersistInterface
         $affectedRows = $discountEntity->save();
 
         $this->saveDiscountMoneyValues($discountEntity, $discountConfiguratorTransfer);
+        $this->saveDiscountStoreRelation($discountEntity, $discountConfiguratorTransfer);
 
         $this->executePostUpdatePlugins($discountConfiguratorTransfer);
 
@@ -395,5 +405,19 @@ class DiscountPersist implements DiscountPersistInterface
             $discountAmountEntity->setFkDiscount($discountEntity->getIdDiscount());
             $discountAmountEntity->save();
         }
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     *
+     * @return void
+     */
+    protected function saveDiscountStoreRelation(SpyDiscount $discountEntity, DiscountConfiguratorTransfer $discountConfiguratorTransfer)
+    {
+        $storeRelationTransfer = $discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation();
+        $storeRelationTransfer->setIdEntity($discountEntity->getIdDiscount());
+
+        $this->discountStoreRelationWriter->update($storeRelationTransfer);
     }
 }

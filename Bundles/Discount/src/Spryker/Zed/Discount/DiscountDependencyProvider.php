@@ -27,7 +27,9 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TotalQuantityDecision
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyBridge;
+use Spryker\Zed\Discount\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
 
 class DiscountDependencyProvider extends AbstractBundleDependencyProvider
@@ -50,6 +52,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     const DECISION_RULE_PLUGINS = 'DECISION_RULE_PLUGINS';
     const CALCULATOR_PLUGINS = 'CALCULATOR_PLUGINS';
     const COLLECTOR_PLUGINS = 'COLLECTOR_PLUGINS';
+    const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -89,6 +92,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDiscountFormDataProviderExpanderPlugins($container);
         $container = $this->addDiscountViewBlockProviderPlugins($container);
         $container = $this->addCurrencyFacade($container);
+        $container = $this->addStoreRelationFormTypePlugin($container);
 
         return $container;
     }
@@ -427,5 +431,35 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreRelationFormTypePlugin(Container $container)
+    {
+        $container[static::PLUGIN_STORE_RELATION_FORM_TYPE] = function () {
+            return $this->createStoreRelationFormTypePlugin();
+        };
+        return $container;
+    }
+
+    /**
+     * @throws \Spryker\Zed\Discount\Exception\MissingStoreRelationFormTypePluginException
+     *
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function createStoreRelationFormTypePlugin()
+    {
+        throw new MissingStoreRelationFormTypePluginException(
+            sprintf(
+                'Missing instance of %s! You need to configure StoreRelationFormType ' .
+                'in your own DiscountDependencyProvider::createStoreRelationFormTypePlugin() ' .
+                'to be able to manage shipment prices.',
+                FormTypeInterface::class
+            )
+        );
     }
 }

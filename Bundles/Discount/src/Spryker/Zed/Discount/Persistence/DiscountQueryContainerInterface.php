@@ -134,4 +134,23 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountAmountQuery
      */
     public function queryDiscountAmountById($idDiscountAmount);
+
+    /**
+     * @api
+     *
+     * @param int $idDiscount
+     * @param int[] $idStores
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery
+     */
+    public function queryDiscountStoreByFkDiscountAndFkStores($idDiscount, array $idStores);
+
+    /**
+     * @api
+     *
+     * @param int $idDiscount
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery
+     */
+    public function queryDiscountStoreWithStoresByFkDiscount($idDiscount);
 }

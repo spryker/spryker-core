@@ -67,7 +67,10 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createGeneralFormType()
     {
-        return new GeneralForm($this->getQueryContainer());
+        return new GeneralForm(
+            $this->getQueryContainer(),
+            $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE)
+        );
     }
 
     /**

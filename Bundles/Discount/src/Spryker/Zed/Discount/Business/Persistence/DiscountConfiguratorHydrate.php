@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DiscountConditionTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
@@ -33,15 +34,23 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     protected $discountEntityMapper;
 
     /**
+     * @var \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationReaderInterface
+     */
+    protected $discountStoreRelationReader;
+
+    /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      * @param \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface $discountEntityMapper
+     * @param \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationReaderInterface $discountStoreRelationReader
      */
     public function __construct(
         DiscountQueryContainerInterface $discountQueryContainer,
-        DiscountEntityMapperInterface $discountEntityMapper
+        DiscountEntityMapperInterface $discountEntityMapper,
+        DiscountStoreRelationReaderInterface $discountStoreRelationReader
     ) {
         $this->discountQueryContainer = $discountQueryContainer;
         $this->discountEntityMapper = $discountEntityMapper;
+        $this->discountStoreRelationReader = $discountStoreRelationReader;
     }
 
     /**
@@ -85,8 +94,24 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
 
         $discountGeneralTransfer->setValidFrom($discountEntity->getValidFrom());
         $discountGeneralTransfer->setValidTo($discountEntity->getValidTo());
+        $discountGeneralTransfer->setStoreRelation(
+            $this->getStoreRelation($discountEntity->getIdDiscount())
+        );
 
         return $discountGeneralTransfer;
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    protected function getStoreRelation($idDiscount)
+    {
+        return $this->discountStoreRelationReader->getStoreRelation(
+            (new StoreRelationTransfer())
+                ->setIdEntity($idDiscount)
+        );
     }
 
     /**
