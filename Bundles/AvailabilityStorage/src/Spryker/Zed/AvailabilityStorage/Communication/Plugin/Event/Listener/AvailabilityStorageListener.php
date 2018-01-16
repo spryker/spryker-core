@@ -20,6 +20,21 @@ class AvailabilityStorageListener extends AbstractAvailabilityStorageListener im
     use DatabaseTransactionHandlerTrait;
 
     /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * AvailabilityStorageListener constructor.
+     *
+     * @param bool $isSendingToQueue
+     */
+    public function __construct($isSendingToQueue = true)
+    {
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
+
+    /**
      * @api
      *
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
@@ -35,11 +50,11 @@ class AvailabilityStorageListener extends AbstractAvailabilityStorageListener im
         if ($eventName === AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE ||
             $eventName === AvailabilityEvents::AVAILABILITY_ABSTRACT_UNPUBLISH
         ) {
-            $this->unpublish($availabilityIds);
+            $this->unpublish($availabilityIds, $this->isSendingToQueue);
 
             return;
         }
 
-        $this->publish($availabilityIds);
+        $this->publish($availabilityIds, $this->isSendingToQueue);
     }
 }

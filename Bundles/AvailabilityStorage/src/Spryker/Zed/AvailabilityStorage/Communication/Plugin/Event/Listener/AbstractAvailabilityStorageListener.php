@@ -21,12 +21,20 @@ class AbstractAvailabilityStorageListener extends AbstractPlugin
     const FK_AVAILABILITY_ABSTRACT = 'fkAvailabilityAbstract';
 
     /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
      * @param array $availabilityIds
+     * @param bool $sendingToQueue
      *
      * @return void
      */
-    protected function publish(array $availabilityIds)
+    protected function publish(array $availabilityIds, $sendingToQueue = true)
     {
+        $this->isSendingToQueue = $sendingToQueue;
+
         $spyAvailabilityEntities = $this->findAvailabilityAbstractEntities($availabilityIds);
         $spyAvailabilityStorageEntities = $this->findAvailabilityStorageEntitiesByAvailabilityAbstractIds($availabilityIds);
 
@@ -38,8 +46,10 @@ class AbstractAvailabilityStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function unpublish(array $availabilityIds)
+    protected function unpublish(array $availabilityIds, $sendingToQueue = true)
     {
+        $this->isSendingToQueue = $sendingToQueue;
+
         $spyAvailabilityStorageEntities = $this->findAvailabilityStorageEntitiesByAvailabilityAbstractIds($availabilityIds);
         foreach ($spyAvailabilityStorageEntities as $spyAvailabilityStorageEntity) {
             $spyAvailabilityStorageEntity->delete();
@@ -79,6 +89,7 @@ class AbstractAvailabilityStorageListener extends AbstractPlugin
         $spyAvailabilityStorageEntity->setFkAvailabilityAbstract($spyAvailabilityEntity[static::ID_AVAILABILITY_ABSTRACT]);
         $spyAvailabilityStorageEntity->setData($spyAvailabilityEntity);
         $spyAvailabilityStorageEntity->setStore($this->getStoreName());
+        $spyAvailabilityStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyAvailabilityStorageEntity->save();
     }
 
