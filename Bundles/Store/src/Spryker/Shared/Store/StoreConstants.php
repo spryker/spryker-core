@@ -11,9 +11,9 @@ interface StoreConstants
 {
     /**
      * Specification:
-     * - Decides if the multi-store per instance feature is enabled.
+     * - Decides if the multi-store per Zed feature is enabled.
      *
      * @api
      */
-    const ENABLE_MULTI_STORE_PER_INSTANCE = 'MULTI_STORE_PER_INSTANCE';
+    const ENABLE_MULTI_STORE_PER_ZED = 'MULTI_STORE_PER_ZED';
 }
