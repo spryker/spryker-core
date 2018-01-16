@@ -137,7 +137,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     {
         $discountQuery = $this->getQueryContainer()->queryDiscount();
 
-        return new DiscountsTable($discountQuery, $this->getCalculatorPlugins());
+        return new DiscountsTable($discountQuery, $this->getQueryContainer(), $this->getCalculatorPlugins());
     }
 
     /**

@@ -15,6 +15,13 @@
            <h4>{{ 'General Information' | trans }}</h4>
            <table class="table">
                <tr>
+                   <td style="width: 150px;">{{ 'Store relation:' | trans }}</td>
+                   <td>
+                       {% for store in discountConfigurator.discountGeneral.storeRelation.stores %}
+                           <span class="label label-info">{{ store.name }}</span>
+                       {% endfor %}
+                   </td>
+               </tr>               <tr>
                    <td style="width: 150px;">{{ 'Discount Type:' | trans }}</td>
                    <td>
                        {{ discountConfigurator.discountGeneral.discountType|replace('_', ' ')|trans  }}
