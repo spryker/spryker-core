@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Cms\Persistence" package="src.Orm.Zed.Cms.Persistence">
+
+    <table name="spy_file" phpName="SpyFile">
+        <column name="id_file" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="file_name" type="VARCHAR" size="500" required="true"/>
+        <id-method-parameter value="spy_file_pk_seq"/>
+    </table>
+
+    <table name="spy_file_info" phpName="SpyFileInfo">
+        <column name="id_file_info" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_file" type="INTEGER" required="true"/>
+        <column name="type" type="VARCHAR" size="255" required="true"/>
+        <column name="size" type="INTEGER" required="true"/>
+        <column name="version" type="INTEGER" required="true"/>
+        <column name="version_name" type="VARCHAR" size="500" required="true"/>
+        <foreign-key name="spy_file_info-fk_file" foreignTable="spy_file" phpName="File" onDelete="CASCADE">
+            <reference foreign="id_file" local="fk_file"/>
+        </foreign-key>
+        <id-method-parameter value="spy_file_info_pk_seq"/>
+    </table>
+
+    <table name="spy_file_info_localized_attributes" idMethod="native" allowPkInsert="true">
+        <column name="id_file_info_localized_attributes" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_file_info" required="true" type="INTEGER"/>
+        <column name="fk_locale" required="true" type="INTEGER"/>
+        <column name="title" required="false" type="VARCHAR" default="NULL" size="255" />
+        <column name="alt" required="false" type="LONGVARCHAR" default="NULL" />
+        <foreign-key name="spy_file_info_localized_attributes-fk_file_info" foreignTable="spy_file_info" onDelete="CASCADE" onUpdate="CASCADE">
+            <reference local="fk_file_info" foreign="id_file_info"/>
+        </foreign-key>
+        <foreign-key name="spy_file_info_localized_attributes-fk_locale" foreignTable="spy_locale" phpName="Locale">
+            <reference local="fk_locale" foreign="id_locale"/>
+        </foreign-key>
+        <unique name="spy_file_info_localized_attributes-unique-fk_file_info">
+            <unique-column name="fk_file_info"/>
+            <unique-column name="fk_locale"/>
+        </unique>
+        <id-method-parameter value="spy_file_info_localized_attributes_pk_seq"/>
+    </table>
+</database>
