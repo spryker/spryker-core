@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
+use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
@@ -83,10 +84,11 @@ class Writer implements WriterInterface
      */
     protected function executeCreateStockTypeTransaction(TypeTransfer $stockTypeTransfer)
     {
-        $stockEntity = new SpyStock();
-        $stockEntity
-            ->setName($stockTypeTransfer->getName())
-            ->save();
+        $stockEntity = (new SpyStockQuery())
+            ->filterByName($stockTypeTransfer->getName())
+            ->findOneOrCreate();
+
+        $stockEntity->save();
 
         $this->insertActiveTouchRecordStockType($stockEntity);
 

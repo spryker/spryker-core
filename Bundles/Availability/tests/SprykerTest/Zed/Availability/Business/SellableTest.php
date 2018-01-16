@@ -61,7 +61,7 @@ class SellableTest extends Unit
     public function testIsProductSellable()
     {
         $this->setTestData();
-        $stockEntity = SpyStockQuery::create()->findOneByName('Warehouse1-demo');
+        $stockEntity = SpyStockQuery::create()->findOneByName('Warehouse1');
         $stockProductEntity = SpyStockProductQuery::create()->findOneOrCreate();
         $stockProductEntity
             ->setIsNeverOutOfStock(true)
@@ -80,7 +80,7 @@ class SellableTest extends Unit
     public function testCalculateRealStock()
     {
         $this->setTestData();
-        $stockEntity = SpyStockQuery::create()->findOneByName('Warehouse1-demo');
+        $stockEntity = SpyStockQuery::create()->findOneByName('Warehouse1');
 
         $stockProductEntity = SpyStockProductQuery::create()->findOneOrCreate();
         $stockProductEntity->setIsNeverOutOfStock(false)
@@ -160,15 +160,15 @@ class SellableTest extends Unit
             ->save();
 
         $stockType1 = SpyStockQuery::create()
-            ->filterByName('Warehouse1-demo')
+            ->filterByName('Warehouse1')
             ->findOneOrCreate();
 
-        $stockType1->setName('Warehouse1-demo')->save();
+        $stockType1->setName('Warehouse1')->save();
 
         $stockType2 = SpyStockQuery::create()
-            ->filterByName('Warehouse2-demo')
+            ->filterByName('Warehouse2')
             ->findOneOrCreate();
-        $stockType2->setName('Warehouse2-demo')->save();
+        $stockType2->setName('Warehouse2')->save();
 
         $stockProduct1 = SpyStockProductQuery::create()
             ->filterByFkStock($stockType1->getIdStock())

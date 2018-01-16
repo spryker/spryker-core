@@ -56,14 +56,15 @@ class ProductReservationReader implements ProductReservationReaderInterface
      */
     public function getProductAbstractAvailability($idProductAbstract, $idLocale, $idStore = null)
     {
-        $storeTransfer = $this->storeFacade->getStoreById($idStore);
+        $storeTransfer = $this->findStoreTransfer($idStore);
+
         $stockTypes = $this->stockFacade->getStoreToWarehouseMapping()[$storeTransfer->getName()];
 
         $productAbstractEntity = $this->availabilityQueryContainer
             ->queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale(
                 $idProductAbstract,
                 $idLocale,
-                $idStore,
+                $storeTransfer->getIdStore(),
                 $stockTypes
             )
             ->findOne();
@@ -80,14 +81,15 @@ class ProductReservationReader implements ProductReservationReaderInterface
      */
     public function findProductAbstractAvailability($idProductAbstract, $idLocale, $idStore)
     {
-        $storeTransfer = $this->storeFacade->getStoreById($idStore);
+        $storeTransfer = $this->findStoreTransfer($idStore);
+
         $stockTypes = $this->stockFacade->getStoreToWarehouseMapping()[$storeTransfer->getName()];
 
         $productAbstractEntity = $this->availabilityQueryContainer
             ->queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale(
                 $idProductAbstract,
                 $idLocale,
-                $idStore,
+                $storeTransfer->getIdStore(),
                 $stockTypes
             )
             ->findOne();
@@ -204,5 +206,24 @@ class ProductReservationReader implements ProductReservationReaderInterface
                 break;
             }
         }
+    }
+
+    /**
+     * @param null|int $idStore
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     */
+    protected function findStoreTransfer($idStore = null)
+    {
+        $storeTransfer = null;
+        if ($idStore) {
+            $storeTransfer = $this->storeFacade->getStoreById($idStore);
+        }
+
+        if (!$storeTransfer) {
+            $storeTransfer = $this->storeFacade->getCurrentStore();
+        }
+
+        return $storeTransfer;
     }
 }

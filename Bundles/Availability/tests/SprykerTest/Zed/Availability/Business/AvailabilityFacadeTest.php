@@ -17,6 +17,7 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
+use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Zed\Availability\Business\AvailabilityFacade;
 
 /**
@@ -214,8 +215,10 @@ class AvailabilityFacadeTest extends Unit
         $productEntity->setFkProductAbstract($productAbstractEntity->getIdProductAbstract());
         $productEntity->save();
 
-        $stockEntity = new SpyStock();
-        $stockEntity->setName('Warehouse1-demo');
+        $stockEntity = (new SpyStockQuery())
+            ->filterByName('Warehouse1')
+            ->findOneOrCreate();
+
         $stockEntity->save();
 
         $stockProductEntity = new SpyStockProduct();

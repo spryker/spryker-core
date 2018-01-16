@@ -38,8 +38,8 @@ class StockConfig extends AbstractBundleConfig
     {
         return [
             'DE' => [
-                'Warehouse1-demo',
-                'Warehouse2-demo',
+                'Warehouse1',
+                'Warehouse2',
             ],
         ];
     }

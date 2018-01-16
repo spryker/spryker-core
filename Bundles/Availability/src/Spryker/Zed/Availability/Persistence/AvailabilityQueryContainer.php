@@ -182,42 +182,48 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      */
     public function querySpyProductAbstractAvailabilityWithStock(array $stockTypes = [])
     {
-        $joinStockProduct = (new Join())->setRightTableName(SpyStockTableMap::TABLE_NAME);
-        $joinStockProduct->setJoinType(Criteria::LEFT_JOIN);
+        $query = $this->querySpyProductAbstractAvailability();
 
-        $stockTypeCriterion = (new Criteria())->getNewCriterion(
-            SpyStockTableMap::COL_NAME,
-            $stockTypes,
-            Criteria::IN
+        if (count($stockTypes) > 0) {
+            $joinStockProduct = (new Join())->setRightTableName(SpyStockTableMap::TABLE_NAME);
+            $joinStockProduct->setJoinType(Criteria::LEFT_JOIN);
+
+            $stockTypeCriterion = (new Criteria())->getNewCriterion(
+                SpyStockTableMap::COL_NAME,
+                $stockTypes,
+                Criteria::IN
+            );
+
+            $joinStockProduct->setJoinCondition($stockTypeCriterion);
+
+            $query->addJoinObject($joinStockProduct);
+        }
+
+        $query->addJoin(
+            [
+                SpyProductTableMap::COL_ID_PRODUCT,
+                SpyStockTableMap::COL_ID_STOCK,
+            ],
+            [
+                SpyStockProductTableMap::COL_FK_PRODUCT,
+                SpyStockProductTableMap::COL_FK_STOCK,
+            ],
+            Criteria::LEFT_JOIN
+        )
+
+        ->addJoin(
+            [
+                SpyProductTableMap::COL_SKU,
+                SpyAvailabilityAbstractTableMap::COL_FK_STORE,
+            ],
+            [
+                SpyOmsProductReservationTableMap::COL_SKU,
+                SpyOmsProductReservationTableMap::COL_FK_STORE,
+            ],
+            Criteria::LEFT_JOIN
         );
 
-        $joinStockProduct->setJoinCondition($stockTypeCriterion);
-
-        return $this->querySpyProductAbstractAvailability()
-            ->addJoinObject($joinStockProduct)
-            ->addJoin(
-                [
-                    SpyProductTableMap::COL_ID_PRODUCT,
-                    SpyStockTableMap::COL_ID_STOCK,
-                ],
-                [
-                    SpyStockProductTableMap::COL_FK_PRODUCT,
-                    SpyStockProductTableMap::COL_FK_STOCK,
-                ],
-                Criteria::LEFT_JOIN
-            )
-
-            ->addJoin(
-                [
-                    SpyProductTableMap::COL_SKU,
-                    SpyAvailabilityAbstractTableMap::COL_FK_STORE,
-                ],
-                [
-                    SpyOmsProductReservationTableMap::COL_SKU,
-                    SpyOmsProductReservationTableMap::COL_FK_STORE,
-                ],
-                Criteria::LEFT_JOIN
-            );
+        return $query;
     }
 
     /**
