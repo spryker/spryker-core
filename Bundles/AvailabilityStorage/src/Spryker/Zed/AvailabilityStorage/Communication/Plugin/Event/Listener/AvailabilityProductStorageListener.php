@@ -24,6 +24,19 @@ class AvailabilityProductStorageListener extends AbstractAvailabilityStorageList
     const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
 
     /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param bool $isSendingToQueue
+     */
+    public function __construct($isSendingToQueue = true)
+    {
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
+
+    /**
      * @api
      *
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
@@ -52,19 +65,21 @@ class AvailabilityProductStorageListener extends AbstractAvailabilityStorageList
         }
 
         $abstractAvailabilityIds = $this->findAvailabilityAbstractBySkus($abstractProductSkus);
-        $this->publish($abstractAvailabilityIds);
+        $this->publish($abstractAvailabilityIds, $this->isSendingToQueue);
         $this->unpublishByAbstractProductIds($abstractProductIds);
     }
 
     /**
      * @param array $idAbstractProducts
+     * @param bool $sendingToQueue
      *
      * @return void
      */
-    protected function unpublishByAbstractProductIds(array $idAbstractProducts)
+    protected function unpublishByAbstractProductIds(array $idAbstractProducts, $sendingToQueue = true)
     {
         $spyAvailabilityStorageEntities = $this->findAvailabilityStorageEntitiesByAbstractProductIds($idAbstractProducts);
         foreach ($spyAvailabilityStorageEntities as $spyAvailabilityStorageEntity) {
+            $spyAvailabilityStorageEntity->setIsSendingToQueue($sendingToQueue);
             $spyAvailabilityStorageEntity->delete();
         }
     }

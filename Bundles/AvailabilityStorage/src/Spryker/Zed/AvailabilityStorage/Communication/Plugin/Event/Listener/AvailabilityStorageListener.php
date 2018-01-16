@@ -25,8 +25,6 @@ class AvailabilityStorageListener extends AbstractAvailabilityStorageListener im
     protected $isSendingToQueue = true;
 
     /**
-     * AvailabilityStorageListener constructor.
-     *
      * @param bool $isSendingToQueue
      */
     public function __construct($isSendingToQueue = true)

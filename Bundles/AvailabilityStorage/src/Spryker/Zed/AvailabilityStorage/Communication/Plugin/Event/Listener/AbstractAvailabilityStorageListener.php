@@ -48,10 +48,9 @@ class AbstractAvailabilityStorageListener extends AbstractPlugin
      */
     protected function unpublish(array $availabilityIds, $sendingToQueue = true)
     {
-        $this->isSendingToQueue = $sendingToQueue;
-
         $spyAvailabilityStorageEntities = $this->findAvailabilityStorageEntitiesByAvailabilityAbstractIds($availabilityIds);
         foreach ($spyAvailabilityStorageEntities as $spyAvailabilityStorageEntity) {
+            $spyAvailabilityStorageEntity->setIsSendingToQueue($sendingToQueue);
             $spyAvailabilityStorageEntity->delete();
         }
     }
@@ -106,7 +105,7 @@ class AbstractAvailabilityStorageListener extends AbstractPlugin
     /**
      * @param array $availabilityAbstractIds
      *
-     * @return array
+     * @return SpyAvailabilityStorage[]
      */
     protected function findAvailabilityStorageEntitiesByAvailabilityAbstractIds(array $availabilityAbstractIds)
     {
