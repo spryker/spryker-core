@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Payolution\Business\Payment\Handler;
 
-use Spryker\Shared\Payolution\PayolutionConfig;
 use Spryker\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use Spryker\Zed\Payolution\Business\Api\Converter\ConverterInterface;
 use Spryker\Zed\Payolution\Business\Exception\NoMethodMapperException;
 use Spryker\Zed\Payolution\Business\Exception\OrderGrandTotalException;
+use Spryker\Zed\Payolution\PayolutionConfig;
 
 abstract class AbstractPaymentHandler
 {
