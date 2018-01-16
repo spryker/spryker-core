@@ -41,6 +41,7 @@
         <column name="valid_from" type="TIMESTAMP" required="false"/>
         <column name="valid_to" type="TIMESTAMP" required="false"/>
         <column name="name" type="VARCHAR" required="true" size="255"/>
+        <column name="cms_block_key" required="false" size="255" type="VARCHAR"/>
 
         <column name="type" type="VARCHAR" size="255" description="Deprecated"/>
         <column name="fk_page" type="INTEGER" required="false" description="Deprecated"/>
