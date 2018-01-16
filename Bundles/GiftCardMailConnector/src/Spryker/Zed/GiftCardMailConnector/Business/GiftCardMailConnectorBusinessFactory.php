@@ -25,7 +25,8 @@ class GiftCardMailConnectorBusinessFactory extends AbstractBusinessFactory
         return new GiftCardCarrier(
             $this->getMailFacade(),
             $this->getCustomerFacade(),
-            $this->getGiftCardQueryContainer()
+            $this->getGiftCardFacade(),
+            $this->getSalesFacade()
         );
     }
 
@@ -35,8 +36,7 @@ class GiftCardMailConnectorBusinessFactory extends AbstractBusinessFactory
     public function createGiftCardUsageMailer()
     {
         return new GiftCardUsageMailer(
-            $this->getMailFacade(),
-            $this->getGiftCardQueryContainer()
+            $this->getMailFacade()
         );
     }
 
@@ -45,7 +45,7 @@ class GiftCardMailConnectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function getMailFacade()
     {
-        return $this->getProvidedDependency(GiftCardMailConnectorDependencyProvider::MAIL_FACADE);
+        return $this->getProvidedDependency(GiftCardMailConnectorDependencyProvider::FACADE_MAIL);
     }
 
     /**
@@ -53,14 +53,22 @@ class GiftCardMailConnectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function getCustomerFacade()
     {
-        return $this->getProvidedDependency(GiftCardMailConnectorDependencyProvider::CUSTOMER_FACADE);
+        return $this->getProvidedDependency(GiftCardMailConnectorDependencyProvider::FACADE_CUSTOMER);
     }
 
     /**
-     * @return \Spryker\Zed\GiftCardMailConnector\Dependency\QueryContainer\GiftCardMailConnectorToGiftCardQueryContainerInterface
+     * @return \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToGiftCardFacadeInterface
      */
-    protected function getGiftCardQueryContainer()
+    protected function getGiftCardFacade()
     {
-        return $this->getProvidedDependency(GiftCardMailConnectorDependencyProvider::GIFT_CARD_QUERY_CONTAINER);
+        return $this->getProvidedDependency(GiftCardMailConnectorDependencyProvider::FACADE_GIFT_CARD);
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToSalesFacadeInterface
+     */
+    protected function getSalesFacade()
+    {
+        return $this->getProvidedDependency(GiftCardMailConnectorDependencyProvider::FACADE_SALES);
     }
 }

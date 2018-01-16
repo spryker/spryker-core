@@ -270,4 +270,20 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
             ->createGiftCardReader()
             ->findGiftCardsByIdSalesOrder($idSalesOrder);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\GiftCardTransfer|null
+     */
+    public function findGiftCardByIdSalesOrderItem($idSalesOrderItem)
+    {
+        return $this->getFactory()
+            ->createGiftCardReader()
+            ->findGiftCardByIdSalesOrderItem($idSalesOrderItem);
+    }
 }

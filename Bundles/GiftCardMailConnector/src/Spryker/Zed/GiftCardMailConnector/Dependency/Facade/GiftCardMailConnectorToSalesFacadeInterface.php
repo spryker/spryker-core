@@ -5,17 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Model\Order;
+namespace Spryker\Zed\GiftCardMailConnector\Dependency\Facade;
 
-interface OrderReaderInterface
+interface GiftCardMailConnectorToSalesFacadeInterface
 {
-    /**
-     * @param int $idSalesOrder
-     *
-     * @return string[]
-     */
-    public function getDistinctOrderStates($idSalesOrder);
-
     /**
      * @param int $idSalesOrderItem
      *

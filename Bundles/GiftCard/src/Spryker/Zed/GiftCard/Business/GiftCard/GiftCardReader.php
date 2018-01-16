@@ -282,6 +282,20 @@ class GiftCardReader implements GiftCardReaderInterface
     }
 
     /**
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\GiftCardTransfer|null
+     */
+    public function findGiftCardByIdSalesOrderItem($idSalesOrderItem)
+    {
+        $salesOrderItemGiftCardEntity = $this->queryContainer
+            ->queryGiftCardOrderItemMetadata($idSalesOrderItem)
+            ->findOne();
+
+        return $this->findByCode($salesOrderItemGiftCardEntity->getCode());
+    }
+
+    /**
      * @param array $giftCardCodes
      *
      * @return array

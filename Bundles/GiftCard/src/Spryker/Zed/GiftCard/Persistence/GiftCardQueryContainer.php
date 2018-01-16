@@ -129,7 +129,7 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
         return $this
             ->queryPaymentGiftCards()
             ->useSpySalesPaymentQuery()
-            ->filterByFkSalesOrder($idSalesOrder)
+                ->filterByFkSalesOrder($idSalesOrder)
             ->endUse();
     }
 

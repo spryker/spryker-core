@@ -8,16 +8,13 @@
 namespace Spryker\Zed\GiftCardMailConnector\Business\Carrier;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCard;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
-use Spryker\Zed\GiftCard\Business\Exception\GiftCardSalesMetadataNotFoundException;
 use Spryker\Zed\GiftCardMailConnector\Communication\Plugin\Mail\GiftCardDeliveryMailTypePlugin;
 use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToCustomerFacadeInterface;
+use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToGiftCardFacadeInterface;
 use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailFacadeInterface;
-use Spryker\Zed\GiftCardMailConnector\Dependency\QueryContainer\GiftCardMailConnectorToGiftCardQueryContainerInterface;
+use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToSalesFacadeInterface;
 
 class GiftCardCarrier implements GiftCardCarrierInterface
 {
@@ -27,28 +24,36 @@ class GiftCardCarrier implements GiftCardCarrierInterface
     protected $mailFacade;
 
     /**
-     * @var \Spryker\Zed\Customer\Business\CustomerFacadeInterface
+     * @var \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToCustomerFacadeInterface
      */
     protected $customerFacade;
 
     /**
-     * @var \Spryker\Zed\GiftCardMailConnector\Dependency\QueryContainer\GiftCardMailConnectorToGiftCardQueryContainerInterface
+     * @var \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToGiftCardFacadeInterface
      */
-    protected $giftCardQueryContainer;
+    protected $giftCardFacade;
+
+    /**
+     * @var \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToSalesFacadeInterface
+     */
+    protected $salesFacade;
 
     /**
      * @param \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToMailFacadeInterface $mailFacade
      * @param \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToCustomerFacadeInterface $customerFacade
-     * @param \Spryker\Zed\GiftCardMailConnector\Dependency\QueryContainer\GiftCardMailConnectorToGiftCardQueryContainerInterface $giftCardQueryContainer
+     * @param \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToGiftCardFacadeInterface $giftCardFacade
+     * @param \Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToSalesFacadeInterface $salesFacade
      */
     public function __construct(
         GiftCardMailConnectorToMailFacadeInterface $mailFacade,
         GiftCardMailConnectorToCustomerFacadeInterface $customerFacade,
-        GiftCardMailConnectorToGiftCardQueryContainerInterface $giftCardQueryContainer
+        GiftCardMailConnectorToGiftCardFacadeInterface $giftCardFacade,
+        GiftCardMailConnectorToSalesFacadeInterface $salesFacade
     ) {
         $this->mailFacade = $mailFacade;
         $this->customerFacade = $customerFacade;
-        $this->giftCardQueryContainer = $giftCardQueryContainer;
+        $this->giftCardFacade = $giftCardFacade;
+        $this->salesFacade = $salesFacade;
     }
 
     /**
@@ -75,14 +80,19 @@ class GiftCardCarrier implements GiftCardCarrierInterface
      */
     protected function prepareMailTransfer($idSalesOrderItem, $mailTransfer)
     {
-        $salesOrderItemGiftCard = $this->getGiftCardEntity($idSalesOrderItem);
-        $giftCardTransfer = $this->mapSalesOrderItemGiftCardToGiftCardTransfer(
-            $salesOrderItemGiftCard,
-            new GiftCardTransfer()
-        );
+        $giftCardTransfer = $this->giftCardFacade->findGiftCardByIdSalesOrderItem($idSalesOrderItem);
 
-        $salesOrderEntity = $salesOrderItemGiftCard->getSpySalesOrderItem()->getOrder();
-        $customerTransfer = $this->getCustomerTransfer($salesOrderEntity);
+        if ($giftCardTransfer === null) {
+            return $mailTransfer;
+        }
+
+        $orderTransfer = $this->salesFacade->findOrderByIdSalesOrderItem($idSalesOrderItem);
+
+        if ($orderTransfer === null) {
+            return $mailTransfer;
+        }
+
+        $customerTransfer = $this->getCustomerTransfer($orderTransfer);
 
         $mailTransfer = $mailTransfer
             ->setType(GiftCardDeliveryMailTypePlugin::MAIL_TYPE)
@@ -93,20 +103,22 @@ class GiftCardCarrier implements GiftCardCarrierInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function getCustomerTransfer(SpySalesOrder $salesOrderEntity)
+    protected function getCustomerTransfer($orderTransfer)
     {
-        if ($salesOrderEntity->getCustomerReference()) {
-            return $this->findCustomerTransfer($salesOrderEntity->getCustomerReference());
+        $customerTransfer = $this->findCustomerTransfer($orderTransfer->getCustomerReference());
+
+        if ($customerTransfer) {
+            return $customerTransfer;
         }
 
         return (new CustomerTransfer())
-            ->setEmail($salesOrderEntity->getEmail())
-            ->setLastName($salesOrderEntity->getLastName())
-            ->setFirstName($salesOrderEntity->getFirstName());
+            ->setEmail($orderTransfer->getEmail())
+            ->setLastName($orderTransfer->getLastName())
+            ->setFirstName($orderTransfer->getFirstName());
     }
 
     /**
@@ -127,42 +139,5 @@ class GiftCardCarrier implements GiftCardCarrierInterface
         }
 
         return $customerTransfer;
-    }
-
-    /**
-     * @param int $idSalesOrderItem
-     *
-     * @throws \Spryker\Zed\GiftCard\Business\Exception\GiftCardSalesMetadataNotFoundException
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCard
-     */
-    protected function getGiftCardEntity($idSalesOrderItem)
-    {
-        $salesOrderItemGiftCard = $this->giftCardQueryContainer
-            ->queryGiftCardOrderItemMetadata($idSalesOrderItem)
-            ->findOne();
-
-        if (!$salesOrderItemGiftCard) {
-            throw new GiftCardSalesMetadataNotFoundException(
-                sprintf('Giftcard Metadata with ID %d is missing', $idSalesOrderItem)
-            );
-        }
-
-        return $salesOrderItemGiftCard;
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCard $salesOrderItemGiftCardEntity
-     * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
-     *
-     * @return \Generated\Shared\Transfer\GiftCardTransfer
-     */
-    protected function mapSalesOrderItemGiftCardToGiftCardTransfer(
-        SpySalesOrderItemGiftCard $salesOrderItemGiftCardEntity,
-        GiftCardTransfer $giftCardTransfer
-    ) {
-        $giftCardTransfer = $giftCardTransfer->setCode($salesOrderItemGiftCardEntity->getCode());
-
-        return $giftCardTransfer;
     }
 }

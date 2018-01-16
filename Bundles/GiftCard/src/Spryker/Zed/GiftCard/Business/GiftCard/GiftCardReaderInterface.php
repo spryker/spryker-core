@@ -80,4 +80,11 @@ interface GiftCardReaderInterface
      * @return \Generated\Shared\Transfer\GiftCardTransfer[]
      */
     public function findGiftCardsByIdSalesOrder($idSalesOrder);
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\GiftCardTransfer|null
+     */
+    public function findGiftCardByIdSalesOrderItem($idSalesOrderItem);
 }

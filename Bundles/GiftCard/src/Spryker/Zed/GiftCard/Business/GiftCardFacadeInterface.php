@@ -213,4 +213,17 @@ interface GiftCardFacadeInterface
      * @return \Generated\Shared\Transfer\GiftCardTransfer[]
      */
     public function findGiftCardsByIdSalesOrder($idSalesOrder);
+
+    /**
+     * Specification:
+     * - Finds an gift card entity
+     * - Maps it to a transfer object with meta information
+     *
+     * @api
+     *
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\GiftCardTransfer|null
+     */
+    public function findGiftCardByIdSalesOrderItem($idSalesOrderItem);
 }
