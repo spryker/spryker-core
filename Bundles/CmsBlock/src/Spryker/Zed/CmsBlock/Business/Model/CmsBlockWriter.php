@@ -35,6 +35,11 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     protected $cmsBlockGlossaryWriter;
 
     /**
+     * @var \Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationWriterInterface
+     */
+    protected $cmsBlockStoreRelationWriter;
+
+    /**
      * @var \Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateManagerInterface
      */
     protected $templateManager;
@@ -48,6 +53,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface $cmsBlockQueryContainer
      * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockMapperInterface $cmsBlockMapper
      * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryWriterInterface $cmsBlockGlossaryWriter
+     * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationWriterInterface $cmsBlockStoreRelationWriter
      * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchInterface $touchFacade
      * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateManagerInterface $cmsBlockTemplateManager
      * @param \Spryker\Zed\CmsBlock\Communication\Plugin\CmsBlockUpdatePluginInterface[] $updatePlugins
@@ -56,6 +62,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         CmsBlockQueryContainerInterface $cmsBlockQueryContainer,
         CmsBlockMapperInterface $cmsBlockMapper,
         CmsBlockGlossaryWriterInterface $cmsBlockGlossaryWriter,
+        CmsBlockStoreRelationWriterInterface $cmsBlockStoreRelationWriter,
         CmsBlockToTouchInterface $touchFacade,
         CmsBlockTemplateManagerInterface $cmsBlockTemplateManager,
         array $updatePlugins
@@ -63,6 +70,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         $this->cmsBlockQueryContainer = $cmsBlockQueryContainer;
         $this->cmsBlockMapper = $cmsBlockMapper;
         $this->cmsBlockGlossaryWriter = $cmsBlockGlossaryWriter;
+        $this->cmsBlockStoreRelationWriter = $cmsBlockStoreRelationWriter;
         $this->touchFacade = $touchFacade;
         $this->templateManager = $cmsBlockTemplateManager;
         $this->cmsBlockUpdatePlugins = $updatePlugins;
@@ -199,6 +207,8 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         $spyCmsBlock = $this->cmsBlockMapper->mapCmsBlockTransferToEntity($cmsBlockTransfer, $spyCmsBlock);
         $spyCmsBlock->save();
 
+        $this->cmsBlockStoreRelationWriter->update($cmsBlockTransfer->getStoreRelation());
+
         if ($spyCmsBlock->getIsActive()) {
             $this->touchFacade->touchActive(CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK, $spyCmsBlock->getIdCmsBlock());
         }
@@ -226,6 +236,9 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         $spyCmsBlock = new SpyCmsBlock();
         $spyCmsBlock = $this->cmsBlockMapper->mapCmsBlockTransferToEntity($cmsBlockTransfer, $spyCmsBlock);
         $spyCmsBlock->save();
+
+        $cmsBlockTransfer->getStoreRelation()->setIdEntity($spyCmsBlock->getIdCmsBlock());
+        $this->cmsBlockStoreRelationWriter->update($cmsBlockTransfer->getStoreRelation());
 
         if ($spyCmsBlock->getIsActive()) {
             $this->touchFacade->touchActive(CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK, $spyCmsBlock->getIdCmsBlock());

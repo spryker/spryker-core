@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlock\Business;
 
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -82,38 +81,6 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
         $this->getFactory()
             ->createCmsBlockWrite()
             ->updateCmsBlock($cmsBlockTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
-     *
-     * @return void
-     */
-    public function updateCmsBlockStoreRelation(StoreRelationTransfer $storeRelationTransfer)
-    {
-        $this->getFactory()
-            ->createCmsBlockStoreRelationWriter()
-            ->update($storeRelationTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
-     *
-     * @return \Generated\Shared\Transfer\StoreRelationTransfer
-     */
-    public function getCmsBlockStoreRelation(StoreRelationTransfer $storeRelationTransfer)
-    {
-        return $this->getFactory()
-            ->createCmsBlockStoreRelationReader()
-            ->getStoreRelation($storeRelationTransfer);
     }
 
     /**
