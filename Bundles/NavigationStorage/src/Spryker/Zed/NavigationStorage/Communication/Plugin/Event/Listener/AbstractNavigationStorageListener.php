@@ -48,8 +48,10 @@ abstract class AbstractNavigationStorageListener extends AbstractPlugin implemen
     protected function unpublish(array $navigationMenuKeyIds)
     {
         $spyNavigationMenuTranslationStorageEntities = $this->findNavigationStorageEntitiesByNavigationIds($navigationMenuKeyIds);
-        foreach ($spyNavigationMenuTranslationStorageEntities as $spyNavigationMenuTranslationStorageEntity) {
-            $spyNavigationMenuTranslationStorageEntity->delete();
+        foreach ($spyNavigationMenuTranslationStorageEntities as $spyNavigationMenuTranslationStorageLocalizedEntities) {
+            foreach ($spyNavigationMenuTranslationStorageLocalizedEntities as $spyNavigationMenuTranslationStorageLocalizedEntity) {
+                $spyNavigationMenuTranslationStorageLocalizedEntity->delete();
+            }
         }
     }
 
