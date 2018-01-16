@@ -66,8 +66,7 @@ class AvailabilityStorageListenerTest extends Unit
         $availabilityStorageListener->handleBulk($eventTransfers, AvailabilityEvents::AVAILABILITY_ABSTRACT_PUBLISH);
 
         // Assert
-        $availabilityStorageCount = SpyAvailabilityStorageQuery::create()->count();
-        $this->assertSame(1, $availabilityStorageCount);
+        $this->assertAvailabilityStorage();
     }
 
     /**
@@ -88,7 +87,19 @@ class AvailabilityStorageListenerTest extends Unit
         $availabilityStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_UPDATE);
 
         // Assert
+        $this->assertAvailabilityStorage();
+    }
+
+    /**
+     * @return void
+     */
+    protected function assertAvailabilityStorage()
+    {
         $availabilityStorageCount = SpyAvailabilityStorageQuery::create()->count();
-        $this->assertSame(1, $availabilityStorageCount);
+        $this->assertEquals(1, $availabilityStorageCount);
+        $availabilityStorageEntity = SpyAvailabilityStorageQuery::create()->findOne();
+        $this->assertEquals(1, $availabilityStorageEntity->getFkProductAbstract());
+        $data = $availabilityStorageEntity->getData();
+        $this->assertEquals(10, $data['quantity']);
     }
 }
