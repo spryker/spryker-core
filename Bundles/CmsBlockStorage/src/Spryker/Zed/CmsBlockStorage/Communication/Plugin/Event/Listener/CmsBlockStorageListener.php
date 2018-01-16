@@ -10,6 +10,10 @@ namespace Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener;
 use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 
+/**
+ * @method \Spryker\Zed\CmsBlockStorage\Communication\CmsBlockStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockStorage\Persistence\CmsBlockStorageQueryContainerInterface getQueryContainer()
+ */
 class CmsBlockStorageListener extends AbstractCmsBlockStorageListener implements EventBulkHandlerInterface
 {
     /**
