@@ -53,6 +53,8 @@ class NopaymentFacade extends AbstractFacade implements NopaymentFacadeInterface
      */
     public function filterPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer, QuoteTransfer $quoteTransfer)
     {
-        return $this->getFactory()->createNopaymentMethodFilter()->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);
+        return $this->getFactory()
+            ->createNopaymentMethodFilter()
+            ->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);
     }
 }
