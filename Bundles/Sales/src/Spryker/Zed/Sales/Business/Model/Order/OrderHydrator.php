@@ -195,7 +195,7 @@ class OrderHydrator implements OrderHydratorInterface
     {
         $orderTransfer = new OrderTransfer();
         $orderTransfer->fromArray($orderEntity->toArray(), true);
-        $orderTransfer->setFkCustomer($orderEntity->getFkCustomer());
+        $orderTransfer->setCustomerReference($orderEntity->getCustomerReference());
 
         return $orderTransfer;
     }
@@ -393,7 +393,7 @@ class OrderHydrator implements OrderHydratorInterface
     protected function hydrateMissingCustomer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
         if (!$orderEntity->getCustomer()) {
-            $orderTransfer->setFkCustomer(null);
+            $orderTransfer->setCustomerReference(null);
         }
     }
 }
