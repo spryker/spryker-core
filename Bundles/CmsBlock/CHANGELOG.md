@@ -1,3 +1,3 @@
 # CmsBlock Changelog
 
-[Release Changelog](https://github.com/spryker/CmsBlock/releases)
+[Release Changelog](https://github.com/spryker/cms-block/releases)

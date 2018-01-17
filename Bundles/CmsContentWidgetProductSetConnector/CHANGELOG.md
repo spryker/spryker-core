@@ -1,3 +1,3 @@
 # CmsContentWidgetProductSetConnector Changelog
 
-[Release Changelog](https://github.com/spryker/CmsContentWidgetProductSetConnector/releases)
+[Release Changelog](https://github.com/spryker/cms-content-widget-product-set-connector/releases)

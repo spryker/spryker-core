@@ -29,7 +29,7 @@ class StoreRelationToggleType extends AbstractType
 
     const STORE_TOGGLE_NAME = 'Store relation';
 
-    const MESSAGE_MULTI_STORE_PER_INSTANCE_DISABLED = 'Multi-store per instance feature is disabled';
+    const MESSAGE_MULTI_STORE_PER_ZED_DISABLED = 'Multi-store per Zed feature is disabled';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -100,7 +100,7 @@ class StoreRelationToggleType extends AbstractType
      */
     protected function addFieldIdStores(FormBuilderInterface $builder)
     {
-        if ($this->getConfig()->isMultiStorePerInstanceEnabled()) {
+        if ($this->getConfig()->isMultiStorePerZedEnabled()) {
             return $this->addFieldEditableIdStores($builder);
         }
 
@@ -135,7 +135,7 @@ class StoreRelationToggleType extends AbstractType
      */
     protected function addFieldImmutableIdStores(FormBuilderInterface $builder)
     {
-        $storeToggleName = sprintf('%s (%s)', static::STORE_TOGGLE_NAME, static::MESSAGE_MULTI_STORE_PER_INSTANCE_DISABLED);
+        $storeToggleName = sprintf('%s (%s)', static::STORE_TOGGLE_NAME, static::MESSAGE_MULTI_STORE_PER_ZED_DISABLED);
 
         $builder->add(
             static::FIELD_ID_STORES_DISABLED,

@@ -15,8 +15,8 @@ class StoreConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isMultiStorePerInstanceEnabled()
+    public function isMultiStorePerZedEnabled()
     {
-        return $this->get(StoreConstants::ENABLE_MULTI_STORE_PER_INSTANCE, false);
+        return $this->get(StoreConstants::ENABLE_MULTI_STORE_PER_ZED, false);
     }
 }

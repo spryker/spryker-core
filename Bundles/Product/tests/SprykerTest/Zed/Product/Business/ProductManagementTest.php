@@ -7,10 +7,8 @@
 
 namespace SprykerTest\Zed\Product\Business;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 
 /**
  * Auto-generated group annotations
@@ -129,90 +127,70 @@ class ProductManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testGetProductAbstractStoreRelationRetrievesRelatedStores()
+    public function testCreateProductAbstractSavesStoreRelation()
     {
         // Assign
-        $idProductAbstract = 1;
-        $relatedStores = [1, 3];
-        $productAbstractRelationRequest = (new StoreRelationTransfer())
-            ->setIdEntity($idProductAbstract);
-        $expectedResult = (new StoreRelationTransfer())
-            ->setIdEntity($idProductAbstract)
-            ->setIdStores($relatedStores)
-            ->setStores(new ArrayObject());
-
-        $this->productFacade->saveProductAbstractStoreRelation($expectedResult);
+        $expectedIdStores = [1, 3];
+        $this->productAbstractTransfer
+            ->getStoreRelation()
+            ->setIdStores($expectedIdStores);
 
         // Act
-        $actualResult = $this
-            ->productFacade
-            ->getProductAbstractStoreRelation($productAbstractRelationRequest);
+        $idProductAbstract = $this->productFacade->createProductAbstract($this->productAbstractTransfer);
+        $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
 
-        // Assert
-        $actualResult->setStores(new ArrayObject());
+        // Asssert
+        $actualIdStores = $productAbstractTransfer->getStoreRelation()->getIdStores();
+        sort($actualIdStores);
 
-        $this->assertEquals($expectedResult, $actualResult);
+        $this->assertEquals($expectedIdStores, $actualIdStores);
     }
 
     /**
-     * @dataProvider relationUpdate
-     *
-     * @reutrn void
-     *
-     * @param int[] $originalRelation
-     * @param int[] $modifiedRelation
-     *
      * @return void
      */
-    public function testSaveProductAbstractStoreRelation(array $originalRelation, array $modifiedRelation)
+    public function testSaveProductAbstractUpdatesStoreRelation()
     {
         // Assign
-        $idProductAbstract = 1;
-        $productAbstractRelationRequest = (new StoreRelationTransfer())
-            ->setIdEntity($idProductAbstract);
-        $originalRelationTransfer = (new StoreRelationTransfer())
-            ->setIdEntity($idProductAbstract)
-            ->setIdStores($originalRelation);
-        $modifiedRelationTransfer = (new StoreRelationTransfer())
-            ->setIdEntity($idProductAbstract)
-            ->setIdStores($modifiedRelation);
-
-        $this->productFacade->saveProductAbstractStoreRelation($originalRelationTransfer);
+        $expectedIdStores = [1, 3];
+        $this->productAbstractTransfer
+            ->getStoreRelation()
+            ->setIdStores([1]);
+        $idProductAbstract = $this->productFacade->createProductAbstract($this->productAbstractTransfer);
+        $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+        $this->productAbstractTransfer->getStoreRelation()->setIdStores($expectedIdStores);
 
         // Act
-        $beforeSaveIdStores = $this
-            ->productFacade
-            ->getProductAbstractStoreRelation($productAbstractRelationRequest)
-            ->getIdStores();
-        $this->productFacade->saveProductAbstractStoreRelation($modifiedRelationTransfer);
-        $afterSaveIdStores = $this
-            ->productFacade
-            ->getProductAbstractStoreRelation($productAbstractRelationRequest)
-            ->getIdStores();
+        $this->productFacade->saveProductAbstract($this->productAbstractTransfer);
+        $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
 
-        // Assert
-        sort($beforeSaveIdStores);
-        sort($afterSaveIdStores);
-        $this->assertEquals($originalRelation, $beforeSaveIdStores);
-        $this->assertEquals($modifiedRelation, $afterSaveIdStores);
+        // Asssert
+        $actualIdStores = $productAbstractTransfer->getStoreRelation()->getIdStores();
+        sort($actualIdStores);
+
+        $this->assertEquals($expectedIdStores, $actualIdStores);
     }
 
     /**
-     * @return array
+     * @return void
      */
-    public function relationUpdate()
+    public function testFindProductAbstractByIdRetrievesStoreRelation()
     {
-        return [
-            [
-                [1, 2, 3], [2],
-            ],
-            [
-                [1], [1, 2],
-            ],
-            [
-                [2], [1, 3],
-            ],
-        ];
+        // Assign
+        $expectedIdStores = [1, 3];
+        $this->productAbstractTransfer
+            ->getStoreRelation()
+            ->setIdStores($expectedIdStores);
+        $idProductAbstract = $this->productFacade->createProductAbstract($this->productAbstractTransfer);
+
+        // Act
+        $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
+
+        // Asssert
+        $actualIdStores = $productAbstractTransfer->getStoreRelation()->getIdStores();
+        sort($actualIdStores);
+
+        $this->assertEquals($expectedIdStores, $actualIdStores);
     }
 
     /**

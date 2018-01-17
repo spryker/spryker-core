@@ -1,3 +1,3 @@
 # ProductImage Changelog
 
-[ProductImage Changelog](https://github.com/spryker/ProductImage/releases)
+[Release Changelog](https://github.com/spryker/product-image/releases)

@@ -1,3 +1,3 @@
 # Config Changelog
 
-[Config Changelog](https://github.com/spryker/Config/releases)
+[Release Changelog](https://github.com/spryker/config/releases)

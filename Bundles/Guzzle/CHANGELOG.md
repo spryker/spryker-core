@@ -1,3 +1,3 @@
 # Guzzle Changelog
 
-[Guzzle Changelog](https://github.com/spryker/Guzzle/releases)
+[Release Changelog](https://github.com/spryker/guzzle/releases)
