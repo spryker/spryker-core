@@ -15,13 +15,15 @@ class AvailabilityStorageBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @param bool $sendingToQueue
-     *
      * @return AvailabilityStorageInterface
      */
-    public function createAvailabilityStorage($sendingToQueue = true)
+    public function createAvailabilityStorage()
     {
-        return new AvailabilityStorage($this->getStore(), $this->getQueryContainer(), $sendingToQueue);
+        return new AvailabilityStorage(
+            $this->getStore(),
+            $this->getQueryContainer(),
+            $this->getConfig()->isSendingToQueue()
+        );
     }
 
     /**

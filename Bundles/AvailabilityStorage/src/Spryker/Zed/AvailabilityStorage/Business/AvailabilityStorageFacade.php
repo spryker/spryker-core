@@ -12,24 +12,22 @@ class AvailabilityStorageFacade extends AbstractFacade implements AvailabilitySt
 
     /**
      * @param array $availabilityIds
-     * @param bool $sendingToQueue
      *
      * @return void
      */
-    public function publish(array $availabilityIds, $sendingToQueue = true)
+    public function publish(array $availabilityIds)
     {
-        $this->getFactory()->createAvailabilityStorage($sendingToQueue)->publish($availabilityIds);
+        $this->getFactory()->createAvailabilityStorage()->publish($availabilityIds);
     }
 
     /**
      * @param array $availabilityIds
-     * @param bool $sendingToQueue
      *
      * @return void
      */
-    public function unpublish(array $availabilityIds, $sendingToQueue = true)
+    public function unpublish(array $availabilityIds)
     {
-        $this->getFactory()->createAvailabilityStorage($sendingToQueue)->unpublish($availabilityIds);
+        $this->getFactory()->createAvailabilityStorage()->unpublish($availabilityIds);
     }
 
 }

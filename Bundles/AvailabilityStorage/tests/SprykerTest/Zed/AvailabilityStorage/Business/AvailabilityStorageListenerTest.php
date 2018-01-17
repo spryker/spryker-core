@@ -13,10 +13,14 @@ use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\Propel;
 use Silex\Application;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
+use Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageBusinessFactory;
+use Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacade;
+use Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacadeInterface;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener\AvailabilityProductStorageListener;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener\AvailabilityStorageListener;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
+use SprykerTest\Zed\AvailabilityStorage\AvailabilityStorageConfigMock;
 
 /**
  * Auto-generated group annotations
@@ -59,7 +63,9 @@ class AvailabilityStorageListenerTest extends Unit
         $this->assertSame(0, $availabilityStorageCount);
 
         // Act
-        $availabilityStorageListener = new AvailabilityStorageListener(false);
+        $availabilityStorageListener = new AvailabilityStorageListener();
+        $availabilityStorageListener->setFacade($this->getAvailabilityStorageFacade());
+
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1)
         ];
@@ -78,7 +84,9 @@ class AvailabilityStorageListenerTest extends Unit
         $this->assertSame(0, $availabilityStorageCount);
 
         // Act
-        $availabilityStorageListener = new AvailabilityProductStorageListener(false);
+        $availabilityStorageListener = new AvailabilityProductStorageListener();
+        $availabilityStorageListener->setFacade($this->getAvailabilityStorageFacade());
+
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
                 SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT => 1
@@ -88,6 +96,20 @@ class AvailabilityStorageListenerTest extends Unit
 
         // Assert
         $this->assertAvailabilityStorage();
+    }
+
+    /**
+     * @return AvailabilityStorageFacade
+     */
+    protected function getAvailabilityStorageFacade()
+    {
+        $factory = new AvailabilityStorageBusinessFactory();
+        $factory->setConfig(new AvailabilityStorageConfigMock());
+
+        $facade = new AvailabilityStorageFacade();
+        $facade->setFactory($factory);
+
+        return $facade;
     }
 
     /**

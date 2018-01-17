@@ -7,18 +7,15 @@ interface AvailabilityStorageFacadeInterface
 
     /**
      * @param array $availabilityIds
-     * @param bool $sendingToQueue
      *
      * @return void
      */
-    public function publish(array $availabilityIds, $sendingToQueue = true);
+    public function publish(array $availabilityIds);
 
     /**
      * @param array $availabilityIds
      *
-     * @param bool $sendingToQueue
-     *
      * @return void
      */
-    public function unpublish(array $availabilityIds, $sendingToQueue = true);
+    public function unpublish(array $availabilityIds);
 }

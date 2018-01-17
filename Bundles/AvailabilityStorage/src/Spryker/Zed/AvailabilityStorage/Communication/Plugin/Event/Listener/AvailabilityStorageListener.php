@@ -37,11 +37,11 @@ class AvailabilityStorageListener extends AbstractPlugin implements EventBulkHan
         if ($eventName === AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE ||
             $eventName === AvailabilityEvents::AVAILABILITY_ABSTRACT_UNPUBLISH
         ) {
-            $this->getFacade()->unpublish($availabilityIds, $this->isSendingToQueue);
+            $this->getFacade()->unpublish($availabilityIds);
 
             return;
         }
 
-        $this->getFacade()->publish($availabilityIds, $this->isSendingToQueue);
+        $this->getFacade()->publish($availabilityIds);
     }
 }

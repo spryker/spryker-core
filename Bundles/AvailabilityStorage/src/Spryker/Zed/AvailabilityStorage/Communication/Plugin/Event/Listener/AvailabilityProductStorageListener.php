@@ -18,25 +18,13 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\AvailabilityStorage\Communication\AvailabilityStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\AvailabilityStorage\AvailabilityStorageConfig getConfig()
  */
 class AvailabilityProductStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
     const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
-
-    /**
-     * @var bool
-     */
-    protected $isSendingToQueue = true;
-
-    /**
-     * @param bool $isSendingToQueue
-     */
-    public function __construct($isSendingToQueue = true)
-    {
-        $this->isSendingToQueue = $isSendingToQueue;
-    }
 
     /**
      * @api
@@ -67,7 +55,7 @@ class AvailabilityProductStorageListener extends AbstractPlugin implements Event
         }
 
         $abstractAvailabilityIds = $this->findAvailabilityAbstractBySkus($abstractProductSkus);
-        $this->getFacade()->publish($abstractAvailabilityIds, $this->isSendingToQueue);
+        $this->getFacade()->publish($abstractAvailabilityIds);
         $this->unpublishByAbstractProductIds($abstractProductIds);
     }
 
@@ -81,7 +69,7 @@ class AvailabilityProductStorageListener extends AbstractPlugin implements Event
     {
         $spyAvailabilityStorageEntities = $this->findAvailabilityStorageEntitiesByAbstractProductIds($idAbstractProducts);
         foreach ($spyAvailabilityStorageEntities as $spyAvailabilityStorageEntity) {
-            $spyAvailabilityStorageEntity->setIsSendingToQueue($sendingToQueue);
+            $spyAvailabilityStorageEntity->setIsSendingToQueue($this->getConfig()->isSendingToQueue());
             $spyAvailabilityStorageEntity->delete();
         }
     }

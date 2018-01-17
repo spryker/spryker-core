@@ -37,7 +37,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
      * @param AvailabilityStorageQueryContainerInterface $queryContainer
      * @param bool $isSendingToQueue
      */
-    public function __construct(Store $store, AvailabilityStorageQueryContainerInterface $queryContainer, $isSendingToQueue = true)
+    public function __construct(Store $store, AvailabilityStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
     {
         $this->store = $store;
         $this->queryContainer = $queryContainer;
