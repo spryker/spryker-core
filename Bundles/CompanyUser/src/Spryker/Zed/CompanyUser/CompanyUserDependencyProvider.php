@@ -36,7 +36,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerSavePlugins(Container $container)
     {
-        $container[static::PLUGINS_CUSTOMER_SAVE] = function (Container $container) {
+        $container[static::PLUGINS_CUSTOMER_SAVE] = function () {
             return $this->getCompanyUserSavePlugins();
         };
 
@@ -50,7 +50,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUserDaveHydrationPlugins(Container $container)
     {
-        $container[static::PLUGINS_CUSTOMER_HYDRATE] = function (Container $container) {
+        $container[static::PLUGINS_CUSTOMER_HYDRATE] = function () {
             return $this->getCompanyUserHydrationPlugins();
         };
 
@@ -58,7 +58,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUser\Dependency\CompanyUserSavePluginInterface[]
+     * @return \Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserSavePluginInterface[]
      */
     protected function getCompanyUserSavePlugins()
     {
@@ -66,7 +66,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUser\Dependency\CompanyUserHydrationPluginInterface[]
+     * @return \Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
      */
     protected function getCompanyUserHydrationPlugins()
     {

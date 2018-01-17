@@ -1,3 +1,3 @@
 # CategoryDataFeed Changelog
 
-[CategoryDataFeed Changelog](https://github.com/spryker/CategoryDataFeed/releases)
+[Release Changelog](https://github.com/spryker/category-data-feed/releases)

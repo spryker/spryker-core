@@ -1,3 +1,3 @@
 # ProductSetPageSearch Changelog
 
-[Release Changelog](https://github.com/spryker/ProductSetPageSearch/releases)
+[Release Changelog](https://github.com/spryker/product-set-page-search/releases)

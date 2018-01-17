@@ -37,4 +37,13 @@ interface NavigationStorageQueryContainerInterface extends QueryContainerInterfa
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
      */
     public function queryNavigationIdsByNavigationNodeIds(array $navigationNodeIds);
+
+    /**
+     * @api
+     *
+     * @param array $urlIds
+     *
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
+     */
+    public function queryNavigationIdsByUrlIds(array $urlIds);
 }

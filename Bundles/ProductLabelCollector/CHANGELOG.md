@@ -1,3 +1,3 @@
 # ProductLabelCollector Changelog
 
-[Release Changelog](https://github.com/spryker/ProductLabelCollector/releases)
+[Release Changelog](https://github.com/spryker/product-label-collector/releases)

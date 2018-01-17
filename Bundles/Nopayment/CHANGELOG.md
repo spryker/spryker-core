@@ -1,3 +1,3 @@
 # Nopayment Changelog
 
-[Nopayment Changelog](https://github.com/spryker/Nopayment/releases)
+[Release Changelog](https://github.com/spryker/nopayment/releases)

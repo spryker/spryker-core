@@ -12,8 +12,17 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PayolutionConfig extends AbstractBundleConfig
 {
+    /**
+     * @deprecated Use Spryker\Shared\Payolution\PayolutionConfig constant instead.
+     */
     const PROVIDER_NAME = 'payolution';
+    /**
+     * @deprecated Use Spryker\Shared\Payolution\PayolutionConfig constant instead.
+     */
     const PAYMENT_METHOD_INVOICE = 'payolutionInvoice';
+    /**
+     * @deprecated Use Spryker\Shared\Payolution\PayolutionConfig constant instead.
+     */
     const PAYMENT_METHOD_INSTALLMENT = 'payolutionInstallment';
 
     /**

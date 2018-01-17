@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class CheckoutPermissionCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\CheckoutPermissionConnector\Dependency\CheckoutPermissionConnectorToFacadeInterface
+     * @return \Spryker\Zed\CheckoutPermissionConnector\Dependency\Facade\CheckoutPermissionConnectorToCheckoutPermissionFacadeInterface
      */
     public function getPermissionFacade()
     {

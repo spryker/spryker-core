@@ -1,3 +1,3 @@
 # Acl Changelog
 
-[Acl Changelog](https://github.com/spryker/Acl/releases)
+[Release Changelog](https://github.com/spryker/acl/releases)

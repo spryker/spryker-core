@@ -89,7 +89,8 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     {
         return new AbstractProductOptionSaver(
             $this->getQueryContainer(),
-            $this->getTouchFacade()
+            $this->getTouchFacade(),
+            $this->getEventFacade()
         );
     }
 
@@ -192,6 +193,14 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     protected function getPriceFacade()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface
+     */
+    protected function getEventFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_EVENT);
     }
 
     /**

@@ -14,6 +14,8 @@ use Spryker\Zed\Navigation\Dependency\NavigationEvents;
 use Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationNodeLocalizedAttributeStorageListener;
 use Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationNodeStorageListener;
 use Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationStorageListener;
+use Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationUrlRelationStorageListener;
+use Spryker\Zed\Url\Dependency\UrlEvents;
 
 /**
  * @method \Spryker\Zed\NavigationStorage\Communication\NavigationStorageCommunicationFactory getFactory()
@@ -40,7 +42,8 @@ class NavigationStorageEventSubscriber extends AbstractPlugin implements EventSu
             ->addListenerQueued(NavigationEvents::ENTITY_SPY_NAVIGATION_NODE_DELETE, new NavigationNodeStorageListener())
             ->addListenerQueued(NavigationEvents::ENTITY_SPY_NAVIGATION_NODE_LOCALIZED_ATTRIBUTE_CREATE, new NavigationNodeLocalizedAttributeStorageListener())
             ->addListenerQueued(NavigationEvents::ENTITY_SPY_NAVIGATION_NODE_LOCALIZED_ATTRIBUTE_UPDATE, new NavigationNodeLocalizedAttributeStorageListener())
-            ->addListenerQueued(NavigationEvents::ENTITY_SPY_NAVIGATION_NODE_LOCALIZED_ATTRIBUTE_DELETE, new NavigationNodeLocalizedAttributeStorageListener());
+            ->addListenerQueued(NavigationEvents::ENTITY_SPY_NAVIGATION_NODE_LOCALIZED_ATTRIBUTE_DELETE, new NavigationNodeLocalizedAttributeStorageListener())
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new NavigationUrlRelationStorageListener());
 
         return $eventCollection;
     }

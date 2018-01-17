@@ -1,7 +1,6 @@
 language: php
 
 php:
-    - 5.6
     - 7.1
 
 cache:
@@ -15,7 +14,6 @@ env:
         - APPLICATION_STORE=DE
 
 install:
-    - composer self-update && composer --version
     - composer install --no-interaction --prefer-dist
 
 script:

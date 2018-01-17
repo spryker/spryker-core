@@ -1,3 +1,3 @@
 # CmsContentWidget Changelog
 
-[Release Changelog](https://github.com/spryker/CmsContentWidget/releases)
+[Release Changelog](https://github.com/spryker/cms-content-widget/releases)

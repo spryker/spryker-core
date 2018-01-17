@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CheckoutPermissionConnector\Dependency\Facade;
 
-class CheckoutPermissionConnectorToFacadeBridge implements CheckoutPermissionConnectorToFacadeInterface
+class CheckoutPermissionConnectorToCheckoutPermissionFacadeBridge implements CheckoutPermissionConnectorToCheckoutPermissionFacadeInterface
 {
     /** @var \Spryker\Zed\Permission\Business\PermissionFacadeInterface */
     protected $permissionFacade;

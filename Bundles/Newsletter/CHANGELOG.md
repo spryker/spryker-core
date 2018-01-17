@@ -1,3 +1,3 @@
 # Newsletter Changelog
 
-[Newsletter Changelog](https://github.com/spryker/Newsletter/releases)
+[Release Changelog](https://github.com/spryker/newsletter/releases)

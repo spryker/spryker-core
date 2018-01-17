@@ -1,3 +1,3 @@
 # Category Changelog
 
-[Category Changelog](https://github.com/spryker/Category/releases)
+[Release Changelog](https://github.com/spryker/category/releases)

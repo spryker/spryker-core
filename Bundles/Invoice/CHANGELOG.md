@@ -1,3 +1,3 @@
 # Invoice Changelog
 
-[Invoice Changelog](https://github.com/spryker/Invoice/releases)
+[Release Changelog](https://github.com/spryker/invoice/releases)
