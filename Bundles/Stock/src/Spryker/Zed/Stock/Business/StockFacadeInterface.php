@@ -52,6 +52,9 @@ interface StockFacadeInterface
     public function calculateStockForProduct($sku);
 
     /**
+     * Specification:
+     *  - Returns the total stock amount of the concrete product for all its available stock types and store.
+     *
      * @api
      *
      * @param string $sku
@@ -227,6 +230,11 @@ interface StockFacadeInterface
      * Specification:
      *  - Returns stock mapping per store/warehouse pair
      *
+     *  [
+     *    'warehouse1' => ['DE', 'US'],
+     *    'warehouse2' => ['US']
+     * ]
+     *
      * @api
      *
      * @return array
@@ -234,6 +242,14 @@ interface StockFacadeInterface
     public function getWarehouseToStoreMapping();
 
     /**
+     * Specification:
+     *  - Returns stock configuration mock per store/warehouse pair:
+     *
+     * [
+     *     'DE' => ['Warehouse1']
+     *     'US' => [ 'Warehouse1', 'Warehouse2'],
+     * ]
+     *
      * @api
      *
      * @return array

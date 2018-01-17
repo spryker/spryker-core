@@ -134,7 +134,6 @@ interface AvailabilityFacadeInterface
     public function findProductConcreteAvailability(ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer);
 
     /**
-     *
      * Specification:
      *  - Touches availability abstract collector for given abstract product
      *

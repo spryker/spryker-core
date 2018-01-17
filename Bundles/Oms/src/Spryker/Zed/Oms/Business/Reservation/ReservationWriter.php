@@ -44,27 +44,22 @@ class ReservationWriter implements ReservationWriterInterface
     public function saveReservationRequest(
         OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
     ) {
-        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
 
         $sku = $omsAvailabilityReservationRequestTransfer->getSku();
         $storeName = $omsAvailabilityReservationRequestTransfer->getOriginStore()->getName();
 
+        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
         if ($currentStoreTransfer->getName() !== $storeName) {
             return;
         }
 
-        $reservationStoreEntity = $this->omsQueryContainer
-            ->queryOmsProductReservationStoreBySkuForStore($sku, $storeName)
-            ->findOneOrCreate();
+        $reservationStoreEntity = $this->findReservationStoreEntity($sku, $storeName);
 
         if ($this->isInvalidVersion($reservationStoreEntity, $omsAvailabilityReservationRequestTransfer)) {
             return;
         }
 
-        $reservationStoreEntity->fromArray($omsAvailabilityReservationRequestTransfer->toArray());
-        $reservationStoreEntity->setStore($storeName);
-        $reservationStoreEntity->setReservationQuantity($omsAvailabilityReservationRequestTransfer->getReservationAmount());
-        $reservationStoreEntity->save();
+        $this->saveReservationStoreEntity($omsAvailabilityReservationRequestTransfer, $reservationStoreEntity, $storeName);
     }
 
     /**
@@ -78,5 +73,36 @@ class ReservationWriter implements ReservationWriterInterface
         OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
     ) {
         return $reservationStoreEntity->isNew() || $reservationStoreEntity->getVersion() < $omsAvailabilityReservationRequestTransfer->getVersion() ? false : true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
+     * @param \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStore $reservationStoreEntity
+     * @param string $storeName
+     *
+     * @return void
+     */
+    protected function saveReservationStoreEntity(
+        OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer,
+        SpyOmsProductReservationStore $reservationStoreEntity,
+        $storeName
+    ) {
+        $reservationStoreEntity->fromArray($omsAvailabilityReservationRequestTransfer->toArray());
+        $reservationStoreEntity->setStore($storeName);
+        $reservationStoreEntity->setReservationQuantity($omsAvailabilityReservationRequestTransfer->getReservationAmount());
+        $reservationStoreEntity->save();
+    }
+
+    /**
+     * @param string $sku
+     * @param string $storeName
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStore
+     */
+    protected function findReservationStoreEntity($sku, $storeName)
+    {
+        return $this->omsQueryContainer
+            ->queryOmsProductReservationStoreBySkuForStore($sku, $storeName)
+            ->findOneOrCreate();
     }
 }

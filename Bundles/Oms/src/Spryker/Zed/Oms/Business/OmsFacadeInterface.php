@@ -516,7 +516,8 @@ interface OmsFacadeInterface
     );
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     *   - Reader non exported reservations and run through Reservation export plugins
      *
      * @api
      *

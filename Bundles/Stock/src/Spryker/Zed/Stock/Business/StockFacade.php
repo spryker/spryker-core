@@ -19,8 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class StockFacade extends AbstractFacade implements StockFacadeInterface
 {
     /**
-     * Specification:
-     * - Checks if the concrete product with the provided SKU has any stock type that is set as "never out of stock".
+     * {@inheritdoc}
      *
      * @api
      *
@@ -34,8 +33,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Checks if the concrete product with the provided SKU has any stock type that is set as "never out of stock".
+     * {@inheritdoc}
      *
      * @api
      *
@@ -50,8 +48,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns the total stock amount of the concrete product for all its available stock types.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -65,6 +62,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $sku
@@ -78,10 +77,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Persists a new stock type entity to database.
-     * - Touches the newly created stock type.
-     * - Returns the ID of the new stock type entity.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -95,11 +91,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Persists a new stock product entity in database for the given product and stock type.
-     * - If the product already have stock assigned in the given stock type, then it throws an exception.
-     * - Touches the newly created stock product.
-     * - Returns the ID of the new stock product entity.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -113,10 +105,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Updates an existing stock product entity with the provided stock data.
-     * - Touches the stock product.
-     * - Returns the ID of the stock product entity.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -130,9 +119,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Decrements stock amount of the given concrete product for the given stock type.
-     * - Touches the stock product.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -148,9 +135,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Increments stock amount of the given concrete product for the given stock type.
-     * - Touches the stock product.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -166,8 +151,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Checks if the given concrete product for the given stock type has positive amount.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -182,10 +166,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Processes all provided stocks of the concrete product transfer
-     * - If a stock entry from the collection doesn't exists for the product, then it will be newly created.
-     * - If a stock entry from the collection exists for the product, then it will be updated with the provided data.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -201,8 +182,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Expands concrete product transfer (by the ID of the product) with it's stock information from the database.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -218,9 +198,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     *
-     * Specification:
-     *  - Returns all available stock types
+     * {@inheritdoc}
      *
      * @api
      *
@@ -232,8 +210,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Returns stock product by given id product
+     * {@inheritdoc}
      *
      * @api
      *
@@ -249,8 +226,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Returns stock product by given id product
+     * {@inheritdoc}
      *
      * @api
      *
@@ -267,8 +243,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Gets stock types for store
+     * {@inheritdoc}
      *
      * @api
      *
@@ -282,13 +257,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Returns stock mapping per warehouse/store pair
-     *
-     *  [
-     *    'warehouse1' => ['DE', 'US'],
-     *    'warehouse2' => ['US']
-     * ]
+     * {@inheritdoc}
      *
      * @api
      *
@@ -302,13 +271,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Returns stock configuration mock per store/warehouse pair:
-     *
-     * [
-     *     'DE' => ['Warehouse1']
-     *     'US' => [ 'Warehouse1', 'Warehouse2'],
-     * ]
+     * {@inheritdoc}
      *
      * @api
      *

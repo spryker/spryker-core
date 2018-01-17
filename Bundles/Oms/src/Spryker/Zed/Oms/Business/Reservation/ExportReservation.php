@@ -9,8 +9,10 @@ namespace Spryker\Zed\Oms\Business\Reservation;
 
 use DateTime;
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsProductReservationLastExportedVersion;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
@@ -28,7 +30,7 @@ class ExportReservation implements ExportReservationInterface
     protected $omsQueryContainer;
 
     /**
-     * @var array|\Spryker\Zed\Oms\Dependency\Plugin\ReservationExportPluginInterface[]
+     * @var \Spryker\Zed\Oms\Dependency\Plugin\ReservationExportPluginInterface[]
      */
     protected $reservationExportPlugins;
 
@@ -56,25 +58,13 @@ class ExportReservation implements ExportReservationInterface
         $lastExportedVersion = $this->getLastExportedVersion();
 
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
-
-        $reservations = $this->omsQueryContainer
-            ->queryReservationChangeVersion($lastExportedVersion, $maxVisibleVersion)
-            ->find();
+        $reservations = $this->findReservations($lastExportedVersion, $maxVisibleVersion);
 
         if (count($reservations) === 0) {
             return;
         }
 
-        foreach ($reservations as $reservation) {
-             $reservationRequestTransfer = (new OmsAvailabilityReservationRequestTransfer())
-                 ->setVersion($reservation[OmsQueryContainer::VERSION])
-                 ->setSku($reservation[OmsQueryContainer::SKU])
-                 ->setReservationAmount($reservation[OmsQueryContainer::RESERVATION_QUANTITY])
-                 ->setOriginStore($currentStoreTransfer);
-
-             $this->executeExportReservationPlugins($reservationRequestTransfer);
-        }
-
+        $this->exportReservations($reservations, $currentStoreTransfer);
         $this->storeLastExportedDate($maxVisibleVersion);
     }
 
@@ -148,5 +138,48 @@ class ExportReservation implements ExportReservationInterface
             ->setVersion($version)
             ->setUpdatedAt($currentDate)
             ->save();
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $reservations
+     * @param \Generated\Shared\Transfer\StoreTransfer $currentStoreTransfer
+     *
+     * @return void
+     */
+    protected function exportReservations(ObjectCollection $reservations, StoreTransfer $currentStoreTransfer)
+    {
+        foreach ($reservations as $reservationEntity) {
+            $this->executeExportReservationPlugins(
+                $this->mapReservationRequestTransfer($currentStoreTransfer, $reservationEntity)
+            );
+        }
+    }
+
+    /**
+     * @param int $lastExportedVersion
+     * @param int $maxVisibleVersion
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersion[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function findReservations($lastExportedVersion, $maxVisibleVersion)
+    {
+        return $this->omsQueryContainer
+            ->queryReservationChangeVersion($lastExportedVersion, $maxVisibleVersion)
+            ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $currentStoreTransfer
+     * @param array $reservation
+     *
+     * @return \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer
+     */
+    protected function mapReservationRequestTransfer(StoreTransfer $currentStoreTransfer, array $reservation)
+    {
+        return (new OmsAvailabilityReservationRequestTransfer())
+            ->setVersion($reservation[OmsQueryContainer::VERSION])
+            ->setSku($reservation[OmsQueryContainer::SKU])
+            ->setReservationAmount($reservation[OmsQueryContainer::RESERVATION_QUANTITY])
+            ->setOriginStore($currentStoreTransfer);
     }
 }

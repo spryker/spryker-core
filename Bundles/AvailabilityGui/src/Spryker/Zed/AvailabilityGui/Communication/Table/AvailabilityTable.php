@@ -187,7 +187,22 @@ class AvailabilityTable extends AbstractTable
      */
     protected function createButtons(array $productAbstract, $isBundle)
     {
-        $availabilityEditUrl = Url::generate(
+        if (!$isBundle) {
+            $availabilityEditUrl = $this->createAvailabilityEditUrl($productAbstract);
+            return $this->generateEditButton($availabilityEditUrl, 'Edit Stock');
+        }
+        $viewBundleUrl = $this->createViewBundleUrl($productAbstract);
+        return $this->generateViewButton($viewBundleUrl, 'View bundled products');
+    }
+
+    /**
+     * @param array $productAbstract
+     *
+     * @return string
+     */
+    protected function createAvailabilityEditUrl(array $productAbstract)
+    {
+        return Url::generate(
             '/availability-gui/index/edit',
             [
                 static::URL_PARAM_ID_PRODUCT => $productAbstract[AvailabilityQueryContainer::ID_PRODUCT],
@@ -196,23 +211,22 @@ class AvailabilityTable extends AbstractTable
                 static::URL_PARAM_ID_STORE => $this->storeTransfer->getIdStore(),
             ]
         );
+    }
 
-        $buttons = '';
-        if (!$isBundle) {
-            $buttons = $this->generateEditButton($availabilityEditUrl, 'Edit Stock');
-        } else {
-            $viewBundleUrl = Url::generate(
-                '/availability-gui/index/bundled-product-availability-table',
-                [
-                    BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_BUNDLE => $productAbstract[AvailabilityQueryContainer::ID_PRODUCT],
-                    BundledProductAvailabilityTable::URL_PARAM_BUNDLE_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
-                    static::URL_PARAM_ID_STORE => $this->storeTransfer->getIdStore(),
-                ]
-            );
-
-            $buttons .= ' ' . $this->generateViewButton($viewBundleUrl, 'View bundled products');
-        }
-
-        return $buttons;
+    /**
+     * @param array $productAbstract
+     *
+     * @return string
+     */
+    protected function createViewBundleUrl(array $productAbstract)
+    {
+        return Url::generate(
+            '/availability-gui/index/bundled-product-availability-table',
+            [
+                BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_BUNDLE => $productAbstract[AvailabilityQueryContainer::ID_PRODUCT],
+                BundledProductAvailabilityTable::URL_PARAM_BUNDLE_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
+                static::URL_PARAM_ID_STORE => $this->storeTransfer->getIdStore(),
+            ]
+        );
     }
 }

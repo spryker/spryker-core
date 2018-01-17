@@ -18,6 +18,13 @@ use Spryker\Zed\Oms\Dependency\Plugin\ReservationExportPluginInterface;
 class ReservationExportPlugin extends AbstractPlugin implements ReservationExportPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * This is example plugin, here should be export to external storage, like queue, file etc.
+     * While on other side you would read file/consume request and use OmsFacade::importReservation() facade method.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $reservationRequestTransfer
      *
      * @return void
