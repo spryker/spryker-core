@@ -1,3 +1,3 @@
 # Testify Changelog
 
-[Testify Changelog](https://github.com/spryker/Testify/releases)
+[Release Changelog](https://github.com/spryker/testify/releases)

@@ -1,3 +1,3 @@
 # ProductLabelSearch Changelog
 
-[Release Changelog](https://github.com/spryker/ProductLabelSearch/releases)
+[Release Changelog](https://github.com/spryker/product-label-search/releases)

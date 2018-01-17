@@ -1,3 +1,3 @@
 # AuthMailConnector Changelog
 
-[AuthMailConnector Changelog](https://github.com/spryker/AuthMailConnector/releases)
+[Release Changelog](https://github.com/spryker/auth-mail-connector/releases)

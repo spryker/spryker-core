@@ -1,3 +1,3 @@
 # ProductRelation Changelog
 
-[ProductRelation Changelog](https://github.com/spryker/ProductRelation/releases)
+[Release Changelog](https://github.com/spryker/product-relation/releases)

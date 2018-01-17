@@ -6,12 +6,16 @@
 
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Orm\Zed\ProductOption\Persistence\Map\SpyProductAbstractProductOptionGroupTableMap;
 use Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroup;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 use Spryker\Zed\ProductOption\Business\Exception\AbstractProductNotFoundException;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface;
+use Spryker\Zed\ProductOption\Dependency\ProductOptionEvents;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
 
@@ -28,15 +32,23 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
     protected $touchFacade;
 
     /**
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface
+     */
+    protected $eventFacade;
+
+    /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface $touchFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface $eventFacade
      */
     public function __construct(
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
-        ProductOptionToTouchFacadeInterface $touchFacade
+        ProductOptionToTouchFacadeInterface $touchFacade,
+        ProductOptionToEventFacadeInterface $eventFacade
     ) {
         $this->productOptionQueryContainer = $productOptionQueryContainer;
         $this->touchFacade = $touchFacade;
+        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -77,6 +89,11 @@ class AbstractProductOptionSaver implements AbstractProductOptionSaverInterface
             $productAbstractProductOptionGroupEntity = $this->createProductAbstractProductOptionGroupEntity($productOptionGroupEntity, $idProductAbstract);
             $productOptionGroupEntity->removeSpyProductAbstractProductOptionGroup($productAbstractProductOptionGroupEntity);
 
+            $eventTransfer = (new EventEntityTransfer())->setForeignKeys([
+                    SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_ABSTRACT => $idProductAbstract,
+            ]);
+
+            $this->eventFacade->trigger(ProductOptionEvents::ENTITY_SPY_PRODUCT_ABSTRACT_PRODUCT_OPTION_GROUP_DELETE, $eventTransfer);
             $this->touchFacade->touchActive(ProductOptionConfig::RESOURCE_TYPE_PRODUCT_OPTION, $idProductAbstract);
         }
     }
