@@ -35,7 +35,7 @@ class ProductBundleToAvailabilityQueryContainerBridge implements ProductBundleTo
 
     /**
      * @param int $idAvailabilityAbstract
-     * @param int $idStore;
+     * @param int $idStore
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */

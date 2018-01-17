@@ -20,7 +20,7 @@ interface StockFacadeInterface
      *
      * @api
      *
-     * @param $sku
+     * @param string $sku
      *
      * @return bool
      */
