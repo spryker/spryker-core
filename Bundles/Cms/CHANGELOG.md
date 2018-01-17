@@ -1,3 +1,3 @@
 # Cms Changelog
 
-[Cms Changelog](https://github.com/spryker/Cms/releases)
+[Release Changelog](https://github.com/spryker/cms/releases)

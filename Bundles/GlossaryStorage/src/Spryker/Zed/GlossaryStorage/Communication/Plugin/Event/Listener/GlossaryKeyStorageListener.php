@@ -10,6 +10,10 @@ namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener;
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
+/**
+ * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\GlossaryStorage\Communication\GlossaryStorageCommunicationFactory getFactory()
+ */
 class GlossaryKeyStorageListener extends AbstractGlossaryTranslationStorageListener
 {
     use DatabaseTransactionHandlerTrait;

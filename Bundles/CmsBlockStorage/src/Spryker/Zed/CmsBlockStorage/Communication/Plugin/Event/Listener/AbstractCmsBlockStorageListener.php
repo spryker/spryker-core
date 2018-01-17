@@ -100,7 +100,7 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
             return;
         }
 
-        $blockEntityArray = $this->getFactory()->getUtilSynchronization()->arrayFilterRecursive($blockEntityArray);
+        $blockEntityArray = $this->getFactory()->getUtilSanitize()->arrayFilterRecursive($blockEntityArray);
         foreach ($this->getFactory()->getContentWidgetDataExpanderPlugins() as $contentWidgetDataExpanderPlugin) {
             $blockEntityArray = $contentWidgetDataExpanderPlugin->expand($blockEntityArray, $localeName);
         }

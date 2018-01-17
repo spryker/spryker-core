@@ -1,3 +1,3 @@
 # ProductCategoryFilterStorage Changelog
 
-[Release Changelog](https://github.com/spryker/ProductCategoryFilterStorage/releases)
+[Release Changelog](https://github.com/spryker/product-category-filter-storage/releases)

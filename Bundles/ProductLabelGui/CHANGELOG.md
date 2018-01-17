@@ -1,3 +1,3 @@
 # ProductLabelGui Changelog
 
-[Release Changelog](https://github.com/spryker/ProductLabelGui/releases)
+[Release Changelog](https://github.com/spryker/product-label-gui/releases)

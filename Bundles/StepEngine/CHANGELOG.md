@@ -1,3 +1,3 @@
 # StepEngine Changelog
 
-[StepEngine Changelog](https://github.com/spryker/StepEngine/releases)
+[Release Changelog](https://github.com/spryker/step-engine/releases)

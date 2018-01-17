@@ -74,7 +74,9 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductAbstractAssertion(),
             $this->createSkuGenerator(),
             $this->createAttributeEncoder(),
-            $this->createProductTransferMapper()
+            $this->createProductTransferMapper(),
+            $this->createProductAbstractStoreRelationReader(),
+            $this->createProductAbstractStoreRelationWriter()
         );
 
         $productAbstractManager->setEventFacade($this->getEventFacade());

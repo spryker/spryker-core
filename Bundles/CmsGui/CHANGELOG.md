@@ -1,3 +1,3 @@
 # CmsGui Changelog
 
-[CmsGui Changelog](https://github.com/spryker/CmsGui/releases)
+[Release Changelog](https://github.com/spryker/cms-gui/releases)

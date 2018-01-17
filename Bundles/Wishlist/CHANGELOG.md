@@ -1,3 +1,3 @@
 # Wishlist Changelog
 
-[Wishlist Changelog](https://github.com/spryker/Wishlist/releases)
+[Release Changelog](https://github.com/spryker/wishlist/releases)

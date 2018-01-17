@@ -143,4 +143,9 @@
         <property name="storePrices" type="array" />
     </transfer>
 
+    <transfer name="EventEntity">
+        <property name="id" type="int"/>
+        <property name="foreignKeys" type="array"/>
+    </transfer>
+
 </transfers>
