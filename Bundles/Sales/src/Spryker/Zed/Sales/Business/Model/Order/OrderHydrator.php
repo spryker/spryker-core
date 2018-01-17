@@ -196,7 +196,7 @@ class OrderHydrator implements OrderHydratorInterface
         $orderTransfer = new OrderTransfer();
         $orderTransfer->fromArray($orderEntity->toArray(), true);
         $orderTransfer->setCustomerReference($orderEntity->getCustomerReference());
-        // using FK to cusotmer is obsolete, but needed to prevent BC-break
+        // Deprecated: Using FK to customer is obsolete, but needed to prevent BC break.
         $orderTransfer->setFkCustomer($orderEntity->getFkCustomer());
 
         return $orderTransfer;
@@ -396,7 +396,7 @@ class OrderHydrator implements OrderHydratorInterface
     {
         if (!$orderEntity->getCustomer()) {
             $orderTransfer->setCustomerReference(null);
-            // using FK to cusotmer is obsolete, but needed to prevent BC-break
+            // Deprecated: Using FK to customer is obsolete, but needed to prevent BC break.
             $orderTransfer->setFkCustomer(null);
         }
     }
