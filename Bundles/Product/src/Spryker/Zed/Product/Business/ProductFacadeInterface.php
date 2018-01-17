@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 
 interface ProductFacadeInterface
 {
@@ -704,32 +703,4 @@ interface ProductFacadeInterface
      * @return array
      */
     public function decodeProductAttributes($attributes);
-
-    /**
-     * Specification:
-     * - Updates the store relations of the provided abstract product.
-     * - Removes store relations from persistent storage if they are not set in the provided store list.
-     * - Adds/keeps store relations to persistent storage if they are set in the provided store list.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelation
-     *
-     * @return void
-     */
-    public function saveProductAbstractStoreRelation(StoreRelationTransfer $storeRelation);
-
-    /**
-     * Specification:
-     * - Populates the abstract product store relations in the provided store relation transfer.
-     * - Populates both transfer objects and id collection.
-     * - Uses the provided entity id to identify the abstract product entity.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
-     *
-     * @return \Generated\Shared\Transfer\StoreRelationTransfer
-     */
-    public function getProductAbstractStoreRelation(StoreRelationTransfer $storeRelationTransfer);
 }
