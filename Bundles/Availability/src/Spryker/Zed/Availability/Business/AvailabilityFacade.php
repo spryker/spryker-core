@@ -183,10 +183,28 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @return int
      */
-    public function saveProductAvailability($sku, $quantity, StoreTransfer $storeTransfer = null)
+    public function saveProductAvailability($sku, $quantity)
     {
         return $this->getFactory()
             ->createAvailabilityHandler()
-            ->saveCurrentAvailability($sku, $quantity, $storeTransfer);
+            ->saveCurrentAvailability($sku, $quantity);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     *
+     * @return int
+     */
+    public function saveProductAvailabilityForStore($sku, $quantity, StoreTransfer $storeTransfer)
+    {
+        return $this->getFactory()
+            ->createAvailabilityHandler()
+            ->saveCurrentAvailabilityForStore($sku, $quantity, $storeTransfer);
     }
 }

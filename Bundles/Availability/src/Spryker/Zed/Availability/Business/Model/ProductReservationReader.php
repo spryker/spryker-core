@@ -113,7 +113,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
         $availabilityEntity = $this->availabilityQueryContainer
-            ->querySpyAvailabilityBySku($productConcreteAvailabilityRequestTransfer->getSku(), $storeTransfer->getIdStore())
+            ->querySpyAvailabilityBySkuAndIdStore($productConcreteAvailabilityRequestTransfer->getSku(), $storeTransfer->getIdStore())
             ->findOne();
 
         if (!$availabilityEntity) {

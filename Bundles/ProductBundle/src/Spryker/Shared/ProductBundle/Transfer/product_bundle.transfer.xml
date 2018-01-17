@@ -63,4 +63,9 @@
         <property name="rowCount" type="int" />
     </transfer>
 
+    <transfer name="Store">
+        <property name="idStore" type="int" />
+        <property name="sharedPersistenceWithStores" type="array" singular="sharedPersistenceWithStore" />
+    </transfer>
+
 </transfers>

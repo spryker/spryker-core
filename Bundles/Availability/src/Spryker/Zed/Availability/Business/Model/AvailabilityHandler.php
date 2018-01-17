@@ -108,16 +108,27 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     /**
      * @param string $sku
      * @param int $quantity
+     *
+     * @return int
+     */
+    public function saveCurrentAvailability($sku, $quantity)
+    {
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+
+        $spyAvailabilityEntity = $this->saveAndTouchAvailability($sku, $quantity, $storeTransfer);
+
+        return $spyAvailabilityEntity->getFkAvailabilityAbstract();
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
      */
-    public function saveCurrentAvailability($sku, $quantity, StoreTransfer $storeTransfer = null)
+    public function saveCurrentAvailabilityForStore($sku, $quantity, StoreTransfer $storeTransfer)
     {
-        if (!$storeTransfer) {
-            $storeTransfer = $this->storeFacade->getCurrentStore();
-        }
-
         $spyAvailabilityEntity = $this->saveAndTouchAvailability($sku, $quantity, $storeTransfer);
 
         return $spyAvailabilityEntity->getFkAvailabilityAbstract();
@@ -204,8 +215,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     protected function querySpyAvailabilityBySku($sku, StoreTransfer $storeTransfer)
     {
-        return $this->queryContainer
-            ->querySpyAvailabilityBySku($sku, $storeTransfer->getIdStore());
+        return $this->queryContainer->querySpyAvailabilityBySkuAndIdStore($sku, $storeTransfer->getIdStore());
     }
 
     /**

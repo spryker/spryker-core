@@ -16,20 +16,4 @@ interface ProductBundleToAvailabilityQueryContainerInterface
      * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
     public function querySpyAvailabilityBySku($sku, $idStore);
-
-    /**
-     * @param int $idAvailabilityAbstract
-     * @param int $idStore
-     *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
-     */
-    public function queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract, $idStore);
-
-    /**
-     * @param int $idAvailabilityAbstract
-     * @param int $idStore
-     *
-     * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
-     */
-    public function querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract, $idStore);
 }

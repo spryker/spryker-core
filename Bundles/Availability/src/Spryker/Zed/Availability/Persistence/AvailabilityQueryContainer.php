@@ -44,13 +44,27 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      * @api
      *
      * @param string $sku
-     * @param int $idStore
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
      * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
-    public function querySpyAvailabilityBySku($sku, $idStore)
+    public function querySpyAvailabilityBySku($sku)
+    {
+        return $this->getFactory()
+            ->createSpyAvailabilityQuery()
+            ->filterBySku($sku);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
+     */
+    public function querySpyAvailabilityBySkuAndIdStore($sku, $idStore)
     {
         return $this->getFactory()
             ->createSpyAvailabilityQuery()

@@ -156,9 +156,24 @@ interface AvailabilityFacadeInterface
      *
      * @param string $sku
      * @param int $quantity
+     *
+     * @return int
+     */
+    public function saveProductAvailability($sku, $quantity);
+
+    /**
+     * Specification:
+     *  - Updates availability for given sku, by quantity
+     *  - Touches availability collector if data changed
+     *  - Returns id of availability abstract
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param int $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
      */
-    public function saveProductAvailability($sku, $quantity, StoreTransfer $storeTransfer = null);
+    public function saveProductAvailabilityForStore($sku, $quantity, StoreTransfer $storeTransfer);
 }

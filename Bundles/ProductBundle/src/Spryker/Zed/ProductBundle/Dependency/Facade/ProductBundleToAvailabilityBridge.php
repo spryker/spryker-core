@@ -64,6 +64,10 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
      */
     public function saveProductAvailability($sku, $quantity, StoreTransfer $storeTransfer)
     {
-        return $this->availabilityFacade->saveProductAvailability($sku, $quantity, $storeTransfer);
+        if (method_exists($this->availabilityFacade, 'saveProductAvailabilityForStore')) {
+            return $this->availabilityFacade->saveProductAvailabilityForStore($sku, $quantity, $storeTransfer);
+        }
+
+        return $this->availabilityFacade->saveProductAvailability($sku, $quantity);
     }
 }

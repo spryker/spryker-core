@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
@@ -29,18 +30,26 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     protected $availabilityQueryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductBundleToAvailabilityInterface $availabilityFacade,
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
-        ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
+        ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer,
+        ProductBundleToStoreFacadeInterface $storeFacade
     ) {
         parent::__construct($availabilityFacade, $productBundleQueryContainer);
 
         $this->availabilityQueryContainer = $availabilityQueryContainer;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -140,8 +149,10 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      */
     protected function findAvailabilityEntityBySku($sku)
     {
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+
         return $this->availabilityQueryContainer
-            ->querySpyAvailabilityBySku($sku)
+            ->querySpyAvailabilityBySku($sku, $storeTransfer->getIdStore())
             ->findOne();
     }
 

@@ -13,11 +13,20 @@ interface AvailabilityQueryContainerInterface
      * @api
      *
      * @param string $sku
+     *
+     * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
+     */
+    public function querySpyAvailabilityBySku($sku);
+
+    /**
+     * @api
+     *
+     * @param string $sku
      * @param int $idStore
      *
      * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
-    public function querySpyAvailabilityBySku($sku, $idStore);
+    public function querySpyAvailabilityBySkuAndIdStore($sku, $idStore);
 
     /**
      * @api
