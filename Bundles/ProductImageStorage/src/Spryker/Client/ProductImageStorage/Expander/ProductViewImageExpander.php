@@ -102,6 +102,10 @@ class ProductViewImageExpander implements ProductViewImageExpanderInterface
             return $this->getImageSetImages($imageSetStorageCollection, ProductImageStorageConfig::DEFAULT_IMAGE_SET_NAME);
         }
 
+        if (isset($imageSetStorageCollection[0])) {
+            return $imageSetStorageCollection[0]->getImages();
+        }
+
         return null;
     }
 }

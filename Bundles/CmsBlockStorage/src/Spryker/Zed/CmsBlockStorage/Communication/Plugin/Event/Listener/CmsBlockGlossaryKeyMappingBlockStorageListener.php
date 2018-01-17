@@ -11,6 +11,10 @@ use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockGlossaryKeyMappingTableMap;
 use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 
+/**
+ * @method \Spryker\Zed\CmsBlockStorage\Communication\CmsBlockStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockStorage\Persistence\CmsBlockStorageQueryContainerInterface getQueryContainer()
+ */
 class CmsBlockGlossaryKeyMappingBlockStorageListener extends AbstractCmsBlockStorageListener implements EventBulkHandlerInterface
 {
     /**

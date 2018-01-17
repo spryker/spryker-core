@@ -25,7 +25,7 @@ class ProductLabelSearchToProductLabelBridge implements ProductLabelSearchToProd
     /**
      * @param int $idProductAbstract
      *
-     * @return \int[]
+     * @return int[]
      */
     public function findLabelIdsByIdProductAbstract($idProductAbstract)
     {
