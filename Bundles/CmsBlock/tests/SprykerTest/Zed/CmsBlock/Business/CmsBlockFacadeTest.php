@@ -257,7 +257,7 @@ class CmsBlockFacadeTest extends Unit
         // Assign
         $expectedIdStores = [1, 3];
         $cmsBlockTransfer = $this->tester->haveCmsBlock([
-            StoreRelationTransfer::STORES => (new StoreRelationTransfer())->setIdStores($expectedIdStores),
+            CmsBlockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => $expectedIdStores],
         ]);
 
         // Act

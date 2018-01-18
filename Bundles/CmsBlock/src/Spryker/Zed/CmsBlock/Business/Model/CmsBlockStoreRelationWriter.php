@@ -40,10 +40,11 @@ class CmsBlockStoreRelationWriter implements CmsBlockStoreRelationWriterInterfac
      */
     public function update(StoreRelationTransfer $storeRelationTransfer)
     {
-        $currentIdStores = $this->getIdStores($storeRelationTransfer->getIdEntity());
+        $currentIdStores = $this->getIdStoresByIdCmsBlock($storeRelationTransfer->getIdEntity());
+        $requestedIdStores = $this->findStoreRelationIdStores($storeRelationTransfer);
 
-        $saveIdStores = array_diff($storeRelationTransfer->getIdStores(), $currentIdStores);
-        $deleteIdStores = array_diff($currentIdStores, $storeRelationTransfer->getIdStores());
+        $saveIdStores = array_diff($requestedIdStores, $currentIdStores);
+        $deleteIdStores = array_diff($currentIdStores, $requestedIdStores);
 
         $this->addStores($saveIdStores, $storeRelationTransfer->getIdEntity());
         $this->removeStores($deleteIdStores, $storeRelationTransfer->getIdEntity());
@@ -87,7 +88,7 @@ class CmsBlockStoreRelationWriter implements CmsBlockStoreRelationWriterInterfac
      *
      * @return int[]
      */
-    protected function getIdStores($idCmsBlock)
+    protected function getIdStoresByIdCmsBlock($idCmsBlock)
     {
         $storeRelation = $this->cmsBlockStoreRelationReader->getStoreRelation(
             (new StoreRelationTransfer())
@@ -95,5 +96,19 @@ class CmsBlockStoreRelationWriter implements CmsBlockStoreRelationWriterInterfac
         );
 
         return $storeRelation->getIdStores();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     *
+     * @return int[]
+     */
+    protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelationTransfer)
+    {
+        if ($storeRelationTransfer->getIdStores() === null) {
+            return [];
+        }
+
+        return $storeRelationTransfer->getIdStores();
     }
 }

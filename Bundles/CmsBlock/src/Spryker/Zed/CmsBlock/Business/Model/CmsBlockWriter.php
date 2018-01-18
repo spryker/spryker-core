@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlock\Business\Model;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Spryker\Shared\CmsBlock\CmsBlockConfig;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockNotFoundException;
@@ -207,11 +208,27 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         $spyCmsBlock = $this->cmsBlockMapper->mapCmsBlockTransferToEntity($cmsBlockTransfer, $spyCmsBlock);
         $spyCmsBlock->save();
 
-        $this->cmsBlockStoreRelationWriter->update($cmsBlockTransfer->getStoreRelation());
+        $this->persistStoreRelation($cmsBlockTransfer, $spyCmsBlock->getIdCmsBlock());
 
         if ($spyCmsBlock->getIsActive()) {
             $this->touchFacade->touchActive(CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK, $spyCmsBlock->getIdCmsBlock());
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     * @param int $idCmsBlock
+     *
+     * @return void
+     */
+    protected function persistStoreRelation(CmsBlockTransfer $cmsBlockTransfer, $idCmsBlock)
+    {
+        if ($cmsBlockTransfer->getStoreRelation() === null) {
+            $cmsBlockTransfer->setStoreRelation(new StoreRelationTransfer());
+        }
+
+        $cmsBlockTransfer->getStoreRelation()->setIdEntity($idCmsBlock);
+        $this->cmsBlockStoreRelationWriter->update($cmsBlockTransfer->getStoreRelation());
     }
 
     /**
@@ -237,8 +254,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         $spyCmsBlock = $this->cmsBlockMapper->mapCmsBlockTransferToEntity($cmsBlockTransfer, $spyCmsBlock);
         $spyCmsBlock->save();
 
-        $cmsBlockTransfer->getStoreRelation()->setIdEntity($spyCmsBlock->getIdCmsBlock());
-        $this->cmsBlockStoreRelationWriter->update($cmsBlockTransfer->getStoreRelation());
+        $this->persistStoreRelation($cmsBlockTransfer, $spyCmsBlock->getIdCmsBlock());
 
         if ($spyCmsBlock->getIsActive()) {
             $this->touchFacade->touchActive(CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK, $spyCmsBlock->getIdCmsBlock());
