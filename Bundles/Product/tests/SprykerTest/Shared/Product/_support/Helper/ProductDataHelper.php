@@ -10,7 +10,6 @@ namespace SprykerTest\Shared\Product\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductAbstractBuilder;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -28,9 +27,6 @@ class ProductDataHelper extends Module
     public function haveProduct(array $productConcreteOverride = [], array $productAbstractOverride = [])
     {
         $productAbstractTransfer = (new ProductAbstractBuilder($productAbstractOverride))->build();
-        $productAbstractTransfer->setStoreRelation(
-            (new StoreRelationTransfer())->setIdStores([])
-        );
 
         $productFacade = $this->getProductFacade();
         $abstractProductId = $productFacade->createProductAbstract($productAbstractTransfer);

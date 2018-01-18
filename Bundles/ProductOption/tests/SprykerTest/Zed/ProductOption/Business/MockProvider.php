@@ -13,6 +13,7 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceHydrat
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceSaverInterface;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface;
@@ -54,6 +55,15 @@ class MockProvider extends Unit
     protected function createTouchFacadeMock()
     {
         return $this->getMockBuilder(ProductOptionToTouchFacadeInterface::class)
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface
+     */
+    protected function createEventFacadeMock()
+    {
+        return $this->getMockBuilder(ProductOptionToEventFacadeInterface::class)
             ->getMock();
     }
 

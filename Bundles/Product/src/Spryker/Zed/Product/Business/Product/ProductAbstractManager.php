@@ -135,10 +135,9 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
 
         $idProductAbstract = $productAbstractEntity->getPrimaryKey();
         $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-        $productAbstractTransfer->getStoreRelation()->setIdEntity($idProductAbstract);
 
         $this->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
-        $this->productAbstractStoreRelationWriter->save($productAbstractTransfer->getStoreRelation());
+        $this->persistProductAbstractStoreRelation($productAbstractTransfer, $idProductAbstract);
 
         $this->notifyAfterCreateObservers($productAbstractTransfer);
 
@@ -167,13 +166,29 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
 
         $this->persistEntity($productAbstractTransfer);
         $this->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
-        $this->productAbstractStoreRelationWriter->save($productAbstractTransfer->getStoreRelation());
+        $this->persistProductAbstractStoreRelation($productAbstractTransfer, $idProductAbstract);
 
         $this->notifyAfterUpdateObservers($productAbstractTransfer);
 
         $this->productQueryContainer->getConnection()->commit();
 
         return $idProductAbstract;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    protected function persistProductAbstractStoreRelation(ProductAbstractTransfer $productAbstractTransfer, $idProductAbstract)
+    {
+        if ($productAbstractTransfer->getStoreRelation() === null) {
+            $productAbstractTransfer->setStoreRelation(new StoreRelationTransfer());
+        }
+
+        $productAbstractTransfer->getStoreRelation()->setIdEntity($idProductAbstract);
+        $this->productAbstractStoreRelationWriter->save($productAbstractTransfer->getStoreRelation());
     }
 
     /**

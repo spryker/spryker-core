@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Product\Business;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 
 /**
  * Auto-generated group annotations
@@ -131,9 +132,10 @@ class ProductManagementTest extends FacadeTestAbstract
     {
         // Assign
         $expectedIdStores = [1, 3];
-        $this->productAbstractTransfer
-            ->getStoreRelation()
-            ->setIdStores($expectedIdStores);
+        $this->productAbstractTransfer->setStoreRelation(
+            (new StoreRelationTransfer())
+                ->setIdStores($expectedIdStores)
+        );
 
         // Act
         $idProductAbstract = $this->productFacade->createProductAbstract($this->productAbstractTransfer);
@@ -153,9 +155,10 @@ class ProductManagementTest extends FacadeTestAbstract
     {
         // Assign
         $expectedIdStores = [1, 3];
-        $this->productAbstractTransfer
-            ->getStoreRelation()
-            ->setIdStores([1]);
+        $this->productAbstractTransfer->setStoreRelation(
+            (new StoreRelationTransfer())
+                ->setIdStores([1])
+        );
         $idProductAbstract = $this->productFacade->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
         $this->productAbstractTransfer->getStoreRelation()->setIdStores($expectedIdStores);
@@ -178,9 +181,10 @@ class ProductManagementTest extends FacadeTestAbstract
     {
         // Assign
         $expectedIdStores = [1, 3];
-        $this->productAbstractTransfer
-            ->getStoreRelation()
-            ->setIdStores($expectedIdStores);
+        $this->productAbstractTransfer->setStoreRelation(
+            (new StoreRelationTransfer())
+                ->setIdStores($expectedIdStores)
+        );
         $idProductAbstract = $this->productFacade->createProductAbstract($this->productAbstractTransfer);
 
         // Act

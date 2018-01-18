@@ -40,7 +40,7 @@ class AbstractDatabaseCollectorTest extends Unit
     /**
      * @var \Spryker\Zed\Collector\Business\Collector\AbstractDatabaseCollector|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected $sut;
+    protected $abstractDatabaseCollectorMock;
 
     /**
      * @var \Symfony\Component\Console\Helper\ProgressBar
@@ -110,14 +110,14 @@ class AbstractDatabaseCollectorTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->sut = $this
+        $this->abstractDatabaseCollectorMock = $this
             ->getMockBuilder(AbstractDatabaseCollector::class)
             ->setMethods(['startProgressBar', 'isStorable', 'collectKey', 'processCollectedItem'])
             ->getMockForAbstractClass();
 
-        $this->sut->setTouchQueryContainer($this->touchQueryContainerMock);
+        $this->abstractDatabaseCollectorMock->setTouchQueryContainer($this->touchQueryContainerMock);
 
-        $this->sut
+        $this->abstractDatabaseCollectorMock
             ->expects($this->any())
             ->method('startProgressBar')
             ->willReturn($this->progressBarHelper);
@@ -129,17 +129,17 @@ class AbstractDatabaseCollectorTest extends Unit
     public function testExportDataToStoreWritesStorableData()
     {
         // Assign
-        $this->sut
+        $this->abstractDatabaseCollectorMock
             ->expects($this->any())
             ->method('isStorable')
             ->willReturn(true);
 
-        $this->sut
+        $this->abstractDatabaseCollectorMock
             ->expects($this->any())
             ->method('collectKey')
             ->willReturn('touchKey1');
 
-        $this->sut
+        $this->abstractDatabaseCollectorMock
             ->expects($this->any())
             ->method('processCollectedItem')
             ->willReturn([]);
@@ -168,7 +168,7 @@ class AbstractDatabaseCollectorTest extends Unit
             ->method('delete');
 
         // Act
-        $this->sut->exportDataToStore(
+        $this->abstractDatabaseCollectorMock->exportDataToStore(
             new ArrayBatchIterator($batchCollection),
             $this->touchUpdaterMock,
             new BatchResult(),
@@ -185,17 +185,17 @@ class AbstractDatabaseCollectorTest extends Unit
     public function testExportDataToStoreDeletesNotStorableData()
     {
         // Assign
-        $this->sut
+        $this->abstractDatabaseCollectorMock
             ->expects($this->any())
             ->method('isStorable')
             ->willReturn(false);
 
-        $this->sut
+        $this->abstractDatabaseCollectorMock
             ->expects($this->any())
             ->method('collectKey')
             ->willReturn('touchKey1');
 
-        $this->sut
+        $this->abstractDatabaseCollectorMock
             ->expects($this->any())
             ->method('processCollectedItem')
             ->willReturn([]);
@@ -224,7 +224,7 @@ class AbstractDatabaseCollectorTest extends Unit
             ->method('delete');
 
         // Act
-        $this->sut->exportDataToStore(
+        $this->abstractDatabaseCollectorMock->exportDataToStore(
             new ArrayBatchIterator($batchCollection),
             $this->touchUpdaterMock,
             new BatchResult(),
