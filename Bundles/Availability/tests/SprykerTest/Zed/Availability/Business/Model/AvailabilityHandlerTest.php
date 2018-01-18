@@ -182,32 +182,32 @@ class AvailabilityHandlerTest extends Unit
         $availabilityContainerMock = $this->getMockBuilder(AvailabilityQueryContainerInterface::class)
             ->getMock();
 
-        $availabilitQueryMock = $this->getMockBuilder(SpyAvailabilityQuery::class)->getMock();
-        $availabilitAbstractQueryMock = $this->getMockBuilder(SpyAvailabilityAbstractQuery::class)->getMock();
+        $availabilityQueryMock = $this->getMockBuilder(SpyAvailabilityQuery::class)->getMock();
+        $availabilityAbstractQueryMock = $this->getMockBuilder(SpyAvailabilityAbstractQuery::class)->getMock();
 
         $availabilityEntity = $this->createAvailabilityEntityMock();
         $availabilityEntity->method('getQuantity')
             ->willReturn($availabilityQuantity);
 
-        $availabilitQueryMock->method('findOne')
+        $availabilityQueryMock->method('findOne')
             ->willReturn($availabilityEntity);
 
         $availabilityEntity = $this->createAvailabilityEntityMock();
-        $availabilitQueryMock->method('findOneOrCreate')
+        $availabilityQueryMock->method('findOneOrCreate')
             ->willReturn($availabilityEntity);
 
         $availabilityEntity = $this->createAvailabilityEntityMock();
-        $availabilitQueryMock->method('findOneOrCreate')
+        $availabilityQueryMock->method('findOneOrCreate')
             ->willReturn($availabilityEntity);
 
-        $availabilityContainerMock->method('querySpyAvailabilityBySku')
-            ->willReturn($availabilitQueryMock);
+        $availabilityContainerMock->method('querySpyAvailabilityBySkuAndIdStore')
+            ->willReturn($availabilityQueryMock);
 
         $availabilityAbstractEntityMock = $this->createAvailabilityAbstractEntityMock();
-        $availabilitAbstractQueryMock->method('findOne')->willReturn($availabilityAbstractEntityMock);
+        $availabilityAbstractQueryMock->method('findOne')->willReturn($availabilityAbstractEntityMock);
 
         $availabilityContainerMock->method('queryAvailabilityAbstractByIdAvailabilityAbstract')
-            ->willReturn($availabilitAbstractQueryMock);
+            ->willReturn($availabilityAbstractQueryMock);
 
         $availabilityContainerMock->method('querySumQuantityOfAvailabilityAbstract')
             ->willReturn($availabilityEntity);
