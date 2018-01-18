@@ -26,6 +26,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
+use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Availability\Communication\Plugin\ProductsAvailableCheckoutPreConditionPlugin;
@@ -315,9 +316,11 @@ class CheckoutFacadeTest extends Unit
             ->setAttributes('{}')
             ->save();
 
-        $stock = new SpyStock();
-        $stock
-            ->setName('testStock');
+        $stock = (new SpyStockQuery())
+            ->filterByName('Warehouse1')
+            ->findOneOrCreate();
+
+        $stock->save();
 
         $stock1 = new SpyStockProduct();
         $stock1
