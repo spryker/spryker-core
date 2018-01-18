@@ -1,23 +1,23 @@
 <?php
 
-namespace Spryker\Service\FileManager;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Service\FileManager;
 
 use Spryker\Service\Kernel\AbstractService;
 
 /**
- * Class FileManagerService
- *
- * @method FileManagerServiceFactory getFactory()
+ * @method \Spryker\Service\FileManager\FileManagerServiceFactory getFactory()
  */
-class FileManagerService extends AbstractService
+class FileManagerService extends AbstractService implements FileManagerServiceInterface
 {
-
     /**
      * @param string $filePath
      *
      * @return string
-     * @throws \Spryker\Service\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function save(string $filePath)
     {
@@ -28,7 +28,6 @@ class FileManagerService extends AbstractService
      * @param string $contentId
      *
      * @return mixed
-     * @throws \Spryker\Service\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function read(string $contentId)
     {
@@ -39,11 +38,9 @@ class FileManagerService extends AbstractService
      * @param string $contentId
      *
      * @return bool
-     * @throws \Spryker\Service\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function delete(string $contentId)
     {
         return $this->getFactory()->createFileManagerAdapter()->delete($contentId);
     }
-
 }

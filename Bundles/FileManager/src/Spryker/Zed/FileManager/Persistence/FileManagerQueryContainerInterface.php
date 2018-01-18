@@ -7,13 +7,10 @@
 
 namespace Spryker\Zed\FileManager\Persistence;
 
-use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-
 /**
  * @method \Spryker\Zed\FileManager\Persistence\FileManagerPersistenceFactory getFactory()
  */
-class FileManagerQueryContainer extends AbstractQueryContainer implements FileManagerQueryContainerInterface
+interface FileManagerQueryContainerInterface
 {
     /**
      * @api
@@ -24,14 +21,7 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
      *
      * @return \Orm\Zed\Cms\Persistence\SpyFileQuery
      */
-    public function queryFileWithFileInfoById(int $id)
-    {
-        $query = $this->getFactory()->createFileQuery();
-        $query->filterByIdFile($id);
-        $query->leftJoinWithSpyFileInfo();
-
-        return $query;
-    }
+    public function queryFileWithFileInfoById(int $id);
 
     /**
      * @api
@@ -42,13 +32,7 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
      *
      * @return \Orm\Zed\Cms\Persistence\SpyFileQuery
      */
-    public function queryFileById(int $id)
-    {
-        $query = $this->getFactory()->createFileQuery();
-        $query->filterByIdFile($id);
-
-        return $query;
-    }
+    public function queryFileById(int $id);
 
     /**
      * @api
@@ -59,14 +43,7 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
      *
      * @return \Orm\Zed\Cms\Persistence\SpyFileInfoQuery
      */
-    public function queryLatestFileInfoByFkFile(int $fileId = null)
-    {
-        $query = $this->getFactory()->createFileInfoQuery();
-        $query->orderByVersion(Criteria::DESC)
-            ->filterByFkFile($fileId);
-
-        return $query;
-    }
+    public function queryLatestFileInfoByFkFile(int $fileId = null);
 
     /**
      * @api
@@ -77,11 +54,5 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
      *
      * @return \Orm\Zed\Cms\Persistence\SpyFileInfoQuery
      */
-    public function queryFileInfo(int $fileInfoId)
-    {
-        $query = $this->getFactory()->createFileInfoQuery();
-        $query->filterByIdFileInfo($fileInfoId);
-
-        return $query;
-    }
+    public function queryFileInfo(int $fileInfoId);
 }

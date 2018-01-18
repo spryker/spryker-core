@@ -1,28 +1,28 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\FileManager\Business;
 
-use Spryker\Service\FileManager\FileManagerService;
 use Spryker\Zed\FileManager\Business\Model\FileFinder;
 use Spryker\Zed\FileManager\Business\Model\FileRemover;
 use Spryker\Zed\FileManager\Business\Model\FileRollback;
 use Spryker\Zed\FileManager\Business\Model\FileSaver;
 use Spryker\Zed\FileManager\Business\Model\FileVersion;
 use Spryker\Zed\FileManager\FileManagerDependencyProvider;
-use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * Class FileManagerBusinessFactory
- *
- * @method FileManagerQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\FileManager\FileManagerConfig getConfig()
  */
 class FileManagerBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
-     * @return FileSaver
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @return \Spryker\Zed\FileManager\Business\Model\FileSaverInterface
      */
     public function createFileSaver()
     {
@@ -35,7 +35,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return FileRollback
+     * @return \Spryker\Zed\FileManager\Business\Model\FileRollbackInterface
      */
     public function createFileRollback()
     {
@@ -46,8 +46,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return FileRemover
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @return \Spryker\Zed\FileManager\Business\Model\FileRemoverInterface
      */
     public function createFileRemover()
     {
@@ -58,7 +57,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return FileVersion
+     * @return \Spryker\Zed\FileManager\Business\Model\FileVersionInterface
      */
     public function createFileVersion()
     {
@@ -66,7 +65,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return FileFinder
+     * @return \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
      */
     public function createFileFinder()
     {
@@ -76,13 +75,10 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return FileManagerService
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @return \Spryker\Service\FileManager\FileManagerServiceInterface
      */
     public function getFileManagerService()
     {
         return $this->getProvidedDependency(FileManagerDependencyProvider::SERVICE_FILE_MANAGER);
     }
-
 }

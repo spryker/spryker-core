@@ -5,9 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\FileManager\Dependency\Plugin;
+namespace Spryker\Service\FileManager;
 
-interface FileManagerPluginInterface
+/**
+ * @method \Spryker\Service\FileManager\FileManagerServiceFactory getFactory()
+ */
+interface FileManagerServiceInterface
 {
     /**
      * @api

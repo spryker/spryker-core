@@ -1,48 +1,55 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\FileManager\Business\Model;
 
+use Exception;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
 use Orm\Zed\Cms\Persistence\SpyFile;
 use Orm\Zed\Cms\Persistence\SpyFileInfo;
-use Spryker\Service\FileManager\FileManagerService;
-use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer;
+use Spryker\Service\FileManager\FileManagerServiceInterface;
+use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
 
-class FileSaver
+class FileSaver implements FileSaverInterface
 {
-
     /**
-     * @var FileManagerQueryContainer
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var FileManagerService
+     * @var \Spryker\Service\FileManager\FileManagerServiceInterface
      */
     protected $fileManagerService;
 
     /**
-     * @var FileVersion
+     * @var \Spryker\Zed\FileManager\Business\Model\FileVersionInterface
      */
     protected $fileVersion;
+
     /**
-     * @var FileFinder
+     * @var \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
      */
-    private $fileFinder;
+    protected $fileFinder;
 
     /**
      * FileSaver constructor.
-     * @param FileManagerQueryContainer $queryContainer
-     * @param FileVersion $fileVersion
-     * @param FileFinder $fileFinder
-     * @param FileManagerService $fileManagerService
+     *
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\FileManager\Business\Model\FileVersionInterface $fileVersion
+     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
+     * @param \Spryker\Service\FileManager\FileManagerServiceInterface $fileManagerService
      */
     public function __construct(
-        FileManagerQueryContainer $queryContainer,
+        FileManagerQueryContainerInterface $queryContainer,
         FileVersion $fileVersion,
         FileFinder $fileFinder,
-        FileManagerService $fileManagerService
+        FileManagerServiceInterface $fileManagerService
     ) {
         $this->queryContainer = $queryContainer;
         $this->fileManagerService = $fileManagerService;
@@ -51,9 +58,9 @@ class FileSaver
     }
 
     /**
-     * @param FileManagerSaveRequestTransfer $saveRequestTransfer
+     * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
+     *
      * @return int
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      */
     public function save(FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
@@ -65,9 +72,9 @@ class FileSaver
     }
 
     /**
-     * @param FileManagerSaveRequestTransfer $saveRequestTransfer
+     * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
+     *
      * @return int
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      */
     protected function update(FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
@@ -77,7 +84,8 @@ class FileSaver
     }
 
     /**
-     * @param FileManagerSaveRequestTransfer $saveRequestTransfer
+     * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
+     *
      * @return int
      */
     protected function create(FileManagerSaveRequestTransfer $saveRequestTransfer)
@@ -87,6 +95,12 @@ class FileSaver
         return $this->saveFile($file, $saveRequestTransfer);
     }
 
+    /**
+     * @param \Orm\Zed\Cms\Persistence\SpyFile $file
+     * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
+     *
+     * @return int
+     */
     protected function saveFile(SpyFile $file, FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
         $this->queryContainer->getConnection()->beginTransaction();
@@ -105,15 +119,16 @@ class FileSaver
             $this->queryContainer->getConnection()->commit();
 
             return $savedRowsCount;
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->queryContainer->getConnection()->rollBack();
         }
     }
 
     /**
-     * @param SpyFileInfo $fileInfo
+     * @param \Orm\Zed\Cms\Persistence\SpyFileInfo $fileInfo
      * @param string $contentId
-     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
      */
     protected function addContentId(SpyFileInfo $fileInfo, string $contentId)
     {
@@ -124,9 +139,9 @@ class FileSaver
     }
 
     /**
-     * @param FileInfoTransfer $fileInfoTransfer
-     * @return SpyFileInfo
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     * @param \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyFileInfo
      */
     protected function createFileInfo(FileInfoTransfer $fileInfoTransfer)
     {
@@ -142,9 +157,9 @@ class FileSaver
     }
 
     /**
-     * @param FileManagerSaveRequestTransfer $saveRequestTransfer
+     * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
+     *
      * @return bool
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      */
     protected function checkFileExists(FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
@@ -160,5 +175,4 @@ class FileSaver
 
         return $file !== null;
     }
-    
 }

@@ -1,31 +1,35 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\FileManager\Business\Model;
 
-use Orm\Zed\Cms\Persistence\SpyFile;
 use Orm\Zed\Cms\Persistence\SpyFileInfo;
 use Spryker\Zed\FileManager\Exception\FileInfoNotFoundException;
 use Spryker\Zed\FileManager\Exception\FileNotFoundException;
 
-class FileRollback
+class FileRollback implements FileRollbackInterface
 {
-
     /**
-     * @var FileVersion
+     * @var \Spryker\Zed\FileManager\Business\Model\FileVersionInterface
      */
     protected $fileVersion;
 
     /**
-     * @var FileFinder
+     * @var \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
      */
     protected $fileFinder;
 
     /**
      * FileSaver constructor.
-     * @param FileFinder $fileFinder
-     * @param FileVersion $fileVersion
+     *
+     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
+     * @param \Spryker\Zed\FileManager\Business\Model\FileVersionInterface $fileVersion
      */
-    public function __construct(FileFinder $fileFinder, FileVersion $fileVersion)
+    public function __construct(FileFinderInterface $fileFinder, FileVersionInterface $fileVersion)
     {
         $this->fileVersion = $fileVersion;
         $this->fileFinder = $fileFinder;
@@ -34,10 +38,8 @@ class FileRollback
     /**
      * @param int $fileId
      * @param int $fileInfoId
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
-     * @throws FileNotFoundException
-     * @throws FileInfoNotFoundException
+     *
+     * @return void
      */
     public function rollback(int $fileId, int $fileInfoId)
     {
@@ -47,10 +49,9 @@ class FileRollback
     }
 
     /**
-     * @param SpyFileInfo $targetFileInfo
-     * @return SpyFileInfo
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     * @param \Orm\Zed\Cms\Persistence\SpyFileInfo $targetFileInfo
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyFileInfo
      */
     protected function createNewFileInfo(SpyFileInfo $targetFileInfo)
     {
@@ -64,9 +65,10 @@ class FileRollback
     }
 
     /**
-     * @param SpyFileInfo $fileInfo
+     * @param \Orm\Zed\Cms\Persistence\SpyFileInfo $fileInfo
      * @param int $fileId
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return void
      */
     protected function updateVersion(SpyFileInfo $fileInfo, int $fileId)
     {
@@ -77,10 +79,11 @@ class FileRollback
     }
 
     /**
-     * @param $fileId
-     * @return SpyFile
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
-     * @throws FileNotFoundException
+     * @param int $fileId
+     *
+     * @throws \Spryker\Zed\FileManager\Exception\FileNotFoundException
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyFile
      */
     protected function getFile(int $fileId)
     {
@@ -95,9 +98,10 @@ class FileRollback
 
     /**
      * @param int $fileInfoId
-     * @return SpyFileInfo
-     * @throws FileInfoNotFoundException
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @throws \Spryker\Zed\FileManager\Exception\FileInfoNotFoundException
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyFileInfo
      */
     protected function getFileInfo(int $fileInfoId)
     {
@@ -109,5 +113,4 @@ class FileRollback
 
         return $fileInfo;
     }
-
 }

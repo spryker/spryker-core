@@ -1,39 +1,33 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\FileManager\Business\Model;
 
-use Orm\Zed\Cms\Persistence\SpyFile;
-use Spryker\Service\FileManager\FileManagerService;
-use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer;
+use Spryker\Service\FileManager\FileManagerServiceInterface;
 
-class FileRemover
+class FileRemover implements FileRemoverInterface
 {
-
     /**
-     * @var FileManagerQueryContainer
-     */
-    protected $queryContainer;
-
-    /**
-     * @var FileManagerService
+     * @var \Spryker\Service\FileManager\FileManagerServiceInterface
      */
     protected $fileManagerService;
 
     /**
-     * @var FileVersion
+     * @var \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
      */
-    protected $fileVersion;
-    /**
-     * @var FileFinder
-     */
-    private $fileFinder;
+    protected $fileFinder;
 
     /**
      * FileSaver constructor.
-     * @param FileFinder $fileFinder
-     * @param FileManagerService $fileManagerService
+     *
+     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
+     * @param \Spryker\Service\FileManager\FileManagerServiceInterface $fileManagerService
      */
-    public function __construct(FileFinder $fileFinder, FileManagerService $fileManagerService)
+    public function __construct(FileFinderInterface $fileFinder, FileManagerServiceInterface $fileManagerService)
     {
         $this->fileManagerService = $fileManagerService;
         $this->fileFinder = $fileFinder;
@@ -41,10 +35,8 @@ class FileRemover
 
     /**
      * @param int $fileInfoId
+     *
      * @return bool
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
-     * @throws \Spryker\Service\Kernel\Exception\Container\ContainerKeyNotFoundException
-     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function deleteFileInfo(int $fileInfoId)
     {
@@ -62,10 +54,8 @@ class FileRemover
 
     /**
      * @param int $fileId
+     *
      * @return bool
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
-     * @throws \Spryker\Service\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function delete(int $fileId)
     {
@@ -85,12 +75,11 @@ class FileRemover
 
     /**
      * @param int $fileId
-     * @return SpyFile
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyFile
      */
     protected function getFile(int $fileId)
     {
-        return $this->queryContainer->queryFileById($fileId)->findOne();
+        return $this->fileFinder->getFile($fileId);
     }
-
 }

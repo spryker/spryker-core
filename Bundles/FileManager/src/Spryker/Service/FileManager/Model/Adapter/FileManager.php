@@ -1,21 +1,25 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Service\FileManager\Model\Adapter;
 
 use Spryker\Service\FileManager\Dependency\Plugin\FileManagerPluginInterface;
 
 class FileManager
 {
-
     /**
-     * @var FileManagerPluginInterface
+     * @var \Spryker\Service\FileManager\Dependency\Plugin\FileManagerPluginInterface
      */
     protected $fileManagerPlugin;
 
     /**
      * FileManager constructor.
      *
-     * @param FileManagerPluginInterface $fileManagerPlugin
+     * @param \Spryker\Service\FileManager\Dependency\Plugin\FileManagerPluginInterface $fileManagerPlugin
      */
     public function __construct(FileManagerPluginInterface $fileManagerPlugin)
     {
@@ -51,5 +55,4 @@ class FileManager
     {
         return $this->fileManagerPlugin->delete($contentId);
     }
-
 }

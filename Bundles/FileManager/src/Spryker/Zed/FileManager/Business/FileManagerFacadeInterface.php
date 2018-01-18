@@ -8,12 +8,11 @@
 namespace Spryker\Zed\FileManager\Business;
 
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\FileManager\Business\FileManagerBusinessFactory getFactory()
  */
-class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInterface
+interface FileManagerFacadeInterface
 {
     /**
      * @api
@@ -22,10 +21,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * @return int
      */
-    public function save(FileManagerSaveRequestTransfer $saveRequestTransfer)
-    {
-        return $this->getFactory()->createFileSaver()->save($saveRequestTransfer);
-    }
+    public function save(FileManagerSaveRequestTransfer $saveRequestTransfer);
 
     /**
      * @api
@@ -34,10 +30,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * @return bool
      */
-    public function delete(int $fileId)
-    {
-        return $this->getFactory()->createFileRemover()->delete($fileId);
-    }
+    public function delete(int $fileId);
 
     /**
      * @api
@@ -46,10 +39,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * @return bool
      */
-    public function deleteFileInfo(int $fileInfoId)
-    {
-        return $this->getFactory()->createFileRemover()->deleteFileInfo($fileInfoId);
-    }
+    public function deleteFileInfo(int $fileInfoId);
 
     /**
      * @api
@@ -59,8 +49,5 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * @return void
      */
-    public function rollback(int $fileId, int $fileInfoId)
-    {
-        $this->getFactory()->createFileRollback()->rollback($fileId, $fileInfoId);
-    }
+    public function rollback(int $fileId, int $fileInfoId);
 }

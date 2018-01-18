@@ -1,45 +1,35 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\FileManager\Business\Model;
 
-use Generated\Shared\Transfer\FileInfoTransfer;
-use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
-use Orm\Zed\Cms\Persistence\SpyFile;
-use Orm\Zed\Cms\Persistence\SpyFileInfo;
-use Spryker\Service\FileManager\FileManagerService;
-use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer;
+use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
 
-class FileFinder
+class FileFinder implements FileFinderInterface
 {
-
     /**
-     * @var FileManagerQueryContainer
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var FileManagerService
-     */
-    protected $fileManagerService;
-
-    /**
-     * @var FileVersion
-     */
-    protected $fileVersion;
-
-    /**
      * FileSaver constructor.
-     * @param FileManagerQueryContainer $queryContainer
+     *
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer $queryContainer
      */
-    public function __construct(FileManagerQueryContainer $queryContainer)
+    public function __construct(FileManagerQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
     }
 
     /**
      * @param int $fileId
-     * @return SpyFile
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyFile
      */
     public function getFile(int $fileId)
     {
@@ -47,19 +37,19 @@ class FileFinder
     }
 
     /**
-     * @param $fileId
-     * @return SpyFileInfo
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     * @param int $fileId
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyFileInfo
      */
-    public function getLatestFileInfoByFkFile($fileId)
+    public function getLatestFileInfoByFkFile(int $fileId)
     {
         return $this->queryContainer->queryLatestFileInfoByFkFile($fileId)->findOne();
     }
 
     /**
      * @param int $fileInfoId
-     * @return SpyFileInfo
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyFileInfo
      */
     public function getFileInfo(int $fileInfoId)
     {
@@ -67,5 +57,4 @@ class FileFinder
             ->queryFileInfo($fileInfoId)
             ->findOne();
     }
-    
 }
