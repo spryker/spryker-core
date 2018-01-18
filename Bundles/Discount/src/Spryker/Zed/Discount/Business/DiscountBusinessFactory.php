@@ -70,7 +70,8 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->createCalculator(),
             $this->createDecisionRuleBuilder(),
             $this->createVoucherValidator(),
-            $this->createDiscountEntityMapper()
+            $this->createDiscountEntityMapper(),
+            $this->getStoreFacade()
         );
 
         $discount->setDiscountApplicableFilterPlugins($this->getDiscountApplicableFilterPlugins());
@@ -581,6 +582,14 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function getCurrencyFacade()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface
+     */
+    public function getStoreFacade()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_STORE);
     }
 
     /**

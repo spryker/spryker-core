@@ -8,6 +8,7 @@
 namespace Spryker\Client\Quote\Session;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\Quote\Dependency\Client\QuoteToStoreClientInterface;
 use Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -26,14 +27,22 @@ class QuoteSession implements QuoteSessionInterface
     protected $currencyPlugin;
 
     /**
+     * @var \Spryker\Client\Quote\Dependency\Client\QuoteToStoreClientInterface
+     */
+    protected $storeClient;
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * @param \Spryker\Client\Quote\Dependency\Client\QuoteToStoreClientInterface $storeClient
      * @param \Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyInterface|null $currencyPlugin
      */
     public function __construct(
         SessionInterface $session,
+        QuoteToStoreClientInterface $storeClient,
         QuoteToCurrencyInterface $currencyPlugin = null
     ) {
         $this->session = $session;
+        $this->storeClient = $storeClient;
         $this->currencyPlugin = $currencyPlugin;
     }
 
@@ -45,6 +54,7 @@ class QuoteSession implements QuoteSessionInterface
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer = $this->session->get(static::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
         $this->setCurrency($quoteTransfer);
+        $this->setStore($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -57,6 +67,7 @@ class QuoteSession implements QuoteSessionInterface
     public function setQuote(QuoteTransfer $quoteTransfer)
     {
         $this->setCurrency($quoteTransfer);
+        $this->setStore($quoteTransfer);
         $this->session->set(static::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
     }
 
@@ -68,6 +79,16 @@ class QuoteSession implements QuoteSessionInterface
         $this->setQuote(new QuoteTransfer());
 
         return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function setStore(QuoteTransfer $quoteTransfer)
+    {
+        $quoteTransfer->setStore($this->storeClient->getCurrentStore());
     }
 
     /**

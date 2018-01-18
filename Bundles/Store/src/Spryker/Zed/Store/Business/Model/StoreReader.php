@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Store\Business\Model;
 
-use Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface;
+use Spryker\Shared\Store\Configuration\StoreConfigurationProviderInterface;
 use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 use Spryker\Zed\Store\Persistence\StoreQueryContainerInterface;
 
 class StoreReader implements StoreReaderInterface
 {
     /**
-     * @var \Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface
+     * @var \Spryker\Shared\Store\Configuration\StoreConfigurationProviderInterface
      */
     protected $storeConfigurationProvider;
 
@@ -34,7 +34,7 @@ class StoreReader implements StoreReaderInterface
     protected static $storeCache = [];
 
     /**
-     * @param \Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface $storeConfigurationProvider
+     * @param \Spryker\Shared\Store\Configuration\StoreConfigurationProviderInterface $storeConfigurationProvider
      * @param \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface $storeQueryContainer
      * @param \Spryker\Zed\Store\Business\Model\StoreMapperInterface $storeMapper
      */

@@ -27,6 +27,7 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TotalQuantityDecision
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyBridge;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeBridge;
 use Spryker\Zed\Discount\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
@@ -37,6 +38,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_MESSENGER = 'MESSENGER_FACADE';
     const FACADE_MONEY = 'MONEY_FACADE';
     const FACADE_CURRENCY = 'CURRENCY_FACADE';
+    const FACADE_STORE = 'FACADE_STORE';
 
     const PLUGIN_CALCULATOR_PERCENTAGE = 'PLUGIN_CALCULATOR_PERCENTAGE';
     const PLUGIN_CALCULATOR_FIXED = 'PLUGIN_CALCULATOR_FIXED';
@@ -73,6 +75,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDiscountConfigurationExpanderPlugins($container);
         $container = $this->addDiscountApplicableFilterPlugins($container);
         $container = $this->addCurrencyFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -428,6 +431,20 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_CURRENCY] = function (Container $container) {
             return new DiscountToCurrencyBridge($container->getLocator()->currency()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container)
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new DiscountToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
 
         return $container;

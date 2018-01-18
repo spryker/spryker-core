@@ -5,14 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Store\Business\Model\Configuration;
+namespace Spryker\Shared\Store\Configuration;
 
-use Spryker\Shared\Store\Configuration\StoreConfigurationProviderInterface as ConfigurationStoreConfigurationProviderInterface;
-
-/**
- * @deprecated Use \Spryker\Shared\Store\Configuration\StoreConfigurationProviderInterface instead.
- */
-interface StoreConfigurationProviderInterface extends ConfigurationStoreConfigurationProviderInterface
+interface StoreConfigurationProviderInterface
 {
     /**
      * @return string

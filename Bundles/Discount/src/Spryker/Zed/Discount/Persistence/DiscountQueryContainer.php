@@ -74,6 +74,8 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     /**
      * @api
      *
+     * @deprecated Use DiscountQueryContainer::queryDiscountsBySpecifiedVouchersForStore() instead.
+     *
      * @param string[] $voucherCodes
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
@@ -96,12 +98,49 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     /**
      * @api
      *
+     * @param int $idStore
+     * @param string[] $voucherCodes
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
+     */
+    public function queryDiscountsBySpecifiedVouchersForStore($idStore, array $voucherCodes = [])
+    {
+        $query = $this->queryDiscountsBySpecifiedVouchers($voucherCodes)
+            ->useSpyDiscountStoreQuery()
+                ->filterByFkStore($idStore)
+            ->endUse();
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Use DiscountQueryContainer::queryActiveCartRulesForStore() instead.
+     *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     public function queryActiveCartRules()
     {
         $query = $this->queryActiveAndRunningDiscounts()
             ->filterByDiscountType(DiscountConstants::TYPE_CART_RULE);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
+     */
+    public function queryActiveCartRulesForStore($idStore)
+    {
+        $query = $this->queryActiveCartRules()
+            ->useSpyDiscountStoreQuery()
+                ->filterByFkStore($idStore)
+            ->endUse();
 
         return $query;
     }

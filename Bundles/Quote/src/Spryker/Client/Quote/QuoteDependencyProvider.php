@@ -10,11 +10,13 @@ namespace Spryker\Client\Quote;
 use Spryker\Client\Currency\Plugin\CurrencyPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\Quote\Dependency\Client\QuoteToStoreClientBridge;
 use Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyBridge;
 
 class QuoteDependencyProvider extends AbstractDependencyProvider
 {
     const CLIENT_SESSION = 'session client';
+    const CLIENT_STORE = 'CLIENT_STORE';
     const CURRENCY_PLUGIN = 'currency plugin';
 
     /**
@@ -25,6 +27,7 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addSessionClient($container);
+        $container = $this->addStoreClient($container);
         $container = $this->addCurrencyPlugin($container);
 
         return $container;
@@ -39,6 +42,20 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_SESSION] = function (Container $container) {
             return $container->getLocator()->session()->client();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStoreClient(Container $container)
+    {
+        $container[static::CLIENT_STORE] = function (Container $container) {
+            return new QuoteToStoreClientBridge($container->getLocator()->store()->client());
         };
 
         return $container;

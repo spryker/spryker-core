@@ -61,11 +61,23 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Use DiscountQueryContainerInterface::queryDiscountsBySpecifiedVouchersForStore() instead.
+     *
      * @param string[] $voucherCodes
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     public function queryDiscountsBySpecifiedVouchers(array $voucherCodes = []);
+
+    /**
+     * @api
+     *
+     * @param int $idStore
+     * @param string[] $voucherCodes
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
+     */
+    public function queryDiscountsBySpecifiedVouchersForStore($idStore, array $voucherCodes = []);
 
     /**
      * @api
@@ -122,9 +134,20 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Use DiscountQueryContainerInterface::queryActiveCartRulesForStore() instead.
+     *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     public function queryActiveCartRules();
+
+    /**
+     * @api
+     *
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
+     */
+    public function queryActiveCartRulesForStore($idStore);
 
     /**
      * @api

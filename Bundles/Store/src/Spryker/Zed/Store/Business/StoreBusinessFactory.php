@@ -8,8 +8,9 @@
 namespace Spryker\Zed\Store\Business;
 
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Store\Configuration\StoreConfigurationProvider;
+use Spryker\Shared\Store\Configuration\StoreConfigurationReader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProvider;
 use Spryker\Zed\Store\Business\Model\StoreMapper;
 use Spryker\Zed\Store\Business\Model\StoreReader;
 
@@ -36,11 +37,19 @@ class StoreBusinessFactory extends AbstractBusinessFactory
      */
     protected function createStoreMapper()
     {
-        return new StoreMapper($this->createStoreConfigurationProvider());
+        return new StoreMapper($this->createStoreConfigurationReader());
     }
 
     /**
-     * @return \Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface
+     * @return \Spryker\Shared\Store\Configuration\StoreConfigurationReader
+     */
+    protected function createStoreConfigurationReader()
+    {
+        return new StoreConfigurationReader($this->createStoreConfigurationProvider());
+    }
+
+    /**
+     * @return \Spryker\Shared\Store\Configuration\StoreConfigurationProviderInterface
      */
     protected function createStoreConfigurationProvider()
     {

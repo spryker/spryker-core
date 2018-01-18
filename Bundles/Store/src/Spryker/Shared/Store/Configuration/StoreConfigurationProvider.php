@@ -5,15 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Store\Business\Model\Configuration;
+namespace Spryker\Shared\Store\Configuration;
 
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Store\Configuration\StoreConfigurationProvider as ConfigurationStoreConfigurationProvider;
 
-/**
- * @deprecated Use \Spryker\Shared\Store\Configuration\StoreConfigurationProvider instead.
- */
-class StoreConfigurationProvider extends ConfigurationStoreConfigurationProvider implements StoreConfigurationProviderInterface
+class StoreConfigurationProvider implements StoreConfigurationProviderInterface
 {
     /**
      * @var \Spryker\Shared\Kernel\Store
@@ -25,8 +21,6 @@ class StoreConfigurationProvider extends ConfigurationStoreConfigurationProvider
      */
     public function __construct(Store $store)
     {
-        parent::__construct($store);
-
         $this->store = $store;
     }
 
@@ -106,6 +100,7 @@ class StoreConfigurationProvider extends ConfigurationStoreConfigurationProvider
     public function getDefaultCurrencyFor($storeName)
     {
         $currencyIsoCodes = $this->getAvailableCurrenciesFor($storeName);
+
         return current($currencyIsoCodes);
     }
 
