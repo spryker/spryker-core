@@ -42,13 +42,28 @@ class ProductAbstractStoreRelationWriter implements ProductAbstractStoreRelation
      */
     public function save(StoreRelationTransfer $storeRelationTransfer)
     {
-        $currentIdStores = $this->getIdStores($storeRelationTransfer->getIdEntity());
+        $currentIdStores = $this->getIdStoresByIdProductAbstract($storeRelationTransfer->getIdEntity());
+        $requestedIdStores = $this->findStoreRelationIdStores($storeRelationTransfer);
 
-        $saveIdStores = array_diff($storeRelationTransfer->getIdStores(), $currentIdStores);
-        $deleteIdStores = array_diff($currentIdStores, $storeRelationTransfer->getIdStores());
+        $saveIdStores = array_diff($requestedIdStores, $currentIdStores);
+        $deleteIdStores = array_diff($currentIdStores, $requestedIdStores);
 
         $this->addStores($saveIdStores, $storeRelationTransfer->getIdEntity());
         $this->removeStores($deleteIdStores, $storeRelationTransfer->getIdEntity());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     *
+     * @return int[]
+     */
+    protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelationTransfer)
+    {
+        if ($storeRelationTransfer->getIdStores() === null) {
+            return [];
+        }
+
+        return $storeRelationTransfer->getIdStores();
     }
 
     /**
@@ -89,7 +104,7 @@ class ProductAbstractStoreRelationWriter implements ProductAbstractStoreRelation
      *
      * @return int[]
      */
-    protected function getIdStores($idProductAbstract)
+    protected function getIdStoresByIdProductAbstract($idProductAbstract)
     {
         $storeRelation = $this->productAbstractStoreRelationReader->getStoreRelation(
             (new StoreRelationTransfer())

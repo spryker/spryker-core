@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleFacade;
@@ -215,10 +214,6 @@ class FacadeTestAbstract extends Unit
     protected function setupProductAbstract()
     {
         $this->productAbstractTransfer = new ProductAbstractTransfer();
-        $this->productAbstractTransfer->setStoreRelation(
-            (new StoreRelationTransfer())
-                ->setIdStores([])
-        );
         $this->productAbstractTransfer
             ->setSku(self::ABSTRACT_SKU);
 
