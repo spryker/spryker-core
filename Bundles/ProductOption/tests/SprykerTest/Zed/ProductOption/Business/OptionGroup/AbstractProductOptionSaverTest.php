@@ -11,6 +11,7 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 use Spryker\Zed\ProductOption\Business\Exception\AbstractProductNotFoundException;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException;
 use Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaver;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use SprykerTest\Zed\ProductOption\Business\MockProvider;
@@ -111,6 +112,7 @@ class AbstractProductOptionSaverTest extends MockProvider
             ->setConstructorArgs([
                 $productOptionContainerMock,
                 $touchFacadeMock,
+                $this->createEventFacadeMock(),
             ])
             ->setMethods([
                 'getProductAbstractBySku',
@@ -126,6 +128,16 @@ class AbstractProductOptionSaverTest extends MockProvider
     {
         return $this->getMockBuilder(SpyProductOptionGroup::class)
             ->setMethods(['save'])
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface
+     */
+    protected function createEventFacadeMock()
+    {
+        return $this->getMockBuilder(ProductOptionToEventFacadeInterface::class)
+            ->disableOriginalConstructor()
             ->getMock();
     }
 }
