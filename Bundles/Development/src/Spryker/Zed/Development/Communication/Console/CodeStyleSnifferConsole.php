@@ -63,9 +63,9 @@ class CodeStyleSnifferConsole extends Console
 
         $this->info($this->buildMessage($module, $path));
 
-        $this->getFacade()->checkCodeStyle($module, $this->input->getOptions() + [static::ARGUMENT_SUB_PATH => $path]);
+        $exitCode = $this->getFacade()->checkCodeStyle($module, $this->input->getOptions() + [static::ARGUMENT_SUB_PATH => $path]);
 
-        return static::CODE_SUCCESS;
+        return $exitCode;
     }
 
     /**
