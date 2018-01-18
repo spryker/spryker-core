@@ -92,12 +92,14 @@ class AbstractProductOptionSaverTest extends MockProvider
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface|null $productOptionContainerMock
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface|null $touchFacadeMock
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface|null $eventFacadeMock
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface
      */
     protected function createAbstractProductOptionSaver(
         ProductOptionQueryContainerInterface $productOptionContainerMock = null,
-        ProductOptionToTouchFacadeInterface $touchFacadeMock = null
+        ProductOptionToTouchFacadeInterface $touchFacadeMock = null,
+        ProductOptionToEventFacadeInterface $eventFacadeMock = null
     ) {
 
         if (!$productOptionContainerMock) {
@@ -107,12 +109,15 @@ class AbstractProductOptionSaverTest extends MockProvider
         if (!$touchFacadeMock) {
             $touchFacadeMock = $this->createTouchFacadeMock();
         }
+        if (!$eventFacadeMock) {
+            $eventFacadeMock = $this->createEventFacadeMock();
+        }
 
         return $this->getMockBuilder(AbstractProductOptionSaver::class)
             ->setConstructorArgs([
                 $productOptionContainerMock,
                 $touchFacadeMock,
-                $this->createEventFacadeMock(),
+                $eventFacadeMock,
             ])
             ->setMethods([
                 'getProductAbstractBySku',
@@ -128,16 +133,6 @@ class AbstractProductOptionSaverTest extends MockProvider
     {
         return $this->getMockBuilder(SpyProductOptionGroup::class)
             ->setMethods(['save'])
-            ->getMock();
-    }
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface
-     */
-    protected function createEventFacadeMock()
-    {
-        return $this->getMockBuilder(ProductOptionToEventFacadeInterface::class)
-            ->disableOriginalConstructor()
             ->getMock();
     }
 }
