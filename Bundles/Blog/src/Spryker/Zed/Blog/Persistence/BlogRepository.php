@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\BlogTransfer;
 use Orm\Zed\Blog\Persistence\Map\SpyBlogTableMap;
 use Orm\Zed\Blog\Persistence\SpyBlog;
 use Orm\Zed\Blog\Persistence\SpyBlogComment;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -34,6 +35,7 @@ class BlogRepository extends AbstractRepository implements BlogRepositoryInterfa
             ->createBlogQuery()
             ->joinSpyBlogComment();
 
+        //feature specific
         if ($blogCriteriaFilterTransfer->getName()) {
             $blogQuery->filterByName($blogCriteriaFilterTransfer->getName(), Criteria::LIKE);
         }
@@ -42,6 +44,10 @@ class BlogRepository extends AbstractRepository implements BlogRepositoryInterfa
             $blogQuery->filterByText($blogCriteriaFilterTransfer->getText(), Criteria::LIKE);
         }
 
+
+
+
+        //group to generic transfer
         if ($blogCriteriaFilterTransfer->getOffset()) {
             $blogQuery->offset($blogCriteriaFilterTransfer->getOffset());
         }
@@ -106,6 +112,64 @@ class BlogRepository extends AbstractRepository implements BlogRepositoryInterfa
         }
 
         return $blogTransfer;
+    }
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\SpyCustomerEntityTransfer
+     */
+    public function findCustomerById($idCustomer)
+    {
+        $spyCustomerEntityTransfer = SpyCustomerQuery::create()
+            ->filterByIdCustomer($idCustomer)
+            ->setFormatter(
+                //propel entity to spy entity transfer formatter
+            )
+            ->findOne();
+
+
+        return $spyCustomerEntityTransfer;
+    }
+
+    /**
+     * @param string $firstName
+     *
+     * Criteria
+     *  - limit  = int
+     *  - offset = int
+     *  - sortBy = string
+     *
+     * @return \Generated\Shared\Transfer\SpyCustomerEntityTransfer[]
+     */
+    public function findCustomersByFirstName($firstName, $criteria)
+    {
+        $spyCustomerQuery = $this->queryCustomerByFirstName($firstName);
+
+        return $this->buildQueryFromCriteria($spyCustomerQuery, $criteria)->find();
+    }
+
+    /**
+     * @param string $firstName
+     *
+     * @return \Generated\Shared\Transfer\SpyCustomerEntityTransfer
+     */
+    public function findCustomerByFirstName($firstName)
+    {
+        $spyCustomerQuery = $this->queryCustomerByFirstName($firstName);
+
+        return $spyCustomerQuery->findOne();
+    }
+    /**
+     * @param string $firstName
+     *
+     * @return int
+     */
+    public function countCustomersByFirstName($firstName, $criteria)
+    {
+        $spyCustomerQuery = $this->queryCustomerByFirstName($firstName);
+
+        return $this->buildQueryFromCriteria($spyCustomerQuery, $criteria)->count();
     }
 
     /**
@@ -178,5 +242,22 @@ class BlogRepository extends AbstractRepository implements BlogRepositoryInterfa
                 ->filterByIdBlog($id)
                 ->delete();
         });
+    }
+
+    /**
+     * @param $firstName
+     *
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function queryCustomerByFirstName($firstName)
+    {
+        $spyCustomerQuery = SpyCustomerQuery::create()
+            ->setFormatter(
+            //propel entity to spy entity transfer formatter
+            )
+            ->filterByFirstName($firstName);
+
+        return $spyCustomerQuery;
     }
 }
