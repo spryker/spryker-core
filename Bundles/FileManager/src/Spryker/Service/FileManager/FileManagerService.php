@@ -25,22 +25,22 @@ class FileManagerService extends AbstractService implements FileManagerServiceIn
     }
 
     /**
-     * @param string $contentId
+     * @param string $idStorage
      *
      * @return mixed
      */
-    public function read(string $contentId)
+    public function read(string $idStorage)
     {
-        return $this->getFactory()->createFileManagerAdapter()->read($contentId);
+        return $this->getFactory()->createFileManagerAdapter()->read($idStorage);
     }
 
     /**
-     * @param string $contentId
+     * @param string $idStorage
      *
      * @return bool
      */
-    public function delete(string $contentId)
+    public function delete(string $idStorage)
     {
-        return $this->getFactory()->createFileManagerAdapter()->delete($contentId);
+        return $this->getFactory()->createFileManagerAdapter()->delete($idStorage);
     }
 }

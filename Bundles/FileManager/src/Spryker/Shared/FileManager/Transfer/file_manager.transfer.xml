@@ -23,7 +23,7 @@
         <property name="size" type="string" />
         <property name="version" type="int" />
         <property name="versionName" type="string" />
-        <property name="contentId" type="string" />
+        <property name="idStorage" type="string" />
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
         <property name="fileInfoLocalizedAttributes" type="FileInfoLocalizedAttributes[]" />

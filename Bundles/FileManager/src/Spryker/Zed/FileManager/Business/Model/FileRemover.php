@@ -46,7 +46,7 @@ class FileRemover implements FileRemoverInterface
             return false;
         }
 
-        $this->fileManagerService->delete($fileInfo->getContentId());
+        $this->fileManagerService->delete($fileInfo->getIdStorage());
         $fileInfo->delete();
 
         return true;
@@ -66,7 +66,7 @@ class FileRemover implements FileRemoverInterface
         }
 
         foreach ($file->getSpyFileInfos() as $fileInfo) {
-            $this->fileManagerService->delete($fileInfo->getContentId());
+            $this->fileManagerService->delete($fileInfo->getIdStorage());
             $fileInfo->delete();
         }
 

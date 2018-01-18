@@ -112,9 +112,9 @@ class FileSaver implements FileSaverInterface
 
             $savedRowsCount = $file->save();
 
-            $contentId = $this->fileManagerService
+            $idStorage = $this->fileManagerService
                 ->save($saveRequestTransfer->getTempFilePath());
-            $this->addContentId($fileInfo, $contentId);
+            $this->addStorageId($fileInfo, $idStorage);
 
             $this->queryContainer->getConnection()->commit();
 
@@ -126,14 +126,14 @@ class FileSaver implements FileSaverInterface
 
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyFileInfo $fileInfo
-     * @param string $contentId
+     * @param string $idStorage
      *
      * @return void
      */
-    protected function addContentId(SpyFileInfo $fileInfo, string $contentId)
+    protected function addStorageId(SpyFileInfo $fileInfo, string $idStorage)
     {
         $fileInfo->reload();
-        $fileInfo->setContentId($contentId);
+        $fileInfo->setIdStorage($idStorage);
 
         $fileInfo->save();
     }

@@ -37,22 +37,22 @@ class FileManager
     }
 
     /**
-     * @param string $contentId
+     * @param string $idStorage
      *
      * @return mixed
      */
-    public function read(string $contentId)
+    public function read(string $idStorage)
     {
-        return $this->fileManagerPlugin->read($contentId);
+        return $this->fileManagerPlugin->read($idStorage);
     }
 
     /**
-     * @param string $contentId
+     * @param string $idStorage
      *
      * @return bool
      */
-    public function delete(string $contentId)
+    public function delete(string $idStorage)
     {
-        return $this->fileManagerPlugin->delete($contentId);
+        return $this->fileManagerPlugin->delete($idStorage);
     }
 }

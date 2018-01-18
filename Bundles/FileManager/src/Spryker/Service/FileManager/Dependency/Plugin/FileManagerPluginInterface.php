@@ -21,18 +21,18 @@ interface FileManagerPluginInterface
     /**
      * @api
      *
-     * @param string $contentId
+     * @param string $idStorage
      *
      * @return mixed
      */
-    public function read(string $contentId);
+    public function read(string $idStorage);
 
     /**
      * @api
      *
-     * @param string $contentId
+     * @param string $idStorage
      *
      * @return bool
      */
-    public function delete(string $contentId);
+    public function delete(string $idStorage);
 }
