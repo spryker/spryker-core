@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\FileManager\Business;
 
+use Spryker\Service\FileSystem\FileSystemServiceInterface;
+use Spryker\Zed\FileManager\Business\Model\FileContent;
 use Spryker\Zed\FileManager\Business\Model\FileFinder;
 use Spryker\Zed\FileManager\Business\Model\FileRemover;
 use Spryker\Zed\FileManager\Business\Model\FileRollback;
@@ -23,6 +25,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
 {
     /**
      * @return \Spryker\Zed\FileManager\Business\Model\FileSaverInterface
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function createFileSaver()
     {
@@ -30,7 +33,8 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createFileVersion(),
             $this->createFileFinder(),
-            $this->getFileManagerService()
+            $this->createFileContent(),
+            $this->getConfig()
         );
     }
 
@@ -75,10 +79,32 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return FileContent
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function createFileContent()
+    {
+        return new FileContent(
+            $this->getFileSystemService(),
+            $this->getConfig()
+        );
+    }
+
+    /**
      * @return \Spryker\Service\FileManager\FileManagerServiceInterface
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function getFileManagerService()
     {
         return $this->getProvidedDependency(FileManagerDependencyProvider::SERVICE_FILE_MANAGER);
+    }
+
+    /**
+     * @return FileSystemServiceInterface
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function getFileSystemService()
+    {
+        return $this->getProvidedDependency(FileManagerDependencyProvider::SERVICE_FILE_SYSTEM);
     }
 }

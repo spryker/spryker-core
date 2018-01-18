@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
 use Orm\Zed\Cms\Persistence\SpyFile;
 use Orm\Zed\Cms\Persistence\SpyFileInfo;
-use Spryker\Service\FileManager\FileManagerServiceInterface;
+use Spryker\Zed\FileManager\FileManagerConfig;
 use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
 
 class FileSaver implements FileSaverInterface
@@ -21,11 +21,6 @@ class FileSaver implements FileSaverInterface
      * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface
      */
     protected $queryContainer;
-
-    /**
-     * @var \Spryker\Service\FileManager\FileManagerServiceInterface
-     */
-    protected $fileManagerService;
 
     /**
      * @var \Spryker\Zed\FileManager\Business\Model\FileVersionInterface
@@ -38,23 +33,35 @@ class FileSaver implements FileSaverInterface
     protected $fileFinder;
 
     /**
+     * @var FileContentInterface
+     */
+    protected $fileContent;
+    /**
+     * @var FileManagerConfig
+     */
+    protected $config;
+
+    /**
      * FileSaver constructor.
      *
      * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\FileManager\Business\Model\FileVersionInterface $fileVersion
-     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
-     * @param \Spryker\Service\FileManager\FileManagerServiceInterface $fileManagerService
+     * @param FileVersionInterface $fileVersion
+     * @param FileFinderInterface $fileFinder
+     * @param FileContentInterface $fileContent
+     * @param FileManagerConfig $config
      */
     public function __construct(
         FileManagerQueryContainerInterface $queryContainer,
-        FileVersion $fileVersion,
-        FileFinder $fileFinder,
-        FileManagerServiceInterface $fileManagerService
+        FileVersionInterface $fileVersion,
+        FileFinderInterface $fileFinder,
+        FileContentInterface $fileContent,
+        FileManagerConfig $config
     ) {
         $this->queryContainer = $queryContainer;
-        $this->fileManagerService = $fileManagerService;
         $this->fileVersion = $fileVersion;
         $this->fileFinder = $fileFinder;
+        $this->fileContent = $fileContent;
+        $this->config = $config;
     }
 
     /**
@@ -100,6 +107,7 @@ class FileSaver implements FileSaverInterface
      * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
      *
      * @return int
+     * @throws Exception
      */
     protected function saveFile(SpyFile $file, FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
@@ -112,28 +120,30 @@ class FileSaver implements FileSaverInterface
 
             $savedRowsCount = $file->save();
 
-            $idStorage = $this->fileManagerService
-                ->save($saveRequestTransfer->getTempFilePath());
-            $this->addStorageId($fileInfo, $idStorage);
+            $newFileName = $this->getNewFileName($file->getFileName(), $fileInfo->getVersionName());
+            $this->fileContent->save($saveRequestTransfer->getTempFilePath(), $newFileName);
+            $this->addStorageInfo($fileInfo, $newFileName);
 
             $this->queryContainer->getConnection()->commit();
 
             return $savedRowsCount;
         } catch (Exception $exception) {
             $this->queryContainer->getConnection()->rollBack();
+            throw $exception;
         }
     }
 
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyFileInfo $fileInfo
-     * @param string $idStorage
-     *
+     * @param string $newFileName
      * @return void
+     * @throws \Propel\Runtime\Exception\PropelException
      */
-    protected function addStorageId(SpyFileInfo $fileInfo, string $idStorage)
+    protected function addStorageInfo(SpyFileInfo $fileInfo, string $newFileName)
     {
         $fileInfo->reload();
-        $fileInfo->setIdStorage($idStorage);
+        $fileInfo->setStorageName($this->config->getStorageName());
+        $fileInfo->setStorageFileName($newFileName);
 
         $fileInfo->save();
     }
@@ -157,6 +167,16 @@ class FileSaver implements FileSaverInterface
     }
 
     /**
+     * @param string $fileName
+     * @param string $versionName
+     * @return string
+     */
+    protected function getNewFileName(string $fileName, string $versionName)
+    {
+        return $fileName . $versionName;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
      *
      * @return bool
@@ -169,9 +189,7 @@ class FileSaver implements FileSaverInterface
             return false;
         }
 
-        $file = $this->queryContainer
-            ->queryFileById($fileId)
-            ->findOne();
+        $file = $this->fileFinder->getFile($fileId);
 
         return $file !== null;
     }

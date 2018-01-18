@@ -7,14 +7,8 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
-use Spryker\Service\FileManager\FileManagerServiceInterface;
-
 class FileRemover implements FileRemoverInterface
 {
-    /**
-     * @var \Spryker\Service\FileManager\FileManagerServiceInterface
-     */
-    protected $fileManagerService;
 
     /**
      * @var \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
@@ -22,21 +16,28 @@ class FileRemover implements FileRemoverInterface
     protected $fileFinder;
 
     /**
+     * @var FileContentInterface
+     */
+    protected $fileContent;
+
+    /**
      * FileSaver constructor.
      *
      * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
-     * @param \Spryker\Service\FileManager\FileManagerServiceInterface $fileManagerService
+     * @param FileContentInterface $fileContent
      */
-    public function __construct(FileFinderInterface $fileFinder, FileManagerServiceInterface $fileManagerService)
+    public function __construct(FileFinderInterface $fileFinder, FileContentInterface $fileContent)
     {
-        $this->fileManagerService = $fileManagerService;
         $this->fileFinder = $fileFinder;
+        $this->fileContent = $fileContent;
     }
 
     /**
      * @param int $fileInfoId
      *
      * @return bool
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Propel\Runtime\Exception\PropelException
      */
     public function deleteFileInfo(int $fileInfoId)
     {
@@ -46,7 +47,7 @@ class FileRemover implements FileRemoverInterface
             return false;
         }
 
-        $this->fileManagerService->delete($fileInfo->getIdStorage());
+        $this->fileContent->delete($fileInfo->getStorageFileName());
         $fileInfo->delete();
 
         return true;
@@ -56,6 +57,8 @@ class FileRemover implements FileRemoverInterface
      * @param int $fileId
      *
      * @return bool
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
      */
     public function delete(int $fileId)
     {
@@ -66,20 +69,11 @@ class FileRemover implements FileRemoverInterface
         }
 
         foreach ($file->getSpyFileInfos() as $fileInfo) {
-            $this->fileManagerService->delete($fileInfo->getIdStorage());
+            $this->fileContent->delete($fileInfo->getStorageFileName());
             $fileInfo->delete();
         }
 
         return true;
     }
 
-    /**
-     * @param int $fileId
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyFile
-     */
-    protected function getFile(int $fileId)
-    {
-        return $this->fileFinder->getFile($fileId);
-    }
 }

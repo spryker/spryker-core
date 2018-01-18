@@ -14,7 +14,8 @@
         <column name="size" type="INTEGER" required="true"/>
         <column name="version" type="INTEGER" required="true"/>
         <column name="version_name" type="VARCHAR" size="500" required="true"/>
-        <column name="id_storage" type="VARCHAR" size="1000"/>
+        <column name="storage_name" type="VARCHAR" size="255"/>
+        <column name="storage_file_name" type="VARCHAR" size="500"/>
         <foreign-key name="spy_file_info-fk_file" foreignTable="spy_file" phpName="File" onDelete="CASCADE">
             <reference foreign="id_file" local="fk_file"/>
         </foreign-key>

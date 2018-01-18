@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Container;
 class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
 {
     const SERVICE_FILE_MANAGER = 'SERVICE_FILE_MANAGER';
+    const SERVICE_FILE_SYSTEM = 'SERVICE_FILE_SYSTEM';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,6 +24,10 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SERVICE_FILE_MANAGER] = function (Container $container) {
             return $container->getLocator()->fileManager()->service();
+        };
+
+        $container[static::SERVICE_FILE_SYSTEM] = function (Container $container) {
+            return $container->getLocator()->fileSystem()->service();
         };
 
         return $container;

@@ -21,6 +21,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
      *
      * @return int
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function save(FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
