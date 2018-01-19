@@ -6,8 +6,7 @@
     <transfer name="FileManagerSaveRequest">
         <property name="file" type="File" />
         <property name="fileInfo" type="FileInfo" />
-        <property name="tempFilePath" type="string" />
-        <property name="tempFilePath" type="string" />
+        <property name="content" type="string" />
     </transfer>
 
     <transfer name="File">
@@ -21,6 +20,7 @@
         <property name="fkFile" type="int" />
         <property name="type" type="string" />
         <property name="size" type="string" />
+        <property name="fileExtension" type="string" />
         <property name="version" type="int" />
         <property name="versionName" type="string" />
         <property name="storageName" type="string" />

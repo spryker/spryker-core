@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
-class FileRemover implements FileRemoverInterface
+class FileReader implements FileReaderInterface
 {
     /**
      * @var \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
@@ -20,8 +20,6 @@ class FileRemover implements FileRemoverInterface
     protected $fileContent;
 
     /**
-     * FileSaver constructor.
-     *
      * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
      * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface $fileContent
      */
@@ -32,42 +30,18 @@ class FileRemover implements FileRemoverInterface
     }
 
     /**
-     * @param int $fileInfoId
+     * @param int $fileId
      *
      * @return bool
      */
-    public function deleteFileInfo(int $fileInfoId)
+    public function read(int $fileId)
     {
-        $fileInfo = $this->fileFinder->getFileInfo($fileInfoId);
+        $fileInfo = $this->fileFinder->getLatestFileInfoByFkFile($fileId);
 
         if ($fileInfo == null) {
             return false;
         }
 
-        $this->fileContent->delete($fileInfo->getStorageFileName());
-        $fileInfo->delete();
-
-        return true;
-    }
-
-    /**
-     * @param int $fileId
-     *
-     * @return bool
-     */
-    public function delete(int $fileId)
-    {
-        $file = $this->fileFinder->getFile($fileId);
-
-        if ($file == null) {
-            return false;
-        }
-
-        foreach ($file->getSpyFileInfos() as $fileInfo) {
-            $this->fileContent->delete($fileInfo->getStorageFileName());
-            $fileInfo->delete();
-        }
-
-        return true;
+        return $this->fileContent->read($fileInfo->getStorageFileName());
     }
 }

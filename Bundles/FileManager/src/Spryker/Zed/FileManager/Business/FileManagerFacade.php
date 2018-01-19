@@ -20,8 +20,9 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
      *
-     * @return int
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return int
      */
     public function save(FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
@@ -33,9 +34,25 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * @param int $fileId
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
      * @return bool
      */
-    public function delete(int $fileId)
+    public function readLatestFileVersion($fileId)
+    {
+        return $this->getFactory()->createFileReader()->read($fileId);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $fileId
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return bool
+     */
+    public function delete($fileId)
     {
         return $this->getFactory()->createFileRemover()->delete($fileId);
     }
@@ -45,9 +62,11 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * @param int $fileInfoId
      *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
      * @return bool
      */
-    public function deleteFileInfo(int $fileInfoId)
+    public function deleteFileInfo($fileInfoId)
     {
         return $this->getFactory()->createFileRemover()->deleteFileInfo($fileInfoId);
     }
@@ -60,7 +79,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * @return void
      */
-    public function rollback(int $fileId, int $fileInfoId)
+    public function rollback($fileId, $fileInfoId)
     {
         $this->getFactory()->createFileRollback()->rollback($fileId, $fileInfoId);
     }

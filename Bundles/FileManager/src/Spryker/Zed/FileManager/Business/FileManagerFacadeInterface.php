@@ -28,9 +28,20 @@ interface FileManagerFacadeInterface
      *
      * @param int $fileId
      *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
      * @return bool
      */
-    public function delete(int $fileId);
+    public function readLatestFileVersion($fileId);
+
+    /**
+     * @api
+     *
+     * @param int $fileId
+     *
+     * @return bool
+     */
+    public function delete($fileId);
 
     /**
      * @api
@@ -39,7 +50,7 @@ interface FileManagerFacadeInterface
      *
      * @return bool
      */
-    public function deleteFileInfo(int $fileInfoId);
+    public function deleteFileInfo($fileInfoId);
 
     /**
      * @api
@@ -49,5 +60,5 @@ interface FileManagerFacadeInterface
      *
      * @return void
      */
-    public function rollback(int $fileId, int $fileInfoId);
+    public function rollback($fileId, $fileInfoId);
 }

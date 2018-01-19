@@ -1,30 +1,33 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\FileManager\Business\Model;
 
 use Generated\Shared\Transfer\FileSystemContentTransfer;
 use Generated\Shared\Transfer\FileSystemDeleteTransfer;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
-use Generated\Shared\Transfer\FileSystemStreamTransfer;
-use Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException;
 use Spryker\Service\FileSystem\FileSystemServiceInterface;
 use Spryker\Zed\FileManager\FileManagerConfig;
 
 class FileContent implements FileContentInterface
 {
     /**
-     * @var FileSystemServiceInterface
+     * @var \Spryker\Service\FileSystem\FileSystemServiceInterface
      */
     protected $fileSystemService;
+
     /**
-     * @var FileManagerConfig
+     * @var \Spryker\Zed\FileManager\FileManagerConfig
      */
     private $config;
 
-
     /**
-     * @param FileSystemServiceInterface $fileSystemService
-     * @param FileManagerConfig $config
+     * @param \Spryker\Service\FileSystem\FileSystemServiceInterface $fileSystemService
+     * @param \Spryker\Zed\FileManager\FileManagerConfig $config
      */
     public function __construct(FileSystemServiceInterface $fileSystemService, FileManagerConfig $config)
     {
@@ -33,31 +36,25 @@ class FileContent implements FileContentInterface
     }
 
     /**
-     * @param string $currentFilePathName
      * @param string $fileName
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     * @param string $content
+     *
+     * @return void
      */
-    public function save(string $currentFilePathName, string $fileName)
+    public function save(string $fileName, string $content)
     {
-        $fileSystemStreamTransfer = new FileSystemStreamTransfer();
-        $fileSystemStreamTransfer->setFileSystemName($this->config->getStorageName());
-        $fileSystemStreamTransfer->setPath($fileName);
+        $fileSystemContentTransfer = new FileSystemContentTransfer();
+        $fileSystemContentTransfer->setFileSystemName($this->config->getStorageName());
+        $fileSystemContentTransfer->setPath($fileName);
+        $fileSystemContentTransfer->setContent($content);
 
-        $stream = fopen($currentFilePathName, 'r+');
-
-        try {
-            $this->fileSystemService->putStream($fileSystemStreamTransfer, $stream);
-        } catch (FileSystemStreamException $exception) {
-            $this->closeStream($stream);
-            throw $exception;
-        }
-
-        $this->closeStream($stream);
+        $this->fileSystemService->put($fileSystemContentTransfer);
     }
 
     /**
      * @param string $fileName
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     *
+     * @return void
      */
     public function delete(string $fileName)
     {
@@ -70,8 +67,8 @@ class FileContent implements FileContentInterface
 
     /**
      * @param string $fileName
+     *
      * @return string
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      */
     public function read(string $fileName)
     {
@@ -81,15 +78,4 @@ class FileContent implements FileContentInterface
 
         return $this->fileSystemService->read($fileSystemQueryTransfer);
     }
-
-    /**
-     * @param $stream
-     */
-    protected function closeStream($stream)
-    {
-        if (is_resource($stream)) {
-            fclose($stream);
-        }
-    }
-
 }

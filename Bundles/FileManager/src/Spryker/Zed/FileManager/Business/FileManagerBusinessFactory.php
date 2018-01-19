@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\FileManager\Business;
 
-use Spryker\Service\FileSystem\FileSystemServiceInterface;
 use Spryker\Zed\FileManager\Business\Model\FileContent;
 use Spryker\Zed\FileManager\Business\Model\FileFinder;
+use Spryker\Zed\FileManager\Business\Model\FileReader;
 use Spryker\Zed\FileManager\Business\Model\FileRemover;
 use Spryker\Zed\FileManager\Business\Model\FileRollback;
 use Spryker\Zed\FileManager\Business\Model\FileSaver;
@@ -25,7 +25,6 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
 {
     /**
      * @return \Spryker\Zed\FileManager\Business\Model\FileSaverInterface
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function createFileSaver()
     {
@@ -56,7 +55,18 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     {
         return new FileRemover(
             $this->createFileFinder(),
-            $this->getFileManagerService()
+            $this->createFileContent()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManager\Business\Model\FileReader
+     */
+    public function createFileReader()
+    {
+        return new FileReader(
+            $this->createFileFinder(),
+            $this->createFileContent()
         );
     }
 
@@ -79,8 +89,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return FileContent
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @return \Spryker\Zed\FileManager\Business\Model\FileContent
      */
     public function createFileContent()
     {
@@ -91,17 +100,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Service\FileManager\FileManagerServiceInterface
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     */
-    public function getFileManagerService()
-    {
-        return $this->getProvidedDependency(FileManagerDependencyProvider::SERVICE_FILE_MANAGER);
-    }
-
-    /**
-     * @return FileSystemServiceInterface
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @return \Spryker\Service\FileSystem\FileSystemServiceInterface
      */
     public function getFileSystemService()
     {

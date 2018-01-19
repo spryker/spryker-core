@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class FileManagerConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string
      */
@@ -20,5 +19,4 @@ class FileManagerConfig extends AbstractBundleConfig
     {
         return $this->get(FileManagerConstants::STORAGE_NAME);
     }
-
 }
