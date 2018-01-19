@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Store;
 
-use Spryker\Shared\Store\StoreConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class StoreConfig extends AbstractBundleConfig
@@ -17,6 +16,6 @@ class StoreConfig extends AbstractBundleConfig
      */
     public function isMultiStorePerZedEnabled()
     {
-        return $this->get(StoreConstants::ENABLE_MULTI_STORE_PER_ZED, false);
+        return false;
     }
 }

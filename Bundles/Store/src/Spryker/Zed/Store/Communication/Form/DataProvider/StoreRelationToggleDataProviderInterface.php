@@ -12,5 +12,5 @@ interface StoreRelationToggleDataProviderInterface
     /**
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function getInitialData();
+    public function getDefaultFormData();
 }
