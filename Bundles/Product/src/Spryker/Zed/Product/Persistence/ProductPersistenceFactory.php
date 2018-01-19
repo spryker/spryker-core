@@ -12,6 +12,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\Product\Persistence\SpyProductValidityQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
@@ -67,5 +68,13 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory
     public function getUrlQueryContainer()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::QUERY_CONTAINER_URL);
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductValidityQuery
+     */
+    public function createProductValidityQuery()
+    {
+        return SpyProductValidityQuery::create();
     }
 }
