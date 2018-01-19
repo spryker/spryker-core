@@ -37,6 +37,7 @@ use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouch;
 use Spryker\Zed\Product\Business\Product\Url\ProductAbstractAfterUpdateUrlObserver;
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlGenerator;
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlManager;
+use Spryker\Zed\Product\Business\Product\Validity\ValidityUpdater;
 use Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGenerator;
 use Spryker\Zed\Product\Business\Product\Variant\VariantGenerator;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
@@ -258,6 +259,14 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function createProductConcreteNameGenerator()
     {
         return new ProductConcreteNameGenerator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Validity\ValidityUpdaterInterface
+     */
+    public function createProductValidityUpdater()
+    {
+        return new ValidityUpdater();
     }
 
     /**
