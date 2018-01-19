@@ -39,7 +39,7 @@ class AvailabilityAbstractTable extends AbstractTable
     protected $storeTransfer;
 
     /**
-     * @var \Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityGuiToOmsFacadeInterface
+     * @var \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface
      */
     protected $omsFacade;
 
