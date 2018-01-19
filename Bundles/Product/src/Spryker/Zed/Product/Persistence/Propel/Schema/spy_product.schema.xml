@@ -90,7 +90,7 @@
         <column name="valid_to" type="TIMESTAMP" required="false"/>
 
         <foreign-key name="spy_product_abstract_validity-fk_product_abstract" foreignTable="spy_product_abstract">
-            <reference local="fk_product_abstract" foreign="id_product_abstract"/>
+            <reference local="id_product_abstract" foreign="id_product_abstract"/>
         </foreign-key>
     </table>
 
