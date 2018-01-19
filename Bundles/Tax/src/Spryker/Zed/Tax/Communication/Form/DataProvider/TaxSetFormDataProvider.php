@@ -56,11 +56,7 @@ class TaxSetFormDataProvider
     protected function createTaxRatesList()
     {
         $taxRateCollection = $this->taxFacade->getTaxRates();
-        $choices = [];
-        foreach ($taxRateCollection->getTaxRates() as $taxRateTransfer) {
-            $choices[$taxRateTransfer->getIdTaxRate()] = $taxRateTransfer->getName();
-        }
 
-        return $choices;
+        return $taxRateCollection->getTaxRates();
     }
 }

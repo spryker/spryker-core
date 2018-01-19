@@ -31,7 +31,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createTaxRateForm(TaxRateFormDataProvider $taxRateFormDataProvider = null)
+    public function getTaxRateForm(TaxRateFormDataProvider $taxRateFormDataProvider = null)
     {
         return $this->getFormFactory()->create(
             TaxRateForm::class,
@@ -43,19 +43,43 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `getTaxRateForm()` instead.
+     *
+     * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider|null $taxRateFormDataProvider Deprecated: TaxRateFormDataProvider must not be passed in.
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createTaxRateForm(TaxRateFormDataProvider $taxRateFormDataProvider = null)
+    {
+        return $this->getTaxRateForm($taxRateFormDataProvider);
+    }
+
+    /**
+     * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider|null $taxSetFormDataProvider Deprecated: TaxSetFormDataProvider must not be passed in.
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getTaxSetForm(TaxSetFormDataProvider $taxSetFormDataProvider = null)
+    {
+        return $this->getFormFactory()->create(
+            TaxSetForm::class,
+            ($taxSetFormDataProvider) ? $taxSetFormDataProvider->getData() : $this->createTaxSetFormDataProvider()->getData(),
+            [
+                'data_class' => TaxSetTransfer::class,
+            ]
+        );
+    }
+
+    /**
+     * @deprecated Use `getTaxSetForm()` instead.
+     *
      * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider|null $taxSetFormDataProvider Deprecated: TaxSetFormDataProvider must not be passed in.
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createTaxSetForm(TaxSetFormDataProvider $taxSetFormDataProvider = null)
     {
-        return $this->getFormFactory()->create(
-            TaxSetForm::class,
-            $this->createTaxSetFormDataProvider()->getData(),
-            [
-                'data_class' => TaxSetTransfer::class,
-            ]
-        );
+        return $this->getTaxSetForm($taxSetFormDataProvider);
     }
 
     /**

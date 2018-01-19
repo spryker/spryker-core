@@ -9,6 +9,7 @@ namespace Spryker\Zed\Tax\Communication\Form;
 use ArrayObject;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -72,8 +73,10 @@ class TaxSetForm extends AbstractType
             'expanded' => true,
             'multiple' => true,
             'label' => 'Tax rates',
-            'choices' => array_flip($this->getFactory()->createTaxSetFormDataProvider()->getOptions()[self::FIELD_TAX_RATES]),
             'choices_as_values' => true,
+            'choices' => $this->getFactory()->createTaxSetFormDataProvider()->getOptions()[self::FIELD_TAX_RATES],
+            'choice_label' => 'name',
+            'choice_value' => 'idTaxRate',
             'constraints' => [
                 new Callback([
                     'callback' => function (ArrayObject $taxRates, ExecutionContextInterface $context) {
@@ -85,19 +88,44 @@ class TaxSetForm extends AbstractType
             ],
         ]);
 
-        $builder->get(self::FIELD_TAX_RATES)
-            ->addModelTransformer(new CallbackTransformer(
-                function ($taxRates) {
-                    if ($taxRates) {
-                        return (array)$taxRates;
-                    }
-                },
-                function ($taxRates) {
-                    return new ArrayObject($taxRates);
-                }
-            ));
+        $builder
+            ->get(self::FIELD_TAX_RATES)
+            ->addModelTransformer($this->createModelTransformer());
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    protected function createModelTransformer(): DataTransformerInterface
+    {
+        return new CallbackTransformer(
+            $this->createTransformCallback(),
+            $this->createReverseTransformCallback()
+        );
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function createTransformCallback(): \Closure
+    {
+        return function ($taxRates) {
+            if ($taxRates) {
+                return (array)$taxRates;
+            }
+        };
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function createReverseTransformCallback(): \Closure
+    {
+        return function ($taxRates) {
+            return new ArrayObject($taxRates);
+        };
     }
 
     /**
