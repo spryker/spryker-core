@@ -130,4 +130,18 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstractWithName($idLocale);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductValidityQuery
+     */
+    public function queryProductsBecomingValid();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductValidityQuery
+     */
+    public function queryProductsBecomingInvalid();
 }

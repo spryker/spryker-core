@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Product\Persistence;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -210,5 +211,34 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
                 ->filterByFkLocale($idLocale)
                 ->endUse()
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, 'name');
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductValidityQuery
+     */
+    public function queryProductsBecomingValid()
+    {
+        return $this
+            ->getFactory()
+            ->createProductValidityQuery()
+            ->filterByValidFrom('now', Criteria::LESS_EQUAL)
+            ->filterByValidTo(null, Criteria::ISNULL)
+            ->_or()
+            ->filterByValidTo('now', Criteria::GREATER_EQUAL);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductValidityQuery
+     */
+    public function queryProductsBecomingInvalid()
+    {
+        return $this
+            ->getFactory()
+            ->createProductValidityQuery()
+            ->filterByValidFrom('now', Criteria::GREATER_EQUAL);
     }
 }
