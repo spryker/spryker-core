@@ -273,6 +273,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             ->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract, $storeTransfer->getIdStore())
             ->findOne();
 
+        $availabilityAbstractEntity->setFkStore($storeTransfer->getIdStore());
         $availabilityAbstractEntity->setQuantity($sumQuantity);
         $availabilityAbstractEntity->save();
     }

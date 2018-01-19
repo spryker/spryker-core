@@ -196,7 +196,7 @@ class AvailabilityFacadeTest extends Unit
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
-        $storeTransfer = (new StoreBuilder([StoreTransfer::NAME => 'DE']))->build();
+        $storeTransfer = (new StoreBuilder([StoreTransfer::NAME => 'DE', StoreTransfer::ID_STORE => 1]))->build();
 
         $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 0]);
 
@@ -206,9 +206,9 @@ class AvailabilityFacadeTest extends Unit
             ProductConcreteAvailabilityRequestTransfer::SKU => self::CONCRETE_SKU,
         ]))->build();
 
-        $availability = $availabilityFacade->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
+        $productConcreteAvailabilityTransfer = $availabilityFacade->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
 
-        $this->assertSame(2, $availability);
+        $this->assertSame(2, $productConcreteAvailabilityTransfer->getAvailability());
     }
 
     /**
