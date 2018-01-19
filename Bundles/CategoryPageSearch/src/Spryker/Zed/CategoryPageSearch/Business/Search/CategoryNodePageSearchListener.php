@@ -5,31 +5,89 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\CategoryPageSearch\Business\Search;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
-use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface;
+use Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface;
+use Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilSanitizeServiceInterface;
+use Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryPageSearch\Communication\CategoryPageSearchCommunicationFactory getFactory()
  */
-abstract class AbstractCategoryNodeSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
+class CategoryNodePageSearchListener implements CategoryNodePageSearchListenerInterface
 {
     use DatabaseTransactionHandlerTrait;
+
+    /**
+     * @var CategoryPageSearchToUtilSanitizeServiceInterface
+     */
+    protected $utilSanitize;
+
+    /**
+     * @var CategoryPageSearchToUtilEncodingInterface
+     */
+    protected $utilEncoding;
+
+    /**
+     * @var CategoryPageSearchToSearchInterface
+     */
+    protected $searchFacade;
+
+    /**
+     * @var CategoryPageSearchQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var Store
+     */
+    protected $store;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param CategoryPageSearchToUtilSanitizeServiceInterface $utilSanitize
+     * @param CategoryPageSearchToUtilEncodingInterface $utilEncoding
+     * @param CategoryPageSearchToSearchInterface $searchFacade
+     * @param CategoryPageSearchQueryContainerInterface $queryContainer
+     * @param Store $store
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(
+        CategoryPageSearchToUtilSanitizeServiceInterface $utilSanitize,
+        CategoryPageSearchToUtilEncodingInterface $utilEncoding,
+        CategoryPageSearchToSearchInterface $searchFacade,
+        CategoryPageSearchQueryContainerInterface $queryContainer,
+        Store $store,
+        $isSendingToQueue
+    )
+    {
+        $this->utilSanitize = $utilSanitize;
+        $this->utilEncoding = $utilEncoding;
+        $this->searchFacade = $searchFacade;
+        $this->queryContainer = $queryContainer;
+        $this->store = $store;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
 
     /**
      * @param array $categoryNodeIds
      *
      * @return void
      */
-    protected function publish(array $categoryNodeIds)
+    public function publish(array $categoryNodeIds)
     {
         $categoryTrees = $this->getCategoryTrees($categoryNodeIds);
         $spyCategoryNodePageSearchEntities = $this->findCategoryNodePageSearchEntitiesByCategoryNodeIds($categoryNodeIds);
@@ -38,13 +96,13 @@ abstract class AbstractCategoryNodeSearchListener extends AbstractPlugin impleme
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param array $categoryNodeIds
      *
      * @return void
      */
-    protected function unpublish(array $productAbstractIds)
+    public function unpublish(array $categoryNodeIds)
     {
-        $spyCategoryNodePageSearchEntities = $this->findCategoryNodePageSearchEntitiesByCategoryNodeIds($productAbstractIds);
+        $spyCategoryNodePageSearchEntities = $this->findCategoryNodePageSearchEntitiesByCategoryNodeIds($categoryNodeIds);
         foreach ($spyCategoryNodePageSearchEntities as $spyCategoryNodePageSearchEntity) {
             $spyCategoryNodePageSearchEntity->delete();
         }
@@ -90,13 +148,14 @@ abstract class AbstractCategoryNodeSearchListener extends AbstractPlugin impleme
             return;
         }
 
-        $categoryTreeNodeData = $this->getFactory()->getUtilSanitizeService()->arrayFilterRecursive($spyCategoryNodeEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true));
+        $categoryTreeNodeData = $this->utilSanitize->arrayFilterRecursive($spyCategoryNodeEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true));
         $data = $this->mapToSearchData($categoryTreeNodeData, $localeName);
         $spyCategoryNodePageSearchEntity->setFkCategoryNode($spyCategoryNodeEntity->getIdCategoryNode());
-        $spyCategoryNodePageSearchEntity->setStructuredData($this->getFactory()->getUtilEncoding()->encodeJson($categoryTreeNodeData));
+        $spyCategoryNodePageSearchEntity->setStructuredData($this->utilEncoding->encodeJson($categoryTreeNodeData));
         $spyCategoryNodePageSearchEntity->setData($data);
-        $spyCategoryNodePageSearchEntity->setStore($this->getStore()->getStoreName());
+        $spyCategoryNodePageSearchEntity->setStore($this->store->getStoreName());
         $spyCategoryNodePageSearchEntity->setLocale($localeName);
+        $spyCategoryNodePageSearchEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyCategoryNodePageSearchEntity->save();
     }
 
@@ -108,7 +167,7 @@ abstract class AbstractCategoryNodeSearchListener extends AbstractPlugin impleme
      */
     public function mapToSearchData(array $categoryNodeData, $localeName)
     {
-        return $this->getFactory()->getSearchFacade()
+        return $this->searchFacade
             ->transformPageMapToDocumentByMapperName(
                 $categoryNodeData,
                 (new LocaleTransfer())->setLocaleName($localeName),
@@ -123,7 +182,7 @@ abstract class AbstractCategoryNodeSearchListener extends AbstractPlugin impleme
      */
     protected function findCategoryNodePageSearchEntitiesByCategoryNodeIds(array $categoryNodeIds)
     {
-        $categoryNodeSearchEntities = $this->getQueryContainer()->queryCategoryNodePageSearchByIds($categoryNodeIds)->find();
+        $categoryNodeSearchEntities = $this->queryContainer->queryCategoryNodePageSearchByIds($categoryNodeIds)->find();
         $categoryNodeSearchEntitiesByIdAndLocale = [];
         foreach ($categoryNodeSearchEntities as $categoryNodeSearchEntity) {
             $categoryNodeSearchEntitiesByIdAndLocale[$categoryNodeSearchEntity->getFkCategoryNode()][$categoryNodeSearchEntity->getLocale()] = $categoryNodeSearchEntity;
@@ -139,13 +198,13 @@ abstract class AbstractCategoryNodeSearchListener extends AbstractPlugin impleme
      */
     protected function getCategoryTrees(array $categoryNodeIds)
     {
-        $localeNames = $this->getStore()->getLocales();
-        $locales = $this->getQueryContainer()->queryLocalesWithLocaleNames($localeNames)->find();
+        $localeNames = $this->store->getLocales();
+        $locales = $this->queryContainer->queryLocalesWithLocaleNames($localeNames)->find();
 
         $categoryNodeTree = [];
         $this->disableInstancePooling();
         foreach ($locales as $locale) {
-            $categoryNodes = $this->getQueryContainer()->queryCategoryNodeTree($categoryNodeIds, $locale->getIdLocale())->find()->toKeyIndex();
+            $categoryNodes = $this->queryContainer->queryCategoryNodeTree($categoryNodeIds, $locale->getIdLocale())->find()->toKeyIndex();
             foreach ($categoryNodeIds as $categoryNodeId) {
                 if (isset($categoryNodes[$categoryNodeId])) {
                     $categoryNodeTree[$categoryNodeId][$locale->getLocaleName()] = $categoryNodes[$categoryNodeId];
@@ -155,13 +214,5 @@ abstract class AbstractCategoryNodeSearchListener extends AbstractPlugin impleme
         $this->enableInstancePooling();
 
         return $categoryNodeTree;
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getFactory()->getStore();
     }
 }

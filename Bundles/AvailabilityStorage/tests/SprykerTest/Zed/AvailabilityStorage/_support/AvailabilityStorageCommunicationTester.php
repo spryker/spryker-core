@@ -16,9 +16,9 @@ namespace SprykerTest\Zed\AvailabilityStorage;
  *
  * @SuppressWarnings(PHPMD)
 */
-class AvailabilityStorageBusinessTester extends \Codeception\Actor
+class AvailabilityStorageCommunicationTester extends \Codeception\Actor
 {
-    use _generated\AvailabilityStorageBusinessTesterActions;
+    use _generated\AvailabilityStorageCommunicationTesterActions;
 
    /**
     * Define custom actions here

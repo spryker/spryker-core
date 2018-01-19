@@ -8,13 +8,17 @@
 namespace Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Category\Dependency\CategoryEvents;
+use Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacadeInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryPageSearch\Communication\CategoryPageSearchCommunicationFactory getFactory()
+ * @method CategoryPageSearchFacadeInterface getFacade()
  */
-class CategoryNodeCategoryPageSearchListener extends AbstractCategoryNodeSearchListener
+class CategoryNodeCategoryPageSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -33,9 +37,9 @@ class CategoryNodeCategoryPageSearchListener extends AbstractCategoryNodeSearchL
         $categoryNodeIds = $this->getQueryContainer()->queryCategoryNodeIdsByCategoryIds($categoryIds)->find()->getData();
 
         if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_DELETE) {
-            $this->unpublish($categoryNodeIds);
+            $this->getFacade()->unpublish($categoryNodeIds);
         } else {
-            $this->publish($categoryNodeIds);
+            $this->getFacade()->publish($categoryNodeIds);
         }
     }
 }

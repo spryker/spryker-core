@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\AvailabilityStorage
+namespace: SprykerTest\Zed\CategoryPageSearch
 
 paths:
     tests: .
@@ -14,7 +14,7 @@ coverage:
 suites:
     Business:
         path: Communication
-        class_name: AvailabilityStorageCommunicationTester
+        class_name: CategoryPageSearchCommunicationTester
         modules:
             enabled:
                 - Asserts

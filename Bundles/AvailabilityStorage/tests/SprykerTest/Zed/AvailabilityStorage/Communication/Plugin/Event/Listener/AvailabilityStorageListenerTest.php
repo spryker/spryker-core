@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\AvailabilityStorage\Business;
+namespace SprykerTest\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
@@ -15,7 +15,6 @@ use Silex\Application;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageBusinessFactory;
 use Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacade;
-use Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacadeInterface;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener\AvailabilityProductStorageListener;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener\AvailabilityStorageListener;
 use Spryker\Zed\Product\Dependency\ProductEvents;
@@ -30,8 +29,6 @@ use SprykerTest\Zed\AvailabilityStorage\AvailabilityStorageConfigMock;
  * @group Business
  * @group AvailabilityStorageListenerTest
  * Add your own group annotations below this line
- *
- * @property \SprykerTest\Zed\AvailabilityStorage\AvailabilityStorageBusinessTester $tester
  */
 class AvailabilityStorageListenerTest extends Unit
 {
