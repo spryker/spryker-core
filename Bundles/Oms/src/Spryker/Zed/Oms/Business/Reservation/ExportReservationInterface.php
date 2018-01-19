@@ -13,4 +13,9 @@ interface ExportReservationInterface
      * @return void
      */
     public function exportReservation();
+
+    /**
+     * @return int
+     */
+    public function getLastExportedVersion();
 }

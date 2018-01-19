@@ -27,6 +27,6 @@ class ReservationVersionHandlerPlugin extends AbstractPlugin implements Reservat
      */
     public function handle($sku)
     {
-        $this->getFacade()->handleReservation($sku);
+        $this->getFacade()->saveReservationVersion($sku);
     }
 }

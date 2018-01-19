@@ -35,9 +35,9 @@ interface ReservationInterface
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $currentStoreTransfer
      *
      * @return int
      */
-    public function getReservationsFromOtherStores($sku, StoreTransfer $storeTransfer);
+    public function getReservationsFromOtherStores($sku, StoreTransfer $currentStoreTransfer);
 }

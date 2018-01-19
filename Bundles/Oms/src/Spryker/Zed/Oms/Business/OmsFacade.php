@@ -552,7 +552,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @return void
      */
-    public function handleReservation($sku)
+    public function saveReservationVersion($sku)
     {
         $this->getFactory()->createReservationVersionHandler()->saveReservationVersion($sku);
     }
@@ -597,5 +597,17 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function getReservationsFromOtherStores($sku, StoreTransfer $storeTransfer)
     {
         return $this->getFactory()->createUtilReservation()->getReservationsFromOtherStores($sku, $storeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getLastExportedReservationVersion()
+    {
+        return $this->getFactory()->createExportReservation()->getLastExportedVersion();
     }
 }

@@ -46,20 +46,20 @@ class ReservationWriter implements ReservationWriterInterface
     ) {
 
         $sku = $omsAvailabilityReservationRequestTransfer->getSku();
-        $storeName = $omsAvailabilityReservationRequestTransfer->getOriginStore()->getName();
+        $originStoreName = $omsAvailabilityReservationRequestTransfer->getOriginStore()->getName();
 
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
-        if ($currentStoreTransfer->getName() !== $storeName) {
+        if ($currentStoreTransfer->getName() === $originStoreName) {
             return;
         }
 
-        $reservationStoreEntity = $this->findReservationStoreEntity($sku, $storeName);
+        $reservationStoreEntity = $this->findReservationStoreEntity($sku, $originStoreName);
 
         if ($this->isInvalidVersion($reservationStoreEntity, $omsAvailabilityReservationRequestTransfer)) {
             return;
         }
 
-        $this->saveReservationStoreEntity($omsAvailabilityReservationRequestTransfer, $reservationStoreEntity, $storeName);
+        $this->saveReservationStoreEntity($omsAvailabilityReservationRequestTransfer, $reservationStoreEntity, $originStoreName);
     }
 
     /**
@@ -78,17 +78,17 @@ class ReservationWriter implements ReservationWriterInterface
     /**
      * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
      * @param \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStore $reservationStoreEntity
-     * @param string $storeName
+     * @param string $originStoreName
      *
      * @return void
      */
     protected function saveReservationStoreEntity(
         OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer,
         SpyOmsProductReservationStore $reservationStoreEntity,
-        $storeName
+        $originStoreName
     ) {
         $reservationStoreEntity->fromArray($omsAvailabilityReservationRequestTransfer->toArray());
-        $reservationStoreEntity->setStore($storeName);
+        $reservationStoreEntity->setStore($originStoreName);
         $reservationStoreEntity->setReservationQuantity($omsAvailabilityReservationRequestTransfer->getReservationAmount());
         $reservationStoreEntity->save();
     }

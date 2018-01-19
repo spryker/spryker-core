@@ -7,9 +7,13 @@
 namespace SprykerTest\Zed\Availability\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ProductConcreteAvailabilityRequestBuilder;
+use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
@@ -183,6 +187,28 @@ class AvailabilityFacadeTest extends Unit
         $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(self::CONCRETE_SKU);
 
         $this->assertSame(0, $availabilityEntity->getQuantity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveProductAvailabilityForStoreShouldStoreAvailability()
+    {
+        $availabilityFacade = $this->createAvailabilityFacade();
+
+        $storeTransfer = (new StoreBuilder([StoreTransfer::NAME => 'DE']))->build();
+
+        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 0]);
+
+        $availabilityFacade->saveProductAvailabilityForStore(self::CONCRETE_SKU, 2, $storeTransfer);
+
+        $productConcreteAvailabilityRequestTransfer = (new ProductConcreteAvailabilityRequestBuilder([
+            ProductConcreteAvailabilityRequestTransfer::SKU => self::CONCRETE_SKU,
+        ]))->build();
+
+        $availability = $availabilityFacade->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
+
+        $this->assertSame(2, $availability);
     }
 
     /**

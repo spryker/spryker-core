@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsProductReservationLastExportedVersion;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
@@ -64,8 +63,26 @@ class ExportReservation implements ExportReservationInterface
             return;
         }
 
-        $this->exportReservations($reservations, $currentStoreTransfer);
+        $this->exportReservations($reservations->toArray(), $currentStoreTransfer);
         $this->storeLastExportedDate($maxVisibleVersion);
+    }
+
+    /**
+     * @return int
+     */
+    public function getLastExportedVersion()
+    {
+        $queryResult = $this->omsQueryContainer
+            ->queryOmsProductReservationLastExportedVersion()
+            ->orderByUpdatedAt(Criteria::DESC)
+            ->findOne();
+
+        $lastExportedVersion = 0;
+        if ($queryResult !== null) {
+            $lastExportedVersion = (int)$queryResult->getVersion();
+        }
+
+        return $lastExportedVersion;
     }
 
     /**
@@ -98,24 +115,6 @@ class ExportReservation implements ExportReservationInterface
     }
 
     /**
-     * @return int
-     */
-    protected function getLastExportedVersion()
-    {
-        $queryResult = $this->omsQueryContainer
-            ->queryOmsProductReservationLastExportedVersion()
-            ->orderByUpdatedAt(Criteria::DESC)
-            ->findOne();
-
-        $lastExportedVersion = 0;
-        if ($queryResult !== null) {
-            $lastExportedVersion = (int)$queryResult->getVersion();
-        }
-
-        return $lastExportedVersion;
-    }
-
-    /**
      * @param int $version
      *
      * @return void
@@ -141,16 +140,16 @@ class ExportReservation implements ExportReservationInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $reservations
+     * @param array $reservations
      * @param \Generated\Shared\Transfer\StoreTransfer $currentStoreTransfer
      *
      * @return void
      */
-    protected function exportReservations(ObjectCollection $reservations, StoreTransfer $currentStoreTransfer)
+    protected function exportReservations(array $reservations, StoreTransfer $currentStoreTransfer)
     {
-        foreach ($reservations as $reservationEntity) {
+        foreach ($reservations as $reservation) {
             $this->executeExportReservationPlugins(
-                $this->mapReservationRequestTransfer($currentStoreTransfer, $reservationEntity)
+                $this->mapReservationRequestTransfer($currentStoreTransfer, $reservation)
             );
         }
     }

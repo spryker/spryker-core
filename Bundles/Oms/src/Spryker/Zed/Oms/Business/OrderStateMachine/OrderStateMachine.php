@@ -674,7 +674,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             }
 
             if ($sourceState === $targetState && $targetState->isReserved()) {
-                $this->reservation->updateReservationQuantity($orderItem->getSku(), $orderItem->getOrder()->getStore());
+                $this->reservation->updateReservationQuantity($orderItem->getSku());
             }
 
             if ($sourceState !== $targetState->getName()

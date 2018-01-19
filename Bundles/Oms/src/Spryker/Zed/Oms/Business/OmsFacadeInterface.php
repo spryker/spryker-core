@@ -499,7 +499,7 @@ interface OmsFacadeInterface
      *
      * @return void
      */
-    public function handleReservation($sku);
+    public function saveReservationVersion($sku);
 
     /**
      * Specification:
@@ -537,4 +537,14 @@ interface OmsFacadeInterface
      * @return int
      */
     public function getReservationsFromOtherStores($sku, StoreTransfer $storeTransfer);
+
+    /**
+     * Specification:
+     *  - Returns last exported reservation version when exporting to external stores
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getLastExportedReservationVersion();
 }

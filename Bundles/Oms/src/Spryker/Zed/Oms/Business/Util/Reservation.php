@@ -103,11 +103,11 @@ class Reservation implements ReservationInterface
             ->filterByFkStore($storeTransfer->getIdStore())
             ->findOne();
 
-        if ($reservationEntity === null) {
-            return 0;
+        $reservationQuantity = 0;
+        if ($reservationEntity !== null) {
+            $reservationQuantity = $reservationEntity->getReservationQuantity();
         }
 
-        $reservationQuantity = $reservationEntity->getReservationQuantity();
         $reservationQuantity += $this->getReservationsFromOtherStores($sku, $storeTransfer);
 
         return $reservationQuantity;
@@ -115,11 +115,11 @@ class Reservation implements ReservationInterface
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $currentStoreTransfer
      *
      * @return int
      */
-    public function getReservationsFromOtherStores($sku, StoreTransfer $storeTransfer)
+    public function getReservationsFromOtherStores($sku, StoreTransfer $currentStoreTransfer)
     {
         $reservationQuantity = 0;
         $reservationStores = $this->queryContainer
@@ -127,7 +127,7 @@ class Reservation implements ReservationInterface
             ->find();
 
         foreach ($reservationStores as $omsProductReservationStoreEntity) {
-            if ($omsProductReservationStoreEntity->getStore() !== $storeTransfer->getName()) {
+            if ($omsProductReservationStoreEntity->getStore() === $currentStoreTransfer->getName()) {
                 continue;
             }
             $reservationQuantity += $omsProductReservationStoreEntity->getReservationQuantity();
