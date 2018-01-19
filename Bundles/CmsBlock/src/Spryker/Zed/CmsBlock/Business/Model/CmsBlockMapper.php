@@ -31,6 +31,8 @@ class CmsBlockMapper implements CmsBlockMapperInterface
     }
 
     /**
+     * TODO: CmsBlockMapper should not have a reader dependency
+     *
      * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $spyCmsBlock
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer

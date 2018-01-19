@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsBlockGui\Communication\Table;
 
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -200,6 +201,16 @@ class CmsBlockTable extends AbstractTable
             ->queryCmsBlockStoreByFkCmsBlock($idCmsBlock)
             ->find();
 
+        return $this->formatStoreNames($cmsBlockStoreCollection);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $cmsBlockStoreCollection
+     *
+     * @return string
+     */
+    protected function formatStoreNames(ObjectCollection $cmsBlockStoreCollection)
+    {
         $storeNames = [];
         foreach ($cmsBlockStoreCollection as $cmsBlockStoreEntity) {
             $storeNames[] = sprintf(

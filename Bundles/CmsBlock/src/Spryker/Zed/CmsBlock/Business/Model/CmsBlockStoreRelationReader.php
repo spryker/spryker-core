@@ -34,6 +34,8 @@ class CmsBlockStoreRelationReader implements CmsBlockStoreRelationReaderInterfac
      */
     public function getStoreRelation(StoreRelationTransfer $storeRelationTransfer)
     {
+        $storeRelationTransfer->requireIdEntity();
+
         $storeTransferCollection = $this->getRelatedStores($storeRelationTransfer->getIdEntity());
         $idStores = $this->getIdStores($storeTransferCollection);
 

@@ -165,7 +165,7 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addStoreRelationFormTypePlugin(Container $container)
     {
         $container[static::PLUGIN_STORE_RELATION_FORM_TYPE] = function () {
-            return $this->createStoreRelationFormTypePlugin();
+            return $this->getStoreRelationFormTypePlugin();
         };
 
         return $container;
@@ -176,12 +176,12 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
      */
-    protected function createStoreRelationFormTypePlugin()
+    protected function getStoreRelationFormTypePlugin()
     {
         throw new MissingStoreRelationFormTypePluginException(
             sprintf(
                 'Missing instance of %s! You need to configure StoreRelationFormType ' .
-                'in your own CmsBlockGuiDependencyProvider::createStoreRelationFormTypePlugin() ' .
+                'in your own CmsBlockGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
                 'to be able to manage shipment prices.',
                 FormTypeInterface::class
             )

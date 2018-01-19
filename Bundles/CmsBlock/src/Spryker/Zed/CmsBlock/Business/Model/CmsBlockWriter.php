@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CmsBlock\Business\Model;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Spryker\Shared\CmsBlock\CmsBlockConfig;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockNotFoundException;
@@ -224,7 +223,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     protected function persistStoreRelation(CmsBlockTransfer $cmsBlockTransfer, $idCmsBlock)
     {
         if ($cmsBlockTransfer->getStoreRelation() === null) {
-            $cmsBlockTransfer->setStoreRelation(new StoreRelationTransfer());
+            return;
         }
 
         $cmsBlockTransfer->getStoreRelation()->setIdEntity($idCmsBlock);

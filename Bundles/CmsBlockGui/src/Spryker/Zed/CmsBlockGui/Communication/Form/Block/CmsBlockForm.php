@@ -145,7 +145,7 @@ class CmsBlockForm extends AbstractType
     {
         $builder->add(
             static::FIELD_STORE_RELATION,
-            $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
+            $this->storeRelationFormTypePlugin->getType(),
             [
                 'label' => false,
             ]
