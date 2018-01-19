@@ -84,13 +84,13 @@
         <id-method-parameter value="spy_product_attribute_key_pk_seq"/>
     </table>
 
-    <table name="spy_product_abstract_validity">
-        <column name="id_product_abstract" required="true" type="INTEGER" primaryKey="true"/>
+    <table name="spy_product_validity">
+        <column name="id_product" required="true" type="INTEGER" primaryKey="true"/>
         <column name="valid_from" type="TIMESTAMP" required="false"/>
         <column name="valid_to" type="TIMESTAMP" required="false"/>
 
-        <foreign-key name="spy_product_abstract_validity-fk_product_abstract" foreignTable="spy_product_abstract">
-            <reference local="id_product_abstract" foreign="id_product_abstract"/>
+        <foreign-key name="spy_product_validity-fk_product_abstract" foreignTable="spy_product">
+            <reference local="id_product" foreign="id_product"/>
         </foreign-key>
     </table>
 
