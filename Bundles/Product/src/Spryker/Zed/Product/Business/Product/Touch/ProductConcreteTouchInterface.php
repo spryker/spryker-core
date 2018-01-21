@@ -21,7 +21,7 @@ interface ProductConcreteTouchInterface
      *
      * @return void
      */
-    public function touchProductConcreteActive1($idProductConcrete);
+    public function touchProductConcreteActive($idProductConcrete);
 
     /**
      * @param int $idProductConcrete
