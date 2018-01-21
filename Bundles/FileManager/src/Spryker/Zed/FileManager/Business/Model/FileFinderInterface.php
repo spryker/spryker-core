@@ -17,11 +17,11 @@ interface FileFinderInterface
     public function getFile(int $fileId);
 
     /**
-     * @param int $fileId
+     * @param int|null $fileId
      *
      * @return \Orm\Zed\Cms\Persistence\SpyFileInfo
      */
-    public function getLatestFileInfoByFkFile(int $fileId);
+    public function getLatestFileInfoByFkFile(int $fileId = null);
 
     /**
      * @param int $fileInfoId

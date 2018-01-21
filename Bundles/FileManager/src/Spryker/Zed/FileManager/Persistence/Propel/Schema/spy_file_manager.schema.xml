@@ -23,22 +23,22 @@
         <id-method-parameter value="spy_file_info_pk_seq"/>
     </table>
 
-    <table name="spy_file_info_localized_attributes" idMethod="native" allowPkInsert="true">
-        <column name="id_file_info_localized_attributes" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_file_info" required="true" type="INTEGER"/>
+    <table name="spy_file_localized_attributes" idMethod="native" allowPkInsert="true">
+        <column name="id_file_localized_attributes" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_file" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="title" required="false" type="VARCHAR" default="NULL" size="255" />
         <column name="alt" required="false" type="LONGVARCHAR" default="NULL" />
-        <foreign-key name="spy_file_info_localized_attributes-fk_file_info" foreignTable="spy_file_info" onDelete="CASCADE" onUpdate="CASCADE">
-            <reference local="fk_file_info" foreign="id_file_info"/>
+        <foreign-key name="spy_file_localized_attributes-fk_file" foreignTable="spy_file" onDelete="CASCADE" onUpdate="CASCADE">
+            <reference local="fk_file" foreign="id_file"/>
         </foreign-key>
-        <foreign-key name="spy_file_info_localized_attributes-fk_locale" foreignTable="spy_locale" phpName="Locale">
+        <foreign-key name="spy_file_localized_attributes-fk_locale" foreignTable="spy_locale" phpName="Locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
-        <unique name="spy_file_info_localized_attributes-unique-fk_file_info">
-            <unique-column name="fk_file_info"/>
+        <unique name="spy_file_localized_attributes-unique-fk_file">
+            <unique-column name="fk_file"/>
             <unique-column name="fk_locale"/>
         </unique>
-        <id-method-parameter value="spy_file_info_localized_attributes_pk_seq"/>
+        <id-method-parameter value="spy_file_localized_attributes_pk_seq"/>
     </table>
 </database>

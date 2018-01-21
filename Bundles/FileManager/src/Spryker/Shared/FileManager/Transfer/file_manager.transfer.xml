@@ -6,6 +6,7 @@
     <transfer name="FileManagerSaveRequest">
         <property name="file" type="File" />
         <property name="fileInfo" type="FileInfo" />
+        <property name="fileLocalizedAttributes" type="FileLocalizedAttributes[]" />
         <property name="content" type="string" />
     </transfer>
 
@@ -30,9 +31,9 @@
         <property name="fileInfoLocalizedAttributes" type="FileInfoLocalizedAttributes[]" />
     </transfer>
 
-    <transfer name="FileInfoLocalizedAttributes">
-        <property name="idFileInfoLocalizedAttributes" type="int" />
-        <property name="fkFileInfo" type="int" />
+    <transfer name="FileLocalizedAttributes">
+        <property name="idFileLocalizedAttributes" type="int" />
+        <property name="fkFile" type="int" />
         <property name="fkLocale" type="int" />
         <property name="alt" type="string" />
         <property name="title" type="string" />

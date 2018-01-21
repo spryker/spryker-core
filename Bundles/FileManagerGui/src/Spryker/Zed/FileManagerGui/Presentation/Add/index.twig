@@ -1,0 +1,65 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Add a file' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ backActionButton('/file-manager-gui', 'Back to File list' | trans) }}
+{% endblock %}
+
+{% block content %}
+    <div id="spy-file" class="glossary">
+        {% embed '@Gui/Partials/widget.twig' %}
+
+            {% block widget_content %}
+
+                {{ form_start(form) }}
+
+                {{ form_widget(form) }}
+
+                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+
+                {{ form_end(form) }}
+
+            {% endblock %}
+
+        {% endembed %}
+
+
+        {% for locale in availableLocales %}
+            {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': (loop.index == 1 ? false : true), 'hasError': false} %}
+                {% block content %}
+                    {% for fileAttributesForm in form.fileAttributes %}
+                        {% if fileAttributesForm.vars.data.localeName == locale.localeName %}
+                            {{ form_row(fileAttributesForm.title) }}
+
+                            {#<div class="form-group {% if fileAttributesForm.url.vars.errors|length > 0 %}has-error{% endif %}" >#}
+                                {#{{ form_label(cmsPageAttributesForm.url) }}#}
+                                {#{% if cmsPageAttributesForm.vars.data.urlPrefix %}#}
+                                    {#<div class="input-group m-b">#}
+                                {#<span class="input-group-addon">#}
+                                    {#{{ cmsPageAttributesForm.vars.data.urlPrefix }}#}
+                                {#</span>#}
+                                        {#{{ form_widget(cmsPageAttributesForm.url) }}#}
+                                    {#</div>#}
+                                {#{% else %}#}
+                                    {#{{ form_widget(cmsPageAttributesForm.url) }}#}
+                                {#{% endif %}#}
+                                {#{{ form_errors(cmsPageAttributesForm.url) }}#}
+                            {#</div>#}
+
+                            {{ form_row(fileAttributesForm.title) }}
+                            {{ form_row(fileAttributesForm.alt) }}
+                            {{ form_row(fileAttributesForm.localeName) }}
+                            {{ form_row(fileAttributesForm.idFileLocalizedAttributes) }}
+                        {% endif %}
+                    {% endfor %}
+
+                    {#{{ dump(form.fileAttributes) }}#}
+                {% endblock %}
+            {% endembed %}
+        {% endfor %}
+    </div>
+{% endblock %}

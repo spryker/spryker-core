@@ -37,11 +37,11 @@ class FileFinder implements FileFinderInterface
     }
 
     /**
-     * @param int $fileId
+     * @param int|null $fileId
      *
      * @return \Orm\Zed\Cms\Persistence\SpyFileInfo
      */
-    public function getLatestFileInfoByFkFile(int $fileId)
+    public function getLatestFileInfoByFkFile(int $fileId = null)
     {
         return $this->queryContainer->queryLatestFileInfoByFkFile($fileId)->findOne();
     }

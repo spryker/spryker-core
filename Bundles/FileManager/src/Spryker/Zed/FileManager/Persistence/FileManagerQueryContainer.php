@@ -84,4 +84,15 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
 
         return $query;
     }
+
+    /**
+     * @return \Orm\Zed\Cms\Persistence\SpyFileQuery
+     */
+    public function queryFiles()
+    {
+        $query = $this->getFactory()->createFileQuery();
+
+        return $query;
+    }
+
 }
