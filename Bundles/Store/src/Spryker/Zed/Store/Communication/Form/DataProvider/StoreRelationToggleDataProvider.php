@@ -28,7 +28,7 @@ class StoreRelationToggleDataProvider implements StoreRelationToggleDataProvider
     /**
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function getInitialData()
+    public function getDefaultFormData()
     {
         return (new StoreRelationTransfer())
             ->setIdStores($this->getAllIdStores());
