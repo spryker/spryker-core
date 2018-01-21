@@ -14,21 +14,24 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 class ValidityUpdater implements ValidityUpdaterInterface
 {
     use DatabaseTransactionHandlerTrait;
-    protected $queryContainer;
     /**
-     * @var ProductConcreteTouchInterface
+     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface
      */
     private $productTouchManager;
 
     /**
-     * @param ProductQueryContainerInterface $queryContainer
-     * @param ProductConcreteTouchInterface $productTouchManager
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface $productTouchManager
      */
     public function __construct(
         ProductQueryContainerInterface $queryContainer,
         ProductConcreteTouchInterface $productTouchManager
-    )
-    {
+    ) {
         $this->queryContainer = $queryContainer;
         $this->productTouchManager = $productTouchManager;
     }
@@ -117,5 +120,4 @@ class ValidityUpdater implements ValidityUpdaterInterface
                 ->touchProductConcreteInactive($productLabelEntity->getIdProduct());
         }
     }
-
 }
