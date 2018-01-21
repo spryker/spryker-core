@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\Product\Business\ProductFacadeInterface getFacade()
  */
-class ProductAbstractValidityConsole extends Console
+class ProductValidityConsole extends Console
 {
     const COMMAND_NAME = 'product:validity';
 
