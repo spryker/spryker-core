@@ -84,7 +84,7 @@
         <id-method-parameter value="spy_product_attribute_key_pk_seq"/>
     </table>
 
-    <table name="spy_product_validity">
+    <table name="spy_product_validity" phpName="SpyProductValidity">
         <column name="id_product_validity" required="true" type="INTEGER" primaryKey="true"/>
         <column name="fk_product" required="true" type="INTEGER" />
         <column name="valid_from" type="TIMESTAMP" required="false"/>
