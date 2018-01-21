@@ -234,6 +234,17 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Product\Business\Product\Validity\ValidityUpdaterInterface
+     */
+    public function createProductValidityUpdater()
+    {
+        return new ValidityUpdater(
+            $this->getQueryContainer(),
+            $this->createProductConcreteTouch()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface
      */
     public function createProductConcreteTouch()
@@ -259,14 +270,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function createProductConcreteNameGenerator()
     {
         return new ProductConcreteNameGenerator();
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Validity\ValidityUpdaterInterface
-     */
-    public function createProductValidityUpdater()
-    {
-        return new ValidityUpdater();
     }
 
     /**
