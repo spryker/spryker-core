@@ -90,11 +90,11 @@ abstract class AbstractPropelCollector extends AbstractDatabaseCollector
     {
         // PHPStan needs AbstractPropelCollector type match also to allow access to queryBuilder property
         if ($this instanceof StoreAwareCollectorInterface && $this instanceof AbstractPropelCollector) {
-            $this->queryBuilder->setStore($this->getCurrentStore());
+            $this->queryBuilder->setStoreTransfer($this->getCurrentStore());
 
             return;
         }
 
-        $this->queryBuilder->setStore(null);
+        $this->queryBuilder->setStoreTransfer(null);
     }
 }

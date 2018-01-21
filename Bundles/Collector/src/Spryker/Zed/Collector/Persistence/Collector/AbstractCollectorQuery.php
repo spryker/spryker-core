@@ -26,7 +26,7 @@ abstract class AbstractCollectorQuery
     /**
      * @var \Generated\Shared\Transfer\StoreTransfer|null
      */
-    protected $store;
+    protected $storeTransfer;
 
     /**
      * @return void
@@ -56,19 +56,19 @@ abstract class AbstractCollectorQuery
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer|null
      */
-    public function getStore()
+    public function getStoreTransfer()
     {
-        return $this->store;
+        return $this->storeTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $store
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return $this
      */
-    public function setStore(StoreTransfer $store = null)
+    public function setStoreTransfer(StoreTransfer $storeTransfer = null)
     {
-        $this->store = $store;
+        $this->storeTransfer = $storeTransfer;
 
         return $this;
     }

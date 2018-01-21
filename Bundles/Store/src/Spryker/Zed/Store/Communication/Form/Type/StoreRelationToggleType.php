@@ -46,7 +46,7 @@ class StoreRelationToggleType extends AbstractType
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
             function (FormEvent $event) {
-                $this->setIntialData($event);
+                $this->setInitialData($event);
             }
         );
     }
@@ -70,7 +70,7 @@ class StoreRelationToggleType extends AbstractType
      *
      * @return void
      */
-    protected function setIntialData(FormEvent $event)
+    protected function setInitialData(FormEvent $event)
     {
         $dataProvider = $this->getFactory()->createStoreRelationToggleDataProvider();
 
@@ -78,7 +78,7 @@ class StoreRelationToggleType extends AbstractType
             return;
         }
 
-        $event->setData($dataProvider->getInitialData());
+        $event->setData($dataProvider->getDefaultFormData());
     }
 
     /**
