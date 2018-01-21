@@ -12,6 +12,7 @@ use Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryManager;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryWriter;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockMapper;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockReader;
+use Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationMapper;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationReader;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationWriter;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateManager;
@@ -44,7 +45,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     public function createCmsBlockMapper()
     {
         return new CmsBlockMapper(
-            $this->createCmsBlockStoreRelationReader()
+            $this->createCmsBlockStoreRelationMapper()
         );
     }
 
@@ -128,7 +129,8 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     public function createCmsBlockStoreRelationReader()
     {
         return new CmsBlockStoreRelationReader(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->createCmsBlockStoreRelationMapper()
         );
     }
 
@@ -156,5 +158,13 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
         return new CmsBlockGlossaryKeyGenerator(
             $this->getProvidedDependency(CmsBlockDependencyProvider::FACADE_GLOSSARY)
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationMapperInterface
+     */
+    protected function createCmsBlockStoreRelationMapper()
+    {
+        return new CmsBlockStoreRelationMapper();
     }
 }

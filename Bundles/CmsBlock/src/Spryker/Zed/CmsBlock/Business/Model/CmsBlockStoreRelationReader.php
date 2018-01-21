@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\CmsBlock\Business\Model;
 
-use ArrayObject;
 use Generated\Shared\Transfer\StoreRelationTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
 
 class CmsBlockStoreRelationReader implements CmsBlockStoreRelationReaderInterface
@@ -20,11 +18,20 @@ class CmsBlockStoreRelationReader implements CmsBlockStoreRelationReaderInterfac
     protected $cmsBlockQueryContainer;
 
     /**
-     * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface $cmsBlockQueryContainer
+     * @var \Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationMapperInterface
      */
-    public function __construct(CmsBlockQueryContainerInterface $cmsBlockQueryContainer)
-    {
+    protected $cmsBlockStoreRelationMapper;
+
+    /**
+     * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface $cmsBlockQueryContainer
+     * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationMapperInterface $cmsBlockStoreRelationMapper
+     */
+    public function __construct(
+        CmsBlockQueryContainerInterface $cmsBlockQueryContainer,
+        CmsBlockStoreRelationMapperInterface $cmsBlockStoreRelationMapper
+    ) {
         $this->cmsBlockQueryContainer = $cmsBlockQueryContainer;
+        $this->cmsBlockStoreRelationMapper = $cmsBlockStoreRelationMapper;
     }
 
     /**
@@ -36,50 +43,13 @@ class CmsBlockStoreRelationReader implements CmsBlockStoreRelationReaderInterfac
     {
         $storeRelationTransfer->requireIdEntity();
 
-        $storeTransferCollection = $this->getRelatedStores($storeRelationTransfer->getIdEntity());
-        $idStores = $this->getIdStores($storeTransferCollection);
+        $cmsBlockEntity = $this->cmsBlockQueryContainer
+            ->queryCmsBlockWithStoreRelationByFkCmsBlock($storeRelationTransfer->getIdEntity())
+            ->find()
+            ->getFirst();
 
-        $storeRelationTransfer
-            ->setStores($storeTransferCollection)
-            ->setIdStores($idStores);
+        $storeRelationTransfer = $this->cmsBlockStoreRelationMapper->mapStoreRelationToTransfer($cmsBlockEntity);
 
         return $storeRelationTransfer;
-    }
-
-    /**
-     * @param int $idCmsBlock
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
-     */
-    protected function getRelatedStores($idCmsBlock)
-    {
-        $cmsBlockStoreCollection = $this->cmsBlockQueryContainer
-            ->queryCmsBlockStoreWithStoresByFkCmsBlock($idCmsBlock)
-            ->find();
-
-        $relatedStores = new ArrayObject();
-        foreach ($cmsBlockStoreCollection as $cmsBlockStoreEntity) {
-            $relatedStores->append(
-                (new StoreTransfer())
-                    ->fromArray(
-                        $cmsBlockStoreEntity->getSpyStore()->toArray(),
-                        true
-                    )
-            );
-        }
-
-        return $relatedStores;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $storeTransferCollection
-     *
-     * @return int[]
-     */
-    protected function getIdStores(ArrayObject $storeTransferCollection)
-    {
-        return array_map(function (StoreTransfer $storeTransfer) {
-            return $storeTransfer->getIdStore();
-        }, $storeTransferCollection->getArrayCopy());
     }
 }

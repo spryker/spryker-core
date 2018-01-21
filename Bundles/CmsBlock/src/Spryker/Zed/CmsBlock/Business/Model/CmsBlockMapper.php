@@ -11,28 +11,25 @@ use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer;
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer;
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping;
 
 class CmsBlockMapper implements CmsBlockMapperInterface
 {
     /**
-     * @var \Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationReaderInterface
+     * @var \Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationMapperInterface
      */
-    protected $cmsBlockStoreRelationReader;
+    protected $cmsBlockStoreRelationMapper;
 
     /**
-     * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationReaderInterface $cmsBlockStoreRelationReader
+     * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationMapperInterface $cmsBlockStoreRelationMapper
      */
-    public function __construct(CmsBlockStoreRelationReaderInterface $cmsBlockStoreRelationReader)
+    public function __construct(CmsBlockStoreRelationMapperInterface $cmsBlockStoreRelationMapper)
     {
-        $this->cmsBlockStoreRelationReader = $cmsBlockStoreRelationReader;
+        $this->cmsBlockStoreRelationMapper = $cmsBlockStoreRelationMapper;
     }
 
     /**
-     * TODO: CmsBlockMapper should not have a reader dependency
-     *
      * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $spyCmsBlock
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
@@ -42,27 +39,14 @@ class CmsBlockMapper implements CmsBlockMapperInterface
         $cmsBlockTransfer = new CmsBlockTransfer();
         $cmsBlockTransfer->fromArray($spyCmsBlock->toArray(), true);
         $cmsBlockTransfer->setTemplateName($spyCmsBlock->getCmsBlockTemplate()->getTemplateName());
+        $cmsBlockTransfer->setStoreRelation(
+            $this->cmsBlockStoreRelationMapper->mapStoreRelationToTransfer($spyCmsBlock)
+        );
 
         $cmsBlockGlossaryTransfer = $this->createGlossaryTransfer($spyCmsBlock);
         $cmsBlockTransfer->setGlossary($cmsBlockGlossaryTransfer);
-        $cmsBlockTransfer->setStoreRelation(
-            $this->getStoreRelation($spyCmsBlock->getIdCmsBlock())
-        );
 
         return $cmsBlockTransfer;
-    }
-
-    /**
-     * @param int $idCmsBlock
-     *
-     * @return \Generated\Shared\Transfer\StoreRelationTransfer
-     */
-    protected function getStoreRelation($idCmsBlock)
-    {
-        return $this->cmsBlockStoreRelationReader->getStoreRelation(
-            (new StoreRelationTransfer())
-                ->setIdEntity($idCmsBlock)
-        );
     }
 
     /**
