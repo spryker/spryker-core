@@ -74,7 +74,7 @@ class CmsBlockCollectorQuery extends AbstractPropelCollectorQuery
             ],
             [
                 SpyCmsBlockStoreTableMap::COL_FK_CMS_BLOCK,
-                $this->store->getIdStore(),
+                $this->storeTransfer->getIdStore(),
             ],
             Criteria::LEFT_JOIN
         );
