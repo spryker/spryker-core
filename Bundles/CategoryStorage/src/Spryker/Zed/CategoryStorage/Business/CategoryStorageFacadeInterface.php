@@ -10,6 +10,12 @@ namespace Spryker\Zed\CategoryStorage\Business;
 interface CategoryStorageFacadeInterface
 {
     /**
+     * Specification:
+     * - Queries all category nodes with categoryNodeIds
+     * - Creates a data structure tree
+     * - Stores data as json encoded to storage table
+     * - Sends a copy of data to queue based on module config
+     *
      * @api
      *
      * @param array $categoryNodeIds
@@ -19,6 +25,10 @@ interface CategoryStorageFacadeInterface
     public function publish(array $categoryNodeIds);
 
     /**
+     * Specification:
+     * - Finds and deletes category node storage entities with categoryNodeIds
+     * - Sends delete message to queue based on module config
+     *
      * @api
      *
      * @param array $categoryNodeIds
@@ -28,6 +38,12 @@ interface CategoryStorageFacadeInterface
     public function unpublish(array $categoryNodeIds);
 
     /**
+     * Specification:
+     * - Queries all categories
+     * - Creates a data structure category tree
+     * - Stores data as json encoded to storage table
+     * - Sends a copy of data to queue based on module config
+     *
      * @api
      *
      * @return void
@@ -35,6 +51,10 @@ interface CategoryStorageFacadeInterface
     public function publishCategoryTree();
 
     /**
+     * Specification:
+     * - Finds and deletes all category tree storage entities
+     * - Sends delete message to queue based on module config
+     *
      * @api
      *
      * @return void

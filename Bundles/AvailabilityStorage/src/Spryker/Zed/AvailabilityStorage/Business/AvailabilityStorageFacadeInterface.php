@@ -10,6 +10,12 @@ namespace Spryker\Zed\AvailabilityStorage\Business;
 interface AvailabilityStorageFacadeInterface
 {
     /**
+     * Specification:
+     * - Queries all availabilities with these ids
+     * - Creates a data structure tree
+     * - Stores data as json encoded to storage table
+     * - Sends a copy of data to queue based on module config
+     *
      * @api
      *
      * @param array $availabilityIds
@@ -19,6 +25,10 @@ interface AvailabilityStorageFacadeInterface
     public function publish(array $availabilityIds);
 
     /**
+     * Specification:
+     * - Finds and deletes availability storage entities based on these ids
+     * - Sends delete message to queue based on module config
+     *
      * @api
      *
      * @param array $availabilityIds

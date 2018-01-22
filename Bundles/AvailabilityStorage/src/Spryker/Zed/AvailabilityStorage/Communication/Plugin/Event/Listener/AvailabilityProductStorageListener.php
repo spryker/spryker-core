@@ -61,11 +61,10 @@ class AvailabilityProductStorageListener extends AbstractPlugin implements Event
 
     /**
      * @param array $idAbstractProducts
-     * @param bool $sendingToQueue
      *
      * @return void
      */
-    protected function unpublishByAbstractProductIds(array $idAbstractProducts, $sendingToQueue = true)
+    protected function unpublishByAbstractProductIds(array $idAbstractProducts)
     {
         $spyAvailabilityStorageEntities = $this->findAvailabilityStorageEntitiesByAbstractProductIds($idAbstractProducts);
         foreach ($spyAvailabilityStorageEntities as $spyAvailabilityStorageEntity) {

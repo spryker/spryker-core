@@ -87,6 +87,10 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
         $categoryTrees = $this->getCategoryTrees($categoryNodeIds);
         $spyCategoryNodePageSearchEntities = $this->findCategoryNodePageSearchEntitiesByCategoryNodeIds($categoryNodeIds);
 
+        if (!$categoryTrees) {
+            $this->deleteSearchData($spyCategoryNodePageSearchEntities);
+        }
+
         $this->storeData($categoryTrees, $spyCategoryNodePageSearchEntities);
     }
 
@@ -98,8 +102,21 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
     public function unpublish(array $categoryNodeIds)
     {
         $spyCategoryNodePageSearchEntities = $this->findCategoryNodePageSearchEntitiesByCategoryNodeIds($categoryNodeIds);
-        foreach ($spyCategoryNodePageSearchEntities as $spyCategoryNodePageSearchEntity) {
-            $spyCategoryNodePageSearchEntity->delete();
+
+        $this->deleteSearchData($spyCategoryNodePageSearchEntities);
+    }
+
+    /**
+     * @param array $spyCategoryNodePageSearchEntities
+     *
+     * @return void
+     */
+    protected function deleteSearchData(array $spyCategoryNodePageSearchEntities)
+    {
+        foreach ($spyCategoryNodePageSearchEntities as $spyCategoryNodePageSearchLocaleEntities) {
+            foreach ($spyCategoryNodePageSearchLocaleEntities as $spyCategoryNodePageSearchLocaleEntity) {
+                $spyCategoryNodePageSearchLocaleEntity->delete();
+            }
         }
     }
 
@@ -158,7 +175,7 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
      * @param array $categoryNodeData
      * @param string $localeName
      *
-     * @return mixed
+     * @return array
      */
     public function mapToSearchData(array $categoryNodeData, $localeName)
     {

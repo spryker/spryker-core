@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSearchFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $categoryNodeIds
@@ -27,6 +29,8 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $categoryNodeIds

@@ -63,6 +63,10 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
         $categoryNodes = $this->getCategoryNodes($categoryNodeIds);
         $spyCategoryNodeStorageEntities = $this->findCategoryNodeStorageEntitiesByCategoryNodeIds($categoryNodeIds);
 
+        if (!$categoryNodes) {
+            $this->deleteStorageData($spyCategoryNodeStorageEntities);
+        }
+
         $this->storeData($categoryNodes, $spyCategoryNodeStorageEntities);
     }
 
@@ -74,8 +78,21 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     public function unpublish(array $categoryNodeIds)
     {
         $spyCategoryNodeStorageEntities = $this->findCategoryNodeStorageEntitiesByCategoryNodeIds($categoryNodeIds);
-        foreach ($spyCategoryNodeStorageEntities as $spyCategoryNodeStorageEntity) {
-            $spyCategoryNodeStorageEntity->delete();
+
+        $this->deleteStorageData($spyCategoryNodeStorageEntities);
+    }
+
+    /**
+     * @param array $spyCategoryNodeStorageEntities
+     *
+     * @return void
+     */
+    protected function deleteStorageData(array $spyCategoryNodeStorageEntities)
+    {
+        foreach ($spyCategoryNodeStorageEntities as $spyCategoryNodeStorageLocaleEntities) {
+            foreach ($spyCategoryNodeStorageLocaleEntities as $spyCategoryNodeStorageLocaleEntity) {
+                $spyCategoryNodeStorageLocaleEntity->delete();
+            }
         }
     }
 

@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $categoryNodeIds
@@ -27,6 +29,8 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $categoryNodeIds
@@ -39,6 +43,8 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
@@ -49,6 +55,8 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
