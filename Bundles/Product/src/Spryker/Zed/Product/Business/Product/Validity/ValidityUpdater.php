@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\Product\Business\Product\Validity;
 
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
