@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Business\Search;
 
-interface CategoryNodePageSearchListenerInterface
+interface CategoryNodePageSearchInterface
 {
 
     /**

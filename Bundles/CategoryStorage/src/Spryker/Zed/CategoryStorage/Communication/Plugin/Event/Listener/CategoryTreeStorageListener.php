@@ -8,13 +8,17 @@
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Category\Dependency\CategoryEvents;
+use Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
+ * @method CategoryStorageFacadeInterface getFacade()
  */
-class CategoryTreeStorageListener extends AbstractCategoryTreeStorageListener
+class CategoryTreeStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -32,9 +36,11 @@ class CategoryTreeStorageListener extends AbstractCategoryTreeStorageListener
         if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_DELETE ||
             $eventName === CategoryEvents::CATEGORY_TREE_UNPUBLISH
         ) {
-            $this->unpublish();
+            $this->getFacade()->unpublishCategoryTree();
+
+            return;
         }
 
-        $this->publish();
+        $this->getFacade()->publishCategoryTree();
     }
 }

@@ -3,8 +3,8 @@
 namespace Spryker\Zed\CategoryPageSearch\Business;
 
 use Spryker\Zed\CategoryPageSearch\CategoryPageSearchDependencyProvider;
-use Spryker\Zed\CategoryPageSearch\Business\Search\CategoryNodePageSearchListener;
-use Spryker\Zed\CategoryPageSearch\Business\Search\CategoryNodePageSearchListenerInterface;
+use Spryker\Zed\CategoryPageSearch\Business\Search\CategoryNodePageSearch;
+use Spryker\Zed\CategoryPageSearch\Business\Search\CategoryNodePageSearchInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -15,11 +15,11 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
-     * @return CategoryNodePageSearchListenerInterface
+     * @return CategoryNodePageSearchInterface
      */
-    public function createCategoryNodeSearchListener()
+    public function createCategoryNodeSearch()
     {
-        return new CategoryNodePageSearchListener(
+        return new CategoryNodePageSearch(
             $this->getUtilSanitizeService(),
             $this->getUtilEncoding(),
             $this->getSearchFacade(),

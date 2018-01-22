@@ -19,11 +19,7 @@ use Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilSa
 use Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
-/**
- * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\CategoryPageSearch\Communication\CategoryPageSearchCommunicationFactory getFactory()
- */
-class CategoryNodePageSearchListener implements CategoryNodePageSearchListenerInterface
+class CategoryNodePageSearch implements CategoryNodePageSearchInterface
 {
     use DatabaseTransactionHandlerTrait;
 
