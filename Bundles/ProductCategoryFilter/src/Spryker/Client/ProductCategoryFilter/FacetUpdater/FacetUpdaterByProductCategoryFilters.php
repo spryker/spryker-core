@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductCategoryFilter\FacetUpdater;
 
+use Spryker\Shared\ProductCategoryFilter\ProductCategoryFilterConfig;
+
 class FacetUpdaterByProductCategoryFilters implements FacetUpdaterInterface
 {
     /**
@@ -23,7 +25,7 @@ class FacetUpdaterByProductCategoryFilters implements FacetUpdaterInterface
 
         $newFacets = [];
         foreach ($updateCriteria as $facetKey => $facetConfig) {
-            if ($facetConfig['isActive'] && isset($facets[$facetKey])) {
+            if ($facetConfig[ProductCategoryFilterConfig::IS_ACTIVE_FLAG] && isset($facets[$facetKey])) {
                 $newFacets[$facetKey] = $facets[$facetKey];
             }
         }

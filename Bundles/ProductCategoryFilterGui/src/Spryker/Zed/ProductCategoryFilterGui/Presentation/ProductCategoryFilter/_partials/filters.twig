@@ -5,7 +5,7 @@
         <div id="filters-container" class="dd">
             <ol class="dd-list">
                 {% if productCategoryFilters.filterDataArray is not empty %}
-                    {% for filterKey, filter in productCategoryFilters.filterDataArray if filter.isActive %}
+                    {% for filterKey, filter in productCategoryFilters.filterDataArray if filter[isProductCategoryFilterActiveFlag] %}
                         <li data-filter-label="{{ filter.label }}" data-filter-key="{{ filterKey }}" class="filter-item dd-item {{ filterKey in allFilters|keys ? '' : 'non-filter-attribute' }}">
                             <a class="btn btn-xs btn-outline btn-danger remove-product-category-filter" title="Remove Filter">
                                 <i class="fa fa-fw fa-trash"></i>
@@ -38,7 +38,7 @@
     {% block widget_content %}
         <div id="inactive-filters-container" class="dd">
             <ol class="dd-list">
-                {% for filterKey, filter in productCategoryFilters.filterDataArray if not filter.isActive %}
+                {% for filterKey, filter in productCategoryFilters.filterDataArray if not filter[isProductCategoryFilterActiveFlag] %}
                     <li data-filter-label="{{ filter.label }}" data-filter-key="{{ filterKey }}" class="filter-item dd-item {{ filterKey in allFilters|keys ? '' : 'non-filter-attribute' }}">
                         <a class="btn btn-xs btn-outline btn-info re-add-product-category-filter" title="Re-add Filter">
                             <i class="fa fa-fw fa-plus-circle"></i>
