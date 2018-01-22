@@ -22,9 +22,9 @@ class FacetUpdaterByProductCategoryFilters implements FacetUpdaterInterface
         }
 
         $newFacets = [];
-        foreach ($updateCriteria as $criteria => $show) {
-            if ($show && isset($facets[$criteria])) {
-                $newFacets[$criteria] = $facets[$criteria];
+        foreach ($updateCriteria as $facetKey => $facetConfig) {
+            if ($facetConfig['isActive'] && isset($facets[$facetKey])) {
+                $newFacets[$facetKey] = $facets[$facetKey];
             }
         }
 

@@ -33,17 +33,17 @@ $(document).ready(function() {
 
     activeFiltersContainer.on('click', '.remove-product-category-filter', function(e) {
         var filter = e.currentTarget.closest('.filter-item');
-        inactiveFilters.append(createInactiveFilter(filter.dataset['filter'], filter.classList.contains('non-filter-attribute')));
+        inactiveFilters.append(createInactiveFilter(filter.dataset['filterKey'], filter.dataset['filterLabel'], filter.classList.contains('non-filter-attribute')));
 
-        removeFilter(filter.dataset['filter'], true);
+        removeFilter(filter.dataset['filterKey'], true);
         activeFiltersContainer.trigger('change');
     });
 
     inactiveFiltersContainer.on('click', '.re-add-product-category-filter', function(e) {
         var filter = e.currentTarget.closest('.filter-item');
-        activeFilters.append(createActiveFilter(filter.dataset['filter'], filter.classList.contains('non-filter-attribute')));
+        activeFilters.append(createActiveFilter(filter.dataset['filterKey'], filter.dataset['filterLabel'], filter.classList.contains('non-filter-attribute')));
 
-        removeFilter(filter.dataset['filter'], false);
+        removeFilter(filter.dataset['filterKey'], false);
         activeFiltersContainer.trigger('change');
     });
 
@@ -61,15 +61,18 @@ function getAllFilters() {
 /**
  *
  * @param selector
- * @param value
+ * @param isActive
  * @returns {Array}
  */
-function getFilters(selector, value) {
+function getFilters(selector, isActive) {
     var filters = [];
     selector.find('li')
         .each(function(index, el) {
             var filter = {};
-            filter[el.dataset['filter']] = value;
+            filter[el.dataset['filterKey']] = {
+                isActive: isActive,
+                label: el.dataset['filterLabel']
+            };
             filters.push(filter);
         });
 
@@ -81,41 +84,38 @@ function addToActiveList(filterToAdd) {
     activeFiltersContainer.trigger('change');
 }
 
-function removeFromInactiveList(filter) {
-    removeFilter(filter, false);
+function removeFromInactiveList(filterKey) {
+    removeFilter(filterKey, false);
     activeFiltersContainer.trigger('change');
 }
 
-function createActiveFilter(filter, nonFilterAttribute) {
-    return '<li data-filter="' + filter + '" class="filter-item dd-item ' + ((nonFilterAttribute)? 'non-filter-attribute': '') + '">\n' +
-        '    <a class="btn btn-xs btn-outline btn-danger remove-product-category-filter" title="Remove Filter">\n' +
-        '        <i class="fa fa-fw fa-trash"></i>\n' +
-        '    </a>\n' +
-        '    <div class="dd-handle extra-padding">\n' +
-                  filter +
-        '    </div>\n' +
-        '</li>';
+function createActiveFilter(filterKey, filterLabel, nonFilterAttribute) {
+    return createFilter(filterKey, filterLabel, nonFilterAttribute, 'btn-danger remove-product-category-filter', 'Remove Filter', 'fa-trash');
 }
 
-function createInactiveFilter(filter, nonFilterAttribute) {
-    return '<li data-filter="' + filter + '" class="filter-item dd-item ' + ((nonFilterAttribute)? 'non-filter-attribute': '') + '">\n' +
-        '    <a class="btn btn-xs btn-outline btn-info re-add-product-category-filter" title="Re-add Filter">\n' +
-        '        <i class="fa fa-fw fa-plus-circle"></i>\n' +
+function createInactiveFilter(filterKey, filterLabel, nonFilterAttribute) {
+    return createFilter(filterKey, filterLabel, nonFilterAttribute, 'btn-info re-add-product-category-filter', 'Re-add Filter', 'fa-plus-circle');
+}
+
+function createFilter(filterKey, filterLabel, nonFilterAttribute, anchorClass, anchorTitle, iconClass) {
+    return '<li data-filter-key="' + filterKey + '"  data-filter-label="' + filterLabel + '" class="filter-item dd-item ' + ((nonFilterAttribute)? 'non-filter-attribute': '') + '">\n' +
+        '    <a class="btn btn-xs btn-outline ' + anchorClass + '" title="' + anchorTitle + '">\n' +
+        '        <i class="fa fa-fw ' + iconClass + '"></i>\n' +
         '    </a>\n' +
         '    <div class="dd-handle">\n' +
-                    filter +
+        filterLabel +
         '    </div>\n' +
         '</li>';
 }
 
-function removeFilter(filter, active) {
+function removeFilter(filterKey, active) {
     var selector = activeFilters;
     if (!active) {
         selector = inactiveFilters;
     }
 
     selector.find('li').each(function(index, el) {
-        if(filter === el.dataset['filter']) {
+        if(filterKey === el.dataset['filterKey']) {
             el.remove();
         }
     });
