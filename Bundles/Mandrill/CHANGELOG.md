@@ -1,3 +1,3 @@
 # Mandrill Changelog
 
-[Mandrill Changelog](https://github.com/spryker/Mandrill/releases)
+[Release Changelog](https://github.com/spryker/mandrill/releases)

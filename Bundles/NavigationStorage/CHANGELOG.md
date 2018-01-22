@@ -1,3 +1,3 @@
 # NavigationStorage Changelog
 
-[Release Changelog](https://github.com/spryker/NavigationStorage/releases)
+[Release Changelog](https://github.com/spryker/navigation-storage/releases)

@@ -1,3 +1,3 @@
 # UtilText Changelog
 
-[UtilText](https://github.com/spryker/UtilText/releases)
+[Release Changelog](https://github.com/spryker/util-text/releases)

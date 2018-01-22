@@ -1,3 +1,3 @@
 # UtilSanitize Changelog
 
-[UtilSanitize](https://github.com/spryker/UtilSanitize/releases)
+[Release Changelog](https://github.com/spryker/util-sanitize/releases)

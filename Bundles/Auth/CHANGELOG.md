@@ -1,3 +1,3 @@
 # Auth Changelog
 
-[Auth Changelog](https://github.com/spryker/Auth/releases)
+[Release Changelog](https://github.com/spryker/auth/releases)

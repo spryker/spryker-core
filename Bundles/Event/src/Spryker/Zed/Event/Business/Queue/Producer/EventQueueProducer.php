@@ -22,7 +22,7 @@ class EventQueueProducer implements EventQueueProducerInterface
     protected $queueClient;
 
     /**
-     * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
+     * @var \Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface
      */
     protected $utilEncodingService;
 

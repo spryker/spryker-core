@@ -1,3 +1,3 @@
 # ProductOption Changelog
 
-[ProductOption Changelog](https://github.com/spryker/ProductOption/releases)
+[Release Changelog](https://github.com/spryker/product-option/releases)

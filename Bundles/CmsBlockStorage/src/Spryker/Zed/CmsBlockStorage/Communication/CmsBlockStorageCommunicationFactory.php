@@ -27,7 +27,7 @@ class CmsBlockStorageCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilSanitizeServiceInterface
      */
-    public function getUtilSynchronization()
+    public function getUtilSanitize()
     {
         return $this->getProvidedDependency(CmsBlockStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
     }

@@ -1,3 +1,3 @@
 # Session Changelog
 
-[Session Changelog](https://github.com/spryker/Session/releases)
+[Release Changelog](https://github.com/spryker/session/releases)

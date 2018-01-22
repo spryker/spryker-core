@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\DummyPayment\Dependency\Injector;
 
+use Spryker\Shared\DummyPayment\DummyPaymentConfig;
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
@@ -15,7 +16,6 @@ use Spryker\Yves\DummyPayment\Plugin\DummyPaymentHandlerPlugin;
 use Spryker\Yves\DummyPayment\Plugin\DummyPaymentInvoiceSubFormPlugin;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
-use Spryker\Zed\DummyPayment\DummyPaymentConfig;
 
 class CheckoutDependencyInjector implements DependencyInjectorInterface
 {

@@ -8,9 +8,9 @@
 namespace Spryker\Yves\Payolution\Form;
 
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
+use Spryker\Shared\Payolution\PayolutionConfig;
 use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
-use Spryker\Zed\Payolution\PayolutionConfig;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;

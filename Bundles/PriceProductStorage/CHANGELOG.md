@@ -1,3 +1,3 @@
 # PriceProductStorage Changelog
 
-[Release Changelog](https://github.com/spryker/PriceProductStorage/releases)
+[Release Changelog](https://github.com/spryker/price-product-storage/releases)
