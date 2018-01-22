@@ -12,7 +12,6 @@ use Orm\Zed\Touch\Persistence\Map\SpyTouchStorageTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\Join;
 use Spryker\Zed\Collector\Business\Collector\AbstractPropelCollector;
 use Spryker\Zed\Collector\CollectorConfig;
 
@@ -58,19 +57,10 @@ abstract class AbstractStoragePropelCollector extends AbstractPropelCollector
      */
     protected function joinStorageTableWithLocale(SpyTouchQuery $touchQuery, LocaleTransfer $localeTransfer)
     {
-        $storageJoin = new Join(
-            SpyTouchTableMap::COL_ID_TOUCH,
-            SpyTouchStorageTableMap::COL_FK_TOUCH,
+        $touchQuery->addJoin(
+            [SpyTouchTableMap::COL_ID_TOUCH, SpyTouchStorageTableMap::COL_FK_LOCALE, SpyTouchStorageTableMap::COL_FK_STORE],
+            [SpyTouchStorageTableMap::COL_FK_TOUCH, (int)$localeTransfer->requireIdLocale()->getIdLocale(), $this->getCurrentIdStore()],
             Criteria::LEFT_JOIN
-        );
-        $touchQuery->addJoinObject($storageJoin, 'storageJoin');
-        $touchQuery->addJoinCondition(
-            'storageJoin',
-            sprintf(
-                '%s = %s',
-                SpyTouchStorageTableMap::COL_FK_LOCALE,
-                (int)$localeTransfer->requireIdLocale()->getIdLocale()
-            )
         );
     }
 
@@ -82,8 +72,8 @@ abstract class AbstractStoragePropelCollector extends AbstractPropelCollector
     protected function joinStorageTable(SpyTouchQuery $touchQuery)
     {
         $touchQuery->addJoin(
-            SpyTouchTableMap::COL_ID_TOUCH,
-            SpyTouchStorageTableMap::COL_FK_TOUCH,
+            [SpyTouchTableMap::COL_ID_TOUCH, SpyTouchStorageTableMap::COL_FK_STORE],
+            [SpyTouchStorageTableMap::COL_FK_TOUCH, $this->getCurrentIdStore()],
             Criteria::LEFT_JOIN
         );
     }

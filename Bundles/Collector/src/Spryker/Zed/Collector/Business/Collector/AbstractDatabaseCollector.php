@@ -16,6 +16,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\CollectorConfig;
+use Spryker\Zed\Store\Business\StoreFacade;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -138,10 +139,24 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
             return 0;
         }
 
-        $touchUpdater->bulkUpdate($touchUpdaterSet, $locale->getIdLocale(), $this->touchQueryContainer->getConnection());
+        $touchUpdater->bulkUpdate(
+            $touchUpdaterSet,
+            $locale->getIdLocale(),
+            $this->getCurrentIdStore(),
+            $this->touchQueryContainer->getConnection()
+        );
         $storeWriter->write($batch);
 
         return $batchSize;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getCurrentIdStore()
+    {
+        // Deprecated: inject StoreFacade through constructor
+        return (new StoreFacade())->getCurrentStore()->getIdStore();
     }
 
     /**
