@@ -709,11 +709,11 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Finds abstract products that are about to become valid/invalid for the current date
-     * - Abstract products that are about to become valid and are not published will cause touching
-     * - Abstract products that are about to become valid and are not published will be marked as 'active' in the database
-     * - Abstract products that are about to become invalid and are published will cause touching
-     * - Abstract products that are about to become invalid and are published will be marked as 'in active' in the database
+     * - Finds products that are about to become valid/invalid for the current date
+     * - Products that are about to become active and are not published will cause touching
+     * - Products that are about to become active and are not published will be marked as 'active' in the database
+     * - Products that are about to become inactive and are published will cause touching
+     * - Products that are about to become inactive and are published will be marked as 'in active' in the database
      *
      * @api
      *
