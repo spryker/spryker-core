@@ -90,11 +90,12 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param string $itemType
+     * @param int $idStore
      * @param int|null $idLocale
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
-    public function queryTouchDeleteStorageAndSearch($itemType, $idLocale = null);
+    public function queryTouchDeleteStorageAndSearch($itemType, $idStore, $idLocale = null);
 
     /**
      * @api
