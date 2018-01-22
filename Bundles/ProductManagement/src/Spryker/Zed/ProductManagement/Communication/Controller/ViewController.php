@@ -249,7 +249,7 @@ class ViewController extends AddController
     {
         $url = $baseUrl;
 
-        if (strpos($url, '/') === 0) {
+        if (preg_match("#^\/(?!/).*$#", $url) === 1) {
             $url = $imageUrlPrefix . $url;
         }
 

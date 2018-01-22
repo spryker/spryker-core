@@ -18,7 +18,7 @@ interface CategoryEvents
     const CATEGORY_AFTER_DELETE = 'Category.after.delete';
 
     /**
-     * Specification
+     * Specification:
      * - This events will be used for spy_category entity creation
      *
      * @api
@@ -26,7 +26,7 @@ interface CategoryEvents
     const ENTITY_SPY_CATEGORY_CREATE = 'Entity.spy_category.create';
 
     /**
-     * Specification
+     * Specification:
      * - This events will be used for spy_category entity changes
      *
      * @api
@@ -34,7 +34,7 @@ interface CategoryEvents
     const ENTITY_SPY_CATEGORY_UPDATE = 'Entity.spy_category.update';
 
     /**
-     * Specification
+     * Specification:
      * - This events will be used for spy_category entity deletion
      *
      * @api
@@ -42,7 +42,7 @@ interface CategoryEvents
     const ENTITY_SPY_CATEGORY_DELETE = 'Entity.spy_category.delete';
 
     /**
-     * Specification
+     * Specification:
      * - This events will be used for spy_category_attribute entity creation
      *
      * @api
@@ -50,7 +50,7 @@ interface CategoryEvents
     const ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE = 'Entity.spy_category_attribute.create';
 
     /**
-     * Specification
+     * Specification:
      * - This events will be used for spy_category_attribute entity changes
      *
      * @api
@@ -58,7 +58,7 @@ interface CategoryEvents
     const ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE = 'Entity.spy_category_attribute.update';
 
     /**
-     * Specification
+     * Specification:
      * - This events will be used for spy_category_attribute entity deletion
      *
      * @api
@@ -66,7 +66,7 @@ interface CategoryEvents
     const ENTITY_SPY_CATEGORY_ATTRIBUTE_DELETE = 'Entity.spy_category_attribute.delete';
 
     /**
-     * Specification
+     * Specification:
      * - This events will be used for spy_category_closure_table entity creation
      *
      * @api
@@ -74,7 +74,7 @@ interface CategoryEvents
     const ENTITY_SPY_CATEGORY_CLOSURE_TABLE_CREATE = 'Entity.spy_category_closure_table.create';
 
     /**
-     * Specification
+     * Specification:
      * - This events will be used for spy_category_closure_table entity changes
      *
      * @api
@@ -82,7 +82,7 @@ interface CategoryEvents
     const ENTITY_SPY_CATEGORY_CLOSURE_TABLE_UPDATE = 'Entity.spy_category_closure_table.update';
 
     /**
-     * Specification
+     * Specification:
      * - This events will be used for spy_category_closure_table entity deletion
      *
      * @api
@@ -90,7 +90,7 @@ interface CategoryEvents
     const ENTITY_SPY_CATEGORY_CLOSURE_TABLE_DELETE = 'Entity.spy_category_closure_table.delete';
 
     /**
-     * Specification
+     * Specification:
      * - This events will be used for spy_category_node entity creation
      *
      * @api
@@ -98,7 +98,7 @@ interface CategoryEvents
     const ENTITY_SPY_CATEGORY_NODE_CREATE = 'Entity.spy_category_node.create';
 
     /**
-     * Specification
+     * Specification:
      * - This events will be used for spy_category_node entity changes
      *
      * @api
@@ -106,7 +106,7 @@ interface CategoryEvents
     const ENTITY_SPY_CATEGORY_NODE_UPDATE = 'Entity.spy_category_node.update';
 
     /**
-     * Specification
+     * Specification:
      * - This events will be used for spy_category_node entity deletion
      *
      * @api
@@ -114,7 +114,7 @@ interface CategoryEvents
     const ENTITY_SPY_CATEGORY_NODE_DELETE = 'Entity.spy_category_node.delete';
 
     /**
-     * Specification
+     * Specification:
      * - This events will be used for spy_category_template entity creation
      *
      * @api
@@ -122,7 +122,7 @@ interface CategoryEvents
     const ENTITY_SPY_CATEGORY_TEMPLATE_CREATE = 'Entity.spy_category_template.create';
 
     /**
-     * Specification
+     * Specification:
      * - This events will be used for spy_category_template entity changes
      *
      * @api
@@ -130,10 +130,42 @@ interface CategoryEvents
     const ENTITY_SPY_CATEGORY_TEMPLATE_UPDATE = 'Entity.spy_category_template.update';
 
     /**
-     * Specification
+     * Specification:
      * - This events will be used for spy_category_template entity deletion
      *
      * @api
      */
     const ENTITY_SPY_CATEGORY_TEMPLATE_DELETE = 'Entity.spy_category_template.delete';
+
+    /**
+     * Specification:
+     * - This events will be used for CategoryNode publish
+     *
+     * @api
+     */
+    const CATEGORY_NODE_PUBLISH = 'Category.node.publish';
+
+    /**
+     * Specification:
+     * - This events will be used for CategoryNode publish
+     *
+     * @api
+     */
+    const CATEGORY_NODE_UNPUBLISH = 'Category.node.unpublish';
+
+    /**
+     * Specification:
+     * - This events will be used for CategoryTree publish
+     *
+     * @api
+     */
+    const CATEGORY_TREE_PUBLISH = 'Category.tree.publish';
+
+    /**
+     * Specification:
+     * - This events will be used for CategoryTree publish
+     *
+     * @api
+     */
+    const CATEGORY_TREE_UNPUBLISH = 'Category.tree.unpublish';
 }

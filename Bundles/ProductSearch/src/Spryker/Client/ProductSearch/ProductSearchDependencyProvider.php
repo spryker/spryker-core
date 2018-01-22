@@ -38,7 +38,7 @@ class ProductSearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function provideStore(Container $container)
     {
-        $container[self::STORE] = function () {
+        $container[static::STORE] = function () {
             return Store::getInstance();
         };
 

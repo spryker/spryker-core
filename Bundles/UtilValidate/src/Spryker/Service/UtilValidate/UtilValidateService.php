@@ -21,7 +21,7 @@ class UtilValidateService extends AbstractService implements UtilValidateService
      *
      * @param string $email
      *
-     * @return string
+     * @return bool
      */
     public function isEmailFormatValid($email)
     {

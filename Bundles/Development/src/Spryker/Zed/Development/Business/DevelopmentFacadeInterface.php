@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Development\Business;
 
 use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 interface DevelopmentFacadeInterface
 {
@@ -17,7 +19,7 @@ interface DevelopmentFacadeInterface
      * @param string|null $module
      * @param array $options
      *
-     * @return void
+     * @return int Exit code
      */
     public function checkCodeStyle($module = null, array $options = []);
 
@@ -35,10 +37,11 @@ interface DevelopmentFacadeInterface
      * @api
      *
      * @param string|null $module
+     * @param array $options
      *
-     * @return void
+     * @return int Exit code
      */
-    public function runPhpMd($module);
+    public function runPhpMd($module, array $options = []);
 
     /**
      * @api
@@ -269,4 +272,17 @@ interface DevelopmentFacadeInterface
      * @return array
      */
     public function getArchitectureRules();
+
+    /**
+     * Specification:
+     * - Runs PHPStan static code analyzing tool.
+     *
+     * @api
+     *
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return int
+     */
+    public function runPhpstan(InputInterface $input, OutputInterface $output);
 }

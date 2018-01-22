@@ -1,3 +1,3 @@
 # CollectorSearchConnector Changelog
 
-[Release Changelog](https://github.com/spryker/CollectorSearchConnector/releases)
+[Release Changelog](https://github.com/spryker/collector-search-connector/releases)

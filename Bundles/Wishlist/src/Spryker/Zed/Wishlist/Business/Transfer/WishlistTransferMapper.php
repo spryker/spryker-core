@@ -16,7 +16,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class WishlistTransferMapper implements WishlistTransferMapperInterface
 {
     /**
-     * @var \Spryker\Zed\Wishlist\Dependency\Plugin\ItemExpanderPluginInterface
+     * @var \Spryker\Zed\Wishlist\Dependency\Plugin\ItemExpanderPluginInterface[]
      */
     protected $itemExpanderPlugins;
 
@@ -75,7 +75,7 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist[]|\Propel\Runtime\Collection\ObjectCollection $wishlistItemEntityCollection
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItem[]|\Propel\Runtime\Collection\ObjectCollection $wishlistItemEntityCollection
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer[]
      */

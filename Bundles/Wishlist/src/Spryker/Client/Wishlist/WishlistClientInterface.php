@@ -10,7 +10,6 @@ namespace Spryker\Client\Wishlist;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
-use Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
@@ -103,17 +102,6 @@ interface WishlistClientInterface
     /**
      * @api
      *
-     * @deprecated Use moveCollectionToCart() instead
-     *
-     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer
-     */
-    public function moveToCart(WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer);
-
-    /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer
@@ -137,6 +125,17 @@ interface WishlistClientInterface
      * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
      */
     public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer);
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
+     */
+    public function getWishlistOverviewWithoutProductDetails(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer);
 
     /**
      * @api

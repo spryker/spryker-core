@@ -1,3 +1,3 @@
 # FlysystemLocalFileSystem Changelog
 
-[FlysystemLocalFileSystem Changelog](https://github.com/spryker/FlysystemLocalFileSystem/releases)
+[Release Changelog](https://github.com/spryker/flysystem-local-file-system/releases)

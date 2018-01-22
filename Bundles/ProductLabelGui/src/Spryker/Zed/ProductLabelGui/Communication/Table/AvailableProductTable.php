@@ -20,7 +20,7 @@ class AvailableProductTable extends AbstractRelatedProductRelationTable
     protected $defaultUrl = 'available-product-table';
 
     /**
-     * @return string
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected function getQuery()
     {

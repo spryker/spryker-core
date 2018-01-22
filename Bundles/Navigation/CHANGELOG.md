@@ -1,3 +1,3 @@
 # Navigation Changelog
 
-[Release Changelog](https://github.com/spryker/Navigation/releases)
+[Release Changelog](https://github.com/spryker/navigation/releases)

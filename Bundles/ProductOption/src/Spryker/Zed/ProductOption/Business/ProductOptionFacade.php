@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductOption\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -21,14 +22,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeInterface
 {
     /**
-     * Specification:
-     *  - Persist new product option group, update existing group if idOptionGroup is set
-     *  - Persist option values if provided
-     *  - Adds abstract products if provided in productsToBeAssigned array of primary keys
-     *  - Removes abstract products if provided in productsToBeDeAssigned array of primary keys
-     *  - Removes product option values if provided in productOptionValuesToBeRemoved array of primary keys
-     *  - Persists value and group name translations, add to glossary
-     *  - Returns id of option group
+     * {@inheritdoc}
      *
      * @api
      *
@@ -44,9 +38,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
-     * Specification:
-     *  - Persist new product option value, updates existing value if idOptionValue is set
-     *  - Returns id of option value
+     * {@inheritdoc}
      *
      * @api
      *
@@ -62,9 +54,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
-     * Specification:
-     *  - Attaches abstract product to existing product group
-     *  - Returns true if product successfully added
+     * {@inheritdoc}
      *
      * @api
      *
@@ -81,8 +71,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
-     * Specification:
-     *  - Reads product option from persistence
+     * {@inheritdoc}
      *
      * @api
      *
@@ -98,10 +87,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
-     *
-     * Specification:
-     *  - Gets product option group from persistence
-     *  - Gets all related product option values
+     * {@inheritdoc}
      *
      * @api
      *
@@ -153,9 +139,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
-     * Specification:
-     *  - Calculate tax rate for current quote
-     *  - Set tax rate percentage
+     * {@inheritdoc}
      *
      * @api
      *
@@ -171,8 +155,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
-     * Specification:
-     *  - Toggle option active/inactive, option wont be diplayed in Yves when disabled. Collectors have to run first.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -205,6 +188,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -219,6 +204,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -227,6 +214,24 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      */
     public function hydrateProductOptionGroupIds(OrderTransfer $orderTransfer)
     {
-        return $this->getFactory()->createProductOptionGroupIdHydrator()->hydrateProductOptionGroupIds($orderTransfer);
+        return $this->getFactory()
+            ->createProductOptionGroupIdHydrator()
+            ->hydrateProductOptionGroupIds($orderTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
+     */
+    public function getProductOptionValueStorePrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer)
+    {
+        return $this->getFactory()
+            ->createProductOptionValuePriceReader()
+            ->getStorePrices($storePricesRequestTransfer);
     }
 }

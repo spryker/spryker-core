@@ -21,6 +21,7 @@ class CurrencyFactory extends AbstractFactory
     {
         return new CurrencyBuilder(
             $this->getInternationalization(),
+            $this->getStore()->getDefaultCurrencyCode(),
             $this->createCurrencyPersistence()->getCurrentCurrencyIsoCode()
         );
     }
@@ -38,7 +39,12 @@ class CurrencyFactory extends AbstractFactory
      */
     public function createCurrencyPostChangePluginExecutor()
     {
-        return new CurrencyPostChangePluginExecutor($this->getCurrencyPostChangePlugins());
+        return new CurrencyPostChangePluginExecutor(
+            $this->getCurrencyPostChangePlugins(),
+            $this->createCurrencyPersistence(),
+            $this->getZedRequestClient(),
+            $this->getMessengerClient()
+        );
     }
 
     /**
@@ -70,6 +76,22 @@ class CurrencyFactory extends AbstractFactory
      */
     protected function getCurrencyPostChangePlugins()
     {
-        return $this->getProvidedDependency(CurrencyDependencyProvider::CURRENCY_POST_CHANGE_PLUGINS);
+        return $this->getProvidedDependency(CurrencyDependencyProvider::PLUGINS_CURRENCY_POST_CHANGE);
+    }
+
+    /**
+     * @return \Spryker\Yves\Currency\Dependency\Client\CurrencyToZedRequestClientInterface
+     */
+    protected function getZedRequestClient()
+    {
+        return $this->getProvidedDependency(CurrencyDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Yves\Currency\Dependency\Client\CurrencyToMessengerClientInterface
+     */
+    protected function getMessengerClient()
+    {
+        return $this->getProvidedDependency(CurrencyDependencyProvider::CLIENT_MESSENGER);
     }
 }

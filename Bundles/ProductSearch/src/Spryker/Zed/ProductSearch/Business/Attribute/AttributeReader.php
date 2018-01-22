@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductSearch\Business\Attribute;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use PDO;
 use Spryker\Zed\ProductSearch\Business\Transfer\ProductAttributeTransferMapperInterface;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleInterface;
@@ -84,18 +85,25 @@ class AttributeReader implements AttributeReaderInterface
     public function suggestUnusedKeys($searchText = '', $limit = 10)
     {
         $query = $this->productSearchQueryContainer
-            ->queryUnusedProductAttributeKeys()
-            ->limit($limit)
-            ->setFormatter(new PropelArraySetFormatter());
+            ->queryUnusedProductAttributeKeys();
 
-        $searchText = trim($searchText);
-        if ($searchText !== '') {
-            $term = '%' . mb_strtoupper($searchText) . '%';
+        return $this->applySearchParamsToQuery($query, $searchText, $limit)
+            ->find();
+    }
 
-            $query->where('UPPER(' . SpyProductAttributeKeyTableMap::COL_KEY . ') LIKE ?', $term, PDO::PARAM_STR);
-        }
+    /**
+     * @param string $searchText
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function suggestKeys($searchText = '', $limit = 10)
+    {
+        $query = $this->productSearchQueryContainer
+            ->queryAllProductAttributeKeys();
 
-        return $query->find();
+        return $this->applySearchParamsToQuery($query, $searchText, $limit)
+                ->find();
     }
 
     /**
@@ -115,5 +123,27 @@ class AttributeReader implements AttributeReaderInterface
         }
 
         return $productSearchAttributes;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery $query
+     * @param string $searchText
+     * @param int $limit
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    protected function applySearchParamsToQuery(SpyProductAttributeKeyQuery $query, $searchText, $limit)
+    {
+        $query->limit($limit)
+            ->setFormatter(new PropelArraySetFormatter());
+
+        $searchText = trim($searchText);
+        if ($searchText !== '') {
+            $term = '%' . mb_strtoupper($searchText) . '%';
+
+            $query->where('UPPER(' . SpyProductAttributeKeyTableMap::COL_KEY . ') LIKE ?', $term, PDO::PARAM_STR);
+        }
+
+        return $query;
     }
 }

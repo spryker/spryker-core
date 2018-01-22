@@ -1,3 +1,3 @@
 # Ratepay Changelog
 
-[Ratepay Changelog](https://github.com/spryker/Ratepay/releases)
+[Release Changelog](https://github.com/spryker/ratepay/releases)

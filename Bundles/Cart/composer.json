@@ -11,12 +11,16 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/price": "*",
+    "spryker/customer": "*",
+    "spryker/price-product": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/customer": "If you want to use Customer plugins, minimum required version: 7.4.0."
   },
   "autoload": {
     "psr-4": {

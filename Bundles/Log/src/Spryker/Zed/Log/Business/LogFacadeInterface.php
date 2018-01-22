@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Log\Business;
 
+/**
+ * @method \Spryker\Zed\Log\Business\LogBusinessFactory getFactory()
+ */
 interface LogFacadeInterface
 {
     /**
@@ -38,4 +41,16 @@ interface LogFacadeInterface
      * @return void
      */
     public function stopListener();
+
+    /**
+     * Specification:
+     * - Sanitize specified data of an array.
+     *
+     * @api
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    public function sanitize(array $data);
 }

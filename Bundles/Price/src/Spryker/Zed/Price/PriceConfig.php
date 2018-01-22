@@ -7,17 +7,42 @@
 
 namespace Spryker\Zed\Price;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Price\PriceConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\Price\PriceConfig getSharedConfig()
+ */
 class PriceConfig extends AbstractBundleConfig
 {
     /**
+     * @return string[]
+     */
+    public function getPriceModes()
+    {
+        return $this->getSharedConfig()->getPriceModes();
+    }
+
+    /**
      * @return string
      */
-    public function getPriceTypeDefaultName()
+    public function getDefaultPriceMode()
     {
-        return Config::get(PriceConstants::DEFAULT_PRICE_TYPE);
+        return $this->getSharedConfig()->getDefaultPriceMode();
+    }
+
+    /**
+     * @return string
+     */
+    public function getNetPriceModeIdentifier()
+    {
+        return $this->getSharedConfig()->getNetPriceModeIdentifier();
+    }
+
+    /**
+     * @return string
+     */
+    public function getGrossPriceModeIdentifier()
+    {
+        return $this->getSharedConfig()->getGrossPriceModeIdentifier();
     }
 }

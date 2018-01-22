@@ -1,3 +1,3 @@
 # ApiQueryBuilder Changelog
 
-[Release Changelog](https://github.com/spryker/ApiQueryBuilder/releases)
+[Release Changelog](https://github.com/spryker/api-query-builder/releases)

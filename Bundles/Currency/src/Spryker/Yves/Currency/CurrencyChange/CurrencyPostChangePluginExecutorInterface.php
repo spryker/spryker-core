@@ -10,15 +10,10 @@ namespace Spryker\Yves\Currency\CurrencyChange;
 interface CurrencyPostChangePluginExecutorInterface
 {
     /**
-     *
-     * Specification:
-     * - Plugin executed when currency is changed
-     *
-     * @api
-     *
      * @param string $currencyIsoCode
+     * @param string $previousCurrencyIsoCode
      *
-     * @return void
+     * @return bool
      */
-    public function execute($currencyIsoCode);
+    public function execute($currencyIsoCode, $previousCurrencyIsoCode);
 }

@@ -71,15 +71,13 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
     }
 
     /**
-     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelation[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return mixed|mixed[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductRelation\Persistence\SpyProductRelation[]
      */
     protected function findActiveProductRelations()
     {
-        $productRelations = $this->productRelationQueryContainer
+        return $this->productRelationQueryContainer
             ->queryActiveAndScheduledRelations()
             ->find();
-
-        return $productRelations;
     }
 
     /**

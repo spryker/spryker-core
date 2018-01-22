@@ -202,7 +202,7 @@ class CmsBlockForm extends AbstractType
             'widget' => 'single_text',
             'required' => false,
             'attr' => [
-                'class' => 'datepicker',
+                'class' => 'datepicker safe-datetime',
             ],
             'constraints' => [
                 $this->createValidFromRangeConstraint(),
@@ -226,7 +226,7 @@ class CmsBlockForm extends AbstractType
             'widget' => 'single_text',
             'required' => false,
             'attr' => [
-                'class' => 'datepicker',
+                'class' => 'datepicker safe-datetime',
             ],
             'constraints' => [
                 $this->createValidToFieldRangeConstraint(),

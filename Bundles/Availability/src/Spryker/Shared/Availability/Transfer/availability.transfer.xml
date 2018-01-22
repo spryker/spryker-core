@@ -23,5 +23,14 @@
         <property name="isNeverOutOfStock" type="bool" />
     </transfer>
 
+    <transfer name="ProductConcreteAvailability">
+        <property name="availability" type="int" />
+        <property name="isNeverOutOfStock" type="bool" />
+    </transfer>
+
+    <transfer name="ProductConcreteAvailabilityRequest">
+        <property name="sku" type="string" />
+    </transfer>
+
 </transfers>
 

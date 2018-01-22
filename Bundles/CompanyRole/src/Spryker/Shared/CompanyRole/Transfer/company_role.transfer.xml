@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="CompanyRoleCollection">
+        <property name="roles" type="CompanyRole[]" singular="role" />
+    </transfer>
+
+    <transfer name="CompanyRole">
+        <property name="idCompanyRole" type="int" />
+        <property name="name" type="string" />
+        <property name="isDefault" type="bool" />
+        <property name="permissionCollection" type="PermissionCollection" />
+    </transfer>
+
+    <transfer name="PermissionCollection">
+        <property name="permissions" type="Permission[]" singular="permission" />
+    </transfer>
+
+    <transfer name="Permission">
+        <property name="key" type="string"/>
+        <property name="config" type="array" />
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int" />
+        <property name="companyRoleCollection" type="CompanyRoleCollection" />
+    </transfer>
+
+    <!-- Infrastructure (under discussion) -->
+    <transfer name="Response">
+        <property name="code" type="int" />
+        <property name="errors" type="ResponseError[]" singular="error" />
+    </transfer>
+
+    <transfer name="ResponseError">
+        <property name="message" type="string" />
+    </transfer>
+    <!-- /Infrastructure -->
+</transfers>

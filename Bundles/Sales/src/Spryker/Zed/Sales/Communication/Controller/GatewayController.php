@@ -37,6 +37,20 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getPaginatedOrdersAction(OrderListTransfer $orderListTransfer)
+    {
+        return $this->getFacade()
+            ->getPaginatedCustomerOrders(
+                $orderListTransfer,
+                $orderListTransfer->getIdCustomer()
+            );
+    }
+
+    /**
      * @deprecated Security issue with missing customer id constraint, use getOrderDetailsAction() instead.
      *
      * @param int $idSalesOrder

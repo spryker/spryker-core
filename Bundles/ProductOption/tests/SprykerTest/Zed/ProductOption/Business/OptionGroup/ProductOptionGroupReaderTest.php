@@ -9,14 +9,11 @@ namespace SprykerTest\Zed\ProductOption\Business\OptionGroup;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
-use Generated\Shared\Transfer\TranslationTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReader;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
-use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use SprykerTest\Zed\ProductOption\Business\MockProvider;
 
 /**
@@ -34,83 +31,75 @@ class ProductOptionGroupReaderTest extends MockProvider
     /**
      * @return void
      */
-    public function testGetProductOptionGroupByIdWhenOptionDoesNotExistShouldThrowException()
+    public function testGetProductOptionGroupByIdThrowsExceptionWhenOptionDoesNotExist()
     {
+        // Assign
+        $productGroupReader = new ProductOptionGroupReader(
+            $this->createProductOptionValuePriceHydratorMock(),
+            $this->getQueryContainerMock(),
+            $this->createGlossaryFacadeMock(),
+            $this->createLocaleFacadeMock()
+        );
+
+        // Assert
         $this->expectException(ProductOptionGroupNotFoundException::class);
 
-        $productGroupReaderMock = $this->createProductOptionGroupReader();
-        $productGroupReaderMock->method('queryProductGroupById')->willReturn(null);
-
-        $this->createProductOptionGroupReader()->getProductOptionGroupById(1);
+        // Act
+        $productGroupReader->getProductOptionGroupById(1);
     }
 
     /**
+     * @uses LocaleFacadeInterface::getLocaleCollection()
+     *
      * @return void
      */
-    public function testGetProductOptionGroupByIdShouldReturnHydrateGroupTransfer()
+    public function testGetProductOptionGroupByIdReturnsProductOptionGroupTransfer()
     {
+        // Assign
         $localeFacadeMock = $this->createLocaleFacadeMock();
-
         $localeFacadeMock
-            ->expects($this->once())
-            ->method('getLocaleCollection')->willReturn([new LocaleTransfer()]);
+            ->expects($this->any())
+            ->method('getLocaleCollection')
+            ->willReturn([ new LocaleTransfer()]);
 
-        $glossaryFacadeMock = $this->createGlossaryFacadeMock();
+        $productOptionGroupEntity = new SpyProductOptionGroup();
 
-        $glossaryFacadeMock
-            ->expects($this->exactly(2))
-            ->method('getTranslation')->willReturn(new TranslationTransfer());
-
-        $glossaryFacadeMock
-            ->expects($this->exactly(2))
-            ->method('hasTranslation')->willReturn(true);
-
-        $productGroupReaderMock = $this->createProductOptionGroupReader(
-            null,
-            $glossaryFacadeMock,
+        $productGroupReader = new ProductOptionGroupReader(
+            $this->createProductOptionValuePriceHydratorMock(),
+            $this->getQueryContainerMock($productOptionGroupEntity),
+            $this->createGlossaryFacadeMock(),
             $localeFacadeMock
         );
 
-        $productOptionGroupEntity = new SpyProductOptionGroup();
-        $productOptionGroupEntity->setName('groupName');
-        $productOptionGroupEntity->addSpyProductOptionValue(new SpyProductOptionValue());
+        // Act
+        $productOptionGroupTransfer = $productGroupReader->getProductOptionGroupById(1);
 
-        $productGroupReaderMock->method('queryProductGroupById')
-            ->willReturn($productOptionGroupEntity);
-
-        $productOptionGroupTransfer = $productGroupReaderMock->getProductOptionGroupById(1);
-
+        // Assert
         $this->assertInstanceOf(ProductOptionGroupTransfer::class, $productOptionGroupTransfer);
     }
 
     /**
-     * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface|null $productOptionContainerMock
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface|null $glossaryMock
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface|null $localeFacadeMock
+     * @uses ProductOptionQueryContainerInterface::queryProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById()
+     * @uses SpyProductOptionGroupQuery::find()
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReader
+     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup|null $productOptionGroupEntity
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
-    protected function createProductOptionGroupReader(
-        ProductOptionQueryContainerInterface $productOptionContainerMock = null,
-        ProductOptionToGlossaryInterface $glossaryMock = null,
-        ProductOptionToLocaleInterface $localeFacadeMock = null
-    ) {
+    protected function getQueryContainerMock(SpyProductOptionGroup $productOptionGroupEntity = null)
+    {
+        $groupCollection = $this->getMockBuilder(ObjectCollection::class)->getMock();
+        $groupCollection->expects($this->any())->method('getFirst')->willReturn($productOptionGroupEntity);
 
-        if (!$glossaryMock) {
-            $glossaryMock = $this->createGlossaryFacadeMock();
-        }
+        $groupQuery = $this->getMockBuilder(SpyProductOptionGroupQuery::class)->getMock();
+        $groupQuery->expects($this->any())->method('find')->willReturn($groupCollection);
 
-        if (!$productOptionContainerMock) {
-            $productOptionContainerMock = $this->createProductOptionQueryContainerMock();
-        }
+        $queryContainerMock = $this->createProductOptionQueryContainerMock();
+        $queryContainerMock
+            ->expects($this->any())
+            ->method('queryProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById')
+            ->willReturn($groupQuery);
 
-        if (!$localeFacadeMock) {
-            $localeFacadeMock = $this->createLocaleFacadeMock();
-        }
-
-        return $this->getMockBuilder(ProductOptionGroupReader::class)
-            ->setConstructorArgs([$productOptionContainerMock, $glossaryMock, $localeFacadeMock])
-            ->setMethods(['queryProductGroupById'])
-            ->getMock();
+        return $queryContainerMock;
     }
 }

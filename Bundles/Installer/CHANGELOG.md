@@ -1,3 +1,3 @@
 # Installer Changelog
 
-[Installer Changelog](https://github.com/spryker/Installer/releases)
+[Release Changelog](https://github.com/spryker/installer/releases)
