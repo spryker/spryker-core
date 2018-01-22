@@ -36,6 +36,8 @@ class ConcreteGeneralForm extends GeneralForm
         parent::buildForm($builder, $options);
 
         $this->addIsSearchableField($builder, $options);
+        $this->addValidFromField($builder, $options);
+        $this->addValidUntilField($builder, $options);
     }
 
     /**
