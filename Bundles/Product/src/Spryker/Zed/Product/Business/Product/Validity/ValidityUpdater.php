@@ -92,7 +92,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
      *
      * @return void
      */
-    protected function setPublished(ObjectCollection $productValidityEntities)
+    protected function setPublished($productValidityEntities)
     {
         foreach ($productValidityEntities as $productLabelEntity) {
             $productLabelEntity
@@ -109,7 +109,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
      *
      * @return void
      */
-    protected function setUnpublished(ObjectCollection $productValidityEntities)
+    protected function setUnpublished($productValidityEntities)
     {
         foreach ($productValidityEntities as $productLabelEntity) {
             $productLabelEntity
