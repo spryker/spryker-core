@@ -49,7 +49,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
         }
 
         $this->handleDatabaseTransaction(function () use ($productsBecomingActive, $productsBecomingInactive) {
-            $this->executeTransaction($productsBecomingActive, $productsBecomingInactive);
+            $this->executeProductPublishTransaction($productsBecomingActive, $productsBecomingInactive);
         });
     }
 
@@ -81,7 +81,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
      *
      * @return void
      */
-    protected function executeTransaction($productsBecomingActive, $productsBecomingInactive)
+    protected function executeProductPublishTransaction($productsBecomingActive, $productsBecomingInactive)
     {
         $this->setPublished($productsBecomingActive);
         $this->setUnpublished($productsBecomingInactive);
