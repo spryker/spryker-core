@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\Product\Persistence\SpyProductValidity;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 
@@ -82,6 +83,13 @@ class ProductTransferMapper implements ProductTransferMapperInterface
         if ($productEntity->getSpyProductAbstract()) {
             $productTransfer->setAbstractSku($productEntity->getSpyProductAbstract()->getSku());
             $productTransfer->setFkProductAbstract($productEntity->getSpyProductAbstract()->getIdProductAbstract());
+        }
+
+        if ($productEntity->getSpyProductValidities()) {
+            /** @var \Orm\Zed\Product\Persistence\SpyProductValidity $validityEntity */
+            $validityEntity = $productEntity->getSpyProductValidities()->getFirst();
+            $productTransfer->setValidFrom($validityEntity->getValidFrom());
+            $productTransfer->setValidUntil($validityEntity->getValidTo());
         }
 
         return $productTransfer;
