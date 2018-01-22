@@ -66,7 +66,7 @@ class ConcreteGeneralForm extends GeneralForm
     protected function addValidFromField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_VALID_FROM, TimeType::class, [
+            ->add(static::FIELD_VALID_FROM, TimeType::class, [
                 'label' => 'Valid From',
                 'required' => false,
                 'input'  => 'datetime',
@@ -85,7 +85,7 @@ class ConcreteGeneralForm extends GeneralForm
     protected function addValidUntilField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_VALID_UNTIL, TimeType::class, [
+            ->add(static::FIELD_VALID_UNTIL, TimeType::class, [
                 'label' => 'Valid Until',
                 'required' => false,
                 'input'  => 'datetime',
