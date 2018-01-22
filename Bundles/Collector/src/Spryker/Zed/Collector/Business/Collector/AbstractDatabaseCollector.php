@@ -16,12 +16,17 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Collector\CollectorConfig;
-use Spryker\Zed\Store\Business\StoreFacade;
+use Spryker\Zed\Kernel\Locator;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractDatabaseCollector extends AbstractCollector implements DatabaseCollectorInterface
 {
+    /**
+     * @var \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected $currentStoreBuffer;
+
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -142,7 +147,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
         $touchUpdater->bulkUpdate(
             $touchUpdaterSet,
             $locale->getIdLocale(),
-            $this->getCurrentIdStore(),
+            $this->getCurrentStore()->getIdStore(),
             $this->touchQueryContainer->getConnection()
         );
         $storeWriter->write($batch);
@@ -151,12 +156,16 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
     }
 
     /**
-     * @return int
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    protected function getCurrentIdStore()
+    protected function getCurrentStore()
     {
-        // Deprecated: inject StoreFacade through constructor
-        return (new StoreFacade())->getCurrentStore()->getIdStore();
+        if ($this->currentStoreBuffer === null) {
+            // Deprecated: inject StoreFacade through constructor
+            $this->currentStoreBuffer = Locator::getInstance()->store()->facade()->getCurrentStore();
+        }
+
+        return $this->currentStoreBuffer;
     }
 
     /**

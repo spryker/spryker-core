@@ -23,9 +23,9 @@ abstract class AbstractCollectorQuery
     protected $locale;
 
     /**
-     * @var int|null
+     * @var \Generated\Shared\Transfer\StoreTransfer
      */
-    protected $idStore;
+    protected $storeTransfer;
 
     /**
      * @return void
@@ -53,21 +53,21 @@ abstract class AbstractCollectorQuery
     }
 
     /**
-     * @return int|null
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getIdStore()
+    public function getStoreTransfer()
     {
-        return $this->idStore;
+        return $this->storeTransfer;
     }
 
     /**
-     * @param int|null $idStore
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return $this
      */
-    public function setIdStore($idStore = null)
+    public function setStoreTransfer($storeTransfer)
     {
-        $this->idStore = $idStore;
+        $this->storeTransfer = $storeTransfer;
 
         return $this;
     }

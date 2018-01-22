@@ -104,7 +104,7 @@ abstract class AbstractPdoCollector extends AbstractDatabaseCollector
             ->setParameterCollection($touchParameters);
 
         $this->queryBuilder
-            ->setIdStore($this->getCurrentIdStore())
+            ->setStoreTransfer($this->getCurrentStore())
             ->setCriteriaBuilder($this->criteriaBuilder)
             ->setLocale($locale)
             ->prepare();

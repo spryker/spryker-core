@@ -58,8 +58,16 @@ abstract class AbstractStoragePropelCollector extends AbstractPropelCollector
     protected function joinStorageTableWithLocale(SpyTouchQuery $touchQuery, LocaleTransfer $localeTransfer)
     {
         $touchQuery->addJoin(
-            [SpyTouchTableMap::COL_ID_TOUCH, SpyTouchStorageTableMap::COL_FK_LOCALE, SpyTouchStorageTableMap::COL_FK_STORE],
-            [SpyTouchStorageTableMap::COL_FK_TOUCH, (int)$localeTransfer->requireIdLocale()->getIdLocale(), $this->getCurrentIdStore()],
+            [
+                SpyTouchTableMap::COL_ID_TOUCH,
+                SpyTouchStorageTableMap::COL_FK_LOCALE,
+                SpyTouchStorageTableMap::COL_FK_STORE,
+            ],
+            [
+                SpyTouchStorageTableMap::COL_FK_TOUCH,
+                $localeTransfer->requireIdLocale()->getIdLocale(),
+                $this->getCurrentStore()->requireIdStore()->getIdStore(),
+            ],
             Criteria::LEFT_JOIN
         );
     }
@@ -73,7 +81,7 @@ abstract class AbstractStoragePropelCollector extends AbstractPropelCollector
     {
         $touchQuery->addJoin(
             [SpyTouchTableMap::COL_ID_TOUCH, SpyTouchStorageTableMap::COL_FK_STORE],
-            [SpyTouchStorageTableMap::COL_FK_TOUCH, $this->getCurrentIdStore()],
+            [SpyTouchStorageTableMap::COL_FK_TOUCH, $this->getCurrentStore()->requireIdStore()->getIdStore()],
             Criteria::LEFT_JOIN
         );
     }
