@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CategoryStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -10,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFacadeInterface
 {
     /**
+     * @api
+     *
      * @param array $categoryNodeIds
      *
      * @return void
@@ -20,6 +27,8 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
     }
 
     /**
+     * @api
+     *
      * @param array $categoryNodeIds
      *
      * @return void
@@ -30,6 +39,8 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function publishCategoryTree()
@@ -38,6 +49,8 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
     }
 
     /**
+     * @api
+     *
      * @return void
      */
     public function unpublishCategoryTree()

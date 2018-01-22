@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Category\Dependency\CategoryEvents;
-use Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacadeInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -16,7 +15,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 /**
  * @method \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryPageSearch\Communication\CategoryPageSearchCommunicationFactory getFactory()
- * @method CategoryPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacadeInterface getFacade()
  */
 class CategoryNodeCategoryTemplateSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

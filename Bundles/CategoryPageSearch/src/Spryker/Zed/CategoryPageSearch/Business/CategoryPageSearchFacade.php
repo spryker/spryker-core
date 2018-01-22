@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CategoryPageSearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -9,8 +14,9 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSearchFacadeInterface
 {
-
     /**
+     * @api
+     *
      * @param array $categoryNodeIds
      *
      * @return void
@@ -21,6 +27,8 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
     }
 
     /**
+     * @api
+     *
      * @param array $categoryNodeIds
      *
      * @return void
@@ -29,5 +37,4 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
     {
         $this->getFactory()->createCategoryNodeSearch()->unpublish($categoryNodeIds);
     }
-
 }

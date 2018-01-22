@@ -24,27 +24,27 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var CategoryPageSearchToUtilSanitizeServiceInterface
+     * @var \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilSanitizeServiceInterface
      */
     protected $utilSanitize;
 
     /**
-     * @var CategoryPageSearchToUtilEncodingInterface
+     * @var \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface
      */
     protected $utilEncoding;
 
     /**
-     * @var CategoryPageSearchToSearchInterface
+     * @var \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface
      */
     protected $searchFacade;
 
     /**
-     * @var CategoryPageSearchQueryContainerInterface
+     * @var \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
@@ -54,11 +54,11 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
     protected $isSendingToQueue = true;
 
     /**
-     * @param CategoryPageSearchToUtilSanitizeServiceInterface $utilSanitize
-     * @param CategoryPageSearchToUtilEncodingInterface $utilEncoding
-     * @param CategoryPageSearchToSearchInterface $searchFacade
-     * @param CategoryPageSearchQueryContainerInterface $queryContainer
-     * @param Store $store
+     * @param \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilSanitizeServiceInterface $utilSanitize
+     * @param \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface $utilEncoding
+     * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface $searchFacade
+     * @param \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface $queryContainer
+     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
     public function __construct(
@@ -68,8 +68,7 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
         CategoryPageSearchQueryContainerInterface $queryContainer,
         Store $store,
         $isSendingToQueue
-    )
-    {
+    ) {
         $this->utilSanitize = $utilSanitize;
         $this->utilEncoding = $utilEncoding;
         $this->searchFacade = $searchFacade;

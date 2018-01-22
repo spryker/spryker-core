@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Zed\CategoryPageSearch;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,8 +17,8 @@ namespace SprykerTest\Zed\CategoryPageSearch;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class CategoryPageSearchCommunicationTester extends \Codeception\Actor
+ */
+class CategoryPageSearchCommunicationTester extends Actor
 {
     use _generated\CategoryPageSearchCommunicationTesterActions;
 

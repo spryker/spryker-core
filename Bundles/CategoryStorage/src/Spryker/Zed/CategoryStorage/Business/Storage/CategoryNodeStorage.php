@@ -10,9 +10,9 @@ namespace Spryker\Zed\CategoryStorage\Business\Storage;
 use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryNodeStorage;
-use Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface;
+use Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CategoryNodeStorage implements CategoryNodeStorageInterface
@@ -20,17 +20,17 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var CategoryStorageQueryContainerInterface
+     * @var \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var CategoryStorageToUtilSanitizeServiceInterface
+     * @var \Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface
      */
     protected $utilSanitize;
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
@@ -40,9 +40,9 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     protected $isSendingToQueue = true;
 
     /**
-     * @param CategoryStorageQueryContainerInterface $queryContainer
-     * @param CategoryStorageToUtilSanitizeServiceInterface $utilSanitize
-     * @param Store $store
+     * @param \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface $utilSanitize
+     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
     public function __construct(CategoryStorageQueryContainerInterface $queryContainer, CategoryStorageToUtilSanitizeServiceInterface $utilSanitize, Store $store, $isSendingToQueue)

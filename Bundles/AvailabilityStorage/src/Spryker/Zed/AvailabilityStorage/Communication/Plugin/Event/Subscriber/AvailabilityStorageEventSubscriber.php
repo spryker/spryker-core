@@ -18,6 +18,7 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
 
 /**
  * @method \Spryker\Zed\AvailabilityStorage\Communication\AvailabilityStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacadeInterface getFacade()
  */
 class AvailabilityStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -102,7 +103,7 @@ class AvailabilityStorageEventSubscriber extends AbstractPlugin implements Event
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */

@@ -21,17 +21,17 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var CategoryStorageQueryContainerInterface
+     * @var \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var CategoryStorageToUtilSanitizeServiceInterface
+     * @var \Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface
      */
     protected $utilSanitize;
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
@@ -41,9 +41,9 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
     protected $isSendingToQueue = true;
 
     /**
-     * @param CategoryStorageQueryContainerInterface $queryContainer
-     * @param CategoryStorageToUtilSanitizeServiceInterface $utilSanitize
-     * @param Store $store
+     * @param \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface $utilSanitize
+     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
     public function __construct(CategoryStorageQueryContainerInterface $queryContainer, CategoryStorageToUtilSanitizeServiceInterface $utilSanitize, Store $store, $isSendingToQueue)

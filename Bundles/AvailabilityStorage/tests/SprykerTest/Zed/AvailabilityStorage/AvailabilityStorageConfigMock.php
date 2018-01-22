@@ -17,5 +17,4 @@ class AvailabilityStorageConfigMock extends AvailabilityStorageConfig
     {
         return false;
     }
-
 }

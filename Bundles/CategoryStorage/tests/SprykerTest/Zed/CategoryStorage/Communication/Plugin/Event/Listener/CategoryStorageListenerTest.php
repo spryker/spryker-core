@@ -29,13 +29,15 @@ use SprykerTest\Zed\CategoryStorage\CategoryStorageConfigMock;
  * @group SprykerTest
  * @group Zed
  * @group CategoryStorage
- * @group Business
+ * @group Communication
+ * @group Plugin
+ * @group Event
+ * @group Listener
  * @group CategoryStorageListenerTest
  * Add your own group annotations below this line
  */
 class CategoryStorageListenerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -67,7 +69,7 @@ class CategoryStorageListenerTest extends Unit
         $categoryNodeStorageListener->setFacade($this->getCategoryStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1)
+            (new EventEntityTransfer())->setId(1),
         ];
         $categoryNodeStorageListener->handleBulk($eventTransfers, CategoryEvents::CATEGORY_NODE_PUBLISH);
 
@@ -87,7 +89,7 @@ class CategoryStorageListenerTest extends Unit
         $categoryNodeStorageListener->setFacade($this->getCategoryStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1)
+            (new EventEntityTransfer())->setId(1),
         ];
         $categoryNodeStorageListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_CREATE);
 
@@ -107,7 +109,7 @@ class CategoryStorageListenerTest extends Unit
         $categoryNodeStorageListener->setFacade($this->getCategoryStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1)
+            (new EventEntityTransfer())->setId(1),
         ];
         $categoryNodeStorageListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_CREATE);
 
@@ -129,8 +131,8 @@ class CategoryStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyCategoryAttributeTableMap::COL_FK_CATEGORY => 1
-            ])
+                SpyCategoryAttributeTableMap::COL_FK_CATEGORY => 1,
+            ]),
         ];
         $categoryNodeStorageListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE);
 
@@ -155,7 +157,7 @@ class CategoryStorageListenerTest extends Unit
     }
 
     /**
-     * @return CategoryStorageFacade
+     * @return \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacade
      */
     protected function getCategoryStorageFacade()
     {

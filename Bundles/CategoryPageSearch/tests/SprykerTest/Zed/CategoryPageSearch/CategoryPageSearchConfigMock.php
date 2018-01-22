@@ -17,5 +17,4 @@ class CategoryPageSearchConfigMock extends CategoryPageSearchConfig
     {
         return false;
     }
-
 }

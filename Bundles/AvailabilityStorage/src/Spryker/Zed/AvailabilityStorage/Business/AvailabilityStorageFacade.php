@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\AvailabilityStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -9,8 +14,9 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class AvailabilityStorageFacade extends AbstractFacade implements AvailabilityStorageFacadeInterface
 {
-
     /**
+     * @api
+     *
      * @param array $availabilityIds
      *
      * @return void
@@ -21,6 +27,8 @@ class AvailabilityStorageFacade extends AbstractFacade implements AvailabilitySt
     }
 
     /**
+     * @api
+     *
      * @param array $availabilityIds
      *
      * @return void
@@ -29,5 +37,4 @@ class AvailabilityStorageFacade extends AbstractFacade implements AvailabilitySt
     {
         $this->getFactory()->createAvailabilityStorage()->unpublish($availabilityIds);
     }
-
 }

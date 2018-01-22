@@ -28,13 +28,15 @@ use SprykerTest\Zed\CategoryPageSearch\CategoryPageSearchConfigMock;
  * @group SprykerTest
  * @group Zed
  * @group CategoryPageSearch
- * @group Business
- * @group CategoryPageSearchListenerTest
+ * @group Communication
+ * @group Plugin
+ * @group Event
+ * @group Listener
+ * @group CategoryNodePageSearchListenerTest
  * Add your own group annotations below this line
  */
 class CategoryNodePageSearchListenerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -66,7 +68,7 @@ class CategoryNodePageSearchListenerTest extends Unit
         $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1)
+            (new EventEntityTransfer())->setId(1),
         ];
         $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::CATEGORY_NODE_PUBLISH);
 
@@ -89,7 +91,7 @@ class CategoryNodePageSearchListenerTest extends Unit
         $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1)
+            (new EventEntityTransfer())->setId(1),
         ];
         $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_TEMPLATE_CREATE);
 
@@ -112,7 +114,7 @@ class CategoryNodePageSearchListenerTest extends Unit
         $categoryPageSearchListener->setFacade($this->getCategoryPageSearchFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1)
+            (new EventEntityTransfer())->setId(1),
         ];
         $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_CREATE);
 
@@ -136,8 +138,8 @@ class CategoryNodePageSearchListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyCategoryAttributeTableMap::COL_FK_CATEGORY => 1
-            ])
+                SpyCategoryAttributeTableMap::COL_FK_CATEGORY => 1,
+            ]),
         ];
         $categoryPageSearchListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE);
 
@@ -148,7 +150,7 @@ class CategoryNodePageSearchListenerTest extends Unit
     }
 
     /**
-     * @return CategoryPageSearchFacade
+     * @return \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacade
      */
     protected function getCategoryPageSearchFacade()
     {

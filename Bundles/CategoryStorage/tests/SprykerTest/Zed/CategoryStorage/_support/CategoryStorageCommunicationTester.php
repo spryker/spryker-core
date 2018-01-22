@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Zed\CategoryStorage;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,8 +17,8 @@ namespace SprykerTest\Zed\CategoryStorage;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class CategoryStorageCommunicationTester extends \Codeception\Actor
+ */
+class CategoryStorageCommunicationTester extends Actor
 {
     use _generated\CategoryStorageCommunicationTesterActions;
 

@@ -17,5 +17,4 @@ class CategoryStorageConfigMock extends CategoryStorageConfig
     {
         return false;
     }
-
 }

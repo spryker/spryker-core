@@ -26,13 +26,15 @@ use SprykerTest\Zed\AvailabilityStorage\AvailabilityStorageConfigMock;
  * @group SprykerTest
  * @group Zed
  * @group AvailabilityStorage
- * @group Business
+ * @group Communication
+ * @group Plugin
+ * @group Event
+ * @group Listener
  * @group AvailabilityStorageListenerTest
  * Add your own group annotations below this line
  */
 class AvailabilityStorageListenerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -64,7 +66,7 @@ class AvailabilityStorageListenerTest extends Unit
         $availabilityStorageListener->setFacade($this->getAvailabilityStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1)
+            (new EventEntityTransfer())->setId(1),
         ];
         $availabilityStorageListener->handleBulk($eventTransfers, AvailabilityEvents::AVAILABILITY_ABSTRACT_PUBLISH);
 
@@ -86,8 +88,8 @@ class AvailabilityStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT => 1
-            ])
+                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT => 1,
+            ]),
         ];
         $availabilityStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_UPDATE);
 
@@ -96,7 +98,7 @@ class AvailabilityStorageListenerTest extends Unit
     }
 
     /**
-     * @return AvailabilityStorageFacade
+     * @return \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacade
      */
     protected function getAvailabilityStorageFacade()
     {

@@ -19,6 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  */
 class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -72,7 +73,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -82,7 +83,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -92,7 +93,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -102,7 +103,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -112,7 +113,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -122,7 +123,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -132,7 +133,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -142,7 +143,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -152,7 +153,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -162,7 +163,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -172,7 +173,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -182,7 +183,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -192,7 +193,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -202,7 +203,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -212,7 +213,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -222,7 +223,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -232,7 +233,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -242,7 +243,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -252,7 +253,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -262,7 +263,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -272,7 +273,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -282,7 +283,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -292,7 +293,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -302,7 +303,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -312,7 +313,7 @@ class CategoryStorageEventSubscriber extends AbstractPlugin implements EventSubs
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */

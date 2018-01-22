@@ -6,20 +6,18 @@
 
 namespace SprykerTest\Zed\CategoryPageSearch\Business;
 
-
 use Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchBusinessFactory;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface;
 
 class CategoryPageSearchBusinessFactoryMock extends CategoryPageSearchBusinessFactory
 {
-
     /**
-     * @var CategoryPageSearchToSearchInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $searchFacadeMock;
 
     /**
-     * @param CategoryPageSearchToSearchInterface|\PHPUnit_Framework_MockObject_MockObject $searchFacadeMock
+     * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface|\PHPUnit_Framework_MockObject_MockObject $searchFacadeMock
      */
     public function __construct(CategoryPageSearchToSearchInterface $searchFacadeMock)
     {
@@ -33,5 +31,4 @@ class CategoryPageSearchBusinessFactoryMock extends CategoryPageSearchBusinessFa
     {
         return $this->searchFacadeMock;
     }
-
 }

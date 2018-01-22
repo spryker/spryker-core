@@ -18,6 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CategoryPageSearch\Communication\CategoryPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacadeInterface getFacade()
  */
 class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -49,7 +50,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -59,7 +60,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -69,7 +70,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -79,7 +80,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -89,7 +90,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -99,7 +100,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -109,7 +110,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -119,7 +120,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -129,7 +130,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -139,7 +140,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -149,7 +150,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -159,7 +160,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -169,7 +170,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -179,7 +180,7 @@ class CategoryPageSearchEventSubscriber extends AbstractPlugin implements EventS
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */

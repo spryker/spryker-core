@@ -1,23 +1,25 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CategoryStorage\Business;
 
 use Spryker\Zed\CategoryStorage\Business\Storage\CategoryNodeStorage;
-use Spryker\Zed\CategoryStorage\Business\Storage\CategoryNodeStorageInterface;
 use Spryker\Zed\CategoryStorage\Business\Storage\CategoryTreeStorage;
-use Spryker\Zed\CategoryStorage\Business\Storage\CategoryTreeStorageInterface;
 use Spryker\Zed\CategoryStorage\CategoryStorageDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
- * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  */
 class CategoryStorageBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
-     * @return CategoryNodeStorageInterface
+     * @return \Spryker\Zed\CategoryStorage\Business\Storage\CategoryNodeStorageInterface
      */
     public function createCategoryNodeStorage()
     {
@@ -30,7 +32,7 @@ class CategoryStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CategoryTreeStorageInterface
+     * @return \Spryker\Zed\CategoryStorage\Business\Storage\CategoryTreeStorageInterface
      */
     public function createCategoryTreeStorage()
     {

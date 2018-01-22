@@ -18,12 +18,12 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     const FK_AVAILABILITY_ABSTRACT = 'fkAvailabilityAbstract';
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
     /**
-     * @var AvailabilityStorageQueryContainerInterface
+     * @var \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -33,8 +33,8 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     protected $isSendingToQueue = true;
 
     /**
-     * @param Store $store
-     * @param AvailabilityStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface $queryContainer
      * @param bool $isSendingToQueue
      */
     public function __construct(Store $store, AvailabilityStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
@@ -120,7 +120,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     /**
      * @param array $availabilityAbstractIds
      *
-     * @return SpyAvailabilityStorage[]
+     * @return \Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorage[]
      */
     protected function findAvailabilityStorageEntitiesByAvailabilityAbstractIds(array $availabilityAbstractIds)
     {
