@@ -37,6 +37,7 @@ use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouch;
 use Spryker\Zed\Product\Business\Product\Url\ProductAbstractAfterUpdateUrlObserver;
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlGenerator;
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlManager;
+use Spryker\Zed\Product\Business\Product\Validity\ValidityHydrator;
 use Spryker\Zed\Product\Business\Product\Validity\ValidityUpdater;
 use Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGenerator;
 use Spryker\Zed\Product\Business\Product\Variant\VariantGenerator;
@@ -198,7 +199,10 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductTransferMapper()
     {
-        return new ProductTransferMapper($this->createAttributeEncoder());
+        return new ProductTransferMapper(
+            $this->createAttributeEncoder(),
+            $this->createValidityHydrotor()
+        );
     }
 
     /**
@@ -531,6 +535,14 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function createProductConcreteReadObserverPluginManager()
     {
         return new ProductConcreteReadObserverPluginManager($this->getProductConcreteReadPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Validity\ValidityHydratorInterface
+     */
+    protected function createValidityHydrotor()
+    {
+        return new ValidityHydrator();
     }
 
     /**

@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Product\Persistence\SpyProductValidity;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
+use Spryker\Zed\Product\Business\Product\Validity\ValidityHydratorInterface;
 
 class ProductTransferMapper implements ProductTransferMapperInterface
 {
@@ -23,11 +23,20 @@ class ProductTransferMapper implements ProductTransferMapperInterface
     protected $attributeEncoder;
 
     /**
-     * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
+     * @var \Spryker\Zed\Product\Business\Product\Validity\ValidityHydratorInterface
      */
-    public function __construct(AttributeEncoderInterface $attributeEncoder)
-    {
+    private $validityHydrator;
+
+    /**
+     * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
+     * @param \Spryker\Zed\Product\Business\Product\Validity\ValidityHydratorInterface $validityHydrator
+     */
+    public function __construct(
+        AttributeEncoderInterface $attributeEncoder,
+        ValidityHydratorInterface $validityHydrator
+    ) {
         $this->attributeEncoder = $attributeEncoder;
+        $this->validityHydrator = $validityHydrator;
     }
 
     /**
@@ -85,12 +94,7 @@ class ProductTransferMapper implements ProductTransferMapperInterface
             $productTransfer->setFkProductAbstract($productEntity->getSpyProductAbstract()->getIdProductAbstract());
         }
 
-        if ($productEntity->getSpyProductValidities()) {
-            /** @var \Orm\Zed\Product\Persistence\SpyProductValidity $validityEntity */
-            $validityEntity = $productEntity->getSpyProductValidities()->getFirst();
-            $productTransfer->setValidFrom($validityEntity->getValidFrom());
-            $productTransfer->setValidUntil($validityEntity->getValidTo());
-        }
+        $productTransfer = $this->validityHydrator->hydrateProduct($productTransfer, $productEntity);
 
         return $productTransfer;
     }
