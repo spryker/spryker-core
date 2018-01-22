@@ -43,7 +43,7 @@ class FileFinder implements FileFinderInterface
      */
     public function getLatestFileInfoByFkFile(int $fileId = null)
     {
-        return $this->queryContainer->queryLatestFileInfoByFkFile($fileId)->findOne();
+        return $this->queryContainer->queryFileInfoByFkFile($fileId)->findOne();
     }
 
     /**

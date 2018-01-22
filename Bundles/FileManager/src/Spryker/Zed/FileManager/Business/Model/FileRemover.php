@@ -68,6 +68,8 @@ class FileRemover implements FileRemoverInterface
             $fileInfo->delete();
         }
 
+        $file->delete();
+
         return true;
     }
 }

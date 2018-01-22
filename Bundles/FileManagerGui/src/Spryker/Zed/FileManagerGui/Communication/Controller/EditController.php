@@ -17,8 +17,10 @@ use Symfony\Component\HttpFoundation\Request;
  * @method FileManagerGuiCommunicationFactory getFactory()
  * @method getFacade()
  */
-class AddController extends AbstractController
+class EditController extends AbstractController
 {
+
+    const URL_PARAM_ID_FILE = 'id-file';
 
     /**
      * @param Request $request
@@ -29,9 +31,10 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $idFile = $request->get(static::URL_PARAM_ID_FILE);
         $dataProvider = $this->getFactory()->createFileFormDataProvider();
         $form = $this->getFactory()
-            ->createFileForm($dataProvider->getData())
+            ->createFileForm($dataProvider->getData($idFile))
             ->handleRequest($request);
 
         if ($form->isValid()) {
@@ -40,15 +43,40 @@ class AddController extends AbstractController
 
             $this->getFactory()->getFileManagerFacade()->save($saveRequestTransfer);
 
-            $redirectUrl = Url::generate('/file-manager-gui')->build();
+            $redirectUrl = Url::generate(sprintf('/file-manager-gui/edit?id-file=%d', $idFile))->build();
 
             return $this->redirectResponse($redirectUrl);
         }
 
-        return $this->viewResponse([
-            'form' => $form->createView(),
+        $fileInfoTable = $this->getFactory()->createFileInfoTable($idFile);
+        $fileFormsTabs = $this->getFactory()->createFileFormTabs();
+
+        return [
+            'fileFormTabs' => $fileFormsTabs->createView(),
+            'fileInfoTable' => $fileInfoTable->render(),
+            'fileForm' => $form->createView(),
             'availableLocales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
-        ]);
+        ];
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function fileInfoTableAction(Request $request)
+    {
+        $idFile = $this->castId(
+            $request->get(static::URL_PARAM_ID_FILE)
+        );
+
+        $fileInfoTable = $this
+            ->getFactory()
+            ->createFileInfoTable($idFile);
+
+        return $this->jsonResponse(
+            $fileInfoTable->fetchData()
+        );
     }
 
     /**
@@ -75,9 +103,14 @@ class AddController extends AbstractController
         $uploadedFile = $data[FileForm::FIELD_FILE_CONTENT];
         $fileInfo = new FileInfoTransfer();
 
+        if ($uploadedFile === null) {
+            return $fileInfo;
+        }
+
         $fileInfo->setFileExtension($uploadedFile->getClientOriginalExtension());
         $fileInfo->setSize($uploadedFile->getSize());
         $fileInfo->setType($uploadedFile->getMimeType());
+        $fileInfo->setFkFile($data[FileForm::FIELD_ID_FILE]);
 
         return $fileInfo;
     }
@@ -90,6 +123,7 @@ class AddController extends AbstractController
     {
         $file = new FileTransfer();
         $file->setFileName($data[FileForm::FIELD_FILE_NAME]);
+        $file->setIdFile($data[FileForm::FIELD_ID_FILE]);
 
         return $file;
     }
@@ -102,6 +136,10 @@ class AddController extends AbstractController
     {
         /** @var UploadedFile $uploadedFile */
         $uploadedFile = $data[FileForm::FIELD_FILE_CONTENT];
+
+        if ($uploadedFile === null) {
+            return null;
+        }
 
         return file_get_contents($uploadedFile->getRealPath());
     }

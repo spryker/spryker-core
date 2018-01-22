@@ -119,14 +119,12 @@ class FileSaver implements FileSaverInterface
 
         try {
             $file->fromArray($saveRequestTransfer->getFile()->toArray());
-            $fileInfo = $this->createFileInfo($saveRequestTransfer->getFileInfo());
-            $file->addSpyFileInfo($fileInfo);
+
+            $fileInfo = $this->createFileInfo($saveRequestTransfer);
+            $this->addFileInfoToFile($file, $fileInfo);
 
             $savedRowsCount = $file->save();
-
-            $newFileName = $this->getNewFileName($file->getFileName(), $fileInfo->getVersionName(), $saveRequestTransfer->getFileInfo()->getFileExtension());
-            $this->fileContent->save($newFileName, $saveRequestTransfer->getContent());
-            $this->addStorageInfo($fileInfo, $newFileName);
+            $this->saveContent($saveRequestTransfer, $file, $fileInfo);
 
             $this->queryContainer->getConnection()->commit();
 
@@ -134,6 +132,31 @@ class FileSaver implements FileSaverInterface
         } catch (Exception $exception) {
             $this->queryContainer->getConnection()->rollBack();
             throw $exception;
+        }
+    }
+
+    /**
+     * @param SpyFile $file
+     * @param SpyFileInfo|null $fileInfo
+     */
+    protected function addFileInfoToFile(SpyFile $file, SpyFileInfo $fileInfo = null)
+    {
+        if ($fileInfo !== null) {
+            $file->addSpyFileInfo($fileInfo);
+        }
+    }
+
+    /**
+     * @param FileManagerSaveRequestTransfer $saveRequestTransfer
+     * @param SpyFile $file
+     * @param SpyFileInfo $fileInfo
+     */
+    protected function saveContent(FileManagerSaveRequestTransfer $saveRequestTransfer, SpyFile $file, SpyFileInfo $fileInfo = null)
+    {
+        if ($saveRequestTransfer->getContent() !== null || $fileInfo !== null) {
+            $newFileName = $this->getNewFileName($file->getFileName(), $fileInfo->getVersionName(), $saveRequestTransfer->getFileInfo()->getFileExtension());
+            $this->fileContent->save($newFileName, $saveRequestTransfer->getContent());
+            $this->addStorageInfo($fileInfo, $newFileName);
         }
     }
 
@@ -153,12 +176,16 @@ class FileSaver implements FileSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer
-     *
+     * @param FileManagerSaveRequestTransfer $saveRequestTransfer
      * @return \Orm\Zed\Cms\Persistence\SpyFileInfo
      */
-    protected function createFileInfo(FileInfoTransfer $fileInfoTransfer)
+    protected function createFileInfo(FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
+        if ($saveRequestTransfer->getContent() === null) {
+            return null;
+        }
+
+        $fileInfoTransfer = $saveRequestTransfer->getFileInfo();
         $fileInfo = new SpyFileInfo();
         $fileInfo->fromArray($fileInfoTransfer->toArray());
 

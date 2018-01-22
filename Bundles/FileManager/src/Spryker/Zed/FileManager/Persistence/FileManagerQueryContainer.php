@@ -53,17 +53,17 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @param int|null $fileId
+     * @param int|null $idFile
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
      * @return \Orm\Zed\Cms\Persistence\SpyFileInfoQuery
      */
-    public function queryLatestFileInfoByFkFile(int $fileId = null)
+    public function queryFileInfoByFkFile(int $idFile = null)
     {
         $query = $this->getFactory()->createFileInfoQuery();
         $query->orderByVersion(Criteria::DESC)
-            ->filterByFkFile($fileId);
+            ->filterByFkFile($idFile);
 
         return $query;
     }

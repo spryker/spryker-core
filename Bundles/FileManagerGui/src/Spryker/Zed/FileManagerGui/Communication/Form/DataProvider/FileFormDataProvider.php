@@ -46,6 +46,7 @@ class FileFormDataProvider
             ->findOne();
 
         return [
+            FileForm::FIELD_ID_FILE => $idFile,
             FileForm::FIELD_FILE_NAME => $file->getFileName(),
         ];
     }

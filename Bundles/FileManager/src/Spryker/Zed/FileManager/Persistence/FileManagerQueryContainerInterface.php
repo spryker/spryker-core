@@ -43,7 +43,7 @@ interface FileManagerQueryContainerInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyFileInfoQuery
      */
-    public function queryLatestFileInfoByFkFile(int $fileId = null);
+    public function queryFileInfoByFkFile(int $fileId = null);
 
     /**
      * @api
