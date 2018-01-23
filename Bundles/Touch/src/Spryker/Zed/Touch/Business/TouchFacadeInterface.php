@@ -10,6 +10,11 @@ namespace Spryker\Zed\Touch\Business;
 interface TouchFacadeInterface
 {
     /**
+     * Specification:
+     * - Updates or inserts a 'touch active' record for the provided entity.
+     * - Touches record with current date.
+     * - Updates previous touch record as 'touch deleted' when key change is set as true.
+     *
      * @api
      *
      * @param string $itemType
@@ -21,6 +26,10 @@ interface TouchFacadeInterface
     public function touchActive($itemType, $idItem, $keyChange = false);
 
     /**
+     * Specification:
+     * - Updates or inserts a 'touch inactive' record for the provided entity.
+     * - Touches record with current date.
+     *
      * @api
      *
      * @param string $itemType
@@ -31,6 +40,10 @@ interface TouchFacadeInterface
     public function touchInactive($itemType, $idItem);
 
     /**
+     * Specification:
+     * - Updates or inserts a 'touch deleted' record for the provided entity.
+     * - Touches record with current date.
+     *
      * @api
      *
      * @param string $itemType
@@ -41,8 +54,8 @@ interface TouchFacadeInterface
     public function touchDeleted($itemType, $idItem);
 
     /**
-     * Specification
-     *  - set `touched` to current date of items with given `$itemType`, `$itemId` where `item_event` is `active`
+     * Specification:
+     * - Touches 'touch active' records from provided list with current date.
      *
      * @api
      *
@@ -56,8 +69,9 @@ interface TouchFacadeInterface
     public function bulkTouchActive($itemType, array $itemIds = []);
 
     /**
-     * Specification
-     *  - set `touched` to current date and `item_event` to `active` where given `$itemType` and `$itemId` matches
+     * Specification:
+     * - Sets provided records as 'touch active'.
+     * - Touches changed records with current date.
      *
      * @api
      *
@@ -69,8 +83,8 @@ interface TouchFacadeInterface
     public function bulkTouchSetActive($itemType, array $itemIds);
 
     /**
-     * Specification
-     *  - set `touched` to current date of items with given `$itemType`, `$itemId` where `item_event` is `inactive`
+     * Specification:
+     * - Touches 'touch inactive' records from provided list with current date.
      *
      * @api
      *
@@ -84,8 +98,9 @@ interface TouchFacadeInterface
     public function bulkTouchInactive($itemType, array $itemIds = []);
 
     /**
-     * Specification
-     *  - set `touched` to current date and `item_event` to `inactive` where given `$itemType` and `$itemId` matches
+     * Specification:
+     * - Sets provided records as 'touch inactive'.
+     * - Touches changed records with current date.
      *
      * @api
      *
@@ -97,8 +112,8 @@ interface TouchFacadeInterface
     public function bulkTouchSetInActive($itemType, array $itemIds);
 
     /**
-     * Specification
-     *  - set `touched` to current date of items with given `$itemType`, `$itemId` where `item_event` is `deleted`
+     * Specification:
+     * - Touches 'touch deleted' records from provided list with current date.
      *
      * @api
      *
@@ -112,8 +127,9 @@ interface TouchFacadeInterface
     public function bulkTouchDeleted($itemType, array $itemIds = []);
 
     /**
-     * Specification
-     *  - set `touched` to current date and `item_event` to `deleted` where given `$itemType` and `$itemId` matches
+     * Specification:
+     * - Sets provided records as 'touch deleted'.
+     * - Touches changed records with current date.
      *
      * @api
      *
@@ -125,6 +141,9 @@ interface TouchFacadeInterface
     public function bulkTouchSetDeleted($itemType, array $itemIds);
 
     /**
+     * Specification:
+     * - Retrieves touch entities by item type as a list of Touch transfer objects.
+     *
      * @api
      *
      * @param string $itemType
@@ -135,8 +154,7 @@ interface TouchFacadeInterface
 
     /**
      * Specification:
-     * - Removes all the rows from the touch table(s)
-     *   which are marked as deleted (item_event = SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
+     * - Removes all 'touch deleted' records from touch table(s).
      *
      * @api
      *

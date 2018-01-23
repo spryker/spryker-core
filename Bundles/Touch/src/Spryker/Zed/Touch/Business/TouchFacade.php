@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class TouchFacade extends AbstractFacade implements TouchFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $itemType
@@ -37,6 +39,8 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $itemType
@@ -56,6 +60,8 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $itemType
@@ -75,8 +81,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
-     * Specification
-     *  - set `touched` to current date of items with given `$itemType`, `$itemId` where `item_event` is `active`
+     * {@inheritdoc}
      *
      * @api
      *
@@ -95,8 +100,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
-     * Specification
-     *  - set `touched` to current date and `item_event` to `active` where given `$itemType` and `$itemId` matches
+     * {@inheritdoc}
      *
      * @api
      *
@@ -113,8 +117,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
-     * Specification
-     *  - set `touched` to current date of items with given `$itemType`, `$itemId` where `item_event` is `inactive`
+     * {@inheritdoc}
      *
      * @api
      *
@@ -133,8 +136,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
-     * Specification
-     *  - set `touched` to current date and `item_event` to `inactive` where given `$itemType` and `$itemId` matches
+     * {@inheritdoc}
      *
      * @api
      *
@@ -151,8 +153,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
-     * Specification
-     *  - set `touched` to current date of items with given `$itemType`, `$itemId` where `item_event` is `deleted`
+     * {@inheritdoc}
      *
      * @api
      *
@@ -171,8 +172,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
-     * Specification
-     *  - set `touched` to current date and `item_event` to `deleted` where given `$itemType` and `$itemId` matches
+     * {@inheritdoc}
      *
      * @api
      *
@@ -189,6 +189,8 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $itemType
@@ -212,6 +214,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     public function removeTouchEntriesMarkedAsDeleted()
     {
         $touchRecordModel = $this->getFactory()->createTouchRecordModel();
+
         return $touchRecordModel->removeTouchEntriesMarkedAsDeleted();
     }
 }
