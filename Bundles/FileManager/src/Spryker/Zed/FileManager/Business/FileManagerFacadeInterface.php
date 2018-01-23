@@ -26,13 +26,13 @@ interface FileManagerFacadeInterface
     /**
      * @api
      *
-     * @param int $fileId
+     * @param int $idFile
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
-    public function readLatestFileVersion($fileId);
+    public function readLatestFileVersion($idFile);
 
     /**
      * @api

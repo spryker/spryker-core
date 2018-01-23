@@ -37,13 +37,13 @@ interface FileManagerQueryContainerInterface
     /**
      * @api
      *
-     * @param int|null $fileId
+     * @param int|null $idFile
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
      * @return \Orm\Zed\Cms\Persistence\SpyFileInfoQuery
      */
-    public function queryFileInfoByFkFile(int $fileId = null);
+    public function queryFileInfoByFkFile(int $idFile = null);
 
     /**
      * @api
@@ -55,4 +55,11 @@ interface FileManagerQueryContainerInterface
      * @return \Orm\Zed\Cms\Persistence\SpyFileInfoQuery
      */
     public function queryFileInfo(int $idFileInfo);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyFileQuery
+     */
+    public function queryFiles();
 }
