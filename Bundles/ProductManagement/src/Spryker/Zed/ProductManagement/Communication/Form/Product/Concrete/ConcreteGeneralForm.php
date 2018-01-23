@@ -37,7 +37,7 @@ class ConcreteGeneralForm extends GeneralForm
 
         $this->addIsSearchableField($builder, $options);
         $this->addValidFromField($builder, $options);
-        $this->addValidUntilField($builder, $options);
+        $this->addValidToField($builder, $options);
     }
 
     /**
@@ -69,7 +69,7 @@ class ConcreteGeneralForm extends GeneralForm
             ->add(static::FIELD_VALID_FROM, TimeType::class, [
                 'label' => 'Valid From',
                 'required' => false,
-                'input'  => 'datetime',
+                'input' => 'datetime',
                 'widget' => 'choice',
             ]);
 
@@ -82,13 +82,13 @@ class ConcreteGeneralForm extends GeneralForm
      *
      * @return $this
      */
-    protected function addValidUntilField(FormBuilderInterface $builder, array $options = [])
+    protected function addValidToField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
             ->add(static::FIELD_VALID_UNTIL, TimeType::class, [
-                'label' => 'Valid Until',
+                'label' => 'Valid To',
                 'required' => false,
-                'input'  => 'datetime',
+                'input' => 'datetime',
                 'widget' => 'choice',
             ]);
 

@@ -26,7 +26,7 @@ class ValidityHydrator implements ValidityHydratorInterface
             /** @var \Orm\Zed\Product\Persistence\SpyProductValidity $validityEntity */
             $validityEntity = $productEntity->getSpyProductValidities()->getFirst();
             $productTransfer->setValidFrom($validityEntity->getValidFrom());
-            $productTransfer->setValidUntil($validityEntity->getValidTo());
+            $productTransfer->setValidTo($validityEntity->getValidTo());
         }
 
         return $productTransfer;
