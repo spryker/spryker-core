@@ -55,21 +55,6 @@ interface TouchFacadeInterface
 
     /**
      * Specification:
-     * - Touches 'touch active' records from provided list with current date.
-     *
-     * @api
-     *
-     * @deprecated Use bulkTouchSetActive instead
-     *
-     * @param string $itemType
-     * @param array $itemIds
-     *
-     * @return int
-     */
-    public function bulkTouchActive($itemType, array $itemIds = []);
-
-    /**
-     * Specification:
      * - Sets provided records as 'touch active'.
      * - Touches changed records with current date.
      *
@@ -84,21 +69,6 @@ interface TouchFacadeInterface
 
     /**
      * Specification:
-     * - Touches 'touch inactive' records from provided list with current date.
-     *
-     * @api
-     *
-     * @deprecated Use bulkTouchSetInActive instead
-     *
-     * @param string $itemType
-     * @param array $itemIds
-     *
-     * @return int
-     */
-    public function bulkTouchInactive($itemType, array $itemIds = []);
-
-    /**
-     * Specification:
      * - Sets provided records as 'touch inactive'.
      * - Touches changed records with current date.
      *
@@ -110,21 +80,6 @@ interface TouchFacadeInterface
      * @return int
      */
     public function bulkTouchSetInActive($itemType, array $itemIds);
-
-    /**
-     * Specification:
-     * - Touches 'touch deleted' records from provided list with current date.
-     *
-     * @api
-     *
-     * @deprecated Use bulkTouchSetDeleted instead
-     *
-     * @param string $itemType
-     * @param array $itemIds
-     *
-     * @return int
-     */
-    public function bulkTouchDeleted($itemType, array $itemIds = []);
 
     /**
      * Specification:

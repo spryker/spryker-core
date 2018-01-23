@@ -82,7 +82,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
     public function bulkUpdate(TouchUpdaterSet $touchUpdaterSet, $idLocale, $idStore, ConnectionInterface $connection = null)
     {
         foreach ($touchUpdaterSet->getData() as $key => $touchData) {
-            $idKey = $this->getCollectorKeyFromData($touchData);
+            $idKey = $this->findCollectorKeyFromData($touchData);
 
             if ($idKey !== null) {
                 $this->bulkTouchUpdateQuery->addQuery(
@@ -142,7 +142,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
      *
      * @return int|null
      */
-    protected function getCollectorKeyFromData(array $touchData)
+    protected function findCollectorKeyFromData(array $touchData)
     {
         if (!isset($touchData['data'])) {
             return null;

@@ -85,25 +85,6 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use bulkTouchSetActive instead
-     *
-     * @param string $itemType
-     * @param array $itemIds
-     *
-     * @return int
-     */
-    public function bulkTouchActive($itemType, array $itemIds = [])
-    {
-        $touchModel = $this->getFactory()->createTouchModel();
-
-        return $touchModel->bulkUpdateTouchRecords($itemType, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $itemIds);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $itemType
      * @param array $itemIds
      *
@@ -121,25 +102,6 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use bulkTouchSetInactive instead
-     *
-     * @param string $itemType
-     * @param array $itemIds
-     *
-     * @return int
-     */
-    public function bulkTouchInactive($itemType, array $itemIds = [])
-    {
-        $touchModel = $this->getFactory()->createTouchModel();
-
-        return $touchModel->bulkUpdateTouchRecords($itemType, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, $itemIds);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $itemType
      * @param array $itemIds
      *
@@ -150,25 +112,6 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
         $touchModel = $this->getFactory()->createBulkTouchModel();
 
         return $touchModel->bulkTouch($itemType, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, $itemIds);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @deprecated Use bulkTouchSetDeleted instead
-     *
-     * @param string $itemType
-     * @param array $itemIds
-     *
-     * @return int
-     */
-    public function bulkTouchDeleted($itemType, array $itemIds = [])
-    {
-        $touchModel = $this->getFactory()->createTouchModel();
-
-        return $touchModel->bulkUpdateTouchRecords($itemType, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $itemIds);
     }
 
     /**
