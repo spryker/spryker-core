@@ -17,7 +17,7 @@ class CommentMapper
      *
      * @return \Generated\Shared\Transfer\BlogCommentTransfer
      */
-    public function fromEntityToTransfer(SpyBlogComment $blogCommentEntity, BlogCommentTransfer $blogCommentTransfer)
+    public function toTransfer(SpyBlogComment $blogCommentEntity, BlogCommentTransfer $blogCommentTransfer)
     {
         $blogCommentTransfer->fromArray($blogCommentEntity->toArray(), true);
 

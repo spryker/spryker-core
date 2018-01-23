@@ -8,6 +8,8 @@ namespace Spryker\Zed\Blog\Persistence;
 
 use Generated\Shared\Transfer\BlogCommentTransfer;
 use Generated\Shared\Transfer\BlogTransfer;
+use Generated\Shared\Transfer\SpyBlogCommentEntityTransfer;
+use Generated\Shared\Transfer\SpyBlogEntityTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 
@@ -16,14 +18,18 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
  */
 interface BlogEntityManagerInterface
 {
-    public function save(TransferInterface $transfer);
-
-    public function saveBlog(BlogTransfer $blogTransfer);
+    /**
+     * @param \Generated\Shared\Transfer\SpyBlogEntityTransfer $blogEntityTransfer
+     *
+     * @return mixed
+     */
+    public function saveBlog(SpyBlogEntityTransfer $blogEntityTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\BlogCommentTransfer $blogCommentTransfer
      *
-     * @return \Generated\Shared\Transfer\BlogCommentTransfer
+     * @param \Generated\Shared\Transfer\SpyBlogCommentEntityTransfer $blogCommentEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyBlogCommentEntityTransfer
      */
-    public function saveBlogComment(BlogCommentTransfer $blogCommentTransfer);
+    public function saveBlogComment(SpyBlogCommentEntityTransfer $blogCommentEntityTransfer);
 }

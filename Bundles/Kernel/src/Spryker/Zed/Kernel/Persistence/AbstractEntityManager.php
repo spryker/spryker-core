@@ -6,18 +6,14 @@
 
 namespace Spryker\Zed\Kernel\Persistence;
 
-use Generated\Shared\Transfer\CriteriaTransfer;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Propel;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
-use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
-use Spryker\Zed\Kernel\Persistence\Repository\TransferObjectFormatter;
 
-abstract class AbstractRepository
+abstract class AbstractEntityManager
 {
     use BundleDependencyProviderResolverAwareTrait;
 
@@ -97,33 +93,51 @@ abstract class AbstractRepository
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $modelCriteria
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      *
-     * @param \Generated\Shared\Transfer\CriteriaTransfer $criteriaTransfer
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function buildQueryFromCriteria(ModelCriteria $modelCriteria, CriteriaTransfer $criteriaTransfer = null)
+    public function save(TransferInterface $transfer)
     {
-        $criteria = $modelCriteria->setFormatter(TransferObjectFormatter::class);
+        //throw exception when child transfer entity is not from same module.
+        //composite object should be handled in business with plugins.
+        //when property is modified and is null, should remove item.
+        $transferClassName = get_class($transfer);
 
-        if (!$criteriaTransfer) {
-            return $criteria;
+        if (strpos($transferClassName, 'EntityTransfer') === 0) {
+            throw new \Exception('Only entity transfer could be automatically mapped!');
         }
 
-        if ($criteriaTransfer->getLimit()) {
-            $criteria->setLimit($criteriaTransfer->getLimit());
-        }
+        $transferParts = explode('\\', $transferClassName);
+        $entityName = str_replace('EntityTransfer', '', $transferParts[3]);
 
-        if ($criteriaTransfer->getOffset()) {
-            $criteria->setOffset($criteriaTransfer->getOffset());
-        }
+        $nameParts = preg_split('/(?=[A-Z])/', $entityName); //How to get module namespace from transfer namespace?
 
-        if ($criteriaTransfer->getSortBy() && $criteriaTransfer->getSortOrder()) {
-            $criteria->orderBy($criteriaTransfer->getSortBy(), $criteriaTransfer->getSortOrder());
-        }
+        $entityClassName = sprintf('\Orm\Zed\%s\Persistence\%s', $nameParts[2], $entityName);
 
-        return $criteria;
+        $transferArray = $transfer->modifiedToArray();
+
+        $propelEntity = new $entityClassName;
+        $propelEntity->fromArray($transferArray);
+
+        /*foreach ($transferArray as $propertyName => $parentValue) {
+            if (substr($propertyName, 0, 3) !== 'spy') {
+                continue;
+            }
+
+            if (is_array($parentValue)) {
+                $methodName = 'add' . $propertyName;
+                foreach ($parentValue as $childValue) {
+                    $propelEntity->addSpyBlogComment();
+                }
+            }
+        }*/
+
+        $propelEntity->save();
+
+        $transfer = new $transferClassName;
+        $transfer->fromArray($propelEntity->toArray(), true);
+
+        return $transfer;
     }
-
 }

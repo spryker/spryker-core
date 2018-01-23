@@ -8,62 +8,50 @@ namespace Spryker\Zed\Blog\Persistence;
 
 use Generated\Shared\Transfer\BlogCommentTransfer;
 use Generated\Shared\Transfer\BlogTransfer;
+use Generated\Shared\Transfer\SpyBlogCommentEntityTransfer;
+use Generated\Shared\Transfer\SpyBlogEntityTransfer;
 use Orm\Zed\Blog\Persistence\SpyBlog;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+use Spryker\Zed\Kernel\Persistence\Repository\EntityManagerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\Blog\Persistence\BlogPersistenceFactory getFactory()
+ *
+ * Should be resolvable by business factory
+ *
  */
-class BlogEntityManager implements BlogEntityManagerInterface
+class BlogEntityManager extends AbstractEntityManager implements BlogEntityManagerInterface, EntityManagerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
-    public function save(TransferInterface $transfer)
+    /**
+     * @param \Generated\Shared\Transfer\SpyBlogEntityTransfer $blogEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer
+     */
+    public function saveBlog(SpyBlogEntityTransfer $blogEntityTransfer)
     {
-        //loop properties
-        //map transfer object to entity graph
-        // save main
-    }
-
-    public function saveBlog(BlogTransfer $blogTransfer)
-    {
-        return $this->handleDatabaseTransaction(function () use ($blogTransfer) {
-
-            $this->getFactory()->createBlogPluginExecutor()->executeBlogPreSavePlugins($blogTransfer);
-
-            $blogEntity = $this->getFactory()
-                ->createBlogMapper()
-                ->fromTransferToEntity($blogTransfer, new SpyBlog());
-
-            $blogEntity->save();
-
-            if (count($blogTransfer->getComments()) > 0) {
-                foreach ($blogTransfer->getComments() as $commentTransfer) {
-                    $commentTransfer->setFkBlog($blogEntity->getPrimaryKey());
-                    $this->saveBlogComment($commentTransfer);
-                }
-            }
-
-            $blogTransfer->setIdBlog($blogEntity->getPrimaryKey());
-
-            $this->getFactory()->createBlogPluginExecutor()->executeBlogPostSavePlugins($blogTransfer);
-
-            $this->save($blogTransfer);
-
-            return $blogTransfer;
+        return $this->handleDatabaseTransaction(function () use ($blogEntityTransfer) {
+            return $this->save($blogEntityTransfer);
         });
-
-
     }
 
     /**
-     * @param \Generated\Shared\Transfer\BlogCommentTransfer $blogCommentTransfer
+     * @param \Generated\Shared\Transfer\SpyBlogCommentEntityTransfer $blogCommentEntityTransfer
      *
-     * @return \Generated\Shared\Transfer\BlogCommentTransfer
+     * @return \Generated\Shared\Transfer\SpyBlogCommentEntityTransfer
      */
-    public function saveBlogComment(BlogCommentTransfer $blogCommentTransfer)
+    public function saveBlogComment(SpyBlogCommentEntityTransfer $blogCommentEntityTransfer)
     {
-        return $blogCommentTransfer;
+        return $this->handleDatabaseTransaction(function () use ($blogCommentEntityTransfer) {
+            return $this->save($blogCommentEntityTransfer);
+        });
+    }
+
+    public function deleteBlog(SpyBlogEntityTransfer $blogEntityTransfer)
+    {
+        //delete by this blog transfer
     }
 }

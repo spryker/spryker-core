@@ -3,6 +3,7 @@
 
     <table name="spy_customer" phpName="SpyCustomer">
         <column name="id_customer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <id-method-parameter value="spy_customer_pk_seq"/>
     </table>
 
 </database>

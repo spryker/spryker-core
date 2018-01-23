@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Blog;
 
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -13,6 +14,8 @@ class BlogDependencyProvider extends AbstractBundleDependencyProvider
 {
     const PLUGIN_POST_SAVE_BLOG = 'post save blog';
     const PLUGIN_PRE_SAVE_BLOG = 'pre save blog';
+
+    const PROPEL_QUERY_CUSTOMER = 'propel query customer';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,6 +30,11 @@ class BlogDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[static::PLUGIN_PRE_SAVE_BLOG] = function (Container $container) {
             return $this->getBlogPreSavePlugin();
+        };
+
+        //document use of propel query object between modules. Use cases.
+        $container[static::PROPEL_QUERY_CUSTOMER] = function (Container $container) {
+            return SpyCustomerQuery::create();
         };
 
         return $container;

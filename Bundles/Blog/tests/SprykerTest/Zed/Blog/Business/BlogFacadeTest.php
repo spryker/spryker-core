@@ -10,74 +10,74 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\BlogCommentTransfer;
 use Generated\Shared\Transfer\BlogCriteriaFilterTransfer;
 use Generated\Shared\Transfer\BlogTransfer;
+use Generated\Shared\Transfer\SpyBlogCommentEntityTransfer;
+use Generated\Shared\Transfer\SpyBlogEntityTransfer;
+use Generated\Shared\Transfer\SpyCustomerEntityTransfer;
+use Orm\Zed\Blog\Persistence\SpyBlogQuery;
 use Spryker\Zed\Blog\Business\BlogFacade;
+use Spryker\Zed\Blog\Persistence\BlogEntityManager;
+use Spryker\Zed\Blog\Persistence\BlogRepository;
 
 class BlogFacadeTest extends Unit
 {
-    /**
-     * @return void
-     */
-    public function testSaveBlogShouldReturnId()
-    {
-        $blogTransfer = $this->createBlog();
-
-        $this->assertNotEmpty($blogTransfer);
-    }
+    const BLOG_NAME = 'Blog name';
 
     /**
      * @return void
      */
-    public function testFindBlogByIdShouldReturnBlogTransfer()
+    public function testFindBlogListByFirstName()
     {
-        $blogTransfer = $this->createBlog();
+        $blogRepository = $this->createBlogRepository();
+        $this->createBlog();
+        $blogCollection = $blogRepository->findBlogListByFirstName(static::BLOG_NAME);
 
-        $blogTransfer = $this->createBlogFacade()->findBlogById($blogTransfer->getIdBlog());
+        $blogEntityTransfer = $blogCollection[0];
 
-        $this->assertInstanceOf(BlogTransfer::class, $blogTransfer);
-        $this->assertCount(1, $blogTransfer->getComments());
-    }
-
-    /**
-     * @return void
-     */
-    public function testFilterBlogPostsShouldReturnCollection()
-    {
-        for ($i =0; $i < 50; $i++) {
-            $this->createBlog();
-        }
-
-        $blogCriteriaFilterTransfer = (new BlogCriteriaFilterTransfer())
-            ->setName('Blog name')
-            ->setOffset(0)
-            ->setLimit(2);
-
-        $blogCollection = $this->createBlogFacade()->filterBlogPosts($blogCriteriaFilterTransfer);
-
-        $this->assertCount(2, $blogCollection);
-
-        $blogCriteriaFilterTransfer = (new BlogCriteriaFilterTransfer())
-            ->setName('Blog name')
-            ->setOffset(2)
-            ->setLimit(2);
-
-        $blogCollection = $this->createBlogFacade()->filterBlogPosts($blogCriteriaFilterTransfer);
-
-        $this->assertCount(2, $blogCollection);
+        $this->assertInstanceOf(SpyBlogEntityTransfer::class, $blogEntityTransfer);
+        $this->assertCount(2, $blogEntityTransfer->getSpyBlogComments());
+        $this->assertInstanceOf(SpyBlogCommentEntityTransfer::class, $blogEntityTransfer->getSpyBlogComments()[0]);
 
     }
 
     /**
      * @return void
      */
-    public function testRemoveBlogByIdShouldDropExistingBlog()
+    public function testFindBlogByFirstName()
     {
-        $blogTransfer = $this->createBlog();
+        $blogRepository = $this->createBlogRepository();
+        $this->createBlog();
+        $spyCustomerEntityTransfer = $blogRepository->findBlogByName(static::BLOG_NAME);
 
-        $this->createBlogFacade()->removeBlogById($blogTransfer->getIdBlog());
 
-        $blogTransfer = $this->createBlogFacade()->findBlogById($blogTransfer->getIdBlog());
+        $this->assertInstanceOf(SpyBlogEntityTransfer::class, $spyCustomerEntityTransfer);
+    }
 
-        $this->assertNull($blogTransfer);
+    /**
+     * @return void
+     */
+    public function testCountBlogByFirstName()
+    {
+        $blogRepository = $this->createBlogRepository();
+        $this->createBlog();
+        $count = $blogRepository->countBlogByName(static::BLOG_NAME);
+
+        $this->assertEquals(1, $count);
+    }
+
+    /**
+     * @return \Spryker\Zed\Blog\Persistence\BlogRepository
+     */
+    protected function createBlogRepository()
+    {
+        return new BlogRepository();
+    }
+
+    /**
+     * @return \Spryker\Zed\Blog\Persistence\BlogEntityManager
+     */
+    protected function createBlogEntityManager()
+    {
+        return new BlogEntityManager();
     }
 
     /**
@@ -89,22 +89,39 @@ class BlogFacadeTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\BlogTransfer
+     * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer
      */
     protected function createBlog()
     {
-        $blogFacade = $this->createBlogFacade();
+        $blogEntityManager = $this->createBlogEntityManager();
 
-        $blogTransfer = (new BlogTransfer())
-            ->setName('Blog name')
+        $blogEntityTransfer = (new SpyBlogEntityTransfer())
+            ->setName(self::BLOG_NAME)
             ->setText('Text');
 
-        $commentTransfer = new BlogCommentTransfer();
-        $commentTransfer->setAuthor("It's a me Mario");
-        $commentTransfer->setMessage('1 UP');
+        //not working
+        $blogCommentEntityTransfer = new SpyBlogCommentEntityTransfer();
+        $blogCommentEntityTransfer->setAuthor("It's a me a Mario!");
+        $blogCommentEntityTransfer->setMessage('1 UP');
 
-        $blogTransfer->addComment($commentTransfer);
+        $blogEntityTransfer->addSpyBlogComments($blogCommentEntityTransfer);
 
-        return $blogFacade->save($blogTransfer);
+        $blogEntityTransfer = $blogEntityManager->saveBlog($blogEntityTransfer);
+
+        $blogCommentEntityTransfer = new SpyBlogCommentEntityTransfer();
+        $blogCommentEntityTransfer->setAuthor("It's a me a Mario!");
+        $blogCommentEntityTransfer->setMessage('1 UP');
+        $blogCommentEntityTransfer->setFkBlog($blogEntityTransfer->getIdBlog());
+
+        $blogEntityManager->saveBlogComment($blogCommentEntityTransfer);
+
+        $blogCommentEntityTransfer = new SpyBlogCommentEntityTransfer();
+        $blogCommentEntityTransfer->setAuthor("It's a me a Mario!");
+        $blogCommentEntityTransfer->setMessage('2 UP');
+        $blogCommentEntityTransfer->setFkBlog($blogEntityTransfer->getIdBlog());
+
+        $blogEntityManager->saveBlogComment($blogCommentEntityTransfer);
+
+        return $blogEntityTransfer;
     }
 }

@@ -9,30 +9,10 @@ namespace Spryker\Zed\Blog\Persistence;
 use Generated\Shared\Transfer\BlogCommentTransfer;
 use Generated\Shared\Transfer\BlogCriteriaFilterTransfer;
 use Generated\Shared\Transfer\BlogTransfer;
+use Generated\Shared\Transfer\CriteriaTransfer;
 
 interface BlogRepositoryInterface
 {
-    /**
-     * @param int $id
-     *
-     * @return \Generated\Shared\Transfer\BlogTransfer|null
-     */
-    public function findBlogById($id);
-
-    /**
-     * @param \Generated\Shared\Transfer\BlogTransfer $blogTransfer
-     *
-     * @return \Generated\Shared\Transfer\BlogTransfer
-     */
-    public function saveBlog(BlogTransfer $blogTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\BlogCommentTransfer $blogCommentTransfer
-     *
-     * @return \Generated\Shared\Transfer\BlogCommentTransfer
-     */
-    public function saveBlogComment(BlogCommentTransfer $blogCommentTransfer);
-
     /**
      * @param \Generated\Shared\Transfer\BlogCriteriaFilterTransfer $blogCriteriaFilterTransfer
      *
@@ -41,9 +21,31 @@ interface BlogRepositoryInterface
     public function filterBlogPosts(BlogCriteriaFilterTransfer $blogCriteriaFilterTransfer);
 
     /**
-     * @param int $id
+     * @param string $firstName
      *
-     * @return void
+     * Criteria
+     *  - limit  = int
+     *  - offset = int
+     *  - sortBy = string
+     *
+     * @param \Generated\Shared\Transfer\CriteriaTransfer $criteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer[]
      */
-    public function removeBlogById($id);
+    public function findBlogListByFirstName($firstName, CriteriaTransfer $criteriaTransfer = null);
+
+    /**
+     * @param string $firstName
+     *
+     * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer
+     */
+    public function findBlogByName($firstName);
+
+    /**
+     * @param string $firstName
+     * @param CriteriaTransfer $criteria
+     *
+     * @return int
+     */
+    public function countBlogByName($firstName, $criteria = null);
 }

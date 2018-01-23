@@ -12,14 +12,14 @@ use Orm\Zed\Blog\Persistence\SpyBlog;
 class BlogMapper
 {
     /**
-     * @param \Orm\Zed\Blog\Persistence\SpyBlog $blogEntity
+     * @param array $blog
      * @param \Generated\Shared\Transfer\BlogTransfer $blogTransfer
      *
      * @return \Generated\Shared\Transfer\BlogTransfer
      */
-    public function fromEntityToTransfer(SpyBlog $blogEntity, BlogTransfer $blogTransfer)
+    public function toTransfer(array $blog, BlogTransfer $blogTransfer)
     {
-        $blogTransfer->fromArray($blogEntity->toArray(), true);
+        $blogTransfer->fromArray($blog, true);
 
         return $blogTransfer;
     }
