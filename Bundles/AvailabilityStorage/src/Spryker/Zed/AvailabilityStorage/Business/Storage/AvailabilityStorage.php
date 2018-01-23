@@ -5,27 +5,51 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\AvailabilityStorage\Business\Storage;
 
 use Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorage;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\AvailabilityStorage\Communication\AvailabilityStorageCommunicationFactory getFactory()
- */
-class AbstractAvailabilityStorageListener extends AbstractPlugin
+class AvailabilityStorage implements AvailabilityStorageInterface
 {
     const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const ID_AVAILABILITY_ABSTRACT = 'id_availability_abstract';
     const FK_AVAILABILITY_ABSTRACT = 'fkAvailabilityAbstract';
 
     /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @var \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface $queryContainer
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(Store $store, AvailabilityStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
+    {
+        $this->store = $store;
+        $this->queryContainer = $queryContainer;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
+
+    /**
      * @param array $availabilityIds
      *
      * @return void
      */
-    protected function publish(array $availabilityIds)
+    public function publish(array $availabilityIds)
     {
         $spyAvailabilityEntities = $this->findAvailabilityAbstractEntities($availabilityIds);
         $spyAvailabilityStorageEntities = $this->findAvailabilityStorageEntitiesByAvailabilityAbstractIds($availabilityIds);
@@ -38,7 +62,7 @@ class AbstractAvailabilityStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function unpublish(array $availabilityIds)
+    public function unpublish(array $availabilityIds)
     {
         $spyAvailabilityStorageEntities = $this->findAvailabilityStorageEntitiesByAvailabilityAbstractIds($availabilityIds);
         foreach ($spyAvailabilityStorageEntities as $spyAvailabilityStorageEntity) {
@@ -79,6 +103,7 @@ class AbstractAvailabilityStorageListener extends AbstractPlugin
         $spyAvailabilityStorageEntity->setFkAvailabilityAbstract($spyAvailabilityEntity[static::ID_AVAILABILITY_ABSTRACT]);
         $spyAvailabilityStorageEntity->setData($spyAvailabilityEntity);
         $spyAvailabilityStorageEntity->setStore($this->getStoreName());
+        $spyAvailabilityStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyAvailabilityStorageEntity->save();
     }
 
@@ -89,17 +114,17 @@ class AbstractAvailabilityStorageListener extends AbstractPlugin
      */
     protected function findAvailabilityAbstractEntities(array $availabilityIds)
     {
-        return $this->getQueryContainer()->queryAvailabilityAbstractWithRelationsByIds($availabilityIds)->find()->getData();
+        return $this->queryContainer->queryAvailabilityAbstractWithRelationsByIds($availabilityIds)->find()->getData();
     }
 
     /**
      * @param array $availabilityAbstractIds
      *
-     * @return array
+     * @return \Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorage[]
      */
     protected function findAvailabilityStorageEntitiesByAvailabilityAbstractIds(array $availabilityAbstractIds)
     {
-        return $this->getQueryContainer()->queryAvailabilityStorageByAvailabilityAbstractIds($availabilityAbstractIds)->find()->toKeyIndex(static::FK_AVAILABILITY_ABSTRACT);
+        return $this->queryContainer->queryAvailabilityStorageByAvailabilityAbstractIds($availabilityAbstractIds)->find()->toKeyIndex(static::FK_AVAILABILITY_ABSTRACT);
     }
 
     /**
@@ -107,6 +132,6 @@ class AbstractAvailabilityStorageListener extends AbstractPlugin
      */
     protected function getStoreName()
     {
-        return $this->getFactory()->getStore()->getStoreName();
+        return $this->store->getStoreName();
     }
 }
