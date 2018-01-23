@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductStorage\Business\Storage;
 use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface;
+use Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface;
 
 class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterface
 {
@@ -21,9 +24,48 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     const CONCRETE_ATTRIBUTES = 'attributes';
 
     /**
+     * @var ProductStorageToProductInterface
+     */
+    protected $productFacade;
+
+    /**
+     * @var ProductStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var Store
+     */
+    protected $store;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
      * @var array
      */
     protected $superAttributes = [];
+
+    /**
+     * @param ProductStorageToProductInterface $productFacade
+     * @param ProductStorageQueryContainerInterface $queryContainer
+     * @param Store $store
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(
+        ProductStorageToProductInterface $productFacade,
+        ProductStorageQueryContainerInterface $queryContainer,
+        Store $store,
+        $isSendingToQueue
+    )
+    {
+        $this->productFacade = $productFacade;
+        $this->queryContainer = $queryContainer;
+        $this->store = $store;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
 
     /**
      * @param array $productIds
@@ -111,6 +153,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
         $spyProductStorageEntity->setData($productConcreteStorageTransfer->toArray());
         $spyProductStorageEntity->setStore($this->getStoreName());
         $spyProductStorageEntity->setLocale($spyProductConcreteLocalizedEntity['Locale']['locale_name']);
+        $spyProductStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductStorageEntity->save();
     }
 
@@ -146,11 +189,11 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
      */
     protected function getConcreteAttributes(array $spyProductConcreteLocalizedEntity)
     {
-        $abstractAttributesData = $this->getFactory()->getProductFacade()->decodeProductAttributes($spyProductConcreteLocalizedEntity['SpyProduct']['SpyProductAbstract']['attributes']);
-        $concreteAttributesData = $this->getFactory()->getProductFacade()->decodeProductAttributes($spyProductConcreteLocalizedEntity['SpyProduct']['attributes']);
+        $abstractAttributesData = $this->productFacade->decodeProductAttributes($spyProductConcreteLocalizedEntity['SpyProduct']['SpyProductAbstract']['attributes']);
+        $concreteAttributesData = $this->productFacade->decodeProductAttributes($spyProductConcreteLocalizedEntity['SpyProduct']['attributes']);
 
-        $abstractLocalizedAttributesData = $this->getFactory()->getProductFacade()->decodeProductAttributes($spyProductConcreteLocalizedEntity[self::ABSTRACT_ATTRIBUTES]);
-        $concreteLocalizedAttributesData = $this->getFactory()->getProductFacade()->decodeProductAttributes($spyProductConcreteLocalizedEntity[self::CONCRETE_ATTRIBUTES]);
+        $abstractLocalizedAttributesData = $this->productFacade->decodeProductAttributes($spyProductConcreteLocalizedEntity[self::ABSTRACT_ATTRIBUTES]);
+        $concreteLocalizedAttributesData = $this->productFacade->decodeProductAttributes($spyProductConcreteLocalizedEntity[self::CONCRETE_ATTRIBUTES]);
 
         $rawProductAttributesTransfer = new RawProductAttributesTransfer();
         $rawProductAttributesTransfer
@@ -159,7 +202,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
             ->setConcreteAttributes($concreteAttributesData)
             ->setConcreteLocalizedAttributes($concreteLocalizedAttributesData);
 
-        return $this->getFactory()->getProductFacade()->combineRawProductAttributes($rawProductAttributesTransfer);
+        return $this->productFacade->combineRawProductAttributes($rawProductAttributesTransfer);
     }
 
     /**
@@ -185,7 +228,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     protected function getVariantSuperAttributes(array $attributes)
     {
         if (empty($this->superAttributes)) {
-            $superAttributes = $this->getQueryContainer()
+            $superAttributes = $this->queryContainer
                 ->queryProductAttributeKey()
                 ->find();
 
@@ -218,7 +261,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
      */
     protected function findProductLocalizedEntities(array $productIds)
     {
-        return $this->getQueryContainer()->queryProductConcreteByIds($productIds)->find()->getData();
+        return $this->queryContainer->queryProductConcreteByIds($productIds)->find()->getData();
     }
 
     /**
@@ -228,7 +271,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
      */
     protected function findProductStorageEntitiesByProductConcreteIds(array $productConcreteIds)
     {
-        $productConcreteStorageEntities = $this->getQueryContainer()->queryProductConcreteStorageByIds($productConcreteIds)->find();
+        $productConcreteStorageEntities = $this->queryContainer->queryProductConcreteStorageByIds($productConcreteIds)->find();
         $productConcreteStorageEntitiesByIdAndLocale = [];
         foreach ($productConcreteStorageEntities as $productConcreteStorageEntity) {
             $productConcreteStorageEntitiesByIdAndLocale[$productConcreteStorageEntity->getFkProduct()][$productConcreteStorageEntity->getLocale()] = $productConcreteStorageEntity;
@@ -242,6 +285,6 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
      */
     protected function getStoreName()
     {
-        return $this->getFactory()->getStore()->getStoreName();
+        return $this->store->getStoreName();
     }
 }

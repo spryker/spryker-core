@@ -10,6 +10,10 @@ namespace Spryker\Zed\ProductStorage\Business\Storage;
 use Generated\Shared\Transfer\ProductAbstractStorageTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\ProductStorage\Business\Attribute\AttributeMapInterface;
+use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface;
+use Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface;
 
 class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterface
 {
@@ -17,9 +21,56 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
 
     /**
+     * @var ProductStorageToProductInterface
+     */
+    protected $productFacade;
+
+    /**
+     * @var AttributeMapInterface
+     */
+    protected $attributeMap;
+
+    /**
+     * @var ProductStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var Store
+     */
+    protected $store;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
      * @var array
      */
     protected $superAttributes = [];
+
+    /**
+     * @param ProductStorageToProductInterface $productFacade
+     * @param AttributeMapInterface $attributeMap
+     * @param ProductStorageQueryContainerInterface $queryContainer
+     * @param Store $store
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(
+        ProductStorageToProductInterface $productFacade,
+        AttributeMapInterface $attributeMap, 
+        ProductStorageQueryContainerInterface $queryContainer, 
+        Store $store, 
+        $isSendingToQueue
+    )
+    {
+        $this->productFacade = $productFacade;
+        $this->attributeMap = $attributeMap;
+        $this->queryContainer = $queryContainer;
+        $this->store = $store;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
 
     /**
      * @param array $productAbstractIds
@@ -108,6 +159,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         $spyProductStorageEntity->setData($productAbstractStorageTransfer->toArray());
         $spyProductStorageEntity->setStore($this->getStoreName());
         $spyProductStorageEntity->setLocale($spyProductAbstractLocalizedEntity['Locale']['locale_name']);
+        $spyProductStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductStorageEntity->save();
     }
 
@@ -136,7 +188,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected function mapToProductAbstractStorageTransfer(array $spyProductAbstractLocalizedEntity, ProductAbstractStorageTransfer $productStorageTransfer = null)
     {
         $attributes = $this->getAbstractAttributes($spyProductAbstractLocalizedEntity);
-        $attributeMap = $this->getFactory()->createAttributeMapHelper()->generateAttributeMap(
+        $attributeMap = $this->attributeMap->generateAttributeMap(
             $spyProductAbstractLocalizedEntity[static::COL_FK_PRODUCT_ABSTRACT],
             $spyProductAbstractLocalizedEntity['Locale']['id_locale']
         );
@@ -163,15 +215,15 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      */
     protected function getAbstractAttributes(array $data)
     {
-        $abstractAttributesData = $this->getFactory()->getProductFacade()->decodeProductAttributes($data['SpyProductAbstract']['attributes']);
-        $abstractLocalizedAttributesData = $this->getFactory()->getProductFacade()->decodeProductAttributes($data['attributes']);
+        $abstractAttributesData = $this->productFacade->decodeProductAttributes($data['SpyProductAbstract']['attributes']);
+        $abstractLocalizedAttributesData = $this->productFacade->decodeProductAttributes($data['attributes']);
 
         $rawProductAttributesTransfer = new RawProductAttributesTransfer();
         $rawProductAttributesTransfer
             ->setAbstractAttributes($abstractAttributesData)
             ->setAbstractLocalizedAttributes($abstractLocalizedAttributesData);
 
-        $attributes = $this->getFactory()->getProductFacade()->combineRawProductAttributes($rawProductAttributesTransfer);
+        $attributes = $this->productFacade->combineRawProductAttributes($rawProductAttributesTransfer);
 
         $attributes = array_filter($attributes, function ($key) {
             return !empty($key);
@@ -188,7 +240,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected function getVariantSuperAttributes(array $attributes)
     {
         if (empty($this->superAttributes)) {
-            $superAttributes = $this->getQueryContainer()
+            $superAttributes = $this->queryContainer
                 ->queryProductAttributeKey()
                 ->find();
 
@@ -221,7 +273,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      */
     protected function findProductAbstractLocalizedEntities(array $productAbstractIds)
     {
-        return $this->getQueryContainer()->queryProductAbstractByIds($productAbstractIds)->find()->getData();
+        return $this->queryContainer->queryProductAbstractByIds($productAbstractIds)->find()->getData();
     }
 
     /**
@@ -231,7 +283,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      */
     protected function findProductStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {
-        $productAbstractStorageEntities = $this->getQueryContainer()->queryProductAbstractStorageByIds($productAbstractIds)->find();
+        $productAbstractStorageEntities = $this->queryContainer->queryProductAbstractStorageByIds($productAbstractIds)->find();
         $productAbstractStorageEntitiesByIdAndLocale = [];
         foreach ($productAbstractStorageEntities as $productAbstractStorageEntity) {
             $productAbstractStorageEntitiesByIdAndLocale[$productAbstractStorageEntity->getFkProductAbstract()][$productAbstractStorageEntity->getLocale()] = $productAbstractStorageEntity;
@@ -245,6 +297,6 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      */
     protected function getStoreName()
     {
-        return $this->getFactory()->getStore()->getStoreName();
+        return $this->store->getStoreName();
     }
 }

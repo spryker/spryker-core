@@ -8,14 +8,17 @@
 namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\ProductEvents;
+use Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductStorage\Communication\ProductStorageCommunicationFactory getFactory()
+ * @method ProductStorageFacadeInterface getFacade()
  */
-class ProductConcreteStorageListener extends AbstractProductConcreteStorageListener implements EventBulkHandlerInterface
+class ProductConcreteStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -35,9 +38,9 @@ class ProductConcreteStorageListener extends AbstractProductConcreteStorageListe
         if ($eventName === ProductEvents::ENTITY_SPY_PRODUCT_DELETE ||
             $eventName === ProductEvents::PRODUCT_CONCRETE_UNPUBLISH
         ) {
-            $this->unpublish($productIds);
+            $this->getFacade()->unpublishConcreteProducts($productIds);
         } else {
-            $this->publish($productIds);
+            $this->getFacade()->publishConcreteProducts($productIds);
         }
     }
 }

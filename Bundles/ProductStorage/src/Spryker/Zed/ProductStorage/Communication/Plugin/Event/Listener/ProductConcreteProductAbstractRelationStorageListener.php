@@ -9,13 +9,16 @@ namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductStorage\Communication\ProductStorageCommunicationFactory getFactory()
+ * @method ProductStorageFacadeInterface getFacade()
  */
-class ProductConcreteProductAbstractRelationStorageListener extends AbstractProductAbstractStorageListener implements EventBulkHandlerInterface
+class ProductConcreteProductAbstractRelationStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -35,6 +38,6 @@ class ProductConcreteProductAbstractRelationStorageListener extends AbstractProd
             SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT
         );
 
-        $this->publish($productAbstractIds);
+        $this->getFacade()->publishAbstractProducts($productAbstractIds);
     }
 }

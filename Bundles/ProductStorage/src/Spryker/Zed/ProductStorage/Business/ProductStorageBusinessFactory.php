@@ -5,6 +5,10 @@ namespace Spryker\Zed\ProductStorage\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductStorage\Business\Attribute\AttributeMap;
 use Spryker\Zed\ProductStorage\Business\Attribute\AttributeMapInterface;
+use Spryker\Zed\ProductStorage\Business\Storage\ProductAbstractStorageWriter;
+use Spryker\Zed\ProductStorage\Business\Storage\ProductAbstractStorageWriterInterface;
+use Spryker\Zed\ProductStorage\Business\Storage\ProductConcreteStorageWriter;
+use Spryker\Zed\ProductStorage\Business\Storage\ProductConcreteStorageWriterInterface;
 use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider;
 
 /**
@@ -13,6 +17,34 @@ use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider;
  */
 class ProductStorageBusinessFactory extends AbstractBusinessFactory
 {
+
+    /**
+     * @return ProductAbstractStorageWriterInterface
+     */
+    public function createProductAbstractStorageWriter()
+    {
+        return new ProductAbstractStorageWriter(
+            $this->getProductFacade(),
+            $this->createAttributeMap(),
+            $this->getQueryContainer(),
+            $this->getStore(),
+            $this->getConfig()->isSendingToQueue()
+        );
+    }
+
+    /**
+     * @return ProductConcreteStorageWriterInterface
+     */
+    public function createProductConcreteStorageWriter()
+    {
+        return new ProductConcreteStorageWriter(
+            $this->getProductFacade(),
+            $this->getQueryContainer(),
+            $this->getStore(),
+            $this->getConfig()->isSendingToQueue()
+        );
+    }
+
     /**
      * @return AttributeMapInterface
      */
