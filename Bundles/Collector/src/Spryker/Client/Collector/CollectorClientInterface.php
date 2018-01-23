@@ -10,6 +10,9 @@ namespace Spryker\Client\Collector;
 interface CollectorClientInterface
 {
     /**
+     * Specification:
+     * - Retrieves locale specific URL details from Storage if found.
+     *
      * @api
      *
      * @param string $url
