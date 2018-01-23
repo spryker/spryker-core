@@ -138,7 +138,12 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
             return 0;
         }
 
-        $touchUpdater->bulkUpdate($touchUpdaterSet, $locale->getIdLocale(), $this->touchQueryContainer->getConnection());
+        $touchUpdater->bulkUpdate(
+            $touchUpdaterSet,
+            $locale->getIdLocale(),
+            $this->getCurrentStore()->getIdStore(),
+            $this->touchQueryContainer->getConnection()
+        );
         $storeWriter->write($batch);
 
         return $batchSize;

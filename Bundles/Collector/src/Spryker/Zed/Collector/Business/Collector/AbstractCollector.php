@@ -19,6 +19,7 @@ use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractCollectorQuery;
+use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -45,6 +46,11 @@ abstract class AbstractCollector
      * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $locale;
+
+    /**
+     * @var \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected $currentStoreBuffer;
 
     /**
      * @param string $touchKey
@@ -80,6 +86,19 @@ abstract class AbstractCollector
     protected function isStorable(array $collectItemData)
     {
         return true;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function getCurrentStore()
+    {
+        if ($this->currentStoreBuffer === null) {
+            // Deprecated: inject StoreFacade through constructor
+            $this->currentStoreBuffer = Locator::getInstance()->store()->facade()->getCurrentStore();
+        }
+
+        return $this->currentStoreBuffer;
     }
 
     /**
@@ -240,7 +259,7 @@ abstract class AbstractCollector
      */
     protected function getTouchCollectionToDelete($itemType, $offset = 0)
     {
-        $deleteQuery = $this->touchQueryContainer->queryTouchDeleteStorageAndSearch($itemType, $this->locale->getIdLocale());
+        $deleteQuery = $this->touchQueryContainer->queryTouchDeleteStorageAndSearch($itemType, $this->getCurrentStore()->getIdStore(), $this->locale->getIdLocale());
         $deleteQuery
             ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, CollectorConfig::COLLECTOR_TOUCH_ID)
             ->withColumn('search.key', CollectorConfig::COLLECTOR_SEARCH_KEY)

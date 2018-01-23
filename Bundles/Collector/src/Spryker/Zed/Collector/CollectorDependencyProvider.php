@@ -62,18 +62,6 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `addLocaleFacade()` instead.
-     *
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    private function provideLocaleFacade(Container $container)
-    {
-        return $this->addLocaleFacade($container);
-    }
-
-    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container

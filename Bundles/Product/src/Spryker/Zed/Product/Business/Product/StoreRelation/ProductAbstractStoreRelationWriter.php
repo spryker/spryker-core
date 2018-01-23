@@ -42,6 +42,8 @@ class ProductAbstractStoreRelationWriter implements ProductAbstractStoreRelation
      */
     public function save(StoreRelationTransfer $storeRelationTransfer)
     {
+        $storeRelationTransfer->requireIdEntity();
+
         $currentIdStores = $this->getIdStoresByIdProductAbstract($storeRelationTransfer->getIdEntity());
         $requestedIdStores = $this->findStoreRelationIdStores($storeRelationTransfer);
 
