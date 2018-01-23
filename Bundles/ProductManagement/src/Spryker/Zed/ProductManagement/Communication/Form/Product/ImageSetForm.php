@@ -61,6 +61,24 @@ class ImageSetForm extends AbstractSubForm
     }
 
     /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'product_image_set';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
