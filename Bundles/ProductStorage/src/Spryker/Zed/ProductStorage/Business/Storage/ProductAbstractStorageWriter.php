@@ -5,18 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\ProductStorage\Business\Storage;
 
 use Generated\Shared\Transfer\ProductAbstractStorageTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-/**
- * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductStorage\Communication\ProductStorageCommunicationFactory getFactory()
- */
-class AbstractProductAbstractStorageListener extends AbstractPlugin
+class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterface
 {
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
@@ -31,7 +26,7 @@ class AbstractProductAbstractStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function publish(array $productAbstractIds)
+    public function publish(array $productAbstractIds)
     {
         $spyProductAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
         $spyProductAbstractStorageEntities = $this->findProductStorageEntitiesByProductAbstractIds($productAbstractIds);
@@ -48,7 +43,7 @@ class AbstractProductAbstractStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function unpublish(array $productAbstractIds)
+    public function unpublish(array $productAbstractIds)
     {
         $spyProductStorageEntities = $this->findProductStorageEntitiesByProductAbstractIds($productAbstractIds);
         $this->deleteStorageData($spyProductStorageEntities);

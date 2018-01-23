@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductStorage\Communication\Helper;
+namespace Spryker\Zed\ProductStorage\Business\Attribute;
 
-interface AttributeMapHelperInterface
+interface AttributeMapInterface
 {
     /**
      * @param int $idProductAbstract

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductStorage\Communication\Helper;
+namespace Spryker\Zed\ProductStorage\Business\Attribute;
 
 use Generated\Shared\Transfer\AttributeMapStorageTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
@@ -14,7 +14,7 @@ use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface;
 use Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface;
 
-class AttributeMapHelper implements AttributeMapHelperInterface
+class AttributeMap implements AttributeMapInterface
 {
     /**
      * @var \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface
