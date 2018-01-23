@@ -9,7 +9,7 @@ namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
-use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer;
+use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -18,14 +18,14 @@ class FileTable extends AbstractTable
     const REQUEST_ID_FILE = 'id-file';
 
     /**
-     * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer
+     * @var \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface
      */
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer $queryContainer
+     * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer
      */
-    public function __construct(FileManagerQueryContainer $queryContainer)
+    public function __construct(FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
     }

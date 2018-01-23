@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\FileManagerGui;
 
+use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToFileManagerFacadeBridge;
+use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeBridge;
+use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -24,15 +27,18 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container[static::FACADE_FILE_MANAGER] = function (Container $container) {
-            return $container->getLocator()->fileManager()->facade();
+            $fileManagerFacade = $container->getLocator()->fileManager()->facade();
+            return new FileManagerGuiToFileManagerFacadeBridge($fileManagerFacade);
         };
 
         $container[static::QUERY_CONTAINER_FILE_MANAGER] = function (Container $container) {
-            return $container->getLocator()->fileManager()->queryContainer();
+            $queryContainer = $container->getLocator()->fileManager()->queryContainer();
+            return new FileManagerGuiToFileManagerQueryContainerBridge($queryContainer);
         };
 
         $container[static::FACADE_LOCALE] = function (Container $container) {
-            return $container->getLocator()->locale()->facade();
+            $localeFacade = $container->getLocator()->locale()->facade();
+            return new FileManagerGuiToLocaleFacadeBridge($localeFacade);
         };
 
         return parent::provideCommunicationLayerDependencies($container);

@@ -9,7 +9,7 @@ namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
-use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer;
+use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -18,7 +18,7 @@ class FileInfoTable extends AbstractTable
     const REQUEST_ID_FILE_INFO = 'id-file-info';
 
     /**
-     * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer
+     * @var \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface
      */
     protected $queryContainer;
 
@@ -33,11 +33,11 @@ class FileInfoTable extends AbstractTable
     private $editMode;
 
     /**
-     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer $queryContainer
+     * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer
      * @param int $idFile
      * @param bool $editMode
      */
-    public function __construct(FileManagerQueryContainer $queryContainer, int $idFile, bool $editMode = false)
+    public function __construct(FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer, int $idFile, bool $editMode = false)
     {
         $this->queryContainer = $queryContainer;
         $this->idFile = $idFile;
@@ -159,6 +159,13 @@ class FileInfoTable extends AbstractTable
     {
         $buttons = [];
 
+        $buttons[] = $this->generateViewButton(
+            Url::generate('/file-manager-gui/download', [
+                static::REQUEST_ID_FILE_INFO => $item[FileManagerGuiConstants::COL_ID_FILE_INFO],
+            ]),
+            'Download'
+        );
+
         if ($this->editMode) {
             $buttons[] = $this->generateRemoveButton(
                 Url::generate('/file-manager-gui/delete/file-info', [
@@ -167,13 +174,6 @@ class FileInfoTable extends AbstractTable
                 'Delete'
             );
         }
-
-        $buttons[] = $this->generateViewButton(
-            Url::generate('/file-manager-gui/download', [
-                static::REQUEST_ID_FILE_INFO => $item[FileManagerGuiConstants::COL_ID_FILE_INFO],
-            ]),
-            'Download'
-        );
 
         return $buttons;
     }

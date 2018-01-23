@@ -7,21 +7,21 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Form\DataProvider;
 
-use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
+use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface;
 
 class FileFormDataProvider
 {
     /**
-     * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer
+     * @var \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface
      */
     private $queryContainer;
 
     /**
-     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer $queryContainer
+     * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer
      */
     public function __construct(
-        FileManagerQueryContainer $queryContainer
+        FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer
     ) {
         $this->queryContainer = $queryContainer;
     }

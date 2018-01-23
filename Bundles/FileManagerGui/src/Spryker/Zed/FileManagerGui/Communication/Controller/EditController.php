@@ -70,7 +70,7 @@ class EditController extends AbstractController
 
         $fileInfoTable = $this
             ->getFactory()
-            ->createFileInfoTable($idFile);
+            ->createFileInfoTable($idFile, true);
 
         return $this->jsonResponse(
             $fileInfoTable->fetchData()

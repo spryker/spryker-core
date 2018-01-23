@@ -72,7 +72,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\FileManagerFacadeInterface
+     * @return \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToFileManagerFacadeBridgeInterface
      */
     public function getFileManagerFacade()
     {
@@ -80,7 +80,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer
+     * @return \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface
      */
     public function getFileManagerQueryContainer()
     {
@@ -88,7 +88,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
+     * @return \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeBridgeInterface
      */
     public function getLocaleFacade()
     {
