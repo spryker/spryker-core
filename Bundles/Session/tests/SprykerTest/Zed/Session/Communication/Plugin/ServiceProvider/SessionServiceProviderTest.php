@@ -32,6 +32,16 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class SessionServiceProviderTest extends Unit
 {
     use ConfigHelperTrait;
+    
+    /**
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        session_write_close();
+    }
 
     /**
      * @return void
