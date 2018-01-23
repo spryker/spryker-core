@@ -1,24 +1,28 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
-use Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method FileManagerGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
  */
 class DeleteController extends AbstractController
 {
-
     const URL_PARAM_ID_FILE_INFO = 'id-file-info';
     const URL_PARAM_ID_FILE = 'id-file';
     const REFERER_PARAM = 'referer';
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function fileInfoAction(Request $request)
     {
@@ -32,8 +36,9 @@ class DeleteController extends AbstractController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function fileAction(Request $request)
     {
@@ -47,7 +52,8 @@ class DeleteController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function redirectBack(Request $request)
@@ -58,5 +64,4 @@ class DeleteController extends AbstractController
 
         return $this->redirectResponse($referer);
     }
-
 }

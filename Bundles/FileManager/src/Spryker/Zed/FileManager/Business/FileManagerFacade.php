@@ -32,55 +32,70 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     /**
      * @api
      *
-     * @param int $fileId
+     * @param int $idFile
      *
+     * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
-    public function readLatestFileVersion($fileId)
+    public function readLatestFileVersion($idFile)
     {
-        return $this->getFactory()->createFileReader()->read($fileId);
+        return $this->getFactory()->createFileReader()->readLatestByFileId($idFile);
     }
 
     /**
      * @api
      *
-     * @param int $fileId
+     * @param int $idFile
      *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return bool
      */
-    public function delete($fileId)
+    public function delete($idFile)
     {
-        return $this->getFactory()->createFileRemover()->delete($fileId);
+        return $this->getFactory()->createFileRemover()->delete($idFile);
     }
 
     /**
      * @api
      *
-     * @param int $fileInfoId
+     * @param int $idFileInfo
      *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
      * @return bool
      */
-    public function deleteFileInfo($fileInfoId)
+    public function deleteFileInfo($idFileInfo)
     {
-        return $this->getFactory()->createFileRemover()->deleteFileInfo($fileInfoId);
+        return $this->getFactory()->createFileRemover()->deleteFileInfo($idFileInfo);
     }
 
     /**
      * @api
      *
-     * @param int $fileId
-     * @param int $fileInfoId
+     * @param int $idFile
+     * @param int $idFileInfo
      *
      * @return void
      */
-    public function rollback($fileId, $fileInfoId)
+    public function rollback($idFile, $idFileInfo)
     {
-        $this->getFactory()->createFileRollback()->rollback($fileId, $fileInfoId);
+        $this->getFactory()->createFileRollback()->rollback($idFile, $idFileInfo);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idFileInfo
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     */
+    public function read($idFileInfo)
+    {
+        return $this->getFactory()->createFileReader()->read($idFileInfo);
     }
 }

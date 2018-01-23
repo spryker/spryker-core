@@ -1,33 +1,31 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\CmsGui\Communication\Controller\CreateGlossaryController;
-use Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method FileManagerGuiCommunicationFactory getFactory()
- * @method getFacade()
+ * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
  */
 class EditController extends AbstractController
 {
-
     const URL_PARAM_ID_FILE = 'id-file';
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      */
     public function indexAction(Request $request)
     {
@@ -48,7 +46,7 @@ class EditController extends AbstractController
             return $this->redirectResponse($redirectUrl);
         }
 
-        $fileInfoTable = $this->getFactory()->createFileInfoTable($idFile);
+        $fileInfoTable = $this->getFactory()->createFileInfoTable($idFile, true);
         $fileFormsTabs = $this->getFactory()->createFileFormTabs();
 
         return [
@@ -60,9 +58,9 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function fileInfoTableAction(Request $request)
     {
@@ -81,7 +79,8 @@ class EditController extends AbstractController
 
     /**
      * @param array $data
-     * @return FileManagerSaveRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileManagerSaveRequestTransfer
      */
     protected function createFileManagerSaveRequestTransfer(array $data)
     {
@@ -95,11 +94,12 @@ class EditController extends AbstractController
 
     /**
      * @param array $data
-     * @return FileInfoTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileInfoTransfer
      */
     protected function createFileInfoTransfer(array $data)
     {
-        /** @var UploadedFile $uploadedFile */
+        /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
         $uploadedFile = $data[FileForm::FIELD_FILE_CONTENT];
         $fileInfo = new FileInfoTransfer();
 
@@ -117,7 +117,8 @@ class EditController extends AbstractController
 
     /**
      * @param array $data
-     * @return FileTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileTransfer
      */
     protected function createFileTransfer(array $data)
     {
@@ -130,11 +131,12 @@ class EditController extends AbstractController
 
     /**
      * @param array $data
+     *
      * @return bool|string
      */
     protected function getFileContent(array $data)
     {
-        /** @var UploadedFile $uploadedFile */
+        /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
         $uploadedFile = $data[FileForm::FIELD_FILE_CONTENT];
 
         if ($uploadedFile === null) {
@@ -143,5 +145,4 @@ class EditController extends AbstractController
 
         return file_get_contents($uploadedFile->getRealPath());
     }
-
 }

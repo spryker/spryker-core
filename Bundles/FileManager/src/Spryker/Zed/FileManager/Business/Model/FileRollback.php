@@ -36,15 +36,15 @@ class FileRollback implements FileRollbackInterface
     }
 
     /**
-     * @param int $fileId
-     * @param int $fileInfoId
+     * @param int $idFile
+     * @param int $idFileInfo
      *
      * @return void
      */
-    public function rollback(int $fileId, int $fileInfoId)
+    public function rollback(int $idFile, int $idFileInfo)
     {
-        $file = $this->getFile($fileId);
-        $targetFileInfo = $this->getFileInfo($fileInfoId);
+        $file = $this->getFile($idFile);
+        $targetFileInfo = $this->getFileInfo($idFileInfo);
         $file->addSpyFileInfo($this->createNewFileInfo($targetFileInfo));
     }
 
@@ -66,49 +66,49 @@ class FileRollback implements FileRollbackInterface
 
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyFileInfo $fileInfo
-     * @param int $fileId
+     * @param int $idFile
      *
      * @return void
      */
-    protected function updateVersion(SpyFileInfo $fileInfo, int $fileId)
+    protected function updateVersion(SpyFileInfo $fileInfo, int $idFile)
     {
-        $newVersion = $this->fileVersion->getNewVersionNumber($fileId);
+        $newVersion = $this->fileVersion->getNewVersionNumber($idFile);
         $newVersionName = $this->fileVersion->getNewVersionName($newVersion);
         $fileInfo->setVersion($newVersion);
         $fileInfo->setVersionName($newVersionName);
     }
 
     /**
-     * @param int $fileId
+     * @param int $idFile
      *
      * @throws \Spryker\Zed\FileManager\Exception\FileNotFoundException
      *
      * @return \Orm\Zed\Cms\Persistence\SpyFile
      */
-    protected function getFile(int $fileId)
+    protected function getFile(int $idFile)
     {
-        $file = $this->fileFinder->getFile($fileId);
+        $file = $this->fileFinder->getFile($idFile);
 
         if ($file == null) {
-            throw new FileNotFoundException(sprintf('File with id %s not found', $fileId));
+            throw new FileNotFoundException(sprintf('File with id %s not found', $idFile));
         }
 
         return $file;
     }
 
     /**
-     * @param int $fileInfoId
+     * @param int $idFileInfo
      *
      * @throws \Spryker\Zed\FileManager\Exception\FileInfoNotFoundException
      *
      * @return \Orm\Zed\Cms\Persistence\SpyFileInfo
      */
-    protected function getFileInfo(int $fileInfoId)
+    protected function getFileInfo(int $idFileInfo)
     {
-        $fileInfo = $this->fileFinder->getFileInfo($fileInfoId);
+        $fileInfo = $this->fileFinder->getFileInfo($idFileInfo);
 
         if ($fileInfo == null) {
-            throw new FileInfoNotFoundException(sprintf('Target file info with id %s not found', $fileInfoId));
+            throw new FileInfoNotFoundException(sprintf('Target file info with id %s not found', $idFileInfo));
         }
 
         return $fileInfo;

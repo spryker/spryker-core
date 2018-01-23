@@ -22,10 +22,6 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_FILE_MANAGER] = function (Container $container) {
-            return $container->getLocator()->fileManager()->service();
-        };
-
         $container[static::SERVICE_FILE_SYSTEM] = function (Container $container) {
             return $container->getLocator()->fileSystem()->service();
         };

@@ -7,6 +7,12 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
+use Generated\Shared\Transfer\FileInfoTransfer;
+use Generated\Shared\Transfer\FileManagerReadResponseTransfer;
+use Generated\Shared\Transfer\FileTransfer;
+use Orm\Zed\Cms\Persistence\Base\SpyFile;
+use Orm\Zed\Cms\Persistence\SpyFileInfo;
+
 class FileReader implements FileReaderInterface
 {
     /**
@@ -30,18 +36,80 @@ class FileReader implements FileReaderInterface
     }
 
     /**
-     * @param int $fileId
+     * @param int $idFileInfo
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
-    public function read(int $fileId)
+    public function read(int $idFileInfo)
     {
-        $fileInfo = $this->fileFinder->getLatestFileInfoByFkFile($fileId);
+        $fileInfo = $this->fileFinder->getFileInfo($idFileInfo);
 
         if ($fileInfo == null) {
             return false;
         }
 
-        return $this->fileContent->read($fileInfo->getStorageFileName());
+        return $this->createResponseTransfer($fileInfo);
+    }
+
+    /**
+     * @param int $idFile
+     *
+     * @return bool|\Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     */
+    public function readLatestByFileId(int $idFile)
+    {
+        $fileInfo = $this->fileFinder->getLatestFileInfoByFkFile($idFile);
+
+        if ($fileInfo == null) {
+            return false;
+        }
+
+        return $this->createResponseTransfer($fileInfo);
+    }
+
+    /**
+     * @param \Orm\Zed\Cms\Persistence\SpyFileInfo $fileInfo
+     *
+     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     */
+    protected function createResponseTransfer(SpyFileInfo $fileInfo)
+    {
+        $fileTransfer = $this->createFileTransfer($fileInfo->getFile());
+        $fileInfoTransfer = $this->createFileInfoTransfer($fileInfo);
+
+        $responseTransfer = new FileManagerReadResponseTransfer();
+        $responseTransfer->setFile($fileTransfer);
+        $responseTransfer->setFileInfo($fileInfoTransfer);
+
+        $content = $this->fileContent->read($fileInfo->getStorageFileName());
+        $responseTransfer->setContent($content);
+
+        return $responseTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Cms\Persistence\Base\SpyFile $file
+     *
+     * @return \Generated\Shared\Transfer\FileTransfer
+     */
+    protected function createFileTransfer(SpyFile $file)
+    {
+        $fileTransfer = new FileTransfer();
+        $fileTransfer->fromArray($file->toArray());
+
+        return $fileTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Cms\Persistence\SpyFileInfo $fileInfo
+     *
+     * @return \Generated\Shared\Transfer\FileInfoTransfer
+     */
+    protected function createFileInfoTransfer(SpyFileInfo $fileInfo)
+    {
+        $fileInfoTransfer = new FileInfoTransfer();
+        $fileInfoTransfer->fromArray($fileInfo->toArray());
+
+        return $fileInfoTransfer;
     }
 }

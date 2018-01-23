@@ -1,24 +1,24 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\FileManagerGui\Communication;
 
-use Spryker\Zed\FileManager\Business\FileManagerFacadeInterface;
-use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer;
 use Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\FileFormDataProvider;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\Tabs\FileFormTabs;
-use Spryker\Zed\FileManagerGui\Communication\Table\FileTable;
 use Spryker\Zed\FileManagerGui\Communication\Table\FileInfoTable;
+use Spryker\Zed\FileManagerGui\Communication\Table\FileTable;
 use Spryker\Zed\FileManagerGui\FileManagerGuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 
 class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
-     * @return FileTable
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @return \Spryker\Zed\FileManagerGui\Communication\Table\FileTable
      */
     public function createFileTable()
     {
@@ -29,14 +29,16 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param int $idFile
-     * @return FileInfoTable
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @param bool $editMode
+     *
+     * @return \Spryker\Zed\FileManagerGui\Communication\Table\FileInfoTable
      */
-    public function createFileInfoTable(int $idFile)
+    public function createFileInfoTable(int $idFile, bool $editMode = false)
     {
         return new FileInfoTable(
             $this->getFileManagerQueryContainer(),
-            $idFile
+            $idFile,
+            $editMode
         );
     }
 
@@ -54,8 +56,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return FileFormDataProvider
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @return \Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\FileFormDataProvider
      */
     public function createFileFormDataProvider()
     {
@@ -63,7 +64,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return FileFormTabs
+     * @return \Spryker\Zed\FileManagerGui\Communication\Form\Tabs\FileFormTabs
      */
     public function createFileFormTabs()
     {
@@ -71,8 +72,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return FileManagerFacadeInterface
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @return \Spryker\Zed\FileManager\Business\FileManagerFacadeInterface
      */
     public function getFileManagerFacade()
     {
@@ -80,21 +80,18 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return FileManagerQueryContainer
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @return \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer
      */
-    protected function getFileManagerQueryContainer()
+    public function getFileManagerQueryContainer()
     {
         return $this->getProvidedDependency(FileManagerGuiDependencyProvider::QUERY_CONTAINER_FILE_MANAGER);
     }
 
     /**
-     * @return LocaleFacadeInterface
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(FileManagerGuiDependencyProvider::FACADE_LOCALE);
     }
-
 }

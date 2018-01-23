@@ -1,7 +1,11 @@
 <?php
 
-namespace Spryker\Zed\FileManagerGui\Communication\Form\Tabs;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Zed\FileManagerGui\Communication\Form\Tabs;
 
 use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
@@ -9,7 +13,6 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class FileFormTabs extends AbstractTabs
 {
-
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
@@ -75,5 +78,4 @@ class FileFormTabs extends AbstractTabs
 
         return $this;
     }
-
 }

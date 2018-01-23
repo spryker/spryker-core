@@ -32,13 +32,13 @@ class FileRemover implements FileRemoverInterface
     }
 
     /**
-     * @param int $fileInfoId
+     * @param int $idFileInfo
      *
      * @return bool
      */
-    public function deleteFileInfo(int $fileInfoId)
+    public function deleteFileInfo(int $idFileInfo)
     {
-        $fileInfo = $this->fileFinder->getFileInfo($fileInfoId);
+        $fileInfo = $this->fileFinder->getFileInfo($idFileInfo);
 
         if ($fileInfo == null) {
             return false;
@@ -51,13 +51,13 @@ class FileRemover implements FileRemoverInterface
     }
 
     /**
-     * @param int $fileId
+     * @param int $idFile
      *
      * @return bool
      */
-    public function delete(int $fileId)
+    public function delete(int $idFile)
     {
-        $file = $this->fileFinder->getFile($fileId);
+        $file = $this->fileFinder->getFile($idFile);
 
         if ($file == null) {
             return false;

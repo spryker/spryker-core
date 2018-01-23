@@ -1,6 +1,11 @@
 <?php
-namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
@@ -10,11 +15,10 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class FileInfoTable extends AbstractTable
 {
-
     const REQUEST_ID_FILE_INFO = 'id-file-info';
 
     /**
-     * @var FileManagerQueryContainer
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer
      */
     protected $queryContainer;
 
@@ -24,13 +28,20 @@ class FileInfoTable extends AbstractTable
     protected $idFile;
 
     /**
-     * @param int $idFile
-     * @param FileManagerQueryContainer $queryContainer
+     * @var bool
      */
-    public function __construct(FileManagerQueryContainer $queryContainer, int $idFile)
+    private $editMode;
+
+    /**
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer $queryContainer
+     * @param int $idFile
+     * @param bool $editMode
+     */
+    public function __construct(FileManagerQueryContainer $queryContainer, int $idFile, bool $editMode = false)
     {
         $this->queryContainer = $queryContainer;
         $this->idFile = $idFile;
+        $this->editMode = $editMode;
     }
 
     /**
@@ -54,7 +65,6 @@ class FileInfoTable extends AbstractTable
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      */
     protected function prepareData(TableConfiguration $config)
     {
@@ -81,7 +91,8 @@ class FileInfoTable extends AbstractTable
 
         return [
             FileManagerGuiConstants::COL_FILE_INFO_VERSION_NAME => $item[FileManagerGuiConstants::COL_FILE_INFO_VERSION_NAME],
-            FileManagerGuiConstants::COL_FILE_INFO_CREATED_AT =>$createdAt ,
+            FileManagerGuiConstants::COL_FILE_INFO_TYPE => $item[FileManagerGuiConstants::COL_FILE_INFO_TYPE],
+            FileManagerGuiConstants::COL_FILE_INFO_CREATED_AT => $createdAt,
             FileManagerGuiConstants::COL_ACTIONS => $actions,
         ];
     }
@@ -95,6 +106,7 @@ class FileInfoTable extends AbstractTable
     {
         $config->setHeader([
             FileManagerGuiConstants::COL_FILE_INFO_VERSION_NAME => 'Version',
+            FileManagerGuiConstants::COL_FILE_INFO_TYPE => 'File type',
             FileManagerGuiConstants::COL_FILE_INFO_CREATED_AT => 'Date',
             FileManagerGuiConstants::COL_ACTIONS => FileManagerGuiConstants::COL_ACTIONS,
         ]);
@@ -147,20 +159,22 @@ class FileInfoTable extends AbstractTable
     {
         $buttons = [];
 
+        if ($this->editMode) {
+            $buttons[] = $this->generateRemoveButton(
+                Url::generate('/file-manager-gui/delete/file-info', [
+                    static::REQUEST_ID_FILE_INFO => $item[FileManagerGuiConstants::COL_ID_FILE_INFO],
+                ]),
+                'Delete'
+            );
+        }
+
         $buttons[] = $this->generateViewButton(
             Url::generate('/file-manager-gui/download', [
                 static::REQUEST_ID_FILE_INFO => $item[FileManagerGuiConstants::COL_ID_FILE_INFO],
             ]),
             'Download'
         );
-        $buttons[] = $this->generateRemoveButton(
-            Url::generate('/file-manager-gui/delete/file-info', [
-                static::REQUEST_ID_FILE_INFO => $item[FileManagerGuiConstants::COL_ID_FILE_INFO],
-            ]),
-            'Delete'
-        );
 
         return $buttons;
     }
-
 }

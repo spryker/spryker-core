@@ -1,19 +1,21 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
-use Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
- * @method FileManagerGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {
-
     /**
      * @return array
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function indexAction()
     {
@@ -27,7 +29,6 @@ class IndexController extends AbstractController
 
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function tableAction()
     {
@@ -36,5 +37,4 @@ class IndexController extends AbstractController
 
         return $this->jsonResponse($table->fetchData());
     }
-
 }

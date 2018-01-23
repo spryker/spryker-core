@@ -7,21 +7,18 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Form\DataProvider;
 
-use Spryker\Zed\Cms\Communication\Form\CmsPageFormType;
-use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleInterface;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 
 class FileFormDataProvider
 {
     /**
-     * @var FileManagerQueryContainer
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer
      */
     private $queryContainer;
 
     /**
-     * @param FileManagerQueryContainer $queryContainer
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer $queryContainer
      */
     public function __construct(
         FileManagerQueryContainer $queryContainer
@@ -31,8 +28,8 @@ class FileFormDataProvider
 
     /**
      * @param int|null $idFile
+     *
      * @return array
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      */
     public function getData($idFile = null)
     {
@@ -50,5 +47,4 @@ class FileFormDataProvider
             FileForm::FIELD_FILE_NAME => $file->getFileName(),
         ];
     }
-
 }

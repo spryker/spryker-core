@@ -10,10 +10,10 @@ namespace Spryker\Zed\FileManager\Business\Model;
 interface FileRollbackInterface
 {
     /**
-     * @param int $fileId
-     * @param int $fileInfoId
+     * @param int $idFile
+     * @param int $idFileInfo
      *
      * @return void
      */
-    public function rollback(int $fileId, int $fileInfoId);
+    public function rollback(int $idFile, int $idFileInfo);
 }

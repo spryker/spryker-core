@@ -30,35 +30,47 @@ interface FileManagerFacadeInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
     public function readLatestFileVersion($fileId);
 
     /**
      * @api
      *
-     * @param int $fileId
+     * @param int $idFile
      *
      * @return bool
      */
-    public function delete($fileId);
+    public function delete($idFile);
 
     /**
      * @api
      *
-     * @param int $fileInfoId
+     * @param int $idFileInfo
      *
      * @return bool
      */
-    public function deleteFileInfo($fileInfoId);
+    public function deleteFileInfo($idFileInfo);
 
     /**
      * @api
      *
-     * @param int $fileId
-     * @param int $fileInfoId
+     * @param int $idFile
+     * @param int $idFileInfo
      *
      * @return void
      */
-    public function rollback($fileId, $fileInfoId);
+    public function rollback($idFile, $idFileInfo);
+
+    /**
+     * @api
+     *
+     * @param int $idFileInfo
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     */
+    public function read($idFileInfo);
 }

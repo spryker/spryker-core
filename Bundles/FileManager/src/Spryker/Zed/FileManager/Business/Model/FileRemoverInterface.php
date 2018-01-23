@@ -10,16 +10,16 @@ namespace Spryker\Zed\FileManager\Business\Model;
 interface FileRemoverInterface
 {
     /**
-     * @param int $fileInfoId
+     * @param int $idFileInfo
      *
      * @return bool
      */
-    public function deleteFileInfo(int $fileInfoId);
+    public function deleteFileInfo(int $idFileInfo);
 
     /**
-     * @param int $fileId
+     * @param int $idFile
      *
      * @return bool
      */
-    public function delete(int $fileId);
+    public function delete(int $idFile);
 }

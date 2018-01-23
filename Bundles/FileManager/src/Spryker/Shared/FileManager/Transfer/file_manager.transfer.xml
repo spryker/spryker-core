@@ -10,6 +10,13 @@
         <property name="content" type="string" />
     </transfer>
 
+    <transfer name="FileManagerReadResponse">
+        <property name="file" type="File" />
+        <property name="fileInfo" type="FileInfo" />
+        <property name="fileLocalizedAttributes" type="FileLocalizedAttributes[]" />
+        <property name="content" type="string" />
+    </transfer>
+
     <transfer name="File">
         <property name="idFile" type="int" />
         <property name="fileName" type="string" />

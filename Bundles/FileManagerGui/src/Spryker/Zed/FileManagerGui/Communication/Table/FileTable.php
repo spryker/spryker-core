@@ -1,6 +1,11 @@
 <?php
-namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
@@ -10,16 +15,15 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class FileTable extends AbstractTable
 {
-
     const REQUEST_ID_FILE = 'id-file';
 
     /**
-     * @var FileManagerQueryContainer
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @param FileManagerQueryContainer $queryContainer
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer $queryContainer
      */
     public function __construct(FileManagerQueryContainer $queryContainer)
     {
@@ -41,7 +45,6 @@ class FileTable extends AbstractTable
 
         return $config;
     }
-
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
@@ -169,5 +172,4 @@ class FileTable extends AbstractTable
 
         return $buttons;
     }
-
 }

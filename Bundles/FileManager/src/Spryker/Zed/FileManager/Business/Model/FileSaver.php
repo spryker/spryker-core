@@ -8,7 +8,6 @@
 namespace Spryker\Zed\FileManager\Business\Model;
 
 use Exception;
-use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
 use Orm\Zed\Cms\Persistence\SpyFile;
 use Orm\Zed\Cms\Persistence\SpyFileInfo;
@@ -17,7 +16,7 @@ use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
 
 class FileSaver implements FileSaverInterface
 {
-    const FILE_EXTENSION_DELIMITER = '.';
+    const FILE_VERSION_DELIMITER = '-';
 
     /**
      * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface
@@ -136,8 +135,10 @@ class FileSaver implements FileSaverInterface
     }
 
     /**
-     * @param SpyFile $file
-     * @param SpyFileInfo|null $fileInfo
+     * @param \Orm\Zed\Cms\Persistence\SpyFile $file
+     * @param \Orm\Zed\Cms\Persistence\SpyFileInfo|null $fileInfo
+     *
+     * @return void
      */
     protected function addFileInfoToFile(SpyFile $file, SpyFileInfo $fileInfo = null)
     {
@@ -147,14 +148,16 @@ class FileSaver implements FileSaverInterface
     }
 
     /**
-     * @param FileManagerSaveRequestTransfer $saveRequestTransfer
-     * @param SpyFile $file
-     * @param SpyFileInfo $fileInfo
+     * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
+     * @param \Orm\Zed\Cms\Persistence\SpyFile $file
+     * @param \Orm\Zed\Cms\Persistence\SpyFileInfo|null $fileInfo
+     *
+     * @return void
      */
     protected function saveContent(FileManagerSaveRequestTransfer $saveRequestTransfer, SpyFile $file, SpyFileInfo $fileInfo = null)
     {
         if ($saveRequestTransfer->getContent() !== null || $fileInfo !== null) {
-            $newFileName = $this->getNewFileName($file->getFileName(), $fileInfo->getVersionName(), $saveRequestTransfer->getFileInfo()->getFileExtension());
+            $newFileName = $this->getNewFileName($file->getFileName(), $fileInfo->getVersionName());
             $this->fileContent->save($newFileName, $saveRequestTransfer->getContent());
             $this->addStorageInfo($fileInfo, $newFileName);
         }
@@ -176,7 +179,8 @@ class FileSaver implements FileSaverInterface
     }
 
     /**
-     * @param FileManagerSaveRequestTransfer $saveRequestTransfer
+     * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
+     *
      * @return \Orm\Zed\Cms\Persistence\SpyFileInfo
      */
     protected function createFileInfo(FileManagerSaveRequestTransfer $saveRequestTransfer)
@@ -200,13 +204,12 @@ class FileSaver implements FileSaverInterface
     /**
      * @param string $fileName
      * @param string $versionName
-     * @param string $fileExtension
      *
      * @return string
      */
-    protected function getNewFileName(string $fileName, string $versionName, string $fileExtension)
+    protected function getNewFileName(string $fileName, string $versionName)
     {
-        return $fileName . $versionName . static::FILE_EXTENSION_DELIMITER . $fileExtension;
+        return $fileName . static::FILE_VERSION_DELIMITER . $versionName;
     }
 
     /**

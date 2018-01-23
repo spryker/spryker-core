@@ -48,11 +48,11 @@ interface FileManagerQueryContainerInterface
     /**
      * @api
      *
-     * @param int $fileInfoId
+     * @param int $idFileInfo
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
      * @return \Orm\Zed\Cms\Persistence\SpyFileInfoQuery
      */
-    public function queryFileInfo(int $fileInfoId);
+    public function queryFileInfo(int $idFileInfo);
 }

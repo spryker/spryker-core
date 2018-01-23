@@ -10,7 +10,6 @@ namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
 use Generated\Shared\Transfer\FileTransfer;
-use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,8 +17,10 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
  */
-class AddController extends AbstractController
+class ViewController extends AbstractController
 {
+    const URL_PARAM_ID_FILE = 'id-file';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -27,26 +28,38 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $dataProvider = $this->getFactory()->createFileFormDataProvider();
-        $form = $this->getFactory()
-            ->createFileForm($dataProvider->getData())
-            ->handleRequest($request);
+        $idFile = $this->castId($request->get(static::URL_PARAM_ID_FILE));
 
-        if ($form->isValid()) {
-            $data = $form->getData();
-            $saveRequestTransfer = $this->createFileManagerSaveRequestTransfer($data);
+        $file = $this->getFactory()
+            ->getFileManagerQueryContainer()
+            ->queryFileById($idFile)
+            ->findOne();
+        $fileInfoTable = $this->getFactory()->createFileInfoTable($idFile);
 
-            $this->getFactory()->getFileManagerFacade()->save($saveRequestTransfer);
+        return [
+            'file' => $file,
+            'fileInfoTable' => $fileInfoTable->render(),
+        ];
+    }
 
-            $redirectUrl = Url::generate('/file-manager-gui')->build();
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function fileInfoTableAction(Request $request)
+    {
+        $idFile = $this->castId(
+            $request->get(static::URL_PARAM_ID_FILE)
+        );
 
-            return $this->redirectResponse($redirectUrl);
-        }
+        $fileInfoTable = $this
+            ->getFactory()
+            ->createFileInfoTable($idFile);
 
-        return $this->viewResponse([
-            'form' => $form->createView(),
-            'availableLocales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
-        ]);
+        return $this->jsonResponse(
+            $fileInfoTable->fetchData()
+        );
     }
 
     /**
@@ -75,9 +88,14 @@ class AddController extends AbstractController
         $uploadedFile = $data[FileForm::FIELD_FILE_CONTENT];
         $fileInfo = new FileInfoTransfer();
 
+        if ($uploadedFile === null) {
+            return $fileInfo;
+        }
+
         $fileInfo->setFileExtension($uploadedFile->getClientOriginalExtension());
         $fileInfo->setSize($uploadedFile->getSize());
         $fileInfo->setType($uploadedFile->getMimeType());
+        $fileInfo->setFkFile($data[FileForm::FIELD_ID_FILE]);
 
         return $fileInfo;
     }
@@ -90,14 +108,8 @@ class AddController extends AbstractController
     protected function createFileTransfer(array $data)
     {
         $file = new FileTransfer();
-
-        if ($data[FileForm::FIELD_USE_REAL_NAME]) {
-            /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
-            $uploadedFile = $data[FileForm::FIELD_FILE_CONTENT];
-            $file->setFileName($uploadedFile->getClientOriginalName());
-        } else {
-            $file->setFileName($data[FileForm::FIELD_FILE_NAME]);
-        }
+        $file->setFileName($data[FileForm::FIELD_FILE_NAME]);
+        $file->setIdFile($data[FileForm::FIELD_ID_FILE]);
 
         return $file;
     }
@@ -111,6 +123,10 @@ class AddController extends AbstractController
     {
         /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
         $uploadedFile = $data[FileForm::FIELD_FILE_CONTENT];
+
+        if ($uploadedFile === null) {
+            return null;
+        }
 
         return file_get_contents($uploadedFile->getRealPath());
     }

@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Edit file' | trans %}
+{% set widget_title = 'View file' | trans %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
@@ -11,16 +11,10 @@
 
 {% block content %}
 
-    {{ form_start(fileForm) }}
+    <h2>{{ file.fileName }}</h2>
 
-    {{ tabs(
-        fileFormTabs,
-        {
-            'fileForm': fileForm,
-            'fileInfoTable': fileInfoTable
-        }
-    ) }}
-
-    {{ form_end(fileForm) }}
+    {% if fileInfoTable %}
+        {{ fileInfoTable | raw }}
+    {% endif %}
 
 {% endblock %}
