@@ -32,7 +32,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class SessionServiceProviderTest extends Unit
 {
     use ConfigHelperTrait;
-    
+
     /**
      * @return void
      */
