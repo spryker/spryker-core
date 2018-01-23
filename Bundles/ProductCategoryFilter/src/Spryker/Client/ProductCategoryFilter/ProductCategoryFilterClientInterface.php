@@ -7,11 +7,15 @@
 
 namespace Spryker\Client\ProductCategoryFilter;
 
+use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
+
 interface ProductCategoryFilterClientInterface
 {
     /**
+     * @deprecated use updateFacetsByProductCategoryFilterTransfer
+     *
      * Specification:
-     * - Returns formatted facets based on product category filters
+     * - Returns formatted facets based on product category filters from array
      *
      * @api
      *
@@ -21,6 +25,19 @@ interface ProductCategoryFilterClientInterface
      * @return array
      */
     public function updateFacetsByCategory(array $facets, array $productCategoryFilters);
+
+    /**
+     * Specification:
+     * - Returns formatted facets based on product category filters from transfer
+     *
+     * @api
+     *
+     * @param array $facets
+     * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
+     *
+     * @return array
+     */
+    public function updateFacetsByProductCategoryFilterTransfer(array $facets, ProductCategoryFilterTransfer $productCategoryFilterTransfer);
 
     /**
      * Specification:

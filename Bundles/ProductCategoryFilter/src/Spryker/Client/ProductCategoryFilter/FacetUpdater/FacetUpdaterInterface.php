@@ -16,4 +16,12 @@ interface FacetUpdaterInterface
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
      */
     public function update(array $facets, array $updateCriteria);
+
+    /**
+     * @param array $facets
+     * @param array \Generated\Shared\Transfer\ProductCategoryFilterItemTransfer $productCategoryFilters
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     */
+    public function updateFromTransfer(array $facets, array $productCategoryFilters);
 }

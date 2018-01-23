@@ -19,18 +19,18 @@ class ProductCategoryFilterReader implements ProductCategoryFilterReaderInterfac
     protected $productCategoryFilterQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductCategoryFilter\Dependency\Service\ProductCategoryFilterToUtilEncodingServiceInterface
+     * @var \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTransferGeneratorInterface
      */
-    protected $utilEncodingService;
+    protected $productCategoryFilterTransferGenerator;
 
     /**
      * @param \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer
      * @param \Spryker\Zed\ProductCategoryFilter\Dependency\Service\ProductCategoryFilterToUtilEncodingServiceInterface $utilEncodingService
      */
-    public function __construct(ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer, ProductCategoryFilterToUtilEncodingServiceInterface $utilEncodingService)
+    public function __construct(ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer, ProductCategoryFilterTransferGenerator $productCategoryFilterTransferGenerator)
     {
         $this->productCategoryFilterQueryContainer = $productCategoryFilterQueryContainer;
-        $this->utilEncodingService = $utilEncodingService;
+        $this->productCategoryFilterTransferGenerator = $productCategoryFilterTransferGenerator;
     }
 
     /**
@@ -42,20 +42,17 @@ class ProductCategoryFilterReader implements ProductCategoryFilterReaderInterfac
     {
         $productCategoryFilterEntity = $this->getProductCategoryFilterEntityByCategoryId($categoryId);
 
-        $productCategoryFilterTransfer = new ProductCategoryFilterTransfer();
-        $productCategoryFilterTransfer->setFkCategory($categoryId);
-
         if (!$productCategoryFilterEntity) {
+            $productCategoryFilterTransfer = new ProductCategoryFilterTransfer();
+            $productCategoryFilterTransfer->setFkCategory($categoryId);
             return $productCategoryFilterTransfer;
         }
 
-        $productCategoryFilterTransfer = $productCategoryFilterTransfer->fromArray($productCategoryFilterEntity->toArray(), true);
-
-        $filterData = $this->utilEncodingService->decodeJson($productCategoryFilterEntity->getFilterData(), true);
-
-        $productCategoryFilterTransfer->setFilterDataArray($filterData);
-
-        return $productCategoryFilterTransfer;
+        return $this->productCategoryFilterTransferGenerator->generateTransferFromJson(
+            $productCategoryFilterEntity->getIdProductCategoryFilter(),
+            $categoryId,
+            $productCategoryFilterEntity->getFilterData()
+        );
     }
 
     /**

@@ -13,7 +13,6 @@ var activeFilters = $('#filters-container ol');
 var inactiveFiltersContainer = $('#inactive-filters-container');
 var inactiveFilters = $('#inactive-filters-container ol');
 var removeAllButton = $('#remove-all-filters');
-var isProductCategoryFilterActiveFlag = $('#is_product_category_filter_active_flag').val();
 
 
 $(document).ready(function() {
@@ -70,8 +69,11 @@ function getFilters(selector, isActive) {
     selector.find('li')
         .each(function(index, el) {
             var filter = {};
-            filter[el.dataset['filterKey']] = { label: el.dataset['filterLabel'] };
-            filter[el.dataset['filterKey']][isProductCategoryFilterActiveFlag] = isActive;
+            filter[el.dataset['filterKey']] = {
+                label: el.dataset['filterLabel'],
+                isActive: isActive
+            };
+
             filters.push(filter);
         });
 

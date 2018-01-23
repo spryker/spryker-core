@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductCategoryFilterGui\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Form\DataProvider\ProductCategoryFilterDataProvider;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Form\ProductCategoryFilterForm;
-use Spryker\Zed\ProductCategoryFilterGui\Communication\Hydrator\ProductCategoryFilterTransferHydrator;
+use Spryker\Zed\ProductCategoryFilterGui\Communication\TransferGenerator\ProductCategoryFilterTransferGenerator;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Table\CategoryRootNodeTable;
 use Spryker\Zed\ProductCategoryFilterGui\ProductCategoryFilterGuiDependencyProvider;
 
@@ -107,11 +107,11 @@ class ProductCategoryFilterGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return \Spryker\Zed\ProductCategoryFilterGui\Communication\Hydrator\HydratorInterface
+     * @return \Spryker\Zed\ProductCategoryFilterGui\Communication\TransferGenerator\ProductCategoryFilterTransferGeneratorInterface
      */
-    public function createProductCategoryFilterHydrator()
+    public function createProductCategoryFilterFormatter()
     {
-        return new ProductCategoryFilterTransferHydrator($this->getUtilEncodingService());
+        return new ProductCategoryFilterTransferGenerator($this->getUtilEncodingService());
     }
 
     /**

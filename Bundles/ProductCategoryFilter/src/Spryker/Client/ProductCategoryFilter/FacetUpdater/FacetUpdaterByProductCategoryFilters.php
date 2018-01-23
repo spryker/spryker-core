@@ -12,6 +12,8 @@ use Spryker\Shared\ProductCategoryFilter\ProductCategoryFilterConfig;
 class FacetUpdaterByProductCategoryFilters implements FacetUpdaterInterface
 {
     /**
+     * @deprecated use updateFromTransfer
+     *
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer[] $facets
      * @param array $updateCriteria
      *
@@ -27,6 +29,28 @@ class FacetUpdaterByProductCategoryFilters implements FacetUpdaterInterface
         foreach ($updateCriteria as $facetKey => $facetConfig) {
             if ($facetConfig[ProductCategoryFilterConfig::IS_ACTIVE_FLAG] && isset($facets[$facetKey])) {
                 $newFacets[$facetKey] = $facets[$facetKey];
+            }
+        }
+
+        return $newFacets;
+    }
+
+    /**
+     * @param array $facets
+     * @param \Generated\Shared\Transfer\ProductCategoryFilterItemTransfer[] $productCategoryFilters
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     */
+    public function updateFromTransfer(array $facets, array $productCategoryFilters)
+    {
+        if (empty($productCategoryFilters)) {
+            return $facets;
+        }
+
+        $newFacets = [];
+        foreach ($productCategoryFilters as $productCategoryFilter) {
+            if ($productCategoryFilter->getIsActive() === true && isset($facets[$productCategoryFilter->getKey()])) {
+                $newFacets[$productCategoryFilter->getKey()] = $facets[$productCategoryFilter->getKey()];
             }
         }
 

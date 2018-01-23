@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductCategoryFilter;
 
+use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -36,12 +37,51 @@ class ProductCategoryFilterClient extends AbstractClient implements ProductCateg
      *
      * @api
      *
+     * @param array $facets
+     * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
+     *
+     * @return array
+     */
+    public function updateFacetsByProductCategoryFilterTransfer(array $facets, ProductCategoryFilterTransfer $productCategoryFilterTransfer)
+    {
+        return $this->getFactory()
+            ->createFacetUpdaterByProductCategoryFilters()
+            ->updateFromTransfer($facets, $productCategoryFilterTransfer->getFilters());
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int $categoryId
      * @param string $localeName
      *
      * @return array
      */
     public function getProductCategoryFiltersForCategoryByLocale($categoryId, $localeName)
+    {
+        return $this->getProductCategoryFiltersFromStorage($categoryId, $localeName);
+    }
+
+    /**
+     * @param $categoryId
+     * @param $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
+     */
+    public function getProductCategoryFiltersTransferForCategoryByLocale($categoryId, $localeName)
+    {
+        $productCategoryFilters = $this->getProductCategoryFiltersFromStorage($categoryId, $localeName);
+    }
+
+    /**
+     * @param int $categoryId
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function getProductCategoryFiltersFromStorage($categoryId, $localeName)
     {
         $productCategoryFilters = $this->getFactory()->getStorageClient()->get(
             $this->getFactory()->createProductCategoryFilterKeyBuilder()->generateKey($categoryId, $localeName)

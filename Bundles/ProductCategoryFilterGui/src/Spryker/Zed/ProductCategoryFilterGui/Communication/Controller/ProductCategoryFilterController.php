@@ -39,6 +39,8 @@ class ProductCategoryFilterController extends AbstractController
         $productCategoryFilterDataProvider = $this->getFactory()
             ->createProductCategoryFilterDataProvider();
 
+        $productCategoryFilterFormatter = $this->getFactory()->createProductCategoryFilterFormatter();
+
         $productCategoryFilterForm = $this->getFactory()
             ->createProductCategoryFilterForm(
                 $productCategoryFilterDataProvider->getData(),
@@ -46,18 +48,23 @@ class ProductCategoryFilterController extends AbstractController
             )
             ->handleRequest($request);
 
-        $productCategoryFilterTransfer = $this->getFactory()
+        $savedProductCategoryFilters = $this->getFactory()
             ->getProductCategoryFilterFacade()
             ->findProductCategoryFilterByCategoryId($idCategory);
 
+        $productCategoryFilterTransfer = $productCategoryFilterFormatter
+            ->generateTransferWithJsonFromTransfer($savedProductCategoryFilters);
+
+        $searchResultsForCategory = $this->getFactory()
+            ->getCatalogClient()
+            ->catalogSearch('', [PageIndexMap::CATEGORY => $idCategory]);
+
         if ($productCategoryFilterForm->isValid()) {
-            /** @var \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer */
-            $productCategoryFilterTransfer = $this->getFactory()
-                ->createProductCategoryFilterHydrator()
-                ->hydrate(
-                    $productCategoryFilterTransfer,
-                    $productCategoryFilterForm->getData()[ProductCategoryFilterForm::FIELD_FILTERS]
-                );
+            $productCategoryFilterTransfer = $productCategoryFilterFormatter->generateTransferFromJson(
+                $savedProductCategoryFilters->getIdProductCategoryFilter(),
+                $idCategory,
+                $productCategoryFilterForm->getData()[ProductCategoryFilterForm::FIELD_FILTERS]
+            );
 
             $facadeFunction = 'createProductCategoryFilter';
             if ($productCategoryFilterTransfer->getIdProductCategoryFilter()) {
@@ -71,16 +78,16 @@ class ProductCategoryFilterController extends AbstractController
             $this->addSuccessMessage(sprintf('Filters for Category "%s" were updated successfully.', $category->getName()));
         }
 
-        $searchResultsForCategory = $this->getFactory()
-            ->getCatalogClient()
-            ->catalogSearch('', [PageIndexMap::CATEGORY => $idCategory]);
+        $filters = [];
 
-        $filters = $this->getFactory()
-            ->getProductCategoryFilterClient()
-            ->updateFacetsByCategory(
-                $searchResultsForCategory[FacetResultFormatterPlugin::NAME],
-                $productCategoryFilterTransfer->getFilterDataArray()
-            );
+        if(count($productCategoryFilterTransfer->getFilters()) === 0) {
+            $filters = $this->getFactory()
+                ->getProductCategoryFilterClient()
+                ->updateFacetsByCategory(
+                    $searchResultsForCategory[FacetResultFormatterPlugin::NAME],
+                    $productCategoryFilterTransfer->getFilterDataArray()
+                );
+        }
 
         return $this->viewResponse([
             'productCategoryFilterForm' => $productCategoryFilterForm->createView(),
@@ -89,7 +96,6 @@ class ProductCategoryFilterController extends AbstractController
             'productCategoryFilters' => $productCategoryFilterTransfer,
             'allFilters' => $searchResultsForCategory[FacetResultFormatterPlugin::NAME],
             'nonSearchAttributes' => array_diff_key($productCategoryFilterTransfer->getFilterDataArray(), $searchResultsForCategory[FacetResultFormatterPlugin::NAME]),
-            'isProductCategoryFilterActiveFlag' => ProductCategoryFilterConfig::IS_ACTIVE_FLAG,
         ]);
     }
 
