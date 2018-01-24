@@ -7,10 +7,15 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ */
 class StockForm extends AbstractType
 {
     const FIELD_HIDDEN_STOCK_PRODUCT_ID = 'id_stock_product';
@@ -121,5 +126,20 @@ class StockForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $stockProduct = $form->getViewData();
+        $stockType = $stockProduct[static::FIELD_TYPE];
+
+        $mapping = $this->getFactory()->getStockFacade()->getWarehouseToStoreMapping();
+        if (isset($mapping[$stockType])) {
+            $view->vars['available_in_stores'] = $mapping[$stockType];
+        }
     }
 }

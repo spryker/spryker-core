@@ -485,4 +485,12 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGIN_MONEY_FORM_TYPE);
     }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockInterface
+     */
+    public function getStockFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_STOCK);
+    }
 }

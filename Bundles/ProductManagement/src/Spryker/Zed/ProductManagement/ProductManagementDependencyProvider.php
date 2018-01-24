@@ -217,6 +217,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToPriceBridge($container->getLocator()->price()->facade());
         };
 
+        $container[static::FACADE_STOCK] = function (Container $container) {
+            return new ProductManagementToStockBridge($container->getLocator()->stock()->facade());
+        };
+
         $container = $this->addStore($container);
         $container = $this->addProductAbstractViewPlugins($container);
         $container = $this->addMoneyFormTypePlugin($container);
