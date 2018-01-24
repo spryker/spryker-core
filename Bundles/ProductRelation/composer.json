@@ -3,6 +3,7 @@
   "description": "ProductRelation module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/application": "^3.0.0",
     "spryker/category": "^3.0.0 || ^4.0.0",
     "spryker/gui": "^3.0.0",

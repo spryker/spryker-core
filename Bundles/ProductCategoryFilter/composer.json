@@ -3,6 +3,7 @@
   "description": "ProductCategoryFilter module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/category": "^4.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/key-builder": "^1.0.0",

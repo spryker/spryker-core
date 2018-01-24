@@ -3,6 +3,7 @@
   "description": "CmsBlockCollector module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/cms-block": "^1.0.0",
     "spryker/collector": "^5.1.1 || ^6.0.0",
     "spryker/glossary": "^3.0.0",
