@@ -155,11 +155,11 @@ class AvailabilityTable extends AbstractTable
     /**
      * @param string $neverOutOfStockSet
      *
-     * @return bool|null
+     * @return bool
      */
     protected function isNeverOutOfStock($neverOutOfStockSet)
     {
-        return filter_var($neverOutOfStockSet, FILTER_VALIDATE_BOOLEAN);
+        return filter_var($neverOutOfStockSet, FILTER_VALIDATE_BOOLEAN) ?: false;
     }
 
     /**

@@ -101,7 +101,7 @@ class IndexController extends AbstractController
             if ($this->saveAvailabilityStock($data)) {
                 $this->addSuccessMessage('Stock successfully updated');
             } else {
-                $this->addErrorMessage('Failed to update stock');
+                $this->addErrorMessage('Failed to update stock, please enter stock amount or select "never out of stock"');
             }
         }
 
