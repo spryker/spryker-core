@@ -28,22 +28,22 @@ class ProductAbstractStoreRelationReader implements ProductAbstractStoreRelation
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelation
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function getStoreRelation(StoreRelationTransfer $storeRelation)
+    public function getStoreRelation(StoreRelationTransfer $storeRelationTransfer)
     {
-        $storeRelation->requireIdEntity();
+        $storeRelationTransfer->requireIdEntity();
 
-        $storeTransferCollection = $this->getRelatedStores($storeRelation->getIdEntity());
+        $storeTransferCollection = $this->getRelatedStores($storeRelationTransfer->getIdEntity());
         $idStores = $this->getIdStores($storeTransferCollection);
 
-        $storeRelation
+        $storeRelationTransfer
             ->setStores($storeTransferCollection)
             ->setIdStores($idStores);
 
-        return $storeRelation;
+        return $storeRelationTransfer;
     }
 
     /**

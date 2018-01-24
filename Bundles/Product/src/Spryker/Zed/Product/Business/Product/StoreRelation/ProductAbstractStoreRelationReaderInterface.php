@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 interface ProductAbstractStoreRelationReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelation
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function getStoreRelation(StoreRelationTransfer $storeRelation);
+    public function getStoreRelation(StoreRelationTransfer $storeRelationTransfer);
 }
