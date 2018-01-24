@@ -35,7 +35,7 @@ class CmsBlockCollectorFacadeTest extends Unit
     /**
      * @var \Spryker\Zed\CmsBlockCollector\Business\CmsBlockCollectorFacadeInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected $sut;
+    protected $cmsBlockCollectorFacadeMock;
 
     /**
      * @var \Spryker\Zed\CmsBlockCollector\Business\CmsBlockCollectorBusinessFactory|\PHPUnit_Framework_MockObject_MockObject
@@ -94,7 +94,7 @@ class CmsBlockCollectorFacadeTest extends Unit
             ->method('getCollectorFacade')
             ->willReturn($this->collectorFacadeMock);
 
-        $this->sut = $this
+        $this->cmsBlockCollectorFacadeMock = $this
             ->getMockBuilder(CmsBlockCollectorFacade::class)
             ->setMethods(
                 [
@@ -104,7 +104,7 @@ class CmsBlockCollectorFacadeTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->sut
+        $this->cmsBlockCollectorFacadeMock
             ->expects($this->any())
             ->method('getFactory')
             ->willReturn($this->cmsBlockCollectorBusinessFactoryMock);
@@ -121,7 +121,7 @@ class CmsBlockCollectorFacadeTest extends Unit
             ->expects($this->exactly(1))
             ->method('runCollector');
 
-        $this->sut->runStorageCmsBlockCollector(
+        $this->cmsBlockCollectorFacadeMock->runStorageCmsBlockCollector(
             $this->getMockBuilder(SpyTouchQuery::class)->disableOriginalConstructor()->getMock(),
             new LocaleTransfer(),
             $this->getMockBuilder(BatchResultInterface::class)->disableOriginalConstructor()->getMock(),

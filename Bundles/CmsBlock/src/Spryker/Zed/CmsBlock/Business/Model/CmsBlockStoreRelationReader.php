@@ -35,21 +35,21 @@ class CmsBlockStoreRelationReader implements CmsBlockStoreRelationReaderInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelation
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function getStoreRelation(StoreRelationTransfer $storeRelationTransfer)
+    public function getStoreRelation(StoreRelationTransfer $storeRelation)
     {
-        $storeRelationTransfer->requireIdEntity();
+        $storeRelation->requireIdEntity();
 
         $cmsBlockEntity = $this->cmsBlockQueryContainer
-            ->queryCmsBlockWithStoreRelationByFkCmsBlock($storeRelationTransfer->getIdEntity())
+            ->queryCmsBlockWithStoreRelationByFkCmsBlock($storeRelation->getIdEntity())
             ->find()
             ->getFirst();
 
-        $storeRelationTransfer = $this->cmsBlockStoreRelationMapper->mapStoreRelationToTransfer($cmsBlockEntity);
+        $storeRelation = $this->cmsBlockStoreRelationMapper->mapStoreRelationToTransfer($cmsBlockEntity);
 
-        return $storeRelationTransfer;
+        return $storeRelation;
     }
 }

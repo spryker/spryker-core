@@ -9,19 +9,12 @@ namespace Spryker\Zed\CmsBlockCollector\Business\Collector\Storage;
 
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\CmsBlock\CmsBlockConfig;
-use Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockCollectorToStoreFacadeInterface;
 use Spryker\Zed\CmsBlockCollector\Persistence\Collector\Storage\Propel\CmsBlockCollectorQuery;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
-use Spryker\Zed\Collector\Business\Collector\StoreAwareCollectorInterface;
 
-class CmsBlockCollector extends AbstractStoragePropelCollector implements StoreAwareCollectorInterface
+class CmsBlockCollector extends AbstractStoragePropelCollector
 {
     const COL_IS_IN_STORE = 'is_in_store';
-
-    /**
-     * @var \Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockCollectorToStoreFacadeInterface
-     */
-    protected $storeFacade;
 
     /**
      * @var \Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[]
@@ -30,16 +23,13 @@ class CmsBlockCollector extends AbstractStoragePropelCollector implements StoreA
 
     /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
-     * @param \Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockCollectorToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[] $collectorDataExpanderPlugins
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,
-        CmsBlockCollectorToStoreFacadeInterface $storeFacade,
         array $collectorDataExpanderPlugins = []
     ) {
         parent::__construct($utilDataReaderService);
-        $this->storeFacade = $storeFacade;
         $this->collectorDataExpanderPlugins = $collectorDataExpanderPlugins;
     }
 
@@ -51,14 +41,6 @@ class CmsBlockCollector extends AbstractStoragePropelCollector implements StoreA
     protected function isStorable(array $collectItemData)
     {
         return $collectItemData[static::COL_IS_IN_STORE] !== null;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getCurrentStore()
-    {
-        return $this->storeFacade->getCurrentStore();
     }
 
     /**

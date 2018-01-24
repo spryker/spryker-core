@@ -215,19 +215,19 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlock
      * @param int $idCmsBlock
      *
      * @return void
      */
-    protected function persistStoreRelation(CmsBlockTransfer $cmsBlockTransfer, $idCmsBlock)
+    protected function persistStoreRelation(CmsBlockTransfer $cmsBlock, $idCmsBlock)
     {
-        if ($cmsBlockTransfer->getStoreRelation() === null) {
+        if ($cmsBlock->getStoreRelation() === null) {
             return;
         }
 
-        $cmsBlockTransfer->getStoreRelation()->setIdEntity($idCmsBlock);
-        $this->cmsBlockStoreRelationWriter->update($cmsBlockTransfer->getStoreRelation());
+        $cmsBlock->getStoreRelation()->setIdEntity($idCmsBlock);
+        $this->cmsBlockStoreRelationWriter->update($cmsBlock->getStoreRelation());
     }
 
     /**

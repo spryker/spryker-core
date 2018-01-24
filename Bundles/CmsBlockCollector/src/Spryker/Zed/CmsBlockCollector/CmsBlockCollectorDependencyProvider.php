@@ -8,14 +8,12 @@
 namespace Spryker\Zed\CmsBlockCollector;
 
 use Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockCollectorToCollectorBridge;
-use Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockCollectorToStoreFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FACADE_COLLECTOR = 'CMS_BLOCK_COLLECTOR:FACADE_COLLECTOR';
-    const FACADE_STORE = 'FACADE_STORE';
 
     const QUERY_CONTAINER_TOUCH = 'CMS_BLOCK_COLLECTOR:QUERY_CONTAINER_TOUCH';
 
@@ -35,7 +33,6 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addCollectorFacade($container);
         $container = $this->addTouchQueryContainer($container);
         $container = $this->addCollectorDataExpanderPlugins($container);
-        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -49,20 +46,6 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addStoreFacade(Container $container)
-    {
-        $container[static::FACADE_STORE] = function (Container $container) {
-            return new CmsBlockCollectorToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
 
         return $container;

@@ -54,14 +54,14 @@ class CmsBlockStoreRelationMapper implements CmsBlockStoreRelationMapperInterfac
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $storeTransferCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $storeCollection
      *
      * @return int[]
      */
-    protected function selectIdStores(ArrayObject $storeTransferCollection)
+    protected function selectIdStores(ArrayObject $storeCollection)
     {
         return array_map(function (StoreTransfer $storeTransfer) {
             return $storeTransfer->getIdStore();
-        }, $storeTransferCollection->getArrayCopy());
+        }, $storeCollection->getArrayCopy());
     }
 }

@@ -24,7 +24,6 @@ class CmsBlockCollectorBusinessFactory extends AbstractBusinessFactory
     {
         $cmsBlockCollector = new CmsBlockCollector(
             $this->getUtilDataReaderService(),
-            $this->getStoreFacade(),
             $this->getCollectorDataExpanderPlugins()
         );
 
@@ -72,13 +71,5 @@ class CmsBlockCollectorBusinessFactory extends AbstractBusinessFactory
     protected function createCmsBlockCollectorStorageQuery()
     {
         return new CmsBlockCollectorQuery();
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockCollectorToStoreFacadeInterface
-     */
-    protected function getStoreFacade()
-    {
-        return $this->getProvidedDependency(CmsBlockCollectorDependencyProvider::FACADE_STORE);
     }
 }
