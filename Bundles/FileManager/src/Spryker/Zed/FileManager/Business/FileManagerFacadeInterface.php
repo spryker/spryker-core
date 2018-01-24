@@ -15,6 +15,10 @@ use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
 interface FileManagerFacadeInterface
 {
     /**
+     * Specification:
+     * - Saves file info
+     * - Uploads file content
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
@@ -24,6 +28,10 @@ interface FileManagerFacadeInterface
     public function save(FileManagerSaveRequestTransfer $saveRequestTransfer);
 
     /**
+     * Specification:
+     * - Finds a latest file version
+     * - Returns a file meta info and a latest content
+     *
      * @api
      *
      * @param int $idFile
@@ -35,6 +43,10 @@ interface FileManagerFacadeInterface
     public function readLatestFileVersion($idFile);
 
     /**
+     * Specification:
+     * - Deletes all file info
+     * - Deletes all file versions
+     *
      * @api
      *
      * @param int $idFile
@@ -44,6 +56,9 @@ interface FileManagerFacadeInterface
     public function delete($idFile);
 
     /**
+     * Specification:
+     * - Deletes only file info version with a given id
+     *
      * @api
      *
      * @param int $idFileInfo
@@ -53,6 +68,9 @@ interface FileManagerFacadeInterface
     public function deleteFileInfo($idFileInfo);
 
     /**
+     * Specification:
+     * - Creates a new file info version based on a given file info id
+     *
      * @api
      *
      * @param int $idFile
@@ -63,6 +81,10 @@ interface FileManagerFacadeInterface
     public function rollback($idFile, $idFileInfo);
 
     /**
+     * Specification:
+     * - Finds a file info
+     * - Returns a file meta info and a file content with a specified version
+     *
      * @api
      *
      * @param int $idFileInfo
