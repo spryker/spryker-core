@@ -13,11 +13,12 @@ interface ProductConcretePluginReadInterface
 {
     /**
      * Specification:
-     * - Executed after a persisted concrete product is read from database.
-     * - Can be used for extending the ProductAbstractTransfer with some extra information or execute any other logic.
-     * - To inject instances of the plugin @see \Spryker\Zed\Product\ProductDependencyProvider.
+     * - Executed on retrieved persisted concrete product data.
+     * - Can be used to extend the ProductAbstractTransfer with extra information.
      *
      * @api
+     *
+     * @see \Spryker\Zed\Product\ProductDependencyProvider
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *

@@ -23,8 +23,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
 {
     /**
-     * Specification:
-     * - Runs storage exporter collectors for all available stores, locales and collector types.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -40,8 +39,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Runs storage exporter collectors for the given locale and all available collector types.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -58,8 +56,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Runs search exporter collectors for all available stores, locales and collector types.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -75,8 +72,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Runs search exporter collectors for the given locale and all available collector types.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -93,8 +89,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Deletes all metadata information from the current search index mapping.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -108,8 +103,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Deletes all the provided keys from storage.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -123,8 +117,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns all persisted collector types from database.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -138,8 +131,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns the types of all collector plugins that has been registered in the StorageExporter.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -153,8 +145,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Runs collectors defined in the project and synchronizes data with stores (add, update, delete)
+     * {@inheritdoc}
      *
      * @api
      *

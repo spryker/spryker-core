@@ -6,6 +6,10 @@
     {% endfilter %}
 </div>
 
+{% if form.store_relation is defined %}
+   {{ form_widget(form.store_relation) }}
+{% endif %}
+
 {{ form_row(form.sku) }}
 
 {% for localeTransfer in localeCollection %}

@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class TouchFacade extends AbstractFacade implements TouchFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $itemType
@@ -37,6 +39,8 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $itemType
@@ -56,6 +60,8 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $itemType
@@ -75,28 +81,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
-     * Specification
-     *  - set `touched` to current date of items with given `$itemType`, `$itemId` where `item_event` is `active`
-     *
-     * @api
-     *
-     * @deprecated Use bulkTouchSetActive instead
-     *
-     * @param string $itemType
-     * @param array $itemIds
-     *
-     * @return int
-     */
-    public function bulkTouchActive($itemType, array $itemIds = [])
-    {
-        $touchModel = $this->getFactory()->createTouchModel();
-
-        return $touchModel->bulkUpdateTouchRecords($itemType, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $itemIds);
-    }
-
-    /**
-     * Specification
-     *  - set `touched` to current date and `item_event` to `active` where given `$itemType` and `$itemId` matches
+     * {@inheritdoc}
      *
      * @api
      *
@@ -113,28 +98,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
-     * Specification
-     *  - set `touched` to current date of items with given `$itemType`, `$itemId` where `item_event` is `inactive`
-     *
-     * @api
-     *
-     * @deprecated Use bulkTouchSetInactive instead
-     *
-     * @param string $itemType
-     * @param array $itemIds
-     *
-     * @return int
-     */
-    public function bulkTouchInactive($itemType, array $itemIds = [])
-    {
-        $touchModel = $this->getFactory()->createTouchModel();
-
-        return $touchModel->bulkUpdateTouchRecords($itemType, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, $itemIds);
-    }
-
-    /**
-     * Specification
-     *  - set `touched` to current date and `item_event` to `inactive` where given `$itemType` and `$itemId` matches
+     * {@inheritdoc}
      *
      * @api
      *
@@ -151,28 +115,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
-     * Specification
-     *  - set `touched` to current date of items with given `$itemType`, `$itemId` where `item_event` is `deleted`
-     *
-     * @api
-     *
-     * @deprecated Use bulkTouchSetDeleted instead
-     *
-     * @param string $itemType
-     * @param array $itemIds
-     *
-     * @return int
-     */
-    public function bulkTouchDeleted($itemType, array $itemIds = [])
-    {
-        $touchModel = $this->getFactory()->createTouchModel();
-
-        return $touchModel->bulkUpdateTouchRecords($itemType, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $itemIds);
-    }
-
-    /**
-     * Specification
-     *  - set `touched` to current date and `item_event` to `deleted` where given `$itemType` and `$itemId` matches
+     * {@inheritdoc}
      *
      * @api
      *
@@ -189,6 +132,8 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $itemType
@@ -212,6 +157,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     public function removeTouchEntriesMarkedAsDeleted()
     {
         $touchRecordModel = $this->getFactory()->createTouchRecordModel();
+
         return $touchRecordModel->removeTouchEntriesMarkedAsDeleted();
     }
 }
