@@ -98,9 +98,9 @@ class ProductStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT => 1
+                SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT => 1,
             ])
-            ->setModifiedColumns([SpyUrlTableMap::COL_URL])
+            ->setModifiedColumns([SpyUrlTableMap::COL_URL]),
         ];
         $productAbstractUrlStorageListener->handleBulk($eventTransfers, UrlEvents::ENTITY_SPY_URL_CREATE);
 
@@ -121,8 +121,8 @@ class ProductStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT => 1
-            ])
+                SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT => 1,
+            ]),
         ];
         $productAbstractLocalizedAttributesStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_UPDATE);
 
@@ -143,8 +143,8 @@ class ProductStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT => 1
-            ])
+                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT => 1,
+            ]),
         ];
         $productConcreteProductAbstractRelationStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_CREATE);
 
@@ -185,9 +185,9 @@ class ProductStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT => 1
+                SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT => 1,
             ])
-                ->setModifiedColumns([SpyUrlTableMap::COL_URL])
+                ->setModifiedColumns([SpyUrlTableMap::COL_URL]),
         ];
         $productConcreteProductAbstractUrlStorageListener->handleBulk($eventTransfers, UrlEvents::ENTITY_SPY_URL_CREATE);
 
@@ -228,8 +228,8 @@ class ProductStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT => 1
-            ])
+                SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT => 1,
+            ]),
         ];
         $productConcreteProductAbstractLocalizedAttributesStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_UPDATE);
 
@@ -250,8 +250,8 @@ class ProductStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT => 1
-            ])
+                SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT => 1,
+            ]),
         ];
         $productConcreteLocalizedAttributesStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_UPDATE);
 

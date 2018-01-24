@@ -24,17 +24,17 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     const CONCRETE_ATTRIBUTES = 'attributes';
 
     /**
-     * @var ProductStorageToProductInterface
+     * @var \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface
      */
     protected $productFacade;
 
     /**
-     * @var ProductStorageQueryContainerInterface
+     * @var \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
@@ -49,9 +49,9 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     protected $superAttributes = [];
 
     /**
-     * @param ProductStorageToProductInterface $productFacade
-     * @param ProductStorageQueryContainerInterface $queryContainer
-     * @param Store $store
+     * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface $productFacade
+     * @param \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
     public function __construct(
@@ -59,8 +59,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
         ProductStorageQueryContainerInterface $queryContainer,
         Store $store,
         $isSendingToQueue
-    )
-    {
+    ) {
         $this->productFacade = $productFacade;
         $this->queryContainer = $queryContainer;
         $this->store = $store;

@@ -10,13 +10,12 @@ namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductStorage\Communication\ProductStorageCommunicationFactory getFactory()
- * @method ProductStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
  */
 class ProductAbstractUrlStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

@@ -1,25 +1,26 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\ProductStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductStorage\Business\Attribute\AttributeMap;
-use Spryker\Zed\ProductStorage\Business\Attribute\AttributeMapInterface;
 use Spryker\Zed\ProductStorage\Business\Storage\ProductAbstractStorageWriter;
-use Spryker\Zed\ProductStorage\Business\Storage\ProductAbstractStorageWriterInterface;
 use Spryker\Zed\ProductStorage\Business\Storage\ProductConcreteStorageWriter;
-use Spryker\Zed\ProductStorage\Business\Storage\ProductConcreteStorageWriterInterface;
 use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductStorage\ProductStorageConfig getConfig()
- * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
  */
 class ProductStorageBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
-     * @return ProductAbstractStorageWriterInterface
+     * @return \Spryker\Zed\ProductStorage\Business\Storage\ProductAbstractStorageWriterInterface
      */
     public function createProductAbstractStorageWriter()
     {
@@ -33,7 +34,7 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductConcreteStorageWriterInterface
+     * @return \Spryker\Zed\ProductStorage\Business\Storage\ProductConcreteStorageWriterInterface
      */
     public function createProductConcreteStorageWriter()
     {
@@ -46,7 +47,7 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return AttributeMapInterface
+     * @return \Spryker\Zed\ProductStorage\Business\Attribute\AttributeMapInterface
      */
     public function createAttributeMap()
     {

@@ -24,6 +24,7 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 
 /**
  * @method \Spryker\Zed\ProductStorage\Communication\ProductStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
  */
 class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -66,7 +67,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -76,7 +77,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -86,7 +87,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -96,7 +97,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -106,7 +107,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -116,7 +117,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -126,7 +127,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -136,7 +137,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -146,7 +147,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -156,7 +157,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -166,7 +167,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -176,7 +177,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -186,7 +187,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -196,7 +197,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -206,7 +207,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -216,17 +217,18 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
     protected function addProductAbstractLocalizedAttributesDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_DELETE, new ProductAbstractLocalizedAttributesStorageListener());;
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_DELETE, new ProductAbstractLocalizedAttributesStorageListener());
+        ;
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -236,7 +238,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -246,7 +248,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -256,7 +258,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -266,7 +268,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -276,7 +278,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -286,7 +288,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -296,7 +298,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */
@@ -306,7 +308,7 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return void
      */

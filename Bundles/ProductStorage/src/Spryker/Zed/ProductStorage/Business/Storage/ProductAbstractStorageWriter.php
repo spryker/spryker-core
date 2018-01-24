@@ -21,22 +21,22 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
 
     /**
-     * @var ProductStorageToProductInterface
+     * @var \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface
      */
     protected $productFacade;
 
     /**
-     * @var AttributeMapInterface
+     * @var \Spryker\Zed\ProductStorage\Business\Attribute\AttributeMapInterface
      */
     protected $attributeMap;
 
     /**
-     * @var ProductStorageQueryContainerInterface
+     * @var \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @var Store
+     * @var \Spryker\Shared\Kernel\Store
      */
     protected $store;
 
@@ -51,20 +51,19 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected $superAttributes = [];
 
     /**
-     * @param ProductStorageToProductInterface $productFacade
-     * @param AttributeMapInterface $attributeMap
-     * @param ProductStorageQueryContainerInterface $queryContainer
-     * @param Store $store
+     * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface $productFacade
+     * @param \Spryker\Zed\ProductStorage\Business\Attribute\AttributeMapInterface $attributeMap
+     * @param \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
     public function __construct(
         ProductStorageToProductInterface $productFacade,
-        AttributeMapInterface $attributeMap, 
-        ProductStorageQueryContainerInterface $queryContainer, 
-        Store $store, 
+        AttributeMapInterface $attributeMap,
+        ProductStorageQueryContainerInterface $queryContainer,
+        Store $store,
         $isSendingToQueue
-    )
-    {
+    ) {
         $this->productFacade = $productFacade;
         $this->attributeMap = $attributeMap;
         $this->queryContainer = $queryContainer;
