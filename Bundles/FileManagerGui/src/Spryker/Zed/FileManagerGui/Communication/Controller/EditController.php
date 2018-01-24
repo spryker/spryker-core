@@ -132,7 +132,7 @@ class EditController extends AbstractController
     /**
      * @param array $data
      *
-     * @return bool|string
+     * @return null|string
      */
     protected function getFileContent(array $data)
     {
