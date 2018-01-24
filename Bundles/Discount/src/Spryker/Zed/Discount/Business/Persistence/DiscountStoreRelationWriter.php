@@ -32,36 +32,36 @@ class DiscountStoreRelationWriter implements DiscountStoreRelationWriterInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelation
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return void
      */
-    public function update(StoreRelationTransfer $storeRelation)
+    public function update(StoreRelationTransfer $storeRelationTransfer)
     {
-        $storeRelation->requireIdEntity();
+        $storeRelationTransfer->requireIdEntity();
 
-        $currentIdStores = $this->getIdStores($storeRelation->getIdEntity());
-        $requestedIdStores = $this->findStoreRelationIdStores($storeRelation);
+        $currentIdStores = $this->getIdStores($storeRelationTransfer->getIdEntity());
+        $requestedIdStores = $this->findStoreRelationIdStores($storeRelationTransfer);
 
         $saveIdStores = array_diff($requestedIdStores, $currentIdStores);
         $deleteIdStores = array_diff($currentIdStores, $requestedIdStores);
 
-        $this->addStores($saveIdStores, $storeRelation->getIdEntity());
-        $this->removeStores($deleteIdStores, $storeRelation->getIdEntity());
+        $this->addStores($saveIdStores, $storeRelationTransfer->getIdEntity());
+        $this->removeStores($deleteIdStores, $storeRelationTransfer->getIdEntity());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelation
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return int[]
      */
-    protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelation)
+    protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelationTransfer)
     {
-        if ($storeRelation->getIdStores() === null) {
+        if ($storeRelationTransfer->getIdStores() === null) {
             return [];
         }
 
-        return $storeRelation->getIdStores();
+        return $storeRelationTransfer->getIdStores();
     }
 
     /**
@@ -104,11 +104,8 @@ class DiscountStoreRelationWriter implements DiscountStoreRelationWriterInterfac
      */
     protected function getIdStores($idDiscount)
     {
-        $storeRelation = $this->discountStoreRelationReader->getStoreRelation(
-            (new StoreRelationTransfer())
-                ->setIdEntity($idDiscount)
-        );
+        $storeRelationTransfer = $this->discountStoreRelationReader->getStoreRelation($idDiscount);
 
-        return $storeRelation->getIdStores();
+        return $storeRelationTransfer->getIdStores();
     }
 }

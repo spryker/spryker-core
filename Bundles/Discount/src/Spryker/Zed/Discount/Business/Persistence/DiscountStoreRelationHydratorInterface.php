@@ -12,9 +12,9 @@ use Orm\Zed\Discount\Persistence\SpyDiscount;
 interface DiscountStoreRelationHydratorInterface
 {
     /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discount
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function hydrate(SpyDiscount $discount);
+    public function hydrate(SpyDiscount $discountEntity);
 }

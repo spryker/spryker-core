@@ -41,7 +41,7 @@ class StoreBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Store\Configuration\StoreConfigurationReader
+     * @return \Spryker\Shared\Store\Configuration\StoreConfigurationReaderInterface
      */
     protected function createStoreConfigurationReader()
     {

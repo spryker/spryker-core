@@ -16,32 +16,32 @@ use Propel\Runtime\Collection\ObjectCollection;
 class DiscountStoreRelationHydrator implements DiscountStoreRelationHydratorInterface
 {
     /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discount
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function hydrate(SpyDiscount $discount)
+    public function hydrate(SpyDiscount $discountEntity)
     {
-        $relatedStoreTransferCollection = $this->getRelatedStores($discount->getSpyDiscountStores());
+        $relatedStoreTransferCollection = $this->getRelatedStoreTransferCollection($discountEntity->getSpyDiscountStores());
         $idStores = $this->getIdStores($relatedStoreTransferCollection);
 
-        $storeRelation = (new StoreRelationTransfer())
-            ->setIdEntity($discount->getIdDiscount())
+        $storeRelationTransfer = (new StoreRelationTransfer())
+            ->setIdEntity($discountEntity->getIdDiscount())
             ->setStores($relatedStoreTransferCollection)
             ->setIdStores($idStores);
 
-        return $storeRelation;
+        return $storeRelationTransfer;
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Discount\Persistence\SpyDiscountStore[] $discountStores
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Discount\Persistence\SpyDiscountStore[] $discountStoreEntityCollection
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
      */
-    protected function getRelatedStores(ObjectCollection $discountStores)
+    protected function getRelatedStoreTransferCollection(ObjectCollection $discountStoreEntityCollection)
     {
         $relatedStoreTransferCollection = new ArrayObject();
-        foreach ($discountStores as $discountStoreEntity) {
+        foreach ($discountStoreEntityCollection as $discountStoreEntity) {
             $relatedStoreTransferCollection->append(
                 (new StoreTransfer())
                     ->fromArray(
@@ -55,14 +55,14 @@ class DiscountStoreRelationHydrator implements DiscountStoreRelationHydratorInte
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $relatedStores
+     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $storeTransferCollection
      *
      * @return int[]
      */
-    protected function getIdStores(ArrayObject $relatedStores)
+    protected function getIdStores(ArrayObject $storeTransferCollection)
     {
         return array_map(function (StoreTransfer $store) {
             return $store->getIdStore();
-        }, $relatedStores->getArrayCopy());
+        }, $storeTransferCollection->getArrayCopy());
     }
 }

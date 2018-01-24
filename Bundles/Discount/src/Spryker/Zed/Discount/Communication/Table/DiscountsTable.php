@@ -151,14 +151,14 @@ class DiscountsTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Discount\Persistence\SpyDiscountStore[] $discountStores
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Discount\Persistence\SpyDiscountStore[] $discountStoreEntityCollection
      *
      * @return string
      */
-    protected function extractStoreNames(ObjectCollection $discountStores)
+    protected function extractStoreNames(ObjectCollection $discountStoreEntityCollection)
     {
         $storeNames = [];
-        foreach ($discountStores as $discountStoreEntity) {
+        foreach ($discountStoreEntityCollection as $discountStoreEntity) {
             $storeNames[] = sprintf(
                 '<span class="label label-info">%s</span>',
                 $discountStoreEntity->getSpyStore()->getName()

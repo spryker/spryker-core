@@ -412,16 +412,16 @@ class DiscountPersist implements DiscountPersistInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelation
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      * @param int $idDiscount
      *
      * @return void
      */
-    protected function saveDiscountStoreRelation(StoreRelationTransfer $storeRelation, $idDiscount)
+    protected function saveDiscountStoreRelation(StoreRelationTransfer $storeRelationTransfer, $idDiscount)
     {
-        $storeRelation->setIdEntity($idDiscount);
+        $storeRelationTransfer->setIdEntity($idDiscount);
 
-        $this->discountStoreRelationWriter->update($storeRelation);
+        $this->discountStoreRelationWriter->update($storeRelationTransfer);
     }
 
     /**
