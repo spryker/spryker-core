@@ -13,4 +13,9 @@
         <property name="sharedPersistenceWithStores" type="array" singular="sharedPersistenceWithStore" />
     </transfer>
 
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int" />
+        <property name="idStores" type="int[]" />
+    </transfer>
+
 </transfers>

@@ -5,32 +5,67 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\CategoryStorage\Business\Storage;
 
 use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryNodeStorage;
-use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface;
+use Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
-/**
- * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
- */
-abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class CategoryNodeStorage implements CategoryNodeStorageInterface
 {
     use DatabaseTransactionHandlerTrait;
+
+    /**
+     * @var \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface
+     */
+    protected $utilSanitize;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitizeServiceInterface $utilSanitize
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(CategoryStorageQueryContainerInterface $queryContainer, CategoryStorageToUtilSanitizeServiceInterface $utilSanitize, Store $store, $isSendingToQueue)
+    {
+        $this->queryContainer = $queryContainer;
+        $this->utilSanitize = $utilSanitize;
+        $this->store = $store;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
 
     /**
      * @param array $categoryNodeIds
      *
      * @return void
      */
-    protected function publish(array $categoryNodeIds)
+    public function publish(array $categoryNodeIds)
     {
         $categoryNodes = $this->getCategoryNodes($categoryNodeIds);
         $spyCategoryNodeStorageEntities = $this->findCategoryNodeStorageEntitiesByCategoryNodeIds($categoryNodeIds);
+
+        if (!$categoryNodes) {
+            $this->deleteStorageData($spyCategoryNodeStorageEntities);
+        }
 
         $this->storeData($categoryNodes, $spyCategoryNodeStorageEntities);
     }
@@ -40,11 +75,24 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
      *
      * @return void
      */
-    protected function unpublish(array $categoryNodeIds)
+    public function unpublish(array $categoryNodeIds)
     {
         $spyCategoryNodeStorageEntities = $this->findCategoryNodeStorageEntitiesByCategoryNodeIds($categoryNodeIds);
-        foreach ($spyCategoryNodeStorageEntities as $spyCategoryNodeStorageEntity) {
-            $spyCategoryNodeStorageEntity->delete();
+
+        $this->deleteStorageData($spyCategoryNodeStorageEntities);
+    }
+
+    /**
+     * @param array $spyCategoryNodeStorageEntities
+     *
+     * @return void
+     */
+    protected function deleteStorageData(array $spyCategoryNodeStorageEntities)
+    {
+        foreach ($spyCategoryNodeStorageEntities as $spyCategoryNodeStorageLocaleEntities) {
+            foreach ($spyCategoryNodeStorageLocaleEntities as $spyCategoryNodeStorageLocaleEntity) {
+                $spyCategoryNodeStorageLocaleEntity->delete();
+            }
         }
     }
 
@@ -88,11 +136,12 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
             return;
         }
 
-        $categoryNodeNodeData = $this->getFactory()->getUtilSanitizeService()->arrayFilterRecursive($categoryNodeStorageTransfer->toArray());
+        $categoryNodeNodeData = $this->utilSanitize->arrayFilterRecursive($categoryNodeStorageTransfer->toArray());
         $spyCategoryNodeStorageEntity->setFkCategoryNode($categoryNodeStorageTransfer->getNodeId());
         $spyCategoryNodeStorageEntity->setData($categoryNodeNodeData);
-        $spyCategoryNodeStorageEntity->setStore($this->getStore()->getStoreName());
+        $spyCategoryNodeStorageEntity->setStore($this->store->getStoreName());
         $spyCategoryNodeStorageEntity->setLocale($localeName);
+        $spyCategoryNodeStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyCategoryNodeStorageEntity->save();
     }
 
@@ -103,7 +152,7 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
      */
     protected function findCategoryNodeStorageEntitiesByCategoryNodeIds(array $categoryNodeIds)
     {
-        $categoryNodeStorageEntities = $this->getQueryContainer()->queryCategoryNodeStorageByIds($categoryNodeIds)->find();
+        $categoryNodeStorageEntities = $this->queryContainer->queryCategoryNodeStorageByIds($categoryNodeIds)->find();
         $categoryNodeStorageEntitiesByIdAndLocale = [];
         foreach ($categoryNodeStorageEntities as $categoryNodeStorageEntity) {
             $categoryNodeStorageEntitiesByIdAndLocale[$categoryNodeStorageEntity->getFkCategoryNode()][$categoryNodeStorageEntity->getLocale()] = $categoryNodeStorageEntity;
@@ -119,13 +168,13 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
      */
     protected function getCategoryNodes(array $categoryNodeIds)
     {
-        $localeNames = $this->getStore()->getLocales();
-        $locales = $this->getQueryContainer()->queryLocalesWithLocaleNames($localeNames)->find();
+        $localeNames = $this->store->getLocales();
+        $locales = $this->queryContainer->queryLocalesWithLocaleNames($localeNames)->find();
 
         $categoryNodeTree = [];
         $this->disableInstancePooling();
         foreach ($locales as $locale) {
-            $categoryNodes = $this->getQueryContainer()->queryCategoryNode($locale->getIdLocale())->find()->toKeyIndex();
+            $categoryNodes = $this->queryContainer->queryCategoryNode($locale->getIdLocale())->find()->toKeyIndex();
             foreach ($categoryNodeIds as $categoryNodeId) {
                 if (isset($categoryNodes[$categoryNodeId])) {
                     $categoryNodeTree[$categoryNodeId][$locale->getLocaleName()] = $this->mapToCategoryNodeStorageTransfer($categoryNodes, $categoryNodes[$categoryNodeId]);
@@ -221,13 +270,5 @@ abstract class AbstractCategoryNodeStorageListener extends AbstractPlugin implem
         }
 
         return $parents;
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getFactory()->getStore();
     }
 }
