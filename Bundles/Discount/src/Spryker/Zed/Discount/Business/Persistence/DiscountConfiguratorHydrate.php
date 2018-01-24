@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\DiscountConditionTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
@@ -34,23 +33,23 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     protected $discountEntityMapper;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationReaderInterface
+     * @var \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationHydratorInterface
      */
-    protected $discountStoreRelationReader;
+    protected $discountStoreRelationHydrator;
 
     /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      * @param \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface $discountEntityMapper
-     * @param \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationReaderInterface $discountStoreRelationReader
+     * @param \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationHydratorInterface $discountStoreRelationHydrator
      */
     public function __construct(
         DiscountQueryContainerInterface $discountQueryContainer,
         DiscountEntityMapperInterface $discountEntityMapper,
-        DiscountStoreRelationReaderInterface $discountStoreRelationReader
+        DiscountStoreRelationHydratorInterface $discountStoreRelationHydrator
     ) {
         $this->discountQueryContainer = $discountQueryContainer;
         $this->discountEntityMapper = $discountEntityMapper;
-        $this->discountStoreRelationReader = $discountStoreRelationReader;
+        $this->discountStoreRelationHydrator = $discountStoreRelationHydrator;
     }
 
     /**
@@ -61,8 +60,9 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     public function getByIdDiscount($idDiscount)
     {
         $discountEntity = $this->discountQueryContainer
-            ->queryDiscount()
-            ->findOneByIdDiscount($idDiscount);
+            ->queryDiscountWithStoresByFkDiscount($idDiscount)
+            ->find()
+            ->getFirst();
 
         $discountConfigurator = $this->createDiscountConfiguratorTransfer();
 
@@ -94,25 +94,11 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
 
         $discountGeneralTransfer->setValidFrom($discountEntity->getValidFrom());
         $discountGeneralTransfer->setValidTo($discountEntity->getValidTo());
-        // TODO: do not use store relation reader in hydrator logic
         $discountGeneralTransfer->setStoreRelation(
-            $this->getStoreRelation($discountEntity->getIdDiscount())
+            $this->discountStoreRelationHydrator->hydrate($discountEntity)
         );
 
         return $discountGeneralTransfer;
-    }
-
-    /**
-     * @param int $idDiscount
-     *
-     * @return \Generated\Shared\Transfer\StoreRelationTransfer
-     */
-    protected function getStoreRelation($idDiscount)
-    {
-        return $this->discountStoreRelationReader->getStoreRelation(
-            (new StoreRelationTransfer())
-                ->setIdEntity($idDiscount)
-        );
     }
 
     /**

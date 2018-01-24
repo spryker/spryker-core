@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\Discount\Business\Persistence;
 
-interface DiscountStoreRelationReaderInterface
+use Orm\Zed\Discount\Persistence\SpyDiscount;
+
+interface DiscountStoreRelationHydratorInterface
 {
     /**
-     * @param int $idDiscount
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discount
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function getStoreRelation($idDiscount);
+    public function hydrate(SpyDiscount $discount);
 }

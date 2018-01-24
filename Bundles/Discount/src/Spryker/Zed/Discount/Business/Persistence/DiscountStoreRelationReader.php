@@ -6,9 +6,6 @@
 
 namespace Spryker\Zed\Discount\Business\Persistence;
 
-use ArrayObject;
-use Generated\Shared\Transfer\StoreRelationTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class DiscountStoreRelationReader implements DiscountStoreRelationReaderInterface
@@ -19,65 +16,34 @@ class DiscountStoreRelationReader implements DiscountStoreRelationReaderInterfac
     protected $discountQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
+     * @var \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationHydratorInterface
      */
-    public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
-    {
-        $this->discountQueryContainer = $discountQueryContainer;
-    }
+    protected $discountStoreRelationHydrator;
 
     /**
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelation
-     *
-     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationHydratorInterface $discountStoreRelationHydrator
      */
-    public function getStoreRelation(StoreRelationTransfer $storeRelation)
-    {
-        $storeRelation->requireIdEntity();
-
-        $storeTransferCollection = $this->getRelatedStores($storeRelation->getIdEntity());
-
-        $idStores = $this->getIdStores($storeTransferCollection);
-        $storeRelation
-            ->setStores($storeTransferCollection)
-            ->setIdStores($idStores);
-
-        return $storeRelation;
+    public function __construct(
+        DiscountQueryContainerInterface $discountQueryContainer,
+        DiscountStoreRelationHydratorInterface $discountStoreRelationHydrator
+    ) {
+        $this->discountQueryContainer = $discountQueryContainer;
+        $this->discountStoreRelationHydrator = $discountStoreRelationHydrator;
     }
 
     /**
      * @param int $idDiscount
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    protected function getRelatedStores($idDiscount)
+    public function getStoreRelation($idDiscount)
     {
-        $discountStoreCollection = $this->discountQueryContainer
-            ->queryDiscountStoreWithStoresByFkDiscount($idDiscount)
-            ->find();
+        $discountEntity = $this->discountQueryContainer
+            ->queryDiscountWithStoresByFkDiscount($idDiscount)
+            ->find()
+            ->getFirst();
 
-        $relatedStores = new ArrayObject();
-        foreach ($discountStoreCollection as $discountStoreEntity) {
-            $relatedStores->append(
-                (new StoreTransfer())
-                    ->fromArray(
-                        $discountStoreEntity->getSpyStore()->toArray(),
-                        true
-                    )
-            );
-        }
-        return $relatedStores;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $stores
-     *
-     * @return int[]
-     */
-    protected function getIdStores(ArrayObject $stores)
-    {
-        return array_map(function (StoreTransfer $storeTransfer) {
-            return $storeTransfer->getIdStore();
-        }, $stores->getArrayCopy());
+        return $this->discountStoreRelationHydrator->hydrate($discountEntity);
     }
 }

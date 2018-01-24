@@ -158,10 +158,7 @@ class DiscountPersist implements DiscountPersistInterface
         $affectedRows = $discountEntity->save();
 
         $this->saveDiscountMoneyValues($discountEntity, $discountConfiguratorTransfer);
-        $this->saveDiscountStoreRelation(
-            $discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation(),
-            $discountEntity->getIdDiscount()
-        );
+        $this->updateDiscountStoreRelation($discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation());
 
         $this->executePostUpdatePlugins($discountConfiguratorTransfer);
 
@@ -424,6 +421,16 @@ class DiscountPersist implements DiscountPersistInterface
     {
         $storeRelation->setIdEntity($idDiscount);
 
+        $this->discountStoreRelationWriter->update($storeRelation);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelation
+     *
+     * @return void
+     */
+    protected function updateDiscountStoreRelation(StoreRelationTransfer $storeRelation)
+    {
         $this->discountStoreRelationWriter->update($storeRelation);
     }
 }

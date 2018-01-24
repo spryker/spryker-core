@@ -287,4 +287,22 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
             ->leftJoinWithSpyStore()
             ->filterByFkDiscount($idDiscount);
     }
+
+    /**
+     * @api
+     *
+     * @param int $idDiscount
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
+     */
+    public function queryDiscountWithStoresByFkDiscount($idDiscount)
+    {
+        return $this->getFactory()
+            ->createDiscountQuery()
+            ->filterByIdDiscount($idDiscount)
+            ->leftJoinWithSpyDiscountStore()
+            ->useSpyDiscountStoreQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithSpyStore()
+            ->endUse();
+    }
 }
