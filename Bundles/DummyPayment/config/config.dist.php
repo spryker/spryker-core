@@ -3,10 +3,10 @@
  * Copy over the following configs to your config
  */
 
+use Spryker\Shared\DummyPayment\DummyPaymentConfig;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Shared\Sales\SalesConstants;
-use Spryker\Zed\DummyPayment\DummyPaymentConfig;
 use Spryker\Zed\Oms\OmsConfig;
 
 $config[KernelConstants::DEPENDENCY_INJECTOR_YVES] = [

@@ -1,3 +1,3 @@
 # CmsBlockProductConnector Changelog
 
-[Release Changelog](https://github.com/spryker/CmsBlockProductConnector/releases)
+[Release Changelog](https://github.com/spryker/cms-block-product-connector/releases)

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\Phpstan;
 
+use RuntimeException;
 use Spryker\Zed\Development\Business\Traits\PathTrait;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,9 +20,12 @@ use Zend\Filter\Word\CamelCaseToDash;
 
 class PhpstanRunner implements PhpstanRunnerInterface
 {
-    const DEFAULT_LEVEL = 'defaultLevel';
     use PathTrait;
 
+    const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+    const NAMESPACE_SPRYKER = 'Spryker';
+
+    const DEFAULT_LEVEL = 'defaultLevel';
     const MEMORY_LIMIT = '512M';
     const CODE_SUCCESS = 0;
     const CODE_ERROR = 0;
@@ -46,6 +50,8 @@ class PhpstanRunner implements PhpstanRunnerInterface
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
+     * @throws \RuntimeException
+     *
      * @return int Exit code
      */
     public function run(InputInterface $input, OutputInterface $output)
@@ -63,6 +69,9 @@ class PhpstanRunner implements PhpstanRunnerInterface
             $paths = $this->getPaths($module);
         } else {
             $paths[$this->config->getPathToRoot() . 'src' . DIRECTORY_SEPARATOR] = 'phpstan.neon';
+        }
+        if (empty($paths)) {
+            throw new RuntimeException('No path found for module ' . $module);
         }
 
         $result = 0;
@@ -216,6 +225,8 @@ class PhpstanRunner implements PhpstanRunnerInterface
     /**
      * @param string $module
      *
+     * @throws \RuntimeException
+     *
      * @return array
      */
     protected function resolveCorePaths($module)
@@ -223,10 +234,18 @@ class PhpstanRunner implements PhpstanRunnerInterface
         $paths = [];
         list ($namespace, $module) = explode('.', $module, 2);
 
-        if ($module === 'core') {
-            $modules = $this->getCoreModules($this->config->getPathToCore());
+        if ($module === 'all') {
+            if ($namespace === static::NAMESPACE_SPRYKER_SHOP) {
+                $corePath = $this->config->getPathToShop();
+            } elseif ($namespace === static::NAMESPACE_SPRYKER) {
+                $corePath = $this->config->getPathToCore();
+            } else {
+                throw new RuntimeException('Namespace invalid: ' . $namespace);
+            }
+
+            $modules = $this->getCoreModules($corePath);
             foreach ($modules as $module) {
-                $path = $this->config->getPathToCore() . $module . DIRECTORY_SEPARATOR;
+                $path = $corePath . $module . DIRECTORY_SEPARATOR;
                 $paths = $this->addPath($paths, $path);
             }
 
@@ -234,8 +253,14 @@ class PhpstanRunner implements PhpstanRunnerInterface
         }
 
         $namespace = $this->normalizeName($namespace);
-        if ($namespace === 'spryker' && is_dir($this->config->getPathToCore() . $module)) {
+        if ($namespace === $this->normalizeName(static::NAMESPACE_SPRYKER) && is_dir($this->config->getPathToCore() . $module)) {
             $paths = $this->addPath($paths, $this->config->getPathToCore() . $module . DIRECTORY_SEPARATOR);
+
+            return $paths;
+        }
+
+        if ($namespace === $this->normalizeName(static::NAMESPACE_SPRYKER_SHOP) && is_dir($this->config->getPathToShop() . $module)) {
+            $paths = $this->addPath($paths, $this->config->getPathToShop() . $module . DIRECTORY_SEPARATOR);
 
             return $paths;
         }

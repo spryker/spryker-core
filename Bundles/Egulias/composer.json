@@ -3,7 +3,8 @@
   "description": "Egulias module",
   "license": "proprietary",
   "require": {
-    "egulias/email-validator": "~2.1.2"
+    "egulias/email-validator": "~2.1.2",
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

@@ -1,3 +1,3 @@
 # AvailabilityStorage Changelog
 
-[Release Changelog](https://github.com/spryker/AvailabilityStorage/releases)
+[Release Changelog](https://github.com/spryker/availability-storage/releases)

@@ -1,3 +1,3 @@
 # ProductRelationStorage Changelog
 
-[Release Changelog](https://github.com/spryker/ProductRelationStorage/releases)
+[Release Changelog](https://github.com/spryker/product-relation-storage/releases)

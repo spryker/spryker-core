@@ -1,3 +1,3 @@
 # Locale Changelog
 
-[Locale Changelog](https://github.com/spryker/Locale/releases)
+[Release Changelog](https://github.com/spryker/locale/releases)

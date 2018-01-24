@@ -9,13 +9,13 @@ namespace Spryker\Yves\Payolution\Dependency\Injector;
 
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
+use Spryker\Shared\Payolution\PayolutionConfig;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Payolution\Plugin\PayolutionHandlerPlugin;
 use Spryker\Yves\Payolution\Plugin\PayolutionInstallmentSubFormPlugin;
 use Spryker\Yves\Payolution\Plugin\PayolutionInvoiceSubFormPlugin;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
-use Spryker\Zed\Payolution\PayolutionConfig;
 
 class CheckoutDependencyInjector implements DependencyInjectorInterface
 {

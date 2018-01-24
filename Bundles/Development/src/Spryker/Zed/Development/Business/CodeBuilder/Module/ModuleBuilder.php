@@ -29,15 +29,8 @@ class ModuleBuilder
      * @var array
      */
     protected $files = [
-        '.gitattributes',
-        '.gitignore',
-        '.coveralls.yml',
         '.travis.yml',
-        'codecept.yml' => 'codeception.yml',
-        'composer.json',
         'CHANGELOG.md',
-        'README.md',
-        'LICENSE',
     ];
 
     /**

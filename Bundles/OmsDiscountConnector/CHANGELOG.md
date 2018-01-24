@@ -1,3 +1,3 @@
 # OmsDiscountConnector Changelog
 
-[OmsDiscountConnector Changelog](https://github.com/spryker/OmsDiscountConnector/releases)
+[Release Changelog](https://github.com/spryker/oms-discount-connector/releases)

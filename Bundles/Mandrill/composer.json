@@ -3,7 +3,8 @@
   "description": "Mandrill module",
   "license": "proprietary",
   "require": {
-    "mandrill/mandrill": "~1.0.55"
+    "mandrill/mandrill": "~1.0.55",
+    "php": ">=7.1"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

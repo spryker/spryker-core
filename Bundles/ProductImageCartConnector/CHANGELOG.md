@@ -1,3 +1,3 @@
 # ProductImageCartConnector Changelog
 
-[ProductImageCartConnector Changelog](https://github.com/spryker/ProductImageCartConnector/releases)
+[Release Changelog](https://github.com/spryker/product-image-cart-connector/releases)

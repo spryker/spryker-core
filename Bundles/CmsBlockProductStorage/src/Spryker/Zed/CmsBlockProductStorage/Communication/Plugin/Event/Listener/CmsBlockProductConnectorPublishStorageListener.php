@@ -10,6 +10,10 @@ namespace Spryker\Zed\CmsBlockProductStorage\Communication\Plugin\Event\Listener
 use Spryker\Zed\CmsBlockProductConnector\Dependency\CmsBlockProductConnectorEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
+/**
+ * @method \Spryker\Zed\CmsBlockProductStorage\Communication\CmsBlockProductStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainerInterface getQueryContainer()
+ */
 class CmsBlockProductConnectorPublishStorageListener extends AbstractCmsBlockProductStorageListener
 {
     use DatabaseTransactionHandlerTrait;

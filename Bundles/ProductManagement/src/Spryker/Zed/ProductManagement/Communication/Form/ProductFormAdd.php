@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
@@ -27,7 +28,6 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyI
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface;
 use Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -38,6 +38,9 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ */
 class ProductFormAdd extends AbstractType
 {
     const FIELD_SKU = 'sku';
@@ -54,6 +57,7 @@ class ProductFormAdd extends AbstractType
     const FORM_PRICE_AND_STOCK = 'price_and_stock';
     const FORM_TAX_SET = 'tax_set';
     const FORM_SEO = 'seo';
+    const FORM_STORE_RELATION = 'store_relation';
     const FORM_IMAGE_SET = 'image_set';
 
     const OPTION_ATTRIBUTE_ABSTRACT = 'option_attribute_abstract';
@@ -196,7 +200,8 @@ class ProductFormAdd extends AbstractType
             ->addPriceForm($builder, $options)
             ->addTaxRateField($builder, $options)
             ->addSeoLocalizedForms($builder)
-            ->addImageLocalizedForms($builder);
+            ->addImageLocalizedForms($builder)
+            ->addStoreRelationForm($builder);
     }
 
     /**
@@ -281,6 +286,21 @@ class ProductFormAdd extends AbstractType
         );
 
         $this->addImageSetForm($builder, $defaultName);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addStoreRelationForm(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FORM_STORE_RELATION,
+            $this->getFactory()->getStoreRelationFormTypePlugin()->getType()
+        );
 
         return $this;
     }

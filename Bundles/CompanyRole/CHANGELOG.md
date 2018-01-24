@@ -1,3 +1,3 @@
 # CompanyRole Changelog
 
-[Release Changelog](https://github.com/spryker/CompanyRole/releases)
+[Release Changelog](https://github.com/spryker/company-role/releases)

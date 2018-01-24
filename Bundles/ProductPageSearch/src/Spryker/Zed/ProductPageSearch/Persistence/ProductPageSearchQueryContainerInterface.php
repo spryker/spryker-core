@@ -44,7 +44,7 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      *
      * @param array $priceTypeIds
      *
-     * @return \Orm\Zed\PriceStorage\Persistence\SpyPriceAbstractStorageQuery
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
     public function queryAllProductAbstractIdsByPriceTypeIds(array $priceTypeIds);
 

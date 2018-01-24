@@ -1,3 +1,3 @@
 # CmsUserConnector Changelog
 
-[Release Changelog](https://github.com/spryker/CmsUserConnector/releases)
+[Release Changelog](https://github.com/spryker/cms-user-connector/releases)

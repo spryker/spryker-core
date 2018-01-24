@@ -3,6 +3,7 @@
   "description": "Quote module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/currency": "^2.0.0 || ^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/session": "^3.0.0",
