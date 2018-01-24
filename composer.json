@@ -149,6 +149,8 @@
     "spryker/product-category-filter-gui": "*",
     "spryker/product-category-filter-storage": "*",
     "spryker/product-category-storage": "*",
+    "spryker/product-customer-permission": "*",
+    "spryker/product-customer-permission-collector": "*",
     "spryker/product-discount-connector": "*",
     "spryker/product-group": "*",
     "spryker/product-group-collector": "*",
