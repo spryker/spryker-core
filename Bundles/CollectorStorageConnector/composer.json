@@ -3,7 +3,7 @@
   "description": "CollectorStorageConnector module",
   "license": "proprietary",
   "require": {
-    "spryker/collector": "^5.0.0",
+    "spryker/collector": "^5.0.0 || ^6.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/storage": "^3.0.0"
   },

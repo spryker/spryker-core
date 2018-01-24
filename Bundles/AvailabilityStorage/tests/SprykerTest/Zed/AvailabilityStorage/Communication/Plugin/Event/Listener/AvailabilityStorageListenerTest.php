@@ -10,8 +10,11 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorageQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use PHPUnit\Framework\SkippedTestError;
 use Propel\Runtime\Propel;
 use Silex\Application;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageBusinessFactory;
 use Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacade;
@@ -36,10 +39,17 @@ use SprykerTest\Zed\AvailabilityStorage\AvailabilityStorageConfigMock;
 class AvailabilityStorageListenerTest extends Unit
 {
     /**
+     * @throws \PHPUnit\Framework\SkippedTestError
+     *
      * @return void
      */
     protected function setUp()
     {
+        $dbType = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
+        if ($dbType !== 'pgsql') {
+            throw new SkippedTestError('Warning: no PostgreSQL is detected');
+        }
+
         Propel::disableInstancePooling();
         $propelServiceProvider = new PropelServiceProvider();
         $propelServiceProvider->boot(new Application());
