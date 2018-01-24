@@ -1,0 +1,25 @@
+{
+    "name": "spryker/product-customer-permission",
+    "description": "ProductCustomerPermission Module",
+    "license": "proprietary",
+    "require": {
+      "spryker/customer": "*",
+      "spryker/kernel": "^3.0.0",
+      "spryker/key-builder": "^1.0.0",
+      "spryker/product": "^5.0.0",
+      "spryker/propel-orm": "^1.1.0",
+      "spryker/storage": "^3.0.0",
+      "spryker/touch": "^3.0.0"
+    },
+    "require-dev": {
+      "spryker/code-sniffer": "*",
+      "spryker/propel": "*"
+    },
+    "autoload": {
+      "psr-4": {
+        "Spryker\\": "src/Spryker/"
+      }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
