@@ -34,7 +34,7 @@ class ViewController extends AbstractController
             ->getFileManagerQueryContainer()
             ->queryFileById($idFile)
             ->findOne();
-        $fileInfoTable = $this->getFactory()->createFileInfoTable($idFile);
+        $fileInfoTable = $this->getFactory()->createFileInfoViewTable($idFile);
 
         return [
             'file' => $file,
@@ -55,7 +55,7 @@ class ViewController extends AbstractController
 
         $fileInfoTable = $this
             ->getFactory()
-            ->createFileInfoTable($idFile);
+            ->createFileInfoViewTable($idFile);
 
         return $this->jsonResponse(
             $fileInfoTable->fetchData()

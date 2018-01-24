@@ -25,15 +25,18 @@ class FileVersion implements FileVersionInterface
     }
 
     /**
-     * @param int|null $fileId
+     * @param int|null $idFile
      *
      * @return int
      */
-    public function getNewVersionNumber(int $fileId = null)
+    public function getNewVersionNumber($idFile = null)
     {
-        $fileInfo = $this->fileFinder->getLatestFileInfoByFkFile($fileId);
+        if ($idFile === null) {
+            return static::DEFAULT_VERSION_NUMBER;
+        }
+        $fileInfo = $this->fileFinder->getLatestFileInfoByFkFile($idFile);
 
-        if ($fileInfo == null) {
+        if ($fileInfo === null) {
             return static::DEFAULT_VERSION_NUMBER;
         }
 
@@ -45,7 +48,7 @@ class FileVersion implements FileVersionInterface
      *
      * @return string
      */
-    public function getNewVersionName(int $versionNumber)
+    public function getNewVersionName($versionNumber)
     {
         return sprintf('v. %d', $versionNumber);
     }

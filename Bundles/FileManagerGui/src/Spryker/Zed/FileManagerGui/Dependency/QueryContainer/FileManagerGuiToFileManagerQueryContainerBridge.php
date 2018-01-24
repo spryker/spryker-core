@@ -23,29 +23,29 @@ class FileManagerGuiToFileManagerQueryContainerBridge implements FileManagerGuiT
     }
 
     /**
-     * @param int $id
+     * @param int $idFile
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
-    public function queryFileWithFileInfoById(int $id)
+    public function queryFileWithFileInfoById(int $idFile)
     {
-        return $this->queryContainer->queryFileWithFileInfoById($id);
+        return $this->queryContainer->queryFileWithFileInfoById($idFile);
     }
 
     /**
-     * @param int $id
+     * @param int $idFile
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
-    public function queryFileById(int $id)
+    public function queryFileById(int $idFile)
     {
-        return $this->queryContainer->queryFileById($id);
+        return $this->queryContainer->queryFileById($idFile);
     }
 
     /**
      * @param int|null $idFile
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileInfoQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
      */
     public function queryFileInfoByFkFile(int $idFile = null)
     {
@@ -55,7 +55,7 @@ class FileManagerGuiToFileManagerQueryContainerBridge implements FileManagerGuiT
     /**
      * @param int $idFileInfo
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileInfoQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
      */
     public function queryFileInfo(int $idFileInfo)
     {
@@ -63,7 +63,7 @@ class FileManagerGuiToFileManagerQueryContainerBridge implements FileManagerGuiT
     }
 
     /**
-     * @return \Orm\Zed\Cms\Persistence\SpyFileQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
     public function queryFiles()
     {

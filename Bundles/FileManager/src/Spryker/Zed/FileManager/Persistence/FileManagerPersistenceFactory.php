@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\FileManager\Persistence;
 
-use Orm\Zed\Cms\Persistence\SpyFileInfoLocalizedAttributesQuery;
-use Orm\Zed\Cms\Persistence\SpyFileInfoQuery;
-use Orm\Zed\Cms\Persistence\SpyFileQuery;
+use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
+use Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributesQuery;
+use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 class FileManagerPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Orm\Zed\Cms\Persistence\SpyFileQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
     public function createFileQuery()
     {
@@ -27,7 +27,7 @@ class FileManagerPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Cms\Persistence\SpyFileInfoQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
      */
     public function createFileInfoQuery()
     {
@@ -35,10 +35,10 @@ class FileManagerPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Cms\Persistence\SpyFileInfoLocalizedAttributesQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributesQuery
      */
     public function createFileInfoLocalizedAttributesQuery()
     {
-        return SpyFileInfoLocalizedAttributesQuery::create();
+        return SpyFileLocalizedAttributesQuery::create();
     }
 }

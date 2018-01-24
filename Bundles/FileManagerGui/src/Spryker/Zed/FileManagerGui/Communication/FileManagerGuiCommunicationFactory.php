@@ -10,7 +10,8 @@ namespace Spryker\Zed\FileManagerGui\Communication;
 use Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\FileFormDataProvider;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\Tabs\FileFormTabs;
-use Spryker\Zed\FileManagerGui\Communication\Table\FileInfoTable;
+use Spryker\Zed\FileManagerGui\Communication\Table\FileInfoEditTable;
+use Spryker\Zed\FileManagerGui\Communication\Table\FileInfoViewTable;
 use Spryker\Zed\FileManagerGui\Communication\Table\FileTable;
 use Spryker\Zed\FileManagerGui\FileManagerGuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -29,16 +30,27 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param int $idFile
-     * @param bool $editMode
      *
-     * @return \Spryker\Zed\FileManagerGui\Communication\Table\FileInfoTable
+     * @return \Spryker\Zed\FileManagerGui\Communication\Table\FileInfoEditTable
      */
-    public function createFileInfoTable(int $idFile, bool $editMode = false)
+    public function createFileInfoEditTable(int $idFile)
     {
-        return new FileInfoTable(
+        return new FileInfoEditTable(
             $this->getFileManagerQueryContainer(),
-            $idFile,
-            $editMode
+            $idFile
+        );
+    }
+
+    /**
+     * @param int $idFile
+     *
+     * @return \Spryker\Zed\FileManagerGui\Communication\Table\FileInfoViewTable
+     */
+    public function createFileInfoViewTable(int $idFile)
+    {
+        return new FileInfoViewTable(
+            $this->getFileManagerQueryContainer(),
+            $idFile
         );
     }
 

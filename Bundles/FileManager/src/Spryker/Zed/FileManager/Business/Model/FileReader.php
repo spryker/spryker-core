@@ -10,8 +10,9 @@ namespace Spryker\Zed\FileManager\Business\Model;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerReadResponseTransfer;
 use Generated\Shared\Transfer\FileTransfer;
-use Orm\Zed\Cms\Persistence\Base\SpyFile;
-use Orm\Zed\Cms\Persistence\SpyFileInfo;
+use Orm\Zed\FileManager\Persistence\Base\SpyFile;
+use Orm\Zed\FileManager\Persistence\SpyFileInfo;
+use Spryker\Zed\FileManager\Exception\FileInfoNotFoundException;
 
 class FileReader implements FileReaderInterface
 {
@@ -38,14 +39,16 @@ class FileReader implements FileReaderInterface
     /**
      * @param int $idFileInfo
      *
+     * @throws \Spryker\Zed\FileManager\Exception\FileInfoNotFoundException
+     *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
-    public function read(int $idFileInfo)
+    public function read($idFileInfo)
     {
         $fileInfo = $this->fileFinder->getFileInfo($idFileInfo);
 
-        if ($fileInfo == null) {
-            return false;
+        if ($fileInfo === null) {
+            throw new FileInfoNotFoundException(sprintf('File info with id %d not found', $idFileInfo));
         }
 
         return $this->createResponseTransfer($fileInfo);
@@ -54,21 +57,23 @@ class FileReader implements FileReaderInterface
     /**
      * @param int $idFile
      *
-     * @return bool|\Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     * @throws \Spryker\Zed\FileManager\Exception\FileInfoNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
-    public function readLatestByFileId(int $idFile)
+    public function readLatestByFileId($idFile)
     {
         $fileInfo = $this->fileFinder->getLatestFileInfoByFkFile($idFile);
 
-        if ($fileInfo == null) {
-            return false;
+        if ($fileInfo === null) {
+            throw new FileInfoNotFoundException(sprintf('File info for file with id %d not found', $idFile));
         }
 
         return $this->createResponseTransfer($fileInfo);
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\SpyFileInfo $fileInfo
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
      *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
@@ -88,7 +93,7 @@ class FileReader implements FileReaderInterface
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\Base\SpyFile $file
+     * @param \Orm\Zed\FileManager\Persistence\Base\SpyFile $file
      *
      * @return \Generated\Shared\Transfer\FileTransfer
      */
@@ -101,7 +106,7 @@ class FileReader implements FileReaderInterface
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\SpyFileInfo $fileInfo
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
      *
      * @return \Generated\Shared\Transfer\FileInfoTransfer
      */

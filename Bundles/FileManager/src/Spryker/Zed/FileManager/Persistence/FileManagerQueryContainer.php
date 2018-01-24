@@ -18,16 +18,16 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @param int $id
+     * @param int $idFile
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
-    public function queryFileWithFileInfoById(int $id)
+    public function queryFileWithFileInfoById($idFile)
     {
         $query = $this->getFactory()->createFileQuery();
-        $query->filterByIdFile($id);
+        $query->filterByIdFile($idFile);
         $query->leftJoinWithSpyFileInfo();
 
         return $query;
@@ -36,16 +36,16 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @param int $id
+     * @param int $idFile
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
-    public function queryFileById(int $id)
+    public function queryFileById($idFile)
     {
         $query = $this->getFactory()->createFileQuery();
-        $query->filterByIdFile($id);
+        $query->filterByIdFile($idFile);
 
         return $query;
     }
@@ -57,9 +57,9 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileInfoQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
      */
-    public function queryFileInfoByFkFile(int $idFile = null)
+    public function queryFileInfoByFkFile($idFile = null)
     {
         $query = $this->getFactory()->createFileInfoQuery();
         $query->orderByVersion(Criteria::DESC)
@@ -75,9 +75,9 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileInfoQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
      */
-    public function queryFileInfo(int $idFileInfo)
+    public function queryFileInfo($idFileInfo)
     {
         $query = $this->getFactory()->createFileInfoQuery();
         $query->filterByIdFileInfo($idFileInfo);
@@ -88,7 +88,7 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
     public function queryFiles()
     {

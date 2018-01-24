@@ -7,13 +7,12 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
-use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
 use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
-class FileInfoTable extends AbstractTable
+abstract class FileInfoTable extends AbstractTable
 {
     const REQUEST_ID_FILE_INFO = 'id-file-info';
 
@@ -28,21 +27,21 @@ class FileInfoTable extends AbstractTable
     protected $idFile;
 
     /**
-     * @var bool
-     */
-    private $editMode;
-
-    /**
      * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer
      * @param int $idFile
-     * @param bool $editMode
      */
-    public function __construct(FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer, int $idFile, bool $editMode = false)
+    public function __construct(FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer, int $idFile)
     {
         $this->queryContainer = $queryContainer;
         $this->idFile = $idFile;
-        $this->editMode = $editMode;
     }
+
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
+    abstract protected function buildLinks($item);
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
@@ -148,33 +147,5 @@ class FileInfoTable extends AbstractTable
         $config->setRawColumns([
             FileManagerGuiConstants::COL_ACTIONS,
         ]);
-    }
-
-    /**
-     * @param array $item
-     *
-     * @return array
-     */
-    protected function buildLinks($item)
-    {
-        $buttons = [];
-
-        $buttons[] = $this->generateViewButton(
-            Url::generate('/file-manager-gui/download', [
-                static::REQUEST_ID_FILE_INFO => $item[FileManagerGuiConstants::COL_ID_FILE_INFO],
-            ]),
-            'Download'
-        );
-
-        if ($this->editMode) {
-            $buttons[] = $this->generateRemoveButton(
-                Url::generate('/file-manager-gui/delete/file-info', [
-                    static::REQUEST_ID_FILE_INFO => $item[FileManagerGuiConstants::COL_ID_FILE_INFO],
-                ]),
-                'Delete'
-            );
-        }
-
-        return $buttons;
     }
 }

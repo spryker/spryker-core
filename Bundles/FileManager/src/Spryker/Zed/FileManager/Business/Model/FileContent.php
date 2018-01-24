@@ -10,13 +10,13 @@ namespace Spryker\Zed\FileManager\Business\Model;
 use Generated\Shared\Transfer\FileSystemContentTransfer;
 use Generated\Shared\Transfer\FileSystemDeleteTransfer;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
-use Spryker\Service\FileSystem\FileSystemServiceInterface;
+use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface;
 use Spryker\Zed\FileManager\FileManagerConfig;
 
 class FileContent implements FileContentInterface
 {
     /**
-     * @var \Spryker\Service\FileSystem\FileSystemServiceInterface
+     * @var \Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface
      */
     protected $fileSystemService;
 
@@ -26,10 +26,10 @@ class FileContent implements FileContentInterface
     private $config;
 
     /**
-     * @param \Spryker\Service\FileSystem\FileSystemServiceInterface $fileSystemService
+     * @param \Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface $fileSystemService
      * @param \Spryker\Zed\FileManager\FileManagerConfig $config
      */
-    public function __construct(FileSystemServiceInterface $fileSystemService, FileManagerConfig $config)
+    public function __construct(FileManagerToFileSystemBridgeInterface $fileSystemService, FileManagerConfig $config)
     {
         $this->fileSystemService = $fileSystemService;
         $this->config = $config;
@@ -41,7 +41,7 @@ class FileContent implements FileContentInterface
      *
      * @return void
      */
-    public function save(string $fileName, string $content)
+    public function save($fileName, $content)
     {
         $fileSystemContentTransfer = new FileSystemContentTransfer();
         $fileSystemContentTransfer->setFileSystemName($this->config->getStorageName());
@@ -56,7 +56,7 @@ class FileContent implements FileContentInterface
      *
      * @return void
      */
-    public function delete(string $fileName)
+    public function delete($fileName)
     {
         $fileSystemDeleteTransfer = new FileSystemDeleteTransfer();
         $fileSystemDeleteTransfer->setFileSystemName($this->config->getStorageName());
@@ -70,7 +70,7 @@ class FileContent implements FileContentInterface
      *
      * @return string
      */
-    public function read(string $fileName)
+    public function read($fileName)
     {
         $fileSystemQueryTransfer = new FileSystemQueryTransfer();
         $fileSystemQueryTransfer->setFileSystemName($this->config->getStorageName());

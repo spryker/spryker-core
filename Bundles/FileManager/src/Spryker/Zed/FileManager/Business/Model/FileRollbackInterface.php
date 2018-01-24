@@ -15,5 +15,5 @@ interface FileRollbackInterface
      *
      * @return void
      */
-    public function rollback(int $idFile, int $idFileInfo);
+    public function rollback($idFile, $idFileInfo);
 }

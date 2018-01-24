@@ -10,16 +10,16 @@ namespace Spryker\Zed\FileManager\Business\Model;
 interface FileVersionInterface
 {
     /**
-     * @param int|null $fileId
+     * @param int|null $idFile
      *
      * @return int
      */
-    public function getNewVersionNumber(int $fileId = null);
+    public function getNewVersionNumber($idFile = null);
 
     /**
      * @param int $versionNumber
      *
      * @return string
      */
-    public function getNewVersionName(int $versionNumber);
+    public function getNewVersionName($versionNumber);
 }

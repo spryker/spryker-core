@@ -46,7 +46,7 @@ class EditController extends AbstractController
             return $this->redirectResponse($redirectUrl);
         }
 
-        $fileInfoTable = $this->getFactory()->createFileInfoTable($idFile, true);
+        $fileInfoTable = $this->getFactory()->createFileInfoEditTable($idFile);
         $fileFormsTabs = $this->getFactory()->createFileFormTabs();
 
         return [
@@ -70,7 +70,7 @@ class EditController extends AbstractController
 
         $fileInfoTable = $this
             ->getFactory()
-            ->createFileInfoTable($idFile, true);
+            ->createFileInfoEditTable($idFile);
 
         return $this->jsonResponse(
             $fileInfoTable->fetchData()

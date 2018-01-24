@@ -10,29 +10,29 @@ namespace Spryker\Zed\FileManagerGui\Dependency\QueryContainer;
 interface FileManagerGuiToFileManagerQueryContainerBridgeInterface
 {
     /**
-     * @param int $id
+     * @param int $idFile
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
-    public function queryFileWithFileInfoById(int $id);
+    public function queryFileWithFileInfoById(int $idFile);
 
     /**
-     * @param int $id
+     * @param int $idFile
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
-    public function queryFileById(int $id);
+    public function queryFileById(int $idFile);
 
     /**
      * @param int|null $idFile
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileInfoQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
      */
     public function queryFileInfoByFkFile(int $idFile = null);
 
@@ -43,14 +43,14 @@ interface FileManagerGuiToFileManagerQueryContainerBridgeInterface
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileInfoQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
      */
     public function queryFileInfo(int $idFileInfo);
 
     /**
      * @api
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
     public function queryFiles();
 }

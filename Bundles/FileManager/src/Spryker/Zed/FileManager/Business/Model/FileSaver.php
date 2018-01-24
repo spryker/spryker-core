@@ -9,15 +9,13 @@ namespace Spryker\Zed\FileManager\Business\Model;
 
 use Exception;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
-use Orm\Zed\Cms\Persistence\SpyFile;
-use Orm\Zed\Cms\Persistence\SpyFileInfo;
+use Orm\Zed\FileManager\Persistence\SpyFile;
+use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Spryker\Zed\FileManager\FileManagerConfig;
 use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
 
 class FileSaver implements FileSaverInterface
 {
-    const FILE_VERSION_DELIMITER = '-';
-
     /**
      * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface
      */
@@ -105,7 +103,7 @@ class FileSaver implements FileSaverInterface
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\SpyFile $file
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
      * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
      *
      * @throws \Exception
@@ -135,8 +133,8 @@ class FileSaver implements FileSaverInterface
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\SpyFile $file
-     * @param \Orm\Zed\Cms\Persistence\SpyFileInfo|null $fileInfo
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo|null $fileInfo
      *
      * @return void
      */
@@ -149,8 +147,8 @@ class FileSaver implements FileSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
-     * @param \Orm\Zed\Cms\Persistence\SpyFile $file
-     * @param \Orm\Zed\Cms\Persistence\SpyFileInfo|null $fileInfo
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo|null $fileInfo
      *
      * @return void
      */
@@ -164,7 +162,7 @@ class FileSaver implements FileSaverInterface
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\SpyFileInfo $fileInfo
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
      * @param string $newFileName
      *
      * @return void
@@ -181,7 +179,7 @@ class FileSaver implements FileSaverInterface
     /**
      * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileInfo
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfo
      */
     protected function createFileInfo(FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
@@ -209,7 +207,9 @@ class FileSaver implements FileSaverInterface
      */
     protected function getNewFileName(string $fileName, string $versionName)
     {
-        return $fileName . static::FILE_VERSION_DELIMITER . $versionName;
+        $fileNameVersionDelimiter = $this->config->getFileNameVersionDelimiter();
+
+        return $fileName . $fileNameVersionDelimiter . $versionName;
     }
 
     /**

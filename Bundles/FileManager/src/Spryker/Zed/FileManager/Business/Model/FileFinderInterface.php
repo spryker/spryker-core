@@ -10,23 +10,23 @@ namespace Spryker\Zed\FileManager\Business\Model;
 interface FileFinderInterface
 {
     /**
-     * @param int $fileId
+     * @param int $idFile
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFile
+     * @return \Orm\Zed\FileManager\Persistence\SpyFile
      */
-    public function getFile(int $fileId);
+    public function getFile($idFile);
 
     /**
-     * @param int|null $fileId
+     * @param int $idFile
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileInfo
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfo
      */
-    public function getLatestFileInfoByFkFile(int $fileId = null);
+    public function getLatestFileInfoByFkFile($idFile);
 
     /**
-     * @param int $fileInfoId
+     * @param int $idFileInfo
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileInfo
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfo
      */
-    public function getFileInfo(int $fileInfoId);
+    public function getFileInfo($idFileInfo);
 }

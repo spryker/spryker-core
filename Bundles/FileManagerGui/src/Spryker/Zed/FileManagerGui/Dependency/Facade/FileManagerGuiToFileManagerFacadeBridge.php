@@ -17,11 +17,11 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
     protected $fileManagerFacade;
 
     /**
-     * @param \Spryker\Zed\FileManager\Business\FileManagerFacadeInterface $fielManagerFacade
+     * @param \Spryker\Zed\FileManager\Business\FileManagerFacadeInterface $fileManagerFacade
      */
-    public function __construct($fielManagerFacade)
+    public function __construct($fileManagerFacade)
     {
-        $this->fileManagerFacade = $fielManagerFacade;
+        $this->fileManagerFacade = $fileManagerFacade;
     }
 
     /**

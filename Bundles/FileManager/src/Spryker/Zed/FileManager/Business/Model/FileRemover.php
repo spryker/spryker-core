@@ -36,7 +36,7 @@ class FileRemover implements FileRemoverInterface
      *
      * @return bool
      */
-    public function deleteFileInfo(int $idFileInfo)
+    public function deleteFileInfo($idFileInfo)
     {
         $fileInfo = $this->fileFinder->getFileInfo($idFileInfo);
 
@@ -55,7 +55,7 @@ class FileRemover implements FileRemoverInterface
      *
      * @return bool
      */
-    public function delete(int $idFile)
+    public function delete($idFile)
     {
         $file = $this->fileFinder->getFile($idFile);
 

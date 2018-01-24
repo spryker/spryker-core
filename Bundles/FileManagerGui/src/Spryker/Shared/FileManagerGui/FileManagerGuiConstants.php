@@ -7,8 +7,8 @@
 
 namespace Spryker\Shared\FileManagerGui;
 
-use Orm\Zed\Cms\Persistence\Map\SpyFileInfoTableMap;
-use Orm\Zed\Cms\Persistence\Map\SpyFileTableMap;
+use Orm\Zed\FileManager\Persistence\Map\SpyFileInfoTableMap;
+use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 interface FileManagerGuiConstants

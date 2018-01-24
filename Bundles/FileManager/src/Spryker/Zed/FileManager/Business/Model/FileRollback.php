@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
-use Orm\Zed\Cms\Persistence\SpyFileInfo;
+use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Spryker\Zed\FileManager\Exception\FileInfoNotFoundException;
 use Spryker\Zed\FileManager\Exception\FileNotFoundException;
 
@@ -41,7 +41,7 @@ class FileRollback implements FileRollbackInterface
      *
      * @return void
      */
-    public function rollback(int $idFile, int $idFileInfo)
+    public function rollback($idFile, $idFileInfo)
     {
         $file = $this->getFile($idFile);
         $targetFileInfo = $this->getFileInfo($idFileInfo);
@@ -49,9 +49,9 @@ class FileRollback implements FileRollbackInterface
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\SpyFileInfo $targetFileInfo
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $targetFileInfo
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileInfo
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfo
      */
     protected function createNewFileInfo(SpyFileInfo $targetFileInfo)
     {
@@ -65,12 +65,12 @@ class FileRollback implements FileRollbackInterface
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\SpyFileInfo $fileInfo
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
      * @param int $idFile
      *
      * @return void
      */
-    protected function updateVersion(SpyFileInfo $fileInfo, int $idFile)
+    protected function updateVersion(SpyFileInfo $fileInfo, $idFile)
     {
         $newVersion = $this->fileVersion->getNewVersionNumber($idFile);
         $newVersionName = $this->fileVersion->getNewVersionName($newVersion);
@@ -83,9 +83,9 @@ class FileRollback implements FileRollbackInterface
      *
      * @throws \Spryker\Zed\FileManager\Exception\FileNotFoundException
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFile
+     * @return \Orm\Zed\FileManager\Persistence\SpyFile
      */
-    protected function getFile(int $idFile)
+    protected function getFile($idFile)
     {
         $file = $this->fileFinder->getFile($idFile);
 
@@ -101,9 +101,9 @@ class FileRollback implements FileRollbackInterface
      *
      * @throws \Spryker\Zed\FileManager\Exception\FileInfoNotFoundException
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyFileInfo
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfo
      */
-    protected function getFileInfo(int $idFileInfo)
+    protected function getFileInfo($idFileInfo)
     {
         $fileInfo = $this->fileFinder->getFileInfo($idFileInfo);
 

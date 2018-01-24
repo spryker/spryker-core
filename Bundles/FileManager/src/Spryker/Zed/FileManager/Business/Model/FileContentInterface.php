@@ -15,7 +15,7 @@ interface FileContentInterface
      *
      * @return void
      */
-    public function save(string $fileName, string $content);
+    public function save($fileName, $content);
 
     /**
      * @param string $fileName
@@ -24,7 +24,7 @@ interface FileContentInterface
      *
      * @return void
      */
-    public function delete(string $fileName);
+    public function delete($fileName);
 
     /**
      * @param string $fileName
@@ -33,5 +33,5 @@ interface FileContentInterface
      *
      * @return string
      */
-    public function read(string $fileName);
+    public function read($fileName);
 }
