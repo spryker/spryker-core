@@ -118,6 +118,10 @@
         <property name="stores" type="Store[]" />
     </transfer>
 
+    <transfer name="Store">
+        <property name="idStore" type="int" />
+    </transfer>
+
     <transfer name="DiscountCalculator">
         <property name="amount" type="string" />
         <property name="calculatorPlugin" type="string" />

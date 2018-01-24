@@ -27,20 +27,22 @@ class DiscountStoreRelationReader implements DiscountStoreRelationReaderInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelation
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function getStoreRelation(StoreRelationTransfer $storeRelationTransfer)
+    public function getStoreRelation(StoreRelationTransfer $storeRelation)
     {
-        $storeTransferCollection = $this->getRelatedStores($storeRelationTransfer->getIdEntity());
+        $storeRelation->requireIdEntity();
+
+        $storeTransferCollection = $this->getRelatedStores($storeRelation->getIdEntity());
 
         $idStores = $this->getIdStores($storeTransferCollection);
-        $storeRelationTransfer
+        $storeRelation
             ->setStores($storeTransferCollection)
             ->setIdStores($idStores);
 
-        return $storeRelationTransfer;
+        return $storeRelation;
     }
 
     /**
@@ -68,14 +70,14 @@ class DiscountStoreRelationReader implements DiscountStoreRelationReaderInterfac
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $storeTransferCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $stores
      *
      * @return int[]
      */
-    protected function getIdStores(ArrayObject $storeTransferCollection)
+    protected function getIdStores(ArrayObject $stores)
     {
         return array_map(function (StoreTransfer $storeTransfer) {
             return $storeTransfer->getIdStore();
-        }, $storeTransferCollection->getArrayCopy());
+        }, $stores->getArrayCopy());
     }
 }

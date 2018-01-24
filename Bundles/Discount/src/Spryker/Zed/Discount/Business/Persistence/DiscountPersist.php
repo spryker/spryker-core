@@ -8,6 +8,7 @@ namespace Spryker\Zed\Discount\Business\Persistence;
 
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Spryker\Shared\Discount\DiscountConstants;
@@ -95,7 +96,10 @@ class DiscountPersist implements DiscountPersistInterface
         $discountEntity->save();
 
         $this->saveDiscountMoneyValues($discountEntity, $discountConfiguratorTransfer);
-        $this->saveDiscountStoreRelation($discountEntity, $discountConfiguratorTransfer);
+        $this->saveDiscountStoreRelation(
+            $discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation(),
+            $discountEntity->getIdDiscount()
+        );
 
         $discountConfiguratorTransfer->getDiscountGeneral()->setIdDiscount($discountEntity->getIdDiscount());
 
@@ -154,7 +158,10 @@ class DiscountPersist implements DiscountPersistInterface
         $affectedRows = $discountEntity->save();
 
         $this->saveDiscountMoneyValues($discountEntity, $discountConfiguratorTransfer);
-        $this->saveDiscountStoreRelation($discountEntity, $discountConfiguratorTransfer);
+        $this->saveDiscountStoreRelation(
+            $discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation(),
+            $discountEntity->getIdDiscount()
+        );
 
         $this->executePostUpdatePlugins($discountConfiguratorTransfer);
 
@@ -408,16 +415,15 @@ class DiscountPersist implements DiscountPersistInterface
     }
 
     /**
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelation
+     * @param int $idDiscount
      *
      * @return void
      */
-    protected function saveDiscountStoreRelation(SpyDiscount $discountEntity, DiscountConfiguratorTransfer $discountConfiguratorTransfer)
+    protected function saveDiscountStoreRelation(StoreRelationTransfer $storeRelation, $idDiscount)
     {
-        $storeRelationTransfer = $discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation();
-        $storeRelationTransfer->setIdEntity($discountEntity->getIdDiscount());
+        $storeRelation->setIdEntity($idDiscount);
 
-        $this->discountStoreRelationWriter->update($storeRelationTransfer);
+        $this->discountStoreRelationWriter->update($storeRelation);
     }
 }

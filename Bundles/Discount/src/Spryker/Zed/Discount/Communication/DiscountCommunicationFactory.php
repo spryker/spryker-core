@@ -69,7 +69,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     {
         return new GeneralForm(
             $this->getQueryContainer(),
-            $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE)
+            $this->getStoreRelationFormTypePlugin()
         );
     }
 
@@ -285,5 +285,13 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function getCalculatorPlugins()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::CALCULATOR_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    public function getStoreRelationFormTypePlugin()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
     }
 }

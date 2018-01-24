@@ -10,6 +10,7 @@ namespace Spryker\Zed\Discount\Communication\Table;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -146,8 +147,18 @@ class DiscountsTable extends AbstractTable
             ->queryDiscountStoreWithStoresByFkDiscount($idDiscount)
             ->find();
 
+        return $this->extractStoreNames($discountStoreCollection);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Discount\Persistence\SpyDiscountStore[] $discountStores
+     *
+     * @return string
+     */
+    protected function extractStoreNames(ObjectCollection $discountStores)
+    {
         $storeNames = [];
-        foreach ($discountStoreCollection as $discountStoreEntity) {
+        foreach ($discountStores as $discountStoreEntity) {
             $storeNames[] = sprintf(
                 '<span class="label label-info">%s</span>',
                 $discountStoreEntity->getSpyStore()->getName()

@@ -94,6 +94,7 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
 
         $discountGeneralTransfer->setValidFrom($discountEntity->getValidFrom());
         $discountGeneralTransfer->setValidTo($discountEntity->getValidTo());
+        // TODO: do not use store relation reader in hydrator logic
         $discountGeneralTransfer->setStoreRelation(
             $this->getStoreRelation($discountEntity->getIdDiscount())
         );

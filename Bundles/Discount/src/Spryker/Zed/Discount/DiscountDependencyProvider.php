@@ -458,7 +458,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     protected function addStoreRelationFormTypePlugin(Container $container)
     {
         $container[static::PLUGIN_STORE_RELATION_FORM_TYPE] = function () {
-            return $this->createStoreRelationFormTypePlugin();
+            return $this->getStoreRelationFormTypePlugin();
         };
         return $container;
     }
@@ -468,13 +468,13 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
      */
-    protected function createStoreRelationFormTypePlugin()
+    protected function getStoreRelationFormTypePlugin()
     {
         throw new MissingStoreRelationFormTypePluginException(
             sprintf(
                 'Missing instance of %s! You need to configure StoreRelationFormType ' .
-                'in your own DiscountDependencyProvider::createStoreRelationFormTypePlugin() ' .
-                'to be able to manage shipment prices.',
+                'in your own DiscountDependencyProvider::getStoreRelationFormTypePlugin() ' .
+                'to be able to manage discounts.',
                 FormTypeInterface::class
             )
         );
