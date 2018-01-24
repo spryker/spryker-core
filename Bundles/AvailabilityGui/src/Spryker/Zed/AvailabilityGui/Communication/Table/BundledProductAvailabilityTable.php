@@ -170,6 +170,11 @@ class BundledProductAvailabilityTable extends AbstractTable
 
         $result = [];
         foreach ($queryResult as $productItem) {
+            $neverOutOfStockFlag = 'n/a';
+            if ($productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET]) {
+                $neverOutOfStockFlag = $this->isNeverOutOfStock($productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET]) ? 'Yes' : 'No';
+            }
+
             $result[] = [
                 AvailabilityQueryContainer::CONCRETE_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
                 AvailabilityQueryContainer::CONCRETE_NAME => $productItem[AvailabilityQueryContainer::CONCRETE_NAME],
@@ -177,12 +182,29 @@ class BundledProductAvailabilityTable extends AbstractTable
                 AvailabilityQueryContainer::STOCK_QUANTITY => $productItem[AvailabilityQueryContainer::STOCK_QUANTITY] ? $productItem[AvailabilityQueryContainer::STOCK_QUANTITY] : 0,
                 AvailabilityQueryContainer::RESERVATION_QUANTITY => $this->calculateReservation($productItem),
                 SpyProductBundleTableMap::COL_QUANTITY => $productItem[static::COL_BUNDLED_ITEMS],
-                AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => $productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET] ? $productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET] : 'n/a',
+                AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => $neverOutOfStockFlag,
                 static::TABLE_COL_ACTION => $this->createEditButton($productItem),
             ];
         }
 
         return $result;
+    }
+
+    /**
+     * @param string $neverOutOfStockSet
+     *
+     * @return bool
+     */
+    protected function isNeverOutOfStock($neverOutOfStockSet)
+    {
+        $statusSet = explode(',', $neverOutOfStockSet);
+
+        foreach ($statusSet as $status) {
+            if (filter_var($status, FILTER_VALIDATE_BOOLEAN)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

@@ -166,6 +166,11 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
                     $storeTransfer->getIdStore()
                 );
 
+                if ($bundledProductAvailabilityEntity->getQuantity() === 0 && !$bundledProductAvailabilityEntity->getIsNeverOutOfStock()) {
+                    $bundleAvailabilityQuantity = 0;
+                    break;
+                }
+
                 if ($bundledProductAvailabilityEntity === null || $bundledProductAvailabilityEntity->getIsNeverOutOfStock()) {
                     continue;
                 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\AvailabilityGui\Communication\Table;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityAbstractTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
@@ -93,7 +94,7 @@ class AvailabilityAbstractTable extends AbstractTable
 
         $config->setSearchable([
             SpyProductAbstractTableMap::COL_SKU,
-            AvailabilityQueryContainer::PRODUCT_NAME => 'Name',
+            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
         ]);
 
         $config->setDefaultSortColumnIndex(0);

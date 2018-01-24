@@ -144,12 +144,22 @@ class AvailabilityTable extends AbstractTable
                 AvailabilityQueryContainer::STOCK_QUANTITY => $productItem[AvailabilityQueryContainer::STOCK_QUANTITY],
                 AvailabilityQueryContainer::RESERVATION_QUANTITY => ($isBundleProduct) ? 'N/A' : $this->calculateReservation($productItem),
                 static::IS_BUNDLE_PRODUCT => ($isBundleProduct) ? 'Yes' : 'No',
-                AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => ($productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET]) ? 'Yes' : 'No',
+                AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => ($this->isNeverOutOfStock($productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET])) ? 'Yes' : 'No',
                 static::TABLE_COL_ACTION => $this->createButtons($productItem, $isBundleProduct),
             ];
         }
 
         return $result;
+    }
+
+    /**
+     * @param string $neverOutOfStockSet
+     *
+     * @return bool|null
+     */
+    protected function isNeverOutOfStock($neverOutOfStockSet)
+    {
+        return filter_var($neverOutOfStockSet, FILTER_VALIDATE_BOOLEAN);
     }
 
     /**
