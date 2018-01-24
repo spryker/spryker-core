@@ -1,13 +1,11 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: ahmedsabaa
- * Date: 1/23/18
- * Time: 3:53 PM
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductCategoryFilter\Business\Model;
-
 
 use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
 

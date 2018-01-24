@@ -13,9 +13,6 @@ use Spryker\Zed\ProductCategoryFilterGui\Dependency\Service\ProductCategoryFilte
 
 class ProductCategoryFilterTransferGenerator implements ProductCategoryFilterTransferGeneratorInterface
 {
-    const IS_ACTIVE_FIELD = 'isActive';
-    const LABEL_FIELD = 'label';
-
     /**
      * @var \Spryker\Zed\ProductCategoryFilterGui\Dependency\Service\ProductCategoryFilterGuiToUtilEncodingServiceInterface
      */
@@ -41,20 +38,7 @@ class ProductCategoryFilterTransferGenerator implements ProductCategoryFilterTra
         $productCategoryFilterTransfer = new ProductCategoryFilterTransfer();
         $productCategoryFilterTransfer->setFkCategory($idCategory);
         $productCategoryFilterTransfer->setIdProductCategoryFilter($idProductCategoryFilter);
-
-        $data = call_user_func_array(
-            'array_merge',
-            $this->utilEncodingService->decodeJson($jsonData,true)
-        );
-
-        foreach ($data as $key => $value) {
-            $productCategoryFilterItemTransfer = new ProductCategoryFilterItemTransfer();
-            $productCategoryFilterItemTransfer->setIsActive($value[static::IS_ACTIVE_FIELD]);
-            $productCategoryFilterItemTransfer->setLabel($value[static::LABEL_FIELD]);
-            $productCategoryFilterItemTransfer->setKey($key);
-
-            $productCategoryFilterTransfer->addProductCategoryFilterItem($productCategoryFilterItemTransfer);
-        }
+        $productCategoryFilterTransfer->fromArray($this->utilEncodingService->decodeJson($jsonData, true), true);
 
         return $productCategoryFilterTransfer;
     }
@@ -69,16 +53,15 @@ class ProductCategoryFilterTransferGenerator implements ProductCategoryFilterTra
         $finalJson = [];
 
         $productCategoryFilterItemTransfers = $productCategoryFilterTransfer->getFilters();
-        foreach($productCategoryFilterItemTransfers as $productCategoryFilterItemTransfer) {
+        foreach ($productCategoryFilterItemTransfers as $productCategoryFilterItemTransfer) {
             $finalJson[] = [
-                $productCategoryFilterItemTransfer->getKey() => [
-                    static::IS_ACTIVE_FIELD => $productCategoryFilterItemTransfer->getIsActive(),
-                    static::LABEL_FIELD => $productCategoryFilterItemTransfer->getLabel(),
-                    ]
+                ProductCategoryFilterItemTransfer::IS_ACTIVE => $productCategoryFilterItemTransfer->getIsActive(),
+                ProductCategoryFilterItemTransfer::LABEL => $productCategoryFilterItemTransfer->getLabel(),
+                ProductCategoryFilterItemTransfer::KEY => $productCategoryFilterItemTransfer->getKey(),
             ];
         }
 
-        $productCategoryFilterTransfer->setFilterData($this->utilEncodingService->encodeJson($finalJson,true));
+        $productCategoryFilterTransfer->setFilterData($this->utilEncodingService->encodeJson($finalJson, true));
 
         return $productCategoryFilterTransfer;
     }

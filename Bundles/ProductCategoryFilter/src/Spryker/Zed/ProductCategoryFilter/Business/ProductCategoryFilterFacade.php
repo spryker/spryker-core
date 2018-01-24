@@ -90,21 +90,4 @@ class ProductCategoryFilterFacade extends AbstractFacade implements ProductCateg
             ->createProductCategoryFilterDeleter()
             ->deleteProductCategoryFilterByCategoryId($categoryId);
     }
-
-    /**
-     * {$inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idCategory
-     * @param string $jsonData
-     *
-     * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
-     */
-    public function generateProductCategoryFilterTransferFromJson($idCategory, $jsonData)
-    {
-        return $this->getFactory()
-            ->createProductCategoryFilterTransferGenerator()
-            ->generateTransferFromJson(null, $idCategory, $jsonData);
-    }
 }

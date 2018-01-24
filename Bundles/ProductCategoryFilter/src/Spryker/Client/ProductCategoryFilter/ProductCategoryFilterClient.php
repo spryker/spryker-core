@@ -38,15 +38,19 @@ class ProductCategoryFilterClient extends AbstractClient implements ProductCateg
      * @api
      *
      * @param array $facets
-     * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
+     * @param int $idCategory
+     * @param string $localeName
      *
      * @return array
      */
-    public function updateFacetsByProductCategoryFilterTransfer(array $facets, ProductCategoryFilterTransfer $productCategoryFilterTransfer)
+    public function updateCategoryFacets(array $facets, $idCategory, $localeName)
     {
         return $this->getFactory()
             ->createFacetUpdaterByProductCategoryFilters()
-            ->updateFromTransfer($facets, $productCategoryFilterTransfer->getFilters());
+            ->updateFromTransfer(
+                $facets,
+                $this->getProductCategoryFiltersTransferForCategoryByLocale($idCategory, $localeName)
+            );
     }
 
     /**
@@ -65,14 +69,21 @@ class ProductCategoryFilterClient extends AbstractClient implements ProductCateg
     }
 
     /**
-     * @param $categoryId
-     * @param $localeName
+     * @api
+     *
+     * @param int $idCategory
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
      */
-    public function getProductCategoryFiltersTransferForCategoryByLocale($categoryId, $localeName)
+    public function getProductCategoryFiltersTransferForCategoryByLocale($idCategory, $localeName)
     {
-        $productCategoryFilters = $this->getProductCategoryFiltersFromStorage($categoryId, $localeName);
+        $productCategoryFilterTransfer = new ProductCategoryFilterTransfer();
+        $productCategoryFilterTransfer->fromArray(
+            $this->getProductCategoryFiltersFromStorage($idCategory, $localeName)
+        );
+
+        return $productCategoryFilterTransfer;
     }
 
     /**

@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductCategoryFilterGui\Communication\Controller;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
-use Spryker\Shared\ProductCategoryFilter\ProductCategoryFilterConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Form\ProductCategoryFilterForm;
 use Symfony\Component\HttpFoundation\Request;
@@ -80,7 +79,7 @@ class ProductCategoryFilterController extends AbstractController
 
         $filters = [];
 
-        if(count($productCategoryFilterTransfer->getFilters()) === 0) {
+        if (count($productCategoryFilterTransfer->getFilters()) === 0) {
             $filters = $this->getFactory()
                 ->getProductCategoryFilterClient()
                 ->updateFacetsByCategory(

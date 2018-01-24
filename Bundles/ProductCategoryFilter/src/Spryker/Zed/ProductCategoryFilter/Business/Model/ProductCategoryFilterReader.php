@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductCategoryFilter\Business\Model;
 
 use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
-use Spryker\Zed\ProductCategoryFilter\Dependency\Service\ProductCategoryFilterToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface;
 
 class ProductCategoryFilterReader implements ProductCategoryFilterReaderInterface
@@ -25,7 +24,7 @@ class ProductCategoryFilterReader implements ProductCategoryFilterReaderInterfac
 
     /**
      * @param \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer
-     * @param \Spryker\Zed\ProductCategoryFilter\Dependency\Service\ProductCategoryFilterToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTransferGenerator $productCategoryFilterTransferGenerator
      */
     public function __construct(ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer, ProductCategoryFilterTransferGenerator $productCategoryFilterTransferGenerator)
     {

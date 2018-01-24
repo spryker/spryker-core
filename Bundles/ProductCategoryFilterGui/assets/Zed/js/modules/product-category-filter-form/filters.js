@@ -55,7 +55,9 @@ $(document).ready(function() {
 });
 
 function getAllFilters() {
-    return getFilters(activeFilters, true).concat(getFilters(inactiveFilters, false));
+    return {
+        filters: getFilters(activeFilters, true).concat(getFilters(inactiveFilters, false))
+    };
 }
 
 /**
@@ -68,13 +70,13 @@ function getFilters(selector, isActive) {
     var filters = [];
     selector.find('li')
         .each(function(index, el) {
-            var filter = {};
-            filter[el.dataset['filterKey']] = {
-                label: el.dataset['filterLabel'],
-                isActive: isActive
-            };
-
-            filters.push(filter);
+            filters.push(
+                {
+                    key: el.dataset['filterKey'],
+                    label: el.dataset['filterLabel'],
+                    isActive: isActive
+                }
+            );
         });
 
     return filters;

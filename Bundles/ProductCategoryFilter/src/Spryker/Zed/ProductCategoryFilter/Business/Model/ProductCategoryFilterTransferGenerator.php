@@ -1,13 +1,11 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: ahmedsabaa
- * Date: 1/23/18
- * Time: 3:52 PM
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductCategoryFilter\Business\Model;
-
 
 use Generated\Shared\Transfer\ProductCategoryFilterItemTransfer;
 use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
@@ -15,16 +13,13 @@ use Spryker\Zed\ProductCategoryFilter\Dependency\Service\ProductCategoryFilterTo
 
 class ProductCategoryFilterTransferGenerator implements ProductCategoryFilterTransferGeneratorInterface
 {
-    const IS_ACTIVE_FIELD = 'isActive';
-    const LABEL_FIELD = 'label';
-
     /**
      * @var \Spryker\Zed\ProductCategoryFilterGui\Dependency\Service\ProductCategoryFilterGuiToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Zed\ProductCategoryFilter\Dependency\Service\ProductCategoryFilterToUtilEncodingServiceInterface
+     * @param \Spryker\Zed\ProductCategoryFilter\Dependency\Service\ProductCategoryFilterToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(ProductCategoryFilterToUtilEncodingServiceInterface $utilEncodingService)
     {
@@ -44,23 +39,11 @@ class ProductCategoryFilterTransferGenerator implements ProductCategoryFilterTra
         $productCategoryFilterTransfer->setIdProductCategoryFilter($idProductCategoryFilter);
         $productCategoryFilterTransfer->setFkCategory($idCategory);
 
-        if(empty($jsonData)) {
+        if (empty($jsonData)) {
             return $productCategoryFilterTransfer;
         }
 
-        $data = call_user_func_array(
-            'array_merge',
-            $this->utilEncodingService->decodeJson($jsonData,true)
-        );
-
-        foreach ($data as $key => $value) {
-            $productCategoryFilterItemTransfer = new ProductCategoryFilterItemTransfer();
-            $productCategoryFilterItemTransfer->setIsActive($value[static::IS_ACTIVE_FIELD]);
-            $productCategoryFilterItemTransfer->setLabel($value[static::LABEL_FIELD]);
-            $productCategoryFilterItemTransfer->setKey($key);
-
-            $productCategoryFilterTransfer->addProductCategoryFilterItem($productCategoryFilterItemTransfer);
-        }
+        $productCategoryFilterTransfer->fromArray($this->utilEncodingService->decodeJson($jsonData, true), true);
 
         return $productCategoryFilterTransfer;
     }
@@ -72,19 +55,20 @@ class ProductCategoryFilterTransferGenerator implements ProductCategoryFilterTra
      */
     public function generateTransferWithJsonFromTransfer(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
     {
-        $finalJson = [];
+        $finalJson = [
+            ProductCategoryFilterTransfer::FILTERS => [],
+        ];
 
         $productCategoryFilterItemTransfers = $productCategoryFilterTransfer->getFilters();
-        foreach($productCategoryFilterItemTransfers as $productCategoryFilterItemTransfer) {
-            $finalJson[] = [
-                $productCategoryFilterItemTransfer->getKey() => [
-                    static::IS_ACTIVE_FIELD => $productCategoryFilterItemTransfer->getIsActive(),
-                    static::LABEL_FIELD => $productCategoryFilterItemTransfer->getLabel(),
-                    ]
+        foreach ($productCategoryFilterItemTransfers as $productCategoryFilterItemTransfer) {
+            $finalJson[ProductCategoryFilterTransfer::FILTERS][] = [
+                ProductCategoryFilterItemTransfer::IS_ACTIVE => $productCategoryFilterItemTransfer->getIsActive(),
+                ProductCategoryFilterItemTransfer::LABEL => $productCategoryFilterItemTransfer->getLabel(),
+                ProductCategoryFilterItemTransfer::KEY => $productCategoryFilterItemTransfer->getKey(),
             ];
         }
 
-        $productCategoryFilterTransfer->setFilterData($this->utilEncodingService->encodeJson($finalJson,true));
+        $productCategoryFilterTransfer->setFilterData($this->utilEncodingService->encodeJson($finalJson, true));
 
         return $productCategoryFilterTransfer;
     }

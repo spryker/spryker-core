@@ -10,8 +10,8 @@ namespace Spryker\Zed\ProductCategoryFilterGui\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Form\DataProvider\ProductCategoryFilterDataProvider;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Form\ProductCategoryFilterForm;
-use Spryker\Zed\ProductCategoryFilterGui\Communication\TransferGenerator\ProductCategoryFilterTransferGenerator;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Table\CategoryRootNodeTable;
+use Spryker\Zed\ProductCategoryFilterGui\Communication\TransferGenerator\ProductCategoryFilterTransferGenerator;
 use Spryker\Zed\ProductCategoryFilterGui\ProductCategoryFilterGuiDependencyProvider;
 
 /**
