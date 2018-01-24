@@ -3,6 +3,7 @@
   "description": "Graphviz module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "phpdocumentor/graphviz": "^1.0.4"
   },
   "minimum-stability": "dev",
