@@ -13,7 +13,7 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
-use Spryker\Zed\Product\Business\Product\Validity\ValidityHydratorInterface;
+use Spryker\Zed\Product\Business\Product\Validity\ProductValidityHydratorInterface;
 
 class ProductTransferMapper implements ProductTransferMapperInterface
 {
@@ -23,17 +23,17 @@ class ProductTransferMapper implements ProductTransferMapperInterface
     protected $attributeEncoder;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\Validity\ValidityHydratorInterface
+     * @var \Spryker\Zed\Product\Business\Product\Validity\ProductValidityHydratorInterface
      */
     private $validityHydrator;
 
     /**
      * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
-     * @param \Spryker\Zed\Product\Business\Product\Validity\ValidityHydratorInterface $validityHydrator
+     * @param \Spryker\Zed\Product\Business\Product\Validity\ProductValidityHydratorInterface $validityHydrator
      */
     public function __construct(
         AttributeEncoderInterface $attributeEncoder,
-        ValidityHydratorInterface $validityHydrator
+        ProductValidityHydratorInterface $validityHydrator
     ) {
         $this->attributeEncoder = $attributeEncoder;
         $this->validityHydrator = $validityHydrator;

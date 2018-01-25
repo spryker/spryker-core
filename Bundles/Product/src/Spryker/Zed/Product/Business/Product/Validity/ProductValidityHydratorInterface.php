@@ -10,7 +10,7 @@ namespace Spryker\Zed\Product\Business\Product\Validity;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 
-interface ValidityHydratorInterface
+interface ProductValidityHydratorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
