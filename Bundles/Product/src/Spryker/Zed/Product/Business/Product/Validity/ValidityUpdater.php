@@ -123,9 +123,9 @@ class ValidityUpdater implements ValidityUpdaterInterface
      */
     protected function setPublished(Traversable $productValidityEntities)
     {
-        foreach ($productValidityEntities as $productLabelEntity) {
+        foreach ($productValidityEntities as $productValidityEntity) {
             $this->productConcreteActivator
-                ->activateProductConcrete($productLabelEntity->getFkProduct());
+                ->activateProductConcrete($productValidityEntity->getFkProduct());
         }
     }
 
@@ -136,9 +136,9 @@ class ValidityUpdater implements ValidityUpdaterInterface
      */
     protected function setUnpublished(Traversable $productValidityEntities)
     {
-        foreach ($productValidityEntities as $productLabelEntity) {
+        foreach ($productValidityEntities as $productValidityEntity) {
             $this->productConcreteActivator
-                ->deactivateProductConcrete($productLabelEntity->getFkProduct());
+                ->deactivateProductConcrete($productValidityEntity->getFkProduct());
         }
     }
 }
