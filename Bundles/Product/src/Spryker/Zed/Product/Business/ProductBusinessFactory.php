@@ -39,7 +39,7 @@ use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouch;
 use Spryker\Zed\Product\Business\Product\Url\ProductAbstractAfterUpdateUrlObserver;
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlGenerator;
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlManager;
-use Spryker\Zed\Product\Business\Product\Validity\ProductProductValidityHydrator;
+use Spryker\Zed\Product\Business\Product\Validity\ProductValidityHydrator;
 use Spryker\Zed\Product\Business\Product\Validity\ValidityUpdater;
 use Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGenerator;
 use Spryker\Zed\Product\Business\Product\Variant\VariantGenerator;
@@ -565,7 +565,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     protected function createValidityHydrotor()
     {
-        return new ProductProductValidityHydrator();
+        return new ProductValidityHydrator();
     }
 
     /**
