@@ -9,4 +9,5 @@ namespace Spryker\Shared\Product;
 
 interface ProductConstants
 {
+    const VALIDITY_DATE_TIME_FORMAT = 'Y-m-d h:m';
 }

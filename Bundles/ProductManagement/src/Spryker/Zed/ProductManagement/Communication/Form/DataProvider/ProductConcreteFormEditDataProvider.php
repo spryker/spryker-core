@@ -186,7 +186,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $formData[$generalFormName][ConcreteGeneralForm::FIELD_DESCRIPTION] = $localizedAttributesTransfer->getDescription();
             $formData[$generalFormName][ConcreteGeneralForm::FIELD_IS_SEARCHABLE] = $localizedAttributesTransfer->getIsSearchable();
             $formData[$generalFormName][ConcreteGeneralForm::FIELD_VALID_FROM] = $productTransfer->getValidityFrom();
-            $formData[$generalFormName][ConcreteGeneralForm::FIELD_VALID_UNTIL] = $productTransfer->getValidityUntil();
+            $formData[$generalFormName][ConcreteGeneralForm::FIELD_VALID_TO] = $productTransfer->getValidityUntil();
 
             $formData[$seoFormName][SeoForm::FIELD_META_TITLE] = $localizedAttributesTransfer->getMetaTitle();
             $formData[$seoFormName][SeoForm::FIELD_META_KEYWORDS] = $localizedAttributesTransfer->getMetaKeywords();
