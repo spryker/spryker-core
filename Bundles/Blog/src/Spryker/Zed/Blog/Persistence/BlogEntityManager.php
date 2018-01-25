@@ -18,15 +18,14 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\Blog\Persistence\BlogPersistenceFactory getFactory()
- *
- * Should be resolvable by business factory
- *
  */
 class BlogEntityManager extends AbstractEntityManager implements BlogEntityManagerInterface, EntityManagerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\SpyBlogEntityTransfer $blogEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer
@@ -39,6 +38,8 @@ class BlogEntityManager extends AbstractEntityManager implements BlogEntityManag
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\SpyBlogCommentEntityTransfer $blogCommentEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyBlogCommentEntityTransfer
@@ -50,8 +51,29 @@ class BlogEntityManager extends AbstractEntityManager implements BlogEntityManag
         });
     }
 
-    public function deleteBlog(SpyBlogEntityTransfer $blogEntityTransfer)
+    /**
+     * @api
+     *
+     * @param int $idBlog
+     */
+    public function deleteBlogById($idBlog)
     {
-        //delete by this blog transfer
+        $this->getFactory()
+            ->createBlogQuery()
+            ->filterByIdBlog($idBlog)
+            ->delete();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idComment
+     */
+    public function deleteCommentById($idComment)
+    {
+        $this->getFactory()
+            ->createBlogCommentQuery()
+            ->filterByIdBlogComment($idComment)
+            ->delete();
     }
 }

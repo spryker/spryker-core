@@ -104,10 +104,10 @@ class BlogRepository extends AbstractRepository implements BlogRepositoryInterfa
      */
     public function findBlogListByFirstName($firstName, CriteriaTransfer $criteriaTransfer = null)
     {
-        $spyCustomerQuery = $this->queryBlogByName($firstName)
+        $customerQuery = $this->queryBlogByName($firstName)
             ->joinWithSpyBlogComment();
 
-        return $this->buildQueryFromCriteria($spyCustomerQuery, $criteriaTransfer)->find();
+        return $this->buildQueryFromCriteria($customerQuery, $criteriaTransfer)->find();
     }
 
     /**
@@ -117,23 +117,22 @@ class BlogRepository extends AbstractRepository implements BlogRepositoryInterfa
      */
     public function findBlogByName($firstName)
     {
-        $spyCustomerQuery = $this->queryBlogByName($firstName)
+        $customerQuery = $this->queryBlogByName($firstName)
             ->joinWithSpyBlogComment();
 
-        return $this->buildQueryFromCriteria($spyCustomerQuery)->find()[0];
+        return $this->buildQueryFromCriteria($customerQuery)->find()[0];
     }
 
     /**
      * @param string $firstName
-     * @param CriteriaTransfer $criteria
      *
      * @return int
      */
-    public function countBlogByName($firstName, $criteria = null)
+    public function countBlogByName($firstName)
     {
-        $spyCustomerQuery = $this->queryBlogByName($firstName);
+        $customerQuery = $this->queryBlogByName($firstName);
 
-        return $this->buildQueryFromCriteria($spyCustomerQuery, $criteria)->count();
+        return $this->buildQueryFromCriteria($customerQuery)->count();
     }
 
     /**
@@ -143,8 +142,8 @@ class BlogRepository extends AbstractRepository implements BlogRepositoryInterfa
      */
     protected function queryBlogByName($name)
     {
-        //
-        return SpyBlogQuery::create()
+        return $this->getFactory()
+            ->createBlogQuery()
             ->filterByName($name);
     }
 }

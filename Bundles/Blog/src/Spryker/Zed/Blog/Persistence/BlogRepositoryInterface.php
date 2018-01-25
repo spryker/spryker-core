@@ -23,11 +23,6 @@ interface BlogRepositoryInterface
     /**
      * @param string $firstName
      *
-     * Criteria
-     *  - limit  = int
-     *  - offset = int
-     *  - sortBy = string
-     *
      * @param \Generated\Shared\Transfer\CriteriaTransfer $criteriaTransfer
      *
      * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer[]
@@ -43,9 +38,8 @@ interface BlogRepositoryInterface
 
     /**
      * @param string $firstName
-     * @param CriteriaTransfer $criteria
      *
      * @return int
      */
-    public function countBlogByName($firstName, $criteria = null);
+    public function countBlogByName($firstName);
 }

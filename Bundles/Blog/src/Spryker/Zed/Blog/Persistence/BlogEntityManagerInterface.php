@@ -32,4 +32,18 @@ interface BlogEntityManagerInterface
      * @return \Generated\Shared\Transfer\SpyBlogCommentEntityTransfer
      */
     public function saveBlogComment(SpyBlogCommentEntityTransfer $blogCommentEntityTransfer);
+
+    /**
+     * @api
+     *
+     * @param int $idBlog
+     */
+    public function deleteBlogById($idBlog);
+
+    /**
+     * @api
+     *
+     * @param int $idComment
+     */
+    public function deleteCommentById($idComment);
 }

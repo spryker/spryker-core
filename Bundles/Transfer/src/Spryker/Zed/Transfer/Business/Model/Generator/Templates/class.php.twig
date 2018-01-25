@@ -30,6 +30,8 @@ class {{ className }} extends AbstractTransfer
 {% endfor -%}
 {{ macro.addPropertyNameMap(propertyNameMap) }}
 
+{{ macro.addModulePropertyMap(modulePropertyMap) }}
+
 {{ macro.addMetadata(normalizedProperties) }}
 {{ macro.addConstructor(constructorDefinition) -}}
 {% for methodName, method  in methods %}
@@ -47,4 +49,6 @@ class {{ className }} extends AbstractTransfer
 {{ macro.addRequire(method) -}}
 {% endif %}
 {% endfor %}
+
+{{ macro.addIsPropertyInModuleMethod() }}
 }

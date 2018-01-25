@@ -61,6 +61,11 @@ class ClassDefinition implements ClassDefinitionInterface
     private $propertyNameMap = [];
 
     /**
+     * @var array
+     */
+    private $modulePropertyMap = [];
+
+    /**
      * @param array $definition
      *
      * @return $this
@@ -79,6 +84,8 @@ class ClassDefinition implements ClassDefinitionInterface
             $this->addProperties($properties);
             $this->setPropertyNameMap($properties);
             $this->addMethods($properties);
+            $this->addModulePropertyMap($properties);
+
         }
 
         return $this;
@@ -723,5 +730,25 @@ class ClassDefinition implements ClassDefinitionInterface
     private function getPropertyDeprecationDescription(array $property)
     {
         return isset($property['deprecated']) ? $property['deprecated'] : null;
+    }
+
+    /**
+     * @param array $properties
+     */
+    private function addModulePropertyMap(array $properties)
+    {
+        foreach ($properties as $property) {
+            foreach ($property['bundles'] as $moduleName) {
+                $this->modulePropertyMap[$moduleName][] = $property['name'];
+            }
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getModulePropertyPath()
+    {
+        return $this->modulePropertyMap;
     }
 }

@@ -48,7 +48,6 @@ class BlogFacadeTest extends Unit
         $this->createBlog();
         $spyCustomerEntityTransfer = $blogRepository->findBlogByName(static::BLOG_NAME);
 
-
         $this->assertInstanceOf(SpyBlogEntityTransfer::class, $spyCustomerEntityTransfer);
     }
 
@@ -106,21 +105,13 @@ class BlogFacadeTest extends Unit
 
         $blogEntityTransfer->addSpyBlogComments($blogCommentEntityTransfer);
 
-        $blogEntityTransfer = $blogEntityManager->saveBlog($blogEntityTransfer);
-
-        $blogCommentEntityTransfer = new SpyBlogCommentEntityTransfer();
-        $blogCommentEntityTransfer->setAuthor("It's a me a Mario!");
-        $blogCommentEntityTransfer->setMessage('1 UP');
-        $blogCommentEntityTransfer->setFkBlog($blogEntityTransfer->getIdBlog());
-
-        $blogEntityManager->saveBlogComment($blogCommentEntityTransfer);
-
         $blogCommentEntityTransfer = new SpyBlogCommentEntityTransfer();
         $blogCommentEntityTransfer->setAuthor("It's a me a Mario!");
         $blogCommentEntityTransfer->setMessage('2 UP');
-        $blogCommentEntityTransfer->setFkBlog($blogEntityTransfer->getIdBlog());
 
-        $blogEntityManager->saveBlogComment($blogCommentEntityTransfer);
+        $blogEntityTransfer->addSpyBlogComments($blogCommentEntityTransfer);
+
+        $blogEntityTransfer = $blogEntityManager->saveBlog($blogEntityTransfer);
 
         return $blogEntityTransfer;
     }

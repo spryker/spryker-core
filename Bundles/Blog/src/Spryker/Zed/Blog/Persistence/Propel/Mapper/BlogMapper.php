@@ -23,17 +23,4 @@ class BlogMapper
 
         return $blogTransfer;
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\BlogTransfer $blogTransfer
-     * @param \Orm\Zed\Blog\Persistence\SpyBlog $blogEntity
-     *
-     * @return \Orm\Zed\Blog\Persistence\SpyBlog
-     */
-    public function fromTransferToEntity(BlogTransfer $blogTransfer, SpyBlog $blogEntity)
-    {
-        $blogEntity->fromArray($blogTransfer->toArray());
-
-        return $blogEntity;
-    }
 }

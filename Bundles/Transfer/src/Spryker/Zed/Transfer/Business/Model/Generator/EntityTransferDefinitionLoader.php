@@ -7,34 +7,51 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
+use Zend\Filter\FilterChain;
+use Zend\Filter\Word\DashToCamelCase;
+use Zend\Filter\Word\UnderscoreToCamelCase;
+use Zend\Config\Factory;
+
 class EntityTransferDefinitionLoader extends TransferDefinitionLoader
 {
     const KEY_TABLE = 'table';
     const ENTITY_SCHEMA_SUFFIX = '.schema.xml';
+    const ENTITY_PREFIX = 'spy_';
     const PREFIX_LENGTH = 4;
 
     /**
-     * @param string $fileName
-     *
-     * @return string
+     * @return array
      */
-    protected function getBundleFromPathName($fileName)
+    protected function loadDefinitions()
     {
-        return '';
+        $xmlTransferDefinitions = $this->finder->getXmlTransferDefinitionFiles();
+        foreach ($xmlTransferDefinitions as $xmlTransferDefinition) {
+
+            $content = $xmlTransferDefinition->getContents();
+            $xml = simplexml_load_string($content);
+
+            $namespace = (string)$xml['namespace'];
+            $namespacePart = explode('\\', $namespace);
+            $module = $namespacePart[2];
+
+            $containingBundle = $this->getContainingBundleFromPathName($xmlTransferDefinition->getPathname());
+            $definition = Factory::fromFile($xmlTransferDefinition->getPathname(), true)->toArray();
+            $this->addDefinition($definition, $module, $containingBundle);
+        }
     }
 
     /**
      * @param array $definition
-     * @param string $bundle
+     * @param string $module
      * @param string $containingBundle
      *
      * @return void
      */
-    protected function addDefinition(array $definition, $bundle, $containingBundle)
+    protected function addDefinition(array $definition, $module, $containingBundle)
     {
         if (isset($definition[static::KEY_TABLE][0])) {
             foreach ($definition[static::KEY_TABLE] as $table) {
-                $table[self::KEY_BUNDLE] = $bundle;
+                $table[self::KEY_BUNDLE] = $module;
                 $table[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
 
                 $this->transferDefinitions[] = $table;
@@ -42,7 +59,7 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
         } else {
             $table = $definition[static::KEY_TABLE];
 
-            $table[self::KEY_BUNDLE] = $bundle;
+            $table[self::KEY_BUNDLE] = $module;
             $table[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
             $this->transferDefinitions[] = $table;
         }

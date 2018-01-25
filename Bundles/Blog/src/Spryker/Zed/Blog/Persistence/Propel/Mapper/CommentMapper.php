@@ -12,28 +12,15 @@ use Orm\Zed\Blog\Persistence\SpyBlogComment;
 class CommentMapper
 {
     /**
-     * @param \Orm\Zed\Blog\Persistence\SpyBlogComment $blogCommentEntity
+     * @param array $commentArray
      * @param \Generated\Shared\Transfer\BlogCommentTransfer $blogCommentTransfer
      *
      * @return \Generated\Shared\Transfer\BlogCommentTransfer
      */
-    public function toTransfer(SpyBlogComment $blogCommentEntity, BlogCommentTransfer $blogCommentTransfer)
+    public function toTransfer(array $commentArray, BlogCommentTransfer $blogCommentTransfer)
     {
-        $blogCommentTransfer->fromArray($blogCommentEntity->toArray(), true);
+        $blogCommentTransfer->fromArray($commentArray, true);
 
         return $blogCommentTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\BlogCommentTransfer $blogCommentTransfer
-     * @param \Orm\Zed\Blog\Persistence\SpyBlogComment $blogCommentEntity
-     *
-     * @return \Orm\Zed\Blog\Persistence\SpyBlogComment
-     */
-    public function fromTransferToEntity(BlogCommentTransfer $blogCommentTransfer, SpyBlogComment $blogCommentEntity)
-    {
-        $blogCommentEntity->fromArray($blogCommentTransfer->toArray());
-
-        return $blogCommentEntity;
     }
 }
