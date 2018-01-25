@@ -3,7 +3,7 @@
   "description": "FileManagerGui module",
   "license": "proprietary",
   "require": {
-    "spryker/file-manager": "^0.1.0",
+    "spryker/file-manager": "dev-beta/core-2414-upload-files",
     "spryker/gui": "^3.13.0",
     "spryker/kernel": "^3.16.0",
     "spryker/locale": "^3.1.0",
