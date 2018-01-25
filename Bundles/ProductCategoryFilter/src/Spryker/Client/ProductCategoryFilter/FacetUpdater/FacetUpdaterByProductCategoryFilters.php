@@ -8,7 +8,6 @@
 namespace Spryker\Client\ProductCategoryFilter\FacetUpdater;
 
 use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
-use Spryker\Shared\ProductCategoryFilter\ProductCategoryFilterConfig;
 
 class FacetUpdaterByProductCategoryFilters implements FacetUpdaterInterface
 {
@@ -27,9 +26,9 @@ class FacetUpdaterByProductCategoryFilters implements FacetUpdaterInterface
         }
 
         $newFacets = [];
-        foreach ($updateCriteria as $facetKey => $facetConfig) {
-            if ($facetConfig[ProductCategoryFilterConfig::IS_ACTIVE_FLAG] && isset($facets[$facetKey])) {
-                $newFacets[$facetKey] = $facets[$facetKey];
+        foreach ($updateCriteria as $criteria => $show) {
+            if ($show && isset($facets[$criteria])) {
+                $newFacets[$criteria] = $facets[$criteria];
             }
         }
 
