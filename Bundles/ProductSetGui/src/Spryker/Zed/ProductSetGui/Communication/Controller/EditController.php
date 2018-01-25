@@ -27,7 +27,7 @@ class EditController extends AbstractProductSetController
         $dataProvider = $this->getFactory()->createUpdateFormDataProvider();
 
         $productSetForm = $this->getFactory()
-            ->createUpdateProductSetForm(
+            ->getUpdateProductSetForm(
                 $dataProvider->getData($idProductSet),
                 $dataProvider->getOptions()
             )

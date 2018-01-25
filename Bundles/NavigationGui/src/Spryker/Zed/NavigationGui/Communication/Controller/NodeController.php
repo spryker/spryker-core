@@ -36,7 +36,7 @@ class NodeController extends AbstractController
             ->createNavigationNodeFormDataProvider();
 
         $navigationNodeForm = $this->getFactory()
-            ->createNavigationNodeForm(
+            ->getNavigationNodeForm(
                 $navigationNodeFormDataProvider->getData(),
                 $navigationNodeFormDataProvider->getOptions()
             )
@@ -68,9 +68,9 @@ class NodeController extends AbstractController
 
             if ($idNavigationNode) {
                 return $this->redirectResponse(Url::generate('/navigation-gui/node/update', $queryParams)->build());
-            } else {
-                return $this->redirectResponse(Url::generate('/navigation-gui/node/create', $queryParams)->build());
             }
+
+            return $this->redirectResponse(Url::generate('/navigation-gui/node/create', $queryParams)->build());
         }
 
         return $this->viewResponse([
@@ -97,7 +97,7 @@ class NodeController extends AbstractController
             ->createNavigationNodeFormDataProvider();
 
         $navigationNodeForm = $this->getFactory()
-            ->createNavigationNodeForm(
+            ->getNavigationNodeForm(
                 $navigationNodeFormDataProvider->getData($idNavigationNode),
                 $navigationNodeFormDataProvider->getOptions()
             )
