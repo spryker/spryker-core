@@ -49,7 +49,7 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
     protected function getImportCommandRemote($backupPath)
     {
         return sprintf(
-            'pg_restore -i -h %s -p %s -U %s -d %s -v %s',
+            'pg_restore -h %s -p %s -U %s -d %s -v %s',
             Config::get(PropelConstants::ZED_DB_HOST),
             Config::get(PropelConstants::ZED_DB_PORT),
             Config::get(PropelConstants::ZED_DB_USERNAME),
@@ -81,9 +81,7 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $this->exportPostgresPassword();
-
-        $process = new Process($command);
+        $process = new Process($command, null, $this->getEnvironmentVariables());
         $process->run();
 
         if (!$process->isSuccessful()) {
@@ -96,14 +94,13 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
     }
 
     /**
-     * @return void
+     * @return array
      */
-    protected function exportPostgresPassword()
+    protected function getEnvironmentVariables()
     {
-        putenv(sprintf(
-            'PGPASSWORD=%s',
-            Config::get(PropelConstants::ZED_DB_PASSWORD)
-        ));
+        return [
+            'PGPASSWORD' => Config::get(PropelConstants::ZED_DB_PASSWORD),
+        ];
     }
 
     /**

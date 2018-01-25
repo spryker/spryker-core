@@ -40,7 +40,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
      */
     protected function createDatabase()
     {
-        $this->runProcess(
+        return $this->runProcess(
             $this->getCreateCommand()
         );
     }
@@ -51,8 +51,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     protected function getExistsCommand()
     {
         return sprintf(
-            'PGPASSWORD=%s psql -h %s -p %s -U %s -w -lqt %s | cut -d \| -f 1 | grep -w %s | wc -l',
-            Config::get(PropelConstants::ZED_DB_PASSWORD),
+            'psql -h %s -p %s -U %s -w -lqt %s | cut -d \| -f 1 | grep -w %s | wc -l',
             Config::get(PropelConstants::ZED_DB_HOST),
             Config::get(PropelConstants::ZED_DB_PORT),
             Config::get(PropelConstants::ZED_DB_USERNAME),
@@ -79,8 +78,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     protected function getCreateCommandRemote()
     {
         return sprintf(
-            'PGPASSWORD=%s psql -h %s -p %s -U %s -w -c "CREATE DATABASE \"%s\" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE=\"template0\"; " %s',
-            Config::get(PropelConstants::ZED_DB_PASSWORD),
+            'psql -h %s -p %s -U %s -w -c "CREATE DATABASE \"%s\" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE=\"template0\"; " %s',
             Config::get(PropelConstants::ZED_DB_HOST),
             Config::get(PropelConstants::ZED_DB_PORT),
             Config::get(PropelConstants::ZED_DB_USERNAME),
@@ -95,8 +93,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     protected function getSudoCreateCommand()
     {
         return sprintf(
-            'PGPASSWORD=%s sudo createdb %s -E UTF8 -T template0',
-            Config::get(PropelConstants::ZED_DB_PASSWORD),
+            'sudo createdb %s -E UTF8 -T template0',
             Config::get(PropelConstants::ZED_DB_DATABASE)
         );
     }
@@ -110,7 +107,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $process = new Process($command);
+        $process = new Process($command, null, $this->getEnvironmentVariables());
         $process->run();
 
         if (!$process->isSuccessful()) {
@@ -128,5 +125,15 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     protected function useSudo()
     {
         return Config::get(PropelConstants::USE_SUDO_TO_MANAGE_DATABASE, true);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEnvironmentVariables()
+    {
+        return [
+            'PGPASSWORD' => Config::get(PropelConstants::ZED_DB_PASSWORD),
+        ];
     }
 }
