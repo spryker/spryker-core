@@ -12,7 +12,6 @@ use Orm\Zed\Touch\Persistence\Map\SpyTouchStorageTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\Join;
 use Spryker\Zed\Collector\Business\Collector\AbstractPropelCollector;
 use Spryker\Zed\Collector\CollectorConfig;
 
@@ -58,19 +57,18 @@ abstract class AbstractStoragePropelCollector extends AbstractPropelCollector
      */
     protected function joinStorageTableWithLocale(SpyTouchQuery $touchQuery, LocaleTransfer $localeTransfer)
     {
-        $storageJoin = new Join(
-            SpyTouchTableMap::COL_ID_TOUCH,
-            SpyTouchStorageTableMap::COL_FK_TOUCH,
-            Criteria::LEFT_JOIN
-        );
-        $touchQuery->addJoinObject($storageJoin, 'storageJoin');
-        $touchQuery->addJoinCondition(
-            'storageJoin',
-            sprintf(
-                '%s = %s',
+        $touchQuery->addJoin(
+            [
+                SpyTouchTableMap::COL_ID_TOUCH,
                 SpyTouchStorageTableMap::COL_FK_LOCALE,
-                (int)$localeTransfer->requireIdLocale()->getIdLocale()
-            )
+                SpyTouchStorageTableMap::COL_FK_STORE,
+            ],
+            [
+                SpyTouchStorageTableMap::COL_FK_TOUCH,
+                $localeTransfer->requireIdLocale()->getIdLocale(),
+                $this->getCurrentStore()->requireIdStore()->getIdStore(),
+            ],
+            Criteria::LEFT_JOIN
         );
     }
 
@@ -82,8 +80,8 @@ abstract class AbstractStoragePropelCollector extends AbstractPropelCollector
     protected function joinStorageTable(SpyTouchQuery $touchQuery)
     {
         $touchQuery->addJoin(
-            SpyTouchTableMap::COL_ID_TOUCH,
-            SpyTouchStorageTableMap::COL_FK_TOUCH,
+            [SpyTouchTableMap::COL_ID_TOUCH, SpyTouchStorageTableMap::COL_FK_STORE],
+            [SpyTouchStorageTableMap::COL_FK_TOUCH, $this->getCurrentStore()->requireIdStore()->getIdStore()],
             Criteria::LEFT_JOIN
         );
     }

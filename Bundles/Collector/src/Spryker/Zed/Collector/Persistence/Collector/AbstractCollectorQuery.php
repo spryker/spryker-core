@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Collector\Persistence\Collector;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 abstract class AbstractCollectorQuery
@@ -24,7 +23,7 @@ abstract class AbstractCollectorQuery
     protected $locale;
 
     /**
-     * @var \Generated\Shared\Transfer\StoreTransfer|null
+     * @var \Generated\Shared\Transfer\StoreTransfer
      */
     protected $storeTransfer;
 
@@ -54,7 +53,7 @@ abstract class AbstractCollectorQuery
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getStoreTransfer()
     {
@@ -62,11 +61,11 @@ abstract class AbstractCollectorQuery
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return $this
      */
-    public function setStoreTransfer(StoreTransfer $storeTransfer = null)
+    public function setStoreTransfer($storeTransfer)
     {
         $this->storeTransfer = $storeTransfer;
 
