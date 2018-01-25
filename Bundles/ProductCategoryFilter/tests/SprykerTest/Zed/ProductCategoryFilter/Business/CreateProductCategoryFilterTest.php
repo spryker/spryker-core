@@ -3,6 +3,7 @@
 namespace SprykerTest\Zed\ProductCategoryFilter\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ProductCategoryFilterItemTransfer;
 use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
 use Spryker\Shared\ProductCategoryFilter\ProductCategoryFilterConfig;
 
@@ -25,25 +26,38 @@ class CreateProductCategoryFilterTest extends Unit
     public function testCreateProductCategoryFilterPersistNewEntitiesToDatabase()
     {
         // Arrange
-        $filterData = 'testFilterData';
         $productCategory = $this->tester->haveCategory();
-        $productCategoryFilter = (new ProductCategoryFilterTransfer())->fromArray([
+
+        $filterData = [
             ProductCategoryFilterTransfer::ID_PRODUCT_CATEGORY_FILTER => null,
             ProductCategoryFilterTransfer::FK_CATEGORY => $productCategory->getIdCategory(),
-            ProductCategoryFilterTransfer::FILTER_DATA => $filterData,
-        ]);
+            ProductCategoryFilterTransfer::FILTERS => [
+                [
+                    ProductCategoryFilterItemTransfer::KEY => 'key1',
+                    ProductCategoryFilterItemTransfer::LABEL => 'label1',
+                    ProductCategoryFilterItemTransfer::IS_ACTIVE => true,
+                ],
+                [
+                    ProductCategoryFilterItemTransfer::KEY => 'key2',
+                    ProductCategoryFilterItemTransfer::LABEL => 'label2',
+                    ProductCategoryFilterItemTransfer::IS_ACTIVE => false,
+                ],
+            ],
+        ];
+
+        $testProductCategoryFilterTransfer = (new ProductCategoryFilterTransfer())->fromArray($filterData);
 
         // Act
-        $productCategoryFilter = $this->tester->getFacade()->createProductCategoryFilter($productCategoryFilter);
+        $productCategoryFilterTransfer = $this->tester->getFacade()->createProductCategoryFilter($testProductCategoryFilterTransfer);
 
         // Assert
-        $this->assertGreaterThan(0, $productCategoryFilter->getIdProductCategoryFilter(), 'Product category filter should have ID after creation.');
-        $this->assertSame($filterData, $productCategoryFilter->getFilterData(), 'Product category filter contain correct data');
-        $this->assertSame($productCategory->getIdCategory(), $productCategoryFilter->getFkCategory());
+        $this->assertGreaterThan(0, $productCategoryFilterTransfer->getIdProductCategoryFilter(), 'Product category filter should have ID after creation.');
+        $this->assertSame($productCategoryFilterTransfer->getFilters(), $testProductCategoryFilterTransfer->getFilters(), 'Product category filter contain correct data');
+        $this->assertSame($productCategory->getIdCategory(), $productCategoryFilterTransfer->getFkCategory());
 
         $this->tester->assertTouchActive(
             ProductCategoryFilterConfig::RESOURCE_TYPE_PRODUCT_CATEGORY_FILTER,
-            $productCategoryFilter->getFkCategory(),
+            $productCategoryFilterTransfer->getFkCategory(),
             'Product category filter should have been touched as active.'
         );
     }

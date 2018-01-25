@@ -3,6 +3,7 @@
   "description": "Elastica module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "ruflin/elastica": "~3.2.0"
   },
   "minimum-stability": "dev",

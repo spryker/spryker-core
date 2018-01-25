@@ -8,8 +8,6 @@ namespace Spryker\Zed\ProductCategoryFilter\Dependency\Service;
 interface ProductCategoryFilterToUtilEncodingServiceInterface
 {
     /**
-     * @api
-     *
      * @param string $jsonString
      * @param bool $assoc
      * @param int|null $depth
@@ -18,4 +16,13 @@ interface ProductCategoryFilterToUtilEncodingServiceInterface
      * @return array
      */
     public function decodeJson($jsonString, $assoc = false, $depth = null, $options = null);
+
+    /**
+     * @param mixed $value
+     * @param int|null $options
+     * @param int|null $depth
+     *
+     * @return string|null
+     */
+    public function encodeJson($value, $options = null, $depth = null);
 }

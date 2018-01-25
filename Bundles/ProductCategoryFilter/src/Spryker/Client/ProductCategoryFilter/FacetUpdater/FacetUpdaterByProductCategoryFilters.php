@@ -7,13 +7,17 @@
 
 namespace Spryker\Client\ProductCategoryFilter\FacetUpdater;
 
+use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
+
 class FacetUpdaterByProductCategoryFilters implements FacetUpdaterInterface
 {
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer[] $facets
+     * @deprecated use updateFromTransfer()
+     *
+     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer[]|\Generated\Shared\Transfer\RangeSearchResultTransfer[] $facets
      * @param array $updateCriteria
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return \Generated\Shared\Transfer\FacetSearchResultTransfer[]|\Generated\Shared\Transfer\RangeSearchResultTransfer[]
      */
     public function update(array $facets, array $updateCriteria)
     {
@@ -25,6 +29,28 @@ class FacetUpdaterByProductCategoryFilters implements FacetUpdaterInterface
         foreach ($updateCriteria as $criteria => $show) {
             if ($show && isset($facets[$criteria])) {
                 $newFacets[$criteria] = $facets[$criteria];
+            }
+        }
+
+        return $newFacets;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer[]|\Generated\Shared\Transfer\RangeSearchResultTransfer[] $facets
+     * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\FacetSearchResultTransfer[]|\Generated\Shared\Transfer\RangeSearchResultTransfer[]
+     */
+    public function updateFromTransfer(array $facets, ProductCategoryFilterTransfer $productCategoryFilterTransfer)
+    {
+        if (empty($productCategoryFilterTransfer->getFilters())) {
+            return $facets;
+        }
+
+        $newFacets = [];
+        foreach ($productCategoryFilterTransfer->getFilters() as $productCategoryFilterItemTransfer) {
+            if ($productCategoryFilterItemTransfer->getIsActive() === true && isset($facets[$productCategoryFilterItemTransfer->getKey()])) {
+                $newFacets[$productCategoryFilterItemTransfer->getKey()] = $facets[$productCategoryFilterItemTransfer->getKey()];
             }
         }
 

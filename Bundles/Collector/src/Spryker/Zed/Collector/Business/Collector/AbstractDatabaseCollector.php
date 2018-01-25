@@ -94,21 +94,82 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
         BatchResultInterface $batchResult,
         WriterInterface $storeWriter
     ) {
-        $batchSize = count($batch);
-        $progressBar->advance($batchSize);
+        $batchItemCount = count($batch);
+        $progressBar->advance($batchItemCount);
 
         $touchUpdaterSet = new TouchUpdaterSet(CollectorConfig::COLLECTOR_TOUCH_ID);
-        $collectedData = $this->collectData($batch, $locale, $touchUpdaterSet);
-        $collectedDataCount = count($collectedData);
+
+        $exportSubBatch = $this->collectData($batch, $locale, $touchUpdaterSet);
+        $exportedItemCount = $this->exportBatch($exportSubBatch, $locale, $touchUpdaterSet, $storeWriter, $touchUpdater);
+
+        $deletedItemCount = 0;
+        if ($this->hasUnprocessedItem($batchItemCount, $exportedItemCount)) {
+            $expiredSubBatch = $this->collectExpiredData($batch, $locale);
+            $deletedItemCount = $this->deleteBatch($expiredSubBatch, $locale, $storeWriter, $touchUpdater);
+        }
+
+        $batchResult->increaseProcessedCount($exportedItemCount + $deletedItemCount);
+    }
+
+    /**
+     * @param int $batchItemCount
+     * @param int $exportedItemCount
+     *
+     * @return bool
+     */
+    protected function hasUnprocessedItem($batchItemCount, $exportedItemCount)
+    {
+        return $batchItemCount > $exportedItemCount;
+    }
+
+    /**
+     * @param array $batch
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $storeWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     *
+     * @return int
+     */
+    protected function exportBatch($batch, LocaleTransfer $locale, TouchUpdaterSet $touchUpdaterSet, WriterInterface $storeWriter, TouchUpdaterInterface $touchUpdater)
+    {
+        $batchSize = count($batch);
+        if ($batchSize === 0) {
+            return 0;
+        }
 
         $touchUpdater->bulkUpdate(
             $touchUpdaterSet,
             $locale->getIdLocale(),
+            $this->getCurrentStore()->getIdStore(),
             $this->touchQueryContainer->getConnection()
         );
-        $storeWriter->write($collectedData);
+        $storeWriter->write($batch);
 
-        $batchResult->increaseProcessedCount($collectedDataCount);
+        return $batchSize;
+    }
+
+    /**
+     * @param array $batch Keys are expired touch keys.
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $storeWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     *
+     * @return int
+     */
+    protected function deleteBatch(array $batch, LocaleTransfer $locale, WriterInterface $storeWriter, TouchUpdaterInterface $touchUpdater)
+    {
+        $batchSize = count($batch);
+        if ($batchSize === 0) {
+            return 0;
+        }
+
+        $touchKeys = array_keys($batch);
+
+        $touchUpdater->deleteTouchKeyEntities($touchKeys, $locale->getIdLocale());
+        $storeWriter->delete(array_flip($touchKeys));
+
+        return $batchSize;
     }
 
     /**
