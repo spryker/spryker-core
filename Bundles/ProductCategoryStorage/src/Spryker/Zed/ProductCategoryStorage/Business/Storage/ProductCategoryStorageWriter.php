@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\ProductCategoryStorage\Business\Storage;
 
 use ArrayObject;
 use Everon\Component\Collection\Collection;
@@ -14,28 +14,57 @@ use Generated\Shared\Transfer\ProductCategoryStorageTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface;
+use Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductCategoryStorage\Communication\ProductCategoryStorageCommunicationFactory getFactory()
- */
-class AbstractProductCategoryStorageListener extends AbstractPlugin
+class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterface
 {
     const ID_CATEGORY_NODE = 'id_category_node';
     const FK_CATEGORY = 'fk_category';
     const NAME = 'name';
 
     /**
+     * @var \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface
+     */
+    protected $categoryFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+    
+    /**
      * @var \Everon\Component\Collection\CollectionInterface
      */
     protected $categoryCacheCollection;
 
     /**
-     * AbstractProductCategoryStorageListener constructor.
+     * @param \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface $categoryFacade
+     * @param \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param bool $isSendingToQueue
      */
-    public function __construct()
-    {
+    public function __construct(
+        ProductCategoryStorageToCategoryInterface $categoryFacade,
+        ProductCategoryStorageQueryContainerInterface $queryContainer,
+        Store $store,
+        $isSendingToQueue
+    ) {
+        $this->categoryFacade = $categoryFacade;
+        $this->queryContainer = $queryContainer;
+        $this->store = $store;
+        $this->isSendingToQueue = $isSendingToQueue;
         $this->categoryCacheCollection = new Collection([]);
     }
 
@@ -44,7 +73,7 @@ class AbstractProductCategoryStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function publish(array $productAbstractIds)
+    public function publish(array $productAbstractIds)
     {
         $spyProductAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
         $categories = [];
@@ -54,7 +83,22 @@ class AbstractProductCategoryStorageListener extends AbstractPlugin
         }
 
         $spyProductAbstractStorageEntities = $this->findProductAbstractCategoryStorageEntitiesByProductAbstractIds($productAbstractIds);
-        $this->refreshData($spyProductAbstractLocalizedEntities, $spyProductAbstractStorageEntities, $categories);
+        $this->storeData($spyProductAbstractLocalizedEntities, $spyProductAbstractStorageEntities, $categories);
+    }
+
+    /**
+     * @param array $productAbstractIds
+     *
+     * @return void
+     */
+    public function unpublish(array $productAbstractIds)
+    {
+        $spyProductAbstractStorageEntities = $this->findProductAbstractCategoryStorageEntitiesByProductAbstractIds($productAbstractIds);
+        foreach ($spyProductAbstractStorageEntities as $spyProductAbstractStorageLocalizedEntities) {
+            foreach ($spyProductAbstractStorageLocalizedEntities as $spyProductAbstractStorageLocalizedEntity) {
+                $spyProductAbstractStorageLocalizedEntity->delete();
+            }
+        }
     }
 
     /**
@@ -64,15 +108,15 @@ class AbstractProductCategoryStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function refreshData(array $spyProductAbstractLocalizedEntities, array $spyProductAbstractStorageEntities, array $categories)
+    protected function storeData(array $spyProductAbstractLocalizedEntities, array $spyProductAbstractStorageEntities, array $categories)
     {
         foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
             $idProduct = $spyProductAbstractLocalizedEntity->getFkProductAbstract();
             $localeName = $spyProductAbstractLocalizedEntity->getLocale()->getLocaleName();
             if (isset($spyProductAbstractStorageEntities[$idProduct][$localeName])) {
-                $this->refreshDataSet($spyProductAbstractLocalizedEntity, $categories, $spyProductAbstractStorageEntities[$idProduct][$localeName]);
+                $this->storeDataSet($spyProductAbstractLocalizedEntity, $categories, $spyProductAbstractStorageEntities[$idProduct][$localeName]);
             } else {
-                $this->refreshDataSet($spyProductAbstractLocalizedEntity, $categories);
+                $this->storeDataSet($spyProductAbstractLocalizedEntity, $categories);
             }
         }
     }
@@ -84,7 +128,7 @@ class AbstractProductCategoryStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function refreshDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $categories, SpyProductAbstractCategoryStorage $spyProductAbstractCategoryStorageEntity = null)
+    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $categories, SpyProductAbstractCategoryStorage $spyProductAbstractCategoryStorageEntity = null)
     {
         if ($spyProductAbstractCategoryStorageEntity === null) {
             $spyProductAbstractCategoryStorageEntity = new SpyProductAbstractCategoryStorage();
@@ -104,6 +148,7 @@ class AbstractProductCategoryStorageListener extends AbstractPlugin
         $spyProductAbstractCategoryStorageEntity->setData($productAbstractCategoryStorageTransfer->toArray());
         $spyProductAbstractCategoryStorageEntity->setStore($this->getStoreName());
         $spyProductAbstractCategoryStorageEntity->setLocale($spyProductAbstractLocalizedEntity->getLocale()->getLocaleName());
+        $spyProductAbstractCategoryStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductAbstractCategoryStorageEntity->save();
     }
 
@@ -135,7 +180,7 @@ class AbstractProductCategoryStorageListener extends AbstractPlugin
             return $this->categoryCacheCollection->get($key);
         }
 
-        $productCategoryMappings = $this->getQueryContainer()->queryProductCategoryMappings($idProductAbstract)->find();
+        $productCategoryMappings = $this->queryContainer->queryProductCategoryMappings($idProductAbstract)->find();
 
         $categories = new ArrayObject();
         foreach ($productCategoryMappings as $mapping) {
@@ -157,7 +202,7 @@ class AbstractProductCategoryStorageListener extends AbstractPlugin
     protected function generateProductCategoryData(SpyProductCategory $productCategory, $productCategoryCollection, $idLocale)
     {
         foreach ($productCategory->getSpyCategory()->getNodes() as $node) {
-            $queryPath = $this->getQueryContainer()->queryPath($node->getIdCategoryNode(), $idLocale);
+            $queryPath = $this->queryContainer->queryPath($node->getIdCategoryNode(), $idLocale);
             $pathTokens = $queryPath->find();
 
             $productCategoryCollection = $this->generateCategoryData($pathTokens, $productCategoryCollection, $idLocale);
@@ -198,7 +243,7 @@ class AbstractProductCategoryStorageListener extends AbstractPlugin
      */
     protected function generateUrl($idNode, $idLocale)
     {
-        $urlQuery = $this->getQueryContainer()
+        $urlQuery = $this->queryContainer
             ->queryUrlByIdCategoryNode($idNode, $idLocale);
 
         $url = $urlQuery->findOne();
@@ -212,7 +257,7 @@ class AbstractProductCategoryStorageListener extends AbstractPlugin
      */
     protected function findProductAbstractLocalizedEntities(array $productAbstractIds)
     {
-        return $this->getQueryContainer()->queryProductAbstractLocalizedByIds($productAbstractIds)->find()->getData();
+        return $this->queryContainer->queryProductAbstractLocalizedByIds($productAbstractIds)->find()->getData();
     }
 
     /**
@@ -222,7 +267,7 @@ class AbstractProductCategoryStorageListener extends AbstractPlugin
      */
     protected function findProductAbstractCategoryStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {
-        $productAbstractCategoryStorageEntities = $this->getQueryContainer()->queryProductAbstractCategoryStorageByIds($productAbstractIds)->find();
+        $productAbstractCategoryStorageEntities = $this->queryContainer->queryProductAbstractCategoryStorageByIds($productAbstractIds)->find();
         $productAbstractStorageEntitiesByIdAndLocale = [];
         foreach ($productAbstractCategoryStorageEntities as $productAbstractCategoryStorageEntity) {
             $productAbstractStorageEntitiesByIdAndLocale[$productAbstractCategoryStorageEntity->getFkProductAbstract()][$productAbstractCategoryStorageEntity->getLocale()] = $productAbstractCategoryStorageEntity;
@@ -236,7 +281,7 @@ class AbstractProductCategoryStorageListener extends AbstractPlugin
      */
     protected function getStoreName()
     {
-        return $this->getFactory()->getStore()->getStoreName();
+        return $this->store->getStoreName();
     }
 
     /**
@@ -244,13 +289,13 @@ class AbstractProductCategoryStorageListener extends AbstractPlugin
      *
      * @return array
      */
-    protected function getRelatedCategoryIds(array $categoryIds)
+    public function getRelatedCategoryIds(array $categoryIds)
     {
         $relatedCategoryIds = [];
         foreach ($categoryIds as $categoryId) {
-            $categoryNodes = $this->getFactory()->getCategoryFacade()->getAllNodesByIdCategory($categoryId);
+            $categoryNodes = $this->categoryFacade->getAllNodesByIdCategory($categoryId);
             foreach ($categoryNodes as $categoryNode) {
-                $result = $this->getQueryContainer()->queryAllCategoryIdsByNodeId($categoryNode->getIdCategoryNode())->find()->getData();
+                $result = $this->queryContainer->queryAllCategoryIdsByNodeId($categoryNode->getIdCategoryNode())->find()->getData();
                 $relatedCategoryIds = array_merge($relatedCategoryIds, $result);
             }
         }
