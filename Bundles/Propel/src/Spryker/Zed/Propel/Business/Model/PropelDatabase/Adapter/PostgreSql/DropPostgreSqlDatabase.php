@@ -124,6 +124,8 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
      */
     protected function runProcess($command)
     {
+        $this->exportPostgresPassword();
+
         $process = $this->getProcess($command);
         $process->run();
 
@@ -134,6 +136,17 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
         $returnValue = (int)$process->getOutput();
 
         return (bool)$returnValue;
+    }
+
+    /**
+     * @return void
+     */
+    protected function exportPostgresPassword()
+    {
+        putenv(sprintf(
+            'PGPASSWORD=%s',
+            Config::get(PropelConstants::ZED_DB_PASSWORD)
+        ));
     }
 
     /**
@@ -151,18 +164,8 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
      */
     protected function getProcess($command)
     {
-        $process = new Process($command, null, $this->getEnvironmentVariables());
+        $process = new Process($command);
 
         return $process;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getEnvironmentVariables()
-    {
-        return [
-            'PGPASSWORD' => Config::get(PropelConstants::ZED_DB_PASSWORD),
-        ];
     }
 }

@@ -81,7 +81,9 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $process = new Process($command, null, $this->getEnvironmentVariables());
+        $this->exportPostgresPassword();
+
+        $process = new Process($command);
         $process->run();
 
         if (!$process->isSuccessful()) {
@@ -94,13 +96,14 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
     }
 
     /**
-     * @return array
+     * @return void
      */
-    protected function getEnvironmentVariables()
+    protected function exportPostgresPassword()
     {
-        return [
-            'PGPASSWORD' => Config::get(PropelConstants::ZED_DB_PASSWORD),
-        ];
+        putenv(sprintf(
+            'PGPASSWORD=%s',
+            Config::get(PropelConstants::ZED_DB_PASSWORD)
+        ));
     }
 
     /**
