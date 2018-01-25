@@ -1,0 +1,38 @@
+{
+  "name": "spryker/price-product-storage",
+  "description": "PriceProductStorage module",
+  "license": "proprietary",
+  "require": {
+    "spryker/event-behavior": "^0.1.2",
+    "spryker/kernel": "^3.16.0",
+    "spryker/price-product": "^1.1.0",
+    "spryker/product": "^5.5.0",
+    "spryker/propel-orm": "^1.5.0",
+    "spryker/storage": "^3.4.0",
+    "spryker/synchronization": "^0.2.0",
+    "spryker/util-sanitize": "^2.1.0"
+  },
+  "require-dev": {
+    "spryker/event": "*",
+    "spryker/product-storage": "*"
+  },
+  "suggest": {
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
+    "spryker/product-storage": "If you want to use ProductStorage plugins, minimum required version: 0.1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

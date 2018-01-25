@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event\Listener;
+
+use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\Url\Dependency\UrlEvents;
+
+/**
+ * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductCategoryStorage\Communication\ProductCategoryStorageCommunicationFactory getFactory()
+ */
+class CategoryUrlStorageListener extends AbstractProductCategoryStorageListener implements EventBulkHandlerInterface
+{
+    use DatabaseTransactionHandlerTrait;
+
+    /**
+     * @api
+     *
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param string $eventName
+     *
+     * @return void
+     */
+    public function handleBulk(array $eventTransfers, $eventName)
+    {
+        $this->preventTransaction();
+
+        if ($eventName === UrlEvents::ENTITY_SPY_URL_DELETE) {
+            $categoryNodeIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE);
+        } else {
+            $categoryNodeIds = $this->getValidCategoryNodeIds($eventTransfers);
+        }
+
+        if (empty($categoryNodeIds)) {
+            return;
+        }
+
+        $categoryIds = $this->getQueryContainer()->queryCategoryIdsByNodeIds($categoryNodeIds)->find()->getData();
+        $relatedCategoryIds = $this->getRelatedCategoryIds($categoryIds);
+        $productAbstractIds = $this->getQueryContainer()->queryProductAbstractIdsByCategoryIds($relatedCategoryIds)->find()->getData();
+
+        $this->publish($productAbstractIds);
+    }
+
+    /**
+     * @param array $eventTransfers
+     *
+     * @return array
+     */
+    protected function getValidCategoryNodeIds(array $eventTransfers)
+    {
+        $validEventTransfers = $this->getFactory()->getEventBehaviorFacade()->getEventTransfersByModifiedColumns(
+            $eventTransfers,
+            [
+                SpyUrlTableMap::COL_URL,
+                SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE,
+            ]
+        );
+
+        return $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($validEventTransfers, SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE);
+    }
+}
