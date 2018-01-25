@@ -21,18 +21,18 @@ class ValidityUpdater implements ValidityUpdaterInterface
     /**
      * @var \Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface
      */
-    protected $productTouchManager;
+    protected $productConcreteTouch;
 
     /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface $productTouchManager
+     * @param \Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface $productConcreteTouch
      */
     public function __construct(
         ProductQueryContainerInterface $queryContainer,
-        ProductConcreteTouchInterface $productTouchManager
+        ProductConcreteTouchInterface $productConcreteTouch
     ) {
         $this->queryContainer = $queryContainer;
-        $this->productTouchManager = $productTouchManager;
+        $this->productConcreteTouch = $productConcreteTouch;
     }
 
     /**
@@ -98,7 +98,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
                 ->getSpyProduct()
                 ->setIsActive(true)
                 ->save();
-            $this->productTouchManager
+            $this->productConcreteTouch
                 ->touchProductConcreteActive($productLabelEntity->getIdProduct());
         }
     }
@@ -115,7 +115,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
                 ->getSpyProduct()
                 ->setIsActive(false)
                 ->save();
-            $this->productTouchManager
+            $this->productConcreteTouch
                 ->touchProductConcreteInactive($productLabelEntity->getIdProduct());
         }
     }
