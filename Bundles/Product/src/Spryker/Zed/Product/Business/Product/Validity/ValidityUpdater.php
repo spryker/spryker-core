@@ -10,6 +10,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductValidityTableMap;
 use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Traversable;
 
 class ValidityUpdater implements ValidityUpdaterInterface
 {
@@ -104,23 +105,23 @@ class ValidityUpdater implements ValidityUpdaterInterface
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Propel\Runtime\Collection\ObjectCollection $productsBecomingActive
-     * @param \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Propel\Runtime\Collection\ObjectCollection $productsBecomingInactive
+     * @param \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Traversable $productsBecomingActive
+     * @param \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Traversable $productsBecomingInactive
      *
      * @return void
      */
-    protected function executeProductPublishTransaction($productsBecomingActive, $productsBecomingInactive)
+    protected function executeProductPublishTransaction(Traversable $productsBecomingActive, Traversable $productsBecomingInactive)
     {
         $this->setPublished($productsBecomingActive);
         $this->setUnpublished($productsBecomingInactive);
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Propel\Runtime\Collection\ObjectCollection $productValidityEntities
+     * @param \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Traversable $productValidityEntities
      *
      * @return void
      */
-    protected function setPublished($productValidityEntities)
+    protected function setPublished(Traversable $productValidityEntities)
     {
         foreach ($productValidityEntities as $productLabelEntity) {
             $productLabelEntity
@@ -128,16 +129,16 @@ class ValidityUpdater implements ValidityUpdaterInterface
                 ->setIsActive(true)
                 ->save();
             $this->productConcreteTouch
-                ->touchProductConcreteActive($productLabelEntity->getIdProduct());
+                ->touchProductConcreteActive($productLabelEntity->getFkProduct());
         }
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Propel\Runtime\Collection\ObjectCollection $productValidityEntities
+     * @param \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Traversable $productValidityEntities
      *
      * @return void
      */
-    protected function setUnpublished($productValidityEntities)
+    protected function setUnpublished(Traversable $productValidityEntities)
     {
         foreach ($productValidityEntities as $productLabelEntity) {
             $productLabelEntity
@@ -145,7 +146,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
                 ->setIsActive(false)
                 ->save();
             $this->productConcreteTouch
-                ->touchProductConcreteInactive($productLabelEntity->getIdProduct());
+                ->touchProductConcreteInactive($productLabelEntity->getFkProduct());
         }
     }
 }
