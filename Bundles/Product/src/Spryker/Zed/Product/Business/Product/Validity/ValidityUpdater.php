@@ -21,7 +21,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
     /**
      * @var \Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface
      */
-    private $productTouchManager;
+    protected $productTouchManager;
 
     /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $queryContainer

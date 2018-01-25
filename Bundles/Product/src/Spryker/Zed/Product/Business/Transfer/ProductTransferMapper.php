@@ -25,7 +25,7 @@ class ProductTransferMapper implements ProductTransferMapperInterface
     /**
      * @var \Spryker\Zed\Product\Business\Product\Validity\ProductValidityHydratorInterface
      */
-    private $validityHydrator;
+    protected $validityHydrator;
 
     /**
      * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
