@@ -50,18 +50,18 @@ class ProductCategoryFilterTransferGenerator implements ProductCategoryFilterTra
      */
     public function generateTransferWithJsonFromTransfer(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
     {
-        $finalJson = [];
+        $productCategoryFilterItemArray = [];
 
         $productCategoryFilterItemTransfers = $productCategoryFilterTransfer->getFilters();
         foreach ($productCategoryFilterItemTransfers as $productCategoryFilterItemTransfer) {
-            $finalJson[] = [
+            $productCategoryFilterItemArray[] = [
                 ProductCategoryFilterItemTransfer::IS_ACTIVE => $productCategoryFilterItemTransfer->getIsActive(),
                 ProductCategoryFilterItemTransfer::LABEL => $productCategoryFilterItemTransfer->getLabel(),
                 ProductCategoryFilterItemTransfer::KEY => $productCategoryFilterItemTransfer->getKey(),
             ];
         }
 
-        $productCategoryFilterTransfer->setFilterData($this->utilEncodingService->encodeJson($finalJson, true));
+        $productCategoryFilterTransfer->setFilterData($this->utilEncodingService->encodeJson($productCategoryFilterItemArray, true));
 
         return $productCategoryFilterTransfer;
     }
