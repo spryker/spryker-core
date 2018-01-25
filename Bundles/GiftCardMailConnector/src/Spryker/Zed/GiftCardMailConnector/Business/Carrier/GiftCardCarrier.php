@@ -9,7 +9,6 @@ namespace Spryker\Zed\GiftCardMailConnector\Business\Carrier;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\GiftCardMailConnector\Communication\Plugin\Mail\GiftCardDeliveryMailTypePlugin;
 use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToCustomerFacadeInterface;
 use Spryker\Zed\GiftCardMailConnector\Dependency\Facade\GiftCardMailConnectorToGiftCardFacadeInterface;
@@ -109,7 +108,7 @@ class GiftCardCarrier implements GiftCardCarrierInterface
      */
     protected function getCustomerTransfer($orderTransfer)
     {
-        $customerTransfer = $this->findCustomerTransfer($orderTransfer->getCustomerReference());
+        $customerTransfer = $this->customerFacade->findByReference($orderTransfer->getCustomerReference());
 
         if ($customerTransfer) {
             return $customerTransfer;
@@ -119,25 +118,5 @@ class GiftCardCarrier implements GiftCardCarrierInterface
             ->setEmail($orderTransfer->getEmail())
             ->setLastName($orderTransfer->getLastName())
             ->setFirstName($orderTransfer->getFirstName());
-    }
-
-    /**
-     * @param string $customerReference
-     *
-     * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
-     */
-    protected function findCustomerTransfer($customerReference)
-    {
-        $customerTransfer = $this->customerFacade->findByReference($customerReference);
-
-        if (!$customerTransfer) {
-            throw new CustomerNotFoundException(
-                sprintf('Customer with reference %d is missing', $customerReference)
-            );
-        }
-
-        return $customerTransfer;
     }
 }
