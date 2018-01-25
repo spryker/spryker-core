@@ -5,26 +5,58 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\UrlStorage\Business\Storage;
 
 use Orm\Zed\UrlStorage\Persistence\SpyUrlRedirectStorage;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface;
+use Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\UrlStorage\Communication\UrlStorageCommunicationFactory getFactory()
- */
-class AbstractRedirectStorageListener extends AbstractPlugin
+class RedirectStorageWriter implements RedirectStorageWriterInterface
 {
     const ID_URL_REDIRECT = 'id_url_redirect';
     const FK_URL_REDIRECT = 'fkUrlRedirect';
+
+    /**
+     * @var \Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface
+     */
+    protected $utilSanitize;
+
+    /**
+     * @var \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param \Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface $utilSanitize
+     * @param \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(UrlStorageToUtilSanitizeServiceInterface $utilSanitize, UrlStorageQueryContainerInterface $queryContainer, Store $store, $isSendingToQueue)
+    {
+        $this->utilSanitize = $utilSanitize;
+        $this->queryContainer = $queryContainer;
+        $this->store = $store;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
 
     /**
      * @param array $redirectIds
      *
      * @return void
      */
-    protected function publish(array $redirectIds)
+    public function publish(array $redirectIds)
     {
         $redirectEntities = $this->findRedirectEntities($redirectIds);
         $redirectStorageEntities = $this->findRedirectStorageEntitiesByIds($redirectIds);
@@ -37,7 +69,7 @@ class AbstractRedirectStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function unpublish(array $redirectIds)
+    public function unpublish(array $redirectIds)
     {
         $redirectStorageEntities = $this->findRedirectStorageEntitiesByIds($redirectIds);
         foreach ($redirectStorageEntities as $redirectStorageEntity) {
@@ -76,8 +108,9 @@ class AbstractRedirectStorageListener extends AbstractPlugin
         }
 
         $spyUrlRedirectStorage->setFkUrlRedirect($spyRedirectEntity[static::ID_URL_REDIRECT]);
-        $spyUrlRedirectStorage->setData($this->getFactory()->getUtilSanitizeService()->arrayFilterRecursive($spyRedirectEntity));
+        $spyUrlRedirectStorage->setData($this->utilSanitize->arrayFilterRecursive($spyRedirectEntity));
         $spyUrlRedirectStorage->setStore($this->getStoreName());
+        $spyUrlRedirectStorage->setIsSendingToQueue($this->isSendingToQueue);
         $spyUrlRedirectStorage->save();
     }
 
@@ -88,7 +121,7 @@ class AbstractRedirectStorageListener extends AbstractPlugin
      */
     protected function findRedirectEntities(array $redirectIds)
     {
-        return $this->getQueryContainer()->queryRedirects($redirectIds)->find()->getData();
+        return $this->queryContainer->queryRedirects($redirectIds)->find()->getData();
     }
 
     /**
@@ -98,7 +131,7 @@ class AbstractRedirectStorageListener extends AbstractPlugin
      */
     protected function findRedirectStorageEntitiesByIds(array $redirectIds)
     {
-        return $this->getQueryContainer()->queryRedirectStorageByIds($redirectIds)->find()->toKeyIndex(static::FK_URL_REDIRECT);
+        return $this->queryContainer->queryRedirectStorageByIds($redirectIds)->find()->toKeyIndex(static::FK_URL_REDIRECT);
     }
 
     /**
@@ -106,6 +139,6 @@ class AbstractRedirectStorageListener extends AbstractPlugin
      */
     protected function getStoreName()
     {
-        return $this->getFactory()->getStore()->getStoreName();
+        return $this->store->getStoreName();
     }
 }

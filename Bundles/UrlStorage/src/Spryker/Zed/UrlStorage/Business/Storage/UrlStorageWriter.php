@@ -5,30 +5,61 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\UrlStorage\Business\Storage;
 
 use Orm\Zed\UrlStorage\Persistence\SpyUrlStorage;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface;
+use Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\UrlStorage\Communication\UrlStorageCommunicationFactory getFactory()
- */
-class AbstractUrlStorageListener extends AbstractPlugin
+class UrlStorageWriter implements UrlStorageWriterInterface
 {
     const ID_URL = 'id_url';
     const FK_URL = 'fkUrl';
+
+    /**
+     * @var \Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface
+     */
+    protected $utilSanitize;
+
+    /**
+     * @var \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param \Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface $utilSanitize
+     * @param \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(UrlStorageToUtilSanitizeServiceInterface $utilSanitize, UrlStorageQueryContainerInterface $queryContainer, Store $store, $isSendingToQueue)
+    {
+        $this->utilSanitize = $utilSanitize;
+        $this->queryContainer = $queryContainer;
+        $this->store = $store;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
 
     /**
      * @param array $urlIds
      *
      * @return void
      */
-    protected function publish(array $urlIds)
+    public function publish(array $urlIds)
     {
         $spyUrlEntities = $this->findUrlEntities($urlIds);
         $spyUrlStorageEntities = $this->findUrlStorageEntitiesByIds($urlIds);
-
         $this->storeData($spyUrlEntities, $spyUrlStorageEntities);
     }
 
@@ -37,7 +68,7 @@ class AbstractUrlStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function unpublish(array $urlIds)
+    public function unpublish(array $urlIds)
     {
         $spyUrlStorageEntities = $this->findUrlStorageEntitiesByIds($urlIds);
         foreach ($spyUrlStorageEntities as $spyUrlStorageEntity) {
@@ -84,8 +115,9 @@ class AbstractUrlStorageListener extends AbstractPlugin
         $spyUrlStorageEntity->setByName('fk_' . $resource['type'], $resource['value']);
         $spyUrlStorageEntity->setUrl($spyUrlEntity['url']);
         $spyUrlStorageEntity->setFkUrl($spyUrlEntity[static::ID_URL]);
-        $spyUrlStorageEntity->setData($this->getFactory()->getUtilSanitizeService()->arrayFilterRecursive($spyUrlEntity));
+        $spyUrlStorageEntity->setData($this->utilSanitize->arrayFilterRecursive($spyUrlEntity));
         $spyUrlStorageEntity->setStore($this->getStoreName());
+        $spyUrlStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyUrlStorageEntity->save();
     }
 
@@ -130,7 +162,7 @@ class AbstractUrlStorageListener extends AbstractPlugin
      */
     protected function findUrlEntities(array $urlIds)
     {
-        return $this->getQueryContainer()->queryUrls($urlIds)->find()->getData();
+        return $this->queryContainer->queryUrls($urlIds)->find()->getData();
     }
 
     /**
@@ -140,7 +172,7 @@ class AbstractUrlStorageListener extends AbstractPlugin
      */
     protected function findUrlStorageEntitiesByIds(array $urlIds)
     {
-        return $this->getQueryContainer()->queryUrlStorageByIds($urlIds)->find()->toKeyIndex(static::FK_URL);
+        return $this->queryContainer->queryUrlStorageByIds($urlIds)->find()->toKeyIndex(static::FK_URL);
     }
 
     /**
@@ -148,6 +180,6 @@ class AbstractUrlStorageListener extends AbstractPlugin
      */
     protected function getStoreName()
     {
-        return $this->getFactory()->getStore()->getStoreName();
+        return $this->store->getStoreName();
     }
 }
