@@ -103,6 +103,17 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Product\Business\Product\Validity\ValidityUpdaterInterface
+     */
+    public function createProductValidityUpdater()
+    {
+        return new ValidityUpdater(
+            $this->getQueryContainer(),
+            $this->createProductConcreteActivator()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Product\Business\Product\ProductConcreteActivatorInterface
      */
     public function createProductConcreteActivator()
@@ -234,17 +245,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getTouchFacade(),
             $this->getQueryContainer(),
             $this->createProductAbstractStatusChecker()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Validity\ValidityUpdaterInterface
-     */
-    public function createProductValidityUpdater()
-    {
-        return new ValidityUpdater(
-            $this->getQueryContainer(),
-            $this->createProductConcreteTouch()
         );
     }
 

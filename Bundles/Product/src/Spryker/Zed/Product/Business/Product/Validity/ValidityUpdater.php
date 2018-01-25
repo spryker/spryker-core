@@ -7,7 +7,7 @@
 namespace Spryker\Zed\Product\Business\Product\Validity;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductValidityTableMap;
-use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface;
+use Spryker\Zed\Product\Business\Product\ProductConcreteActivatorInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Traversable;
@@ -21,20 +21,20 @@ class ValidityUpdater implements ValidityUpdaterInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface
+     * @var \Spryker\Zed\Product\Business\Product\ProductConcreteActivatorInterface
      */
-    protected $productConcreteTouch;
+    protected $productConcreteActivator;
 
     /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface $productConcreteTouch
+     * @param \Spryker\Zed\Product\Business\Product\ProductConcreteActivatorInterface $productConcreteActivator
      */
     public function __construct(
         ProductQueryContainerInterface $queryContainer,
-        ProductConcreteTouchInterface $productConcreteTouch
+        ProductConcreteActivatorInterface $productConcreteActivator
     ) {
         $this->queryContainer = $queryContainer;
-        $this->productConcreteTouch = $productConcreteTouch;
+        $this->productConcreteActivator = $productConcreteActivator;
     }
 
     /**
@@ -124,12 +124,8 @@ class ValidityUpdater implements ValidityUpdaterInterface
     protected function setPublished(Traversable $productValidityEntities)
     {
         foreach ($productValidityEntities as $productLabelEntity) {
-            $productLabelEntity
-                ->getSpyProduct()
-                ->setIsActive(true)
-                ->save();
-            $this->productConcreteTouch
-                ->touchProductConcreteActive($productLabelEntity->getFkProduct());
+            $this->productConcreteActivator
+                ->activateProductConcrete($productLabelEntity->getFkProduct());
         }
     }
 
@@ -141,12 +137,8 @@ class ValidityUpdater implements ValidityUpdaterInterface
     protected function setUnpublished(Traversable $productValidityEntities)
     {
         foreach ($productValidityEntities as $productLabelEntity) {
-            $productLabelEntity
-                ->getSpyProduct()
-                ->setIsActive(false)
-                ->save();
-            $this->productConcreteTouch
-                ->touchProductConcreteInactive($productLabelEntity->getFkProduct());
+            $this->productConcreteActivator
+                ->deactivateProductConcrete($productLabelEntity->getFkProduct());
         }
     }
 }
