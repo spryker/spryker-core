@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Product\Business\Product\Validity;
 
+use Orm\Zed\Product\Persistence\Map\SpyProductValidityTableMap;
 use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -40,22 +41,50 @@ class ValidityUpdater implements ValidityUpdaterInterface
      */
     public function updateProductsValidity()
     {
-        $productsBecomingActive = $this->findProductsBecomingActive();
-        $productsBecomingInactive = $this->findProductsBecomingInactive();
-
-        if (!$productsBecomingActive->count() && !$productsBecomingInactive->count()) {
+        if (!$this->willProductsUpdate()) {
             return;
         }
 
-        $this->handleDatabaseTransaction(function () use ($productsBecomingActive, $productsBecomingInactive) {
+        $this->handleDatabaseTransaction(function () {
+            $productsBecomingActive = $this->findProductsBecomingActive();
+            $productsBecomingInactive = $this->findProductsBecomingInactive();
+
             $this->executeProductPublishTransaction($productsBecomingActive, $productsBecomingInactive);
         });
     }
 
     /**
+     * @return bool
+     */
+    protected function willProductsUpdate(): bool
+    {
+        $willProductsBecomeValid = $this
+            ->queryContainer
+            ->queryProductsBecomingValid()
+            ->select([SpyProductValidityTableMap::COL_ID_PRODUCT_VALIDITY])
+            ->findOne();
+
+        if ($willProductsBecomeValid) {
+            return true;
+        }
+
+        $willProductsBecomeInvalid = $this
+            ->queryContainer
+            ->queryProductsBecomingInvalid()
+            ->select([SpyProductValidityTableMap::COL_ID_PRODUCT_VALIDITY])
+            ->findOne();
+
+        if ($willProductsBecomeInvalid) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @return \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function findProductsBecomingActive()
+    protected function findProductsBecomingActive(): \Traversable
     {
         return $this
             ->queryContainer
@@ -66,7 +95,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function findProductsBecomingInactive()
+    protected function findProductsBecomingInactive(): \Traversable
     {
         return $this
             ->queryContainer
