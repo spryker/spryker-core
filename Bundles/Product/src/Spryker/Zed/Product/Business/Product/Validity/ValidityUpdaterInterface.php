@@ -12,5 +12,5 @@ interface ValidityUpdaterInterface
     /**
      * @return void
      */
-    public function checkAndTouchAllProducts();
+    public function updateProductsValidity();
 }

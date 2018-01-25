@@ -38,7 +38,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
     /**
      * @return void
      */
-    public function checkAndTouchAllProducts()
+    public function updateProductsValidity()
     {
         $productsBecomingActive = $this->findProductsBecomingActive();
         $productsBecomingInactive = $this->findProductsBecomingInactive();

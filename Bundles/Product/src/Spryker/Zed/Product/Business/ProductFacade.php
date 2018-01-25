@@ -818,6 +818,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     {
         $this->getFactory()
             ->createProductValidityUpdater()
-            ->checkAndTouchAllProducts();
+            ->updateProductsValidity();
     }
 }
