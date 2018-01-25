@@ -96,6 +96,7 @@
         <foreign-key name="spy_product_validity-fk_product" foreignTable="spy_product">
             <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
+        <id-method-parameter value="spy_product_validity_pk_seq"/>
     </table>
 
 </database>
