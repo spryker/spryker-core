@@ -106,7 +106,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryActiveCartRulesForStore($idStore)
     {
-        $query = $this->$this->queryActiveAndRunningDiscounts()
+        $query = $this->queryActiveAndRunningDiscounts()
             ->filterByDiscountType(DiscountConstants::TYPE_CART_RULE)
             ->useSpyDiscountStoreQuery()
                 ->filterByFkStore($idStore)

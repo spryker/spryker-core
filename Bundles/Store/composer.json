@@ -10,9 +10,13 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
+    "spryker/quote": "*",
     "spryker/testify": "*",
     "spryker/transfer": "*",
     "spryker/twig": "*"
+  },
+  "suggest": {
+    "spryker/quote": "If you want to use StoreQuoteTransferExpander plugin, minimum required version: 1.2.0"
   },
   "autoload": {
     "psr-4": {

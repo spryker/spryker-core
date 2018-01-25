@@ -8,7 +8,6 @@
 namespace Spryker\Client\Quote\Session;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Quote\Dependency\Client\QuoteToStoreClientInterface;
 use Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -27,23 +26,23 @@ class QuoteSession implements QuoteSessionInterface
     protected $currencyPlugin;
 
     /**
-     * @var \Spryker\Client\Quote\Dependency\Client\QuoteToStoreClientInterface
+     * @var \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[]
      */
-    protected $storeClient;
+    protected $quoteTransferExpanderPlugins;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \Spryker\Client\Quote\Dependency\Client\QuoteToStoreClientInterface $storeClient
      * @param \Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyInterface|null $currencyPlugin
+     * @param \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[]|null $quoteTransferExpanderPlugins Deprecated: plugin list will be a mandatory array with next major
      */
     public function __construct(
         SessionInterface $session,
-        QuoteToStoreClientInterface $storeClient,
-        QuoteToCurrencyInterface $currencyPlugin = null
+        QuoteToCurrencyInterface $currencyPlugin = null,
+        array $quoteTransferExpanderPlugins = null
     ) {
         $this->session = $session;
-        $this->storeClient = $storeClient;
         $this->currencyPlugin = $currencyPlugin;
+        $this->quoteTransferExpanderPlugins = $quoteTransferExpanderPlugins;
     }
 
     /**
@@ -54,7 +53,8 @@ class QuoteSession implements QuoteSessionInterface
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer = $this->session->get(static::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
         $this->setCurrency($quoteTransfer);
-        $this->setStore($quoteTransfer);
+
+        $quoteTransfer = $this->expandQuoteTransfer($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -67,7 +67,9 @@ class QuoteSession implements QuoteSessionInterface
     public function setQuote(QuoteTransfer $quoteTransfer)
     {
         $this->setCurrency($quoteTransfer);
-        $this->setStore($quoteTransfer);
+
+        $quoteTransfer = $this->expandQuoteTransfer($quoteTransfer);
+
         $this->session->set(static::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
     }
 
@@ -84,11 +86,20 @@ class QuoteSession implements QuoteSessionInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function setStore(QuoteTransfer $quoteTransfer)
+    protected function expandQuoteTransfer(QuoteTransfer $quoteTransfer)
     {
-        $quoteTransfer->setStore($this->storeClient->getCurrentStore());
+        // Deprecated: plugin list will not be optional with next major
+        if ($this->quoteTransferExpanderPlugins === null) {
+            return $quoteTransfer;
+        }
+
+        foreach ($this->quoteTransferExpanderPlugins as $quoteTransferExpanderPlugin) {
+            $quoteTransfer = $quoteTransferExpanderPlugin->expandQuote($quoteTransfer);
+        }
+
+        return $quoteTransfer;
     }
 
     /**
