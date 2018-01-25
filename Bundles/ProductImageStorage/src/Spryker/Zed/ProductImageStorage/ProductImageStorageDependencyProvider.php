@@ -14,11 +14,9 @@ use Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToEvent
 use Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageBridge;
 use Spryker\Zed\ProductImageStorage\Dependency\QueryContainer\ProductImageStorageToProductImageQueryContainerBridge;
 use Spryker\Zed\ProductImageStorage\Dependency\QueryContainer\ProductImageStorageToProductQueryContainerBridge;
-use Spryker\Zed\ProductImageStorage\Dependency\Service\ProductImageStorageToUtilSanitizeServiceBridge;
 
 class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
@@ -32,13 +30,20 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
-            return new ProductImageStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
-
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new ProductImageStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
         $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {
             return new ProductImageStorageToProductImageBridge($container->getLocator()->productImage()->facade());
         };

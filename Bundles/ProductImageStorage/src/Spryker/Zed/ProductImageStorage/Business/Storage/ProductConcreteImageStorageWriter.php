@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\ProductImageStorage\Business\Storage;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductConcreteImageStorageTransfer;
@@ -13,20 +13,56 @@ use Generated\Shared\Transfer\ProductImageSetStorageTransfer;
 use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageInterface;
+use Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface;
 
 /**
- * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface queryContainer
  * @method \Spryker\Zed\ProductImageStorage\Communication\ProductImageStorageCommunicationFactory getFactory()
  */
-class AbstractProductConcreteImageStorageListener extends AbstractPlugin
+class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWriterInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageInterface
+     */
+    protected $productImageFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param \Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageInterface $productImageFacade
+     * @param \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(ProductImageStorageToProductImageInterface $productImageFacade, ProductImageStorageQueryContainerInterface $queryContainer, Store $store, $isSendingToQueue)
+    {
+        $this->productImageFacade = $productImageFacade;
+        $this->queryContainer = $queryContainer;
+        $this->store = $store;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
+
     /**
      * @param array $productIds
      *
      * @return void
      */
-    protected function publish(array $productIds)
+    public function publish(array $productIds)
     {
         $spyProductConcreteLocalizedEntities = $this->findProductConcreteLocalizedEntities($productIds);
         $imageSets = [];
@@ -41,6 +77,21 @@ class AbstractProductConcreteImageStorageListener extends AbstractPlugin
 
         $spyProductConcreteImageStorageEntities = $this->findProductConcreteImageStorageEntitiesByProductConcreteIds($productIds);
         $this->storeData($spyProductConcreteLocalizedEntities, $spyProductConcreteImageStorageEntities, $imageSets);
+    }
+
+    /**
+     * @param array $productIds
+     *
+     * @return void
+     */
+    public function unpublish(array $productIds)
+    {
+        $spyProductConcreteImageStorageEntities = $this->findProductConcreteImageStorageEntitiesByProductConcreteIds($productIds);
+        foreach ($spyProductConcreteImageStorageEntities as $spyProductConcreteImageStorageLocalizedEntities) {
+            foreach ($spyProductConcreteImageStorageLocalizedEntities as $spyProductConcreteImageStorageLocalizedEntity) {
+                $spyProductConcreteImageStorageLocalizedEntity->delete();
+            }
+        }
     }
 
     /**
@@ -92,6 +143,7 @@ class AbstractProductConcreteImageStorageListener extends AbstractPlugin
         $spyProductConcreteImageStorage->setData($productConcreteStorageTransfer->toArray());
         $spyProductConcreteImageStorage->setStore($this->getStoreName());
         $spyProductConcreteImageStorage->setLocale($spyProductLocalizedEntity->getLocale()->getLocaleName());
+        $spyProductConcreteImageStorage->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductConcreteImageStorage->save();
     }
 
@@ -104,7 +156,7 @@ class AbstractProductConcreteImageStorageListener extends AbstractPlugin
      */
     protected function generateProductConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale)
     {
-        $imageSetTransfers = $this->getFactory()->getProductImageFacade()->getCombinedConcreteImageSets(
+        $imageSetTransfers = $this->productImageFacade->getCombinedConcreteImageSets(
             $idProductConcrete,
             $idProductAbstract,
             $idLocale
@@ -133,7 +185,7 @@ class AbstractProductConcreteImageStorageListener extends AbstractPlugin
      */
     protected function findProductConcreteLocalizedEntities(array $productConcreteIds)
     {
-        return $this->getQueryContainer()->queryProductLocalizedByIds($productConcreteIds)->find()->getData();
+        return $this->queryContainer->queryProductLocalizedByIds($productConcreteIds)->find()->getData();
     }
 
     /**
@@ -143,7 +195,7 @@ class AbstractProductConcreteImageStorageListener extends AbstractPlugin
      */
     protected function findProductConcreteImageStorageEntitiesByProductConcreteIds(array $productConcreteIds)
     {
-        $productConcreteStorageEntities = $this->getQueryContainer()->queryProductConcreteImageStorageByIds($productConcreteIds)->find();
+        $productConcreteStorageEntities = $this->queryContainer->queryProductConcreteImageStorageByIds($productConcreteIds)->find();
         $productConcreteStorageEntitiesByIdAndLocale = [];
         foreach ($productConcreteStorageEntities as $productConcreteStorageEntity) {
             $productConcreteStorageEntitiesByIdAndLocale[$productConcreteStorageEntity->getFkProduct()][$productConcreteStorageEntity->getLocale()] = $productConcreteStorageEntity;
@@ -157,6 +209,6 @@ class AbstractProductConcreteImageStorageListener extends AbstractPlugin
      */
     protected function getStoreName()
     {
-        return $this->getFactory()->getStore()->getStoreName();
+        return $this->store->getStoreName();
     }
 }
