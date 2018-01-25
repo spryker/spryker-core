@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryNavigationConnector\Business\Model;
+namespace Spryker\Zed\CmsNavigationConnector\Business\Model;
 
-interface NavigationNodesIsActiveUpdaterInterface
+interface NavigationNodeIsActiveUpdaterInterface
 {
     /**
-     * @param int $idCategoryNode
+     * @param int $idCmsPage
      * @param bool $isActive
      *
      * @return void
      */
-    public function updateCategoryNodeNavigationNodes($idCategoryNode, $isActive);
+    public function updateCmsPageNavigationNodes($idCmsPage, $isActive);
 }

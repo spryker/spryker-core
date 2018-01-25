@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CmsNavigationConnectorFacade extends AbstractFacade implements CmsNavigationConnectorFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CategoryNavigationConnector\Business;
 
+use Spryker\Zed\CategoryNavigationConnector\Business\Model\NavigationNodeIsActiveUpdater;
 use Spryker\Zed\CategoryNavigationConnector\Business\Model\NavigationNodeReader;
-use Spryker\Zed\CategoryNavigationConnector\Business\Model\NavigationNodesIsActiveUpdater;
 use Spryker\Zed\CategoryNavigationConnector\CategoryNavigationConnectorDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -50,10 +50,10 @@ class CategoryNavigationConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryNavigationConnector\Business\Model\NavigationNodesIsActiveUpdaterInterface
+     * @return \Spryker\Zed\CategoryNavigationConnector\Business\Model\NavigationNodeIsActiveUpdaterInterface
      */
     public function createNavigationNodesIsActiveUpdater()
     {
-        return new NavigationNodesIsActiveUpdater($this->getNavigationFacade(), $this->createNavigationNodeReader());
+        return new NavigationNodeIsActiveUpdater($this->getNavigationFacade(), $this->createNavigationNodeReader());
     }
 }

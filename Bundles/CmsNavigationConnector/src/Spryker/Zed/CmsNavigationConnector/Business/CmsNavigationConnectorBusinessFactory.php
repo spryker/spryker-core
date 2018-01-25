@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CmsNavigationConnector\Business;
 
+use Spryker\Zed\CmsNavigationConnector\Business\Model\NavigationNodeIsActiveUpdater;
 use Spryker\Zed\CmsNavigationConnector\Business\Model\NavigationNodeReader;
-use Spryker\Zed\CmsNavigationConnector\Business\Model\NavigationNodesIsActiveUpdater;
 use Spryker\Zed\CmsNavigationConnector\CmsNavigationConnectorDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -50,10 +50,10 @@ class CmsNavigationConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsNavigationConnector\Business\Model\NavigationNodesIsActiveUpdaterInterface
+     * @return \Spryker\Zed\CmsNavigationConnector\Business\Model\NavigationNodeIsActiveUpdaterInterface
      */
     public function createNavigationNodesIsActiveUpdater()
     {
-        return new NavigationNodesIsActiveUpdater($this->getNavigationFacade(), $this->createNavigationNodeReader());
+        return new NavigationNodeIsActiveUpdater($this->getNavigationFacade(), $this->createNavigationNodeReader());
     }
 }

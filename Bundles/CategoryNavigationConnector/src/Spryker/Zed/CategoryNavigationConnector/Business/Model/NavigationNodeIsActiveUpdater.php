@@ -9,7 +9,7 @@ namespace Spryker\Zed\CategoryNavigationConnector\Business\Model;
 
 use Spryker\Zed\CategoryNavigationConnector\Dependency\Facade\CategoryNavigationConnectorToNavigationFacadeInterface;
 
-class NavigationNodesIsActiveUpdater implements NavigationNodesIsActiveUpdaterInterface
+class NavigationNodeIsActiveUpdater implements NavigationNodeIsActiveUpdaterInterface
 {
     /**
      * @var \Spryker\Zed\CategoryNavigationConnector\Dependency\Facade\CategoryNavigationConnectorToNavigationFacadeInterface
