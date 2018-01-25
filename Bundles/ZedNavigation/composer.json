@@ -3,6 +3,7 @@
   "description": "ZedNavigation module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/url": "^3.0.0",

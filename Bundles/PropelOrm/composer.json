@@ -3,6 +3,7 @@
   "description": "PropelOrm module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "propel/propel": "2.0.0-alpha7",
     "spryker/config": "^3.0.0",
     "spryker/error-handler": "^2.0.0"

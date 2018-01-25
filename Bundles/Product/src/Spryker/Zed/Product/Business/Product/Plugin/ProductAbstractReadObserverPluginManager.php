@@ -26,6 +26,8 @@ class ProductAbstractReadObserverPluginManager implements ProductAbstractReadObs
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer

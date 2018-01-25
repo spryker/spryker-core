@@ -50,25 +50,6 @@ class TouchFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider bulkTouchSetMethodsDataProvider
-     *
-     * @deprecated This can be removed when all `TouchFacadeInterface::bulkTouch*` methods are removed
-     *
-     * @param string $method
-     * @param array $itemIds
-     * @param int $expectedAffectedRows
-     *
-     * @return void
-     */
-    public function testBulkTouchMethods($method, array $itemIds, $expectedAffectedRows)
-    {
-        $touchFacade = new TouchFacade();
-        $affectedRows = $touchFacade->$method(self::ITEM_TYPE, $itemIds);
-
-        $this->assertSame($expectedAffectedRows, $affectedRows);
-    }
-
-    /**
      * @return array
      */
     public function bulkTouchMethodsDataProvider()

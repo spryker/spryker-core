@@ -11,7 +11,7 @@ interface ProductClientInterface
 {
     /**
      * Specification:
-     * - Read abstract product data from yves storage, based on provided
+     * - Reads abstract product data from locale specific Storage.
      *
      * @api
      *
@@ -24,7 +24,8 @@ interface ProductClientInterface
 
     /**
      * Specification:
-     * - Read abstract product data from yves storage, based on current shop selected locale
+     * - Reads abstract product data from Storage.
+     * - Selects Storage using current shop locale.
      *
      * @api
      *
@@ -36,7 +37,8 @@ interface ProductClientInterface
 
     /**
      * Specification:
-     * - Read attribute map from storage, based on current shop selected locale
+     * - Reads attribute map from Storage.
+     * - Selects Storage using current shop locale.
      *
      * @api
      *
@@ -48,7 +50,7 @@ interface ProductClientInterface
 
     /**
      * Specification:
-     * - Read attribute map from storage, based on provided
+     * - Reads attribute map from locale specific Storage.
      *
      * @api
      *
@@ -61,7 +63,8 @@ interface ProductClientInterface
 
     /**
      * Specification:
-     * - Read concrete product data from yves storage, based on current shop selected locale
+     * - Reads concrete product data from Storage.
+     * - Selects Storage using current shop locale.
      *
      * @api
      *
@@ -73,7 +76,7 @@ interface ProductClientInterface
 
     /**
      * Specification:
-     * - Read concrete product data from yves storage, based on provided locale
+     * - Reads concrete product data from locale specific Storage.
      *
      * @api
      *
@@ -86,7 +89,7 @@ interface ProductClientInterface
 
     /**
      * Specification:
-     * - Read product concrete information based on product concrete id collection
+     * - Reads concrete product data based on provided product concrete id collection.
      *
      * @api
      *

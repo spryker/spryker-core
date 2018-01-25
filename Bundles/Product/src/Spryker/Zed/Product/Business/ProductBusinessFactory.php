@@ -32,6 +32,8 @@ use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusChecker;
+use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReader;
+use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationWriter;
 use Spryker\Zed\Product\Business\Product\Touch\ProductAbstractTouch;
 use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouch;
 use Spryker\Zed\Product\Business\Product\Url\ProductAbstractAfterUpdateUrlObserver;
@@ -74,7 +76,9 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductAbstractAssertion(),
             $this->createSkuGenerator(),
             $this->createAttributeEncoder(),
-            $this->createProductTransferMapper()
+            $this->createProductTransferMapper(),
+            $this->createProductAbstractStoreRelationReader(),
+            $this->createProductAbstractStoreRelationWriter()
         );
 
         $productAbstractManager->setEventFacade($this->getEventFacade());
@@ -274,6 +278,25 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function createProductConcreteNameGenerator()
     {
         return new ProductConcreteNameGenerator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReaderInterface
+     */
+    public function createProductAbstractStoreRelationReader()
+    {
+        return new ProductAbstractStoreRelationReader($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationWriterInterface
+     */
+    public function createProductAbstractStoreRelationWriter()
+    {
+        return new ProductAbstractStoreRelationWriter(
+            $this->getQueryContainer(),
+            $this->createProductAbstractStoreRelationReader()
+        );
     }
 
     /**
