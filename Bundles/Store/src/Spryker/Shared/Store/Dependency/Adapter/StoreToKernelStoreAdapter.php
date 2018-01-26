@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Store\Configuration;
+namespace Spryker\Shared\Store\Dependency\Adapter;
 
 use Spryker\Shared\Kernel\Store;
 
-class StoreConfigurationProvider implements StoreConfigurationProviderInterface
+class StoreToKernelStoreAdapter implements StoreToKernelStoreInterface
 {
     /**
      * @var \Spryker\Shared\Kernel\Store

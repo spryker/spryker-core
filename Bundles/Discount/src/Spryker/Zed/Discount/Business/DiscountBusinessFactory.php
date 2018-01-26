@@ -35,6 +35,7 @@ use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapper;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderHydrate;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver as ObsoleteDiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Persistence\DiscountPersist;
+use Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationMapper;
 use Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationReader;
 use Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationWriter;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
@@ -323,9 +324,9 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
         $discountConfiguratorHydrate = new DiscountConfiguratorHydrate(
             $this->getQueryContainer(),
             $this->createDiscountEntityMapper(),
-            $this->createDiscountStoreRelationReader()
+            $this->createDiscountStoreRelationMapper(),
+            $this->getConfigurationExpanderPlugins()
         );
-        $discountConfiguratorHydrate->setDiscountConfigurationExpanderPlugins($this->getConfigurationExpanderPlugins());
 
         return $discountConfiguratorHydrate;
     }
@@ -338,11 +339,10 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
         $discountPersist = new DiscountPersist(
             $this->createVoucherEngine(),
             $this->getQueryContainer(),
-            $this->createDiscountStoreRelationWriter()
+            $this->createDiscountStoreRelationWriter(),
+            $this->getDiscountPostCreatePlugins(),
+            $this->getDiscountPostUpdatePlugins()
         );
-
-        $discountPersist->setDiscountPostCreatePlugins($this->getDiscountPostCreatePlugins());
-        $discountPersist->setDiscountPostUpdatePlugins($this->getDiscountPostUpdatePlugins());
 
         return $discountPersist;
     }
@@ -505,6 +505,14 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationMapperInterface
+     */
+    protected function createDiscountStoreRelationMapper()
+    {
+        return new DiscountStoreRelationMapper();
+    }
+
+    /**
      * @return \Spryker\Zed\Discount\Business\Calculator\CollectorStrategyResolverInterface
      */
     protected function createCollectorResolver()
@@ -608,6 +616,9 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     protected function createDiscountStoreRelationReader()
     {
-        return new DiscountStoreRelationReader($this->getQueryContainer());
+        return new DiscountStoreRelationReader(
+            $this->getQueryContainer(),
+            $this->createDiscountStoreRelationMapper()
+        );
     }
 }

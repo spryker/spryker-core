@@ -33,12 +33,12 @@ class QuoteSession implements QuoteSessionInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyInterface|null $currencyPlugin
-     * @param \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[]|null $quoteTransferExpanderPlugins Deprecated: plugin list will be a mandatory array with next major
+     * @param \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[] $quoteTransferExpanderPlugins
      */
     public function __construct(
         SessionInterface $session,
         QuoteToCurrencyInterface $currencyPlugin = null,
-        array $quoteTransferExpanderPlugins = null
+        array $quoteTransferExpanderPlugins = []
     ) {
         $this->session = $session;
         $this->currencyPlugin = $currencyPlugin;
@@ -90,11 +90,6 @@ class QuoteSession implements QuoteSessionInterface
      */
     protected function expandQuoteTransfer(QuoteTransfer $quoteTransfer)
     {
-        // Deprecated: plugin list will not be optional with next major
-        if ($this->quoteTransferExpanderPlugins === null) {
-            return $quoteTransfer;
-        }
-
         foreach ($this->quoteTransferExpanderPlugins as $quoteTransferExpanderPlugin) {
             $quoteTransfer = $quoteTransferExpanderPlugin->expandQuote($quoteTransfer);
         }

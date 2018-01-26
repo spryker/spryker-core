@@ -8,29 +8,20 @@
 namespace Spryker\Client\Store;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Shared\Store\Configuration\StoreConfigurationProvider;
-use Spryker\Shared\Store\Configuration\StoreConfigurationReader;
+use Spryker\Shared\Store\Reader\KernelStoreReader;
 
 class StoreFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Shared\Store\Configuration\StoreConfigurationReaderInterface
+     * @return \Spryker\Shared\Store\Reader\KernelStoreReaderInterface
      */
-    public function createStoreReader()
+    public function createKernelStoreReader()
     {
-        return new StoreConfigurationReader($this->createStoreConfigurationProvider());
+        return new KernelStoreReader($this->getStore());
     }
 
     /**
-     * @return \Spryker\Shared\Store\Configuration\StoreConfigurationProviderInterface
-     */
-    protected function createStoreConfigurationProvider()
-    {
-        return new StoreConfigurationProvider($this->getStore());
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Shared\Store\Dependency\Adapter\StoreToKernelStoreInterface
      */
     protected function getStore()
     {

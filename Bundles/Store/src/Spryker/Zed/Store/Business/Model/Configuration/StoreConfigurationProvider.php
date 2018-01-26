@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Store\Business\Model\Configuration;
 
-use Spryker\Shared\Store\Configuration\StoreConfigurationProvider as SharedStoreConfigurationProvider;
+use Spryker\Shared\Store\Dependency\Adapter\StoreToKernelStoreAdapter;
 
 /**
- * @deprecated Use \Spryker\Shared\Store\Configuration\StoreConfigurationProvider instead.
+ * @deprecated Implement \Spryker\Shared\Store\Dependency\Adapter\StoreToKernelStoreInterface instead.
  */
-class StoreConfigurationProvider extends SharedStoreConfigurationProvider implements StoreConfigurationProviderInterface
+class StoreConfigurationProvider extends StoreToKernelStoreAdapter implements StoreConfigurationProviderInterface
 {
 }

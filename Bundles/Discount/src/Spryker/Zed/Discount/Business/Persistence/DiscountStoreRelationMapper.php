@@ -11,16 +11,16 @@ use ArrayObject;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
-use Propel\Runtime\Collection\ObjectCollection;
+use Traversable;
 
-class DiscountStoreRelationHydrator implements DiscountStoreRelationHydratorInterface
+class DiscountStoreRelationMapper implements DiscountStoreRelationMapperInterface
 {
     /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function hydrate(SpyDiscount $discountEntity)
+    public function mapDiscountStoreEntityCollectionToStoreRelationTransferCollection(SpyDiscount $discountEntity)
     {
         $relatedStoreTransferCollection = $this->getRelatedStoreTransferCollection($discountEntity->getSpyDiscountStores());
         $idStores = $this->getIdStores($relatedStoreTransferCollection);
@@ -34,11 +34,11 @@ class DiscountStoreRelationHydrator implements DiscountStoreRelationHydratorInte
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Discount\Persistence\SpyDiscountStore[] $discountStoreEntityCollection
+     * @param \Traversable|\Orm\Zed\Discount\Persistence\SpyDiscountStore[] $discountStoreEntityCollection
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
      */
-    protected function getRelatedStoreTransferCollection(ObjectCollection $discountStoreEntityCollection)
+    protected function getRelatedStoreTransferCollection(Traversable $discountStoreEntityCollection)
     {
         $relatedStoreTransferCollection = new ArrayObject();
         foreach ($discountStoreEntityCollection as $discountStoreEntity) {

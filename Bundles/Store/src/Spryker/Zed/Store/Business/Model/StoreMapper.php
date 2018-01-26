@@ -9,21 +9,21 @@ namespace Spryker\Zed\Store\Business\Model;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Store\Persistence\SpyStore;
-use Spryker\Shared\Store\Configuration\StoreConfigurationReaderInterface;
+use Spryker\Shared\Store\Reader\KernelStoreReaderInterface;
 
 class StoreMapper implements StoreMapperInterface
 {
     /**
-     * @var \Spryker\Shared\Store\Configuration\StoreConfigurationReaderInterface;
+     * @var \Spryker\Shared\Store\Reader\KernelStoreReaderInterface
      */
-    protected $storeConfigurationReader;
+    protected $kernelStoreReader;
 
     /**
-     * @param \Spryker\Shared\Store\Configuration\StoreConfigurationReaderInterface $storeConfigurationReader
+     * @param \Spryker\Shared\Store\Reader\KernelStoreReaderInterface $kernelStoreReader
      */
-    public function __construct(StoreConfigurationReaderInterface $storeConfigurationReader)
+    public function __construct(KernelStoreReaderInterface $kernelStoreReader)
     {
-        $this->storeConfigurationReader = $storeConfigurationReader;
+        $this->kernelStoreReader = $kernelStoreReader;
     }
 
     /**
@@ -35,7 +35,7 @@ class StoreMapper implements StoreMapperInterface
     {
         $storeName = $storeEntity->getName();
 
-        $storeTransfer = $this->storeConfigurationReader->getStoreByName($storeName);
+        $storeTransfer = $this->kernelStoreReader->getStoreByName($storeName);
 
         return $storeTransfer->fromArray($storeEntity->toArray(), true);
     }

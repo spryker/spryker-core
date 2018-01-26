@@ -9,12 +9,12 @@ namespace Spryker\Zed\Discount\Business\Persistence;
 
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 
-interface DiscountStoreRelationHydratorInterface
+interface DiscountStoreRelationMapperInterface
 {
     /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function hydrate(SpyDiscount $discountEntity);
+    public function mapDiscountStoreEntityCollectionToStoreRelationTransferCollection(SpyDiscount $discountEntity);
 }

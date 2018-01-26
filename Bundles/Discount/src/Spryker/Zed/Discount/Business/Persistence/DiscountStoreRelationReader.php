@@ -16,20 +16,20 @@ class DiscountStoreRelationReader implements DiscountStoreRelationReaderInterfac
     protected $discountQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationHydratorInterface
+     * @var \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationMapperInterface
      */
-    protected $discountStoreRelationHydrator;
+    protected $discountStoreRelationMapper;
 
     /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
-     * @param \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationHydratorInterface $discountStoreRelationHydrator
+     * @param \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationMapperInterface $discountStoreRelationMapper
      */
     public function __construct(
         DiscountQueryContainerInterface $discountQueryContainer,
-        DiscountStoreRelationHydratorInterface $discountStoreRelationHydrator
+        DiscountStoreRelationMapperInterface $discountStoreRelationMapper
     ) {
         $this->discountQueryContainer = $discountQueryContainer;
-        $this->discountStoreRelationHydrator = $discountStoreRelationHydrator;
+        $this->discountStoreRelationMapper = $discountStoreRelationMapper;
     }
 
     /**
@@ -44,6 +44,6 @@ class DiscountStoreRelationReader implements DiscountStoreRelationReaderInterfac
             ->find()
             ->getFirst();
 
-        return $this->discountStoreRelationHydrator->hydrate($discountEntity);
+        return $this->discountStoreRelationMapper->mapDiscountStoreEntityCollectionToStoreRelationTransferCollection($discountEntity);
     }
 }

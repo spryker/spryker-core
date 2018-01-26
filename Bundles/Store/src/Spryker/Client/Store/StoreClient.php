@@ -24,7 +24,7 @@ class StoreClient extends AbstractClient implements StoreClientInterface
     public function getCurrentStore()
     {
         return $this->getFactory()
-            ->createStoreReader()
+            ->createKernelStoreReader()
             ->getCurrentStore();
     }
 }

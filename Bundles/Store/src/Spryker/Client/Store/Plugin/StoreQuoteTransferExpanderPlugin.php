@@ -23,6 +23,10 @@ class StoreQuoteTransferExpanderPlugin extends AbstractPlugin implements QuoteTr
      */
     public function expandQuote(QuoteTransfer $quoteTransfer)
     {
+        if ($quoteTransfer->getStore() !== null) {
+            return $quoteTransfer;
+        }
+
         $quoteTransfer->setStore($this->getClient()->getCurrentStore());
 
         return $quoteTransfer;

@@ -10,6 +10,7 @@ namespace Spryker\Client\Store;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Store\Dependency\Adapter\StoreToKernelStoreAdapter;
 
 class StoreDependencyProvider extends AbstractDependencyProvider
 {
@@ -37,7 +38,7 @@ class StoreDependencyProvider extends AbstractDependencyProvider
     protected function addStore(Container $container)
     {
         $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
+            return new StoreToKernelStoreAdapter(Store::getInstance());
         };
 
         return $container;

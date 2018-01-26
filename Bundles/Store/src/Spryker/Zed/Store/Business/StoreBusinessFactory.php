@@ -8,11 +8,11 @@
 namespace Spryker\Zed\Store\Business;
 
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Store\Configuration\StoreConfigurationProvider;
-use Spryker\Shared\Store\Configuration\StoreConfigurationReader;
+use Spryker\Shared\Store\Reader\KernelStoreReader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Store\Business\Model\StoreMapper;
 use Spryker\Zed\Store\Business\Model\StoreReader;
+use Spryker\Zed\Store\StoreDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Store\StoreConfig getConfig()
@@ -26,7 +26,7 @@ class StoreBusinessFactory extends AbstractBusinessFactory
     public function createStoreReader()
     {
         return new StoreReader(
-            $this->createStoreConfigurationProvider(),
+            $this->getKernelStore(),
             $this->getQueryContainer(),
             $this->createStoreMapper()
         );
@@ -37,23 +37,23 @@ class StoreBusinessFactory extends AbstractBusinessFactory
      */
     protected function createStoreMapper()
     {
-        return new StoreMapper($this->createStoreConfigurationReader());
+        return new StoreMapper($this->createKernelStoreReader());
     }
 
     /**
-     * @return \Spryker\Shared\Store\Configuration\StoreConfigurationReaderInterface
+     * @return \Spryker\Shared\Store\Reader\KernelStoreReaderInterface
      */
-    protected function createStoreConfigurationReader()
+    protected function createKernelStoreReader()
     {
-        return new StoreConfigurationReader($this->createStoreConfigurationProvider());
+        return new KernelStoreReader($this->getKernelStore());
     }
 
     /**
-     * @return \Spryker\Shared\Store\Configuration\StoreConfigurationProviderInterface
+     * @return \Spryker\Shared\Store\Dependency\Adapter\StoreToKernelStoreInterface
      */
-    protected function createStoreConfigurationProvider()
+    protected function getKernelStore()
     {
-        return new StoreConfigurationProvider($this->getStore());
+        return $this->getProvidedDependency(StoreDependencyProvider::STORE);
     }
 
     /**
