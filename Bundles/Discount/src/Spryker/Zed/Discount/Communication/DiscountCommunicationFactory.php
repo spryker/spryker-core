@@ -10,13 +10,10 @@ use Generated\Shared\Transfer\DataTablesTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Spryker\Zed\Discount\Communication\AmountFormatter\DiscountAmountFormatter;
-use Spryker\Zed\Discount\Communication\Form\CalculatorForm;
-use Spryker\Zed\Discount\Communication\Form\ConditionsForm;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\DiscountFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DiscountForm;
-use Spryker\Zed\Discount\Communication\Form\GeneralForm;
 use Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer;
 use Spryker\Zed\Discount\Communication\Form\VoucherForm;
 use Spryker\Zed\Discount\Communication\QueryBuilderTransformer\JavascriptQueryBuilderTransformer;
@@ -55,56 +52,14 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use the FQCN directly.
-     *
-     * @return string
-     */
-    public function createGeneralFormType()
-    {
-        return GeneralForm::class;
-    }
-
-    /**
-     * @deprecated Use the FQCN directly.
-     *
-     * @return string
-     */
-    public function createCalculatorFormType()
-    {
-        return CalculatorForm::class;
-    }
-
-    /**
-     * @deprecated Use the FQCN directly.
-     *
-     * @return string
-     */
-    public function createConditionsFormType()
-    {
-        return ConditionsForm::class;
-    }
-
-    /**
-     * @deprecated Use the FQCN directly.
-     *
-     * @return string
-     */
-    public function createVoucherFormType()
-    {
-        return VoucherForm::class;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createVoucherForm(DiscountVoucherTransfer $discountVoucherTransfer)
     {
-        $discountVoucherFormType = $this->createVoucherFormType();
-
         return $this->getFormFactory()->create(
-            $discountVoucherFormType,
+            VoucherForm::class,
             $discountVoucherTransfer,
             [
                 'data_class' => DiscountVoucherTransfer::class,
