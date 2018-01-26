@@ -33,7 +33,6 @@ use Spryker\Zed\Discount\Business\Filter\DiscountableItemFilter;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
 use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapper;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderHydrate;
-use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver as ObsoleteDiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Persistence\DiscountPersist;
 use Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationMapper;
 use Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationReader;
@@ -140,19 +139,6 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function getDecisionRulePlugins()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::DECISION_RULE_PLUGINS);
-    }
-
-    /**
-     * @deprecated Use createCheckoutDiscountOrderSaver() instead
-     *
-     * @return \Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaverInterface
-     */
-    public function createDiscountOrderSaver()
-    {
-        return new ObsoleteDiscountOrderSaver(
-            $this->getQueryContainer(),
-            $this->createVoucherCode()
-        );
     }
 
     /**

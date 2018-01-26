@@ -5,7 +5,6 @@
  */
 namespace Spryker\Zed\Discount\Business;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
@@ -444,23 +443,6 @@ interface DiscountFacadeInterface
      * @return bool
      */
     public function useVoucherCodes(array $voucherCodes);
-
-    /**
-     * Specification:
-     * - Loops over all quote items, take calculated discounts and persist them discount amount is for single item
-     * - Loops over all quote expenses, take calculated discounts and persist them discount amount is for single item
-     * - If there is voucher codes marks them as already used by incrementing number of uses.
-     *
-     * @api
-     *
-     * @deprecated Use saveOrderDiscountsForCheckout() instead
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return void
-     */
-    public function saveOrderDiscounts(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 
     /**
      * Specification:
