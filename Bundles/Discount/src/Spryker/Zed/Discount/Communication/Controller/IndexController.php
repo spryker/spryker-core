@@ -36,7 +36,7 @@ class IndexController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $discountForm = $this->getFactory()->createDiscountForm();
+        $discountForm = $this->getFactory()->getDiscountForm();
         $discountForm->handleRequest($request);
 
         if ($discountForm->isValid()) {
@@ -73,12 +73,12 @@ class IndexController extends AbstractController
         $discountConfiguratorTransfer = $this->getFacade()
             ->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
 
-        $discountForm = $this->getFactory()->createDiscountForm($idDiscount);
+        $discountForm = $this->getFactory()->getDiscountForm($idDiscount);
         $discountForm->setData($discountConfiguratorTransfer);
         $this->handleDiscountForm($request, $discountForm);
 
         $voucherFormDataProvider = $this->getFactory()->createVoucherFormDataProvider();
-        $voucherForm = $this->getFactory()->createVoucherForm(
+        $voucherForm = $this->getFactory()->getVoucherForm(
             $voucherFormDataProvider->getData($idDiscount)
         );
 

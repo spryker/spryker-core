@@ -38,7 +38,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createDiscountForm($idDiscount = null)
+    public function getDiscountForm($idDiscount = null)
     {
         $discountDataProvider = $this->createDiscountDataProvider();
 
@@ -56,7 +56,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createVoucherForm(DiscountVoucherTransfer $discountVoucherTransfer)
+    public function getVoucherForm(DiscountVoucherTransfer $discountVoucherTransfer)
     {
         return $this->getFormFactory()->create(
             VoucherForm::class,
