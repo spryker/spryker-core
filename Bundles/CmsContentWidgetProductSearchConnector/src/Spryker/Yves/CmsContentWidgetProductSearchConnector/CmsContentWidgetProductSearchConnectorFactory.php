@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 class CmsContentWidgetProductSearchConnectorFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Yves\CmsContentWidgetProductSearchConnector\Dependency\Client\CmsContentWidgetProductSearchConnectorToProductInterface
+     * @return \Spryker\Yves\CmsContentWidgetProductSearchConnector\Dependency\Client\CmsContentWidgetProductSearchConnectorToProductClientInterface
      */
     public function getProductClient()
     {
@@ -20,7 +20,7 @@ class CmsContentWidgetProductSearchConnectorFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\CmsContentWidgetProductSearchConnector\Dependency\Client\CmsContentWidgetProductSearchConnectorToSearchInterface
+     * @return \Spryker\Yves\CmsContentWidgetProductSearchConnector\Dependency\Client\CmsContentWidgetProductSearchConnectorToSearchClientInterface
      */
     public function getSearchClient()
     {
