@@ -86,6 +86,22 @@ interface SearchClientInterface
 
     /**
      * Specification:
+     * - Runs a simple string search for the given search string
+     * 0 @see https://www.elastic.co/guide/en/elasticsearch/reference/2.4/query-dsl-query-string-query.html
+     * - Returns the raw result set ordered by relevance
+     *
+     * @api
+     *
+     * @param string $searchString
+     * @param int|null $limit
+     * @param int|null $offset
+     *
+     * @return \Elastica\ResultSet|array
+     */
+    public function searchSimpleString($searchString, $limit = null, $offset = null);
+
+    /**
+     * Specification:
      * - Returns data from an external search service (e.g Elasticsearch)
      *
      * @api

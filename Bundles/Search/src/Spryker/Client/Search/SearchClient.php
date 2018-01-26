@@ -122,6 +122,26 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
+     * @param string $searchString
+     * @param int|null $limit
+     * @param int|null $offset
+     *
+     * @return \Elastica\ResultSet|array
+     */
+    public function searchSimpleString($searchString, $limit = null, $offset = null)
+    {
+        $query = $this
+            ->getFactory()
+            ->createSearchStringQuery($searchString, $limit, $offset);
+
+        return $this->search($query);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $key
      * @param string|null $typeName
      * @param string|null $indexName
