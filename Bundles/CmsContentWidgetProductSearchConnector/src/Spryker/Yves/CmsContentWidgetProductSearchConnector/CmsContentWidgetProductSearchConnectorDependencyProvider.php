@@ -24,17 +24,39 @@ class CmsContentWidgetProductSearchConnectorDependencyProvider extends AbstractB
      */
     public function provideDependencies(Container $container)
     {
+        $container = $this->provideProductClient($container);
+        $container = $this->provideSearchClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function provideProductClient(Container $container): Container
+    {
         $container[static::CLIENT_PRODUCT] = function (Container $container) {
             return new CmsContentWidgetProductSearchConnectorToProductClientBridge(
                 $container->getLocator()->product()->client()
             );
         };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function provideSearchClient(Container $container): Container
+    {
         $container[static::CLIENT_SEARCH] = function (Container $container) {
             return new CmsContentWidgetProductSearchConnectorToSearchClientBridge(
                 $container->getLocator()->search()->client()
             );
         };
-
         return $container;
     }
 }
