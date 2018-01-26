@@ -42,17 +42,21 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
 
     /**
      * @param \Twig_Environment $twig
-     * @param array $context
-     * @param array|string $productAbstractSkuList $productAbstractSkuList
+     * @param array $context Data related to twig function
+     * @param string $searchString $productAbstractSkuList
      * @param null|string $templateIdentifier
      *
      * @return string
      */
-    public function contentWidgetFunction(Twig_Environment $twig, array $context, $productAbstractSkuList, $templateIdentifier = null)
-    {
+    public function contentWidgetFunction(
+        Twig_Environment $twig,
+        array $context,
+        $searchString,
+        $templateIdentifier = null
+    ) {
         return $twig->render(
             $this->resolveTemplatePath($templateIdentifier),
-            $this->getContent($context, $productAbstractSkuList)
+            $this->getContent($context, $searchString)
         );
     }
 
