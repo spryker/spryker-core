@@ -59,19 +59,10 @@ class ProductStorageListenerTest extends Unit
     /**
      * @return void
      */
-    protected function tearDown()
-    {
-        SpyProductAbstractStorageQuery::create()->deleteAll();
-        SpyProductConcreteStorageQuery::create()->deleteAll();
-    }
-
-    /**
-     * @return void
-     */
     public function testProductAbstractStorageListenerStoreData()
     {
-        $productStorageCount = SpyProductAbstractStorageQuery::create()->count();
-        $this->assertSame(0, $productStorageCount);
+        SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract(1)->delete();
+        $beforeCount = SpyProductAbstractStorageQuery::create()->count();
 
         $productAbstractStorageListener = new ProductAbstractStorageListener();
         $productAbstractStorageListener->setFacade($this->getProductStorageFacade());
@@ -82,7 +73,7 @@ class ProductStorageListenerTest extends Unit
         $productAbstractStorageListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_ABSTRACT_PUBLISH);
 
         // Assert
-        $this->assertProductAbstractStorage();
+        $this->assertProductAbstractStorage($beforeCount);
     }
 
     /**
@@ -90,8 +81,8 @@ class ProductStorageListenerTest extends Unit
      */
     public function testProductAbstractUrlStorageListenerStoreData()
     {
-        $productStorageCount = SpyProductAbstractStorageQuery::create()->count();
-        $this->assertSame(0, $productStorageCount);
+        SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract(1)->delete();
+        $beforeCount = SpyProductAbstractStorageQuery::create()->count();
 
         $productAbstractUrlStorageListener = new ProductAbstractUrlStorageListener();
         $productAbstractUrlStorageListener->setFacade($this->getProductStorageFacade());
@@ -105,7 +96,7 @@ class ProductStorageListenerTest extends Unit
         $productAbstractUrlStorageListener->handleBulk($eventTransfers, UrlEvents::ENTITY_SPY_URL_CREATE);
 
         // Assert
-        $this->assertProductAbstractStorage();
+        $this->assertProductAbstractStorage($beforeCount);
     }
 
     /**
@@ -113,8 +104,8 @@ class ProductStorageListenerTest extends Unit
      */
     public function testProductAbstractLocalizedAttributesStorageListenerStoreData()
     {
-        $productStorageCount = SpyProductAbstractStorageQuery::create()->count();
-        $this->assertSame(0, $productStorageCount);
+        SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract(1)->delete();
+        $beforeCount = SpyProductAbstractStorageQuery::create()->count();
 
         $productAbstractLocalizedAttributesStorageListener = new ProductAbstractLocalizedAttributesStorageListener();
         $productAbstractLocalizedAttributesStorageListener->setFacade($this->getProductStorageFacade());
@@ -127,7 +118,7 @@ class ProductStorageListenerTest extends Unit
         $productAbstractLocalizedAttributesStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_UPDATE);
 
         // Assert
-        $this->assertProductAbstractStorage();
+        $this->assertProductAbstractStorage($beforeCount);
     }
 
     /**
@@ -135,8 +126,8 @@ class ProductStorageListenerTest extends Unit
      */
     public function testProductConcreteProductAbstractRelationStorageListenerStoreData()
     {
-        $productStorageCount = SpyProductAbstractStorageQuery::create()->count();
-        $this->assertSame(0, $productStorageCount);
+        SpyProductAbstractStorageQuery::create()->filterByFkProductAbstract(1)->delete();
+        $beforeCount = SpyProductAbstractStorageQuery::create()->count();
 
         $productConcreteProductAbstractRelationStorageListener = new ProductConcreteProductAbstractRelationStorageListener();
         $productConcreteProductAbstractRelationStorageListener->setFacade($this->getProductStorageFacade());
@@ -149,7 +140,7 @@ class ProductStorageListenerTest extends Unit
         $productConcreteProductAbstractRelationStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_CREATE);
 
         // Assert
-        $this->assertProductAbstractStorage();
+        $this->assertProductAbstractStorage($beforeCount);
     }
 
     /**
@@ -157,8 +148,8 @@ class ProductStorageListenerTest extends Unit
      */
     public function testProductConcreteStorageListenerStoreData()
     {
-        $productStorageCount = SpyProductConcreteStorageQuery::create()->count();
-        $this->assertSame(0, $productStorageCount);
+        SpyProductConcreteStorageQuery::create()->filterByFkProduct(1)->delete();
+        $beforeCount = SpyProductConcreteStorageQuery::create()->count();
 
         $productConcreteStorageListener = new ProductConcreteStorageListener();
         $productConcreteStorageListener->setFacade($this->getProductStorageFacade());
@@ -169,7 +160,7 @@ class ProductStorageListenerTest extends Unit
         $productConcreteStorageListener->handleBulk($eventTransfers, ProductEvents::PRODUCT_CONCRETE_PUBLISH);
 
         // Assert
-        $this->assertProductConcreteStorage();
+        $this->assertProductConcreteStorage($beforeCount);
     }
 
     /**
@@ -177,8 +168,8 @@ class ProductStorageListenerTest extends Unit
      */
     public function testProductConcreteRelationUrlStorageListenerStoreData()
     {
-        $productStorageCount = SpyProductConcreteStorageQuery::create()->count();
-        $this->assertSame(0, $productStorageCount);
+        SpyProductConcreteStorageQuery::create()->filterByFkProduct(1)->delete();
+        $beforeCount = SpyProductConcreteStorageQuery::create()->count();
 
         $productConcreteProductAbstractUrlStorageListener = new ProductConcreteProductAbstractUrlStorageListener();
         $productConcreteProductAbstractUrlStorageListener->setFacade($this->getProductStorageFacade());
@@ -192,7 +183,7 @@ class ProductStorageListenerTest extends Unit
         $productConcreteProductAbstractUrlStorageListener->handleBulk($eventTransfers, UrlEvents::ENTITY_SPY_URL_CREATE);
 
         // Assert
-        $this->assertProductConcreteStorage();
+        $this->assertProductConcreteStorage($beforeCount);
     }
 
     /**
@@ -200,8 +191,8 @@ class ProductStorageListenerTest extends Unit
      */
     public function testProductConcreteProductAbstractStorageListenerStoreData()
     {
-        $productStorageCount = SpyProductConcreteStorageQuery::create()->count();
-        $this->assertSame(0, $productStorageCount);
+        SpyProductConcreteStorageQuery::create()->filterByFkProduct(1)->delete();
+        $beforeCount = SpyProductConcreteStorageQuery::create()->count();
 
         $productConcreteProductAbstractStorageListener = new ProductConcreteProductAbstractStorageListener();
         $productConcreteProductAbstractStorageListener->setFacade($this->getProductStorageFacade());
@@ -212,7 +203,7 @@ class ProductStorageListenerTest extends Unit
         $productConcreteProductAbstractStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE);
 
         // Assert
-        $this->assertProductConcreteStorage();
+        $this->assertProductConcreteStorage($beforeCount);
     }
 
     /**
@@ -220,8 +211,8 @@ class ProductStorageListenerTest extends Unit
      */
     public function testProductConcreteProductAbstractLocalizedAttributesStorageListenerStoreData()
     {
-        $productStorageCount = SpyProductConcreteStorageQuery::create()->count();
-        $this->assertSame(0, $productStorageCount);
+        SpyProductConcreteStorageQuery::create()->filterByFkProduct(1)->delete();
+        $beforeCount = SpyProductConcreteStorageQuery::create()->count();
 
         $productConcreteProductAbstractLocalizedAttributesStorageListener = new ProductConcreteProductAbstractLocalizedAttributesStorageListener();
         $productConcreteProductAbstractLocalizedAttributesStorageListener->setFacade($this->getProductStorageFacade());
@@ -234,7 +225,7 @@ class ProductStorageListenerTest extends Unit
         $productConcreteProductAbstractLocalizedAttributesStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_UPDATE);
 
         // Assert
-        $this->assertProductConcreteStorage();
+        $this->assertProductConcreteStorage($beforeCount);
     }
 
     /**
@@ -242,8 +233,8 @@ class ProductStorageListenerTest extends Unit
      */
     public function testProductConcreteLocalizedAttributesStorageListenerStoreData()
     {
-        $productStorageCount = SpyProductConcreteStorageQuery::create()->count();
-        $this->assertSame(0, $productStorageCount);
+        SpyProductConcreteStorageQuery::create()->filterByFkProduct(1)->delete();
+        $beforeCount = SpyProductConcreteStorageQuery::create()->count();
 
         $productConcreteLocalizedAttributesStorageListener = new ProductConcreteLocalizedAttributesStorageListener();
         $productConcreteLocalizedAttributesStorageListener->setFacade($this->getProductStorageFacade());
@@ -256,7 +247,7 @@ class ProductStorageListenerTest extends Unit
         $productConcreteLocalizedAttributesStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_UPDATE);
 
         // Assert
-        $this->assertProductConcreteStorage();
+        $this->assertProductConcreteStorage($beforeCount);
     }
 
     /**
@@ -274,14 +265,16 @@ class ProductStorageListenerTest extends Unit
     }
 
     /**
+     * @param int $beforeCount
+     *
      * @return void
      */
-    protected function assertProductAbstractStorage()
+    protected function assertProductAbstractStorage($beforeCount)
     {
-        $productStorageCount = SpyProductAbstractStorageQuery::create()->count();
-        $this->assertEquals(2, $productStorageCount);
-        $spyProductAbstractStorage = SpyProductAbstractStorageQuery::create()->findOne();
-        $this->assertEquals(1, $spyProductAbstractStorage->getFkProductAbstract());
+        $afterCount = SpyProductAbstractStorageQuery::create()->count();
+        $this->assertEquals($beforeCount + 2, $afterCount);
+        $spyProductAbstractStorage = SpyProductAbstractStorageQuery::create()->findOneByFkProductAbstract(1);
+        $this->assertNotNull($spyProductAbstractStorage);
         $data = $spyProductAbstractStorage->getData();
         $this->assertEquals('001', $data['sku']);
         $this->assertEquals(6, count($data['attributes']));
@@ -289,14 +282,16 @@ class ProductStorageListenerTest extends Unit
     }
 
     /**
+     * @param int $beforeCount
+     *
      * @return void
      */
-    protected function assertProductConcreteStorage()
+    protected function assertProductConcreteStorage($beforeCount)
     {
-        $productStorageCount = SpyProductConcreteStorageQuery::create()->count();
-        $this->assertEquals(2, $productStorageCount);
-        $spyProductConcreteStorage = SpyProductConcreteStorageQuery::create()->findOne();
-        $this->assertEquals(1, $spyProductConcreteStorage->getFkProduct());
+        $afterCount = SpyProductConcreteStorageQuery::create()->count();
+        $this->assertEquals($beforeCount + 2, $afterCount);
+        $spyProductConcreteStorage = SpyProductConcreteStorageQuery::create()->findOneByFkProduct(1);
+        $this->assertNotNull($spyProductConcreteStorage);
         $data = $spyProductConcreteStorage->getData();
         $this->assertEquals('001_25904006', $data['sku']);
         $this->assertEquals(6, count($data['attributes']));
