@@ -9,6 +9,7 @@ namespace Spryker\Zed\FileManagerGui\Communication;
 
 use Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\FileFormDataProvider;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
+use Spryker\Zed\FileManagerGui\Communication\Form\FileLocalizedAttributesForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\Tabs\FileFormTabs;
 use Spryker\Zed\FileManagerGui\Communication\Table\FileInfoEditTable;
 use Spryker\Zed\FileManagerGui\Communication\Table\FileInfoViewTable;
@@ -55,16 +56,45 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $formData
-     * @param array $formOptions
+     * @param \Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\FileFormDataProvider $dataProvider
+     * @param null|int $idFile
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createFileForm(array $formData = [], array $formOptions = [])
+    public function createFileForm(FileFormDataProvider $dataProvider, $idFile = null)
     {
-        $fileForm = new FileForm();
+        $fileForm = new FileForm(
+            $this->createFileLocalizedAttributesForm()
+        );
 
-        return $this->getFormFactory()->create($fileForm, $formData, $formOptions);
+        return $this->getFormFactory()->create(
+            $fileForm,
+            $dataProvider->getData($idFile),
+            $dataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getCurrentLocale()
+    {
+//        if ($this->currentLocale === null) {
+//            $this->currentLocale = $this->getLocaleFacade()
+//                ->getCurrentLocale();
+//        }
+//
+//        return $this->currentLocale;
+
+        return $this->getLocaleFacade()->getCurrentLocale();
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManagerGui\Communication\Form\FileLocalizedAttributesForm
+     */
+    public function createFileLocalizedAttributesForm()
+    {
+        return new FileLocalizedAttributesForm();
     }
 
     /**
@@ -72,7 +102,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createFileFormDataProvider()
     {
-        return new FileFormDataProvider($this->getFileManagerQueryContainer());
+        return new FileFormDataProvider($this->getFileManagerQueryContainer(), $this->getLocaleFacade());
     }
 
     /**

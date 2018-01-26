@@ -32,7 +32,7 @@ class EditController extends AbstractController
         $idFile = $request->get(static::URL_PARAM_ID_FILE);
         $dataProvider = $this->getFactory()->createFileFormDataProvider();
         $form = $this->getFactory()
-            ->createFileForm($dataProvider->getData($idFile))
+            ->createFileForm($dataProvider, $idFile)
             ->handleRequest($request);
 
         if ($form->isValid()) {
@@ -54,6 +54,7 @@ class EditController extends AbstractController
             'fileInfoTable' => $fileInfoTable->render(),
             'fileForm' => $form->createView(),
             'availableLocales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
+            'currentLocale' => $this->getFactory()->getCurrentLocale(),
         ];
     }
 
@@ -78,29 +79,31 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
      * @return \Generated\Shared\Transfer\FileManagerSaveRequestTransfer
      */
-    protected function createFileManagerSaveRequestTransfer(array $data)
+    protected function createFileManagerSaveRequestTransfer(FileTransfer $fileTransfer)
     {
         $requestTransfer = new FileManagerSaveRequestTransfer();
-        $requestTransfer->setFile($this->createFileTransfer($data));
-        $requestTransfer->setFileInfo($this->createFileInfoTransfer($data));
-        $requestTransfer->setContent($this->getFileContent($data));
+
+        $requestTransfer->setFile($fileTransfer);
+        $requestTransfer->setFileInfo($this->createFileInfoTransfer($fileTransfer));
+        $requestTransfer->setContent($this->getFileContent($fileTransfer));
+        $requestTransfer->setFileLocalizedAttributes($fileTransfer->getFileLocalizedAttributes());
 
         return $requestTransfer;
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
      * @return \Generated\Shared\Transfer\FileInfoTransfer
      */
-    protected function createFileInfoTransfer(array $data)
+    protected function createFileInfoTransfer(FileTransfer $fileTransfer)
     {
         /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
-        $uploadedFile = $data[FileForm::FIELD_FILE_CONTENT];
+        $uploadedFile = $fileTransfer->getFileContent();
         $fileInfo = new FileInfoTransfer();
 
         if ($uploadedFile === null) {
@@ -110,7 +113,6 @@ class EditController extends AbstractController
         $fileInfo->setFileExtension($uploadedFile->getClientOriginalExtension());
         $fileInfo->setSize($uploadedFile->getSize());
         $fileInfo->setType($uploadedFile->getMimeType());
-        $fileInfo->setFkFile($data[FileForm::FIELD_ID_FILE]);
 
         return $fileInfo;
     }
@@ -130,14 +132,14 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
-     * @return null|string
+     * @return bool|string
      */
-    protected function getFileContent(array $data)
+    protected function getFileContent(FileTransfer $fileTransfer)
     {
         /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
-        $uploadedFile = $data[FileForm::FIELD_FILE_CONTENT];
+        $uploadedFile = $fileTransfer->getFileContent();
 
         if ($uploadedFile === null) {
             return null;

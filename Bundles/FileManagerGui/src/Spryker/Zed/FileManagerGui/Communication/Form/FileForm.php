@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Form;
 
+use Generated\Shared\Transfer\FileTransfer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FileForm extends AbstractType
 {
@@ -20,6 +24,23 @@ class FileForm extends AbstractType
     const FIELD_FILE_CONTENT = 'fileContent';
     const FIELD_ID_FILE = 'idFile';
     const FIELD_USE_REAL_NAME = 'useRealName';
+    const FILE_LOCALIZED_ATTRIBUTES = 'fileLocalizedAttributes';
+
+    const OPTION_DATA_CLASS = 'data_class';
+    const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
+
+    /**
+     * @var \Spryker\Zed\FileManagerGui\Communication\Form\FileLocalizedAttributesForm
+     */
+    protected $fileLocalizedAttributesForm;
+
+    /**
+     * @param \Symfony\Component\Form\FormTypeInterface $fileLocalizedAttributesForm
+     */
+    public function __construct(FormTypeInterface $fileLocalizedAttributesForm)
+    {
+        $this->fileLocalizedAttributesForm = $fileLocalizedAttributesForm;
+    }
 
     /**
      * @return string
@@ -41,7 +62,22 @@ class FileForm extends AbstractType
             ->addFileNameField($builder)
             ->addIdFileField($builder)
             ->addUseRealNameOption($builder)
+            ->addFileLocalizedAttributesForm($builder, $options)
             ->addFileContentField($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setRequired(static::OPTION_AVAILABLE_LOCALES);
+
+        $resolver->setDefaults([
+            static::OPTION_DATA_CLASS => FileTransfer::class,
+        ]);
     }
 
     /**
@@ -103,6 +139,27 @@ class FileForm extends AbstractType
                 'required' => false,
             ]);
         }
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array|null $options
+     *
+     * @return $this
+     */
+    protected function addFileLocalizedAttributesForm(FormBuilderInterface $builder, array $options = null)
+    {
+        $builder->add(static::FILE_LOCALIZED_ATTRIBUTES, CollectionType::class, [
+            'entry_type' => $this->fileLocalizedAttributesForm,
+            'allow_add' => true,
+            'allow_delete' => true,
+
+            'entry_options' => [
+                FileForm::OPTION_AVAILABLE_LOCALES => $options[FileForm::OPTION_AVAILABLE_LOCALES],
+            ],
+        ]);
 
         return $this;
     }

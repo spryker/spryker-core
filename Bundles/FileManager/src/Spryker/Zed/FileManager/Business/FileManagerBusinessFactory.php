@@ -9,6 +9,7 @@ namespace Spryker\Zed\FileManager\Business;
 
 use Spryker\Zed\FileManager\Business\Model\FileContent;
 use Spryker\Zed\FileManager\Business\Model\FileFinder;
+use Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaver;
 use Spryker\Zed\FileManager\Business\Model\FileReader;
 use Spryker\Zed\FileManager\Business\Model\FileRemover;
 use Spryker\Zed\FileManager\Business\Model\FileRollback;
@@ -33,6 +34,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
             $this->createFileVersion(),
             $this->createFileFinder(),
             $this->createFileContent(),
+            $this->createFileLocalizedAttributesSaver(),
             $this->getConfig()
         );
     }
@@ -57,6 +59,14 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
             $this->createFileFinder(),
             $this->createFileContent()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaverInterface
+     */
+    public function createFileLocalizedAttributesSaver()
+    {
+        return new FileLocalizedAttributesSaver();
     }
 
     /**

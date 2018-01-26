@@ -7,34 +7,48 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\FileLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\FileTransfer;
+use Orm\Zed\FileManager\Persistence\SpyFile;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
+use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeBridgeInterface;
 use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface;
 
 class FileFormDataProvider
 {
+    const FK_LOCALE_KEY = 'fkLocale';
+
     /**
      * @var \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface
      */
-    private $queryContainer;
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
+     */
+    protected $localeFacade;
 
     /**
      * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer
+     * @param \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeBridgeInterface $localeFacade
      */
     public function __construct(
-        FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer
+        FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer,
+        FileManagerGuiToLocaleFacadeBridgeInterface $localeFacade
     ) {
         $this->queryContainer = $queryContainer;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
      * @param int|null $idFile
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\FileTransfer
      */
     public function getData($idFile = null)
     {
         if ($idFile === null) {
-            return [];
+            return $this->createEmptyFileTransfer();
         }
 
         $file = $this
@@ -42,9 +56,67 @@ class FileFormDataProvider
             ->queryFileById($idFile)
             ->findOne();
 
+        $fileTransfer = $this->createEmptyFileTransfer();
+
+        $this->addFileLocalizedAttributes($file, $fileTransfer);
+        $fileTransfer->fromArray($file->toArray());
+
+        return $fileTransfer;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
         return [
-            FileForm::FIELD_ID_FILE => $idFile,
-            FileForm::FIELD_FILE_NAME => $file->getFileName(),
+            FileForm::OPTION_AVAILABLE_LOCALES => $this->getAvailableLocales(),
         ];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     */
+    protected function getAvailableLocales()
+    {
+        return $this->localeFacade
+            ->getLocaleCollection();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\FileTransfer
+     */
+    protected function createEmptyFileTransfer()
+    {
+        $fileTransfer = new FileTransfer();
+
+        foreach ($this->getAvailableLocales() as $locale) {
+            $fileLocalizedAttribute = new FileLocalizedAttributesTransfer();
+            $fileLocalizedAttribute->setLocale($locale);
+
+            $fileTransfer->addFileLocalizedAttributes($fileLocalizedAttribute);
+        }
+
+        return $fileTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
+     *
+     * @return void
+     */
+    protected function addFileLocalizedAttributes(SpyFile $file, FileTransfer $fileTransfer)
+    {
+        $savedLocalizedAttributes = $file->getSpyFileLocalizedAttributess()
+            ->toKeyIndex(static::FK_LOCALE_KEY);
+
+        foreach ($fileTransfer->getFileLocalizedAttributes() as $fileLocalizedAttribute) {
+            $fkLocale = $fileLocalizedAttribute->getLocale()->getIdLocale();
+
+            if (!empty($savedLocalizedAttributes[$fkLocale])) {
+                $fileLocalizedAttribute->fromArray($savedLocalizedAttributes[$fkLocale]->toArray());
+            }
+        }
     }
 }

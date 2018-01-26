@@ -17,7 +17,15 @@
 
                 {{ form_start(form) }}
 
-                {{ form_widget(form) }}
+                {{ form_row(form.fileName) }}
+                {{ form_row(form.fileContent) }}
+                {{ form_row(form.useRealName) }}
+
+                {% embed '@FileManagerGui/_partials/localized-attributes.twig' with {
+                    currentLocale: currentLocale,
+                    form: form
+                } %}
+                {% endembed %}
 
                 <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
 

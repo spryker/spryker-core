@@ -42,12 +42,18 @@ class FileSaver implements FileSaverInterface
     protected $config;
 
     /**
+     * @var \Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaverInterface
+     */
+    private $attributesSaver;
+
+    /**
      * FileSaver constructor.
      *
      * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\FileManager\Business\Model\FileVersionInterface $fileVersion
      * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
      * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface $fileContent
+     * @param \Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaverInterface $attributesSaver
      * @param \Spryker\Zed\FileManager\FileManagerConfig $config
      */
     public function __construct(
@@ -55,6 +61,7 @@ class FileSaver implements FileSaverInterface
         FileVersionInterface $fileVersion,
         FileFinderInterface $fileFinder,
         FileContentInterface $fileContent,
+        FileLocalizedAttributesSaverInterface $attributesSaver,
         FileManagerConfig $config
     ) {
         $this->queryContainer = $queryContainer;
@@ -62,6 +69,7 @@ class FileSaver implements FileSaverInterface
         $this->fileFinder = $fileFinder;
         $this->fileContent = $fileContent;
         $this->config = $config;
+        $this->attributesSaver = $attributesSaver;
     }
 
     /**
@@ -121,6 +129,7 @@ class FileSaver implements FileSaverInterface
             $this->addFileInfoToFile($file, $fileInfo);
 
             $savedRowsCount = $file->save();
+            $this->attributesSaver->saveFileLocalizedAttributes($file, $saveRequestTransfer);
             $this->saveContent($saveRequestTransfer, $file, $fileInfo);
 
             $this->queryContainer->getConnection()->commit();

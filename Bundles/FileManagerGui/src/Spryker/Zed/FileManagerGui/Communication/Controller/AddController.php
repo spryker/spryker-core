@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -29,7 +28,7 @@ class AddController extends AbstractController
     {
         $dataProvider = $this->getFactory()->createFileFormDataProvider();
         $form = $this->getFactory()
-            ->createFileForm($dataProvider->getData())
+            ->createFileForm($dataProvider)
             ->handleRequest($request);
 
         if ($form->isValid()) {
@@ -46,33 +45,37 @@ class AddController extends AbstractController
         return $this->viewResponse([
             'form' => $form->createView(),
             'availableLocales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
+            'currentLocale' => $this->getFactory()->getCurrentLocale(),
         ]);
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
      * @return \Generated\Shared\Transfer\FileManagerSaveRequestTransfer
      */
-    protected function createFileManagerSaveRequestTransfer(array $data)
+    protected function createFileManagerSaveRequestTransfer(FileTransfer $fileTransfer)
     {
         $requestTransfer = new FileManagerSaveRequestTransfer();
-        $requestTransfer->setFile($this->createFileTransfer($data));
-        $requestTransfer->setFileInfo($this->createFileInfoTransfer($data));
-        $requestTransfer->setContent($this->getFileContent($data));
+        $this->setFileName($fileTransfer);
+
+        $requestTransfer->setFile($fileTransfer);
+        $requestTransfer->setFileInfo($this->createFileInfoTransfer($fileTransfer));
+        $requestTransfer->setContent($this->getFileContent($fileTransfer));
+        $requestTransfer->setFileLocalizedAttributes($fileTransfer->getFileLocalizedAttributes());
 
         return $requestTransfer;
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
      * @return \Generated\Shared\Transfer\FileInfoTransfer
      */
-    protected function createFileInfoTransfer(array $data)
+    protected function createFileInfoTransfer(FileTransfer $fileTransfer)
     {
         /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
-        $uploadedFile = $data[FileForm::FIELD_FILE_CONTENT];
+        $uploadedFile = $fileTransfer->getFileContent();
         $fileInfo = new FileInfoTransfer();
 
         $fileInfo->setFileExtension($uploadedFile->getClientOriginalExtension());
@@ -83,34 +86,30 @@ class AddController extends AbstractController
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
      * @return \Generated\Shared\Transfer\FileTransfer
      */
-    protected function createFileTransfer(array $data)
+    protected function setFileName(FileTransfer $fileTransfer)
     {
-        $file = new FileTransfer();
-
-        if ($data[FileForm::FIELD_USE_REAL_NAME]) {
+        if ($fileTransfer->getUseRealName()) {
             /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
-            $uploadedFile = $data[FileForm::FIELD_FILE_CONTENT];
-            $file->setFileName($uploadedFile->getClientOriginalName());
-        } else {
-            $file->setFileName($data[FileForm::FIELD_FILE_NAME]);
+            $uploadedFile = $fileTransfer->getFileContent();
+            $fileTransfer->setFileName($uploadedFile->getClientOriginalName());
         }
 
-        return $file;
+        return $fileTransfer;
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
      * @return bool|string
      */
-    protected function getFileContent(array $data)
+    protected function getFileContent(FileTransfer $fileTransfer)
     {
         /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
-        $uploadedFile = $data[FileForm::FIELD_FILE_CONTENT];
+        $uploadedFile = $fileTransfer->getFileContent();
 
         return file_get_contents($uploadedFile->getRealPath());
     }

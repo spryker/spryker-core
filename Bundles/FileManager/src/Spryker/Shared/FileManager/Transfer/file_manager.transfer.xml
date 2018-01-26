@@ -21,6 +21,9 @@
         <property name="idFile" type="int" />
         <property name="fileName" type="string" />
         <property name="fileInfo" type="FileInfo[]" />
+        <property name="fileLocalizedAttributes" type="FileLocalizedAttributes[]" />
+        <property name="useRealName" type="bool" />
+        <property name="fileContent" type="string" />
     </transfer>
 
     <transfer name="FileInfo">
@@ -44,5 +47,6 @@
         <property name="fkLocale" type="int" />
         <property name="alt" type="string" />
         <property name="title" type="string" />
+        <property name="locale" type="Locale" />
     </transfer>
 </transfers>
