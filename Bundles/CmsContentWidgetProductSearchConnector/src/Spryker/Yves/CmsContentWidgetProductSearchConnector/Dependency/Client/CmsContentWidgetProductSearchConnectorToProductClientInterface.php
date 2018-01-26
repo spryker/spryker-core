@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\CmsContentWidgetProductSearchConnector\Dependency\Client;
 
-interface CmsContentWidgetProductSearchConnectorToProductInterface
+interface CmsContentWidgetProductSearchConnectorToProductClientInterface
 {
     /**
      * @param int $idProductAbstract

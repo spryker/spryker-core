@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\CmsContentWidgetProductSearchConnector\Dependency\Client;
 
-class CmsContentWidgetProductSearchConnectorToSearchBridge implements CmsContentWidgetProductSearchConnectorToSearchInterface
+class CmsContentWidgetProductSearchConnectorToSearchClientBridge implements CmsContentWidgetProductSearchConnectorToSearchClientInterface
 {
     /**
      * @var \Spryker\Client\Search\SearchClientInterface

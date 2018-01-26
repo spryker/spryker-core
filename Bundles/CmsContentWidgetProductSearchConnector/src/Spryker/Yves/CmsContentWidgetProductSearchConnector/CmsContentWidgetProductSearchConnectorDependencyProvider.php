@@ -7,8 +7,8 @@
 
 namespace Spryker\Yves\CmsContentWidgetProductSearchConnector;
 
-use Spryker\Yves\CmsContentWidgetProductSearchConnector\Dependency\Client\CmsContentWidgetProductSearchConnectorToProductBridge;
-use Spryker\Yves\CmsContentWidgetProductSearchConnector\Dependency\Client\CmsContentWidgetProductSearchConnectorToSearchBridge;
+use Spryker\Yves\CmsContentWidgetProductSearchConnector\Dependency\Client\CmsContentWidgetProductSearchConnectorToProductClientBridge;
+use Spryker\Yves\CmsContentWidgetProductSearchConnector\Dependency\Client\CmsContentWidgetProductSearchConnectorToSearchClientBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
@@ -25,12 +25,12 @@ class CmsContentWidgetProductSearchConnectorDependencyProvider extends AbstractB
     public function provideDependencies(Container $container)
     {
         $container[static::CLIENT_PRODUCT] = function (Container $container) {
-            return new CmsContentWidgetProductSearchConnectorToProductBridge(
+            return new CmsContentWidgetProductSearchConnectorToProductClientBridge(
                 $container->getLocator()->product()->client()
             );
         };
         $container[static::CLIENT_SEARCH] = function (Container $container) {
-            return new CmsContentWidgetProductSearchConnectorToSearchBridge(
+            return new CmsContentWidgetProductSearchConnectorToSearchClientBridge(
                 $container->getLocator()->search()->client()
             );
         };
