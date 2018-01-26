@@ -3,6 +3,7 @@
   "description": "CategoryStorage module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/category": "^4.3.0",
     "spryker/event-behavior": "^0.1.2",
     "spryker/kernel": "^3.16.0",

@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "moneyphp/money": "^3.0.0",
+    "php": ">=7.1",
     "spryker/currency": "^2.0.0 || ^3.1.0",
     "spryker/kernel": "^3.11.0",
     "spryker/store": "^1.1.0",

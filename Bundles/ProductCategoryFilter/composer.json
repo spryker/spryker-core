@@ -3,6 +3,7 @@
   "description": "ProductCategoryFilter module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/category": "^4.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/key-builder": "^1.0.0",
@@ -17,7 +18,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\ProductCategoryFilter\\Helper\\": "tests/SprykerTest/Zed/ProductCategoryFilter/_support/Helper/"
     }
   },
   "autoload-dev": {

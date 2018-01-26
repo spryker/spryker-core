@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "filp/whoops": "^2.1",
+    "php": ">=7.1",
     "spryker/config": "^3.0.0",
     "spryker/log": "^3.0.0",
     "spryker/new-relic-api": "^1.0.0"

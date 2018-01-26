@@ -42,9 +42,7 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createSearchPreferencesForm(array $data = [], array $options = [])
     {
-        $filterFormType = new SearchPreferencesForm($this->getQueryContainer());
-
-        return $this->getFormFactory()->create($filterFormType, $data, $options);
+        return $this->getFormFactory()->create(SearchPreferencesForm::class, $data, $options);
     }
 
     /**
@@ -63,9 +61,7 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createFilterPreferencesForm(array $data = [], array $options = [])
     {
-        $filterFormType = new FilterPreferencesForm($this->getQueryContainer());
-
-        return $this->getFormFactory()->create($filterFormType, $data, $options);
+        return $this->getFormFactory()->create(FilterPreferencesForm::class, $data, $options);
     }
 
     /**

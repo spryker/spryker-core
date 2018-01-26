@@ -3,6 +3,7 @@
   "description": "ProductSetGui module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/gui": "^3.5.0",
     "spryker/kernel": "^3.4.0",
     "spryker/locale": "^3.0.0",

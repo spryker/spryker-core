@@ -45,16 +45,8 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     {
         $discountDataProvider = $this->createDiscountDataProvider();
 
-        $discountFormType = new DiscountForm(
-            $this->createGeneralFormType(),
-            $this->createCalculatorFormType(),
-            $this->createConditionsFormType()
-        );
-
-        $discountFormType->setFormTypeExpanderPlugins($this->getDiscountFormTypeExpanderPlugins());
-
         return $this->getFormFactory()->create(
-            $discountFormType,
+            DiscountForm::class,
             $discountDataProvider->getData($idDiscount),
             [
                 'data_class' => DiscountConfiguratorTransfer::class,
@@ -63,45 +55,43 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Communication\Form\GeneralForm|\Symfony\Component\Form\FormTypeInterface
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
      */
     public function createGeneralFormType()
     {
-        return new GeneralForm(
-            $this->getQueryContainer(),
-            $this->getStoreRelationFormTypePlugin()
-        );
+        return GeneralForm::class;
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Communication\Form\CalculatorForm|\Symfony\Component\Form\FormTypeInterface
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
      */
     public function createCalculatorFormType()
     {
-        $calculatorDataProvider = $this->createCalculatorFormDataProvider();
-
-        return new CalculatorForm(
-            $calculatorDataProvider,
-            $this->getFacade(),
-            $this->getCalculatorPlugins(),
-            $this->createCalculatorAmountTransformer()
-        );
+        return CalculatorForm::class;
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Communication\Form\ConditionsForm|\Symfony\Component\Form\FormTypeInterface
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
      */
     public function createConditionsFormType()
     {
-        return new ConditionsForm($this->getFacade());
+        return ConditionsForm::class;
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Communication\Form\VoucherForm|\Symfony\Component\Form\FormTypeInterface
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
      */
     public function createVoucherFormType()
     {
-        return new VoucherForm();
+        return VoucherForm::class;
     }
 
     /**
@@ -250,7 +240,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormExpanderPluginInterface[]
      */
-    protected function getDiscountFormTypeExpanderPlugins()
+    public function getDiscountFormTypeExpanderPlugins()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_FORM_TYPE_EXPANDER);
     }
