@@ -19,6 +19,13 @@ class StoreReader implements StoreReaderInterface
     protected $store;
 
     /**
+     * @deprecated Use StoreReader::store instead.
+     *
+     * @var \Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface
+     */
+    protected $storeConfigurationProvider;
+
+    /**
      * @var \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface
      */
     protected $storeQueryContainer;
@@ -44,6 +51,7 @@ class StoreReader implements StoreReaderInterface
         StoreMapperInterface $storeMapper
     ) {
         $this->store = $store;
+        $this->storeConfigurationProvider = $store;
         $this->storeQueryContainer = $storeQueryContainer;
         $this->storeMapper = $storeMapper;
     }
