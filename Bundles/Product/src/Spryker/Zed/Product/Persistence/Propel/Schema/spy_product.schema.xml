@@ -111,7 +111,7 @@
         <column name="valid_from" type="TIMESTAMP" required="false"/>
         <column name="valid_to" type="TIMESTAMP" required="false"/>
 
-        <unique name="spy_product_validity-fk_product">
+        <unique name="spy_product_validity-fk_product-unique">
             <unique-column name="fk_product"/>
         </unique>
         <foreign-key name="spy_product_validity-fk_product" foreignTable="spy_product">
