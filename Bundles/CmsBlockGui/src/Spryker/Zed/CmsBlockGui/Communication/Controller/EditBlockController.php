@@ -119,7 +119,7 @@ class EditBlockController extends AbstractController
      */
     protected function updateCmsBlock(FormInterface $cmsBlockForm)
     {
-        if ($cmsBlockForm->isValid()) {
+        if ($cmsBlockForm->isSubmitted() && $cmsBlockForm->isValid()) {
             try {
                 $this->getFactory()
                     ->getCmsBlockFacade()
