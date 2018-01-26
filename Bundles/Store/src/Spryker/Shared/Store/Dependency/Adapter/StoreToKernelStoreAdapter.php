@@ -33,6 +33,8 @@ class StoreToKernelStoreAdapter implements StoreToKernelStoreInterface
     }
 
     /**
+     * @deprecated Unused method will be removed in next major
+     *
      * @return string[]
      */
     public function getCurrentStoreAvailableCurrencyIsoCodes()
@@ -41,6 +43,8 @@ class StoreToKernelStoreAdapter implements StoreToKernelStoreInterface
     }
 
     /**
+     * @deprecated Unused method will be removed in next major
+     *
      * @return string
      */
     public function getCurrentStoreSelectedLocaleIsoCode()
@@ -57,6 +61,8 @@ class StoreToKernelStoreAdapter implements StoreToKernelStoreInterface
     }
 
     /**
+     * @deprecated Unused method will be removed in next major
+     *
      * @return string[]
      */
     public function getCurrentAvailableLocaleIsoCodes()

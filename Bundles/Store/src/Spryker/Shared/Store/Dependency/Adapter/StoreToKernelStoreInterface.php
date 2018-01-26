@@ -20,16 +20,22 @@ interface StoreToKernelStoreInterface
     public function getAllStoreNames();
 
     /**
+     * @deprecated Unused method will be removed in next major
+     *
      * @return string[]
      */
     public function getCurrentStoreAvailableCurrencyIsoCodes();
 
     /**
+     * @deprecated Unused method will be removed in next major
+     *
      * @return string
      */
     public function getCurrentStoreSelectedLocaleIsoCode();
 
     /**
+     * @deprecated Unused method will be removed in next major
+     *
      * @return string[]
      */
     public function getCurrentAvailableLocaleIsoCodes();
