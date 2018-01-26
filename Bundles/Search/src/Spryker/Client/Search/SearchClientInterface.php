@@ -98,7 +98,7 @@ interface SearchClientInterface
      *
      * @return \Elastica\ResultSet|array
      */
-    public function searchSimpleString($searchString, $limit = null, $offset = null);
+    public function searchQueryString($searchString, $limit = null, $offset = null);
 
     /**
      * Specification:

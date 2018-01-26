@@ -114,7 +114,7 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
     {
         $elasticResponse = $this->getFactory()
             ->getSearchClient()
-            ->searchSimpleString($productSearchString, static::SEARCH_LIMIT)
+            ->searchQueryString($productSearchString, static::SEARCH_LIMIT)
             ->getResponse()
             ->getData();
         $dataResponce = $elasticResponse['hits']['hits'];
