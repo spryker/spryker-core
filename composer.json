@@ -2,7 +2,8 @@
   "name": "spryker/spryker",
   "description": "Spryker Framework",
   "license": "proprietary",
-  "require":{
+  "require": {
+    "php": ">=7.1",
     "phpdocumentor/graphviz": "^1.0.4",
     "paragonie/random_compat": "^2.0.10",
     "everon/criteria-builder": "^1.1.0",
@@ -16,7 +17,7 @@
   "prefer-stable": true,
   "config": {
     "use-include-path": true,
-    "process-timeout": 1000
+    "process-timeout": 1200
   },
   "autoload": {
     "files": [

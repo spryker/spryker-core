@@ -63,7 +63,7 @@ class RoleController extends AbstractController
             ->createRoleForm()
             ->handleRequest($request);
 
-        if ($ruleForm->isValid()) {
+        if ($ruleForm->isSubmitted() && $ruleForm->isValid()) {
             $formData = $ruleForm->getData();
 
             try {
@@ -192,7 +192,7 @@ class RoleController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($ruleSetForm->isValid()) {
+        if ($ruleSetForm->isSubmitted() && $ruleSetForm->isValid()) {
             $ruleTransfer = new RuleTransfer();
             $ruleTransfer = $ruleTransfer->fromArray($ruleSetForm->getData());
 
@@ -216,7 +216,7 @@ class RoleController extends AbstractController
      */
     protected function handleRoleForm(Request $request, FormInterface $roleForm)
     {
-        if ($roleForm->isValid()) {
+        if ($roleForm->isSubmitted() && $roleForm->isValid()) {
             $formData = $roleForm->getData();
 
             $roleTransfer = new RoleTransfer();

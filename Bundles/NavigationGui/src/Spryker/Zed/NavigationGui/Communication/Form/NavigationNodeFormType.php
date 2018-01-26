@@ -9,7 +9,7 @@ namespace Spryker\Zed\NavigationGui\Communication\Form;
 
 use DateTime;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -22,6 +22,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
+/**
+ * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
+ */
 class NavigationNodeFormType extends AbstractType
 {
     const FIELD_NODE_TYPE = 'node_type';
@@ -34,27 +38,6 @@ class NavigationNodeFormType extends AbstractType
     const NODE_TYPE_CMS_PAGE = 'cms_page';
     const NODE_TYPE_LINK = 'link';
     const NODE_TYPE_EXTERNAL_URL = 'external_url';
-
-    /**
-     * @var \Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeLocalizedAttributesFormType
-     */
-    protected $navigationNodeLocalizedAttributesFormType;
-
-    /**
-     * @param \Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeLocalizedAttributesFormType $navigationNodeLocalizedAttributesFormType
-     */
-    public function __construct(NavigationNodeLocalizedAttributesFormType $navigationNodeLocalizedAttributesFormType)
-    {
-        $this->navigationNodeLocalizedAttributesFormType = $navigationNodeLocalizedAttributesFormType;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'navigation_node';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -102,12 +85,12 @@ class NavigationNodeFormType extends AbstractType
             ->add(self::FIELD_NODE_TYPE, ChoiceType::class, [
                 'label' => 'Type',
                 'placeholder' => 'Label',
-                'choices' => [
-                    'Category' => self::NODE_TYPE_CATEGORY,
-                    'CMS page' => self::NODE_TYPE_CMS_PAGE,
-                    'Link' => self::NODE_TYPE_LINK,
-                    'External URL' => self::NODE_TYPE_EXTERNAL_URL,
-                ],
+                'choices' => array_flip([
+                    self::NODE_TYPE_CATEGORY => 'Category',
+                    self::NODE_TYPE_CMS_PAGE => 'CMS page',
+                    self::NODE_TYPE_LINK => 'Link',
+                    self::NODE_TYPE_EXTERNAL_URL => 'External URL',
+                ]),
                 'choices_as_values' => true,
                 'choice_attr' => [
                     'Category' => ['data-url' => '/search-for-category'],
@@ -129,7 +112,7 @@ class NavigationNodeFormType extends AbstractType
     {
         $builder
             ->add(self::FIELD_NAVIGATION_NODE_LOCALIZED_ATTRIBUTES, CollectionType::class, [
-                'type' => $this->navigationNodeLocalizedAttributesFormType,
+                'entry_type' => NavigationNodeLocalizedAttributesFormType::class,
             ]);
 
         return $this;
@@ -272,5 +255,23 @@ class NavigationNodeFormType extends AbstractType
         }
 
         $event->setData($navigationNodeTransfer);
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'navigation_node';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

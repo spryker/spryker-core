@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCategoryFilter\Business\Exception;
+namespace Spryker\Zed\ProductManagement\Exception;
 
 use Exception;
 
-class ProductCategoryFilterNotFoundException extends Exception
+class MissingStoreRelationFormTypePluginException extends Exception
 {
 }

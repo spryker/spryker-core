@@ -10,10 +10,9 @@ namespace Spryker\Zed\NavigationGui\Communication\Form;
 use Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\NavigationGui\Communication\Form\Constraint\CategoryUrlConstraint;
 use Spryker\Zed\NavigationGui\Communication\Form\Constraint\CmsPageUrlConstraint;
-use Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToUrlInterface;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -25,6 +24,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Url;
 
+/**
+ * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
+ */
 class NavigationNodeLocalizedAttributesFormType extends AbstractType
 {
     const FIELD_TITLE = 'title';
@@ -39,27 +42,6 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
     const GROUP_CATEGORY = 'category';
     const GROUP_LINK = 'link';
     const GROUP_EXTERNAL_URL = 'external_url';
-
-    /**
-     * @var \Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToUrlInterface
-     */
-    protected $urlFacade;
-
-    /**
-     * @param \Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToUrlInterface $urlFacade
-     */
-    public function __construct(NavigationGuiToUrlInterface $urlFacade)
-    {
-        $this->urlFacade = $urlFacade;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'navigation_node_localized_attributes';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -87,11 +69,11 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
             },
             'constraints' => [
                 new CmsPageUrlConstraint([
-                    CmsPageUrlConstraint::OPTION_URL_FACADE => $this->urlFacade,
+                    CmsPageUrlConstraint::OPTION_URL_FACADE => $this->getFactory()->getUrlFacade(),
                     'groups' => [self::GROUP_CMS],
                 ]),
                 new CategoryUrlConstraint([
-                    CategoryUrlConstraint::OPTION_URL_FACADE => $this->urlFacade,
+                    CategoryUrlConstraint::OPTION_URL_FACADE => $this->getFactory()->getUrlFacade(),
                     'groups' => [self::GROUP_CATEGORY],
                 ]),
             ],
@@ -142,7 +124,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
      */
     protected function addCmsPageUrlField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_CMS_PAGE_URL, new AutosuggestType(), [
+        $builder->add(self::FIELD_CMS_PAGE_URL, AutosuggestType::class, [
             'label' => 'CMS page URL',
             'attr' => [
                 'placeholder' => 'Type 3 letters to search by CMS page name.',
@@ -167,7 +149,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
      */
     protected function addCategoryUrlField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_CATEGORY_URL, new AutosuggestType(), [
+        $builder->add(self::FIELD_CATEGORY_URL, AutosuggestType::class, [
             'label' => 'Category URL',
             'attr' => [
                 'placeholder' => 'Type 3 letters to search by category name.',
@@ -352,7 +334,7 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
         $urlTransfer = new UrlTransfer();
         $urlTransfer->setIdUrl($idUrl);
 
-        return $this->urlFacade->findUrl($urlTransfer);
+        return $this->getFactory()->getUrlFacade()->findUrl($urlTransfer);
     }
 
     /**
@@ -365,6 +347,24 @@ class NavigationNodeLocalizedAttributesFormType extends AbstractType
         $urlTransfer = new UrlTransfer();
         $urlTransfer->setUrl($url);
 
-        return $this->urlFacade->findUrl($urlTransfer);
+        return $this->getFactory()->getUrlFacade()->findUrl($urlTransfer);
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'navigation_node_localized_attributes';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

@@ -9,11 +9,14 @@ namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
 use Spryker\Zed\Product\Business\Product\Observer\AbstractProductAbstractManagerSubject;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface;
+use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReaderInterface;
+use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationWriterInterface;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
@@ -57,6 +60,16 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
     protected $productTransferMapper;
 
     /**
+     * @var \Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReaderInterface
+     */
+    protected $productAbstractStoreRelationReader;
+
+    /**
+     * @var \Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationWriterInterface
+     */
+    protected $productAbstractStoreRelationWriter;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
@@ -64,6 +77,8 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
      * @param \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface $skuGenerator
      * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
      * @param \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface $productTransferMapper
+     * @param \Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReaderInterface $productAbstractStoreRelationReader
+     * @param \Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationWriterInterface $productAbstractStoreRelationWriter
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
@@ -72,7 +87,9 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         ProductAbstractAssertionInterface $productAbstractAssertion,
         SkuGeneratorInterface $skuGenerator,
         AttributeEncoderInterface $attributeEncoder,
-        ProductTransferMapperInterface $productTransferMapper
+        ProductTransferMapperInterface $productTransferMapper,
+        ProductAbstractStoreRelationReaderInterface $productAbstractStoreRelationReader,
+        ProductAbstractStoreRelationWriterInterface $productAbstractStoreRelationWriter
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->touchFacade = $touchFacade;
@@ -81,6 +98,8 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         $this->skuGenerator = $skuGenerator;
         $this->attributeEncoder = $attributeEncoder;
         $this->productTransferMapper = $productTransferMapper;
+        $this->productAbstractStoreRelationReader = $productAbstractStoreRelationReader;
+        $this->productAbstractStoreRelationWriter = $productAbstractStoreRelationWriter;
     }
 
     /**
@@ -118,6 +137,7 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
         $this->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
+        $this->persistProductAbstractStoreRelation($productAbstractTransfer, $idProductAbstract);
 
         $this->notifyAfterCreateObservers($productAbstractTransfer);
 
@@ -146,12 +166,29 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
 
         $this->persistEntity($productAbstractTransfer);
         $this->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
+        $this->persistProductAbstractStoreRelation($productAbstractTransfer, $idProductAbstract);
 
         $this->notifyAfterUpdateObservers($productAbstractTransfer);
 
         $this->productQueryContainer->getConnection()->commit();
 
         return $idProductAbstract;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    protected function persistProductAbstractStoreRelation(ProductAbstractTransfer $productAbstractTransfer, $idProductAbstract)
+    {
+        if ($productAbstractTransfer->getStoreRelation() === null) {
+            $productAbstractTransfer->setStoreRelation(new StoreRelationTransfer());
+        }
+
+        $productAbstractTransfer->getStoreRelation()->setIdEntity($idProductAbstract);
+        $this->productAbstractStoreRelationWriter->save($productAbstractTransfer->getStoreRelation());
     }
 
     /**
@@ -190,10 +227,26 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
 
         $productAbstractTransfer = $this->productTransferMapper->convertProductAbstract($productAbstractEntity);
         $productAbstractTransfer = $this->loadLocalizedAttributes($productAbstractTransfer);
+        $productAbstractTransfer->setStoreRelation(
+            $this->getStoreRelation($idProductAbstract)
+        );
 
         $productAbstractTransfer = $this->notifyReadObservers($productAbstractTransfer);
 
         return $productAbstractTransfer;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    protected function getStoreRelation($idProductAbstract)
+    {
+        return $this->productAbstractStoreRelationReader->getStoreRelation(
+            (new StoreRelationTransfer())
+                ->setIdEntity($idProductAbstract)
+        );
     }
 
     /**

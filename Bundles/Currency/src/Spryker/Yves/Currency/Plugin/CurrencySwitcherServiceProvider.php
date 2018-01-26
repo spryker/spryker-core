@@ -36,7 +36,6 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
         $app['twig'] = $app->share(
             $app->extend('twig', function (Twig_Environment $twig) {
                 $twig->addFunction(
-                    static::$functionName,
                     $this->getCurrencySwitcher($twig)
                 );
 
