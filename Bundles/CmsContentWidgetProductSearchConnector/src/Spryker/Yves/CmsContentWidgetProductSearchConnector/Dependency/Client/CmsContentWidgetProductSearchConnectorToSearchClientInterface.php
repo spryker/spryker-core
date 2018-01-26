@@ -16,5 +16,5 @@ interface CmsContentWidgetProductSearchConnectorToSearchClientInterface
      *
      * @return \Elastica\ResultSet
      */
-    public function searchKeys($searchString, $limit = null, $offset = null);
+    public function searchSimpleString($searchString, $limit = null, $offset = null);
 }

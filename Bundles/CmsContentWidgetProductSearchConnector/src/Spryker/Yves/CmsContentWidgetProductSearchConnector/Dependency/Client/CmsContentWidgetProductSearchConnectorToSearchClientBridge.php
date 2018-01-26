@@ -21,9 +21,9 @@ class CmsContentWidgetProductSearchConnectorToSearchClientBridge implements CmsC
      *
      * @return \Elastica\ResultSet
      */
-    public function searchKeys($searchString, $limit = null, $offset = null)
+    public function searchSimpleString($searchString, $limit = null, $offset = null)
     {
-        return $this->searchClient->searchKeys($searchString, $limit, $offset);
+        return $this->searchClient->searchSimpleString($searchString, $limit, $offset);
     }
 
     /**
