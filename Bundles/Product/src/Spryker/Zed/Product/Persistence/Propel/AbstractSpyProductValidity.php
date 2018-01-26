@@ -18,6 +18,6 @@ use Orm\Zed\Product\Persistence\Base\SpyProductValidity as BaseSpyProductValidit
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-class AbstractSpyProductValidity extends BaseSpyProductValidity
+abstract class AbstractSpyProductValidity extends BaseSpyProductValidity
 {
 }
