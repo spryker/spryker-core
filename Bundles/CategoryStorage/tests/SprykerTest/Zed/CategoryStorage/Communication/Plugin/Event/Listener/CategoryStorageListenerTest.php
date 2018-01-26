@@ -61,19 +61,10 @@ class CategoryStorageListenerTest extends Unit
     /**
      * @return void
      */
-    protected function tearDown()
-    {
-        SpyCategoryNodeStorageQuery::create()->deleteall();
-        SpyCategoryTreeStorageQuery::create()->deleteall();
-    }
-
-    /**
-     * @return void
-     */
     public function testCategoryNodeStorageListenerStoreData()
     {
+        SpyCategoryNodeStorageQuery::create()->filterByFkCategoryNode(1)->delete();
         $categoryStorageCount = SpyCategoryNodeStorageQuery::create()->count();
-        $this->assertSame(0, $categoryStorageCount);
 
         $categoryNodeStorageListener = new CategoryNodeStorageListener();
         $categoryNodeStorageListener->setFacade($this->getCategoryStorageFacade());
@@ -84,7 +75,7 @@ class CategoryStorageListenerTest extends Unit
         $categoryNodeStorageListener->handleBulk($eventTransfers, CategoryEvents::CATEGORY_NODE_PUBLISH);
 
         // Assert
-        $this->assertCategoryNodeStorage();
+        $this->assertCategoryNodeStorage($categoryStorageCount);
     }
 
     /**
@@ -92,8 +83,8 @@ class CategoryStorageListenerTest extends Unit
      */
     public function testCategoryStorageListenerStoreData()
     {
+        SpyCategoryNodeStorageQuery::create()->filterByFkCategoryNode(1)->delete();
         $categoryStorageCount = SpyCategoryNodeStorageQuery::create()->count();
-        $this->assertSame(0, $categoryStorageCount);
 
         $categoryNodeStorageListener = new CategoryNodeCategoryStorageListener();
         $categoryNodeStorageListener->setFacade($this->getCategoryStorageFacade());
@@ -104,7 +95,7 @@ class CategoryStorageListenerTest extends Unit
         $categoryNodeStorageListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_CREATE);
 
         // Assert
-        $this->assertCategoryNodeStorage();
+        $this->assertCategoryNodeStorage($categoryStorageCount);
     }
 
     /**
@@ -112,8 +103,8 @@ class CategoryStorageListenerTest extends Unit
      */
     public function testCategoryTemplateStorageListenerStoreData()
     {
-        $categoryStorageCount = SpyCategoryNodeStorageQuery::create()->count();
-        $this->assertSame(0, $categoryStorageCount);
+        SpyCategoryNodeStorageQuery::create()->filterByFkCategoryNode(1)->delete();
+        $beforeCount = SpyCategoryNodeStorageQuery::create()->count();
 
         $categoryNodeStorageListener = new CategoryNodeCategoryTemplateStorageListener();
         $categoryNodeStorageListener->setFacade($this->getCategoryStorageFacade());
@@ -125,7 +116,7 @@ class CategoryStorageListenerTest extends Unit
 
         // Assert
         $CategoryStorageCount = SpyCategoryNodeStorageQuery::create()->count();
-        $this->assertEquals(18, $CategoryStorageCount);
+        $this->assertGreaterThan($beforeCount, $CategoryStorageCount);
     }
 
     /**
@@ -133,8 +124,8 @@ class CategoryStorageListenerTest extends Unit
      */
     public function testCategoryAttributeStorageListenerStoreData()
     {
-        $categoryStorageCount = SpyCategoryNodeStorageQuery::create()->count();
-        $this->assertSame(0, $categoryStorageCount);
+        SpyCategoryNodeStorageQuery::create()->filterByFkCategoryNode(1)->delete();
+        $beforeCount = SpyCategoryNodeStorageQuery::create()->count();
 
         $categoryNodeStorageListener = new CategoryNodeCategoryAttributeStorageListener();
         $categoryNodeStorageListener->setFacade($this->getCategoryStorageFacade());
@@ -147,7 +138,7 @@ class CategoryStorageListenerTest extends Unit
         $categoryNodeStorageListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE);
 
         // Assert
-        $this->assertCategoryNodeStorage();
+        $this->assertCategoryNodeStorage($beforeCount);
     }
 
     /**
@@ -155,8 +146,7 @@ class CategoryStorageListenerTest extends Unit
      */
     public function testCategoryTreeStorageListenerStoreData()
     {
-        $categoryStorageCount = SpyCategoryTreeStorageQuery::create()->count();
-        $this->assertSame(0, $categoryStorageCount);
+        SpyCategoryTreeStorageQuery::create()->deleteall();
 
         $categoryTreeStorageListener = new CategoryTreeStorageListener();
         $categoryTreeStorageListener->setFacade($this->getCategoryStorageFacade());
@@ -183,12 +173,12 @@ class CategoryStorageListenerTest extends Unit
     /**
      * @return void
      */
-    protected function assertCategoryNodeStorage()
+    protected function assertCategoryNodeStorage($beforeCount)
     {
         $CategoryStorageCount = SpyCategoryNodeStorageQuery::create()->count();
-        $this->assertEquals(2, $CategoryStorageCount);
-        $spyCategoryNodeStorage = SpyCategoryNodeStorageQuery::create()->findOne();
-        $this->assertEquals(1, $spyCategoryNodeStorage->getFkCategoryNode());
+        $this->assertEquals($beforeCount + 2, $CategoryStorageCount);
+        $spyCategoryNodeStorage = SpyCategoryNodeStorageQuery::create()->findOneByFkCategoryNode(1);
+        $this->assertNotNull($spyCategoryNodeStorage);
         $data = $spyCategoryNodeStorage->getData();
         $this->assertEquals('Demoshop', $data['name']);
         $this->assertEquals('Demoshop', $data['meta_title']);
