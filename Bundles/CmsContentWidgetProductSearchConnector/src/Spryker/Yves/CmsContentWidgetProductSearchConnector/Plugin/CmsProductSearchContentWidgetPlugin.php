@@ -57,25 +57,32 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
         $templateIdentifier = null
     ) {
         return $twig->render(
-            $this->resolveTemplatePath($templateIdentifier),
+            $this->resolveTemplatePath($templateIdentifier, $context),
             $this->getTwigWidgetContent($searchString)
         );
     }
 
     /**
      * @param string $templateIdentifier
+     * @param array $context
      *
      * @throws \Spryker\Yves\CmsContentWidgetProductSearchConnector\Exception\TemplateIdentifierNotFoundException
      *
      * @return string
      */
-    protected function resolveTemplatePath($templateIdentifier)
+    protected function resolveTemplatePath($templateIdentifier, array $context)
     {
         $availableTemplates = $this->widgetConfiguration->getAvailableTemplates();
         $templateIdentifier = $templateIdentifier ?: CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER;
 
         if (!array_key_exists($templateIdentifier, $availableTemplates)) {
-            throw new TemplateIdentifierNotFoundException();
+            throw new TemplateIdentifierNotFoundException(
+                sprintf(
+                    'Template identifier %s not found. Context: {%s}',
+                    $templateIdentifier,
+                    json_encode($context)
+                )
+            );
         }
 
         return $availableTemplates[$templateIdentifier];
