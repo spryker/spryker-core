@@ -18,17 +18,15 @@ use Spryker\Zed\ProductCustomerPermission\ProductCustomerPermissionDependencyPro
 class ProductCustomerPermissionBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @param int $customerId
-     *
-     * @return \Spryker\Zed\ProductCustomerPermission\Business\Model\CustomerProductPermissionSaver
+     * @return \Spryker\Zed\ProductCustomerPermission\Business\Model\CustomerProductPermissionSaverInterface
      */
-    public function createCustomerProductPermissionSaver(int $customerId)
+    public function createCustomerProductPermissionSaver()
     {
-        return new CustomerProductPermissionSaver($customerId, $this->getQueryContainer(), $this->getTouchFacade());
+        return new CustomerProductPermissionSaver($this->getQueryContainer(), $this->getTouchFacade());
     }
 
     /**
-     * @return \Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToTouchInterface
+     * @return \Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToTouchFacadeInterface
      */
     protected function getTouchFacade()
     {

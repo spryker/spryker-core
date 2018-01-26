@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductCustomerPermissionFacade extends AbstractFacade implements ProductCustomerPermissionFacadeInterface
 {
     /**
+     * @inheritdoc
+     *
      * @api
      *
      * @param int $customerId
@@ -24,10 +26,13 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
      */
     public function saveCustomerProductPermission(int $customerId, int $productId)
     {
-        $this->getFactory()->createCustomerProductPermissionSaver($customerId)->saveProductPermission($productId);
+        $this->getFactory()->createCustomerProductPermissionSaver()
+            ->saveProductPermission($customerId, $productId);
     }
 
     /**
+     * @inheritdoc
+     *
      * @api
      *
      * @param int $customerId
@@ -37,6 +42,7 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
      */
     public function saveCustomerProductPermissions(int $customerId, array $productIds)
     {
-        $this->getFactory()->createCustomerProductPermissionSaver($customerId)->saveProductPermissions($productIds);
+        $this->getFactory()->createCustomerProductPermissionSaver()
+            ->saveProductPermissions($customerId, $productIds);
     }
 }

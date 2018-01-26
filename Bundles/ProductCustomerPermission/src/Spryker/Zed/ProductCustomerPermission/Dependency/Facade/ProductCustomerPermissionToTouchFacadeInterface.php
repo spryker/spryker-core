@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductCustomerPermission\Dependency\Facade;
 
-interface ProductCustomerPermissionToTouchInterface
+interface ProductCustomerPermissionToTouchFacadeInterface
 {
     /**
      * @param string $itemType

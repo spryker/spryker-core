@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductCustomerPermission\Dependency\Facade;
 
-class ProductCustomerPermissionToTouchBridge implements ProductCustomerPermissionToTouchInterface
+class ProductCustomerPermissionToTouchFacadeBridge implements ProductCustomerPermissionToTouchFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface

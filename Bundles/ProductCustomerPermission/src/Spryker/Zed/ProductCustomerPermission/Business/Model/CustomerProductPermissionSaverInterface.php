@@ -10,16 +10,22 @@ namespace Spryker\Zed\ProductCustomerPermission\Business\Model;
 interface CustomerProductPermissionSaverInterface
 {
     /**
+     * // add specification
+     *
+     * @param int $customerId
      * @param int $productId
      *
      * @return void
      */
-    public function saveProductPermission(int $productId);
+    public function saveProductPermission(int $customerId, int $productId);
 
     /**
+     * // add specification
+     *
+     * @param int $customerId
      * @param array $productIds
      *
      * @return void
      */
-    public function saveProductPermissions(array $productIds);
+    public function saveProductPermissions(int $customerId, array $productIds);
 }
