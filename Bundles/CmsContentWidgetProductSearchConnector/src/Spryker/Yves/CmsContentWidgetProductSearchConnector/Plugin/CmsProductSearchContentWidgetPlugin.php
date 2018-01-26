@@ -142,7 +142,7 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
                 continue;
             }
 
-            $productStorageTransfer = $this->mapProductStorageTransfer($productData);
+            $productStorageTransfer = $this->hydrateProductStorageTransfer($productData);
 
             $products[] = $productStorageTransfer;
         }
@@ -151,11 +151,14 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
     }
 
     /**
+     * This method should hydrate all data in product transfer.
+     * Including availability, images e.t.c.
+     *
      * @param array $productData
      *
      * @return \Generated\Shared\Transfer\StorageProductTransfer
      */
-    protected function mapProductStorageTransfer(array $productData)
+    protected function hydrateProductStorageTransfer(array $productData)
     {
        //implement, this method is overwritten and provided in demoshop
         return (new StorageProductTransfer())->fromArray($productData, true);
