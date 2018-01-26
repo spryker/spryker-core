@@ -8,7 +8,6 @@
 namespace Spryker\Yves\CmsContentWidgetProductSearchConnector\Plugin;
 
 use Generated\Shared\Transfer\StorageProductTransfer;
-use Spryker\Shared\CmsContentWidget\CmsContentWidgetConfig;
 use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 use Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
@@ -43,7 +42,7 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
     /**
      * @param \Twig_Environment $twig
      * @param array $context Data related to twig function
-     * @param string $searchString $productAbstractSkuList
+     * @param string $searchString String for direct search in elastic
      * @param null|string $templateIdentifier
      *
      * @return string
@@ -56,7 +55,7 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
     ) {
         return $twig->render(
             $this->resolveTemplatePath($templateIdentifier),
-            $this->getContent($context, $searchString)
+            $this->getContent($searchString)
         );
     }
 
@@ -71,26 +70,21 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
             $templateIdentifier = CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER;
         }
 
-        return $this->widgetConfiguration->getAvailableTemplates()[$templateIdentifier];
+        return $this->widgetConfiguration
+            ->getAvailableTemplates()[$templateIdentifier];
     }
 
     /**
-     * @param array $context
      * @param string $productSearchString
      *
-     * @return array
+     * @return array Variables for twig template
      */
-    protected function getContent(array $context, $productSearchString)
+    protected function getContent($productSearchString)
     {
-        $cmsContent = $this->getCmsContent($context);
-        $skuMap = $this->getProductAbstractSkuMap($cmsContent);
+        $productAbstractIds = $this->searchProductAbstractIds($productSearchString);
 
-        $productAbstractSkuMap = $this->findProductAbstractByIdProductAbstract($productSearchString);
-        $skuMap = array_merge($skuMap, $productAbstractSkuMap);
-        $productAbstractSkuList = array_keys($productAbstractSkuMap);
-
-        if (is_array($productAbstractSkuList)) {
-            $products = $this->collectProductAbstractList($productAbstractSkuList, $skuMap);
+        if (is_array($productAbstractIds)) {
+            $products = $this->collectProductAbstractList($productAbstractIds);
 
             $numberOfCollectedProducts = count($products);
             if ($numberOfCollectedProducts > 1) {
@@ -99,38 +93,17 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
             if ($numberOfCollectedProducts === 1) {
                 return ['product' => array_shift($products)];
             }
-            return [];
         }
 
         return [];
     }
 
     /**
-     * @param array $context
-     *
-     * @return array
-     */
-    protected function getCmsContent(array $context)
-    {
-        return $context['cmsContent'];
-    }
-
-    /**
-     * @param array $cmsContent
-     *
-     * @return array
-     */
-    protected function getProductAbstractSkuMap(array $cmsContent)
-    {
-        return $cmsContent[CmsContentWidgetConfig::CMS_CONTENT_WIDGET_PARAMETER_MAP][$this->widgetConfiguration->getFunctionName()];
-    }
-
-    /**
      * @param string $productSearchString
      *
-     * @return string[] [$productSKU => $productId]
+     * @return int[] Product abstract ids
      */
-    protected function searchProductAbstractSkuMap($productSearchString)
+    protected function searchProductAbstractIds($productSearchString)
     {
         $response = $this->getFactory()
             ->getSearchClient()
@@ -138,44 +111,33 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
             ->getResponse()
             ->getData()['hits']['hits'];
 
-        $skuMap = [];
+        $productAbstractIds = [];
         foreach ($response as $item) {
             if ($item['_source']['type'] !== 'product_abstract') {
                 continue;
             }
 
-            $productId = $item['_source']['search-result-data']['id_product_abstract'];
-            $productSku = $item['_source']['search-result-data']['abstract_sku'];
-            $skuMap[$productSku] = $productId;
+            $productAbstractIds[] = $item['_source']['search-result-data']['id_product_abstract'];
         }
 
-        return $skuMap;
+        return $productAbstractIds;
     }
 
     /**
-     * @param array $concreteProductSkuList
-     * @param array $skuToProductAbstractIdMap
+     * @param int[] $productAbstractIds
      *
      * @return array
      */
-    protected function collectProductAbstractList(array $concreteProductSkuList, array $skuToProductAbstractIdMap)
+    protected function collectProductAbstractList(array $productAbstractIds)
     {
         $products = [];
-        foreach ($concreteProductSkuList as $sku) {
-            if (!isset($skuToProductAbstractIdMap[$sku])) {
-                continue;
-            }
-
-            $productData = $this->findProductAbstractByIdProductAbstract($skuToProductAbstractIdMap[$sku]);
+        foreach ($productAbstractIds as $productAbstractId) {
+            $productData = $this->findProductAbstractByIdProductAbstract($productAbstractId);
             if (!$productData) {
                 continue;
             }
 
             $productStorageTransfer = $this->mapProductStorageTransfer($productData);
-
-            if (!$productStorageTransfer->getAvailable()) {
-                continue;
-            }
 
             $products[] = $productStorageTransfer;
         }
