@@ -24,9 +24,9 @@ class CartVariantDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
-        $container = $this->provideProductClient($container);
+        $container = $this->addProductClient($container);
 
-        $container = $this->provideAvailabilityClient($container);
+        $container = $this->addAvailabilityClient($container);
 
         return $container;
     }
@@ -36,7 +36,7 @@ class CartVariantDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function provideProductClient(Container $container)
+    protected function addProductClient(Container $container)
     {
         $container[static::CLIENT_PRODUCT] = function (Container $container) {
             return new CartVariantToProductClientBridge($container->getLocator()->product()->client());
@@ -49,7 +49,7 @@ class CartVariantDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function provideAvailabilityClient(Container $container)
+    protected function addAvailabilityClient(Container $container)
     {
         $container[static::CLIENT_AVAILABILITY] = function (Container $container) {
             return new CartVariantToAvailabilityClientBridge($container->getLocator()->availability()->client());
