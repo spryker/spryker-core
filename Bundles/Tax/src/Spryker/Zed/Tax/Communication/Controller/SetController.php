@@ -30,7 +30,7 @@ class SetController extends AbstractController
     {
         $taxSetFormDataProvider = $this->getFactory()->createTaxSetFormDataProvider();
 
-        $taxSetForm = $this->getFactory()->createTaxSetForm($taxSetFormDataProvider);
+        $taxSetForm = $this->getFactory()->getTaxSetForm($taxSetFormDataProvider);
 
         if ($request->request->count() > 0) {
             $taxSetForm->handleRequest($request);
@@ -64,7 +64,7 @@ class SetController extends AbstractController
 
         $taxSetTransfer = $this->getFacade()->getTaxSet($idTaxSet);
         $taxSetFormDataProvider = $this->getFactory()->createTaxSetFormDataProvider($taxSetTransfer);
-        $taxSetForm = $this->getFactory()->createTaxSetForm($taxSetFormDataProvider);
+        $taxSetForm = $this->getFactory()->getTaxSetForm($taxSetFormDataProvider);
 
         if ($request->request->count() > 0) {
             $taxSetForm->handleRequest($request);

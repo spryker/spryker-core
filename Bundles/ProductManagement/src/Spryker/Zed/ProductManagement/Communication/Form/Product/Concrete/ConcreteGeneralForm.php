@@ -12,20 +12,22 @@ use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ */
 class ConcreteGeneralForm extends GeneralForm
 {
     const FIELD_IS_SEARCHABLE = 'is_searchable';
     const FIELD_VALID_FROM = 'valid_from';
     const FIELD_VALID_TO = 'valid_to';
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function __construct()
     {
-        return 'product_general';
     }
 
     /**
@@ -52,7 +54,7 @@ class ConcreteGeneralForm extends GeneralForm
     protected function addIsSearchableField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_IS_SEARCHABLE, 'checkbox', [
+            ->add(self::FIELD_IS_SEARCHABLE, CheckboxType::class, [
                 'label' => 'Searchable',
                 'required' => false,
             ]);
