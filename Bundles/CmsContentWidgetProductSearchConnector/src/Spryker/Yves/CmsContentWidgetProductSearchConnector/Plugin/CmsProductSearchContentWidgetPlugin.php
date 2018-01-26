@@ -16,11 +16,10 @@ use Twig_Environment;
 
 /**
  * @method \Spryker\Yves\CmsContentWidgetProductSearchConnector\CmsContentWidgetProductSearchConnectorFactory getFactory()
+ * @method \Spryker\Yves\CmsContentWidgetProductSearchConnector\CmsContentWidgetProductSearchConnectorConfig getConfig()
  */
 class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsContentWidgetPluginInterface
 {
-    const SEARCH_LIMIT = 20;
-
     /**
      * @var \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface
      */
@@ -119,9 +118,12 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
      */
     protected function searchIdProductAbstracts($productSearchString)
     {
+        $limit = $this->getConfig()
+            ->getSearchLimit();
+
         $elasticResponse = $this->getFactory()
             ->getSearchClient()
-            ->searchQueryString($productSearchString, static::SEARCH_LIMIT)
+            ->searchQueryString($productSearchString, $limit)
             ->getResponse()
             ->getData();
         $dataResponse = $elasticResponse['hits']['hits'];
