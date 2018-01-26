@@ -10,6 +10,7 @@ namespace Spryker\Yves\CmsContentWidgetProductSearchConnector\Plugin;
 use Generated\Shared\Transfer\StorageProductTransfer;
 use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 use Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface;
+use Spryker\Yves\CmsContentWidgetProductSearchConnector\Exception\TemplateIdentifierNotFoundException;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig_Environment;
 
@@ -60,18 +61,22 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
     }
 
     /**
-     * @param null|string $templateIdentifier
+     * @param string $templateIdentifier
+     *
+     * @throws \Spryker\Yves\CmsContentWidgetProductSearchConnector\Exception\TemplateIdentifierNotFoundException
      *
      * @return string
      */
-    protected function resolveTemplatePath($templateIdentifier = null)
+    protected function resolveTemplatePath($templateIdentifier)
     {
-        if (!$templateIdentifier) {
-            $templateIdentifier = CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER;
+        $availableTemplates = $this->widgetConfiguration->getAvailableTemplates();
+        $templateIdentifier = $templateIdentifier ?: CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER;
+
+        if (!array_key_exists($templateIdentifier, $availableTemplates)) {
+            throw new TemplateIdentifierNotFoundException();
         }
 
-        return $this->widgetConfiguration
-            ->getAvailableTemplates()[$templateIdentifier];
+        return $availableTemplates[$templateIdentifier];
     }
 
     /**
