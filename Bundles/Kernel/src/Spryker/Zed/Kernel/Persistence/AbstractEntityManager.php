@@ -6,8 +6,11 @@
 
 namespace Spryker\Zed\Kernel\Persistence;
 
+use Generated\Shared\Transfer\SpyCustomerAddressEntityTransfer;
+use Generated\Shared\Transfer\SpyCustomerEntityTransfer;
 use Orm\Zed\Blog\Persistence\SpyBlogComment;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -110,9 +113,9 @@ abstract class AbstractEntityManager
         //throw exception when child transfer entity is not from same module.
         //composite object should be handled in business with plugins.
         //when property is modified and is null, should remove item.
+        //add marker interface for entity transfer
 
-        //how to get current module?
-        $moduleName = 'Blog';
+        $moduleName = 'Blog'; //from kernel magic
 
         $transferClassName = get_class($transfer);
         if (strpos($transferClassName, 'EntityTransfer') === 0) {
@@ -133,11 +136,11 @@ abstract class AbstractEntityManager
         $propelEntity->fromArray($transferArray);
 
         foreach ($transferArray as $property => $value) {
-            if (substr($property, 0, 4) !== 'spy_') {
+            if (substr($property, 0, 4) !== 'spy_') {  //get only if transfer
                 continue;
             }
 
-            if (!$transfer->isPropertyInModule($moduleName, $property)) {
+            /*if (!$transfer->isPropertyInModule($moduleName, $property)) {
                 throw new \Exception(
                     sprintf(
                         'Property "%s" is not allowed to be saved in module %s',
@@ -145,11 +148,19 @@ abstract class AbstractEntityManager
                         $moduleName
                     )
                 );
-            }
+            }*/
 
             if (is_array($value)) {
 
                 foreach ($value as $childData) {
+
+                    (new SpyCustomerEntityTransfer())->getSpyCustomerAddresses();
+
+
+
+                    $namespace = $property->getEntityNamespace();
+
+                    $propelEntity->addAddress(new SpyCustomerAddress());
 
                     $entityName = (new FilterChain())
                         ->attach(new UnderscoreToCamelCase())
@@ -179,5 +190,36 @@ abstract class AbstractEntityManager
         $transfer->fromArray($propelEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true), true);
 
         return $transfer;
+    }
+
+    public function test()
+    {
+        $customerTransfer = new SpyCustomerEntityTransfer();
+        $customerTransfer->addSpyCustomerAddresses(new SpyCustomerAddressEntityTransfer());
+
+        $entity = $this->testSave($customerTransfer);
+
+        $entity->save();
+
+    }
+
+    protected function testSave(TransferInterface $customerTransfer)
+    {
+        $array = $customerTransfer->toArray(false);
+
+        $entity = new SpyCustomer();
+
+        foreach ($array as $property => $value) {
+            if (!$property instanceof TransferInterface) {
+                $array[$property] = $this->testSave($customerTransfer);
+                $entity->addAddress();
+                continue;
+            }
+        }
+
+        $entity = new SpyCustomer();
+        $entity->fromArray($array);
+
+        return $entity;
     }
 }
