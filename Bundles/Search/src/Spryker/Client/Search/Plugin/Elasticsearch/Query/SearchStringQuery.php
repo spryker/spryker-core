@@ -49,7 +49,7 @@ class SearchStringQuery implements QueryInterface
         $baseQuery = new Query();
 
         if (!empty($this->searchString)) {
-            $query = $this->createQuerySearchQuery($this->searchString);
+            $query = $this->createStringQuery($this->searchString);
         } else {
             $query = new MatchAll();
         }
@@ -69,7 +69,7 @@ class SearchStringQuery implements QueryInterface
      *
      * @return \Elastica\Query\QueryString
      */
-    protected function createQuerySearchQuery($searchString)
+    protected function createStringQuery($searchString)
     {
         return new QueryString($searchString);
     }

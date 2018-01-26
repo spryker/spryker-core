@@ -87,7 +87,7 @@ interface SearchClientInterface
     /**
      * Specification:
      * - Runs a string search for the given search string
-     * 0 @see https://www.elastic.co/guide/en/elasticsearch/reference/2.4/query-dsl-query-string-query.html
+     * - @see https://www.elastic.co/guide/en/elasticsearch/reference/2.4/query-dsl-query-string-query.html
      * - Returns the raw result set ordered by relevance
      *
      * @api
