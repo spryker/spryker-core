@@ -38,8 +38,11 @@ class CmsProductSearchContentWidgetConfigurationProvider implements CmsContentWi
     public function getUsageInformation()
     {
         return <<<EOT
-            {{ product_search('is-active:false AND locale:de_DE') }},
-            to use different template {{ product_search('is-active:false AND locale:de_DE', 'default') }}
+            Simple example: {{ product_search('is-active:false AND locale:de_DE') }}.
+            Whole search query should be in one string and passed as first parameter.
+            Like: {{ product_search('title:"red socks" AND is-active:false AND locale:de_DE AND price>200') }}.
+            To use different template, add it as second parameter:
+            {{ product_search('is-active:false AND locale:de_DE', 'default') }}.
 EOT;
     }
 }
