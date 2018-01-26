@@ -12,7 +12,7 @@ use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProv
 class CmsProductSearchContentWidgetConfigurationProvider implements CmsContentWidgetConfigurationProviderInterface
 {
     const FUNCTION_NAME = 'product_search';
-    const TEMPLATE_PATH = '@Product/product/partials/product_search_cms_content_widget.twig';
+    const TEMPLATE_PATH = '@Product/product/partials/product_cms_content_widget.twig';
 
     /**
      * @return string
