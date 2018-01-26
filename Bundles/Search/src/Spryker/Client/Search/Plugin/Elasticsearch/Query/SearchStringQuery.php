@@ -9,11 +9,8 @@ namespace Spryker\Client\Search\Plugin\Elasticsearch\Query;
 
 use Elastica\Query;
 use Elastica\Query\MatchAll;
-use Elastica\Query\SimpleQueryString;
-use Generated\Shared\Search\PageIndexMap;
+use Elastica\Query\QueryString;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Search\SearchConstants;
 
 class SearchStringQuery implements QueryInterface
 {
@@ -70,19 +67,11 @@ class SearchStringQuery implements QueryInterface
     /**
      * @param string $searchString
      *
-     * @return \Elastica\Query\SimpleQueryString
+     * @return \Elastica\Query\QueryString
      */
     protected function createSimpleQuerySearchQuery($searchString)
     {
-        $fields = [
-            PageIndexMap::FULL_TEXT,
-            PageIndexMap::FULL_TEXT_BOOSTED . '^' . Config::get(SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE),
-        ];
-
-        $simpleQueryString = (new SimpleQueryString($searchString))
-            ->setFields($fields);
-
-        return $simpleQueryString;
+        return new QueryString($searchString);
     }
 
     /**
