@@ -16,6 +16,7 @@ use Symfony\Component\Form\FormEvents;
 
 /**
  * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
  */
 class UpdateProductsFormType extends AbstractType
 {

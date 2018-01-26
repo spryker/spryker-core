@@ -17,6 +17,7 @@ use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 
 /**
  * @method \Spryker\Zed\CategoryPageSearch\Communication\CategoryPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacadeInterface getFacade()
  */
 class CategoryNodeDataPageMapBuilder extends AbstractPlugin implements NamedPageMapInterface
 {

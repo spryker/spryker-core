@@ -11,7 +11,7 @@ class CategoryStorageConstants
 {
     /**
      * Specification:
-     * - Queue name as used for processing cms block messages
+     * - Queue name as used for processing category messages
      *
      * @api
      */
@@ -19,7 +19,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - Queue name as used for error cms block messages
+     * - Queue name as used for error category messages
      *
      * @api
      */

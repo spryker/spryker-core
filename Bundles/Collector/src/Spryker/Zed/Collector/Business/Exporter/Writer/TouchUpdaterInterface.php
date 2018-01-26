@@ -15,11 +15,12 @@ interface TouchUpdaterInterface
     /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
      * @param int $idLocale
+     * @param int $idStore
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
      *
      * @return
      */
-    public function bulkUpdate(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null);
+    public function bulkUpdate(TouchUpdaterSet $touchUpdaterSet, $idLocale, $idStore, ConnectionInterface $connection = null);
 
     /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet

@@ -88,6 +88,8 @@ class ProductAttributeToProductBridge implements ProductAttributeToProductInterf
     }
 
     /**
+     * @deprecated Method will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
      *

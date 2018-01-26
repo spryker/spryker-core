@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\Gui\Communication\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
+ */
 class SelectType extends AbstractType
 {
     const URL = 'url';
@@ -61,14 +65,6 @@ class SelectType extends AbstractType
      */
     public function getParent()
     {
-        return 'choice';
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'select';
+        return ChoiceType::class;
     }
 }

@@ -54,7 +54,7 @@ class CreateController extends AbstractController
 
         $aggregateForm = $this
             ->getFactory()
-            ->createProductLabelAggregateForm(
+            ->getProductLabelAggregateForm(
                 $aggregateFormDataProvider->getData(),
                 $aggregateFormDataProvider->getOptions()
             );

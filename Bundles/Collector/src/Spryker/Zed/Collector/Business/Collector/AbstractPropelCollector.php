@@ -78,6 +78,7 @@ abstract class AbstractPropelCollector extends AbstractDatabaseCollector
         $this->queryBuilder->setTouchQuery($touchQuery);
 
         $this->queryBuilder
+            ->setStoreTransfer($this->getCurrentStore())
             ->setLocale($locale)
             ->prepare();
     }

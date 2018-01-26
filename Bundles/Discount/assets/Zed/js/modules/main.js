@@ -33,7 +33,7 @@ $(document).ready(function() {
         $(this)
             .prop('disabled', true)
             .addClass('disabled');
-        
+
         if (isQueryStringCollectorSelected) {
             sqlCalculationBuilder.saveQuery();
         }
@@ -82,11 +82,11 @@ $(document).ready(function() {
     });
 
     $('#discount_discountCalculator_collectorStrategyType input').on('click', function(event) {
-          $('#discount_discountCalculator_collectorStrategyType input').each(function(index, element) {
-               $('#collector-type-' + $(element).val()).hide();
-          });
+        $('#discount_discountCalculator_collectorStrategyType input').each(function(index, element) {
+            $('#collector-type-' + $(element).val()).hide();
+        });
 
-          $('#collector-type-' + $(event.target).val()).show();
+        $('#collector-type-' + $(event.target).val()).show();
     });
 
     $('#discount_discountCalculator_calculator_plugin').on('change', function(event) {
