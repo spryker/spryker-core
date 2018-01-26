@@ -22,7 +22,7 @@ class ProductValidityHydrator implements ProductValidityHydratorInterface
         ProductConcreteTransfer $productTransfer,
         SpyProduct $productEntity
     ): ProductConcreteTransfer {
-        if ($productEntity->getSpyProductValidities()) {
+        if ($productEntity->getSpyProductValidities()->count()) {
             /** @var \Orm\Zed\Product\Persistence\SpyProductValidity $validityEntity */
             $validityEntity = $productEntity->getSpyProductValidities()->getFirst();
             $productTransfer->setValidFrom($validityEntity->getValidFrom());
