@@ -15,6 +15,14 @@ class CmsContentWidgetProductSearchConnectorToSearchClientBridge implements CmsC
     protected $searchClient;
 
     /**
+     * @param \Spryker\Client\Search\SearchClientInterface $searchClient
+     */
+    public function __construct($searchClient)
+    {
+        $this->searchClient = $searchClient;
+    }
+
+    /**
      * @param string $searchString
      * @param int|null $limit
      * @param int|null $offset
@@ -24,13 +32,5 @@ class CmsContentWidgetProductSearchConnectorToSearchClientBridge implements CmsC
     public function searchQueryString($searchString, $limit = null, $offset = null)
     {
         return $this->searchClient->searchQueryString($searchString, $limit, $offset);
-    }
-
-    /**
-     * @param \Spryker\Client\Search\SearchClientInterface $searchClient
-     */
-    public function __construct($searchClient)
-    {
-        $this->searchClient = $searchClient;
     }
 }
