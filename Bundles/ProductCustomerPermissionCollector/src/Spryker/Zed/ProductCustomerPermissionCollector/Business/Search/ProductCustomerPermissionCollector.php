@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCustomerPermissionCollector\Business\Search;
 
+use Generated\Shared\Search\CustomerPageIndexMap;
 use Generated\Shared\Transfer\SearchCollectorConfigurationTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Product\ProductConfig;
@@ -36,7 +37,7 @@ class ProductCustomerPermissionCollector extends AbstractConfigurableSearchPrope
         $productAbstractKey = $this->generateKeyForProduct($collectItemData[ProductCustomerPermissionSearchCollectorQuery::FIELD_FK_PRODUCT_ABSTRACT], $this->locale->getLocaleName());
 
         $result = [
-            'id-customer' => $collectItemData[ProductCustomerPermissionSearchCollectorQuery::FIELD_FK_CUSTOMER],
+            CustomerPageIndexMap::ID_CUSTOMER => $collectItemData[ProductCustomerPermissionSearchCollectorQuery::FIELD_FK_CUSTOMER],
             'parent' => $productAbstractKey,
         ];
 

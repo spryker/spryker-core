@@ -9,15 +9,11 @@ namespace Spryker\Zed\ProductCustomerPermissionCollector;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductCustomerPermissionCollector\Dependency\Facade\ProductCustomerPermissionCollectorToCollectorBridge;
-use Spryker\Zed\ProductCustomerPermissionCollector\Dependency\Facade\ProductCustomerPermissionCollectorToSearchBridge;
+use Spryker\Zed\ProductCustomerPermissionCollector\Dependency\Facade\ProductCustomerPermissionCollectorToCollectorFacadeBridge;
 
 class ProductCustomerPermissionCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const STORE = 'STORE';
-
     const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
-    const FACADE_SEARCH = 'FACADE_SEARCH';
 
     const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
 
@@ -31,10 +27,8 @@ class ProductCustomerPermissionCollectorDependencyProvider extends AbstractBundl
     public function provideBusinessLayerDependencies(Container $container)
     {
         $this->addCollectorFacade($container);
-        //$this->addSearchFacade($container);
         $this->addDataReaderService($container);
         $this->addTouchQueryContainer($container);
-        //$this->addStore($container);
 
         return $container;
     }
@@ -47,19 +41,7 @@ class ProductCustomerPermissionCollectorDependencyProvider extends AbstractBundl
     protected function addCollectorFacade(Container $container)
     {
         $container[static::FACADE_COLLECTOR] = function (Container $container) {
-            return new ProductCustomerPermissionCollectorToCollectorBridge($container->getLocator()->collector()->facade());
-        };
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return void
-     */
-    protected function addSearchFacade(Container $container)
-    {
-        $container[static::FACADE_SEARCH] = function (Container $container) {
-            return new ProductCustomerPermissionCollectorToSearchBridge($container->getLocator()->search()->facade());
+            return new ProductCustomerPermissionCollectorToCollectorFacadeBridge($container->getLocator()->collector()->facade());
         };
     }
 

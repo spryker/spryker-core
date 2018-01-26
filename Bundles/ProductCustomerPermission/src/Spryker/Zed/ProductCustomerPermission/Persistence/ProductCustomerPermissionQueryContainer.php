@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductCustomerPermission\Persistence;
 
-use Orm\Zed\ProductCustomerPermission\Persistence\Base\SpyProductCustomerPermissionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -18,10 +17,37 @@ class ProductCustomerPermissionQueryContainer extends AbstractQueryContainer imp
     /**
      * @api
      *
+     * @param int $customerId
+     *
      * @return \Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermissionQuery
      */
-    public function queryProductCustomerPermission()
+    public function queryProductCustomerPermissionByCustomer(int $customerId)
     {
-        return SpyProductCustomerPermissionQuery::create();
+        return $this->getFactory()->createProductCustomerPermissionQuery()
+            ->filterByFkCustomer($customerId);
+    }
+
+    /**
+     * @param int $customerId
+     * @param array $productIds
+     *
+     * @return $this|\Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermissionQuery
+     */
+    public function queryProductCustomerPermissionByCustomerAndProducts(int $customerId, array $productIds)
+    {
+        return $this->getFactory()->createProductCustomerPermissionQuery()
+            ->filterByFkCustomer($customerId)
+            ->filterByFkProductAbstract_In($productIds);
+    }
+
+    /**
+     * @param array $entityIds
+     *
+     * @return \Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermissionQuery
+     */
+    public function queryProductCustomerPermissionByIds(array $entityIds)
+    {
+        return $this->getFactory()->createProductCustomerPermissionQuery()
+            ->filterByIdProductCustomerPermission_In($entityIds);
     }
 }

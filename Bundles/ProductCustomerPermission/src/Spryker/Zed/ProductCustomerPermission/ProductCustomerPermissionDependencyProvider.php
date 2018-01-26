@@ -9,23 +9,11 @@ namespace Spryker\Zed\ProductCustomerPermission;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToTouchBridge;
+use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToTouchFacadeBridge;
 
 class ProductCustomerPermissionDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FACADE_TOUCH = 'FACADE_TOUCH';
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function provideCommunicationLayerDependencies(Container $container)
-    {
-        //TODO Provide dependencies
-
-        return $container;
-    }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -44,22 +32,10 @@ class ProductCustomerPermissionDependencyProvider extends AbstractBundleDependen
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function providePersistenceLayerDependencies(Container $container)
-    {
-        //TODO Provide dependencies
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addTouchFacade(Container $container)
     {
         $container[static::FACADE_TOUCH] = function (Container $container) {
-            return new ProductCustomerPermissionToTouchBridge($container->getLocator()->touch()->facade());
+            return new ProductCustomerPermissionToTouchFacadeBridge($container->getLocator()->touch()->facade());
         };
 
         return $container;

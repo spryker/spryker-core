@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductCustomerPermissionCollector\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\ProductCustomerPermissionCollector\Persistence\ProductCustomerPermissionCollectorQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductCustomerPermissionCollector\ProductCustomerPermissionCollectorConfig getConfig()
  */
 class ProductCustomerPermissionCollectorCommunicationFactory extends AbstractCommunicationFactory

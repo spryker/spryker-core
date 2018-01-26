@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductCustomerPermission\Business;
 interface ProductCustomerPermissionFacadeInterface
 {
     /**
+     * Specification:
+     *  - This method will save relation between customer and product
+     *
      * @api
      *
      * @param int $customerId
@@ -20,8 +23,9 @@ interface ProductCustomerPermissionFacadeInterface
     public function saveCustomerProductPermission(int $customerId, int $productId);
 
     /**
-     * This method will remove all products (not from the list of $productsIds) which were assigned to this customer before
-     * and add new if they are no assigned yet
+     * Specification:
+     *  - This method will remove all products not from the list of $productsIds, which were assigned to this customer before
+     *    and add new ones, if they are no assigned yet
      *
      * @api
      *

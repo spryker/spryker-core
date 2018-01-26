@@ -16,8 +16,21 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-interface ProductCustomerPermissionCollectorToCollectorInterface
+class ProductCustomerPermissionCollectorToCollectorFacadeBridge implements ProductCustomerPermissionCollectorToCollectorFacadeInterface
 {
+    /**
+     * @var \Spryker\Zed\Collector\Business\CollectorFacadeInterface
+     */
+    protected $collectorFacade;
+
+    /**
+     * @param \Spryker\Zed\Collector\Business\CollectorFacadeInterface $collectorFacade
+     */
+    public function __construct($collectorFacade)
+    {
+        $this->collectorFacade = $collectorFacade;
+    }
+
     /**
      * @param \Spryker\Zed\Collector\Business\Collector\DatabaseCollectorInterface $collector
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
@@ -39,5 +52,16 @@ interface ProductCustomerPermissionCollectorToCollectorInterface
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
-    );
+    ) {
+        $this->collectorFacade->runCollector(
+            $collector,
+            $baseQuery,
+            $localeTransfer,
+            $result,
+            $dataReader,
+            $dataWriter,
+            $touchUpdater,
+            $output
+        );
+    }
 }
