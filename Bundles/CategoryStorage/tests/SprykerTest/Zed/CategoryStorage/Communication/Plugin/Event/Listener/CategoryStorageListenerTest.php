@@ -171,6 +171,8 @@ class CategoryStorageListenerTest extends Unit
     }
 
     /**
+     * @param int $beforeCount
+     *
      * @return void
      */
     protected function assertCategoryNodeStorage($beforeCount)
