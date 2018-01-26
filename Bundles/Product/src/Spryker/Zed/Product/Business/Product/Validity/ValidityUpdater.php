@@ -110,8 +110,10 @@ class ValidityUpdater implements ValidityUpdaterInterface
      *
      * @return void
      */
-    protected function executeProductPublishTransaction(Traversable $productsBecomingActive, Traversable $productsBecomingInactive)
-    {
+    protected function executeProductPublishTransaction(
+        Traversable $productsBecomingActive,
+        Traversable $productsBecomingInactive
+    ) {
         $this->setPublished($productsBecomingActive);
         $this->setUnpublished($productsBecomingInactive);
     }
