@@ -58,7 +58,7 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
     ) {
         return $twig->render(
             $this->resolveTemplatePath($templateIdentifier),
-            $this->getContent($searchString)
+            $this->getTwigWidgetContent($searchString)
         );
     }
 
@@ -84,14 +84,14 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
     /**
      * @param string $productSearchString
      *
-     * @return array Variables for twig template
+     * @return array
      */
-    protected function getContent($productSearchString)
+    protected function getTwigWidgetContent($productSearchString)
     {
-        $productAbstractIds = $this->searchProductAbstractIds($productSearchString);
+        $idProductAbstracts = $this->searchIdProductAbstracts($productSearchString);
 
-        if (is_array($productAbstractIds)) {
-            $products = $this->collectProductAbstractList($productAbstractIds);
+        if (is_array($idProductAbstracts)) {
+            $products = $this->collectProductAbstractList($idProductAbstracts);
 
             $numberOfCollectedProducts = count($products);
             if ($numberOfCollectedProducts > 1) {
@@ -108,39 +108,39 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
     /**
      * @param string $productSearchString
      *
-     * @return int[] Product abstract ids
+     * @return int[]
      */
-    protected function searchProductAbstractIds($productSearchString)
+    protected function searchIdProductAbstracts($productSearchString)
     {
         $elasticResponse = $this->getFactory()
             ->getSearchClient()
             ->searchQueryString($productSearchString, static::SEARCH_LIMIT)
             ->getResponse()
             ->getData();
-        $dataResponce = $elasticResponse['hits']['hits'];
+        $dataResponse = $elasticResponse['hits']['hits'];
 
-        $productAbstractIds = [];
-        foreach ($dataResponce as $item) {
+        $idProductAbstracts = [];
+        foreach ($dataResponse as $item) {
             if ($item['_source']['type'] !== 'product_abstract') {
                 continue;
             }
 
-            $productAbstractIds[] = $item['_source']['search-result-data']['id_product_abstract'];
+            $idProductAbstracts[] = $item['_source']['search-result-data']['id_product_abstract'];
         }
 
-        return $productAbstractIds;
+        return $idProductAbstracts;
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param int[] $idProductAbstracts
      *
      * @return array
      */
-    protected function collectProductAbstractList(array $productAbstractIds)
+    protected function collectProductAbstractList(array $idProductAbstracts)
     {
         $products = [];
-        foreach ($productAbstractIds as $productAbstractId) {
-            $productData = $this->findProductAbstractByIdProductAbstract($productAbstractId);
+        foreach ($idProductAbstracts as $idProductAbstract) {
+            $productData = $this->findProductAbstractByIdProductAbstract($idProductAbstract);
             if (!$productData) {
                 continue;
             }
