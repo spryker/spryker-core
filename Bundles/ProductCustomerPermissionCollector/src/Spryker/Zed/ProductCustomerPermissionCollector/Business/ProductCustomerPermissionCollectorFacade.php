@@ -81,6 +81,19 @@ class ProductCustomerPermissionCollectorFacade extends AbstractFacade implements
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        // TODO
+        $factory = $this->getFactory();
+        $collector = $factory
+            ->createStorageProductCustomerPermissionCollector();
+
+        $factory->getCollectorFacade()->runCollector(
+            $collector,
+            $baseQuery,
+            $localeTransfer,
+            $result,
+            $dataReader,
+            $dataWriter,
+            $touchUpdater,
+            $output
+        );
     }
 }

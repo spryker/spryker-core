@@ -16,7 +16,7 @@ use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\ProductCustomerPermission\ProductCustomerPermissionConfig;
 use Spryker\Zed\ProductCustomerPermissionCollector\Persistence\Search\Propel\ProductCustomerPermissionSearchCollectorQuery;
 
-class ProductCustomerPermissionCollector extends AbstractConfigurableSearchPropelCollector
+class ProductCustomerPermissionSearchCollector extends AbstractConfigurableSearchPropelCollector
 {
     /**
      * @return string

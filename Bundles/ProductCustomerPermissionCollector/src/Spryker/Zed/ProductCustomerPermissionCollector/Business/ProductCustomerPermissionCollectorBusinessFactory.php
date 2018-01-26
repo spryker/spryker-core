@@ -8,7 +8,8 @@
 namespace Spryker\Zed\ProductCustomerPermissionCollector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductCustomerPermissionCollector\Business\Search\ProductCustomerPermissionCollector;
+use Spryker\Zed\ProductCustomerPermissionCollector\Business\Search\ProductCustomerPermissionSearchCollector;
+use Spryker\Zed\ProductCustomerPermissionCollector\Business\Storage\ProductCustomerPermissionStorageCollector;
 use Spryker\Zed\ProductCustomerPermissionCollector\Persistence\Search\Propel\ProductCustomerPermissionSearchCollectorQuery;
 use Spryker\Zed\ProductCustomerPermissionCollector\ProductCustomerPermissionCollectorDependencyProvider;
 
@@ -18,17 +19,32 @@ use Spryker\Zed\ProductCustomerPermissionCollector\ProductCustomerPermissionColl
 class ProductCustomerPermissionCollectorBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductCustomerPermissionCollector\Business\Search\ProductCustomerPermissionCollector
+     * @return \Spryker\Zed\ProductCustomerPermissionCollector\Business\Search\ProductCustomerPermissionSearchCollector
      */
     public function createSearchProductCustomerPermissionCollector()
     {
-        $searchCollector = new ProductCustomerPermissionCollector(
+        $searchCollector = new ProductCustomerPermissionSearchCollector(
             $this->getUtilDataReaderService()
         );
         $searchCollector->setTouchQueryContainer($this->getTouchQueryContainer());
         $searchCollector->setQueryBuilder($this->createProductCustomerPermissionSearchCollectorQuery());
 
         return $searchCollector;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelationCollector\Business\Collector\Storage\ProductRelationCollector
+     */
+    public function createStorageProductCustomerPermissionCollector()
+    {
+        $storageCollector = new ProductCustomerPermissionStorageCollector(
+            $this->getUtilDataReaderService()
+        );
+
+        $storageCollector->setTouchQueryContainer($this->getTouchQueryContainer());
+        $storageCollector->setQueryBuilder($this->createProductCustomerPermissionSearchCollectorQuery());
+
+        return $storageCollector;
     }
 
     /**
