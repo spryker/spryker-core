@@ -121,7 +121,9 @@ class ElasticsearchWriter implements WriterInterface, ConfigurableSearchWriterIn
         foreach ($dataSet as $key => $data) {
             $document = clone $documentPrototype;
 
-            $this->setParent($document, $data);
+            if (is_array($data)) {
+                $this->setParent($document, $data);
+            }
 
             $document->setId($key);
             $document->setData($data);
