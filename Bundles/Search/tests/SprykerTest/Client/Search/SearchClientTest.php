@@ -205,7 +205,7 @@ class SearchClientTest extends Unit
 
         $clientMock->setFactory(new SearchFactory());
 
-        $clientMock->searchKeys('foo:bar', 25, 100);
+        $clientMock->searchQueryString('foo:bar', 25, 100);
     }
 
     /**
