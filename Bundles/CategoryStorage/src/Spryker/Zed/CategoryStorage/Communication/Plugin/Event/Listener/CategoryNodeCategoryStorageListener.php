@@ -8,13 +8,16 @@
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Category\Dependency\CategoryEvents;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  */
-class CategoryNodeCategoryStorageListener extends AbstractCategoryNodeStorageListener
+class CategoryNodeCategoryStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -33,9 +36,11 @@ class CategoryNodeCategoryStorageListener extends AbstractCategoryNodeStorageLis
         $categoryNodeIds = $this->getQueryContainer()->queryCategoryNodeIdsByCategoryIds($categoryIds)->find()->getData();
 
         if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_DELETE) {
-            $this->unpublish($categoryNodeIds);
-        } else {
-            $this->publish($categoryNodeIds);
+            $this->getFacade()->unpublish($categoryNodeIds);
+
+            return;
         }
+
+        $this->getFacade()->publish($categoryNodeIds);
     }
 }

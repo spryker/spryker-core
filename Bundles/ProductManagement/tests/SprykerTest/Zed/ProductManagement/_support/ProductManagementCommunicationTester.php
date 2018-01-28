@@ -4,6 +4,7 @@ namespace SprykerTest\Zed\ProductManagement;
 use Codeception\Actor;
 use Spryker\Zed\Money\Communication\Plugin\Form\MoneyFormTypePlugin;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
+use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
 
 /**
  * Inherited Methods
@@ -23,6 +24,20 @@ use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 class ProductManagementCommunicationTester extends Actor
 {
     use _generated\ProductManagementCommunicationTesterActions;
+
+   /**
+    * Define custom actions here
+    */
+
+    /**
+     * @return void
+     */
+    public function registerProductManagementStoreRelationFormTypePlugin()
+    {
+        $this->setDependency(ProductManagementDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
+            return new StoreRelationToggleFormTypePlugin();
+        });
+    }
 
     /**
      * @return void

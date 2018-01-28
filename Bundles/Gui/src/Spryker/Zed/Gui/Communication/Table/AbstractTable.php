@@ -238,7 +238,7 @@ abstract class AbstractTable
     {
         $callback = function (&$value, $key) use ($safeColumns) {
             if (!in_array($key, $safeColumns)) {
-                $value = \twig_escape_filter(new Twig_Environment(), $value);
+                $value = \twig_escape_filter(new Twig_Environment(new Twig_Loader_Filesystem()), $value);
             }
 
             return $value;
@@ -870,14 +870,12 @@ abstract class AbstractTable
     {
         $formFactory = $this->getFormFactory();
 
-        $deleteForm = new DeleteForm();
-
         $options = [
             'fields' => $options,
             'action' => $url,
         ];
 
-        $form = $formFactory->create($deleteForm, [], $options);
+        $form = $formFactory->create(DeleteForm::class, [], $options);
 
         $options['form'] = $form->createView();
         $options['title'] = $title;

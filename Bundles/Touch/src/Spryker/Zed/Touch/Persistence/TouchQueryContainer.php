@@ -117,28 +117,6 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
-     * @api
-     *
-     * @deprecated Use `queryTouchEntriesByItemTypeAndItemIds` instead
-     *
-     * @param string $itemType
-     * @param string $itemEvent
-     * @param array $itemIds
-     *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
-     */
-    public function queryTouchEntries($itemType, $itemEvent, array $itemIds)
-    {
-        $query = $this->getFactory()->createTouchQuery()
-            ->setQueryKey(self::TOUCH_ENTRIES_QUERY_KEY)
-            ->filterByItemType($itemType)
-            ->filterByItemEvent($itemEvent)
-            ->filterByItemId($itemIds, Criteria::IN);
-
-        return $query;
-    }
-
-    /**
      * Specification:
      *  - return all items with given `$itemType` and `$itemId` whether they are active, inactive or deleted
      *
@@ -162,18 +140,21 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      * @api
      *
      * @param string $itemType
+     * @param int $idStore
      * @param int|null $idLocale
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
-    public function queryTouchDeleteStorageAndSearch($itemType, $idLocale = null)
+    public function queryTouchDeleteStorageAndSearch($itemType, $idStore, $idLocale = null)
     {
         $query = $this->getFactory()
             ->createTouchQuery()
             ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
             ->filterByItemType($itemType)
             ->leftJoinTouchSearch('search')
-            ->leftJoinTouchStorage('storage');
+            ->leftJoinTouchStorage('storage')
+            ->addJoinCondition('search', sprintf('search.fk_store = %d', $idStore))
+            ->addJoinCondition('storage', sprintf('storage.fk_store = %d', $idStore));
 
         if ($idLocale) {
             $query

@@ -40,7 +40,7 @@ class EditController extends AbstractController
 
         $glossaryForm = $this
             ->getFactory()
-            ->createTranslationUpdateForm($formData);
+            ->getTranslationUpdateForm($formData);
 
         $glossaryForm->handleRequest($request);
 
