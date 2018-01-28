@@ -34,8 +34,8 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
      */
     public function testCheckCartAvailabilityWhenBundledItemsAvailableShouldReturnEmptyMessageContainer()
     {
-        $availabilityFacadeMock = $this
-            ->createAvailabilityFacadeMock()
+        $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
+        $availabilityFacadeMock
             ->expects($this->exactly(2))
             ->method('isProductSellable')
             ->withConsecutive(
