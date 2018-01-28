@@ -17,6 +17,7 @@ use Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface;
 use Spryker\Client\Search\Model\Handler\ElasticsearchSearchHandler;
 use Spryker\Client\Search\Plugin\Config\SearchConfig;
 use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchKeysQuery;
+use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchStringQuery;
 use Spryker\Client\Search\SearchClient;
 use Spryker\Client\Search\SearchFactory;
 
@@ -183,6 +184,28 @@ class SearchClientTest extends Unit
         $clientMock->setFactory(new SearchFactory());
 
         $clientMock->searchKeys('foo', 25, 100);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSearchString()
+    {
+        $expectedQuery = new SearchStringQuery('foo:bar', 25, 100);
+
+        /** @var \Spryker\Client\Search\SearchClient|\PHPUnit_Framework_MockObject_MockObject $clientMock */
+        $clientMock = $this->getMockBuilder(SearchClient::class)
+            ->setMethods(['search'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $clientMock
+            ->expects($this->once())
+            ->method('search')
+            ->with($expectedQuery);
+
+        $clientMock->setFactory(new SearchFactory());
+
+        $clientMock->searchKeys('foo:bar', 25, 100);
     }
 
     /**
