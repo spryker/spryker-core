@@ -9,16 +9,17 @@ namespace Spryker\Zed\ProductValidity\Business\Validity;
 
 use DateTime;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Orm\Zed\Product\Persistence\SpyProduct;
-use Spryker\Shared\ProductValidity\ProductValidityConstants;
 use Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface;
 
 class ProductValidityHydrator implements ProductValidityHydratorInterface
 {
+    protected const VALIDITY_DATE_TIME_FORMAT = 'Y-m-d h:m';
+
+    /** @var \Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface */
     protected $productValidityQueryContainer;
 
     /**
-     * @param ProductValidityQueryContainerInterface $productValidityQueryContainer
+     * @param \Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface $productValidityQueryContainer
      */
     public function __construct(ProductValidityQueryContainerInterface $productValidityQueryContainer)
     {
@@ -26,9 +27,9 @@ class ProductValidityHydrator implements ProductValidityHydratorInterface
     }
 
     /**
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function hydrate(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
@@ -42,12 +43,12 @@ class ProductValidityHydrator implements ProductValidityHydratorInterface
             return $productConcreteTransfer;
         }
 
-        /** @var \Orm\Zed\Product\Persistence\SpyProductValidity $validityEntity */
+        /** @var \Orm\Zed\ProductValidity\Persistence\SpyProductValidity $validityEntity */
         $productConcreteTransfer->setValidFrom(
-            $this->formatDateTime($validityEntity->getValidFrom())
+            $this->formatDateTime($productValidityEntity->getValidFrom())
         );
         $productConcreteTransfer->setValidTo(
-            $this->formatDateTime($validityEntity->getValidTo())
+            $this->formatDateTime($productValidityEntity->getValidTo())
         );
 
         return $productConcreteTransfer;
@@ -60,6 +61,6 @@ class ProductValidityHydrator implements ProductValidityHydratorInterface
      */
     protected function formatDateTime(DateTime $dateTime = null)
     {
-        return $dateTime ? $dateTime->format(ProductValidityConstants::VALIDITY_DATE_TIME_FORMAT) : null;
+        return $dateTime ? $dateTime->format(static::VALIDITY_DATE_TIME_FORMAT) : null;
     }
 }

@@ -7,7 +7,7 @@
 namespace Spryker\Zed\ProductValidity\Business\ProductConcrete;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductValidityTableMap;
-use Spryker\Zed\ProductValidity\Dependency\ProductValidityToProductFacadeInterface;
+use Spryker\Zed\ProductValidity\Dependency\Facade\ProductValidityToProductFacadeInterface;
 use Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Traversable;
@@ -26,12 +26,12 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
      */
     protected $productConcreteActivator;
 
-    /** @var  ProductValidityToProductFacadeInterface */
+    /** @var \Spryker\Zed\ProductValidity\Dependency\Facade\ProductValidityToProductFacadeInterface */
     protected $productFacade;
 
     /**
-     * @param ProductValidityQueryContainerInterface $queryContainer
-     * @param ProductValidityToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductValidity\Dependency\Facade\ProductValidityToProductFacadeInterface $productFacade
      */
     public function __construct(
         ProductValidityQueryContainerInterface $queryContainer,
@@ -87,7 +87,7 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
     }
 
     /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Traversable
+     * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidity[]|\Traversable
      */
     protected function findProductsBecomingActive(): \Traversable
     {
@@ -98,7 +98,7 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
     }
 
     /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Traversable
+     * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidity[]|\Traversable
      */
     protected function findProductsBecomingInactive(): \Traversable
     {
@@ -109,8 +109,8 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Traversable $productsBecomingActive
-     * @param \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Traversable $productsBecomingInactive
+     * @param \Orm\Zed\ProductValidity\Persistence\SpyProductValidity[]|\Traversable $productsBecomingActive
+     * @param \Orm\Zed\ProductValidity\Persistence\SpyProductValidity[]|\Traversable $productsBecomingInactive
      *
      * @return void
      */
@@ -123,7 +123,7 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Traversable $productValidityEntities
+     * @param \Orm\Zed\ProductValidity\Persistence\SpyProductValidity[]|\Traversable $productValidityEntities
      *
      * @return void
      */
@@ -138,7 +138,7 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Traversable $productValidityEntities
+     * @param \Orm\Zed\ProductValidity\Persistence\SpyProductValidity[]|\Traversable $productValidityEntities
      *
      * @return void
      */

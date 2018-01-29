@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use DateTime;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Shared\Product\ProductValidityConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
@@ -31,6 +30,8 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class ProductConcreteFormEdit extends ProductFormAdd
 {
+    const VALIDITY_DATE_TIME_FORMAT = 'Y-m-d h:m';
+
     const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const FIELD_ID_PRODUCT_CONCRETE = 'id_product';
     const FIELD_VALID_FROM = 'valid_from';
@@ -326,7 +327,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                         return null;
                     }
 
-                    return $dateAsObject->format(ProductValidityConstants::VALIDITY_DATE_TIME_FORMAT);
+                    return $dateAsObject->format(static::VALIDITY_DATE_TIME_FORMAT);
                 }
             ));
     }

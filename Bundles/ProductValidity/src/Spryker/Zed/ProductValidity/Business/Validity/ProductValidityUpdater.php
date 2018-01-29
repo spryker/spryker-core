@@ -1,21 +1,24 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\ProductValidity\Business\Validity;
-
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface;
 
-class ProductValidityUpdater implements  ProductValidityUpdaterInterface
+class ProductValidityUpdater implements ProductValidityUpdaterInterface
 {
     /**
-     * @var ProductValidityQueryContainerInterface
+     * @var \Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface
      */
     protected $productValidityQueryContainer;
 
     /**
-     * @param ProductValidityQueryContainerInterface $productValidityQueryContainer
+     * @param \Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface $productValidityQueryContainer
      */
     public function __construct(ProductValidityQueryContainerInterface $productValidityQueryContainer)
     {
@@ -23,9 +26,9 @@ class ProductValidityUpdater implements  ProductValidityUpdaterInterface
     }
 
     /**
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function update(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
@@ -33,14 +36,12 @@ class ProductValidityUpdater implements  ProductValidityUpdaterInterface
 
         $productValidityEntity = $this->productValidityQueryContainer
             ->queryProductValidityByIdProductConcrete($productConcreteTransfer->getIdProductConcrete())
-            ->filterByFkProduct()
             ->findOneOrCreate();
 
         $productValidityEntity->setValidFrom($productConcreteTransfer->getValidFrom());
         $productValidityEntity->setValidTo($productConcreteTransfer->getValidTo());
 
         $productValidityEntity->save();
-
 
         return $productConcreteTransfer;
     }

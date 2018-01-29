@@ -1,8 +1,13 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\ProductValidity\Persistence;
 
-
+use Orm\Zed\ProductValidity\Persistence\SpyProductValidityQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -55,5 +60,20 @@ class ProductValidityQueryContainer extends AbstractQueryContainer implements Pr
             ->getFactory()
             ->createProductValidityQuery()
             ->filterByValidTo('now', Criteria::LESS_THAN);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidityQuery
+     */
+    public function queryProductValidityByIdProductConcrete(int $idProductConcrete): SpyProductValidityQuery
+    {
+        return $this->queryProductValidity()
+            ->filterByFkProduct($idProductConcrete);
     }
 }

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\ProductValidity\Communication\Plugin;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -9,12 +14,12 @@ use Spryker\Zed\Product\Business\Product\Observer\ProductConcreteUpdateObserverI
 /**
  * @method \Spryker\Zed\ProductValidity\Business\ProductValidityFacadeInterface getFacade()
  */
-class ProductValidityUpdateObserver extends AbstractPlugin implements ProductConcreteUpdateObserverInterface
+class ProductValidityUpdatePlugin extends AbstractPlugin implements ProductConcreteUpdateObserverInterface
 {
     /**
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function update(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {

@@ -1,17 +1,19 @@
 <?php
 
-namespace Spryker\Zed\ProductValidity\Dependency;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
-
-use Spryker\Zed\Product\Business\ProductFacadeInterface;
+namespace Spryker\Zed\ProductValidity\Dependency\Facade;
 
 class ProductValidityToProductFacadeBridge implements ProductValidityToProductFacadeInterface
 {
-    /** @var  ProductFacadeInterface */
+    /** @var \Spryker\Zed\Product\Business\ProductFacadeInterface */
     protected $productFacade;
 
     /**
-     * @param ProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\Product\Business\ProductFacadeInterface $productFacade
      */
     public function __construct($productFacade)
     {

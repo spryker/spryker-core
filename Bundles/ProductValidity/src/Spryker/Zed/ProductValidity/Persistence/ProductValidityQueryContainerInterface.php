@@ -1,9 +1,13 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\ProductValidity\Persistence;
 
-
-use Orm\Zed\Product\Persistence\SpyProductValidityQuery;
+use Orm\Zed\ProductValidity\Persistence\SpyProductValidityQuery;
 
 interface ProductValidityQueryContainerInterface
 {
@@ -15,12 +19,13 @@ interface ProductValidityQueryContainerInterface
     public function queryProductValidity();
 
     /**
+     * @api
+     *
      * @param int $idProductConcrete
      *
-     * @return SpyProductValidityQuery
+     * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidityQuery
      */
     public function queryProductValidityByIdProductConcrete(int $idProductConcrete): SpyProductValidityQuery;
-
 
     /**
      * @api

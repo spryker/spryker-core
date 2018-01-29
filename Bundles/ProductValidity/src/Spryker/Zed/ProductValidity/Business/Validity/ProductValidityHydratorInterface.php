@@ -8,14 +8,13 @@
 namespace Spryker\Zed\ProductValidity\Business\Validity;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Orm\Zed\Product\Persistence\SpyProduct;
 
 interface ProductValidityHydratorInterface
 {
     /**
-     * @param ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return ProductConcreteTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function hydrate(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }

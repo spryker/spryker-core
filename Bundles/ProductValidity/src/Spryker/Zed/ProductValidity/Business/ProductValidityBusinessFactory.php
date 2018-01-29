@@ -1,16 +1,16 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\ProductValidity\Business;
 
-
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductValidity\Business\Validity\ProductValidityHydrator;
-use Spryker\Zed\ProductValidity\Business\Validity\ProductValidityHydratorInterface;
 use Spryker\Zed\ProductValidity\Business\ProductConcrete\ProductConcreteSwitcher;
+use Spryker\Zed\ProductValidity\Business\Validity\ProductValidityHydrator;
 use Spryker\Zed\ProductValidity\Business\Validity\ProductValidityUpdater;
-use Spryker\Zed\ProductValidity\Business\Validity\ProductValidityUpdaterInterface;
-use Spryker\Zed\ProductValidity\Dependency\ProductValidityToProductFacadeInterface;
 use Spryker\Zed\ProductValidity\ProductValidityDependencyProvider;
 
 /**
@@ -30,7 +30,7 @@ class ProductValidityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductValidityHydratorInterface
+     * @return \Spryker\Zed\ProductValidity\Business\Validity\ProductValidityHydratorInterface
      */
     public function createProductValidityHydrator()
     {
@@ -40,7 +40,7 @@ class ProductValidityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductValidityUpdaterInterface
+     * @return \Spryker\Zed\ProductValidity\Business\Validity\ProductValidityUpdaterInterface
      */
     public function createProductValidityUpdater()
     {
@@ -50,7 +50,7 @@ class ProductValidityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return ProductValidityToProductFacadeInterface
+     * @return \Spryker\Zed\ProductValidity\Dependency\Facade\ProductValidityToProductFacadeInterface
      */
     public function getProductFacade()
     {
