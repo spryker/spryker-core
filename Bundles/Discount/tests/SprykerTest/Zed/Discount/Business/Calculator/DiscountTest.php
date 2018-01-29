@@ -127,6 +127,7 @@ class DiscountTest extends Unit
      */
     public function testCalculateDiscountsRetrievesDiscount()
     {
+        // Assign
         $expectedDiscount = (new DiscountTransfer())
             ->setIdDiscount(5);
         $collectedDiscount = (new CollectedDiscountTransfer())
@@ -137,8 +138,13 @@ class DiscountTest extends Unit
             ->setUsedNotAppliedVoucherCodes([])
             ->setVoucherDiscounts(new ArrayObject([]));
 
-        $this->calculatorMock->expects($this->any())->method('calculate')->willReturn([$collectedDiscount]);
-        $this->storeFacadeMock->expects($this->any())->method('getStoreByName')->willReturn($this->getCurrentStore());
+        $this->calculatorMock->expects($this->any())
+            ->method('calculate')
+            ->willReturn([$collectedDiscount]);
+
+        $this->storeFacadeMock->expects($this->any())
+            ->method('getStoreByName')
+            ->willReturn($this->getCurrentStore());
 
         $discountQueryMock = $this->getMockBuilder(SpyDiscountQuery::class)
             ->disableOriginalConstructor()
@@ -162,8 +168,10 @@ class DiscountTest extends Unit
             ->method('hydrateDiscountTransfer')
             ->willReturn($expectedDiscount);
 
+        // Act
         $actualResult = $this->discountMock->calculate($quoteTransfer);
 
+        // Assert
         $this->assertEquals([$expectedDiscount], $actualResult->getCartRuleDiscounts()->getArrayCopy());
     }
 
