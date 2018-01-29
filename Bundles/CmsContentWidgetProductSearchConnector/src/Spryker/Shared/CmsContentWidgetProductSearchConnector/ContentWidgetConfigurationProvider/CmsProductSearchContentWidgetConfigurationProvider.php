@@ -40,6 +40,7 @@ class CmsProductSearchContentWidgetConfigurationProvider implements CmsContentWi
         return <<<EOT
             Simple example: {{ product_search('is-active:false AND locale:de_DE') }}.
             Whole search query should be in one string and passed as first parameter.
+            You should use `AND` in capital letters, otherwise ElasticSearch will mark it as part of searching text.
             To use different template, add it as second parameter:
             {{ product_search('is-active:false AND locale:de_DE', 'default') }}.
 EOT;
