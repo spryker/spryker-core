@@ -20,6 +20,8 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
@@ -130,6 +132,27 @@ class ProductConcreteFormEdit extends ProductFormAdd
                 'attr' => [
                     'class' => 'datepicker js-from-datetime safe-datetime',
                 ],
+                'constraints' => [
+                     new Callback([
+                        'callback' => function ($newFrom, ExecutionContextInterface $context) {
+                            $formData = $context->getRoot()->getData();
+
+                            if (!$newFrom) {
+                                return;
+                            }
+
+                            if ($formData[static::FIELD_VALID_TO]) {
+                                if ($newFrom > $formData[static::FIELD_VALID_TO]) {
+                                    $context->addViolation('Date "Valid from" cannot be later than "Valid to".');
+                                }
+
+                                if ($newFrom == $formData[static::FIELD_VALID_TO]) {
+                                    $context->addViolation('Date "Valid from" is the same as "Valid to".');
+                                }
+                            }
+                        },
+                    ])
+                ],
             ]
         );
 
@@ -155,8 +178,23 @@ class ProductConcreteFormEdit extends ProductFormAdd
                 'required' => false,
                 'attr' => [
                     'class' => 'datepicker js-to-datetime safe-datetime',
-                    'styles' => 'position: relative; z-index: 100000;'
                 ],
+                'constraints' => [
+                    new Callback([
+                        'callback' => function ($newTo, ExecutionContextInterface $context) {
+                            $formData = $context->getRoot()->getData();
+                            if (!$newTo) {
+                                return;
+                            }
+
+                            if ($formData[static::FIELD_VALID_FROM]) {
+                                if ($newTo < $formData[static::FIELD_VALID_FROM]) {
+                                    $context->addViolation('Date "Valid to" cannot be earlier than "Valid from".');
+                                }
+                            }
+                        },
+                    ])
+                ]
             ]
         );
 

@@ -314,6 +314,6 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
         return $this
             ->getFactory()
             ->createProductValidityQuery()
-            ->filterByValidFrom('now', Criteria::GREATER_EQUAL);
+            ->filterByValidTo('now', Criteria::LESS_THAN);
     }
 }
