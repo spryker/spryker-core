@@ -177,6 +177,8 @@ class Discount implements DiscountInterface
      */
     protected function getApplicableDiscounts(QuoteTransfer $quoteTransfer)
     {
+        $quoteTransfer->requireStore();
+
         $discounts = $this->retrieveActiveCartAndVoucherDiscounts(
             $this->getVoucherCodes($quoteTransfer),
             $this->getIdStoreByName($quoteTransfer->getStore()->getName())

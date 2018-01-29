@@ -95,6 +95,8 @@ class DiscountPersist implements DiscountPersistInterface
         SpyDiscount $discountEntity,
         DiscountConfiguratorTransfer $discountConfiguratorTransfer
     ) {
+        $discountConfiguratorTransfer->getDiscountGeneral()->requireStoreRelation();
+
         if ($discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType() === DiscountConstants::TYPE_VOUCHER) {
             $this->saveVoucherPool($discountEntity);
         }

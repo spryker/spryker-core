@@ -22,6 +22,7 @@ use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Shared\Discount\DiscountConstants;
@@ -752,6 +753,7 @@ class DiscountFacadeTest extends Unit
         $discountGeneralTransfer->setDescription('Description');
         $discountGeneralTransfer->setValidFrom(new DateTime());
         $discountGeneralTransfer->setValidTo(new DateTime());
+        $discountGeneralTransfer->setStoreRelation((new StoreRelationTransfer())->setIdStores([]));
         $discountConfiguratorTransfer->setDiscountGeneral($discountGeneralTransfer);
 
         $discountCalculatorTransfer = new DiscountCalculatorTransfer();

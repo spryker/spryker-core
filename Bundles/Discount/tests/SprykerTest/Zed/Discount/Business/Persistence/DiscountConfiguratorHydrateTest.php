@@ -12,6 +12,7 @@ use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
 use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface;
+use Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationMapper;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 /**
@@ -27,6 +28,8 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 class DiscountConfiguratorHydrateTest extends Unit
 {
     /**
+     * @uses DiscountQueryContainerInterface::queryDiscountWithStoresByFkDiscount()
+     *
      * @return void
      */
     public function testHydrateDiscountShouldFillTransferWithDataFromEntities()
@@ -34,11 +37,13 @@ class DiscountConfiguratorHydrateTest extends Unit
         $discountEntity = $this->createDiscountEntity();
 
         $discountQueryMock = $this->createDiscountQueryMock();
-        $discountQueryMock->method('findOneByIdDiscount')
+        $discountQueryMock->method('find')
+            ->willReturn($discountQueryMock);
+        $discountQueryMock->method('getFirst')
             ->willReturn($discountEntity);
 
         $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
-        $discountQueryContainerMock->method('queryDiscount')->willReturn($discountQueryMock);
+        $discountQueryContainerMock->method('queryDiscountWithStoresByFkDiscount')->willReturn($discountQueryMock);
 
         $discountConfiguratorHydrate = $this->createDiscountConfiguratorHydrate($discountQueryContainerMock);
 
@@ -120,9 +125,14 @@ class DiscountConfiguratorHydrateTest extends Unit
                 ->willReturn(new ArrayObject());
         }
 
+        $discountStoreRelationMapperMock = $this->createDiscountStoreRelationMapperMock();
+        $discountConfigurationExpanderPlugins = [];
+
         return new DiscountConfiguratorHydrate(
             $discountQueryContainerMock,
-            $discountEntityMapperMock
+            $discountEntityMapperMock,
+            $discountStoreRelationMapperMock,
+            $discountConfigurationExpanderPlugins
         );
     }
 
@@ -160,7 +170,7 @@ class DiscountConfiguratorHydrateTest extends Unit
      */
     protected function createDiscountQueryMock()
     {
-        return $this->getMockBuilder(SpyDiscountQuery::class)->setMethods(['findOneByIdDiscount'])->getMock();
+        return $this->getMockBuilder(SpyDiscountQuery::class)->setMethods(['find', 'getFirst'])->getMock();
     }
 
     /**
@@ -169,5 +179,13 @@ class DiscountConfiguratorHydrateTest extends Unit
     protected function createEntityMapperMock()
     {
         return $this->getMockBuilder(DiscountEntityMapperInterface::class)->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationMapper
+     */
+    protected function createDiscountStoreRelationMapperMock()
+    {
+        return $this->getMockBuilder(DiscountStoreRelationMapper::class)->getMock();
     }
 }
