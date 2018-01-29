@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\Store\Dependency\Adapter;
 
-interface StoreToKernelStoreInterface
+interface StoreToStoreInterface
 {
     /**
      * @return string

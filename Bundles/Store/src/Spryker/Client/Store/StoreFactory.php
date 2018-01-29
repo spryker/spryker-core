@@ -8,20 +8,20 @@
 namespace Spryker\Client\Store;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Shared\Store\Reader\KernelStoreReader;
+use Spryker\Shared\Store\Reader\StoreReader;
 
 class StoreFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Shared\Store\Reader\KernelStoreReaderInterface
+     * @return \Spryker\Shared\Store\Reader\StoreReaderInterface
      */
-    public function createKernelStoreReader()
+    public function createStoreReader()
     {
-        return new KernelStoreReader($this->getStore());
+        return new StoreReader($this->getStore());
     }
 
     /**
-     * @return \Spryker\Shared\Store\Dependency\Adapter\StoreToKernelStoreInterface
+     * @return \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface
      */
     protected function getStore()
     {

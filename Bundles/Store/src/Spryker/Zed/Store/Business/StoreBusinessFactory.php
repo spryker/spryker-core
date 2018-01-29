@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Store\Business;
 
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Store\Reader\KernelStoreReader;
+use Spryker\Shared\Store\Reader\StoreReader as SharedStoreReader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProvider;
 use Spryker\Zed\Store\Business\Model\StoreMapper;
@@ -27,7 +27,7 @@ class StoreBusinessFactory extends AbstractBusinessFactory
     public function createStoreReader()
     {
         return new StoreReader(
-            $this->getKernelStore(),
+            $this->getSharedStore(),
             $this->getQueryContainer(),
             $this->createStoreMapper()
         );
@@ -38,21 +38,21 @@ class StoreBusinessFactory extends AbstractBusinessFactory
      */
     protected function createStoreMapper()
     {
-        return new StoreMapper($this->createKernelStoreReader());
+        return new StoreMapper($this->createSharedStoreReader());
     }
 
     /**
-     * @return \Spryker\Shared\Store\Reader\KernelStoreReaderInterface
+     * @return \Spryker\Shared\Store\Reader\StoreReaderInterface
      */
-    protected function createKernelStoreReader()
+    protected function createSharedStoreReader()
     {
-        return new KernelStoreReader($this->getKernelStore());
+        return new SharedStoreReader($this->getSharedStore());
     }
 
     /**
-     * @return \Spryker\Shared\Store\Dependency\Adapter\StoreToKernelStoreInterface
+     * @return \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface
      */
-    protected function getKernelStore()
+    protected function getSharedStore()
     {
         return $this->getProvidedDependency(StoreDependencyProvider::STORE);
     }

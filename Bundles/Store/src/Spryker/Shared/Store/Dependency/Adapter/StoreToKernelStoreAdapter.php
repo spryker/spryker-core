@@ -9,7 +9,7 @@ namespace Spryker\Shared\Store\Dependency\Adapter;
 
 use Spryker\Shared\Kernel\Store;
 
-class StoreToKernelStoreAdapter implements StoreToKernelStoreInterface
+class StoreToKernelStoreAdapter implements StoreToStoreInterface
 {
     /**
      * @var \Spryker\Shared\Kernel\Store

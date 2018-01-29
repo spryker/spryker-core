@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Store\Business\Model;
 
-use Spryker\Shared\Store\Dependency\Adapter\StoreToKernelStoreInterface;
+use Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface;
 use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 use Spryker\Zed\Store\Persistence\StoreQueryContainerInterface;
 
 class StoreReader implements StoreReaderInterface
 {
     /**
-     * @var \Spryker\Shared\Store\Dependency\Adapter\StoreToKernelStoreInterface
+     * @var \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface
      */
     protected $store;
 
@@ -41,12 +41,12 @@ class StoreReader implements StoreReaderInterface
     protected static $storeCache = [];
 
     /**
-     * @param \Spryker\Shared\Store\Dependency\Adapter\StoreToKernelStoreInterface $store
+     * @param \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface $store
      * @param \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface $storeQueryContainer
      * @param \Spryker\Zed\Store\Business\Model\StoreMapperInterface $storeMapper
      */
     public function __construct(
-        StoreToKernelStoreInterface $store,
+        StoreToStoreInterface $store,
         StoreQueryContainerInterface $storeQueryContainer,
         StoreMapperInterface $storeMapper
     ) {

@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\Store\Reader;
 
-interface KernelStoreReaderInterface
+interface StoreReaderInterface
 {
     /**
      * @param string $storeName

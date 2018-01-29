@@ -8,19 +8,19 @@
 namespace Spryker\Shared\Store\Reader;
 
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Shared\Store\Dependency\Adapter\StoreToKernelStoreInterface;
+use Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface;
 
-class KernelStoreReader implements KernelStoreReaderInterface
+class StoreReader implements StoreReaderInterface
 {
     /**
-     * @var \Spryker\Shared\Store\Dependency\Adapter\StoreToKernelStoreInterface
+     * @var \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface
      */
     protected $store;
 
     /**
-     * @param \Spryker\Shared\Store\Dependency\Adapter\StoreToKernelStoreInterface $store
+     * @param \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface $store
      */
-    public function __construct(StoreToKernelStoreInterface $store)
+    public function __construct(StoreToStoreInterface $store)
     {
         $this->store = $store;
     }
