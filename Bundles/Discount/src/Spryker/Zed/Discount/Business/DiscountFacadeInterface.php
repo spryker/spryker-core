@@ -22,12 +22,12 @@ interface DiscountFacadeInterface
 {
     /**
      * Specification:
-     *  - Finds all discounts with voucher
-     *  - Finds all discounts matching decision rules
-     *  - Collects discountable items for each discount type
-     *  - Applies discount to exclusive if exists
-     *  - Distributes discount amount throw all discountable items
-     *  - Adds discount totals to quote discount properties
+     * - Finds all discounts with voucher within the provided Store.
+     * - Finds all discounts matching decision rules.
+     * - Collects discountable items for each discount type.
+     * - Applies discount to exclusive if exists.
+     * - Distributes discount amount throw all discountable items.
+     * - Adds discount totals to quote discount properties.
      *
      * @api
      *
