@@ -24,6 +24,7 @@ class EditBlockController extends AbstractController
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
     const REDIRECT_URL_DEFAULT = '/cms-block-gui/list-block';
 
+    const MESSAGE_CMS_BLOCK_INVALID_ID_ERROR = 'Invalid Id provided.';
     const MESSAGE_CMS_BLOCK_UPDATE_ERROR = 'Invalid data provided.';
     const MESSAGE_CMS_BLOCK_UPDATE_SUCCESS = 'CMS Block was updated successfully.';
     const MESSAGE_CMS_BLOCK_ACTIVATE_SUCCESS = 'CMS Block was activated successfully.';
@@ -41,6 +42,17 @@ class EditBlockController extends AbstractController
             ->syncTemplate($this->getFactory()->getConfig()->getTemplatePath());
 
         $idCmsBlock = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_BLOCK));
+
+        $cmsBlockTransfer = $this->getFactory()
+            ->getCmsBlockFacade()
+            ->findCmsBlockById($idCmsBlock);
+
+        if (!$cmsBlockTransfer) {
+            $this->addErrorMessage(static::MESSAGE_CMS_BLOCK_INVALID_ID_ERROR);
+            $redirectUrl = Url::generate('/cms-block-gui/list-block')->build();
+
+            return $this->redirectResponse($redirectUrl);
+        }
 
         $cmsBlockFormTypeDataProvider = $this->getFactory()
             ->createCmsBlockFormDataProvider();
@@ -61,10 +73,6 @@ class EditBlockController extends AbstractController
         $availableLocales = $this->getFactory()
             ->getLocaleFacade()
             ->getLocaleCollection();
-
-        $cmsBlockTransfer = $this->getFactory()
-            ->getCmsBlockFacade()
-            ->findCmsBlockById($idCmsBlock);
 
         return $this->viewResponse([
             'idCmsBlock' => $idCmsBlock,
