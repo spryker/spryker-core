@@ -40,7 +40,7 @@ class TransferObjectFormatter extends ArrayFormatter
         }
 
         $collection = [];
-        if ($this->isWithOneToMany() && $this->hasLimit > 1) {
+        if ($this->isWithOneToMany() && $this->hasLimit) {
             throw new LogicException('Cannot use limit() in conjunction with with() on a one-to-many relationship. Please remove the with() call, or the limit() call.');
         }
 
@@ -77,7 +77,7 @@ class TransferObjectFormatter extends ArrayFormatter
         $this->checkInit();
         $result = null;
 
-        if ($this->isWithOneToMany() && $this->hasLimit > 1) {
+        if ($this->isWithOneToMany() && $this->hasLimit) {
             throw new LogicException('Cannot use limit() in conjunction with with() on a one-to-many relationship. Please remove the with() call, or the limit() call.');
         }
 

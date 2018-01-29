@@ -28,15 +28,13 @@ class BlogRepository extends AbstractRepository implements BlogRepositoryInterfa
     /**
      * @param \Generated\Shared\Transfer\BlogCriteriaFilterTransfer $blogCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\BlogCriteriaFilterTransfer[]
+     * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer[]
      */
     public function filterBlogPosts(BlogCriteriaFilterTransfer $blogCriteriaFilterTransfer)
     {
         $blogQuery = $this->getFactory()
-            ->createBlogQuery()
-            ->joinSpyBlogComment();
+            ->createBlogQuery();
 
-        //feature specific
         if ($blogCriteriaFilterTransfer->getName()) {
             $blogQuery->filterByName($blogCriteriaFilterTransfer->getName(), Criteria::LIKE);
         }
@@ -45,42 +43,7 @@ class BlogRepository extends AbstractRepository implements BlogRepositoryInterfa
             $blogQuery->filterByText($blogCriteriaFilterTransfer->getText(), Criteria::LIKE);
         }
 
-        //group to generic transfer
-        if ($blogCriteriaFilterTransfer->getOffset()) {
-            $blogQuery->offset($blogCriteriaFilterTransfer->getOffset());
-        }
-
-        if ($blogCriteriaFilterTransfer->getLimit()) {
-            $blogQuery->limit($blogCriteriaFilterTransfer->getLimit());
-        }
-
-        if ($blogCriteriaFilterTransfer->getSortBy()) {
-            $blogQuery->orderBy($blogCriteriaFilterTransfer->getSortBy());
-        }
-
-        $results = $blogQuery
-            ->setFormatter(ArrayFormatter::class)
-            ->find();
-
-        $blogCollection = [];
-        foreach ($results as $blogArray) {
-
-            $blogTransfer = $this->getFactory()
-                ->createBlogMapper()
-                ->toTransfer($blogArray, new BlogTransfer());
-
-            foreach ($blogArray['spy_blog_comments'] as $commentArray) {
-                $commentTransfer = $this->getFactory()
-                    ->createCommentMapper()
-                    ->toTransfer($commentArray, new BlogCommentTransfer());
-
-                $blogTransfer->addComment($commentTransfer);
-            }
-
-            $blogCollection[] = $blogTransfer;
-        }
-
-        return $blogCollection;
+        return $this->buildQueryFromCriteria($blogQuery, $blogCriteriaFilterTransfer->getCriteria())->find();
     }
 
     /**

@@ -10,6 +10,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\BlogCommentTransfer;
 use Generated\Shared\Transfer\BlogCriteriaFilterTransfer;
 use Generated\Shared\Transfer\BlogTransfer;
+use Generated\Shared\Transfer\CriteriaTransfer;
 use Generated\Shared\Transfer\SpyBlogCommentEntityTransfer;
 use Generated\Shared\Transfer\SpyBlogCustomerEntityTransfer;
 use Generated\Shared\Transfer\SpyBlogEntityTransfer;
@@ -97,13 +98,34 @@ class BlogFacadeTest extends Unit
     public function testSaveFromFacadeShouldPersist()
     {
        $blogFacade = $this->createBlogFacade();
-        $blogEntityTransfer = (new SpyBlogEntityTransfer())
+       $blogEntityTransfer = (new SpyBlogEntityTransfer())
             ->setName(self::BLOG_NAME)
             ->setText('Text');
 
        $transfer = $blogFacade->save($blogEntityTransfer);
 
        $this->assertNotEmpty($transfer->getIdBlog());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterBlogPosts()
+    {
+        $blogRepository = $this->createBlogRepository();
+
+        $blogCriteriaFilterTransfer = new BlogCriteriaFilterTransfer();
+
+        $this->createBlog();
+        $this->createBlog();
+        $this->createBlog();
+
+        $criteriaTransfer = (new CriteriaTransfer())->setOffset(0)->setLimit(2);
+        $blogCriteriaFilterTransfer->setCriteria($criteriaTransfer);
+
+        $blogCollection = $blogRepository->filterBlogPosts($blogCriteriaFilterTransfer);
+        $this->assertCount(2, $blogCollection);
+
     }
 
     /**
