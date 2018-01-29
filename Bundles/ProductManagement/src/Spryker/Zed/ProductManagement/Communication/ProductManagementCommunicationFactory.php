@@ -42,16 +42,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductFormAdd(array $formData, array $formOptions = [])
     {
-        $formType = new ProductFormAdd(
-            $this->createLocaleProvider(),
-            $this->getProductQueryContainer(),
-            $this->getQueryContainer(),
-            $this->getMoneyFacade(),
-            $this->getUtilTextService(),
-            $this->getCurrencyFacade()
-        );
-
-        return $this->getFormFactory()->create($formType, $formData, $formOptions);
+        return $this->getFormFactory()->create(ProductFormAdd::class, $formData, $formOptions);
     }
 
     /**
@@ -62,16 +53,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductFormEdit(array $formData, array $formOptions = [])
     {
-        $formType = new ProductFormEdit(
-            $this->createLocaleProvider(),
-            $this->getProductQueryContainer(),
-            $this->getQueryContainer(),
-            $this->getMoneyFacade(),
-            $this->getUtilTextService(),
-            $this->getCurrencyFacade()
-        );
-
-        return $this->getFormFactory()->create($formType, $formData, $formOptions);
+        return $this->getFormFactory()->create(ProductFormEdit::class, $formData, $formOptions);
     }
 
     /**
@@ -82,16 +64,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductVariantFormEdit(array $formData, array $formOptions = [])
     {
-        $formType = new ProductConcreteFormEdit(
-            $this->createLocaleProvider(),
-            $this->getProductQueryContainer(),
-            $this->getQueryContainer(),
-            $this->getMoneyFacade(),
-            $this->getUtilTextService(),
-            $this->getCurrencyFacade()
-        );
-
-        return $this->getFormFactory()->create($formType, $formData, $formOptions);
+        return $this->getFormFactory()->create(ProductConcreteFormEdit::class, $formData, $formOptions);
     }
 
     /**
@@ -449,7 +422,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface
      */
-    protected function getMoneyFacade()
+    public function getMoneyFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_MONEY);
     }
@@ -457,7 +430,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface
      */
-    protected function getCurrencyFacade()
+    public function getCurrencyFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_CURRENCY);
     }

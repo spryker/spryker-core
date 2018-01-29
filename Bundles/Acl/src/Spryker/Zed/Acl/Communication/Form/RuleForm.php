@@ -7,12 +7,20 @@
 
 namespace Spryker\Zed\Acl\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
+ * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
+ */
 class RuleForm extends AbstractType
 {
     const OPTION_TYPE = 'option_type';
@@ -22,14 +30,6 @@ class RuleForm extends AbstractType
     const FIELD_ACTION = 'action';
     const FIELD_TYPE = 'type';
     const FIELD_FK_ACL_ROLE = 'fk_acl_role';
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'ruleset';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -76,7 +76,7 @@ class RuleForm extends AbstractType
      */
     protected function addBundleField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_BUNDLE, 'text', [
+        $builder->add(self::FIELD_BUNDLE, TextType::class, [
             'label' => 'Bundle',
             'constraints' => [
                new NotBlank(),
@@ -93,7 +93,7 @@ class RuleForm extends AbstractType
      */
     protected function addControllerField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_CONTROLLER, 'text', [
+        $builder->add(self::FIELD_CONTROLLER, TextType::class, [
             'label' => 'Controller',
             'constraints' => [
                 new NotBlank(),
@@ -110,7 +110,7 @@ class RuleForm extends AbstractType
      */
     protected function addActionField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ACTION, 'text', [
+        $builder->add(self::FIELD_ACTION, TextType::class, [
             'label' => 'Action',
             'constraints' => [
                 new NotBlank(),
@@ -128,7 +128,7 @@ class RuleForm extends AbstractType
      */
     protected function addPermissionField(FormBuilderInterface $builder, array $choices)
     {
-        $builder->add(self::FIELD_TYPE, 'choice', [
+        $builder->add(self::FIELD_TYPE, ChoiceType::class, [
             'label' => 'Permission',
             'choices' => $choices,
         ]);
@@ -143,8 +143,26 @@ class RuleForm extends AbstractType
      */
     protected function addRoleFkField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FK_ACL_ROLE, 'hidden', []);
+        $builder->add(self::FIELD_FK_ACL_ROLE, HiddenType::class, []);
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'ruleset';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

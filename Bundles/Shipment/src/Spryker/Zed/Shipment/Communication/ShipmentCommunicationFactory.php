@@ -41,9 +41,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCarrierForm(array $formData, array $formOptions = [])
     {
-        $form = new CarrierForm();
-
-        return $this->getFormFactory()->create($form, $formData, $formOptions);
+        return $this->getFormFactory()->create(CarrierForm::class, $formData, $formOptions);
     }
 
     /**
@@ -84,9 +82,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createMethodForm(ShipmentMethodTransfer $data, array $options = [])
     {
-        $form = new MethodForm($this->getMoneyCollectionFormTypePlugin());
-
-        return $this->getFormFactory()->create($form, $data, $options);
+        return $this->getFormFactory()->create(MethodForm::class, $data, $options);
     }
 
     /**

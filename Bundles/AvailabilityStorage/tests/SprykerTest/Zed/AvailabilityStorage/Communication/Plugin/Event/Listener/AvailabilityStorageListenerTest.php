@@ -58,18 +58,10 @@ class AvailabilityStorageListenerTest extends Unit
     /**
      * @return void
      */
-    protected function tearDown()
-    {
-        SpyAvailabilityStorageQuery::create()->deleteall();
-    }
-
-    /**
-     * @return void
-     */
     public function testAvailabilityStorageListenerStoreData()
     {
+        SpyAvailabilityStorageQuery::create()->filterByFkProductAbstract(1)->delete();
         $availabilityStorageCount = SpyAvailabilityStorageQuery::create()->count();
-        $this->assertSame(0, $availabilityStorageCount);
 
         // Act
         $availabilityStorageListener = new AvailabilityStorageListener();
@@ -81,7 +73,7 @@ class AvailabilityStorageListenerTest extends Unit
         $availabilityStorageListener->handleBulk($eventTransfers, AvailabilityEvents::AVAILABILITY_ABSTRACT_PUBLISH);
 
         // Assert
-        $this->assertAvailabilityStorage();
+        $this->assertAvailabilityStorage($availabilityStorageCount);
     }
 
     /**
@@ -89,8 +81,8 @@ class AvailabilityStorageListenerTest extends Unit
      */
     public function testAvailabilityProductStorageListenerStoreData()
     {
+        SpyAvailabilityStorageQuery::create()->filterByFkProductAbstract(1)->delete();
         $availabilityStorageCount = SpyAvailabilityStorageQuery::create()->count();
-        $this->assertSame(0, $availabilityStorageCount);
 
         // Act
         $availabilityStorageListener = new AvailabilityProductStorageListener();
@@ -104,7 +96,7 @@ class AvailabilityStorageListenerTest extends Unit
         $availabilityStorageListener->handleBulk($eventTransfers, ProductEvents::ENTITY_SPY_PRODUCT_UPDATE);
 
         // Assert
-        $this->assertAvailabilityStorage();
+        $this->assertAvailabilityStorage($availabilityStorageCount);
     }
 
     /**
@@ -122,14 +114,16 @@ class AvailabilityStorageListenerTest extends Unit
     }
 
     /**
+     * @param int $previousCount
+     *
      * @return void
      */
-    protected function assertAvailabilityStorage()
+    protected function assertAvailabilityStorage($previousCount)
     {
         $availabilityStorageCount = SpyAvailabilityStorageQuery::create()->count();
-        $this->assertEquals(1, $availabilityStorageCount);
-        $availabilityStorageEntity = SpyAvailabilityStorageQuery::create()->findOne();
-        $this->assertEquals(1, $availabilityStorageEntity->getFkProductAbstract());
+        $this->assertEquals($previousCount + 1, $availabilityStorageCount);
+        $availabilityStorageEntity = SpyAvailabilityStorageQuery::create()->findOneByFkProductAbstract(1);
+        $this->assertNotNull($availabilityStorageEntity);
         $data = $availabilityStorageEntity->getData();
         $this->assertEquals(10, $data['quantity']);
     }

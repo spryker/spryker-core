@@ -30,25 +30,16 @@ use Symfony\Component\Form\FormInterface;
 class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
+     * @deprecated Use `getProductOptionGroupType()` instead.
+     *
      * @param \Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider $productOptionGroupDataProvider
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createProductOptionGroup(ProductOptionGroupDataProvider $productOptionGroupDataProvider)
     {
-        $productOptionValueForm = $this->createProductOptionValueForm();
-        $createProductOptionTranslationForm = $this->createProductOptionTranslationForm();
-
-        $productOptionGroupFormType = new ProductOptionGroupForm(
-            $productOptionValueForm,
-            $createProductOptionTranslationForm,
-            $this->createArrayToArrayObjectTransformer(),
-            $this->createStringToArrayTransformer(),
-            $this->getQueryContainer()
-        );
-
         return $this->getFormFactory()->create(
-            $productOptionGroupFormType,
+            ProductOptionGroupForm::class,
             $productOptionGroupDataProvider->getData(),
             array_merge(
                 [
@@ -60,23 +51,33 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Communication\Form\ProductOptionValueForm
+     * @param \Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider|null $productOptionGroupDataProvider
+     *
+     * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductOptionValueForm()
+    public function getProductOptionGroupForm(ProductOptionGroupDataProvider $productOptionGroupDataProvider)
     {
-        return new ProductOptionValueForm(
-            $this->getMoneyCollectionFormTypePlugin(),
-            $this->getQueryContainer(),
-            $this->createPriceTranformer()
-        );
+        return $this->createProductOptionGroup($productOptionGroupDataProvider);
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Communication\Form\ProductOptionTranslationForm
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
+     */
+    public function createProductOptionValueForm()
+    {
+        return ProductOptionValueForm::class;
+    }
+
+    /**
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
      */
     public function createProductOptionTranslationForm()
     {
-        return new ProductOptionTranslationForm();
+        return ProductOptionTranslationForm::class;
     }
 
     /**
@@ -158,7 +159,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Symfony\Component\Form\DataTransformerInterface
      */
-    protected function createArrayToArrayObjectTransformer()
+    public function createArrayToArrayObjectTransformer()
     {
         return new ArrayToArrayObjectTransformer();
     }
@@ -166,15 +167,25 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Symfony\Component\Form\DataTransformerInterface
      */
-    protected function createStringToArrayTransformer()
+    public function createStringToArrayTransformer()
     {
         return new StringToArrayTransformer();
     }
 
     /**
+     * @deprecated Please use `createPriceTransformer()` instead.
+     *
      * @return \Symfony\Component\Form\DataTransformerInterface
      */
-    protected function createPriceTranformer()
+    public function createPriceTranformer()
+    {
+        return $this->createPriceTransformer();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createPriceTransformer()
     {
         return new PriceTransformer($this->getMoneyFacade());
     }

@@ -7,22 +7,18 @@
 
 namespace Spryker\Zed\Gui\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
+ */
 class DeleteForm extends AbstractType
 {
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'delete_form';
-    }
-
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -75,7 +71,7 @@ class DeleteForm extends AbstractType
     protected function addDeleteField(FormBuilderInterface $builder, array $options)
     {
         foreach ($options['fields'] as $key => $value) {
-            $builder->add($key, 'hidden', [
+            $builder->add($key, HiddenType::class, [
                 'data' => $value,
             ]);
         }

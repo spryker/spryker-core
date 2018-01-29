@@ -121,7 +121,7 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
         $availabilityGuiStockFormDataProvider = $this->createAvailabilityGuiStockFormDataProvider($storeTransfer);
 
         return $this->getFormFactory()->create(
-            $availabilityForm,
+            AvailabilityStockForm::class,
             $availabilityGuiStockFormDataProvider->getData($idProduct, $sku),
             $availabilityGuiStockFormDataProvider->getOptions()
         );
