@@ -13,4 +13,5 @@ abstract class AbstractFactory
     use BundleDependencyProviderResolverAwareTrait;
     use QueryContainerResolverAwareTrait;
     use RepositoryResolverAwareTrait;
+    use EntityManagerResolverAwareTrait;
 }

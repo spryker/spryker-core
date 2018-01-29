@@ -18,7 +18,6 @@ use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Propel\Runtime\Formatter\ArrayFormatter;
 use Spryker\Zed\Kernel\Persistence\Repository\TransferObjectFormatter;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -26,8 +25,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class BlogRepository extends AbstractRepository implements BlogRepositoryInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @param \Generated\Shared\Transfer\BlogCriteriaFilterTransfer $blogCriteriaFilterTransfer
      *
@@ -89,15 +86,9 @@ class BlogRepository extends AbstractRepository implements BlogRepositoryInterfa
     /**
      * @api
      *
-     * @dependency Customer, Product, Store  should be included in composer.json
+     * @dependency Customer, Product, Store should be included in composer.json
      *
      * @param string $firstName
-     *
-     * Criteria
-     *  - limit  = int
-     *  - offset = int
-     *  - sortBy = string
-     *
      * @param \Generated\Shared\Transfer\CriteriaTransfer $criteriaTransfer
      *
      * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer[]

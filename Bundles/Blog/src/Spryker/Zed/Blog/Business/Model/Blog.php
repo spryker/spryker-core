@@ -8,61 +8,79 @@ namespace Spryker\Zed\Blog\Business\Model;
 
 use Generated\Shared\Transfer\BlogCriteriaFilterTransfer;
 use Generated\Shared\Transfer\BlogTransfer;
+use Generated\Shared\Transfer\SpyBlogEntityTransfer;
+use Spryker\Zed\Blog\Persistence\BlogEntityManagerInterface;
 use Spryker\Zed\Blog\Persistence\BlogRepositoryInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class Blog
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Blog\Persistence\BlogRepositoryInterface
      */
     protected $blogRepository;
 
     /**
+     * @var \Spryker\Zed\Blog\Persistence\BlogEntityManagerInterface
+     */
+    protected $blogEntityManager;
+
+    /**
      * @param \Spryker\Zed\Blog\Persistence\BlogRepositoryInterface $blogRepository
+     * @param \Spryker\Zed\Blog\Persistence\BlogEntityManagerInterface $blogEntityManager
      */
-    public function __construct(BlogRepositoryInterface $blogRepository)
-    {
+    public function __construct(
+        BlogRepositoryInterface $blogRepository,
+        BlogEntityManagerInterface $blogEntityManager
+    ) {
         $this->blogRepository = $blogRepository;
+        $this->blogEntityManager = $blogEntityManager;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\BlogTransfer $blogTransfer
+     * @param \Generated\Shared\Transfer\SpyBlogEntityTransfer $blogTransfer
      *
-     * @return \Generated\Shared\Transfer\BlogTransfer
+     * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer
      */
-    public function save(BlogTransfer $blogTransfer)
+    public function save(SpyBlogEntityTransfer $blogTransfer)
     {
-        return $this->blogRepository->saveBlog($blogTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function() use($blogTransfer) {
 
+            //Everything in this blog will be done in a single transaction.
+
+            return $this->executeSaveBlogTransaction($blogTransfer);
+        });
     }
 
     /**
-     * @param int $id
+     * @param \Generated\Shared\Transfer\SpyBlogEntityTransfer $blogTransfer
      *
-     * @return \Generated\Shared\Transfer\BlogTransfer
+     * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer
      */
-    public function findBlogById($id)
+    protected function executeSaveBlogTransaction(SpyBlogEntityTransfer $blogTransfer)
     {
-        return $this->blogRepository->findBlogById($id);
+        return $this->blogEntityManager->saveBlog($blogTransfer);
+    }
+
+    /**
+     * @param int $name
+     *
+     * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer
+     */
+    public function findBlogByName($name)
+    {
+        return $this->blogRepository->findBlogByName($name);
     }
 
     /**
      * @param \Generated\Shared\Transfer\BlogCriteriaFilterTransfer $blogCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\BlogCriteriaFilterTransfer[]
+     * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer[]
      */
     public function filterBlogPosts(BlogCriteriaFilterTransfer $blogCriteriaFilterTransfer)
     {
         return $this->blogRepository->filterBlogPosts($blogCriteriaFilterTransfer);
     }
-
-
-    /**
-     * @param $id
-     */
-    public function removeBlogById($id)
-    {
-        $this->blogRepository->removeBlogById($id);
-    }
-
 }

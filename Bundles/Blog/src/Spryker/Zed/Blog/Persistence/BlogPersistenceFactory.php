@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Blog\Persistence;
 
 use Orm\Zed\Blog\Persistence\SpyBlogCommentQuery;
+use Orm\Zed\Blog\Persistence\SpyBlogCustomerQuery;
 use Orm\Zed\Blog\Persistence\SpyBlogQuery;
 use Spryker\Zed\Blog\Persistence\Plugins\BlogPluginExecutor;
 use Spryker\Zed\Blog\Persistence\Propel\Mapper\BlogMapper;
@@ -30,6 +31,14 @@ class BlogPersistenceFactory extends AbstractPersistenceFactory
     public function createBlogCommentQuery()
     {
         return SpyBlogCommentQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Blog\Persistence\SpyBlogCustomerQuery
+     */
+    public function createBlogCustomerQuery()
+    {
+        return SpyBlogCustomerQuery::create();
     }
 
     /**

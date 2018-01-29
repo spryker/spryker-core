@@ -8,43 +8,41 @@ namespace Spryker\Zed\Blog\Business;
 
 use Generated\Shared\Transfer\BlogCriteriaFilterTransfer;
 use Generated\Shared\Transfer\BlogTransfer;
+use Generated\Shared\Transfer\SpyBlogEntityTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Blog\Business\BlogBusinessFactory getFactory()
  * @method \Spryker\Zed\Blog\Persistence\BlogRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Blog\Persistence\BlogEntityManagerInterface getEntityManager()
  */
 class BlogFacade extends AbstractFacade
 {
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\BlogTransfer $blogTransfer
+     * @param \Generated\Shared\Transfer\SpyBlogEntityTransfer $blogEntityTransfer
      *
-     * @return \Generated\Shared\Transfer\BlogTransfer
+     * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer
      */
-    public function save(BlogTransfer $blogTransfer)
+    public function save(SpyBlogEntityTransfer $blogEntityTransfer)
     {
-        //Using repository directly
-        //$this->getRepository()->saveBlog($blogTransfer);
-
-        return $this->getFactory()
-            ->createBlog()
-            ->save($blogTransfer);
+        return $this->getEntityManager()
+            ->saveBlog($blogEntityTransfer);
     }
 
     /**
      * @api
      *
-     * @param int $id
+     * @param string $name
      *
-     * @return \Generated\Shared\Transfer\BlogTransfer
+     * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer
      */
-    public function findBlogById($id)
+    public function findBlogByName($name)
     {
         return $this->getFactory()
             ->createBlog()
-            ->findBlogById($id);
+            ->findBlogByName($name);
     }
 
     /**
@@ -52,7 +50,7 @@ class BlogFacade extends AbstractFacade
      *
      * @param \Generated\Shared\Transfer\BlogCriteriaFilterTransfer $blogCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\BlogCriteriaFilterTransfer[]
+     * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer[]
      */
     public function filterBlogPosts(BlogCriteriaFilterTransfer $blogCriteriaFilterTransfer)
     {
@@ -60,19 +58,4 @@ class BlogFacade extends AbstractFacade
             ->createBlog()
             ->filterBlogPosts($blogCriteriaFilterTransfer);
     }
-
-    /**
-     * @api
-     *
-     * @param int $id
-     *
-     * @return void
-     */
-    public function removeBlogById($id)
-    {
-        $this->getFactory()
-            ->createBlog()
-            ->removeBlogById($id);
-    }
-
 }

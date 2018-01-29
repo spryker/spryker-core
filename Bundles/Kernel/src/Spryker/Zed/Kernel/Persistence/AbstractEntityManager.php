@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Kernel\Persistence\EntityManager\EntityManagerInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransferToEntityMapper;
 
 abstract class AbstractEntityManager implements EntityManagerInterface
 {
@@ -97,7 +98,7 @@ abstract class AbstractEntityManager implements EntityManagerInterface
     }
 
     /**
-     * This method saves SpyNameEntityTransfer data objects, it will try to persist whole object tree in single transaction.
+     * This method saves EntityTransferInterface data objects, it will try to persist whole object tree in single transaction.
      *
      * @param \Spryker\Shared\Kernel\Transfer\EntityTransferInterface $entityTransfer
      *
@@ -105,98 +106,18 @@ abstract class AbstractEntityManager implements EntityManagerInterface
      */
     public function save(EntityTransferInterface $entityTransfer)
     {
-        $parentEntity = $this->mapEntityCollection($entityTransfer);
+        $transferToEntityMapper = $this->createTransferToEntityMapper();
+        $parentEntity = $transferToEntityMapper->mapEntityCollection($entityTransfer);
         $parentEntity->save();
 
-        return $this->mapTransferCollection(get_class($entityTransfer), $parentEntity);
+        return $transferToEntityMapper->mapTransferCollection(get_class($entityTransfer), $parentEntity);
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\EntityTransferInterface $entityTransfer
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $parentEntity
-     *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
+     * @return \Spryker\Zed\Kernel\Persistence\EntityManager\TransferToEntityMapper
      */
-    public function mapEntityCollection(
-        EntityTransferInterface $entityTransfer,
-        ActiveRecordInterface $parentEntity = null
-    ) {
-        if ($parentEntity === null) {
-            $parentEntity = $this->mapEntity($entityTransfer);
-        }
-
-        $transferArray = $entityTransfer->modifiedToArray(false);
-        foreach ($transferArray as $propertyName => $value) {
-            if (!$value instanceof EntityTransferInterface && !$value instanceof \ArrayObject) {
-                continue;
-            }
-
-            $parentEntitySetterMethodName = $this->findParentEntitySetterMethodName($propertyName, $parentEntity);
-            if (is_array($value) || $value instanceof \ArrayObject) {
-                foreach ($value as $childTransfer) {
-                    $childEntity = $this->mapEntity($childTransfer);
-                    $entity = $this->mapEntityCollection($childTransfer, $childEntity);
-                    $parentEntity->$parentEntitySetterMethodName($entity);
-                }
-                continue;
-            }
-
-            $childEntity = $this->mapEntity($value);
-            $parentEntity->$parentEntitySetterMethodName($childEntity);
-        }
-
-        return $parentEntity;
-
-    }
-
-    /**
-     * @param string $relationName
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $parentEntity
-     *
-     * @return null|string
-     */
-    protected function findParentEntitySetterMethodName($relationName, ActiveRecordInterface $parentEntity)
+    protected function createTransferToEntityMapper()
     {
-        $relationName = str_replace('_', '', ucwords($relationName, '_'));
-
-        $tableNameClass = $parentEntity::TABLE_MAP;
-        $tableMap = $tableNameClass::getTableMap();
-        foreach ($tableMap->getRelations() as $relationMap) {
-            if ($relationMap->getPluralName() !== $relationName && $relationMap->getName() !== $relationName) {
-                continue;
-            }
-
-            return 'add' . $relationMap->getName();
-        }
-        return null;
-    }
-
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\EntityTransferInterface $entityTransfer
-     *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
-     */
-    protected function mapEntity(EntityTransferInterface $entityTransfer)
-    {
-        $entityName = $entityTransfer->_getEntityNamespace();
-        $entity = new $entityName;
-        $childTransferArray = $entityTransfer->modifiedToArray(false);
-        $entity->fromArray($childTransferArray);
-
-        return $entity;
-    }
-
-    /**
-     * @param string $transferClassName
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $parentEntity
-     *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
-     */
-    protected function mapTransferCollection($transferClassName, ActiveRecordInterface $parentEntity)
-    {
-        $transfer = new $transferClassName;
-        $transfer->fromArray($parentEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true), true);
-
-        return $transfer;
+        return new TransferToEntityMapper();
     }
 }

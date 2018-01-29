@@ -69,4 +69,17 @@ class BlogEntityManager extends AbstractEntityManager implements BlogEntityManag
             ->filterByIdBlogComment($idComment)
             ->delete();
     }
+
+    /**
+     * @api
+     *
+     * @param int $idBlogCustomer
+     */
+    public function deleteBlogCustomerById($idBlogCustomer)
+    {
+        $this->getFactory()
+            ->createBlogCustomerQuery()
+            ->filterByIdBlogCustomer($idBlogCustomer)
+            ->delete();
+    }
 }

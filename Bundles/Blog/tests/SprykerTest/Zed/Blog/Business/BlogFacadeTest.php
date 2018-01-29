@@ -70,6 +70,43 @@ class BlogFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testDeleteCommentShouldDropCommentFromDatabase()
+    {
+        $blogEntityManager = $this->createBlogEntityManager();
+        $blogEntityTransfer = $this->createBlog();
+
+        $blogCommentTransfer = $blogEntityTransfer->getSpyBlogComments()[0];
+        $customerTransfer = $blogCommentTransfer->getSpyBlogCustomers()[0];
+
+        $blogEntityManager->deleteBlogCustomerById($customerTransfer->getIdBlogCustomer());
+        $blogEntityManager->deleteCommentById($blogCommentTransfer->getIdBlogComment());
+
+        $updatedComments = $this->createBlogRepository()
+            ->findBlogByName(self::BLOG_NAME)
+            ->getSpyBlogComments();
+
+        $this->assertCount(1, $updatedComments);
+
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveFromFacadeShouldPersist()
+    {
+       $blogFacade = $this->createBlogFacade();
+        $blogEntityTransfer = (new SpyBlogEntityTransfer())
+            ->setName(self::BLOG_NAME)
+            ->setText('Text');
+
+       $transfer = $blogFacade->save($blogEntityTransfer);
+
+       $this->assertNotEmpty($transfer->getIdBlog());
+    }
+
+    /**
      * @return \Spryker\Zed\Blog\Persistence\BlogRepository
      */
     protected function createBlogRepository()

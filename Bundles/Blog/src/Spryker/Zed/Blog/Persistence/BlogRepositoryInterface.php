@@ -16,7 +16,7 @@ interface BlogRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\BlogCriteriaFilterTransfer $blogCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\BlogCriteriaFilterTransfer[]
+     * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer[]
      */
     public function filterBlogPosts(BlogCriteriaFilterTransfer $blogCriteriaFilterTransfer);
 

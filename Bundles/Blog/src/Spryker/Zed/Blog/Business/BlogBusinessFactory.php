@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Blog\Persistence\BlogRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Blog\Persistence\BlogEntityManagerInterface getEntityManager()
  */
 class BlogBusinessFactory extends AbstractBusinessFactory
 {
@@ -20,6 +21,6 @@ class BlogBusinessFactory extends AbstractBusinessFactory
      */
     public function createBlog()
     {
-        return new Blog($this->getRepository());
+        return new Blog($this->getRepository(), $this->getEntityManager());
     }
 }

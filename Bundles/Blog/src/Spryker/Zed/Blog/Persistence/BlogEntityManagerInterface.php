@@ -46,4 +46,11 @@ interface BlogEntityManagerInterface
      * @param int $idComment
      */
     public function deleteCommentById($idComment);
+
+    /**
+     * @api
+     *
+     * @param int $idBlogCustomer
+     */
+    public function deleteBlogCustomerById($idBlogCustomer);
 }
