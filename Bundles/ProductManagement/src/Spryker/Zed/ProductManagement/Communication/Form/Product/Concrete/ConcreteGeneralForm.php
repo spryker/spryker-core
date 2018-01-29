@@ -7,13 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete;
 
-use DateTime;
-use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**

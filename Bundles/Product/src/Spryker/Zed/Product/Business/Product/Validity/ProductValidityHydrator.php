@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Product\Business\Product\Validity;
 
+use DateTime;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Spryker\Shared\Product\ProductConstants;
@@ -44,7 +45,7 @@ class ProductValidityHydrator implements ProductValidityHydratorInterface
      *
      * @return null|string
      */
-    protected function formatDateTime(\DateTime $dateTime = null)
+    protected function formatDateTime(DateTime $dateTime = null)
     {
         return $dateTime ? $dateTime->format(ProductConstants::VALIDITY_DATE_TIME_FORMAT) : null;
     }

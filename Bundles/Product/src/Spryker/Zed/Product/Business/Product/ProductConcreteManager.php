@@ -10,7 +10,6 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Orm\Zed\Product\Persistence\SpyProductValidity;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
@@ -297,6 +296,8 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
      */
     protected function persistValidity(ProductConcreteTransfer $productConcreteTransfer)
     {
@@ -343,7 +344,6 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
 
         return $productConcreteEntity;
     }
-
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer

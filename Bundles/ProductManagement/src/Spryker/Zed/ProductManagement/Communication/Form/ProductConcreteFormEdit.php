@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
+use DateTime;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
@@ -123,7 +124,6 @@ class ProductConcreteFormEdit extends ProductFormAdd
         $builder->add(
             static::FIELD_VALID_FROM,
             DateTimeType::class,
-
             [
                 'format' => 'yyyy-MM-dd H:mm:ss',
                 'label' => 'Valid From',
@@ -151,7 +151,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                                 }
                             }
                         },
-                    ])
+                     ]),
                 ],
             ]
         );
@@ -193,8 +193,8 @@ class ProductConcreteFormEdit extends ProductFormAdd
                                 }
                             }
                         },
-                    ])
-                ]
+                    ]),
+                ],
             ]
         );
 
@@ -314,7 +314,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                         return null;
                     }
 
-                    return new \DateTime($dateAsString);
+                    return new DateTime($dateAsString);
                 },
                 function ($dateAsObject) {
                     /** @var \DateTime $dateAsObject */
