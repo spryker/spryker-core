@@ -155,6 +155,13 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductValidityQuery
      */
+    public function queryProductValidity();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductValidityQuery
+     */
     public function queryProductsBecomingValid();
 
     /**

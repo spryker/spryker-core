@@ -111,6 +111,8 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
         $formData[ProductFormAdd::FORM_PRICE_AND_STOCK] = $this->getDefaultStockFields();
         $formData[ProductConcreteFormEdit::FIELD_ID_PRODUCT_CONCRETE] = null;
+        $formData[ProductConcreteFormEdit::FIELD_VALID_FROM] = null;
+        $formData[ProductConcreteFormEdit::FIELD_VALID_TO] = null;
 
         return $formData;
     }
@@ -172,6 +174,8 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
         $formData[ProductFormAdd::FIELD_SKU] = $productTransfer->getSku();
         $formData[ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT] = $productAbstractTransfer->getIdProductAbstract();
+        $formData[ProductConcreteFormEdit::FIELD_VALID_FROM] = $productTransfer->getValidFrom();
+        $formData[ProductConcreteFormEdit::FIELD_VALID_TO] = $productTransfer->getValidTo();
 
         foreach ($localizedData as $localizedAttributesTransfer) {
             $localeCode = $localizedAttributesTransfer->getLocale()->getLocaleName();
@@ -185,8 +189,6 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $formData[$generalFormName][ConcreteGeneralForm::FIELD_NAME] = $localizedAttributesTransfer->getName();
             $formData[$generalFormName][ConcreteGeneralForm::FIELD_DESCRIPTION] = $localizedAttributesTransfer->getDescription();
             $formData[$generalFormName][ConcreteGeneralForm::FIELD_IS_SEARCHABLE] = $localizedAttributesTransfer->getIsSearchable();
-            $formData[$generalFormName][ConcreteGeneralForm::FIELD_VALID_FROM] = $productTransfer->getValidityFrom();
-            $formData[$generalFormName][ConcreteGeneralForm::FIELD_VALID_TO] = $productTransfer->getValidityUntil();
 
             $formData[$seoFormName][SeoForm::FIELD_META_TITLE] = $localizedAttributesTransfer->getMetaTitle();
             $formData[$seoFormName][SeoForm::FIELD_META_KEYWORDS] = $localizedAttributesTransfer->getMetaKeywords();

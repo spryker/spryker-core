@@ -9,6 +9,7 @@ namespace Spryker\Zed\Product\Business\Product\Validity;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
+use Spryker\Shared\Product\ProductConstants;
 
 class ProductValidityHydrator implements ProductValidityHydratorInterface
 {
@@ -22,13 +23,29 @@ class ProductValidityHydrator implements ProductValidityHydratorInterface
         ProductConcreteTransfer $productTransfer,
         SpyProduct $productEntity
     ): ProductConcreteTransfer {
-        if ($productEntity->getSpyProductValidities()) {
+
+        $validityEntity = $productEntity->getSpyProductValidities()->getFirst();
+
+        if ($validityEntity) {
             /** @var \Orm\Zed\Product\Persistence\SpyProductValidity $validityEntity */
-            $validityEntity = $productEntity->getSpyProductValidities()->getFirst();
-            $productTransfer->setValidFrom($validityEntity->getValidFrom());
-            $productTransfer->setValidTo($validityEntity->getValidTo());
+            $productTransfer->setValidFrom(
+                $this->formatDateTime($validityEntity->getValidFrom())
+            );
+            $productTransfer->setValidTo(
+                $this->formatDateTime($validityEntity->getValidTo())
+            );
         }
 
         return $productTransfer;
+    }
+
+    /**
+     * @param \DateTime|null $dateTime
+     *
+     * @return null|string
+     */
+    protected function formatDateTime(\DateTime $dateTime = null)
+    {
+        return $dateTime ? $dateTime->format(ProductConstants::VALIDITY_DATE_TIME_FORMAT) : null;
     }
 }

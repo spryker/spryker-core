@@ -10,6 +10,7 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Orm\Zed\Product\Persistence\SpyProductValidity;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
@@ -157,6 +158,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
 
         $this->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
+        $this->persistValidity($productConcreteTransfer);
 
         $this->notifyAfterUpdateObservers($productConcreteTransfer);
 
@@ -295,6 +297,22 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     */
+    protected function persistValidity(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $productValidityEntity = $this->productQueryContainer
+            ->queryProductValidity()
+            ->filterByFkProduct($productConcreteTransfer->getIdProductConcrete())
+            ->findOneOrCreate();
+
+        $productValidityEntity->setValidFrom($productConcreteTransfer->getValidFrom());
+        $productValidityEntity->setValidTo($productConcreteTransfer->getValidTo());
+
+        $productValidityEntity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct
      */
@@ -325,6 +343,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
 
         return $productConcreteEntity;
     }
+
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer

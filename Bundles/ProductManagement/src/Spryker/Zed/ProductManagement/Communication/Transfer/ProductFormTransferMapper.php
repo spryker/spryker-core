@@ -177,6 +177,9 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $imageSetCollection = $this->buildProductImageSetCollection($form);
         $productConcreteTransfer->setImageSets(new ArrayObject($imageSetCollection));
 
+        $productConcreteTransfer->setValidFrom($formData[ProductConcreteFormEdit::FIELD_VALID_FROM]);
+        $productConcreteTransfer->setValidTo($formData[ProductConcreteFormEdit::FIELD_VALID_TO]);
+
         return $productConcreteTransfer;
     }
 

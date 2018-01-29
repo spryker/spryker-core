@@ -8,12 +8,14 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,6 +30,8 @@ class ProductConcreteFormEdit extends ProductFormAdd
 {
     const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const FIELD_ID_PRODUCT_CONCRETE = 'id_product';
+    const FIELD_VALID_FROM = 'valid_from';
+    const FIELD_VALID_TO = 'valid_to';
 
     const FORM_ASSIGNED_BUNDLED_PRODUCTS = 'assigned_bundled_products';
     const BUNDLED_PRODUCTS_TO_BE_REMOVED = 'product_bundles_to_be_removed';
@@ -44,6 +48,8 @@ class ProductConcreteFormEdit extends ProductFormAdd
     {
         $this
             ->addSkuField($builder)
+            ->addValidFromField($builder)
+            ->addValidToField($builder)
             ->addProductAbstractIdHiddenField($builder)
             ->addProductConcreteIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
@@ -101,6 +107,60 @@ class ProductConcreteFormEdit extends ProductFormAdd
                     'readonly' => 'readonly',
                 ],
             ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addValidFromField(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_VALID_FROM,
+            DateTimeType::class,
+
+            [
+                'format' => 'yyyy-MM-dd H:mm:ss',
+                'label' => 'Valid From',
+                'widget' => 'single_text',
+                'required' => false,
+                'attr' => [
+                    'class' => 'datepicker js-from-datetime safe-datetime',
+                ],
+            ]
+        );
+
+        $this->addDateTimeTransformer(static::FIELD_VALID_FROM, $builder);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addValidToField(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_VALID_TO,
+            DateTimeType::class,
+            [
+                'format' => 'yyyy-MM-dd H:mm:ss',
+                'label' => 'Valid To',
+                'widget' => 'single_text',
+                'required' => false,
+                'attr' => [
+                    'class' => 'datepicker js-to-datetime safe-datetime',
+                    'styles' => 'position: relative; z-index: 100000;'
+                ],
+            ]
+        );
+
+        $this->addDateTimeTransformer(static::FIELD_VALID_TO, $builder);
 
         return $this;
     }
@@ -198,6 +258,35 @@ class ProductConcreteFormEdit extends ProductFormAdd
     protected function createGeneralForm()
     {
         return ConcreteGeneralForm::class;
+    }
+
+    /**
+     * @param string $fieldName
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
+     */
+    protected function addDateTimeTransformer($fieldName, FormBuilderInterface $builder)
+    {
+        $builder
+            ->get($fieldName)
+            ->addModelTransformer(new CallbackTransformer(
+                function ($dateAsString) {
+                    if (!$dateAsString) {
+                        return null;
+                    }
+
+                    return new \DateTime($dateAsString);
+                },
+                function ($dateAsObject) {
+                    /** @var \DateTime $dateAsObject */
+                    if (!$dateAsObject) {
+                        return null;
+                    }
+
+                    return $dateAsObject->format(ProductConstants::VALIDITY_DATE_TIME_FORMAT);
+                }
+            ));
     }
 
     /**

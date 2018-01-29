@@ -276,6 +276,19 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductValidityQuery
+     */
+    public function queryProductValidity()
+    {
+        return $this->getFactory()
+            ->createProductValidityQuery();
+    }
+
+    /**
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductValidityQuery
