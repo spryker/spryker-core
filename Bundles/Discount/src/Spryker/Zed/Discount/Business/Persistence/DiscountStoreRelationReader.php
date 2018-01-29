@@ -44,6 +44,6 @@ class DiscountStoreRelationReader implements DiscountStoreRelationReaderInterfac
             ->find()
             ->getFirst();
 
-        return $this->discountStoreRelationMapper->mapDiscountStoreEntityCollectionToStoreRelationTransferCollection($discountEntity);
+        return $this->discountStoreRelationMapper->mapDiscountStoreEntityCollectionToStoreRelationTransfer($discountEntity);
     }
 }

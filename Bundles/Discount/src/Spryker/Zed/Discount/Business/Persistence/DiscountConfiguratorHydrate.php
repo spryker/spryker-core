@@ -98,7 +98,7 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
         $discountGeneralTransfer->setValidFrom($discountEntity->getValidFrom());
         $discountGeneralTransfer->setValidTo($discountEntity->getValidTo());
         $discountGeneralTransfer->setStoreRelation(
-            $this->discountStoreRelationMapper->mapDiscountStoreEntityCollectionToStoreRelationTransferCollection($discountEntity)
+            $this->discountStoreRelationMapper->mapDiscountStoreEntityCollectionToStoreRelationTransfer($discountEntity)
         );
 
         return $discountGeneralTransfer;

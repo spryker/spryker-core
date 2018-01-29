@@ -16,5 +16,5 @@ interface DiscountStoreRelationMapperInterface
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function mapDiscountStoreEntityCollectionToStoreRelationTransferCollection(SpyDiscount $discountEntity);
+    public function mapDiscountStoreEntityCollectionToStoreRelationTransfer(SpyDiscount $discountEntity);
 }

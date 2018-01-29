@@ -20,7 +20,7 @@ class DiscountStoreRelationMapper implements DiscountStoreRelationMapperInterfac
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function mapDiscountStoreEntityCollectionToStoreRelationTransferCollection(SpyDiscount $discountEntity)
+    public function mapDiscountStoreEntityCollectionToStoreRelationTransfer(SpyDiscount $discountEntity)
     {
         $relatedStoreTransferCollection = $this->getRelatedStoreTransferCollection($discountEntity->getSpyDiscountStores());
         $idStores = $this->getIdStores($relatedStoreTransferCollection);
