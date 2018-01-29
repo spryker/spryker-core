@@ -216,7 +216,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductTransferMapper(
             $this->createAttributeEncoder(),
-            $this->createValidityHydrotor()
+            $this->createValidityHydrator()
         );
     }
 
@@ -563,7 +563,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Product\Business\Product\Validity\ProductValidityHydratorInterface
      */
-    protected function createValidityHydrotor()
+    protected function createValidityHydrator()
     {
         return new ProductValidityHydrator();
     }

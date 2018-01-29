@@ -42,7 +42,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
      */
     public function updateProductsValidity()
     {
-        if (!$this->willProductsUpdate()) {
+        if (!$this->hasTriggeredProductValidity()) {
             return;
         }
 
@@ -57,7 +57,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
     /**
      * @return bool
      */
-    protected function willProductsUpdate(): bool
+    protected function hasTriggeredProductValidity(): bool
     {
         $willProductsBecomeValid = $this
             ->queryContainer
@@ -83,7 +83,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
     }
 
     /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Traversable
      */
     protected function findProductsBecomingActive(): \Traversable
     {
@@ -94,7 +94,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
     }
 
     /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Product\Persistence\SpyProductValidity[]|\Traversable
      */
     protected function findProductsBecomingInactive(): \Traversable
     {
@@ -114,8 +114,8 @@ class ValidityUpdater implements ValidityUpdaterInterface
         Traversable $productsBecomingActive,
         Traversable $productsBecomingInactive
     ) {
-        $this->setPublished($productsBecomingActive);
-        $this->setUnpublished($productsBecomingInactive);
+        $this->activateProductConcretes($productsBecomingActive);
+        $this->deactivateProductConcretes($productsBecomingInactive);
     }
 
     /**
@@ -123,7 +123,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
      *
      * @return void
      */
-    protected function setPublished(Traversable $productValidityEntities)
+    protected function activateProductConcretes(Traversable $productValidityEntities)
     {
         foreach ($productValidityEntities as $productValidityEntity) {
             $this->productConcreteActivator
@@ -136,7 +136,7 @@ class ValidityUpdater implements ValidityUpdaterInterface
      *
      * @return void
      */
-    protected function setUnpublished(Traversable $productValidityEntities)
+    protected function deactivateProductConcretes(Traversable $productValidityEntities)
     {
         foreach ($productValidityEntities as $productValidityEntity) {
             $this->productConcreteActivator

@@ -301,6 +301,8 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      */
     protected function persistValidity(ProductConcreteTransfer $productConcreteTransfer)
     {
+        $productConcreteTransfer->requireIdProductConcrete();
+
         $productValidityEntity = $this->productQueryContainer
             ->queryProductValidity()
             ->filterByFkProduct($productConcreteTransfer->getIdProductConcrete())

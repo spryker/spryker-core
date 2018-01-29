@@ -24,7 +24,7 @@ class ProductValidityConsole extends Console
     protected function configure()
     {
         $this->setName(static::COMMAND_NAME);
-        $this->setDescription('(Un)Publish product based on validity date ranges');
+        $this->setDescription('(Un)Publish products based on validity date ranges.');
 
         parent::configure();
     }

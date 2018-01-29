@@ -141,14 +141,16 @@ class ProductConcreteFormEdit extends ProductFormAdd
                                 return;
                             }
 
-                            if ($formData[static::FIELD_VALID_TO]) {
-                                if ($newFrom > $formData[static::FIELD_VALID_TO]) {
-                                    $context->addViolation('Date "Valid from" cannot be later than "Valid to".');
-                                }
+                            if (empty($formData[static::FIELD_VALID_TO])) {
+                                return;
+                            }
 
-                                if ($newFrom == $formData[static::FIELD_VALID_TO]) {
-                                    $context->addViolation('Date "Valid from" is the same as "Valid to".');
-                                }
+                            if ($newFrom > $formData[static::FIELD_VALID_TO]) {
+                                $context->addViolation('Date "Valid from" can not be later than "Valid to".');
+                            }
+
+                            if ($newFrom == $formData[static::FIELD_VALID_TO]) {
+                                $context->addViolation('Date "Valid from" can not be the same as "Valid to".');
                             }
                         },
                      ]),
@@ -187,10 +189,12 @@ class ProductConcreteFormEdit extends ProductFormAdd
                                 return;
                             }
 
-                            if ($formData[static::FIELD_VALID_FROM]) {
-                                if ($newTo < $formData[static::FIELD_VALID_FROM]) {
-                                    $context->addViolation('Date "Valid to" cannot be earlier than "Valid from".');
-                                }
+                            if (empty($formData[static::FIELD_VALID_FROM])) {
+                                return;
+                            }
+
+                            if ($newTo < $formData[static::FIELD_VALID_FROM]) {
+                                $context->addViolation('Date "Valid to" can not be earlier than "Valid from".');
                             }
                         },
                     ]),
