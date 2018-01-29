@@ -18,6 +18,7 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
     const ENTITY_SCHEMA_SUFFIX = '.schema.xml';
     const ENTITY_PREFIX = 'spy_';
     const PREFIX_LENGTH = 4;
+    const ENTITY_NAMESPACE = 'entity-namespace';
 
     /**
      * @return array
@@ -27,16 +28,14 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
         $xmlTransferDefinitions = $this->finder->getXmlTransferDefinitionFiles();
         foreach ($xmlTransferDefinitions as $xmlTransferDefinition) {
 
-            $content = $xmlTransferDefinition->getContents();
-            $xml = simplexml_load_string($content);
-
+            $xml = simplexml_load_string($xmlTransferDefinition->getContents());
             $namespace = (string)$xml['namespace'];
-            $namespacePart = explode('\\', $namespace);
-            $module = $namespacePart[2];
 
             $containingBundle = $this->getContainingBundleFromPathName($xmlTransferDefinition->getPathname());
             $definition = Factory::fromFile($xmlTransferDefinition->getPathname(), true)->toArray();
-            $this->addDefinition($definition, $module, $containingBundle);
+            $definition[self::ENTITY_NAMESPACE] = $namespace;
+
+            $this->addDefinition($definition, '', $containingBundle);
         }
     }
 
@@ -53,6 +52,7 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
             foreach ($definition[static::KEY_TABLE] as $table) {
                 $table[self::KEY_BUNDLE] = $module;
                 $table[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
+                $table[self::ENTITY_NAMESPACE] = $definition[self::ENTITY_NAMESPACE];
 
                 $this->transferDefinitions[] = $table;
             }
@@ -61,6 +61,7 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
 
             $table[self::KEY_BUNDLE] = $module;
             $table[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
+            $table[self::ENTITY_NAMESPACE] = $definition[self::ENTITY_NAMESPACE];
             $this->transferDefinitions[] = $table;
         }
     }

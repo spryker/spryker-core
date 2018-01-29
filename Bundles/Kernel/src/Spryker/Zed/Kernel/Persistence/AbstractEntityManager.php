@@ -6,23 +6,18 @@
 
 namespace Spryker\Zed\Kernel\Persistence;
 
-use Generated\Shared\Transfer\SpyCustomerAddressEntityTransfer;
-use Generated\Shared\Transfer\SpyCustomerEntityTransfer;
-use Orm\Zed\Blog\Persistence\SpyBlogComment;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
-use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
+use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\EntityTransferInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
 use Propel\Runtime\Map\TableMap;
-use Zend\Filter\FilterChain;
-use Zend\Filter\Word\UnderscoreToCamelCase;
+use Spryker\Zed\Kernel\Persistence\EntityManager\EntityManagerInterface;
 
-abstract class AbstractEntityManager
+abstract class AbstractEntityManager implements EntityManagerInterface
 {
     use BundleDependencyProviderResolverAwareTrait;
 
@@ -102,124 +97,106 @@ abstract class AbstractEntityManager
     }
 
     /**
-     * @todo cleanup this mess
+     * This method saves SpyNameEntityTransfer data objects, it will try to persist whole object tree in single transaction.
      *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
+     * @param \Spryker\Shared\Kernel\Transfer\EntityTransferInterface $entityTransfer
      *
-     * @return \\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function save(TransferInterface $transfer)
+    public function save(EntityTransferInterface $entityTransfer)
     {
-        //throw exception when child transfer entity is not from same module.
-        //composite object should be handled in business with plugins.
-        //when property is modified and is null, should remove item.
-        //add marker interface for entity transfer
+        $parentEntity = $this->mapEntityCollection($entityTransfer);
+        $parentEntity->save();
 
-        $moduleName = 'Blog'; //from kernel magic
+        return $this->mapTransferCollection(get_class($entityTransfer), $parentEntity);
+    }
 
-        $transferClassName = get_class($transfer);
-        if (strpos($transferClassName, 'EntityTransfer') === 0) {
-            throw new \Exception('Only entity transfer could be automatically mapped!');
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\EntityTransferInterface $entityTransfer
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $parentEntity
+     *
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
+     */
+    public function mapEntityCollection(
+        EntityTransferInterface $entityTransfer,
+        ActiveRecordInterface $parentEntity = null
+    ) {
+        if ($parentEntity === null) {
+            $parentEntity = $this->mapEntity($entityTransfer);
         }
 
-        if (strpos($transferClassName, 'BlogComment') !== false) {
-            $entityClassName = sprintf('\Orm\Zed\%s\Persistence\%s', $moduleName, 'SpyBlogComment');
-        } else {
-            $entityClassName = sprintf('\Orm\Zed\%s\Persistence\%s', $moduleName, 'SpyBlog');
-        }
-
-        //find entity class name
-
-        $transferArray = $transfer->modifiedToArray();
-
-        $propelEntity = new $entityClassName;
-        $propelEntity->fromArray($transferArray);
-
-        foreach ($transferArray as $property => $value) {
-            if (substr($property, 0, 4) !== 'spy_') {  //get only if transfer
+        $transferArray = $entityTransfer->modifiedToArray(false);
+        foreach ($transferArray as $propertyName => $value) {
+            if (!$value instanceof EntityTransferInterface && !$value instanceof \ArrayObject) {
                 continue;
             }
 
-            /*if (!$transfer->isPropertyInModule($moduleName, $property)) {
-                throw new \Exception(
-                    sprintf(
-                        'Property "%s" is not allowed to be saved in module %s',
-                        $property,
-                        $moduleName
-                    )
-                );
-            }*/
-
-            if (is_array($value)) {
-
-                foreach ($value as $childData) {
-
-                    (new SpyCustomerEntityTransfer())->getSpyCustomerAddresses();
-
-
-
-                    $namespace = $property->getEntityNamespace();
-
-                    $propelEntity->addAddress(new SpyCustomerAddress());
-
-                    $entityName = (new FilterChain())
-                        ->attach(new UnderscoreToCamelCase())
-                        ->filter($property);
-
-                    //find a way to get singular value
-                    $entityName = substr($entityName, 0, -1);
-
-                    $entityClassName = sprintf('\Orm\Zed\%s\Persistence\%s', $moduleName, $entityName);
-
-                    $childEntity = new $entityClassName();
-                    $childEntity->fromArray($childData);
-                    $methodName = 'add'. $entityName;
-                    $propelEntity->$methodName($childEntity);
-
+            $parentEntitySetterMethodName = $this->findParentEntitySetterMethodName($propertyName, $parentEntity);
+            if (is_array($value) || $value instanceof \ArrayObject) {
+                foreach ($value as $childTransfer) {
+                    $childEntity = $this->mapEntity($childTransfer);
+                    $entity = $this->mapEntityCollection($childTransfer, $childEntity);
+                    $parentEntity->$parentEntitySetterMethodName($entity);
                 }
-            }  else {
-                //$childEntity->fromArray($value);
-                //$childEntity->save();
-            }
-
-        }
-
-        $propelEntity->save();
-
-        $transfer = new $transferClassName;
-        $transfer->fromArray($propelEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true), true);
-
-        return $transfer;
-    }
-
-    public function test()
-    {
-        $customerTransfer = new SpyCustomerEntityTransfer();
-        $customerTransfer->addSpyCustomerAddresses(new SpyCustomerAddressEntityTransfer());
-
-        $entity = $this->testSave($customerTransfer);
-
-        $entity->save();
-
-    }
-
-    protected function testSave(TransferInterface $customerTransfer)
-    {
-        $array = $customerTransfer->toArray(false);
-
-        $entity = new SpyCustomer();
-
-        foreach ($array as $property => $value) {
-            if (!$property instanceof TransferInterface) {
-                $array[$property] = $this->testSave($customerTransfer);
-                $entity->addAddress();
                 continue;
             }
+
+            $childEntity = $this->mapEntity($value);
+            $parentEntity->$parentEntitySetterMethodName($childEntity);
         }
 
-        $entity = new SpyCustomer();
-        $entity->fromArray($array);
+        return $parentEntity;
+
+    }
+
+    /**
+     * @param string $relationName
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $parentEntity
+     *
+     * @return null|string
+     */
+    protected function findParentEntitySetterMethodName($relationName, ActiveRecordInterface $parentEntity)
+    {
+        $relationName = str_replace('_', '', ucwords($relationName, '_'));
+
+        $tableNameClass = $parentEntity::TABLE_MAP;
+        $tableMap = $tableNameClass::getTableMap();
+        foreach ($tableMap->getRelations() as $relationMap) {
+            if ($relationMap->getPluralName() !== $relationName && $relationMap->getName() !== $relationName) {
+                continue;
+            }
+
+            return 'add' . $relationMap->getName();
+        }
+        return null;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\EntityTransferInterface $entityTransfer
+     *
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
+     */
+    protected function mapEntity(EntityTransferInterface $entityTransfer)
+    {
+        $entityName = $entityTransfer->_getEntityNamespace();
+        $entity = new $entityName;
+        $childTransferArray = $entityTransfer->modifiedToArray(false);
+        $entity->fromArray($childTransferArray);
 
         return $entity;
+    }
+
+    /**
+     * @param string $transferClassName
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $parentEntity
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    protected function mapTransferCollection($transferClassName, ActiveRecordInterface $parentEntity)
+    {
+        $transfer = new $transferClassName;
+        $transfer->fromArray($parentEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true), true);
+
+        return $transfer;
     }
 }

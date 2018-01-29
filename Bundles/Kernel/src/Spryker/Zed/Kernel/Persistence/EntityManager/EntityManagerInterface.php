@@ -4,16 +4,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Kernel\Persistence\Repository;
+namespace Spryker\Zed\Kernel\Persistence\EntityManager;
 
+use Spryker\Shared\Kernel\Transfer\EntityTransferInterface;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface EntityManagerInterface
 {
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
+     * @param \Spryker\Shared\Kernel\Transfer\EntityTransferInterface $entityTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function save(TransferInterface $transfer);
+    public function save(EntityTransferInterface $entityTransfer);
 }

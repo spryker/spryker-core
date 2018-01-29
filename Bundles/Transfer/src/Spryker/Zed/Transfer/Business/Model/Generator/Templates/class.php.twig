@@ -10,7 +10,13 @@ namespace Generated\Shared\Transfer;
 {% if hasArrayObject %}
 use ArrayObject;
 {% endif %}
+{% if entityNamespace is null %}
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+{% set abstractClass = 'AbstractTransfer' %}
+{% else %}
+use Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer;
+{% set abstractClass = 'AbstractEntityTransfer' %}
+{% endif %}
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
@@ -20,7 +26,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
  * @deprecated {{ deprecationDescription }}
  {% endif -%}
  */
-class {{ className }} extends AbstractTransfer
+class {{ className }} extends {{ abstractClass }}
 {
 {% for constant in constants %}
 {{ macro.addConstant(constant) -}}
@@ -30,9 +36,11 @@ class {{ className }} extends AbstractTransfer
 {% endfor -%}
 {{ macro.addPropertyNameMap(propertyNameMap) }}
 
-{{ macro.addModulePropertyMap(modulePropertyMap) }}
-
 {{ macro.addMetadata(normalizedProperties) }}
+
+{% if entityNamespace is not null -%}
+{{ macro.addEntityNamespace(entityNamespace) }}
+{% endif -%}
 {{ macro.addConstructor(constructorDefinition) -}}
 {% for methodName, method  in methods %}
 
@@ -50,5 +58,5 @@ class {{ className }} extends AbstractTransfer
 {% endif %}
 {% endfor %}
 
-{{ macro.addIsPropertyInModuleMethod() }}
+
 }

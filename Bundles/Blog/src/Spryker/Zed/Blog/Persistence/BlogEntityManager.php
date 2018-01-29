@@ -13,16 +13,13 @@ use Generated\Shared\Transfer\SpyBlogEntityTransfer;
 use Orm\Zed\Blog\Persistence\SpyBlog;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
-use Spryker\Zed\Kernel\Persistence\Repository\EntityManagerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\Kernel\Persistence\EntityManager\EntityManagerInterface;
 
 /**
  * @method \Spryker\Zed\Blog\Persistence\BlogPersistenceFactory getFactory()
  */
 class BlogEntityManager extends AbstractEntityManager implements BlogEntityManagerInterface, EntityManagerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @api
      *
@@ -32,9 +29,7 @@ class BlogEntityManager extends AbstractEntityManager implements BlogEntityManag
      */
     public function saveBlog(SpyBlogEntityTransfer $blogEntityTransfer)
     {
-        return $this->handleDatabaseTransaction(function () use ($blogEntityTransfer) {
-            return $this->save($blogEntityTransfer);
-        });
+       return $this->save($blogEntityTransfer);
     }
 
     /**
@@ -46,9 +41,7 @@ class BlogEntityManager extends AbstractEntityManager implements BlogEntityManag
      */
     public function saveBlogComment(SpyBlogCommentEntityTransfer $blogCommentEntityTransfer)
     {
-        return $this->handleDatabaseTransaction(function () use ($blogCommentEntityTransfer) {
-            return $this->save($blogCommentEntityTransfer);
-        });
+        return $this->save($blogCommentEntityTransfer);
     }
 
     /**

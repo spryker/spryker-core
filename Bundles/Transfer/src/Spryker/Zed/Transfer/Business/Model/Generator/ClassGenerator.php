@@ -72,7 +72,7 @@ class ClassGenerator implements GeneratorInterface
             'normalizedProperties' => $classDefinition->getNormalizedProperties(),
             'deprecationDescription' => $classDefinition->getDeprecationDescription(),
             'hasArrayObject' => $classDefinition->hasArrayObject(),
-            'modulePropertyMap' => $classDefinition->getModulePropertyPath()
+            'entityNamespace' => $classDefinition->getEntityNamespace(),
         ];
     }
 }

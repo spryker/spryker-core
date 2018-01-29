@@ -158,40 +158,10 @@
     }
 {% endmacro -%}
 
-{%- macro addModulePropertyMap(modulePropertyMap) %}
-
+{%- macro addEntityNamespace(entityNamespace) %}
     /**
-    * @var array
+    * @var null|string
     */
-    protected $modulePropertyMap = [
-    {% if modulePropertyMap is defined -%}
-    {% for name, properties in modulePropertyMap %}
-    '{{ name }}'=> [
-    {% for property in properties %}
-        '{{ property }}',
-    {% endfor %}
-    ],
-    {% endfor %}
-    {% endif %}
-];
-{% endmacro -%}
-
-{%- macro addIsPropertyInModuleMethod() %}
-
-    /**
-    * @param string $moduleName
-    * @param string $property
-    *
-    * @return bool
-    */
-    public function isPropertyInModule($moduleName, $property)
-    {
-        if (!isset($this->modulePropertyMap[$moduleName]) && !isset($this->modulePropertyMap[$moduleName][$property])) {
-            return false;
-        }
-
-        return true;
-    }
-
+    protected $_entityNamespace = '{{ entityNamespace }}';
 {% endmacro -%}
 

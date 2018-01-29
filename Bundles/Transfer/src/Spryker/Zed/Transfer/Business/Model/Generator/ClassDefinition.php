@@ -61,9 +61,9 @@ class ClassDefinition implements ClassDefinitionInterface
     private $propertyNameMap = [];
 
     /**
-     * @var array
+     * @var string
      */
-    private $modulePropertyMap = [];
+    private $entityNamespace;
 
     /**
      * @param array $definition
@@ -78,13 +78,14 @@ class ClassDefinition implements ClassDefinitionInterface
             $this->deprecationDescription = $definition['deprecated'];
         }
 
+        $this->addEntityNamespace($definition);
+
         if (isset($definition['property'])) {
             $properties = $this->normalizePropertyTypes($definition['property']);
             $this->addConstants($properties);
             $this->addProperties($properties);
             $this->setPropertyNameMap($properties);
             $this->addMethods($properties);
-            $this->addModulePropertyMap($properties);
 
         }
 
@@ -733,22 +734,20 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param array $properties
+     * @param array $definition
      */
-    private function addModulePropertyMap(array $properties)
+    protected function addEntityNamespace(array $definition)
     {
-        foreach ($properties as $property) {
-            foreach ($property['bundles'] as $moduleName) {
-                $this->modulePropertyMap[$moduleName][] = $property['name'];
-            }
+        if (isset($definition['entity-namespace'])) {
+            $this->entityNamespace = $definition['entity-namespace'];
         }
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getModulePropertyPath()
+    public function getEntityNamespace()
     {
-        return $this->modulePropertyMap;
+        return $this->entityNamespace;
     }
 }

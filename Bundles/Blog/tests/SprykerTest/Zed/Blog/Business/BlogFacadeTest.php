@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\BlogCommentTransfer;
 use Generated\Shared\Transfer\BlogCriteriaFilterTransfer;
 use Generated\Shared\Transfer\BlogTransfer;
 use Generated\Shared\Transfer\SpyBlogCommentEntityTransfer;
+use Generated\Shared\Transfer\SpyBlogCustomerEntityTransfer;
 use Generated\Shared\Transfer\SpyBlogEntityTransfer;
 use Generated\Shared\Transfer\SpyCustomerEntityTransfer;
 use Orm\Zed\Blog\Persistence\SpyBlogQuery;
@@ -35,7 +36,12 @@ class BlogFacadeTest extends Unit
 
         $this->assertInstanceOf(SpyBlogEntityTransfer::class, $blogEntityTransfer);
         $this->assertCount(2, $blogEntityTransfer->getSpyBlogComments());
-        $this->assertInstanceOf(SpyBlogCommentEntityTransfer::class, $blogEntityTransfer->getSpyBlogComments()[0]);
+
+        $blogCommentTransfer = $blogEntityTransfer->getSpyBlogComments()[0];
+        $blogCustomerTransfer = $blogCommentTransfer->getSpyBlogCustomers()[0];
+
+        $this->assertInstanceOf(SpyBlogCommentEntityTransfer::class, $blogCommentTransfer);
+        $this->assertInstanceOf(SpyBlogCustomerEntityTransfer::class, $blogCustomerTransfer);
 
     }
 
@@ -98,16 +104,20 @@ class BlogFacadeTest extends Unit
             ->setName(self::BLOG_NAME)
             ->setText('Text');
 
-        //not working
+        $blogCustomerEntityTransfer = new SpyBlogCustomerEntityTransfer();
+        $blogCustomerEntityTransfer->setName('test');
+
         $blogCommentEntityTransfer = new SpyBlogCommentEntityTransfer();
         $blogCommentEntityTransfer->setAuthor("It's a me a Mario!");
         $blogCommentEntityTransfer->setMessage('1 UP');
+        $blogCommentEntityTransfer->addSpyBlogCustomers($blogCustomerEntityTransfer);
 
         $blogEntityTransfer->addSpyBlogComments($blogCommentEntityTransfer);
 
         $blogCommentEntityTransfer = new SpyBlogCommentEntityTransfer();
         $blogCommentEntityTransfer->setAuthor("It's a me a Mario!");
         $blogCommentEntityTransfer->setMessage('2 UP');
+        $blogCommentEntityTransfer->addSpyBlogCustomers($blogCustomerEntityTransfer);
 
         $blogEntityTransfer->addSpyBlogComments($blogCommentEntityTransfer);
 
