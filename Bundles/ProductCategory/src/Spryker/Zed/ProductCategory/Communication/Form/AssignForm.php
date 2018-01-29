@@ -6,9 +6,15 @@
 
 namespace Spryker\Zed\ProductCategory\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface getQueryContainer()
+ */
 class AssignForm extends AbstractType
 {
     /**
@@ -33,7 +39,7 @@ class AssignForm extends AbstractType
      */
     protected function addIdCategoryField(FormBuilderInterface $builder)
     {
-        $builder->add('id_category', 'hidden');
+        $builder->add('id_category', HiddenType::class);
 
         return $this;
     }
@@ -47,7 +53,7 @@ class AssignForm extends AbstractType
     {
         $builder->add(
             'products_to_be_assigned',
-            'hidden',
+            HiddenType::class,
             [
                 'attr' => [
                     'id' => 'products_to_be_assigned',
@@ -67,7 +73,7 @@ class AssignForm extends AbstractType
     {
         $builder->add(
             'products_to_be_de_assigned',
-            'hidden',
+            HiddenType::class,
             [
                 'attr' => [
                     'id' => 'products_to_be_de_assigned',
@@ -87,7 +93,7 @@ class AssignForm extends AbstractType
     {
         $builder->add(
             'product_order',
-            'hidden',
+            HiddenType::class,
             [
                 'attr' => [
                     'id' => 'product_order',
@@ -96,13 +102,5 @@ class AssignForm extends AbstractType
         );
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'assign_form';
     }
 }

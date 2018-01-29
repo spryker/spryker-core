@@ -7,10 +7,15 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\ProductAttributeGui\Communication\ProductAttributeGuiCommunicationFactory getFactory()
+ */
 class AttributeValueTranslationForm extends AbstractType
 {
     const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE = 'id_product_management_attribute_value';
@@ -19,14 +24,6 @@ class AttributeValueTranslationForm extends AbstractType
     const FIELD_FK_LOCALE = 'fk_locale';
 
     const GROUP_VALUE_TRANSLATIONS = 'value_translations_group';
-
-    /**
-     * @return string The name of this type
-     */
-    public function getName()
-    {
-        return 'value_translation';
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -49,7 +46,7 @@ class AttributeValueTranslationForm extends AbstractType
      */
     protected function addIdField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, 'hidden', [
+        $builder->add(self::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, HiddenType::class, [
             'label' => null,
         ]);
 
@@ -63,10 +60,12 @@ class AttributeValueTranslationForm extends AbstractType
      */
     protected function addValueField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_VALUE, 'text', [
+        $builder->add(self::FIELD_VALUE, TextType::class, [
             'label' => 'Value',
-            'read_only' => true,
             'disabled' => true,
+            'attr' => [
+                'readonly' => true,
+            ],
         ]);
 
         return $this;
@@ -79,7 +78,7 @@ class AttributeValueTranslationForm extends AbstractType
      */
     protected function addTranslationField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_TRANSLATION, 'text', [
+        $builder->add(self::FIELD_TRANSLATION, TextType::class, [
             'label' => 'Translation',
             'constraints' => [
                 new NotBlank([
@@ -89,5 +88,23 @@ class AttributeValueTranslationForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'value_translation';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

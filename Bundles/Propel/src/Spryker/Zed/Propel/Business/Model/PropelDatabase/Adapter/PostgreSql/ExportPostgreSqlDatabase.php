@@ -49,7 +49,7 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
     protected function getExportCommandRemote($backupPath)
     {
         return sprintf(
-            'pg_dump -i -h %s -p %s -U %s -F c -b -v -f %s %s',
+            'pg_dump -h %s -p %s -U %s -F c -b -v -f %s %s',
             Config::get(PropelConstants::ZED_DB_HOST),
             Config::get(PropelConstants::ZED_DB_PORT),
             Config::get(PropelConstants::ZED_DB_USERNAME),
@@ -77,9 +77,8 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $this->exportPostgresPassword();
-
-        $process = new Process($command);
+        $process = new Process($command, null, $this->getEnvironmentVariables());
+        $process->inheritEnvironmentVariables(true);
         $process->run();
 
         if (!$process->isSuccessful()) {
@@ -92,14 +91,13 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
     }
 
     /**
-     * @return void
+     * @return array
      */
-    protected function exportPostgresPassword()
+    protected function getEnvironmentVariables()
     {
-        putenv(sprintf(
-            'PGPASSWORD=%s',
-            Config::get(PropelConstants::ZED_DB_PASSWORD)
-        ));
+        return [
+            'PGPASSWORD' => Config::get(PropelConstants::ZED_DB_PASSWORD),
+        ];
     }
 
     /**

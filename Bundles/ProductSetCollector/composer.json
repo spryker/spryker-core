@@ -3,6 +3,7 @@
   "description": "ProductSetCollector module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/collector": "^5.1.1 || ^6.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/product-set": "^1.0.0",

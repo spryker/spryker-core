@@ -120,6 +120,11 @@ class ElasticsearchWriter implements WriterInterface, ConfigurableSearchWriterIn
 
         foreach ($dataSet as $key => $data) {
             $document = clone $documentPrototype;
+
+            if (is_array($data)) {
+                $this->setParent($document, $data);
+            }
+
             $document->setId($key);
             $document->setData($data);
             $documents[] = $document;
@@ -172,5 +177,18 @@ class ElasticsearchWriter implements WriterInterface, ConfigurableSearchWriterIn
     public function getSearchCollectorConfiguration()
     {
         return $this->searchCollectorConfiguration;
+    }
+
+    /**
+     * @param \Elastica\Document $document
+     * @param array $data
+     *
+     * @return void
+     */
+    protected function setParent(Document $document, array $data)
+    {
+        if (isset($data['parent'])) {
+            $document->setParent($data['parent']);
+        }
     }
 }

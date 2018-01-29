@@ -3,6 +3,7 @@
   "description": "Redis module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "predis/predis": "^1.1.1"
   },
   "minimum-stability": "dev",

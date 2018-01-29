@@ -3,6 +3,7 @@
   "description": "ProductPageSearch module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/catalog-price-product-connector": "^1.1.0",
     "spryker/category": "^4.3.0",
     "spryker/event-behavior": "^0.1.2",

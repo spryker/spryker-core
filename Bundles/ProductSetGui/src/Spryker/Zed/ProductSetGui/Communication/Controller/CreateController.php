@@ -25,7 +25,7 @@ class CreateController extends AbstractProductSetController
         $dataProvider = $this->getFactory()->createCreateFormDataProvider();
 
         $productSetForm = $this->getFactory()
-            ->createCreateProductSetForm(
+            ->getCreateProductSetForm(
                 $dataProvider->getData(),
                 $dataProvider->getOptions()
             )

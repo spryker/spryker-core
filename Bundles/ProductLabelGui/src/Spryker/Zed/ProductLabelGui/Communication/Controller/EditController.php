@@ -75,7 +75,7 @@ class EditController extends AbstractController
 
         $aggregateForm = $this
             ->getFactory()
-            ->createProductLabelAggregateForm(
+            ->getProductLabelAggregateForm(
                 $aggregateFormDataProvider->getData($productLabelTransfer->getIdProductLabel()),
                 $aggregateFormDataProvider->getOptions()
             );

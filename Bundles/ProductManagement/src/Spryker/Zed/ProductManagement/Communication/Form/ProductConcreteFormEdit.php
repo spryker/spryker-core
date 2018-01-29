@@ -13,9 +13,17 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ */
 class ProductConcreteFormEdit extends ProductFormAdd
 {
     const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
@@ -25,14 +33,6 @@ class ProductConcreteFormEdit extends ProductFormAdd
     const BUNDLED_PRODUCTS_TO_BE_REMOVED = 'product_bundles_to_be_removed';
 
     const OPTION_IS_BUNDLE_ITEM = 'is_bundle_item';
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'ProductConcreteFormEdit';
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -62,7 +62,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     protected function addBundledProductsToBeRemoved(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::BUNDLED_PRODUCTS_TO_BE_REMOVED, 'hidden', [
+            ->add(self::BUNDLED_PRODUCTS_TO_BE_REMOVED, HiddenType::class, [
                 'attr' => [
                     'id' => self::BUNDLED_PRODUCTS_TO_BE_REMOVED,
                 ],
@@ -95,9 +95,11 @@ class ProductConcreteFormEdit extends ProductFormAdd
     protected function addSkuField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_SKU, 'text', [
+            ->add(self::FIELD_SKU, TextType::class, [
                 'label' => 'SKU',
-                'read_only' => true,
+                'attr' => [
+                    'readonly' => 'readonly',
+                ],
             ]);
 
         return $this;
@@ -111,7 +113,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     protected function addProductAbstractIdHiddenField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_ID_PRODUCT_ABSTRACT, 'hidden', []);
+            ->add(self::FIELD_ID_PRODUCT_ABSTRACT, HiddenType::class, []);
 
         return $this;
     }
@@ -124,7 +126,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     protected function addProductConcreteIdHiddenField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_ID_PRODUCT_CONCRETE, 'hidden', []);
+            ->add(self::FIELD_ID_PRODUCT_CONCRETE, HiddenType::class, []);
 
         return $this;
     }
@@ -147,6 +149,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                 'entry_type' => ProductMoneyType::class,
             ]
         );
+
         return $this;
     }
 
@@ -158,8 +161,8 @@ class ProductConcreteFormEdit extends ProductFormAdd
      */
     protected function addAssignBundledProductForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FORM_ASSIGNED_BUNDLED_PRODUCTS, 'collection', [
-            'type' => new BundledProductForm(),
+        $builder->add(self::FORM_ASSIGNED_BUNDLED_PRODUCTS, CollectionType::class, [
+            'entry_type' => BundledProductForm::class,
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,
@@ -181,8 +184,8 @@ class ProductConcreteFormEdit extends ProductFormAdd
         }
 
         $builder
-            ->add(self::FORM_PRICE_AND_STOCK, 'collection', [
-                'type' => new StockForm(),
+            ->add(self::FORM_PRICE_AND_STOCK, CollectionType::class, [
+                'entry_type' => StockForm::class,
                 'label' => false,
             ]);
 
@@ -190,11 +193,11 @@ class ProductConcreteFormEdit extends ProductFormAdd
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Communication\Form\Product\GeneralForm
+     * @return string
      */
     protected function createGeneralForm()
     {
-        return new ConcreteGeneralForm();
+        return ConcreteGeneralForm::class;
     }
 
     /**

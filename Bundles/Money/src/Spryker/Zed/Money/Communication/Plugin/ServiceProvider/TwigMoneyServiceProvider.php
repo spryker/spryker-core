@@ -34,7 +34,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
         $app['twig'] = $app->share(
             $app->extend('twig', function (Twig_Environment $twig) {
                 $twig->addFilter($this->getFilter());
-                $twig->addFunction(static::FUNCTION_NAME_MONEY_COLLECTION, $this->getMoneyFormTableFunction($twig));
+                $twig->addFunction($this->getMoneyFormTableFunction($twig));
 
                 return $twig;
             })
