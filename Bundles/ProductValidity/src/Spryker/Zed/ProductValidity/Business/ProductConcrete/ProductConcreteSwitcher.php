@@ -4,19 +4,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Business\Product\Validity;
+namespace Spryker\Zed\ProductValidity\Business\ProductConcrete;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductValidityTableMap;
-use Spryker\Zed\Product\Business\Product\ProductConcreteActivatorInterface;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\ProductValidity\Dependency\ProductValidityToProductFacadeInterface;
+use Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Traversable;
 
-class ValidityUpdater implements ValidityUpdaterInterface
+class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
 {
     use DatabaseTransactionHandlerTrait;
+
     /**
-     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
+     * @var \Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -25,16 +26,19 @@ class ValidityUpdater implements ValidityUpdaterInterface
      */
     protected $productConcreteActivator;
 
+    /** @var  ProductValidityToProductFacadeInterface */
+    protected $productFacade;
+
     /**
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Product\Business\Product\ProductConcreteActivatorInterface $productConcreteActivator
+     * @param ProductValidityQueryContainerInterface $queryContainer
+     * @param ProductValidityToProductFacadeInterface $productFacade
      */
     public function __construct(
-        ProductQueryContainerInterface $queryContainer,
-        ProductConcreteActivatorInterface $productConcreteActivator
+        ProductValidityQueryContainerInterface $queryContainer,
+        ProductValidityToProductFacadeInterface $productFacade
     ) {
         $this->queryContainer = $queryContainer;
-        $this->productConcreteActivator = $productConcreteActivator;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -126,8 +130,10 @@ class ValidityUpdater implements ValidityUpdaterInterface
     protected function activateProductConcretes(Traversable $productValidityEntities)
     {
         foreach ($productValidityEntities as $productValidityEntity) {
-            $this->productConcreteActivator
-                ->activateProductConcrete($productValidityEntity->getFkProduct());
+            $this->productFacade
+                ->activateProductConcrete(
+                    $productValidityEntity->getFkProduct()
+                );
         }
     }
 
@@ -139,8 +145,10 @@ class ValidityUpdater implements ValidityUpdaterInterface
     protected function deactivateProductConcretes(Traversable $productValidityEntities)
     {
         foreach ($productValidityEntities as $productValidityEntity) {
-            $this->productConcreteActivator
-                ->deactivateProductConcrete($productValidityEntity->getFkProduct());
+            $this->productFacade
+                ->deactivateProductConcrete(
+                    $productValidityEntity->getFkProduct()
+                );
         }
     }
 }

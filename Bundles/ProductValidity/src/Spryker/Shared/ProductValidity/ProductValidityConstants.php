@@ -5,12 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Business\Product\Validity;
+namespace Spryker\Shared\ProductValidity;
 
-interface ValidityUpdaterInterface
+interface ProductValidityConstants
 {
-    /**
-     * @return void
-     */
-    public function updateProductsValidity();
+    const VALIDITY_DATE_TIME_FORMAT = 'Y-m-d h:m';
 }

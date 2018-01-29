@@ -5,8 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Product;
+namespace Spryker\Zed\ProductValidity\Business\ProductConcrete;
 
-interface ProductConstants
+interface ProductConcreteSwitcherInterface
 {
+    /**
+     * @return void
+     */
+    public function updateProductsValidity();
 }

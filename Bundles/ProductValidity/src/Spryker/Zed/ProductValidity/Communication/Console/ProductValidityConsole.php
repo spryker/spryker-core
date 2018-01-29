@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Communication\Console;
+namespace Spryker\Zed\ProductValidity\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Product\Business\ProductFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductValidity\Business\ProductValidityFacadeInterface getFacade()
  */
 class ProductValidityConsole extends Console
 {
-    const COMMAND_NAME = 'product:validity';
+    const COMMAND_NAME = 'product:check-validity';
 
     /**
      * @return void

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Product\Persistence;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -273,47 +272,5 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
         return $this->getFactory()->createProductAbstractStoreQuery()
             ->filterByFkStore_In($idStores)
             ->filterByFkProductAbstract($idProductAbstract);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductValidityQuery
-     */
-    public function queryProductValidity()
-    {
-        return $this->getFactory()
-            ->createProductValidityQuery();
-    }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductValidityQuery
-     */
-    public function queryProductsBecomingValid()
-    {
-        return $this
-            ->getFactory()
-            ->createProductValidityQuery()
-            ->filterByValidFrom('now', Criteria::LESS_EQUAL)
-            ->filterByValidTo(null, Criteria::ISNULL)
-            ->_or()
-            ->filterByValidTo('now', Criteria::GREATER_EQUAL);
-    }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductValidityQuery
-     */
-    public function queryProductsBecomingInvalid()
-    {
-        return $this
-            ->getFactory()
-            ->createProductValidityQuery()
-            ->filterByValidTo('now', Criteria::LESS_THAN);
     }
 }

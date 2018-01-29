@@ -13,7 +13,6 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
-use Orm\Zed\Product\Persistence\SpyProductValidityQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
@@ -77,13 +76,5 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory
     public function createProductAbstractStoreQuery()
     {
         return SpyProductAbstractStoreQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductValidityQuery
-     */
-    public function createProductValidityQuery()
-    {
-        return SpyProductValidityQuery::create();
     }
 }

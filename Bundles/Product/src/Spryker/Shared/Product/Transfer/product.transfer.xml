@@ -11,8 +11,6 @@
         <property name="fkProductAbstract" type="int" />
         <property name="abstractSku" type="string" />
         <property name="localizedAttributes" type="LocalizedAttributes[]" />
-        <property name="validFrom" type="string"/>
-        <property name="validTo" type="string"/>
     </transfer>
 
     <transfer name="ProductAbstract">

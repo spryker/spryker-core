@@ -13,7 +13,6 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
-use Spryker\Zed\Product\Business\Product\Validity\ProductValidityHydratorInterface;
 
 class ProductTransferMapper implements ProductTransferMapperInterface
 {
@@ -23,20 +22,11 @@ class ProductTransferMapper implements ProductTransferMapperInterface
     protected $attributeEncoder;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\Validity\ProductValidityHydratorInterface
-     */
-    protected $validityHydrator;
-
-    /**
      * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
-     * @param \Spryker\Zed\Product\Business\Product\Validity\ProductValidityHydratorInterface $validityHydrator
      */
-    public function __construct(
-        AttributeEncoderInterface $attributeEncoder,
-        ProductValidityHydratorInterface $validityHydrator
-    ) {
+    public function __construct(AttributeEncoderInterface $attributeEncoder)
+    {
         $this->attributeEncoder = $attributeEncoder;
-        $this->validityHydrator = $validityHydrator;
     }
 
     /**
@@ -93,8 +83,6 @@ class ProductTransferMapper implements ProductTransferMapperInterface
             $productTransfer->setAbstractSku($productEntity->getSpyProductAbstract()->getSku());
             $productTransfer->setFkProductAbstract($productEntity->getSpyProductAbstract()->getIdProductAbstract());
         }
-
-        $productTransfer = $this->validityHydrator->hydrateProduct($productTransfer, $productEntity);
 
         return $productTransfer;
     }

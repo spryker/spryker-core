@@ -806,18 +806,4 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
             ->createAttributeEncoder()
             ->decodeAttributes($attributes);
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function checkProductValidityDateRangeAndTouch()
-    {
-        $this->getFactory()
-            ->createProductValidityUpdater()
-            ->updateProductsValidity();
-    }
 }

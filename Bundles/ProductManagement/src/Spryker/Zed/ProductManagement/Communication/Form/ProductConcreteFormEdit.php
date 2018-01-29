@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use DateTime;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Shared\Product\ProductConstants;
+use Spryker\Shared\Product\ProductValidityConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
@@ -326,7 +326,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                         return null;
                     }
 
-                    return $dateAsObject->format(ProductConstants::VALIDITY_DATE_TIME_FORMAT);
+                    return $dateAsObject->format(ProductValidityConstants::VALIDITY_DATE_TIME_FORMAT);
                 }
             ));
     }

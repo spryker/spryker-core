@@ -703,18 +703,4 @@ interface ProductFacadeInterface
      * @return array
      */
     public function decodeProductAttributes($attributes);
-
-    /**
-     * Specification:
-     * - Finds products that are about to become valid/invalid for the current time.
-     * - Products that are about to become active and are not published will be marked as 'active' in the database.
-     * - Products that are about to become active and are not published will cause touching.
-     * - Products that are about to become inactive and are published will be marked as 'inactive' in the database.
-     * - Products that are about to become inactive and are published will cause touching.
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function checkProductValidityDateRangeAndTouch();
 }

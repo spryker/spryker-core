@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Persistence\Propel;
+namespace Spryker\Zed\ProductValidity\Persistence\Propel;
 
-use Orm\Zed\Product\Persistence\Base\SpyProductValidityQuery as BaseSpyProductValidityQuery;
+use Orm\Zed\ProductValidity\Persistence\Base\SpyProductValidity as BaseSpyProductValidity;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'spy_product_validity' table.
+ * Skeleton subclass for representing a row from the 'spy_product_validity' table.
  *
  *
  *
@@ -18,6 +18,6 @@ use Orm\Zed\Product\Persistence\Base\SpyProductValidityQuery as BaseSpyProductVa
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyProductValidityQuery extends BaseSpyProductValidityQuery
+abstract class AbstractSpyProductValidity extends BaseSpyProductValidity
 {
 }

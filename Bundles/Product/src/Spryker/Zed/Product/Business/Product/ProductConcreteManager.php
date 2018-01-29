@@ -157,7 +157,6 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
 
         $this->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
-        $this->persistValidity($productConcreteTransfer);
 
         $this->notifyAfterUpdateObservers($productConcreteTransfer);
 
@@ -292,26 +291,6 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
             ->filterByFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
             ->filterByIdProduct($productConcreteTransfer->getIdProductConcrete())
             ->findOne();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
-    protected function persistValidity(ProductConcreteTransfer $productConcreteTransfer)
-    {
-        $productConcreteTransfer->requireIdProductConcrete();
-
-        $productValidityEntity = $this->productQueryContainer
-            ->queryProductValidity()
-            ->filterByFkProduct($productConcreteTransfer->getIdProductConcrete())
-            ->findOneOrCreate();
-
-        $productValidityEntity->setValidFrom($productConcreteTransfer->getValidFrom());
-        $productValidityEntity->setValidTo($productConcreteTransfer->getValidTo());
-
-        $productValidityEntity->save();
     }
 
     /**
