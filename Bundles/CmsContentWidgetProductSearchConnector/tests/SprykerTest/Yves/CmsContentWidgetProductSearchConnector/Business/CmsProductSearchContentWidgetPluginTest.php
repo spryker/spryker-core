@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\CmsContentWidgetProductSetConnector\Business;
 
 use Codeception\Test\Unit;
 use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
+use Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface;
 use Spryker\Yves\CmsContentWidgetProductSearchConnector\Plugin\CmsProductSearchContentWidgetPlugin;
 
 /**
@@ -27,9 +28,11 @@ class CmsProductSearchContentWidgetPluginTest extends Unit
      */
     public function testCmsProductSearchContentWidgetPluginCreated()
     {
-        new CmsProductSearchContentWidgetPlugin(
+        $plugin = new CmsProductSearchContentWidgetPlugin(
             $this->createCmsContentWidgetConfigurationProviderMock()
         );
+
+        $this->assertInstanceOf(CmsContentWidgetPluginInterface::class, $plugin);
     }
 
     /**
