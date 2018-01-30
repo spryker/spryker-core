@@ -22,11 +22,8 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductConcreteActivatorInterface
+     * @var \Spryker\Zed\ProductValidity\Dependency\Facade\ProductValidityToProductFacadeInterface
      */
-    protected $productConcreteActivator;
-
-    /** @var \Spryker\Zed\ProductValidity\Dependency\Facade\ProductValidityToProductFacadeInterface */
     protected $productFacade;
 
     /**
