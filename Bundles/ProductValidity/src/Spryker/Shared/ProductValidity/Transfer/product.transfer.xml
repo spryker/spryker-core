@@ -4,7 +4,6 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ProductConcrete">
-        <property name="idProductConcrete" type="int" />
         <property name="validFrom" type="string"/>
         <property name="validTo" type="string"/>
     </transfer>
