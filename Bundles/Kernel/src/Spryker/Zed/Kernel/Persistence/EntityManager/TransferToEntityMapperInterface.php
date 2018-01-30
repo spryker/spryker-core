@@ -13,11 +13,10 @@ interface TransferToEntityMapperInterface
 {
     /**
      * @param \Spryker\Shared\Kernel\Transfer\EntityTransferInterface $entityTransfer
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $parentEntity
      *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
      */
-    public function mapEntityCollection(EntityTransferInterface $entityTransfer, ActiveRecordInterface $parentEntity = null);
+    public function mapEntityCollection(EntityTransferInterface $entityTransfer);
 
     /**
      * @param string $transferClassName

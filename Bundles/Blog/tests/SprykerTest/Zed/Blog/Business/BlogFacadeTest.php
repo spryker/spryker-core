@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\SpyBlogCustomerEntityTransfer;
 use Generated\Shared\Transfer\SpyBlogEntityTransfer;
 use Generated\Shared\Transfer\SpyCustomerEntityTransfer;
 use Orm\Zed\Blog\Persistence\SpyBlogQuery;
+use Propel\Runtime\Propel;
 use Spryker\Zed\Blog\Business\BlogFacade;
 use Spryker\Zed\Blog\Persistence\BlogEntityManager;
 use Spryker\Zed\Blog\Persistence\BlogRepository;
@@ -31,7 +32,7 @@ class BlogFacadeTest extends Unit
     {
         $blogRepository = $this->createBlogRepository();
         $this->createBlog();
-        $blogCollection = $blogRepository->findBlogListByFirstName(static::BLOG_NAME);
+        $blogCollection = $blogRepository->findBlogCollectionByFirstName(static::BLOG_NAME);
 
         $blogEntityTransfer = $blogCollection[0];
 

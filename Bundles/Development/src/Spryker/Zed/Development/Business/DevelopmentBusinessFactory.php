@@ -74,6 +74,7 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ClientMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\FacadeMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\QueryContainerMethodBuilder;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\RepositoryMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\ServiceMethodBuilder;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\NamespaceExtractor;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator;
@@ -400,7 +401,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorService
+     * @return \Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\LocatorClient
      */
     protected function createLocatorServiceChecker()
     {
@@ -1015,6 +1016,28 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
      */
+    public function createRepositoryIdeAutoCompletionWriter()
+    {
+        return $this->createIdeAutoCompletionWriter(
+            $this->createRepositoryIdeAutoCompletionBundleBuilder(),
+            $this->getConfig()->getRepositoryIdeAutoCompletionOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleBuilderInterface
+     */
+    protected function createRepositoryIdeAutoCompletionBundleBuilder()
+    {
+        return new IdeAutoCompletionBundleBuilder(
+            $this->getRepositoryIdeAutoCompletionMethodBuilderStack(),
+            $this->getConfig()->getRepositoryIdeAutoCompletionOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
+     */
     public function createServiceIdeAutoCompletionWriter()
     {
         return $this->createIdeAutoCompletionWriter(
@@ -1066,6 +1089,15 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createIdeAutoCompletionClientMethodBuilder(),
         ];
     }
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
+     */
+    protected function getRepositoryIdeAutoCompletionMethodBuilderStack()
+    {
+        return [
+            $this->createIdeAutoCompletionRepositoryMethodBuilder(),
+        ];
+    }
 
     /**
      * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
@@ -1099,6 +1131,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createIdeAutoCompletionClientMethodBuilder()
     {
         return new ClientMethodBuilder($this->createIdeAutoCompletionNamespaceExtractor());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface
+     */
+    protected function createIdeAutoCompletionRepositoryMethodBuilder()
+    {
+        return new RepositoryMethodBuilder($this->createIdeAutoCompletionNamespaceExtractor());
     }
 
     /**

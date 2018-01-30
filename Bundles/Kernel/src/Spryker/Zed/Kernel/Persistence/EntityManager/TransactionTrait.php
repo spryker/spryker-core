@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionHandlerInterface;
 trait TransactionTrait
 {
     /**
-     * \Spryker\Zed\Kernel\Persistence\EntityManager\TransactionHandlerInterface
+     * @return \Spryker\Zed\Kernel\Persistence\EntityManager\TransactionHandlerInterface
      */
     public function getTransactionHandler()
     {

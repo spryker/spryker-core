@@ -371,4 +371,14 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     {
         return $this->getFactory()->createPhpstanRunner()->run($input, $output);
     }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function generateRepositoryIdeAutoCompletion()
+    {
+        $this->getFactory()->createRepositoryIdeAutoCompletionWriter()->writeCompletionFiles();
+    }
 }

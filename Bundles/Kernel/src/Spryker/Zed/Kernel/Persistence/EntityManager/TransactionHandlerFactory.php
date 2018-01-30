@@ -15,7 +15,6 @@ class TransactionHandlerFactory
      */
     public static function createHandler()
     {
-        //@todo should get from configuration.
         return new PropelDatabaseTransactionHandler();
     }
 }

@@ -27,7 +27,7 @@ interface BlogRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer[]
      */
-    public function findBlogListByFirstName($firstName, CriteriaTransfer $criteriaTransfer = null);
+    public function findBlogCollectionByFirstName($firstName, CriteriaTransfer $criteriaTransfer = null);
 
     /**
      * @param string $firstName

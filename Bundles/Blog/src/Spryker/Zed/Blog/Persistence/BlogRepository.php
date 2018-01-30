@@ -62,7 +62,7 @@ class BlogRepository extends AbstractRepository implements BlogRepositoryInterfa
      *
      * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer[]
      */
-    public function findBlogListByFirstName($firstName, CriteriaTransfer $criteriaTransfer = null)
+    public function findBlogCollectionByFirstName($firstName, CriteriaTransfer $criteriaTransfer = null)
     {
         $customerQuery = $this->queryBlogByName($firstName)
             ->joinWithSpyBlogComment()

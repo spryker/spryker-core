@@ -21,17 +21,12 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\EntityTransferInterface $entityTransfer
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $parentEntity
      *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
      */
-    public function mapEntityCollection(
-        EntityTransferInterface $entityTransfer,
-        ActiveRecordInterface $parentEntity = null
-    ) {
-        if ($parentEntity === null) {
-            $parentEntity = $this->mapEntity($entityTransfer);
-        }
+    public function mapEntityCollection(EntityTransferInterface $entityTransfer)
+    {
+        $parentEntity = $this->mapEntity($entityTransfer);
 
         $transferArray = $entityTransfer->modifiedToArray(false);
         foreach ($transferArray as $propertyName => $value) {
@@ -42,8 +37,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
             $parentEntitySetterMethodName = $this->findParentEntitySetterMethodName($propertyName, $parentEntity);
             if (is_array($value) || $value instanceof \ArrayObject) {
                 foreach ($value as $childTransfer) {
-                    $childEntity = $this->mapEntity($childTransfer);
-                    $entity = $this->mapEntityCollection($childTransfer, $childEntity);
+                    $entity = $this->mapEntityCollection($childTransfer);
                     $parentEntity->$parentEntitySetterMethodName($entity);
                 }
                 continue;
