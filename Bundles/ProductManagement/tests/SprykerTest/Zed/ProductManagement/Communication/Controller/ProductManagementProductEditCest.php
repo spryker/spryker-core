@@ -36,4 +36,21 @@ class ProductManagementProductEditCest
         $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Edit Product');
     }
+
+    /**
+     * @param \SprykerTest\Zed\ProductManagement\ProductManagementCommunicationTester $i
+     *
+     * @return void
+     */
+    public function canSaveProductWithoutEditing(ProductManagementCommunicationTester $i)
+    {
+        $i->registerProductManagementStoreRelationFormTypePlugin();
+        $i->registerMoneyCollectionFormTypePlugin();
+
+        $i->listDataTable(ProductManagementProductListPage::URL . '/index/table');
+        $i->clickDataTableEditButton();
+        $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Edit Product');
+        $i->click('Save');
+        $i->seeResponseCodeIs(200);
+    }
 }

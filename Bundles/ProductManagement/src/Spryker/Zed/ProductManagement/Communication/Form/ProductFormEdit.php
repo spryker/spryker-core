@@ -62,7 +62,7 @@ class ProductFormEdit extends ProductFormAdd
                             $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
                             $sku = $this->getFactory()->getUtilTextService()->generateSlug($sku);
 
-                            $skuCount = $this->getQueryContainer()
+                            $skuCount = $this->getFactory()->getProductQueryContainer()
                                 ->queryProduct()
                                 ->filterByFkProductAbstract($idProductAbstract, Criteria::NOT_EQUAL)
                                 ->filterBySku($sku)
