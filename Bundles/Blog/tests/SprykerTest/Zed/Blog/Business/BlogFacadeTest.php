@@ -135,6 +135,28 @@ class BlogFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testUpdateBlogShouldUpdateExisting()
+    {
+        $entityManager = $this->createBlogEntityManager();
+
+        $blogTransfer = $this->createBlog();
+
+        $name = 'new';
+
+        $blogTransfer->setName($name);
+
+        //update
+        $entityManager->save($blogTransfer);
+
+        $blogTransfer = $this->createBlogRepository()->findBlogByName($name);
+
+        $this->assertNotNull($blogTransfer);
+        $this->assertSame($name, $blogTransfer->getName());
+    }
+
+    /**
      * @return \Spryker\Zed\Blog\Persistence\BlogRepository
      */
     protected function createBlogRepository()
