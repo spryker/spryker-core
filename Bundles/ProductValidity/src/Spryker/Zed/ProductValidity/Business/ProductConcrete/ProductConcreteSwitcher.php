@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\ProductValidity\Business\ProductConcrete;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductValidityTableMap;
+use Orm\Zed\ProductValidity\Persistence\Map\SpyProductValidityTableMap;
 use Spryker\Zed\ProductValidity\Dependency\Facade\ProductValidityToProductFacadeInterface;
 use Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
