@@ -23,7 +23,7 @@ interface ProductValidityFacadeInterface
      *
      * @return void
      */
-    public function checkProductValidityDateRangeAndTouch();
+    public function checkProductValidityDateRangeAndTouch(): void;
 
     /**
      * Specification:

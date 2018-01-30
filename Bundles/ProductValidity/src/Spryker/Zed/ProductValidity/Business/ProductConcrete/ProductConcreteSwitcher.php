@@ -41,7 +41,7 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
     /**
      * @return void
      */
-    public function updateProductsValidity()
+    public function updateProductsValidity(): void
     {
         if (!$this->hasTriggeredProductValidity()) {
             return;
@@ -114,7 +114,7 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
     protected function executeProductPublishTransaction(
         Traversable $productsBecomingActive,
         Traversable $productsBecomingInactive
-    ) {
+    ): void {
         $this->activateProductConcretes($productsBecomingActive);
         $this->deactivateProductConcretes($productsBecomingInactive);
     }
@@ -124,7 +124,7 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
      *
      * @return void
      */
-    protected function activateProductConcretes(Traversable $productValidityEntities)
+    protected function activateProductConcretes(Traversable $productValidityEntities): void
     {
         foreach ($productValidityEntities as $productValidityEntity) {
             $this->productFacade
@@ -139,7 +139,7 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
      *
      * @return void
      */
-    protected function deactivateProductConcretes(Traversable $productValidityEntities)
+    protected function deactivateProductConcretes(Traversable $productValidityEntities): void
     {
         foreach ($productValidityEntities as $productValidityEntity) {
             $this->productFacade

@@ -12,5 +12,5 @@ interface ProductConcreteSwitcherInterface
     /**
      * @return void
      */
-    public function updateProductsValidity();
+    public function updateProductsValidity(): void;
 }

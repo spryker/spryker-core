@@ -22,7 +22,7 @@ class ProductValidityFacade extends AbstractFacade implements ProductValidityFac
      *
      * @return void
      */
-    public function checkProductValidityDateRangeAndTouch()
+    public function checkProductValidityDateRangeAndTouch(): void
     {
         $this->getFactory()
             ->createProductConcreteSwitcher()
