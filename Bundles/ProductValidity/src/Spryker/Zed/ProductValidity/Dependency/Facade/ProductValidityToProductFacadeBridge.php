@@ -9,7 +9,9 @@ namespace Spryker\Zed\ProductValidity\Dependency\Facade;
 
 class ProductValidityToProductFacadeBridge implements ProductValidityToProductFacadeInterface
 {
-    /** @var \Spryker\Zed\Product\Business\ProductFacadeInterface */
+    /**
+     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
+     */
     protected $productFacade;
 
     /**
