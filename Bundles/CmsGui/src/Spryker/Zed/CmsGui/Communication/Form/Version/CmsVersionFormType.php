@@ -79,14 +79,4 @@ class CmsVersionFormType extends AbstractType
     {
         return static::CMS_VERSION;
     }
-
-    /**
-     * @deprecated Use `getBlockPrefix()` instead.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
-    }
 }
