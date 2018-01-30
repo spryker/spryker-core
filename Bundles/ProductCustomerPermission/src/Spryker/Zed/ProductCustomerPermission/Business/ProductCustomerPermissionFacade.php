@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductCustomerPermission\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -26,8 +29,9 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
      */
     public function saveCustomerProductPermission(int $customerId, int $productId)
     {
-        $this->getFactory()->createCustomerProductPermissionSaver()
-            ->saveProductPermission($customerId, $productId);
+        $this->getFactory()
+            ->createProductCustomerPermissionSaver()
+            ->savePermission($customerId, $productId);
     }
 
     /**
@@ -42,7 +46,74 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
      */
     public function saveCustomerProductPermissions(int $customerId, array $productIds)
     {
-        $this->getFactory()->createCustomerProductPermissionSaver()
-            ->saveProductPermissions($customerId, $productIds);
+        $this->getFactory()
+            ->createProductCustomerPermissionSaver()
+            ->savePermissions($customerId, $productIds);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @api
+     *
+     * @param int $customerId
+     * @param int $productId
+     *
+     * @return void
+     */
+    public function deleteCustomerProductPermission(int $customerId, int $productId)
+    {
+        $this->getFactory()
+            ->createProductCustomerPermissionSaver()
+            ->deletePermission($customerId, $productId);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @api
+     *
+     * @param int $customerId
+     *
+     * @return void
+     */
+    public function deleteCustomerProductPermissions(int $customerId)
+    {
+        $this->getFactory()
+            ->createProductCustomerPermissionSaver()
+            ->deletePermissions($customerId);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     **/
+    public function checkPermissions(CartChangeTransfer $cartChangeTransfer)
+    {
+        return $this->getFactory()
+            ->createCartValidator()
+            ->checkPermissions($cartChangeTransfer);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function checkoutPreCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
+        return $this->getFactory()
+            ->createCheckoutPreConditionChecker()
+            ->checkPreCondition($quoteTransfer, $checkoutResponseTransfer);
     }
 }

@@ -18,22 +18,18 @@ interface ProductCustomerPermissionQueryContainerInterface extends QueryContaine
      * @api
      *
      * @param int $customerId
+     *
      * @return \Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermissionQuery
      */
     public function queryProductCustomerPermissionByCustomer(int $customerId);
 
     /**
+     * @api
+     *
      * @param int $customerId
      * @param array $productIds
      *
      * @return \Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermissionQuery
      */
     public function queryProductCustomerPermissionByCustomerAndProducts(int $customerId, array $productIds);
-
-    /**
-     * @param array $entityIds
-     *
-     * @return \Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermissionQuery
-     */
-    public function queryProductCustomerPermissionByIds(array $entityIds);
 }

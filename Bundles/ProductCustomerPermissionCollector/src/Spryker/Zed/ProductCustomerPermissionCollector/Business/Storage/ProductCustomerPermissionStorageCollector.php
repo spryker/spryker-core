@@ -13,11 +13,20 @@ use Spryker\Zed\ProductCustomerPermissionCollector\Persistence\Search\Propel\Pro
 
 class ProductCustomerPermissionStorageCollector extends AbstractStoragePropelCollector
 {
+    /**
+     * @return string
+     */
     protected function collectResourceType()
     {
         return ProductCustomerPermissionConfig::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION;
     }
 
+    /**
+     * @param string $touchKey
+     * @param array $collectItemData
+     *
+     * @return array
+     */
     protected function collectItem($touchKey, array $collectItemData)
     {
         return [];
@@ -32,7 +41,7 @@ class ProductCustomerPermissionStorageCollector extends AbstractStoragePropelCol
      */
     protected function collectKey($data, $localeName, array $collectedItemData)
     {
-        $data  = $collectedItemData[ProductCustomerPermissionSearchCollectorQuery::FIELD_FK_PRODUCT_ABSTRACT]
+        $data = $collectedItemData[ProductCustomerPermissionSearchCollectorQuery::FIELD_FK_PRODUCT_ABSTRACT]
             . '.' . $collectedItemData[ProductCustomerPermissionSearchCollectorQuery::FIELD_FK_CUSTOMER];
 
         return $this->generateKey($data, $localeName);

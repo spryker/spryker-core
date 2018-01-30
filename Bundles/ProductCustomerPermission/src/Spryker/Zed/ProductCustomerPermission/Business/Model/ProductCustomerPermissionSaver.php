@@ -13,7 +13,7 @@ use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermi
 use Spryker\Zed\ProductCustomerPermission\Persistence\ProductCustomerPermissionQueryContainerInterface;
 use Spryker\Zed\ProductCustomerPermission\ProductCustomerPermissionConfig;
 
-class CustomerProductPermissionSaver implements CustomerProductPermissionSaverInterface
+class ProductCustomerPermissionSaver implements ProductCustomerPermissionSaverInterface
 {
     /**
      * @var \Spryker\Zed\ProductCustomerPermission\Persistence\ProductCustomerPermissionQueryContainerInterface
@@ -45,7 +45,7 @@ class CustomerProductPermissionSaver implements CustomerProductPermissionSaverIn
      *
      * @return void
      */
-    public function saveProductPermission(int $customerId, int $productId)
+    public function savePermission(int $customerId, int $productId)
     {
         $productCustomerPermissionEntity = new SpyProductCustomerPermission();
         $productCustomerPermissionEntity->setFkCustomer($customerId);
@@ -63,27 +63,71 @@ class CustomerProductPermissionSaver implements CustomerProductPermissionSaverIn
      *
      * @return void
      */
-    public function saveProductPermissions(int $customerId, array $productIds)
+    public function savePermissions(int $customerId, array $productIds)
     {
-        $query = count($productIds) > 0
-            ? $this->queryContainer->queryProductCustomerPermissionByCustomerAndProducts($customerId, $productIds)
-            : $this->queryContainer->queryProductCustomerPermissionByCustomer($customerId);
-
-        $existingRecords = $query->find();
-
-        $existingRecordIds = $this->getExistingRecordsIds($existingRecords);
-
         if (count($productIds) === 0) {
-            $this->cleanEntities($existingRecordIds);
             return;
         }
+
+        $existingRecords = $this->queryContainer
+            ->queryProductCustomerPermissionByCustomerAndProducts($customerId, $productIds)
+            ->find();
+        $existingRecordIds = $this->getExistingRecordsIds($existingRecords);
 
         if ($existingRecords->count() === count($productIds)) {
             return;
         }
 
-        $this->deleteProducts($existingRecordIds, $productIds);
         $this->addNewProducts($customerId, $existingRecordIds, $productIds);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param int $customerId
+     * @param int $productId
+     *
+     * @return void
+     */
+    public function deletePermission(int $customerId, int $productId)
+    {
+        $productCustomerPermissionEntity = $this->queryContainer
+            ->queryProductCustomerPermissionByCustomerAndProducts($customerId, [$productId])
+            ->findOne();
+
+        if ($productCustomerPermissionEntity) {
+            $this->deleteAndCleanEntity($productCustomerPermissionEntity);
+        }
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param int $customerId
+     *
+     * @return void
+     */
+    public function deletePermissions(int $customerId)
+    {
+        $productCustomerPermissionEntities = $this->queryContainer
+            ->queryProductCustomerPermissionByCustomer($customerId)
+            ->find();
+
+        foreach ($productCustomerPermissionEntities as $productCustomerPermissionEntity) {
+            $this->deleteAndCleanEntity($productCustomerPermissionEntity);
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermission $productCustomerPermissionEntity
+     *
+     * @return void
+     */
+    protected function deleteAndCleanEntity(SpyProductCustomerPermission $productCustomerPermissionEntity)
+    {
+        $entityId = $productCustomerPermissionEntity->getIdProductCustomerPermission();
+        $productCustomerPermissionEntity->delete();
+        $this->touchFacade->touchDeleted(ProductCustomerPermissionConfig::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION, $entityId);
     }
 
     /**
@@ -102,51 +146,6 @@ class CustomerProductPermissionSaver implements CustomerProductPermissionSaverIn
     }
 
     /**
-     * @param int $entityId
-     *
-     * @return void
-     */
-    protected function touchEntity(int $entityId)
-    {
-        $this->touchFacade->touchActive(ProductCustomerPermissionConfig::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION, $entityId);
-    }
-
-    /**
-     * @param array $entityIds
-     *
-     * @return void
-     */
-    protected function cleanEntities(array $entityIds)
-    {
-        if (!$entityIds) {
-            return;
-        }
-
-        foreach ($entityIds as $entityId) {
-            $this->touchFacade->touchDeleted(ProductCustomerPermissionConfig::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION, $entityId);
-        }
-
-        $this->queryContainer->queryProductCustomerPermissionByIds($entityIds)
-            ->delete();
-    }
-
-    /**
-     * @param array $existingRecordIds
-     * @param array $productIds
-     *
-     * @return void
-     */
-    protected function deleteProducts(array $existingRecordIds, array $productIds)
-    {
-        $productsToDelete = array_diff(array_keys($existingRecordIds), $productIds);
-        $entitiesToDelete = [];
-        foreach ($productsToDelete as $productId) {
-            $entitiesToDelete[] = $existingRecordIds[$productId];
-        }
-        $this->cleanEntities($entitiesToDelete);
-    }
-
-    /**
      * @param int $customerId
      * @param array $existingRecordIds
      * @param array $productIds
@@ -157,7 +156,17 @@ class CustomerProductPermissionSaver implements CustomerProductPermissionSaverIn
     {
         $productsToAdd = array_diff($productIds, array_keys($existingRecordIds));
         foreach ($productsToAdd as $productId) {
-            $this->saveProductPermission($customerId, $productId);
+            $this->savePermission($customerId, $productId);
         }
+    }
+
+    /**
+     * @param int $entityId
+     *
+     * @return void
+     */
+    protected function touchEntity(int $entityId)
+    {
+        $this->touchFacade->touchActive(ProductCustomerPermissionConfig::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION, $entityId);
     }
 }

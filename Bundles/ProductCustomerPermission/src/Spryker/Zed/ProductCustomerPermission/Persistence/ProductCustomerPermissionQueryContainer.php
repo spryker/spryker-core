@@ -23,11 +23,14 @@ class ProductCustomerPermissionQueryContainer extends AbstractQueryContainer imp
      */
     public function queryProductCustomerPermissionByCustomer(int $customerId)
     {
-        return $this->getFactory()->createProductCustomerPermissionQuery()
+        return $this->getFactory()
+            ->createProductCustomerPermissionQuery()
             ->filterByFkCustomer($customerId);
     }
 
     /**
+     * @api
+     *
      * @param int $customerId
      * @param array $productIds
      *
@@ -35,19 +38,9 @@ class ProductCustomerPermissionQueryContainer extends AbstractQueryContainer imp
      */
     public function queryProductCustomerPermissionByCustomerAndProducts(int $customerId, array $productIds)
     {
-        return $this->getFactory()->createProductCustomerPermissionQuery()
+        return $this->getFactory()
+            ->createProductCustomerPermissionQuery()
             ->filterByFkCustomer($customerId)
             ->filterByFkProductAbstract_In($productIds);
-    }
-
-    /**
-     * @param array $entityIds
-     *
-     * @return \Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermissionQuery
-     */
-    public function queryProductCustomerPermissionByIds(array $entityIds)
-    {
-        return $this->getFactory()->createProductCustomerPermissionQuery()
-            ->filterByIdProductCustomerPermission_In($entityIds);
     }
 }

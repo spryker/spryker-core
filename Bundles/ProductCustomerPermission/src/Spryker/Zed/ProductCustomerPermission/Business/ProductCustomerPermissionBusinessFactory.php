@@ -8,7 +8,9 @@
 namespace Spryker\Zed\ProductCustomerPermission\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductCustomerPermission\Business\Model\CustomerProductPermissionSaver;
+use Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionCartValidator;
+use Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionCheckoutPreCondition;
+use Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionSaver;
 use Spryker\Zed\ProductCustomerPermission\ProductCustomerPermissionDependencyProvider;
 
 /**
@@ -18,11 +20,27 @@ use Spryker\Zed\ProductCustomerPermission\ProductCustomerPermissionDependencyPro
 class ProductCustomerPermissionBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductCustomerPermission\Business\Model\CustomerProductPermissionSaverInterface
+     * @return \Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionSaverInterface
      */
-    public function createCustomerProductPermissionSaver()
+    public function createProductCustomerPermissionSaver()
     {
-        return new CustomerProductPermissionSaver($this->getQueryContainer(), $this->getTouchFacade());
+        return new ProductCustomerPermissionSaver($this->getQueryContainer(), $this->getTouchFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionCartValidatorInterface
+     */
+    public function createCartValidator()
+    {
+        return new ProductCustomerPermissionCartValidator($this->getQueryContainer(), $this->getProductFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionCheckoutPreConditionInterface
+     */
+    public function createCheckoutPreConditionChecker()
+    {
+        return new ProductCustomerPermissionCheckoutPreCondition($this->getQueryContainer());
     }
 
     /**
@@ -31,5 +49,13 @@ class ProductCustomerPermissionBusinessFactory extends AbstractBusinessFactory
     protected function getTouchFacade()
     {
         return $this->getProvidedDependency(ProductCustomerPermissionDependencyProvider::FACADE_TOUCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface
+     */
+    protected function getProductFacade()
+    {
+        return $this->getProvidedDependency(ProductCustomerPermissionDependencyProvider::FACADE_PRODUCT);
     }
 }
