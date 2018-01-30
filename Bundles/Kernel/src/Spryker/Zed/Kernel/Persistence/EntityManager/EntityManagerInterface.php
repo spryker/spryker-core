@@ -14,7 +14,7 @@ interface EntityManagerInterface
     /**
      * @param \Spryker\Shared\Kernel\Transfer\EntityTransferInterface $entityTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface
      */
     public function save(EntityTransferInterface $entityTransfer);
 }

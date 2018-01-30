@@ -126,6 +126,11 @@ class BlogFacadeTest extends Unit
         $blogCollection = $blogRepository->filterBlogPosts($blogCriteriaFilterTransfer);
         $this->assertCount(2, $blogCollection);
 
+        $blogComments = $blogCollection[0]->getSpyBlogComments();
+        $this->assertCount(2, $blogComments);
+
+        $blogCustomers = $blogComments[0]->getSpyBlogCustomers();
+        $this->assertCount(1, $blogCustomers);
     }
 
     /**

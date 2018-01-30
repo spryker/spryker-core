@@ -8,6 +8,8 @@ namespace Spryker\Zed\Kernel\Persistence;
 
 use Generated\Shared\Transfer\CriteriaTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\ActiveQuery\PropelQuery;
+use Propel\Runtime\Map\RelationMap;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
@@ -15,7 +17,9 @@ use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use Spryker\Zed\Kernel\Persistence\Repository\RelationMapper;
 use Spryker\Zed\Kernel\Persistence\Repository\TransferObjectFormatter;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 abstract class AbstractRepository
 {
@@ -124,6 +128,26 @@ abstract class AbstractRepository
         }
 
         return $criteria;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\EntityTransferInterface[] $collection
+     * @param string $relation
+     * @param \Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria $criteria
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface[]
+     */
+    public function populateCollectionWithRelation(array &$collection, $relation, Criteria $criteria = null)
+    {
+        return $this->createRelationMapper()->populateCollectionWithRelation($collection, $relation, $criteria);
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Persistence\Repository\RelationMapperInterface
+     */
+    protected function createRelationMapper()
+    {
+        return (new RelationMapper());
     }
 
 }

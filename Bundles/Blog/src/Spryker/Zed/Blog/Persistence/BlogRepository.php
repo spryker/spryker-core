@@ -43,7 +43,13 @@ class BlogRepository extends AbstractRepository implements BlogRepositoryInterfa
             $blogQuery->filterByText($blogCriteriaFilterTransfer->getText(), Criteria::LIKE);
         }
 
-        return $this->buildQueryFromCriteria($blogQuery, $blogCriteriaFilterTransfer->getCriteria())->find();
+        $collection = $this->buildQueryFromCriteria($blogQuery, $blogCriteriaFilterTransfer->getCriteria())
+            ->find();
+
+        $comments = $this->populateCollectionWithRelation($collection, 'SpyBlogComment');
+        $this->populateCollectionWithRelation($comments, 'SpyBlogCustomer');
+
+        return $collection;
     }
 
     /**
