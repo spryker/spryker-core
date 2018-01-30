@@ -23,7 +23,7 @@ class ProductValidityQueryContainer extends AbstractQueryContainer implements Pr
      *
      * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidityQuery
      */
-    public function queryProductValidity()
+    public function queryProductValidity(): SpyProductValidityQuery
     {
         return $this->getFactory()
             ->createProductValidityQuery();
@@ -36,7 +36,7 @@ class ProductValidityQueryContainer extends AbstractQueryContainer implements Pr
      *
      * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidityQuery
      */
-    public function queryProductsBecomingValid()
+    public function queryProductsBecomingValid(): SpyProductValidityQuery
     {
         return $this
             ->getFactory()
@@ -54,7 +54,7 @@ class ProductValidityQueryContainer extends AbstractQueryContainer implements Pr
      *
      * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidityQuery
      */
-    public function queryProductsBecomingInvalid()
+    public function queryProductsBecomingInvalid(): SpyProductValidityQuery
     {
         return $this
             ->getFactory()

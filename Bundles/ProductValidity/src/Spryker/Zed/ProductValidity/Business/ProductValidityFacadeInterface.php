@@ -27,7 +27,7 @@ interface ProductValidityFacadeInterface
 
     /**
      * Specification:
-     * - Hydrates product concrete validity (validFrom and validTo fields)
+     * - Hydrates product concrete validity (validFrom and validTo fields).
      *
      * @api
      *
@@ -39,7 +39,7 @@ interface ProductValidityFacadeInterface
 
     /**
      * Specification:
-     * - Persists validity dates from a product concrete to the product validity table
+     * - Persists validity dates from a product concrete to the product validity table.
      *
      * @api
      *

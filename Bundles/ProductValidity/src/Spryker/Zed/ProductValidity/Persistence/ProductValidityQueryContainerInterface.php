@@ -16,7 +16,7 @@ interface ProductValidityQueryContainerInterface
      *
      * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidityQuery
      */
-    public function queryProductValidity();
+    public function queryProductValidity(): SpyProductValidityQuery;
 
     /**
      * @api
@@ -32,12 +32,12 @@ interface ProductValidityQueryContainerInterface
      *
      * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidityQuery
      */
-    public function queryProductsBecomingValid();
+    public function queryProductsBecomingValid(): SpyProductValidityQuery;
 
     /**
      * @api
      *
      * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidityQuery
      */
-    public function queryProductsBecomingInvalid();
+    public function queryProductsBecomingInvalid(): SpyProductValidityQuery;
 }

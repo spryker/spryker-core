@@ -18,7 +18,7 @@ class ProductValidityPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidityQuery
      */
-    public function createProductValidityQuery()
+    public function createProductValidityQuery(): SpyProductValidityQuery
     {
         return SpyProductValidityQuery::create();
     }

@@ -21,7 +21,7 @@ class ProductValidityConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName(static::COMMAND_NAME);
         $this->setDescription('(Un)Publish products based on validity date ranges.');
@@ -35,7 +35,7 @@ class ProductValidityConsole extends Console
      *
      * @return void
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->getFacade()->checkProductValidityDateRangeAndTouch();
     }
