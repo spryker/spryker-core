@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -8,15 +9,11 @@ namespace Spryker\Zed\Kernel\Persistence;
 
 use Generated\Shared\Transfer\CriteriaTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\ActiveQuery\PropelQuery;
-use Propel\Runtime\Map\RelationMap;
-use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
-use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use Spryker\Zed\Kernel\Persistence\Repository\RelationMapper;
 use Spryker\Zed\Kernel\Persistence\Repository\TransferObjectFormatter;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -39,8 +36,7 @@ abstract class AbstractRepository
     protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,
         Container $container
-    )
-    {
+    ) {
         $dependencyProvider->providePersistenceLayerDependencies($container);
     }
 
@@ -53,8 +49,7 @@ abstract class AbstractRepository
     protected function injectExternalDependencies(
         DependencyInjector $dependencyInjector,
         Container $container
-    )
-    {
+    ) {
         return $dependencyInjector->injectPersistenceLayerDependencies($container);
     }
 
@@ -102,8 +97,7 @@ abstract class AbstractRepository
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $modelCriteria
-     *
-     * @param \Generated\Shared\Transfer\CriteriaTransfer $criteriaTransfer
+     * @param \Generated\Shared\Transfer\CriteriaTransfer|null $criteriaTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
@@ -133,7 +127,7 @@ abstract class AbstractRepository
     /**
      * @param \Spryker\Shared\Kernel\Transfer\EntityTransferInterface[] $collection
      * @param string $relation
-     * @param \Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria $criteria
+     * @param \Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria|null $criteria
      *
      * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface[]
      */
@@ -149,5 +143,4 @@ abstract class AbstractRepository
     {
         return (new RelationMapper());
     }
-
 }

@@ -29,7 +29,7 @@ class Locator extends AbstractLocatorLocator
                 new QueryContainerLocator(),
                 new ClientLocator(),
                 new ServiceLocator(),
-                new RepositoryLocator()
+                new RepositoryLocator(),
             ];
         }
         $bundleProxy->setLocator($this->locator);

@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
-use Zend\Filter\FilterChain;
-use Zend\Filter\Word\DashToCamelCase;
-use Zend\Filter\Word\UnderscoreToCamelCase;
 use Zend\Config\Factory;
 
 class EntityTransferDefinitionLoader extends TransferDefinitionLoader
@@ -27,7 +24,6 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
     {
         $xmlTransferDefinitions = $this->finder->getXmlTransferDefinitionFiles();
         foreach ($xmlTransferDefinitions as $xmlTransferDefinition) {
-
             $xml = simplexml_load_string($xmlTransferDefinition->getContents());
             $namespace = (string)$xml['namespace'];
 

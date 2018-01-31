@@ -1089,6 +1089,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createIdeAutoCompletionClientMethodBuilder(),
         ];
     }
+
     /**
      * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
      */

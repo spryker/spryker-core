@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -25,10 +26,9 @@ interface RelationMapperInterface
      *   $this->populateCollectionWithRelation($commentCollection, 'SpyBlogCustomer');
      *   Now each blog comment have customer associated.
      *
-     *
      * @param \Spryker\Shared\Kernel\Transfer\EntityTransferInterface[] $collection
      * @param string $relation
-     * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
+     * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *
      * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface[]
      */

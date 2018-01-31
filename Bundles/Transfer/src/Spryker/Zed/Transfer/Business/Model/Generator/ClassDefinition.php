@@ -86,7 +86,6 @@ class ClassDefinition implements ClassDefinitionInterface
             $this->addProperties($properties);
             $this->setPropertyNameMap($properties);
             $this->addMethods($properties);
-
         }
 
         return $this;
@@ -735,6 +734,8 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param array $definition
+     *
+     * @return void
      */
     protected function addEntityNamespace(array $definition)
     {

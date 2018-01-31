@@ -1,19 +1,15 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Kernel\Persistence\Repository;
 
-use Propel\Runtime\ActiveQuery\BaseModelCriteria;
-use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\DataFetcher\DataFetcherInterface;
 use Propel\Runtime\Exception\LogicException;
-use Propel\Runtime\Formatter\AbstractFormatter;
-use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Formatter\ArrayFormatter;
-
 
 class TransferObjectFormatter extends ArrayFormatter
 {
@@ -25,7 +21,7 @@ class TransferObjectFormatter extends ArrayFormatter
     /**
      * @param \Propel\Runtime\DataFetcher\DataFetcherInterface|null $dataFetcher
      *
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Propel\Runtime\Exception\LogicException
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface[]
      */
@@ -68,7 +64,7 @@ class TransferObjectFormatter extends ArrayFormatter
     /**
      * @param \Propel\Runtime\DataFetcher\DataFetcherInterface|null $dataFetcher
      *
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Propel\Runtime\Exception\LogicException
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
      */
@@ -123,9 +119,11 @@ class TransferObjectFormatter extends ArrayFormatter
         return $entityTransfer;
     }
 
+    /**
+     * @return bool
+     */
     public function isObjectFormatter()
     {
         return false;
     }
-
 }

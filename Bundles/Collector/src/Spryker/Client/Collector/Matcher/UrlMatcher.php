@@ -23,6 +23,7 @@ class UrlMatcher implements UrlMatcherInterface
     protected $keyValueReader;
 
     /**                                                          O
+     *
      * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $urlKeyBuilder
      * @param \Spryker\Client\Storage\StorageClientInterface $keyValueReader
      */

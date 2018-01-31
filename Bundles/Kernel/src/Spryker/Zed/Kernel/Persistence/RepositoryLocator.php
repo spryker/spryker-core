@@ -1,13 +1,13 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Kernel\Persistence;
 
 use Spryker\Shared\Kernel\AbstractLocator;
-use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Kernel\ClassResolver\Repository\RepositoryResolver;
 
 class RepositoryLocator extends AbstractLocator

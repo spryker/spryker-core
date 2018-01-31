@@ -1,20 +1,18 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Kernel\Persistence;
 
-use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Kernel\Transfer\EntityTransferInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
-use Propel\Runtime\Map\TableMap;
 use Spryker\Zed\Kernel\Persistence\EntityManager\EntityManagerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransferToEntityMapper;
 
@@ -36,8 +34,7 @@ abstract class AbstractEntityManager implements EntityManagerInterface
     protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,
         Container $container
-    )
-    {
+    ) {
         $dependencyProvider->providePersistenceLayerDependencies($container);
     }
 
@@ -50,8 +47,7 @@ abstract class AbstractEntityManager implements EntityManagerInterface
     protected function injectExternalDependencies(
         DependencyInjector $dependencyInjector,
         Container $container
-    )
-    {
+    ) {
         return $dependencyInjector->injectPersistenceLayerDependencies($container);
     }
 

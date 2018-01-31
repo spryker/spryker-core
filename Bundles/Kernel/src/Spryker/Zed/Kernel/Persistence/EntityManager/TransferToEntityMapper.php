@@ -1,11 +1,13 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Kernel\Persistence\EntityManager;
 
+use ArrayObject;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Shared\Kernel\Transfer\EntityTransferInterface;
@@ -30,12 +32,12 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
 
         $transferArray = $entityTransfer->modifiedToArray(false);
         foreach ($transferArray as $propertyName => $value) {
-            if (!$value instanceof EntityTransferInterface && !$value instanceof \ArrayObject) {
+            if (!$value instanceof EntityTransferInterface && !$value instanceof ArrayObject) {
                 continue;
             }
 
             $parentEntitySetterMethodName = $this->findParentEntitySetterMethodName($propertyName, $parentEntity);
-            if (is_array($value) || $value instanceof \ArrayObject) {
+            if (is_array($value) || $value instanceof ArrayObject) {
                 foreach ($value as $childTransfer) {
                     $entity = $this->mapEntityCollection($childTransfer);
                     $parentEntity->$parentEntitySetterMethodName($entity);
