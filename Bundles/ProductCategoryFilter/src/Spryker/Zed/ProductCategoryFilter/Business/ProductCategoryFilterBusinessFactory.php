@@ -12,6 +12,7 @@ use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterCreato
 use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterDeleter;
 use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterReader;
 use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTouch;
+use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTransferGenerator;
 use Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterUpdater;
 use Spryker\Zed\ProductCategoryFilter\ProductCategoryFilterDependencyProvider;
 
@@ -26,7 +27,7 @@ class ProductCategoryFilterBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductCategoryFilterCreator()
     {
-        return new ProductCategoryFilterCreator($this->createProductGroupTouch());
+        return new ProductCategoryFilterCreator($this->createProductCategoryFilterTouch(), $this->createProductCategoryFilterTransferGenerator());
     }
 
     /**
@@ -34,7 +35,7 @@ class ProductCategoryFilterBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductCategoryFilterReader()
     {
-        return new ProductCategoryFilterReader($this->getQueryContainer(), $this->getUtilEncodingService());
+        return new ProductCategoryFilterReader($this->getQueryContainer(), $this->createProductCategoryFilterTransferGenerator());
     }
 
     /**
@@ -42,7 +43,7 @@ class ProductCategoryFilterBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductCategoryFilterUpdater()
     {
-        return new ProductCategoryFilterUpdater($this->getQueryContainer(), $this->createProductGroupTouch());
+        return new ProductCategoryFilterUpdater($this->getQueryContainer(), $this->createProductCategoryFilterTouch(), $this->createProductCategoryFilterTransferGenerator());
     }
 
     /**
@@ -50,15 +51,23 @@ class ProductCategoryFilterBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductCategoryFilterDeleter()
     {
-        return new ProductCategoryFilterDeleter($this->getQueryContainer(), $this->createProductGroupTouch());
+        return new ProductCategoryFilterDeleter($this->getQueryContainer(), $this->createProductCategoryFilterTouch());
     }
 
     /**
      * @return \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTouchInterface
      */
-    public function createProductGroupTouch()
+    public function createProductCategoryFilterTouch()
     {
         return new ProductCategoryFilterTouch($this->getTouchFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTransferGeneratorInterface
+     */
+    public function createProductCategoryFilterTransferGenerator()
+    {
+        return new ProductCategoryFilterTransferGenerator($this->getUtilEncodingService());
     }
 
     /**

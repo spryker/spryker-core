@@ -30,7 +30,7 @@ class AddController extends AbstractController
     {
         $glossaryForm = $this
             ->getFactory()
-            ->createTranslationAddForm();
+            ->getTranslationAddForm();
 
         $glossaryForm->handleRequest($request);
 

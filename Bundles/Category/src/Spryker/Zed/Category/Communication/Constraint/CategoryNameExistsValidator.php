@@ -50,7 +50,7 @@ class CategoryNameExistsValidator extends ConstraintValidator
      */
     protected function addViolation($value, Constraint $constraint)
     {
-        $this->buildViolation($constraint->message)
+        $this->context->buildViolation($constraint->message)
             ->setParameter('{{ value }}', $value)
             ->addViolation();
     }

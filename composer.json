@@ -17,7 +17,7 @@
   "prefer-stable": true,
   "config": {
     "use-include-path": true,
-    "process-timeout": 1000
+    "process-timeout": 1200
   },
   "autoload": {
     "files": [

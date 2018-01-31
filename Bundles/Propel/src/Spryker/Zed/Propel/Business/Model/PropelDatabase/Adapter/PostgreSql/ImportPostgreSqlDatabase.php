@@ -49,7 +49,7 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
     protected function getImportCommandRemote($backupPath)
     {
         return sprintf(
-            'pg_restore -i -h %s -p %s -U %s -d %s -v %s',
+            'pg_restore -h %s -p %s -U %s -d %s -v %s',
             Config::get(PropelConstants::ZED_DB_HOST),
             Config::get(PropelConstants::ZED_DB_PORT),
             Config::get(PropelConstants::ZED_DB_USERNAME),

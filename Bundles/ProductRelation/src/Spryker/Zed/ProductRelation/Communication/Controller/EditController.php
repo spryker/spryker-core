@@ -36,7 +36,7 @@ class EditController extends BaseProductRelationController
             ->createProductRelationFormTypeDataProvider();
 
         $productRelationForm = $this->getFactory()
-            ->createRelationForm($productRelationFormTypeDataProvider, $idProductRelation);
+            ->getRelationForm($productRelationFormTypeDataProvider, $idProductRelation);
 
         $productRelationTabs = $this->getFactory()
             ->createProductRelationTabs();

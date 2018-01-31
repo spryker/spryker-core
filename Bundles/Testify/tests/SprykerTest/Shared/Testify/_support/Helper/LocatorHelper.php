@@ -23,6 +23,7 @@ class LocatorHelper extends ConfigHelper
     protected $config = [
         'projectNamespaces' => [],
         'coreNamespaces' => [
+            'SprykerShop',
             'Spryker',
         ],
     ];

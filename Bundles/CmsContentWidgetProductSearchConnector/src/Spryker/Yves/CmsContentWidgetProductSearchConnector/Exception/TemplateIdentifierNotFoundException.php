@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCategoryFilter\Business\Exception;
+namespace Spryker\Yves\CmsContentWidgetProductSearchConnector\Exception;
 
 use Exception;
 
-class ProductCategoryFilterNotFoundException extends Exception
+class TemplateIdentifierNotFoundException extends Exception
 {
 }

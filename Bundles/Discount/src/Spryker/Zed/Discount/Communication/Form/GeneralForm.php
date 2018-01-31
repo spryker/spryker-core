@@ -9,8 +9,7 @@ namespace Spryker\Zed\Discount\Communication\Form;
 
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Communication\Form\Constraint\UniqueDiscountName;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -18,6 +17,11 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
+ */
 class GeneralForm extends AbstractType
 {
     const FIELD_DISCOUNT_TYPE = 'discount_type';
@@ -28,19 +32,6 @@ class GeneralForm extends AbstractType
     const FIELD_IS_EXCLUSIVE = 'is_exclusive';
     const NON_EXCLUSIVE = 'Non-Exclusive';
     const EXCLUSIVE = 'Exclusive';
-
-    /**
-     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
-     */
-    protected $discountQueryContainer;
-
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
-     */
-    public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
-    {
-        $this->discountQueryContainer = $discountQueryContainer;
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -67,7 +58,8 @@ class GeneralForm extends AbstractType
     {
         $builder->add(static::FIELD_DISCOUNT_TYPE, ChoiceType::class, [
             'label' => 'Discount Type',
-            'choices' => $this->getVoucherChoices(),
+            'choices' => array_flip($this->getVoucherChoices()),
+            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],
@@ -99,7 +91,7 @@ class GeneralForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new UniqueDiscountName([
-                    UniqueDiscountName::OPTION_DISCOUNT_QUERY_CONTAINER => $this->discountQueryContainer,
+                    UniqueDiscountName::OPTION_DISCOUNT_QUERY_CONTAINER => $this->getQueryContainer(),
                 ]),
             ],
         ]);
@@ -136,10 +128,11 @@ class GeneralForm extends AbstractType
             'expanded' => true,
             'multiple' => false,
             'label' => false,
-            'choices' => [
+            'choices' => array_flip([
                 self::NON_EXCLUSIVE,
                 self::EXCLUSIVE,
-            ],
+            ]),
+            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],
@@ -188,12 +181,20 @@ class GeneralForm extends AbstractType
     }
 
     /**
-     * Returns the name of this type.
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'discount_general';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
      *
-     * @return string The name of this type
+     * @return string
      */
     public function getName()
     {
-        return 'discount_general';
+        return $this->getBlockPrefix();
     }
 }

@@ -9,8 +9,10 @@ namespace Spryker\Zed\ProductAttributeGui\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
-use Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,6 +22,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\ProductAttributeGui\Communication\ProductAttributeGuiCommunicationFactory getFactory()
+ */
 class AttributeForm extends AbstractType
 {
     const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
@@ -35,27 +40,6 @@ class AttributeForm extends AbstractType
 
     const GROUP_VALUES = 'values_group';
     const GROUP_UNIQUE_KEY = 'unique_key_group';
-
-    /**
-     * @var \Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface
-     */
-    protected $productAttributeQueryContainer;
-
-    /**
-     * @param \Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface $productAttributeQueryContainer
-     */
-    public function __construct(ProductAttributeGuiToProductAttributeQueryContainerInterface $productAttributeQueryContainer)
-    {
-        $this->productAttributeQueryContainer = $productAttributeQueryContainer;
-    }
-
-    /**
-     * @return string The name of this type
-     */
-    public function getName()
-    {
-        return 'attributeForm';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -116,7 +100,7 @@ class AttributeForm extends AbstractType
      */
     protected function addIdProductManagementAttribute(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, 'hidden');
+        $builder->add(self::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, HiddenType::class);
 
         return $this;
     }
@@ -129,7 +113,7 @@ class AttributeForm extends AbstractType
      */
     protected function addKeyField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_KEY, new AutosuggestType(), [
+        $builder->add(self::FIELD_KEY, AutosuggestType::class, [
             'label' => 'Attribute key',
             'url' => '/product-attribute-gui/attribute/keys',
             'constraints' => [
@@ -140,17 +124,15 @@ class AttributeForm extends AbstractType
                         'digits, numbers, underscores ("_"), hyphens ("-") and colons (":").',
                 ]),
                 new Callback([
-                    'methods' => [
-                        function ($key, ExecutionContextInterface $context) {
-                            $keyCount = $this->productAttributeQueryContainer
-                                ->queryProductAttributeKeyByKeys([$key])
-                                ->count();
+                    'callback' => function ($key, ExecutionContextInterface $context) {
+                        $keyCount = $this->getFactory()->getProductAttributeQueryContainer()
+                            ->queryProductAttributeKeyByKeys([$key])
+                            ->count();
 
-                            if ($keyCount > 0) {
-                                $context->addViolation('Attribute key is already used');
-                            }
-                        },
-                    ],
+                        if ($keyCount > 0) {
+                            $context->addViolation('Attribute key is already used');
+                        }
+                    },
                     'groups' => [self::GROUP_UNIQUE_KEY],
                 ]),
             ],
@@ -168,9 +150,10 @@ class AttributeForm extends AbstractType
      */
     protected function addInputTypeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_INPUT_TYPE, 'choice', [
+        $builder->add(self::FIELD_INPUT_TYPE, ChoiceType::class, [
             'label' => 'Input type',
-            'choices' => $options[self::OPTION_ATTRIBUTE_TYPE_CHOICES],
+            'choices' => array_flip($options[self::OPTION_ATTRIBUTE_TYPE_CHOICES]),
+            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],
@@ -188,7 +171,7 @@ class AttributeForm extends AbstractType
      */
     protected function addIsSuperField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_IS_SUPER, 'checkbox', [
+        $builder->add(self::FIELD_IS_SUPER, CheckboxType::class, [
             'label' => 'Super attribute',
             'disabled' => $options[self::OPTION_IS_UPDATE],
         ]);
@@ -204,7 +187,7 @@ class AttributeForm extends AbstractType
      */
     protected function addValuesField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_VALUES, new Select2ComboBoxType(), [
+        $builder->add(self::FIELD_VALUES, Select2ComboBoxType::class, [
             'label' => 'Predefined Values',
             'choices' => $options[self::OPTION_VALUES_CHOICES],
             'multiple' => true,
@@ -228,10 +211,28 @@ class AttributeForm extends AbstractType
      */
     protected function addAllowInputField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_ALLOW_INPUT, 'checkbox', [
+        $builder->add(self::FIELD_ALLOW_INPUT, CheckboxType::class, [
             'label' => 'Allow input any value other than predefined ones',
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'attributeForm';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }
