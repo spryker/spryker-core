@@ -21,6 +21,10 @@
         <property name="stores" type="Store[]" />
     </transfer>
 
+    <transfer name="Store">
+        <property name="idStore" type="int" />
+    </transfer>
+
     <transfer name="CmsBlockGlossary">
         <property name="glossaryPlaceholders" type="CmsBlockGlossaryPlaceholder[]" singular="glossaryPlaceholder" />
     </transfer>
