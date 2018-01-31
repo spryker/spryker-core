@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
@@ -251,8 +252,7 @@ class OrderHydrator implements OrderHydratorInterface
         $billingAddressTransfer->fromArray($orderEntity->getBillingAddress()->toArray(), true);
         $billingAddressTransfer->setIso2Code($countryEntity->getIso2Code());
 
-        $countryTransfer = (new CountryTransfer())->fromArray($countryEntity->toArray(), true);
-        $billingAddressTransfer->setCountry($countryTransfer);
+        $this->hydrateCountryEntityIntoAddressTransfer($billingAddressTransfer, $countryEntity);
 
         $orderTransfer->setBillingAddress($billingAddressTransfer);
     }
@@ -271,10 +271,25 @@ class OrderHydrator implements OrderHydratorInterface
         $shippingAddressTransfer->fromArray($orderEntity->getShippingAddress()->toArray(), true);
         $shippingAddressTransfer->setIso2Code($countryEntity->getIso2Code());
 
-        $countryTransfer = (new CountryTransfer())->fromArray($countryEntity->toArray(), true);
-        $shippingAddressTransfer->setCountry($countryTransfer);
+        $this->hydrateCountryEntityIntoAddressTransfer($shippingAddressTransfer, $countryEntity);
 
         $orderTransfer->setShippingAddress($shippingAddressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Orm\Zed\Country\Persistence\SpyCountry $countryEntity
+     *
+     * @return void
+     */
+    protected function hydrateCountryEntityIntoAddressTransfer(
+        AddressTransfer $addressTransfer,
+        SpyCountry $countryEntity
+    )
+    {
+        $addressTransfer->setIso2Code($countryEntity->getIso2Code());
+        $countryTransfer = (new CountryTransfer())->fromArray($countryEntity->toArray(), true);
+        $addressTransfer->setCountry($countryTransfer);
     }
 
     /**
