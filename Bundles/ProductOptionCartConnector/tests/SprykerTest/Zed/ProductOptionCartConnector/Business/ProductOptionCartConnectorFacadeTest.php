@@ -373,7 +373,6 @@ class ProductOptionCartConnectorFacadeTest extends Unit
         $this->assertEquals($expectedResult, $actualResponse->getIsSuccess());
     }
 
-
     /**
      * @return void
      */
@@ -385,7 +384,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
 
         $itemTransfer = new ItemTransfer();
 
-        foreach ( $this->productOptionCartConnectorFacade->getProductOptionValues() as $productOptionValueTransfer) {
+        foreach ($this->productOptionCartConnectorFacade->getProductOptionValues() as $productOptionValueTransfer) {
             $productOptionTransfer = new ProductOptionTransfer();
             $productOptionTransfer->setIdProductOptionValue($productOptionValueTransfer->getIdProductOptionValue());
             $itemTransfer->addProductOption($productOptionTransfer);
@@ -412,12 +411,11 @@ class ProductOptionCartConnectorFacadeTest extends Unit
 
         $cartChangeTransfer->addItem($itemTransfer);
 
-        $cartPreCheckResponseTransfer =  $this->productOptionCartConnectorFacade->checkProductOptionExists($cartChangeTransfer);
+        $cartPreCheckResponseTransfer = $this->productOptionCartConnectorFacade->checkProductOptionExists($cartChangeTransfer);
 
         $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
         $this->assertCount(1, $cartPreCheckResponseTransfer->getMessages());
     }
-
 
     /**
      * @return string
