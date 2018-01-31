@@ -10,7 +10,6 @@ namespace Spryker\Zed\CmsBlockGui\Communication\Form\Block;
 use DateTime;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -344,15 +343,5 @@ class CmsBlockForm extends AbstractType
     public function getBlockPrefix()
     {
         return 'cms_block';
-    }
-
-    /**
-     * @deprecated Use `getBlockPrefix()` instead.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 }

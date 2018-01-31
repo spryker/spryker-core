@@ -46,7 +46,7 @@ class EditBlockController extends AbstractController
             ->createCmsBlockFormDataProvider();
 
         $cmsBlockForm = $this->getFactory()
-            ->createCmsBlockForm($cmsBlockFormTypeDataProvider, $idCmsBlock)
+            ->getCmsBlockForm($cmsBlockFormTypeDataProvider, $idCmsBlock)
             ->handleRequest($request);
 
         if ($cmsBlockForm->isSubmitted()) {
