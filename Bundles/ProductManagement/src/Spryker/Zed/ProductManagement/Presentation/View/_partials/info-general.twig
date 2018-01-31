@@ -1,15 +1,17 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General Information' } %}
     {% block widget_content %}
 
-        <div class="row">
-            <div class="col-xs-2"><b>Store relation</b></div>
-            <div class="col-xs-10">
-                {% for storeName in relatedStoreNames %}
-                    <span class="label label-info">{{ storeName }}</span>
-                {% endfor %}
+        {% if relatedStoreNames is defined %}
+            <div class="row">
+                <div class="col-xs-2"><b>Store relation</b></div>
+                <div class="col-xs-10">
+                    {% for storeName in relatedStoreNames %}
+                        <span class="label label-info">{{ storeName }}</span>
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-        <div class="hr-line-dashed"></div>
+            <div class="hr-line-dashed"></div>
+        {% endif %}
 
         <div class="row">
             <div class="col-xs-2"><b>Sku</b></div>
