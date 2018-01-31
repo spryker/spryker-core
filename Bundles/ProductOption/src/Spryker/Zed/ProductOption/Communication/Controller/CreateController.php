@@ -25,7 +25,7 @@ class CreateController extends BaseOptionController
     {
         $dataProvider = $this->getFactory()->createGeneralFormDataProvider();
 
-        $productOptionGroupForm = $this->getFactory()->createProductOptionGroup($dataProvider);
+        $productOptionGroupForm = $this->getFactory()->getProductOptionGroupForm($dataProvider);
         $productOptionGroupForm->handleRequest($request);
 
         if ($productOptionGroupForm->isValid()) {

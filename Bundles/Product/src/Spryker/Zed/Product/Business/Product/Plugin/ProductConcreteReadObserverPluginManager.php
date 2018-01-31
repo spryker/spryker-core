@@ -26,6 +26,8 @@ class ProductConcreteReadObserverPluginManager implements ProductConcreteReadObs
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

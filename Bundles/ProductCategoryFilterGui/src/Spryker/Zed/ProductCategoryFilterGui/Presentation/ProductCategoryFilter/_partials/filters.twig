@@ -4,25 +4,25 @@
         <button id="remove-all-filters" class="btn btn-sm btn-danger">{{ 'Remove all' | trans }}</button>
         <div id="filters-container" class="dd">
             <ol class="dd-list">
-                {% if productCategoryFilters.filterDataArray is not empty %}
-                    {% for filter, active in productCategoryFilters.filterDataArray if active %}
-                        <li data-filter="{{ filter }}" class="filter-item dd-item {{ filter in allFilters|keys ? '' : 'non-filter-attribute' }}">
+                {% if productCategoryFilters.filters is not empty %}
+                    {% for filter in productCategoryFilters.filters if filter.isActive %}
+                        <li data-filter-label="{{ filter.label }}" data-filter-key="{{ filter.key }}" class="filter-item dd-item {{ filter.key in allFilters|keys ? '' : 'non-filter-attribute' }}">
                             <a class="btn btn-xs btn-outline btn-danger remove-product-category-filter" title="Remove Filter">
                                 <i class="fa fa-fw fa-trash"></i>
                             </a>
                             <div class="dd-handle">
-                                {{ filter }}
+                                {{ filter.label }}
                             </div>
                         </li>
                     {% endfor %}
                 {% else %}
-                    {% for filter in filters %}
-                        <li data-filter="{{ filter.name }}" class="filter-item dd-item">
+                    {% for filterKey, filter in filters %}
+                        <li data-filter-active="true" data-filter-key="{{ filterKey }}" data-filter-label="{{ filter.config.parameterName }}" class="filter-item dd-item">
                             <a class="btn btn-xs btn-outline btn-danger remove-product-category-filter" title="Remove Filter">
                                 <i class="fa fa-fw fa-trash"></i>
                             </a>
                             <div class="dd-handle">
-                                {{ filter.name }}
+                                {{ filter.config.parameterName }}
                             </div>
                         </li>
                     {% endfor %}
@@ -38,13 +38,13 @@
     {% block widget_content %}
         <div id="inactive-filters-container" class="dd">
             <ol class="dd-list">
-                {% for filter, active in productCategoryFilters.filterDataArray if not active %}
-                    <li data-filter="{{ filter }}" class="filter-item dd-item {{ filter in allFilters|keys ? '' : 'non-filter-attribute' }}">
+                {% for filter in productCategoryFilters.filters if not filter.isActive %}
+                    <li data-filter-label="{{ filter.label }}" data-filter-key="{{ filter.key }}" class="filter-item dd-item {{ filter.key in allFilters|keys ? '' : 'non-filter-attribute' }}">
                         <a class="btn btn-xs btn-outline btn-info re-add-product-category-filter" title="Re-add Filter">
                             <i class="fa fa-fw fa-plus-circle"></i>
                         </a>
                         <div class="dd-handle">
-                            {{ filter }}
+                            {{ filter.label }}
                         </div>
                     </li>
                 {% endfor %}

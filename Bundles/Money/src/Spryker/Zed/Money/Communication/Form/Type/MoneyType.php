@@ -88,7 +88,6 @@ class MoneyType extends AbstractType
         $validationGroups,
         array $moneyCurrencyOptions
     ) {
-
         $field = $form->get($fieldName);
         $options = $field->getConfig()->getOptions();
         $form->remove($fieldName);

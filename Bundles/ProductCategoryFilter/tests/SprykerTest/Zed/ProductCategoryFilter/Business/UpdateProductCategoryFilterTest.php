@@ -3,6 +3,7 @@
 namespace SprykerTest\Zed\ProductCategoryFilter\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ProductCategoryFilterItemTransfer;
 use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
 use Spryker\Shared\ProductCategoryFilter\ProductCategoryFilterConfig;
 
@@ -25,17 +26,30 @@ class UpdateProductCategoryFilterTest extends Unit
     public function testUpdateProductCategoryFilterChangesDataInDatabase()
     {
         // Arrange
-        $oldFilterData = 'old test filter data';
-        $newFilterData = 'new test filter data';
-        $productCategoryFilter = $this->tester->haveProductCategoryFilter([ProductCategoryFilterTransfer::FILTER_DATA => $oldFilterData]);
+        $newFilterData = [
+            ProductCategoryFilterTransfer::FILTERS => [
+                [
+                    ProductCategoryFilterItemTransfer::KEY => 'newKey1',
+                    ProductCategoryFilterItemTransfer::LABEL => 'newLabel1',
+                    ProductCategoryFilterItemTransfer::IS_ACTIVE => true,
+                ],
+                [
+                    ProductCategoryFilterItemTransfer::KEY => 'newKey2',
+                    ProductCategoryFilterItemTransfer::LABEL => 'newLabel2',
+                    ProductCategoryFilterItemTransfer::IS_ACTIVE => false,
+                ],
+            ],
+        ];
+
+        $productCategoryFilter = $this->tester->haveProductCategoryFilter();
 
         // Act
-        $productCategoryFilter->setFilterData($newFilterData);
-        $productCategoryFilter = $this->tester->getFacade()->updateProductCategoryFilter($productCategoryFilter);
+        $productCategoryFilter->fromArray($newFilterData);
+        $newProductCategoryFilter = $this->tester->getFacade()->updateProductCategoryFilter($productCategoryFilter);
 
         $productCategoryFilterFromDb = $this->tester->getFacade()->findProductCategoryFilterByCategoryId($productCategoryFilter->getFkCategory());
         // Assert
-        $this->assertSame($newFilterData, $productCategoryFilterFromDb->getFilterData(), 'Product category filter should contain new data');
+        $this->assertEquals($newProductCategoryFilter->getFilters(), $productCategoryFilterFromDb->getFilters(), 'Product category filter should contain new data');
         $this->tester->assertTouchActive(
             ProductCategoryFilterConfig::RESOURCE_TYPE_PRODUCT_CATEGORY_FILTER,
             $productCategoryFilter->getFkCategory(),

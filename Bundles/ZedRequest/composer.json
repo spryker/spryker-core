@@ -3,6 +3,7 @@
   "description": "ZedRequest module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/config": "^3.0.0",
     "spryker/guzzle": "^2.1.0",
     "spryker/kernel": "^3.0.0",

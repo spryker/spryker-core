@@ -10,6 +10,10 @@ namespace Spryker\Yves\Twig\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Symfony\Bridge\Twig\Extension\HttpKernelRuntime;
+use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
+use Twig\RuntimeLoader\FactoryRuntimeLoader;
+use Twig_Environment;
 
 /**
  * @method \Spryker\Yves\Twig\TwigFactory getFactory()
@@ -28,6 +32,25 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         $app[static::TWIG_LOADER_YVES] = function () {
             return $this->getFactory()->createFilesystemLoader();
         };
+
+        if (class_exists('\Symfony\Bridge\Twig\Extension\HttpKernelRuntime')) {
+            $app['twig'] = $app->share(
+                $app->extend(
+                    'twig',
+                    function (Twig_Environment $twig) use ($app) {
+                        $callback = function () use ($app) {
+                            $fragmentHandler = new FragmentHandler($app['request_stack'], $app['fragment.renderers']);
+
+                            return new HttpKernelRuntime($fragmentHandler);
+                        };
+                        $factoryLoader = new FactoryRuntimeLoader([HttpKernelRuntime::class => $callback]);
+                        $twig->addRuntimeLoader($factoryLoader);
+
+                        return $twig;
+                    }
+                )
+            );
+        }
     }
 
     /**

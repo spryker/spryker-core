@@ -8,25 +8,22 @@
 namespace Spryker\Zed\CustomerGroup\Communication\Form;
 
 use Generated\Shared\Transfer\CustomerGroupToCustomerAssignmentTransfer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface getFacade()
+ * @method \Spryker\Zed\CustomerGroup\Communication\CustomerGroupCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface getQueryContainer()
+ */
 class CustomerAssignmentForm extends AbstractType
 {
     const FIELD_ID_CUSTOMER_GROUP = 'idCustomerGroup';
     const FIELD_IDS_CUSTOMER_TO_ASSIGN_CSV = 'idsCustomerToAssign';
     const FIELD_IDS_CUSTOMER_TO_DE_ASSIGN_CSV = 'idsCustomerToDeAssign';
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'customerAssignment';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -141,5 +138,23 @@ class CustomerAssignmentForm extends AbstractType
                     return explode(',', $idsAsString);
                 }
             ));
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'customerAssignment';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

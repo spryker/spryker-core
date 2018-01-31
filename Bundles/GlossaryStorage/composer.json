@@ -3,6 +3,7 @@
   "description": "GlossaryStorage module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/event-behavior": "^0.1.2",
     "spryker/glossary": "^3.3.0",
     "spryker/kernel": "^3.16.0",
