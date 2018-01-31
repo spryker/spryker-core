@@ -1,5 +1,7 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
+{% set priceLabel = '<span class="label label-info">%s</span>' %}
+
 {% block section_title 'View product option' | trans %}
 
 {% block action %}
@@ -44,17 +46,34 @@
                 <tr>
                     <th>{{ "Translation key" | trans }}</th>
                     <th>{{ "Sku" | trans }}</th>
-                    <th>{{ "Price" | trans }}</th>
+                    <th>{{ "Gross Price" | trans }}</th>
+                    <th>{{ "Net Price" | trans }}</th>
                 </tr>
                 {% for optionValue in productOptionGroup.productOptionValues %}
                     <tr>
                         <td>{{ optionValue.value }}</td>
                         <td>{{ optionValue.Sku }}</td>
-                        <td>{{ optionValue.price | money }}</td>
+                        <td>
+                            {% for moneyValueTransfer in optionValue.prices %}
+                                {% if moneyValueTransfer.GrossAmount is not empty %}
+                                    {{ priceLabel | format(moneyValueTransfer.GrossAmount | money(true, moneyValueTransfer.Currency.Code)) | raw }}
+                                {% else %}
+                                    {{ priceLabel | format('-') | raw }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for moneyValueTransfer in optionValue.prices %}
+                                {% if moneyValueTransfer.NetAmount is not empty %}
+                                    {{ priceLabel | format(moneyValueTransfer.NetAmount | money(true, moneyValueTransfer.Currency.Code)) | raw }}
+                                {% else %}
+                                    {{ priceLabel | format('-') | raw }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
                     </tr>
                 {% endfor %}
             </table>
-
 
         {% endblock %}
     {% endembed %}

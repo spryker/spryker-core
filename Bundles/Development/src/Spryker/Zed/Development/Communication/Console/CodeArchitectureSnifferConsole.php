@@ -79,7 +79,7 @@ class CodeArchitectureSnifferConsole extends Console
         } else {
             $pathToRoot = $this->getFactory()->getConfig()->getPathToRoot();
             $customPath = $pathToRoot . $path;
-            if (file_exists($customPath)) {
+            if (!$module && file_exists($customPath)) {
                 $success = $this->runCustomPath($output, $customPath);
             } else {
                 $success = $this->runForProject($output, $module, $path);
@@ -154,6 +154,12 @@ class CodeArchitectureSnifferConsole extends Console
                 $count = $this->displayViolations($output, $violations);
                 $result += $count;
             }
+        }
+
+        if (!isset($violations)) {
+            $output->writeln('<error>No paths found for checking</error>');
+
+            return false;
         }
 
         $output->writeln($result . ' violations found');

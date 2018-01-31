@@ -29,6 +29,11 @@ class StoreReader implements StoreReaderInterface
     protected $storeMapper;
 
     /**
+     * @var \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    protected static $storeCache = [];
+
+    /**
      * @param \Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface $storeConfigurationProvider
      * @param \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface $storeQueryContainer
      * @param \Spryker\Zed\Store\Business\Model\StoreMapperInterface $storeMapper
@@ -67,12 +72,19 @@ class StoreReader implements StoreReaderInterface
     public function getCurrentStore()
     {
         $currentStore = $this->storeConfigurationProvider->getCurrentStoreName();
+        if (isset(static::$storeCache[$currentStore])) {
+            return static::$storeCache[$currentStore];
+        }
 
         $storeEntity = $this->storeQueryContainer
             ->queryStoreByName($currentStore)
             ->findOne();
 
-        return $this->storeMapper->mapEntityToTransfer($storeEntity);
+        $storeTransfer = $this->storeMapper->mapEntityToTransfer($storeEntity);
+
+        static::$storeCache[$currentStore] = $storeTransfer;
+
+        return $storeTransfer;
     }
 
     /**
@@ -84,6 +96,10 @@ class StoreReader implements StoreReaderInterface
      */
     public function getStoreById($idStore)
     {
+        if (isset(static::$storeCache[$idStore])) {
+            return static::$storeCache[$idStore];
+        }
+
          $storeEntity = $this->storeQueryContainer
              ->queryStoreById($idStore)
              ->findOne();
@@ -94,6 +110,40 @@ class StoreReader implements StoreReaderInterface
             );
         }
 
-         return $this->storeMapper->mapEntityToTransfer($storeEntity);
+        $storeTransfer = $this->storeMapper->mapEntityToTransfer($storeEntity);
+
+        static::$storeCache[$idStore] = $storeTransfer;
+
+        return $storeTransfer;
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @throws \Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreByName($storeName)
+    {
+        if (isset(static::$storeCache[$storeName])) {
+            return static::$storeCache[$storeName];
+        }
+
+        $storeEntity = $this->storeQueryContainer
+            ->queryStoreByName($storeName)
+            ->findOne();
+
+        if (!$storeEntity) {
+            throw new StoreNotFoundException(
+                sprintf('Store with name "%s" not found!', $storeName)
+            );
+        }
+
+        $storeTransfer = $this->storeMapper->mapEntityToTransfer($storeEntity);
+
+        static::$storeCache[$storeName] = $storeTransfer;
+
+        return $storeTransfer;
     }
 }

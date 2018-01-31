@@ -1,3 +1,3 @@
 # TaxProductConnector Changelog
 
-[TaxProductConnector Changelog](https://github.com/spryker/TaxProductConnector/releases)
+[Release Changelog](https://github.com/spryker/tax-product-connector/releases)

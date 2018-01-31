@@ -11,6 +11,22 @@ interface GlossaryEvents
 {
     /**
      * Specification
+     * - This events will be used for key publishing
+     *
+     * @api
+     */
+    const GLOSSARY_KEY_PUBLISH = 'Glossary.key.publish';
+
+    /**
+     * Specification
+     * - This events will be used for key un-publishing
+     *
+     * @api
+     */
+    const GLOSSARY_KEY_UNPUBLISH = 'Glossary.key.unpublish';
+
+    /**
+     * Specification
      * - This events will be used for spy_glossary_key entity creation
      *
      * @api

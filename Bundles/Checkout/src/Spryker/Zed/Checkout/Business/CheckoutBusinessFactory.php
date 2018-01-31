@@ -22,10 +22,19 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
     public function createCheckoutWorkflow()
     {
         return new CheckoutWorkflow(
+            $this->getOmsFacade(),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_POST_HOOKS),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_PRE_SAVE_HOOKS)
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface
+     */
+    protected function getOmsFacade()
+    {
+        return $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_OMS);
     }
 }

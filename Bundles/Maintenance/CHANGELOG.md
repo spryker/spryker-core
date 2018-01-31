@@ -1,3 +1,3 @@
 # Maintenance Changelog
 
-[Maintenance Changelog](https://github.com/spryker/Maintenance/releases)
+[Release Changelog](https://github.com/spryker/maintenance/releases)

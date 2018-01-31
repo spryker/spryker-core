@@ -10,9 +10,11 @@ namespace Spryker\Zed\Shipment\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -117,6 +119,21 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
+     * @param int $idShipmentMethod
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFactory()->createMethod()->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int $idMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
@@ -195,6 +212,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use saveOrderShipment() instead
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
@@ -202,7 +221,26 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function saveShipmentForOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFactory()->createShipmentOrderSaver()->saveShipmentForOrder($quoteTransfer, $checkoutResponse);
+        $this->getFactory()
+            ->createShipmentOrderSaver()
+            ->saveShipmentForOrder($quoteTransfer, $checkoutResponse);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveOrderShipment(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    {
+        $this->getFactory()
+            ->createCheckoutShipmentOrderSaver()
+            ->saveOrderShipment($quoteTransfer, $saveOrderTransfer);
     }
 
     /**
@@ -246,5 +284,17 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     public function isShipmentMethodActive($idShipmentMethod)
     {
         return $this->getFactory()->createMethod()->isShipmentMethodActive($idShipmentMethod);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getShipmentExpenseTypeIdentifier()
+    {
+        return ShipmentConstants::SHIPMENT_EXPENSE_TYPE;
     }
 }

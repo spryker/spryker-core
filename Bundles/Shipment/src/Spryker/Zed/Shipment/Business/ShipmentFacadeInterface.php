@@ -10,6 +10,7 @@ namespace Spryker\Zed\Shipment\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
@@ -93,6 +94,24 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves active shipment method buy id shipment method.
+     * - Calculates shipment method delivery time using its assigned ShipmentMethodDeliveryTimePluginInterface plugin.
+     * - Selects shipment method price for the provided currency and current store.
+     * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
+     * - Excludes shipment methods which do not have a valid price as a result.
+     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin requirements.
+     *
+     * @api
+     *
+     * @param int $idShipmentMethod
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
      * - Retrieves a shipment method from database by ID.
      *
      * @api
@@ -165,12 +184,28 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use saveOrderShipment() instead
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
     public function saveShipmentForOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
+
+    /**
+     * Specification:
+     * - Adds shipment sales expense to sales order.
+     * - Creates sales shipment for sales order.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveOrderShipment(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
 
     /**
      * Specification:
@@ -198,6 +233,16 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     public function transformShipmentMethodEntityToShipmentMethodTransfer(SpyShipmentMethod $shipmentMethodEntity);
+
+    /**
+     * Specification:
+     * - Returns shipment expense type, used to identify expense used for shipment.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getShipmentExpenseTypeIdentifier();
 
     /**
      * Specification:

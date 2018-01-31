@@ -17,6 +17,7 @@ class ProductAbstractRelationCollectorQuery extends AbstractPropelCollectorQuery
 {
     const RESULT_FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const RESULT_FIELD_ID_PRODUCT_LABELS_CSV = 'id_product_labels_csv';
+    const LABEL_DELIMITER = ":#:";
 
     /**
      * @return void
@@ -35,10 +36,13 @@ class ProductAbstractRelationCollectorQuery extends AbstractPropelCollectorQuery
             SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT,
             static::RESULT_FIELD_ID_PRODUCT_ABSTRACT
         );
+
         $this->touchQuery->withColumn(
             sprintf(
-                'GROUP_CONCAT(%s ORDER BY %s %s)',
+                'GROUP_CONCAT(CONCAT(%s, \'%s\', %s) ORDER BY %s %s)',
                 SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL,
+                static::LABEL_DELIMITER,
+                SpyProductLabelTableMap::COL_IS_ACTIVE,
                 SpyProductLabelTableMap::COL_POSITION,
                 Criteria::ASC
             ),

@@ -1,3 +1,3 @@
 # Silex Changelog
 
-[Silex Changelog](https://github.com/spryker/Silex/releases)
+[Release Changelog](https://github.com/spryker/silex/releases)

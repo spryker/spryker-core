@@ -60,7 +60,7 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     protected function mapBundledItemTransferFromSalesOrderItemEntity(SpySalesOrderItem $orderItemEntity)
     {
         $bundleItemTransfer = new ItemTransfer();
-        $bundleItemTransfer->setBundleItemIdentifier($orderItemEntity->getFkSalesOrderItemBundle());
+        $bundleItemTransfer->setBundleItemIdentifier((string)$orderItemEntity->getFkSalesOrderItemBundle());
         $bundleItemTransfer->setQuantity($orderItemEntity->getQuantity());
         $salesOrderItemBundle = $orderItemEntity->getSalesOrderItemBundle();
         $bundleItemTransfer->fromArray($salesOrderItemBundle->toArray(), true);
@@ -208,7 +208,7 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
 
             $bundleItemTransfer = $bundledProducts[$salesOrderItemEntity->getFkSalesOrderItemBundle()];
 
-            $itemTransfer->setRelatedBundleItemIdentifier($salesOrderItemEntity->getFkSalesOrderItemBundle());
+            $itemTransfer->setRelatedBundleItemIdentifier((string)$salesOrderItemEntity->getFkSalesOrderItemBundle());
 
             $this->calculateBundleAmounts($bundleItemTransfer, $itemTransfer);
         }

@@ -1,3 +1,3 @@
 # Graphviz Changelog
 
-[Graphviz Changelog](https://github.com/spryker/Graphviz/releases)
+[Release Changelog](https://github.com/spryker/graphviz/releases)

@@ -76,11 +76,11 @@ class OmsFacadeTest extends Unit
 
         $omsFacade = $this->createOmsFacadeWithTestStateMachine([$testStateMachineProcessName]);
 
-        $checkoutResponseTransfer = $this->tester->haveOrder([
+        $saveOrderTransfer = $this->tester->haveOrder([
             'unitPrice' => 100,
         ], $testStateMachineProcessName);
 
-        $idSalesOrder = $checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder();
+        $idSalesOrder = $saveOrderTransfer->getIdSalesOrder();
 
         $salesOrderEntity = SpySalesOrderQuery::create()->filterByIdSalesOrder($idSalesOrder)->findOne();
 
@@ -100,11 +100,11 @@ class OmsFacadeTest extends Unit
 
         $omsFacade = $this->createOmsFacadeWithTestStateMachine([$testStateMachineProcessName]);
 
-        $checkoutResponseTransfer = $this->tester->haveOrder([
+        $saveOrderTransfer = $this->tester->haveOrder([
             'unitPrice' => 100,
         ], $testStateMachineProcessName);
 
-        $idSalesOrder = $checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder();
+        $idSalesOrder = $saveOrderTransfer->getIdSalesOrder();
 
         $isOrderExcluded = $omsFacade->isOrderFlaggedExcludeFromCustomer($idSalesOrder);
 

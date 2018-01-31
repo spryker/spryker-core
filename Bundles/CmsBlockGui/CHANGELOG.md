@@ -1,3 +1,3 @@
 # CmsBlockGui Changelog
 
-[Release Changelog](https://github.com/spryker/CmsBlockGui/releases)
+[Release Changelog](https://github.com/spryker/cms-block-gui/releases)

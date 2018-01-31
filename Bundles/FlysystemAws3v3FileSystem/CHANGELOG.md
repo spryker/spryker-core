@@ -1,3 +1,3 @@
 # FlysystemAws3v3FileSystem Changelog
 
-[FlysystemAws3v3FileSystem Changelog](https://github.com/spryker/FlysystemAws3v3FileSystem/releases)
+[Release Changelog](https://github.com/spryker/flysystem-aws3v3-file-system/releases)

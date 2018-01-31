@@ -21,8 +21,4 @@ use Codeception\Actor;
 class AuthCommunicationTester extends Actor
 {
     use _generated\AuthCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

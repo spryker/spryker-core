@@ -28,7 +28,7 @@ class CurrentPasswordValidator extends ConstraintValidator
         }
 
         if (!$this->isProvidedPasswordEqualsToPersisted($value, $constraint)) {
-            $this->buildViolation($constraint->getMessage())
+            $this->context->buildViolation($constraint->getMessage())
                 ->setParameter('{{ value }}', $this->formatValue($value))
                 ->addViolation();
         }

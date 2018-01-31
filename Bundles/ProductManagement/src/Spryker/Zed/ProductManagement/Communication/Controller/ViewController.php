@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
@@ -69,6 +71,8 @@ class ViewController extends AddController
 
         $imageSets = $this->getProductImageSetCollection($imageSetCollection);
 
+        $relatedStoreNames = $this->getStoreNames($productAbstractTransfer->getStoreRelation()->getStores());
+
         return $this->viewResponse([
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
@@ -84,6 +88,7 @@ class ViewController extends AddController
             'imageUrlPrefix' => $this->getFactory()->getConfig()->getImageUrlPrefix(),
             'taxSet' => $this->getFactory()->getTaxFacade()->getTaxSet($productAbstractTransfer->getIdTaxSet()),
             'renderedPlugins' => $this->getRenderedProductAbstractViewPlugins($idProductAbstract),
+            'relatedStoreNames' => $relatedStoreNames,
         ]);
     }
 
@@ -249,7 +254,7 @@ class ViewController extends AddController
     {
         $url = $baseUrl;
 
-        if (strpos($url, '/') === 0) {
+        if (preg_match("#^\/(?!/).*$#", $url) === 1) {
             $url = $imageUrlPrefix . $url;
         }
 
@@ -273,5 +278,17 @@ class ViewController extends AddController
         }
 
         return $productAbstractRenderedPlugins;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $stores
+     *
+     * @return string[]
+     */
+    protected function getStoreNames(ArrayObject $stores)
+    {
+        return array_map(function (StoreTransfer $storeTransfer) {
+            return $storeTransfer->getName();
+        }, $stores->getArrayCopy());
     }
 }

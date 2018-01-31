@@ -26,119 +26,151 @@ interface ProductEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product entity creation
+     * - This events will be used for product_abstract publishing
+     *
+     * @api
+     */
+    const PRODUCT_ABSTRACT_PUBLISH = 'Product.product_abstract.publish';
+
+    /**
+     * Specification
+     * - This events will be used for product_abstract un-publishing
+     *
+     * @api
+     */
+    const PRODUCT_ABSTRACT_UNPUBLISH = 'Product.product_abstract.unpublish';
+
+    /**
+     * Specification
+     * - This events will be used for product_abstract publishing
+     *
+     * @api
+     */
+    const PRODUCT_CONCRETE_PUBLISH = 'Product.product_concrete.publish';
+
+    /**
+     * Specification
+     * - This events will be used for product_abstract un-publishing
+     *
+     * @api
+     */
+    const PRODUCT_CONCRETE_UNPUBLISH = 'Product.product_concrete.unpublish';
+
+    /**
+     * Specification:
+     * - Represents spy_product entity creation.
      *
      * @api
      */
     const ENTITY_SPY_PRODUCT_CREATE = 'Entity.spy_product.create';
 
     /**
-     * Specification
-     * - This events will be used for spy_product entity changes
+     * Specification:
+     * - Represents spy_product entity changes.
      *
      * @api
      */
     const ENTITY_SPY_PRODUCT_UPDATE = 'Entity.spy_product.update';
 
     /**
-     * Specification
-     * - This events will be used for spy_product entity deletion
+     * Specification:
+     * - Represents spy_product entity deletion.
      *
      * @api
      */
     const ENTITY_SPY_PRODUCT_DELETE = 'Entity.spy_product.delete';
 
     /**
-     * Specification
-     * - This events will be used for spy_product_localized_attributes entity creation
+     * Specification:
+     * - Represents spy_product_localized_attributes entity creation.
      *
      * @api
      */
     const ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_CREATE = 'Entity.spy_product_localized_attributes.create';
 
     /**
-     * Specification
-     * - This events will be used for spy_product_localized_attributes entity changes
+     * Specification:
+     * - Represents spy_product_localized_attributes entity changes.
      *
      * @api
      */
     const ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_UPDATE = 'Entity.spy_product_localized_attributes.update';
 
     /**
-     * Specification
-     * - This events will be used for spy_product_localized_attributes entity deletion
+     * Specification:
+     * - Represents spy_product_localized_attributes entity deletion.
      *
      * @api
      */
     const ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_DELETE = 'Entity.spy_product_localized_attributes.delete';
 
     /**
-     * Specification
-     * - This events will be used for spy_product_abstract entity creation
+     * Specification:
+     * - Represents spy_product_abstract entity creation.
      *
      * @api
      */
     const ENTITY_SPY_PRODUCT_ABSTRACT_CREATE = 'Entity.spy_product_abstract.create';
 
     /**
-     * Specification
-     * - This events will be used for spy_product_abstract entity changes
+     * Specification:
+     * - Represents spy_product_abstract entity changes.
      *
      * @api
      */
     const ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE = 'Entity.spy_product_abstract.update';
 
     /**
-     * Specification
-     * - This events will be used for spy_product_abstract entity deletion
+     * Specification:
+     * - Represents spy_product_abstract entity deletion.
      *
      * @api
      */
     const ENTITY_SPY_PRODUCT_ABSTRACT_DELETE = 'Entity.spy_product_abstract.delete';
 
     /**
-     * Specification
-     * - This events will be used for spy_product_abstract_localized_attributes entity creation
+     * Specification:
+     * - Represents spy_product_abstract_localized_attributes entity creation.
      *
      * @api
      */
     const ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_CREATE = 'Entity.spy_product_abstract_localized_attributes.create';
 
     /**
-     * Specification
-     * - This events will be used for spy_product_abstract_localized_attributes entity changes
+     * Specification:
+     * - Represents spy_product_abstract_localized_attributes entity changes.
      *
      * @api
      */
     const ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_UPDATE = 'Entity.spy_product_abstract_localized_attributes.update';
 
     /**
-     * Specification
-     * - This events will be used for spy_product_abstract_localized_attributes entity deletion
+     * Specification:
+     * - Represents spy_product_abstract_localized_attributes entity deletion.
      *
      * @api
      */
     const ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_DELETE = 'Entity.spy_product_abstract_localized_attributes.delete';
 
     /**
-     * Specification
-     * - This events will be used for spy_product_attribute_key entity creation
+     * Specification:
+     * - Represents spy_product_attribute_key entity creation.
      *
      * @api
      */
     const ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_CREATE = 'Entity.spy_product_attribute_key.create';
 
     /**
-     * Specification
-     * - This events will be used for spy_product_attribute_key entity changes
+     * Specification:
+     * - Represents spy_product_attribute_key entity changes.
      *
      * @api
      */
     const ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_UPDATE = 'Entity.spy_product_attribute_key.update';
 
     /**
-     * Specification
-     * - This events will be used for spy_product_attribute_key entity deletion
+     * Specification:
+     * - Represents spy_product_attribute_key entity deletion.
      *
      * @api
      */

@@ -7,14 +7,18 @@
 
 namespace Spryker\Zed\ProductSetGui\Communication\Form;
 
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ProductSetGui\Communication\Form\General\GeneralFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\Images\ImagesFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\Products\UpdateProductsFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\Seo\SeoFormType;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
+ */
 class UpdateProductSetFormType extends AbstractType
 {
     const FIELD_GENERAL_FORM = 'general_form';
@@ -25,9 +29,19 @@ class UpdateProductSetFormType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'product_set_form';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 
     /**

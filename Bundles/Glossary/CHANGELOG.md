@@ -1,3 +1,3 @@
 # Glossary Changelog
 
-[Glossary Changelog](https://github.com/spryker/Glossary/releases)
+[Release Changelog](https://github.com/spryker/glossary/releases)
