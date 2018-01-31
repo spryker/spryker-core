@@ -49,7 +49,7 @@ class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
             ->getIdShipmentMethod();
 
         if (!$idShipmentMethod || !$this->shipmentFacade->isShipmentMethodActive($idShipmentMethod)) {
-            $checkoutErrorTransfer = $this->createErrorCheckoutTransfer();
+            $checkoutErrorTransfer = $this->createCheckoutErrorTransfer();
 
             $checkoutResponseTransfer
                 ->setIsSuccess(false)
@@ -64,7 +64,7 @@ class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
     /**
      * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
      */
-    protected function createErrorCheckoutTransfer()
+    protected function createCheckoutErrorTransfer()
     {
         return (new CheckoutErrorTransfer())
             ->setErrorCode(ShipmentCheckoutConnectorConfig::ERROR_CODE_SHIPMENT_FAILED)

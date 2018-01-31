@@ -13,7 +13,7 @@ use Spryker\Zed\ShipmentCheckoutConnector\Dependency\Facade\ShipmentCheckoutConn
 
 class ShipmentCheckoutConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_SHIPMENT = 'SHIPMENT_FACADE';
+    const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
