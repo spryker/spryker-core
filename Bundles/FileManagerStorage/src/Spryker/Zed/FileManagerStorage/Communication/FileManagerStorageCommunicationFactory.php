@@ -1,18 +1,22 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\FileManagerStorage\Communication;
 
-use Spryker\Zed\FileManagerStorage\Dependency\Facade\FileManagerStorageToEventBehaviorFacadeBridgeInterface;
-use Spryker\Zed\FileManagerStorage\Dependency\Facade\FileManagerStorageToLocaleFacadeBridgeInterface;
 use Spryker\Zed\FileManagerStorage\FileManagerStorageDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
+/**
+ * @method \Spryker\Zed\FileManagerStorage\Persistence\FileManagerStorageQueryContainer getQueryContainer()
+ */
 class FileManagerStorageCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
-     * @return FileManagerStorageToEventBehaviorFacadeBridgeInterface
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @return \Spryker\Zed\FileManagerStorage\Dependency\Facade\FileManagerStorageToEventBehaviorFacadeBridgeInterface
      */
     public function getEventBehaviorFacade()
     {
@@ -20,12 +24,10 @@ class FileManagerStorageCommunicationFactory extends AbstractCommunicationFactor
     }
 
     /**
-     * @return FileManagerStorageToLocaleFacadeBridgeInterface
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @return \Spryker\Zed\FileManagerStorage\Dependency\Facade\FileManagerStorageToLocaleFacadeBridgeInterface
      */
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(FileManagerStorageDependencyProvider::FACADE_LOCALE);
     }
-
 }

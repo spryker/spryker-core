@@ -22,6 +22,18 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        $container = $this->addFileSystemService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFileSystemService(Container $container)
+    {
         $container[static::SERVICE_FILE_SYSTEM] = function (Container $container) {
             $fileSystemService = $container->getLocator()->fileSystem()->service();
             return new FileManagerToFileSystemBridge($fileSystemService);

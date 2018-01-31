@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener;
 
 use Generated\Shared\Transfer\FileStorageTransfer;
@@ -16,9 +21,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class FileManagerStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-
     use DatabaseTransactionHandlerTrait;
-
 
     /**
      * Specification
@@ -30,9 +33,10 @@ class FileManagerStorageListener extends AbstractPlugin implements EventBulkHand
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
      * @param string $eventName
      *
-     * @return void
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     *
+     * @return void
      */
     public function handleBulk(array $eventTransfers, $eventName)
     {
@@ -46,12 +50,12 @@ class FileManagerStorageListener extends AbstractPlugin implements EventBulkHand
         if ($eventName === FileManagerEvents::ENTITY_FILE_CREATE || $eventName === FileManagerEvents::ENTITY_FILE_UPDATE) {
             $this->publish($fileIds);
         }
-
     }
 
     /**
      * @param $fileIds
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return void
      */
     protected function publish($fileIds)
     {
@@ -59,6 +63,9 @@ class FileManagerStorageListener extends AbstractPlugin implements EventBulkHand
         $this->storeData($fileEntities);
     }
 
+    /**
+     * @return void
+     */
     protected function storeData($fileEntities)
     {
         $availableLocales = $this->getFactory()->getLocaleFacade()->getAvailableLocales();
@@ -68,6 +75,9 @@ class FileManagerStorageListener extends AbstractPlugin implements EventBulkHand
         }
     }
 
+    /**
+     * @return void
+     */
     protected function storeDataSet($fileEntities, LocaleTransfer $locale)
     {
         foreach ($fileEntities as $fileEntity) {
@@ -83,9 +93,8 @@ class FileManagerStorageListener extends AbstractPlugin implements EventBulkHand
     protected function mapToFileStorageTransfer($fileEntity, LocaleTransfer $locale)
     {
         $fileStorageTransfer = new FileStorageTransfer();
+        $fileStorageTransfer->fromArray($fileEntity->toArray());
         $fileStorageTransfer->setLocale($locale->getLocaleName());
-        $fileStorageTransfer->setFileName($fileEntity->getFileName());
-        $fileStorageTransfer->setIdFile($fileEntity->getIdFile());
         $fileStorageTransfer->setType($fileEntity->getFileInfo()->getType());
 
         return $fileStorageTransfer;
@@ -93,7 +102,9 @@ class FileManagerStorageListener extends AbstractPlugin implements EventBulkHand
 
     /**
      * @param $fileIds
+     *
      * @return array
+     * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      */
     protected function findFileEntities($fileIds)
@@ -103,11 +114,10 @@ class FileManagerStorageListener extends AbstractPlugin implements EventBulkHand
             ->find();
 
         foreach ($files as $file) {
-            $latestFileInfo = $this->getQueryContainer()->queryLatestFileInfoByFkFile($file->getIdFile())->findOne();
+            $latestFileInfo = $file->getSpyFileInfos()->getFirst();
             $file->setVirtualColumn('fileInfo', $latestFileInfo);
         }
 
         return $files;
     }
-
 }

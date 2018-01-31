@@ -1,35 +1,49 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\FileManagerStorage\Persistence;
 
-use Orm\Zed\FileManagerStorage\Persistence\SpyFileStorageQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
- * @method FileManagerStoragePersistenceFactory getFactory()
+ * @method \Spryker\Zed\FileManagerStorage\Persistence\FileManagerStoragePersistenceFactory getFactory()
  */
 class FileManagerStorageQueryContainer extends AbstractQueryContainer
 {
-
     /**
-     * @param $fileIds
-     * @return \Orm\Zed\Cms\Persistence\SpyFileQuery
+     * @api
+     *
+     * @param array $fileIds
+     *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyFileQuery
      */
     public function queryFilesByIds($fileIds)
     {
         $query = $this->getFactory()
             ->createFileQuery();
         $query->filterByIdFile($fileIds, Criteria::IN);
+        $query->useSpyFileInfoQuery()
+            ->orderByVersion(Criteria::DESC)
+        ->endUse();
 
         return $query;
     }
 
     /**
-     * @param $fkFile
-     * @return \Orm\Zed\Cms\Persistence\SpyFileInfoQuery
+     * @api
+     *
+     * @param int $fkFile
+     *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyFileInfoQuery
      */
     public function queryLatestFileInfoByFkFile($fkFile)
     {
@@ -41,11 +55,12 @@ class FileManagerStorageQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @return SpyFileStorageQuery
+     * @api
+     *
+     * @return \Orm\Zed\FileManagerStorage\Persistence\SpyFileStorageQuery
      */
     public function queryFileManagerStorage()
     {
         return $this->getFactory()->createFileManagerStorageQuery();
     }
-
 }

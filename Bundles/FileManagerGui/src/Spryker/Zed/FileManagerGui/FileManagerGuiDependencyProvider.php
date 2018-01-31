@@ -26,21 +26,55 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
+        $container = $this->addFileManagerFacade($container);
+        $container = $this->addFileManagerQueryContainer($container);
+        $container = $this->addLocaleFacade($container);
+
+        return parent::provideCommunicationLayerDependencies($container);
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFileManagerFacade(Container $container)
+    {
         $container[static::FACADE_FILE_MANAGER] = function (Container $container) {
             $fileManagerFacade = $container->getLocator()->fileManager()->facade();
             return new FileManagerGuiToFileManagerFacadeBridge($fileManagerFacade);
         };
 
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFileManagerQueryContainer(Container $container)
+    {
         $container[static::QUERY_CONTAINER_FILE_MANAGER] = function (Container $container) {
             $queryContainer = $container->getLocator()->fileManager()->queryContainer();
             return new FileManagerGuiToFileManagerQueryContainerBridge($queryContainer);
         };
 
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container)
+    {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             $localeFacade = $container->getLocator()->locale()->facade();
             return new FileManagerGuiToLocaleFacadeBridge($localeFacade);
         };
 
-        return parent::provideCommunicationLayerDependencies($container);
+        return $container;
     }
 }

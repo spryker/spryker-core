@@ -1,24 +1,24 @@
 <?php
 
-namespace Spryker\Zed\FileManagerStorage\Dependency\Facade;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
-use Spryker\Zed\EventBehavior\Business\EventBehaviorFacadeInterface;
+namespace Spryker\Zed\FileManagerStorage\Dependency\Facade;
 
 class FileManagerStorageToEventBehaviorFacadeBridge implements FileManagerStorageToEventBehaviorFacadeBridgeInterface
 {
-
     /**
-     * @var EventBehaviorFacadeInterface
+     * @var \Spryker\Zed\EventBehavior\Business\EventBehaviorFacadeInterface
      */
     protected $eventBehaviourFacade;
 
-
     /**
-     * @param EventBehaviorFacadeInterface $eventBehaviourFacade
+     * @param \Spryker\Zed\EventBehavior\Business\EventBehaviorFacadeInterface $eventBehaviourFacade
      */
     public function __construct($eventBehaviourFacade)
     {
-
         $this->eventBehaviourFacade = $eventBehaviourFacade;
     }
 
