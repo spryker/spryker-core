@@ -9,6 +9,7 @@ namespace Spryker\Zed\Product\Persistence;
 
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
@@ -17,7 +18,7 @@ use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Product\ProductConfig getConfig()
- * @method \Spryker\Zed\Product\Persistence\ProductQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface getQueryContainer()
  */
 class ProductPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -67,5 +68,13 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory
     public function getUrlQueryContainer()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::QUERY_CONTAINER_URL);
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery
+     */
+    public function createProductAbstractStoreQuery()
+    {
+        return SpyProductAbstractStoreQuery::create();
     }
 }

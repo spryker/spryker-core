@@ -12,6 +12,7 @@ use Spryker\Zed\Discount\Business\Calculator\Discount;
 use Spryker\Zed\Discount\Business\Calculator\FilteredCalculator;
 use Spryker\Zed\Discount\Business\Calculator\Type\FixedType;
 use Spryker\Zed\Discount\Business\Calculator\Type\PercentageType;
+use Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Collector\ItemPriceCollector;
 use Spryker\Zed\Discount\Business\Collector\ItemQuantityCollector;
 use Spryker\Zed\Discount\Business\Collector\SkuCollector;
@@ -32,7 +33,7 @@ use Spryker\Zed\Discount\Business\Filter\DiscountableItemFilter;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
 use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapper;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderHydrate;
-use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver;
+use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver as ObsoleteDiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Persistence\DiscountPersist;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
@@ -53,7 +54,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
- * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
  */
 class DiscountBusinessFactory extends AbstractBusinessFactory
 {
@@ -138,11 +139,27 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use createCheckoutDiscountOrderSaver() instead
+     *
      * @return \Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaverInterface
      */
     public function createDiscountOrderSaver()
     {
-        return new DiscountOrderSaver($this->getQueryContainer(), $this->createVoucherCode());
+        return new ObsoleteDiscountOrderSaver(
+            $this->getQueryContainer(),
+            $this->createVoucherCode()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaverInterface
+     */
+    public function createCheckoutDiscountOrderSaver()
+    {
+        return new DiscountOrderSaver(
+            $this->getQueryContainer(),
+            $this->createVoucherCode()
+        );
     }
 
     /**

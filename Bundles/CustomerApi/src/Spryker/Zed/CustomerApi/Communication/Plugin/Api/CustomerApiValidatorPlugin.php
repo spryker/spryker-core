@@ -13,7 +13,7 @@ use Spryker\Zed\CustomerApi\CustomerApiConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\CustomerApi\Business\CustomerApiFacade getFacade()
+ * @method \Spryker\Zed\CustomerApi\Business\CustomerApiFacadeInterface getFacade()
  */
 class CustomerApiValidatorPlugin extends AbstractPlugin implements ApiValidatorPluginInterface
 {

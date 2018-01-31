@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CompanyBusinessUnit\Persistence" package="src.Orm.Zed.CompanyBusinessUnit.Persistence">
+
+    <table name="spy_company_business_unit" phpName="SpyCompanyBusinessUnit">
+        <column name="default_billing_address" type="INTEGER"/>
+
+        <foreign-key name="spy_company_business_unit-default_billing_address" foreignTable="spy_company_unit_address" phpName="BillingAddress" refPhpName="CompanyBusinessUnitBillingAddress" onDelete="SETNULL">
+            <reference foreign="id_company_unit_address" local="default_billing_address"/>
+        </foreign-key>
+    </table>
+
+</database>

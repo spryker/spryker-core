@@ -1,3 +1,3 @@
 # Monolog Changelog
 
-[Monolog Changelog](https://github.com/spryker/Monolog/releases)
+[Release Changelog](https://github.com/spryker/monolog/releases)

@@ -222,13 +222,17 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * Note: For performance reasons, the state history join is separated into this method.
+     *
      * @api
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
      *
      * @return void
      */
-    public function queryOrderItemsStateHistoriesOrderedByNewestState(ObjectCollection $salesOrderItems)
+    public function fillOrderItemsWithLatestStates(ObjectCollection $salesOrderItems)
     {
         /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity */
         foreach ($salesOrderItems as $orderItemEntity) {
@@ -237,6 +241,22 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
             $orderItemEntity->getStateHistoriesJoinState($criteria);
             $orderItemEntity->resetPartialStateHistories(false);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @deprecated Use SalesQueryContainerInterface::fillOrderItemsWithLatestStates() instead.
+     *
+     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
+     *
+     * @return void
+     */
+    public function queryOrderItemsStateHistoriesOrderedByNewestState(ObjectCollection $salesOrderItems)
+    {
+        $this->fillOrderItemsWithLatestStates($salesOrderItems);
     }
 
     /**

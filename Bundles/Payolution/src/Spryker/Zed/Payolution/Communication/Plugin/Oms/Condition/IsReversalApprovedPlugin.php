@@ -10,7 +10,7 @@ namespace Spryker\Zed\Payolution\Communication\Plugin\Oms\Condition;
 use Generated\Shared\Transfer\OrderTransfer;
 
 /**
- * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
+ * @method \Spryker\Zed\Payolution\Business\PayolutionFacadeInterface getFacade()
  */
 class IsReversalApprovedPlugin extends AbstractCheckPlugin
 {

@@ -1,3 +1,3 @@
 # CartCurrencyConnector Changelog
 
-[Release Changelog](https://github.com/spryker/CartCurrencyConnector/releases)
+[Release Changelog](https://github.com/spryker/cart-currency-connector/releases)

@@ -8,8 +8,10 @@ namespace Spryker\Zed\ProductOption\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
+use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 
 /**
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionBusinessFactory getFactory()
@@ -24,6 +26,7 @@ interface ProductOptionFacadeInterface
      *  - Removes abstract products if provided in productsToBeDeAssigned array of primary keys
      *  - Removes product option values if provided in productOptionValuesToBeRemoved array of primary keys
      *  - Persists value and group name translations, add to glossary
+     *  - Persists multi-currency value prices.
      *  - Returns id of option group
      *
      * @api
@@ -38,8 +41,9 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     *  - Persist new product option value, updates existing value if idOptionValue is set
-     *  - Returns id of option value
+     * - Persist new product option value, updates existing value if idOptionValue is set.
+     * - Persists multi-currency value prices.
+     * - Returns id of option value.
      *
      * @api
      *
@@ -70,7 +74,9 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     *  - Reads product option from persistence
+     * - Reads product option from persistence.
+     * - Net and gross unit prices are calculated using current store, and current currency.
+     * - Uses default store (fkStore = NULL) prices when the option has no currency definition for the current store.
      *
      * @api
      *
@@ -81,10 +87,9 @@ interface ProductOptionFacadeInterface
     public function getProductOptionValueById($idProductOptionValue);
 
     /**
-     *
      * Specification:
-     *  - Gets product option group from persistence
-     *  - Gets all related product option values
+     * - Retrieves all product option group related production values from persistence.
+     * - Populates all multi-currency prices for each product option value.
      *
      * @api
      *
@@ -107,6 +112,20 @@ interface ProductOptionFacadeInterface
      * @return void
      */
     public function saveSaleOrderProductOptions(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
+
+    /**
+     * Specification:
+     *  - Persist product option sales data
+     *  - Used by sales saver plugin
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveOrderProductOptions(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
 
     /**
      * Specification:
@@ -147,6 +166,13 @@ interface ProductOptionFacadeInterface
     public function hydrateSalesOrderProductOptions(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     * - Sorts sales order items within the provided transfer object.
+     * - 3 level sorting is applied:
+     *   - items without options come first,
+     *   - items are ordered by SKU,
+     *   - items are ordered by ID.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -156,6 +182,9 @@ interface ProductOptionFacadeInterface
     public function sortSalesOrderItemsByOptions(OrderTransfer $orderTransfer);
 
     /**
+     * Specification:
+     * - Hydrates existing production option group ids within the provided OrderTransfer.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
@@ -163,6 +192,21 @@ interface ProductOptionFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateProductOptionGroupIds(OrderTransfer $orderTransfer);
+
+    /**
+     * Specification:
+     * - Selects prices for the current store.
+     * - The returned price map contains the net and gross amounts per currency.
+     * - Uses "default store" (fkStore=NULL) currency prices when a store does not specify the prices in a currency.
+     * - "default store" price is used for either net and gross price when it is null.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
+     */
+    public function getProductOptionValueStorePrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer);
 
     /**
      * Specification:

@@ -33,14 +33,14 @@ abstract class AbstractGenerator implements GeneratorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer[] $bundleTransferCollection
+     * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer[] $moduleTransferCollection
      *
      * @return string
      */
-    public function generate(array $bundleTransferCollection)
+    public function generate(array $moduleTransferCollection)
     {
         $templateVariables = [
-            'bundleTransferCollection' => $bundleTransferCollection,
+            'bundleTransferCollection' => $moduleTransferCollection,
             'namespace' => $this->getNamespace(),
         ];
 

@@ -7,14 +7,22 @@
 
 namespace Spryker\Zed\Checkout\Communication\Controller;
 
+use Exception;
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 /**
- * @method \Spryker\Zed\Checkout\Business\CheckoutFacade getFacade()
+ * @method \Spryker\Zed\Checkout\Business\CheckoutFacadeInterface getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {
+    const MESSAGE_PLACE_ORDER_ERROR = 'Order can not be processed';
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -22,6 +30,34 @@ class GatewayController extends AbstractGatewayController
      */
     public function placeOrderAction(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFacade()->placeOrder($quoteTransfer);
+        try {
+            $checkoutResponseTransfer = $this->getFacade()->placeOrder($quoteTransfer);
+        } catch (Exception $exception) {
+            $checkoutResponseTransfer = $this->createCheckoutResponseWithPlaceOrderFailure($exception);
+        } catch (Throwable $exception) {
+            $checkoutResponseTransfer = $this->createCheckoutResponseWithPlaceOrderFailure($exception);
+        }
+
+        return $checkoutResponseTransfer;
+    }
+
+    /**
+     * @param \Exception|\Throwable $exception
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function createCheckoutResponseWithPlaceOrderFailure($exception)
+    {
+        $checkoutErrorTransfer = (new CheckoutErrorTransfer())
+            ->setErrorCode(Response::HTTP_INTERNAL_SERVER_ERROR)
+            ->setMessage(static::MESSAGE_PLACE_ORDER_ERROR);
+
+        $checkoutResponseTransfer = (new CheckoutResponseTransfer())
+            ->addError($checkoutErrorTransfer)
+            ->setIsSuccess(false);
+
+        ErrorLogger::getInstance()->log($exception);
+
+        return $checkoutResponseTransfer;
     }
 }

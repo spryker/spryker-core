@@ -1,3 +1,3 @@
 # SequenceNumber Changelog
 
-[SequenceNumber Changelog](https://github.com/spryker/SequenceNumber/releases)
+[Release Changelog](https://github.com/spryker/sequence-number/releases)

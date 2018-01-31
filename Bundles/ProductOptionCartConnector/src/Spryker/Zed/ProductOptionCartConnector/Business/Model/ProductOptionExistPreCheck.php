@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface;
+use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface;
 
 class ProductOptionExistPreCheck implements ProductOptionExistPreCheckInterface
 {
@@ -20,7 +20,7 @@ class ProductOptionExistPreCheck implements ProductOptionExistPreCheckInterface
     const MESSAGE_ERROR_PRODUCT_OPTION_EXISTS = 'cart.item.option.pre.check.validation.error.exists';
 
     /**
-     * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface
+     * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface
      */
     protected $productOptionFacade;
 
@@ -30,9 +30,9 @@ class ProductOptionExistPreCheck implements ProductOptionExistPreCheckInterface
     protected static $productOptionBySkuActiveCache = [];
 
     /**
-     * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface $productOptionFacade
+     * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface $productOptionFacade
      */
-    public function __construct(ProductOptionCartConnectorToProductOptionInterface $productOptionFacade)
+    public function __construct(ProductOptionCartConnectorToProductOptionFacadeInterface $productOptionFacade)
     {
         $this->productOptionFacade = $productOptionFacade;
     }

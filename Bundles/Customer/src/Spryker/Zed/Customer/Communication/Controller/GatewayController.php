@@ -15,7 +15,7 @@ use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method \Spryker\Zed\Customer\Business\CustomerFacade getFacade()
+ * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
  * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
@@ -185,9 +185,10 @@ class GatewayController extends AbstractGatewayController
      */
     public function updateAddressAction(AddressTransfer $addressTransfer)
     {
-        $result = $this->getFacade()
+        $addressTransfer = $this->getFacade()
             ->updateAddress($addressTransfer);
-        $this->setSuccess($result);
+
+        $this->setSuccess(true);
 
         return $addressTransfer;
     }

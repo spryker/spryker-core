@@ -28,7 +28,7 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getSourceDirectories()
     {
@@ -41,7 +41,7 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getDataBuilderSourceDirectories()
     {
@@ -116,10 +116,12 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getEntitiesSourceDirectories()
     {
-        return [];
+        return [
+            APPLICATION_SOURCE_DIR . '/Orm/Propel/*/Schema/',
+        ];
     }
 }

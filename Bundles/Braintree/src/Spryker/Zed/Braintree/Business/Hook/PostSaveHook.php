@@ -45,6 +45,7 @@ class PostSaveHook implements PostSaveHookInterface
                 ->setMessage($logRecord->getMessage());
 
             $checkoutResponse->addError($errorTransfer);
+            $checkoutResponse->setIsSuccess(false);
         }
 
         return $checkoutResponse;

@@ -1,3 +1,3 @@
 # Search Changelog
 
-[Search Changelog](https://github.com/spryker/Search/releases)
+[Release Changelog](https://github.com/spryker/search/releases)

@@ -12,4 +12,4 @@ composer require spryker/product-review-collector
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/products/product_reviews/product_review.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/products/product_reviews/product_review.html)

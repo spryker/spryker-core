@@ -12,16 +12,18 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\DiscountPromotion\DiscountPromotionConfig getConfig()
- * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainer getQueryContainer()
- * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacade getFacade()
+ * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface getFacade()
  */
 class DiscountPromotionCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\DiscountPromotion\Communication\Form\DiscountPromotionFormType|\Symfony\Component\Form\FormTypeInterface
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
      */
     public function createDiscountFormPromotionType()
     {
-        return new DiscountPromotionFormType();
+        return DiscountPromotionFormType::class;
     }
 }

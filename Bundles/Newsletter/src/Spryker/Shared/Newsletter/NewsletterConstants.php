@@ -22,4 +22,6 @@ interface NewsletterConstants
      * @api
      */
     const BASE_URL_YVES = 'NEWSLETTER:BASE_URL_YVES';
+
+    const DEFAULT_NEWSLETTER_TYPE = 'DEFAULT_NEWSLETTER';
 }

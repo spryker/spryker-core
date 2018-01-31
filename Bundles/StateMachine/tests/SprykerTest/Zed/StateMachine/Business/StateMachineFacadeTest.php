@@ -603,6 +603,42 @@ class StateMachineFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testStateMachineExistsReturnsTrueWhenStateMachineHasHandler()
+    {
+        // Assign
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineName = $stateMachineHandler->getStateMachineName();
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+        $expectedResult = true;
+
+        // Act
+        $actualResult = $stateMachineFacade->stateMachineExists($stateMachineName);
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testStateMachineExistsReturnsFalseWhenStateMachineHasNoHandler()
+    {
+        // Assign
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineName = $stateMachineHandler->getStateMachineName() . "SomethingElse";
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+        $expectedResult = false;
+
+        // Act
+        $actualResult = $stateMachineFacade->stateMachineExists($stateMachineName);
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
      * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface $stateMachineHandler
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachineFacade

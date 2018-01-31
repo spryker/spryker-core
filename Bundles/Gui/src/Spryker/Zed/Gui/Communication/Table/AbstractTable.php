@@ -238,7 +238,7 @@ abstract class AbstractTable
     {
         $callback = function (&$value, $key) use ($safeColumns) {
             if (!in_array($key, $safeColumns)) {
-                $value = \twig_escape_filter(new Twig_Environment(), $value);
+                $value = \twig_escape_filter(new Twig_Environment(new Twig_Loader_Filesystem()), $value);
             }
 
             return $value;
@@ -870,14 +870,12 @@ abstract class AbstractTable
     {
         $formFactory = $this->getFormFactory();
 
-        $deleteForm = new DeleteForm();
-
         $options = [
             'fields' => $options,
             'action' => $url,
         ];
 
-        $form = $formFactory->create($deleteForm, [], $options);
+        $form = $formFactory->create(DeleteForm::class, [], $options);
 
         $options['form'] = $form->createView();
         $options['title'] = $title;
@@ -1069,11 +1067,11 @@ abstract class AbstractTable
         if (preg_match('/created_at|updated_at/', $searchColumns[$column->getData()])) {
             $query->where(
                 sprintf(
-                    "(%s >= '%s' AND %s <= '%s')",
+                    "(%s >= %s AND %s <= %s)",
                     $searchColumns[$column->getData()],
-                    $this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 00:00:00',
+                    Propel::getConnection()->quote($this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 00:00:00'),
                     $searchColumns[$column->getData()],
-                    $this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 23:59:59'
+                    Propel::getConnection()->quote($this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 23:59:59')
                 )
             );
 
@@ -1086,9 +1084,9 @@ abstract class AbstractTable
         }
 
         $query->where(sprintf(
-            "%s = '%s'",
+            "%s = %s",
             $searchColumns[$column->getData()],
-            $value
+            Propel::getConnection()->quote($value)
         ));
     }
 

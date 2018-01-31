@@ -30,7 +30,7 @@ use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Category\CategoryConfig getConfig()
  */
 class CategoryBusinessFactory extends AbstractBusinessFactory
@@ -185,7 +185,12 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
      */
     protected function createCategoryUrl()
     {
-        return new CategoryUrl($this->getQueryContainer(), $this->getUrlFacade(), $this->createUrlPathGenerator());
+        return new CategoryUrl(
+            $this->getQueryContainer(),
+            $this->getUrlFacade(),
+            $this->createUrlPathGenerator(),
+            $this->getCategoryUrlPathPlugins()
+        );
     }
 
     /**
@@ -217,6 +222,14 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     protected function getRelationUpdatePluginStack()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_STACK_RELATION_UPDATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryUrlPathPluginInterface[]
+     */
+    protected function getCategoryUrlPathPlugins()
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::PLUGINS_CATEGORY_URL_PATH);
     }
 
     /**

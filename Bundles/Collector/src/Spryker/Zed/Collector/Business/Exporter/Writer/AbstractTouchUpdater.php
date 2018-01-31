@@ -45,10 +45,11 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
     /**
      * @param string $key
      * @param int $idLocale
+     * @param int $idStore
      *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface
      */
-    abstract protected function findOrCreateTouchKeyEntity($key, $idLocale);
+    abstract protected function findOrCreateTouchKeyEntity($key, $idLocale, $idStore);
 
     /**
      * @param string[] $keys
@@ -73,14 +74,15 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
     /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
      * @param int $idLocale
+     * @param int $idStore
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
      *
      * @return void
      */
-    public function bulkUpdate(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null)
+    public function bulkUpdate(TouchUpdaterSet $touchUpdaterSet, $idLocale, $idStore, ConnectionInterface $connection = null)
     {
         foreach ($touchUpdaterSet->getData() as $key => $touchData) {
-            $idKey = $this->getCollectorKeyFromData($touchData);
+            $idKey = $this->findCollectorKeyFromData($touchData);
 
             if ($idKey !== null) {
                 $this->bulkTouchUpdateQuery->addQuery(
@@ -91,7 +93,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
                 );
             } else {
                 /** @var \Orm\Zed\Touch\Persistence\SpyTouchStorage|\Orm\Zed\Touch\Persistence\SpyTouchSearch $entity */
-                $entity = $this->findOrCreateTouchKeyEntity($key, $idLocale);
+                $entity = $this->findOrCreateTouchKeyEntity($key, $idLocale, $idStore);
                 $entity->setFkTouch($touchData[CollectorConfig::COLLECTOR_TOUCH_ID]);
                 $entity->save();
             }
@@ -140,7 +142,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
      *
      * @return int|null
      */
-    protected function getCollectorKeyFromData(array $touchData)
+    protected function findCollectorKeyFromData(array $touchData)
     {
         if (!isset($touchData['data'])) {
             return null;

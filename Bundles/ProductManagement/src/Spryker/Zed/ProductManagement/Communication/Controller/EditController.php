@@ -13,9 +13,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacade getFacade()
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
  */
 class EditController extends AddController
 {
@@ -59,7 +59,7 @@ class EditController extends AddController
 
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $productAbstractTransfer = $this->getFactory()
                     ->createProductFormTransferGenerator()

@@ -1,3 +1,3 @@
 # ProductCategory Changelog
 
-[ProductCategory Changelog](https://github.com/spryker/ProductCategory/releases)
+[Release Changelog](https://github.com/spryker/product-category/releases)

@@ -24,4 +24,12 @@ class UniqueValue extends SymfonyConstraint
     {
         return $this->productOptionQueryContainer;
     }
+
+    /**
+     * @return string
+     */
+    public function getTargets()
+    {
+        return static::CLASS_CONSTRAINT;
+    }
 }

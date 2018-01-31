@@ -9,10 +9,6 @@
             <unique-column name="template_path"/>
         </unique>
 
-        <index name="spy_cms_block_template-template_path">
-            <index-column name="template_path"/>
-        </index>
-
         <id-method-parameter value="spy_cms_block_template_pk_seq"/>
     </table>
 

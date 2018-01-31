@@ -3,6 +3,7 @@
   "description": "Application module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/config": "^3.0.0",
     "spryker/error-handler": "^2.0.0",
     "spryker/kernel": "^3.8.0",
@@ -23,7 +24,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\Application\\": "tests/SprykerTest/Shared/Application/_support/Helper/"
+      "SprykerTest\\Shared\\Application\\Helper\\": "tests/SprykerTest/Shared/Application/_support/Helper/"
     }
   },
   "autoload-dev": {

@@ -1,3 +1,3 @@
 # UtilDataReader Changelog
 
-[Release Changelog](https://github.com/spryker/UtilDataReader/releases)
+[Release Changelog](https://github.com/spryker/util-data-reader/releases)

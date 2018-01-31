@@ -12,6 +12,7 @@ use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionCartQuantity;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionExistPreCheck;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionValueExpander;
+use Spryker\Zed\ProductOptionCartConnector\Business\Validator\ProductOptionValuePriceValidator;
 use Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorDependencyProvider;
 
 /**
@@ -25,7 +26,26 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOptionValueExpander()
     {
-        return new ProductOptionValueExpander($this->getProductOptionFacade());
+        return new ProductOptionValueExpander(
+            $this->getProductOptionFacade(),
+            $this->getPriceFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface
+     */
+    protected function getProductOptionFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionCartConnectorDependencyProvider::FACADE_PRODUCT_OPTION);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceFacadeInterface
+     */
+    protected function getPriceFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionCartConnectorDependencyProvider::FACADE_PRICE);
     }
 
     /**
@@ -53,10 +73,13 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface
+     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Validator\ProductOptionValuePriceValidatorInterface
      */
-    protected function getProductOptionFacade()
+    public function createProductOptionValuePriceValidator()
     {
-        return $this->getProvidedDependency(ProductOptionCartConnectorDependencyProvider::FACADE_PRODUCT_OPTION);
+        return new ProductOptionValuePriceValidator(
+            $this->getProductOptionFacade(),
+            $this->getPriceFacade()
+        );
     }
 }

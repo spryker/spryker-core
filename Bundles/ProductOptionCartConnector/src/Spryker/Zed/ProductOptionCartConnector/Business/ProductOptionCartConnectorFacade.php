@@ -17,10 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductOptionCartConnectorFacade extends AbstractFacade implements ProductOptionCartConnectorFacadeInterface
 {
     /**
-     *
-     * Specification:
-     *  - Expands product option transfer object with additional data from persistence
-     *  - Returns CartChangeTransfer transfer with option data included
+     * {@inheritdoc}
      *
      * @api
      *
@@ -36,10 +33,7 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
     }
 
     /**
-     *
-     * Specification:
-     *  - Sets group key to itemTransfer to contain product option identifiers.
-     *  - Returns CartChangeTransfer with modified group key for each item, which includes options
+     * {@inheritdoc}
      *
      * @api
      *
@@ -55,10 +49,7 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
     }
 
     /**
-     *
-     * Specification:
-     *  - Sets each product quantity to item quantity
-     *  - Returns CartChangeTransfer with modified item quantity
+     * {@inheritdoc}
      *
      * @api
      *
@@ -71,6 +62,22 @@ class ProductOptionCartConnectorFacade extends AbstractFacade implements Product
         return $this->getFactory()
             ->createProductOptionCartQuantity()
             ->changeQuantity($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateProductOptionValuePrices(CartChangeTransfer $cartChangeTransfer)
+    {
+        return $this->getFactory()
+            ->createProductOptionValuePriceValidator()
+            ->validateProductOptionValuePrices($cartChangeTransfer);
     }
 
     /**

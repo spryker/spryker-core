@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 
 /**
- * @method \Spryker\Zed\Calculation\Business\CalculationFacade getFacade()
+ * @method \Spryker\Zed\Calculation\Business\CalculationFacadeInterface getFacade()
  */
 class CheckoutGrandTotalPreCondition implements CheckoutPreConditionInterface
 {
@@ -20,10 +20,10 @@ class CheckoutGrandTotalPreCondition implements CheckoutPreConditionInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->getFacade()->validateCheckoutGrandTotal($quoteTransfer, $checkoutResponseTransfer);
+        return $this->getFacade()->validateCheckoutGrandTotal($quoteTransfer, $checkoutResponseTransfer);
     }
 }

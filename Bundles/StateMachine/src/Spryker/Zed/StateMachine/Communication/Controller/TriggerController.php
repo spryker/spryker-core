@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\StateMachine\Business\StateMachineFacade getFacade()
+ * @method \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface getFacade()
  * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()
  */
 class TriggerController extends AbstractController

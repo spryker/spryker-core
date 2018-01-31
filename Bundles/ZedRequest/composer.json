@@ -3,6 +3,7 @@
   "description": "ZedRequest module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/config": "^3.0.0",
     "spryker/guzzle": "^2.1.0",
     "spryker/kernel": "^3.0.0",
@@ -21,7 +22,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\ZedRequest\\": "tests/SprykerTest/Zed/ZedRequest/_support/Helper/"
+      "SprykerTest\\Zed\\ZedRequest\\Helper\\": "tests/SprykerTest/Zed/ZedRequest/_support/Helper/"
     }
   },
   "autoload-dev": {

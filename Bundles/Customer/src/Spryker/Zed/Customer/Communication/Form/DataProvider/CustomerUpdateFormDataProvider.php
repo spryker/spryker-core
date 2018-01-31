@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Customer\Communication\Form\DataProvider;
 
+use Spryker\Zed\Customer\Communication\Form\CustomerForm;
 use Spryker\Zed\Customer\Communication\Form\CustomerUpdateForm;
 
 class CustomerUpdateFormDataProvider extends CustomerFormDataProvider
@@ -27,7 +28,10 @@ class CustomerUpdateFormDataProvider extends CustomerFormDataProvider
             ->queryCustomerById($idCustomer)
             ->findOne();
 
-        return $customerEntity->toArray();
+        $data = $customerEntity->toArray();
+        $data[CustomerForm::FIELD_LOCALE] = $customerEntity->getLocale();
+
+        return $data;
     }
 
     /**

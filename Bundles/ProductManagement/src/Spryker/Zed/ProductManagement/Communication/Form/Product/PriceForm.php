@@ -9,9 +9,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,7 +17,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Valid;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ */
 class PriceForm extends AbstractType
 {
     const FIELD_PRICE = 'price';
@@ -28,36 +32,10 @@ class PriceForm extends AbstractType
 
     const OPTION_TAX_RATE_CHOICES = 'tax_rate_choices';
     const OPTION_CURRENCY_ISO_CODE = 'currency_iso_code';
+    const OPTION_MONEY_FACADE = 'money-facade';
+    const OPTION_CURRENCY_FACADE = 'currency-facade';
     const DEFAULT_SCALE = 2;
     const MAX_PRICE_SIZE = 2147483647; // 32 bit integer
-
-    /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface
-     */
-    protected $moneyFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface
-     */
-    protected $currencyFacade;
-
-    /**
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface $moneyFacade
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface $currencyFacade
-     */
-    public function __construct(ProductManagementToMoneyInterface $moneyFacade, ProductManagementToCurrencyInterface $currencyFacade)
-    {
-        $this->moneyFacade = $moneyFacade;
-        $this->currencyFacade = $currencyFacade;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'PriceForm';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -74,7 +52,7 @@ class PriceForm extends AbstractType
 
         $resolver->setDefaults([
             'required' => false,
-            'cascade_validation' => true,
+            'constraints' => new Valid(),
             static::OPTION_CURRENCY_ISO_CODE => null,
         ]);
     }
@@ -101,7 +79,7 @@ class PriceForm extends AbstractType
      */
     protected function addPriceField(FormBuilderInterface $builder, array $options)
     {
-        $currencyTransfer = $this->currencyFacade->getCurrent();
+        $currencyTransfer = $this->getFactory()->getCurrencyFacade()->getCurrent();
 
         $fieldOptions = [
             'label' => 'Price *',
@@ -119,7 +97,7 @@ class PriceForm extends AbstractType
             $fieldOptions['currency'] = $options[static::OPTION_CURRENCY_ISO_CODE];
         }
 
-        $builder->add(static::FIELD_PRICE, 'money', $fieldOptions);
+        $builder->add(static::FIELD_PRICE, MoneyType::class, $fieldOptions);
 
         return $this;
     }
@@ -132,7 +110,7 @@ class PriceForm extends AbstractType
      */
     protected function addPriceFieldCollection(FormBuilderInterface $builder, array $options)
     {
-        $currencyTransfer = $this->currencyFacade->getCurrent();
+        $currencyTransfer = $this->getFactory()->getCurrencyFacade()->getCurrent();
 
         $fieldOptions = [
             'label_format' => 'Price (%name%)',
@@ -198,7 +176,7 @@ class PriceForm extends AbstractType
      */
     protected function addTaxRateField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_TAX_RATE, new Select2ComboBoxType(), [
+        $builder->add(self::FIELD_TAX_RATE, Select2ComboBoxType::class, [
             'label' => 'Tax Set',
             'required' => true,
             'choices' => $options[static::OPTION_TAX_RATE_CHOICES],

@@ -12,4 +12,4 @@ composer require spryker/queue
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/queue/queue.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/queue/queue.html)

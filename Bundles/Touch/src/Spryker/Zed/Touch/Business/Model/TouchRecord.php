@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Touch\Business\Model;
 
 use DateTime;
-use Exception;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouch;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
@@ -16,6 +15,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
+use Throwable;
 
 class TouchRecord implements TouchRecordInterface
 {
@@ -222,7 +222,7 @@ class TouchRecord implements TouchRecordInterface
      *
      * @api
      *
-     * @throws \Exception
+     * @throws \Throwable
      *
      * @return int
      */
@@ -236,9 +236,9 @@ class TouchRecord implements TouchRecordInterface
                     SpyTouchTableMap::COL_ITEM_EVENT_DELETED
                 );
             $deletedCount = $this->removeTouchEntries($touchListQuery);
-        } catch (Exception $exception) {
+        } catch (Throwable $throwable) {
             $this->touchQueryContainer->getConnection()->rollBack();
-            throw $exception;
+            throw $throwable;
         }
 
         $this->touchQueryContainer->getConnection()->commit();

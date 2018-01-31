@@ -16,7 +16,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 use Spryker\Zed\Payolution\PayolutionConfig;
 
 /**
- * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
+ * @method \Spryker\Zed\Payolution\Business\PayolutionFacadeInterface getFacade()
  * @method \Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory getFactory()
  */
 class MailPlugin extends AbstractPlugin implements CommandByOrderInterface

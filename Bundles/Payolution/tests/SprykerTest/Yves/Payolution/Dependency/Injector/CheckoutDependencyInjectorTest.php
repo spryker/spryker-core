@@ -8,12 +8,12 @@
 namespace SprykerTest\Yves\Payolution\Dependency\Injector;
 
 use Codeception\Test\Unit;
+use Spryker\Shared\Payolution\PayolutionConfig;
 use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Payolution\Dependency\Injector\CheckoutDependencyInjector;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
-use Spryker\Zed\Payolution\PayolutionConfig;
 
 /**
  * Auto-generated group annotations

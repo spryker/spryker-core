@@ -13,7 +13,7 @@ use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacade getFacade()
+ * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  */
 class ProductBundleIdHydratorPlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {

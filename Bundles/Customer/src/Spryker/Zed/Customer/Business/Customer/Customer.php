@@ -53,6 +53,11 @@ class Customer implements CustomerInterface
     protected $customerConfig;
 
     /**
+     * @var \Spryker\Zed\Customer\Business\Customer\EmailValidatorInterface
+     */
+    protected $emailValidator;
+
+    /**
      * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface
      */
     protected $mailFacade;
@@ -71,6 +76,7 @@ class Customer implements CustomerInterface
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface $customerReferenceGenerator
      * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
+     * @param \Spryker\Zed\Customer\Business\Customer\EmailValidatorInterface $emailValidator
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface $mailFacade
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param \Spryker\Shared\Kernel\Store $store
@@ -79,6 +85,7 @@ class Customer implements CustomerInterface
         CustomerQueryContainerInterface $queryContainer,
         CustomerReferenceGeneratorInterface $customerReferenceGenerator,
         CustomerConfig $customerConfig,
+        EmailValidatorInterface $emailValidator,
         CustomerToMailInterface $mailFacade,
         LocaleQueryContainerInterface $localeQueryContainer,
         Store $store
@@ -86,6 +93,7 @@ class Customer implements CustomerInterface
         $this->queryContainer = $queryContainer;
         $this->customerReferenceGenerator = $customerReferenceGenerator;
         $this->customerConfig = $customerConfig;
+        $this->emailValidator = $emailValidator;
         $this->mailFacade = $mailFacade;
         $this->localeQueryContainer = $localeQueryContainer;
         $this->store = $store;
@@ -116,6 +124,7 @@ class Customer implements CustomerInterface
         $customerTransfer->fromArray($customerEntity->toArray(), true);
 
         $customerTransfer = $this->attachAddresses($customerTransfer, $customerEntity);
+        $customerTransfer = $this->attachLocale($customerTransfer, $customerEntity);
 
         return $customerTransfer;
     }
@@ -151,15 +160,17 @@ class Customer implements CustomerInterface
         $customerEntity = new SpyCustomer();
         $customerEntity->fromArray($customerTransfer->toArray());
 
-        $this->addLocale($customerEntity);
-
-        if (!$this->isEmailAvailableForCustomer($customerEntity)) {
-            $customerResponseTransfer = $this->createCustomerEmailAlreadyUsedResponse();
-
-            return $customerResponseTransfer;
+        if ($customerTransfer->getLocale() !== null) {
+            $this->addLocaleByLocaleName($customerEntity, $customerTransfer->getLocale()->getLocaleName());
         }
 
+        $this->addLocale($customerEntity);
+
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
+        $customerResponseTransfer = $this->validateCustomerEmail($customerResponseTransfer, $customerEntity);
+        if ($customerResponseTransfer->getIsSuccess() !== true) {
+            return $customerResponseTransfer;
+        }
 
         $customerEntity->setCustomerReference($this->customerReferenceGenerator->generateCustomerReference($customerTransfer));
         $customerEntity->setRegistrationKey($this->generateKey());
@@ -211,6 +222,21 @@ class Customer implements CustomerInterface
         }
 
         $localeName = $this->store->getCurrentLocale();
+        $localeEntity = $this->localeQueryContainer->queryLocaleByName($localeName)->findOne();
+
+        if ($localeEntity) {
+            $customerEntity->setLocale($localeEntity);
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     * @param string $localeName
+     *
+     * @return void
+     */
+    protected function addLocaleByLocaleName(SpyCustomer $customerEntity, $localeName)
+    {
         $localeEntity = $this->localeQueryContainer->queryLocaleByName($localeName)->findOne();
 
         if ($localeEntity) {
@@ -403,14 +429,18 @@ class Customer implements CustomerInterface
             }
         }
 
+        $customerResponseTransfer = $this->createCustomerResponseTransfer();
         $customerEntity = $this->getCustomer($customerTransfer);
         $customerEntity->fromArray($customerTransfer->modifiedToArray());
 
-        if (!$this->isEmailAvailableForCustomer($customerEntity)) {
-            return $this->createCustomerEmailAlreadyUsedResponse();
+        if ($customerTransfer->getLocale() !== null) {
+            $this->addLocaleByLocaleName($customerEntity, $customerTransfer->getLocale()->getLocaleName());
         }
 
-        $customerResponseTransfer = $this->createCustomerResponseTransfer();
+        $customerResponseTransfer = $this->validateCustomerEmail($customerResponseTransfer, $customerEntity);
+        if ($customerResponseTransfer->getIsSuccess() !== true) {
+            return $customerResponseTransfer;
+        }
 
         $changedRows = $customerEntity->save();
 
@@ -439,31 +469,41 @@ class Customer implements CustomerInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    protected function createCustomerEmailAlreadyUsedResponse()
+    protected function validateCustomerEmail(CustomerResponseTransfer $customerResponseTransfer, SpyCustomer $customerEntity)
     {
-        $customerErrorTransfer = new CustomerErrorTransfer();
-        $customerErrorTransfer->setMessage(Messages::CUSTOMER_EMAIL_ALREADY_USED);
+        if (!$this->emailValidator->isFormatValid($customerEntity->getEmail())) {
+            $customerResponseTransfer->setIsSuccess(false);
+            $customerResponseTransfer->addError(
+                $this->createErrorCustomerResponseTransfer(Messages::CUSTOMER_EMAIL_FORMAT_INVALID)
+            );
+        }
 
-        $customerResponseTransfer = $this->createCustomerResponseTransfer(false);
-        $customerResponseTransfer->addError($customerErrorTransfer);
+        if (!$this->emailValidator->isEmailAvailableForCustomer($customerEntity->getEmail(), $customerEntity->getIdCustomer())) {
+            $customerResponseTransfer->setIsSuccess(false);
+            $customerResponseTransfer->addError(
+                $this->createErrorCustomerResponseTransfer(Messages::CUSTOMER_EMAIL_ALREADY_USED)
+            );
+        }
 
         return $customerResponseTransfer;
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     * @param string $message
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CustomerErrorTransfer
      */
-    protected function isEmailAvailableForCustomer(SpyCustomer $customerEntity)
+    protected function createErrorCustomerResponseTransfer($message)
     {
-        $count = $this->queryContainer
-            ->queryCustomerByEmailApartFromIdCustomer($customerEntity->getEmail(), $customerEntity->getIdCustomer())
-            ->count();
+        $customerErrorTransfer = new CustomerErrorTransfer();
+        $customerErrorTransfer->setMessage($message);
 
-        return ($count === 0);
+        return $customerErrorTransfer;
     }
 
     /**

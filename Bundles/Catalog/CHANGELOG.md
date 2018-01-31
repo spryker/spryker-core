@@ -1,3 +1,3 @@
 # Catalog Changelog
 
-[Catalog Changelog](https://github.com/spryker/Catalog/releases)
+[Release Changelog](https://github.com/spryker/catalog/releases)

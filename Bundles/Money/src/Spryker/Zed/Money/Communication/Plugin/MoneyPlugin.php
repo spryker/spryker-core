@@ -13,7 +13,7 @@ use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Money\Business\MoneyFacade getFacade()
+ * @method \Spryker\Zed\Money\Business\MoneyFacadeInterface getFacade()
  * @method \Spryker\Zed\Money\Communication\MoneyCommunicationFactory getFactory()
  */
 class MoneyPlugin extends AbstractPlugin implements MoneyPluginInterface

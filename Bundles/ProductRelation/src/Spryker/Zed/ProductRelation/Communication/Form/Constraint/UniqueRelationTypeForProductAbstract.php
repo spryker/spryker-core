@@ -31,6 +31,6 @@ class UniqueRelationTypeForProductAbstract extends SymfonyConstraint
      */
     public function getTargets()
     {
-        return static::CLASS_CONSTRAINT;
+         return static::CLASS_CONSTRAINT;
     }
 }

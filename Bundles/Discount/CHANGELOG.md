@@ -1,3 +1,3 @@
 # Discount Changelog
 
-[Discount Changelog](https://github.com/spryker/Discount/releases)
+[Release Changelog](https://github.com/spryker/discount/releases)

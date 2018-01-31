@@ -6,20 +6,20 @@
 
 namespace Spryker\Zed\ProductOption\Communication\Form\Transformer;
 
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyFacadeInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class PriceTransformer implements DataTransformerInterface
 {
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyFacadeInterface
      */
     protected $moneyFacade;
 
     /**
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyInterface $moneyFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyFacadeInterface $moneyFacade
      */
-    public function __construct(ProductOptionToMoneyInterface $moneyFacade)
+    public function __construct(ProductOptionToMoneyFacadeInterface $moneyFacade)
     {
         $this->moneyFacade = $moneyFacade;
     }

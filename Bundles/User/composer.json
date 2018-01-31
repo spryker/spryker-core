@@ -3,6 +3,7 @@
   "description": "User module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/gui": "^3.10.0",
     "spryker/kernel": "^3.0.0",
     "spryker/session": "^3.1.1",
@@ -25,7 +26,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\User\\": "tests/SprykerTest/Shared/User/_support/Helper/"
+      "SprykerTest\\Shared\\User\\Helper\\": "tests/SprykerTest/Shared/User/_support/Helper/"
     }
   },
   "autoload-dev": {

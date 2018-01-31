@@ -81,6 +81,19 @@ class ProductLabelQueryContainer extends AbstractQueryContainer implements Produ
     /**
      * @api
      *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    public function queryActiveProductsLabelByIdProductAbstract($idProductAbstract)
+    {
+        return $this->queryProductsLabelByIdProductAbstract($idProductAbstract)
+            ->filterByIsActive(true);
+    }
+
+    /**
+     * @api
+     *
      * @param int $idProductLabel
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery

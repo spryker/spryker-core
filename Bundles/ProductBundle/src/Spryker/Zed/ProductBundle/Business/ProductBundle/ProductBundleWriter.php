@@ -29,7 +29,7 @@ class ProductBundleWriter implements ProductBundleWriterInterface
     protected $productBundleQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter
+     * @var \Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface
      */
     protected $productBundleStockWriter;
 

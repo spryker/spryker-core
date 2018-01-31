@@ -104,7 +104,7 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Orm\Zed\Payment\Persistence\SpySalesPayment[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Payment\Persistence\SpySalesPayment[]|\Propel\Runtime\Collection\ObjectCollection|mixed
      */
     protected function findSalesPaymentByIdSalesOrder(OrderTransfer $orderTransfer)
     {

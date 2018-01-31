@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeBridge;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 
 /**
@@ -91,11 +91,11 @@ class ProductOptionTaxRateCalculationTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\PHPUnit_Framework_MockObject_Builder_InvocationMocker|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxBridge
+     * @return \PHPUnit_Framework_MockObject_MockObject|\PHPUnit_Framework_MockObject_Builder_InvocationMocker|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeBridge
      */
     protected function createProductOptionToTaxBridgeMock()
     {
-        $bridgeMock = $this->getMockBuilder(ProductOptionToTaxBridge::class)
+        $bridgeMock = $this->getMockBuilder(ProductOptionToTaxFacadeBridge::class)
             ->disableOriginalConstructor()
             ->getMock();
 

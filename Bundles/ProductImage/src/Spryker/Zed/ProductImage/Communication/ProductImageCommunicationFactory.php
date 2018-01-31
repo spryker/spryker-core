@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\ProductImage\ProductImageConfig getConfig()
- * @method \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface getQueryContainer()
  */
 class ProductImageCommunicationFactory extends AbstractCommunicationFactory
 {

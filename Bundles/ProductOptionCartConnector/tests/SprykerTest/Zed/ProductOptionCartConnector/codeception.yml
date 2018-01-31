@@ -24,3 +24,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\ProductOption\Helper\ProductOptionDataHelper
+                - \SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper

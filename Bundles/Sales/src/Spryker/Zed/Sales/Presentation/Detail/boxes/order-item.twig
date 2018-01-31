@@ -2,6 +2,7 @@
 {% set numberOfItemAdditions = orderItem.productOptions | length + 1  %}
 {% set subtotal = group ? bundleItem.unitSubtotalAggregation : orderItem.unitSubtotalAggregation %}
 {% set priceToPay = group ? bundleItem.unitPriceToPayAggregation : orderItem.unitPriceToPayAggregation %}
+{% set image = image %}
 
 <td class="item-checker"><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check" /></td>
 {% if displayImage %}

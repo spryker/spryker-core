@@ -1,3 +1,3 @@
 # Gui Changelog
 
-[Gui Changelog](https://github.com/spryker/Gui/releases)
+[Release Changelog](https://github.com/spryker/gui/releases)
