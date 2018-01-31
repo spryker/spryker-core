@@ -64,7 +64,7 @@ class CmsBlockTable extends AbstractTable
             static::COL_NAME => 'Name',
             static::COL_TEMPLATE_NAME => 'Template',
             static::COL_IS_ACTIVE => 'Status',
-            static::COL_STORE_RELATION => 'Store',
+            static::COL_STORE_RELATION => 'Stores',
             static::COL_ACTIONS => static::COL_ACTIONS,
         ]);
 

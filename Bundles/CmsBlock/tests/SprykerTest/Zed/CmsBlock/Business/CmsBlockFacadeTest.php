@@ -22,7 +22,7 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 class CmsBlockFacadeTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\CmsBlock\BusinessTester
+     * @var \SprykerTest\Zed\CmsBlock\CmsBlockBusinessTester
      */
     protected $tester;
 
@@ -206,12 +206,12 @@ class CmsBlockFacadeTest extends Unit
     public function testUpdateCmsBlockUpdatesStoreRelation(array $originalRelation, array $modifiedRelation)
     {
         // Assign
-        /** @var \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer */
-        $cmsBlockTransfer = $this->tester->haveCmsBlock();
-        $cmsBlockTransfer->setStoreRelation(
-            (new StoreRelationTransfer())
-                ->setIdEntity($cmsBlockTransfer->getIdCmsBlock())
-                ->setIdStores($originalRelation)
+        $cmsBlockTransfer = $this->tester->haveCmsBlock(
+            [
+                CmsBlockTransfer::STORE_RELATION => [
+                    StoreRelationTransfer::ID_STORES => $originalRelation,
+                ],
+            ]
         );
 
         $this->createCmsBlockFacade()->updateCmsBlock($cmsBlockTransfer);
