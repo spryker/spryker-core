@@ -67,4 +67,32 @@ class StorageFacade extends AbstractFacade implements StorageFacadeInterface
     {
         $this->getFactory()->createStorage()->deleteMulti($keys);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $destination
+     *
+     * @return bool
+     */
+    public function export($destination)
+    {
+        return $this->getFactory()->createStorageExporter()->export($destination);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $source
+     *
+     * @return bool
+     */
+    public function import($source)
+    {
+        return $this->getFactory()->createStorageImporter()->import($source);
+    }
 }

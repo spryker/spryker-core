@@ -55,7 +55,7 @@ class CustomerUserConnectorGuiCommunicationFactory extends AbstractCommunication
     public function createCustomerUserConnectorForm($idUser)
     {
         return $this->getFormFactory()->create(
-            new CustomerUserConnectorForm(),
+            CustomerUserConnectorForm::class,
             $this->createUserConnectionTransfer($idUser),
             $this->createCustomerUserConnectorFormDataProvider()->getOptions()
         );

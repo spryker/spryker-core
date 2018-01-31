@@ -42,7 +42,6 @@ class CmsContentWidgetServiceProvider extends AbstractPlugin implements ServiceP
     {
         foreach ($this->getFactory()->getCmsContentWidgetPlugins() as $functionName => $cmsContentWidgetPlugin) {
             $twig->addFunction(
-                $functionName,
                 $this->createTwigSimpleFunction($functionName, $cmsContentWidgetPlugin)
             );
         }

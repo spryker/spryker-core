@@ -1,3 +1,3 @@
 # NavigationGui Changelog
 
-[Release Changelog](https://github.com/spryker/NavigationGui/releases)
+[Release Changelog](https://github.com/spryker/navigation-gui/releases)

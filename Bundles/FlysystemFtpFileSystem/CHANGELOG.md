@@ -1,3 +1,3 @@
 # FlysystemFtpFileSystem Changelog
 
-[FlysystemFtpFileSystem Changelog](https://github.com/spryker/FlysystemFtpFileSystem/releases)
+[Release Changelog](https://github.com/spryker/flysystem-ftp-file-system/releases)

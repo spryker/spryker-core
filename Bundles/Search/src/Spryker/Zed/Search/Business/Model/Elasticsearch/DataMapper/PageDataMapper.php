@@ -66,6 +66,8 @@ class PageDataMapper implements PageDataMapperInterface
         foreach ($namedPageMapPlugins as $namedPageMapPlugin) {
             $pageMaps[$namedPageMapPlugin->getName()] = $namedPageMapPlugin;
         }
+
+        return $pageMaps;
     }
 
     /**

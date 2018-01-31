@@ -9,13 +9,16 @@ namespace SprykerTest\Zed\Customer\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
+use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceInterface;
@@ -34,6 +37,7 @@ use Spryker\Zed\Kernel\Container;
 class CustomerFacadeTest extends Unit
 {
     const TESTER_EMAIL = 'tester@spryker.com';
+    const TESTER_INVALID_EMAIL = 'tester<>@spryker.com';
     const TESTER_NON_EXISTING_EMAIL = 'nonexisting@spryker.com';
     const TESTER_UPDATE_EMAIL = 'update.tester@spryker.com';
     const TESTER_PASSWORD = 'tester';
@@ -41,6 +45,11 @@ class CustomerFacadeTest extends Unit
     const TESTER_CITY = 'Testcity';
     const TESTER_ADDRESS1 = 'Testerstreet 23';
     const TESTER_ZIP_CODE = '42';
+
+    /**
+     * @var \SprykerTest\Zed\Customer\CustomerBusinessTester
+     */
+    protected $tester;
 
     /**
      * @var \Spryker\Zed\Customer\Business\CustomerFacadeInterface
@@ -574,6 +583,183 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCheckOrderPreSaveConditionsDoesNotValidateEmailForRegisteredCustomer()
+    {
+        // Assign
+        $dummyIdCustomer = 11111;
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer(
+                (new CustomerTransfer())
+                    ->setIdCustomer($dummyIdCustomer)
+                    ->setEmail(static::TESTER_INVALID_EMAIL)
+            );
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
+        // Act
+        $this->customerFacade->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertFalse($this->hasCheckoutErrorMessage($checkoutResponseTransfer, PreConditionChecker::ERROR_EMAIL_INVALID));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckOrderPreSaveConditionsDoesNotCheckUniqueEmailForRegisteredCustomer()
+    {
+        // Assign
+        $dummyCustomerId = 11111;
+        $email = 'occupied@spryker.com';
+        $this->tester->haveCustomer(['email' => $email]);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer(
+                (new CustomerTransfer())
+                    ->setIdCustomer($dummyCustomerId)
+                    ->setEmail($email)
+            );
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
+        // Act
+        $this->customerFacade->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertFalse($this->hasCheckoutErrorMessage($checkoutResponseTransfer, PreConditionChecker::ERROR_EMAIL_UNIQUE));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckOrderPreSaveConditionsReturnsErrorIfEmailIsInvalidForGuest()
+    {
+        // Assign
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer(
+                (new CustomerTransfer())
+                    ->setIsGuest(true)
+                    ->setEmail(static::TESTER_INVALID_EMAIL)
+            );
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
+        // Act
+        $this->customerFacade->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertTrue($this->hasCheckoutErrorMessage($checkoutResponseTransfer, PreConditionChecker::ERROR_EMAIL_INVALID));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckOrderPreSaveConditionsReturnsNoErrorIfEmailIsValidForGuest()
+    {
+        // Assign
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer(
+                (new CustomerTransfer())
+                    ->setIsGuest(true)
+                    ->setEmail(static::TESTER_EMAIL)
+            );
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
+        // Act
+        $this->customerFacade->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertFalse($this->hasCheckoutErrorMessage($checkoutResponseTransfer, PreConditionChecker::ERROR_EMAIL_INVALID));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckOrderPreSaveConditionsDoesNotCheckUniqueEmailForGuest()
+    {
+        // Assign
+        $email = 'occupied@spryker.com';
+        $this->tester->haveCustomer(['email' => $email]);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer(
+                (new CustomerTransfer())
+                    ->setIsGuest(true)
+                    ->setEmail($email)
+            );
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
+        // Act
+        $this->customerFacade->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertFalse($this->hasCheckoutErrorMessage($checkoutResponseTransfer, PreConditionChecker::ERROR_EMAIL_UNIQUE));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckOrderPreSaveConditionsReturnsErrorIfEmailIsInvalidForNewCustomer()
+    {
+        // Assign
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer(
+                (new CustomerTransfer())
+                    ->setEmail(static::TESTER_INVALID_EMAIL)
+            );
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
+        // Act
+        $this->customerFacade->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertTrue($this->hasCheckoutErrorMessage($checkoutResponseTransfer, PreConditionChecker::ERROR_EMAIL_INVALID));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckOrderPreSaveConditionsReturnsErrorIfEmailIsNotUniqueForNewCustomer()
+    {
+        // Assign
+        $email = 'occupied@spryker.com';
+        $this->tester->haveCustomer(['email' => $email]);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer(
+                (new CustomerTransfer())
+                    ->setEmail($email)
+            );
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
+        // Act
+        $this->customerFacade->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertTrue($this->hasCheckoutErrorMessage($checkoutResponseTransfer, PreConditionChecker::ERROR_EMAIL_UNIQUE));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckOrderPreSaveConditionsReturnsNoErrorIfEmailIsValidAndUniqueForNewCustomer()
+    {
+        // Assign
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer(
+                (new CustomerTransfer())
+                    ->setEmail(static::TESTER_EMAIL)
+            );
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
+        // Act
+        $this->customerFacade->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertFalse($this->hasCheckoutErrorMessage($checkoutResponseTransfer, PreConditionChecker::ERROR_EMAIL_UNIQUE));
+        $this->assertFalse($this->hasCheckoutErrorMessage($checkoutResponseTransfer, PreConditionChecker::ERROR_EMAIL_INVALID));
+    }
+
+    /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $transfer
      * @param bool $hasEmail
      *
@@ -745,5 +931,22 @@ class CustomerFacadeTest extends Unit
         // Assert
         $this->expectException(CustomerNotFoundException::class);
         $this->customerFacade->getCustomer($customerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param string $errorMessage
+     *
+     * @return bool
+     */
+    protected function hasCheckoutErrorMessage(CheckoutResponseTransfer $checkoutResponseTransfer, $errorMessage)
+    {
+        foreach ($checkoutResponseTransfer->getErrors() as $errorTransfer) {
+            if ($errorTransfer->getMessage() === $errorMessage) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

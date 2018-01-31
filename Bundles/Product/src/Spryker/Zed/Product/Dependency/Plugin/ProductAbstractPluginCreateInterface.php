@@ -13,12 +13,13 @@ interface ProductAbstractPluginCreateInterface
 {
     /**
      * Specification:
-     * - Executed before and after an abstract product is created.
-     * - Can be used for persisting other abstract product related information to database or execute any other logic.
-     * - The ID of the abstract product is available only if the plugin executed on "after" event.
-     * - To inject instances of the plugin @see \Spryker\Zed\Product\ProductDependencyProvider.
+     * - Executed on "before" and/or on "after" event when an abstract product is created.
+     * - The ID of the abstract product is available only if the plugin is executed on "after" event.
+     * - Can be used to persist additional abstract product related information.
      *
      * @api
+     *
+     * @see \Spryker\Zed\Product\ProductDependencyProvider
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *

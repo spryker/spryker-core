@@ -19,6 +19,7 @@
         <property name="attributes" type="array" singular="attribute" />
         <property name="localizedAttributes" type="LocalizedAttributes[]" />
         <property name="isActive" type="bool" />
+        <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
     <transfer name="LocalizedAttributes">
@@ -69,6 +70,12 @@
 
     <transfer name="StorageProduct">
         <property name="sku" type="string" />
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int" />
+        <property name="idStores" type="int[]" />
+        <property name="stores" type="Store[]" />
     </transfer>
 
 </transfers>

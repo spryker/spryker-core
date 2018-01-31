@@ -8,13 +8,21 @@
 namespace Spryker\Zed\Shipment\Communication\Form;
 
 use Spryker\Shared\Shipment\ShipmentConstants;
-use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
+/**
+ * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
+ */
 class MethodForm extends AbstractType
 {
     const FIELD_NAME_FIELD = 'name';
@@ -36,24 +44,21 @@ class MethodForm extends AbstractType
     const OPTION_DATA_CLASS = 'data_class';
 
     /**
-     * @var \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     * @return string
      */
-    protected $moneyCollectionFormTypePlugin;
-
-    /**
-     * @param \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface $moneyCollectionFormTypePlugin
-     */
-    public function __construct(FormTypeInterface $moneyCollectionFormTypePlugin)
+    public function getBlockPrefix()
     {
-        $this->moneyCollectionFormTypePlugin = $moneyCollectionFormTypePlugin;
+        return 'method';
     }
 
     /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
      * @return string
      */
     public function getName()
     {
-        return 'method';
+        return $this->getBlockPrefix();
     }
 
     /**
@@ -82,7 +87,6 @@ class MethodForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        /** @var \Symfony\Component\OptionsResolver\OptionsResolver $resolver */
         $resolver->setRequired(self::OPTION_CARRIER_CHOICES);
         $resolver->setRequired(self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST);
         $resolver->setRequired(self::OPTION_PRICE_PLUGIN_CHOICE_LIST);
@@ -103,10 +107,11 @@ class MethodForm extends AbstractType
      */
     protected function addCarrierField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_CARRIER_FIELD, 'choice', [
+        $builder->add(self::FIELD_CARRIER_FIELD, ChoiceType::class, [
             'label' => 'Carrier',
             'placeholder' => 'Select one',
-            'choices' => $options[self::OPTION_CARRIER_CHOICES],
+            'choices' => array_flip($options[self::OPTION_CARRIER_CHOICES]),
+            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
                 new Required(),
@@ -117,23 +122,13 @@ class MethodForm extends AbstractType
     }
 
     /**
-     * @param array $options
-     *
-     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface
-     */
-    protected function getMoneyFacade(array $options)
-    {
-        return $options[static::OPTION_MONEY_FACADE];
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_NAME_FIELD, 'text', [
+        $builder->add(self::FIELD_NAME_FIELD, TextType::class, [
             'label' => 'Name',
             'constraints' => [
                 new NotBlank(),
@@ -153,9 +148,10 @@ class MethodForm extends AbstractType
     {
         $builder->add(
             static::FIELD_PRICES,
-            $this->moneyCollectionFormTypePlugin->getType(),
+            $this->getFactory()->getMoneyCollectionFormTypePlugin()->getType(),
             [
                 ShipmentConstants::OPTION_AMOUNT_PER_STORE => true,
+                'required' => false,
             ]
         );
 
@@ -170,10 +166,11 @@ class MethodForm extends AbstractType
      */
     protected function addAvailabilityPluginField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_AVAILABILITY_PLUGIN_FIELD, 'choice', [
+        $builder->add(self::FIELD_AVAILABILITY_PLUGIN_FIELD, ChoiceType::class, [
             'label' => 'Availability Plugin',
             'placeholder' => 'Select one',
-            'choices' => $options[self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST],
+            'choices' => array_flip($options[self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST]),
+            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -188,10 +185,11 @@ class MethodForm extends AbstractType
      */
     protected function addPricePluginField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_PRICE_PLUGIN_FIELD, 'choice', [
+        $builder->add(self::FIELD_PRICE_PLUGIN_FIELD, ChoiceType::class, [
             'label' => 'Price Plugin',
             'placeholder' => 'Select one',
-            'choices' => $options[self::OPTION_PRICE_PLUGIN_CHOICE_LIST],
+            'choices' => array_flip($options[self::OPTION_PRICE_PLUGIN_CHOICE_LIST]),
+            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -206,10 +204,11 @@ class MethodForm extends AbstractType
      */
     protected function addDeliveryTimePluginField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_DELIVERY_TIME_PLUGIN_FIELD, 'choice', [
+        $builder->add(self::FIELD_DELIVERY_TIME_PLUGIN_FIELD, ChoiceType::class, [
             'label' => 'Delivery Time Plugin',
             'placeholder' => 'Select one',
-            'choices' => $options[self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST],
+            'choices' => array_flip($options[self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST]),
+            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -223,7 +222,7 @@ class MethodForm extends AbstractType
      */
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_IS_ACTIVE, 'checkbox', [
+        $builder->add(self::FIELD_IS_ACTIVE, CheckboxType::class, [
             'required' => false,
         ]);
 
@@ -237,7 +236,7 @@ class MethodForm extends AbstractType
      */
     protected function addIdField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_FIELD, 'hidden');
+        $builder->add(self::FIELD_ID_FIELD, HiddenType::class);
 
         return $this;
     }
@@ -252,10 +251,11 @@ class MethodForm extends AbstractType
     {
         $builder->add(
             self::FIELD_TAX_SET_FIELD,
-            'choice',
+            ChoiceType::class,
             [
                 'label' => 'Tax set',
-                'choices' => $options[self::OPTION_TAX_SETS],
+                'choices' => array_flip($options[self::OPTION_TAX_SETS]),
+                'choices_as_values' => true,
             ]
         );
 

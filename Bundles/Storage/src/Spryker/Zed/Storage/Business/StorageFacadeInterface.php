@@ -47,4 +47,28 @@ interface StorageFacadeInterface
      * @return void
      */
     public function deleteMulti(array $keys);
+
+    /**
+     * Specification:
+     * - Exports the redis db to destination.
+     *
+     * @api
+     *
+     * @param string $destination
+     *
+     * @return bool
+     */
+    public function export($destination);
+
+    /**
+     * Specification:
+     * - Imports redis db dump from source.
+     *
+     * @api
+     *
+     * @param string $source
+     *
+     * @return bool
+     */
+    public function import($source);
 }

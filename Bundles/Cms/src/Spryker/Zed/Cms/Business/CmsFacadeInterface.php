@@ -252,6 +252,21 @@ interface CmsFacadeInterface
 
     /**
      * Specification:
+     * - Creates new Cms page with given Url and Locale
+     * - Touches cms collector
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PageTransfer $pageTransfer
+     * @param string $url
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    public function createPageUrlWithLocale($pageTransfer, $url, LocaleTransfer $localeTransfer);
+
+    /**
+     * Specification:
      * - Reads cms page by given id
      *
      * @api

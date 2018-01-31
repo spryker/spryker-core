@@ -1,3 +1,3 @@
 # CmsCollector Changelog
 
-[Release Changelog](https://github.com/spryker/CmsCollector/releases)
+[Release Changelog](https://github.com/spryker/cms-collector/releases)

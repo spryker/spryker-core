@@ -1,6 +1,10 @@
 parameters:
     ignoreErrors:
         - '#Class PHP_CodeSniffer\\Config not found#'
+        - '#Parameter \$resolver of method [a-zA-Z0-9\\]+\:\:setDefaultOptions\(\) has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface\.#'
+
+    reportUnmatchedIgnoredErrors: false
+
     excludes_analyse:
         - %rootDir%/../../../vendor/spryker/spryker/Bundles/Development/tests/Unit/Spryker/Zed/Development/Business/DependencyTree/DependencyFinder/Fixtures/*
         - %rootDir%/../../../vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/DependencyFinder/ExternalDependency.php
@@ -23,6 +27,8 @@ parameters:
         - %rootDir%/../../../vendor/spryker/spryker/Bundles/FlysystemAws3v3FileSystem/src/Spryker/Service/FlysystemAws3v3FileSystem/Model/Builder/Adapter/Aws3v3AdapterBuilder.php
         - %rootDir%/../../../vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php
         - %rootDir%/../../../vendor/spryker/spryker/Bundles/*/tests/*
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Twig/src/Spryker/Yves/Twig/Plugin/ServiceProvider/TwigServiceProvider.php
+        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Twig/src/Spryker/Zed/Twig/Communication/Plugin/ServiceProvider/TwigServiceProvider.php
 
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
@@ -54,5 +60,40 @@ services:
 
     -
         class: PhpStan\DynamicType\ServiceDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\ConfigDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\ClientDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\ClientPluginDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\YvesFormTypeDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\ZedFormTypeDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\YvesFactoryDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\ZedFactoryDynamicTypeExtension
         tags:
             - phpstan.broker.dynamicMethodReturnTypeExtension

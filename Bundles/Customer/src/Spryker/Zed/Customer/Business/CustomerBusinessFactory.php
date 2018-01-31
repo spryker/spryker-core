@@ -8,10 +8,11 @@
 namespace Spryker\Zed\Customer\Business;
 
 use Spryker\Zed\Customer\Business\Anonymizer\CustomerAnonymizer;
+use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaver;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\Customer\EmailValidator;
-use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver;
+use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver as ObsoleteCustomerOrderSaver;
 use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
 use Spryker\Zed\Customer\Business\Sales\CustomerOrderHydrator;
@@ -100,6 +101,14 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerOrderSaver()
     {
+        return new ObsoleteCustomerOrderSaver($this->createCustomer(), $this->createAddress());
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface
+     */
+    public function createCheckoutCustomerOrderSaver()
+    {
         return new CustomerOrderSaver($this->createCustomer(), $this->createAddress());
     }
 
@@ -108,7 +117,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createPreConditionChecker()
     {
-        return new PreConditionChecker($this->createCustomer());
+        return new PreConditionChecker($this->createCustomer(), $this->getUtilValidateService());
     }
 
     /**

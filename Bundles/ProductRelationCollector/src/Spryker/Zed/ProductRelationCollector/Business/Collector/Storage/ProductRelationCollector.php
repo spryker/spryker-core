@@ -18,7 +18,7 @@ use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\ProductRelation\ProductRelationConstants;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
-use Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceInterface;
+use Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceProductFacadeInterface;
 use Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer\ProductRelationCollectorToProductImageInterface;
 use Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer\ProductRelationCollectorToProductRelationInterface;
 use Spryker\Zed\ProductRelationCollector\Persistence\Collector\Propel\ProductRelationCollectorQuery;
@@ -31,9 +31,9 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
     protected $productImageQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceInterface
+     * @var \Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceProductFacadeInterface
      */
-    protected $priceFacade;
+    protected $priceProductFacade;
 
     /**
      * @var \Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer\ProductRelationCollectorToProductRelationInterface
@@ -43,17 +43,17 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
     /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
      * @param \Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer\ProductRelationCollectorToProductImageInterface $productImageQueryContainer
-     * @param \Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceInterface $priceFacade
+     * @param \Spryker\Zed\ProductRelationCollector\Dependency\Facade\ProductRelationCollectorToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer\ProductRelationCollectorToProductRelationInterface $productRelationQueryContainer
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,
         ProductRelationCollectorToProductImageInterface $productImageQueryContainer,
-        ProductRelationCollectorToPriceInterface $priceFacade,
+        ProductRelationCollectorToPriceProductFacadeInterface $priceProductFacade,
         ProductRelationCollectorToProductRelationInterface $productRelationQueryContainer
     ) {
         $this->productImageQueryContainer = $productImageQueryContainer;
-        $this->priceFacade = $priceFacade;
+        $this->priceProductFacade = $priceProductFacade;
         $this->productRelationQueryContainer = $productRelationQueryContainer;
 
         parent::__construct($utilDataReaderService);
@@ -105,7 +105,6 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
         return [
             StorageProductAbstractRelationTransfer::ID_PRODUCT_ABSTRACT => $relationProduct[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
             StorageProductAbstractRelationTransfer::NAME => $relationProduct[SpyProductAbstractLocalizedAttributesTableMap::COL_NAME],
-            StorageProductAbstractRelationTransfer::PRICE => $this->getPriceBySku($relationProduct[SpyProductAbstractTableMap::COL_SKU]),
             StorageProductAbstractRelationTransfer::PRICES => $this->findPricesBySku($relationProduct[SpyProductAbstractTableMap::COL_SKU]),
             StorageProductAbstractRelationTransfer::SKU => $relationProduct[SpyProductAbstractTableMap::COL_SKU],
             StorageProductAbstractRelationTransfer::URL => $relationProduct[SpyUrlTableMap::COL_URL],
@@ -119,7 +118,7 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
     /**
      * @param int $idProductRelation
      *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|mixed
      */
     protected function findRelationProducts($idProductRelation)
     {
@@ -134,28 +133,11 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
     /**
      * @param string $sku
      *
-     * @return int
-     */
-    protected function getPriceBySku($sku)
-    {
-        return $this->priceFacade->getPriceBySku($sku);
-    }
-
-    /**
-     * @param string $sku
-     *
      * @return array
      */
     protected function findPricesBySku($sku)
     {
-        $priceProductTransfers = $this->priceFacade->findPricesBySku($sku);
-
-        $prices = [];
-        foreach ($priceProductTransfers as $priceProductTransfer) {
-            $prices[$priceProductTransfer->getPriceTypeName()] = $priceProductTransfer->getPrice();
-        }
-
-        return $prices;
+        return $this->priceProductFacade->findPricesBySkuGroupedForCurrentStore($sku);
     }
 
     /**

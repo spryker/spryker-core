@@ -1,3 +1,3 @@
 # ProductGroupCollector Changelog
 
-[Release Changelog](https://github.com/spryker/ProductGroupCollector/releases)
+[Release Changelog](https://github.com/spryker/product-group-collector/releases)

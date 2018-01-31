@@ -89,6 +89,23 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
     }
 
     /**
+     * @return void
+     */
+    public function testSuggestProductSearchAttributes()
+    {
+        // Arrange
+        $key = 'suggestProductSearchAttributes';
+        $this->createProductAttributeKeyEntity($key);
+
+        // Act
+        $suggestedAttributes = $this->productSearchFacade->suggestProductSearchAttributeKeys($key);
+
+        // Assert
+        $this->assertCount(1, $suggestedAttributes);
+        $this->assertContains($key, $suggestedAttributes);
+    }
+
+    /**
      * @return array
      */
     public function touchProductAbstractByAsynchronousAttributesDataProvider()

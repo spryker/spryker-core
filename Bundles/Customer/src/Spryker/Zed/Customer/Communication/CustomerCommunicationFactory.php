@@ -53,9 +53,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerForm(array $data = [], array $options = [])
     {
-        $customerFormType = new CustomerForm($this->getQueryContainer());
-
-        return $this->getFormFactory()->create($customerFormType, $data, $options);
+        return $this->getFormFactory()->create(CustomerForm::class, $data, $options);
     }
 
     /**
@@ -63,7 +61,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerFormDataProvider()
     {
-        return new CustomerFormDataProvider($this->getQueryContainer());
+        return new CustomerFormDataProvider($this->getQueryContainer(), $this->getLocaleFacade());
     }
 
     /**
@@ -74,9 +72,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerUpdateForm(array $data = [], array $options = [])
     {
-        $customerFormType = new CustomerUpdateForm($this->getQueryContainer());
-
-        return $this->getFormFactory()->create($customerFormType, $data, $options);
+        return $this->getFormFactory()->create(CustomerUpdateForm::class, $data, $options);
     }
 
     /**
@@ -84,7 +80,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerUpdateFormDataProvider()
     {
-        return new CustomerUpdateFormDataProvider($this->getQueryContainer());
+        return new CustomerUpdateFormDataProvider($this->getQueryContainer(), $this->getLocaleFacade());
     }
 
     /**
@@ -95,9 +91,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createAddressForm(array $formData = [], array $formOptions = [])
     {
-        $customerAddressFormType = new AddressForm();
-
-        return $this->getFormFactory()->create($customerAddressFormType, $formData, $formOptions);
+        return $this->getFormFactory()->create(AddressForm::class, $formData, $formOptions);
     }
 
     /**
@@ -126,6 +120,26 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     public function getCustomerTransferExpanderPlugins()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_TRANSFER_EXPANDER);
+    }
+
+    /**
+     * @deprecated Please use `getLocaleFacadePublic()` instead.
+     *
+     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
+     */
+    protected function getLocaleFacade()
+    {
+        return $this->getLocaleFacadePublic();
+    }
+
+    /**
+     * Deprecated: This will be renamed to `getLocaleFacade()` in the next major.
+     *
+     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
+     */
+    public function getLocaleFacadePublic()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_LOCALE);
     }
 
     /**

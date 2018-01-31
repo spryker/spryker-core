@@ -25,7 +25,7 @@ class ReorderController extends AbstractController
     {
         $dataProvider = $this->getFactory()->createReorderProductSetsFormDataProvider();
         $reorderProductSetsForm = $this->getFactory()
-            ->createReorderProductSetsForm(
+            ->getReorderProductSetsForm(
                 $dataProvider->getData(),
                 $dataProvider->getOptions()
             )

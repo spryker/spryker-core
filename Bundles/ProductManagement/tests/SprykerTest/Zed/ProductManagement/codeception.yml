@@ -30,13 +30,15 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
                     depends: \SprykerTest\Shared\Testify\Helper\BundleConfig
                     serviceProvider:
-                      - Spryker\Shared\Application\ServiceProvider\FormFactoryServiceProvider
                       - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\MvcRoutingServiceProvider
                       - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RoutingServiceProvider
                       - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider
-                      - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TranslationServiceProvider
-                      - Spryker\Zed\Gui\Communication\Plugin\ServiceProvider\GuiTwigExtensionServiceProvider
+                      - Silex\Provider\FormServiceProvider
+                      - Spryker\Shared\Application\ServiceProvider\FormFactoryServiceProvider
                       - Spryker\Zed\Twig\Communication\Plugin\ServiceProvider\TwigServiceProvider
+                      - Spryker\Zed\Gui\Communication\Plugin\ServiceProvider\GuiTwigExtensionServiceProvider
+                      - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TranslationServiceProvider
+                      - Spryker\Zed\Application\Communication\Plugin\ServiceProvider\TwigGlobalVariablesServiceProvider
                       - Spryker\Zed\ZedNavigation\Communication\Plugin\ServiceProvider\ZedNavigationServiceProvider
 
     Presentation:
@@ -48,6 +50,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Config\Helper\ConfigInit
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - WebDriver:
                     url: ''
                     browser: chrome

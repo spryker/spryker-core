@@ -18,10 +18,11 @@ interface QueueFacadeInterface
      * @api
      *
      * @param string $queueName
+     * @param array $options
      *
      * @return void
      */
-    public function startTask($queueName);
+    public function startTask($queueName, array $options = []);
 
     /**
      * Specification

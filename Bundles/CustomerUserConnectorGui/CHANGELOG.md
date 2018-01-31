@@ -1,3 +1,3 @@
 # CustomerUserConnectorGui Changelog
 
-[CustomerUserConnectorGui Changelog](https://github.com/spryker/CustomerUserConnectorGui/releases)
+[Release Changelog](https://github.com/spryker/customer-user-connector-gui/releases)

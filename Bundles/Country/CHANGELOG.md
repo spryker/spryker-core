@@ -1,3 +1,3 @@
 # Country Changelog
 
-[Country Changelog](https://github.com/spryker/Country/releases)
+[Release Changelog](https://github.com/spryker/country/releases)

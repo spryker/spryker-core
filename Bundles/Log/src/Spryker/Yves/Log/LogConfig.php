@@ -41,6 +41,10 @@ class LogConfig extends AbstractBundleConfig
      */
     public function getLogFilePath()
     {
+        if ($this->getConfig()->hasKey(LogConstants::LOG_FILE_PATH_YVES)) {
+            return $this->get(LogConstants::LOG_FILE_PATH_YVES);
+        }
+
         return $this->get(LogConstants::LOG_FILE_PATH);
     }
 
@@ -57,6 +61,18 @@ class LogConfig extends AbstractBundleConfig
      */
     public function getExceptionLogFilePath()
     {
+        if ($this->getConfig()->hasKey(LogConstants::EXCEPTION_LOG_FILE_PATH_YVES)) {
+            return $this->get(LogConstants::EXCEPTION_LOG_FILE_PATH_YVES);
+        }
+
         return $this->get(LogConstants::EXCEPTION_LOG_FILE_PATH);
+    }
+
+    /**
+     * @return string
+     */
+    public function getQueueName()
+    {
+        return $this->get(LogConstants::LOG_QUEUE_NAME);
     }
 }

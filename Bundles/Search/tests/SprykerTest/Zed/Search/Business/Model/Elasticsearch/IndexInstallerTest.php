@@ -41,11 +41,11 @@ class IndexInstallerTest extends Unit
 
         $indexMock = $this->getMockBuilder(Index::class)
             ->disableOriginalConstructor()
-            ->setMethods(['exists', 'create'])
+            ->setMethods(['exists', 'request'])
             ->getMock();
 
         $indexMock->method('exists')->willReturn(false);
-        $indexMock->expects($this->exactly(3))->method('create');
+        $indexMock->expects($this->atLeastOnce())->method('request');
 
         $installer = new IndexInstaller(
             $this->createIndexDefinitionLoaderMock($indexDefinitions),

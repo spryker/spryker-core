@@ -45,6 +45,17 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getMigrationDirectory()
+    {
+        $config = $this->getPropelConfig();
+        $schemaDir = $config['paths']['migrationDir'] . DIRECTORY_SEPARATOR;
+
+        return $schemaDir;
+    }
+
+    /**
      * @return array
      */
     public function getPropelSchemaPathPatterns()
@@ -112,5 +123,13 @@ class PropelConfig extends AbstractBundleConfig
         }
 
         return $supportedEngines[$dbEngine];
+    }
+
+    /**
+     * @return array
+     */
+    public function getWhitelistForAllowedAttributeValueChanges()
+    {
+        return [];
     }
 }

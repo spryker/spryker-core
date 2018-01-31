@@ -11,8 +11,9 @@ interface ComposerJsonUpdaterInterface
 {
     /**
      * @param array $bundles
+     * @param bool $dryRun
      *
-     * @return void
+     * @return array
      */
-    public function update(array $bundles);
+    public function update(array $bundles, $dryRun = false);
 }

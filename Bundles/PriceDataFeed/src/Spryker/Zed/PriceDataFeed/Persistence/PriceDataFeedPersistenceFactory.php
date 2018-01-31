@@ -19,8 +19,8 @@ class PriceDataFeedPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\PriceDataFeed\Dependency\QueryContainer\PriceDataFeedToPriceInterface
      */
-    public function getPriceQueryContainer()
+    public function getPriceProductQueryContainer()
     {
-        return $this->getProvidedDependency(PriceDataFeedDependencyProvider::PRICE_QUERY_CONTAINER);
+        return $this->getProvidedDependency(PriceDataFeedDependencyProvider::PRICE_PRODUCT_QUERY_CONTAINER);
     }
 }

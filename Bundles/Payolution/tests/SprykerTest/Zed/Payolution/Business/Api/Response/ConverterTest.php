@@ -54,8 +54,7 @@ class ConverterTest extends Unit
      */
     private function getTestResponseData()
     {
-        return
-            'PROCESSING_RISK_SCORE=0' . '&' .
+        return 'PROCESSING_RISK_SCORE=0' . '&' .
             'P3_VALIDATION=ACK' . '&' .
             'NAME_GIVEN=John' . '&' .
             'IDENTIFICATION_SHOPPERID=158' . '&' .

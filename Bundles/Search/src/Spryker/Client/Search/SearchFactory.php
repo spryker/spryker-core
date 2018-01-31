@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Search;
 
-use Elastica\Client;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilder;
@@ -25,6 +24,7 @@ use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\SearchConfig;
 use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
 use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchKeysQuery;
+use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchStringQuery;
 use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\Search\Provider\SearchClientProvider;
 
@@ -214,6 +214,18 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @param string $searchString
+     * @param int|null $limit
+     * @param int|null $offset
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     */
+    public function createSearchStringQuery($searchString, $limit = null, $offset = null)
+    {
+        return new SearchStringQuery($searchString, $limit, $offset);
+    }
+
+    /**
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigExpanderPluginInterface[]
      */
     public function getSearchConfigExpanderPlugins()
@@ -259,19 +271,9 @@ class SearchFactory extends AbstractFactory
     public function createCachedElasticsearchClient()
     {
         if (static::$searchClient === null) {
-            static::$searchClient = $this->createElasticsearchClient();
+            static::$searchClient = $this->getElasticsearchClient();
         }
 
         return static::$searchClient;
-    }
-
-    /**
-     * @return \Elastica\Client
-     */
-    public function createElasticsearchClient()
-    {
-        return new Client(
-            $this->getConfig()->getElasticsearchConfig()
-        );
     }
 }

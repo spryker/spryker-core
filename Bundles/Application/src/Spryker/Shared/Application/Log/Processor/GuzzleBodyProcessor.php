@@ -47,7 +47,7 @@ class GuzzleBodyProcessor
     }
 
     /**
-     * @param string $body
+     * @param string|array $body
      *
      * @return array
      */
