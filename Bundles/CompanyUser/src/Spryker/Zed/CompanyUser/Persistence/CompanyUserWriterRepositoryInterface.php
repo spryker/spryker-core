@@ -5,18 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUser\Dependency\Plugin;
+namespace Spryker\Zed\CompanyUser\Persistence;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 
-interface CompanyUserHydrationPluginInterface
+interface CompanyUserWriterRepositoryInterface
 {
     /**
-     * @api
+     * Specification:
+     * - Creates a user
+     * - Finds a user by CompanyUserTransfer::idCompanyUser in the transfer
+     * - Updates fields in a company user entity
      *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function hydrate(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
+    public function save(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
 }
