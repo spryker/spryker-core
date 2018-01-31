@@ -25,11 +25,11 @@ class ProductCustomerPermissionFacadeTest extends Unit
      */
     public function testSavingProductForCustomer()
     {
-        $product = $this->tester->haveProduct();
+        $product = $this->tester->haveProductAbstract();
         $customer = $this->tester->haveCustomer();
 
         $this->getProductCustomerPermissionFacade()
-            ->saveCustomerProductPermission($customer->getIdCustomer(), $product->getFkProductAbstract());
+            ->saveCustomerProductPermission($customer->getIdCustomer(), $product->getIdProductAbstract());
     }
 
     /**
@@ -39,14 +39,14 @@ class ProductCustomerPermissionFacadeTest extends Unit
      */
     public function testRemovingProductCustomerPermission()
     {
-        $product = $this->tester->haveProduct();
+        $product = $this->tester->haveProductAbstract();
         $customer = $this->tester->haveCustomer();
 
         $this->getProductCustomerPermissionFacade()
-            ->saveCustomerProductPermission($customer->getIdCustomer(), $product->getFkProductAbstract());
+            ->saveCustomerProductPermission($customer->getIdCustomer(), $product->getIdProductAbstract());
 
         $this->getProductCustomerPermissionFacade()
-            ->deleteCustomerProductPermission($customer->getIdCustomer(), $product->getFkProductAbstract());
+            ->deleteCustomerProductPermission($customer->getIdCustomer(), $product->getIdProductAbstract());
     }
 
     /**
@@ -58,7 +58,7 @@ class ProductCustomerPermissionFacadeTest extends Unit
 
         $productIds = [];
         for ($i = 1; $i <= 10; $i++) {
-            $productIds[] = $this->tester->haveProduct()->getFkProductAbstract();
+            $productIds[] = $this->tester->haveProductAbstract()->getIdProductAbstract();
         }
 
         $this->getProductCustomerPermissionFacade()
@@ -76,7 +76,7 @@ class ProductCustomerPermissionFacadeTest extends Unit
 
         $productIds = [];
         for ($i = 1; $i <= 10; $i++) {
-            $productIds[] = $this->tester->haveProduct()->getFkProductAbstract();
+            $productIds[] = $this->tester->haveProductAbstract()->getIdProductAbstract();
         }
 
         $this->getProductCustomerPermissionFacade()
@@ -97,7 +97,7 @@ class ProductCustomerPermissionFacadeTest extends Unit
 
         $productIds = [];
         for ($i = 1; $i <= 10; $i++) {
-            $productIds[] = $this->tester->haveProduct()->getFkProductAbstract();
+            $productIds[] = $this->tester->haveProductAbstract()->getIdProductAbstract();
         }
 
         $this->getProductCustomerPermissionFacade()
