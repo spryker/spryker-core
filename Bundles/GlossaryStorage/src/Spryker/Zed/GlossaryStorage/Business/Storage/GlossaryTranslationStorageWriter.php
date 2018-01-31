@@ -5,27 +5,47 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\GlossaryStorage\Business\Storage;
 
 use Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorage;
-use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilSanitizeServiceInterface;
+use Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\GlossaryStorage\Communication\GlossaryStorageCommunicationFactory getFactory()
- */
-abstract class AbstractGlossaryTranslationStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWriterInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    /**
+     * @var \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Zed\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilSanitizeServiceInterface
+     */
+    protected $utilSanitizeService;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilSanitizeServiceInterface $utilSanitizeService
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(GlossaryStorageQueryContainerInterface $queryContainer, GlossaryStorageToUtilSanitizeServiceInterface $utilSanitizeService, $isSendingToQueue)
+    {
+        $this->queryContainer = $queryContainer;
+        $this->utilSanitizeService = $utilSanitizeService;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
 
     /**
      * @param array $glossaryKeyIds
      *
      * @return void
      */
-    protected function publish(array $glossaryKeyIds)
+    public function publish(array $glossaryKeyIds)
     {
         $spyGlossaryTranslationEntities = $this->findGlossaryTranslationEntities($glossaryKeyIds);
         $spyGlossaryStorageEntities = $this->findGlossaryStorageEntitiesByGlossaryKeyIds($glossaryKeyIds);
@@ -38,11 +58,13 @@ abstract class AbstractGlossaryTranslationStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function unpublish(array $glossaryKeyIds)
+    public function unpublish(array $glossaryKeyIds)
     {
         $spyGlossaryTranslationStorageEntities = $this->findGlossaryStorageEntitiesByGlossaryKeyIds($glossaryKeyIds);
-        foreach ($spyGlossaryTranslationStorageEntities as $spyGlossaryTranslationStorageEntity) {
-            $spyGlossaryTranslationStorageEntity->delete();
+        foreach ($spyGlossaryTranslationStorageEntities as $spyGlossaryTranslationStorageLocalizedEntities) {
+            foreach ($spyGlossaryTranslationStorageLocalizedEntities as $spyGlossaryTranslationStorageLocalizedEntity) {
+                $spyGlossaryTranslationStorageLocalizedEntity->delete();
+            }
         }
     }
 
@@ -77,11 +99,12 @@ abstract class AbstractGlossaryTranslationStorageListener extends AbstractPlugin
             $spyGlossaryStorage = new SpyGlossaryStorage();
         }
 
-        $data = $this->getFactory()->getUtilSanitizeService()->arrayFilterRecursive($spyGlossaryTranslationEntity);
+        $data = $this->utilSanitizeService->arrayFilterRecursive($spyGlossaryTranslationEntity);
         $spyGlossaryStorage->setFkGlossaryKey($spyGlossaryTranslationEntity['fk_glossary_key']);
         $spyGlossaryStorage->setGlossaryKey($spyGlossaryTranslationEntity['GlossaryKey']['key']);
         $spyGlossaryStorage->setLocale($spyGlossaryTranslationEntity['Locale']['locale_name']);
         $spyGlossaryStorage->setData($data);
+        $spyGlossaryStorage->setIsSendingToQueue($this->isSendingToQueue);
         $spyGlossaryStorage->save();
     }
 
@@ -92,7 +115,7 @@ abstract class AbstractGlossaryTranslationStorageListener extends AbstractPlugin
      */
     protected function findGlossaryTranslationEntities(array $glossaryKeyIds)
     {
-        return $this->getQueryContainer()->queryGlossaryTranslation($glossaryKeyIds)->find()->getData();
+        return $this->queryContainer->queryGlossaryTranslation($glossaryKeyIds)->find()->getData();
     }
 
     /**
@@ -102,7 +125,7 @@ abstract class AbstractGlossaryTranslationStorageListener extends AbstractPlugin
      */
     protected function findGlossaryStorageEntitiesByGlossaryKeyIds(array $glossaryKeyIds)
     {
-        $spyGlossaryStorageEntities = $this->getQueryContainer()->queryGlossaryStorageByGlossaryIds($glossaryKeyIds)->find();
+        $spyGlossaryStorageEntities = $this->queryContainer->queryGlossaryStorageByGlossaryIds($glossaryKeyIds)->find();
         $glossaryStorageEntitiesByIdAndLocale = [];
         foreach ($spyGlossaryStorageEntities as $spyGlossaryStorageEntity) {
             $glossaryStorageEntitiesByIdAndLocale[$spyGlossaryStorageEntity->getFkGlossaryKey()][$spyGlossaryStorageEntity->getLocale()] = $spyGlossaryStorageEntity;

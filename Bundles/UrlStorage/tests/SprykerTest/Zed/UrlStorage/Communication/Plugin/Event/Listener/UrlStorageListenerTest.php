@@ -14,8 +14,11 @@ use Orm\Zed\Url\Persistence\SpyUrlRedirect;
 use Orm\Zed\Url\Persistence\SpyUrlRedirectQuery;
 use Orm\Zed\UrlStorage\Persistence\SpyUrlRedirectStorageQuery;
 use Orm\Zed\UrlStorage\Persistence\SpyUrlStorageQuery;
+use PHPUnit\Framework\SkippedTestError;
 use Propel\Runtime\Propel;
 use Silex\Application;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 use Spryker\Zed\UrlStorage\Business\UrlStorageBusinessFactory;
@@ -43,6 +46,11 @@ class UrlStorageListenerTest extends Unit
      */
     protected function setUp()
     {
+        $dbType = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
+        if ($dbType !== 'pgsql') {
+            throw new SkippedTestError('Warning: no PostgreSQL is detected');
+        }
+
         Propel::disableInstancePooling();
         $propelServiceProvider = new PropelServiceProvider();
         $propelServiceProvider->boot(new Application());

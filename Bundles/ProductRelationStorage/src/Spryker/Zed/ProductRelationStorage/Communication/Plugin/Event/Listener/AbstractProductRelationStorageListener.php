@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductRelationStorage\Communication\Plugin\Event\Listener
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractRelationStorageTransfer;
 use Generated\Shared\Transfer\ProductRelationStorageTransfer;
-use Generated\Shared\Transfer\StorageProductRelationsTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTableMap;
@@ -120,8 +119,8 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
         foreach ($result as $key => $value) {
             $productRelationStorageTransfer = new ProductRelationStorageTransfer();
             $productRelationStorageTransfer->setKey($key);
-            $productRelationStorageTransfer->setIsActive($result[$key][StorageProductRelationsTransfer::IS_ACTIVE]);
-            $productRelationStorageTransfer->setProductAbstractIds($result[$key][StorageProductRelationsTransfer::ABSTRACT_PRODUCTS]);
+            $productRelationStorageTransfer->setIsActive($result[$key][ProductRelationStorageTransfer::IS_ACTIVE]);
+            $productRelationStorageTransfer->setProductAbstractIds($result[$key][ProductRelationStorageTransfer::PRODUCT_ABSTRACT_IDS]);
             $productRelationStorageTransfers[] = $productRelationStorageTransfer;
         }
 
@@ -143,15 +142,15 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
             foreach ($relationProducts as $relationProduct) {
                 if (!isset($results[$relationProduct[SpyProductRelationTypeTableMap::COL_KEY]])) {
                     $results[$relationProduct[SpyProductRelationTypeTableMap::COL_KEY]] = [
-                        StorageProductRelationsTransfer::ABSTRACT_PRODUCTS => [],
-                        StorageProductRelationsTransfer::IS_ACTIVE => $productRelation->getIsActive(),
+                        ProductRelationStorageTransfer::PRODUCT_ABSTRACT_IDS => [],
+                        ProductRelationStorageTransfer::IS_ACTIVE => $productRelation->getIsActive(),
                     ];
                 }
                 $relationName = $relationProduct[SpyProductRelationTypeTableMap::COL_KEY];
                 $idProductAbstract = $relationProduct[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT];
                 $order = $relationProduct[SpyProductRelationProductAbstractTableMap::COL_ORDER];
 
-                $results[$relationName][StorageProductRelationsTransfer::ABSTRACT_PRODUCTS][$idProductAbstract] = $order;
+                $results[$relationName][ProductRelationStorageTransfer::PRODUCT_ABSTRACT_IDS][$idProductAbstract] = $order;
             }
         }
 
