@@ -4,9 +4,9 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/category": "^4.0.0",
+    "spryker/category": "^4.4.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/navigation": "^4.0.0"
+    "spryker/navigation": "^2.3.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
