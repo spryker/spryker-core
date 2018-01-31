@@ -25,6 +25,11 @@ class CmsGuiConfig extends AbstractBundleConfig
             return $config->get(ApplicationConstants::BASE_URL_YVES);
         }
 
+        // @deprecated This is just for backward compatibility
+        if ($config->hasKey(ApplicationConstants::HOST_YVES)) {
+            return $config->get(ApplicationConstants::HOST_YVES);
+        }
+
         return null;
     }
 
