@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\Customer\Persistence" package="src.Orm.Zed.Customer.Persistence" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd">
-
-    <table name="spy_customer" phpName="SpyCustomer">
-        <column name="id_customer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <id-method-parameter value="spy_customer_pk_seq"/>
-    </table>
-
-</database>
