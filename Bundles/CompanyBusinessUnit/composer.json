@@ -3,6 +3,7 @@
   "description": "CompanyBusinessUnit module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/company": "^0.0.1",
     "spryker/kernel": "^3.0.0"
   },

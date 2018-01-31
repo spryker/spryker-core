@@ -33,4 +33,16 @@ class ProductCategoryFilterToUtilEncodingServiceBridge implements ProductCategor
     {
         return $this->utilEncodingService->decodeJson($jsonString, $assoc, $depth, $options);
     }
+
+    /**
+     * @param mixed $value
+     * @param int|null $options
+     * @param int|null $depth
+     *
+     * @return string|null
+     */
+    public function encodeJson($value, $options = null, $depth = null)
+    {
+        return $this->utilEncodingService->encodeJson($value, $options, $depth);
+    }
 }

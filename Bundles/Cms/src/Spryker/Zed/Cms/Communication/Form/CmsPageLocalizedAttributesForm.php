@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Cms\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,6 +15,11 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
+/**
+ * @method \Spryker\Zed\Cms\Business\CmsFacadeInterface getFacade()
+ * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
+ */
 class CmsPageLocalizedAttributesForm extends AbstractType
 {
     const FIELD_ID_CMS_PAGE_LOCALIZED_ATTRIBUTES = 'id_cms_page_localized_attributes';
@@ -23,14 +28,6 @@ class CmsPageLocalizedAttributesForm extends AbstractType
     const FIELD_META_TITLE = 'meta_title';
     const FIELD_META_KEYWORDS = 'meta_keywords';
     const FIELD_META_DESCRIPTION = 'meta_description';
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'localized_attributes';
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -144,5 +141,23 @@ class CmsPageLocalizedAttributesForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'localized_attributes';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

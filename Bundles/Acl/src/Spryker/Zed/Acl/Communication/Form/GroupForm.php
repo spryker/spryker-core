@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Acl\Communication\Form;
 
-use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,6 +19,11 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
+ * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
+ */
 class GroupForm extends AbstractType
 {
     const FIELD_TITLE = 'title';
@@ -27,27 +32,6 @@ class GroupForm extends AbstractType
     const OPTION_ROLE_CHOICES = 'role_choices';
 
     const GROUP_UNIQUE_GROUP_CHECK = 'unique_group_check';
-
-    /**
-     * @var \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface
-     */
-    protected $queryContainer;
-
-    /**
-     * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $queryContainer
-     */
-    public function __construct(AclQueryContainerInterface $queryContainer)
-    {
-        $this->queryContainer = $queryContainer;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'group';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -106,18 +90,16 @@ class GroupForm extends AbstractType
      */
     protected function addTitleField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_TITLE, 'text', [
+        $builder->add(self::FIELD_TITLE, TextType::class, [
             'label' => 'Title',
             'constraints' => [
                 new NotBlank(),
                 new Callback([
-                    'methods' => [
-                        function ($name, ExecutionContextInterface $contextInterface) {
-                            if ($this->queryContainer->queryGroupByName($name)->count() > 0) {
-                                $contextInterface->addViolation('Group name already in use');
-                            }
-                        },
-                    ],
+                    'callback' => function ($name, ExecutionContextInterface $contextInterface) {
+                        if ($this->getQueryContainer()->queryGroupByName($name)->count() > 0) {
+                            $contextInterface->addViolation('Group name already in use');
+                        }
+                    },
                     'groups' => [self::GROUP_UNIQUE_GROUP_CHECK],
                 ]),
             ],
@@ -134,7 +116,7 @@ class GroupForm extends AbstractType
      */
     protected function addRolesField(FormBuilderInterface $builder, array $choices)
     {
-        $builder->add(self::FIELD_ROLES, new Select2ComboBoxType(), [
+        $builder->add(self::FIELD_ROLES, Select2ComboBoxType::class, [
             'label' => 'Assigned Roles',
             'placeholder' => false,
             'multiple' => true,
@@ -145,5 +127,23 @@ class GroupForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'group';
     }
 }

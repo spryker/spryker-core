@@ -31,7 +31,7 @@ class EditController extends AbstractController
 
         $dataProvider = $this->getFactory()->createCustomerFormDataProvider();
         $form = $this->getFactory()
-            ->createCustomerForm(
+            ->getCustomerForm(
                 $dataProvider->getData($idSalesOrder),
                 $dataProvider->getOptions()
             )
@@ -71,7 +71,7 @@ class EditController extends AbstractController
 
         $dataProvider = $this->getFactory()->createAddressFormDataProvider();
         $form = $this->getFactory()
-            ->createAddressForm(
+            ->getAddressForm(
                 $dataProvider->getData($idOrderAddress),
                 $dataProvider->getOptions()
             )

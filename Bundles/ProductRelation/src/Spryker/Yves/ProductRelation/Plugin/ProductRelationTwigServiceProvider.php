@@ -36,7 +36,6 @@ class ProductRelationTwigServiceProvider extends AbstractPlugin implements Servi
         $app['twig'] = $app->share(
             $app->extend('twig', function (Twig_Environment $twig) {
                 $twig->addFunction(
-                    'product_relation',
                     $this->createProductRelationFunction($twig)
                 );
 

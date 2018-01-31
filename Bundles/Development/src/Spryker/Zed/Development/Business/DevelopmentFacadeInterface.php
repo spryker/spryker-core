@@ -19,7 +19,7 @@ interface DevelopmentFacadeInterface
      * @param string|null $module
      * @param array $options
      *
-     * @return void
+     * @return int Exit code
      */
     public function checkCodeStyle($module = null, array $options = []);
 

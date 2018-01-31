@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\User\Communication\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -50,8 +51,9 @@ class UserUpdateForm extends UserForm
 
         $builder->remove(self::FIELD_PASSWORD);
 
-        $builder->add(self::FIELD_STATUS, 'choice', [
-            'choices' => $options[self::OPTION_STATUS_CHOICES],
+        $builder->add(self::FIELD_STATUS, ChoiceType::class, [
+            'choices' => array_flip($options[self::OPTION_STATUS_CHOICES]),
+            'choices_as_values' => true,
         ]);
     }
 }
