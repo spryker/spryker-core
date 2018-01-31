@@ -229,7 +229,6 @@ class OrderHydrator implements OrderHydratorInterface
 
         $itemTransfer->setUnitTaxAmount($orderItemEntity->getTaxAmount());
         $itemTransfer->setUnitTaxAmountFullAggregation($orderItemEntity->getTaxAmountFullAggregation());
-
         $itemTransfer->setUnitPriceToPayAggregation($orderItemEntity->getPriceToPayAggregation());
 
         $this->hydrateStateHistory($orderItemEntity, $itemTransfer);
@@ -251,7 +250,6 @@ class OrderHydrator implements OrderHydratorInterface
         $billingAddressTransfer = new AddressTransfer();
         $billingAddressTransfer->fromArray($orderEntity->getBillingAddress()->toArray(), true);
         $billingAddressTransfer->setIso2Code($countryEntity->getIso2Code());
-
         $this->hydrateCountryEntityIntoAddressTransfer($billingAddressTransfer, $countryEntity);
 
         $orderTransfer->setBillingAddress($billingAddressTransfer);
