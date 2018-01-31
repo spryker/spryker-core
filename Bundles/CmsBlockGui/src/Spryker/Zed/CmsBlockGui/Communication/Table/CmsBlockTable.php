@@ -198,21 +198,21 @@ class CmsBlockTable extends AbstractTable
     {
         $cmsBlockStoreCollection = $this
             ->cmsBlockQueryContainer
-            ->queryCmsBlockStoreByFkCmsBlock($idCmsBlock)
+            ->queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock)
             ->find();
 
         return $this->formatStoreNames($cmsBlockStoreCollection);
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $cmsBlockStoreCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection $cmsBlockStoreEntityCollection
      *
      * @return string
      */
-    protected function formatStoreNames(ObjectCollection $cmsBlockStoreCollection)
+    protected function formatStoreNames(ObjectCollection $cmsBlockStoreEntityCollection)
     {
         $storeNames = [];
-        foreach ($cmsBlockStoreCollection as $cmsBlockStoreEntity) {
+        foreach ($cmsBlockStoreEntityCollection as $cmsBlockStoreEntity) {
             $storeNames[] = sprintf(
                 '<span class="label label-info">%s</span>',
                 $cmsBlockStoreEntity->getSpyStore()->getName()

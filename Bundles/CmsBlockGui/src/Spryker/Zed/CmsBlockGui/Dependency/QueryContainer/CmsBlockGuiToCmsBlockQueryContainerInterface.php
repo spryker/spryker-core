@@ -31,5 +31,5 @@ interface CmsBlockGuiToCmsBlockQueryContainerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
      */
-    public function queryCmsBlockStoreByFkCmsBlock($idCmsBlock);
+    public function queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock);
 }

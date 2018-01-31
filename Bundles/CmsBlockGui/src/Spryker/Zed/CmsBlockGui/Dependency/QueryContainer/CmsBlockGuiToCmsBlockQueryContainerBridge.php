@@ -53,8 +53,8 @@ class CmsBlockGuiToCmsBlockQueryContainerBridge implements CmsBlockGuiToCmsBlock
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
      */
-    public function queryCmsBlockStoreByFkCmsBlock($idCmsBlock)
+    public function queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock)
     {
-        return $this->cmsBlockQueryContainer->queryCmsBlockStoreByFkCmsBlock($idCmsBlock);
+        return $this->cmsBlockQueryContainer->queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock);
     }
 }

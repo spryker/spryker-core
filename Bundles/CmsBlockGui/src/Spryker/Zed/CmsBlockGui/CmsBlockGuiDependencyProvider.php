@@ -182,7 +182,7 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
             sprintf(
                 'Missing instance of %s! You need to configure StoreRelationFormType ' .
                 'in your own CmsBlockGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
-                'to be able to manage shipment prices.',
+                'to be able to manage cms blocks.',
                 FormTypeInterface::class
             )
         );

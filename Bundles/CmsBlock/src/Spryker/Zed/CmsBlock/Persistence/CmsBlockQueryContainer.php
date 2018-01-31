@@ -220,11 +220,12 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
      */
-    public function queryCmsBlockStoreByFkCmsBlock($idCmsBlock)
+    public function queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock)
     {
         return $this->getFactory()
             ->createCmsBlockStoreQuery()
-            ->filterByFkCmsBlock($idCmsBlock);
+            ->filterByFkCmsBlock($idCmsBlock)
+            ->joinWithSpyStore();
     }
 
     /**
