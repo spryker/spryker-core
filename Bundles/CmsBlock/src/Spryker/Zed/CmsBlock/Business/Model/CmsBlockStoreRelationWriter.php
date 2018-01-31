@@ -34,22 +34,22 @@ class CmsBlockStoreRelationWriter implements CmsBlockStoreRelationWriterInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelation
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return void
      */
-    public function update(StoreRelationTransfer $storeRelation)
+    public function update(StoreRelationTransfer $storeRelationTransfer)
     {
-        $storeRelation->requireIdEntity();
+        $storeRelationTransfer->requireIdEntity();
 
-        $currentIdStores = $this->getIdStoresByIdCmsBlock($storeRelation->getIdEntity());
-        $requestedIdStores = $this->findStoreRelationIdStores($storeRelation);
+        $currentIdStores = $this->getIdStoresByIdCmsBlock($storeRelationTransfer->getIdEntity());
+        $requestedIdStores = $this->findStoreRelationIdStores($storeRelationTransfer);
 
         $saveIdStores = array_diff($requestedIdStores, $currentIdStores);
         $deleteIdStores = array_diff($currentIdStores, $requestedIdStores);
 
-        $this->addStores($saveIdStores, $storeRelation->getIdEntity());
-        $this->removeStores($deleteIdStores, $storeRelation->getIdEntity());
+        $this->addStores($saveIdStores, $storeRelationTransfer->getIdEntity());
+        $this->removeStores($deleteIdStores, $storeRelationTransfer->getIdEntity());
     }
 
     /**
@@ -101,16 +101,16 @@ class CmsBlockStoreRelationWriter implements CmsBlockStoreRelationWriterInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelation
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return int[]
      */
-    protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelation)
+    protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelationTransfer)
     {
-        if ($storeRelation->getIdStores() === null) {
+        if ($storeRelationTransfer->getIdStores() === null) {
             return [];
         }
 
-        return $storeRelation->getIdStores();
+        return $storeRelationTransfer->getIdStores();
     }
 }

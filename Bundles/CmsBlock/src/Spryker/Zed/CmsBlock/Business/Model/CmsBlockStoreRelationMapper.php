@@ -15,17 +15,17 @@ use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 class CmsBlockStoreRelationMapper implements CmsBlockStoreRelationMapperInterface
 {
     /**
-     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $cmsBlock
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $cmsBlockEntity
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function mapStoreRelationToTransfer(SpyCmsBlock $cmsBlock)
+    public function mapStoreRelationToTransfer(SpyCmsBlock $cmsBlockEntity)
     {
-        $storeTransferCollection = $this->mapStoreTransfers($cmsBlock);
+        $storeTransferCollection = $this->mapStoreTransfers($cmsBlockEntity);
         $idStores = $this->selectIdStores($storeTransferCollection);
 
         $storeRelationTransfer = (new StoreRelationTransfer())
-            ->setIdEntity($cmsBlock->getIdCmsBlock())
+            ->setIdEntity($cmsBlockEntity->getIdCmsBlock())
             ->setStores($storeTransferCollection)
             ->setIdStores($idStores);
 
@@ -33,14 +33,14 @@ class CmsBlockStoreRelationMapper implements CmsBlockStoreRelationMapperInterfac
     }
 
     /**
-     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $cmsBlock
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $cmsBlockEntity
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
      */
-    protected function mapStoreTransfers(SpyCmsBlock $cmsBlock)
+    protected function mapStoreTransfers(SpyCmsBlock $cmsBlockEntity)
     {
         $storeTransferCollection = new ArrayObject();
-        foreach ($cmsBlock->getSpyCmsBlockStores() as $cmsBlockStoreEntity) {
+        foreach ($cmsBlockEntity->getSpyCmsBlockStores() as $cmsBlockStoreEntity) {
             $storeTransferCollection->append(
                 (new StoreTransfer())
                     ->fromArray(
@@ -54,14 +54,14 @@ class CmsBlockStoreRelationMapper implements CmsBlockStoreRelationMapperInterfac
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $storeCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $storeTransferCollection
      *
      * @return int[]
      */
-    protected function selectIdStores(ArrayObject $storeCollection)
+    protected function selectIdStores(ArrayObject $storeTransferCollection)
     {
         return array_map(function (StoreTransfer $storeTransfer) {
             return $storeTransfer->getIdStore();
-        }, $storeCollection->getArrayCopy());
+        }, $storeTransferCollection->getArrayCopy());
     }
 }

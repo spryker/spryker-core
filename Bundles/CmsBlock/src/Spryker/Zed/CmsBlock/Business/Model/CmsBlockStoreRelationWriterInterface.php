@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 interface CmsBlockStoreRelationWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelation
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return void
      */
-    public function update(StoreRelationTransfer $storeRelation);
+    public function update(StoreRelationTransfer $storeRelationTransfer);
 }

@@ -189,7 +189,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      */
     public function queryCmsBlockStoreByFkCmsBlockAndFkStores($idCmsBlock, array $idStores)
     {
-        return $this
+        return $this->getFactory()
             ->createCmsBlockStoreQuery()
             ->filterByFkCmsBlock($idCmsBlock)
             ->filterByFkStore_In($idStores);
@@ -222,7 +222,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      */
     public function queryCmsBlockStoreByFkCmsBlock($idCmsBlock)
     {
-        return $this
+        return $this->getFactory()
             ->createCmsBlockStoreQuery()
             ->filterByFkCmsBlock($idCmsBlock);
     }
@@ -251,15 +251,5 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     {
         return $this->getFactory()
             ->createCmsBlockGlossaryKeyMappingQuery();
-    }
-
-    /**
-     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
-     */
-    protected function createCmsBlockStoreQuery()
-    {
-        return $this
-            ->getFactory()
-            ->createCmsBlockStoreQuery();
     }
 }

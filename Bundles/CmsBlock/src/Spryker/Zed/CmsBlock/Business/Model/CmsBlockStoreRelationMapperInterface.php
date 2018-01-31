@@ -12,9 +12,9 @@ use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 interface CmsBlockStoreRelationMapperInterface
 {
     /**
-     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $cmsBlock
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $cmsBlockEntity
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function mapStoreRelationToTransfer(SpyCmsBlock $cmsBlock);
+    public function mapStoreRelationToTransfer(SpyCmsBlock $cmsBlockEntity);
 }
