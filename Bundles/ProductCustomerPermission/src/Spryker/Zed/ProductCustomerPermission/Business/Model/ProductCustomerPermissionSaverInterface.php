@@ -50,5 +50,16 @@ interface ProductCustomerPermissionSaverInterface
      *
      * @return void
      */
-    public function deletePermissions(int $customerId);
+    public function deleteAllPermissions(int $customerId);
+
+    /**
+     * Specification:
+     *  - Delete specified products from the customer permission list
+     *
+     * @param int $customerId
+     * @param array $productIds
+     *
+     * @return void
+     */
+    public function deletePermissions(int $customerId, array $productIds);
 }

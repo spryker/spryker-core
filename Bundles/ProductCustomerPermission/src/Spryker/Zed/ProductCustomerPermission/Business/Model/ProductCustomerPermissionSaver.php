@@ -107,10 +107,29 @@ class ProductCustomerPermissionSaver implements ProductCustomerPermissionSaverIn
      *
      * @return void
      */
-    public function deletePermissions(int $customerId)
+    public function deleteAllPermissions(int $customerId)
     {
         $productCustomerPermissionEntities = $this->queryContainer
             ->queryProductCustomerPermissionByCustomer($customerId)
+            ->find();
+
+        foreach ($productCustomerPermissionEntities as $productCustomerPermissionEntity) {
+            $this->deleteAndCleanEntity($productCustomerPermissionEntity);
+        }
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param int $customerId
+     * @param array $productIds
+     *
+     * @return void
+     */
+    public function deletePermissions(int $customerId, array $productIds)
+    {
+        $productCustomerPermissionEntities = $this->queryContainer
+            ->queryProductCustomerPermissionByCustomerAndProducts($customerId, $productIds)
             ->find();
 
         foreach ($productCustomerPermissionEntities as $productCustomerPermissionEntity) {

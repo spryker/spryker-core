@@ -77,11 +77,28 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
      *
      * @return void
      */
-    public function deleteCustomerProductPermissions(int $customerId)
+    public function deleteAllCustomerProductPermissions(int $customerId)
     {
         $this->getFactory()
             ->createProductCustomerPermissionSaver()
-            ->deletePermissions($customerId);
+            ->deleteAllPermissions($customerId);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @api
+     *
+     * @param int $customerId
+     * @param array $productIds
+     *
+     * @return void
+     */
+    public function deleteCustomerProductPermissions(int $customerId, array $productIds)
+    {
+        $this->getFactory()
+            ->createProductCustomerPermissionSaver()
+            ->deletePermissions($customerId, $productIds);
     }
 
     /**

@@ -62,7 +62,20 @@ interface ProductCustomerPermissionFacadeInterface
      *
      * @return void
      */
-    public function deleteCustomerProductPermissions(int $customerId);
+    public function deleteAllCustomerProductPermissions(int $customerId);
+
+    /**
+     * Specification:
+     *  - Delete specified products from the customer permission list
+     *
+     * @api
+     *
+     * @param int $customerId
+     * @param array $productIds
+     *
+     * @return void
+     */
+    public function deleteCustomerProductPermissions(int $customerId, array $productIds);
 
     /**
      * Specification:
