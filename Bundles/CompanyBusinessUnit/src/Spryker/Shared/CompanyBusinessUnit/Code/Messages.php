@@ -5,8 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnit\Persistence;
+namespace Spryker\Shared\CompanyBusinessUnit\Code;
 
-interface BusinessUnitQueryContainerInterface
+interface Messages
 {
+    public const COMPANY_BUSINESS_UNIT_DELETION_HAS_USERS = 'company.business_unit.deletion.has_users';
 }
