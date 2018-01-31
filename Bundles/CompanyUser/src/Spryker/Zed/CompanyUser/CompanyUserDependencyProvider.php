@@ -20,11 +20,11 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addCustomerSavePlugins($container);
-        $container = $this->addUserDaveHydrationPlugins($container);
+        $container = $this->addUserSaveHydrationPlugins($container);
 
         return $container;
     }
@@ -34,7 +34,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCustomerSavePlugins(Container $container)
+    protected function addCustomerSavePlugins(Container $container): Container
     {
         $container[static::PLUGINS_CUSTOMER_SAVE] = function () {
             return $this->getCompanyUserSavePlugins();
@@ -48,7 +48,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUserDaveHydrationPlugins(Container $container)
+    protected function addUserSaveHydrationPlugins(Container $container): Container
     {
         $container[static::PLUGINS_CUSTOMER_HYDRATE] = function () {
             return $this->getCompanyUserHydrationPlugins();
@@ -60,7 +60,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserSavePluginInterface[]
      */
-    protected function getCompanyUserSavePlugins()
+    protected function getCompanyUserSavePlugins(): array
     {
         return [];
     }
@@ -68,7 +68,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
      */
-    protected function getCompanyUserHydrationPlugins()
+    protected function getCompanyUserHydrationPlugins(): array
     {
         return [];
     }

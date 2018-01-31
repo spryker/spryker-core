@@ -5,18 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUser\Dependency\Plugin;
+namespace Spryker\Zed\CompanyUser\Business\Model;
 
+use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 
-interface CompanyUserSavePluginInterface
+interface CompanyUserWriterInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function save(CompanyUserTransfer $companyUserTransfer): void;
+    public function create(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 }
