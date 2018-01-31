@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnit\Business;
+namespace Spryker\Client\CompanyBusinessUnit;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
-interface CompanyBusinessUnitFacadeInterface
+interface CompanyBusinessUnitClientInterface
 {
     /**
      * Specification:
@@ -29,7 +29,7 @@ interface CompanyBusinessUnitFacadeInterface
 
     /**
      * Specification:
-     * - Creates a company business unit
+     * - Creates new company business unit.
      *
      * @api
      *
@@ -37,7 +37,9 @@ interface CompanyBusinessUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    public function create(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer;
+    public function createCompanyBusinessUnit(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitResponseTransfer;
 
     /**
      * Specification:
@@ -50,7 +52,9 @@ interface CompanyBusinessUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    public function update(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer;
+    public function updateCompanyBusinessUnit(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitResponseTransfer;
 
     /**
      * Specification:
@@ -63,7 +67,7 @@ interface CompanyBusinessUnitFacadeInterface
      *
      * @return bool
      */
-    public function delete(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool;
+    public function deleteCompanyBusinessUnit(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool;
 
     /**
      * Specification:
