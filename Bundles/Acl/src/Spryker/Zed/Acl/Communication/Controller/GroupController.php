@@ -70,7 +70,7 @@ class GroupController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
             $roles = $this->getRoleTransfersFromForm($formData);
@@ -107,7 +107,7 @@ class GroupController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
             $roles = $this->getRoleTransfersFromForm($formData);
 

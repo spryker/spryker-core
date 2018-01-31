@@ -9,6 +9,7 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
 
 use Elastica\Client;
 use Elastica\Index;
+use Elastica\Request;
 use Elastica\Type\Mapping;
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Psr\Log\LoggerInterface;
@@ -71,12 +72,9 @@ class IndexInstaller implements SearchInstallerInterface
                 $indexDefinitionTransfer->getIndexName()
             ));
 
-            $settings = $indexDefinitionTransfer->getSettings();
-            $index->create($settings);
-        }
-
-        foreach ($indexDefinitionTransfer->getMappings() as $mappingName => $mappingData) {
-            $this->sendMapping($index, $mappingName, $mappingData);
+            $this->importMappingsToNewIndex($indexDefinitionTransfer, $index);
+        } else {
+            $this->importMappingsToExistingIndex($indexDefinitionTransfer, $index);
         }
     }
 
@@ -89,20 +87,90 @@ class IndexInstaller implements SearchInstallerInterface
      */
     protected function sendMapping(Index $index, $mappingName, array $mappingData)
     {
-        $type = $index->getType($mappingName);
-
         $this->messenger->info(sprintf(
             'Send mapping type "%s" (index: "%s")',
             $mappingName,
             $index->getName()
         ));
 
-        $mapping = new Mapping($type);
+        $mapping = $this->createMappingByName($mappingData, $mappingName, $index);
 
+        $mapping->send();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer $indexDefinitionTransfer
+     * @param \Elastica\Index $index
+     *
+     * @return array
+     */
+    protected function mergeMappings(ElasticsearchIndexDefinitionTransfer $indexDefinitionTransfer, Index $index)
+    {
+        $mappings = [];
+        foreach ($indexDefinitionTransfer->getMappings() as $mappingName => $mappingData) {
+            $mapping = $this->createMappingByName($mappingData, $mappingName, $index);
+            $mappings = array_merge($mappings, $mapping->toArray());
+        }
+        return $mappings;
+    }
+
+    /**
+     * @param array $mappingData
+     * @param string $mappingName
+     * @param \Elastica\Index $index
+     *
+     * @return \Elastica\Type\Mapping
+     */
+    protected function createMappingByName(array $mappingData, $mappingName, Index $index)
+    {
+        $type = $index->getType($mappingName);
+
+        $mapping = new Mapping($type);
         foreach ($mappingData as $key => $value) {
             $mapping->setParam($key, $value);
         }
+        return $mapping;
+    }
 
-        $mapping->send();
+    /**
+     * @param \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer $indexDefinitionTransfer
+     * @param \Elastica\Index $index
+     *
+     * @return void
+     */
+    protected function importMappingsToNewIndex(
+        ElasticsearchIndexDefinitionTransfer $indexDefinitionTransfer,
+        Index $index
+    ) {
+
+        $mappings = $this->mergeMappings($indexDefinitionTransfer, $index);
+
+        $data = ['mappings' => $mappings];
+        $settings = $indexDefinitionTransfer->getSettings();
+        if ($settings) {
+            $data['settings'] = $settings;
+        }
+
+        $this->messenger->info(sprintf(
+            'Send all mappings. (index: "%s")',
+            $index->getName()
+        ));
+
+        $index->request('', Request::PUT, $data);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer $indexDefinitionTransfer
+     * @param \Elastica\Index $index
+     *
+     * @return void
+     */
+    protected function importMappingsToExistingIndex(
+        ElasticsearchIndexDefinitionTransfer $indexDefinitionTransfer,
+        Index $index
+    ) {
+        foreach ($indexDefinitionTransfer->getMappings() as $mappingName => $mappingData) {
+            $this->sendMapping($index, $mappingName, $mappingData);
+        }
     }
 }

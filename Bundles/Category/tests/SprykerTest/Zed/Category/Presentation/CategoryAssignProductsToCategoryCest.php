@@ -29,7 +29,7 @@ class CategoryAssignProductsToCategoryCest
     public function breadcrumbIsVisible(CategoryPresentationTester $i)
     {
         $i->amOnPage(CategoryListPage::URL);
-        $i->wait(2);
+        $i->waitForElement(CategoryListPage::getAssignProductsButtonSelector());
         $i->click(CategoryListPage::getAssignProductsButtonSelector());
         $i->seeBreadcrumbNavigation('Dashboard / Category / Assign Products to Category');
     }

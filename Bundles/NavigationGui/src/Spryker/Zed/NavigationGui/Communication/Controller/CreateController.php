@@ -23,7 +23,7 @@ class CreateController extends AbstractController
     public function indexAction(Request $request)
     {
         $navigationForm = $this->getFactory()
-            ->createNavigationForm()
+            ->getNavigationForm()
             ->handleRequest($request);
 
         if ($navigationForm->isValid()) {

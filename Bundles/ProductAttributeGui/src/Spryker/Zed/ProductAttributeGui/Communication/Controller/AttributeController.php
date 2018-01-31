@@ -67,7 +67,7 @@ class AttributeController extends AbstractController
 
         $attributeForm = $this
             ->getFactory()
-            ->createAttributeForm($dataProvider->getData(), $dataProvider->getOptions())
+            ->getAttributeForm($dataProvider->getData(), $dataProvider->getOptions())
             ->handleRequest($request);
 
         if (!$attributeForm->isValid()) {
@@ -115,7 +115,7 @@ class AttributeController extends AbstractController
 
         $attributeTranslateFormCollection = $this
             ->getFactory()
-            ->createAttributeTranslationFormCollection($dataProvider->getData($idProductManagementAttribute), $dataProvider->getOptions())
+            ->getAttributeTranslationFormCollection($dataProvider->getData($idProductManagementAttribute), $dataProvider->getOptions())
             ->handleRequest($request);
 
         if (!$attributeTranslateFormCollection->isValid()) {
@@ -173,7 +173,7 @@ class AttributeController extends AbstractController
 
         $attributeForm = $this
             ->getFactory()
-            ->createAttributeForm($dataProvider->getData($idProductManagementAttribute), $dataProvider->getOptions($idProductManagementAttribute))
+            ->getAttributeForm($dataProvider->getData($idProductManagementAttribute), $dataProvider->getOptions($idProductManagementAttribute))
             ->handleRequest($request);
 
         if (!$attributeForm->isValid()) {

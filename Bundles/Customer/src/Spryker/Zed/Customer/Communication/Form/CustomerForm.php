@@ -8,12 +8,13 @@
 namespace Spryker\Zed\Customer\Communication\Form;
 
 use DateTime;
-use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
-use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,6 +25,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
+ */
 class CustomerForm extends AbstractType
 {
     const OPTION_SALUTATION_CHOICES = 'salutation_choices';
@@ -43,31 +48,9 @@ class CustomerForm extends AbstractType
     const FIELD_LOCALE = 'locale';
 
     /**
-     * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
-     */
-    protected $customerQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
-     */
-    protected $localeFacade;
-
-    /**
-     * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
-     * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface $localeFacade
-     */
-    public function __construct(
-        CustomerQueryContainerInterface $customerQueryContainer,
-        CustomerToLocaleInterface $localeFacade
-    ) {
-        $this->customerQueryContainer = $customerQueryContainer;
-        $this->localeFacade = $localeFacade;
-    }
-
-    /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'customer';
     }
@@ -113,7 +96,7 @@ class CustomerForm extends AbstractType
      */
     protected function addIdCustomerField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_CUSTOMER, 'hidden');
+        $builder->add(self::FIELD_ID_CUSTOMER, HiddenType::class);
 
         return $this;
     }
@@ -125,7 +108,7 @@ class CustomerForm extends AbstractType
      */
     protected function addEmailField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_EMAIL, 'email', [
+        $builder->add(self::FIELD_EMAIL, EmailType::class, [
             'label' => 'Email',
             'constraints' => $this->createEmailConstraints(),
         ]);
@@ -141,10 +124,11 @@ class CustomerForm extends AbstractType
      */
     protected function addSalutationField(FormBuilderInterface $builder, array $choices)
     {
-        $builder->add(self::FIELD_SALUTATION, 'choice', [
+        $builder->add(self::FIELD_SALUTATION, ChoiceType::class, [
             'label' => 'Salutation',
             'placeholder' => 'Select one',
-            'choices' => $choices,
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -158,7 +142,7 @@ class CustomerForm extends AbstractType
      */
     protected function addFirstNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FIRST_NAME, 'text', [
+        $builder->add(self::FIELD_FIRST_NAME, TextType::class, [
             'label' => 'First Name',
             'constraints' => $this->getTextFieldConstraints(),
         ]);
@@ -173,7 +157,7 @@ class CustomerForm extends AbstractType
      */
     protected function addLastNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_LAST_NAME, 'text', [
+        $builder->add(self::FIELD_LAST_NAME, TextType::class, [
             'label' => 'Last Name',
             'constraints' => $this->getTextFieldConstraints(),
         ]);
@@ -189,10 +173,11 @@ class CustomerForm extends AbstractType
      */
     protected function addGenderField(FormBuilderInterface $builder, array $choices)
     {
-        $builder->add(self::FIELD_GENDER, 'choice', [
+        $builder->add(self::FIELD_GENDER, ChoiceType::class, [
             'label' => 'Gender',
             'placeholder' => 'Select one',
-            'choices' => $choices,
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
             'constraints' => [
                 new Required(),
             ],
@@ -209,7 +194,7 @@ class CustomerForm extends AbstractType
      */
     protected function addSendPasswordField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SEND_PASSWORD_TOKEN, 'checkbox', [
+        $builder->add(self::FIELD_SEND_PASSWORD_TOKEN, CheckboxType::class, [
             'label' => 'Send password token through email',
             'required' => false,
         ]);
@@ -268,7 +253,8 @@ class CustomerForm extends AbstractType
         $builder->add(static::FIELD_LOCALE, ChoiceType::class, [
             'label' => 'Locale',
             'placeholder' => 'Select one',
-            'choices' => $choices,
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
             'required' => false,
 
         ]);
@@ -312,16 +298,14 @@ class CustomerForm extends AbstractType
             new Email(),
         ];
 
-        $customerQuery = $this->customerQueryContainer->queryCustomers();
+        $customerQuery = $this->getQueryContainer()->queryCustomers();
 
         $emailConstraints[] = new Callback([
-            'methods' => [
-                function ($email, ExecutionContextInterface $context) use ($customerQuery) {
-                    if ($customerQuery->findByEmail($email)->count() > 0) {
-                        $context->addViolation('Email is already used');
-                    }
-                },
-            ],
+            'callback' => function ($email, ExecutionContextInterface $context) use ($customerQuery) {
+                if ($customerQuery->findByEmail($email)->count() > 0) {
+                    $context->addViolation('Email is already used');
+                }
+            },
         ]);
 
         return $emailConstraints;
@@ -369,9 +353,19 @@ class CustomerForm extends AbstractType
             },
             function ($localeAsInt) {
                 if ($localeAsInt !== null) {
-                    return $this->localeFacade->getLocaleById($localeAsInt);
+                    return $this->getFactory()->getLocaleFacadePublic()->getLocaleById($localeAsInt);
                 }
             }
         );
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

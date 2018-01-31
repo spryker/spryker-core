@@ -26,9 +26,7 @@ class DevelopmentCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createBundlesForm(array $data = [], array $options = [])
     {
-        $bundlesFormType = new BundlesFormType();
-
-        return $this->getFormFactory()->create($bundlesFormType, $data, $options);
+        return $this->getFormFactory()->create(BundlesFormType::class, $data, $options);
     }
 
     /**

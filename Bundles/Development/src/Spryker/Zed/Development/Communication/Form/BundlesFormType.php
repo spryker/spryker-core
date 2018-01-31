@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\Development\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
+ */
 class BundlesFormType extends AbstractType
 {
     const FORM_TYPE_NAME = 'bundlesFormType';
@@ -31,14 +35,6 @@ class BundlesFormType extends AbstractType
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return static::FORM_TYPE_NAME;
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -49,11 +45,30 @@ class BundlesFormType extends AbstractType
         $builder->add(static::EXCLUDED_BUNDLES, ChoiceType::class, [
             'expanded' => true,
             'multiple' => true,
-            'choices' => $options[static::BUNDLE_NAME_CHOICES],
+            'choices' => array_flip($options[static::BUNDLE_NAME_CHOICES]),
+            'choices_as_values' => true,
         ]);
 
         $builder->add(static::SHOW_INCOMING, CheckboxType::class, [
             'required' => false,
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return static::FORM_TYPE_NAME;
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

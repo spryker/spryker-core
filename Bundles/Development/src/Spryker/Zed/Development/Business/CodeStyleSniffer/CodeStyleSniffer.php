@@ -127,7 +127,6 @@ class CodeStyleSniffer
     protected function buildPaths($module, $pathSuffix = null)
     {
         return [
-            $this->getPathToCoreModule($this->normalizeModuleNameForSplit($module), $pathSuffix),
             $this->getPathToCorePackageNonSplit($this->normalizeModuleNameForSplit($module), $pathSuffix),
             $this->getPathToCoreModule($this->normalizeModuleNameForNonSplit($module), $pathSuffix),
         ];
