@@ -4,7 +4,7 @@
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.14.0",
-    "spryker/shipment": "^6.1.0"
+    "spryker/shipment": "^6.3.0"
   },
   "require-dev": {
     "spryker/checkout": "*",
