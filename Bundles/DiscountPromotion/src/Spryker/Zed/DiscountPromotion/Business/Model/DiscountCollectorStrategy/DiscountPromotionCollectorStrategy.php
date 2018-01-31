@@ -177,7 +177,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
      */
     protected function createPromotionDiscountableItemTransfer(ItemTransfer $promotionItemTransfer, $currentQuantity)
     {
-        return(new DiscountableItemTransfer())
+        return (new DiscountableItemTransfer())
             ->setOriginalItem($promotionItemTransfer)
             ->setOriginalItemCalculatedDiscounts($promotionItemTransfer->getCalculatedDiscounts())
             ->setQuantity($currentQuantity)

@@ -135,7 +135,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCollectShouldAdjustQuantityBasedOnAvailability()
+    public function testCollectAdjustsQuantityBasedOnAvailability()
     {
         $discountPromotionFacade = $this->getDiscountPromotionFacade();
 
