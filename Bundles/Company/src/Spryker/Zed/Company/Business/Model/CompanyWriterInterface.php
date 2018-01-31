@@ -5,19 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Company\Business;
+namespace Spryker\Zed\Company\Business\Model;
 
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 
-interface CompanyFacadeInterface
+interface CompanyWriterInterface
 {
     /**
-     * Specification:
-     * - Creates a company
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyResponseTransfer
@@ -25,13 +20,6 @@ interface CompanyFacadeInterface
     public function create(CompanyTransfer $companyTransfer): CompanyResponseTransfer;
 
     /**
-     * Specification:
-     * - Finds a company by CompanyTransfer::idCompany in the transfer
-     * - Updates fields in a company entity
-     * - Updates relations to stores
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyResponseTransfer
@@ -39,12 +27,6 @@ interface CompanyFacadeInterface
     public function update(CompanyTransfer $companyTransfer): CompanyResponseTransfer;
 
     /**
-     * Specification:
-     * - Finds a company by CompanyTransfer::idCompany in the transfer
-     * - Deletes the company
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
      * @return void
