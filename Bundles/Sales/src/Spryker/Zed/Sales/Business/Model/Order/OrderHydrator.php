@@ -249,7 +249,6 @@ class OrderHydrator implements OrderHydratorInterface
 
         $billingAddressTransfer = new AddressTransfer();
         $billingAddressTransfer->fromArray($orderEntity->getBillingAddress()->toArray(), true);
-        $billingAddressTransfer->setIso2Code($countryEntity->getIso2Code());
         $this->hydrateCountryEntityIntoAddressTransfer($billingAddressTransfer, $countryEntity);
 
         $orderTransfer->setBillingAddress($billingAddressTransfer);
@@ -267,8 +266,6 @@ class OrderHydrator implements OrderHydratorInterface
 
         $shippingAddressTransfer = new AddressTransfer();
         $shippingAddressTransfer->fromArray($orderEntity->getShippingAddress()->toArray(), true);
-        $shippingAddressTransfer->setIso2Code($countryEntity->getIso2Code());
-
         $this->hydrateCountryEntityIntoAddressTransfer($shippingAddressTransfer, $countryEntity);
 
         $orderTransfer->setShippingAddress($shippingAddressTransfer);
