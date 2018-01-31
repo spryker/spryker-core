@@ -45,6 +45,8 @@ use SprykerTest\Zed\ProductImageStorage\ProductImageStorageConfigMock;
 class ProductImageStorageListenerTest extends Unit
 {
     /**
+     * @throws \PHPUnit\Framework\SkippedTestError
+     *
      * @return void
      */
     protected function setUp()

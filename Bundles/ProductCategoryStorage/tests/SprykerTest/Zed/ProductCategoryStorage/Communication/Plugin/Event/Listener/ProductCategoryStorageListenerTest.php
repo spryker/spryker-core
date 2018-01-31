@@ -49,6 +49,8 @@ use SprykerTest\Zed\ProductCategoryStorage\ProductCategoryStorageConfigMock;
 class ProductCategoryStorageListenerTest extends Unit
 {
     /**
+     * @throws \PHPUnit\Framework\SkippedTestError
+     *
      * @return void
      */
     protected function setUp()

@@ -42,6 +42,8 @@ use SprykerTest\Zed\UrlStorage\UrlStorageConfigMock;
 class UrlStorageListenerTest extends Unit
 {
     /**
+     * @throws \PHPUnit\Framework\SkippedTestError
+     *
      * @return void
      */
     protected function setUp()

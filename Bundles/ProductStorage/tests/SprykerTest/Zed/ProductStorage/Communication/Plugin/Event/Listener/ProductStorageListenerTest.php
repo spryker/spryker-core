@@ -50,6 +50,8 @@ use SprykerTest\Zed\ProductStorage\ProductStorageConfigMock;
 class ProductStorageListenerTest extends Unit
 {
     /**
+     * @throws \PHPUnit\Framework\SkippedTestError
+     *
      * @return void
      */
     protected function setUp()
