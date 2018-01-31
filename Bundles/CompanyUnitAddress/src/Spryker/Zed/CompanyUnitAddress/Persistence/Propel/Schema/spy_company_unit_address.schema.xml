@@ -4,9 +4,10 @@
     <table name="spy_company_unit_address" idMethod="native" phpName="SpyCompanyUnitAddress">
         <column name="id_company_unit_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
 
-        <column name="fk_company_business_unit" required="true" type="INTEGER"/>
+        <column name="fk_company_business_unit" required="false" type="INTEGER"/>
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER"/>
+        <column name="fk_company" type="INTEGER"/>
 
         <column name="address1" size="255" type="VARCHAR"/>
         <column name="address2" size="255" type="VARCHAR"/>
@@ -25,6 +26,10 @@
         <foreign-key name="spy_company_unit_address-fk_country" foreignTable="spy_country" phpName="Country" refPhpName="CompanyUnitAddress">
             <reference local="fk_country" foreign="id_country"/>
         </foreign-key>
+        <foreign-key name="spy_company_unit_address-fk_company" foreignTable="spy_company" phpName="Company" refPhpName="UnitAddressCompany">
+            <reference local="fk_company" foreign="id_company"/>
+        </foreign-key>
+
         <index name="spy_company_unit_address-fk_company_business_unit">
             <index-column name="fk_company_business_unit"/>
         </index>

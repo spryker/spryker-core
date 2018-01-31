@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUnitAddress\Business;
+namespace Spryker\Client\CompanyUnitAddress;
 
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 
-interface CompanyUnitAddressFacadeInterface
+interface CompanyUnitAddressClientInterface
 {
     /**
      * Specification:
@@ -23,7 +23,9 @@ interface CompanyUnitAddressFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function getCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
+    public function getCompanyUnitAddressById(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+    ): CompanyUnitAddressResponseTransfer;
 
     /**
      * Specification:
@@ -35,7 +37,9 @@ interface CompanyUnitAddressFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function create(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
+    public function createCompanyUnitAddress(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+    ): CompanyUnitAddressResponseTransfer;
 
     /**
      * Specification:
@@ -48,34 +52,23 @@ interface CompanyUnitAddressFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function update(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
+    public function updateCompanyUnitAddress(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
 
     /**
      * Specification:
      * - Finds a company unit address by CompanyUnitAddressTransfer::idCompanyUnitAddress in the transfer
-     * - Deletes the company unit address
+     * - Updates fields in a company unit address entity
+     * - Updates default business unit addresses
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function delete(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void;
-
-    /**
-     * Specification:
-     * - Returns the company unit address collection.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
-     */
-    public function getCompanyUnitAddressCollection(
-        CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
-    ): CompanyUnitAddressCollectionTransfer;
+    public function updateCompanyUnitAddressAndBusinessUnitDefaultAddresses(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+    ): CompanyUnitAddressResponseTransfer;
 
     /**
      * Specification:
@@ -95,16 +88,29 @@ interface CompanyUnitAddressFacadeInterface
     /**
      * Specification:
      * - Finds a company unit address by CompanyUnitAddressTransfer::idCompanyUnitAddress in the transfer
-     * - Updates fields in a company unit address entity
-     * - Updates default business unit addresses
+     * - Deletes the company unit address
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     * @return void
      */
-    public function updateCompanyUnitAddressAndBusinessUnitDefaultAddresses(
+    public function deleteCompanyUnitAddress(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer;
+    ): void;
+
+    /**
+     * Specification:
+     * - Returns the company unit address collection.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     */
+    public function getCompanyUnitAddressCollection(
+        CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
+    ): CompanyUnitAddressCollectionTransfer;
 }
