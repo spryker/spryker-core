@@ -11,18 +11,18 @@ use DateTime;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\ProductManagementConfig;
 
-class ProductValidityActivityChecker implements ProductValidityActivityCheckerInterface
+class ProductValidityActivityMessenger implements ProductValidityActivityMessengerInterface
 {
     const DEACTIVATION_IN_FUTURE_MESSAGE = 'This product will be deactivated at %s GMT. Check the field "Valid To".';
     const DEACTIVATION_NOW_MESSAGE = <<<'EOD'
         This product will be deactivated shortly because validity overrules activity.
-        Check the field "Valid To", it is set in past, to %s.
+        Check the field "Valid To", it is set in past, to %s GMT.
 EOD;
 
     const ACTIVATION_IN_FUTURE_MESSAGE = 'This product will be activated at %s GMT. Check the field "Valid From".';
     const ACTIVATION_NOW_MESSAGE = <<<'EOD'
         This product will be activated shortly because validity overrules activity.
-        Check the field "Valid From", it is set in past, to %s.
+        Check the field "Valid From", it is set in past, to %s GMT.
 EOD;
 
     /**
@@ -57,24 +57,24 @@ EOD;
         $productTransfer = $this->productFacade
             ->findProductConcreteById($idProductConcrete);
 
-        $validityToExists = $productTransfer && $productTransfer->getValidTo();
+        $validToExists = $productTransfer && $productTransfer->getValidTo();
 
-        if (!$validityToExists) {
+        if (!$validToExists) {
             return '';
         }
 
-        $validityTo = new DateTime($productTransfer->getValidTo());
+        $validTo = new DateTime($productTransfer->getValidTo());
 
-        if ($validityTo > (new DateTime())) {
+        if ($validTo > (new DateTime())) {
             return sprintf(
                 static::DEACTIVATION_IN_FUTURE_MESSAGE,
-                $validityTo->format($this->config->getValidityTimeFormat())
+                $validTo->format($this->config->getValidityTimeFormat())
             );
         }
 
         return sprintf(
             static::DEACTIVATION_NOW_MESSAGE,
-            $validityTo->format($this->config->getValidityTimeFormat())
+            $validTo->format($this->config->getValidityTimeFormat())
         );
     }
 
@@ -88,32 +88,32 @@ EOD;
         $productTransfer = $this->productFacade
             ->findProductConcreteById($idProductConcrete);
 
-        $validityFromExists = $productTransfer && $productTransfer->getValidFrom();
+        $validFromExists = $productTransfer && $productTransfer->getValidFrom();
 
-        if (!$validityFromExists) {
+        if (!$validFromExists) {
             return '';
         }
 
-        $validityFrom = new DateTime($productTransfer->getValidFrom());
+        $validFrom = new DateTime($productTransfer->getValidFrom());
 
-        if ($validityFrom > (new DateTime())) {
+        if ($validFrom > (new DateTime())) {
             return sprintf(
                 static::ACTIVATION_IN_FUTURE_MESSAGE,
-                $validityFrom->format($this->config->getValidityTimeFormat())
+                $validFrom->format($this->config->getValidityTimeFormat())
             );
         }
 
-        $validityToExists = $productTransfer && $productTransfer->getValidTo();
+        $validToExists = $productTransfer && $productTransfer->getValidTo();
         $validityTo = new DateTime($productTransfer->getValidTo());
-        $isValidityToInPast = $validityToExists && ($validityTo < (new DateTime()));
+        $isValidToInPast = $validToExists && ($validityTo < (new DateTime()));
 
-        if ($isValidityToInPast) {
+        if ($isValidToInPast) {
             return '';
         }
 
         return sprintf(
             static::ACTIVATION_NOW_MESSAGE,
-            $validityFrom->format($this->config->getValidityTimeFormat())
+            $validFrom->format($this->config->getValidityTimeFormat())
         );
     }
 }

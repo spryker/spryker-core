@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication;
 
+use Spryker\Yves\Kernel\Dependency\Messenger\KernelToMessengerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\Price\ProductMoneyCollectionDataProvider;
@@ -17,7 +18,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelper;
-use Spryker\Zed\ProductManagement\Communication\Helper\ProductValidity\ProductValidityActivityChecker;
+use Spryker\Zed\ProductManagement\Communication\Helper\ProductValidity\ProductValidityActivityMessenger;
 use Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductGroupTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductTable;
@@ -276,11 +277,11 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Communication\Helper\ProductValidity\ProductValidityActivityCheckerInterface
+     * @return \Spryker\Zed\ProductManagement\Communication\Helper\ProductValidity\ProductValidityActivityMessengerInterface
      */
-    public function createProductValidityActivityChecker()
+    public function createProductValidityActivityMessenger()
     {
-        return new ProductValidityActivityChecker(
+        return new ProductValidityActivityMessenger(
             $this->getConfig(),
             $this->getProductFacade()
         );

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Helper\ProductValidity;
 
-interface ProductValidityActivityCheckerInterface
+interface ProductValidityActivityMessengerInterface
 {
     /**
      * @param int $idProductConcrete
