@@ -9,12 +9,11 @@ namespace Spryker\Zed\ProductValidity\Business\Validity;
 
 use DateTime;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Shared\ProductValidity\ProductValidityConstants;
 use Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface;
 
 class ProductValidityHydrator implements ProductValidityHydratorInterface
 {
-    protected const VALIDITY_DATE_TIME_FORMAT = 'Y-m-d h:m';
-
     /** @var \Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterface */
     protected $productValidityQueryContainer;
 
@@ -61,6 +60,6 @@ class ProductValidityHydrator implements ProductValidityHydratorInterface
      */
     protected function formatDateTime(DateTime $dateTime = null): ?string
     {
-        return $dateTime ? $dateTime->format(static::VALIDITY_DATE_TIME_FORMAT) : null;
+        return $dateTime ? $dateTime->format(ProductValidityConstants::VALIDITY_DATE_TIME_FORMAT) : null;
     }
 }

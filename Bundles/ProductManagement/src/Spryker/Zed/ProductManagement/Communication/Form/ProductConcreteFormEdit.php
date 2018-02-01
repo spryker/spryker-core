@@ -27,11 +27,10 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
  */
 class ProductConcreteFormEdit extends ProductFormAdd
 {
-    const VALIDITY_DATE_TIME_FORMAT = 'Y-m-d h:m';
-
     const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const FIELD_ID_PRODUCT_CONCRETE = 'id_product';
     const FIELD_VALID_FROM = 'valid_from';
@@ -311,6 +310,8 @@ class ProductConcreteFormEdit extends ProductFormAdd
      */
     protected function addDateTimeTransformer($fieldName, FormBuilderInterface $builder)
     {
+        $timeFormat = $this->getConfig()->getValidityTimeFormat();
+
         $builder
             ->get($fieldName)
             ->addModelTransformer(new CallbackTransformer(
@@ -321,13 +322,13 @@ class ProductConcreteFormEdit extends ProductFormAdd
 
                     return new DateTime($dateAsString);
                 },
-                function ($dateAsObject) {
+                function ($dateAsObject) use ($timeFormat) {
                     /** @var \DateTime $dateAsObject */
                     if (!$dateAsObject) {
                         return null;
                     }
 
-                    return $dateAsObject->format(static::VALIDITY_DATE_TIME_FORMAT);
+                    return $dateAsObject->format($timeFormat);
                 }
             ));
     }
