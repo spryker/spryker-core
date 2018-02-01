@@ -12,15 +12,17 @@ class AbstractEntityTransfer extends AbstractTransfer implements EntityTransferI
     /**
      * @var null|string
      */
-    protected $entityNamespace = null;
+    protected static $entityNamespace = null;
 
     /**
+     * @internal
+     *
      * Returns FQCN of propel entity it's mapped
      *
      * @return string
      */
-    public function _getEntityNamespace()
+    public function entityNamespace()
     {
-        return $this->entityNamespace;
+        return static::$entityNamespace;
     }
 }

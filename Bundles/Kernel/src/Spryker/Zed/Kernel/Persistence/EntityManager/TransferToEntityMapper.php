@@ -100,7 +100,7 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
      */
     protected function mapEntity(EntityTransferInterface $entityTransfer)
     {
-        $entityName = $entityTransfer->_getEntityNamespace();
+        $entityName = $entityTransfer->entityNamespace();
         $entity = new $entityName;
         $childTransferArray = $entityTransfer->modifiedToArray(false);
         $entity->fromArray($childTransferArray);
