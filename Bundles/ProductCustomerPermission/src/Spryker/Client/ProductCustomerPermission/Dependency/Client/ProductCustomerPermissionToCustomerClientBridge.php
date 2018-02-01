@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductCustomerPermission\Dependency\Client;
 
-class ProductCustomerPermissionToCustomerClientClientBridge implements ProductCustomerPermissionToCustomerClientInterface
+class ProductCustomerPermissionToCustomerClientBridge implements ProductCustomerPermissionToCustomerClientInterface
 {
     /**
      * @var \Spryker\Client\Customer\CustomerClientInterface

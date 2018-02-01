@@ -18,4 +18,12 @@ class ProductCustomerPermissionFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductCustomerPermissionDependencyProvider::CLIENT_CUSTOMER);
     }
+
+    /**
+     * @return \Spryker\Client\ProductCustomerPermission\Dependency\Client\ProductCustomerPermissionToStorageClientInterface
+     */
+    public function getStorageClient()
+    {
+        return $this->getProvidedDependency(ProductCustomerPermissionDependencyProvider::KV_STORAGE);
+    }
 }

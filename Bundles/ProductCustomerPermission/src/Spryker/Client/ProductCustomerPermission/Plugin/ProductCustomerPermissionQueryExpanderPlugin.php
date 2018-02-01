@@ -33,7 +33,9 @@ class ProductCustomerPermissionQueryExpanderPlugin extends AbstractPlugin implem
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+        $customerTransfer = $this->getFactory()
+            ->getCustomerClient()
+            ->getCustomer();
 
         if ($customerTransfer) {
             $productPriceFilter = $this->createCustomerFilter($customerTransfer->getIdCustomer());
