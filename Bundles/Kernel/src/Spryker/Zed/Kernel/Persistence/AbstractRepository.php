@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Kernel\Persistence;
 
-use Generated\Shared\Transfer\CriteriaTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
@@ -97,28 +97,28 @@ abstract class AbstractRepository
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $modelCriteria
-     * @param \Generated\Shared\Transfer\CriteriaTransfer|null $criteriaTransfer
+     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function buildQueryFromCriteria(ModelCriteria $modelCriteria, CriteriaTransfer $criteriaTransfer = null)
+    public function buildQueryFromCriteria(ModelCriteria $modelCriteria, FilterTransfer $filterTransfer = null)
     {
         $criteria = $modelCriteria->setFormatter(TransferObjectFormatter::class);
 
-        if (!$criteriaTransfer) {
+        if (!$filterTransfer) {
             return $criteria;
         }
 
-        if ($criteriaTransfer->getLimit()) {
-            $criteria->setLimit($criteriaTransfer->getLimit());
+        if ($filterTransfer->getLimit()) {
+            $criteria->setLimit($filterTransfer->getLimit());
         }
 
-        if ($criteriaTransfer->getOffset()) {
-            $criteria->setOffset($criteriaTransfer->getOffset());
+        if ($filterTransfer->getOffset()) {
+            $criteria->setOffset($filterTransfer->getOffset());
         }
 
-        if ($criteriaTransfer->getSortBy() && $criteriaTransfer->getSortOrder()) {
-            $criteria->orderBy($criteriaTransfer->getSortBy(), $criteriaTransfer->getSortOrder());
+        if ($filterTransfer->getOrderBy() && $filterTransfer->getOrderDirection()) {
+            $criteria->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection());
         }
 
         return $criteria;
