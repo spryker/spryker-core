@@ -126,7 +126,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
             DateTimeType::class,
             [
                 'format' => 'yyyy-MM-dd H:mm:ss',
-                'label' => 'Valid From',
+                'label' => 'Valid From (GMT)',
                 'widget' => 'single_text',
                 'required' => false,
                 'attr' => [
@@ -175,7 +175,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
             DateTimeType::class,
             [
                 'format' => 'yyyy-MM-dd H:mm:ss',
-                'label' => 'Valid To',
+                'label' => 'Valid To (GMT)',
                 'widget' => 'single_text',
                 'required' => false,
                 'attr' => [
