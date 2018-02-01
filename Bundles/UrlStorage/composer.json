@@ -10,7 +10,8 @@
     "spryker/storage": "^3.4.0",
     "spryker/synchronization": "^0.2.0",
     "spryker/url": "^3.3.0",
-    "spryker/util-sanitize": "^2.1.0"
+    "spryker/util-sanitize": "^2.1.0",
+    "spryker/locale": "^3.0.0"
   },
   "require-dev": {
     "spryker/event": "*"

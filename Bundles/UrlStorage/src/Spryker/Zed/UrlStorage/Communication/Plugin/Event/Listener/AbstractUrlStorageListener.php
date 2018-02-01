@@ -8,7 +8,6 @@
 namespace Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener;
 
 use Generated\Shared\Transfer\UrlTransfer;
-use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\UrlStorage\Persistence\SpyUrlStorage;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -28,11 +27,11 @@ class AbstractUrlStorageListener extends AbstractPlugin
      */
     protected function publish(array $urlIds)
     {
-        $spyUrlEntities = $this->findUrlEntities($urlIds);
-        $spyUrlEntities = $this->appendLocaleUrlsToUrlEntities($spyUrlEntities);
-        $spyUrlStorageEntities = $this->findUrlStorageEntitiesByIds($urlIds);
+        $urlEntities = $this->findUrlEntities($urlIds);
+        $urlEntities = $this->appendLocaleUrlsToUrlEntities($urlEntities);
+        $urlStorageEntities = $this->findUrlStorageEntitiesByIds($urlIds);
 
-        $this->storeData($spyUrlEntities, $spyUrlStorageEntities);
+        $this->storeData($urlEntities, $urlStorageEntities);
     }
 
     /**
@@ -156,17 +155,20 @@ class AbstractUrlStorageListener extends AbstractPlugin
         foreach ($urlResources as $resourceType => $resourceIds) {
             $urlResources[$resourceType] = $this->getQueryContainer()
                 ->queryUrlsByResourceTypeAndIds($resourceType, $resourceIds)
-                ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, UrlTransfer::LOCALE_NAME)
-                ->find()
-                ->getData();
+                ->find();
         }
 
         $spyUrlEntitiesWithLocaleUrls = [];
         foreach ($spyUrlEntities as $spyUrlEntity) {
-            $localeUrls = $urlResources[$spyUrlEntity->getResourceType()];
-            $spyUrlEntity = $spyUrlEntity->toArray();
-            $spyUrlEntity[UrlTransfer::LOCALE_URLS] = $localeUrls;
-            $spyUrlEntitiesWithLocaleUrls[] = $spyUrlEntity;
+            $urlEntityArray = $spyUrlEntity->toArray();
+            /** @var \Orm\Zed\Url\Persistence\SpyUrl $urlResource */
+            foreach ($urlResources[$spyUrlEntity->getResourceType()] as $urlResource) {
+                if ($spyUrlEntity->getResourceId() === $urlResource->getResourceId()) {
+                    $urlEntityArray[UrlTransfer::LOCALE_URLS][] = $urlResource->toArray();
+                }
+            }
+
+            $spyUrlEntitiesWithLocaleUrls[] = $urlEntityArray;
         }
 
         return $spyUrlEntitiesWithLocaleUrls;

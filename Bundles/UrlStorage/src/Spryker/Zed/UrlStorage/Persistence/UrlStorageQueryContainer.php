@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\UrlStorage\Persistence;
 
+use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -63,8 +65,8 @@ class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStor
         return $this->getFactory()
             ->getUrlQueryContainer()
             ->queryUrlsByResourceTypeAndIds($resourceType, $resourceIds)
-            ->joinWithSpyLocale()
-            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, UrlTransfer::LOCALE_NAME)
+            ->joinWithSpyLocale();
     }
 
     /**
