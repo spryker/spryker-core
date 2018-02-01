@@ -28,8 +28,7 @@ class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStor
             ->getFactory()
             ->getUrlQueryContainer()
             ->queryUrls()
-            ->filterByIdUrl_In($urlIds)
-            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+            ->filterByIdUrl_In($urlIds);
 
         return $queryUrl;
     }
@@ -49,6 +48,23 @@ class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStor
             ->filterByFkUrl_In($urlIds);
 
         return $queryUrl;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $resourceType
+     * @param array $resourceIds
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryUrlsByResourceTypeAndIds($resourceType, $resourceIds)
+    {
+        return $this->getFactory()
+            ->getUrlQueryContainer()
+            ->queryUrlsByResourceTypeAndIds($resourceType, $resourceIds)
+            ->joinWithSpyLocale()
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
     }
 
     /**

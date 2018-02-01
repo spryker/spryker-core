@@ -29,4 +29,19 @@ class UrlStorageClient extends AbstractClient implements UrlStorageClientInterfa
             ->createUrlStorageReader()
             ->matchUrl($url, $localeName);
     }
+
+    /**
+     * @api
+     *
+     * @param string $url
+     *
+     * @return array
+     */
+    public function getUrlData($url)
+    {
+        return $this
+            ->getFactory()
+            ->createUrlStorageReader()
+            ->getUrlData($url);
+    }
 }

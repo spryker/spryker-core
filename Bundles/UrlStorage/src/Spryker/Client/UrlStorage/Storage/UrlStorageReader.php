@@ -59,8 +59,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
      */
     public function matchUrl($url, $localeName)
     {
-        $urlKey = $this->getUrlKey($url);
-        $urlDetails = $this->storageClient->get($urlKey);
+        $urlDetails = $this->getUrlFromStorage($url);
         if ($urlDetails === null) {
             return [];
         }
@@ -82,6 +81,32 @@ class UrlStorageReader implements UrlStorageReaderInterface
         }
 
         return [];
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return array
+     */
+    public function getUrlData($url)
+    {
+        $urlDetails = $this->getUrlFromStorage($url);
+        if ($urlDetails === null) {
+            return [];
+        }
+
+        return $urlDetails;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return array
+     */
+    protected function getUrlFromStorage($url)
+    {
+        $urlKey = $this->getUrlKey($url);
+        return $this->storageClient->get($urlKey);
     }
 
     /**

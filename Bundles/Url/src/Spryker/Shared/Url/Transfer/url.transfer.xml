@@ -22,6 +22,8 @@
         <property name="resourceType" type="string" deprecated="Use appropriate fkResourceXYZ attribute instead." />
         <property name="resourceId" type="int" deprecated="Use appropriate fkResourceXYZ attribute instead." />
         <property name="fkResourceRedirect" type="int" />
+        <property name="localeUrls" type="Url[]" singular="Url" />
+        <property name="localeName" type="string" />
     </transfer>
 
     <transfer name="UrlRedirect">

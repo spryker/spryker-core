@@ -16,4 +16,11 @@ interface UrlStorageReaderInterface
      * @return array
      */
     public function matchUrl($url, $localeName);
+
+    /**
+     * @param string $url
+     *
+     * @return array
+     */
+    public function getUrlData($url);
 }
