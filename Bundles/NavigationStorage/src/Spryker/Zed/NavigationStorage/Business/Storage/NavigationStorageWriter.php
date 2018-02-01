@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\NavigationStorage\Business\Storage;
 
 use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -15,24 +15,68 @@ use Generated\Shared\Transfer\NavigationStorageTransfer;
 use Generated\Shared\Transfer\NavigationTransfer;
 use Generated\Shared\Transfer\NavigationTreeTransfer;
 use Orm\Zed\NavigationStorage\Persistence\SpyNavigationStorage;
-use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToNavigationInterface;
+use Spryker\Zed\NavigationStorage\Dependency\Service\NavigationStorageToUtilSanitizeServiceInterface;
+use Spryker\Zed\NavigationStorage\Persistence\NavigationStorageQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
-/**
- * @method \Spryker\Zed\NavigationStorage\Persistence\NavigationStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\NavigationStorage\Communication\NavigationStorageCommunicationFactory getFactory()
- */
-abstract class AbstractNavigationStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class NavigationStorageWriter implements NavigationStorageWriterInterface
 {
     use DatabaseTransactionHandlerTrait;
+
+    /**
+     * @var \Spryker\Zed\NavigationStorage\Dependency\Service\NavigationStorageToUtilSanitizeServiceInterface
+     */
+    protected $utilSanitizeService;
+
+    /**
+     * @var \Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToNavigationInterface
+     */
+    protected $navigationFacade;
+
+    /**
+     * @var \Spryker\Zed\NavigationStorage\Persistence\NavigationStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param \Spryker\Zed\NavigationStorage\Dependency\Service\NavigationStorageToUtilSanitizeServiceInterface $utilSanitizeService
+     * @param \Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToNavigationInterface $navigationFacade
+     * @param \Spryker\Zed\NavigationStorage\Persistence\NavigationStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(
+        NavigationStorageToUtilSanitizeServiceInterface $utilSanitizeService,
+        NavigationStorageToNavigationInterface $navigationFacade,
+        NavigationStorageQueryContainerInterface $queryContainer,
+        Store $store,
+        $isSendingToQueue
+    ) {
+        $this->utilSanitizeService = $utilSanitizeService;
+        $this->navigationFacade = $navigationFacade;
+        $this->queryContainer = $queryContainer;
+        $this->store = $store;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
 
     /**
      * @param array $navigationIds
      *
      * @return void
      */
-    protected function publish(array $navigationIds)
+    public function publish(array $navigationIds)
     {
         $navigationTreeTransfers = $this->getNavigationTreeTransfer($navigationIds);
         $spyNavigationStorageEntities = $this->findNavigationStorageEntitiesByNavigationIds($navigationIds);
@@ -41,13 +85,13 @@ abstract class AbstractNavigationStorageListener extends AbstractPlugin implemen
     }
 
     /**
-     * @param array $navigationMenuKeyIds
+     * @param array $navigationIds
      *
      * @return void
      */
-    protected function unpublish(array $navigationMenuKeyIds)
+    public function unpublish(array $navigationIds)
     {
-        $spyNavigationMenuTranslationStorageEntities = $this->findNavigationStorageEntitiesByNavigationIds($navigationMenuKeyIds);
+        $spyNavigationMenuTranslationStorageEntities = $this->findNavigationStorageEntitiesByNavigationIds($navigationIds);
         foreach ($spyNavigationMenuTranslationStorageEntities as $spyNavigationMenuTranslationStorageLocalizedEntities) {
             foreach ($spyNavigationMenuTranslationStorageLocalizedEntities as $spyNavigationMenuTranslationStorageLocalizedEntity) {
                 $spyNavigationMenuTranslationStorageLocalizedEntity->delete();
@@ -88,13 +132,14 @@ abstract class AbstractNavigationStorageListener extends AbstractPlugin implemen
         }
 
         $newTransfer = $this->mapToNavigationStorageTransfer($navigationTreeByLocaleTransfer);
-        $data = $this->getFactory()->getUtilSanitizeService()->arrayFilterRecursive($newTransfer->toArray());
+        $data = $this->utilSanitizeService->arrayFilterRecursive($newTransfer->toArray());
 
         $spyNavigationStorage->setFkNavigation($navigationTreeByLocaleTransfer->getNavigation()->getIdNavigation());
         $spyNavigationStorage->setNavigationKey($navigationTreeByLocaleTransfer->getNavigation()->getKey());
         $spyNavigationStorage->setLocale($localeName);
-        $spyNavigationStorage->setStore($this->getFactory()->getStore()->getStoreName());
+        $spyNavigationStorage->setStore($this->store->getStoreName());
         $spyNavigationStorage->setData($data);
+        $spyNavigationStorage->setIsSendingToQueue($this->isSendingToQueue);
         $spyNavigationStorage->save();
     }
 
@@ -106,14 +151,14 @@ abstract class AbstractNavigationStorageListener extends AbstractPlugin implemen
     protected function getNavigationTreeTransfer(array $navigationIds)
     {
         $navigationTrees = [];
-        $localeNames = $this->getFactory()->getStore()->getLocales();
-        $locales = $this->getQueryContainer()->queryLocalesWithLocaleNames($localeNames)->find()->getData();
+        $localeNames = $this->store->getLocales();
+        $locales = $this->queryContainer->queryLocalesWithLocaleNames($localeNames)->find()->getData();
         foreach ($navigationIds as $navigationId) {
             $navigationTransfer = new NavigationTransfer();
             $navigationTransfer->setIdNavigation($navigationId);
             foreach ($locales as $locale) {
                 $localeTransfer = (new LocaleTransfer())->fromArray($locale->toArray(), true);
-                $navigationTrees[$navigationId][$localeTransfer->getLocaleName()] = $this->getFactory()->getNavigationFacade()->findNavigationTree($navigationTransfer, $localeTransfer);
+                $navigationTrees[$navigationId][$localeTransfer->getLocaleName()] = $this->navigationFacade->findNavigationTree($navigationTransfer, $localeTransfer);
             }
         }
 
@@ -127,7 +172,7 @@ abstract class AbstractNavigationStorageListener extends AbstractPlugin implemen
      */
     protected function findNavigationStorageEntitiesByNavigationIds(array $navigationIds)
     {
-        $spyNavigationStorageEntities = $this->getQueryContainer()->queryNavigationStorageByNavigationIds($navigationIds)->find();
+        $spyNavigationStorageEntities = $this->queryContainer->queryNavigationStorageByNavigationIds($navigationIds)->find();
         $navigationStorageEntitiesByIdAndLocale = [];
         foreach ($spyNavigationStorageEntities as $spyNavigationStorageEntity) {
             $navigationStorageEntitiesByIdAndLocale[$spyNavigationStorageEntity->getFkNavigation()][$spyNavigationStorageEntity->getLocale()] = $spyNavigationStorageEntity;
