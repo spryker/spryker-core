@@ -103,6 +103,14 @@ EOD;
             );
         }
 
+        $validityToExists = $productTransfer && $productTransfer->getValidTo();
+        $validityTo = new DateTime($productTransfer->getValidTo());
+        $isValidityToInPast = $validityToExists && ($validityTo < (new DateTime()));
+
+        if ($isValidityToInPast) {
+            return '';
+        }
+
         return sprintf(
             self::ACTIVATION_NOW_MESSAGE,
             $validityFrom->format($this->config->getValidityTimeFormat())
