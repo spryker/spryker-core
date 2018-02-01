@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Communication;
 
-use Spryker\Yves\Kernel\Dependency\Messenger\KernelToMessengerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\Price\ProductMoneyCollectionDataProvider;

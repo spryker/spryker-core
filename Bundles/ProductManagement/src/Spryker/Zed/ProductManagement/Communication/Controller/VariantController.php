@@ -130,6 +130,8 @@ class VariantController extends AbstractController
 
     /**
      * @param int $idProductConcrete
+     *
+     * @return void
      */
     protected function addActivationMessages($idProductConcrete)
     {
@@ -146,6 +148,8 @@ class VariantController extends AbstractController
 
     /**
      * @param int $idProductConcrete
+     *
+     * @return void
      */
     protected function addDeactivationMessages($idProductConcrete)
     {

@@ -104,8 +104,8 @@ EOD;
         }
 
         $validToExists = $productTransfer && $productTransfer->getValidTo();
-        $validityTo = new DateTime($productTransfer->getValidTo());
-        $isValidToInPast = $validToExists && ($validityTo < (new DateTime()));
+        $validTo = new DateTime($productTransfer->getValidTo());
+        $isValidToInPast = $validToExists && ($validTo < (new DateTime()));
 
         if ($isValidToInPast) {
             return '';
