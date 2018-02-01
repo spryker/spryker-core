@@ -44,6 +44,7 @@ class ProductValidityQueryContainer extends AbstractQueryContainer implements Pr
             ->filterByValidFrom('now', Criteria::LESS_EQUAL)
             ->filterByValidTo(null, Criteria::ISNULL)
             ->_or()
+            ->filterByValidFrom('now', Criteria::LESS_EQUAL)
             ->filterByValidTo('now', Criteria::GREATER_EQUAL);
     }
 
