@@ -88,6 +88,14 @@ class VariantController extends AbstractController
             ->getProductFacade()
             ->activateProductConcrete($idProductConcrete);
 
+        $activationMessage = $this->getFactory()
+            ->createProductValidityActivityChecker()
+            ->getActivationMessage($idProductConcrete);
+
+        if ($activationMessage) {
+            $this->addInfoMessage($activationMessage);
+        }
+
         $this->addSuccessMessage('Product was activated.');
         $redirectUrl = $this->generateRedirectUrl($idProductAbstract, $idProductConcrete);
 
@@ -107,6 +115,14 @@ class VariantController extends AbstractController
         $this->getFactory()
             ->getProductFacade()
             ->deactivateProductConcrete($idProductConcrete);
+
+        $deactivationMessage = $this->getFactory()
+            ->createProductValidityActivityChecker()
+            ->getDeactivationMessage($idProductConcrete);
+
+        if ($deactivationMessage) {
+            $this->addInfoMessage($deactivationMessage);
+        }
 
         $this->addSuccessMessage('Product was deactivated.');
         $redirectUrl = $this->generateRedirectUrl($idProductAbstract, $idProductConcrete);

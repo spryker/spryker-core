@@ -14,6 +14,7 @@ class ProductManagementConfig extends AbstractBundleConfig
 {
     const PRODUCT_TYPE_BUNDLE = 'bundle';
     const PRODUCT_TYPE_REGULAR = 'regular';
+    const VALIDITY_DATE_TIME_FORMAT = 'Y-m-d h:m';
 
     /**
      * @return string
@@ -29,5 +30,13 @@ class ProductManagementConfig extends AbstractBundleConfig
     public function getHostYves()
     {
         return $this->get(ProductManagementConstants::BASE_URL_YVES);
+    }
+
+    /**
+     * @return string
+     */
+    public function getValidityTimeFormat()
+    {
+        return self::VALIDITY_DATE_TIME_FORMAT;
     }
 }

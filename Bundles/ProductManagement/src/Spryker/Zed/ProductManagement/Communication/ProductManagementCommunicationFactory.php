@@ -17,6 +17,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelper;
+use Spryker\Zed\ProductManagement\Communication\Helper\ProductValidity\ProductValidityActivityChecker;
 use Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductGroupTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductTable;
@@ -272,6 +273,17 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         }
 
         return $result;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Helper\ProductValidity\ProductValidityActivityCheckerInterface
+     */
+    public function createProductValidityActivityChecker()
+    {
+        return new ProductValidityActivityChecker(
+            $this->getConfig(),
+            $this->getProductFacade()
+        );
     }
 
     /**
