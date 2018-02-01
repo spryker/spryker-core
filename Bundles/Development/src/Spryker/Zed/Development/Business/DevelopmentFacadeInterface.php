@@ -285,11 +285,4 @@ interface DevelopmentFacadeInterface
      * @return int
      */
     public function runPhpstan(InputInterface $input, OutputInterface $output);
-
-    /**
-     * @api
-     *
-     * @return void
-     */
-    public function generateRepositoryIdeAutoCompletion();
 }

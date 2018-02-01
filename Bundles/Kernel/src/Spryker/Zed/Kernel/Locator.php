@@ -28,8 +28,7 @@ class Locator extends AbstractLocatorLocator
                 new FacadeLocator(),
                 new QueryContainerLocator(),
                 new ClientLocator(),
-                new ServiceLocator(),
-                new RepositoryLocator(),
+                new ServiceLocator()
             ];
         }
         $bundleProxy->setLocator($this->locator);

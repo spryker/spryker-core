@@ -259,17 +259,6 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getRepositoryIdeAutoCompletionOptions()
-    {
-        $options = $this->getDefaultIdeAutoCompletionOptions();
-        $options[IdeAutoCompletionOptionConstants::APPLICATION_NAME] = 'Repository';
-
-        return $options;
-    }
-
-    /**
-     * @return array
-     */
     public function getServiceIdeAutoCompletionOptions()
     {
         $options = $this->getDefaultIdeAutoCompletionOptions();
