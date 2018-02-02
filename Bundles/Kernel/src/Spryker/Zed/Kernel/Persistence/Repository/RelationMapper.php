@@ -21,7 +21,7 @@ class RelationMapper implements RelationMapperInterface
      * @param string $relation
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *
-     * @throws \Exception
+     * @throws \Propel\Runtime\Collection\Exception\UnsupportedRelationException
      *
      * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface[]
      */

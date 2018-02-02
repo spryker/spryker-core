@@ -17,4 +17,9 @@ interface EntityTransferInterface extends TransferInterface
      * @return string
      */
     public function entityNamespace();
+
+    /**
+     * @return array
+     */
+    public function getVirtualColumns();
 }
