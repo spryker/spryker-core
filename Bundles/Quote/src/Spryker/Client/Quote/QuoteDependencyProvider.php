@@ -80,7 +80,7 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[]
      */
-    protected function getQuoteTransferExpanderPlugins($container)
+    protected function getQuoteTransferExpanderPlugins(Container $container)
     {
         return [];
     }
