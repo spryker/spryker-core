@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductManagement\Communication\Controller;
+namespace SprykerTest\Zed\ProductManagement\Presentation;
 
 use SprykerTest\Zed\ProductManagement\PageObject\ProductManagementProductCreatePage;
 use SprykerTest\Zed\ProductManagement\ProductManagementCommunicationTester;
@@ -15,8 +15,7 @@ use SprykerTest\Zed\ProductManagement\ProductManagementCommunicationTester;
  * @group SprykerTest
  * @group Zed
  * @group ProductManagement
- * @group Communication
- * @group Controller
+ * @group Presentation
  * @group ProductManagementProductCreateCest
  * Add your own group annotations below this line
  */
