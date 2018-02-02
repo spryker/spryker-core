@@ -17,4 +17,11 @@ interface CompanyPluginExecutorInterface
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
     public function executeCompanyPreSavePlugins(CompanyTransfer $companyTransfer): CompanyTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function executeCompanyPostCreatePlugins(CompanyTransfer $companyTransfer): CompanyTransfer;
 }
