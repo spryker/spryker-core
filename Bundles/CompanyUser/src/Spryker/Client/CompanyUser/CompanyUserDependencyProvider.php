@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\CompanyUser;
 
-use Spryker\Client\CompanyUser\Dependency\Client\CompanyUserToCustomerClientBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -24,7 +23,6 @@ class CompanyUserDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addZedRequestClient($container);
-        $container = $this->addCustomerClient($container);
 
         return $container;
     }
@@ -38,20 +36,6 @@ class CompanyUserDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
             return $container->getLocator()->zedRequest()->client();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addCustomerClient(Container $container): Container
-    {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
-            return new CompanyUserToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 
         return $container;

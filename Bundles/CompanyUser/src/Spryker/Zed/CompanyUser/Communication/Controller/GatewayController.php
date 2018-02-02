@@ -9,7 +9,6 @@ namespace Spryker\Zed\CompanyUser\Communication\Controller;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -25,15 +24,5 @@ class GatewayController extends AbstractGatewayController
     public function createAction(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         return $this->getFacade()->create($companyUserTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
-     */
-    public function findCompanyUserByCustomerIdAction(CustomerTransfer $customerTransfer): ?CompanyUserTransfer
-    {
-        return $this->getFacade()->findCompanyUserByCustomerId($customerTransfer);
     }
 }

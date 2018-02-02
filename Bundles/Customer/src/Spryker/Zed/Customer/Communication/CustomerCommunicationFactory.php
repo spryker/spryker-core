@@ -115,14 +115,6 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface[]
-     */
-    public function getCustomerTransferExpanderPlugins()
-    {
-        return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_TRANSFER_EXPANDER);
-    }
-
-    /**
      * @deprecated Please use `getLocaleFacadePublic()` instead.
      *
      * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface

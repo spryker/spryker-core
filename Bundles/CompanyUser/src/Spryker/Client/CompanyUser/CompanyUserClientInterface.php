@@ -23,14 +23,4 @@ interface CompanyUserClientInterface
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function createCompanyUser(CompanyUserTransfer $companyUserUserTransfer): CompanyUserResponseTransfer;
-
-    /**
-     * Specification:
-     * - Retrieve current company user information from session.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
-     */
-    public function getCompanyUser(): ?CompanyUserTransfer;
 }
