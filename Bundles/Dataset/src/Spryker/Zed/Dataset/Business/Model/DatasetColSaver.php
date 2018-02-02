@@ -19,6 +19,7 @@ class DatasetColSaver implements DatasetColSaverInterface
 
     /**
      * DatasetColSaver constructor.
+     *
      * @param \Spryker\Zed\Dataset\Business\Model\DatasetFinderInterface $datasetFinder
      */
     public function __construct(DatasetFinderInterface $datasetFinder)

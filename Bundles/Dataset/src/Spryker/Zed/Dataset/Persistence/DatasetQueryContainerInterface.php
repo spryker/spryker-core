@@ -11,13 +11,16 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface DatasetQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
+     * @api
+     *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
      */
     public function queryDashboard();
 
     /**
+     * @api
+     *
      * @param int $idDataset
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
@@ -25,6 +28,8 @@ interface DatasetQueryContainerInterface extends QueryContainerInterface
     public function queryDatasetById($idDataset);
 
     /**
+     * @api
+     *
      * @param string $title
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
@@ -32,6 +37,8 @@ interface DatasetQueryContainerInterface extends QueryContainerInterface
     public function queryDatasetRowByTitle($title);
 
     /**
+     * @api
+     *
      * @param string $title
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery

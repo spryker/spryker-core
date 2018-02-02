@@ -36,7 +36,6 @@ class DatasetSaver implements DatasetSaverInterface
      */
     protected $readerManager;
 
-
     public function __construct(
         DatasetFinderInterface $datasetFinder,
         DatasetLocalizedAttributesSaverInterface $datasetLocalizedAttributesSaver,
@@ -51,7 +50,7 @@ class DatasetSaver implements DatasetSaverInterface
 
     /**
      * @param null|\Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile|null $file
      *
      * @return bool
      */

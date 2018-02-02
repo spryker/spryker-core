@@ -9,5 +9,4 @@ namespace Spryker\Zed\Dataset\Business\Exception;
 
 class DatasetParseFormatException extends DatasetParseException
 {
-
 }

@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 interface DatasetFacadeInterface
 {
     /**
-     *
      * @api
      *
      * @param int $idDataset
@@ -23,7 +22,6 @@ interface DatasetFacadeInterface
     public function delete($idDataset);
 
     /**
-     *
      * @api
      *
      * @param int $idDataset
@@ -33,7 +31,6 @@ interface DatasetFacadeInterface
     public function activateById($idDataset);
 
     /**
-     *
      * @api
      *
      * @param int $idDataset
@@ -43,11 +40,10 @@ interface DatasetFacadeInterface
     public function deactivateById($idDataset);
 
     /**
-     *
      * @api
      *
      * @param null|\Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile|null
      *
      * @return bool
      */

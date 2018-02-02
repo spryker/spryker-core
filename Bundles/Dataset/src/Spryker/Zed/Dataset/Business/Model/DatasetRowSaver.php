@@ -24,6 +24,7 @@ class DatasetRowSaver implements DatasetRowSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\SpyDatasetRowEntityTransfer $datasetRowEntityTransfer
+     *
      * @return \Orm\Zed\Dataset\Persistence\SpyDataset
      */
     public function getOrCreate(SpyDatasetRowEntityTransfer $datasetRowEntityTransfer)
