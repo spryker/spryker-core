@@ -7,18 +7,18 @@
 
 namespace Spryker\Zed\FileManagerStorage\Persistence;
 
-use Orm\Zed\Cms\Persistence\SpyFileInfoQuery;
-use Orm\Zed\Cms\Persistence\SpyFileQuery;
+use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
+use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\FileManagerStorage\Persistence\SpyFileStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
- * @method \Spryker\Zed\FileManagerStorage\Persistence\FileManagerStorageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\FileManagerStorage\Persistence\FileManagerStorageQueryContainerInterface getQueryContainer()
  */
 class FileManagerStoragePersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Orm\Zed\Cms\Persistence\SpyFileQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
     public function createFileQuery()
     {
@@ -34,10 +34,18 @@ class FileManagerStoragePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Cms\Persistence\SpyFileInfoQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
      */
     public function createFileInfoQuery()
     {
         return SpyFileInfoQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\FileManagerStorage\Persistence\SpyFileStorageQuery
+     */
+    public function createFileStorageQuery()
+    {
+        return SpyFileStorageQuery::create();
     }
 }

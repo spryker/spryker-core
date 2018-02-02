@@ -24,6 +24,9 @@
         </foreign-key>
         <behavior name="timestampable" />
         <id-method-parameter value="spy_file_info_pk_seq"/>
+        <behavior name="event">
+            <parameter name="spy_file_info_all" column="*" />
+        </behavior>
     </table>
 
     <table name="spy_file_localized_attributes" idMethod="native" allowPkInsert="true"  phpName="SpyFileLocalizedAttributes">
@@ -43,5 +46,8 @@
             <unique-column name="fk_locale"/>
         </unique>
         <id-method-parameter value="spy_file_localized_attributes_pk_seq"/>
+        <behavior name="event">
+            <parameter name="spy_file_localized_attributes_all" column="*" />
+        </behavior>
     </table>
 </database>

@@ -27,6 +27,7 @@ class FileLocalizedAttributesSaver implements FileLocalizedAttributesSaverInterf
 
         if (empty($existingFileLocalizedAttributes)) {
             $this->createNewLocalizedAttributes($file, $localizedAttributesToSave);
+            return;
         }
 
         foreach ($localizedAttributesToSave as $localizedAttribute) {

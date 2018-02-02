@@ -7,12 +7,15 @@
 
     <table name="spy_file_storage" phpName="SpyFileStorage">
         <column name="id_file_storage" type="integer" autoIncrement="true" primaryKey="true"/>
+        <column name="file_name" type="varchar"/>
+        <column name="fk_file" type="integer"/>
         <id-method-parameter value="spy_file_storage_pk_seq"/>
         <behavior name="synchronization">
             <parameter name="resource" value="file"/>
             <parameter name="store" required="true"/>
             <parameter name="locale" required="true"/>
             <parameter name="queue_group" value="sync.storage.file"/>
+            <parameter name="key_suffix_column" value="file_name"/>
         </behavior>
     </table>
 </database>
