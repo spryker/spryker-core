@@ -10,29 +10,12 @@ namespace Spryker\Shared\Kernel\Transfer;
 class AbstractEntityTransfer extends AbstractTransfer implements EntityTransferInterface
 {
     /**
-     * @var null|string
-     */
-    protected static $entityNamespace = null;
-
-    /**
      * This property is used to map all properties which does not exist in child transfer,
      * it's used for SQL aliases, aggregates, custom fields.
      *
      * @var array
      */
     protected $virtualColumns = [];
-
-    /**
-     * @internal
-     *
-     * Returns FQCN of propel entity it's mapped
-     *
-     * @return string
-     */
-    public function entityNamespace()
-    {
-        return static::$entityNamespace;
-    }
 
     /**
      * @return array

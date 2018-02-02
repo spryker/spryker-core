@@ -160,8 +160,8 @@
 
 {%- macro addEntityNamespace(entityNamespace) %}
     /**
-    * @var null|string
+    * @var string
     */
-    protected static $entityNamespace = '{{ entityNamespace }}';
+    public static $entityNamespace = '{{ entityNamespace }}';
 {% endmacro -%}
 

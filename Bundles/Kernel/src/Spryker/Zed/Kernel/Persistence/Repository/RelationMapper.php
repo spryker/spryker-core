@@ -124,7 +124,7 @@ class RelationMapper implements RelationMapperInterface
      */
     protected function getTableMap(EntityTransferInterface $entityTransfer)
     {
-        $entityNamespace = $entityTransfer->entityNamespace();
+        $entityNamespace = $entityTransfer::$entityNamespace;
         $tableNameClass = $entityNamespace::TABLE_MAP;
 
         return $tableNameClass::getTableMap();

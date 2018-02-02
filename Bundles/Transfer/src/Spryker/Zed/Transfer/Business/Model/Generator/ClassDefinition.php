@@ -61,7 +61,7 @@ class ClassDefinition implements ClassDefinitionInterface
     private $propertyNameMap = [];
 
     /**
-     * @var string
+     * @var string|null
      */
     private $entityNamespace;
 

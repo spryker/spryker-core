@@ -10,15 +10,6 @@ namespace Spryker\Shared\Kernel\Transfer;
 interface EntityTransferInterface extends TransferInterface
 {
     /**
-     * @internal
-     *
-     * Returns FQCN of propel entity it's mapped
-     *
-     * @return string
-     */
-    public function entityNamespace();
-
-    /**
      * @return array
      */
     public function getVirtualColumns();
