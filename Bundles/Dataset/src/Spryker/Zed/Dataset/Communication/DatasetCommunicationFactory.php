@@ -15,13 +15,13 @@ use Spryker\Zed\Dataset\DatasetDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\Dataset\Persistence\DatasetQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Dataset\DatasetConfig getConfig()
  */
 class DatasetCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return DatasetTable
+     * @return \Spryker\Zed\Dataset\Communication\Table\DatasetTable
      */
     public function createDatasetTable()
     {

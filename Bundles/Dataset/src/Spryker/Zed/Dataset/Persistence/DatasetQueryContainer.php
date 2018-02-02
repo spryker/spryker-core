@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class DatasetQueryContainer extends AbstractQueryContainer implements DatasetQueryContainerInterface
 {
     /**
+     * @api
+     *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
      */
     public function queryDashboard()
@@ -26,6 +28,8 @@ class DatasetQueryContainer extends AbstractQueryContainer implements DatasetQue
     }
 
     /**
+     * @api
+     *
      * @param int $idDataset
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
@@ -36,6 +40,8 @@ class DatasetQueryContainer extends AbstractQueryContainer implements DatasetQue
     }
 
     /**
+     * @api
+     *
      * @param string $title
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetRowQuery
@@ -45,8 +51,9 @@ class DatasetQueryContainer extends AbstractQueryContainer implements DatasetQue
         return $this->queryDashboardRow()->filterByTitle($title);
     }
 
-
     /**
+     * @api
+     *
      * @param string $title
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetColQuery

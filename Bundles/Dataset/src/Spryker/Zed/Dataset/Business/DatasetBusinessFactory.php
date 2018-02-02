@@ -19,11 +19,10 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Dataset\DatasetConfig getConfig()
- * @method \Spryker\Zed\Dataset\Persistence\DatasetQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface getQueryContainer()
  */
 class DatasetBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Dataset\Business\Model\DatasetFinderInterface
      */

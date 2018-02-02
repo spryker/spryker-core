@@ -14,6 +14,7 @@ use Orm\Zed\Dataset\Persistence\SpyDataset;
 use Spryker\Zed\Dataset\Communication\Form\DatasetForm;
 use Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeFacadeBridge;
 use Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface;
+use ArrayObject;
 
 class DatasetFormDataProvider
 {
@@ -31,7 +32,7 @@ class DatasetFormDataProvider
 
     /**
      * @param \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeFacadeBridge
+     * @param \Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeFacadeBridge $localeFacade
      */
     public function __construct(
         DatasetQueryContainerInterface $queryContainer,
@@ -61,6 +62,8 @@ class DatasetFormDataProvider
         $spyDatasetTransfer = $this->createEmptyspyDatasetTransfer();
         $this->addSpyDatasetLocalizedAttributeTransfers($spyDataset, $spyDatasetTransfer);
         $spyDatasetTransfer->fromArray($spyDataset->toArray(), true);
+        $spyDatasetRowColTransfers = new ArrayObject($spyDataset->getSpyDatasetRowColValues());
+        $spyDatasetTransfer->setSpyDatasetRowColValues($spyDatasetRowColTransfers);
 
         return $spyDatasetTransfer;
     }

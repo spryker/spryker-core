@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Container;
 
 class DatasetDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_LOCALE = 'FACADE_LOCALE';
 

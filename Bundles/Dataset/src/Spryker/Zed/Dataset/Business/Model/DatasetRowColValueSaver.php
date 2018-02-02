@@ -22,7 +22,6 @@ class DatasetRowColValueSaver implements DatasetRowColValueSaverInterface
      */
     protected $datasetRowSaver;
 
-
     public function __construct(
         DatasetColSaverInterface $datasetColSaver,
         DatasetRowSaverInterface $datasetRowSaver

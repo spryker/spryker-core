@@ -17,6 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use ArrayObject;
 
 class DatasetForm extends AbstractType
 {
@@ -63,7 +64,6 @@ class DatasetForm extends AbstractType
             ->addDatasetContentField($builder)
             ->addDatasetNameField($builder)
             ->addDatasetLocalizedAttributesForm($builder, $options);
-
     }
 
     /**
@@ -131,11 +131,8 @@ class DatasetForm extends AbstractType
      */
     protected function addDatasetContentField(FormBuilderInterface $builder)
     {
-        $formData = $builder->getData();
-        $countData = count($formData[static::DATASET_DATA_CONTENT]);
-
         $builder->add(static::DATASET_FILE_CONTENT, FileType::class, [
-            'required' => empty($countData),
+            'required' => false,
             'mapped' => false,
             'constraints' => [
                 new File([

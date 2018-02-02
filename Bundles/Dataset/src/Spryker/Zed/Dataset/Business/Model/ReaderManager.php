@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\Dataset\Business\Model;
 
+use ArrayObject;
+use Exception;
 use Generated\Shared\Transfer\SpyDatasetColEntityTransfer;
 use Generated\Shared\Transfer\SpyDatasetRowColValueEntityTransfer;
 use Generated\Shared\Transfer\SpyDatasetRowEntityTransfer;
-use League\Csv\Reader;
 use League\Csv\CharsetConverter;
+use League\Csv\Reader;
 use Spryker\Zed\Dataset\Business\Exception\DatasetParseException;
 use Spryker\Zed\Dataset\Business\Exception\DatasetParseFormatException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use \Exception;
-use \ArrayObject;
 
 class ReaderManager implements ReaderManagerInterface
 {
@@ -105,6 +105,7 @@ class ReaderManager implements ReaderManagerInterface
 
     /**
      * @param string $col
+     *
      * @return \Generated\Shared\Transfer\SpyDatasetColEntityTransfer
      */
     private function getDatasetColTransfer($col)

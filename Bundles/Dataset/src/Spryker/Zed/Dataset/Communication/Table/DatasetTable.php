@@ -107,7 +107,7 @@ class DatasetTable extends AbstractTable
         $config->setSortable([
             DatasetConstants::COL_ID_DATASET,
             DatasetConstants::COL_DATASET_NAME,
-            DatasetConstants::COL_IS_ACTIVE
+            DatasetConstants::COL_IS_ACTIVE,
         ]);
     }
 
@@ -120,7 +120,7 @@ class DatasetTable extends AbstractTable
     {
         $config->setSearchable([
             DatasetConstants::COL_ID_DATASET,
-            DatasetConstants::COL_DATASET_NAME
+            DatasetConstants::COL_DATASET_NAME,
         ]);
     }
 
