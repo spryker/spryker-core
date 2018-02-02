@@ -9,7 +9,6 @@ namespace Spryker\Client\CompanyUser\Zed;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CompanyUserStubInterface
 {
@@ -19,11 +18,4 @@ interface CompanyUserStubInterface
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function createCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface|null
-     */
-    public function findCompanyUserByCustomerId(CustomerTransfer $customerTransfer): ?CompanyUserTransfer;
 }

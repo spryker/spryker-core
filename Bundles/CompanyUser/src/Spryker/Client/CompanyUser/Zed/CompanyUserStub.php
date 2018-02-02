@@ -9,7 +9,6 @@ namespace Spryker\Client\CompanyUser\Zed;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class CompanyUserStub implements CompanyUserStubInterface
@@ -35,15 +34,5 @@ class CompanyUserStub implements CompanyUserStubInterface
     public function createCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         return $this->zedRequestClient->call('/company-user/gateway/create', $companyUserTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface|null
-     */
-    public function findCompanyUserByCustomerId(CustomerTransfer $customerTransfer): ?CompanyUserTransfer
-    {
-        return $this->zedRequestClient->call('/company-user/gateway/find-company-user-by-customer-id', $customerTransfer);
     }
 }
