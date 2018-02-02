@@ -42,7 +42,7 @@ class NavigationStorageDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
@@ -57,6 +57,8 @@ class NavigationStorageDependencyProvider extends AbstractBundleDependencyProvid
         $container[static::STORE] = function (Container $container) {
             return Store::getInstance();
         };
+
+        return $container;
     }
 
     /**

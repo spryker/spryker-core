@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductRelationStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\ProductRelationStorage\Business\Storage;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractRelationStorageTransfer;
@@ -15,20 +15,44 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTypeTableMap;
 use Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorage;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductRelationStorage\Communication\ProductRelationStorageCommunicationFactory getFactory()
- */
-class AbstractProductRelationStorageListener extends AbstractPlugin
+class ProductRelationStorageWriter implements ProductRelationStorageWriterInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(ProductRelationStorageQueryContainerInterface $queryContainer, Store $store, $isSendingToQueue)
+    {
+        $this->queryContainer = $queryContainer;
+        $this->store = $store;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
+
     /**
      * @param array $productAbstractIds
      *
      * @return void
      */
-    protected function publish(array $productAbstractIds)
+    public function publish(array $productAbstractIds)
     {
         $productRelationEntities = $this->findProductRelationAbstractEntities($productAbstractIds);
         $productRelations = [];
@@ -40,6 +64,19 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
         $spyProductAbstractRelationStorageEntities = $this->findProductStorageEntitiesByProductAbstractIds($productAbstractIds);
 
         $this->storeData($spyProductAbstractLocalizedAttributeEntities, $spyProductAbstractRelationStorageEntities, $productRelations);
+    }
+
+    /**
+     * @param array $productAbstractIds
+     *
+     * @return void
+     */
+    public function unpublish(array $productAbstractIds)
+    {
+        $spyProductAbstractRelationStorageEntities = $this->findProductStorageEntitiesByProductAbstractIds($productAbstractIds);
+        foreach ($spyProductAbstractRelationStorageEntities as $spyProductAbstractRelationStorageEntity) {
+            $spyProductAbstractRelationStorageEntity->delete();
+        }
     }
 
     /**
@@ -96,6 +133,7 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
         $spyProductAbstractRelationStorageEntity->setFkProductAbstract($spyProductAbstractLocalizedEntity->getFkProductAbstract());
         $spyProductAbstractRelationStorageEntity->setData($productAbstractRelationStorageTransfer->toArray());
         $spyProductAbstractRelationStorageEntity->setStore($this->getStoreName());
+        $spyProductAbstractRelationStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductAbstractRelationStorageEntity->save();
     }
 
@@ -165,7 +203,7 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
      */
     protected function findRelationProducts($idProductRelation, $idLocale)
     {
-        return $this->getQueryContainer()
+        return $this->queryContainer
             ->queryProductRelationWithProductAbstractByIdRelationAndLocale(
                 $idProductRelation,
                 $idLocale
@@ -180,7 +218,7 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
      */
     protected function findProductRelationAbstractEntities(array $productAbstractIds)
     {
-        return $this->getQueryContainer()->queryProductRelations($productAbstractIds)->find()->getData();
+        return $this->queryContainer->queryProductRelations($productAbstractIds)->find()->getData();
     }
 
     /**
@@ -190,7 +228,7 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
      */
     protected function findProductAbstractLocalizedEntities(array $productAbstractIds)
     {
-        return $this->getQueryContainer()->queryProductAbstractLocalizedByIds($productAbstractIds)->find()->getData();
+        return $this->queryContainer->queryProductAbstractLocalizedByIds($productAbstractIds)->find()->getData();
     }
 
     /**
@@ -200,7 +238,7 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
      */
     protected function findProductStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {
-        $productAbstractRelationStorageEntities = $this->getQueryContainer()->queryProductAbstractRelationStorageByIds($productAbstractIds)->find();
+        $productAbstractRelationStorageEntities = $this->queryContainer->queryProductAbstractRelationStorageByIds($productAbstractIds)->find();
         $productAbstractStorageRelationEntitiesById = [];
         foreach ($productAbstractRelationStorageEntities as $productAbstractRelationStorageEntity) {
             $productAbstractStorageRelationEntitiesById[$productAbstractRelationStorageEntity->getFkProductAbstract()] = $productAbstractRelationStorageEntity;
@@ -214,6 +252,6 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
      */
     protected function getStoreName()
     {
-        return $this->getFactory()->getStore()->getStoreName();
+        return $this->store->getStoreName();
     }
 }
