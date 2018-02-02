@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductCustomerPermissionCollector\Business\Storage;
 
+use Spryker\Shared\ProductCustomerPermission\ProductCustomerPermissionConfig;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
-use Spryker\Zed\ProductCustomerPermission\ProductCustomerPermissionConfig;
 use Spryker\Zed\ProductCustomerPermissionCollector\Persistence\Search\Propel\ProductCustomerPermissionSearchCollectorQuery;
 
 class ProductCustomerPermissionStorageCollector extends AbstractStoragePropelCollector

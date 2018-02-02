@@ -11,9 +11,9 @@ use Generated\Shared\Search\CustomerPageIndexMap;
 use Generated\Shared\Transfer\SearchCollectorConfigurationTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Product\ProductConfig;
+use Spryker\Shared\ProductCustomerPermission\ProductCustomerPermissionConfig;
 use Spryker\Zed\Collector\Business\Collector\Search\AbstractConfigurableSearchPropelCollector;
 use Spryker\Zed\Collector\CollectorConfig;
-use Spryker\Zed\ProductCustomerPermission\ProductCustomerPermissionConfig;
 use Spryker\Zed\ProductCustomerPermissionCollector\Persistence\Search\Propel\ProductCustomerPermissionSearchCollectorQuery;
 
 class ProductCustomerPermissionSearchCollector extends AbstractConfigurableSearchPropelCollector
