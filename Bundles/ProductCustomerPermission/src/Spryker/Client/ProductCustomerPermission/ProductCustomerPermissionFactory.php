@@ -8,9 +8,31 @@
 namespace Spryker\Client\ProductCustomerPermission;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductCustomerPermission\KeyBuilder\ProductCustomerPermissionResourceKeyBuilder;
+use Spryker\Client\ProductCustomerPermission\Storage\ProductCustomerPermissionStorage;
 
 class ProductCustomerPermissionFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Client\ProductCustomerPermission\Storage\ProductCustomerPermissionStorageInterface
+     */
+    public function createStorage()
+    {
+        return new ProductCustomerPermissionStorage(
+            $this->getStorageClient(),
+            $this->createKeyBuilder(),
+            $this->getLocaleClient()->getCurrentLocale()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
+     */
+    protected function createKeyBuilder()
+    {
+        return new ProductCustomerPermissionResourceKeyBuilder();
+    }
+
     /**
      * @return \Spryker\Client\ProductCustomerPermission\Dependency\Client\ProductCustomerPermissionToCustomerClientInterface
      */
@@ -24,6 +46,14 @@ class ProductCustomerPermissionFactory extends AbstractFactory
      */
     public function getStorageClient()
     {
-        return $this->getProvidedDependency(ProductCustomerPermissionDependencyProvider::KV_STORAGE);
+        return $this->getProvidedDependency(ProductCustomerPermissionDependencyProvider::CLIENT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductCustomerPermission\Dependency\Client\ProductCustomerPermissionToLocaleClientInterface
+     */
+    public function getLocaleClient()
+    {
+        return $this->getProvidedDependency(ProductCustomerPermissionDependencyProvider::CLIENT_LOCALE);
     }
 }

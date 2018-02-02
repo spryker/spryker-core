@@ -16,7 +16,7 @@ use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Spryker\Zed\ProductCustomerPermission\ProductCustomerPermissionConfig;
+use Spryker\Shared\ProductCustomerPermission\ProductCustomerPermissionConfig;
 
 /**
  * @method \Spryker\Client\ProductCustomerPermission\ProductCustomerPermissionFactory getFactory()
@@ -68,24 +68,24 @@ class ProductCustomerPermissionQueryExpanderPlugin extends AbstractPlugin implem
     }
 
     /**
-     * @param int $customerId
+     * @param int $idCustomer
      *
      * @return \Elastica\Query\Match
      */
-    protected function createCustomerQuery(int $customerId)
+    protected function createCustomerQuery(int $idCustomer)
     {
         return (new Match())
-            ->setField(CustomerPageIndexMap::ID_CUSTOMER, $customerId);
+            ->setField(CustomerPageIndexMap::ID_CUSTOMER, $idCustomer);
     }
 
     /**
-     * @param int $customerId
+     * @param int $idCustomer
      *
      * @return \Elastica\Query\HasChild
      */
-    protected function createCustomerFilter(int $customerId)
+    protected function createCustomerFilter(int $idCustomer)
     {
-        $customerQuery = $this->createCustomerQuery($customerId);
+        $customerQuery = $this->createCustomerQuery($idCustomer);
         return (new HasChild($customerQuery))
             ->setType(ProductCustomerPermissionConfig::ELASTICSEARCH_INDEX_TYPE_NAME);
     }

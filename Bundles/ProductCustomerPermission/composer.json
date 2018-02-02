@@ -8,12 +8,24 @@
       "spryker/product": "^5.0.0",
       "spryker/propel-orm": "^1.1.0",
       "spryker/storage": "^3.0.0",
-      "spryker/touch": "^3.0.0"
+      "spryker/touch": "^3.0.0",
+      "spryker/locale": "^3.0.0",
+      "spryker/key-builder": "^1.0.0"
     },
     "require-dev": {
       "spryker/code-sniffer": "*",
-      "spryker/propel": "*"
+      "spryker/propel": "*",
+      "spryker/cart": "*",
+      "spryker/checkout": "*",
+      "spryker/elastica": "*",
+      "spryker/search": "*"
     },
+   "suggest": {
+      "spryker/cart": "*",
+      "spryker/checkout": "*",
+      "spryker/elastica": "*",
+      "spryker/search": "*"
+   },
     "autoload": {
       "psr-4": {
         "Spryker\\": "src/Spryker/"

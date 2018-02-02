@@ -10,11 +10,14 @@ namespace Spryker\Client\ProductCustomerPermission;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductCustomerPermission\Dependency\Client\ProductCustomerPermissionToCustomerClientBridge;
+use Spryker\Client\ProductCustomerPermission\Dependency\Client\ProductCustomerPermissionToLocaleClientBridge;
+use Spryker\Client\ProductCustomerPermission\Dependency\Client\ProductCustomerPermissionToStorageClientBridge;
 
 class ProductCustomerPermissionDependencyProvider extends AbstractDependencyProvider
 {
     const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    const KV_STORAGE = 'KV_STORAGE';
+    const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    const CLIENT_STORAGE = 'CLIENT_STORAGE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -24,6 +27,7 @@ class ProductCustomerPermissionDependencyProvider extends AbstractDependencyProv
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addCustomerClient($container);
+        $container = $this->addLocaleClient($container);
         $container = $this->addStorageClient($container);
 
         return $container;
@@ -47,9 +51,22 @@ class ProductCustomerPermissionDependencyProvider extends AbstractDependencyProv
      *
      * @return \Spryker\Client\Kernel\Container
      */
+    protected function addLocaleClient(Container $container)
+    {
+        $container[static::CLIENT_LOCALE] = function (Container $container) {
+            return new ProductCustomerPermissionToLocaleClientBridge($container->getLocator()->locale()->client());
+        };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
     protected function addStorageClient(Container $container)
     {
-        $container[static::KV_STORAGE] = function (Container $container) {
+        $container[static::CLIENT_STORAGE] = function (Container $container) {
             return new ProductCustomerPermissionToStorageClientBridge($container->getLocator()->storage()->client());
         };
         return $container;
