@@ -9,9 +9,9 @@ namespace Spryker\Zed\ProductCustomerPermission\Business\Model;
 
 use Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermission;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Shared\ProductCustomerPermission\ProductCustomerPermissionConfig;
 use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToTouchFacadeInterface;
 use Spryker\Zed\ProductCustomerPermission\Persistence\ProductCustomerPermissionQueryContainerInterface;
-use Spryker\Zed\ProductCustomerPermission\ProductCustomerPermissionConfig;
 
 class ProductCustomerPermissionSaver implements ProductCustomerPermissionSaverInterface
 {
