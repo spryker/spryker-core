@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Kernel\Persistence\Repository;
 
-use Exception;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveQuery\PropelQuery;
+use Propel\Runtime\Collection\Exception\UnsupportedRelationException;
 use Propel\Runtime\Map\RelationMap;
 use Spryker\Shared\Kernel\Transfer\EntityTransferInterface;
 
@@ -36,7 +36,7 @@ class RelationMapper implements RelationMapperInterface
         $relationMap = $this->getRelation($entityTransfer, $relation);
 
         if (RelationMap::ONE_TO_MANY !== $relationMap->getType()) {
-            throw new Exception('Only one to many relations supported');
+            throw new UnsupportedRelationException('Only one to many relations supported');
         }
 
         $symRelationMap = $relationMap->getSymmetricalRelation();
