@@ -40,6 +40,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
     const BUNDLED_PRODUCTS_TO_BE_REMOVED = 'product_bundles_to_be_removed';
 
     const OPTION_IS_BUNDLE_ITEM = 'is_bundle_item';
+    const VALIDITY_DATETIME_FORMAT = 'yyyy-MM-dd H:mm:ss';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -125,7 +126,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
             static::FIELD_VALID_FROM,
             DateTimeType::class,
             [
-                'format' => 'yyyy-MM-dd H:mm:ss',
+                'format' => static::VALIDITY_DATETIME_FORMAT,
                 'label' => 'Valid From (GMT)',
                 'widget' => 'single_text',
                 'required' => false,
@@ -177,7 +178,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
             static::FIELD_VALID_TO,
             DateTimeType::class,
             [
-                'format' => 'yyyy-MM-dd H:mm:ss',
+                'format' => static::VALIDITY_DATETIME_FORMAT,
                 'label' => 'Valid To (GMT)',
                 'widget' => 'single_text',
                 'required' => false,
@@ -330,7 +331,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                     return new DateTime($dateAsString);
                 },
                 function ($dateAsObject) use ($timeFormat) {
-                    /** @var \DateTime $dateAsObject */
+                    /** @var \DateTime|null $dateAsObject */
                     if (!$dateAsObject) {
                         return null;
                     }

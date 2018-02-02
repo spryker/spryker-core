@@ -143,7 +143,7 @@ class VariantController extends AbstractController
             $this->addInfoMessage($activationMessage);
         }
 
-        $this->addSuccessMessage('Product was activated.');
+        $this->addSuccessMessage('Product has been activated.');
     }
 
     /**
@@ -161,6 +161,6 @@ class VariantController extends AbstractController
             $this->addInfoMessage($deactivationMessage);
         }
 
-        $this->addSuccessMessage('Product was deactivated.');
+        $this->addSuccessMessage('Product has been deactivated.');
     }
 }
