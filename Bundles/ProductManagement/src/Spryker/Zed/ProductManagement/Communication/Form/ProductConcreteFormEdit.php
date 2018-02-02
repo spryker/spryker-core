@@ -133,7 +133,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                     'class' => 'datepicker js-from-datetime safe-datetime',
                 ],
                 'constraints' => [
-                     new Callback([
+                    new Callback([
                         'callback' => function ($newFrom, ExecutionContextInterface $context) {
                             $formData = $context->getRoot()->getData();
 
@@ -145,15 +145,18 @@ class ProductConcreteFormEdit extends ProductFormAdd
                                 return;
                             }
 
-                            if ($newFrom > $formData[static::FIELD_VALID_TO]) {
+                            $newValidFromDateTime = new DateTime($newFrom);
+                            $validToDateTime = new DateTime($formData[static::FIELD_VALID_TO]);
+
+                            if ($newValidFromDateTime > $validToDateTime) {
                                 $context->addViolation('Date "Valid from" can not be later than "Valid to".');
                             }
 
-                            if ($newFrom == $formData[static::FIELD_VALID_TO]) {
+                            if ($newValidFromDateTime->format('c') === $validToDateTime->format('c')) {
                                 $context->addViolation('Date "Valid from" can not be the same as "Valid to".');
                             }
                         },
-                     ]),
+                    ]),
                 ],
             ]
         );
@@ -185,6 +188,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
                     new Callback([
                         'callback' => function ($newTo, ExecutionContextInterface $context) {
                             $formData = $context->getRoot()->getData();
+
                             if (!$newTo) {
                                 return;
                             }
@@ -193,7 +197,10 @@ class ProductConcreteFormEdit extends ProductFormAdd
                                 return;
                             }
 
-                            if ($newTo < $formData[static::FIELD_VALID_FROM]) {
+                            $newValidToDateTime = new DateTime($newTo);
+                            $validFromDateTime = new DateTime($formData[static::FIELD_VALID_FROM]);
+
+                            if ($newValidToDateTime < $validFromDateTime) {
                                 $context->addViolation('Date "Valid to" can not be earlier than "Valid from".');
                             }
                         },
