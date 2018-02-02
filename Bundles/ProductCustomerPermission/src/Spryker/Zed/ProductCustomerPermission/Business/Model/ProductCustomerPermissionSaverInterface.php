@@ -13,53 +13,53 @@ interface ProductCustomerPermissionSaverInterface
      * Specification:
      *  - Add one product to the customer permission list
      *
-     * @param int $customerId
+     * @param int $idCustomer
      * @param int $productId
      *
      * @return void
      */
-    public function savePermission(int $customerId, int $productId);
+    public function savePermission(int $idCustomer, int $productId);
 
     /**
      * Specification:
      *  - Add new products to customer, if they are no assigned yet
      *
-     * @param int $customerId
+     * @param int $idCustomer
      * @param array $productIds
      *
      * @return void
      */
-    public function savePermissions(int $customerId, array $productIds);
+    public function savePermissions(int $idCustomer, array $productIds);
 
     /**
      * Specification:
      *  - Delete one product from the customer permission list
      *
-     * @param int $customerId
+     * @param int $idCustomer
      * @param int $productId
      *
      * @return void
      */
-    public function deletePermission(int $customerId, int $productId);
+    public function deletePermission(int $idCustomer, int $productId);
 
     /**
      * Specification:
      *  - Delete all products from the customer permission list
      *
-     * @param int $customerId
+     * @param int $idCustomer
      *
      * @return void
      */
-    public function deleteAllPermissions(int $customerId);
+    public function deleteAllPermissions(int $idCustomer);
 
     /**
      * Specification:
      *  - Delete specified products from the customer permission list
      *
-     * @param int $customerId
+     * @param int $idCustomer
      * @param array $productIds
      *
      * @return void
      */
-    public function deletePermissions(int $customerId, array $productIds);
+    public function deletePermissions(int $idCustomer, array $productIds);
 }

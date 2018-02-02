@@ -17,19 +17,19 @@ interface ProductCustomerPermissionQueryContainerInterface extends QueryContaine
     /**
      * @api
      *
-     * @param int $customerId
+     * @param int $idCustomer
      *
      * @return \Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermissionQuery
      */
-    public function queryProductCustomerPermissionByCustomer(int $customerId);
+    public function queryProductCustomerPermissionByCustomer(int $idCustomer);
 
     /**
      * @api
      *
-     * @param int $customerId
+     * @param int $idCustomer
      * @param array $productIds
      *
      * @return \Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermissionQuery
      */
-    public function queryProductCustomerPermissionByCustomerAndProducts(int $customerId, array $productIds);
+    public function queryProductCustomerPermissionByCustomerAndProducts(int $idCustomer, array $productIds);
 }

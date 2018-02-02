@@ -67,16 +67,16 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
      */
     protected function customerHasPermissions(QuoteTransfer $quoteTransfer)
     {
-        $productAbstractIds = $this->getProductAbstractIds($quoteTransfer);
-        $customerId = $quoteTransfer->getCustomer()->getIdCustomer();
+        $idProductAbstracts = $this->getProductAbstractIds($quoteTransfer);
+        $idCustomer = $quoteTransfer->getCustomer()->getIdCustomer();
 
         $permissionCount = $this->queryContainer
             ->queryProductCustomerPermissionByCustomerAndProducts(
-                $customerId,
-                $productAbstractIds
+                $idCustomer,
+                $idProductAbstracts
             )->count();
 
-        return $permissionCount === count($productAbstractIds);
+        return $permissionCount === count($idProductAbstracts);
     }
 
     /**
@@ -86,13 +86,13 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
      */
     protected function getAllowedProductIds(QuoteTransfer $quoteTransfer)
     {
-        $productAbstractIds = $this->getProductAbstractIds($quoteTransfer);
-        $customerId = $quoteTransfer->getCustomer()->getIdCustomer();
+        $idProductAbstracts = $this->getProductAbstractIds($quoteTransfer);
+        $idCustomer = $quoteTransfer->getCustomer()->getIdCustomer();
 
         $allowedProducts = $this->queryContainer
             ->queryProductCustomerPermissionByCustomerAndProducts(
-                $customerId,
-                $productAbstractIds
+                $idCustomer,
+                $idProductAbstracts
             )->find();
 
         $allowedProductIds = [];
@@ -129,11 +129,11 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
      */
     protected function getProductAbstractIds(QuoteTransfer $quoteTransfer)
     {
-        $productAbstractIds = [];
+        $idProductAbstracts = [];
         foreach ($quoteTransfer->getItems() as $cartItem) {
-            $productAbstractIds[] = $cartItem->getIdProductAbstract();
+            $idProductAbstracts[] = $cartItem->getIdProductAbstract();
         }
 
-        return array_unique($productAbstractIds);
+        return array_unique($idProductAbstracts);
     }
 }
