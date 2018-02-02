@@ -74,7 +74,7 @@ class StoreRelationToggleType extends AbstractType
     {
         $dataProvider = $this->getFactory()->createStoreRelationToggleDataProvider();
 
-        if (count($event->getData()) !== 0) {
+        if ($event->getData()) {
             return;
         }
 
