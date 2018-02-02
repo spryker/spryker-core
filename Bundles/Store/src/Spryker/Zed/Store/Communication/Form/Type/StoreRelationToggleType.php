@@ -121,7 +121,8 @@ class StoreRelationToggleType extends AbstractType
                 'label' => static::STORE_TOGGLE_NAME,
                 'expanded' => true,
                 'multiple' => true,
-                'choices' => $this->getStoreNameMap(),
+                'choices' => array_flip($this->getStoreNameMap()),
+                'choices_as_values' => true,
             ]
         );
 
