@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\ProductManagement\Presentation;
 
 use SprykerTest\Zed\ProductManagement\PageObject\ProductManagementProductCreatePage;
-use SprykerTest\Zed\ProductManagement\ProductManagementCommunicationTester;
+use SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester;
 
 /**
  * Auto-generated group annotations
@@ -22,11 +22,11 @@ use SprykerTest\Zed\ProductManagement\ProductManagementCommunicationTester;
 class ProductManagementProductCreateCest
 {
     /**
-     * @param \SprykerTest\Zed\ProductManagement\ProductManagementCommunicationTester $i
+     * @param \SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductManagementCommunicationTester $i)
+    public function breadcrumbIsVisible(ProductManagementPresentationTester $i)
     {
         $i->registerProductManagementStoreRelationFormTypePlugin();
         $i->registerMoneyCollectionFormTypePlugin();
