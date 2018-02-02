@@ -15,6 +15,7 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_STORE = 'FACADE_STORE';
     public const COMPANY_PRE_SAVE_PLUGINS = 'COMPANY_PRE_SAVE_PLUGINS';
+    public const COMPANY_POST_CREATE_PLUGINS = 'COMPANY_POST_CREATE_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,6 +28,7 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addStoreFacade($container);
         $container = $this->addCompanyPreSavePlugins($container);
+        $container = $this->addCompanyPostCreatePlugins($container);
 
         return $container;
     }
@@ -60,9 +62,31 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyPostCreatePlugins(Container $container): Container
+    {
+        $container[static::COMPANY_POST_CREATE_PLUGINS] = function (Container $container) {
+            return $this->getCompanyPostCreatePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\Company\Dependency\Plugin\CompanyPreSavePluginInterface[]
      */
     protected function getCompanyPreSavePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\Company\Dependency\Plugin\CompanyPostCreatePluginInterface[]
+     */
+    protected function getCompanyPostCreatePlugins(): array
     {
         return [];
     }

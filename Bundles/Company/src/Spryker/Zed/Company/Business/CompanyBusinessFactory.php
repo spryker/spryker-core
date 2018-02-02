@@ -77,7 +77,8 @@ class CompanyBusinessFactory extends AbstractBusinessFactory
     protected function createPluginExecutor(): CompanyPluginExecutorInterface
     {
         return new CompanyPluginExecutor(
-            $this->getCompanyPreSavePlugins()
+            $this->getCompanyPreSavePlugins(),
+            $this->getCompanyPostCreatePlugins()
         );
     }
 
@@ -111,5 +112,13 @@ class CompanyBusinessFactory extends AbstractBusinessFactory
     protected function getCompanyPreSavePlugins(): array
     {
         return $this->getProvidedDependency(CompanyDependencyProvider::COMPANY_PRE_SAVE_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Company\Dependency\Plugin\CompanyPostCreatePluginInterface[]
+     */
+    protected function getCompanyPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyDependencyProvider::COMPANY_POST_CREATE_PLUGINS);
     }
 }
