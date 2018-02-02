@@ -73,6 +73,11 @@ class Customer implements CustomerInterface
     protected $store;
 
     /**
+     * @var \Spryker\Zed\Customer\Business\Customer\CustomerTransferExpanderPluginExecutorInterface
+     */
+    protected $customerTransferExpanderPluginExecutor;
+
+    /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface $customerReferenceGenerator
      * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
@@ -80,6 +85,7 @@ class Customer implements CustomerInterface
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface $mailFacade
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\Customer\Business\Customer\CustomerTransferExpanderPluginExecutorInterface $customerTransferExpanderPluginExecutor
      */
     public function __construct(
         CustomerQueryContainerInterface $queryContainer,
@@ -88,7 +94,8 @@ class Customer implements CustomerInterface
         EmailValidatorInterface $emailValidator,
         CustomerToMailInterface $mailFacade,
         LocaleQueryContainerInterface $localeQueryContainer,
-        Store $store
+        Store $store,
+        CustomerTransferExpanderPluginExecutorInterface $customerTransferExpanderPluginExecutor
     ) {
         $this->queryContainer = $queryContainer;
         $this->customerReferenceGenerator = $customerReferenceGenerator;
@@ -97,6 +104,7 @@ class Customer implements CustomerInterface
         $this->mailFacade = $mailFacade;
         $this->localeQueryContainer = $localeQueryContainer;
         $this->store = $store;
+        $this->customerTransferExpanderPluginExecutor = $customerTransferExpanderPluginExecutor;
     }
 
     /**
@@ -125,6 +133,7 @@ class Customer implements CustomerInterface
 
         $customerTransfer = $this->attachAddresses($customerTransfer, $customerEntity);
         $customerTransfer = $this->attachLocale($customerTransfer, $customerEntity);
+        $customerTransfer = $this->executeTransferExpanderPlugins($customerTransfer);
 
         return $customerTransfer;
     }
@@ -833,5 +842,15 @@ class Customer implements CustomerInterface
         $customerTransfer->setLocale($localeTransfer);
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function executeTransferExpanderPlugins(CustomerTransfer $customerTransfer)
+    {
+        return $this->customerTransferExpanderPluginExecutor->executeCustomerTransferExpanderPlugins($customerTransfer);
     }
 }

@@ -29,26 +29,4 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
     {
         return $this->getFactory()->createZedCompanyUserStub()->createCompanyUser($companyUserTransfer);
     }
-
-    /**
-     * Specification:
-     * - Retrieve current company user information from session.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
-     */
-    public function getCompanyUser(): ?CompanyUserTransfer
-    {
-        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
-
-        if ($customerTransfer !== null) {
-            $companyUserTransfer = $this->getFactory()->createZedCompanyUserStub()
-                ->findCompanyUserByCustomerId($customerTransfer);
-
-            return $companyUserTransfer;
-        }
-
-        return null;
-    }
 }

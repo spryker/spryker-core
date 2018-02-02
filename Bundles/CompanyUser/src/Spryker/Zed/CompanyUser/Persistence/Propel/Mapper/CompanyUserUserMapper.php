@@ -36,6 +36,11 @@ class CompanyUserUserMapper implements CompanyUserMapperInterface
         $companyUserEntity->fromArray($companyUserTransfer->modifiedToArray());
         $companyUserEntity->setNew($companyUserTransfer->getIdCompanyUser() === null);
 
+        $idCustomer = $companyUserTransfer->getCustomerTransfer()->getIdCustomer();
+        if ($idCustomer !== null) {
+            $companyUserEntity->setFkCustomer($idCustomer);
+        }
+
         return $companyUserEntity;
     }
 }

@@ -14,6 +14,7 @@ use Spryker\Zed\CompanyUser\Business\Model\CompanyUserReaderInterface;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserWriter;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserWriterInterface;
 use Spryker\Zed\CompanyUser\CompanyUserDependencyProvider;
+use Spryker\Zed\CompanyUser\Dependency\Facade\CompanyUserToCustomerFacadeInterface;
 use Spryker\Zed\CompanyUser\Persistence\CompanyUserRepositoryInterface;
 use Spryker\Zed\CompanyUser\Persistence\CompanyUserWriterRepositoryInterface;
 use Spryker\Zed\CompanyUser\Persistence\Propel\CompanyUserPropelRepository;
@@ -32,6 +33,7 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyUserWriter(
             $this->createCompanyUserWriterRepository(),
+            $this->getCustomerFacade(),
             $this->createCompanyUserPluginExecutor()
         );
     }
@@ -69,6 +71,14 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     public function createCompanyUserRepository(): CompanyUserRepositoryInterface
     {
         return new CompanyUserPropelRepository();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUser\Dependency\Facade\CompanyUserToCustomerFacadeInterface
+     */
+    protected function getCustomerFacade(): CompanyUserToCustomerFacadeInterface
+    {
+        return $this->getProvidedDependency(CompanyUserDependencyProvider::FACADE_CUSTOMER);
     }
 
     /**
