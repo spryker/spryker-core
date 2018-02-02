@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\CompanyBusinessUnit\Code;
+namespace Spryker\Shared\CompanyBusinessUnit;
 
-interface Messages
+interface CompanyBusinessUnitConstants
 {
-    public const COMPANY_BUSINESS_UNIT_DELETION_HAS_USERS = 'company.business_unit.deletion.has_users';
+    public const COMPANY_BUSINESS_UNIT_DEFAULT_NAME = 'Default';
 }
