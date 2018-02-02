@@ -51,7 +51,10 @@ class CompanyWriter implements CompanyWriterInterface
      */
     public function create(CompanyTransfer $companyTransfer): CompanyResponseTransfer
     {
-        return $this->save($companyTransfer);
+        $companyResponseTransfer = $this->save($companyTransfer);
+        $companyResponseTransfer = $this->executePostCreatePlugins($companyResponseTransfer);
+
+        return $companyResponseTransfer;
     }
 
     /**
@@ -89,6 +92,20 @@ class CompanyWriter implements CompanyWriterInterface
         $companyResponseTransfer = new CompanyResponseTransfer();
         $companyResponseTransfer->setCompanyTransfer($companyTransfer);
         $companyResponseTransfer->setIsSuccessful(true);
+
+        return $companyResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     */
+    protected function executePostCreatePlugins(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
+    {
+        $companyTransfer = $companyResponseTransfer->getCompanyTransfer();
+        $companyTransfer = $this->companyPluginExecutor->executeCompanyPostCreatePlugins($companyTransfer);
+        $companyResponseTransfer->setCompanyTransfer($companyTransfer);
 
         return $companyResponseTransfer;
     }

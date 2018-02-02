@@ -17,12 +17,20 @@ class CompanyPluginExecutor implements CompanyPluginExecutorInterface
     protected $companyPreSavePlugins;
 
     /**
+     * @var \Spryker\Zed\Company\Dependency\Plugin\CompanyPostCreatePluginInterface[]
+     */
+    protected $companyPostCreatePlugins;
+
+    /**
      * @param \Spryker\Zed\Company\Dependency\Plugin\CompanyPreSavePluginInterface[] $companyPreSavePlugins
+     * @param \Spryker\Zed\Company\Dependency\Plugin\CompanyPostCreatePluginInterface[] $companyPostCreatePlugins
      */
     public function __construct(
-        array $companyPreSavePlugins = []
+        array $companyPreSavePlugins = [],
+        array $companyPostCreatePlugins = []
     ) {
         $this->companyPreSavePlugins = $companyPreSavePlugins;
+        $this->companyPostCreatePlugins = $companyPostCreatePlugins;
     }
 
     /**
@@ -34,6 +42,20 @@ class CompanyPluginExecutor implements CompanyPluginExecutorInterface
     {
         foreach ($this->companyPreSavePlugins as $companyPreSavePlugin) {
             $companyTransfer = $companyPreSavePlugin->preSave($companyTransfer);
+        }
+
+        return $companyTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function executeCompanyPostCreatePlugins(CompanyTransfer $companyTransfer): CompanyTransfer
+    {
+        foreach ($this->companyPostCreatePlugins as $companyPostCreatePlugin) {
+            $companyTransfer = $companyPostCreatePlugin->postCreate($companyTransfer);
         }
 
         return $companyTransfer;

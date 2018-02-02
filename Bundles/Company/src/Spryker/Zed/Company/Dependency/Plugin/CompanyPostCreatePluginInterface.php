@@ -9,12 +9,12 @@ namespace Spryker\Zed\Company\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CompanyTransfer;
 
-interface CompanyPreSavePluginInterface
+interface CompanyPostCreatePluginInterface
 {
     /**
      * Specification:
      *
-     * Plugin is triggered before company is saved.
+     * Plugin is triggered after company is created.
      *
      * @api
      *
@@ -22,5 +22,5 @@ interface CompanyPreSavePluginInterface
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function preSave(CompanyTransfer $companyTransfer): CompanyTransfer;
+    public function postCreate(CompanyTransfer $companyTransfer): CompanyTransfer;
 }
