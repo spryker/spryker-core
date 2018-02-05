@@ -13,14 +13,12 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductLabelQueryContainerBridge;
 use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductQueryContainerBridge;
-use Spryker\Zed\ProductLabelStorage\Dependency\Service\ProductLabelStorageToUtilSanitizeServiceBridge;
 
 class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const QUERY_CONTAINER_PRODUCT_LABEL = 'QUERY_CONTAINER_PRODUCT_LABEL';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
 
     const STORE = 'STORE';
 
@@ -31,14 +29,20 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
-            return new ProductLabelStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
-
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new ProductLabelStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
         };
 
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
         $container[static::STORE] = function (Container $container) {
             return Store::getInstance();
         };
