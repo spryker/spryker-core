@@ -31,7 +31,7 @@ interface DatasetFinderInterface
     public function deactivateById($idDataset);
 
     /**
-     * @param $idDataset
+     * @param int $idDataset
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException
      *

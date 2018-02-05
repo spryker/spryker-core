@@ -36,6 +36,12 @@ class DatasetSaver implements DatasetSaverInterface
      */
     protected $readerManager;
 
+    /**
+     * @param \Spryker\Zed\Dataset\Business\Model\DatasetFinderInterface $datasetFinder
+     * @param \Spryker\Zed\Dataset\Business\Model\DatasetLocalizedAttributesSaverInterface $datasetLocalizedAttributesSaver
+     * @param \Spryker\Zed\Dataset\Business\Model\DatasetRowColValueSaverInterface $datasetRowColValueSaver
+     * @param \Spryker\Zed\Dataset\Business\Model\ReaderManagerInterface $readerManager
+     */
     public function __construct(
         DatasetFinderInterface $datasetFinder,
         DatasetLocalizedAttributesSaverInterface $datasetLocalizedAttributesSaver,

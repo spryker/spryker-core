@@ -95,7 +95,7 @@ class DatasetFinder implements DatasetFinderInterface
     }
 
     /**
-     * @param $idDataset
+     * @param int $idDataset
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException
      *

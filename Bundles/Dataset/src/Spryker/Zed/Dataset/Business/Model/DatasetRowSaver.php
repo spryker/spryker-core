@@ -13,10 +13,13 @@ use Orm\Zed\Dataset\Persistence\SpyDatasetRow;
 class DatasetRowSaver implements DatasetRowSaverInterface
 {
     /**
-     * @return \Spryker\Zed\Dataset\Business\Model\DatasetFinderInterface
+     * @var \Spryker\Zed\Dataset\Business\Model\DatasetFinderInterface
      */
     protected $datasetFinder;
 
+    /**
+     * @param \Spryker\Zed\Dataset\Business\Model\DatasetFinderInterface $datasetFinder
+     */
     public function __construct(DatasetFinderInterface $datasetFinder)
     {
         $this->datasetFinder = $datasetFinder;

@@ -43,7 +43,7 @@ interface DatasetFacadeInterface
      * @api
      *
      * @param null|\Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile|null
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile|null $file
      *
      * @return bool
      */

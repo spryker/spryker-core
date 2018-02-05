@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Communication\Form\DataProvider;
 
+use ArrayObject;
 use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
 use Generated\Shared\Transfer\SpyDatasetLocalizedAttributesEntityTransfer;
 use Generated\Shared\Transfer\SpyLocaleEntityTransfer;
@@ -14,7 +15,6 @@ use Orm\Zed\Dataset\Persistence\SpyDataset;
 use Spryker\Zed\Dataset\Communication\Form\DatasetForm;
 use Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeFacadeBridge;
 use Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface;
-use ArrayObject;
 
 class DatasetFormDataProvider
 {
@@ -55,9 +55,7 @@ class DatasetFormDataProvider
         $spyDataset = $this
             ->queryContainer
             ->queryDatasetById($idDataset)
-            ->leftJoinWithSpyDatasetRowColValue()
-            ->find()
-            ->getFirst();
+            ->findOne();
 
         $spyDatasetTransfer = $this->createEmptyspyDatasetTransfer();
         $this->addSpyDatasetLocalizedAttributeTransfers($spyDataset, $spyDatasetTransfer);
@@ -69,13 +67,36 @@ class DatasetFormDataProvider
     }
 
     /**
+     * @param int $idDataset
+     *
      * @return array
      */
-    public function getOptions()
+    public function getOptions($idDataset)
     {
         return [
             DatasetForm::OPTION_AVAILABLE_LOCALES => $this->getAvailableLocales(),
+            DatasetForm::DATASET_HAS_DATA => $this->hasDatasetData($idDataset)
         ];
+    }
+
+    /**
+     * @param int $idDataset
+     *
+     * @return bool
+     */
+    protected function hasDatasetData($idDataset)
+    {
+        $spyDataset = $this
+            ->queryContainer
+            ->queryDatasetById($idDataset)
+            ->leftJoinSpyDatasetRowColValue()
+            ->find()
+            ->getFirst();
+        if ($spyDataset->getSpyDatasetRowColValues()->count()) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
