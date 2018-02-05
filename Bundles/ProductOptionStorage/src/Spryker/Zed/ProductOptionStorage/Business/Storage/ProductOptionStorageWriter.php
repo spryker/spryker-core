@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOptionStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\ProductOptionStorage\Business\Storage;
 
 use ArrayObject;
 use Generated\Shared\Transfer\MoneyValueTransfer;
@@ -15,20 +15,52 @@ use Generated\Shared\Transfer\ProductOptionValueStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface;
+use Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductOptionStorage\Communication\ProductOptionStorageCommunicationFactory getFactory()
- */
-class AbstractProductOptionStorageListener extends AbstractPlugin
+class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface
+     */
+    protected $productOptionFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface $productOptionFacade
+     * @param \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(ProductOptionStorageToProductOptionFacadeInterface $productOptionFacade, ProductOptionStorageQueryContainerInterface $queryContainer, Store $store, $isSendingToQueue)
+    {
+        $this->productOptionFacade = $productOptionFacade;
+        $this->queryContainer = $queryContainer;
+        $this->store = $store;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
+
     /**
      * @param array $productAbstractIds
      *
      * @return void
      */
-    protected function publish(array $productAbstractIds)
+    public function publish(array $productAbstractIds)
     {
         $productOptionEntities = $this->findProductOptionAbstractEntities($productAbstractIds);
         $productOptions = [];
@@ -44,6 +76,21 @@ class AbstractProductOptionStorageListener extends AbstractPlugin
         }
 
         $this->storeData($spyProductAbstractLocalizedAttributeEntities, $spyProductAbstractOptionStorageEntities, $productOptions);
+    }
+
+    /**
+     * @param array $productAbstractIds
+     *
+     * @return void
+     */
+    public function unpublish(array $productAbstractIds)
+    {
+        $spyProductAbstractOptionStorageEntities = $this->findProductStorageOptionEntitiesByProductAbstractIds($productAbstractIds);
+        foreach ($spyProductAbstractOptionStorageEntities as $spyProductAbstractOptionStorageLocalizedEntities) {
+            foreach ($spyProductAbstractOptionStorageLocalizedEntities as $spyProductAbstractOptionStorageLocalizedEntity) {
+                $spyProductAbstractOptionStorageLocalizedEntity->delete();
+            }
+        }
     }
 
     /**
@@ -110,6 +157,7 @@ class AbstractProductOptionStorageListener extends AbstractPlugin
         $spyProductAbstractOptionStorageEntity->setData($productAbstractOptionStorageTransfer->toArray());
         $spyProductAbstractOptionStorageEntity->setStore($this->getStoreName());
         $spyProductAbstractOptionStorageEntity->setLocale($spyProductAbstractLocalizedEntity->getLocale()->getLocaleName());
+        $spyProductAbstractOptionStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductAbstractOptionStorageEntity->save();
     }
 
@@ -120,7 +168,7 @@ class AbstractProductOptionStorageListener extends AbstractPlugin
      */
     protected function findProductOptionAbstractEntities(array $productAbstractIds)
     {
-        return $this->getQueryContainer()->queryProductOptionsByProductAbstractIds($productAbstractIds)->find()->getData();
+        return $this->queryContainer->queryProductOptionsByProductAbstractIds($productAbstractIds)->find()->getData();
     }
 
     /**
@@ -130,7 +178,7 @@ class AbstractProductOptionStorageListener extends AbstractPlugin
      */
     protected function findProductAbstractLocalizedEntities(array $productAbstractIds)
     {
-        return $this->getQueryContainer()->queryProductAbstractLocalizedByIds($productAbstractIds)->find()->getData();
+        return $this->queryContainer->queryProductAbstractLocalizedByIds($productAbstractIds)->find()->getData();
     }
 
     /**
@@ -140,7 +188,7 @@ class AbstractProductOptionStorageListener extends AbstractPlugin
      */
     protected function findProductStorageOptionEntitiesByProductAbstractIds(array $productAbstractIds)
     {
-        $productAbstractOptionStorageEntities = $this->getQueryContainer()->queryProductAbstractOptionStorageByIds($productAbstractIds)->find();
+        $productAbstractOptionStorageEntities = $this->queryContainer->queryProductAbstractOptionStorageByIds($productAbstractIds)->find();
         $productAbstractOptionStorageEntitiesByIdAndLocale = [];
         foreach ($productAbstractOptionStorageEntities as $productAbstractOptionStorageEntity) {
             $productAbstractOptionStorageEntitiesByIdAndLocale[$productAbstractOptionStorageEntity->getFkProductAbstract()][$productAbstractOptionStorageEntity->getLocale()] = $productAbstractOptionStorageEntity;
@@ -154,7 +202,7 @@ class AbstractProductOptionStorageListener extends AbstractPlugin
      */
     protected function getStoreName()
     {
-        return $this->getFactory()->getStore()->getStoreName();
+        return $this->store->getStoreName();
     }
 
     /**
@@ -190,7 +238,7 @@ class AbstractProductOptionStorageListener extends AbstractPlugin
     {
         $moneyValueCollection = $this->transformPriceEntityCollectionToMoneyValueTransferCollection($prices);
 
-        $priceResponse = $this->getFactory()->getProductOptionFacade()->getProductOptionValueStorePrices(
+        $priceResponse = $this->productOptionFacade->getProductOptionValueStorePrices(
             (new ProductOptionValueStorePricesRequestTransfer())->setPrices($moneyValueCollection)
         );
 

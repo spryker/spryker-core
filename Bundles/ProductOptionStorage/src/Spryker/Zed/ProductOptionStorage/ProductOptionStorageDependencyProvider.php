@@ -14,7 +14,6 @@ use Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToEve
 use Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeBridge;
 use Spryker\Zed\ProductOptionStorage\Dependency\QueryContainer\ProductOptionStorageToProductOptionQueryContainerBridge;
 use Spryker\Zed\ProductOptionStorage\Dependency\QueryContainer\ProductOptionStorageToProductQueryContainerBridge;
-use Spryker\Zed\ProductOptionStorage\Dependency\Service\ProductOptionStorageToUtilSanitizeServiceBridge;
 
 class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -22,7 +21,6 @@ class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyPro
     const QUERY_CONTAINER_PRODUCT_OPTION = 'QUERY_CONTAINER_PRODUCT_OPTION';
     const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const STORE = 'STORE';
 
     /**
@@ -32,16 +30,22 @@ class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyPro
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
-            return new ProductOptionStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
-
-        $container[static::FACADE_PRODUCT_OPTION] = function (Container $container) {
-            return new ProductOptionStorageToProductOptionFacadeBridge($container->getLocator()->productOption()->facade());
-        };
-
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new ProductOptionStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container[static::FACADE_PRODUCT_OPTION] = function (Container $container) {
+            return new ProductOptionStorageToProductOptionFacadeBridge($container->getLocator()->productOption()->facade());
         };
 
         $container[static::STORE] = function (Container $container) {
