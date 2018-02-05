@@ -30,7 +30,7 @@ interface UrlStorageClientInterface
      *
      * @param string $url
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
     public function getUrlData($url);
 }

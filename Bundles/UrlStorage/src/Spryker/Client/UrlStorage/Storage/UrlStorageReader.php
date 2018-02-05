@@ -9,6 +9,7 @@ namespace Spryker\Client\UrlStorage\Storage;
 
 use Generated\Shared\Transfer\SpyUrlEntityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageInterface;
 use Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServiceInterface;
 use Spryker\Shared\Kernel\Store;
@@ -86,16 +87,17 @@ class UrlStorageReader implements UrlStorageReaderInterface
     /**
      * @param string $url
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
     public function getUrlData($url)
     {
         $urlDetails = $this->getUrlFromStorage($url);
+
         if ($urlDetails === null) {
-            return [];
+            return null;
         }
 
-        return $urlDetails;
+        return (new UrlTransfer())->fromArray($urlDetails, true);
     }
 
     /**

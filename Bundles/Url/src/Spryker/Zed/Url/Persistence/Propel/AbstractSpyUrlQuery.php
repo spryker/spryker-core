@@ -35,7 +35,7 @@ abstract class AbstractSpyUrlQuery extends BaseSpyUrlQuery
      *
      * @return $this
      */
-    public function filterByResourceTypeAndIds($resourceType, $resourceIds)
+    public function filterByResourceTypeAndIds($resourceType, array $resourceIds)
     {
         $bumps = explode('_', $resourceType);
         $bumps = array_map('ucfirst', $bumps);
