@@ -23,7 +23,12 @@ class ArrayFilter implements ArrayFilterInterface
             }
 
             if (is_array($value)) {
-                $filteredArray[$key] = $this->arrayFilterRecursive($value);
+                $result = $this->arrayFilterRecursive($value);
+                if (!$result) {
+                    continue;
+                }
+
+                $filteredArray[$key] = $result;
                 continue;
             }
             if ($value instanceof Countable && $count($value) !== 0) {
