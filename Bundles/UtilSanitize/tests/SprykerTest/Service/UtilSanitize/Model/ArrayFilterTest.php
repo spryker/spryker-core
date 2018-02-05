@@ -2,6 +2,7 @@
 
 namespace SprykerTest\Service\UtilSanitize;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Spryker\Service\UtilSanitize\Model\ArrayFilter;
 use stdClass;
@@ -31,6 +32,8 @@ class ArrayFilterTest extends Unit
             'stringZero' => '0',
             'emptyString' => '',
             'someObject' => new stdClass(),
+            'emptyCountable' => new ArrayObject(),
+            'countable' => new ArrayObject(['test']),
             'nested' => [
                 'foo' => [
                     'bar' => [
@@ -45,7 +48,9 @@ class ArrayFilterTest extends Unit
 
         $expected = [
             'true' => $array['true'],
+            'stringZero' => '0',
             'someObject' => $array['someObject'],
+            'countable' => $array['countable'],
             'nested' => [
                 'foo' => [
                     'bar' => [
