@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyRole\Business;
 
+use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 
@@ -20,9 +21,9 @@ interface CompanyRoleFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
      */
-    public function create(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer;
+    public function create(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer;
 
     /**
      * Specification:
