@@ -22,6 +22,10 @@ class DatasetRowColValueSaver implements DatasetRowColValueSaverInterface
      */
     protected $datasetRowSaver;
 
+    /**
+     * @param \Spryker\Zed\Dataset\Business\Model\DatasetColSaverInterface $datasetColSaver
+     * @param \Spryker\Zed\Dataset\Business\Model\DatasetRowSaverInterface $datasetRowSaver
+     */
     public function __construct(
         DatasetColSaverInterface $datasetColSaver,
         DatasetRowSaverInterface $datasetRowSaver

@@ -17,7 +17,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
-use ArrayObject;
 
 class DatasetForm extends AbstractType
 {
@@ -29,6 +28,7 @@ class DatasetForm extends AbstractType
     const DATASET_LOCALIZED_ATTRIBUTES = 'getSpyDatasetLocalizedAttributess';
     const OPTION_DATA_CLASS = 'data_class';
     const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
+    const DATASET_HAS_DATA = 'datasetHasData';
 
     /**
      * @var \Spryker\Zed\Dataset\Communication\Form\DatasetLocalizedAttributesForm
@@ -61,7 +61,7 @@ class DatasetForm extends AbstractType
     {
         $this
             ->addIdDatasetField($builder)
-            ->addDatasetContentField($builder)
+            ->addDatasetContentField($builder, $options)
             ->addDatasetNameField($builder)
             ->addDatasetLocalizedAttributesForm($builder, $options);
     }
@@ -74,6 +74,7 @@ class DatasetForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(static::OPTION_AVAILABLE_LOCALES);
+        $resolver->setRequired(static::DATASET_HAS_DATA);
         $resolver->setDefaults([
             static::OPTION_DATA_CLASS => SpyDatasetEntityTransfer::class,
         ]);
@@ -126,13 +127,14 @@ class DatasetForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array|null $options
      *
      * @return $this
      */
-    protected function addDatasetContentField(FormBuilderInterface $builder)
+    protected function addDatasetContentField(FormBuilderInterface $builder, array $options = null)
     {
         $builder->add(static::DATASET_FILE_CONTENT, FileType::class, [
-            'required' => false,
+            'required' => empty($options[static::DATASET_HAS_DATA]),
             'mapped' => false,
             'constraints' => [
                 new File([

@@ -13,7 +13,7 @@ use Orm\Zed\Dataset\Persistence\SpyDatasetCol;
 class DatasetColSaver implements DatasetColSaverInterface
 {
     /**
-     * @return \Spryker\Zed\Dataset\Business\Model\DatasetFinderInterface
+     * @var \Spryker\Zed\Dataset\Business\Model\DatasetFinderInterface
      */
     protected $datasetFinder;
 
