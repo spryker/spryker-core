@@ -5,8 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnit\Persistence;
+namespace Spryker\Shared\CompanyBusinessUnit;
 
-interface BusinessUnitQueryContainerInterface
+interface CompanyBusinessUnitConstants
 {
+    public const COMPANY_BUSINESS_UNIT_DEFAULT_NAME = 'Default';
 }
