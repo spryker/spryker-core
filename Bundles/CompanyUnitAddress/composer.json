@@ -4,6 +4,11 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/company": "*",
+    "spryker/locale": "*",
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
+    "spryker/zed-request": "*",
     "spryker/company-business-unit": "^0.0.1",
     "spryker/country": "^3.0.0",
     "spryker/kernel": "^3.0.0"

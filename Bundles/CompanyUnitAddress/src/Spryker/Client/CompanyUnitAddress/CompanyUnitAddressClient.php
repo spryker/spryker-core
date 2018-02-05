@@ -1,0 +1,138 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Client\CompanyUnitAddress;
+
+use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+use Spryker\Client\Kernel\AbstractClient;
+
+/**
+ * @method \Spryker\Client\CompanyUnitAddress\CompanyUnitAddressFactory getFactory()
+ */
+class CompanyUnitAddressClient extends AbstractClient implements CompanyUnitAddressClientInterface
+{
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function createCompanyUnitAddress(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+    ): CompanyUnitAddressResponseTransfer {
+        return $this->getFactory()
+            ->createZedCompanyUnitAddressStub()
+            ->createCompanyUnitAddress($companyUnitAddressTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function updateCompanyUnitAddress(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+    ): CompanyUnitAddressResponseTransfer {
+        return $this->getFactory()
+            ->createZedCompanyUnitAddressStub()
+            ->updateCompanyUnitAddress($companyUnitAddressTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return void
+     */
+    public function deleteCompanyUnitAddress(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+    ): void {
+        $this->getFactory()
+            ->createZedCompanyUnitAddressStub()
+            ->deleteCompanyUnitAddress($companyUnitAddressTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     */
+    public function getCompanyUnitAddressCollection(
+        CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
+    ): CompanyUnitAddressCollectionTransfer {
+        return $this->getFactory()
+            ->createZedCompanyUnitAddressStub()
+            ->getCompanyUnitAddressCollection($companyUnitAddressCollectionTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function getCompanyUnitAddressById(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+    ): CompanyUnitAddressResponseTransfer {
+        return $this->getFactory()
+            ->createZedCompanyUnitAddressStub()
+            ->getCompanyUnitAddressById($companyUnitAddressTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function updateCompanyUnitAddressAndBusinessUnitDefaultAddresses(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+    ): CompanyUnitAddressResponseTransfer {
+        return $this->getFactory()
+            ->createZedCompanyUnitAddressStub()
+            ->updateCompanyUnitAddressAndBusinessUnitDefaultAddresses($companyUnitAddressTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddresses(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+    ): CompanyUnitAddressResponseTransfer {
+        return $this->getFactory()
+            ->createZedCompanyUnitAddressStub()
+            ->createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddresses($companyUnitAddressTransfer);
+    }
+}
