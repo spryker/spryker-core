@@ -1,6 +1,6 @@
 {
-  "name": "spryker/product-group-collector",
-  "description": "ProductGroupCollector module",
+  "name": "spryker/product-customer-permission-collector",
+  "description": "ProductCustomerPermissionCollector module",
   "license": "proprietary",
   "require": {
     "spryker/product-customer-permission": "*",
