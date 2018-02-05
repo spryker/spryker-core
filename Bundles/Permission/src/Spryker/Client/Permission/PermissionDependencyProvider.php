@@ -9,19 +9,21 @@ namespace Spryker\Client\Permission;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\Permission\Communication\Plugin\PermissionStoragePluginInterface;
 use Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientBridge;
 
 class PermissionDependencyProvider extends AbstractDependencyProvider
 {
     const PLUGINS_PERMISSION = 'PLUGINS_PERMISSION';
     const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const PLUGIN_PERMISSION_STORAGE = 'PLUGIN_PERMISSION_STORAGE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addPermissionPlugins($container);
@@ -35,7 +37,7 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addPermissionPlugins(Container $container)
+    protected function addPermissionPlugins(Container $container): Container
     {
         $container[static::PLUGINS_PERMISSION] = function (Container $container) {
             return $this->getPermissionPlugins();
@@ -47,22 +49,19 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
     /**
      * @return \Spryker\Client\Permission\Plugin\PermissionPluginInterface[]
      */
-    protected function getPermissionPlugins()
+    protected function getPermissionPlugins(): array
     {
         return [];
     }
 
     /**
-     * @param \Spryker\Client\Kernel\Container $container
+     * @throws \Exception
      *
-     * @return \Spryker\Client\Kernel\Container
+     * @return PermissionStoragePluginInterface
      */
-    protected function addCustomerClient(Container $container)
+    protected function getPermissionStoragePlugin(): PermissionStoragePluginInterface
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
-            return new PermissionToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
-
-        return $container;
+        throw new \Exception('Please set a permission storage plugin, implementation of 
+        \Spryker\Client\Permission\Communication\Plugin\PermissionStoragePluginInterface');
     }
 }

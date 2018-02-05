@@ -7,6 +7,14 @@
 
 namespace Spryker\Zed\CompanyRole\Persistence;
 
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
+
 interface CompanyRoleRepositoryInterface
 {
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return PermissionCollectionTransfer
+     */
+    public function findPermissionsByIdCompanyUser(int $idCompanyUser): PermissionCollectionTransfer;
 }

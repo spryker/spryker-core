@@ -23,4 +23,12 @@ class CompanyRolePersistenceFactory extends AbstractPersistenceFactory
     {
         return new CompanyRoleMapper();
     }
+
+    /**
+     * @return CompanyRoleRepositoryInterface
+     */
+    public function createCompanyRoleRepository()
+    {
+        return new CompanyRoleRepository();
+    }
 }

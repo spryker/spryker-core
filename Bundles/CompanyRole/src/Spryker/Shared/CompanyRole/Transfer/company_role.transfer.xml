@@ -35,6 +35,10 @@
         <property name="errors" type="ResponseError[]" singular="error"/>
     </transfer>
 
+    <transfer name="Customer">
+        <property name="Permissions" type="PermissionCollection" />
+    </transfer>
+
     <transfer name="ResponseError">
         <property name="message" type="string"/>
     </transfer>

@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Spryker\Zed\CompanyRole\Persistence\CompanyRolePersistenceFactory;
+use Spryker\Zed\CompanyRole\Persistence\CompanyRoleRepository;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -83,5 +86,21 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     public function hydrateCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
     {
         return $companyUserTransfer->setCompanyRoleCollection(new CompanyRoleCollectionTransfer());
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCompanyUser
+     *
+     * @return PermissionCollectionTransfer
+     */
+    public function findPermissionsByIdCompanyUser(int $idCompanyUser)
+    {
+        return (new CompanyRolePersistenceFactory)
+            ->createCompanyRoleRepository()
+            ->findPermissionsByIdCompanyUser($idCompanyUser);
     }
 }

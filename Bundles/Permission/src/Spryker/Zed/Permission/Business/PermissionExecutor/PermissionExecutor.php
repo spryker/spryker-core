@@ -1,52 +1,45 @@
 <?php
+namespace Spryker\Zed\Permission\Business\PermissionExecutor;
 
-/**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
- */
-
-namespace Spryker\Client\Permission\PermissionExecutor;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Spryker\Client\Permission\Communication\Plugin\PermissionStoragePluginInterface;
-use Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientInterface;
-use Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface;
-use Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Zed\Permission\Business\PermissionFinder\PermissionFinderInterface;
+use Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface;
 
 class PermissionExecutor implements PermissionExecutorInterface
 {
-    /**
-     * @var PermissionStoragePluginInterface
-     */
+    /** @var  PermissionStoragePluginInterface */
     protected $permissionStoragePlugin;
 
     /**
-     * @var \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface
+     * @var PermissionFinderInterface
      */
     protected $permissionFinder;
 
     /**
      * @param PermissionStoragePluginInterface $permissionStoragePlugin
-     * @param \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface $permissionConfigurator
+     * @param PermissionFinderInterface $permissionFinder
      */
     public function __construct(
         PermissionStoragePluginInterface $permissionStoragePlugin,
-        PermissionFinderInterface $permissionConfigurator
+        PermissionFinderInterface $permissionFinder
     ) {
-        $this->permissionFinder = $permissionConfigurator;
         $this->permissionStoragePlugin = $permissionStoragePlugin;
+        $this->permissionFinder = $permissionFinder;
     }
 
     /**
      * @param string $permissionKey
+     * @param int|string $identifier
      * @param string|int|array|null $context
      *
      * @return bool
      */
-    public function can($permissionKey, $context = null): bool
+    public function can($permissionKey, $identifier, $context = null): bool
     {
-        $permissionCollectionTransfer = $this->findPermissions($permissionKey);
+        $permissionCollectionTransfer = $this->findPermissions($permissionKey, $identifier);
 
         if ($permissionCollectionTransfer->getPermissions()->count() === 0) {
             return false;
@@ -101,14 +94,15 @@ class PermissionExecutor implements PermissionExecutorInterface
 
     /**
      * @param string $permissionKey
+     * @param int|string $identifier
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    protected function findPermissions($permissionKey): PermissionCollectionTransfer
+    protected function findPermissions(string $permissionKey, $identifier): PermissionCollectionTransfer
     {
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 
-        foreach ($this->permissionStoragePlugin->getPermissionCollection()->getPermissions() as $permission) {
+        foreach ($this->permissionStoragePlugin->getPermissionCollection($identifier)->getPermissions() as $permission) {
             if ($permission->getKey() === $permissionKey) {
                 $permissionCollectionTransfer->addPermission($permission);
             }
