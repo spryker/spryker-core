@@ -101,7 +101,7 @@ class CmsPageAttributesFormType extends AbstractType
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Name',
-            'required' => true,
+            'required' => false,
             'constraints' => [
                 new NotBlank(),
             ],
@@ -131,7 +131,7 @@ class CmsPageAttributesFormType extends AbstractType
     {
         $builder->add(static::FIELD_URL, TextType::class, [
             'label' => 'URL',
-            'required' => true,
+            'required' => false,
             'constraints' => [
                 new NotBlank(),
                 new Regex([
