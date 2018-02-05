@@ -72,7 +72,7 @@ class Role implements RoleInterface
             }
         }
 
-        if ($this->hasRoleName($roleTransfer->getName())) {
+        if ($aclRoleEntity->getName() !== $roleTransfer->getName() && $this->hasRoleName($roleTransfer->getName())) {
             throw new RoleNameExistsException(
                 sprintf('Role with name "%s" already exists!', $roleTransfer->getName())
             );
