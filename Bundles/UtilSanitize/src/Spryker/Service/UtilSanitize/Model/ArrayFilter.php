@@ -24,10 +24,14 @@ class ArrayFilter implements ArrayFilterInterface
 
             if (is_array($value)) {
                 $filteredArray[$key] = $this->arrayFilterRecursive($value);
-            } else {
-                if (count($value) !== 0) {
-                    $filteredArray[$key] = $value;
-                }
+                continue;
+            }
+            if ($value instanceof Countable && $count($value) !== 0) {
+                $filteredArray[$key] = $value;
+                continue;
+            }
+            if (!$value instanceof Countable && $value) {
+                $filteredArray[$key] = $value;
             }
         }
 
