@@ -75,7 +75,7 @@ class DatasetFormDataProvider
     {
         return [
             DatasetForm::OPTION_AVAILABLE_LOCALES => $this->getAvailableLocales(),
-            DatasetForm::DATASET_HAS_DATA => $this->hasDatasetData($idDataset)
+            DatasetForm::DATASET_HAS_DATA => $this->hasDatasetData($idDataset),
         ];
     }
 
@@ -135,6 +135,9 @@ class DatasetFormDataProvider
         SpyDataset $spyDataset,
         SpyDatasetEntityTransfer $spyDatasetTransfer
     ) {
+        /**
+         * @var \Orm\Zed\Dataset\Persistence\SpyDatasetLocalizedAttributes[] $savedLocalizedAttributes
+         */
         $savedLocalizedAttributes = $spyDataset->getSpyDatasetLocalizedAttributess()
             ->toKeyIndex(static::FK_LOCALE_KEY);
         foreach ($spyDatasetTransfer->getSpyDatasetLocalizedAttributess() as $spyDatasetLocalizedAttributeTransfer) {

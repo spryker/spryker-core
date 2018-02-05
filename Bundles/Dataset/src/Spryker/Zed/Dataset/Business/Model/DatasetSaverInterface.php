@@ -15,6 +15,7 @@ interface DatasetSaverInterface
     /**
      * @param null|\Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile|null $file
+     *
      * @return mixed
      */
     public function save(SpyDatasetEntityTransfer $saveRequestTransfer, UploadedFile $file = null);
