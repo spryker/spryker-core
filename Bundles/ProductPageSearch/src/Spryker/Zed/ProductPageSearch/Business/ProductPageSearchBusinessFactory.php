@@ -62,7 +62,8 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     public function createProductPageWriter()
     {
         return new ProductPageSearchWriter(
-            $this->getUtilEncoding()
+            $this->getUtilEncoding(),
+            $this->getConfig()->isSendingToQueue()
         );
     }
 
