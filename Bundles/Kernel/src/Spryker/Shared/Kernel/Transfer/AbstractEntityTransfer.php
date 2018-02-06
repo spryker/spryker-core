@@ -20,7 +20,7 @@ class AbstractEntityTransfer extends AbstractTransfer implements EntityTransferI
     /**
      * @return array
      */
-    public function getVirtualColumns()
+    public function virtualColumns()
     {
         return $this->virtualColumns;
     }

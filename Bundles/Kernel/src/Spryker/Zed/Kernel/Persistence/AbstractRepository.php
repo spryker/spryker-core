@@ -14,8 +14,8 @@ use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
+use Spryker\Zed\Kernel\Persistence\Repository\CriteriaBuilder;
 use Spryker\Zed\Kernel\Persistence\Repository\RelationMapper;
-use Spryker\Zed\Kernel\Persistence\Repository\TransferObjectFormatter;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 abstract class AbstractRepository
@@ -103,25 +103,15 @@ abstract class AbstractRepository
      */
     public function buildQueryFromCriteria(ModelCriteria $modelCriteria, FilterTransfer $filterTransfer = null)
     {
-        $criteria = $modelCriteria->setFormatter(TransferObjectFormatter::class);
+        return $this->createCriteriaBuilder()->buildQueryFromCriteria($modelCriteria, $filterTransfer);
+    }
 
-        if (!$filterTransfer) {
-            return $criteria;
-        }
-
-        if ($filterTransfer->getLimit()) {
-            $criteria->setLimit($filterTransfer->getLimit());
-        }
-
-        if ($filterTransfer->getOffset()) {
-            $criteria->setOffset($filterTransfer->getOffset());
-        }
-
-        if ($filterTransfer->getOrderBy() && $filterTransfer->getOrderDirection()) {
-            $criteria->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection());
-        }
-
-        return $criteria;
+    /**
+     * @return \Spryker\Zed\Kernel\Persistence\Repository\CriteriaBuilderInterface
+     */
+    protected function createCriteriaBuilder()
+    {
+        return new CriteriaBuilder();
     }
 
     /**

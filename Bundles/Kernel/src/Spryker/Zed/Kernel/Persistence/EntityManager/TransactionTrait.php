@@ -14,6 +14,14 @@ trait TransactionTrait
      */
     public function getTransactionHandler()
     {
-        return TransactionHandlerFactory::createHandler();
+        return $this->createTransactionHandlerFactory()->createHandler();
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Persistence\EntityManager\TransactionHandlerFactoryInterface
+     */
+    protected function createTransactionHandlerFactory()
+    {
+        return new TransactionHandlerFactory();
     }
 }

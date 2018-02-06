@@ -7,15 +7,10 @@
 
 namespace Spryker\Zed\Kernel\Persistence\EntityManager;
 
-use Spryker\Zed\PropelOrm\Business\Transaction\PropelDatabaseTransactionHandler;
-
-class TransactionHandlerFactory implements TransactionHandlerFactoryInterface
+interface TransactionHandlerFactoryInterface
 {
     /**
      * @return \Spryker\Zed\Kernel\Persistence\EntityManager\TransactionHandlerInterface
      */
-    public function createHandler()
-    {
-        return new PropelDatabaseTransactionHandler();
-    }
+    public function createHandler();
 }
