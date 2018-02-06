@@ -22,5 +22,5 @@ interface UrlStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
-    public function getUrlData($url);
+    public function getUrlTransferFromUrl($url);
 }

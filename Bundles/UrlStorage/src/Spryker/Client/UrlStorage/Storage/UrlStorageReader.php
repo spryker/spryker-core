@@ -89,7 +89,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
-    public function getUrlData($url)
+    public function getUrlTransferFromUrl($url)
     {
         $urlDetails = $this->getUrlFromStorage($url);
 

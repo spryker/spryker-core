@@ -137,50 +137,84 @@ class AbstractUrlStorageListener extends AbstractPlugin
     }
 
     /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl[] $spyUrls
+     * @param \Orm\Zed\Url\Persistence\SpyUrl[] $urlEntities
      *
      * @return array
      */
-    protected function appendLocaleUrlsToUrlEntities($spyUrls)
+    protected function appendLocaleUrlsToUrlEntities(array $urlEntities)
+    {
+        $urlResources = $this->getUrlResourcesFromEntities($urlEntities);
+        $urls = $this->getUrlsByResources($urlResources);
+
+        return $this->appendLocaleUrlsToUrls($urls);
+    }
+
+    /**
+     * @param \Orm\Zed\Url\Persistence\SpyUrl[] $urlEntities
+     *
+     * @return array
+     */
+    protected function getUrlResourcesFromEntities(array $urlEntities)
     {
         $urlResources = [];
-        foreach ($spyUrls as $spyUrl) {
-            if (isset($urlResources[$spyUrl->getResourceType()])) {
-                $urlResources[$spyUrl->getResourceType()][] = $spyUrl->getResourceId();
+        foreach ($urlEntities as $urlEntity) {
+            if (isset($urlResources[$urlEntity->getResourceType()])) {
+                $urlResources[$urlEntity->getResourceType()][] = $urlEntity->getResourceId();
                 continue;
             }
 
-            $urlResources[$spyUrl->getResourceType()] = [$spyUrl->getResourceId()];
+            $urlResources[$urlEntity->getResourceType()] = [$urlEntity->getResourceId()];
         }
 
+        return $urlResources;
+    }
+
+    /**
+     * @param array $urls
+     *
+     * @return array
+     */
+    protected function appendLocaleUrlsToUrls(array $urls)
+    {
+        $urlsWithLocaleUrls = [];
+        foreach ($urls as $urlEntity) {
+            $urlsWithLocaleUrls[] = $this->getUrlArrayFromEntity(
+                $urlEntity,
+                $urls[$urlEntity->getResourceType()]->getData()
+            );
+        }
+
+        return $urlsWithLocaleUrls;
+    }
+
+    /**
+     * @param array $urlResources
+     *
+     * @return array
+     */
+    protected function getUrlsByResources(array $urlResources)
+    {
+        $urls = [];
         foreach ($urlResources as $resourceType => $resourceIds) {
-            $urlResources[$resourceType] = $this->getQueryContainer()
+            $urls[$resourceType] = $this->getQueryContainer()
                 ->queryUrlsByResourceTypeAndIds($resourceType, $resourceIds)
                 ->find();
         }
 
-        $spyUrlsWithLocaleUrls = [];
-        foreach ($spyUrls as $spyUrl) {
-            $spyUrlsWithLocaleUrls[] = $this->getUrlArrayFromEntity(
-                $spyUrl,
-                $urlResources[$spyUrl->getResourceType()]->getData()
-            );
-        }
-
-        return $spyUrlsWithLocaleUrls;
+        return $urls;
     }
 
     /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $spyUrl
+     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
      * @param \Orm\Zed\Url\Persistence\SpyUrl[] $urlResources
      *
      * @return array
      */
-    protected function getUrlArrayFromEntity(SpyUrl $spyUrl, array $urlResources)
+    protected function getUrlArrayFromEntity(SpyUrl $urlEntity, array $urlResources)
     {
-        $urlArray = $spyUrl->toArray();
+        $urlArray = $urlEntity->toArray();
         foreach ($urlResources as $urlResource) {
-            if ($spyUrl->getResourceId() === $urlResource->getResourceId()) {
+            if ($urlEntity->getResourceId() === $urlResource->getResourceId()) {
                 $urlArray[UrlTransfer::LOCALE_URLS][] = $urlResource->toArray();
             }
         }

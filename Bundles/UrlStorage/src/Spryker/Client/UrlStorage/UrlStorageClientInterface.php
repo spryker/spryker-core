@@ -25,6 +25,7 @@ interface UrlStorageClientInterface
     /**
      * Specification
      * - Gets the URL data from storage
+     * - Returns UrlTransfer with data
      *
      * @api
      *
@@ -32,5 +33,5 @@ interface UrlStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
-    public function getUrlData($url);
+    public function getUrlTransferFromUrl($url);
 }

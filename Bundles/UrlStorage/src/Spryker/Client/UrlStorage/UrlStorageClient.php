@@ -37,11 +37,11 @@ class UrlStorageClient extends AbstractClient implements UrlStorageClientInterfa
      *
      * @return \Generated\Shared\Transfer\UrlTransfer|null
      */
-    public function getUrlData($url)
+    public function getUrlTransferFromUrl($url)
     {
         return $this
             ->getFactory()
             ->createUrlStorageReader()
-            ->getUrlData($url);
+            ->getUrlTransferFromUrl($url);
     }
 }
