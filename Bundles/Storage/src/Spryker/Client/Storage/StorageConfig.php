@@ -28,6 +28,10 @@ class StorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Defines parameter names which will be used for kv multi get optimisation.
+     * - Please make sure you use an expected case for parameter names.
+     *
      * @return array
      */
     public function getAllowedGetParametersList()
