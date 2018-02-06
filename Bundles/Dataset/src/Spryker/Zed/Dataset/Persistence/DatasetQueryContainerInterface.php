@@ -16,7 +16,7 @@ interface DatasetQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
      */
-    public function queryDashboard();
+    public function queryDataset();
 
     /**
      * @api
@@ -43,5 +43,32 @@ interface DatasetQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
      */
-    public function queryDatasetColByTitle($title);
+    public function queryDatasetColumnByTitle($title);
+
+    /**
+     * @api
+     *
+     * @param int $idDataset
+     *
+     * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
+     */
+    public function queryDatasetByIdWithRelation($idDataset);
+
+    /**
+     * @api
+     *
+     * @param string $nameDataset
+     *
+     * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
+     */
+    public function queryDatasetByNameWithRelation($nameDataset);
+
+    /**
+     * @api
+     *
+     * @param string $nameDataset
+     *
+     * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
+     */
+    public function queryDatasetByName($nameDataset);
 }

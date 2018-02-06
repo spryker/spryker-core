@@ -10,6 +10,7 @@ namespace Spryker\Zed\Dataset\Communication\Controller;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Dataset\Business\Exception\DatasetParseException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,6 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AddController extends AbstractController
 {
     const MESSAGE_DATASET_PARSE_ERROR = 'Not valid file';
+    const DATSET_LIST_URL = '/dataset';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -35,13 +37,14 @@ class AddController extends AbstractController
         if ($form->isValid()) {
             $saveRequestTransfer = $form->getData();
             $file = $form->get('contentFile')->getData();
+            $filePath = ($file instanceof UploadedFile) ? $file->getRealPath() : null;
             try {
-                $this->getFacade()->save($saveRequestTransfer, $file);
+                $this->getFacade()->save($saveRequestTransfer, $filePath);
             } catch (DatasetParseException $e) {
                 $this->addErrorMessage(static::MESSAGE_DATASET_PARSE_ERROR);
             }
 
-            $redirectUrl = Url::generate('/dataset')->build();
+            $redirectUrl = Url::generate(static::DATSET_LIST_URL)->build();
 
             return $this->redirectResponse($redirectUrl);
         }

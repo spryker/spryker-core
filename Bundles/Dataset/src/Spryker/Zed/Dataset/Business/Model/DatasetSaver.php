@@ -10,7 +10,6 @@ namespace Spryker\Zed\Dataset\Business\Model;
 use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
 use Orm\Zed\Dataset\Persistence\SpyDataset;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class DatasetSaver implements DatasetSaverInterface
 {
@@ -27,9 +26,9 @@ class DatasetSaver implements DatasetSaverInterface
     protected $datasetLocalizedAttributesSaver;
 
     /**
-     * @var \Spryker\Zed\Dataset\Business\Model\DatasetRowColValueSaverInterface
+     * @var \Spryker\Zed\Dataset\Business\Model\DatasetRowColumnValueSaverInterface
      */
-    protected $datasetRowColValueSaver;
+    protected $datasetRowColumnValueSaver;
 
     /**
      * @var \Spryker\Zed\Dataset\Business\Model\ReaderManagerInterface
@@ -39,31 +38,33 @@ class DatasetSaver implements DatasetSaverInterface
     /**
      * @param \Spryker\Zed\Dataset\Business\Model\DatasetFinderInterface $datasetFinder
      * @param \Spryker\Zed\Dataset\Business\Model\DatasetLocalizedAttributesSaverInterface $datasetLocalizedAttributesSaver
-     * @param \Spryker\Zed\Dataset\Business\Model\DatasetRowColValueSaverInterface $datasetRowColValueSaver
+     * @param \Spryker\Zed\Dataset\Business\Model\DatasetRowColumnValueSaverInterface $datasetRowColumnValueSaver
      * @param \Spryker\Zed\Dataset\Business\Model\ReaderManagerInterface $readerManager
      */
     public function __construct(
         DatasetFinderInterface $datasetFinder,
         DatasetLocalizedAttributesSaverInterface $datasetLocalizedAttributesSaver,
-        DatasetRowColValueSaverInterface $datasetRowColValueSaver,
+        DatasetRowColumnValueSaverInterface $datasetRowColumnValueSaver,
         ReaderManagerInterface $readerManager
     ) {
         $this->datasetFinder = $datasetFinder;
         $this->datasetLocalizedAttributesSaver = $datasetLocalizedAttributesSaver;
-        $this->datasetRowColValueSaver = $datasetRowColValueSaver;
+        $this->datasetRowColumnValueSaver = $datasetRowColumnValueSaver;
         $this->readerManager = $readerManager;
     }
 
     /**
      * @param null|\Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile|null $file
+     * @param string|null $filePath
      *
      * @return bool
      */
-    public function save(SpyDatasetEntityTransfer $saveRequestTransfer, UploadedFile $file = null)
+    public function save(SpyDatasetEntityTransfer $saveRequestTransfer, $filePath = null)
     {
-        if ($file) {
-            $saveRequestTransfer->setSpyDatasetRowColValues($this->readerManager->convertFileToDataTransfers($file));
+        if (!empty($filePath) && file_exists($filePath)) {
+            $saveRequestTransfer->setSpyDatasetRowColumnValues(
+                $this->readerManager->convertFileToDataTransfers($filePath)
+            );
         }
         if ($this->checkDatasetExists($saveRequestTransfer)) {
             $this->update($saveRequestTransfer);
@@ -85,12 +86,12 @@ class DatasetSaver implements DatasetSaverInterface
     {
         $this->handleDatabaseTransaction(function () use ($dataset, $saveRequestTransfer) {
             $dataset->fromArray($saveRequestTransfer->toArray());
-            if ($saveRequestTransfer->getSpyDatasetRowColValues()->count() && !$dataset->isNew()) {
-                $this->datasetRowColValueSaver->removeDatasetRowColValues($dataset);
+            if ($saveRequestTransfer->getSpyDatasetRowColumnValues()->count() && !$dataset->isNew()) {
+                $this->datasetRowColumnValueSaver->removeDatasetRowColumnValues($dataset);
             }
             $dataset->save();
             $this->datasetLocalizedAttributesSaver->saveDatasetLocalizedAttributes($dataset, $saveRequestTransfer);
-            $this->datasetRowColValueSaver->saveDatasetRowColValues($dataset, $saveRequestTransfer);
+            $this->datasetRowColumnValueSaver->saveDatasetRowColumnValues($dataset, $saveRequestTransfer);
         });
     }
 
@@ -101,7 +102,7 @@ class DatasetSaver implements DatasetSaverInterface
      */
     protected function update(SpyDatasetEntityTransfer $saveRequestTransfer)
     {
-        $dataset = $this->datasetFinder->getDatasetyId($saveRequestTransfer->getIdDataset());
+        $dataset = $this->datasetFinder->getDatasetId($saveRequestTransfer->getIdDataset());
 
         $this->saveDataset($dataset, $saveRequestTransfer);
     }
@@ -126,10 +127,10 @@ class DatasetSaver implements DatasetSaverInterface
     protected function checkDatasetExists(SpyDatasetEntityTransfer $saveRequestTransfer)
     {
         $idDataset = $saveRequestTransfer->getIdDataset();
-        if ($idDataset == null) {
+        if ($idDataset === null) {
             return false;
         }
-        $dataset = $this->datasetFinder->getDatasetyId($idDataset);
+        $dataset = $this->datasetFinder->getDatasetId($idDataset);
 
         return $dataset !== null;
     }

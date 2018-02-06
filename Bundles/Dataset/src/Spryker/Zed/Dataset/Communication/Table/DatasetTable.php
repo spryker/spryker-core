@@ -17,6 +17,12 @@ class DatasetTable extends AbstractTable
 {
     const REQUEST_ID_DATASET = 'id-dataset';
 
+    const DATASET_ACTIVATE_URL = '/dataset/activate';
+    const DATASET_DEACTIVATE_URL = '/dataset/deactivate';
+    const DATASET_EDIT_URL = '/dataset/edit';
+    const DATASET_DOWNLOAD_URL = '/dataset/download';
+    const DATASET_DELETE_URL = '/dataset/delete';
+
     /**
      * @var \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface
      */
@@ -55,7 +61,7 @@ class DatasetTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->queryContainer->queryDashboard();
+        $query = $this->queryContainer->queryDataset();
         $queryResults = $this->runQuery($query, $config);
         $results = [];
         foreach ($queryResults as $item) {
@@ -154,15 +160,21 @@ class DatasetTable extends AbstractTable
     protected function buildLinks($item)
     {
         $buttons = [];
+        $buttons[] = $this->generateViewButton(
+            Url::generate(self::DATASET_DOWNLOAD_URL, [
+                static::REQUEST_ID_DATASET => $item[DatasetConstants::COL_ID_DATASET],
+            ]),
+            'Download'
+        );
         $buttons[] = $this->generateEditButton(
-            Url::generate('/dataset/edit', [
+            Url::generate(self::DATASET_EDIT_URL, [
                 static::REQUEST_ID_DATASET => $item[DatasetConstants::COL_ID_DATASET],
             ]),
             'Edit'
         );
         $buttons[] = $this->generateStateChangeButton($item);
         $buttons[] = $this->generateRemoveButton(
-            Url::generate('/dataset/delete', [
+            Url::generate(self::DATASET_DELETE_URL, [
                 static::REQUEST_ID_DATASET => $item[DatasetConstants::COL_ID_DATASET],
             ]),
             'Delete'
@@ -180,7 +192,7 @@ class DatasetTable extends AbstractTable
     {
         if ($item[DatasetConstants::COL_IS_ACTIVE]) {
             return $this->generateRemoveButton(
-                Url::generate('/dataset/deactivate', [
+                Url::generate(self::DATASET_DEACTIVATE_URL, [
                     self::REQUEST_ID_DATASET => $item[DatasetConstants::COL_ID_DATASET],
                 ]),
                 'Deactivate'
@@ -188,7 +200,7 @@ class DatasetTable extends AbstractTable
         }
 
         return $this->generateViewButton(
-            Url::generate('/dataset/activate', [
+            Url::generate(self::DATASET_ACTIVATE_URL, [
                 self::REQUEST_ID_DATASET => $item[DatasetConstants::COL_ID_DATASET],
             ]),
             'Activate'

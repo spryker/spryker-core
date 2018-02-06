@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Dependency\Facade;
 
-class DatasetToLocaleFacadeFacadeBridge implements DatasetToLocaleFacadeInterface
+class DatasetToLocaleFacadeBridge implements DatasetToLocaleFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface

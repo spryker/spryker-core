@@ -7,16 +7,14 @@
 
 namespace Spryker\Zed\Dataset\Business\Model;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-
 interface ReaderManagerInterface
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
+     * @param string $filePath
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetParseException
      *
-     * @return \Generated\Shared\Transfer\SpyDatasetRowColValueEntityTransfer[]
+     * @return \Generated\Shared\Transfer\SpyDatasetRowColumnValueEntityTransfer[]
      */
-    public function convertFileToDataTransfers(UploadedFile $file);
+    public function convertFileToDataTransfers($filePath);
 }

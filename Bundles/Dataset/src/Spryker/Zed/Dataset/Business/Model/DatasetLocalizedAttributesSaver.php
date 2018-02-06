@@ -29,6 +29,21 @@ class DatasetLocalizedAttributesSaver implements DatasetLocalizedAttributesSaver
 
             return;
         }
+        $this->saveNewLocalizedAttributes($dataset, $localizedAttributesToSave, $existingDatasetLocalizedAttributes);
+    }
+
+    /**
+     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $dataset
+     * @param array $localizedAttributesToSave
+     * @param array $existingDatasetLocalizedAttributes
+     *
+     * @return void
+     */
+    protected function saveNewLocalizedAttributes(
+        SpyDataset $dataset,
+        $localizedAttributesToSave,
+        $existingDatasetLocalizedAttributes
+    ) {
         foreach ($localizedAttributesToSave as $localizedAttribute) {
             $idLocale = $localizedAttribute->getLocale()->getIdLocale();
             if (!empty($existingDatasetLocalizedAttributes[$idLocale])) {

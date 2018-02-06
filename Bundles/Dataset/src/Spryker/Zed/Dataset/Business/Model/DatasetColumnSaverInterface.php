@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Dataset\Business\Model;
 
-use Generated\Shared\Transfer\SpyDatasetColEntityTransfer;
+use Generated\Shared\Transfer\SpyDatasetColumnEntityTransfer;
 
-interface DatasetColSaverInterface
+interface DatasetColumnSaverInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyDatasetColEntityTransfer $datasetColEntityTransfer
+     * @param \Generated\Shared\Transfer\SpyDatasetColumnEntityTransfer $datasetColumnEntityTransfer
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDataset
      */
-    public function getOrCreate(SpyDatasetColEntityTransfer $datasetColEntityTransfer);
+    public function findOrCreate(SpyDatasetColumnEntityTransfer $datasetColumnEntityTransfer);
 }

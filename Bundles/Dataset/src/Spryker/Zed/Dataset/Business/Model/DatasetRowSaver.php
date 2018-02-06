@@ -30,7 +30,7 @@ class DatasetRowSaver implements DatasetRowSaverInterface
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDataset
      */
-    public function getOrCreate(SpyDatasetRowEntityTransfer $datasetRowEntityTransfer)
+    public function findOrCreate(SpyDatasetRowEntityTransfer $datasetRowEntityTransfer)
     {
         $datasetRowEntity = $this->datasetFinder->getDatasetRowByTitle($datasetRowEntityTransfer->getTitle());
         if ($datasetRowEntity === null) {

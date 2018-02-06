@@ -8,40 +8,38 @@
 namespace Spryker\Zed\Dataset\Communication\Form;
 
 use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\Dataset\Business\DatasetFacadeInterface getFacade()
+ * @method \Spryker\Zed\Dataset\Communication\DatasetCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface getQueryContainer()
+ */
 class DatasetForm extends AbstractType
 {
     const FIELD_DATASET_NAME = 'name';
     const FIELD_ID_DATASET = 'idDataset';
-    const DATASET_DATA_CONTENT = 'spyDatasetRowColValues';
+    const DATASET_DATA_CONTENT = 'spyDatasetRowColumnValues';
     const DATASET_FILE_CONTENT = 'contentFile';
     const FIELD_USE_REAL_NAME = 'useRealName';
     const DATASET_LOCALIZED_ATTRIBUTES = 'getSpyDatasetLocalizedAttributess';
     const OPTION_DATA_CLASS = 'data_class';
     const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
     const DATASET_HAS_DATA = 'datasetHasData';
-
-    /**
-     * @var \Spryker\Zed\Dataset\Communication\Form\DatasetLocalizedAttributesForm
-     */
-    protected $datasetLocalizedAttributesForm;
-
-    /**
-     * @param \Symfony\Component\Form\FormTypeInterface $datasetLocalizedAttributesForm
-     */
-    public function __construct(FormTypeInterface $datasetLocalizedAttributesForm)
-    {
-        $this->datasetLocalizedAttributesForm = $datasetLocalizedAttributesForm;
-    }
+    const GROUP_UNIQUE_DATASET_NAME_CHECK = 'unique_dataset_name_check';
 
     /**
      * @return string
@@ -78,6 +76,20 @@ class DatasetForm extends AbstractType
         $resolver->setDefaults([
             static::OPTION_DATA_CLASS => SpyDatasetEntityTransfer::class,
         ]);
+        $resolver->setDefaults([
+            'validation_groups' => function (FormInterface $form) {
+                $defaultData = (array)$form->getConfig()->getData();
+                $submittedData = $form->getData();
+
+                if (array_key_exists(self::FIELD_DATASET_NAME, $defaultData) === false ||
+                    $defaultData[self::FIELD_DATASET_NAME] !== $submittedData[self::FIELD_DATASET_NAME]
+                ) {
+                    return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_DATASET_NAME_CHECK];
+                }
+
+                return [Constraint::DEFAULT_GROUP];
+            },
+        ]);
     }
 
     /**
@@ -90,8 +102,42 @@ class DatasetForm extends AbstractType
         $builder->add(static::FIELD_DATASET_NAME, TextType::class, [
             'required' => true,
         ]);
+        $builder->add(self::FIELD_DATASET_NAME, TextType::class, [
+            'label' => 'Name',
+            'constraints' => $this->createDatasetConstraints(),
+        ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint[]
+     */
+    protected function createDatasetConstraints()
+    {
+        $constraints = $this->getFieldDefaultConstraints();
+
+        $constraints[] = new Callback([
+            'callback' => function ($name, ExecutionContextInterface $contextInterface) {
+                if ($this->getFacade()->hasDatasetName($name)) {
+                    $contextInterface->addViolation('The name already exists.');
+                }
+            },
+            'groups' => [self::GROUP_UNIQUE_DATASET_NAME_CHECK],
+        ]);
+
+        return $constraints;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint[]
+     */
+    protected function getFieldDefaultConstraints()
+    {
+        return [
+            new NotBlank(),
+            new Required(),
+        ];
     }
 
     /**
@@ -115,7 +161,7 @@ class DatasetForm extends AbstractType
     protected function addDatasetLocalizedAttributesForm(FormBuilderInterface $builder, array $options = null)
     {
         $builder->add(static::DATASET_LOCALIZED_ATTRIBUTES, CollectionType::class, [
-            'entry_type' => $this->datasetLocalizedAttributesForm,
+            'entry_type' => $this->getFactory()->createDatasetLocalizedAttributesForm(),
             'allow_add' => true,
             'allow_delete' => true,
             'entry_options' => [

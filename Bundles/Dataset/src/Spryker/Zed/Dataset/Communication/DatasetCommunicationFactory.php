@@ -29,21 +29,18 @@ class DatasetCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param null|int $idDashboard
+     * @param null|int $idDataset
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createDatasetForm($idDashboard = null)
+    public function createDatasetForm($idDataset = null)
     {
-        $datasetForm = new DatasetForm(
-            $this->createDatasetLocalizedAttributesForm()
-        );
         $datasetFormProvider = $this->createDatasetFormDataProvider();
 
         return $this->getFormFactory()->create(
-            $datasetForm,
-            $datasetFormProvider->getData($idDashboard),
-            $datasetFormProvider->getOptions($idDashboard)
+            DatasetForm::class,
+            $datasetFormProvider->getData($idDataset),
+            $datasetFormProvider->getOptions($idDataset)
         );
     }
 
@@ -64,7 +61,7 @@ class DatasetCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeFacadeBridge
+     * @return \Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeBridge
      */
     public function getLocaleFacade()
     {

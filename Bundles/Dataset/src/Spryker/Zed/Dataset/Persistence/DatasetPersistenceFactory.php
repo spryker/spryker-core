@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Dataset\Persistence;
 
-use Orm\Zed\Dataset\Persistence\SpyDatasetColQuery;
+use Orm\Zed\Dataset\Persistence\SpyDatasetColumnQuery;
 use Orm\Zed\Dataset\Persistence\SpyDatasetLocalizedAttributesQuery;
 use Orm\Zed\Dataset\Persistence\SpyDatasetQuery;
-use Orm\Zed\Dataset\Persistence\SpyDatasetRowColValueQuery;
+use Orm\Zed\Dataset\Persistence\SpyDatasetRowColumnValueQuery;
 use Orm\Zed\Dataset\Persistence\SpyDatasetRowQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -29,11 +29,11 @@ class DatasetPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Dataset\Persistence\SpyDatasetColQuery
+     * @return \Orm\Zed\Dataset\Persistence\SpyDatasetColumnQuery
      */
-    public function createSpyDatasetColQuery()
+    public function createSpyDatasetColumnQuery()
     {
-        return SpyDatasetColQuery::create();
+        return SpyDatasetColumnQuery::create();
     }
 
     /**
@@ -45,11 +45,11 @@ class DatasetPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Dataset\Persistence\SpyDatasetRowColValueQuery
+     * @return \Orm\Zed\Dataset\Persistence\SpyDatasetRowColumnValueQuery
      */
-    public function createSpyDatasetRowColValueQuery()
+    public function createSpyDatasetRowColumnValueQuery()
     {
-        return SpyDatasetRowColValueQuery::create();
+        return SpyDatasetRowColumnValueQuery::create();
     }
 
     /**
