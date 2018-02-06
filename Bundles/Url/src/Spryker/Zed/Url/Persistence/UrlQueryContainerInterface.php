@@ -42,7 +42,7 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
      * @param string $resourceType
      * @param array $resourceIds
      *
-     * @throws Exception\UnknownResourceTypeException
+     * @throws \Spryker\Zed\Url\Persistence\Exception\UnknownResourceTypeException
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */

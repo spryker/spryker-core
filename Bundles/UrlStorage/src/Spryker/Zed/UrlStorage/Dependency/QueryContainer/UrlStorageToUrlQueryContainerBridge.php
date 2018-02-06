@@ -44,7 +44,7 @@ class UrlStorageToUrlQueryContainerBridge implements UrlStorageToUrlQueryContain
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    public function queryUrlsByResourceTypeAndIds($resourceType, $resourceIds)
+    public function queryUrlsByResourceTypeAndIds($resourceType, array $resourceIds)
     {
         return $this->urlQueryContainer->queryUrlsByResourceTypeAndIds($resourceType, $resourceIds);
     }
