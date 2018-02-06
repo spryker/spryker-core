@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
 
 /**
- * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacade getFacade()
+ * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()
  */
 class ProductBundleProductConcreteReadPlugin extends AbstractPlugin implements ProductConcretePluginReadInterface

@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\ProductAttribute\ProductAttributeConfig getConfig()
- * @method \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface getQueryContainer()
  */
 class ProductAttributePersistenceFactory extends AbstractPersistenceFactory
 {

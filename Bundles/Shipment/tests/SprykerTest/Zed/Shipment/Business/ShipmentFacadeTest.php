@@ -355,18 +355,7 @@ class ShipmentFacadeTest extends Test
             ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
             ->setCurrency((new CurrencyTransfer())->setCode($currencyCode));
 
-        $priceList = [
-            $this->tester->getDefaultStoreName() => [
-                'EUR' => [
-                    'netAmount' => 3100,
-                    'grossAmount' => 3100,
-                ],
-                'USD' => [
-                    'netAmount' => 3200,
-                    'grossAmount' => 3200,
-                ],
-            ],
-        ];
+        $priceList = $this->creteShipmentPriceList();
 
         $idShipmentMethod = $this->tester->haveShipmentMethod([], [], $priceList)->getIdShipmentMethod();
 
@@ -375,7 +364,30 @@ class ShipmentFacadeTest extends Test
         $actualPriceResult = $this->tester->findShipmentMethod($shipmentMethodsTransfer, $idShipmentMethod)->getStoreCurrencyPrice();
 
         // Assert
-        $this->assertEquals($expectedPriceResult, $actualPriceResult);
+        $this->assertSame($expectedPriceResult, $actualPriceResult);
+    }
+
+    /**
+     * @dataProvider multiCurrencyPrices
+     *
+     * @param string $currencyCode
+     * @param string $expectedPriceResult
+     *
+     * @return void
+     */
+    public function testFindAvailableMethodByIdShouldReturnShipmentMethodById($currencyCode, $expectedPriceResult)
+    {
+        $quoteTransfer = (new QuoteTransfer())
+            ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
+            ->setCurrency((new CurrencyTransfer())->setCode($currencyCode));
+
+        $priceList = $this->creteShipmentPriceList();
+
+        $idShipmentMethod = $this->tester->haveShipmentMethod([], [], $priceList)->getIdShipmentMethod();
+
+        $shipmentMethodsTransfer = $this->tester->getShipmentFacade()->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
+
+        $this->assertSame($shipmentMethodsTransfer->getStoreCurrencyPrice(), $expectedPriceResult);
     }
 
     /**
@@ -436,5 +448,25 @@ class ShipmentFacadeTest extends Test
                 static::DELIVERY_TIME_PLUGIN => $deliveryTimePlugin,
             ],
         ]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function creteShipmentPriceList()
+    {
+        $priceList = [
+            $this->tester->getDefaultStoreName() => [
+                'EUR' => [
+                    'netAmount' => 3100,
+                    'grossAmount' => 3100,
+                ],
+                'USD' => [
+                    'netAmount' => 3200,
+                    'grossAmount' => 3200,
+                ],
+            ],
+        ];
+        return $priceList;
     }
 }

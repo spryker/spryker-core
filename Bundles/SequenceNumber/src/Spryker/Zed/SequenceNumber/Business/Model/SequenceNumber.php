@@ -12,11 +12,14 @@ use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumber;
 use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery;
 use Propel\Runtime\Connection\ConnectionInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\SequenceNumber\Business\Exception\InvalidSequenceNumberException;
 use Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface;
 
 class SequenceNumber implements SequenceNumberInterface
 {
+    use DatabaseTransactionHandlerTrait;
+
     /**
      * @var \Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface
      */
@@ -33,15 +36,28 @@ class SequenceNumber implements SequenceNumberInterface
     protected $connection;
 
     /**
+     * @see \Spryker\Shared\SequenceNumber\SequenceNumberConstants::LIMIT_LIST
+     *
+     * @var array
+     */
+    protected $limitList;
+
+    /**
      * @param \Spryker\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface $randomNumberGenerator
      * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettings
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
+     * @param array $limitList
      */
-    public function __construct(RandomNumberGeneratorInterface $randomNumberGenerator, SequenceNumberSettingsTransfer $sequenceNumberSettings, ConnectionInterface $connection)
-    {
+    public function __construct(
+        RandomNumberGeneratorInterface $randomNumberGenerator,
+        SequenceNumberSettingsTransfer $sequenceNumberSettings,
+        ConnectionInterface $connection,
+        array $limitList = []
+    ) {
         $this->randomNumberGenerator = $randomNumberGenerator;
         $this->sequenceNumberSettings = $sequenceNumberSettings;
         $this->connection = $connection;
+        $this->limitList = $limitList;
     }
 
     /**
@@ -69,21 +85,30 @@ class SequenceNumber implements SequenceNumberInterface
     protected function createNumber()
     {
         try {
-            $this->connection->beginTransaction();
-            $sequence = $this->getSequence();
-            $idCurrent = $sequence->getCurrentId() + $this->randomNumberGenerator->generate();
-
-            $sequence->setCurrentId($idCurrent);
-            $sequence->save();
-
-            $this->connection->commit();
+            $idCurrent = $this->handleDatabaseTransaction(function () {
+                return $this->createNumberTransaction();
+            });
         } catch (Exception $e) {
-            $this->connection->rollBack();
-
             throw new InvalidSequenceNumberException(
                 'Could not generate sequence number. Make sure your settings are complete. Error: ' . $e->getMessage()
             );
         }
+
+        return $idCurrent;
+    }
+
+    /**
+     * @return int
+     */
+    protected function createNumberTransaction()
+    {
+        $sequence = $this->getSequence();
+        $idCurrent = $sequence->getCurrentId() + $this->randomNumberGenerator->generate();
+
+        $this->assertIdCurrent($idCurrent);
+
+        $sequence->setCurrentId($idCurrent);
+        $sequence->save();
 
         return $idCurrent;
     }
@@ -115,5 +140,26 @@ class SequenceNumber implements SequenceNumberInterface
         }
 
         return $sequence;
+    }
+
+    /**
+     * @param int $idCurrent
+     *
+     * @throws \Exception
+     *
+     * @return void
+     */
+    protected function assertIdCurrent($idCurrent)
+    {
+        if (!isset($this->limitList[$this->sequenceNumberSettings->getName()])) {
+            return;
+        }
+
+        if ($idCurrent > $this->limitList[$this->sequenceNumberSettings->getName()]) {
+            throw new Exception(sprintf(
+                'The sequence limit is reached for %s',
+                $this->sequenceNumberSettings->getName()
+            ));
+        }
     }
 }

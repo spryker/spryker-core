@@ -1,3 +1,3 @@
 # DummyPayment Changelog
 
-[DummyPayment Changelog](https://github.com/spryker/DummyPayment/releases)
+[Release Changelog](https://github.com/spryker/dummy-payment/releases)

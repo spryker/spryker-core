@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Locale\LocaleConfig getConfig()
- * @method \Spryker\Zed\Locale\Persistence\LocaleQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface getQueryContainer()
  */
 class LocalePersistenceFactory extends AbstractPersistenceFactory
 {

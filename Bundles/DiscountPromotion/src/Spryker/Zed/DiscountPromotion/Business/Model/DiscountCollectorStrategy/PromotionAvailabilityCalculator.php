@@ -36,14 +36,14 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
     }
 
     /**
-     * @param string $promotionProductAbstractSku
+     * @param int $idProductAbstract
      * @param int $maxQuantity
      *
      * @return int
      */
-    public function getMaximumQuantityBasedOnAvailability($promotionProductAbstractSku, $maxQuantity)
+    public function getMaximumQuantityBasedOnAvailability($idProductAbstract, $maxQuantity)
     {
-        $productAbstractAvailabilityTransfer = $this->getProductAbstractAvailability($promotionProductAbstractSku);
+        $productAbstractAvailabilityTransfer = $this->getProductAbstractAvailability($idProductAbstract);
 
         if ($productAbstractAvailabilityTransfer->getIsNeverOutOfStock()) {
             return (int)$maxQuantity;
@@ -61,17 +61,17 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
     }
 
     /**
-     * @param string $promotionProductAbstractSku
+     * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
-    protected function getProductAbstractAvailability($promotionProductAbstractSku)
+    protected function getProductAbstractAvailability($idProductAbstract)
     {
         $localeTransfer = $this->localeFacade->getCurrentLocale();
 
         $productAbstractAvailabilityTransfer = $this->availabilityFacade
             ->getProductAbstractAvailability(
-                $promotionProductAbstractSku,
+                $idProductAbstract,
                 $localeTransfer->getIdLocale()
             );
 

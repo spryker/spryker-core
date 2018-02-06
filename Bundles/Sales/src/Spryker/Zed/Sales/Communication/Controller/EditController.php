@@ -16,14 +16,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
- * @method \Spryker\Zed\Sales\Business\SalesFacade getFacade()
+ * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
  */
 class EditController extends AbstractController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function customerAction(Request $request)
     {
@@ -31,7 +31,7 @@ class EditController extends AbstractController
 
         $dataProvider = $this->getFactory()->createCustomerFormDataProvider();
         $form = $this->getFactory()
-            ->createCustomerForm(
+            ->getCustomerForm(
                 $dataProvider->getData($idSalesOrder),
                 $dataProvider->getOptions()
             )
@@ -62,7 +62,7 @@ class EditController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function addressAction(Request $request)
     {
@@ -71,7 +71,7 @@ class EditController extends AbstractController
 
         $dataProvider = $this->getFactory()->createAddressFormDataProvider();
         $form = $this->getFactory()
-            ->createAddressForm(
+            ->getAddressForm(
                 $dataProvider->getData($idOrderAddress),
                 $dataProvider->getOptions()
             )

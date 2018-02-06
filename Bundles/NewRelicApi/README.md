@@ -12,4 +12,4 @@ composer require spryker/new-relic-api
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/enablement/tutorials/backend/t_new_relic_monitoring.html)
+[Module Documentation](https://academy.spryker.com/enablement/tutorials/backend/t_new_relic_monitoring.html)

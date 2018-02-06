@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 
 /**
- * @method \Spryker\Zed\SalesProductConnector\Business\SalesProductConnectorFacade getFacade()
+ * @method \Spryker\Zed\SalesProductConnector\Business\SalesProductConnectorFacadeInterface getFacade()
  */
 class ItemMetadataHydratorPlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {

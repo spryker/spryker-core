@@ -329,10 +329,10 @@ class Builder implements BuilderInterface
             $processName = $this->getAttributeString($xmlProcess, self::STATE_NAME_ATTRIBUTE);
             $process->setName($processName);
             $processMap[$processName] = $process;
-            $process->setMain($this->getAttributeBoolean($xmlProcess, self::PROCESS_MAIN_FLAG_ATTRIBUTE));
+            $process->setIsMain($this->getAttributeBoolean($xmlProcess, self::PROCESS_MAIN_FLAG_ATTRIBUTE));
             $process->setFile($this->getAttributeString($xmlProcess, self::PROCESS_FILE_ATTRIBUTE));
 
-            if ($process->getMain()) {
+            if ($process->getIsMain()) {
                 $mainProcess = $process;
             }
         }
@@ -569,7 +569,7 @@ class Builder implements BuilderInterface
      * @param \SimpleXMLElement $xmlElement
      * @param string $attributeName
      *
-     * @return string
+     * @return string|null
      */
     protected function getAttributeString(SimpleXMLElement $xmlElement, $attributeName)
     {

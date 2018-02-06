@@ -10,7 +10,7 @@ namespace Spryker\Zed\Ratepay\Communication\Controller;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
- * @method \Spryker\Zed\Ratepay\Business\RatepayFacade getFacade()
+ * @method \Spryker\Zed\Ratepay\Business\RatepayFacadeInterface getFacade()
  * @method \Spryker\Zed\Ratepay\Communication\RatepayCommunicationFactory getFactory()
  */
 class ProfileController extends AbstractController

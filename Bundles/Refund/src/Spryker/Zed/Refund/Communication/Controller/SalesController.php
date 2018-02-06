@@ -12,8 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Refund\Communication\RefundCommunicationFactory getFactory()
- * @method \Spryker\Zed\Refund\Persistence\RefundQueryContainer getQueryContainer()
- * @method \Spryker\Zed\Refund\Business\RefundFacade getFacade()
+ * @method \Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Refund\Business\RefundFacadeInterface getFacade()
  */
 class SalesController extends AbstractController
 {

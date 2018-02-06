@@ -5,10 +5,10 @@
 
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Oms\OmsConstants;
+use Spryker\Shared\Payolution\PayolutionConfig;
 use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Shared\Sales\SalesConstants;
 use Spryker\Zed\Oms\OmsConfig;
-use Spryker\Zed\Payolution\PayolutionConfig;
 
 $config[PayolutionConstants::TRANSACTION_GATEWAY_URL] = '';
 $config[PayolutionConstants::CALCULATION_GATEWAY_URL] = '';

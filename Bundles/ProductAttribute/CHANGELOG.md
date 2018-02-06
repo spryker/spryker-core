@@ -1,3 +1,3 @@
 # ProductAttribute Changelog
 
-[ProductAttribute Changelog](https://github.com/spryker/ProductAttribute/releases)
+[Release Changelog](https://github.com/spryker/product-attribute/releases)

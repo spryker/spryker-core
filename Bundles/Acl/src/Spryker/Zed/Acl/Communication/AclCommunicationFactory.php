@@ -22,9 +22,9 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method \Spryker\Zed\Acl\Persistence\AclQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Acl\AclConfig getConfig()
- * @method \Spryker\Zed\Acl\Business\AclFacade getFacade()
+ * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
  */
 class AclCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -84,11 +84,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createGroupForm(array $data = [], array $options = [])
     {
-        $formType = new GroupForm(
-            $this->getProvidedDependency(AclDependencyProvider::QUERY_CONTAINER_ACL)
-        );
-
-        return $this->getFormFactory()->create($formType, $data, $options);
+        return $this->getFormFactory()->create(GroupForm::class, $data, $options);
     }
 
     /**
@@ -120,9 +116,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createRoleForm(array $data = [], array $options = [])
     {
-        $formType = new RoleForm();
-
-        return $this->getFormFactory()->create($formType, $data, $options);
+        return $this->getFormFactory()->create(RoleForm::class, $data, $options);
     }
 
     /**
@@ -141,9 +135,7 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createRuleForm(array $data = [], array $options = [])
     {
-        $formType = new RuleForm();
-
-        return $this->getFormFactory()->create($formType, $data, $options);
+        return $this->getFormFactory()->create(RuleForm::class, $data, $options);
     }
 
     /**

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
- * @method \Spryker\Zed\Shipment\Business\ShipmentFacade getFacade()
+ * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
  */
 class MethodController extends AbstractController
 {
@@ -51,7 +51,7 @@ class MethodController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return array|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request)
     {

@@ -3,6 +3,7 @@
   "description": "Oms module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/graph": "^3.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
@@ -38,12 +39,6 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ],
   "extra": {
     "branch-alias": {
       "dev-master": "6.0.x-dev"

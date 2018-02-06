@@ -1,3 +1,3 @@
 # AvailabilityCartConnector Changelog
 
-[AvailabilityCartConnector Changelog](https://github.com/spryker/AvailabilityCartConnector/releases)
+[Release Changelog](https://github.com/spryker/availability-cart-connector/releases)

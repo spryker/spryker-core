@@ -12,7 +12,7 @@ use Spryker\Service\Flysystem\Dependency\Plugin\FlysystemFilesystemBuilderPlugin
 use Spryker\Service\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Service\FlysystemFtpFileSystem\FlysystemFtpFileSystemServiceFactory getFactory
+ * @method \Spryker\Service\FlysystemFtpFileSystem\FlysystemFtpFileSystemServiceFactory getFactory()
  */
 class FtpFilesystemBuilderPlugin extends AbstractPlugin implements FlysystemFilesystemBuilderPluginInterface
 {

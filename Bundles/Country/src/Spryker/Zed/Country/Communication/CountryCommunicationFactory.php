@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Country\CountryConfig getConfig()
- * @method \Spryker\Zed\Country\Persistence\CountryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface getQueryContainer()
  */
 class CountryCommunicationFactory extends AbstractCommunicationFactory
 {

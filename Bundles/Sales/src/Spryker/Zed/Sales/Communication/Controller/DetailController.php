@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
- * @method \Spryker\Zed\Sales\Business\SalesFacade getFacade()
+ * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
  */
 class DetailController extends AbstractController
@@ -23,7 +23,7 @@ class DetailController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
@@ -54,7 +54,7 @@ class DetailController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array|string
+     * @return array|string|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function renderSalesDetailBlocks(Request $request, OrderTransfer $orderTransfer)
     {

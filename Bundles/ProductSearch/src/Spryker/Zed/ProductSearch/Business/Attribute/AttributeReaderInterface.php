@@ -25,6 +25,14 @@ interface AttributeReaderInterface
     public function suggestUnusedKeys($searchText = '', $limit = 10);
 
     /**
+     * @param string $searchText
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function suggestKeys($searchText = '', $limit = 10);
+
+    /**
      * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer[]
      */
     public function getAttributeList();

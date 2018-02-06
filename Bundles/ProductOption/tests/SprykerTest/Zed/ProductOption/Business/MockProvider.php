@@ -9,31 +9,34 @@ namespace SprykerTest\Zed\ProductOption\Business;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceHydratorInterface;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceSaverInterface;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class MockProvider extends Unit
 {
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface
      */
     protected function createGlossaryFacadeMock()
     {
-        return $this->getMockBuilder(ProductOptionToGlossaryInterface::class)
+        return $this->getMockBuilder(ProductOptionToGlossaryFacadeInterface::class)
             ->getMock();
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface
      */
     protected function createLocaleFacadeMock()
     {
-        return $this->getMockBuilder(ProductOptionToLocaleInterface::class)
+        return $this->getMockBuilder(ProductOptionToLocaleFacadeInterface::class)
             ->getMock();
     }
 
@@ -47,11 +50,20 @@ class MockProvider extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface
      */
     protected function createTouchFacadeMock()
     {
-        return $this->getMockBuilder(ProductOptionToTouchInterface::class)
+        return $this->getMockBuilder(ProductOptionToTouchFacadeInterface::class)
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface
+     */
+    protected function createEventFacadeMock()
+    {
+        return $this->getMockBuilder(ProductOptionToEventFacadeInterface::class)
             ->getMock();
     }
 
@@ -88,6 +100,26 @@ class MockProvider extends Unit
     protected function createTranslationSaverMock()
     {
         return $this->getMockBuilder(TranslationSaverInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceHydratorInterface
+     */
+    protected function createProductOptionValuePriceHydratorMock()
+    {
+        return $this->getMockBuilder(ProductOptionValuePriceHydratorInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceSaverInterface
+     */
+    protected function createProductOptionValuePriceSaverMock()
+    {
+        return $this->getMockBuilder(ProductOptionValuePriceSaverInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
     }

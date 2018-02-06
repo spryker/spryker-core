@@ -391,7 +391,7 @@ class Store
     /**
      * @return string
      */
-    protected function getDefaultCurrencyCode()
+    public function getDefaultCurrencyCode()
     {
         $defaultCurrencyCode = current($this->currencyIsoCodes);
         if (!$defaultCurrencyCode) {

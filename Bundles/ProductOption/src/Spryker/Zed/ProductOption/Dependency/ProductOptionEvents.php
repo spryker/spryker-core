@@ -11,6 +11,22 @@ interface ProductOptionEvents
 {
     /**
      * Specification
+     * - This events will be used for product_abstract_option publishing
+     *
+     * @api
+     */
+    const PRODUCT_ABSTRACT_PRODUCT_OPTION_PUBLISH = 'ProductOption.product_abstract_option.publish';
+
+    /**
+     * Specification
+     * - This events will be used for product_abstract_option publishing
+     *
+     * @api
+     */
+    const PRODUCT_ABSTRACT_PRODUCT_OPTION_UNPUBLISH = 'ProductOption.product_abstract_option.unpublish';
+
+    /**
+     * Specification
      * - This events will be used for spy_product_abstract_product_option_group entity creation
      *
      * @api
@@ -80,4 +96,28 @@ interface ProductOptionEvents
      * @api
      */
     const ENTITY_SPY_PRODUCT_OPTION_VALUE_DELETE = 'Entity.spy_product_option_value.delete';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_option_value_price entity creation
+     *
+     * @api
+     */
+    const ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_CREATE = 'Entity.spy_product_option_value_price.create';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_option_value_price entity change
+     *
+     * @api
+     */
+    const ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_UPDATE = 'Entity.spy_product_option_value_price.update';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_option_value_price entity deletion
+     *
+     * @api
+     */
+    const ENTITY_SPY_PRODUCT_OPTION_VALUE_PRICE_DELETE = 'Entity.spy_product_option_value_price.delete';
 }

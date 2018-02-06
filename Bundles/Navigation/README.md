@@ -12,4 +12,4 @@ composer require spryker/navigation
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/developing_with_spryker/module_guide/yves_components/navigation/navigation.html)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/yves_components/navigation/navigation.html)

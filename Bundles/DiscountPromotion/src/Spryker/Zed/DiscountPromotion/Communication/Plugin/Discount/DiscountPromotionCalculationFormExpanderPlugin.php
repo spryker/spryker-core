@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacade getFacade()
+ * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface getFacade()
  * @method \Spryker\Zed\DiscountPromotion\Communication\DiscountPromotionCommunicationFactory getFactory()
  */
 class DiscountPromotionCalculationFormExpanderPlugin extends AbstractPlugin implements DiscountFormExpanderPluginInterface

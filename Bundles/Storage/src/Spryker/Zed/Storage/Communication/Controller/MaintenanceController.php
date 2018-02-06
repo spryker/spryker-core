@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Storage\Business\StorageFacade getFacade()
+ * @method \Spryker\Zed\Storage\Business\StorageFacadeInterface getFacade()
  * @method \Spryker\Zed\Storage\Communication\StorageCommunicationFactory getFactory()
  */
 class MaintenanceController extends AbstractController

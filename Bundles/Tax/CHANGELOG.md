@@ -1,3 +1,3 @@
 # Tax Changelog
 
-[Tax Changelog](https://github.com/spryker/Tax/releases)
+[Release Changelog](https://github.com/spryker/tax/releases)

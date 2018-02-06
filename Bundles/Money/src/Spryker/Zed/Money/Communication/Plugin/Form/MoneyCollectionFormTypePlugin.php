@@ -12,12 +12,16 @@ use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
 
 /**
- * @method \Spryker\Zed\Money\Business\MoneyFacade getFacade()
+ * @method \Spryker\Zed\Money\Business\MoneyFacadeInterface getFacade()
  * @method \Spryker\Zed\Money\Communication\MoneyCommunicationFactory getFactory()
  */
 class MoneyCollectionFormTypePlugin extends AbstractPlugin implements FormTypeInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getType()

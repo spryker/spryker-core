@@ -33,15 +33,18 @@ class TouchUpdater extends AbstractTouchUpdater
     /**
      * @param string $key
      * @param int $idLocale
+     * @param int $idStore
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchSearch
      */
-    protected function findOrCreateTouchKeyEntity($key, $idLocale)
+    protected function findOrCreateTouchKeyEntity($key, $idLocale, $idStore)
     {
-        return SpyTouchSearchQuery::create()
+        $spyTouchSearchQuery = SpyTouchSearchQuery::create()
             ->filterByKey($key)
-            ->filterByFkLocale($idLocale)
-            ->findOneOrCreate();
+            ->filterByFkStore($idStore)
+            ->filterByFkLocale($idLocale);
+
+        return $spyTouchSearchQuery->findOneOrCreate();
     }
 
     /**

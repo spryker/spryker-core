@@ -1,3 +1,3 @@
 # FileSystem Changelog
 
-[FileSystem Changelog](https://github.com/spryker/FileSystem/releases)
+[Release Changelog](https://github.com/spryker/file-system/releases)

@@ -12,13 +12,14 @@ use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Yves\Kernel\Dependency\Messenger\KernelToMessengerBridge;
 use Spryker\Yves\Kernel\Dependency\Messenger\NullMessenger;
+use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 abstract class AbstractController
 {
     /**
-     * @var \Silex\Application
+     * @var \Spryker\Shared\Kernel\Communication\Application|\Silex\Application
      */
     private $application;
 
@@ -40,7 +41,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param \Silex\Application $application
+     * @param \Spryker\Shared\Kernel\Communication\Application|\Silex\Application $application
      *
      * @return $this
      */
@@ -64,7 +65,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Silex\Application
+     * @return \Spryker\Shared\Kernel\Communication\Application|\Silex\Application
      */
     protected function getApplication()
     {
@@ -110,6 +111,18 @@ abstract class AbstractController
     protected function viewResponse(array $data = [])
     {
         return $data;
+    }
+
+    /**
+     * @param array $data
+     * @param \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface[] $widgetPlugins
+     * @param string|null $template
+     *
+     * @return array|\Spryker\Yves\Kernel\View\View
+     */
+    protected function view(array $data = [], array $widgetPlugins = [], $template = null)
+    {
+        return new View($data, $widgetPlugins, $template);
     }
 
     /**

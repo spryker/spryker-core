@@ -90,4 +90,14 @@ class SalesToOmsBridge implements SalesToOmsInterface
     {
         return $this->omsFacade->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
     }
+
+    /**
+     * @param int $idOrder
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedExcludeFromCustomer($idOrder)
+    {
+        return $this->omsFacade->isOrderFlaggedExcludeFromCustomer($idOrder);
+    }
 }

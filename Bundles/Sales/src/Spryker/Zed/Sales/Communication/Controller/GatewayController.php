@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method \Spryker\Zed\Sales\Business\SalesFacade getFacade()
+ * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {
@@ -34,6 +34,20 @@ class GatewayController extends AbstractGatewayController
     public function getOrderDetailsAction(OrderTransfer $orderTransfer)
     {
         return $this->getFacade()->getCustomerOrder($orderTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getPaginatedOrdersAction(OrderListTransfer $orderListTransfer)
+    {
+        return $this->getFacade()
+            ->getPaginatedCustomerOrders(
+                $orderListTransfer,
+                $orderListTransfer->getIdCustomer()
+            );
     }
 
     /**

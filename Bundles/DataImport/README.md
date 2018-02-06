@@ -12,4 +12,4 @@ composer require spryker/data-import
 
 ## Documentation
 
-[Module Documentation](http://academy.spryker.com/enablement/howtos/ht_data_import.html)
+[Module Documentation](https://academy.spryker.com/enablement/howtos/ht_data_import.html)

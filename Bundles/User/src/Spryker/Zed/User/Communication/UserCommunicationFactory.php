@@ -18,9 +18,9 @@ use Spryker\Zed\User\Communication\Table\UsersTable;
 use Spryker\Zed\User\UserDependencyProvider;
 
 /**
- * @method \Spryker\Zed\User\Persistence\UserQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\User\UserConfig getConfig()
- * @method \Spryker\Zed\User\Business\UserFacade getFacade()
+ * @method \Spryker\Zed\User\Business\UserFacadeInterface getFacade()
  */
 class UserCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -31,9 +31,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createResetPasswordForm(UserFacade $userFacade)
     {
-        $formType = new ResetPasswordForm($userFacade);
-
-        return $this->getFormFactory()->create($formType);
+        return $this->getFormFactory()->create(ResetPasswordForm::class);
     }
 
     /**
@@ -56,9 +54,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUserForm(array $data = [], array $options = [])
     {
-        $formType = new UserForm($this->getFacade());
-
-        return $this->getFormFactory()->create($formType, $data, $options);
+        return $this->getFormFactory()->create(UserForm::class, $data, $options);
     }
 
     /**
@@ -69,9 +65,7 @@ class UserCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUpdateUserForm(array $data = [], array $options = [])
     {
-        $formType = new UserUpdateForm($this->getFacade());
-
-        return $this->getFormFactory()->create($formType, $data, $options);
+        return $this->getFormFactory()->create(UserUpdateForm::class, $data, $options);
     }
 
     /**

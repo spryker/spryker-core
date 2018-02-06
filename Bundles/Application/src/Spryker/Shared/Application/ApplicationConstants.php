@@ -17,7 +17,7 @@ interface ApplicationConstants
     const ENABLE_APPLICATION_DEBUG = 'ENABLE_APPLICATION_DEBUG';
     const ENABLE_WEB_PROFILER = 'ENABLE_WEB_PROFILER';
 
-    const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR'; //deprecated
+    const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR'; // Deprecated: Will be removed with the next major.
     const STORE_PREFIX = 'STORE_PREFIX';
     const BACKTRACE_USER_PATH = 'BACKTRACE_USER_PATH';
 
@@ -78,21 +78,48 @@ interface ApplicationConstants
     const YVES_AUTH_SETTINGS = 'YVES_AUTH_SETTINGS';
 
     /**
-     * @deprecated Use `KernelConstants::PROJECT_NAMESPACES` instead
+     * @deprecated Use `Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACES` instead
      */
     const PROJECT_NAMESPACES = KernelConstants::PROJECT_NAMESPACES;
 
     /**
-     * @deprecated Use `KernelConstants::CORE_NAMESPACES` instead
+     * @deprecated Use `Spryker\Shared\Kernel\KernelConstants::CORE_NAMESPACES` instead
      */
     const CORE_NAMESPACES = KernelConstants::CORE_NAMESPACES;
 
+    /**
+     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__HOST` instead
+     */
     const ELASTICA_PARAMETER__HOST = 'ELASTICA_PARAMETER__HOST';
+
+    /**
+     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__PORT` instead
+     */
     const ELASTICA_PARAMETER__PORT = 'ELASTICA_PARAMETER__PORT';
+
+    /**
+     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__TRANSPORT` instead
+     */
     const ELASTICA_PARAMETER__TRANSPORT = 'ELASTICA_PARAMETER__TRANSPORT';
+
+    /**
+     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__INDEX_NAME` instead
+     */
     const ELASTICA_PARAMETER__INDEX_NAME = 'ELASTICA_PARAMETER__INDEX_NAME';
+
+    /**
+     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER` instead
+     */
     const ELASTICA_PARAMETER__AUTH_HEADER = 'ELASTICA_PARAMETER__AUTH_HEADER';
+
+    /**
+     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE` instead
+     */
     const ELASTICA_PARAMETER__DOCUMENT_TYPE = 'ELASTICA_PARAMETER__DOCUMENT_TYPE';
+
+    /**
+     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__EXTRA` instead
+     */
     const ELASTICA_PARAMETER__EXTRA = 'ELASTICA_PARAMETER__EXTRA';
 
     /**
@@ -166,7 +193,7 @@ interface ApplicationConstants
     const PROJECT_TIMEZONE = 'PROJECT_TIMEZONE';
 
     /**
-     * @deprecated Use `KernelConstants::PROJECT_NAMESPACE` instead
+     * @deprecated Use `Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACE` instead
      */
     const PROJECT_NAMESPACE = KernelConstants::PROJECT_NAMESPACE;
 

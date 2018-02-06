@@ -3,7 +3,7 @@
 
     <table name="spy_customer">
         <column name="fk_user" type="INTEGER"/>
-        <foreign-key name="spy_customer-fk_user" foreignTable="spy_user" onDelete="NO ACTION">
+        <foreign-key name="spy_customer-fk_user" foreignTable="spy_user">
             <reference foreign="id_user" local="fk_user"/>
         </foreign-key>
     </table>

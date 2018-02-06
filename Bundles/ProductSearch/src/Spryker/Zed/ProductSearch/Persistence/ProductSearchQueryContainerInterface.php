@@ -86,6 +86,13 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryAllProductAttributeKeys();
+
+    /**
+     * @api
+     *
      * @param bool $synced
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery

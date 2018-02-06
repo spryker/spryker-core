@@ -13,7 +13,7 @@ use Spryker\Zed\Application\Business\Model\Request\SubRequestHandler;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  */
 class SubRequestServiceProvider extends AbstractPlugin implements ServiceProviderInterface

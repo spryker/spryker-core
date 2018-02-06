@@ -134,7 +134,7 @@ class WorkerProgressBar implements WorkerProgressBarInterface
      */
     public function reset()
     {
-        unset($this->progressBar);
+        $this->progressBar = null;
     }
 
     /**

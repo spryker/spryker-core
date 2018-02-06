@@ -12,7 +12,7 @@ use Spryker\Zed\Cart\Dependency\PostSavePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacade getFacade()
+ * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()
  */
 class CartPostSaveUpdateBundlesPlugin extends AbstractPlugin implements PostSavePluginInterface

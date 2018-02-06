@@ -43,6 +43,14 @@ interface QueueConstants
 
     /**
      * Specification:
+     * - Delay interval between each execution of process in microsecond
+     *
+     * @api
+     */
+    const QUEUE_PROCESS_TRIGGER_INTERVAL_MICROSECONDS = 'QUEUE_PROCESS_TRIGGER_INTERVAL_MICROSECONDS';
+
+    /**
+     * Specification:
      * - Worker execution time in seconds
      *
      * @api

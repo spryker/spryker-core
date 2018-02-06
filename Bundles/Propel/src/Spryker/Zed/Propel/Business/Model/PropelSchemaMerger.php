@@ -167,8 +167,8 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
             }
         }
 
-        $callback = function ($a) {
-            $multiplier = (strlen($a[1]) / 2) * 4;
+        $callback = function ($matches) {
+            $multiplier = (strlen($matches[1]) / 2) * 4;
 
             return str_repeat(' ', $multiplier) . '<';
         };
@@ -188,7 +188,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
 
         foreach ($fromXmlElement->children() as $fromXmlChildTagName => $fromXmlChildElement) {
             $fromXmlElementName = $this->getElementName($fromXmlChildElement, $fromXmlChildTagName);
-            if (array_key_exists($fromXmlElementName, $toXmlElements) === true) {
+            if (isset($toXmlElements[$fromXmlElementName])) {
                 $toXmlElementChild = $toXmlElements[$fromXmlElementName];
             } else {
                 $toXmlElementChild = $toXmlElement->addChild($fromXmlChildTagName, $fromXmlChildElement);
@@ -228,7 +228,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     {
         $elementName = (array)$fromXmlChildElement->attributes();
         $elementName = current($elementName);
-        if (is_array($elementName) && array_key_exists('name', $elementName)) {
+        if (is_array($elementName) && isset($elementName['name'])) {
             $elementName = $tagName . '|' . $elementName['name'];
         }
 
@@ -244,31 +244,20 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      * @param \SimpleXMLElement $toXmlElement
      * @param \SimpleXMLElement $fromXmlElement
      *
-     * @throws \Spryker\Zed\Propel\Business\Exception\SchemaMergeException
-     *
      * @return \SimpleXMLElement
      */
     private function mergeAttributes(SimpleXMLElement $toXmlElement, SimpleXMLElement $fromXmlElement)
     {
-        $toXmlAttributes = (array)$toXmlElement->attributes();
-        if (count($toXmlAttributes) > 0) {
-            $toXmlAttributes = current($toXmlAttributes);
-            $alreadyHasAttributes = true;
-        } else {
-            $alreadyHasAttributes = false;
-        }
+        $toXmlAttributes = iterator_to_array($toXmlElement->attributes());
+
         foreach ($fromXmlElement->attributes() as $key => $value) {
-            if ($alreadyHasAttributes
-                && array_key_exists($key, $toXmlAttributes)
-                && $toXmlAttributes[$key] !== (string)$value
-            ) {
-                throw new SchemaMergeException('Ambiguous value for the same attribute for key "' . $key . '": "' . $toXmlAttributes[$key] . '" !== "' . $value . '"');
+            if (isset($toXmlAttributes[$key])) {
+                $toXmlElement->attributes()->$key = $value;
+
+                continue;
             }
 
-            if (!$alreadyHasAttributes || !array_key_exists($key, $toXmlAttributes)) {
-                $value = (string)$value;
-                $toXmlElement->addAttribute($key, $value);
-            }
+            $toXmlElement->addAttribute($key, $value);
         }
 
         return $toXmlElement;

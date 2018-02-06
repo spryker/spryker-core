@@ -5,3 +5,6 @@ build:
 filter:
     excluded_paths:
         - Bundles/Propel/src/Spryker/Zed/Propel/Business/Builder/*
+
+build_failure_conditions:
+    - 'project.metric("scrutinizer.quality", < 9.59)'

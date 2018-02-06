@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface;
 
 /**
- * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacade getFacade()
+ * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
  */
 class DummyPaymentPostCheckPlugin extends AbstractPlugin implements CheckoutPostCheckPluginInterface

@@ -3,6 +3,7 @@
   "description": "UtilSanitize module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/kernel": "^3.0.0"
   },
   "autoload": {

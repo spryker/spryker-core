@@ -1,3 +1,3 @@
 # Redis Changelog
 
-[Redis Changelog](https://github.com/spryker/Redis/releases)
+[Release Changelog](https://github.com/spryker/redis/releases)

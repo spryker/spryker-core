@@ -1,3 +1,3 @@
 # ProductApi Changelog
 
-[Release Changelog](https://github.com/spryker/ProductApi/releases)
+[Release Changelog](https://github.com/spryker/product-api/releases)

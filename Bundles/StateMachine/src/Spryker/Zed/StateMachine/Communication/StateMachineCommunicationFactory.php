@@ -11,7 +11,7 @@ use Spryker\Zed\StateMachine\StateMachineDependencyProvider;
 
 /**
  * @method \Spryker\Zed\StateMachine\StateMachineConfig getConfig()
- * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()
  */
 class StateMachineCommunicationFactory extends AbstractCommunicationFactory
 {

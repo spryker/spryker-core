@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Log\Communication\LogCommunicationFactory getFactory()
  * @method \Spryker\Zed\Log\LogConfig getConfig()
+ * @method \Spryker\Zed\Log\Business\LogFacadeInterface getFacade()
  */
 class ZedLoggerConfigPlugin extends AbstractPlugin implements LoggerConfigInterface
 {

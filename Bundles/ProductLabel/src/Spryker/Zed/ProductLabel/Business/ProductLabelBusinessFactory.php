@@ -49,7 +49,8 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
         return new LabelUpdater(
             $this->createLocalizedAttributesCollectionWriter(),
             $this->getQueryContainer(),
-            $this->createLabelDictionaryTouchManager()
+            $this->createLabelDictionaryTouchManager(),
+            $this->createProductAbstractRelationTouchManager()
         );
     }
 
