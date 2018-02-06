@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Kernel\Persistence\EntityManager;
 
+use Spryker\Zed\PropelOrm\Business\Transaction\PropelDatabaseTransactionHandler;
+
 class TransactionHandlerFactory
 {
     /**

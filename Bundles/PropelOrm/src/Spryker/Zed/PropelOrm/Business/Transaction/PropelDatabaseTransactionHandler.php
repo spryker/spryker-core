@@ -5,13 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Kernel\Persistence\EntityManager;
+namespace Spryker\Zed\PropelOrm\Business\Transaction;
 
 use Closure;
 use Exception;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionHandlerInterface;
 use Throwable;
 
 class PropelDatabaseTransactionHandler implements TransactionHandlerInterface
