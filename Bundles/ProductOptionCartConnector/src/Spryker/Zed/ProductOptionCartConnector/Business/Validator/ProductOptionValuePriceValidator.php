@@ -76,9 +76,14 @@ class ProductOptionValuePriceValidator implements ProductOptionValuePriceValidat
      */
     protected function getProductOptionValueStorePrice(CartChangeTransfer $cartChangeTransfer, ProductOptionTransfer $productOptionTransfer)
     {
-        $productOptionTransfer = $this->productOptionFacade->getProductOptionValueById(
-            $productOptionTransfer->getIdProductOptionValue()
-        );
+        $isProductOptionNotHydrated = $productOptionTransfer->getUnitGrossPrice() === null
+            || $productOptionTransfer->getUnitNetPrice() === null;
+
+        if ($isProductOptionNotHydrated) {
+            $productOptionTransfer = $this->productOptionFacade->getProductOptionValueById(
+                $productOptionTransfer->getIdProductOptionValue()
+            );
+        }
 
         $priceMode = $this->getPriceMode($cartChangeTransfer);
         if ($priceMode === $this->priceFacade->getGrossPriceModeIdentifier()) {
