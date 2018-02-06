@@ -23,7 +23,6 @@ class GatewayController extends AbstractGatewayController
      */
     public function createAction(CompanyTransfer $companyTransfer): CompanyResponseTransfer
     {
-        return $this->getFacade()
-            ->create($companyTransfer);
+        return $this->getFacade()->create($companyTransfer);
     }
 }

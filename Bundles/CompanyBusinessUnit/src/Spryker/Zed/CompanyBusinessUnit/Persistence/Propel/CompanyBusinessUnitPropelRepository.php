@@ -88,6 +88,7 @@ class CompanyBusinessUnitPropelRepository implements CompanyBusinessUnitReposito
 
         $count = $this->queryCompanyBusinessUnit()
             ->filterByIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
+            ->joinWithCompanyUser()
             ->count();
 
         return ($count > 0);

@@ -13,9 +13,6 @@ use Generated\Shared\Transfer\CompanyRoleTransfer;
 interface CompanyRoleWriterInterface
 {
     /**
-     * Specification:
-     * - Creates a company role
-     *
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
