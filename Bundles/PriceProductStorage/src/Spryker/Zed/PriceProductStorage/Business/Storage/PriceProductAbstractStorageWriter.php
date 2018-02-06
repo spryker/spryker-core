@@ -5,32 +5,63 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\PriceProductStorage\Business\Storage;
 
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainer;
+use Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\PriceProductStorage\Communication\PriceProductStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\PriceProductStorage\PriceProductStorageConfig getConfig()
- */
-class AbstractPriceProductAbstractStorageListener extends AbstractPlugin
+class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWriterInterface
 {
+    /**
+     * @var \Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface
+     */
+    protected $priceProductFacade;
+
+    /**
+     * @var \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param \Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface $priceProductFacade
+     * @param \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(PriceProductStorageToPriceProductFacadeInterface $priceProductFacade, PriceProductStorageQueryContainerInterface $queryContainer, Store $store, $isSendingToQueue)
+    {
+        $this->priceProductFacade = $priceProductFacade;
+        $this->queryContainer = $queryContainer;
+        $this->store = $store;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
+
     /**
      * @param array $productAbstractIds
      *
      * @return void
      */
-    protected function publish(array $productAbstractIds)
+    public function publish(array $productAbstractIds)
     {
         $skus = $this->getProductAbstractSkus($productAbstractIds);
         $priceProducts = [];
 
         foreach ($skus as $idProductAbstract => $sku) {
-            $priceProducts[$idProductAbstract] = $this->getFactory()->getPriceProductFacade()->findPricesBySkuGroupedForCurrentStore($sku);
+            $priceProducts[$idProductAbstract] = $this->priceProductFacade->findPricesBySkuGroupedForCurrentStore($sku);
         }
 
         $spyPriceProductStorageEntities = $this->findPriceAbstractStorageEntitiesByProductAbstractIds($productAbstractIds);
@@ -42,7 +73,7 @@ class AbstractPriceProductAbstractStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function unpublish(array $productAbstractIds)
+    public function unpublish(array $productAbstractIds)
     {
         $spyPriceAbstractStorageEntities = $this->findPriceAbstractStorageEntitiesByProductAbstractIds($productAbstractIds);
         foreach ($spyPriceAbstractStorageEntities as $spyPriceAbstractStorageEntity) {
@@ -94,6 +125,7 @@ class AbstractPriceProductAbstractStorageListener extends AbstractPlugin
         $spyPriceProductStorageEntity->setFkProductAbstract($idProductAbstract);
         $spyPriceProductStorageEntity->setData($priceProductStorageTransfer->toArray());
         $spyPriceProductStorageEntity->setStore($this->getStoreName());
+        $spyPriceProductStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyPriceProductStorageEntity->save();
     }
 
@@ -104,7 +136,7 @@ class AbstractPriceProductAbstractStorageListener extends AbstractPlugin
      */
     protected function getProductAbstractSkus(array $productAbstractIds)
     {
-        return $this->getQueryContainer()
+        return $this->queryContainer
             ->queryProductAbstractSkuByIds($productAbstractIds)
             ->find()
             ->toKeyValue(PriceProductStorageQueryContainer::ID_PRODUCT_ABSTRACT, PriceProductStorageQueryContainer::SKU);
@@ -117,7 +149,7 @@ class AbstractPriceProductAbstractStorageListener extends AbstractPlugin
      */
     protected function findPriceAbstractStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {
-        return $this->getQueryContainer()->queryPriceAbstractStorageByPriceAbstractIds($productAbstractIds)->find()->toKeyIndex('fkProductAbstract');
+        return $this->queryContainer->queryPriceAbstractStorageByPriceAbstractIds($productAbstractIds)->find()->toKeyIndex('fkProductAbstract');
     }
 
     /**
@@ -125,6 +157,6 @@ class AbstractPriceProductAbstractStorageListener extends AbstractPlugin
      */
     protected function getStoreName()
     {
-        return $this->getFactory()->getStore()->getStoreName();
+        return $this->store->getStoreName();
     }
 }
