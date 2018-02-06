@@ -86,6 +86,7 @@ class ProductCustomerPermissionQueryExpanderPlugin extends AbstractPlugin implem
     protected function createCustomerFilter(int $idCustomer)
     {
         $customerQuery = $this->createCustomerQuery($idCustomer);
+
         return (new HasChild($customerQuery))
             ->setType(ProductCustomerPermissionConfig::ELASTICSEARCH_INDEX_TYPE_NAME);
     }
