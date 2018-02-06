@@ -16,5 +16,5 @@ interface DatasetRowSaverInterface
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDataset
      */
-    public function getOrCreate(SpyDatasetRowEntityTransfer $datasetRowEntityTransfer);
+    public function findOrCreate(SpyDatasetRowEntityTransfer $datasetRowEntityTransfer);
 }

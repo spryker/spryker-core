@@ -9,14 +9,14 @@ namespace Spryker\Zed\Dataset\Business\Model;
 
 use Orm\Zed\Dataset\Persistence\SpyDataset;
 
-interface DatasetRowColValueSaverInterface
+interface DatasetRowColumnValueSaverInterface
 {
     /**
      * @param \Orm\Zed\Dataset\Persistence\SpyDataset $dataset
      *
      * @return bool
      */
-    public function removeDatasetRowColValues(SpyDataset $dataset);
+    public function removeDatasetRowColumnValues(SpyDataset $dataset);
 
     /**
      * @param \Orm\Zed\Dataset\Persistence\SpyDataset $dataset
@@ -24,5 +24,5 @@ interface DatasetRowColValueSaverInterface
      *
      * @return void
      */
-    public function saveDatasetRowColValues(SpyDataset $dataset, $saveRequestTransfer);
+    public function saveDatasetRowColumnValues(SpyDataset $dataset, $saveRequestTransfer);
 }

@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\Dataset;
 
-use Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeFacadeBridge;
-use Spryker\Zed\Dataset\Dependency\Facade\DatasetToTouchFacadeFacadeBridge;
+use Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class DatasetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
@@ -34,38 +32,13 @@ class DatasetDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
-    {
-        $container = $this->addTouchFacade($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addTouchFacade(Container $container)
-    {
-        $container[static::FACADE_TOUCH] = function (Container $container) {
-            return new DatasetToTouchFacadeFacadeBridge($container->getLocator()->touch()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addLocaleFacade(Container $container)
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             $localeFacade = $container->getLocator()->locale()->facade();
-            return new DatasetToLocaleFacadeFacadeBridge($localeFacade);
+            return new DatasetToLocaleFacadeBridge($localeFacade);
         };
+
         return $container;
     }
 }

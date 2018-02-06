@@ -28,8 +28,8 @@ class DeleteController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idDashboard = $this->castId($request->get(static::URL_PARAM_ID_DATASET));
-        $this->getFacade()->delete($idDashboard);
+        $idDataset = $this->castId($request->get(static::URL_PARAM_ID_DATASET));
+        $this->getFacade()->delete($idDataset);
 
         return $this->redirectBack($request);
     }

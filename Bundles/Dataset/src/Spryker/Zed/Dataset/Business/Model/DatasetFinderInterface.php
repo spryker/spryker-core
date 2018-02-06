@@ -19,14 +19,14 @@ interface DatasetFinderInterface
     /**
      * @param int $idDataset
      *
-     * @return bool
+     * @return void
      */
     public function activateById($idDataset);
 
     /**
      * @param int $idDataset
      *
-     * @return bool
+     * @return void
      */
     public function deactivateById($idDataset);
 
@@ -37,7 +37,7 @@ interface DatasetFinderInterface
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDataset
      */
-    public function getDatasetyId($idDataset);
+    public function getDatasetId($idDataset);
 
     /**
      * @param string $title
@@ -51,5 +51,26 @@ interface DatasetFinderInterface
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDataset
      */
-    public function getDatasetColByTitle($title);
+    public function getDatasetColumnByTitle($title);
+
+    /**
+     * @param int $idDataset
+     *
+     * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
+     */
+    public function getDatasetTransferById($idDataset);
+
+    /**
+     * @param string $nameDataset
+     *
+     * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
+     */
+    public function getDatasetTransferByName($nameDataset);
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function hasDatasetName($name);
 }

@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Dataset\Business;
 
-use Spryker\Zed\Dataset\Business\Model\DatasetColSaver;
+use Spryker\Zed\Dataset\Business\Model\DatasetColumnSaver;
 use Spryker\Zed\Dataset\Business\Model\DatasetFinder;
 use Spryker\Zed\Dataset\Business\Model\DatasetLocalizedAttributesSaver;
-use Spryker\Zed\Dataset\Business\Model\DatasetRowColValueSaver;
+use Spryker\Zed\Dataset\Business\Model\DatasetRowColumnValueSaver;
 use Spryker\Zed\Dataset\Business\Model\DatasetRowSaver;
 use Spryker\Zed\Dataset\Business\Model\DatasetSaver;
 use Spryker\Zed\Dataset\Business\Model\ReaderManager;
-use Spryker\Zed\Dataset\DatasetDependencyProvider;
+use Spryker\Zed\Dataset\Business\Model\WriterManager;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -28,10 +28,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
      */
     public function createDatasetFinder()
     {
-        return new DatasetFinder(
-            $this->getQueryContainer(),
-            $this->getProvidedDependency(DatasetDependencyProvider::FACADE_TOUCH)
-        );
+        return new DatasetFinder($this->getQueryContainer());
     }
 
     /**
@@ -42,7 +39,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
         return new DatasetSaver(
             $this->createDatasetFinder(),
             $this->createDatasetLocalizedAttributesSaver(),
-            $this->createDatasetRowColValueSaver(),
+            $this->createDatasetRowColumnValueSaver(),
             $this->createReaderManager()
         );
     }
@@ -56,11 +53,11 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Business\Model\DatasetColSaverInterface
+     * @return \Spryker\Zed\Dataset\Business\Model\DatasetColumnSaverInterface
      */
-    public function createDatasetColSaver()
+    public function createDatasetColumnSaver()
     {
-        return new DatasetColSaver($this->createDatasetFinder());
+        return new DatasetColumnSaver($this->createDatasetFinder());
     }
 
     /**
@@ -72,12 +69,12 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Business\Model\DatasetRowColValueSaverInterface
+     * @return \Spryker\Zed\Dataset\Business\Model\DatasetRowColumnValueSaverInterface
      */
-    public function createDatasetRowColValueSaver()
+    public function createDatasetRowColumnValueSaver()
     {
-        return new DatasetRowColValueSaver(
-            $this->createDatasetColSaver(),
+        return new DatasetRowColumnValueSaver(
+            $this->createDatasetColumnSaver(),
             $this->createDatasetRowSaver()
         );
     }
@@ -88,5 +85,13 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     public function createReaderManager()
     {
         return new ReaderManager();
+    }
+
+    /**
+     * @return \Spryker\Zed\Dataset\Business\Model\WriterManagerInterface
+     */
+    public function createWriterManager()
+    {
+        return new WriterManager($this->createDatasetFinder());
     }
 }

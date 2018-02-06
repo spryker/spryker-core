@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\Dataset\Business\Model;
 
-use Spryker\Shared\Dataset\DatasetConstants;
+use Generated\Shared\Transfer\SpyDatasetColumnEntityTransfer;
+use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
+use Generated\Shared\Transfer\SpyDatasetRowColumnValueEntityTransfer;
+use Generated\Shared\Transfer\SpyDatasetRowEntityTransfer;
+use Orm\Zed\Dataset\Persistence\SpyDataset;
 use Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException;
-use Spryker\Zed\Dataset\Dependency\Facade\DatasetToTouchFacadeInterface;
 use Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -23,20 +26,12 @@ class DatasetFinder implements DatasetFinderInterface
     protected $datasetQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Dataset\Dependency\Facade\DatasetToTouchFacadeInterface
-     */
-    protected $touchFacade;
-
-    /**
      * @param \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface $datasetQueryContainer
-     * @param \Spryker\Zed\Dataset\Dependency\Facade\DatasetToTouchFacadeInterface $touchFacade
      */
     public function __construct(
-        DatasetQueryContainerInterface $datasetQueryContainer,
-        DatasetToTouchFacadeInterface $touchFacade
+        DatasetQueryContainerInterface $datasetQueryContainer
     ) {
         $this->datasetQueryContainer = $datasetQueryContainer;
-        $this->touchFacade = $touchFacade;
     }
 
     /**
@@ -52,33 +47,39 @@ class DatasetFinder implements DatasetFinderInterface
     }
 
     /**
-     * @param int $idDataset
+     * @param string $name
      *
      * @return bool
      */
-    public function activateById($idDataset)
+    public function hasDatasetName($name)
     {
-        $this->handleDatabaseTransaction(function () use ($idDataset) {
-            $this->updateIsActiveByIdTransaction($idDataset, true);
-            $this->touchFacade->touchActive(DatasetConstants::RESOURCE_TYPE_DATASET, $idDataset);
-        });
+        $query = $this->datasetQueryContainer->queryDatasetByName($name);
 
-        return true;
+        return $query->count() > 0;
     }
 
     /**
      * @param int $idDataset
      *
-     * @return bool
+     * @return void
+     */
+    public function activateById($idDataset)
+    {
+        $this->handleDatabaseTransaction(function () use ($idDataset) {
+            $this->updateIsActiveByIdTransaction($idDataset, true);
+        });
+    }
+
+    /**
+     * @param int $idDataset
+     *
+     * @return void
      */
     public function deactivateById($idDataset)
     {
         $this->handleDatabaseTransaction(function () use ($idDataset) {
             $this->updateIsActiveByIdTransaction($idDataset, false);
-            $this->touchFacade->touchDeleted(DatasetConstants::RESOURCE_TYPE_DATASET, $idDataset);
         });
-
-        return true;
     }
 
     /**
@@ -89,7 +90,7 @@ class DatasetFinder implements DatasetFinderInterface
      */
     protected function updateIsActiveByIdTransaction($idDataset, $isActive)
     {
-        $spyDataset = $this->getDatasetyId($idDataset);
+        $spyDataset = $this->getDatasetId($idDataset);
         $spyDataset->setIsActive($isActive);
         $spyDataset->save();
     }
@@ -101,9 +102,27 @@ class DatasetFinder implements DatasetFinderInterface
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDataset
      */
-    public function getDatasetyId($idDataset)
+    public function getDatasetId($idDataset)
     {
         $spyDataset = $this->datasetQueryContainer->queryDatasetById($idDataset)->findOne();
+
+        if (!$spyDataset) {
+            throw new DatasetNotFoundException();
+        }
+
+        return $spyDataset;
+    }
+
+    /**
+     * @param string $nameDataset
+     *
+     * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException
+     *
+     * @return \Orm\Zed\Dataset\Persistence\SpyDataset
+     */
+    public function getDatasetName($nameDataset)
+    {
+        $spyDataset = $this->datasetQueryContainer->queryDatasetByName($nameDataset)->findOne();
 
         if (!$spyDataset) {
             throw new DatasetNotFoundException();
@@ -127,8 +146,74 @@ class DatasetFinder implements DatasetFinderInterface
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDataset
      */
-    public function getDatasetColByTitle($title)
+    public function getDatasetColumnByTitle($title)
     {
-        return $this->datasetQueryContainer->queryDatasetColByTitle($title)->findOne();
+        return $this->datasetQueryContainer->queryDatasetColumnByTitle($title)->findOne();
+    }
+
+    /**
+     * @param int $idDataset
+     *
+     * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
+     */
+    public function getDatasetTransferById($idDataset)
+    {
+        $spyDatasetEntity = $this->datasetQueryContainer->queryDatasetByIdWithRelation($idDataset)->find()->getFirst();
+
+        $spyDatasetTransfer = $this->getResponseDatasetTransfer($spyDatasetEntity);
+
+        return $spyDatasetTransfer;
+    }
+
+    /**
+     * @param string $nameDataset
+     *
+     * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
+     */
+    public function getDatasetTransferByName($nameDataset)
+    {
+        $spyDatasetEntity = $this->datasetQueryContainer->queryDatasetByNameWithRelation($nameDataset)->find()->getFirst();
+
+        $spyDatasetTransfer = $this->getResponseDatasetTransfer($spyDatasetEntity);
+
+        return $spyDatasetTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $spyDatasetEntity
+     *
+     * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
+     */
+    protected function getResponseDatasetTransfer(SpyDataset $spyDatasetEntity)
+    {
+        $spyDatasetTransfer = new SpyDatasetEntityTransfer();
+        $spyDatasetTransfer->fromArray($spyDatasetEntity->toArray(), true);
+        $datasetRowEntityTransfers = [];
+        $datasetColumnEntityTransfers = [];
+        foreach ($spyDatasetEntity->getSpyDatasetRowColumnValues() as $spyDatasetRowColumnValue) {
+            $datasetRowColumnValueEntityTransfer = new SpyDatasetRowColumnValueEntityTransfer();
+            if (empty($datasetRowEntityTransfers[$spyDatasetRowColumnValue->getSpyDatasetRow()->getIdDatasetRow()])) {
+                $datasetRowEntityTransfer = new SpyDatasetRowEntityTransfer();
+                $datasetRowEntityTransfer->fromArray($spyDatasetRowColumnValue->getSpyDatasetRow()->toArray());
+                $datasetRowEntityTransfers[$spyDatasetRowColumnValue->getSpyDatasetRow()->getIdDatasetRow()] =
+                    $datasetRowEntityTransfer;
+            }
+            if (empty($datasetColumnEntityTransfers[$spyDatasetRowColumnValue->getSpyDatasetColumn()->getIdDatasetColumn()])) {
+                $datasetColumnEntityTransfer = new SpyDatasetColumnEntityTransfer();
+                $datasetColumnEntityTransfer->fromArray($spyDatasetRowColumnValue->getSpyDatasetColumn()->toArray());
+                $datasetColumnEntityTransfers[$spyDatasetRowColumnValue->getSpyDatasetColumn()->getIdDatasetColumn()] =
+                    $datasetColumnEntityTransfer;
+            }
+            $datasetRowColumnValueEntityTransfer->fromArray($spyDatasetRowColumnValue->toArray());
+            $datasetRowColumnValueEntityTransfer->setSpyDatasetRow(
+                $datasetRowEntityTransfers[$spyDatasetRowColumnValue->getSpyDatasetRow()->getIdDatasetRow()]
+            );
+            $datasetRowColumnValueEntityTransfer->setSpyDatasetColumn(
+                $datasetColumnEntityTransfers[$spyDatasetRowColumnValue->getSpyDatasetColumn()->getIdDatasetColumn()]
+            );
+            $spyDatasetTransfer->addSpyDatasetRowColumnValues($datasetRowColumnValueEntityTransfer);
+        }
+
+        return $spyDatasetTransfer;
     }
 }

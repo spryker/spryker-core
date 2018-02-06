@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\SpyDatasetLocalizedAttributesEntityTransfer;
 use Generated\Shared\Transfer\SpyLocaleEntityTransfer;
 use Orm\Zed\Dataset\Persistence\SpyDataset;
 use Spryker\Zed\Dataset\Communication\Form\DatasetForm;
-use Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeFacadeBridge;
+use Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeBridge;
 use Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface;
 
 class DatasetFormDataProvider
@@ -26,17 +26,17 @@ class DatasetFormDataProvider
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeFacadeBridge
+     * @var \Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeBridge
      */
     protected $localeFacade;
 
     /**
      * @param \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeFacadeBridge $localeFacade
+     * @param \Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeBridge $localeFacade
      */
     public function __construct(
         DatasetQueryContainerInterface $queryContainer,
-        DatasetToLocaleFacadeFacadeBridge $localeFacade
+        DatasetToLocaleFacadeBridge $localeFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->localeFacade = $localeFacade;
@@ -60,8 +60,8 @@ class DatasetFormDataProvider
         $spyDatasetTransfer = $this->createEmptyspyDatasetTransfer();
         $this->addSpyDatasetLocalizedAttributeTransfers($spyDataset, $spyDatasetTransfer);
         $spyDatasetTransfer->fromArray($spyDataset->toArray(), true);
-        $spyDatasetRowColTransfers = new ArrayObject($spyDataset->getSpyDatasetRowColValues());
-        $spyDatasetTransfer->setSpyDatasetRowColValues($spyDatasetRowColTransfers);
+        $spyDatasetRowColumnTransfers = new ArrayObject($spyDataset->getSpyDatasetRowColumnValues());
+        $spyDatasetTransfer->setSpyDatasetRowColumnValues($spyDatasetRowColumnTransfers);
 
         return $spyDatasetTransfer;
     }
@@ -86,13 +86,16 @@ class DatasetFormDataProvider
      */
     protected function hasDatasetData($idDataset)
     {
+        if ($idDataset === null) {
+            return false;
+        }
         $spyDataset = $this
             ->queryContainer
             ->queryDatasetById($idDataset)
-            ->leftJoinSpyDatasetRowColValue()
+            ->leftJoinSpyDatasetRowColumnValue()
             ->find()
             ->getFirst();
-        if ($spyDataset->getSpyDatasetRowColValues()->count()) {
+        if ($spyDataset->getSpyDatasetRowColumnValues()->count()) {
             return true;
         }
 
