@@ -22,11 +22,11 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
      *
      * @param int $idDataset
      *
-     * @return bool
+     * @return void
      */
     public function delete($idDataset)
     {
-        return $this->getFactory()->createDatasetFinder()->delete($idDataset);
+        $this->getFactory()->createDatasetFinder()->delete($idDataset);
     }
 
     /**
