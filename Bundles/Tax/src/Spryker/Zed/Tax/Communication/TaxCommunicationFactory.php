@@ -35,7 +35,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getFormFactory()->create(
             TaxRateForm::class,
-            $this->createTaxRateFormDataProvider()->getData(),
+            $taxRateFormDataProvider ? $taxRateFormDataProvider->getData() : $this->createTaxRateFormDataProvider()->getData(),
             [
                  'data_class' => TaxRateTransfer::class,
               ]
