@@ -18,7 +18,7 @@
         <column name="comment" size="255" type="VARCHAR"/>
 
         <foreign-key name="spy_company_unit_address-fk_company_business_unit" foreignTable="spy_company_business_unit" phpName="CompanyBusinessUnit" refPhpName="CompanyUnitAddress" onDelete="CASCADE">
-            <reference foreign="id_company_business_unit" local="fk_company_business_unit"/>
+            <reference local="fk_company_business_unit" foreign="id_company_business_unit"/>
         </foreign-key>
         <foreign-key name="spy_company_unit_address-fk_region" foreignTable="spy_region" phpName="Region" refPhpName="CompanyUnitAddress">
             <reference local="fk_region" foreign="id_region"/>

@@ -51,7 +51,9 @@ class CompanyWriter implements CompanyWriterInterface
      */
     public function create(CompanyTransfer $companyTransfer): CompanyResponseTransfer
     {
+        $initialUserTransfer = $companyTransfer->getInitialUserTransfer();
         $companyResponseTransfer = $this->save($companyTransfer);
+        $companyResponseTransfer->getCompanyTransfer()->setInitialUserTransfer($initialUserTransfer);
         $companyResponseTransfer = $this->executePostCreatePlugins($companyResponseTransfer);
 
         return $companyResponseTransfer;

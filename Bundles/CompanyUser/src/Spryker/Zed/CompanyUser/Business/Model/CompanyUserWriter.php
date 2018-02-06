@@ -53,6 +53,7 @@ class CompanyUserWriter implements CompanyUserWriterInterface
      */
     public function create(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
+        $companyUserTransfer->requireCustomerTransfer();
         $customerResponseTransfer = $this->registerCustomer($companyUserTransfer->getCustomerTransfer());
 
         if (!$customerResponseTransfer->getIsSuccess()) {
@@ -62,6 +63,8 @@ class CompanyUserWriter implements CompanyUserWriterInterface
 
             return $companyUserResponseTransfer;
         }
+
+        $companyUserTransfer->setFkCustomer($customerResponseTransfer->getCustomerTransfer()->getIdCustomer());
 
         return $this->save($companyUserTransfer);
     }
