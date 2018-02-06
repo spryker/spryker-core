@@ -27,14 +27,14 @@ class AbstractEntityTransfer extends AbstractTransfer implements EntityTransferI
 
     /**
      * @param array $data
-     * @param bool $ignoreMissingProperty
+     * @param bool $acceptVirtualColumns
      *
      * @return $this
      */
-    public function fromArray(array $data, $ignoreMissingProperty = false)
+    public function fromArray(array $data, $acceptVirtualColumns = false)
     {
         foreach ($data as $property => $value) {
-            if ($this->hasProperty($property, $ignoreMissingProperty) === false) {
+            if ($this->hasProperty($property, $acceptVirtualColumns) === false) {
                 $this->virtualColumns[$property] = $value;
                 continue;
             }
@@ -43,9 +43,9 @@ class AbstractEntityTransfer extends AbstractTransfer implements EntityTransferI
 
             if ($this->transferMetadata[$property]['is_collection']) {
                 $elementType = $this->transferMetadata[$property]['type'];
-                $value = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
+                $value = $this->processArrayObject($elementType, $value, $acceptVirtualColumns);
             } elseif ($this->transferMetadata[$property]['is_transfer']) {
-                $value = $this->initializeNestedTransferObject($property, $value, $ignoreMissingProperty);
+                $value = $this->initializeNestedTransferObject($property, $value, $acceptVirtualColumns);
             }
 
             $this->$property = $value;
