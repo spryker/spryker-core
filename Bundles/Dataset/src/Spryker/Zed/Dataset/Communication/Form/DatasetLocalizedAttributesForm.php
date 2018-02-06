@@ -64,6 +64,7 @@ class DatasetLocalizedAttributesForm extends AbstractType
             ],
             'property_path' => 'locale.localeName',
         ]);
+
         return $this;
     }
 
@@ -81,6 +82,7 @@ class DatasetLocalizedAttributesForm extends AbstractType
                 new Length(['max' => 255]),
             ],
         ]);
+
         return $this;
     }
 
@@ -98,6 +100,7 @@ class DatasetLocalizedAttributesForm extends AbstractType
                 ],
                 'property_path' => 'locale.idLocale',
             ]);
+
         return $this;
     }
 
@@ -109,6 +112,7 @@ class DatasetLocalizedAttributesForm extends AbstractType
     protected function addIdDatasetLocalizedAttributes(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_DATASET_LOCALIZED_ATTRIBUTES, HiddenType::class);
+
         return $this;
     }
 

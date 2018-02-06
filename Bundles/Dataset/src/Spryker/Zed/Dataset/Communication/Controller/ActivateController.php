@@ -34,9 +34,7 @@ class ActivateController extends AbstractController
     {
         $idDataset = $this->castId($request->query->get(static::URL_PARAM_ID_DATASET));
         $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
-
         $this->getFacade()->activateById($idDataset);
-
         $this->addSuccessMessage(static::MESSAGE_DATASET_ACTIVATE_SUCCESS);
 
         return $this->redirectResponse($redirectUrl);
@@ -52,6 +50,7 @@ class ActivateController extends AbstractController
         $referer = $request
             ->headers
             ->get(static::REFERER_PARAM);
+
         return $this->redirectResponse($referer);
     }
 }

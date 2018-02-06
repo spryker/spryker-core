@@ -12,7 +12,7 @@ interface DatasetFinderInterface
     /**
      * @param int $idDataset
      *
-     * @return bool
+     * @return void
      */
     public function delete($idDataset);
 

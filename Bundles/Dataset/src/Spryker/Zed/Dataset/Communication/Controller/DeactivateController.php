@@ -52,6 +52,7 @@ class DeactivateController extends AbstractController
         $referer = $request
             ->headers
             ->get(static::REFERER_PARAM);
+
         return $this->redirectResponse($referer);
     }
 }
