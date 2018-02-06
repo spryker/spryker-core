@@ -34,6 +34,16 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return void
      */
+    public function setUp()
+    {
+        parent::setUp();
+
+        session_write_close();
+    }
+
+    /**
+     * @return void
+     */
     public function testRegisterShouldSetSessionStorageOptions()
     {
         $application = new Application();

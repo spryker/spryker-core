@@ -5,29 +5,30 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductManagement\Communication\Controller;
+namespace SprykerTest\Zed\ProductManagement\Presentation;
 
 use SprykerTest\Zed\ProductManagement\PageObject\ProductManagementProductListPage;
-use SprykerTest\Zed\ProductManagement\ProductManagementCommunicationTester;
+use SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
  * @group ProductManagement
- * @group Communication
- * @group Controller
+ * @group Presentation
  * @group ProductManagementProductEditCest
  * Add your own group annotations below this line
  */
 class ProductManagementProductEditCest
 {
     /**
-     * @param \SprykerTest\Zed\ProductManagement\ProductManagementCommunicationTester $i
+     * @skip Fix me
+     *
+     * @param \SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester $i
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductManagementCommunicationTester $i)
+    public function breadcrumbIsVisible(ProductManagementPresentationTester $i)
     {
         $i->registerProductManagementStoreRelationFormTypePlugin();
         $i->registerMoneyCollectionFormTypePlugin();
@@ -38,11 +39,13 @@ class ProductManagementProductEditCest
     }
 
     /**
-     * @param \SprykerTest\Zed\ProductManagement\ProductManagementCommunicationTester $i
+     * @skip Fix me
+     *
+     * @param \SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester $i
      *
      * @return void
      */
-    public function canSaveProductWithoutEditing(ProductManagementCommunicationTester $i)
+    public function canSaveProductWithoutEditing(ProductManagementPresentationTester $i)
     {
         $i->registerProductManagementStoreRelationFormTypePlugin();
         $i->registerMoneyCollectionFormTypePlugin();
