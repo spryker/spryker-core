@@ -46,9 +46,10 @@ class ProductCustomerPermissionSaver implements ProductCustomerPermissionSaverIn
     public function savePermission(int $idCustomer, int $productId)
     {
         $productCustomerPermissionEntity = new SpyProductCustomerPermission();
-        $productCustomerPermissionEntity->setFkCustomer($idCustomer);
-        $productCustomerPermissionEntity->setFkProductAbstract($productId);
-        $productCustomerPermissionEntity->save();
+        $productCustomerPermissionEntity
+            ->setFkCustomer($idCustomer)
+            ->setFkProductAbstract($productId)
+            ->save();
 
         $this->touchFacade->touchActive(
             ProductCustomerPermissionConfig::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION,
