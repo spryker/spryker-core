@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductCustomerPermissionClient extends AbstractClient implements ProductCustomerPermissionClientInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @api
      *
@@ -35,11 +35,11 @@ class ProductCustomerPermissionClient extends AbstractClient implements ProductC
 
         return $this->getFactory()
             ->createStorage()
-            ->getProductCustomerPermission($customer->getIdCustomer(), $idProductAbstract);
+            ->hasProductCustomerPermission($customer->getIdCustomer(), $idProductAbstract);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @api
      *
@@ -52,6 +52,6 @@ class ProductCustomerPermissionClient extends AbstractClient implements ProductC
     {
         return $this->getFactory()
             ->createStorage()
-            ->getProductCustomerPermission($idCustomer, $idProductAbstract);
+            ->hasProductCustomerPermission($idCustomer, $idProductAbstract);
     }
 }

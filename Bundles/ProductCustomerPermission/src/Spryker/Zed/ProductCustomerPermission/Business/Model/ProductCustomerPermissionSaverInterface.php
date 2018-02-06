@@ -10,42 +10,30 @@ namespace Spryker\Zed\ProductCustomerPermission\Business\Model;
 interface ProductCustomerPermissionSaverInterface
 {
     /**
-     * Specification:
-     *  - Add one product to the customer permission list
-     *
      * @param int $idCustomer
-     * @param int $productId
+     * @param int $idProduct
      *
      * @return void
      */
-    public function savePermission(int $idCustomer, int $productId);
+    public function savePermission(int $idCustomer, int $idProduct);
 
     /**
-     * Specification:
-     *  - Add new products to customer, if they are no assigned yet
-     *
      * @param int $idCustomer
-     * @param array $productIds
+     * @param int[] $idProducts
      *
      * @return void
      */
-    public function savePermissions(int $idCustomer, array $productIds);
+    public function savePermissions(int $idCustomer, array $idProducts);
 
     /**
-     * Specification:
-     *  - Delete one product from the customer permission list
-     *
      * @param int $idCustomer
-     * @param int $productId
+     * @param int $idProduct
      *
      * @return void
      */
-    public function deletePermission(int $idCustomer, int $productId);
+    public function deletePermission(int $idCustomer, int $idProduct);
 
     /**
-     * Specification:
-     *  - Delete all products from the customer permission list
-     *
      * @param int $idCustomer
      *
      * @return void
@@ -53,13 +41,10 @@ interface ProductCustomerPermissionSaverInterface
     public function deleteAllPermissions(int $idCustomer);
 
     /**
-     * Specification:
-     *  - Delete specified products from the customer permission list
-     *
      * @param int $idCustomer
-     * @param array $productIds
+     * @param int[] $idProducts
      *
      * @return void
      */
-    public function deletePermissions(int $idCustomer, array $productIds);
+    public function deletePermissions(int $idCustomer, array $idProducts);
 }

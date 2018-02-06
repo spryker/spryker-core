@@ -23,7 +23,7 @@ class ProductCustomerPermissionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSavingProductForCustomer()
+    public function testSaveCustomerProductPermissionAddsProductPermissionToCustomer()
     {
         $product = $this->tester->haveProductAbstract();
         $customer = $this->tester->haveCustomer();
@@ -33,11 +33,11 @@ class ProductCustomerPermissionFacadeTest extends Unit
     }
 
     /**
-     * @depends testSavingProductForCustomer
+     * @depends testSaveCustomerProductPermissionAddsProductPermissionToCustomer
      *
      * @return void
      */
-    public function testRemovingProductCustomerPermission()
+    public function testDeleteCustomerProductPermissionRemoveProductPermissionFromCustomer()
     {
         $product = $this->tester->haveProductAbstract();
         $customer = $this->tester->haveCustomer();
@@ -52,7 +52,7 @@ class ProductCustomerPermissionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSavingProductsForCustomer()
+    public function testSaveCustomerProductPermissionsAddsProductPermissionsToCustomer()
     {
         $customer = $this->tester->haveCustomer();
 
@@ -66,11 +66,11 @@ class ProductCustomerPermissionFacadeTest extends Unit
     }
 
     /**
-     * @depends testSavingProductsForCustomer
+     * @depends testSaveCustomerProductPermissionsAddsProductPermissionsToCustomer
      *
      * @return void
      */
-    public function testRemovingProductsForCustomer()
+    public function testDeleteCustomerProductPermissionsRemoveProductPermissionsFromCustomer()
     {
         $customer = $this->tester->haveCustomer();
 
@@ -87,11 +87,11 @@ class ProductCustomerPermissionFacadeTest extends Unit
     }
 
     /**
-     * @depends testSavingProductsForCustomer
+     * @depends testSaveCustomerProductPermissionsAddsProductPermissionsToCustomer
      *
      * @return void
      */
-    public function testRemovingAllProductsForCustomer()
+    public function testDeleteAllCustomerProductPermissionsRemoveAllProductPermissionsFromCustomer()
     {
         $customer = $this->tester->haveCustomer();
 

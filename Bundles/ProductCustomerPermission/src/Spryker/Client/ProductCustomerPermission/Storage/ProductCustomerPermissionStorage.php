@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductCustomerPermission\Storage;
 
+use Spryker\Client\ProductCustomerPermission\Dependency\Client\ProductCustomerPermissionToLocaleClientInterface;
 use Spryker\Client\ProductCustomerPermission\Dependency\Client\ProductCustomerPermissionToStorageClientInterface;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
@@ -15,28 +16,31 @@ class ProductCustomerPermissionStorage implements ProductCustomerPermissionStora
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
-    private $storageClient;
+    protected $storageClient;
 
     /**
      * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
-    private $keyBuilder;
+    protected $keyBuilder;
 
     /**
-     * @var string
+     * @var \Spryker\Client\ProductCustomerPermission\Dependency\Client\ProductCustomerPermissionToLocaleClientInterface
      */
-    private $locale;
+    protected $localeClient;
 
     /**
      * @param \Spryker\Client\ProductCustomerPermission\Dependency\Client\ProductCustomerPermissionToStorageClientInterface $storage
      * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
-     * @param string $localeName
+     * @param \Spryker\Client\ProductCustomerPermission\Dependency\Client\ProductCustomerPermissionToLocaleClientInterface $localeClient
      */
-    public function __construct(ProductCustomerPermissionToStorageClientInterface $storage, KeyBuilderInterface $keyBuilder, $localeName)
-    {
+    public function __construct(
+        ProductCustomerPermissionToStorageClientInterface $storage,
+        KeyBuilderInterface $keyBuilder,
+        ProductCustomerPermissionToLocaleClientInterface $localeClient
+    ) {
         $this->storageClient = $storage;
         $this->keyBuilder = $keyBuilder;
-        $this->locale = $localeName;
+        $this->localeClient = $localeClient;
     }
 
     /**
@@ -45,10 +49,11 @@ class ProductCustomerPermissionStorage implements ProductCustomerPermissionStora
      *
      * @return bool
      */
-    public function getProductCustomerPermission(int $idCustomer, int $idProductAbstract)
+    public function hasProductCustomerPermission(int $idCustomer, int $idProductAbstract)
     {
         $identifier = $idProductAbstract . '.' . $idCustomer;
-        $key = $this->keyBuilder->generateKey($identifier, $this->locale);
+        $locale = $this->localeClient->getCurrentLocale();
+        $key = $this->keyBuilder->generateKey($identifier, $locale);
         $permission = $this->storageClient->get($key);
 
         return $permission === null ? false : true;

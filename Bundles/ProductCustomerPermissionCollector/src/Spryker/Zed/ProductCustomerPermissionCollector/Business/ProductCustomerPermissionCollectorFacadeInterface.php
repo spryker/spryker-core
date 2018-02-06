@@ -18,6 +18,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 interface ProductCustomerPermissionCollectorFacadeInterface
 {
     /**
+     * Specification:
+     *  - Exports all touched product customer permissions entries to customer-page Elasticsearch documents
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
@@ -41,6 +44,9 @@ interface ProductCustomerPermissionCollectorFacadeInterface
     );
 
     /**
+     * Specification:
+     *  - Exports all touched product customer permissions entries to KV storage
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery

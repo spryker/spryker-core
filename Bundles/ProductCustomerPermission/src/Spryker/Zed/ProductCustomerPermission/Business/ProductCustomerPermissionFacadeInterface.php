@@ -28,7 +28,7 @@ interface ProductCustomerPermissionFacadeInterface
 
     /**
      * Specification:
-     *  - Add new products to customer, if they are no assigned yet
+     *  - Add new products to the customer permission list, if they are no assigned yet
      *
      * @api
      *

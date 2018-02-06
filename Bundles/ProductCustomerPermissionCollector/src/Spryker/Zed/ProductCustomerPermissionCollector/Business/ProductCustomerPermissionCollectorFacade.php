@@ -22,6 +22,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ProductCustomerPermissionCollectorFacade extends AbstractFacade implements ProductCustomerPermissionCollectorFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
@@ -60,6 +62,8 @@ class ProductCustomerPermissionCollectorFacade extends AbstractFacade implements
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery

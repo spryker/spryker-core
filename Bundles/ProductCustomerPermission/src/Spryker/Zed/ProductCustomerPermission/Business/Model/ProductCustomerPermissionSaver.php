@@ -38,8 +38,6 @@ class ProductCustomerPermissionSaver implements ProductCustomerPermissionSaverIn
     }
 
     /**
-     * @inheritdoc
-     *
      * @param int $idCustomer
      * @param int $productId
      *
@@ -52,38 +50,37 @@ class ProductCustomerPermissionSaver implements ProductCustomerPermissionSaverIn
         $productCustomerPermissionEntity->setFkProductAbstract($productId);
         $productCustomerPermissionEntity->save();
 
-        $this->touchEntity($productCustomerPermissionEntity->getPrimaryKey());
+        $this->touchFacade->touchActive(
+            ProductCustomerPermissionConfig::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION,
+            $productCustomerPermissionEntity->getIdProductCustomerPermission()
+        );
     }
 
     /**
-     * @inheritdoc
-     *
      * @param int $idCustomer
-     * @param array $productIds
+     * @param int[] $idProducts
      *
      * @return void
      */
-    public function savePermissions(int $idCustomer, array $productIds)
+    public function savePermissions(int $idCustomer, array $idProducts)
     {
-        if (count($productIds) === 0) {
+        if (count($idProducts) === 0) {
             return;
         }
 
-        $existingRecords = $this->queryContainer
-            ->queryProductCustomerPermissionByCustomerAndProducts($idCustomer, $productIds)
+        $existingPermissionEntityCollection = $this->queryContainer
+            ->queryProductCustomerPermissionByCustomerAndProducts($idCustomer, $idProducts)
             ->find();
-        $existingRecordIds = $this->getExistingRecordsIds($existingRecords);
+        $idExistingRecords = $this->getExistingIdProductCustomerPermissionCollection($existingPermissionEntityCollection);
 
-        if ($existingRecords->count() === count($productIds)) {
+        if ($existingPermissionEntityCollection->count() === count($idProducts)) {
             return;
         }
 
-        $this->addNewProducts($idCustomer, $existingRecordIds, $productIds);
+        $this->addNewProductPermissions($idCustomer, $idExistingRecords, $idProducts);
     }
 
     /**
-     * @inheritdoc
-     *
      * @param int $idCustomer
      * @param int $productId
      *
@@ -96,13 +93,11 @@ class ProductCustomerPermissionSaver implements ProductCustomerPermissionSaverIn
             ->findOne();
 
         if ($productCustomerPermissionEntity) {
-            $this->deleteAndCleanEntity($productCustomerPermissionEntity);
+            $this->deleteEntity($productCustomerPermissionEntity);
         }
     }
 
     /**
-     * @inheritdoc
-     *
      * @param int $idCustomer
      *
      * @return void
@@ -114,26 +109,24 @@ class ProductCustomerPermissionSaver implements ProductCustomerPermissionSaverIn
             ->find();
 
         foreach ($productCustomerPermissionEntities as $productCustomerPermissionEntity) {
-            $this->deleteAndCleanEntity($productCustomerPermissionEntity);
+            $this->deleteEntity($productCustomerPermissionEntity);
         }
     }
 
     /**
-     * @inheritdoc
-     *
      * @param int $idCustomer
-     * @param array $productIds
+     * @param int[] $idProducts
      *
      * @return void
      */
-    public function deletePermissions(int $idCustomer, array $productIds)
+    public function deletePermissions(int $idCustomer, array $idProducts)
     {
         $productCustomerPermissionEntities = $this->queryContainer
-            ->queryProductCustomerPermissionByCustomerAndProducts($idCustomer, $productIds)
+            ->queryProductCustomerPermissionByCustomerAndProducts($idCustomer, $idProducts)
             ->find();
 
         foreach ($productCustomerPermissionEntities as $productCustomerPermissionEntity) {
-            $this->deleteAndCleanEntity($productCustomerPermissionEntity);
+            $this->deleteEntity($productCustomerPermissionEntity);
         }
     }
 
@@ -142,50 +135,40 @@ class ProductCustomerPermissionSaver implements ProductCustomerPermissionSaverIn
      *
      * @return void
      */
-    protected function deleteAndCleanEntity(SpyProductCustomerPermission $productCustomerPermissionEntity)
+    protected function deleteEntity(SpyProductCustomerPermission $productCustomerPermissionEntity)
     {
-        $entityId = $productCustomerPermissionEntity->getIdProductCustomerPermission();
+        $idProductCustomerPermission = $productCustomerPermissionEntity->getIdProductCustomerPermission();
         $productCustomerPermissionEntity->delete();
-        $this->touchFacade->touchDeleted(ProductCustomerPermissionConfig::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION, $entityId);
+        $this->touchFacade->touchDeleted(ProductCustomerPermissionConfig::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION, $idProductCustomerPermission);
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $existingRecords
+     * @param \Propel\Runtime\Collection\ObjectCollection $existingEntities
      *
-     * @return array
+     * @return int[]
      */
-    protected function getExistingRecordsIds(ObjectCollection $existingRecords)
+    protected function getExistingIdProductCustomerPermissionCollection(ObjectCollection $existingEntities)
     {
-        $existingRecordIds = [];
-        foreach ($existingRecords as $record) {
-            $existingRecordIds[$record->getFkProductAbstract()] = $record->getIdProductCustomerPermission();
+        $idExistingRecords = [];
+        foreach ($existingEntities as $record) {
+            $idExistingRecords[$record->getFkProductAbstract()] = $record->getIdProductCustomerPermission();
         }
 
-        return $existingRecordIds;
+        return $idExistingRecords;
     }
 
     /**
      * @param int $idCustomer
-     * @param array $existingRecordIds
-     * @param array $productIds
+     * @param array $idExistingRecords
+     * @param array $idProducts
      *
      * @return void
      */
-    protected function addNewProducts(int $idCustomer, array $existingRecordIds, array $productIds)
+    protected function addNewProductPermissions(int $idCustomer, array $idExistingRecords, array $idProducts)
     {
-        $productsToAdd = array_diff($productIds, array_keys($existingRecordIds));
+        $productsToAdd = array_diff($idProducts, array_keys($idExistingRecords));
         foreach ($productsToAdd as $productId) {
             $this->savePermission($idCustomer, $productId);
         }
-    }
-
-    /**
-     * @param int $entityId
-     *
-     * @return void
-     */
-    protected function touchEntity(int $entityId)
-    {
-        $this->touchFacade->touchActive(ProductCustomerPermissionConfig::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION, $entityId);
     }
 }

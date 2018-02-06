@@ -13,7 +13,7 @@ interface ProductCustomerPermissionStorageInterface
      * @param int $idCustomer
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
+     * @return bool
      */
-    public function getProductCustomerPermission(int $idCustomer, int $idProductAbstract);
+    public function hasProductCustomerPermission(int $idCustomer, int $idProductAbstract);
 }

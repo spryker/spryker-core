@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductCustomerPermissionFacade extends AbstractFacade implements ProductCustomerPermissionFacadeInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @api
      *
@@ -52,7 +52,7 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @api
      *
@@ -69,7 +69,7 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @api
      *
@@ -85,7 +85,7 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @api
      *
@@ -102,7 +102,7 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @api
      *
@@ -118,7 +118,7 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @api
      *

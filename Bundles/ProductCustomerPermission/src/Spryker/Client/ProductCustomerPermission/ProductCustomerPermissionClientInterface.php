@@ -11,7 +11,7 @@ interface ProductCustomerPermissionClientInterface
 {
     /**
      * Specification:
-     * - Check if current customer has permission to buy specified product
+     * - Checks if current customer has permission to buy specified product
      *
      * @api
      *
@@ -23,7 +23,7 @@ interface ProductCustomerPermissionClientInterface
 
     /**
      * Specification:
-     * - Check if specified customer has permission to buy specified product
+     * - Checks if specified customer has permission to buy specified product
      *
      * @api
      *

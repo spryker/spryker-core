@@ -55,7 +55,7 @@ class ProductCustomerPermissionCartValidator implements ProductCustomerPermissio
         }
 
         foreach ($cartChangeTransfer->getItems() as $cartItem) {
-            if (!$this->customerHasPermission($customer->getIdCustomer(), $cartItem->getSku())) {
+            if (!$this->hasPermission($customer->getIdCustomer(), $cartItem->getSku())) {
                 $cartPreCheckResponseTransfer->setIsSuccess(false);
                 $cartPreCheckResponseTransfer->addMessage($this->createCartErrorMessage());
                 break;
@@ -80,7 +80,7 @@ class ProductCustomerPermissionCartValidator implements ProductCustomerPermissio
      *
      * @return bool
      */
-    protected function customerHasPermission(int $idCustomer, string $concreteProductSku)
+    protected function hasPermission(int $idCustomer, string $concreteProductSku)
     {
         $idProductAbstract = $this->productFacade
             ->getProductAbstractIdByConcreteSku($concreteProductSku);
