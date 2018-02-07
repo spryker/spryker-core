@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener;
 
-use Generated\Shared\Transfer\UrlTransfer;
+use Generated\Shared\Transfer\UrlStorageTransfer;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use Orm\Zed\UrlStorage\Persistence\SpyUrlStorage;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -129,7 +130,7 @@ class AbstractUrlStorageListener extends AbstractPlugin
     /**
      * @param array $urlIds
      *
-     * @return array
+     * @return \Propel\Runtime\Collection\ObjectCollection
      */
     protected function findUrlEntities(array $urlIds)
     {
@@ -141,12 +142,12 @@ class AbstractUrlStorageListener extends AbstractPlugin
      *
      * @return array
      */
-    protected function appendLocaleUrlsToUrlEntities(array $urlEntities)
+    protected function appendLocaleUrlsToUrlEntities(ObjectCollection $urlEntities)
     {
         $urlResources = $this->getUrlResourcesFromEntities($urlEntities);
-        $urls = $this->getUrlsByResources($urlResources);
+        $urlResources = $this->getUrlsByResources($urlResources);
 
-        return $this->appendLocaleUrlsToUrls($urls);
+        return $this->appendLocaleUrlsToUrls($urlEntities, $urlResources);
     }
 
     /**
@@ -154,7 +155,7 @@ class AbstractUrlStorageListener extends AbstractPlugin
      *
      * @return array
      */
-    protected function getUrlResourcesFromEntities(array $urlEntities)
+    protected function getUrlResourcesFromEntities(ObjectCollection $urlEntities)
     {
         $urlResources = [];
         foreach ($urlEntities as $urlEntity) {
@@ -170,17 +171,18 @@ class AbstractUrlStorageListener extends AbstractPlugin
     }
 
     /**
-     * @param array $urls
+     * @param \Orm\Zed\Url\Persistence\SpyUrl[] $urlEntities
+     * @param array $urlResources
      *
      * @return array
      */
-    protected function appendLocaleUrlsToUrls(array $urls)
+    protected function appendLocaleUrlsToUrls(ObjectCollection $urlEntities, array $urlResources)
     {
         $urlsWithLocaleUrls = [];
-        foreach ($urls as $urlEntity) {
+        foreach ($urlEntities as $urlEntity) {
             $urlsWithLocaleUrls[] = $this->getUrlArrayFromEntity(
                 $urlEntity,
-                $urls[$urlEntity->getResourceType()]->getData()
+                $urlResources[$urlEntity->getResourceType()]->getData()
             );
         }
 
@@ -215,7 +217,7 @@ class AbstractUrlStorageListener extends AbstractPlugin
         $urlArray = $urlEntity->toArray();
         foreach ($urlResources as $urlResource) {
             if ($urlEntity->getResourceId() === $urlResource->getResourceId()) {
-                $urlArray[UrlTransfer::LOCALE_URLS][] = $urlResource->toArray();
+                $urlArray[UrlStorageTransfer::LOCALE_URLS][] = $urlResource->toArray();
             }
         }
 

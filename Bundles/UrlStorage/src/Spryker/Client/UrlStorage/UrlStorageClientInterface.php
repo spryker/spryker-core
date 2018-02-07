@@ -25,13 +25,14 @@ interface UrlStorageClientInterface
     /**
      * Specification
      * - Gets the URL data from storage
-     * - Returns UrlTransfer with data
+     * - Returns UrlStorageTransfer with data
+     * - If URL doesn't exist in storage, returns null
      *
      * @api
      *
      * @param string $url
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer|null
+     * @return \Generated\Shared\Transfer\UrlStorageTransfer|null
      */
-    public function getUrlTransferFromUrl($url);
+    public function getUrlStorageTransferFromUrl($url);
 }
