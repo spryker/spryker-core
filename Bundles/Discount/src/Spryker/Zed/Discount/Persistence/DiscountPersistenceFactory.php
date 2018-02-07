@@ -9,6 +9,7 @@ namespace Spryker\Zed\Discount\Persistence;
 
 use Orm\Zed\Discount\Persistence\SpyDiscountAmountQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -49,5 +50,13 @@ class DiscountPersistenceFactory extends AbstractPersistenceFactory
     public function createDiscountAmountQuery()
     {
         return SpyDiscountAmountQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery
+     */
+    public function createDiscountStoreQuery()
+    {
+        return SpyDiscountStoreQuery::create();
     }
 }

@@ -43,12 +43,13 @@ class FacetUpdaterByProductCategoryFilters implements FacetUpdaterInterface
      */
     public function updateFromTransfer(array $facets, ProductCategoryFilterTransfer $productCategoryFilterTransfer)
     {
-        if (empty($productCategoryFilterTransfer->getFilters())) {
+        $filters = (array)$productCategoryFilterTransfer->getFilters();
+        if (!$filters) {
             return $facets;
         }
 
         $newFacets = [];
-        foreach ($productCategoryFilterTransfer->getFilters() as $productCategoryFilterItemTransfer) {
+        foreach ($filters as $productCategoryFilterItemTransfer) {
             if ($productCategoryFilterItemTransfer->getIsActive() === true && isset($facets[$productCategoryFilterItemTransfer->getKey()])) {
                 $newFacets[$productCategoryFilterItemTransfer->getKey()] = $facets[$productCategoryFilterItemTransfer->getKey()];
             }

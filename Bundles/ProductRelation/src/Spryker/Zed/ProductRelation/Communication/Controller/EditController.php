@@ -43,7 +43,7 @@ class EditController extends BaseProductRelationController
 
         $productRelationForm->handleRequest($request);
 
-        if ($productRelationForm->isValid()) {
+        if ($productRelationForm->isSubmitted() && $productRelationForm->isValid()) {
             $this->getFacade()->updateProductRelation($productRelationForm->getData());
 
             $this->addSuccessMessage('Product relation successfully modified');

@@ -70,7 +70,7 @@ class CommentController extends AbstractController
         $formData = $form->getData();
         $idSalesOrder = $formData[CommentTransfer::FK_SALES_ORDER];
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $commentTransfer = new CommentTransfer();
             $commentTransfer->setMessage($formData[CommentTransfer::MESSAGE]);
             $commentTransfer->setFkSalesOrder($idSalesOrder);
