@@ -18,7 +18,7 @@
       "spryker/cart": "*",
       "spryker/checkout": "*",
       "spryker/elastica": "*",
-      "spryker/search": "*"
+      "spryker/search": "^6.0.0 || ^7.0.0"
     },
    "suggest": {
       "spryker/cart": "*",

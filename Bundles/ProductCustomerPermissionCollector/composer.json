@@ -3,7 +3,7 @@
   "description": "ProductCustomerPermissionCollector module",
   "license": "proprietary",
   "require": {
-    "spryker/collector": "^6.0.0",
+    "spryker/collector": "^5.0.0 || ^6.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/product-customer-permission": "^1.0.0",
