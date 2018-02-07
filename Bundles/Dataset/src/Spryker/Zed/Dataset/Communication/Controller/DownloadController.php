@@ -50,7 +50,7 @@ class DownloadController extends AbstractController
         $response = new Response($content);
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $datasetTransfer->getName(). '.' . static::FILE_EXTENTION
+            $datasetTransfer->getName() . '.' . static::FILE_EXTENTION
         );
         $response->headers->set(static::CONTENT_DISPOSITION, $disposition);
         $response->headers->set(static::CONTENT_TYPE, static::CONTENT_TYPE_CSV);

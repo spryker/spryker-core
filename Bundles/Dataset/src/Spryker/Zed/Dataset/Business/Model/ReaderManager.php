@@ -66,6 +66,8 @@ class ReaderManager implements ReaderManagerInterface
      * @param \Generated\Shared\Transfer\SpyDatasetRowEntityTransfer $datasetRowValueTransfer
      * @param array $values
      *
+     * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetParseException
+     *
      * @return void
      */
     public function appendDatasetColumnRowValueTransfer(
