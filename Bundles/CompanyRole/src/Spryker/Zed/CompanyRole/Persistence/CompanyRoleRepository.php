@@ -7,44 +7,15 @@
 
 namespace Spryker\Zed\CompanyRole\Persistence;
 
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Orm\Zed\CompanyRole\Persistence\Base\SpyCompanyRoleToPermissionQuery;
-use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery;
 
 class CompanyRoleRepository implements CompanyRoleRepositoryInterface
 {
-    /**
-     * Specification:
-     * - Set QueryContainer to Repository Object
-     *
-     * @deprecated
-     *
-     * @param \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer $companyRoleQueryContainer
-     *
-     * @return $this
-     */
-    public function setQueryContainer(AbstractQueryContainer $companyRoleQueryContainer)
-    {
-        // TODO: Implement setQueryContainer() method.
-    }
-
-    /**
-     * Specification:
-     * - Set PersistenceFactory to Repository Object
-     *
-     * @deprecated
-     *
-     * @param \Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory $persistenceFactory
-     *
-     * @return $this
-     */
-    public function setPersistenceFactory(AbstractPersistenceFactory $persistenceFactory)
-    {
-        // TODO: Implement setPersistenceFactory() method.
-    }
-
     /**
      * @param int $idCompanyUser
      *
@@ -74,5 +45,40 @@ class CompanyRoleRepository implements CompanyRoleRepositoryInterface
         }
 
         return $permissionCollectionTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
+     */
+    public function findCompanyRole(): CompanyRoleCollectionTransfer
+    {
+        $companyRoleEntities = SpyCompanyRoleQuery::create()
+            ->joinSpyCompanyRoleToPermission()
+            ->useSpyCompanyRoleToPermissionQuery()
+                ->joinPermission()
+            ->endUse()
+            ->find();
+
+        $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
+
+        foreach ($companyRoleEntities as $companyRoleEntity) {
+            $companyRoleTransfer = (new CompanyRolePersistenceFactory)
+                ->createCompanyRoleMapper()
+                ->mapCompanyRoleEntityToTransfer(
+                    $companyRoleEntity,
+                    new CompanyRoleTransfer()
+                );
+
+            $companyRoleTransfer = (new CompanyRolePersistenceFactory())
+                ->createCompanyRolePermissionMapper()
+                ->hydratePermissionCollection(
+                    $companyRoleEntity,
+                    $companyRoleTransfer
+                );
+
+            $companyRoleCollectionTransfer->addRole($companyRoleTransfer);
+        }
+
+        return $companyRoleCollectionTransfer;
     }
 }

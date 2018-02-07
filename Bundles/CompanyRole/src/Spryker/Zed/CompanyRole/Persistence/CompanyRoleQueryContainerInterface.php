@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyRole\Persistence;
 
+use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery;
 use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleToPermissionQuery;
 
 interface CompanyRoleQueryContainerInterface
@@ -17,4 +18,11 @@ interface CompanyRoleQueryContainerInterface
      * @return \Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleToPermissionQuery
      */
     public function queryCompanyRoleToPermission(): SpyCompanyRoleToPermissionQuery;
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery
+     */
+    public function queryCompanyRole(): SpyCompanyRoleQuery;
 }

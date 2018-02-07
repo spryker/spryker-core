@@ -46,6 +46,9 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
      */
     public function update(CompanyRoleTransfer $companyRoleTransfer)
     {
+        $this->getFactory()
+            ->createCompanyRoleWriterRepository()
+            ->save($companyRoleTransfer);
     }
 
     /**
@@ -59,6 +62,20 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
      */
     public function delete(CompanyRoleTransfer $companyRoleTransfer)
     {
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
+     */
+    public function findCompanyRoles(): CompanyRoleCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyRoleRepository()
+            ->findCompanyRole();
     }
 
     /**

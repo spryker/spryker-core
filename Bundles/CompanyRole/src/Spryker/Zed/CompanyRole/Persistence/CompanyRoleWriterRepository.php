@@ -8,6 +8,8 @@
 namespace Spryker\Zed\CompanyRole\Persistence;
 
 use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -24,6 +26,8 @@ class CompanyRoleWriterRepository implements CompanyRoleWriterRepositoryInterfac
     protected $persistenceFactory;
 
     /**
+     * todo: split into create and update methods.
+     *
      * {@inheritdoc}
      *
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
@@ -32,9 +36,28 @@ class CompanyRoleWriterRepository implements CompanyRoleWriterRepositoryInterfac
      */
     public function save(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer
     {
-        $companyRoleEntity = $this->persistenceFactory->createCompanyRoleMapper()->mapTransferToCompanyRoleEntity($companyRoleTransfer);
+        $companyRoleEntity = $this->companyRoleQueryContainer
+            ->queryCompanyRole()
+            ->filterByIdCompanyRole($companyRoleTransfer->getIdCompanyRole())
+            ->findOneOrCreate();
+
+        $companyRoleEntity = $this->persistenceFactory
+            ->createCompanyRoleMapper()
+            ->mapTransferToCompanyRoleEntity(
+                $companyRoleTransfer,
+                $companyRoleEntity
+            );
+
         $companyRoleEntity->save();
-        $companyRoleTransfer = $this->persistenceFactory->createCompanyRoleMapper()->mapCompanyRoleEntityToTransfer($companyRoleEntity);
+
+        $companyRoleTransfer = $this->persistenceFactory
+            ->createCompanyRoleMapper()
+            ->mapCompanyRoleEntityToTransfer(
+                $companyRoleEntity,
+                $companyRoleTransfer
+            );
+
+        $this->saveCompanyRolePermissions($companyRoleTransfer);
 
         return $companyRoleTransfer;
     }
@@ -48,16 +71,42 @@ class CompanyRoleWriterRepository implements CompanyRoleWriterRepositoryInterfac
      */
     public function saveCompanyRolePermissions(CompanyRoleTransfer $companyRoleTransfer): void
     {
-        foreach ($companyRoleTransfer->getPermissionCollection()->getPermissions() as $permissionTransfer) {
-            $spyCompanyRoleToPermission = $this->companyRoleQueryContainer
-                ->queryCompanyRoleToPermission()
-                ->filterByFkCompanyRole($companyRoleTransfer->getIdCompanyRole())
-                ->filterByFkPermission($permissionTransfer->getIdPermission())
-                ->findOneOrCreate();
+        $permissions = [];
 
-            $spyCompanyRoleToPermission->setConfiguration($permissionTransfer->getConfiguration());
-            $spyCompanyRoleToPermission->save();
+        if ($companyRoleTransfer->getPermissionCollection()) {
+            $permissions = $companyRoleTransfer->getPermissionCollection()->getPermissions();
         }
+
+        $assignedIdPermissions = [];
+
+        foreach ($permissions as $permissionTransfer) {
+            $this->saveCompanyRolePermission($companyRoleTransfer->getIdCompanyRole(), $permissionTransfer);
+            $assignedIdPermissions[] = $permissionTransfer->getIdPermission();
+        }
+
+        $this->companyRoleQueryContainer
+            ->queryCompanyRoleToPermission()
+            ->filterByFkCompanyRole($companyRoleTransfer->getIdCompanyRole())
+            ->filterByFkPermission($assignedIdPermissions, Criteria::NOT_IN)
+            ->delete();
+    }
+
+    /**
+     * @param int $idCompanyRole
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
+     *
+     * @return void
+     */
+    protected function saveCompanyRolePermission(int $idCompanyRole, PermissionTransfer $permissionTransfer)
+    {
+        $spyCompanyRoleToPermission = $this->companyRoleQueryContainer
+            ->queryCompanyRoleToPermission()
+            ->filterByFkCompanyRole($idCompanyRole)
+            ->filterByFkPermission($permissionTransfer->getIdPermission())
+            ->findOneOrCreate();
+
+        $spyCompanyRoleToPermission->setConfiguration(\json_encode($permissionTransfer->getConfiguration()));
+        $spyCompanyRoleToPermission->save();
     }
 
     /**

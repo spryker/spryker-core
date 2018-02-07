@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\CompanyRole\Persistence;
 
+use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery;
 use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleToPermissionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -22,5 +23,15 @@ class CompanyRoleQueryContainer extends AbstractQueryContainer implements Compan
     public function queryCompanyRoleToPermission(): SpyCompanyRoleToPermissionQuery
     {
         return $this->getFactory()->createCompanyRoleToPermissionQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery
+     */
+    public function queryCompanyRole(): SpyCompanyRoleQuery
+    {
+        return $this->getFactory()->createCompanyRoleQuery();
     }
 }

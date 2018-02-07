@@ -15,46 +15,29 @@ class CompanyRoleMapper implements CompanyRoleMapperInterface
     /**
      * {@inheritdoc}
      *
-     * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole $companyEntity
+     * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole $companyRoleEntity
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
-    public function mapCompanyRoleEntityToTransfer(SpyCompanyRole $companyEntity): CompanyRoleTransfer
+    public function mapCompanyRoleEntityToTransfer(SpyCompanyRole $companyRoleEntity, CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer
     {
-        $companyRole = $this->createCompanyRoleTransfer();
-        $companyRole->fromArray($companyEntity->toArray());
+        $companyRoleTransfer->fromArray($companyRoleEntity->toArray());
 
-        return $companyRole;
+        return $companyRoleTransfer;
     }
 
     /**
      * {@inheritdoc}
      *
-     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRole
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
      * @return \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole
      */
-    public function mapTransferToCompanyRoleEntity(CompanyRoleTransfer $companyRole): SpyCompanyRole
+    public function mapTransferToCompanyRoleEntity(CompanyRoleTransfer $companyRoleTransfer, SpyCompanyRole $companyRoleEntity): SpyCompanyRole
     {
-        $companyEntity = $this->createCompanyRoleEntity();
-        $companyEntity->fromArray($companyRole->modifiedToArray());
+        $companyRoleEntity->fromArray($companyRoleTransfer->modifiedToArray());
 
-        return $companyEntity;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
-     */
-    protected function createCompanyRoleTransfer(): CompanyRoleTransfer
-    {
-        return new CompanyRoleTransfer();
-    }
-
-    /**
-     * @return \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole
-     */
-    protected function createCompanyRoleEntity(): SpyCompanyRole
-    {
-        return new SpyCompanyRole();
+        return $companyRoleEntity;
     }
 }

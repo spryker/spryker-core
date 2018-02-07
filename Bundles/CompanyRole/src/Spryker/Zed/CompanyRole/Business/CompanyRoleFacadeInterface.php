@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyRole\Business;
 
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
@@ -51,6 +52,16 @@ interface CompanyRoleFacadeInterface
      * @return void
      */
     public function delete(CompanyRoleTransfer $companyRoleTransfer);
+
+    /**
+     * Specification:
+     * - Finds company roles
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
+     */
+    public function findCompanyRoles(): CompanyRoleCollectionTransfer;
 
     /**
      * Specification:
