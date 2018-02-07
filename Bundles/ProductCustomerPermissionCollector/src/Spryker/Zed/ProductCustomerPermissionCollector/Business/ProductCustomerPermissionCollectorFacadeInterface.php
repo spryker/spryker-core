@@ -19,7 +19,7 @@ interface ProductCustomerPermissionCollectorFacadeInterface
 {
     /**
      * Specification:
-     *  - Exports all touched product customer permissions entries to customer-page Elasticsearch documents
+     * - Exports all touched product customer permissions entries to customer-page Search documents.
      *
      * @api
      *
@@ -45,7 +45,7 @@ interface ProductCustomerPermissionCollectorFacadeInterface
 
     /**
      * Specification:
-     *  - Exports all touched product customer permissions entries to KV storage
+     * - Exports all touched product customer permissions entries to Storage.
      *
      * @api
      *

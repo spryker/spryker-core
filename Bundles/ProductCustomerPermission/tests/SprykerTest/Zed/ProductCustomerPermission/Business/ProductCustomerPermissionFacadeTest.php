@@ -56,13 +56,13 @@ class ProductCustomerPermissionFacadeTest extends Unit
     {
         $customer = $this->tester->haveCustomer();
 
-        $productIds = [];
+        $idProductAbstracts = [];
         for ($i = 1; $i <= 10; $i++) {
-            $productIds[] = $this->tester->haveProductAbstract()->getIdProductAbstract();
+            $idProductAbstracts[] = $this->tester->haveProductAbstract()->getIdProductAbstract();
         }
 
         $this->getProductCustomerPermissionFacade()
-            ->saveCustomerProductPermissions($customer->getIdCustomer(), $productIds);
+            ->saveCustomerProductPermissions($customer->getIdCustomer(), $idProductAbstracts);
     }
 
     /**
@@ -74,16 +74,16 @@ class ProductCustomerPermissionFacadeTest extends Unit
     {
         $customer = $this->tester->haveCustomer();
 
-        $productIds = [];
+        $idProductAbstracts = [];
         for ($i = 1; $i <= 10; $i++) {
-            $productIds[] = $this->tester->haveProductAbstract()->getIdProductAbstract();
+            $idProductAbstracts[] = $this->tester->haveProductAbstract()->getIdProductAbstract();
         }
 
         $this->getProductCustomerPermissionFacade()
-            ->saveCustomerProductPermissions($customer->getIdCustomer(), $productIds);
+            ->saveCustomerProductPermissions($customer->getIdCustomer(), $idProductAbstracts);
 
         $this->getProductCustomerPermissionFacade()
-            ->deleteCustomerProductPermissions($customer->getIdCustomer(), $productIds);
+            ->deleteCustomerProductPermissions($customer->getIdCustomer(), $idProductAbstracts);
     }
 
     /**
@@ -95,13 +95,13 @@ class ProductCustomerPermissionFacadeTest extends Unit
     {
         $customer = $this->tester->haveCustomer();
 
-        $productIds = [];
+        $idProductAbstracts = [];
         for ($i = 1; $i <= 10; $i++) {
-            $productIds[] = $this->tester->haveProductAbstract()->getIdProductAbstract();
+            $idProductAbstracts[] = $this->tester->haveProductAbstract()->getIdProductAbstract();
         }
 
         $this->getProductCustomerPermissionFacade()
-            ->saveCustomerProductPermissions($customer->getIdCustomer(), $productIds);
+            ->saveCustomerProductPermissions($customer->getIdCustomer(), $idProductAbstracts);
 
         $this->getProductCustomerPermissionFacade()
             ->deleteAllCustomerProductPermissions($customer->getIdCustomer());
