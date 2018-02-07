@@ -26,15 +26,23 @@ class QuoteSession implements QuoteSessionInterface
     protected $currencyPlugin;
 
     /**
+     * @var \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[]
+     */
+    protected $quoteTransferExpanderPlugins;
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyInterface|null $currencyPlugin
+     * @param \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[] $quoteTransferExpanderPlugins
      */
     public function __construct(
         SessionInterface $session,
-        QuoteToCurrencyInterface $currencyPlugin = null
+        QuoteToCurrencyInterface $currencyPlugin = null,
+        array $quoteTransferExpanderPlugins = []
     ) {
         $this->session = $session;
         $this->currencyPlugin = $currencyPlugin;
+        $this->quoteTransferExpanderPlugins = $quoteTransferExpanderPlugins;
     }
 
     /**
@@ -45,6 +53,8 @@ class QuoteSession implements QuoteSessionInterface
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer = $this->session->get(static::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
         $this->setCurrency($quoteTransfer);
+
+        $quoteTransfer = $this->expandQuoteTransfer($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -57,6 +67,9 @@ class QuoteSession implements QuoteSessionInterface
     public function setQuote(QuoteTransfer $quoteTransfer)
     {
         $this->setCurrency($quoteTransfer);
+
+        $quoteTransfer = $this->expandQuoteTransfer($quoteTransfer);
+
         $this->session->set(static::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
     }
 
@@ -68,6 +81,20 @@ class QuoteSession implements QuoteSessionInterface
         $this->setQuote(new QuoteTransfer());
 
         return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function expandQuoteTransfer(QuoteTransfer $quoteTransfer)
+    {
+        foreach ($this->quoteTransferExpanderPlugins as $quoteTransferExpanderPlugin) {
+            $quoteTransfer = $quoteTransferExpanderPlugin->expandQuote($quoteTransfer);
+        }
+
+        return $quoteTransfer;
     }
 
     /**

@@ -13,6 +13,7 @@ use Spryker\Shared\Application\Log\Processor\RequestProcessor;
 use Spryker\Shared\Log\Sanitizer\Sanitizer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 /**
  * Auto-generated group annotations
@@ -99,7 +100,7 @@ class RequestProcessorTest extends Unit
     protected function getRequestMockWithSession()
     {
         $request = Request::createFromGlobals();
-        $session = new Session();
+        $session = new Session(new MockArraySessionStorage());
         $request->setSession($session);
 
         return $request;
@@ -111,7 +112,7 @@ class RequestProcessorTest extends Unit
     protected function getRequestMockWithUser()
     {
         $request = Request::createFromGlobals();
-        $session = new Session();
+        $session = new Session(new MockArraySessionStorage());
         $userTransfer = new UserTransfer();
         $userTransfer->setUsername('username');
         $session->set(RequestProcessor::SESSION_KEY_USER, $userTransfer);

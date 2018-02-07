@@ -42,7 +42,7 @@ class NodeController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($navigationNodeForm->isValid()) {
+        if ($navigationNodeForm->isSubmitted() && $navigationNodeForm->isValid()) {
             /** @var \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer */
             $navigationNodeTransfer = $navigationNodeForm->getData();
 
@@ -103,7 +103,7 @@ class NodeController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($navigationNodeForm->isValid()) {
+        if ($navigationNodeForm->isSubmitted() && $navigationNodeForm->isValid()) {
             /** @var \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer */
             $navigationNodeTransfer = clone $navigationNodeForm->getData();
 

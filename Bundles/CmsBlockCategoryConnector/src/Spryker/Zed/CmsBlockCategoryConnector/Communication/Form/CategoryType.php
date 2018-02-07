@@ -84,7 +84,8 @@ class CategoryType extends AbstractType
             $builder->add(static::FIELD_CMS_BLOCKS . '_' . $idCmsBlockCategoryPosition, Select2ComboBoxType::class, [
                 'property_path' => static::FIELD_CMS_BLOCKS . '[' . $idCmsBlockCategoryPosition . ']',
                 'label' => 'CMS Blocks: ' . $positionName,
-                'choices' => $choices,
+                'choices' => array_flip($choices),
+                'choices_as_values' => true,
                 'multiple' => true,
                 'required' => false,
                 'attr' => [

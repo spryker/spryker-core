@@ -7,8 +7,40 @@
 
 namespace Spryker\Zed\Store;
 
+use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Store\Dependency\Adapter\StoreToKernelStoreAdapter;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 class StoreDependencyProvider extends AbstractBundleDependencyProvider
 {
+    const STORE = 'STORE';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addStore($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStore(Container $container)
+    {
+        $container[static::STORE] = function (Container $container) {
+            return new StoreToKernelStoreAdapter(Store::getInstance());
+        };
+
+        return $container;
+    }
 }
