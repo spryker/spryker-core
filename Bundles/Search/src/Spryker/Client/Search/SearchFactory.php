@@ -24,6 +24,7 @@ use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\SearchConfig;
 use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
 use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchKeysQuery;
+use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchStringQuery;
 use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\Search\Provider\SearchClientProvider;
 
@@ -210,6 +211,18 @@ class SearchFactory extends AbstractFactory
     public function createSearchKeysQuery($searchString, $limit = null, $offset = null)
     {
         return new SearchKeysQuery($searchString, $limit, $offset);
+    }
+
+    /**
+     * @param string $searchString
+     * @param int|null $limit
+     * @param int|null $offset
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     */
+    public function createSearchStringQuery($searchString, $limit = null, $offset = null)
+    {
+        return new SearchStringQuery($searchString, $limit, $offset);
     }
 
     /**

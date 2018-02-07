@@ -96,7 +96,7 @@ class IndexController extends AbstractController
         $availabilityStockForm = $this->getFactory()->createAvailabilityStockForm($idProduct, $sku, $storeTransfer);
         $availabilityStockForm->handleRequest($request);
 
-        if ($availabilityStockForm->isValid()) {
+        if ($availabilityStockForm->isSubmitted() && $availabilityStockForm->isValid()) {
             $data = $availabilityStockForm->getData();
             if ($this->saveAvailabilityStock($data)) {
                 $this->addSuccessMessage('Stock successfully updated');
