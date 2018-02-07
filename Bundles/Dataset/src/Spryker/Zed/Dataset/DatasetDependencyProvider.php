@@ -36,6 +36,7 @@ class DatasetDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             $localeFacade = $container->getLocator()->locale()->facade();
+
             return new DatasetToLocaleFacadeBridge($localeFacade);
         };
 

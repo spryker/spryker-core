@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Dataset\Communication\Form\DataProvider;
 
-use ArrayObject;
 use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
 use Generated\Shared\Transfer\SpyDatasetLocalizedAttributesEntityTransfer;
 use Generated\Shared\Transfer\SpyLocaleEntityTransfer;
@@ -52,16 +51,10 @@ class DatasetFormDataProvider
         if ($idDataset === null) {
             return $this->createEmptyspyDatasetTransfer();
         }
-        $spyDataset = $this
-            ->queryContainer
-            ->queryDatasetById($idDataset)
-            ->findOne();
-
+        $spyDataset = $this->queryContainer->queryDatasetById($idDataset)->findOne();
         $spyDatasetTransfer = $this->createEmptyspyDatasetTransfer();
         $this->addSpyDatasetLocalizedAttributeTransfers($spyDataset, $spyDatasetTransfer);
         $spyDatasetTransfer->fromArray($spyDataset->toArray(), true);
-        $spyDatasetRowColumnTransfers = new ArrayObject($spyDataset->getSpyDatasetRowColumnValues());
-        $spyDatasetTransfer->setSpyDatasetRowColumnValues($spyDatasetRowColumnTransfers);
 
         return $spyDatasetTransfer;
     }

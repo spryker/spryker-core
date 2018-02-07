@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Persistence\Propel;
 
-use Orm\Zed\Dataset\Persistence\Base\SpyDatasetCol as BaseSpyDatasetCol;
+use Orm\Zed\Dataset\Persistence\Base\SpyDatasetColumn as BaseSpyDatasetColumn;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_dataset_col' table.
@@ -19,6 +19,6 @@ use Orm\Zed\Dataset\Persistence\Base\SpyDatasetCol as BaseSpyDatasetCol;
  * long as it does not already exist in the output directory.
  *
  */
-class AbstractSpyDatasetCol extends BaseSpyDatasetCol
+class AbstractSpyDatasetColColumn extends BaseSpyDatasetColumn
 {
 }

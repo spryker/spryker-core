@@ -57,6 +57,7 @@ class DatasetForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->setByReference(false);
         $this
             ->addIdDatasetField($builder)
             ->addDatasetContentField($builder, $options)
@@ -75,11 +76,9 @@ class DatasetForm extends AbstractType
         $resolver->setRequired(static::DATASET_HAS_DATA);
         $resolver->setDefaults([
             static::OPTION_DATA_CLASS => SpyDatasetEntityTransfer::class,
-        ]);
-        $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
-                $defaultData = (array)$form->getConfig()->getData();
-                $submittedData = $form->getData();
+                $defaultData = $form->getConfig()->getData()->toArray();
+                $submittedData = $form->getData()->toArray();
 
                 if (array_key_exists(self::FIELD_DATASET_NAME, $defaultData) === false ||
                     $defaultData[self::FIELD_DATASET_NAME] !== $submittedData[self::FIELD_DATASET_NAME]
