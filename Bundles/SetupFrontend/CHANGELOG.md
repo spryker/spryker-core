@@ -1,3 +1,3 @@
 # SetupFrontend Changelog
 
-[Release Changelog](https://github.com/spryker/SetupFrontend/releases)
+[Release Changelog](https://github.com/spryker/setup-frontend/releases)

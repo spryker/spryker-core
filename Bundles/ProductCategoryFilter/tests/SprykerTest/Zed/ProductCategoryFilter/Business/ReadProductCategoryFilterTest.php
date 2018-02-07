@@ -29,7 +29,7 @@ class ReadProductCategoryFilterTest extends Unit
         $productCategoryFilterFromDb = $this->tester->getFacade()->findProductCategoryFilterByCategoryId($productCategoryFilter->getFkCategory());
 
         // Assert
-        $this->assertSame($productCategoryFilter->getFilterData(), $productCategoryFilterFromDb->getFilterData(), 'Product category filter contain correct data');
+        $this->assertEquals($productCategoryFilter->getFilters(), $productCategoryFilterFromDb->getFilters(), 'Product category filter contain correct data');
         $this->assertSame($productCategoryFilter->getFkCategory(), $productCategoryFilterFromDb->getFkCategory(), 'Product category filter related to correct category');
     }
 

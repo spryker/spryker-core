@@ -27,13 +27,13 @@ class EditController extends AbstractProductSetController
         $dataProvider = $this->getFactory()->createUpdateFormDataProvider();
 
         $productSetForm = $this->getFactory()
-            ->createUpdateProductSetForm(
+            ->getUpdateProductSetForm(
                 $dataProvider->getData($idProductSet),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
 
-        if ($productSetForm->isValid()) {
+        if ($productSetForm->isSubmitted() && $productSetForm->isValid()) {
             $productSetTransfer = $this->getFactory()
                 ->createUpdateFormDataToTransferMapper()
                 ->mapData($productSetForm);

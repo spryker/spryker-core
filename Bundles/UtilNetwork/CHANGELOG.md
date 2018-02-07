@@ -1,3 +1,3 @@
 # UtilNetwork Changelog
 
-[UtilNetwork](https://github.com/spryker/UtilNetwork/releases)
+[Release Changelog](https://github.com/spryker/util-network/releases)

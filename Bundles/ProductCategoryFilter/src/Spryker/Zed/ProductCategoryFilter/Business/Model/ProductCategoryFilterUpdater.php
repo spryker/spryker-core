@@ -26,13 +26,20 @@ class ProductCategoryFilterUpdater implements ProductCategoryFilterUpdaterInterf
     protected $productCategoryFilterQueryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTransferGeneratorInterface
+     */
+    protected $productCategoryFilterTransferGenerator;
+
+    /**
      * @param \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer
      * @param \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTouchInterface $productCategoryFilterTouch
+     * @param \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTransferGeneratorInterface $productCategoryFilterTransferGenerator
      */
-    public function __construct(ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer, ProductCategoryFilterTouchInterface $productCategoryFilterTouch)
+    public function __construct(ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer, ProductCategoryFilterTouchInterface $productCategoryFilterTouch, ProductCategoryFilterTransferGenerator $productCategoryFilterTransferGenerator)
     {
         $this->productCategoryFilterQueryContainer = $productCategoryFilterQueryContainer;
         $this->productCategoryFilterTouch = $productCategoryFilterTouch;
+        $this->productCategoryFilterTransferGenerator = $productCategoryFilterTransferGenerator;
     }
 
     /**
@@ -54,17 +61,18 @@ class ProductCategoryFilterUpdater implements ProductCategoryFilterUpdaterInterf
      */
     protected function executeUpdateProductCategoryFilterTransaction(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
     {
-        $productCategoryFilterEntity = $this->updateProductCategoryFilterEntity($productCategoryFilterTransfer);
-        $productCategoryFilterTransfer->fromArray($productCategoryFilterEntity->toArray(), true);
+        $productCategoryFilterTransfer = $this->productCategoryFilterTransferGenerator->generateTransferWithJsonFromTransfer($productCategoryFilterTransfer);
+        $this->updateProductCategoryFilterEntity($productCategoryFilterTransfer);
 
         $this->productCategoryFilterTouch->touchProductCategoryFilterActive($productCategoryFilterTransfer);
+
         return $productCategoryFilterTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
      *
-     * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilter
+     * @return void
      */
     protected function updateProductCategoryFilterEntity(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
     {
@@ -72,8 +80,6 @@ class ProductCategoryFilterUpdater implements ProductCategoryFilterUpdaterInterf
 
         $productCategoryFilterEntity->fromArray($productCategoryFilterTransfer->modifiedToArray());
         $productCategoryFilterEntity->save();
-
-        return $productCategoryFilterEntity;
     }
 
     /**

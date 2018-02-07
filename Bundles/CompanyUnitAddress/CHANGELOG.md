@@ -1,3 +1,3 @@
 # CompanyUnitAddress Changelog
 
-[Release Changelog](https://github.com/spryker/CompanyUnitAddress/releases)
+[Release Changelog](https://github.com/spryker/company-unit-address/releases)

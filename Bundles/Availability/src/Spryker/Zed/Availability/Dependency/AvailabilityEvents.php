@@ -48,4 +48,12 @@ interface AvailabilityEvents
      * @api
      */
     const ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE = 'Entity.spy_availability_abstract.delete';
+
+    /**
+     * Specification
+     * - This events will be used for spy_availability entity changes
+     *
+     * @api
+     */
+    const ENTITY_SPY_AVAILABILITY_UPDATE = 'Entity.spy_availability.update';
 }

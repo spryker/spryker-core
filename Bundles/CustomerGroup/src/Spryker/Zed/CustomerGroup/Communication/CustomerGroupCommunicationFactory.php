@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CustomerGroup\Communication;
 
 use Generated\Shared\Transfer\CustomerGroupTransfer;
-use Spryker\Zed\CustomerGroup\Communication\Form\CustomerAssignmentForm;
 use Spryker\Zed\CustomerGroup\Communication\Form\CustomerGroupForm;
 use Spryker\Zed\CustomerGroup\Communication\Form\DataProvider\CustomerGroupFormDataProvider;
 use Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignedCustomerTable;
@@ -89,14 +88,6 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormTypeInterface
-     */
-    protected function createCustomerAssignmentFormType()
-    {
-        return new CustomerAssignmentForm();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CustomerGroupTransfer $data
      * @param array $options
      *
@@ -104,13 +95,9 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerGroupForm(CustomerGroupTransfer $data, array $options = [])
     {
-        $customerFormType = new CustomerGroupForm(
-            $this->getQueryContainer(),
-            $this->createCustomerAssignmentFormType(),
-            $data->getIdCustomerGroup()
-        );
+        $options[CustomerGroupForm::ID_CUSTOMER_GROUP] = $data->getIdCustomerGroup();
 
-        return $this->getFormFactory()->create($customerFormType, $data, $options);
+        return $this->getFormFactory()->create(CustomerGroupForm::class, $data, $options);
     }
 
     /**

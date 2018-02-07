@@ -33,7 +33,7 @@ class EditController extends AbstractController
         $form = $this->getFactory()->createCategoryEditForm();
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $categoryTransfer = $this->getCategoryTransferFromForm($form);
             try {
                 $this->getFacade()->update($categoryTransfer);

@@ -59,7 +59,7 @@ class EditController extends AddController
 
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $productAbstractTransfer = $this->getFactory()
                     ->createProductFormTransferGenerator()
@@ -154,7 +154,7 @@ class EditController extends AddController
         $bundledProductTable = $this->getFactory()
             ->createBundledProductTable($idProduct);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $productAbstractTransfer = $this->getFactory()
                     ->getProductFacade()

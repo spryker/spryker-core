@@ -1,3 +1,3 @@
 # Zend Changelog
 
-[Zend Changelog](https://github.com/spryker/Zend/releases)
+[Release Changelog](https://github.com/spryker/zend/releases)

@@ -10,6 +10,11 @@ namespace Spryker\Client\GlossaryStorage;
 interface GlossaryStorageClientInterface
 {
     /**
+     * Specification:
+     * - Read glossary from storage and returned translated string by the given key and locale.
+     * - If there were no translation found, then the key will be returned.
+     * - Parameters passed will be replaced in the translated text.
+     *
      * @api
      *
      * @param string $id

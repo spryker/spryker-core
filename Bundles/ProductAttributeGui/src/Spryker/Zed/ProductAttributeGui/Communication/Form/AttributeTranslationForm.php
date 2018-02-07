@@ -7,13 +7,20 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\ProductAttributeGui\Communication\ProductAttributeGuiCommunicationFactory getFactory()
+ */
 class AttributeTranslationForm extends AbstractType
 {
     const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
@@ -21,14 +28,6 @@ class AttributeTranslationForm extends AbstractType
     const FIELD_KEY_TRANSLATION = 'key_translation';
     const FIELD_TRANSLATE_VALUES = 'translate_values';
     const FIELD_VALUE_TRANSLATIONS = 'value_translations';
-
-    /**
-     * @return string The name of this type
-     */
-    public function getName()
-    {
-        return 'translation';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -78,7 +77,7 @@ class AttributeTranslationForm extends AbstractType
      */
     protected function addIdProductManagementAttributeField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, 'hidden');
+        $builder->add(self::FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE, HiddenType::class);
 
         return $this;
     }
@@ -90,10 +89,12 @@ class AttributeTranslationForm extends AbstractType
      */
     protected function addAttributeKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_KEY, 'text', [
+        $builder->add(self::FIELD_KEY, TextType::class, [
             'label' => 'Attribute key',
-            'read_only' => true,
             'disabled' => true,
+            'attr' => [
+                'read_only' => true,
+            ],
         ]);
 
         return $this;
@@ -106,7 +107,7 @@ class AttributeTranslationForm extends AbstractType
      */
     protected function addAttributeKeyTranslationField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_KEY_TRANSLATION, 'text', [
+        $builder->add(self::FIELD_KEY_TRANSLATION, TextType::class, [
             'label' => 'Translation',
             'constraints' => [
                 new NotBlank(),
@@ -123,7 +124,7 @@ class AttributeTranslationForm extends AbstractType
      */
     protected function addTranslateValuesField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_TRANSLATE_VALUES, 'checkbox', [
+        $builder->add(self::FIELD_TRANSLATE_VALUES, CheckboxType::class, [
             'label' => 'Translate predefined values',
         ]);
 
@@ -137,15 +138,33 @@ class AttributeTranslationForm extends AbstractType
      */
     protected function addValueTranslationFields(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_VALUE_TRANSLATIONS, 'collection', [
+        $builder->add(self::FIELD_VALUE_TRANSLATIONS, CollectionType::class, [
             'label' => 'Predefined value translations',
-            'type' => new AttributeValueTranslationForm(),
+            'entry_type' => AttributeValueTranslationForm::class,
             'allow_add' => true,
             'allow_delete' => true,
             'delete_empty' => true,
-            'options' => [],
+            'entry_options' => [],
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'translation';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

@@ -1,3 +1,3 @@
 # StateMachine Changelog
 
-[StateMachine Changelog](https://github.com/spryker/StateMachine/releases)
+[Release Changelog](https://github.com/spryker/state-machine/releases)

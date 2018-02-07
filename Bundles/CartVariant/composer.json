@@ -3,9 +3,10 @@
   "description": "CartVariant module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/availability": "^5.0.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/product": "^5.0.0"
+    "spryker/product": "^5.0.0 || ^6.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

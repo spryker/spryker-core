@@ -29,10 +29,10 @@ class EditController extends BaseOptionController
         $productOptionGroupTransfer = $this->getFacade()->getProductOptionGroupById($idProductOptionGroup);
         $dataProvider = $this->getFactory()->createGeneralFormDataProvider($productOptionGroupTransfer);
 
-        $productOptionGroupForm = $this->getFactory()->createProductOptionGroup($dataProvider);
+        $productOptionGroupForm = $this->getFactory()->getProductOptionGroupForm($dataProvider);
         $productOptionGroupForm->handleRequest($request);
 
-        if ($productOptionGroupForm->isValid()) {
+        if ($productOptionGroupForm->isSubmitted() && $productOptionGroupForm->isValid()) {
             $this->getFacade()->saveProductOptionGroup($productOptionGroupForm->getData());
 
             $redirectUrl = Url::generate(

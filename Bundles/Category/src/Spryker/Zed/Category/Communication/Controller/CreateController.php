@@ -34,7 +34,7 @@ class CreateController extends AbstractController
         $form = $this->getFactory()->createCategoryCreateForm($idParentNode);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $categoryTransfer = $this->getCategoryTransferFromForm($form);
             try {
                 $this->getFacade()->create($categoryTransfer);

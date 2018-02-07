@@ -110,6 +110,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
         $imageSetCollection = $this->buildProductImageSetCollection($form);
         $productAbstractTransfer->setImageSets(new ArrayObject($imageSetCollection));
+        $productAbstractTransfer->setStoreRelation($formData[ProductFormAdd::FORM_STORE_RELATION]);
         $productAbstractTransfer->setPrices($formData[ProductFormAdd::FIELD_PRICES]);
 
         return $productAbstractTransfer;
@@ -175,6 +176,9 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
         $imageSetCollection = $this->buildProductImageSetCollection($form);
         $productConcreteTransfer->setImageSets(new ArrayObject($imageSetCollection));
+
+        $productConcreteTransfer->setValidFrom($formData[ProductConcreteFormEdit::FIELD_VALID_FROM]);
+        $productConcreteTransfer->setValidTo($formData[ProductConcreteFormEdit::FIELD_VALID_TO]);
 
         return $productConcreteTransfer;
     }

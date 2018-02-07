@@ -1,3 +1,3 @@
 # StockSalesConnector Changelog
 
-[StockSalesConnector Changelog](https://github.com/spryker/StockSalesConnector/releases)
+[Release Changelog](https://github.com/spryker/stock-sales-connector/releases)
