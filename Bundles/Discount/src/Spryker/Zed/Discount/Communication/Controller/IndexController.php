@@ -39,7 +39,7 @@ class IndexController extends AbstractController
         $discountForm = $this->getFactory()->createDiscountForm();
         $discountForm->handleRequest($request);
 
-        if ($discountForm->isValid()) {
+        if ($discountForm->isSubmitted() && $discountForm->isValid()) {
             $idDiscount = $this->getFacade()
                 ->saveDiscount($discountForm->getData());
             $discountType = $discountForm->getData()->getDiscountGeneral()->getDiscountType();
@@ -114,7 +114,7 @@ class IndexController extends AbstractController
     {
         $voucherForm->handleRequest($request);
 
-        if ($voucherForm->isValid()) {
+        if ($voucherForm->isSubmitted() && $voucherForm->isValid()) {
             $voucherCreateInfoTransfer = $this->getFacade()->saveVoucherCodes($voucherForm->getData());
             $this->addVoucherCreateMessage($voucherCreateInfoTransfer);
 

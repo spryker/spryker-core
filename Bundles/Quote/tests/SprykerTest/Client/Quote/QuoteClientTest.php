@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Quote\QuoteClient;
 use Spryker\Client\Session\SessionClient;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 /**
  * Auto-generated group annotations
@@ -29,7 +30,7 @@ class QuoteClientTest extends Unit
      */
     public function setUp()
     {
-        $sessionContainer = new Session();
+        $sessionContainer = new Session(new MockArraySessionStorage());
         $sessionClient = new SessionClient();
         $sessionClient->setContainer($sessionContainer);
     }
