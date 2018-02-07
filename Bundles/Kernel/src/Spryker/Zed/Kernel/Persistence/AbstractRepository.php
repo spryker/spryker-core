@@ -131,6 +131,6 @@ abstract class AbstractRepository
      */
     protected function createRelationMapper()
     {
-        return (new RelationMapper());
+        return new RelationMapper();
     }
 }

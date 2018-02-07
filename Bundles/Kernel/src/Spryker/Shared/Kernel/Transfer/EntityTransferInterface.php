@@ -12,5 +12,5 @@ interface EntityTransferInterface extends TransferInterface
     /**
      * @return array
      */
-    public function virtualColumns();
+    public function virtualProperties();
 }
