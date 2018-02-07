@@ -73,7 +73,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return new PersistenceAvailabilityToProductBridge(
                 $container->getLocator()->product()->queryContainer()
             );
@@ -89,7 +89,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductFacade(Container $container)
     {
-        $container[self::FACADE_PRODDUCT] = function (Container $container) {
+        $container[static::FACADE_PRODDUCT] = function (Container $container) {
             return new AvailabilityToProductBridge($container->getLocator()->product()->facade());
         };
         return $container;
@@ -102,7 +102,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTouchFacade(Container $container)
     {
-        $container[self::FACADE_TOUCH] = function (Container $container) {
+        $container[static::FACADE_TOUCH] = function (Container $container) {
             return new AvailabilityToTouchBridge($container->getLocator()->touch()->facade());
         };
         return $container;
@@ -115,7 +115,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStockFacade(Container $container)
     {
-        $container[self::FACADE_STOCK] = function (Container $container) {
+        $container[static::FACADE_STOCK] = function (Container $container) {
             return new AvailabilityToStockBridge($container->getLocator()->stock()->facade());
         };
         return $container;
@@ -128,7 +128,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOmsFacade(Container $container)
     {
-        $container[self::FACADE_OMS] = function (Container $container) {
+        $container[static::FACADE_OMS] = function (Container $container) {
             return new AvailabilityToOmsBridge($container->getLocator()->oms()->facade());
         };
         return $container;
