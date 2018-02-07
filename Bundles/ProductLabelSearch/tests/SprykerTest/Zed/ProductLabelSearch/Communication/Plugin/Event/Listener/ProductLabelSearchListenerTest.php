@@ -54,6 +54,6 @@ class ProductLabelSearchListenerTest extends Unit
         $productLabelSearchQueryContainer = new ProductLabelSearchQueryContainer();
         $result = $productLabelSearchQueryContainer->queryProductLabelByProductLabelIds([1])->count();
 
-        $this->assertEquals(48, $result);
+        $this->assertSame(48, $result);
     }
 }

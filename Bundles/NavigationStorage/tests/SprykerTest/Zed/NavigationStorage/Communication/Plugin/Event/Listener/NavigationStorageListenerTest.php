@@ -164,11 +164,11 @@ class NavigationStorageListenerTest extends Unit
     protected function assertNavigationStorage($beforeCount)
     {
         $navigationStorageCount = SpyNavigationStorageQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $navigationStorageCount);
+        $this->assertSame($beforeCount + 2, $navigationStorageCount);
         $spyNavigationStorage = SpyNavigationStorageQuery::create()->findOneByFkNavigation(1);
         $this->assertNotNull($spyNavigationStorage);
         $data = $spyNavigationStorage->getData();
-        $this->assertEquals('MAIN_NAVIGATION', $data['key']);
-        $this->assertEquals(7, count($data['nodes']));
+        $this->assertSame('MAIN_NAVIGATION', $data['key']);
+        $this->assertSame(7, count($data['nodes']));
     }
 }

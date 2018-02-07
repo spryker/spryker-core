@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\GlossaryStorage\Communication\Plugin\Event\Listener;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
+use Orm\Zed\GlossaryStorage\Persistence\Map\SpyGlossaryStorageTableMap;
 use Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorageQuery;
 use PHPUnit\Framework\SkippedTestError;
 use Propel\Runtime\Propel;
@@ -118,11 +119,13 @@ class GlossaryStorageListenerTest extends Unit
     protected function assertGlossaryStorage($beforeCount)
     {
         $glossaryStorageCount = SpyGlossaryStorageQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $glossaryStorageCount);
-        $spyGlossaryStorage = SpyGlossaryStorageQuery::create()->findOneByFkGlossaryKey(1);
+        $this->assertSame($beforeCount + 2, $glossaryStorageCount);
+        $spyGlossaryStorage = SpyGlossaryStorageQuery::create()
+            ->orderBy(SpyGlossaryStorageTableMap::COL_FK_GLOSSARY_KEY)
+            ->findOneByFkGlossaryKey(1);
         $this->assertNotNull($spyGlossaryStorage);
         $data = $spyGlossaryStorage->getData();
-        $this->assertEquals('cart.remove.items.success', $data['GlossaryKey']['key']);
-        $this->assertEquals('Products were removed successfully', $data['value']);
+        $this->assertSame('cart.remove.items.success', $data['GlossaryKey']['key']);
+        $this->assertSame('Products were removed successfully', $data['value']);
     }
 }

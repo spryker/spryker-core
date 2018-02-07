@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductStorage\Persistence\Map\SpyProductAbstractStorageTableMap;
+use Orm\Zed\ProductStorage\Persistence\Map\SpyProductConcreteStorageTableMap;
 use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorageQuery;
 use Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorageQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
@@ -282,13 +284,15 @@ class ProductStorageListenerTest extends Unit
     protected function assertProductAbstractStorage($beforeCount)
     {
         $afterCount = SpyProductAbstractStorageQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $afterCount);
-        $spyProductAbstractStorage = SpyProductAbstractStorageQuery::create()->findOneByFkProductAbstract(1);
+        $this->assertSame($beforeCount + 2, $afterCount);
+        $spyProductAbstractStorage = SpyProductAbstractStorageQuery::create()
+            ->orderBy(SpyProductAbstractStorageTableMap::COL_ID_PRODUCT_ABSTRACT_STORAGE)
+            ->findOneByFkProductAbstract(1);
         $this->assertNotNull($spyProductAbstractStorage);
         $data = $spyProductAbstractStorage->getData();
-        $this->assertEquals('001', $data['sku']);
-        $this->assertEquals(6, count($data['attributes']));
-        $this->assertEquals('/de/canon-ixus-160-001', $data['url']);
+        $this->assertSame('001', $data['sku']);
+        $this->assertSame(6, count($data['attributes']));
+        $this->assertSame('/de/canon-ixus-160-001', $data['url']);
     }
 
     /**
@@ -299,12 +303,14 @@ class ProductStorageListenerTest extends Unit
     protected function assertProductConcreteStorage($beforeCount)
     {
         $afterCount = SpyProductConcreteStorageQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $afterCount);
-        $spyProductConcreteStorage = SpyProductConcreteStorageQuery::create()->findOneByFkProduct(1);
+        $this->assertSame($beforeCount + 2, $afterCount);
+        $spyProductConcreteStorage = SpyProductConcreteStorageQuery::create()
+            ->orderBy(SpyProductConcreteStorageTableMap::COL_ID_PRODUCT_CONCRETE_STORAGE)
+            ->findOneByFkProduct(1);
         $this->assertNotNull($spyProductConcreteStorage);
         $data = $spyProductConcreteStorage->getData();
-        $this->assertEquals('001_25904006', $data['sku']);
-        $this->assertEquals(6, count($data['attributes']));
-        $this->assertEquals('/de/canon-ixus-160-001', $data['url']);
+        $this->assertSame('001_25904006', $data['sku']);
+        $this->assertSame(6, count($data['attributes']));
+        $this->assertSame('/de/canon-ixus-160-001', $data['url']);
     }
 }

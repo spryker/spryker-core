@@ -144,7 +144,7 @@ class PriceProductAbstractStorageListenerTest extends Unit
 
         // Assert
         $priceProductAbstractStorageCount = SpyPriceProductAbstractStorageQuery::create()->count();
-        $this->assertEquals($beforeCount + 214, $priceProductAbstractStorageCount);
+        $this->assertSame($beforeCount + 214, $priceProductAbstractStorageCount);
     }
 
     /**
@@ -169,10 +169,10 @@ class PriceProductAbstractStorageListenerTest extends Unit
     protected function assertPriceProductAbstractStorage($beforeCount)
     {
         $priceProductAbstractStorageCount = SpyPriceProductAbstractStorageQuery::create()->count();
-        $this->assertEquals($beforeCount + 1, $priceProductAbstractStorageCount);
+        $this->assertSame($beforeCount + 1, $priceProductAbstractStorageCount);
         $spyPriceProductAbstractStorage = SpyPriceProductAbstractStorageQuery::create()->findOneByFkProductAbstract(1);
         $this->assertNotNull($spyPriceProductAbstractStorage);
         $data = $spyPriceProductAbstractStorage->getData();
-        $this->assertEquals(2, count($data['prices']));
+        $this->assertSame(2, count($data['prices']));
     }
 }

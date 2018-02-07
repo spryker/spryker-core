@@ -114,11 +114,11 @@ class ProductLabelStorageListenerTest extends Unit
 
         // Assert
         $labelDictionaryStorageCount = SpyProductLabelDictionaryStorageQuery::create()->count();
-        $this->assertEquals(2, $labelDictionaryStorageCount);
+        $this->assertSame(2, $labelDictionaryStorageCount);
         $spyProductLabelDictionaryStorage = SpyProductLabelDictionaryStorageQuery::create()->findOne();
         $this->assertNotNull($spyProductLabelDictionaryStorage);
         $data = $spyProductLabelDictionaryStorage->getData();
-        $this->assertEquals(3, count($data['items']));
+        $this->assertSame(3, count($data['items']));
     }
 
     /**
@@ -143,7 +143,7 @@ class ProductLabelStorageListenerTest extends Unit
     protected function assertProductAbstractLabelGroupStorage($beforeCount)
     {
         $productLabelStorageCount = SpyProductAbstractLabelStorageQuery::create()->count();
-        $this->assertEquals($beforeCount + 348, $productLabelStorageCount);
+        $this->assertSame($beforeCount + 348, $productLabelStorageCount);
     }
 
         /**
@@ -154,10 +154,10 @@ class ProductLabelStorageListenerTest extends Unit
     protected function assertProductAbstractLabelStorage($beforeCount)
     {
         $productLabelStorageCount = SpyProductAbstractLabelStorageQuery::create()->count();
-        $this->assertEquals($beforeCount + 1, $productLabelStorageCount);
+        $this->assertSame($beforeCount + 1, $productLabelStorageCount);
         $spyProductAbstractLabelStorage = SpyProductAbstractLabelStorageQuery::create()->findOneByFkProductAbstract(1);
         $this->assertNotNull($spyProductAbstractLabelStorage);
         $data = $spyProductAbstractLabelStorage->getData();
-        $this->assertEquals(2, count($data['product_label_ids']));
+        $this->assertSame(2, count($data['product_label_ids']));
     }
 }

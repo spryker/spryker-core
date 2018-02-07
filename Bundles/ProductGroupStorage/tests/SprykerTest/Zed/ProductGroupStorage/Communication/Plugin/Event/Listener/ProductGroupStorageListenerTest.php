@@ -118,10 +118,10 @@ class ProductGroupStorageListenerTest extends Unit
     protected function assertProductAbstractGroupStorage($beforeCount)
     {
         $productGroupStorageCount = SpyProductAbstractGroupStorageQuery::create()->count();
-        $this->assertEquals($beforeCount + 3, $productGroupStorageCount);
+        $this->assertSame($beforeCount + 3, $productGroupStorageCount);
         $spyProductAbstractGroupStorage = SpyProductAbstractGroupStorageQuery::create()->findOneByFkProductAbstract(1);
         $this->assertNotNull($spyProductAbstractGroupStorage);
         $data = $spyProductAbstractGroupStorage->getData();
-        $this->assertEquals(3, count($data['group_product_abstract_ids']));
+        $this->assertSame(3, count($data['group_product_abstract_ids']));
     }
 }
