@@ -75,6 +75,9 @@ class ReaderManager implements ReaderManagerInterface
         $values
     ) {
         foreach ($values as $key => $value) {
+            if ($value === null) {
+                throw new DatasetParseException();
+            }
             $datasetRowColumnValueTransfers->append($this->getDatasetRowColumnValueEntityTransfer(
                 $datasetColumnValueTransfers[$key],
                 $datasetRowValueTransfer,
