@@ -25,7 +25,7 @@ class DownloadController extends AbstractController
     const CONTENT_DISPOSITION = 'Content-Disposition';
     const CONTENT_TYPE = 'Content-Type';
     const CONTENT_TYPE_CSV = 'text/plain';
-
+    const FILE_EXTENTION = 'csv';
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -50,7 +50,7 @@ class DownloadController extends AbstractController
         $response = new Response($content);
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            $datasetTransfer->getName()
+            $datasetTransfer->getName(). '.' . static::FILE_EXTENTION
         );
         $response->headers->set(static::CONTENT_DISPOSITION, $disposition);
         $response->headers->set(static::CONTENT_TYPE, static::CONTENT_TYPE_CSV);

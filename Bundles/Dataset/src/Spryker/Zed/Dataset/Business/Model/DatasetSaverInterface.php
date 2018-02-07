@@ -15,7 +15,7 @@ interface DatasetSaverInterface
      * @param null|\Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
      * @param string|null $filePath
      *
-     * @return bool
+     * @return void
      */
     public function save(SpyDatasetEntityTransfer $saveRequestTransfer, $filePath = null);
 }

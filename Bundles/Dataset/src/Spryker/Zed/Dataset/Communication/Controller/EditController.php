@@ -41,14 +41,12 @@ class EditController extends AbstractController
             $file = $form->get('contentFile')->getData();
             $filePath = ($file instanceof UploadedFile) ? $file->getRealPath() : null;
             try {
-                $result = $this->getFacade()->save($saveRequestTransfer, $filePath);
-            } catch (DatasetParseException $e) {
-                $this->addErrorMessage(static::MESSAGE_DATASET_PARSE_ERROR);
-            }
-            if (!empty($result)) {
+                $this->getFacade()->save($saveRequestTransfer, $filePath);
                 $redirectUrl = Url::generate(static::DATSET_LIST_URL)->build();
 
                 return $this->redirectResponse($redirectUrl);
+            } catch (DatasetParseException $e) {
+                $this->addErrorMessage(static::MESSAGE_DATASET_PARSE_ERROR);
             }
         }
 
