@@ -10,8 +10,11 @@ namespace SprykerTest\Zed\Acl\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
+use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Acl\Business\AclFacade;
 use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
+use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
+use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
 use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
 use Spryker\Zed\User\Business\UserFacade;
 
@@ -198,6 +201,52 @@ class AclTest extends Unit
         $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $roleDto);
         $this->assertNotNull($roleDto->getIdAclRole());
         $this->assertEquals($roleData['name'], $roleDto->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRoleUpdate()
+    {
+        $roleData = $this->mockRoleData();
+        $roleDto = $this->facade->addRole($roleData['name']);
+        $roleDto = $this->facade->updateRole($roleDto);
+
+        $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $roleDto);
+        $this->assertNotNull($roleDto->getIdAclRole());
+        $this->assertEquals($roleData['name'], $roleDto->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRoleNameUniquenessCheck()
+    {
+        $roleData = $this->mockRoleData();
+        $this->facade->addRole($roleData['name']);
+
+        $roleDto = null;
+        try {
+            $roleDto = $this->facade->addRole($roleData['name']);
+        } catch (RoleNameExistsException $e) {
+            $this->assertInstanceOf('\Spryker\Zed\Acl\Business\Exception\RoleNameExistsException', $e);
+        }
+        $this->assertNull($roleDto);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRootRoleIsNotAllowedToEdit()
+    {
+        $roleDto = $this->facade->getRoleByName(AclConstants::ROOT_ROLE);
+        $roleUpdated = null;
+        try {
+            $roleUpdated = $this->facade->updateRole($roleDto);
+        } catch (RootNodeModificationException $e) {
+            $this->assertInstanceOf('\Spryker\Zed\Acl\Business\Exception\RootNodeModificationException', $e);
+        }
+        $this->assertNull($roleUpdated);
     }
 
     /**
