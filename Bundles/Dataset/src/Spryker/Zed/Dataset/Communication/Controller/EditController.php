@@ -36,6 +36,7 @@ class EditController extends AbstractController
         $form = $this->getFactory()
             ->createDatasetForm($idDataset)
             ->handleRequest($request);
+
         if ($form->isValid()) {
             $saveRequestTransfer = $form->getData();
             $file = $form->get('contentFile')->getData();
