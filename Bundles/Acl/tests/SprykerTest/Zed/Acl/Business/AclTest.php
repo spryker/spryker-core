@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\RuleTransfer;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Acl\Business\AclFacade;
 use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
-use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
-use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
 use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
 use Spryker\Zed\User\Business\UserFacade;
 
@@ -218,35 +216,28 @@ class AclTest extends Unit
     }
 
     /**
+     * @expectedException \Spryker\Zed\Acl\Business\Exception\RoleNameExistsException
+     * @expectedExceptionMessage Role with name "role-unique" already exists!
+     *
      * @return void
      */
     public function testRoleNameUniquenessCheck()
     {
-        $roleData = $this->mockRoleData();
-        $this->facade->addRole($roleData['name']);
-
-        $roleDto = null;
-        try {
-            $roleDto = $this->facade->addRole($roleData['name']);
-        } catch (RoleNameExistsException $e) {
-            $this->assertInstanceOf('\Spryker\Zed\Acl\Business\Exception\RoleNameExistsException', $e);
-        }
-        $this->assertNull($roleDto);
+        $roleName = 'role-unique';
+        $this->facade->addRole($roleName);
+        $this->facade->addRole($roleName);
     }
 
     /**
+     * @expectedException \Spryker\Zed\Acl\Business\Exception\RootNodeModificationException
+     * @expectedExceptionMessage Could not modify root role node!
+     *
      * @return void
      */
     public function testRootRoleIsNotAllowedToEdit()
     {
         $roleDto = $this->facade->getRoleByName(AclConstants::ROOT_ROLE);
-        $roleUpdated = null;
-        try {
-            $roleUpdated = $this->facade->updateRole($roleDto);
-        } catch (RootNodeModificationException $e) {
-            $this->assertInstanceOf('\Spryker\Zed\Acl\Business\Exception\RootNodeModificationException', $e);
-        }
-        $this->assertNull($roleUpdated);
+        $this->facade->updateRole($roleDto);
     }
 
     /**
