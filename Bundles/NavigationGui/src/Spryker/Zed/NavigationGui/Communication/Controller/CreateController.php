@@ -26,7 +26,7 @@ class CreateController extends AbstractController
             ->getNavigationForm()
             ->handleRequest($request);
 
-        if ($navigationForm->isValid()) {
+        if ($navigationForm->isSubmitted() && $navigationForm->isValid()) {
             $navigationTransfer = $navigationForm->getData();
             $navigationTransfer = $this->getFactory()
                 ->getNavigationFacade()

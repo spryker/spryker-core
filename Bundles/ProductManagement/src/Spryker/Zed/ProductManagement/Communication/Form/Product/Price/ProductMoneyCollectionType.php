@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product\Price;
 
+use Countable;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractCollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -72,7 +73,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
     {
         $moneyCollectionInitialDataProvider = $this->getFactory()->createMoneyCollectionMultiStoreDataProvider();
 
-        if (count($event->getData()) === 0) {
+        if (!($event->getData() instanceof Countable) || count($event->getData()) === 0) {
             $event->setData($moneyCollectionInitialDataProvider->getInitialData());
             return;
         }

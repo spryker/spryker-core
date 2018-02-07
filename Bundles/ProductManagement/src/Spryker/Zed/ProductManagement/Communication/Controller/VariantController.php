@@ -88,7 +88,7 @@ class VariantController extends AbstractController
             ->getProductFacade()
             ->activateProductConcrete($idProductConcrete);
 
-        $this->addSuccessMessage('Product was activated.');
+        $this->addActivationMessages($idProductConcrete);
         $redirectUrl = $this->generateRedirectUrl($idProductAbstract, $idProductConcrete);
 
         return $this->redirectResponse($redirectUrl);
@@ -108,7 +108,7 @@ class VariantController extends AbstractController
             ->getProductFacade()
             ->deactivateProductConcrete($idProductConcrete);
 
-        $this->addSuccessMessage('Product was deactivated.');
+        $this->addDeactivationMessages($idProductConcrete);
         $redirectUrl = $this->generateRedirectUrl($idProductAbstract, $idProductConcrete);
 
         return $this->redirectResponse($redirectUrl);
@@ -126,5 +126,41 @@ class VariantController extends AbstractController
             EditController::PARAM_ID_PRODUCT => $idProductConcrete,
             EditController::PARAM_ID_PRODUCT_ABSTRACT => $idProductAbstract,
         ])->build();
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    protected function addActivationMessages($idProductConcrete)
+    {
+        $activationMessage = $this->getFactory()
+            ->createProductValidityActivityMessenger()
+            ->getActivationMessage($idProductConcrete);
+
+        if ($activationMessage) {
+            $this->addInfoMessage($activationMessage);
+        }
+
+        $this->addSuccessMessage('Product has been activated.');
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    protected function addDeactivationMessages($idProductConcrete)
+    {
+        $deactivationMessage = $this->getFactory()
+            ->createProductValidityActivityMessenger()
+            ->getDeactivationMessage($idProductConcrete);
+
+        if ($deactivationMessage) {
+            $this->addInfoMessage($deactivationMessage);
+        }
+
+        $this->addSuccessMessage('Product has been deactivated.');
     }
 }
