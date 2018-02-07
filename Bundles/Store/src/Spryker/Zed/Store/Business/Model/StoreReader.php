@@ -7,14 +7,20 @@
 
 namespace Spryker\Zed\Store\Business\Model;
 
-use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface;
+use Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface;
 use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 use Spryker\Zed\Store\Persistence\StoreQueryContainerInterface;
 
 class StoreReader implements StoreReaderInterface
 {
     /**
+     * @var \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface
+     */
+    protected $store;
+
+    /**
+     * @deprecated Use StoreReader::store instead.
+     *
      * @var \Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface
      */
     protected $storeConfigurationProvider;
@@ -35,16 +41,17 @@ class StoreReader implements StoreReaderInterface
     protected static $storeCache = [];
 
     /**
-     * @param \Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface $storeConfigurationProvider
+     * @param \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface $store
      * @param \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface $storeQueryContainer
      * @param \Spryker\Zed\Store\Business\Model\StoreMapperInterface $storeMapper
      */
     public function __construct(
-        StoreConfigurationProviderInterface $storeConfigurationProvider,
+        StoreToStoreInterface $store,
         StoreQueryContainerInterface $storeQueryContainer,
         StoreMapperInterface $storeMapper
     ) {
-        $this->storeConfigurationProvider = $storeConfigurationProvider;
+        $this->store = $store;
+        $this->storeConfigurationProvider = $store;
         $this->storeQueryContainer = $storeQueryContainer;
         $this->storeMapper = $storeMapper;
     }
@@ -54,7 +61,7 @@ class StoreReader implements StoreReaderInterface
      */
     public function getAllStores()
     {
-        $stores = $this->storeConfigurationProvider->getAllStoreNames();
+        $stores = $this->store->getAllStoreNames();
         $storeCollection = $this->storeQueryContainer
             ->queryStoresByNames($stores)
             ->find();
@@ -72,7 +79,7 @@ class StoreReader implements StoreReaderInterface
      */
     public function getCurrentStore()
     {
-        $currentStore = $this->storeConfigurationProvider->getCurrentStoreName();
+        $currentStore = $this->store->getCurrentStoreName();
         if (isset(static::$storeCache[$currentStore])) {
             return static::$storeCache[$currentStore];
         }

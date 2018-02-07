@@ -18,4 +18,8 @@
         <property name="idStores" type="int[]" />
     </transfer>
 
+    <transfer name="Quote">
+        <property name="store" type="Store" />
+    </transfer>
+
 </transfers>

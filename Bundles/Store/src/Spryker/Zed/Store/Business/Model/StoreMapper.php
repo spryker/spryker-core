@@ -9,21 +9,21 @@ namespace Spryker\Zed\Store\Business\Model;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Store\Persistence\SpyStore;
-use Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface;
+use Spryker\Shared\Store\Reader\StoreReaderInterface;
 
 class StoreMapper implements StoreMapperInterface
 {
     /**
-     * @var \Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface;
+     * @var \Spryker\Shared\Store\Reader\StoreReaderInterface
      */
-    protected $storeConfigurationProvider;
+    protected $sharedStoreReader;
 
     /**
-     * @param \Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface $storeConfigurationProvider
+     * @param \Spryker\Shared\Store\Reader\StoreReaderInterface $sharedStoreReader
      */
-    public function __construct(StoreConfigurationProviderInterface $storeConfigurationProvider)
+    public function __construct(StoreReaderInterface $sharedStoreReader)
     {
-        $this->storeConfigurationProvider = $storeConfigurationProvider;
+        $this->sharedStoreReader = $sharedStoreReader;
     }
 
     /**
@@ -35,14 +35,9 @@ class StoreMapper implements StoreMapperInterface
     {
         $storeName = $storeEntity->getName();
 
-        $currencyTransfer = (new StoreTransfer())
-            ->setSharedPersistenceWithStores($this->storeConfigurationProvider->getSharedPersistenceWithStores())
-            ->setSelectedCurrencyIsoCode($this->storeConfigurationProvider->getCurrentStoreSelectedCurrencyIsoCode())
-            ->setDefaultCurrencyIsoCode($this->storeConfigurationProvider->getDefaultCurrencyFor($storeName))
-            ->setAvailableCurrencyIsoCodes($this->storeConfigurationProvider->getAvailableCurrenciesFor($storeName))
-            ->setAvailableLocaleIsoCodes($this->storeConfigurationProvider->getAvailableLocaleIsoCodesFor($storeName));
+        $storeTransfer = $this->sharedStoreReader->getStoreByName($storeName);
 
-        return $currencyTransfer->fromArray($storeEntity->toArray(), true);
+        return $storeTransfer->fromArray($storeEntity->toArray(), true);
     }
 
     /**
