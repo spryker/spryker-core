@@ -14,7 +14,7 @@ interface DatasetConstants
 {
     /**
      * Specification
-     * - Defines the collector resource name
+     * - Defines column names for dataset
      *
      * @api
      */
