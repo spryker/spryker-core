@@ -9,15 +9,14 @@ namespace Spryker\Client\Permission\PermissionExecutor;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Spryker\Client\Permission\Communication\Plugin\PermissionStoragePluginInterface;
-use Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientInterface;
+use Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface;
 use Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface;
 use Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface;
 
 class PermissionExecutor implements PermissionExecutorInterface
 {
     /**
-     * @var PermissionStoragePluginInterface
+     * @var \Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface
      */
     protected $permissionStoragePlugin;
 
@@ -27,7 +26,7 @@ class PermissionExecutor implements PermissionExecutorInterface
     protected $permissionFinder;
 
     /**
-     * @param PermissionStoragePluginInterface $permissionStoragePlugin
+     * @param \Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface $permissionStoragePlugin
      * @param \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface $permissionConfigurator
      */
     public function __construct(

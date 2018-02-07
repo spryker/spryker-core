@@ -1,20 +1,23 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Client\CompanyRole\Dependency\Client;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Client\Customer\CustomerClient;
-use Spryker\Client\Customer\CustomerClientInterface;
 
 class CompanyRoleToCustomerClientBridge implements CompanyRoleToCustomerClientInterface
 {
     /**
-     * @var CustomerClientInterface
+     * @var \Spryker\Client\Customer\CustomerClientInterface
      */
     protected $customerClient;
 
     /**
-     * @param CustomerClientInterface $customerClient
+     * @param \Spryker\Client\Customer\CustomerClientInterface $customerClient
      */
     public function __construct($customerClient)
     {

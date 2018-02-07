@@ -10,7 +10,6 @@ namespace Spryker\Zed\CompanyRole\Business;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\PermissionCollectionTransfer;
 
 interface CompanyRoleFacadeInterface
 {
@@ -86,7 +85,7 @@ interface CompanyRoleFacadeInterface
      *
      * @param int $idCompanyUser
      *
-     * @return PermissionCollectionTransfer
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function findPermissionsByIdCompanyUser(int $idCompanyUser);
 }

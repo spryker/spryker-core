@@ -1,10 +1,15 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Client\CompanyRole\Plugin;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Permission\Communication\Plugin\PermissionStoragePluginInterface;
+use Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface;
 
 /**
  * @method \Spryker\Client\CompanyRole\CompanyRoleFactory getFactory()
@@ -12,7 +17,7 @@ use Spryker\Client\Permission\Communication\Plugin\PermissionStoragePluginInterf
 class PermissionStoragePlugin extends AbstractPlugin implements PermissionStoragePluginInterface
 {
     /**
-     * @return PermissionCollectionTransfer
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function getPermissionCollection(): PermissionCollectionTransfer
     {

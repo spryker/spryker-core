@@ -14,7 +14,7 @@ interface CompanyRoleRepositoryInterface
     /**
      * @param int $idCompanyUser
      *
-     * @return PermissionCollectionTransfer
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function findPermissionsByIdCompanyUser(int $idCompanyUser): PermissionCollectionTransfer;
 }

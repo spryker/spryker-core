@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\Permission;
 
+use Exception;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface;
-use Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface;
 
 class PermissionDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -18,9 +17,9 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_PERMISSION_STORAGE = 'PLUGIN_PERMISSION_STORAGE';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
@@ -32,9 +31,9 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addPermissionPlugins(Container $container)
     {
@@ -46,7 +45,7 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return PermissionPluginInterface[]
+     * @return \Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface[]
      */
     protected function getPermissionPlugins()
     {
@@ -54,9 +53,9 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addPermissionStoragePlugin(Container $container)
     {
@@ -70,11 +69,11 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @throws \Exception
      *
-     * @return PermissionStoragePluginInterface
+     * @return \Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface
      */
     protected function getPermissionStoragePlugin()
     {
-        throw new \Exception('Please set a permission storage plugin, 
+        throw new Exception('Please set a permission storage plugin, 
         implementation of \Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface');
     }
 }

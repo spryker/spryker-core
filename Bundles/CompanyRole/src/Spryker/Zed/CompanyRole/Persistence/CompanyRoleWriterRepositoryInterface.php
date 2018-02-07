@@ -22,4 +22,14 @@ interface CompanyRoleWriterRepositoryInterface
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
     public function save(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer;
+
+    /**
+     * Specification:
+     * - Creates/updates related to a company role permissions
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return void
+     */
+    public function saveCompanyRolePermissions(CompanyRoleTransfer $companyRoleTransfer): void;
 }

@@ -20,8 +20,9 @@
     </transfer>
 
     <transfer name="Permission">
+        <property name="idPermission" type="int" />
         <property name="key" type="string"/>
-        <property name="config" type="[]"/>
+        <property name="configuration" type="array"/>
     </transfer>
 
     <transfer name="CompanyUser">

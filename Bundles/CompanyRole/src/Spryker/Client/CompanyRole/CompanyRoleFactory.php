@@ -9,7 +9,6 @@ namespace Spryker\Client\CompanyRole;
 
 use Spryker\Client\CompanyRole\Zed\CompanyRoleStub;
 use Spryker\Client\CompanyRole\Zed\CompanyRoleStubInterface;
-use Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToCustomerClientInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class CompanyRoleFactory extends AbstractFactory
@@ -23,7 +22,7 @@ class CompanyRoleFactory extends AbstractFactory
     }
 
     /**
-     * @return CompanyRoleToCustomerClientInterface
+     * @return \Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToCustomerClientInterface
      */
     public function getCustomerClient()
     {

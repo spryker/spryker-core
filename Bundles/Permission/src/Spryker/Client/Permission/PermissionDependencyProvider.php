@@ -7,10 +7,10 @@
 
 namespace Spryker\Client\Permission;
 
+use Exception;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\Permission\Communication\Plugin\PermissionStoragePluginInterface;
-use Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientBridge;
+use Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface;
 
 class PermissionDependencyProvider extends AbstractDependencyProvider
 {
@@ -57,11 +57,11 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
     /**
      * @throws \Exception
      *
-     * @return PermissionStoragePluginInterface
+     * @return \Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface
      */
     protected function getPermissionStoragePlugin(): PermissionStoragePluginInterface
     {
-        throw new \Exception('Please set a permission storage plugin, implementation of 
-        \Spryker\Client\Permission\Communication\Plugin\PermissionStoragePluginInterface');
+        throw new Exception('Please set a permission storage plugin, implementation of 
+        \Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface');
     }
 }

@@ -1,6 +1,11 @@
 <?php
-namespace Spryker\Zed\Permission\Business\PermissionExecutor;
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\Permission\Business\PermissionExecutor;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
@@ -10,17 +15,17 @@ use Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface
 
 class PermissionExecutor implements PermissionExecutorInterface
 {
-    /** @var  PermissionStoragePluginInterface */
+    /** @var \Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface */
     protected $permissionStoragePlugin;
 
     /**
-     * @var PermissionFinderInterface
+     * @var \Spryker\Zed\Permission\Business\PermissionFinder\PermissionFinderInterface
      */
     protected $permissionFinder;
 
     /**
-     * @param PermissionStoragePluginInterface $permissionStoragePlugin
-     * @param PermissionFinderInterface $permissionFinder
+     * @param \Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface $permissionStoragePlugin
+     * @param \Spryker\Zed\Permission\Business\PermissionFinder\PermissionFinderInterface $permissionFinder
      */
     public function __construct(
         PermissionStoragePluginInterface $permissionStoragePlugin,

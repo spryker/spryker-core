@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
-namespace Spryker\Client\Permission\Communication\Plugin;
-
+namespace Spryker\Client\Permission\Dependency\Plugin;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 
@@ -13,7 +16,9 @@ interface PermissionStoragePluginInterface
      * - Finds permissions in a user session
      * - Populates them in a permission collection with configurations
      *
-     * @return PermissionCollectionTransfer
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function getPermissionCollection(): PermissionCollectionTransfer;
 }

@@ -1,22 +1,24 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\Permission\Business;
 
-
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Permission\Business\PermissionExecutor\PermissionExecutor;
-use Spryker\Zed\Permission\Business\PermissionExecutor\PermissionExecutorInterface;
 use Spryker\Zed\Permission\Business\PermissionFinder\PermissionFinder;
-use Spryker\Zed\Permission\Business\PermissionFinder\PermissionFinderInterface;
-use Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface;
-use Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\Permission\Persistence\PermissionQueryContainerInterface getQueryContainer()
+ */
 class PermissionBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return PermissionStoragePluginInterface
+     * @return \Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface
      */
     public function getPermissionStoragePlugin()
     {
@@ -24,7 +26,7 @@ class PermissionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PermissionExecutorInterface
+     * @return \Spryker\Zed\Permission\Business\PermissionExecutor\PermissionExecutorInterface
      */
     public function createPermissionExecutor()
     {
@@ -35,7 +37,7 @@ class PermissionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PermissionFinderInterface
+     * @return \Spryker\Zed\Permission\Business\PermissionFinder\PermissionFinderInterface
      */
     public function createPermissionFinder()
     {
@@ -45,7 +47,7 @@ class PermissionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return PermissionPluginInterface[]
+     * @return \Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface[]
      */
     public function getPermissionPlugins()
     {

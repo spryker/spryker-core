@@ -42,6 +42,27 @@ class CompanyRoleWriterRepository implements CompanyRoleWriterRepositoryInterfac
     /**
      * {@inheritdoc}
      *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return void
+     */
+    public function saveCompanyRolePermissions(CompanyRoleTransfer $companyRoleTransfer): void
+    {
+        foreach ($companyRoleTransfer->getPermissionCollection()->getPermissions() as $permissionTransfer) {
+            $spyCompanyRoleToPermission = $this->companyRoleQueryContainer
+                ->queryCompanyRoleToPermission()
+                ->filterByFkCompanyRole($companyRoleTransfer->getIdCompanyRole())
+                ->filterByFkPermission($permissionTransfer->getIdPermission())
+                ->findOneOrCreate();
+
+            $spyCompanyRoleToPermission->setConfiguration($permissionTransfer->getConfiguration());
+            $spyCompanyRoleToPermission->save();
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @deprecated
      *
      * @param \Spryker\Zed\CompanyRole\Persistence\CompanyRoleQueryContainerInterface $companyRoleQueryContainer
