@@ -15,10 +15,12 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Currency\Persistence\SpyCurrencyQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountAmount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use Orm\Zed\Discount\Persistence\SpyDiscountStore;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Propel\Runtime\Propel;
@@ -212,6 +214,9 @@ class DiscountFacadeCalculateTest extends Unit
     protected function createQuoteTransfer()
     {
         $quoteTransfer = new QuoteTransfer();
+
+        $quoteTransfer->setStore($this->getCurrentStore());
+
         $currencyTransfer = new CurrencyTransfer();
         $currencyTransfer->setCode('EUR');
         $quoteTransfer->setCurrency($currencyTransfer);
@@ -264,6 +269,11 @@ class DiscountFacadeCalculateTest extends Unit
         $discountEntity->setValidTo(new DateTime('tomorrow'));
         $discountEntity->save();
 
+        (new SpyDiscountStore())
+            ->setFkStore($this->getCurrentStore()->getIdStore())
+            ->setFkDiscount($discountEntity->getIdDiscount())
+            ->save();
+
         $discountAmount = new SpyDiscountAmount();
         $currencyEntity = $this->getCurrency();
         $discountAmount->setFkCurrency($currencyEntity->getIdCurrency());
@@ -314,6 +324,7 @@ class DiscountFacadeCalculateTest extends Unit
         $collectorStrategyPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::PLUGIN_COLLECTOR_STRATEGY_PLUGINS);
         $applicableFilterPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS);
         $currencyFacade = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::FACADE_CURRENCY);
+        $storeFacade = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::FACADE_STORE);
 
         $container = new Container();
 
@@ -327,6 +338,10 @@ class DiscountFacadeCalculateTest extends Unit
 
         $container[DiscountDependencyProvider::FACADE_MESSENGER] = function () use ($messengerFacade) {
             return $messengerFacade;
+        };
+
+        $container[DiscountDependencyProvider::FACADE_STORE] = function () use ($storeFacade) {
+            return $storeFacade;
         };
 
         $container[DiscountDependencyProvider::COLLECTOR_PLUGINS] = function () use ($collectorPlugins) {
@@ -373,5 +388,15 @@ class DiscountFacadeCalculateTest extends Unit
     protected function getCurrency()
     {
         return SpyCurrencyQuery::create()->findOneByCode('EUR');
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function getCurrentStore()
+    {
+        return (new StoreTransfer())
+            ->setIdStore(1)
+            ->setName('DE');
     }
 }
