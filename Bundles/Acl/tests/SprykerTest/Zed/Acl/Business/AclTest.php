@@ -9,10 +9,13 @@ namespace SprykerTest\Zed\Acl\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RolesTransfer;
+use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Acl\Business\AclFacade;
 use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
+use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
+use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
 use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
 use Spryker\Zed\User\Business\UserFacade;
 
@@ -204,40 +207,43 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testRoleUpdate()
+    public function testUpdatesRole()
     {
         $roleData = $this->mockRoleData();
-        $roleDto = $this->facade->addRole($roleData['name']);
-        $roleDto = $this->facade->updateRole($roleDto);
+        $roleTransfer = $this->facade->addRole($roleData['name']);
+        $roleTransfer = $this->facade->updateRole($roleTransfer);
 
-        $this->assertInstanceOf('\Generated\Shared\Transfer\RoleTransfer', $roleDto);
-        $this->assertNotNull($roleDto->getIdAclRole());
-        $this->assertEquals($roleData['name'], $roleDto->getName());
+        $this->assertInstanceOf(RoleTransfer::class, $roleTransfer);
+        $this->assertNotNull($roleTransfer->getIdAclRole());
+        $this->assertSame($roleData['name'], $roleTransfer->getName());
     }
 
     /**
-     * @expectedException \Spryker\Zed\Acl\Business\Exception\RoleNameExistsException
-     * @expectedExceptionMessage Role with name "role-unique" already exists!
-     *
      * @return void
      */
     public function testRoleNameUniquenessCheck()
     {
-        $roleName = 'role-unique';
+        $roleData = $this->mockRoleData();
+        $roleName = $roleData['name'];
         $this->facade->addRole($roleName);
+
+        $this->expectException(RoleNameExistsException::class);
+        $this->expectExceptionMessage(sprintf('Role with name "%s" already exists!', $roleName));
+
         $this->facade->addRole($roleName);
     }
 
     /**
-     * @expectedException \Spryker\Zed\Acl\Business\Exception\RootNodeModificationException
-     * @expectedExceptionMessage Could not modify root role node!
-     *
      * @return void
      */
     public function testRootRoleIsNotAllowedToEdit()
     {
-        $roleDto = $this->facade->getRoleByName(AclConstants::ROOT_ROLE);
-        $this->facade->updateRole($roleDto);
+        $roleTransfer = $this->facade->getRoleByName(AclConstants::ROOT_ROLE);
+
+        $this->expectException(RootNodeModificationException::class);
+        $this->expectExceptionMessage('Could not modify root role node!');
+
+        $this->facade->updateRole($roleTransfer);
     }
 
     /**
