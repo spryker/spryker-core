@@ -134,7 +134,6 @@ class Customer implements CustomerInterface
 
         $customerTransfer = $this->attachAddresses($customerTransfer, $customerEntity);
         $customerTransfer = $this->attachLocale($customerTransfer, $customerEntity);
-        $customerTransfer = $this->executeTransferExpanderPlugins($customerTransfer);
         $customerTransfer = $this->customerExpander->expand($customerTransfer);
 
         return $customerTransfer;
