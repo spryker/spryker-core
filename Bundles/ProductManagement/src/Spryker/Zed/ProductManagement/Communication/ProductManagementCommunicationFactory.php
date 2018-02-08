@@ -17,6 +17,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelper;
+use Spryker\Zed\ProductManagement\Communication\Helper\ProductValidity\ProductValidityActivityMessenger;
 use Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductGroupTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductTable;
@@ -42,16 +43,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductFormAdd(array $formData, array $formOptions = [])
     {
-        $formType = new ProductFormAdd(
-            $this->createLocaleProvider(),
-            $this->getProductQueryContainer(),
-            $this->getQueryContainer(),
-            $this->getMoneyFacade(),
-            $this->getUtilTextService(),
-            $this->getCurrencyFacade()
-        );
-
-        return $this->getFormFactory()->create($formType, $formData, $formOptions);
+        return $this->getFormFactory()->create(ProductFormAdd::class, $formData, $formOptions);
     }
 
     /**
@@ -62,16 +54,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductFormEdit(array $formData, array $formOptions = [])
     {
-        $formType = new ProductFormEdit(
-            $this->createLocaleProvider(),
-            $this->getProductQueryContainer(),
-            $this->getQueryContainer(),
-            $this->getMoneyFacade(),
-            $this->getUtilTextService(),
-            $this->getCurrencyFacade()
-        );
-
-        return $this->getFormFactory()->create($formType, $formData, $formOptions);
+        return $this->getFormFactory()->create(ProductFormEdit::class, $formData, $formOptions);
     }
 
     /**
@@ -82,16 +65,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductVariantFormEdit(array $formData, array $formOptions = [])
     {
-        $formType = new ProductConcreteFormEdit(
-            $this->createLocaleProvider(),
-            $this->getProductQueryContainer(),
-            $this->getQueryContainer(),
-            $this->getMoneyFacade(),
-            $this->getUtilTextService(),
-            $this->getCurrencyFacade()
-        );
-
-        return $this->getFormFactory()->create($formType, $formData, $formOptions);
+        return $this->getFormFactory()->create(ProductConcreteFormEdit::class, $formData, $formOptions);
     }
 
     /**
@@ -302,6 +276,17 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Helper\ProductValidity\ProductValidityActivityMessengerInterface
+     */
+    public function createProductValidityActivityMessenger()
+    {
+        return new ProductValidityActivityMessenger(
+            $this->getConfig(),
+            $this->getProductFacade()
+        );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $attributeCollection
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
@@ -439,9 +424,17 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    public function getStoreRelationFormTypePlugin()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface
      */
-    protected function getMoneyFacade()
+    public function getMoneyFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_MONEY);
     }
@@ -449,7 +442,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface
      */
-    protected function getCurrencyFacade()
+    public function getCurrencyFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_CURRENCY);
     }

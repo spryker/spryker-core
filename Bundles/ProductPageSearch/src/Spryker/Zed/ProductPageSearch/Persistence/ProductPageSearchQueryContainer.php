@@ -97,7 +97,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      *
      * @param array $priceTypeIds
      *
-     * @return \Orm\Zed\PriceStorage\Persistence\SpyPriceAbstractStorageQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
     public function queryAllProductAbstractIdsByPriceTypeIds(array $priceTypeIds)
     {
@@ -114,7 +114,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      *
      * @param array $priceProductIds
      *
-     * @return \Orm\Zed\PriceStorage\Persistence\SpyPriceAbstractStorageQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
     public function queryAllProductAbstractIdsByPriceProductIds(array $priceProductIds)
     {

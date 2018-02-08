@@ -131,6 +131,11 @@ class FacadeTestAbstract extends Unit
     protected $productConcreteTransfer;
 
     /**
+     * @var \SprykerTest\Zed\Product\ProductBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     protected function setUp()

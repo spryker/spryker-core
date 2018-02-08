@@ -8,18 +8,22 @@
 namespace Spryker\Zed\ProductOption\Communication\Form;
 
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
-use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueOptionValueSku;
 use Spryker\Zed\ProductOption\Communication\Form\Constraint\UniqueValue;
-use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
+/**
+ * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
+ */
 class ProductOptionValueForm extends AbstractType
 {
     const FIELD_VALUE = 'value';
@@ -31,36 +35,6 @@ class ProductOptionValueForm extends AbstractType
     const OPTION_AMOUNT_PER_STORE = 'amount_per_store';
 
     const ALPHA_NUMERIC_PATTERN = '/^[a-z0-9\.\_]+$/';
-
-    /**
-     * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
-     */
-    protected $productOptionQueryContainer;
-
-    /**
-     * @var \Symfony\Component\Form\DataTransformerInterface
-     */
-    protected $priceTransformer;
-
-    /**
-     * @var \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
-     */
-    protected $moneyCollectionFormTypePlugin;
-
-    /**
-     * @param \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface $moneyCollectionFormTypePlugin
-     * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
-     * @param \Symfony\Component\Form\DataTransformerInterface $priceTransformer
-     */
-    public function __construct(
-        FormTypeInterface $moneyCollectionFormTypePlugin,
-        ProductOptionQueryContainerInterface $productOptionQueryContainer,
-        DataTransformerInterface $priceTransformer
-    ) {
-        $this->moneyCollectionFormTypePlugin = $moneyCollectionFormTypePlugin;
-        $this->productOptionQueryContainer = $productOptionQueryContainer;
-        $this->priceTransformer = $priceTransformer;
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -88,10 +62,10 @@ class ProductOptionValueForm extends AbstractType
             'data_class' => ProductOptionValueTransfer::class,
             'constraints' => [
                 new UniqueValue([
-                    UniqueValue::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer,
+                    UniqueValue::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->getQueryContainer(),
                 ]),
                 new UniqueOptionValueSku([
-                    UniqueOptionValueSku::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->productOptionQueryContainer,
+                    UniqueOptionValueSku::OPTION_PRODUCT_OPTION_QUERY_CONTAINER => $this->getQueryContainer(),
                 ]),
             ],
         ]);
@@ -104,7 +78,7 @@ class ProductOptionValueForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_VALUE, 'text', [
+        $builder->add(self::FIELD_VALUE, TextType::class, [
             'label' => 'Option name translation key',
             'required' => true,
             'attr' => [
@@ -129,7 +103,7 @@ class ProductOptionValueForm extends AbstractType
      */
     protected function addSkuField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SKU, 'text', [
+        $builder->add(self::FIELD_SKU, TextType::class, [
             'label' => 'Sku',
             'required' => true,
             'constraints' => [
@@ -149,7 +123,7 @@ class ProductOptionValueForm extends AbstractType
     {
         $builder->add(
             static::FIELD_PRICES,
-            $this->moneyCollectionFormTypePlugin->getType(),
+            $this->getFactory()->getMoneyCollectionFormTypePlugin()->getType(),
             [
                     static::OPTION_AMOUNT_PER_STORE => true,
             ]
@@ -165,7 +139,7 @@ class ProductOptionValueForm extends AbstractType
      */
     protected function addIdProductOptionValue(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_OPTION_VALUE, 'hidden');
+        $builder->add(self::FIELD_ID_PRODUCT_OPTION_VALUE, HiddenType::class);
 
         return $this;
     }
@@ -177,18 +151,26 @@ class ProductOptionValueForm extends AbstractType
      */
     protected function addFormHash(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_OPTION_HASH, 'hidden');
+        $builder->add(self::FIELD_OPTION_HASH, HiddenType::class);
 
         return $this;
     }
 
     /**
-     * Returns the name of this type.
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'product_option';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
      *
-     * @return string The name of this type
+     * @return string
      */
     public function getName()
     {
-        return 'product_option';
+        return $this->getBlockPrefix();
     }
 }

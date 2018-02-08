@@ -1,3 +1,3 @@
 # ProductSetGui Changelog
 
-[Release Changelog](https://github.com/spryker/ProductSetGui/releases)
+[Release Changelog](https://github.com/spryker/product-set-gui/releases)

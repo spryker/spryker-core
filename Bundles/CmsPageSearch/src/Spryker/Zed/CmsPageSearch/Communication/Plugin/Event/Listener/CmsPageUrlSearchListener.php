@@ -11,6 +11,10 @@ use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
+/**
+ * @method \Spryker\Zed\CmsPageSearch\Communication\CmsPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface getQueryContainer()
+ */
 class CmsPageUrlSearchListener extends AbstractCmsPageSearchListener implements EventBulkHandlerInterface
 {
     /**

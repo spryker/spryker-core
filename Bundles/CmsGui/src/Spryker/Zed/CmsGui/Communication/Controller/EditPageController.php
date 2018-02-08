@@ -87,7 +87,7 @@ class EditPageController extends AbstractController
      */
     protected function updateCmsPage($pageForm)
     {
-        if ($pageForm->isValid()) {
+        if ($pageForm->isSubmitted() && $pageForm->isValid()) {
             try {
                 $this->getFactory()
                     ->getCmsFacade()

@@ -73,10 +73,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsPageForm(array $formData = [], array $formOptions = [])
     {
-        $urlFacade = $this->getUrlFacade();
-        $cmsPageForm = new CmsPageForm($urlFacade);
-
-        return $this->getFormFactory()->create($cmsPageForm, $formData, $formOptions);
+        return $this->getFormFactory()->create(CmsPageForm::class, $formData, $formOptions);
     }
 
     /**
@@ -107,10 +104,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsRedirectForm(array $formData = [], array $formOptions = [])
     {
-        $urlFacade = $this->getUrlFacade();
-        $cmsRedirectFormType = new CmsRedirectForm($urlFacade);
-
-        return $this->getFormFactory()->create($cmsRedirectFormType, $formData, $formOptions);
+        return $this->getFormFactory()->create(CmsRedirectForm::class, $formData, $formOptions);
     }
 
     /**
@@ -130,9 +124,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsGlossaryForm(CmsFacade $cmsFacade, array $formData = [], array $formOptions = [])
     {
-        $cmsGlossaryFormType = new CmsGlossaryForm($cmsFacade);
-
-        return $this->getFormFactory()->create($cmsGlossaryFormType, $formData, $formOptions);
+        return $this->getFormFactory()->create(CmsGlossaryForm::class, $formData, $formOptions);
     }
 
     /**

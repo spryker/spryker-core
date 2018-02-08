@@ -15,7 +15,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\CmsBlockCategoryConnector\Communication\CmsBlockCategoryConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface getQueryContainer()
  */
 class CategoryType extends AbstractType
 {
@@ -33,14 +35,6 @@ class CategoryType extends AbstractType
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_WITH_CMS_BLOCK,
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_ONLY_CMS_BLOCK,
     ];
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'cms-blocks';
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -90,7 +84,8 @@ class CategoryType extends AbstractType
             $builder->add(static::FIELD_CMS_BLOCKS . '_' . $idCmsBlockCategoryPosition, Select2ComboBoxType::class, [
                 'property_path' => static::FIELD_CMS_BLOCKS . '[' . $idCmsBlockCategoryPosition . ']',
                 'label' => 'CMS Blocks: ' . $positionName,
-                'choices' => $choices,
+                'choices' => array_flip($choices),
+                'choices_as_values' => true,
                 'multiple' => true,
                 'required' => false,
                 'attr' => [
@@ -134,5 +129,23 @@ class CategoryType extends AbstractType
         $warningMessage .= implode(', ', $wrongCmsBlockList);
 
         return $warningMessage;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'cms-blocks';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

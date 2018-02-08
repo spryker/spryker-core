@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\StepEngine\Dependency\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 

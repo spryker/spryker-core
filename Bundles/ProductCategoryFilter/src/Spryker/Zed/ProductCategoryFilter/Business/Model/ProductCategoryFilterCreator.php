@@ -21,11 +21,18 @@ class ProductCategoryFilterCreator implements ProductCategoryFilterCreatorInterf
     protected $productCategoryFilterTouch;
 
     /**
-     * @param \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTouchInterface $productCategoryFilterTouch
+     * @var \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTransferGeneratorInterface
      */
-    public function __construct(ProductCategoryFilterTouchInterface $productCategoryFilterTouch)
+    protected $productCategoryFilterTransferGenerator;
+
+    /**
+     * @param \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTouchInterface $productCategoryFilterTouch
+     * @param \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTransferGeneratorInterface $productCategoryFilterTransferGenerator
+     */
+    public function __construct(ProductCategoryFilterTouchInterface $productCategoryFilterTouch, ProductCategoryFilterTransferGenerator $productCategoryFilterTransferGenerator)
     {
         $this->productCategoryFilterTouch = $productCategoryFilterTouch;
+        $this->productCategoryFilterTransferGenerator = $productCategoryFilterTransferGenerator;
     }
 
     /**
@@ -47,6 +54,7 @@ class ProductCategoryFilterCreator implements ProductCategoryFilterCreatorInterf
      */
     protected function executeCreateProductCategoryFilterTransaction(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
     {
+        $productCategoryFilterTransfer = $this->productCategoryFilterTransferGenerator->generateTransferWithJsonFromTransfer($productCategoryFilterTransfer);
         $productCategoryFilterEntity = $this->createProductCategoryFilterEntity($productCategoryFilterTransfer);
         $productCategoryFilterTransfer->setIdProductCategoryFilter($productCategoryFilterEntity->getIdProductCategoryFilter());
 

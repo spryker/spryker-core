@@ -9,27 +9,61 @@ namespace Spryker\Shared\Discount;
 
 interface DiscountConstants
 {
+    /**
+     * Specification:
+     * - Represents the "voucher type" from the discount types.
+     *
+     * @api
+     */
     const TYPE_VOUCHER = 'voucher';
+
+    /**
+     * Specification:
+     * - Represents the "cart rule type" from the discount types.
+     *
+     * @api
+     */
     const TYPE_CART_RULE = 'cart_rule';
 
     /**
-     * Types of result type saved in VoucherCreateInfoTransfer.
+     * Specification:
+     * - Success result type saved in VoucherCreateInfoTransfer.
+     *
+     * @api
      */
     const MESSAGE_TYPE_SUCCESS = 'success';
+
+    /**
+     * Specification:
+     * - Error result type saved in VoucherCreateInfoTransfer.
+     *
+     * @api
+     */
     const MESSAGE_TYPE_ERROR = 'error';
 
     /**
-     * This constant used to uniquely identify promotion discount collector strategy type
+     * Specification:
+     * - Uniquely identifies promotion discount collector strategy type.
+     *
+     * @api
      */
     const DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING = 'query-string';
 
     /**
-     * Constant used to indicate what kind input is used to enter amount for calculator, default is single amount input
+     * Specification:
+     * - Indicates what type of input is used to enter the amount for calculator.
+     * - Default type is single amount input.
+     *
+     * @api
      */
     const CALCULATOR_DEFAULT_INPUT_TYPE = 'calculator-default-input-type';
 
     /**
-     * Constant used to indicate what kind input is used to enter amount for calculator, money type means it with render input form for each currency.
+     * Specification:
+     * - Indicates what type of input is used to enter the amount for calculator.
+     * - Money type renders the input form for each currency.
+     *
+     * @api
      */
     const CALCULATOR_MONEY_INPUT_TYPE = 'calculator-money-input-type';
 }

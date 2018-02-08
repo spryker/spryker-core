@@ -27,13 +27,13 @@ class UpdateController extends AbstractController
         $idNavigation = $this->castId($request->query->getInt(self::PARAM_ID_NAVIGATION));
         $navigationFormDataProvider = $this->getFactory()->createNavigationFormDataProvider();
         $navigationForm = $this->getFactory()
-            ->createUpdateNavigationForm(
+            ->getUpdateNavigationForm(
                 $navigationFormDataProvider->getData($idNavigation),
                 $navigationFormDataProvider->getOptions()
             )
             ->handleRequest($request);
 
-        if ($navigationForm->isValid()) {
+        if ($navigationForm->isSubmitted() && $navigationForm->isValid()) {
             $navigationTransfer = $navigationForm->getData();
             $this->getFactory()
                 ->getNavigationFacade()

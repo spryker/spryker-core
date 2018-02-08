@@ -1,3 +1,3 @@
 # Customer Changelog
 
-[Customer Changelog](https://github.com/spryker/Customer/releases)
+[Release Changelog](https://github.com/spryker/customer/releases)

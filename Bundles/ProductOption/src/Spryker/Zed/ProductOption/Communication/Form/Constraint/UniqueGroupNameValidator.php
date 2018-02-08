@@ -40,7 +40,7 @@ class UniqueGroupNameValidator extends ConstraintValidator
         }
 
         if (!$this->isUniqueGroupName($value, $constraint)) {
-            $this->buildViolation(
+            $this->context->buildViolation(
                 sprintf(
                     'Group with "%s" translation key is already created.',
                     $value

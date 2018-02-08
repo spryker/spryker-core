@@ -8,21 +8,19 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ */
 class SeoForm extends AbstractSubForm
 {
     const FIELD_META_TITLE = 'meta_title';
     const FIELD_META_KEYWORDS = 'meta_keywords';
     const FIELD_META_DESCRIPTION = 'meta_description';
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'product_seo';
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -48,7 +46,7 @@ class SeoForm extends AbstractSubForm
     protected function addMetaTitleField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_META_TITLE, 'text', [
+            ->add(self::FIELD_META_TITLE, TextType::class, [
                 'required' => false,
                 'label' => 'Title',
             ]);
@@ -64,7 +62,7 @@ class SeoForm extends AbstractSubForm
     protected function addMetaKeywordField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_META_KEYWORDS, 'text', [
+            ->add(self::FIELD_META_KEYWORDS, TextType::class, [
                 'required' => false,
                 'label' => 'Keywords',
             ]);
@@ -80,7 +78,7 @@ class SeoForm extends AbstractSubForm
     protected function addMetaDescriptionField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_META_DESCRIPTION, 'text', [
+            ->add(self::FIELD_META_DESCRIPTION, TextType::class, [
                 'required' => false,
                 'label' => 'Description',
             ]);

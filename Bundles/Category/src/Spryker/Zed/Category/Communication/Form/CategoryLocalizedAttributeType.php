@@ -7,11 +7,19 @@
 namespace Spryker\Zed\Category\Communication\Form;
 
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
+ * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
+ */
 class CategoryLocalizedAttributeType extends AbstractType
 {
     const FIELD_NAME = 'name';
@@ -21,14 +29,6 @@ class CategoryLocalizedAttributeType extends AbstractType
     const FIELD_META_DESCRIPTION = 'meta_description';
     const FIELD_META_KEYWORDS = 'meta_keywords';
     const FIELD_CATEGORY_IMAGE_NAME = 'category_image_name';
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'localizedAttributes';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -69,7 +69,7 @@ class CategoryLocalizedAttributeType extends AbstractType
     protected function addFkLocaleField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_FK_LOCALE, 'hidden', [
+            ->add(self::FIELD_FK_LOCALE, HiddenType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -87,7 +87,7 @@ class CategoryLocalizedAttributeType extends AbstractType
     protected function addLocaleNameField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_LOCALE_NAME, 'hidden', [
+            ->add(self::FIELD_LOCALE_NAME, HiddenType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -105,7 +105,7 @@ class CategoryLocalizedAttributeType extends AbstractType
     protected function addNameField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_NAME, 'text', [
+            ->add(self::FIELD_NAME, TextType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -123,7 +123,7 @@ class CategoryLocalizedAttributeType extends AbstractType
     protected function addMetaTitleField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_META_TITLE, 'text', [
+            ->add(self::FIELD_META_TITLE, TextType::class, [
                 'label' => 'Meta Title',
                 'required' => false,
             ]);
@@ -139,7 +139,7 @@ class CategoryLocalizedAttributeType extends AbstractType
     protected function addMetaDescriptionField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_META_DESCRIPTION, 'textarea', [
+            ->add(self::FIELD_META_DESCRIPTION, TextareaType::class, [
                 'label' => 'Meta Description',
                 'required' => false,
                 'attr' => [
@@ -158,11 +158,29 @@ class CategoryLocalizedAttributeType extends AbstractType
     protected function addMetaKeywordsField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_META_KEYWORDS, 'textarea', [
+            ->add(self::FIELD_META_KEYWORDS, TextareaType::class, [
                 'label' => 'Meta Keywords',
                 'required' => false,
             ]);
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'localizedAttributes';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

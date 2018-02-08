@@ -40,11 +40,11 @@ class EditController extends AbstractController
 
         $glossaryForm = $this
             ->getFactory()
-            ->createTranslationUpdateForm($formData);
+            ->getTranslationUpdateForm($formData);
 
         $glossaryForm->handleRequest($request);
 
-        if ($glossaryForm->isValid()) {
+        if ($glossaryForm->isSubmitted() && $glossaryForm->isValid()) {
             $data = $glossaryForm->getData();
 
             $keyTranslationTransfer = new KeyTranslationTransfer();

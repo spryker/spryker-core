@@ -31,13 +31,13 @@ class EditController extends AbstractController
 
         $dataProvider = $this->getFactory()->createCustomerFormDataProvider();
         $form = $this->getFactory()
-            ->createCustomerForm(
+            ->getCustomerForm(
                 $dataProvider->getData($idSalesOrder),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $orderTransfer = (new OrderTransfer())->fromArray($form->getData(), true);
             $this->getFacade()->updateOrder($orderTransfer, $idSalesOrder);
 
@@ -71,13 +71,13 @@ class EditController extends AbstractController
 
         $dataProvider = $this->getFactory()->createAddressFormDataProvider();
         $form = $this->getFactory()
-            ->createAddressForm(
+            ->getAddressForm(
                 $dataProvider->getData($idOrderAddress),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $addressTransfer = (new AddressTransfer())->fromArray($form->getData(), true);
             $addressTransfer->setIdSalesOrderAddress($idOrderAddress);
             $this->getFacade()

@@ -36,14 +36,14 @@ class EditController extends BaseProductRelationController
             ->createProductRelationFormTypeDataProvider();
 
         $productRelationForm = $this->getFactory()
-            ->createRelationForm($productRelationFormTypeDataProvider, $idProductRelation);
+            ->getRelationForm($productRelationFormTypeDataProvider, $idProductRelation);
 
         $productRelationTabs = $this->getFactory()
             ->createProductRelationTabs();
 
         $productRelationForm->handleRequest($request);
 
-        if ($productRelationForm->isValid()) {
+        if ($productRelationForm->isSubmitted() && $productRelationForm->isValid()) {
             $this->getFacade()->updateProductRelation($productRelationForm->getData());
 
             $this->addSuccessMessage('Product relation successfully modified');

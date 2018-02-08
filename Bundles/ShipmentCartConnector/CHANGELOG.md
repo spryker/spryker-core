@@ -1,3 +1,3 @@
 # ShipmentCartConnector Changelog
 
-[ShipmentCartConnector Changelog](https://github.com/spryker/ShipmentCartConnector/releases)
+[Release Changelog](https://github.com/spryker/shipment-cart-connector/releases)

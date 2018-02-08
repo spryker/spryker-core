@@ -1,3 +1,3 @@
 # ProductSearch Changelog
 
-[ProductSearch Changelog](https://github.com/spryker/ProductSearch/releases)
+[Release Changelog](https://github.com/spryker/product-search/releases)

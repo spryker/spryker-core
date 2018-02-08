@@ -8,6 +8,13 @@
         <property name="fkCategory" type="int" />
         <property name="filterData" type="string" />
         <property name="filterDataArray" type="array" />
+        <property name="filters" type="ProductCategoryFilterItem[]" singular="ProductCategoryFilterItem"/>
+    </transfer>
+
+    <transfer name="ProductCategoryFilterItem">
+        <property name="key" type="string"/>
+        <property name="label" type="string"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
 </transfers>

@@ -2,8 +2,6 @@
 namespace SprykerTest\Zed\ProductManagement;
 
 use Codeception\Actor;
-use Spryker\Zed\Money\Communication\Plugin\Form\MoneyFormTypePlugin;
-use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
 /**
  * Inherited Methods
@@ -24,13 +22,7 @@ class ProductManagementCommunicationTester extends Actor
 {
     use _generated\ProductManagementCommunicationTesterActions;
 
-    /**
-     * @return void
-     */
-    public function registerMoneyCollectionFormTypePlugin()
-    {
-        $this->setDependency(ProductManagementDependencyProvider::PLUGIN_MONEY_FORM_TYPE, function () {
-            return new MoneyFormTypePlugin();
-        });
-    }
+   /**
+    * Define custom actions here
+    */
 }

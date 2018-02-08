@@ -1,3 +1,3 @@
 # Log Changelog
 
-[Log Changelog](https://github.com/spryker/Log/releases)
+[Release Changelog](https://github.com/spryker/log/releases)

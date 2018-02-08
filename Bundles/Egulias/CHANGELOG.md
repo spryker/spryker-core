@@ -1,3 +1,3 @@
 # Egulias Changelog
 
-[Release Changelog](https://github.com/spryker/Egulias/releases)
+[Release Changelog](https://github.com/spryker/egulias/releases)

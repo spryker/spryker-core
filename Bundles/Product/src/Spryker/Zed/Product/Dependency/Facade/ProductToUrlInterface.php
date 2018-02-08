@@ -44,13 +44,6 @@ interface ProductToUrlInterface
     public function activateUrl(UrlTransfer $urlTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer Deprecated: String format is accepted for BC reasons only.
-     *
-     * @return bool
-     */
-    public function hasUrl($urlTransfer);
-
-    /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void

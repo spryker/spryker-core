@@ -37,7 +37,7 @@ class AssignController extends AbstractController
         $form = $this->getForm($idCategory);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             if ($this->updateCategoryData($form->getData())) {
                 $this->addSuccessMessage('The category was saved successfully.');
 

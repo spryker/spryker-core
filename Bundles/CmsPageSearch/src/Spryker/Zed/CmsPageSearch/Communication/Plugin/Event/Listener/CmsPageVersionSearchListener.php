@@ -10,6 +10,10 @@ namespace Spryker\Zed\CmsPageSearch\Communication\Plugin\Event\Listener;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsVersionTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 
+/**
+ * @method \Spryker\Zed\CmsPageSearch\Communication\CmsPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface getQueryContainer()
+ */
 class CmsPageVersionSearchListener extends AbstractCmsPageSearchListener implements EventBulkHandlerInterface
 {
     /**

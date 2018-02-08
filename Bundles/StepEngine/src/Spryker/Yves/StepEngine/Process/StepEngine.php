@@ -99,7 +99,7 @@ class StepEngine implements StepEngineInterface
 
         if ($formCollection->hasSubmittedForm($request, $dataTransfer)) {
             $form = $formCollection->handleRequest($request, $dataTransfer);
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $this->executeWithFormInput($currentStep, $request, $dataTransfer, $form->getData());
 
                 return $this->createRedirectResponse($this->stepCollection->getNextUrl($currentStep, $dataTransfer));
