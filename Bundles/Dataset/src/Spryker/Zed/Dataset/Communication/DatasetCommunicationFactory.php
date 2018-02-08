@@ -47,7 +47,7 @@ class DatasetCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return string
      */
-    public function createDatasetLocalizedAttributesForm()
+    public function getDatasetLocalizedAttributesForm()
     {
         return DatasetLocalizedAttributesForm::class;
     }
