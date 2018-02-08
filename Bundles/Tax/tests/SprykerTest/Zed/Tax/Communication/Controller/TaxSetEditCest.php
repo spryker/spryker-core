@@ -45,6 +45,6 @@ class TaxSetEditCest
         $i->clickDataTableEditButton();
 
         $name = $i->grabValueFrom('[name="tax_set[name]"]');
-        $i->assertFalse(empty($name));
+        $i->assertNotEmpty($name);
     }
 }

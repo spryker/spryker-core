@@ -45,10 +45,10 @@ class TaxRateEditCest
         $i->clickDataTableEditButton();
         
         $name = $i->grabValueFrom('[name="tax_rate[name]"]');
-        $i->assertFalse(empty($name));
+        $i->assertNotEmpty($name);
         $country = $i->grabValueFrom('[name="tax_rate[fkCountry]"]');
-        $i->assertFalse(empty($country));
-        $rate = $i->grabValueFrom('[name="tax_rate[rate]"]');
-        $i->assertFalse(empty($rate));
+        $i->assertNotEmpty($country);
+        $country = $i->grabValueFrom('[name="tax_rate[rate]"]');
+        $i->assertNotEmpty($country);
     }
 }
