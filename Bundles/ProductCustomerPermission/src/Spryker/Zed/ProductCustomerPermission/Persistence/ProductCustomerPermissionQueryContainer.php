@@ -32,7 +32,7 @@ class ProductCustomerPermissionQueryContainer extends AbstractQueryContainer imp
      * @api
      *
      * @param int $idCustomer
-     * @param int[] $idProductAbstracts
+     * @param array $idProductAbstracts
      *
      * @return \Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermissionQuery
      */

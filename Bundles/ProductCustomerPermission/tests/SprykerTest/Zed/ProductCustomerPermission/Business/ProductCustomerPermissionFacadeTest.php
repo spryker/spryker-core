@@ -30,6 +30,8 @@ class ProductCustomerPermissionFacadeTest extends Unit
 
         $this->getProductCustomerPermissionFacade()
             ->saveCustomerProductPermission($customer->getIdCustomer(), $product->getIdProductAbstract());
+
+        // @TODO add assert
     }
 
     /**
@@ -47,6 +49,8 @@ class ProductCustomerPermissionFacadeTest extends Unit
 
         $this->getProductCustomerPermissionFacade()
             ->deleteCustomerProductPermission($customer->getIdCustomer(), $product->getIdProductAbstract());
+
+        // @TODO add assert
     }
 
     /**
@@ -63,6 +67,8 @@ class ProductCustomerPermissionFacadeTest extends Unit
 
         $this->getProductCustomerPermissionFacade()
             ->saveCustomerProductPermissions($customer->getIdCustomer(), $idProductAbstracts);
+
+        // @TODO add assert
     }
 
     /**
@@ -84,6 +90,8 @@ class ProductCustomerPermissionFacadeTest extends Unit
 
         $this->getProductCustomerPermissionFacade()
             ->deleteCustomerProductPermissions($customer->getIdCustomer(), $idProductAbstracts);
+
+        // @TODO add assert
     }
 
     /**
@@ -105,6 +113,8 @@ class ProductCustomerPermissionFacadeTest extends Unit
 
         $this->getProductCustomerPermissionFacade()
             ->deleteAllCustomerProductPermissions($customer->getIdCustomer());
+
+        // @TODO add assert
     }
 
     /**

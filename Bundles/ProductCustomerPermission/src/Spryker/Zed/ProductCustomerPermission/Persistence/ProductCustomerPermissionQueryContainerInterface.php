@@ -27,7 +27,7 @@ interface ProductCustomerPermissionQueryContainerInterface extends QueryContaine
      * @api
      *
      * @param int $idCustomer
-     * @param int[] $idProductAbstracts
+     * @param array $idProductAbstracts
      *
      * @return \Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermissionQuery
      */
