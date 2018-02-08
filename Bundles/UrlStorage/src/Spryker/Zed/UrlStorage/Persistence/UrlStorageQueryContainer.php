@@ -30,7 +30,8 @@ class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStor
             ->getFactory()
             ->getUrlQueryContainer()
             ->queryUrls()
-            ->filterByIdUrl_In($urlIds);
+            ->filterByIdUrl_In($urlIds)
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
 
         return $queryUrl;
     }
@@ -65,8 +66,10 @@ class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStor
         return $this->getFactory()
             ->getUrlQueryContainer()
             ->queryUrlsByResourceTypeAndIds($resourceType, $resourceIds)
-            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, UrlStorageTransfer::LOCALE_NAME)
-            ->joinWithSpyLocale();
+            ->useSpyLocaleQuery()
+                ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, UrlStorageTransfer::LOCALE_NAME)
+            ->endUse()
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
     }
 
     /**

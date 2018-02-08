@@ -34,5 +34,5 @@ interface UrlStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\UrlStorageTransfer|null
      */
-    public function getUrlStorageTransferFromUrl($url);
+    public function findUrlStorageTransferByUrl($url);
 }
