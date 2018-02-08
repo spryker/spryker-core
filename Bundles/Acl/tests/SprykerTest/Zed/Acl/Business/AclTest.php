@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\RuleTransfer;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Acl\Business\AclFacade;
 use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
+use Spryker\Zed\Acl\Business\Exception\RoleNameEmptyException;
 use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
 use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
 use Spryker\Zed\Acl\Business\Exception\RuleNotFoundException;
@@ -231,6 +232,17 @@ class AclTest extends Unit
         $this->expectExceptionMessage(sprintf('Role with name "%s" already exists!', $roleName));
 
         $this->facade->addRole($roleName);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRoleNameShouldNotBeEmpty()
+    {
+        $this->expectException(RoleNameEmptyException::class);
+        $this->expectExceptionMessage('Role name should not be empty!');
+
+        $this->facade->addRole('');
     }
 
     /**
