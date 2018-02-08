@@ -4,10 +4,10 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.0.0",
-    "spryker/customer": "^7.5.0",
     "spryker/company": "^0.0.1",
     "spryker/company-user": "^0.0.1",
+    "spryker/customer": "^7.5.0",
+    "spryker/kernel": "^3.0.0",
     "spryker/permission": "^0.0.1",
     "spryker/propel-orm": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
