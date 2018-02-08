@@ -105,6 +105,8 @@ class CompanyUnitAddressClient extends AbstractClient implements CompanyUnitAddr
     /**
      * {@inheritdoc}
      *
+     * @deprecated
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
@@ -121,6 +123,8 @@ class CompanyUnitAddressClient extends AbstractClient implements CompanyUnitAddr
 
     /**
      * {@inheritdoc}
+     *
+     * @deprecated
      *
      * @api
      *

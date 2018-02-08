@@ -77,6 +77,8 @@ interface CompanyUnitAddressClientInterface
      *
      * @api
      *
+     * @deprecated
+     *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
@@ -105,6 +107,8 @@ interface CompanyUnitAddressClientInterface
      * - Returns the company unit address collection.
      *
      * @api
+     *
+     * @deprecated
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
      *
