@@ -33,4 +33,22 @@ class TaxRateEditCest
         $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Rates / Edit Tax Rate');
     }
+
+    /**
+     * @param \SprykerTest\Zed\Tax\TaxCommunicationTester $i
+     *
+     * @return void
+     */
+    public function dataIsProvided(TaxCommunicationTester $i)
+    {
+        $i->listDataTable(TaxRateListPage::TABLE_DATA_URL);
+        $i->clickDataTableEditButton();
+        
+        $name = $i->grabValueFrom('[name="tax_rate[name]"]');
+        $i->assertFalse(empty($name));
+        $country = $i->grabValueFrom('[name="tax_rate[fkCountry]"]');
+        $i->assertFalse(empty($country));
+        $rate = $i->grabValueFrom('[name="tax_rate[rate]"]');
+        $i->assertFalse(empty($rate));
+    }
 }
