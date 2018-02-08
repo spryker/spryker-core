@@ -163,14 +163,4 @@ class VoucherForm extends AbstractType
     {
         return 'discount_voucher';
     }
-
-    /**
-     * @deprecated Use `getBlockPrefix()` instead.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
-    }
 }
