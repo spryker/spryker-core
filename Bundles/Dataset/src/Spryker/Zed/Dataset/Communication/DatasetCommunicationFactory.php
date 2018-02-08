@@ -45,11 +45,11 @@ class DatasetCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Communication\Form\DatasetLocalizedAttributesForm
+     * @return string
      */
     public function createDatasetLocalizedAttributesForm()
     {
-        return new DatasetLocalizedAttributesForm();
+        return DatasetLocalizedAttributesForm::class;
     }
 
     /**
