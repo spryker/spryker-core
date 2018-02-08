@@ -41,6 +41,9 @@ class StockConfig extends AbstractBundleConfig
                 'Warehouse1',
                 'Warehouse2',
             ],
+            'AT' => [
+                'Warehouse1',
+            ],
         ];
     }
 }

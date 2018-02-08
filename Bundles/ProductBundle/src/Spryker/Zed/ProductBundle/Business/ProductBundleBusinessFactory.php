@@ -131,8 +131,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleCartAvailabilityCheck(
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
-            $this->getAvailabilityQueryContainer(),
-            $this->getStoreFacade()
+            $this->getAvailabilityQueryContainer()
         );
     }
 

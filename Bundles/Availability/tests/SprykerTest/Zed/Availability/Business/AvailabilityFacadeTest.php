@@ -261,6 +261,7 @@ class AvailabilityFacadeTest extends Unit
     protected function createQuoteTransfer()
     {
         $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku(self::CONCRETE_SKU);
         $itemTransfer->setQuantity(1);

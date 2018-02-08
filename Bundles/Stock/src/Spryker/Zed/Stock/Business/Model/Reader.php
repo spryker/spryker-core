@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use InvalidArgumentException;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
@@ -135,12 +136,12 @@ class Reader implements ReaderInterface
     {
         $idProduct = $this->productFacade->findProductConcreteIdBySku($sku);
 
-        $idStock = $this->queryContainer
+        $idStockProduct = $this->queryContainer
             ->queryStockByNeverOutOfStockAllTypes($idProduct)
-            ->select(SpyStockTableMap::COL_ID_STOCK)
+            ->select(SpyStockProductTableMap::COL_ID_STOCK_PRODUCT)
             ->findOne();
 
-        return ($idStock !== null);
+        return ($idStockProduct !== null);
     }
 
     /**
@@ -154,12 +155,12 @@ class Reader implements ReaderInterface
         $idProduct = $this->productFacade->findProductConcreteIdBySku($sku);
         $stockNames = $this->getStoreWarehouses($storeTransfer->getName());
 
-        $idStock = $this->queryContainer
+        $idStockProduct = $this->queryContainer
             ->queryStockByNeverOutOfStockAllTypesForStockNames($idProduct, $stockNames)
-            ->select(SpyStockTableMap::COL_ID_STOCK)
+            ->select(SpyStockProductTableMap::COL_ID_STOCK_PRODUCT)
             ->findOne();
 
-        return ($idStock !== null);
+        return ($idStockProduct !== null);
     }
 
     /**
@@ -211,7 +212,7 @@ class Reader implements ReaderInterface
         if (!isset($this->stockConfig->getStoreToWarehouseMapping()[$storeName])) {
             throw new StockWarehouseMappingException(
                 sprintf(
-                    'Warehouse mapping is not provided for store %s. You can configure it in %::getStoreToWarehouseMapping',
+                    'Warehouse mapping is not provided for store %s. You can configure it in %s::getStoreToWarehouseMapping',
                     $storeName,
                     StockConfig::class
                 )

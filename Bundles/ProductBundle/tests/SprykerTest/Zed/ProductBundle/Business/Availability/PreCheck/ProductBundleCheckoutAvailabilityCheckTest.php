@@ -31,7 +31,7 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
     {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $availabilityFacadeMock->expects($this->once())
-            ->method('isProductSellable')
+            ->method('isProductSellableForStore')
             ->willReturn(true);
 
         $productBundleAvailabilityCheckMock = $this->createProductBundleCheckoutAvailabilityCheckMock($availabilityFacadeMock);
@@ -59,7 +59,7 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
     {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $availabilityFacadeMock->expects($this->once())
-            ->method('isProductSellable')
+            ->method('isProductSellableForStore')
             ->willReturn(false);
 
         $productBundleAvailabilityCheckMock = $this->createProductBundleCheckoutAvailabilityCheckMock($availabilityFacadeMock);

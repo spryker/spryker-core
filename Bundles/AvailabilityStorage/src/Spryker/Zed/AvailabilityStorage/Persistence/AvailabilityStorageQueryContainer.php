@@ -62,6 +62,7 @@ class AvailabilityStorageQueryContainer extends AbstractQueryContainer implement
             ->queryAllAvailabilityAbstracts()
             ->filterByIdAvailabilityAbstract_In($availabilityAbstractIds)
             ->joinWithSpyAvailability()
+            ->joinWithStore()
             ->addJoin(
                 SpyAvailabilityAbstractTableMap::COL_ABSTRACT_SKU,
                 SpyProductAbstractTableMap::COL_SKU,

@@ -63,7 +63,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $this->setupProductBundleAvailability($bundledItemAvailability, $productBundleAvailabilityHandlerMock);
 
         $availabilityFacadeMock->expects($this->once())
-            ->method('saveProductAvailability')
+            ->method('saveProductAvailabilityForStore')
             ->with($bundleSku, $expectedBundleAvailability);
 
         $productBundleAvailabilityHandlerMock->updateAffectedBundlesAvailability('sku-1');
@@ -88,7 +88,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $productBundleAvailabilityHandlerMock->method('findBundleProductEntityBySku')->willReturn($bundleProductEntity);
 
         $availabilityFacadeMock->expects($this->once())
-            ->method('saveProductAvailability')
+            ->method('saveProductAvailabilityForStore')
             ->with($bundleSku, $expectedBundleAvailability);
 
         $this->setupProductBundleAvailability($bundledItemAvailability, $productBundleAvailabilityHandlerMock);

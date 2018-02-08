@@ -16,6 +16,8 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const ID_AVAILABILITY_ABSTRACT = 'id_availability_abstract';
     const FK_AVAILABILITY_ABSTRACT = 'fkAvailabilityAbstract';
+    const STORE = 'Store';
+    const STORE_NAME = 'name';
 
     /**
      * @var \Spryker\Shared\Kernel\Store
@@ -80,7 +82,8 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     {
         foreach ($spyAvailabilityEntities as $spyAvailability) {
             $idAvailability = $spyAvailability[static::ID_AVAILABILITY_ABSTRACT];
-            if (isset($spyAvailabilityStorageEntities[$idAvailability])) {
+            $store = $spyAvailability[static::STORE][static::STORE_NAME];
+            if (isset($spyAvailabilityStorageEntities[$idAvailability]) && isset($spyAvailabilityStorageEntities[$store])) {
                 $this->storeDataSet($spyAvailability, $spyAvailabilityStorageEntities[$idAvailability]);
             } else {
                 $this->storeDataSet($spyAvailability);
@@ -99,10 +102,11 @@ class AvailabilityStorage implements AvailabilityStorageInterface
         if ($spyAvailabilityStorageEntity === null) {
             $spyAvailabilityStorageEntity = new SpyAvailabilityStorage();
         }
+        $store = $spyAvailabilityEntity[static::STORE][static::STORE_NAME];
         $spyAvailabilityStorageEntity->setFkProductAbstract($spyAvailabilityEntity[static::ID_PRODUCT_ABSTRACT]);
         $spyAvailabilityStorageEntity->setFkAvailabilityAbstract($spyAvailabilityEntity[static::ID_AVAILABILITY_ABSTRACT]);
         $spyAvailabilityStorageEntity->setData($spyAvailabilityEntity);
-        $spyAvailabilityStorageEntity->setStore($this->getStoreName());
+        $spyAvailabilityStorageEntity->setStore($store);
         $spyAvailabilityStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyAvailabilityStorageEntity->save();
     }

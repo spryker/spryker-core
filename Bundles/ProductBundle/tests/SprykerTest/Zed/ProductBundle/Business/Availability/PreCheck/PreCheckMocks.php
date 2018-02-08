@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductBundle\Business\Availability\PreCheck;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -44,6 +45,8 @@ class PreCheckMocks extends Unit
     protected function createTestQuoteTransfer()
     {
         $quoteTransfer = new QuoteTransfer();
+
+        $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku($this->fixtures['bundle-sku']);

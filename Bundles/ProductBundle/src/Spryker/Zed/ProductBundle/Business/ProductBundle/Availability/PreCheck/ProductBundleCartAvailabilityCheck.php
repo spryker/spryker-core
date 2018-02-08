@@ -30,27 +30,20 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      */
     protected $availabilityQueryContainer;
 
-    /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
-     */
-    protected $storeFacade;
 
     /**
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductBundleToAvailabilityInterface $availabilityFacade,
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
-        ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer,
-        ProductBundleToStoreFacadeInterface $storeFacade
+        ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
     ) {
         parent::__construct($availabilityFacade, $productBundleQueryContainer);
 
         $this->availabilityQueryContainer = $availabilityQueryContainer;
-        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -147,13 +140,12 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
 
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailability
      */
-    protected function findAvailabilityEntityBySku($sku)
+    protected function findAvailabilityEntityBySku($sku, StoreTransfer $storeTransfer)
     {
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-
         return $this->availabilityQueryContainer
             ->querySpyAvailabilityBySku($sku, $storeTransfer->getIdStore())
             ->findOne();
@@ -237,7 +229,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
             return null;
         }
 
-        $availabilityEntity = $this->findAvailabilityEntityBySku($itemTransfer->getSku());
+        $availabilityEntity = $this->findAvailabilityEntityBySku($itemTransfer->getSku(), $storeTransfer);
 
         return $this->createItemIsNotAvailableMessageTransfer(
             $availabilityEntity->getQuantity(),

@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
@@ -100,6 +101,7 @@ class CheckoutFacadeTest extends Unit
 
         $quoteTransfer = (new QuoteBuilder())
             ->withItem([ItemTransfer::SKU => $product->getSku(), ItemTransfer::UNIT_PRICE => 1])
+            ->withStore([StoreTransfer::NAME => 'DE'])
             ->withCustomer()
             ->withTotals()
             ->withCurrency()
@@ -123,6 +125,7 @@ class CheckoutFacadeTest extends Unit
 
         $quoteTransfer = (new QuoteBuilder([CustomerTransfer::EMAIL => 'max@mustermann.de']))
             ->withItem([ItemTransfer::SKU => $product->getSku()])
+            ->withStore([StoreTransfer::NAME => 'DE'])
             ->withCustomer()
             ->withTotals()
             ->withCurrency()
@@ -150,6 +153,7 @@ class CheckoutFacadeTest extends Unit
         $quoteTransfer = (new QuoteBuilder())
             ->withItem([ItemTransfer::SKU => $product1->getSku(), ItemTransfer::UNIT_PRICE => 1])
             ->withAnotherItem([ItemTransfer::SKU => $product2->getSku(), ItemTransfer::UNIT_PRICE => 1])
+            ->withStore([StoreTransfer::NAME => 'DE'])
             ->withCustomer()
             ->withTotals()
             ->withCurrency()
@@ -284,6 +288,8 @@ class CheckoutFacadeTest extends Unit
     protected function getBaseQuoteTransfer()
     {
         $quoteTransfer = new QuoteTransfer();
+
+        $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
 
         $currencyTransfer = new CurrencyTransfer();
         $currencyTransfer->setCode('EUR');
