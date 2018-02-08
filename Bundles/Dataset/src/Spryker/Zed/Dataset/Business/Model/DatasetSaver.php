@@ -61,7 +61,7 @@ class DatasetSaver implements DatasetSaverInterface
      */
     public function save(SpyDatasetEntityTransfer $saveRequestTransfer, $filePath = null)
     {
-        if (!empty($filePath) && file_exists($filePath)) {
+        if ($filePath !== null && file_exists($filePath)) {
             $saveRequestTransfer->setSpyDatasetRowColumnValues(
                 $this->readerManager->convertFileToDataTransfers($filePath)
             );

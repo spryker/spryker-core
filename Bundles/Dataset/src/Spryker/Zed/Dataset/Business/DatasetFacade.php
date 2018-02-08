@@ -63,13 +63,27 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
-     * @param null|string $filePath
+     * @param string $filePath
      *
      * @return void
      */
-    public function save(SpyDatasetEntityTransfer $saveRequestTransfer, $filePath = null)
+    public function save(SpyDatasetEntityTransfer $saveRequestTransfer, $filePath)
     {
         $this->getFactory()->createDatasetSaver()->save($saveRequestTransfer, $filePath);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
+     *
+     * @return void
+     */
+    public function saveDataset(SpyDatasetEntityTransfer $saveRequestTransfer)
+    {
+        $this->getFactory()->createDatasetSaver()->save($saveRequestTransfer);
     }
 
     /**

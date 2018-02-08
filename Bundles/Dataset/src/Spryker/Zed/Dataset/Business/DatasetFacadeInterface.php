@@ -56,11 +56,24 @@ interface DatasetFacadeInterface
      * @api
      *
      * @param null|\Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
-     * @param string|null $filePath
+     * @param string $filePath
      *
      * @return void
      */
-    public function save(SpyDatasetEntityTransfer $saveRequestTransfer, $filePath = null);
+    public function save(SpyDatasetEntityTransfer $saveRequestTransfer, $filePath);
+
+    /**
+     * Specification:
+     * - Save dataset entity
+     * - Save data to EAV model
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
+     *
+     * @return void
+     */
+    public function saveDataset(SpyDatasetEntityTransfer $saveRequestTransfer);
 
     /**
      * Specification:
