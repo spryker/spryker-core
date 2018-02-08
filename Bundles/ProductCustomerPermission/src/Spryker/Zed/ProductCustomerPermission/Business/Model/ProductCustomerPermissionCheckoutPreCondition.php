@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductCustomerPermission\Business\Model;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToGlossaryFacadeInterface;
 use Spryker\Zed\ProductCustomerPermission\Persistence\ProductCustomerPermissionQueryContainerInterface;
 
 class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPermissionCheckoutPreConditionInterface
@@ -22,12 +23,20 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToGlossaryFacadeInterface
+     */
+    protected $glossaryFacade;
+
+    /**
      * @param \Spryker\Zed\ProductCustomerPermission\Persistence\ProductCustomerPermissionQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToGlossaryFacadeInterface $glossaryFacade
      */
     public function __construct(
-        ProductCustomerPermissionQueryContainerInterface $queryContainer
+        ProductCustomerPermissionQueryContainerInterface $queryContainer,
+        ProductCustomerPermissionToGlossaryFacadeInterface $glossaryFacade
     ) {
         $this->queryContainer = $queryContainer;
+        $this->glossaryFacade = $glossaryFacade;
     }
 
     /**
@@ -54,10 +63,11 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
      */
     protected function createCheckoutErrorTransfer(QuoteTransfer $quoteTransfer)
     {
-        $deniedProductAbstractNames = $this->getDeniedProductAbstractNames($quoteTransfer);
+        $message = $this->glossaryFacade->translate(static::MESSAGE_NO_PERMISSION)
+            . ': ' . implode(', ', $this->getDeniedProductAbstractNames($quoteTransfer));
 
         return (new CheckoutErrorTransfer())
-            ->setMessage(static::MESSAGE_NO_PERMISSION . ': ' . implode(', ', $deniedProductAbstractNames));
+            ->setMessage($message);
     }
 
     /**
@@ -70,13 +80,21 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
         $idProductAbstracts = $this->getIdProductAbstracts($quoteTransfer);
         $idCustomer = $quoteTransfer->getCustomer()->getIdCustomer();
 
-        $permissionCount = $this->queryContainer
+        $hasCustomerPermissions = $this->queryContainer
+            ->queryProductCustomerPermissionByCustomer($idCustomer)
+            ->count();
+
+        if ($hasCustomerPermissions === 0) {
+            return true;
+        }
+
+        $productCustomerPermissionCount = $this->queryContainer
             ->queryProductCustomerPermissionByCustomerAndProducts(
                 $idCustomer,
                 $idProductAbstracts
             )->count();
 
-        return $permissionCount === count($idProductAbstracts);
+        return $productCustomerPermissionCount === count($idProductAbstracts);
     }
 
     /**

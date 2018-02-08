@@ -40,7 +40,7 @@ class ProductCustomerPermissionBusinessFactory extends AbstractBusinessFactory
      */
     public function createCheckoutPreConditionChecker()
     {
-        return new ProductCustomerPermissionCheckoutPreCondition($this->getQueryContainer());
+        return new ProductCustomerPermissionCheckoutPreCondition($this->getQueryContainer(), $this->getGlossaryFacade());
     }
 
     /**
@@ -57,5 +57,13 @@ class ProductCustomerPermissionBusinessFactory extends AbstractBusinessFactory
     protected function getProductFacade()
     {
         return $this->getProvidedDependency(ProductCustomerPermissionDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToGlossaryFacadeInterface
+     */
+    protected function getGlossaryFacade()
+    {
+        return $this->getProvidedDependency(ProductCustomerPermissionDependencyProvider::FACADE_GLOSSARY);
     }
 }

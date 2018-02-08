@@ -84,10 +84,19 @@ class ProductCustomerPermissionCartValidator implements ProductCustomerPermissio
     {
         $idProductAbstract = $this->productFacade
             ->getProductAbstractIdByConcreteSku($concreteProductSku);
-        $hasPermission = $this->queryContainer
+
+        $hasCustomerPermissions = $this->queryContainer
+            ->queryProductCustomerPermissionByCustomer($idCustomer)
+            ->count();
+
+        if ($hasCustomerPermissions === 0) {
+            return true;
+        }
+
+        $productCustomerPermissionCount = $this->queryContainer
             ->queryProductCustomerPermissionByCustomerAndProducts($idCustomer, [$idProductAbstract])
             ->count();
 
-        return $hasPermission > 0;
+        return $productCustomerPermissionCount > 0;
     }
 }
