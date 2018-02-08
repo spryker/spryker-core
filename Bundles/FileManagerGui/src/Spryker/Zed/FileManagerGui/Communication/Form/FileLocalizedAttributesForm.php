@@ -8,7 +8,7 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Form;
 
 use Generated\Shared\Transfer\FileLocalizedAttributesTransfer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -116,7 +116,7 @@ class FileLocalizedAttributesForm extends AbstractType
     protected function addFkLocaleField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_FK_LOCALE, 'hidden', [
+            ->add(self::FIELD_FK_LOCALE, HiddenType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],

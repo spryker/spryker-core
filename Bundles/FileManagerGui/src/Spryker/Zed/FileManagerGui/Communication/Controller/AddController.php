@@ -26,9 +26,8 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $dataProvider = $this->getFactory()->createFileFormDataProvider();
         $form = $this->getFactory()
-            ->createFileForm($dataProvider)
+            ->createFileForm()
             ->handleRequest($request);
 
         if ($form->isValid()) {

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Form;
 
 use Generated\Shared\Transfer\FileTransfer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -18,6 +18,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
+ */
 class FileForm extends AbstractType
 {
     const FIELD_FILE_NAME = 'fileName';
@@ -28,19 +31,6 @@ class FileForm extends AbstractType
 
     const OPTION_DATA_CLASS = 'data_class';
     const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
-
-    /**
-     * @var \Spryker\Zed\FileManagerGui\Communication\Form\FileLocalizedAttributesForm
-     */
-    protected $fileLocalizedAttributesForm;
-
-    /**
-     * @param \Symfony\Component\Form\FormTypeInterface $fileLocalizedAttributesForm
-     */
-    public function __construct(FormTypeInterface $fileLocalizedAttributesForm)
-    {
-        $this->fileLocalizedAttributesForm = $fileLocalizedAttributesForm;
-    }
 
     /**
      * @return string
@@ -152,12 +142,12 @@ class FileForm extends AbstractType
     protected function addFileLocalizedAttributesForm(FormBuilderInterface $builder, array $options = null)
     {
         $builder->add(static::FILE_LOCALIZED_ATTRIBUTES, CollectionType::class, [
-            'entry_type' => $this->fileLocalizedAttributesForm,
+            'entry_type' => FileLocalizedAttributesForm::class,
             'allow_add' => true,
             'allow_delete' => true,
 
             'entry_options' => [
-                FileForm::OPTION_AVAILABLE_LOCALES => $options[FileForm::OPTION_AVAILABLE_LOCALES],
+                static::OPTION_AVAILABLE_LOCALES => $options[static::OPTION_AVAILABLE_LOCALES],
             ],
         ]);
 

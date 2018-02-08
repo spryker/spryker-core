@@ -61,16 +61,14 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createFileForm(FileFormDataProvider $dataProvider, $idFile = null)
+    public function createFileForm($idFile = null)
     {
-        $fileForm = new FileForm(
-            $this->createFileLocalizedAttributesForm()
-        );
+        $dataProvider = $this->createFileFormDataProvider();
 
         return $this->getFormFactory()->create(
-            $fileForm,
+            FileForm::class,
             $dataProvider->getData($idFile),
-            $dataProvider->getOptions()
+            $dataProvider->getOptions($idFile)
         );
     }
 
