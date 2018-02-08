@@ -160,7 +160,7 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
             return;
         }
 
-        $categoryTreeNodeData = $this->utilSanitize->arrayFilterRecursive($spyCategoryNodeEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true));
+        $categoryTreeNodeData = $spyCategoryNodeEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true);
         $data = $this->mapToSearchData($categoryTreeNodeData, $localeName);
         $spyCategoryNodePageSearchEntity->setFkCategoryNode($spyCategoryNodeEntity->getIdCategoryNode());
         $spyCategoryNodePageSearchEntity->setStructuredData($this->utilEncoding->encodeJson($categoryTreeNodeData));
