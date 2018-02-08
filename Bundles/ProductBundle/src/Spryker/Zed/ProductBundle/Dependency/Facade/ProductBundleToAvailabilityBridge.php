@@ -46,6 +46,37 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     }
 
     /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer)
+    {
+        if (method_exists($this->availabilityFacade, 'calculateStockForProductWithStore')) {
+            return $this->availabilityFacade->calculateStockForProductWithStore($sku, $storeTransfer);
+        }
+
+        return $this->availabilityFacade->calculateStockForProduct($sku);
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer)
+    {
+        if (method_exists($this->availabilityFacade, 'isProductSellableForStore')) {
+            return $this->availabilityFacade->isProductSellableForStore($sku, $quantity, $storeTransfer);
+        }
+
+        return $this->availabilityFacade->calculateStockForProduct($sku);
+    }
+
+    /**
      * @param int $idAvailabilityAbstract
      *
      * @return void
@@ -58,11 +89,22 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     /**
      * @param string $sku
      * @param int $quantity
+     *
+     * @return int
+     */
+    public function saveProductAvailability($sku, $quantity)
+    {
+        return $this->availabilityFacade->saveProductAvailability($sku, $quantity);
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function saveProductAvailability($sku, $quantity, StoreTransfer $storeTransfer)
+    public function saveProductAvailabilityForStore($sku, $quantity, StoreTransfer $storeTransfer)
     {
         if (method_exists($this->availabilityFacade, 'saveProductAvailabilityForStore')) {
             return $this->availabilityFacade->saveProductAvailabilityForStore($sku, $quantity, $storeTransfer);

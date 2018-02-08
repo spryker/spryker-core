@@ -9,6 +9,7 @@ namespace Spryker\Zed\Oms\Business\Reservation;
 
 use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
 use Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersion;
+use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class ReservationVersionHandler implements ReservationVersionHandlerInterface
@@ -19,11 +20,20 @@ class ReservationVersionHandler implements ReservationVersionHandlerInterface
     protected $omsQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $omsQueryContainer
+     * @var \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface
      */
-    public function __construct(OmsQueryContainerInterface $omsQueryContainer)
-    {
+    protected $storeFacade;
+
+    /**
+     * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $omsQueryContainer
+     * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface $storeFacade
+     */
+    public function __construct(
+        OmsQueryContainerInterface $omsQueryContainer,
+        OmsToStoreFacadeInterface $storeFacade
+    ) {
         $this->omsQueryContainer = $omsQueryContainer;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -33,8 +43,10 @@ class ReservationVersionHandler implements ReservationVersionHandlerInterface
      */
     public function saveReservationVersion($sku)
     {
+        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
+
         $idOmsProductReservation = $this->omsQueryContainer
-            ->createOmsProductReservationQuery($sku)
+            ->queryProductReservationBySkuAndStore($sku, $currentStoreTransfer->getIdStore())
             ->select([SpyOmsProductReservationTableMap::COL_ID_OMS_PRODUCT_RESERVATION])
             ->findOne();
 

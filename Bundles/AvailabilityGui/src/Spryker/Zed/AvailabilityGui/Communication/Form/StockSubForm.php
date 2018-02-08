@@ -87,8 +87,11 @@ class StockSubForm extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param array $options
      *
+     * @return void
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {

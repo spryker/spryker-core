@@ -106,7 +106,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      */
     public function removeBundleAvailability($bundleProductSku, StoreTransfer $storeTransfer)
     {
-        $this->availabilityFacade->saveProductAvailability($bundleProductSku, 0, $storeTransfer);
+        $this->availabilityFacade->saveProductAvailabilityForStore($bundleProductSku, 0, $storeTransfer);
     }
 
     /**
@@ -182,7 +182,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
                 }
             }
 
-            $this->availabilityFacade->saveProductAvailability(
+            $this->availabilityFacade->saveProductAvailabilityForStore(
                 $bundleProductSku,
                 $bundleAvailabilityQuantity,
                 $storeTransfer

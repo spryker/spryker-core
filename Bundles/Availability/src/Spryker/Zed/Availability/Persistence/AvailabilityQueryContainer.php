@@ -125,13 +125,13 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      *
      * @param int $idLocale
      * @param int $idStore
-     * @param array $stockTypes
+     * @param array $stockNames
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, array $stockTypes)
+    public function queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, array $stockNames)
     {
-        return $this->querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale, $stockTypes)
+        return $this->querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale, $stockNames)
             ->withColumn(static::GROUP_CONCAT . '(' . SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK . ')', static::CONCRETE_NEVER_OUT_OF_STOCK_SET)
             ->withColumn('SUM(' . SpyStockProductTableMap::COL_QUANTITY . ')', self::STOCK_QUANTITY)
             ->withColumn(
@@ -146,13 +146,13 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      * @api
      *
      * @param int $idLocale
-     * @param array $stockTypes
+     * @param array $stockNames
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryAvailabilityWithStockByIdLocale($idLocale, array $stockTypes = [])
+    public function queryAvailabilityWithStockByIdLocale($idLocale, array $stockNames = [])
     {
-        return $this->querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale, $stockTypes)
+        return $this->querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale, $stockNames)
             ->addJoin(SpyProductTableMap::COL_ID_PRODUCT, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT, Criteria::INNER_JOIN)
             ->addJoin(
                 [
@@ -172,15 +172,15 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      * @api
      *
      * @param int $idLocale
-     * @param array $stockTypes
+     * @param array $stockNames
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale, array $stockTypes = [])
+    public function querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale, array $stockNames = [])
     {
-        return $this->querySpyProductAbstractAvailabilityWithStock($stockTypes)
+        return $this->querySpyProductAbstractAvailabilityWithStock($stockNames)
             ->useSpyProductAbstractLocalizedAttributesQuery()
                 ->filterByFkLocale($idLocale)
             ->endUse()
@@ -191,21 +191,21 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     /**
      * @api
      *
-     * @param array $stockTypes
+     * @param array $stockNames
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function querySpyProductAbstractAvailabilityWithStock(array $stockTypes = [])
+    public function querySpyProductAbstractAvailabilityWithStock(array $stockNames = [])
     {
         $query = $this->querySpyProductAbstractAvailability();
 
-        if (count($stockTypes) > 0) {
+        if (count($stockNames) > 0) {
             $joinStockProduct = (new Join())->setRightTableName(SpyStockTableMap::TABLE_NAME);
             $joinStockProduct->setJoinType(Criteria::LEFT_JOIN);
 
             $stockTypeCriterion = (new Criteria())->getNewCriterion(
                 SpyStockTableMap::COL_NAME,
-                $stockTypes,
+                $stockNames,
                 Criteria::IN
             );
 
@@ -261,7 +261,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      * @param int $idProductAbstract
      * @param int $idLocale
      * @param null|int $idStore
-     * @param array $stockTypes
+     * @param array $stockNames
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
@@ -269,9 +269,9 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
         $idProductAbstract,
         $idLocale,
         $idStore = null,
-        array $stockTypes = []
+        array $stockNames = []
     ) {
-        $query = $this->queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, $stockTypes)
+        $query = $this->queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, $stockNames)
             ->filterByIdProductAbstract($idProductAbstract);
 
         return $query;
@@ -283,13 +283,13 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      * @param int $idProductAbstract
      * @param int $idLocale
      * @param int $idStore
-     * @param array $stockTypes
+     * @param array $stockNames
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore, array $stockTypes = [])
+    public function queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore, array $stockNames = [])
     {
-        return $this->queryAvailabilityWithStockByIdLocale($idLocale, $stockTypes)
+        return $this->queryAvailabilityWithStockByIdLocale($idLocale, $stockNames)
             ->withColumn('GROUP_CONCAT(' . SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK . ')', static::CONCRETE_NEVER_OUT_OF_STOCK_SET)
             ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, static::ID_PRODUCT)
             ->withColumn(SpyProductTableMap::COL_SKU, static::CONCRETE_SKU)

@@ -44,6 +44,7 @@
 
     <transfer name="Quote">
         <property name="bundleItems" type="Item[]" singular="bundleItem" />
+        <property name="store" type="Store" />
     </transfer>
 
     <transfer name="Order">

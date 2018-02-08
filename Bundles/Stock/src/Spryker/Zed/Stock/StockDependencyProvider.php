@@ -28,31 +28,12 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_TOUCH] = function (Container $container) {
-            return new StockToTouchBridge($container->getLocator()->touch()->facade());
-        };
-
-        $container[self::FACADE_PRODUCT] = function (Container $container) {
-            return new StockToProductBridge($container->getLocator()->product()->facade());
-        };
-
-        $container[self::PLUGINS_STOCK_UPDATE] = function (Container $container) {
-            return $this->getStockUpdateHandlerPlugins($container);
-        };
-
+        $container = $this->addTouchFacade($container);
+        $container = $this->addProductFacade($container);
+        $container = $this->addStockUpdatePlugins($container);
         $container = $this->addStoreFacade($container);
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
-     */
-    protected function getStockUpdateHandlerPlugins($container)
-    {
-        return [];
     }
 
     /**
@@ -67,5 +48,54 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStockUpdatePlugins(Container $container): \Spryker\Zed\Kernel\Container
+    {
+        $container[self::PLUGINS_STOCK_UPDATE] = function (Container $container) {
+            return $this->getStockUpdateHandlerPlugins($container);
+        };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductFacade(Container $container): \Spryker\Zed\Kernel\Container
+    {
+        $container[self::FACADE_PRODUCT] = function (Container $container) {
+            return new StockToProductBridge($container->getLocator()->product()->facade());
+        };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTouchFacade(Container $container): \Spryker\Zed\Kernel\Container
+    {
+        $container[self::FACADE_TOUCH] = function (Container $container) {
+            return new StockToTouchBridge($container->getLocator()->touch()->facade());
+        };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
+     */
+    protected function getStockUpdateHandlerPlugins(Container $container)
+    {
+        return [];
     }
 }

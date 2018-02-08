@@ -89,6 +89,25 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
+     * @param string $storeName
+     * @param bool $returnTest
+     *
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function sumProductQuantitiesForAllSalesOrderItemsBySkuForStore(
+        array $states,
+        $sku,
+        $storeName,
+        $returnTest = true
+    );
+
+    /**
+     * @api
+     *
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
+     * @param string $sku
      * @param bool $returnTest
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -196,7 +215,17 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
      */
-    public function createOmsProductReservationQuery($sku);
+    public function queryOmsProductReservationBySku($sku);
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
+     */
+    public function queryProductReservationBySkuAndStore($sku, $idStore);
 
     /**
      * @api

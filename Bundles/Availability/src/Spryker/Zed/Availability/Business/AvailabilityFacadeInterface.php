@@ -16,7 +16,7 @@ interface AvailabilityFacadeInterface
 {
     /**
      * Specification:
-     *  - Checks if product is never out of stock.
+     *  - Checks if product is never out of stock for current store.
      *  - Checks if product has stock in stock table.
      *  - Checks if have placed orders where items have state machine state flagged as reserved.
      *
@@ -31,7 +31,23 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
+     *  - Checks if product is never out of stock for given store.
      *  - Checks if product has stock in stock table.
+     *  - Checks if have placed orders where items have state machine state flagged as reserved.
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer);
+
+    /**
+     * Specification:
+     *  - Checks if product has stock in stock table for current store.
      *  - Checks if have placed orders where items have state machine state flagged as reserved.
      *  - Returns integer value which is Product stock - reserved state machine items.
      *
@@ -42,6 +58,21 @@ interface AvailabilityFacadeInterface
      * @return int
      */
     public function calculateStockForProduct($sku);
+
+    /**
+     * Specification:
+     *  - Checks if product has stock in stock table for current store.
+     *  - Checks if have placed orders where items have state machine state flagged as reserved.
+     *  - Returns integer value which is Product stock - reserved state machine items.
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer);
 
     /**
      * Specification:
@@ -100,11 +131,10 @@ interface AvailabilityFacadeInterface
      *
      * @param int $idProductAbstract
      * @param int $idLocale
-     * @param null|int $idStore
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
-    public function getProductAbstractAvailability($idProductAbstract, $idLocale, $idStore = null);
+    public function getProductAbstractAvailability($idProductAbstract, $idLocale);
 
     /**
      * Specification:
@@ -148,7 +178,7 @@ interface AvailabilityFacadeInterface
     /**
      *
      * Specification:
-     *  - Updates availability for given sku, by quantity
+     *  - Updates availability for given sku, by quantity for current store
      *  - Touches availability collector if data changed
      *  - Returns id of availability abstract
      *

@@ -14,11 +14,26 @@ interface SellableInterface
     /**
      * @param string $sku
      * @param int $quantity
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return bool
      */
-    public function isProductSellable($sku, $quantity, StoreTransfer $storeTransfer = null);
+    public function isProductSellable($sku, $quantity);
+
+    /**
+     * @param string $sku
+     *
+     * @return int
+     */
+    public function calculateStockForProduct($sku);
+
+    /**
+     * @param string $sku
+     * @param string $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return mixed
+     */
+    public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer);
 
     /**
      * @param string $sku
@@ -26,5 +41,5 @@ interface SellableInterface
      *
      * @return int
      */
-    public function calculateStockForProduct($sku, StoreTransfer $storeTransfer = null);
+    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer);
 }

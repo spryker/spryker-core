@@ -204,6 +204,30 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
+     * @param string $storeName
+     * @param bool $returnTest
+     *
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function sumProductQuantitiesForAllSalesOrderItemsBySkuForStore(
+        array $states,
+        $sku,
+        $storeName,
+        $returnTest = true
+    ) {
+        return $this->sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest)
+            ->useOrderQuery()
+            ->filterByStore($storeName)
+            ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
+     * @param string $sku
      * @param bool $returnTest
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -378,11 +402,27 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
      */
-    public function createOmsProductReservationQuery($sku)
+    public function queryOmsProductReservationBySku($sku)
     {
         return $this->getFactory()
             ->createOmsProductReservationQuery()
             ->filterBySku($sku);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
+     */
+    public function queryProductReservationBySkuAndStore($sku, $idStore)
+    {
+        return $this->getFactory()
+            ->createOmsProductReservationQuery()
+            ->filterBySku($sku)
+            ->filterByFkStore($idStore);
     }
 
     /**

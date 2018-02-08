@@ -36,11 +36,11 @@ interface AvailabilityToStockInterface
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer = null);
+    public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct

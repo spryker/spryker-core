@@ -53,18 +53,18 @@ class ExportReservation implements ExportReservationInterface
      */
     public function exportReservation()
     {
-        $maxVisibleVersion = $this->getMaxVisibleVersion();
+        $maxVersion = $this->getMaxVersion();
         $lastExportedVersion = $this->getLastExportedVersion();
 
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
-        $reservations = $this->findReservations($lastExportedVersion, $maxVisibleVersion);
+        $reservations = $this->findReservations($lastExportedVersion, $maxVersion);
 
         if (count($reservations) === 0) {
             return;
         }
 
         $this->exportReservations($reservations->toArray(), $currentStoreTransfer);
-        $this->storeLastExportedDate($maxVisibleVersion);
+        $this->storeLastExportedDate($maxVersion);
     }
 
     /**
@@ -100,18 +100,18 @@ class ExportReservation implements ExportReservationInterface
     /**
      * @return int
      */
-    protected function getMaxVisibleVersion()
+    protected function getMaxVersion()
     {
         $queryResult = $this->omsQueryContainer
             ->queryMaxReservationChangeVersion()
             ->findOne();
 
-        $maxVisibleVersion = 0;
+        $version = 0;
         if ($queryResult) {
-            $maxVisibleVersion = (int)$queryResult;
+            $version = (int)$queryResult;
         }
 
-        return $maxVisibleVersion;
+        return $version;
     }
 
     /**

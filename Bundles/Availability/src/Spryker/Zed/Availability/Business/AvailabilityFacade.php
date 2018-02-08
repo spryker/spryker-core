@@ -41,6 +41,24 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      * @api
      *
      * @param string $sku
+     * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer)
+    {
+        return $this->getFactory()
+            ->createSellableModel()
+            ->isProductSellableForStore($sku, $quantity, $storeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
      *
      * @return int
      */
@@ -49,6 +67,22 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
         return $this->getFactory()
             ->createSellableModel()
             ->calculateStockForProduct($sku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return int
+     */
+    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer)
+    {
+        return $this->getFactory()
+            ->createSellableModel()
+            ->calculateStockForProductWithStore($sku, $storeTransfer);
     }
 
     /**
@@ -110,15 +144,14 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @param int $idProductAbstract
      * @param int $idLocale
-     * @param null|int $idStore
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
-    public function getProductAbstractAvailability($idProductAbstract, $idLocale, $idStore = null)
+    public function getProductAbstractAvailability($idProductAbstract, $idLocale)
     {
         return $this->getFactory()
             ->createProductReservationReader()
-            ->getProductAbstractAvailability($idProductAbstract, $idLocale, $idStore);
+            ->getProductAbstractAvailability($idProductAbstract, $idLocale);
     }
 
     /**
@@ -179,7 +212,6 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @param string $sku
      * @param int $quantity
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
      */

@@ -10,6 +10,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements ProductBundleCheckoutAvailabilityCheckInterface
@@ -51,9 +52,11 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
         $uniqueBundleItems = $this->getUniqueBundleItems($quoteTransfer);
         $itemsInCart = $quoteTransfer->getItems();
 
+        $storeTransfer = $quoteTransfer->getStore();
+
         foreach ($uniqueBundleItems as $bundleItemTransfer) {
             $bundledItems = $this->findBundledProducts($bundleItemTransfer->getSku());
-            if (!$this->isAllCheckoutBundledItemsAvailable($itemsInCart, $bundledItems)) {
+            if (!$this->isAllCheckoutBundledItemsAvailable($itemsInCart, $bundledItems, $storeTransfer)) {
                 $checkoutErrorMessages[] = $this->createCheckoutResponseTransfer();
             }
         }
@@ -74,16 +77,20 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
     /**
      * @param \ArrayObject $currentCartItems
      * @param mixed|mixed[]|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection $bundledItems
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    protected function isAllCheckoutBundledItemsAvailable(ArrayObject $currentCartItems, ObjectCollection $bundledItems)
-    {
+    protected function isAllCheckoutBundledItemsAvailable(
+        ArrayObject $currentCartItems,
+        ObjectCollection $bundledItems,
+        StoreTransfer $storeTransfer
+    ) {
         foreach ($bundledItems as $productBundleEntity) {
             $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
 
             $sku = $bundledProductConcreteEntity->getSku();
-            if (!$this->checkIfItemIsSellable($currentCartItems, $sku)) {
+            if (!$this->checkIfItemIsSellable($currentCartItems, $sku, $storeTransfer)) {
                 return false;
             }
         }

@@ -42,6 +42,8 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
         $cartPreCheckResponseTransfer = new CartPreCheckResponseTransfer();
         $cartPreCheckResponseTransfer->setIsSuccess(true);
 
+        $storeTransfer = $cartChangeTransfer->getQuote()->getStore();
+
         $messages = new ArrayObject();
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $currentItemQuantity = $this->calculateCurrentCartQuantityForGivenSku(
@@ -50,13 +52,14 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
             );
              $currentItemQuantity += $itemTransfer->getQuantity();
 
-            $isSellable = $this->availabilityFacade->isProductSellable(
+            $isSellable = $this->availabilityFacade->isProductSellableForStore(
                 $itemTransfer->getSku(),
-                $currentItemQuantity
+                $currentItemQuantity,
+                $storeTransfer
             );
 
             if (!$isSellable) {
-                $stock = $this->availabilityFacade->calculateStockForProduct($itemTransfer->getSku());
+                $stock = $this->availabilityFacade->calculateStockForProductWithStore($itemTransfer->getSku(), $storeTransfer);
                 $cartPreCheckResponseTransfer->setIsSuccess(false);
                 $messages[] = $this->createItemIsNotAvailableMessageTransfer($stock);
             }
@@ -95,13 +98,11 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     {
         $translationKey = $this->getTranslationKey($stock);
 
-        $messageTranfer = new MessageTransfer();
-        $messageTranfer->setValue($translationKey);
-        $messageTranfer->setParameters([
-            self::STOCK_TRANSLATION_PARAMETER => $stock,
-        ]);
-
-        return $messageTranfer;
+        return (new MessageTransfer())
+            ->setValue($translationKey)
+            ->setParameters([
+                static::STOCK_TRANSLATION_PARAMETER => $stock,
+            ]);
     }
 
     /**
@@ -111,9 +112,9 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
      */
     protected function getTranslationKey($stock)
     {
-        $translationKey = self::CART_PRE_CHECK_AVAILABILITY_FAILED;
+        $translationKey = static::CART_PRE_CHECK_AVAILABILITY_FAILED;
         if ($stock <= 0) {
-            $translationKey = self::CART_PRE_CHECK_AVAILABILITY_EMPTY;
+            $translationKey = static::CART_PRE_CHECK_AVAILABILITY_EMPTY;
         }
         return $translationKey;
     }

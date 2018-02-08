@@ -63,7 +63,8 @@ interface StoreFacadeInterface
 
     /**
      * Specification:
-     *  -Reads all shared store from Store transfer and populates data from configuration
+     *  - Reads all shared store from Store transfer and populates data from configuration.
+     *  - The list of stores with which this store shares database, the value is store name.
      *
      * @api
      *

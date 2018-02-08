@@ -12,15 +12,16 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use InvalidArgumentException;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
+use Spryker\Zed\Stock\Business\Exception\StockWarehouseMappingException;
 use Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapperInterface;
 use Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface;
 use Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 use Spryker\Zed\Stock\StockConfig;
+use Traversable;
 
 class Reader implements ReaderInterface
 {
@@ -82,7 +83,7 @@ class Reader implements ReaderInterface
             ->queryAllStockTypes()
             ->find();
 
-        return $this->mapStockTypes($stockTypes);
+        return $this->mapStockNames($stockTypes);
     }
 
     /**
@@ -100,7 +101,7 @@ class Reader implements ReaderInterface
             ->queryStockByNames($warehouses)
             ->find();
 
-        return $this->mapStockTypes($stockTypes);
+        return $this->mapStockNames($stockTypes);
     }
 
     /**
@@ -134,36 +135,31 @@ class Reader implements ReaderInterface
     {
         $idProduct = $this->productFacade->findProductConcreteIdBySku($sku);
 
-        $stock = $this->queryContainer
+        $idStock = $this->queryContainer
             ->queryStockByNeverOutOfStockAllTypes($idProduct)
+            ->select(SpyStockTableMap::COL_ID_STOCK)
             ->findOne();
 
-        return ($stock !== null);
+        return ($idStock !== null);
     }
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer = null)
+    public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer)
     {
-        if (!$storeTransfer) {
-            $storeTransfer = $this->storeFacade->getCurrentStore();
-        }
-
         $idProduct = $this->productFacade->findProductConcreteIdBySku($sku);
-        $warehouses = $this->getStoreWarehouses($storeTransfer->getName());
+        $stockNames = $this->getStoreWarehouses($storeTransfer->getName());
 
-        $stock = $this->queryContainer
-            ->queryStockByNeverOutOfStockAllTypes($idProduct)
-            ->useStockQuery()
-                ->filterByName($warehouses, Criteria::IN)
-            ->endUse()
+        $idStock = $this->queryContainer
+            ->queryStockByNeverOutOfStockAllTypesForStockNames($idProduct, $stockNames)
+            ->select(SpyStockTableMap::COL_ID_STOCK)
             ->findOne();
 
-        return ($stock !== null);
+        return ($idStock !== null);
     }
 
     /**
@@ -196,25 +192,30 @@ class Reader implements ReaderInterface
     public function findProductStocksForStore($sku, StoreTransfer $storeTransfer)
     {
         $productId = $this->productFacade->findProductConcreteIdBySku($sku);
-        $warehouses = $this->getStoreWarehouses($storeTransfer->getName());
+        $storeNames = $this->getStoreWarehouses($storeTransfer->getName());
 
         return $this->queryContainer
-            ->queryStockByProducts($productId)
-            ->useStockQuery()
-                 ->filterByName($warehouses, Criteria::IN)
-            ->endUse()
+            ->queryStockByProductsForStockNames($productId, $storeNames)
             ->find();
     }
 
     /**
      * @param string $storeName
      *
-     * @return array
+     * @throws \Spryker\Zed\Stock\Business\Exception\StockWarehouseMappingException
+     *
+     * @return string[]
      */
     protected function getStoreWarehouses($storeName)
     {
         if (!isset($this->stockConfig->getStoreToWarehouseMapping()[$storeName])) {
-            return [];
+            throw new StockWarehouseMappingException(
+                sprintf(
+                    'Warehouse mapping is not provided for store %s. You can configure it in %::getStoreToWarehouseMapping',
+                    $storeName,
+                    StockConfig::class
+                )
+            );
         }
 
         return $this->stockConfig->getStoreToWarehouseMapping()[$storeName];
@@ -245,9 +246,12 @@ class Reader implements ReaderInterface
      */
     public function hasStockProduct($sku, $stockType)
     {
-        return $this->queryContainer
-                ->queryStockProductBySkuAndType($sku, $stockType)
-                ->count() > 0;
+        $idStock = $this->queryContainer
+            ->queryStockProductBySkuAndType($sku, $stockType)
+            ->select(SpyStockTableMap::COL_ID_STOCK)
+            ->findOne();
+
+        return $idStock !== null;
     }
 
     /**
@@ -407,15 +411,15 @@ class Reader implements ReaderInterface
             return null;
         }
 
-        $products = [];
+        $productTransferCollection = [];
         foreach ($stockProducts as $stockProductEntity) {
             $stockProductTransfer = (new StockProductTransfer())
                 ->fromArray($stockProductEntity->toArray(), true);
 
-            $products[] = $stockProductTransfer;
+            $productTransferCollection[] = $stockProductTransfer;
         }
 
-        return $products;
+        return $productTransferCollection;
     }
 
     /**
@@ -425,9 +429,11 @@ class Reader implements ReaderInterface
      */
     protected function hasStockType($stockType)
     {
-        return $this->queryContainer
-            ->queryStockByName($stockType)
-            ->count() > 0;
+        $idStock = $this->queryContainer
+            ->queryStockByName($stockType)->select(SpyStockTableMap::COL_ID_STOCK)
+            ->findOne();
+
+        return $idStock !== null;
     }
 
     /**
@@ -457,15 +463,15 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $stockTypes
+     * @param \Traversable|\Orm\Zed\Stock\Persistence\SpyStock[] $stockCollection
      *
      * @return array
      */
-    protected function mapStockTypes(ObjectCollection $stockTypes)
+    protected function mapStockNames(Traversable $stockCollection)
     {
         $types = [];
-        foreach ($stockTypes as $stockType) {
-            $types[$stockType->getName()] = $stockType->getName();
+        foreach ($stockCollection as $stockEntity) {
+            $types[$stockEntity->getName()] = $stockEntity->getName();
         }
         return $types;
     }

@@ -99,8 +99,7 @@ class Reservation implements ReservationInterface
     public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer)
     {
         $reservationEntity = $this->queryContainer
-            ->createOmsProductReservationQuery($sku)
-            ->filterByFkStore($storeTransfer->getIdStore())
+            ->queryProductReservationBySkuAndStore($sku, $storeTransfer->getIdStore())
             ->findOne();
 
         $reservationQuantity = 0;
@@ -150,17 +149,20 @@ class Reservation implements ReservationInterface
         StoreTransfer $storeTransfer = null
     ) {
 
-        $query = $this->queryContainer
-            ->sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest);
-
         if ($storeTransfer) {
-            $query
-                ->useOrderQuery()
-                    ->filterByStore($storeTransfer->getName())
-                ->endUse();
+            return (int)$this->queryContainer
+                ->sumProductQuantitiesForAllSalesOrderItemsBySkuForStore(
+                    $states,
+                    $sku,
+                    $storeTransfer->getName(),
+                    $returnTest
+                )
+                ->findOne();
         }
 
-        return (int)$query->findOne();
+        return (int)$this->queryContainer
+            ->sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest)
+            ->findOne();
     }
 
     /**
@@ -188,8 +190,7 @@ class Reservation implements ReservationInterface
     protected function saveReservation($sku, $idStore, $reservationQuantity)
     {
         $reservationEntity = $this->queryContainer
-            ->createOmsProductReservationQuery($sku)
-            ->filterByFkStore($idStore)
+            ->queryProductReservationBySkuAndStore($sku, $idStore)
             ->findOneOrCreate();
 
         $reservationEntity->setReservationQuantity($reservationQuantity);

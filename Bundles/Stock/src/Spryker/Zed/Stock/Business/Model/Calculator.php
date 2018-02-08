@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Stock\Business\Model;
 
 use Generated\Shared\Transfer\StoreTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Traversable;
 
 class Calculator implements CalculatorInterface
 {
@@ -50,11 +50,11 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Stock\Persistence\SpyStockProduct[] $productEntities
+     * @param \Traversable|\Orm\Zed\Stock\Persistence\SpyStockProduct[] $productEntities
      *
      * @return int
      */
-    protected function calculateTotalQuantity(ObjectCollection $productEntities)
+    protected function calculateTotalQuantity(Traversable $productEntities)
     {
         $quantity = 0;
 

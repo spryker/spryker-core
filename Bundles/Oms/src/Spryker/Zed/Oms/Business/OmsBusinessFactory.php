@@ -251,7 +251,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createReservationVersionHandler()
     {
-        return new ReservationVersionHandler($this->getQueryContainer());
+        return new ReservationVersionHandler($this->getQueryContainer(), $this->getStoreFacade());
     }
 
     /**

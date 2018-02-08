@@ -38,11 +38,11 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer = null)
+    public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer)
     {
         return $this->getFactory()->createReaderModel()->isNeverOutOfStockForStore($sku, $storeTransfer);
     }

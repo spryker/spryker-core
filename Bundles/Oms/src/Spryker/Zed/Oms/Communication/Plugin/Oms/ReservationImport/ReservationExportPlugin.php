@@ -20,8 +20,11 @@ class ReservationExportPlugin extends AbstractPlugin implements ReservationExpor
     /**
      * {@inheritdoc}
      *
-     * This is example plugin, here should be export to external storage, like queue, file etc.
-     * While on other side you would read file/consume request and use OmsFacade::importReservation() facade method.
+     * Example plugin! Synchronous implementation. Change it according to implementation requirements.
+     *
+     * This is example plugin, here should be export to external storage, for example put message to queue, export to file. (serialize $reservationRequestTransfer)
+     * The import would be done in other store which would read/consume exported message/file. Using importReservation facade method.
+     *
      *
      * @api
      *

@@ -50,22 +50,21 @@ class ProductReservationReader implements ProductReservationReaderInterface
     /**
      * @param int $idProductAbstract
      * @param int $idLocale
-     * @param null|int $idStore
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
-    public function getProductAbstractAvailability($idProductAbstract, $idLocale, $idStore = null)
+    public function getProductAbstractAvailability($idProductAbstract, $idLocale)
     {
-        $storeTransfer = $this->findStoreTransfer($idStore);
+        $storeTransfer = $this->findStoreTransfer();
 
-        $stockTypes = $this->stockFacade->getStoreToWarehouseMapping()[$storeTransfer->getName()];
+        $stockNames = $this->stockFacade->getStoreToWarehouseMapping()[$storeTransfer->getName()];
 
         $productAbstractEntity = $this->availabilityQueryContainer
             ->queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale(
                 $idProductAbstract,
                 $idLocale,
                 $storeTransfer->getIdStore(),
-                $stockTypes
+                $stockNames
             )
             ->findOne();
 

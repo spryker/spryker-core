@@ -24,10 +24,30 @@ interface StockQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param int $idProduct
+     * @param array $stockNames
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     */
+    public function queryStockByNeverOutOfStockAllTypesForStockNames($idProduct, array $stockNames);
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryStockByProducts($idProduct);
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     * @param array $stockNames
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     */
+    public function queryStockByProductsForStockNames($idProduct, array $stockNames);
 
     /**
      * @api
