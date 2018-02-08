@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Customer\Business\Customer;
+namespace Spryker\Zed\Customer\Business\CustomerExpander;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 
-class CustomerTransferExpanderPluginExecutor implements CustomerTransferExpanderPluginExecutorInterface
+class CustomerExpander implements CustomerExpanderInterface
 {
     /**
      * @var array|\Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface[]
@@ -29,7 +29,7 @@ class CustomerTransferExpanderPluginExecutor implements CustomerTransferExpander
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function executeCustomerTransferExpanderPlugins(CustomerTransfer $customerTransfer)
+    public function expand(CustomerTransfer $customerTransfer)
     {
         foreach ($this->customerTransferExpanderPlugins as $customerTransferExpanderPlugin) {
             $customerTransfer = $customerTransferExpanderPlugin->expandTransfer($customerTransfer);
