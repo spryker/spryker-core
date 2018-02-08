@@ -40,9 +40,8 @@ class EditController extends AbstractController
         if ($form->isValid()) {
             $saveRequestTransfer = $form->getData();
             $file = $form->get('contentFile')->getData();
-            $filePath = ($file instanceof UploadedFile) ? $file->getRealPath() : null;
             try {
-                $this->getFacade()->save($saveRequestTransfer, $filePath);
+                $this->saveDataset($saveRequestTransfer, $file);
                 $redirectUrl = Url::generate(static::DATSET_LIST_URL)->build();
 
                 return $this->redirectResponse($redirectUrl);
@@ -56,5 +55,20 @@ class EditController extends AbstractController
             'availableLocales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
         ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
+     * @param string $file
+     *
+     * @return void
+     */
+    protected function saveDataset($saveRequestTransfer, $file)
+    {
+        if ($file instanceof UploadedFile) {
+            $this->getFacade()->save($saveRequestTransfer, $file->getRealPath());
+        } else {
+            $this->getFacade()->saveDataset($saveRequestTransfer);
+        }
     }
 }
