@@ -14,8 +14,8 @@ use Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface
 
 class PermissionDependencyProvider extends AbstractDependencyProvider
 {
-    const PLUGINS_PERMISSION = 'PLUGINS_PERMISSION';
-    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const PLUGINS_PERMISSION = 'PLUGINS_PERMISSION';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const PLUGIN_PERMISSION_STORAGE = 'PLUGIN_PERMISSION_STORAGE';
 
     /**
@@ -27,7 +27,7 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addPermissionPlugins($container);
-        $container = $this->addCustomerClient($container);
+        $container = $this->addPermissionStoragePlugin($container);
 
         return $container;
     }
@@ -41,6 +41,20 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::PLUGINS_PERMISSION] = function (Container $container) {
             return $this->getPermissionPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPermissionStoragePlugin($container): Container
+    {
+        $container[static::PLUGINS_PERMISSION] = function (Container $container) {
+            return $this->getPermissionStoragePlugin();
         };
 
         return $container;
