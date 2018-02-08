@@ -72,7 +72,7 @@ class DependencyController extends AbstractController
         $excludedBundles = [];
         $showIncoming = false;
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
             if (isset($formData[BundlesFormType::EXCLUDED_BUNDLES])) {
                 $excludedBundles = $formData[BundlesFormType::EXCLUDED_BUNDLES];

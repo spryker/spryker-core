@@ -25,7 +25,7 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginInterface[]
      */
-    protected $discountConfigurationExpanderPlugins = [];
+    protected $discountConfigurationExpanderPlugins;
 
     /**
      * @var \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface
@@ -33,15 +33,26 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     protected $discountEntityMapper;
 
     /**
+     * @var \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationMapperInterface
+     */
+    protected $discountStoreRelationMapper;
+
+    /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      * @param \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface $discountEntityMapper
+     * @param \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationMapperInterface $discountStoreRelationMapper
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginInterface[] $discountConfigurationExpanderPlugins
      */
     public function __construct(
         DiscountQueryContainerInterface $discountQueryContainer,
-        DiscountEntityMapperInterface $discountEntityMapper
+        DiscountEntityMapperInterface $discountEntityMapper,
+        DiscountStoreRelationMapperInterface $discountStoreRelationMapper,
+        array $discountConfigurationExpanderPlugins
     ) {
         $this->discountQueryContainer = $discountQueryContainer;
         $this->discountEntityMapper = $discountEntityMapper;
+        $this->discountStoreRelationMapper = $discountStoreRelationMapper;
+        $this->discountConfigurationExpanderPlugins = $discountConfigurationExpanderPlugins;
     }
 
     /**
@@ -52,8 +63,9 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     public function getByIdDiscount($idDiscount)
     {
         $discountEntity = $this->discountQueryContainer
-            ->queryDiscount()
-            ->findOneByIdDiscount($idDiscount);
+            ->queryDiscountWithStoresByFkDiscount($idDiscount)
+            ->find()
+            ->getFirst();
 
         $discountConfigurator = $this->createDiscountConfiguratorTransfer();
 
@@ -85,6 +97,9 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
 
         $discountGeneralTransfer->setValidFrom($discountEntity->getValidFrom());
         $discountGeneralTransfer->setValidTo($discountEntity->getValidTo());
+        $discountGeneralTransfer->setStoreRelation(
+            $this->discountStoreRelationMapper->mapDiscountStoreEntityCollectionToStoreRelationTransfer($discountEntity)
+        );
 
         return $discountGeneralTransfer;
     }
@@ -160,15 +175,5 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
         }
 
         return $discountConfiguratorTransfer;
-    }
-
-    /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginInterface[] $discountConfigurationExpanderPlugins
-     *
-     * @return void
-     */
-    public function setDiscountConfigurationExpanderPlugins(array $discountConfigurationExpanderPlugins)
-    {
-        $this->discountConfigurationExpanderPlugins = $discountConfigurationExpanderPlugins;
     }
 }

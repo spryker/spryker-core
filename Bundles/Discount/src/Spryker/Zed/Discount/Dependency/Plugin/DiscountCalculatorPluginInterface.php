@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\DiscountTransfer;
 interface DiscountCalculatorPluginInterface
 {
     /**
+     * Specification:
+     * - Calculates a discount based on the provided parameters.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
@@ -22,6 +25,9 @@ interface DiscountCalculatorPluginInterface
     public function calculateDiscount(array $discountableItems, DiscountTransfer $discountTransfer);
 
     /**
+     * Specification:
+     * - Converts provided business logic unit to Persistance's unit.
+     *
      * @api
      *
      * @param float $value
@@ -31,6 +37,9 @@ interface DiscountCalculatorPluginInterface
     public function transformForPersistence($value);
 
     /**
+     * Specification:
+     * - Converts provided Persistance's unit to business logic unit.
+     *
      * @api
      *
      * @param int $value
@@ -40,6 +49,9 @@ interface DiscountCalculatorPluginInterface
     public function transformFromPersistence($value);
 
     /**
+     * Specification:
+     * - Formats provided amount.
+     *
      * @api
      *
      * @param int $amount
@@ -50,6 +62,9 @@ interface DiscountCalculatorPluginInterface
     public function getFormattedAmount($amount, $isoCode = null);
 
     /**
+     * Specification:
+     * - Retrieves a list of validators used to validate amount.
+     *
      * @api
      *
      * @return array

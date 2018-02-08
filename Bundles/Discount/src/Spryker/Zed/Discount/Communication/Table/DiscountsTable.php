@@ -11,8 +11,10 @@ use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Traversable;
 
 class DiscountsTable extends AbstractTable
 {
@@ -20,6 +22,7 @@ class DiscountsTable extends AbstractTable
     const TABLE_COL_TYPE = 'Type';
     const TYPE_COL_PERIOD = 'Period';
     const TABLE_COL_ACTIONS = 'Actions';
+    const TABLE_COL_STORE = 'Store';
 
     const URL_PARAM_ID_DISCOUNT = 'id-discount';
     const URL_PARAM_VISIBILITY = 'visibility';
@@ -35,17 +38,24 @@ class DiscountsTable extends AbstractTable
     protected $discountQuery;
 
     /**
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
+     */
+    protected $discountQueryContainer;
+
+    /**
      * @var array|\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
      */
     protected $calculatorPlugins = [];
 
     /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscountQuery $discountQuery
+     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
      */
-    public function __construct(SpyDiscountQuery $discountQuery, array $calculatorPlugins)
+    public function __construct(SpyDiscountQuery $discountQuery, DiscountQueryContainerInterface $discountQueryContainer, array $calculatorPlugins)
     {
         $this->discountQuery = $discountQuery;
+        $this->discountQueryContainer = $discountQueryContainer;
         $this->calculatorPlugins = $calculatorPlugins;
     }
 
@@ -67,6 +77,7 @@ class DiscountsTable extends AbstractTable
             static::TYPE_COL_PERIOD => static::TABLE_COL_PERIOD,
             SpyDiscountTableMap::COL_IS_ACTIVE => 'Status',
             SpyDiscountTableMap::COL_IS_EXCLUSIVE => 'Exclusive',
+            static::TABLE_COL_STORE => static::TABLE_COL_STORE,
             static::TABLE_COL_ACTIONS => static::TABLE_COL_ACTIONS,
         ]);
 
@@ -90,6 +101,7 @@ class DiscountsTable extends AbstractTable
 
         $config->addRawColumn(static::TABLE_COL_ACTIONS);
         $config->addRawColumn(SpyDiscountTableMap::COL_AMOUNT);
+        $config->addRawColumn(static::TABLE_COL_STORE);
 
         return $config;
     }
@@ -116,10 +128,44 @@ class DiscountsTable extends AbstractTable
                 SpyDiscountTableMap::COL_IS_ACTIVE => $this->getStatus($discountEntity),
                 SpyDiscountTableMap::COL_IS_EXCLUSIVE => $discountEntity->getIsExclusive(),
                 static::TABLE_COL_ACTIONS => $this->getActionButtons($discountEntity),
+                static::TABLE_COL_STORE => $this->getStoreNames($discountEntity->getIdDiscount()),
             ];
         }
 
         return $result;
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return string
+     */
+    protected function getStoreNames($idDiscount)
+    {
+        $discountStoreCollection = $this
+            ->discountQueryContainer
+            ->queryDiscountStoreWithStoresByFkDiscount($idDiscount)
+            ->find();
+
+        return $this->extractStoreNames($discountStoreCollection);
+    }
+
+    /**
+     * @param \Traversable|\Orm\Zed\Discount\Persistence\SpyDiscountStore[] $discountStoreEntityCollection
+     *
+     * @return string
+     */
+    protected function extractStoreNames(Traversable $discountStoreEntityCollection)
+    {
+        $storeNames = [];
+        foreach ($discountStoreEntityCollection as $discountStoreEntity) {
+            $storeNames[] = sprintf(
+                '<span class="label label-info">%s</span>',
+                $discountStoreEntity->getSpyStore()->getName()
+            );
+        }
+
+        return implode(" ", $storeNames);
     }
 
     /**
