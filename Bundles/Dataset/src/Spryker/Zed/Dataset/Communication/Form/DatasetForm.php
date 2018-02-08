@@ -160,7 +160,7 @@ class DatasetForm extends AbstractType
     protected function addDatasetLocalizedAttributesForm(FormBuilderInterface $builder, array $options = null)
     {
         $builder->add(static::DATASET_LOCALIZED_ATTRIBUTES, CollectionType::class, [
-            'entry_type' => $this->getFactory()->createDatasetLocalizedAttributesForm(),
+            'entry_type' => $this->getFactory()->getDatasetLocalizedAttributesForm(),
             'allow_add' => true,
             'allow_delete' => true,
             'entry_options' => [
