@@ -239,4 +239,110 @@ class ObjectBuilder extends PropelObjectBuilder
 
         return $script;
     }
+
+    /**
+     * Adds the toArray method
+     *
+     * @param string &$script The script will be modified in this method.
+     *
+     * @return void
+     **/
+    protected function addToArray(&$script)
+    {
+        $fks = $this->getTable()->getForeignKeys();
+        $referrers = $this->getTable()->getReferrers();
+        $hasFks = count($fks) > 0 || count($referrers) > 0;
+        $objectClassName = $this->getUnqualifiedClassName();
+        $pkGetter = $this->getTable()->hasCompositePrimaryKey() ? 'serialize($this->getPrimaryKey())' : '$this->getPrimaryKey()';
+        $defaultKeyType = $this->getDefaultKeyType();
+        $script .= "
+    /**
+     * Exports the object as an array.
+     *
+     * You can specify the key type of the array by passing one of the class
+     * type constants.
+     *
+     * @param     string  \$keyType (optional) One of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME,
+     *                    TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
+     *                    Defaults to TableMap::$defaultKeyType.
+     * @param     boolean \$includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
+     * @param     array \$alreadyDumpedObjects List of objects to skip to avoid recursion";
+        if ($hasFks) {
+            $script .= "
+     * @param     boolean \$includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.";
+        }
+        $script .= "
+     *
+     * @return array an associative array containing the field names (as keys) and field values
+     */
+    public function toArray(\$keyType = TableMap::$defaultKeyType, \$includeLazyLoadColumns = true, \$alreadyDumpedObjects = array()" . ($hasFks ? ", \$includeForeignObjects = false" : '') . ")
+    {
+
+        if (isset(\$alreadyDumpedObjects['$objectClassName'][\$this->hashCode()])) {
+            return '*RECURSION*';
+        }
+        \$alreadyDumpedObjects['$objectClassName'][\$this->hashCode()] = true;
+        \$keys = " . $this->getTableMapClassName() . "::getFieldNames(\$keyType);
+        \$result = array(";
+        foreach ($this->getTable()->getColumns() as $num => $col) {
+            if ($col->isLazyLoad()) {
+                $script .= "
+            \$keys[$num] => (\$includeLazyLoadColumns) ? \$this->get" . $col->getPhpName() . "() : null,";
+            } else {
+                $script .= "
+            \$keys[$num] => \$this->get" . $col->getPhpName() . "(),";
+            }
+        }
+        $script .= "
+        );";
+
+        foreach ($this->getTable()->getColumns() as $num => $col) {
+            if ($col->isTemporalType()) {
+                $script .= "
+        if (\$result[\$keys[$num]] instanceof \DateTime) {
+            \$result[\$keys[$num]] = \$result[\$keys[$num]]->format('Y-m-d H:i:s.u');
+        }
+        ";
+            }
+        }
+        $script .= "
+        \$virtualColumns = \$this->virtualColumns;
+        foreach (\$virtualColumns as \$key => \$virtualColumn) {
+            \$result[\$key] = \$virtualColumn;
+        }
+        ";
+        if ($hasFks) {
+            $script .= "
+        if (\$includeForeignObjects) {";
+            foreach ($fks as $fk) {
+                $script .= "
+            if (null !== \$this->" . $this->getFKVarName($fk) . ") {
+                {$this->addToArrayKeyLookUp($fk->getPhpName(), $fk->getForeignTable(), false)}
+                \$result[\$key] = \$this->" . $this->getFKVarName($fk) . "->toArray(\$keyType, \$includeLazyLoadColumns,  \$alreadyDumpedObjects, true);
+            }";
+            }
+            foreach ($referrers as $fk) {
+                if ($fk->isLocalPrimaryKey()) {
+                    $script .= "
+            if (null !== \$this->" . $this->getPKRefFKVarName($fk) . ") {
+                {$this->addToArrayKeyLookUp($fk->getRefPhpName(), $fk->getTable(), false)}
+                \$result[\$key] = \$this->" . $this->getPKRefFKVarName($fk) . "->toArray(\$keyType, \$includeLazyLoadColumns, \$alreadyDumpedObjects, true);
+            }";
+                } else {
+                    $script .= "
+            if (null !== \$this->" . $this->getRefFKCollVarName($fk) . ") {
+                {$this->addToArrayKeyLookUp($fk->getRefPhpName(), $fk->getTable(), true)}
+                \$result[\$key] = \$this->" . $this->getRefFKCollVarName($fk) . "->toArray(null, false, \$keyType, \$includeLazyLoadColumns, \$alreadyDumpedObjects);
+            }";
+                }
+            }
+            $script .= "
+        }";
+        }
+        $script .= "
+
+        return \$result;
+    }
+";
+    }
 }
