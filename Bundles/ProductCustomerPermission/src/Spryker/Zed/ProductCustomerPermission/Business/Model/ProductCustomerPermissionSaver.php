@@ -8,10 +8,10 @@
 namespace Spryker\Zed\ProductCustomerPermission\Business\Model;
 
 use Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermission;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\ProductCustomerPermission\ProductCustomerPermissionConfig;
 use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToTouchFacadeInterface;
 use Spryker\Zed\ProductCustomerPermission\Persistence\ProductCustomerPermissionQueryContainerInterface;
+use Traversable;
 
 class ProductCustomerPermissionSaver implements ProductCustomerPermissionSaverInterface
 {
@@ -144,11 +144,11 @@ class ProductCustomerPermissionSaver implements ProductCustomerPermissionSaverIn
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $existingEntities
+     * @param \Traversable $existingEntities
      *
      * @return int[]
      */
-    protected function getExistingIdProductCustomerPermissionCollection(ObjectCollection $existingEntities)
+    protected function getExistingIdProductCustomerPermissionCollection(Traversable $existingEntities)
     {
         $idExistingRecords = [];
         foreach ($existingEntities as $record) {

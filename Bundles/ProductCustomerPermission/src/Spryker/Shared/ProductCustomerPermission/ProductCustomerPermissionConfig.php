@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\ProductCustomerPermission;
 
-interface ProductCustomerPermissionConstants
+interface ProductCustomerPermissionConfig
 {
     const RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION = 'product_customer_permission';
 

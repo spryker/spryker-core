@@ -8,7 +8,7 @@
 namespace Spryker\Client\ProductCustomerPermission\KeyBuilder;
 
 use Spryker\Shared\KeyBuilder\SharedResourceKeyBuilder;
-use Spryker\Shared\ProductCustomerPermission\ProductCustomerPermissionConstants;
+use Spryker\Shared\ProductCustomerPermission\ProductCustomerPermissionConfig;
 
 class ProductCustomerPermissionResourceKeyBuilder extends SharedResourceKeyBuilder
 {
@@ -17,6 +17,6 @@ class ProductCustomerPermissionResourceKeyBuilder extends SharedResourceKeyBuild
      */
     protected function getResourceType()
     {
-        return ProductCustomerPermissionConstants::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION;
+        return ProductCustomerPermissionConfig::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION;
     }
 }

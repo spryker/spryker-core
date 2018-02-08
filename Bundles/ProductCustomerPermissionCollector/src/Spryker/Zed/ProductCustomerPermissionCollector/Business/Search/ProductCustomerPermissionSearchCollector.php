@@ -11,7 +11,7 @@ use Generated\Shared\Search\CustomerPageIndexMap;
 use Generated\Shared\Transfer\SearchCollectorConfigurationTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Product\ProductConfig;
-use Spryker\Shared\ProductCustomerPermission\ProductCustomerPermissionConstants;
+use Spryker\Shared\ProductCustomerPermission\ProductCustomerPermissionConfig;
 use Spryker\Zed\Collector\Business\Collector\Search\AbstractConfigurableSearchPropelCollector;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\ProductCustomerPermissionCollector\Persistence\Search\Propel\ProductCustomerPermissionSearchCollectorQuery;
@@ -23,7 +23,7 @@ class ProductCustomerPermissionSearchCollector extends AbstractConfigurableSearc
      */
     protected function collectResourceType()
     {
-        return ProductCustomerPermissionConstants::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION;
+        return ProductCustomerPermissionConfig::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION;
     }
 
     /**
@@ -81,7 +81,7 @@ class ProductCustomerPermissionSearchCollector extends AbstractConfigurableSearc
     protected function getCollectorConfiguration()
     {
         $searchCollectorConfigurationTransfer = new SearchCollectorConfigurationTransfer();
-        $searchCollectorConfigurationTransfer->setTypeName(ProductCustomerPermissionConstants::ELASTICSEARCH_INDEX_TYPE_NAME);
+        $searchCollectorConfigurationTransfer->setTypeName(ProductCustomerPermissionConfig::ELASTICSEARCH_INDEX_TYPE_NAME);
 
         return $searchCollectorConfigurationTransfer;
     }

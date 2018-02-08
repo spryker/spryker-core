@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductCustomerPermissionCollector\Business\Storage;
 
-use Spryker\Shared\ProductCustomerPermission\ProductCustomerPermissionConstants;
+use Spryker\Shared\ProductCustomerPermission\ProductCustomerPermissionConfig;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 use Spryker\Zed\ProductCustomerPermissionCollector\Persistence\Search\Propel\ProductCustomerPermissionSearchCollectorQuery;
 
@@ -18,7 +18,7 @@ class ProductCustomerPermissionStorageCollector extends AbstractStoragePropelCol
      */
     protected function collectResourceType()
     {
-        return ProductCustomerPermissionConstants::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION;
+        return ProductCustomerPermissionConfig::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION;
     }
 
     /**

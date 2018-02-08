@@ -16,7 +16,7 @@ use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Spryker\Shared\ProductCustomerPermission\ProductCustomerPermissionConstants;
+use Spryker\Shared\ProductCustomerPermission\ProductCustomerPermissionConfig;
 
 /**
  * @method \Spryker\Client\ProductCustomerPermission\ProductCustomerPermissionFactory getFactory()
@@ -88,6 +88,6 @@ class ProductCustomerPermissionQueryExpanderPlugin extends AbstractPlugin implem
         $customerQuery = $this->createCustomerQuery($idCustomer);
 
         return (new HasChild($customerQuery))
-            ->setType(ProductCustomerPermissionConstants::ELASTICSEARCH_INDEX_TYPE_NAME);
+            ->setType(ProductCustomerPermissionConfig::ELASTICSEARCH_INDEX_TYPE_NAME);
     }
 }
