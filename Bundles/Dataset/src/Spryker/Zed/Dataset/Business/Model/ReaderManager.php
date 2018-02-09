@@ -101,7 +101,7 @@ class ReaderManager implements ReaderManagerInterface
 
         $datasetColumnTransfers = [];
         foreach ($columns as $column) {
-            $datasetColumnTransfers[$column] = $this->getDatasetColumnTransfer($column);
+            $datasetColumnTransfers[] = $this->getDatasetColumnTransfer($column);
         }
 
         return $datasetColumnTransfers;
