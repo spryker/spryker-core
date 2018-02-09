@@ -11,6 +11,7 @@ use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductCustomerPermissionCollector\Business\Search\ProductCustomerPermissionSearchCollector;
 use Spryker\Zed\ProductCustomerPermissionCollector\Business\Storage\ProductCustomerPermissionStorageCollector;
+use Spryker\Zed\ProductCustomerPermissionCollector\Dependency\Facade\ProductCustomerPermissionCollectorToCollectorFacadeInterface;
 use Spryker\Zed\ProductCustomerPermissionCollector\Persistence\Search\Propel\ProductCustomerPermissionSearchCollectorQuery;
 use Spryker\Zed\ProductCustomerPermissionCollector\ProductCustomerPermissionCollectorDependencyProvider;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
@@ -74,9 +75,9 @@ class ProductCustomerPermissionCollectorBusinessFactory extends AbstractBusiness
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\CollectorFacadeInterface
+     * @return \Spryker\Zed\ProductCustomerPermissionCollector\Dependency\Facade\ProductCustomerPermissionCollectorToCollectorFacadeInterface
      */
-    public function getCollectorFacade()
+    public function getCollectorFacade(): ProductCustomerPermissionCollectorToCollectorFacadeInterface
     {
         return $this->getProvidedDependency(ProductCustomerPermissionCollectorDependencyProvider::FACADE_COLLECTOR);
     }

@@ -9,8 +9,11 @@ namespace Spryker\Zed\ProductCustomerPermission\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionCartValidator;
+use Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionCartValidatorInterface;
 use Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionCheckoutPreCondition;
+use Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionCheckoutPreConditionInterface;
 use Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionSaver;
+use Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionSaverInterface;
 use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToGlossaryFacadeInterface;
 use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToProductFacadeInterface;
 use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToTouchFacadeInterface;
@@ -25,7 +28,7 @@ class ProductCustomerPermissionBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionSaverInterface
      */
-    public function createProductCustomerPermissionSaver(): Model\ProductCustomerPermissionSaverInterface
+    public function createProductCustomerPermissionSaver(): ProductCustomerPermissionSaverInterface
     {
         return new ProductCustomerPermissionSaver($this->getQueryContainer(), $this->getTouchFacade());
     }
@@ -33,7 +36,7 @@ class ProductCustomerPermissionBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionCartValidatorInterface
      */
-    public function createCartValidator(): Model\ProductCustomerPermissionCartValidatorInterface
+    public function createCartValidator(): ProductCustomerPermissionCartValidatorInterface
     {
         return new ProductCustomerPermissionCartValidator($this->getQueryContainer(), $this->getProductFacade());
     }
@@ -41,7 +44,7 @@ class ProductCustomerPermissionBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionCheckoutPreConditionInterface
      */
-    public function createCheckoutPreConditionChecker(): Model\ProductCustomerPermissionCheckoutPreConditionInterface
+    public function createCheckoutPreConditionChecker(): ProductCustomerPermissionCheckoutPreConditionInterface
     {
         return new ProductCustomerPermissionCheckoutPreCondition($this->getQueryContainer(), $this->getGlossaryFacade());
     }

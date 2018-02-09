@@ -19,30 +19,6 @@ class ProductCustomerPermissionClient extends AbstractClient implements ProductC
      *
      * @api
      *
-     * @param int $idProductAbstract
-     *
-     * @return bool
-     */
-    public function isAllowedForCurrentCustomer(int $idProductAbstract): bool
-    {
-        $customer = $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
-
-        if (!$customer) {
-            return true;
-        }
-
-        return $this->getFactory()
-            ->createStorage()
-            ->hasProductCustomerPermission($customer->getIdCustomer(), $idProductAbstract);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idCustomer
      * @param int $idProductAbstract
      *

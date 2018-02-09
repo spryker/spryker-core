@@ -113,12 +113,12 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
                 $idProductAbstracts
             )->find();
 
-        $idAllowedProducts = [];
+        $allowedIdProductAbstracts = [];
         foreach ($allowedProducts as $allowedProduct) {
-            $idAllowedProducts[] = $allowedProduct->getFkProductAbstract();
+            $allowedIdProductAbstracts[] = $allowedProduct->getFkProductAbstract();
         }
 
-        return $idAllowedProducts;
+        return $allowedIdProductAbstracts;
     }
 
     /**
@@ -128,11 +128,11 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
      */
     protected function getDeniedProductAbstractNames(QuoteTransfer $quoteTransfer): array
     {
-        $allowedProductIds = $this->getAllowedIdProductAbstracts($quoteTransfer);
+        $allowedIdProductAbstracts = $this->getAllowedIdProductAbstracts($quoteTransfer);
         $deniedProductAbstractNames = [];
 
         foreach ($quoteTransfer->getItems() as $quoteItem) {
-            if (!in_array($quoteItem->getIdProductAbstract(), $allowedProductIds)) {
+            if (!\in_array($quoteItem->getIdProductAbstract(), $allowedIdProductAbstracts, true)) {
                 $deniedProductAbstractNames[] = $quoteItem->getName();
             }
         }
@@ -148,8 +148,8 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
     protected function getIdProductAbstracts(QuoteTransfer $quoteTransfer): array
     {
         $idProductAbstracts = [];
-        foreach ($quoteTransfer->getItems() as $cartItem) {
-            $idProductAbstract = $cartItem->getIdProductAbstract();
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $idProductAbstract = $itemTransfer->getIdProductAbstract();
             if (isset($idProductAbstracts[$idProductAbstract])) {
                 continue;
             }

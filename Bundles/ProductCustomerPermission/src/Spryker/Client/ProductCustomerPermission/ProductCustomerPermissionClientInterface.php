@@ -11,18 +11,6 @@ interface ProductCustomerPermissionClientInterface
 {
     /**
      * Specification:
-     * - Checks if current customer has permission to buy specified product.
-     *
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return bool
-     */
-    public function isAllowedForCurrentCustomer(int $idProductAbstract): bool;
-
-    /**
-     * Specification:
      * - Checks if specified customer has permission to buy specified product.
      *
      * @api

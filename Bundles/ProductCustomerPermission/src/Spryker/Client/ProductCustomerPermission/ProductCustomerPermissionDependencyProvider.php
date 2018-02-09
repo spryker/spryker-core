@@ -24,7 +24,7 @@ class ProductCustomerPermissionDependencyProvider extends AbstractDependencyProv
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addCustomerClient($container);
         $container = $this->addLocaleClient($container);

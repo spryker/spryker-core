@@ -51,11 +51,22 @@ class ProductCustomerPermissionStorage implements ProductCustomerPermissionStora
      */
     public function hasProductCustomerPermission(int $idCustomer, int $idProductAbstract): bool
     {
-        $identifier = $idProductAbstract . '.' . $idCustomer;
-        $locale = $this->localeClient->getCurrentLocale();
-        $key = $this->keyBuilder->generateKey($identifier, $locale);
-        $permission = $this->storageClient->get($key);
+        $permission = $this->storageClient->get($this->getStorageKey($idCustomer, $idProductAbstract));
 
         return $permission !== null;
+    }
+
+    /**
+     * @param int $idCustomer
+     * @param int $idProductAbstract
+     *
+     * @return string
+     */
+    protected function getStorageKey(int $idCustomer, int $idProductAbstract): string
+    {
+        $identifier = $idProductAbstract . '.' . $idCustomer;
+        $locale = $this->localeClient->getCurrentLocale();
+
+        return $this->keyBuilder->generateKey($identifier, $locale);
     }
 }
