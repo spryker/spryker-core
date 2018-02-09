@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
 use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -67,7 +68,7 @@ abstract class FileInfoTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->queryContainer->queryFileInfoByFkFile($this->idFile);
+        $query = $this->queryContainer->queryFileInfoByFkFile($this->idFile)->orderByCreatedAt(Criteria::DESC);
         $queryResults = $this->runQuery($query, $config);
 
         $results = [];

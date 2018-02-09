@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
+use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
 use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface;
@@ -53,7 +55,7 @@ class FileTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->queryContainer->queryFiles();
+        $query = $this->queryContainer->queryFiles()->orderByIdFile(Criteria::DESC);
         $queryResults = $this->runQuery($query, $config);
 
         $results = [];
