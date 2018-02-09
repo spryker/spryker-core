@@ -1,9 +1,15 @@
 <?php
+/**
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\ProductCustomerPermission\Business;
 
 use Codeception\Test\Unit;
 use Orm\Zed\ProductCustomerPermission\Persistence\Map\SpyProductCustomerPermissionTableMap;
 use Spryker\Zed\ProductCustomerPermission\Business\ProductCustomerPermissionFacadeInterface;
+use Spryker\Zed\ProductCustomerPermission\Persistence\ProductCustomerPermissionQueryContainer;
 use Spryker\Zed\ProductCustomerPermission\Persistence\ProductCustomerPermissionQueryContainerInterface;
 
 /**
@@ -152,6 +158,6 @@ class ProductCustomerPermissionFacadeTest extends Unit
      */
     protected function getQueryContainer(): ProductCustomerPermissionQueryContainerInterface
     {
-        return $this->tester->getLocator()->productCustomerPermission()->queryContainer();
+        return new ProductCustomerPermissionQueryContainer();
     }
 }
