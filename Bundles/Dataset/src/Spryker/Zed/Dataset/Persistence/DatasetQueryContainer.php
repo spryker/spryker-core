@@ -127,11 +127,11 @@ class DatasetQueryContainer extends AbstractQueryContainer implements DatasetQue
      */
     protected function joinDatasetRelations(SpyDatasetQuery $spyDataset)
     {
-        return $spyDataset->useSpyDatasetRowColumnValueQuery(null, Criteria::LEFT_JOIN)
-            ->useSpyDatasetRowQuery(null, Criteria::LEFT_JOIN)
-            ->endUse()
-            ->useSpyDatasetColumnQuery(null, Criteria::LEFT_JOIN)
-            ->endUse()
-        ->endUse();
+        return $spyDataset
+            ->leftJoinWithSpyDatasetLocalizedAttributes()
+            ->useSpyDatasetRowColumnValueQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinSpyDatasetColumn()
+                ->leftJoinSpyDatasetRow()
+            ->endUse();
     }
 }
