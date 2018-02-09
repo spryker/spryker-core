@@ -38,6 +38,8 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
+    const QUEUE_POOL_NAME_EXCLUSIVE = 'exclusivePool';
+
     /**
      * @api
      *
@@ -48,17 +50,17 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, new ProductPageProductAbstractListener())
-            ->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH, new ProductPageProductAbstractListener())
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_CREATE, new ProductPageProductAbstractListener())
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE, new ProductPageProductAbstractListener())
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE, new ProductPageProductAbstractListener())
+            ->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, new ProductPageProductAbstractListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
+            ->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH, new ProductPageProductAbstractListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_CREATE, new ProductPageProductAbstractListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE, new ProductPageProductAbstractListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE, new ProductPageProductAbstractListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
             ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_CREATE, new ProductPageLocalizedAttributesSearchListener())
             ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_UPDATE, new ProductPageLocalizedAttributesSearchListener())
             ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_DELETE, new ProductPageLocalizedAttributesSearchListener())
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_CREATE, new ProductPageProductConcreteSearchListener())
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new ProductPageProductConcreteSearchListener())
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_DELETE, new ProductPageProductConcreteSearchListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_CREATE, new ProductPageProductConcreteSearchListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new ProductPageProductConcreteSearchListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_DELETE, new ProductPageProductConcreteSearchListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
             ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_CREATE, new ProductPageProductConcreteLocalizedAttributesSearchListener())
             ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_UPDATE, new ProductPageProductConcreteLocalizedAttributesSearchListener())
             ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_DELETE, new ProductPageProductConcreteLocalizedAttributesSearchListener())

@@ -40,4 +40,12 @@ interface EventConstants
      * @api
      */
     const EVENT_QUEUE_ERROR = 'event.error';
+
+    /**
+     * Specification:
+     * - Used when event has to go through default queue pool.
+     *
+     * @api
+     */
+    const QUEUE_POOL_NAME_DEFAULT = null;
 }

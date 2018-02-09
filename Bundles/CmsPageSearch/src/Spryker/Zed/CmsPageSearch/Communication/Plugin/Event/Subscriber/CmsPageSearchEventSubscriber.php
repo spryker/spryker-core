@@ -21,6 +21,8 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
+    const QUEUE_POOL_NAME_SHARED = 'sharedPool';
+
     /**
      * @api
      *
@@ -33,9 +35,9 @@ class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscr
         $eventCollection
             ->addListenerQueued(CmsEvents::CMS_VERSION_PUBLISH, new CmsPageSearchListener())
             ->addListenerQueued(CmsEvents::CMS_VERSION_UNPUBLISH, new CmsPageSearchListener())
-            ->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_CREATE, new CmsPageSearchListener())
-            ->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE, new CmsPageSearchListener())
-            ->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE, new CmsPageSearchListener())
+            ->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_CREATE, new CmsPageSearchListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE, new CmsPageSearchListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE, new CmsPageSearchListener(), 0, static::QUEUE_POOL_NAME_SHARED)
             ->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_VERSION_CREATE, new CmsPageVersionSearchListener())
             ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new CmsPageUrlSearchListener())
             ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new CmsPageUrlSearchListener())

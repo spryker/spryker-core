@@ -93,6 +93,11 @@ class Store
     protected $currencyIsoCodes = [];
 
     /**
+     * @var array
+     */
+    protected $queuePools = [];
+
+    /**
      * @return \Spryker\Shared\Kernel\Store
      */
     public static function getInstance()
@@ -399,5 +404,13 @@ class Store
         }
 
         return $defaultCurrencyCode;
+    }
+
+    /**
+     * @return array
+     */
+    public function getQueuePools()
+    {
+        return $this->queuePools;
     }
 }

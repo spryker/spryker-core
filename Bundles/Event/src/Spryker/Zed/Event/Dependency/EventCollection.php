@@ -9,6 +9,7 @@ namespace Spryker\Zed\Event\Dependency;
 
 use ArrayIterator;
 use SplPriorityQueue;
+use Spryker\Shared\Event\EventConstants;
 use Spryker\Zed\Event\Business\Dispatcher\EventListenerContext;
 use Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException;
 use Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface;
@@ -24,12 +25,13 @@ class EventCollection implements EventCollectionInterface
      * @param string $eventName
      * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface $eventHandler
      * @param int $priority
+     * @param string|null $queuePoolName
      *
      * @return $this
      */
-    public function addListener($eventName, EventBaseHandlerInterface $eventHandler, $priority = 0)
+    public function addListener($eventName, EventBaseHandlerInterface $eventHandler, $priority = 0, $queuePoolName = EventConstants::QUEUE_POOL_NAME_DEFAULT)
     {
-        $this->add($eventName, $eventHandler, false, $priority);
+        $this->add($eventName, $eventHandler, false, $priority, $queuePoolName);
 
         return $this;
     }
@@ -38,12 +40,13 @@ class EventCollection implements EventCollectionInterface
      * @param string $eventName
      * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface $eventHandler
      * @param int $priority
+     * @param string|null $queuePoolName
      *
      * @return $this
      */
-    public function addListenerQueued($eventName, EventBaseHandlerInterface $eventHandler, $priority = 0)
+    public function addListenerQueued($eventName, EventBaseHandlerInterface $eventHandler, $priority = 0, $queuePoolName = EventConstants::QUEUE_POOL_NAME_DEFAULT)
     {
-        $this->add($eventName, $eventHandler, true, $priority);
+        $this->add($eventName, $eventHandler, true, $priority, $queuePoolName);
 
         return $this;
     }
@@ -63,16 +66,17 @@ class EventCollection implements EventCollectionInterface
      * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface $eventHandler
      * @param bool $isHandledInQueue
      * @param int $priority
+     * @param string|null $queuePoolName
      *
      * @return void
      */
-    protected function add($eventName, EventBaseHandlerInterface $eventHandler, $isHandledInQueue = false, $priority = 0)
+    protected function add($eventName, EventBaseHandlerInterface $eventHandler, $isHandledInQueue = false, $priority = 0, $queuePoolName = EventConstants::QUEUE_POOL_NAME_DEFAULT)
     {
         if (!$this->has($eventName)) {
             $this->eventListeners[$eventName] = new SplPriorityQueue();
         }
 
-        $this->eventListeners[$eventName]->insert(new EventListenerContext($eventHandler, $isHandledInQueue), $priority);
+        $this->eventListeners[$eventName]->insert(new EventListenerContext($eventHandler, $isHandledInQueue, $queuePoolName), $priority);
     }
 
     /**

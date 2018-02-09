@@ -9,6 +9,7 @@ namespace Spryker\Zed\Event\Dependency;
 
 use ArrayAccess;
 use IteratorAggregate;
+use Spryker\Shared\Event\EventConstants;
 use Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface;
 
 interface EventCollectionInterface extends ArrayAccess, IteratorAggregate
@@ -17,19 +18,21 @@ interface EventCollectionInterface extends ArrayAccess, IteratorAggregate
      * @param string $eventName
      * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface $eventHandler
      * @param int $priority
+     * @param string|null $queuePoolName
      *
      * @return $this
      */
-    public function addListener($eventName, EventBaseHandlerInterface $eventHandler, $priority = 0);
+    public function addListener($eventName, EventBaseHandlerInterface $eventHandler, $priority = 0, $queuePoolName = EventConstants::QUEUE_POOL_NAME_DEFAULT);
 
     /**
      * @param string $eventName
      * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface $eventHandler
      * @param int $priority
+     * @param string|null $queuePoolName
      *
      * @return $this
      */
-    public function addListenerQueued($eventName, EventBaseHandlerInterface $eventHandler, $priority = 0);
+    public function addListenerQueued($eventName, EventBaseHandlerInterface $eventHandler, $priority = 0, $queuePoolName = EventConstants::QUEUE_POOL_NAME_DEFAULT);
 
     /**
      * @param string $eventName
