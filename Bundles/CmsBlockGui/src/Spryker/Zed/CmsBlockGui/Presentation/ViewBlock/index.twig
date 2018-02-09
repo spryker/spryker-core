@@ -19,6 +19,12 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' }  %}
         {% block widget_content %}
             <p>
+                <strong>Store relation:</strong>
+                {% for storeName in relatedStoreNames %}
+                    <span class="label label-info">{{ storeName }}</span>
+                {% endfor %}
+            </p>
+            <p>
                 <strong>{{ 'Is active:' | trans }}</strong> {{ cmsBlock.isActive ? 'yes'|trans : 'no'|trans}}
             </p>
 

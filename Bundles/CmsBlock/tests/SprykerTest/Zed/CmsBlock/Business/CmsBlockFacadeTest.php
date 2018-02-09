@@ -7,6 +7,7 @@ use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer;
 use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer;
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 
 /**
  * Auto-generated group annotations
@@ -21,7 +22,7 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 class CmsBlockFacadeTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\CmsBlock\BusinessTester
+     * @var \SprykerTest\Zed\CmsBlock\CmsBlockBusinessTester
      */
     protected $tester;
 
@@ -192,6 +193,80 @@ class CmsBlockFacadeTest extends Unit
             ->findTemplate('test path');
 
         $this->assertEquals('test name', $cmsBlockTemplateTransfer->getTemplateName());
+    }
+
+    /**
+     * @dataProvider relationUpdate
+     *
+     * @param int[] $originalRelation
+     * @param int[] $modifiedRelation
+     *
+     * @return void
+     */
+    public function testUpdateCmsBlockUpdatesStoreRelation(array $originalRelation, array $modifiedRelation)
+    {
+        // Assign
+        $cmsBlockTransfer = $this->tester->haveCmsBlock(
+            [
+                CmsBlockTransfer::STORE_RELATION => [
+                    StoreRelationTransfer::ID_STORES => $originalRelation,
+                ],
+            ]
+        );
+
+        $this->createCmsBlockFacade()->updateCmsBlock($cmsBlockTransfer);
+
+        // Act
+        $cmsBlockTransfer->getStoreRelation()->setIdStores($modifiedRelation);
+        $this->createCmsBlockFacade()
+            ->updateCmsBlock($cmsBlockTransfer);
+
+        $cmsBlockTransfer = $this->createCmsBlockFacade()
+            ->findCmsBlockById($cmsBlockTransfer->getIdCmsBlock());
+
+        $resultIdStores = $cmsBlockTransfer->getStoreRelation()->getIdStores();
+
+        // Assert
+        sort($resultIdStores);
+        $this->assertEquals($modifiedRelation, $resultIdStores);
+    }
+
+    /**
+     * @return array
+     */
+    public function relationUpdate()
+    {
+        return [
+            [
+                [1, 2, 3], [2],
+            ],
+            [
+                [1], [1, 2],
+            ],
+            [
+                [2], [1, 3],
+            ],
+        ];
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateCmsBlockSavesStoreRelation()
+    {
+        // Assign
+        $expectedIdStores = [1, 3];
+        $cmsBlockTransfer = $this->tester->haveCmsBlock([
+            CmsBlockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => $expectedIdStores],
+        ]);
+
+        // Act
+        $cmsBlockTransfer = $this->createCmsBlockFacade()->findCmsBlockById($cmsBlockTransfer->getIdCmsBlock());
+        $resultIdStores = $cmsBlockTransfer->getStoreRelation()->getIdStores();
+
+        // Assert
+        sort($resultIdStores);
+        $this->assertEquals($expectedIdStores, $resultIdStores);
     }
 
     /**

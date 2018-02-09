@@ -47,7 +47,7 @@ class AddressController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($addressForm->isValid()) {
+        if ($addressForm->isSubmitted() && $addressForm->isValid()) {
             $customerAddress = new AddressTransfer();
             $customerAddress->fromArray($addressForm->getData(), true);
 
@@ -85,7 +85,7 @@ class AddressController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($addressForm->isValid()) {
+        if ($addressForm->isSubmitted() && $addressForm->isValid()) {
             $addressTransfer = new AddressTransfer();
             $addressTransfer->fromArray($addressForm->getData(), true);
             $addressTransfer->setFkCustomer($idCustomer);

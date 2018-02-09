@@ -24,6 +24,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class GeneralForm extends AbstractType
 {
+    const FIELD_STORE_RELATION = 'store_relation';
     const FIELD_DISCOUNT_TYPE = 'discount_type';
     const FIELD_DISPLAY_NAME = 'display_name';
     const FIELD_DESCRIPTION = 'description';
@@ -41,12 +42,40 @@ class GeneralForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addDiscountType($builder)
+        $this
+            ->addStoreRelationField($builder)
+            ->addDiscountType($builder)
             ->addDisplayNameField($builder)
             ->addDescriptionField($builder)
             ->addExclusive($builder)
             ->addValidFromField($builder)
             ->addValidToField($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addStoreRelationField(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_STORE_RELATION,
+            $this->getStoreRelationFormTypePlugin()->getType(),
+            [
+                'label' => false,
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function getStoreRelationFormTypePlugin()
+    {
+        return $this->getFactory()->getStoreRelationFormTypePlugin();
     }
 
     /**
@@ -186,15 +215,5 @@ class GeneralForm extends AbstractType
     public function getBlockPrefix()
     {
         return 'discount_general';
-    }
-
-    /**
-     * @deprecated Use `getBlockPrefix()` instead.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 }
