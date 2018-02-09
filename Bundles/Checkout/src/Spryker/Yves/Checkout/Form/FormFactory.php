@@ -43,11 +43,9 @@ class FormFactory extends AbstractFactory
      */
     public function createPaymentFormCollection()
     {
-        $subFormCollection = $this->createPaymentSubFormFilter()->getSubForms();
-        $paymentFormType = $this->createPaymentForm($subFormCollection);
-        $subFormDataProvider = $this->createSubFormDataProvider($subFormCollection);
+        $subFormDataProvider = $this->createSubFormDataProvider();
 
-        return $this->createSubFormCollection($paymentFormType, $subFormDataProvider);
+        return $this->createSubFormCollection(PaymentForm::class, $subFormDataProvider);
     }
 
     /**
@@ -61,27 +59,17 @@ class FormFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Checkout\Form\Filter\SubFormFilter
      */
-    protected function createPaymentSubFormFilter()
+    public function createPaymentSubFormFilter()
     {
         return new SubFormFilter(
             $this->getPaymentMethodSubFormPluginCollection(),
-            $this->getMethodFormFilters(), //todo: they are subForm filters, can it work if there are form filters too??
+            $this->getMethodFormFilters(),
             $this->createDataContainer()
         );
     }
 
     /**
-     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $subForms
-     *
-     * @return \Spryker\Yves\Checkout\Form\Steps\PaymentForm
-     */
-    protected function createPaymentForm(SubFormPluginCollection $subForms)
-    {
-        return new PaymentForm($subForms);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormTypeInterface $formType
+     * @param string $formType
      * @param \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface $dataProvider
      *
      * @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
@@ -100,13 +88,14 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $subFormProvider
-     *
      * @return \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface
      */
-    protected function createSubFormDataProvider($subFormProvider)
+    protected function createSubFormDataProvider()
     {
-        return new SubFormDataProviders($subFormProvider);
+        return new SubFormDataProviders(
+            $this->createPaymentSubFormFilter()
+                ->getSubForms()
+        );
     }
 
     /**
