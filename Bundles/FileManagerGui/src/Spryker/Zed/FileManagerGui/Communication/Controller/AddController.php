@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
+use Exception;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
 use Generated\Shared\Transfer\FileTransfer;
@@ -31,14 +32,22 @@ class AddController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isValid()) {
-            $data = $form->getData();
-            $saveRequestTransfer = $this->createFileManagerSaveRequestTransfer($data);
+            try {
+                $data = $form->getData();
+                $saveRequestTransfer = $this->createFileManagerSaveRequestTransfer($data);
 
-            $this->getFactory()->getFileManagerFacade()->save($saveRequestTransfer);
+                $this->getFactory()->getFileManagerFacade()->save($saveRequestTransfer);
 
-            $redirectUrl = Url::generate('/file-manager-gui')->build();
+                $this->addSuccessMessage(
+                    'The file was added successfully.'
+                );
+                $redirectUrl = Url::generate('/file-manager-gui')->build();
 
-            return $this->redirectResponse($redirectUrl);
+                return $this->redirectResponse($redirectUrl);
+
+            } catch (Exception $exception) {
+                $this->addErrorMessage($exception->getMessage());
+            }
         }
 
         return $this->viewResponse([
