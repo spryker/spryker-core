@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductCustomerPermission\Business\Model;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Orm\Zed\ProductCustomerPermission\Persistence\Map\SpyProductCustomerPermissionTableMap;
 use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToProductFacadeInterface;
 use Spryker\Zed\ProductCustomerPermission\Persistence\ProductCustomerPermissionQueryContainerInterface;
 
@@ -85,18 +86,11 @@ class ProductCustomerPermissionCartValidator implements ProductCustomerPermissio
         $idProductAbstract = $this->productFacade
             ->getProductAbstractIdByConcreteSku($concreteProductSku);
 
-        $hasCustomerPermissions = $this->queryContainer
-            ->queryProductCustomerPermissionByCustomer($idCustomer)
-            ->count();
-
-        if ($hasCustomerPermissions === 0) {
-            return true;
-        }
-
-        $productCustomerPermissionCount = $this->queryContainer
+        $productCustomerPermissions = $this->queryContainer
             ->queryProductCustomerPermissionByCustomerAndProducts($idCustomer, [$idProductAbstract])
-            ->count();
+            ->select([SpyProductCustomerPermissionTableMap::COL_ID_PRODUCT_CUSTOMER_PERMISSION])
+            ->findOne();
 
-        return $productCustomerPermissionCount > 0;
+        return $productCustomerPermissions !== null;
     }
 }

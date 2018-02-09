@@ -80,14 +80,6 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
         $idProductAbstracts = $this->getIdProductAbstracts($quoteTransfer);
         $idCustomer = $quoteTransfer->getCustomer()->getIdCustomer();
 
-        $hasCustomerPermissions = $this->queryContainer
-            ->queryProductCustomerPermissionByCustomer($idCustomer)
-            ->count();
-
-        if ($hasCustomerPermissions === 0) {
-            return true;
-        }
-
         $productCustomerPermissionCount = $this->queryContainer
             ->queryProductCustomerPermissionByCustomerAndProducts(
                 $idCustomer,
