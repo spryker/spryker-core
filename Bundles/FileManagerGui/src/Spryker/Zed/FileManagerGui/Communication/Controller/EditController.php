@@ -30,9 +30,8 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $idFile = $request->get(static::URL_PARAM_ID_FILE);
-        $dataProvider = $this->getFactory()->createFileFormDataProvider();
         $form = $this->getFactory()
-            ->createFileForm($dataProvider, $idFile)
+            ->createFileForm($idFile)
             ->handleRequest($request);
 
         if ($form->isValid()) {

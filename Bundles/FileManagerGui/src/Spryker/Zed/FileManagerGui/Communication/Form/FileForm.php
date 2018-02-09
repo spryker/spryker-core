@@ -8,6 +8,7 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Form;
 
 use Generated\Shared\Transfer\FileTransfer;
+use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -17,9 +18,11 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\FileManagerGui\FileManagerGuiConfig getConfig()
  */
 class FileForm extends AbstractType
 {
@@ -107,6 +110,12 @@ class FileForm extends AbstractType
         $formData = $builder->getData();
         $builder->add(static::FIELD_FILE_CONTENT, FileType::class, [
             'required' => empty($formData[static::FIELD_ID_FILE]),
+            'constraints' => [
+                new File([
+                    'mimeTypes' => $this->getConfig()->getAllowedMimeTypes(),
+                    'mimeTypesMessage' => FileManagerGuiConstants::ERROR_MIME_TYPE_MESSAGE,
+                ]),
+            ]
         ]);
 
         return $this;
