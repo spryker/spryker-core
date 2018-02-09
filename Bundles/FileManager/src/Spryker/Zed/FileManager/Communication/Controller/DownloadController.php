@@ -8,6 +8,7 @@
 namespace Spryker\Zed\FileManager\Communication\Controller;
 
 use Generated\Shared\Transfer\FileManagerReadResponseTransfer;
+use Spryker\Shared\FileManager\FileManagerConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +19,6 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
  */
 class DownloadController extends AbstractController
 {
-    const URL_PARAM_ID_FILE_INFO = 'id-file-info';
     const CONTENT_DISPOSITION = 'Content-Disposition';
     const CONTENT_TYPE = 'Content-Type';
 
@@ -29,7 +29,7 @@ class DownloadController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idFileInfo = $request->get(static::URL_PARAM_ID_FILE_INFO);
+        $idFileInfo = $request->get(FileManagerConstants::URL_PARAM_ID_FILE_INFO);
 
         $file = $this->getFactory()
             ->getFileManagerFacade()
