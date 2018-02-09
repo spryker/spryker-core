@@ -92,7 +92,8 @@ class Discount implements DiscountInterface
     public function calculate(QuoteTransfer $quoteTransfer)
     {
         $activeDiscounts = $this->retrieveActiveCartAndVoucherDiscounts(
-            $this->getVoucherCodes($quoteTransfer)
+            $this->getVoucherCodes($quoteTransfer),
+            $this->getIdStoreByName($quoteTransfer->getStore()->getName())
         );
 
         $nonApplicableDiscounts = $this->filterNonApplicableDiscounts($activeDiscounts, $quoteTransfer);
