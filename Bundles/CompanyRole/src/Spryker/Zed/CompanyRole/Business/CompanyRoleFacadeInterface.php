@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyRole\Business;
 
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 
@@ -20,9 +22,9 @@ interface CompanyRoleFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
      */
-    public function create(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer;
+    public function create(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer;
 
     /**
      * Specification:
@@ -53,6 +55,16 @@ interface CompanyRoleFacadeInterface
 
     /**
      * Specification:
+     * - Finds company roles
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
+     */
+    public function findCompanyRoles(): CompanyRoleCollectionTransfer;
+
+    /**
+     * Specification:
      * - Removes related to the company user roles
      * - Creates relations roles to the company user according CompanyUserTransfer::companyRoleCollection
      *
@@ -75,4 +87,16 @@ interface CompanyRoleFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
     public function hydrateCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
+
+    /**
+     * Specification:
+     * - Collects related to a company user permissions from all assigned roles
+     *
+     * @api
+     *
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findPermissionsByIdCompanyUser(int $idCompanyUser);
 }

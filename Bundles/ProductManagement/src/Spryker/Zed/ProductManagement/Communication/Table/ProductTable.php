@@ -77,7 +77,7 @@ class ProductTable extends AbstractProductTable
             static::COL_STATUS => 'Status',
             static::COL_IS_BUNDLE => 'Contains bundles',
             static::COL_PRODUCT_TYPE => 'Product type',
-            static::COL_STORE_RELATION => 'Store',
+            static::COL_STORE_RELATION => 'Stores',
             static::COL_ACTIONS => 'Actions',
         ]);
 

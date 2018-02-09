@@ -12,7 +12,7 @@ class PermissionFinder implements PermissionFinderInterface
     /**
      * @var \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface[]
      */
-    protected $executablePermissionPlugins;
+    protected $executablePermissionPlugins = [];
 
     /**
      * @param \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface[] $permissionPlugins

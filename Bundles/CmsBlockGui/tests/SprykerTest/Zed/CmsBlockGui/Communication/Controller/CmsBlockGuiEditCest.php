@@ -29,6 +29,7 @@ class CmsBlockGuiEditCest
      */
     public function breadcrumbIsVisible(CmsBlockGuiCommunicationTester $i)
     {
+        $i->registerCmsBlockStoreRelationFormTypePlugin();
         $i->listDataTable(CmsBlockGuiListPage::URL . '/table');
         $i->clickDataTableButton('Edit Block');
         $i->seeBreadcrumbNavigation('Dashboard / Content Management / Blocks / Edit CMS Block');
