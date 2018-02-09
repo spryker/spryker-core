@@ -100,8 +100,6 @@ class DatasetForm extends AbstractType
     {
         $builder->add(static::FIELD_DATASET_NAME, TextType::class, [
             'required' => true,
-        ]);
-        $builder->add(self::FIELD_DATASET_NAME, TextType::class, [
             'label' => 'Name',
             'constraints' => $this->createDatasetConstraints(),
         ]);
