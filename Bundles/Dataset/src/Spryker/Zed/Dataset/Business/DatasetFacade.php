@@ -119,13 +119,13 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
      *
      * @api
      *
-     * @param string $nameDataset
+     * @param string $datasetName
      *
      * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
-    public function getDatasetTransferByName($nameDataset)
+    public function getDatasetTransferByName($datasetName)
     {
-        return $this->getFactory()->createDatasetFinder()->getDatasetTransferByName($nameDataset);
+        return $this->getFactory()->createDatasetFinder()->getDatasetTransferByName($datasetName);
     }
 
     /**
@@ -133,12 +133,12 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
      *
      * @api
      *
-     * @param string $nameDataset
+     * @param string $datasetName
      *
      * @return bool
      */
-    public function hasDatasetName($nameDataset)
+    public function hasDatasetName($datasetName)
     {
-        return $this->getFactory()->createDatasetFinder()->hasDatasetName($nameDataset);
+        return $this->getFactory()->createDatasetFinder()->hasDatasetName($datasetName);
     }
 }

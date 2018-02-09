@@ -114,15 +114,15 @@ class DatasetFinder implements DatasetFinderInterface
     }
 
     /**
-     * @param string $nameDataset
+     * @param string $datasetName
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDataset
      */
-    public function getDatasetName($nameDataset)
+    public function getDatasetName($datasetName)
     {
-        $spyDataset = $this->datasetQueryContainer->queryDatasetByName($nameDataset)->findOne();
+        $spyDataset = $this->datasetQueryContainer->queryDatasetByName($datasetName)->findOne();
 
         if (!$spyDataset) {
             throw new DatasetNotFoundException();
@@ -166,13 +166,13 @@ class DatasetFinder implements DatasetFinderInterface
     }
 
     /**
-     * @param string $nameDataset
+     * @param string $datasetName
      *
      * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
-    public function getDatasetTransferByName($nameDataset)
+    public function getDatasetTransferByName($datasetName)
     {
-        $spyDatasetEntity = $this->datasetQueryContainer->queryDatasetByNameWithRelation($nameDataset)->find()->getFirst();
+        $spyDatasetEntity = $this->datasetQueryContainer->queryDatasetByNameWithRelation($datasetName)->find()->getFirst();
 
         $spyDatasetTransfer = $this->getResponseDatasetTransfer($spyDatasetEntity);
 
