@@ -39,53 +39,25 @@ class ReaderManager implements ReaderManagerInterface
         $result = $this->getReader($filePath);
         $datasetRowColumnValueTransfers = new ArrayObject();
         $datasetColumnValueTransfers = $this->getDatasetColumnTransfers($result);
-        $rowTitleUnique = [];
+
         foreach ($result as $row) {
             $rowTitle = array_shift($row);
-            if (!empty($rowTitleUnique[$rowTitle])) {
-                throw new DatasetParseException();
-            }
-            $rowTitleUnique[$rowTitle] = true;
-            $datasetRowValueTransfer = $this->getDatasetRowEntityTransfer($rowTitle);
             $values = array_values($row);
+            $datasetRowValueTransfer = $this->getDatasetRowEntityTransfer($rowTitle);
 
-            $this->appendDatasetColumnRowValueTransfer(
-                $datasetRowColumnValueTransfers,
-                $datasetColumnValueTransfers,
-                $datasetRowValueTransfer,
-                $values
-            );
+            foreach ($values as $key => $value) {
+                if ($value === null) {
+                    throw new DatasetParseException();
+                }
+                $datasetRowColumnValueTransfers->append($this->getDatasetRowColumnValueEntityTransfer(
+                    $datasetColumnValueTransfers[$key],
+                    $datasetRowValueTransfer,
+                    $value
+                ));
+            }
         }
 
         return $datasetRowColumnValueTransfers;
-    }
-
-    /**
-     * @param \ArrayObject $datasetRowColumnValueTransfers
-     * @param \Generated\Shared\Transfer\SpyDatasetColumnEntityTransfer[] $datasetColumnValueTransfers
-     * @param \Generated\Shared\Transfer\SpyDatasetRowEntityTransfer $datasetRowValueTransfer
-     * @param array $values
-     *
-     * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetParseException
-     *
-     * @return void
-     */
-    public function appendDatasetColumnRowValueTransfer(
-        ArrayObject $datasetRowColumnValueTransfers,
-        $datasetColumnValueTransfers,
-        $datasetRowValueTransfer,
-        $values
-    ) {
-        foreach ($values as $key => $value) {
-            if ($value === null) {
-                throw new DatasetParseException();
-            }
-            $datasetRowColumnValueTransfers->append($this->getDatasetRowColumnValueEntityTransfer(
-                $datasetColumnValueTransfers[$key],
-                $datasetRowValueTransfer,
-                $value
-            ));
-        }
     }
 
     /**
@@ -129,7 +101,7 @@ class ReaderManager implements ReaderManagerInterface
 
         $datasetColumnTransfers = [];
         foreach ($columns as $column) {
-            $datasetColumnTransfers[] = $this->getDatasetColumnTransfer($column);
+            $datasetColumnTransfers[$column] = $this->getDatasetColumnTransfer($column);
         }
 
         return $datasetColumnTransfers;
@@ -169,8 +141,8 @@ class ReaderManager implements ReaderManagerInterface
      * @return \Generated\Shared\Transfer\SpyDatasetRowColumnValueEntityTransfer
      */
     private function getDatasetRowColumnValueEntityTransfer(
-        $datasetColumnValueTransfer,
-        $datasetRowValueTransfer,
+        SpyDatasetColumnEntityTransfer $datasetColumnValueTransfer,
+        SpyDatasetRowEntityTransfer $datasetRowValueTransfer,
         $value
     ) {
         $datasetRowColumnValueEntityTransfer = new SpyDatasetRowColumnValueEntityTransfer();

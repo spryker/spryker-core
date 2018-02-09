@@ -54,7 +54,7 @@ class DatasetSaver implements DatasetSaverInterface
     }
 
     /**
-     * @param null|\Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
+     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
      * @param string|null $filePath
      *
      * @return void

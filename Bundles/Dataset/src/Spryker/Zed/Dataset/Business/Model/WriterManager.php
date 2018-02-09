@@ -34,24 +34,38 @@ class WriterManager implements WriterManagerInterface
     public function getDatasetContentBy(SpyDatasetEntityTransfer $datasetTransfer)
     {
         $writer = $this->getWriter();
+        $this->insertDataByTransfer($writer, $datasetTransfer);
+
+        return $writer->getContent();
+    }
+
+    /**
+     * @param \League\Csv\Writer $writer
+     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $datasetTransfer
+     *
+     * @return void
+     */
+    protected function insertDataByTransfer(Writer $writer, SpyDatasetEntityTransfer $datasetTransfer)
+    {
         $rowValues = [];
         $headerUnique = [];
         $header = [''];
         foreach ($datasetTransfer->getSpyDatasetRowColumnValues() as $spyDatasetRowColumnValue) {
-            if (empty($headerUnique[$spyDatasetRowColumnValue->getSpyDatasetColumn()->getIdDatasetColumn()])) {
-                $headerUnique[$spyDatasetRowColumnValue->getSpyDatasetColumn()->getIdDatasetColumn()] = true;
-                array_push($header, $spyDatasetRowColumnValue->getSpyDatasetColumn()->getTitle());
+            $datasetColumn = $spyDatasetRowColumnValue->getSpyDatasetColumn();
+
+            if (empty($headerUnique[$datasetColumn->getIdDatasetColumn()])) {
+                $headerUnique[$datasetColumn->getIdDatasetColumn()] = true;
+                array_push($header, $datasetColumn->getTitle());
             }
-            $rowValues[$spyDatasetRowColumnValue->getSpyDatasetRow()->getTitle()][] = $spyDatasetRowColumnValue->getValue();
+
+            $rowValues[$spyDatasetRowColumnValue->getSpyDatasetRow()->getTitle()][] =
+                $spyDatasetRowColumnValue->getValue();
         }
         $writer->insertOne($header);
-
         foreach ($rowValues as $rowTitle => $values) {
             array_unshift($values, $rowTitle);
             $writer->insertOne($values);
         }
-
-        return $writer->getContent();
     }
 
     /**
