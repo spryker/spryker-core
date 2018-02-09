@@ -105,11 +105,11 @@ interface DatasetFacadeInterface
      *
      * @api
      *
-     * @param string $nameDataset
+     * @param string $datasetName
      *
      * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
-    public function getDatasetTransferByName($nameDataset);
+    public function getDatasetTransferByName($datasetName);
 
     /**
      * Specification:
@@ -117,9 +117,9 @@ interface DatasetFacadeInterface
      *
      * @api
      *
-     * @param string $nameDataset
+     * @param string $datasetName
      *
      * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
-    public function hasDatasetName($nameDataset);
+    public function hasDatasetName($datasetName);
 }

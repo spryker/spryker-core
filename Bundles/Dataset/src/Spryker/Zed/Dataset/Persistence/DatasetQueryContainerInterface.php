@@ -57,18 +57,18 @@ interface DatasetQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param string $nameDataset
+     * @param string $datasetName
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
      */
-    public function queryDatasetByNameWithRelation($nameDataset);
+    public function queryDatasetByNameWithRelation($datasetName);
 
     /**
      * @api
      *
-     * @param string $nameDataset
+     * @param string $datasetName
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
      */
-    public function queryDatasetByName($nameDataset);
+    public function queryDatasetByName($datasetName);
 }

@@ -61,11 +61,11 @@ interface DatasetFinderInterface
     public function getDatasetTransferById($idDataset);
 
     /**
-     * @param string $nameDataset
+     * @param string $datasetName
      *
      * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
-    public function getDatasetTransferByName($nameDataset);
+    public function getDatasetTransferByName($datasetName);
 
     /**
      * @param string $name

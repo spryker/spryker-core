@@ -41,13 +41,13 @@ class DatasetQueryContainer extends AbstractQueryContainer implements DatasetQue
     /**
      * @api
      *
-     * @param string $nameDataset
+     * @param string $datasetName
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
      */
-    public function queryDatasetByName($nameDataset)
+    public function queryDatasetByName($datasetName)
     {
-        return $this->queryDataset()->filterByName($nameDataset);
+        return $this->queryDataset()->filterByName($datasetName);
     }
 
     /**
@@ -91,14 +91,14 @@ class DatasetQueryContainer extends AbstractQueryContainer implements DatasetQue
     /**
      * @api
      *
-     * @param string $nameDataset
+     * @param string $datasetName
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
      */
-    public function queryDatasetByNameWithRelation($nameDataset)
+    public function queryDatasetByNameWithRelation($datasetName)
     {
         return $this->joinDatasetRelations(
-            $this->queryDatasetByName($nameDataset)
+            $this->queryDatasetByName($datasetName)
         );
     }
 
