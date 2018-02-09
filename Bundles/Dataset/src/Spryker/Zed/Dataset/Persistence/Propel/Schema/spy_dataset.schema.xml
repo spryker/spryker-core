@@ -58,7 +58,7 @@
             <reference local="fk_dataset_column" foreign="id_dataset_column"/>
         </foreign-key>
 
-        <id-method-parameter value="spy_dataset_row_coumn_value_pk_seq"/>
+        <id-method-parameter value="spy_dataset_row_column_value_pk_seq"/>
     </table>
 
     <table name="spy_dataset_localized_attributes" idMethod="native" allowPkInsert="true"  phpName="SpyDatasetLocalizedAttributes" identifierQuoting="true">

@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Persistence;
 
-use Orm\Zed\Dataset\Persistence\SpyDatasetColumnQuery;
 use Orm\Zed\Dataset\Persistence\SpyDatasetQuery;
-use Orm\Zed\Dataset\Persistence\SpyDatasetRowQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -25,7 +23,7 @@ class DatasetQueryContainer extends AbstractQueryContainer implements DatasetQue
      */
     public function queryDataset()
     {
-        return SpyDatasetQuery::create();
+        return $this->getFactory()->createDatasetQuery();
     }
 
     /**
@@ -109,7 +107,7 @@ class DatasetQueryContainer extends AbstractQueryContainer implements DatasetQue
      */
     protected function queryDatasetRow()
     {
-        return SpyDatasetRowQuery::create();
+        return $this->getFactory()->createSpyDatasetRowQuery();
     }
 
     /**
@@ -117,18 +115,17 @@ class DatasetQueryContainer extends AbstractQueryContainer implements DatasetQue
      */
     protected function queryDatasetColumn()
     {
-        return SpyDatasetColumnQuery::create();
+        return $this->getFactory()->createSpyDatasetColumnQuery();
     }
 
     /**
-     * @param \Orm\Zed\Dataset\Persistence\SpyDatasetQuery $spyDataset
+     * @param \Orm\Zed\Dataset\Persistence\SpyDatasetQuery $datasetQuery
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
      */
-    protected function joinDatasetRelations(SpyDatasetQuery $spyDataset)
+    protected function joinDatasetRelations(SpyDatasetQuery $datasetQuery)
     {
-        return $spyDataset
-            ->leftJoinWithSpyDatasetLocalizedAttributes()
+        return $datasetQuery->leftJoinWithSpyDatasetLocalizedAttributes()
             ->useSpyDatasetRowColumnValueQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinSpyDatasetColumn()
                 ->leftJoinSpyDatasetRow()

@@ -100,8 +100,7 @@ class DatasetFormDataProvider
      */
     protected function getAvailableLocales()
     {
-        return $this->localeFacade
-            ->getLocaleCollection();
+        return $this->localeFacade->getLocaleCollection();
     }
 
     /**
