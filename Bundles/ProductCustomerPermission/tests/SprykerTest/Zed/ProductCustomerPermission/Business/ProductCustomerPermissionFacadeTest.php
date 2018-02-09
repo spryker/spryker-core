@@ -2,6 +2,9 @@
 namespace SprykerTest\Zed\ProductCustomerPermission\Business;
 
 use Codeception\Test\Unit;
+use Orm\Zed\ProductCustomerPermission\Persistence\Map\SpyProductCustomerPermissionTableMap;
+use Spryker\Zed\ProductCustomerPermission\Business\ProductCustomerPermissionFacadeInterface;
+use Spryker\Zed\ProductCustomerPermission\Persistence\ProductCustomerPermissionQueryContainerInterface;
 
 /**
  * Auto-generated group annotations
@@ -23,7 +26,7 @@ class ProductCustomerPermissionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveCustomerProductPermissionAddsProductPermissionToCustomer()
+    public function testSaveCustomerProductPermissionAddsProductPermissionToCustomer(): void
     {
         $product = $this->tester->haveProductAbstract();
         $customer = $this->tester->haveCustomer();
@@ -31,15 +34,17 @@ class ProductCustomerPermissionFacadeTest extends Unit
         $this->getProductCustomerPermissionFacade()
             ->saveCustomerProductPermission($customer->getIdCustomer(), $product->getIdProductAbstract());
 
-        // @TODO add assert
+        $this->assertNotNull(
+            $this->getQueryContainer()
+            ->queryProductCustomerPermissionByCustomerAndProducts($customer->getIdCustomer(), [$product->getIdProductAbstract()])
+            ->findOne()
+        );
     }
 
     /**
-     * @depends testSaveCustomerProductPermissionAddsProductPermissionToCustomer
-     *
      * @return void
      */
-    public function testDeleteCustomerProductPermissionRemoveProductPermissionFromCustomer()
+    public function testDeleteCustomerProductPermissionRemoveProductPermissionFromCustomer(): void
     {
         $product = $this->tester->haveProductAbstract();
         $customer = $this->tester->haveCustomer();
@@ -50,13 +55,20 @@ class ProductCustomerPermissionFacadeTest extends Unit
         $this->getProductCustomerPermissionFacade()
             ->deleteCustomerProductPermission($customer->getIdCustomer(), $product->getIdProductAbstract());
 
-        // @TODO add assert
+        $this->assertNull(
+            $this->getQueryContainer()
+                ->queryProductCustomerPermissionByCustomerAndProducts(
+                    $customer->getIdCustomer(),
+                    [$product->getIdProductAbstract()]
+                )
+                ->findOne()
+        );
     }
 
     /**
      * @return void
      */
-    public function testSaveCustomerProductPermissionsAddsProductPermissionsToCustomer()
+    public function testSaveCustomerProductPermissionsAddsSpecifiedProductPermissionsToCustomer(): void
     {
         $customer = $this->tester->haveCustomer();
 
@@ -68,15 +80,19 @@ class ProductCustomerPermissionFacadeTest extends Unit
         $this->getProductCustomerPermissionFacade()
             ->saveCustomerProductPermissions($customer->getIdCustomer(), $idProductAbstracts);
 
-        // @TODO add assert
+        $resultIdProductAbstracts = $this->getQueryContainer()
+            ->queryProductCustomerPermissionByCustomer($customer->getIdCustomer())
+            ->select(SpyProductCustomerPermissionTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->find()
+            ->toArray();
+
+        $this->assertEquals($idProductAbstracts, $resultIdProductAbstracts);
     }
 
     /**
-     * @depends testSaveCustomerProductPermissionsAddsProductPermissionsToCustomer
-     *
      * @return void
      */
-    public function testDeleteCustomerProductPermissionsRemoveProductPermissionsFromCustomer()
+    public function testDeleteCustomerProductPermissionsRemoveSpecifiedProductPermissionsFromCustomer(): void
     {
         $customer = $this->tester->haveCustomer();
 
@@ -91,15 +107,17 @@ class ProductCustomerPermissionFacadeTest extends Unit
         $this->getProductCustomerPermissionFacade()
             ->deleteCustomerProductPermissions($customer->getIdCustomer(), $idProductAbstracts);
 
-        // @TODO add assert
+        $this->assertNull(
+            $this->getQueryContainer()
+                ->queryProductCustomerPermissionByCustomer($customer->getIdCustomer())
+                ->findOne()
+        );
     }
 
     /**
-     * @depends testSaveCustomerProductPermissionsAddsProductPermissionsToCustomer
-     *
      * @return void
      */
-    public function testDeleteAllCustomerProductPermissionsRemoveAllProductPermissionsFromCustomer()
+    public function testDeleteAllCustomerProductPermissionsRemoveAllProductPermissionsFromCustomer(): void
     {
         $customer = $this->tester->haveCustomer();
 
@@ -114,14 +132,26 @@ class ProductCustomerPermissionFacadeTest extends Unit
         $this->getProductCustomerPermissionFacade()
             ->deleteAllCustomerProductPermissions($customer->getIdCustomer());
 
-        // @TODO add assert
+        $this->assertNull(
+            $this->getQueryContainer()
+                ->queryProductCustomerPermissionByCustomer($customer->getIdCustomer())
+                ->findOne()
+        );
     }
 
     /**
      * @return \Spryker\Zed\ProductCustomerPermission\Business\ProductCustomerPermissionFacadeInterface
      */
-    protected function getProductCustomerPermissionFacade()
+    protected function getProductCustomerPermissionFacade(): ProductCustomerPermissionFacadeInterface
     {
         return $this->tester->getFacade();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCustomerPermission\Persistence\ProductCustomerPermissionQueryContainerInterface
+     */
+    protected function getQueryContainer(): ProductCustomerPermissionQueryContainerInterface
+    {
+        return $this->tester->getLocator()->productCustomerPermission()->queryContainer();
     }
 }
