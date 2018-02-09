@@ -23,4 +23,6 @@ interface FileManagerGuiConstants
     const COL_FILE_INFO_CREATED_AT = SpyFileInfoTableMap::COL_CREATED_AT;
 
     const SORT_DESC = TableConfiguration::SORT_DESC;
+    const ALLOWED_MIME_TYPES = 'ALLOWED_MIME_TYPES';
+    const ERROR_MIME_TYPE_MESSAGE = 'Please upload a file with valid';
 }
