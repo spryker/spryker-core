@@ -9,6 +9,9 @@ namespace Spryker\Zed\Permission\Business;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 
+/**
+ * @method \Spryker\Zed\Permission\Business\PermissionBusinessFactory getFactory()
+ */
 class PermissionFacade implements PermissionFacadeInterface
 {
     /**
@@ -36,11 +39,8 @@ class PermissionFacade implements PermissionFacadeInterface
      */
     public function can($permissionKey, $identifier, $context = null)
     {
-        //does the identifier contain permission key? (use a plugin from Company Role get this info)
-        //get configuration by PermissionKey and Identifier (use same plugin from Company Role)
-        //find the plugin in provided dependency
-        //pass the configuration and the context to the plugin.
-
-        return true;
+        $this->getFactory()
+            ->createPermissionExecutor()
+            ->can($permissionKey, $identifier, $context);
     }
 }

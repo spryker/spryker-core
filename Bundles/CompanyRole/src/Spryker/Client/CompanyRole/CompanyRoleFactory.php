@@ -20,4 +20,12 @@ class CompanyRoleFactory extends AbstractFactory
     {
         return new CompanyRoleStub($this->getProvidedDependency(CompanyRoleDependencyProvider::SERVICE_ZED));
     }
+
+    /**
+     * @return \Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToCustomerClientInterface
+     */
+    public function getCustomerClient()
+    {
+        return $this->getProvidedDependency(CompanyRoleDependencyProvider::CLIENT_CUSTOMER);
+    }
 }

@@ -84,6 +84,8 @@ interface CompanyUnitAddressFacadeInterface
      *
      * @api
      *
+     * @deprecated
+     *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
@@ -99,6 +101,8 @@ interface CompanyUnitAddressFacadeInterface
      * - Updates default business unit addresses
      *
      * @api
+     *
+     * @deprecated
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *

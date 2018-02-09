@@ -16,19 +16,21 @@ interface CompanyRoleMapperInterface
      * Specification:
      * - Maps company role entity to transfer object.
      *
-     * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole $companyEntity
+     * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole $companyRoleEntity
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
-    public function mapCompanyRoleEntityToTransfer(SpyCompanyRole $companyEntity): CompanyRoleTransfer;
+    public function mapCompanyRoleEntityToTransfer(SpyCompanyRole $companyRoleEntity, CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer;
 
     /**
      * Specification:
      * - Maps transfer object to company role entity.
      *
-     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyTransferTransfer
+     * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole $companyRoleEntity
      *
      * @return \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole
      */
-    public function mapTransferToCompanyRoleEntity(CompanyRoleTransfer $companyTransfer): SpyCompanyRole;
+    public function mapTransferToCompanyRoleEntity(CompanyRoleTransfer $companyTransferTransfer, SpyCompanyRole $companyRoleEntity): SpyCompanyRole;
 }

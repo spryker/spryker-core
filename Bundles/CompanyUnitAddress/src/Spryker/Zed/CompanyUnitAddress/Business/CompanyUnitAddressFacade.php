@@ -91,6 +91,8 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
     /**
      * {@inheritdoc}
      *
+     * @deprecated
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
@@ -107,6 +109,8 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
 
     /**
      * {@inheritdoc}
+     *
+     * @deprecated
      *
      * @api
      *

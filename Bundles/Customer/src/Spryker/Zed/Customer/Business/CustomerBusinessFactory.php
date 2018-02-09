@@ -11,8 +11,8 @@ use Spryker\Zed\Customer\Business\Anonymizer\CustomerAnonymizer;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaver;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
-use Spryker\Zed\Customer\Business\Customer\CustomerTransferExpanderPluginExecutor;
 use Spryker\Zed\Customer\Business\Customer\EmailValidator;
+use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpander;
 use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver as ObsoleteCustomerOrderSaver;
 use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
@@ -41,7 +41,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getMailFacade(),
             $this->getLocaleQueryContainer(),
             $this->getStore(),
-            $this->createCustomerTransferExpanderPluginExecutor()
+            $this->createCustomerExpander()
         );
 
         return $customer;
@@ -197,10 +197,12 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Business\Customer\CustomerTransferExpanderPluginExecutorInterface
+     * @return \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface
      */
-    protected function createCustomerTransferExpanderPluginExecutor()
+    public function createCustomerExpander()
     {
-        return new CustomerTransferExpanderPluginExecutor($this->getCustomerTransferExpanderPlugins());
+        return new CustomerExpander(
+            $this->getCustomerTransferExpanderPlugins()
+        );
     }
 }

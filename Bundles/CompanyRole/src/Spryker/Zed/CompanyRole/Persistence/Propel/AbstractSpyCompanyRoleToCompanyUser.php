@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\CompanyRole\Persistence\Propel;
 
-use Orm\Zed\CompanyRole\Persistence\Base\SpyCompanyRolePermissionQuery as BaseSpyCompanyRolePermissionQuery;
+use Orm\Zed\CompanyRole\Persistence\Base\SpyCompanyRoleToCompanyUser as BaseSpyCompanyRoleToCompanyUser;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'spy_company_role_permission' table.
+ * Skeleton subclass for representing a row from the 'spy_company_role_to_company_user' table.
  *
  *
  *
@@ -19,6 +19,6 @@ use Orm\Zed\CompanyRole\Persistence\Base\SpyCompanyRolePermissionQuery as BaseSp
  * long as it does not already exist in the output directory.
  *
  */
-abstract class AbstractSpyCompanyRolePermissionQuery extends BaseSpyCompanyRolePermissionQuery
+abstract class AbstractSpyCompanyRoleToCompanyUser extends BaseSpyCompanyRoleToCompanyUser
 {
 }

@@ -20,8 +20,9 @@
     </transfer>
 
     <transfer name="Permission">
+        <property name="idPermission" type="int" />
         <property name="key" type="string"/>
-        <property name="config" type="[]"/>
+        <property name="configuration" type="array"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -33,6 +34,10 @@
         <property name="companyRoleTransfer" type="CompanyRole"/>
         <property name="isSuccessful" type="bool"/>
         <property name="errors" type="ResponseError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="Permissions" type="PermissionCollection" />
     </transfer>
 
     <transfer name="ResponseError">
