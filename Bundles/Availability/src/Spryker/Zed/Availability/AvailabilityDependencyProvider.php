@@ -12,7 +12,7 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchBridge;
-use Spryker\Zed\Availability\Dependency\QueryContainer\AvailabilityToProductBridge as PersistenceAvailabilityToProductBridge;
+use Spryker\Zed\Availability\Dependency\QueryContainer\AvailabilityToProductBridge as AvailabilityToProductQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -128,7 +128,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     protected function addProductQueryContainer(Container $container)
     {
         $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
-            return new PersistenceAvailabilityToProductBridge($container->getLocator()->product()->queryContainer());
+            return new AvailabilityToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
         };
         return $container;
     }
