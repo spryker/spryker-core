@@ -27,7 +27,7 @@ class ProductCustomerPermissionToProductFacadeBridge implements ProductCustomerP
      *
      * @return int
      */
-    public function getProductAbstractIdByConcreteSku($concreteSku)
+    public function getProductAbstractIdByConcreteSku($concreteSku): int
     {
         return $this->productFacade->getProductAbstractIdByConcreteSku($concreteSku);
     }

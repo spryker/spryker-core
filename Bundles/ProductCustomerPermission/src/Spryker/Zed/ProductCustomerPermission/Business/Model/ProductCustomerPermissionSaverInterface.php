@@ -11,40 +11,40 @@ interface ProductCustomerPermissionSaverInterface
 {
     /**
      * @param int $idCustomer
-     * @param int $idProduct
+     * @param int $idProductAbstract
      *
      * @return void
      */
-    public function savePermission(int $idCustomer, int $idProduct);
+    public function savePermission(int $idCustomer, int $idProductAbstract): void;
 
     /**
      * @param int $idCustomer
-     * @param int[] $idProductAbstracts
+     * @param int[] $idProductAbstractAbstracts
      *
      * @return void
      */
-    public function savePermissions(int $idCustomer, array $idProductAbstracts);
+    public function savePermissions(int $idCustomer, array $idProductAbstractAbstracts): void;
 
     /**
      * @param int $idCustomer
-     * @param int $idProduct
+     * @param int $idProductAbstract
      *
      * @return void
      */
-    public function deletePermission(int $idCustomer, int $idProduct);
+    public function deletePermission(int $idCustomer, int $idProductAbstract): void;
 
     /**
      * @param int $idCustomer
      *
      * @return void
      */
-    public function deleteAllPermissions(int $idCustomer);
+    public function deleteAllPermissions(int $idCustomer): void;
 
     /**
      * @param int $idCustomer
-     * @param int[] $idProductAbstracts
+     * @param int[] $idProductAbstractAbstracts
      *
      * @return void
      */
-    public function deletePermissions(int $idCustomer, array $idProductAbstracts);
+    public function deletePermissions(int $idCustomer, array $idProductAbstractAbstracts): void;
 }

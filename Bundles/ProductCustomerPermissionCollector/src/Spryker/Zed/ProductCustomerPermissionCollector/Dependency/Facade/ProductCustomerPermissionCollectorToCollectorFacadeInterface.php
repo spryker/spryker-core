@@ -39,5 +39,5 @@ interface ProductCustomerPermissionCollectorToCollectorFacadeInterface
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
-    );
+    ): void;
 }

@@ -28,7 +28,7 @@ class ProductCustomerPermissionToTouchFacadeBridge implements ProductCustomerPer
      *
      * @return bool
      */
-    public function touchActive($itemType, $itemId)
+    public function touchActive($itemType, $itemId): bool
     {
         return $this->touchFacade->touchActive($itemType, $itemId);
     }
@@ -39,7 +39,7 @@ class ProductCustomerPermissionToTouchFacadeBridge implements ProductCustomerPer
      *
      * @return bool
      */
-    public function touchDeleted($itemType, $itemId)
+    public function touchDeleted($itemType, $itemId): bool
     {
         return $this->touchFacade->touchDeleted($itemType, $itemId);
     }

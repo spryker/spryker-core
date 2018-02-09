@@ -25,7 +25,7 @@ class ProductCustomerPermissionToLocaleClientBridge implements ProductCustomerPe
     /**
      * @return string
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): string
     {
         return $this->localeClient->getCurrentLocale();
     }

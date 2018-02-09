@@ -39,7 +39,7 @@ class ProductCustomerPermissionCollectorStoragePlugin extends AbstractCollectorP
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
-    ) {
+    ): void {
         $this->getFacade()->runStorageProductCustomerPermissionCollector(
             $baseQuery,
             $locale,

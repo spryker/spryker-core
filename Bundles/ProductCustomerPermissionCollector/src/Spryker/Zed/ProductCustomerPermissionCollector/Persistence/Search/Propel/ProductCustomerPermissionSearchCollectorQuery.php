@@ -13,14 +13,14 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class ProductCustomerPermissionSearchCollectorQuery extends AbstractPropelCollectorQuery
 {
-    const FIELD_ID_PRODUCT_CUSTOMER_PERMISSION = 'id_product_customer_permission';
-    const FIELD_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
-    const FIELD_FK_CUSTOMER = 'fk_customer';
+    public const FIELD_ID_PRODUCT_CUSTOMER_PERMISSION = 'id_product_customer_permission';
+    public const FIELD_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+    public const FIELD_FK_CUSTOMER = 'fk_customer';
 
     /**
      * @return void
      */
-    protected function prepareQuery()
+    protected function prepareQuery(): void
     {
         $this->touchQuery
             ->addJoin(

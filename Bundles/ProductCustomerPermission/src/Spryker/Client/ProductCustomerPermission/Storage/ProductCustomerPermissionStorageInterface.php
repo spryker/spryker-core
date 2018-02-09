@@ -15,5 +15,5 @@ interface ProductCustomerPermissionStorageInterface
      *
      * @return bool
      */
-    public function hasProductCustomerPermission(int $idCustomer, int $idProductAbstract);
+    public function hasProductCustomerPermission(int $idCustomer, int $idProductAbstract): bool;
 }

@@ -16,7 +16,7 @@ class ProductCustomerPermissionStorageCollector extends AbstractStoragePropelCol
     /**
      * @return string
      */
-    protected function collectResourceType()
+    protected function collectResourceType(): string
     {
         return ProductCustomerPermissionConfig::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION;
     }
@@ -27,7 +27,7 @@ class ProductCustomerPermissionStorageCollector extends AbstractStoragePropelCol
      *
      * @return array
      */
-    protected function collectItem($touchKey, array $collectItemData)
+    protected function collectItem($touchKey, array $collectItemData): array
     {
         return [];
     }
@@ -39,18 +39,18 @@ class ProductCustomerPermissionStorageCollector extends AbstractStoragePropelCol
      *
      * @return string
      */
-    protected function collectKey($data, $localeName, array $collectedItemData)
+    protected function collectKey($data, $localeName, array $collectedItemData): string
     {
-        $data = $collectedItemData[ProductCustomerPermissionSearchCollectorQuery::FIELD_FK_PRODUCT_ABSTRACT]
+        $customData = $collectedItemData[ProductCustomerPermissionSearchCollectorQuery::FIELD_FK_PRODUCT_ABSTRACT]
             . '.' . $collectedItemData[ProductCustomerPermissionSearchCollectorQuery::FIELD_FK_CUSTOMER];
 
-        return $this->generateKey($data, $localeName);
+        return $this->generateKey($customData, $localeName);
     }
 
     /**
      * @return bool
      */
-    protected function isStorageTableJoinWithLocaleEnabled()
+    protected function isStorageTableJoinWithLocaleEnabled(): bool
     {
         return true;
     }

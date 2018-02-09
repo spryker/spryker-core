@@ -21,7 +21,7 @@ class ProductCustomerPermissionSearchCollector extends AbstractConfigurableSearc
     /**
      * @return string
      */
-    protected function collectResourceType()
+    protected function collectResourceType(): string
     {
         return ProductCustomerPermissionConfig::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION;
     }
@@ -32,7 +32,7 @@ class ProductCustomerPermissionSearchCollector extends AbstractConfigurableSearc
      *
      * @return array
      */
-    protected function collectItem($touchKey, array $collectItemData)
+    protected function collectItem($touchKey, array $collectItemData): array
     {
         $productAbstractKey = $this->generateKeyForProduct($collectItemData[ProductCustomerPermissionSearchCollectorQuery::FIELD_FK_PRODUCT_ABSTRACT], $this->locale->getLocaleName());
 
@@ -52,7 +52,7 @@ class ProductCustomerPermissionSearchCollector extends AbstractConfigurableSearc
      *
      * @return string
      */
-    protected function generateKeyForProduct($idProductAbstract, $localeName)
+    protected function generateKeyForProduct($idProductAbstract, $localeName): string
     {
         $keyParts = $this->getKeyPartsForProduct($idProductAbstract, $localeName);
 
@@ -65,7 +65,7 @@ class ProductCustomerPermissionSearchCollector extends AbstractConfigurableSearc
      *
      * @return array
      */
-    protected function getKeyPartsForProduct($idProductAbstract, $localeName)
+    protected function getKeyPartsForProduct($idProductAbstract, $localeName): array
     {
         return [
             Store::getInstance()->getStoreName(),
@@ -78,7 +78,7 @@ class ProductCustomerPermissionSearchCollector extends AbstractConfigurableSearc
     /**
      * @return \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer
      */
-    protected function getCollectorConfiguration()
+    protected function getCollectorConfiguration(): SearchCollectorConfigurationTransfer
     {
         $searchCollectorConfigurationTransfer = new SearchCollectorConfigurationTransfer();
         $searchCollectorConfigurationTransfer->setTypeName(ProductCustomerPermissionConfig::ELASTICSEARCH_INDEX_TYPE_NAME);
@@ -92,7 +92,7 @@ class ProductCustomerPermissionSearchCollector extends AbstractConfigurableSearc
      *
      * @return array
      */
-    protected function addExtraCollectorFields(array $result, array $collectItemData)
+    protected function addExtraCollectorFields(array $result, array $collectItemData): array
     {
         $result[CollectorConfig::COLLECTOR_TOUCH_ID] = (int)$collectItemData[CollectorConfig::COLLECTOR_TOUCH_ID];
         $result[CollectorConfig::COLLECTOR_RESOURCE_ID] = (int)$collectItemData[CollectorConfig::COLLECTOR_RESOURCE_ID];

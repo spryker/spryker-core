@@ -16,7 +16,7 @@ class ProductCustomerPermissionFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductCustomerPermission\Storage\ProductCustomerPermissionStorageInterface
      */
-    public function createStorage()
+    public function createStorage(): Storage\ProductCustomerPermissionStorageInterface
     {
         return new ProductCustomerPermissionStorage(
             $this->getStorageClient(),
@@ -28,7 +28,7 @@ class ProductCustomerPermissionFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
-    protected function createKeyBuilder()
+    protected function createKeyBuilder(): \Spryker\Shared\KeyBuilder\KeyBuilderInterface
     {
         return new ProductCustomerPermissionResourceKeyBuilder();
     }
@@ -36,7 +36,7 @@ class ProductCustomerPermissionFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductCustomerPermission\Dependency\Client\ProductCustomerPermissionToCustomerClientInterface
      */
-    public function getCustomerClient()
+    public function getCustomerClient(): Dependency\Client\ProductCustomerPermissionToCustomerClientInterface
     {
         return $this->getProvidedDependency(ProductCustomerPermissionDependencyProvider::CLIENT_CUSTOMER);
     }
@@ -44,7 +44,7 @@ class ProductCustomerPermissionFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductCustomerPermission\Dependency\Client\ProductCustomerPermissionToStorageClientInterface
      */
-    public function getStorageClient()
+    public function getStorageClient(): Dependency\Client\ProductCustomerPermissionToStorageClientInterface
     {
         return $this->getProvidedDependency(ProductCustomerPermissionDependencyProvider::CLIENT_STORAGE);
     }
@@ -52,7 +52,7 @@ class ProductCustomerPermissionFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductCustomerPermission\Dependency\Client\ProductCustomerPermissionToLocaleClientInterface
      */
-    public function getLocaleClient()
+    public function getLocaleClient(): Dependency\Client\ProductCustomerPermissionToLocaleClientInterface
     {
         return $this->getProvidedDependency(ProductCustomerPermissionDependencyProvider::CLIENT_LOCALE);
     }

@@ -23,7 +23,7 @@ class ProductCustomerPermissionClient extends AbstractClient implements ProductC
      *
      * @return bool
      */
-    public function isAllowedForCurrentCustomer(int $idProductAbstract)
+    public function isAllowedForCurrentCustomer(int $idProductAbstract): bool
     {
         $customer = $this->getFactory()
             ->getCustomerClient()
@@ -48,7 +48,7 @@ class ProductCustomerPermissionClient extends AbstractClient implements ProductC
      *
      * @return bool
      */
-    public function isAllowedForCustomer(int $idCustomer, int $idProductAbstract)
+    public function isAllowedForCustomer(int $idCustomer, int $idProductAbstract): bool
     {
         return $this->getFactory()
             ->createStorage()

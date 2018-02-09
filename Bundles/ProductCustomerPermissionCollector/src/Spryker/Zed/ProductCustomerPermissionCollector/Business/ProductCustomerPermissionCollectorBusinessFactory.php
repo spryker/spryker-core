@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\ProductCustomerPermissionCollector\Business;
 
+use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductCustomerPermissionCollector\Business\Search\ProductCustomerPermissionSearchCollector;
 use Spryker\Zed\ProductCustomerPermissionCollector\Business\Storage\ProductCustomerPermissionStorageCollector;
 use Spryker\Zed\ProductCustomerPermissionCollector\Persistence\Search\Propel\ProductCustomerPermissionSearchCollectorQuery;
 use Spryker\Zed\ProductCustomerPermissionCollector\ProductCustomerPermissionCollectorDependencyProvider;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 /**
  * @method \Spryker\Zed\ProductCustomerPermissionCollector\ProductCustomerPermissionCollectorConfig getConfig()
@@ -21,7 +23,7 @@ class ProductCustomerPermissionCollectorBusinessFactory extends AbstractBusiness
     /**
      * @return \Spryker\Zed\ProductCustomerPermissionCollector\Business\Search\ProductCustomerPermissionSearchCollector
      */
-    public function createSearchProductCustomerPermissionCollector()
+    public function createSearchProductCustomerPermissionCollector(): ProductCustomerPermissionSearchCollector
     {
         $searchCollector = new ProductCustomerPermissionSearchCollector(
             $this->getUtilDataReaderService()
@@ -33,9 +35,9 @@ class ProductCustomerPermissionCollectorBusinessFactory extends AbstractBusiness
     }
 
     /**
-     * @return \Spryker\Zed\ProductRelationCollector\Business\Collector\Storage\ProductRelationCollector
+     * @return \Spryker\Zed\ProductCustomerPermissionCollector\Business\Storage\ProductCustomerPermissionStorageCollector
      */
-    public function createStorageProductCustomerPermissionCollector()
+    public function createStorageProductCustomerPermissionCollector(): ProductCustomerPermissionStorageCollector
     {
         $storageCollector = new ProductCustomerPermissionStorageCollector(
             $this->getUtilDataReaderService()
@@ -50,7 +52,7 @@ class ProductCustomerPermissionCollectorBusinessFactory extends AbstractBusiness
     /**
      * @return \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface
      */
-    protected function getUtilDataReaderService()
+    protected function getUtilDataReaderService(): UtilDataReaderServiceInterface
     {
         return $this->getProvidedDependency(ProductCustomerPermissionCollectorDependencyProvider::SERVICE_DATA_READER);
     }
@@ -58,7 +60,7 @@ class ProductCustomerPermissionCollectorBusinessFactory extends AbstractBusiness
     /**
      * @return \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface
      */
-    protected function getTouchQueryContainer()
+    protected function getTouchQueryContainer(): TouchQueryContainerInterface
     {
         return $this->getProvidedDependency(ProductCustomerPermissionCollectorDependencyProvider::QUERY_CONTAINER_TOUCH);
     }
@@ -66,7 +68,7 @@ class ProductCustomerPermissionCollectorBusinessFactory extends AbstractBusiness
     /**
      * @return \Spryker\Zed\ProductCustomerPermissionCollector\Persistence\Search\Propel\ProductCustomerPermissionSearchCollectorQuery
      */
-    protected function createProductCustomerPermissionSearchCollectorQuery()
+    protected function createProductCustomerPermissionSearchCollectorQuery(): ProductCustomerPermissionSearchCollectorQuery
     {
         return new ProductCustomerPermissionSearchCollectorQuery();
     }

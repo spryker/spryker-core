@@ -15,7 +15,7 @@ use Spryker\Zed\ProductCustomerPermission\Persistence\ProductCustomerPermissionQ
 
 class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPermissionCheckoutPreConditionInterface
 {
-    const MESSAGE_NO_PERMISSION = 'checkout.step.error.no-product-permission';
+    protected const MESSAGE_NO_PERMISSION = 'checkout.step.error.no-product-permission';
 
     /**
      * @var \Spryker\Zed\ProductCustomerPermission\Persistence\ProductCustomerPermissionQueryContainerInterface
@@ -45,7 +45,7 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
      *
      * @return bool
      */
-    public function checkPreCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function checkPreCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         $isPassed = $this->hasCustomerPermissions($quoteTransfer);
 
@@ -61,7 +61,7 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
      *
      * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
      */
-    protected function createCheckoutErrorTransfer(QuoteTransfer $quoteTransfer)
+    protected function createCheckoutErrorTransfer(QuoteTransfer $quoteTransfer): CheckoutErrorTransfer
     {
         $message = $this->glossaryFacade->translate(static::MESSAGE_NO_PERMISSION)
             . ': ' . implode(', ', $this->getDeniedProductAbstractNames($quoteTransfer));
@@ -75,7 +75,7 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
      *
      * @return bool
      */
-    protected function hasCustomerPermissions(QuoteTransfer $quoteTransfer)
+    protected function hasCustomerPermissions(QuoteTransfer $quoteTransfer): bool
     {
         $idProductAbstracts = $this->getIdProductAbstracts($quoteTransfer);
         $idCustomer = $quoteTransfer->getCustomer()->getIdCustomer();
@@ -102,7 +102,7 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
      *
      * @return int[]
      */
-    protected function getAllowedIdProductAbstracts(QuoteTransfer $quoteTransfer)
+    protected function getAllowedIdProductAbstracts(QuoteTransfer $quoteTransfer): array
     {
         $idProductAbstracts = $this->getIdProductAbstracts($quoteTransfer);
         $idCustomer = $quoteTransfer->getCustomer()->getIdCustomer();
@@ -126,7 +126,7 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
      *
      * @return string[]
      */
-    protected function getDeniedProductAbstractNames(QuoteTransfer $quoteTransfer)
+    protected function getDeniedProductAbstractNames(QuoteTransfer $quoteTransfer): array
     {
         $allowedProductIds = $this->getAllowedIdProductAbstracts($quoteTransfer);
         $deniedProductAbstractNames = [];
@@ -145,7 +145,7 @@ class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPe
      *
      * @return int[]
      */
-    protected function getIdProductAbstracts(QuoteTransfer $quoteTransfer)
+    protected function getIdProductAbstracts(QuoteTransfer $quoteTransfer): array
     {
         $idProductAbstracts = [];
         foreach ($quoteTransfer->getItems() as $cartItem) {

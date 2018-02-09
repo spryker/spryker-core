@@ -15,15 +15,15 @@ use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermi
 
 class ProductCustomerPermissionDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
-    const FACADE_PRODUCT = 'FACADE_PRODUCT';
-    const FACADE_TOUCH = 'FACADE_TOUCH';
+    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_TOUCH = 'FACADE_TOUCH';
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addGlossaryFacade($container);
         $container = $this->addProductFacade($container);
@@ -37,7 +37,7 @@ class ProductCustomerPermissionDependencyProvider extends AbstractBundleDependen
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addGlossaryFacade(Container $container)
+    protected function addGlossaryFacade(Container $container): Container
     {
         $container[static::FACADE_GLOSSARY] = function (Container $container) {
             return new ProductCustomerPermissionToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
@@ -51,7 +51,7 @@ class ProductCustomerPermissionDependencyProvider extends AbstractBundleDependen
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductFacade(Container $container)
+    protected function addProductFacade(Container $container): Container
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductCustomerPermissionToProductFacadeBridge($container->getLocator()->product()->facade());
@@ -65,7 +65,7 @@ class ProductCustomerPermissionDependencyProvider extends AbstractBundleDependen
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addTouchFacade(Container $container)
+    protected function addTouchFacade(Container $container): Container
     {
         $container[static::FACADE_TOUCH] = function (Container $container) {
             return new ProductCustomerPermissionToTouchFacadeBridge($container->getLocator()->touch()->facade());

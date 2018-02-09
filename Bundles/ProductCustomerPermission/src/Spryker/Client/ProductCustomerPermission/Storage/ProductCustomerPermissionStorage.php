@@ -49,13 +49,13 @@ class ProductCustomerPermissionStorage implements ProductCustomerPermissionStora
      *
      * @return bool
      */
-    public function hasProductCustomerPermission(int $idCustomer, int $idProductAbstract)
+    public function hasProductCustomerPermission(int $idCustomer, int $idProductAbstract): bool
     {
         $identifier = $idProductAbstract . '.' . $idCustomer;
         $locale = $this->localeClient->getCurrentLocale();
         $key = $this->keyBuilder->generateKey($identifier, $locale);
         $permission = $this->storageClient->get($key);
 
-        return $permission === null ? false : true;
+        return $permission !== null;
     }
 }

@@ -39,7 +39,7 @@ class ProductCustomerPermissionCollectorSearchPlugin extends AbstractCollectorPl
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
-    ) {
+    ): void {
         $this->getFacade()->runSearchProductCustomerPermissionCollector(
             $baseQuery,
             $locale,

@@ -13,18 +13,18 @@ use Spryker\Zed\ProductCustomerPermissionCollector\Dependency\Facade\ProductCust
 
 class ProductCustomerPermissionCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+    public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
 
-    const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
+    public const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
 
-    const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
+    public const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $this->addCollectorFacade($container);
         $this->addDataReaderService($container);
@@ -36,36 +36,42 @@ class ProductCustomerPermissionCollectorDependencyProvider extends AbstractBundl
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container $container
      */
-    protected function addCollectorFacade(Container $container)
+    protected function addCollectorFacade(Container $container): Container
     {
         $container[static::FACADE_COLLECTOR] = function (Container $container) {
             return new ProductCustomerPermissionCollectorToCollectorFacadeBridge($container->getLocator()->collector()->facade());
         };
+
+        return $container;
     }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container $container
      */
-    protected function addDataReaderService(Container $container)
+    protected function addDataReaderService(Container $container): Container
     {
         $container[static::SERVICE_DATA_READER] = function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
         };
+
+        return $container;
     }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container $container
      */
-    protected function addTouchQueryContainer(Container $container)
+    protected function addTouchQueryContainer(Container $container): Container
     {
         $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
         };
+
+        return $container;
     }
 }

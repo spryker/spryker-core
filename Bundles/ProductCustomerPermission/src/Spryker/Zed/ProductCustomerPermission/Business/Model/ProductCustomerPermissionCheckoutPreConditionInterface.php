@@ -18,5 +18,5 @@ interface ProductCustomerPermissionCheckoutPreConditionInterface
      *
      * @return bool
      */
-    public function checkPreCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+    public function checkPreCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }

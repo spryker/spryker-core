@@ -31,7 +31,7 @@ class ProductCustomerPermissionQueryExpanderPlugin extends AbstractPlugin implem
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
-    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
+    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
     {
         $customerTransfer = $this->getFactory()
             ->getCustomerClient()
@@ -53,7 +53,7 @@ class ProductCustomerPermissionQueryExpanderPlugin extends AbstractPlugin implem
      *
      * @return \Elastica\Query\BoolQuery
      */
-    protected function getBoolQuery(Query $query)
+    protected function getBoolQuery(Query $query): BoolQuery
     {
         $boolQuery = $query->getQuery();
         if (!$boolQuery instanceof BoolQuery) {
@@ -72,7 +72,7 @@ class ProductCustomerPermissionQueryExpanderPlugin extends AbstractPlugin implem
      *
      * @return \Elastica\Query\Match
      */
-    protected function createCustomerQuery(int $idCustomer)
+    protected function createCustomerQuery(int $idCustomer): Match
     {
         return (new Match())
             ->setField(CustomerPageIndexMap::ID_CUSTOMER, $idCustomer);
@@ -83,7 +83,7 @@ class ProductCustomerPermissionQueryExpanderPlugin extends AbstractPlugin implem
      *
      * @return \Elastica\Query\HasChild
      */
-    protected function createCustomerFilter(int $idCustomer)
+    protected function createCustomerFilter(int $idCustomer): HasChild
     {
         $customerQuery = $this->createCustomerQuery($idCustomer);
 

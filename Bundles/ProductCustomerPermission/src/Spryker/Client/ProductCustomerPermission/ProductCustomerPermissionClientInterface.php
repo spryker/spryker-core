@@ -19,7 +19,7 @@ interface ProductCustomerPermissionClientInterface
      *
      * @return bool
      */
-    public function isAllowedForCurrentCustomer(int $idProductAbstract);
+    public function isAllowedForCurrentCustomer(int $idProductAbstract): bool;
 
     /**
      * Specification:
@@ -32,5 +32,5 @@ interface ProductCustomerPermissionClientInterface
      *
      * @return bool
      */
-    public function isAllowedForCustomer(int $idCustomer, int $idProductAbstract);
+    public function isAllowedForCustomer(int $idCustomer, int $idProductAbstract): bool;
 }

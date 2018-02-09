@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCustomerPermission\Persistence;
 
+use Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermissionQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 /**
@@ -21,7 +22,7 @@ interface ProductCustomerPermissionQueryContainerInterface extends QueryContaine
      *
      * @return \Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermissionQuery
      */
-    public function queryProductCustomerPermissionByCustomer(int $idCustomer);
+    public function queryProductCustomerPermissionByCustomer(int $idCustomer): SpyProductCustomerPermissionQuery;
 
     /**
      * @api
@@ -31,5 +32,5 @@ interface ProductCustomerPermissionQueryContainerInterface extends QueryContaine
      *
      * @return \Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermissionQuery
      */
-    public function queryProductCustomerPermissionByCustomerAndProducts(int $idCustomer, array $idProductAbstracts);
+    public function queryProductCustomerPermissionByCustomerAndProducts(int $idCustomer, array $idProductAbstracts): SpyProductCustomerPermissionQuery;
 }

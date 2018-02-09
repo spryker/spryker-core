@@ -41,7 +41,7 @@ interface ProductCustomerPermissionCollectorFacadeInterface
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
-    );
+    ): void;
 
     /**
      * Specification:
@@ -67,5 +67,5 @@ interface ProductCustomerPermissionCollectorFacadeInterface
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
-    );
+    ): void;
 }

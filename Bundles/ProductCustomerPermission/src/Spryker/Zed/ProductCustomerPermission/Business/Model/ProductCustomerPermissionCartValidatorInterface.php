@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductCustomerPermission\Business\Model;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 
 interface ProductCustomerPermissionCartValidatorInterface
 {
@@ -16,5 +17,5 @@ interface ProductCustomerPermissionCartValidatorInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function checkPermissions(CartChangeTransfer $cartChangeTransfer);
+    public function checkPermissions(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }

@@ -44,7 +44,7 @@ class ProductCustomerPermissionCollectorFacade extends AbstractFacade implements
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
-    ) {
+    ): void {
         $factory = $this->getFactory();
         $collector = $factory
             ->createSearchProductCustomerPermissionCollector();
@@ -84,7 +84,7 @@ class ProductCustomerPermissionCollectorFacade extends AbstractFacade implements
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
-    ) {
+    ): void {
         $factory = $this->getFactory();
         $collector = $factory
             ->createStorageProductCustomerPermissionCollector();

@@ -15,7 +15,7 @@ interface ProductCustomerPermissionToTouchFacadeInterface
      *
      * @return bool
      */
-    public function touchActive($itemType, $itemId);
+    public function touchActive($itemType, $itemId): bool;
 
     /**
      * @param string $itemType
@@ -23,5 +23,5 @@ interface ProductCustomerPermissionToTouchFacadeInterface
      *
      * @return bool
      */
-    public function touchDeleted($itemType, $itemId);
+    public function touchDeleted($itemType, $itemId): bool;
 }

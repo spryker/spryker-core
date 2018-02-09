@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductCustomerPermission\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -27,7 +28,7 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
      *
      * @return void
      */
-    public function saveCustomerProductPermission(int $idCustomer, int $idProductAbstract)
+    public function saveCustomerProductPermission(int $idCustomer, int $idProductAbstract): void
     {
         $this->getFactory()
             ->createProductCustomerPermissionSaver()
@@ -44,7 +45,7 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
      *
      * @return void
      */
-    public function saveCustomerProductPermissions(int $idCustomer, array $idProductAbstracts)
+    public function saveCustomerProductPermissions(int $idCustomer, array $idProductAbstracts): void
     {
         $this->getFactory()
             ->createProductCustomerPermissionSaver()
@@ -61,7 +62,7 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
      *
      * @return void
      */
-    public function deleteCustomerProductPermission(int $idCustomer, int $idProductAbstract)
+    public function deleteCustomerProductPermission(int $idCustomer, int $idProductAbstract): void
     {
         $this->getFactory()
             ->createProductCustomerPermissionSaver()
@@ -77,7 +78,7 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
      *
      * @return void
      */
-    public function deleteAllCustomerProductPermissions(int $idCustomer)
+    public function deleteAllCustomerProductPermissions(int $idCustomer): void
     {
         $this->getFactory()
             ->createProductCustomerPermissionSaver()
@@ -94,7 +95,7 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
      *
      * @return void
      */
-    public function deleteCustomerProductPermissions(int $idCustomer, array $idProductAbstracts)
+    public function deleteCustomerProductPermissions(int $idCustomer, array $idProductAbstracts): void
     {
         $this->getFactory()
             ->createProductCustomerPermissionSaver()
@@ -110,7 +111,7 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      **/
-    public function checkPermissions(CartChangeTransfer $cartChangeTransfer)
+    public function checkPermissions(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         return $this->getFactory()
             ->createCartValidator()
@@ -127,7 +128,7 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
      *
      * @return bool
      */
-    public function checkoutPreCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function checkoutPreCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         return $this->getFactory()
             ->createCheckoutPreConditionChecker()

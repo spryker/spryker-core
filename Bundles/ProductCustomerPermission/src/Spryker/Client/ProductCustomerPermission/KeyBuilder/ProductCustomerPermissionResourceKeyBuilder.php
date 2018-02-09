@@ -15,7 +15,7 @@ class ProductCustomerPermissionResourceKeyBuilder extends SharedResourceKeyBuild
     /**
      * @return string
      */
-    protected function getResourceType()
+    protected function getResourceType(): string
     {
         return ProductCustomerPermissionConfig::RESOURCE_TYPE_PRODUCT_CUSTOMER_PERMISSION;
     }

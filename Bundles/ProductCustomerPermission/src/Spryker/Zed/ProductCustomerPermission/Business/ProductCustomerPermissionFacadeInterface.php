@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductCustomerPermission\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -24,7 +25,7 @@ interface ProductCustomerPermissionFacadeInterface
      *
      * @return void
      */
-    public function saveCustomerProductPermission(int $idCustomer, int $idProductAbstract);
+    public function saveCustomerProductPermission(int $idCustomer, int $idProductAbstract): void;
 
     /**
      * Specification:
@@ -37,7 +38,7 @@ interface ProductCustomerPermissionFacadeInterface
      *
      * @return void
      */
-    public function saveCustomerProductPermissions(int $idCustomer, array $idProductAbstracts);
+    public function saveCustomerProductPermissions(int $idCustomer, array $idProductAbstracts): void;
 
     /**
      * Specification:
@@ -50,7 +51,7 @@ interface ProductCustomerPermissionFacadeInterface
      *
      * @return void
      */
-    public function deleteCustomerProductPermission(int $idCustomer, int $idProductAbstract);
+    public function deleteCustomerProductPermission(int $idCustomer, int $idProductAbstract): void;
 
     /**
      * Specification:
@@ -62,7 +63,7 @@ interface ProductCustomerPermissionFacadeInterface
      *
      * @return void
      */
-    public function deleteAllCustomerProductPermissions(int $idCustomer);
+    public function deleteAllCustomerProductPermissions(int $idCustomer): void;
 
     /**
      * Specification:
@@ -75,7 +76,7 @@ interface ProductCustomerPermissionFacadeInterface
      *
      * @return void
      */
-    public function deleteCustomerProductPermissions(int $idCustomer, array $idProductAbstracts);
+    public function deleteCustomerProductPermissions(int $idCustomer, array $idProductAbstracts): void;
 
     /**
      * Specification:
@@ -88,7 +89,7 @@ interface ProductCustomerPermissionFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      **/
-    public function checkPermissions(CartChangeTransfer $cartChangeTransfer);
+    public function checkPermissions(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 
     /**
      * Specification:
@@ -101,5 +102,5 @@ interface ProductCustomerPermissionFacadeInterface
      *
      * @return bool
      */
-    public function checkoutPreCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+    public function checkoutPreCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }

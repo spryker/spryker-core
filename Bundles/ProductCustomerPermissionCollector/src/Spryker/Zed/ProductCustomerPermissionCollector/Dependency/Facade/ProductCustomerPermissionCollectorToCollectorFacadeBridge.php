@@ -52,7 +52,7 @@ class ProductCustomerPermissionCollectorToCollectorFacadeBridge implements Produ
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
-    ) {
+    ): void {
         $this->collectorFacade->runCollector(
             $collector,
             $baseQuery,

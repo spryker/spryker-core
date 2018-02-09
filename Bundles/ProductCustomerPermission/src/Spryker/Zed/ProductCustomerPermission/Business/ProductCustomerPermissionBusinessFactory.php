@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionCartValidator;
 use Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionCheckoutPreCondition;
 use Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionSaver;
+use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToGlossaryFacadeInterface;
+use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToProductFacadeInterface;
+use Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToTouchFacadeInterface;
 use Spryker\Zed\ProductCustomerPermission\ProductCustomerPermissionDependencyProvider;
 
 /**
@@ -22,7 +25,7 @@ class ProductCustomerPermissionBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionSaverInterface
      */
-    public function createProductCustomerPermissionSaver()
+    public function createProductCustomerPermissionSaver(): Model\ProductCustomerPermissionSaverInterface
     {
         return new ProductCustomerPermissionSaver($this->getQueryContainer(), $this->getTouchFacade());
     }
@@ -30,7 +33,7 @@ class ProductCustomerPermissionBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionCartValidatorInterface
      */
-    public function createCartValidator()
+    public function createCartValidator(): Model\ProductCustomerPermissionCartValidatorInterface
     {
         return new ProductCustomerPermissionCartValidator($this->getQueryContainer(), $this->getProductFacade());
     }
@@ -38,7 +41,7 @@ class ProductCustomerPermissionBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductCustomerPermission\Business\Model\ProductCustomerPermissionCheckoutPreConditionInterface
      */
-    public function createCheckoutPreConditionChecker()
+    public function createCheckoutPreConditionChecker(): Model\ProductCustomerPermissionCheckoutPreConditionInterface
     {
         return new ProductCustomerPermissionCheckoutPreCondition($this->getQueryContainer(), $this->getGlossaryFacade());
     }
@@ -46,7 +49,7 @@ class ProductCustomerPermissionBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToTouchFacadeInterface
      */
-    protected function getTouchFacade()
+    protected function getTouchFacade(): ProductCustomerPermissionToTouchFacadeInterface
     {
         return $this->getProvidedDependency(ProductCustomerPermissionDependencyProvider::FACADE_TOUCH);
     }
@@ -54,7 +57,7 @@ class ProductCustomerPermissionBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToProductFacadeInterface
      */
-    protected function getProductFacade()
+    protected function getProductFacade(): ProductCustomerPermissionToProductFacadeInterface
     {
         return $this->getProvidedDependency(ProductCustomerPermissionDependencyProvider::FACADE_PRODUCT);
     }
@@ -62,7 +65,7 @@ class ProductCustomerPermissionBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductCustomerPermission\Dependency\Facade\ProductCustomerPermissionToGlossaryFacadeInterface
      */
-    protected function getGlossaryFacade()
+    protected function getGlossaryFacade(): ProductCustomerPermissionToGlossaryFacadeInterface
     {
         return $this->getProvidedDependency(ProductCustomerPermissionDependencyProvider::FACADE_GLOSSARY);
     }

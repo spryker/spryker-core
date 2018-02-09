@@ -14,5 +14,5 @@ interface ProductCustomerPermissionToProductFacadeInterface
      *
      * @return int
      */
-    public function getProductAbstractIdByConcreteSku($concreteSku);
+    public function getProductAbstractIdByConcreteSku($concreteSku): int;
 }

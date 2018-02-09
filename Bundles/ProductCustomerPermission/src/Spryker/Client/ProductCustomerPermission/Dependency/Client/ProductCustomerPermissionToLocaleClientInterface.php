@@ -11,5 +11,5 @@ interface ProductCustomerPermissionToLocaleClientInterface
     /**
      * @return string
      */
-    public function getCurrentLocale();
+    public function getCurrentLocale(): string;
 }

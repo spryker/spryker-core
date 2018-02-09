@@ -19,7 +19,7 @@ class ProductCustomerPermissionPersistenceFactory extends AbstractPersistenceFac
     /**
      * @return \Orm\Zed\ProductCustomerPermission\Persistence\SpyProductCustomerPermissionQuery
      */
-    public function createProductCustomerPermissionQuery()
+    public function createProductCustomerPermissionQuery(): SpyProductCustomerPermissionQuery
     {
         return SpyProductCustomerPermissionQuery::create();
     }

@@ -23,7 +23,7 @@ class ProductCustomerPermissionPreConditionCheckerPlugin extends AbstractPlugin 
      *
      * @return bool
      */
-    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         return $this->getFacade()
             ->checkoutPreCondition($quoteTransfer, $checkoutResponseTransfer);
