@@ -43,7 +43,7 @@ class AvailabilityHandlerTest extends Unit
         $availabilityContainerMock = $this->createAvailabilityQueryContainerMock(0);
 
         $sellableMock = $this->createSellableMock();
-        $sellableMock->method('calculateStockForProduct')->willReturn(15);
+        $sellableMock->method('calculateStockForProductWithStore')->willReturn(15);
 
         $touchFacadeMock = $this->createTouchFacadeMock();
         $touchFacadeMock->expects($this->once())->method('touchActive');
@@ -66,7 +66,7 @@ class AvailabilityHandlerTest extends Unit
         $availabilityContainerMock = $this->createAvailabilityQueryContainerMock(5);
 
         $sellableMock = $this->createSellableMock();
-        $sellableMock->method('calculateStockForProduct')->willReturn(0);
+        $sellableMock->method('calculateStockForProductWithStore')->willReturn(0);
 
         $touchFacadeMock = $this->createTouchFacadeMock();
         $touchFacadeMock->expects($this->once())->method('touchActive');

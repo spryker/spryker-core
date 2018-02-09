@@ -51,7 +51,7 @@ class ReservationVersionHandler implements ReservationVersionHandlerInterface
             ->findOne();
 
         (new SpyOmsProductReservationChangeVersion())
-            ->setIdOmsProductReservationId($idOmsProductReservation)
+            ->setIdOmsProductReservation($idOmsProductReservation)
             ->save();
     }
 }
