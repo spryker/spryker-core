@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Dataset\Communication\Table;
 
+use Orm\Zed\Dataset\Persistence\Map\SpyDatasetTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Shared\Dataset\DatasetConstants;
 use Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -16,6 +16,11 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class DatasetTable extends AbstractTable
 {
     const REQUEST_ID_DATASET = 'id-dataset';
+    const COL_ID_DATASET = SpyDatasetTableMap::COL_ID_DATASET;
+    const COL_DATASET_NAME = SpyDatasetTableMap::COL_NAME;
+    const COL_ACTIONS = 'Actions';
+    const SORT_DESC = TableConfiguration::SORT_DESC;
+    const COL_IS_ACTIVE = SpyDatasetTableMap::COL_IS_ACTIVE;
 
     const DATASET_ACTIVATE_URL = '/dataset/activate';
     const DATASET_DEACTIVATE_URL = '/dataset/deactivate';
@@ -48,8 +53,8 @@ class DatasetTable extends AbstractTable
         $this->setSearchableFields($config);
         $this->setRawColumns($config);
         $this->setDefaultSortField($config);
-        $config->addRawColumn(DatasetConstants::COL_IS_ACTIVE);
-        $config->addRawColumn(DatasetConstants::COL_ACTIONS);
+        $config->addRawColumn(static::COL_IS_ACTIVE);
+        $config->addRawColumn(static::COL_ACTIONS);
 
         return $config;
     }
@@ -81,10 +86,10 @@ class DatasetTable extends AbstractTable
         $actions = implode(' ', $this->buildLinks($item));
 
         return [
-            DatasetConstants::COL_ID_DATASET => $item[DatasetConstants::COL_ID_DATASET],
-            DatasetConstants::COL_DATASET_NAME => $item[DatasetConstants::COL_DATASET_NAME],
-            DatasetConstants::COL_IS_ACTIVE => $this->generateStatusLabels($item),
-            DatasetConstants::COL_ACTIONS => $actions,
+            static::COL_ID_DATASET => $item[static::COL_ID_DATASET],
+            static::COL_DATASET_NAME => $item[static::COL_DATASET_NAME],
+            static::COL_IS_ACTIVE => $this->generateStatusLabels($item),
+            static::COL_ACTIONS => $actions,
         ];
     }
 
@@ -96,10 +101,10 @@ class DatasetTable extends AbstractTable
     protected function setHeaders(TableConfiguration $config)
     {
         $config->setHeader([
-            DatasetConstants::COL_ID_DATASET => '#',
-            DatasetConstants::COL_DATASET_NAME => 'Dataset name',
-            DatasetConstants::COL_IS_ACTIVE => 'Active',
-            DatasetConstants::COL_ACTIONS => DatasetConstants::COL_ACTIONS,
+            static::COL_ID_DATASET => '#',
+            static::COL_DATASET_NAME => 'Dataset name',
+            static::COL_IS_ACTIVE => 'Active',
+            static::COL_ACTIONS => static::COL_ACTIONS,
         ]);
     }
 
@@ -111,9 +116,9 @@ class DatasetTable extends AbstractTable
     protected function setSortableFields(TableConfiguration $config)
     {
         $config->setSortable([
-            DatasetConstants::COL_ID_DATASET,
-            DatasetConstants::COL_DATASET_NAME,
-            DatasetConstants::COL_IS_ACTIVE,
+            static::COL_ID_DATASET,
+            static::COL_DATASET_NAME,
+            static::COL_IS_ACTIVE,
         ]);
     }
 
@@ -125,8 +130,8 @@ class DatasetTable extends AbstractTable
     protected function setSearchableFields(TableConfiguration $config)
     {
         $config->setSearchable([
-            DatasetConstants::COL_ID_DATASET,
-            DatasetConstants::COL_DATASET_NAME,
+            static::COL_ID_DATASET,
+            static::COL_DATASET_NAME,
         ]);
     }
 
@@ -138,7 +143,7 @@ class DatasetTable extends AbstractTable
     protected function setRawColumns(TableConfiguration $config)
     {
         $config->setRawColumns([
-            DatasetConstants::COL_ACTIONS,
+            static::COL_ACTIONS,
         ]);
     }
 
@@ -149,7 +154,7 @@ class DatasetTable extends AbstractTable
      */
     protected function setDefaultSortField(TableConfiguration $config)
     {
-        $config->setDefaultSortField(DatasetConstants::COL_ID_DATASET, DatasetConstants::SORT_DESC);
+        $config->setDefaultSortField(static::COL_ID_DATASET, static::SORT_DESC);
     }
 
     /**
@@ -162,20 +167,20 @@ class DatasetTable extends AbstractTable
         $buttons = [];
         $buttons[] = $this->generateViewButton(
             Url::generate(self::DATASET_DOWNLOAD_URL, [
-                static::REQUEST_ID_DATASET => $item[DatasetConstants::COL_ID_DATASET],
+                static::REQUEST_ID_DATASET => $item[static::COL_ID_DATASET],
             ]),
             'Download'
         );
         $buttons[] = $this->generateEditButton(
             Url::generate(self::DATASET_EDIT_URL, [
-                static::REQUEST_ID_DATASET => $item[DatasetConstants::COL_ID_DATASET],
+                static::REQUEST_ID_DATASET => $item[static::COL_ID_DATASET],
             ]),
             'Edit'
         );
         $buttons[] = $this->generateStateChangeButton($item);
         $buttons[] = $this->generateRemoveButton(
             Url::generate(self::DATASET_DELETE_URL, [
-                static::REQUEST_ID_DATASET => $item[DatasetConstants::COL_ID_DATASET],
+                static::REQUEST_ID_DATASET => $item[static::COL_ID_DATASET],
             ]),
             'Delete'
         );
@@ -190,10 +195,10 @@ class DatasetTable extends AbstractTable
      */
     protected function generateStateChangeButton(array $item)
     {
-        if ($item[DatasetConstants::COL_IS_ACTIVE]) {
+        if ($item[static::COL_IS_ACTIVE]) {
             return $this->generateRemoveButton(
                 Url::generate(self::DATASET_DEACTIVATE_URL, [
-                    self::REQUEST_ID_DATASET => $item[DatasetConstants::COL_ID_DATASET],
+                    self::REQUEST_ID_DATASET => $item[static::COL_ID_DATASET],
                 ]),
                 'Deactivate'
             );
@@ -201,7 +206,7 @@ class DatasetTable extends AbstractTable
 
         return $this->generateViewButton(
             Url::generate(self::DATASET_ACTIVATE_URL, [
-                self::REQUEST_ID_DATASET => $item[DatasetConstants::COL_ID_DATASET],
+                self::REQUEST_ID_DATASET => $item[static::COL_ID_DATASET],
             ]),
             'Activate'
         );
@@ -214,7 +219,7 @@ class DatasetTable extends AbstractTable
      */
     protected function generateStatusLabels(array $item)
     {
-        if ($item[DatasetConstants::COL_IS_ACTIVE]) {
+        if ($item[static::COL_IS_ACTIVE]) {
             return '<span class="label label-info">Active</span>';
         }
 
