@@ -41,7 +41,7 @@ class ProductCategoryFilterController extends AbstractController
         $productCategoryFilterFormatter = $this->getFactory()->createProductCategoryFilterFormatter();
 
         $productCategoryFilterForm = $this->getFactory()
-            ->createProductCategoryFilterForm(
+            ->getProductCategoryFilterForm(
                 $productCategoryFilterDataProvider->getData(),
                 $productCategoryFilterDataProvider->getOptions()
             )
