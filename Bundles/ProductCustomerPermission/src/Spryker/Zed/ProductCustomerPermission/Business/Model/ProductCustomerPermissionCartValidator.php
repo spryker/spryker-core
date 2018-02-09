@@ -55,7 +55,6 @@ class ProductCustomerPermissionCartValidator implements ProductCustomerPermissio
             return $cartPreCheckResponseTransfer;
         }
 
-        // @TODO additional optimization could added to reduce number of queries
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if (!$this->hasPermission($customerTransfer->getIdCustomer(), $itemTransfer->getSku())) {
                 $cartPreCheckResponseTransfer->setIsSuccess(false);
