@@ -7,21 +7,21 @@
 
 namespace Spryker\Yves\Checkout\Dependency\Plugin\Form;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface SubFormFilterPluginInterface
 {
     /**
      * Specification:
-     * - Filters invalid sub-forms for checkout
+     * - Provides an array with valid form names listed
      *
      * @api
      *
-     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $formPluginCollection
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $data
+     * @example ['subForm1', 'subForm2']
      *
-     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string[]
      */
-    public function filter(SubFormPluginCollection $formPluginCollection, AbstractTransfer $data);
+    public function provideValidFormNames(QuoteTransfer $quoteTransfer);
 }

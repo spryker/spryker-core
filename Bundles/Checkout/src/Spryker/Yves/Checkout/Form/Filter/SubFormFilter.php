@@ -7,6 +7,8 @@
 
 namespace Spryker\Yves\Checkout\Form\Filter;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface;
 use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 
@@ -65,12 +67,42 @@ class SubFormFilter implements SubFormFilterInterface
     protected function applyFilters()
     {
         $dataTransfer = $this->dataContainer->get();
+
+        if (!($dataTransfer instanceof QuoteTransfer)) {
+            return $this->subFormPlugins;
+        }
+
         $filteredSubFormPlugins = clone $this->subFormPlugins;
 
         foreach ($this->subFormFilterPlugins as $filter) {
-            $filteredSubFormPlugins = $filter->filter($filteredSubFormPlugins, $dataTransfer);
+            $filteredSubFormPlugins = $this->applyFilter($filteredSubFormPlugins, $filter, $dataTransfer);
         }
 
         return $filteredSubFormPlugins;
+    }
+
+    /**
+     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $subFormPluginCollection
+     * @param \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface $subFormFilterPlugin
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
+     */
+    protected function applyFilter(
+        SubFormPluginCollection $subFormPluginCollection,
+        SubFormFilterPluginInterface $subFormFilterPlugin,
+        QuoteTransfer $quoteTransfer
+    ) {
+        $validFormNames = $subFormFilterPlugin->provideValidFormNames($quoteTransfer);
+
+        foreach ($subFormPluginCollection as $key => $subFormPlugin) {
+            $subFormName = $subFormPlugin->createSubForm()->getName();
+
+            if (!in_array($subFormName, $validFormNames)) {
+                unset($subFormPluginCollection[$key]);
+            }
+        }
+
+        return $subFormPluginCollection;
     }
 }

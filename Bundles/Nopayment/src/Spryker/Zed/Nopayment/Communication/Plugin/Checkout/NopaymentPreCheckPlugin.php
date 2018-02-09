@@ -37,7 +37,5 @@ class NopaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheck
             $error->setErrorCode(self::ERROR_CODE_NOPAYMENT_NOT_ALLOWED);
             $checkoutResponseTransfer->addError($error);
         }
-
-        return;
     }
 }

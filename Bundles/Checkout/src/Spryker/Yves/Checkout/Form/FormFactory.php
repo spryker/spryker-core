@@ -14,7 +14,6 @@ use Spryker\Yves\Checkout\Form\Provider\SubFormDataProviders;
 use Spryker\Yves\Checkout\Form\Steps\PaymentForm;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
-use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandler;
 
 class FormFactory extends AbstractFactory

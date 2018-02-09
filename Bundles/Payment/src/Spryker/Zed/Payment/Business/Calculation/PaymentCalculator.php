@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\Payment\Business\Calculation;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 
 class PaymentCalculator implements PaymentCalculatorInterface
@@ -64,7 +62,9 @@ class PaymentCalculator implements PaymentCalculatorInterface
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     *
+     * @return void
      */
     protected function definePriceToPay(TotalsTransfer $totalsTransfer)
     {
@@ -74,8 +74,8 @@ class PaymentCalculator implements PaymentCalculatorInterface
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
-     * @param PaymentTransfer[] $paymentTransfers
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Generated\Shared\Transfer\PaymentTransfer[] $paymentTransfers
      *
      * @return void
      */
@@ -104,8 +104,8 @@ class PaymentCalculator implements PaymentCalculatorInterface
     }
 
     /**
-     * @param TotalsTransfer $totalsTransfer
-     * @param PaymentTransfer[] $paymentTransfers
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Generated\Shared\Transfer\PaymentTransfer[] $paymentTransfers
      *
      * @return void
      */

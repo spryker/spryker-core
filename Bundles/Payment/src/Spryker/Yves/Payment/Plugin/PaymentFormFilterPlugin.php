@@ -7,13 +7,14 @@
 
 namespace Spryker\Yves\Payment\Plugin;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Generated\Shared\Transfer\PaymentMethodsTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 
 /**
  * @method \Spryker\Yves\Payment\PaymentFactory getFactory()
+ * @method \Spryker\Client\Payment\PaymentClientInterface getClient()
  */
 class PaymentFormFilterPlugin extends AbstractPlugin implements SubFormFilterPluginInterface
 {
@@ -22,15 +23,30 @@ class PaymentFormFilterPlugin extends AbstractPlugin implements SubFormFilterPlu
      *
      * @api
      *
-     * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection $formPluginCollection
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $data
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection
+     * @return string[]
      */
-    public function filter(SubFormPluginCollection $formPluginCollection, AbstractTransfer $data)
+    public function provideValidFormNames(QuoteTransfer $quoteTransfer)
     {
-        return $this->getFactory()
-            ->createPaymentMethodFormFilter()
-            ->filter($formPluginCollection, $data);
+        return $this->collectPaymentMethodNames(
+            $this->getClient()->getAvailableMethods($quoteTransfer)
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
+     *
+     * @return array
+     */
+    protected function collectPaymentMethodNames(PaymentMethodsTransfer $paymentMethodsTransfer)
+    {
+        $paymentMethodNames = [];
+
+        foreach ($paymentMethodsTransfer->getMethods() as $paymentMethodTransfer) {
+            $paymentMethodNames[] = $paymentMethodTransfer->getMethodName();
+        }
+
+        return $paymentMethodNames;
     }
 }
