@@ -47,8 +47,10 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function providePersistenceLayerDependencies(Container $container)
     {
+        $container = $this->addProductQueryContainer($container);
+
         return $container;
     }
 
@@ -61,22 +63,6 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_STORE] = function (Container $container) {
             return new AvailabilityToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function providePersistenceLayerDependencies(Container $container)
-    {
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
-            return new PersistenceAvailabilityToProductBridge(
-                $container->getLocator()->product()->queryContainer()
-            );
         };
 
         return $container;
@@ -130,6 +116,19 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_OMS] = function (Container $container) {
             return new AvailabilityToOmsBridge($container->getLocator()->oms()->facade());
+        };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductQueryContainer(Container $container)
+    {
+        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+            return new PersistenceAvailabilityToProductBridge($container->getLocator()->product()->queryContainer());
         };
         return $container;
     }

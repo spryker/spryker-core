@@ -83,7 +83,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
         foreach ($spyAvailabilityEntities as $spyAvailability) {
             $idAvailability = $spyAvailability[static::ID_AVAILABILITY_ABSTRACT];
             $store = $spyAvailability[static::STORE][static::STORE_NAME];
-            if (isset($spyAvailabilityStorageEntities[$idAvailability]) && isset($spyAvailabilityStorageEntities[$store])) {
+            if (isset($spyAvailabilityStorageEntities[$idAvailability]) && $spyAvailabilityStorageEntities[$idAvailability]->getStore() === $store) {
                 $this->storeDataSet($spyAvailability, $spyAvailabilityStorageEntities[$idAvailability]);
             } else {
                 $this->storeDataSet($spyAvailability);
@@ -128,7 +128,9 @@ class AvailabilityStorage implements AvailabilityStorageInterface
      */
     protected function findAvailabilityStorageEntitiesByAvailabilityAbstractIds(array $availabilityAbstractIds)
     {
-        return $this->queryContainer->queryAvailabilityStorageByAvailabilityAbstractIds($availabilityAbstractIds)->find()->toKeyIndex(static::FK_AVAILABILITY_ABSTRACT);
+        return $this->queryContainer->queryAvailabilityStorageByAvailabilityAbstractIds($availabilityAbstractIds)
+            ->find()
+            ->toKeyIndex(static::FK_AVAILABILITY_ABSTRACT);
     }
 
     /**
