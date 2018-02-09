@@ -56,12 +56,11 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\FileFormDataProvider $dataProvider
      * @param null|int $idFile
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createFileForm($dataProvider, $idFile = null)
+    public function createFileForm($idFile = null)
     {
         $dataProvider = $this->createFileFormDataProvider();
 

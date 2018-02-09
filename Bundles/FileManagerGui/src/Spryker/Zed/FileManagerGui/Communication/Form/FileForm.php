@@ -112,6 +112,7 @@ class FileForm extends AbstractType
             'required' => empty($formData[static::FIELD_ID_FILE]),
             'constraints' => [
                 new File([
+                    'maxSize' => $this->getConfig()->getMaxSize(),
                     'mimeTypes' => $this->getConfig()->getAllowedMimeTypes(),
                     'mimeTypesMessage' => FileManagerGuiConstants::ERROR_MIME_TYPE_MESSAGE,
                 ]),

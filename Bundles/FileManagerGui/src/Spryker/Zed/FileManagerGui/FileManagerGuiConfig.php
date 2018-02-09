@@ -23,4 +23,12 @@ class FileManagerGuiConfig extends AbstractBundleConfig
         return $this->get(FileManagerGuiConstants::ALLOWED_MIME_TYPES, []);
     }
 
+    /**
+     * @return string
+     */
+    public function getMaxSize(): string
+    {
+        return $this->get(FileManagerGuiConstants::MAX_FILE_SIZE, FileManagerGuiConstants::DEFAULT_MAX_FILE_SIZE);
+    }
+
 }

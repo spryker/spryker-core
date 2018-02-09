@@ -25,4 +25,6 @@ interface FileManagerGuiConstants
     const SORT_DESC = TableConfiguration::SORT_DESC;
     const ALLOWED_MIME_TYPES = 'ALLOWED_MIME_TYPES';
     const ERROR_MIME_TYPE_MESSAGE = 'Please upload a file with valid';
+    const MAX_FILE_SIZE = 'MAX_FILE_SIZE';
+    const DEFAULT_MAX_FILE_SIZE = '10M';
 }
