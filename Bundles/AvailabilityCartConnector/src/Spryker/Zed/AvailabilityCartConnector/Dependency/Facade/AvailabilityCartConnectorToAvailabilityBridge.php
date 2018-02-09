@@ -25,6 +25,8 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
     }
 
     /**
+     * @deprecated use calculateStockForProductWithStore instead
+     *
      * @param string $sku
      * @param int $quantity
      *
@@ -36,6 +38,8 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
     }
 
     /**
+     * @deprecated use calculateStockForProduct instead
+     *
      * @param string $sku
      *
      * @return int
@@ -46,6 +50,8 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
     }
 
     /**
+     * The method check for "method_exists" is for BC for modules without multi store support.
+     *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -61,6 +67,8 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
     }
 
     /**
+     * The method check for "method_exists" is for BC for modules without multi store support.
+     *
      * @param string $sku
      * @param int $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer

@@ -82,8 +82,8 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     {
         foreach ($spyAvailabilityEntities as $spyAvailability) {
             $idAvailability = $spyAvailability[static::ID_AVAILABILITY_ABSTRACT];
-            $store = $spyAvailability[static::STORE][static::STORE_NAME];
-            if (isset($spyAvailabilityStorageEntities[$idAvailability]) && $spyAvailabilityStorageEntities[$idAvailability]->getStore() === $store) {
+            $storeName = $spyAvailability[static::STORE][static::STORE_NAME];
+            if (isset($spyAvailabilityStorageEntities[$idAvailability]) && $spyAvailabilityStorageEntities[$idAvailability]->getStore() === $storeName) {
                 $this->storeDataSet($spyAvailability, $spyAvailabilityStorageEntities[$idAvailability]);
             } else {
                 $this->storeDataSet($spyAvailability);
@@ -102,11 +102,11 @@ class AvailabilityStorage implements AvailabilityStorageInterface
         if ($spyAvailabilityStorageEntity === null) {
             $spyAvailabilityStorageEntity = new SpyAvailabilityStorage();
         }
-        $store = $spyAvailabilityEntity[static::STORE][static::STORE_NAME];
+        $storeName = $spyAvailabilityEntity[static::STORE][static::STORE_NAME];
         $spyAvailabilityStorageEntity->setFkProductAbstract($spyAvailabilityEntity[static::ID_PRODUCT_ABSTRACT]);
         $spyAvailabilityStorageEntity->setFkAvailabilityAbstract($spyAvailabilityEntity[static::ID_AVAILABILITY_ABSTRACT]);
         $spyAvailabilityStorageEntity->setData($spyAvailabilityEntity);
-        $spyAvailabilityStorageEntity->setStore($store);
+        $spyAvailabilityStorageEntity->setStore($storeName);
         $spyAvailabilityStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyAvailabilityStorageEntity->save();
     }

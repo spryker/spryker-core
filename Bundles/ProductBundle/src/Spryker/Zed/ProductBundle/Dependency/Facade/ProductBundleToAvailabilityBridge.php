@@ -25,6 +25,8 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     }
 
     /**
+     * @deprecated use isProductSellableForStore instead
+     *
      * @param string $sku
      * @param int $quantity
      *
@@ -36,6 +38,8 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     }
 
     /**
+     * @deprecated use calculateStockForProductWithStore instead
+     *
      * @param string $sku
      *
      * @return int
@@ -46,6 +50,8 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     }
 
     /**
+     * The method check for "method_exists" is for BC for modules without multi store availability support.
+     *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -61,6 +67,8 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     }
 
     /**
+     * The method check for "method_exists" is for BC for modules without multi store availability support.
+     *
      * @param string $sku
      * @param int $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
@@ -87,6 +95,8 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     }
 
     /**
+     * @deprecated use saveProductAvailabilityForStore instead
+     *
      * @param string $sku
      * @param int $quantity
      *
@@ -98,6 +108,8 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     }
 
     /**
+     * The method check for "method_exists" is for BC for modules without multi store availability support.
+     *
      * @param string $sku
      * @param int $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer

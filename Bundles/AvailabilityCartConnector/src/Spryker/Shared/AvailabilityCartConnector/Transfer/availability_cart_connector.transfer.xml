@@ -7,6 +7,10 @@
         <property name="store" type="Store" />
     </transfer>
 
+    <transfer name="Store">
+        <property name="name" type="string" />
+    </transfer>
+
     <transfer name="CartChange">
         <property name="items" type="Item[]" singular="item" />
         <property name="quote" type="Quote" />

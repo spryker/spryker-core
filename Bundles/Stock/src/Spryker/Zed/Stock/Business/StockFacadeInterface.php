@@ -231,8 +231,8 @@ interface StockFacadeInterface
      *  - Returns stock mapping per store/warehouse pair
      *
      *  [
-     *    'warehouse1' => ['DE', 'US'],
-     *    'warehouse2' => ['US']
+     *    'Warehouse1' => ['DE', 'US'],
+     *    'Warehouse1' => ['US']
      * ]
      *
      * @api

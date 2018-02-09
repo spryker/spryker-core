@@ -43,6 +43,8 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
+        $quoteTransfer->requireStore();
+
         $isPassed = true;
 
         $storeTransfer = $quoteTransfer->getStore();

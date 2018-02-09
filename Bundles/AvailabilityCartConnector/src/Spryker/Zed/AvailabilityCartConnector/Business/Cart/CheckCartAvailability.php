@@ -10,7 +10,9 @@ namespace Spryker\Zed\AvailabilityCartConnector\Business\Cart;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface;
 
 class CheckCartAvailability implements CheckCartAvailabilityInterface
@@ -42,7 +44,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
         $cartPreCheckResponseTransfer = new CartPreCheckResponseTransfer();
         $cartPreCheckResponseTransfer->setIsSuccess(true);
 
-        $storeTransfer = $cartChangeTransfer->getQuote()->getStore();
+        $storeTransfer = $this->getStoreTransfer($cartChangeTransfer);
 
         $messages = new ArrayObject();
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
@@ -52,14 +54,10 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
             );
              $currentItemQuantity += $itemTransfer->getQuantity();
 
-            $isSellable = $this->availabilityFacade->isProductSellableForStore(
-                $itemTransfer->getSku(),
-                $currentItemQuantity,
-                $storeTransfer
-            );
+            $isSellable = $this->isProductSellable($itemTransfer, $currentItemQuantity, $storeTransfer);
 
             if (!$isSellable) {
-                $stock = $this->availabilityFacade->calculateStockForProductWithStore($itemTransfer->getSku(), $storeTransfer);
+                $stock = $this->calculateStockForProduct($itemTransfer, $storeTransfer);
                 $cartPreCheckResponseTransfer->setIsSuccess(false);
                 $messages[] = $this->createItemIsNotAvailableMessageTransfer($stock);
             }
@@ -117,5 +115,55 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
             $translationKey = static::CART_PRE_CHECK_AVAILABILITY_EMPTY;
         }
         return $translationKey;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function getStoreTransfer(CartChangeTransfer $cartChangeTransfer)
+    {
+        $storeTransfer = $cartChangeTransfer->getQuote()->getStore();
+        if (!$storeTransfer) {
+            return new StoreTransfer();
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param int $currentItemQuantity
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     *
+     * @return bool
+     */
+    protected function isProductSellable(
+        ItemTransfer $itemTransfer,
+        $currentItemQuantity,
+        StoreTransfer $storeTransfer = null
+    ) {
+        if ($storeTransfer) {
+            return $this->availabilityFacade->isProductSellableForStore(
+                $itemTransfer->getSku(),
+                $currentItemQuantity,
+                $storeTransfer
+            );
+        }
+
+        return $this->availabilityFacade->isProductSellable($itemTransfer->getSku(), $currentItemQuantity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     *
+     * @return int
+     */
+    protected function calculateStockForProduct(ItemTransfer $itemTransfer, StoreTransfer $storeTransfer = null)
+    {
+        if ($storeTransfer) {
+            $this->availabilityFacade->calculateStockForProductWithStore($itemTransfer->getSku(), $storeTransfer);
+        }
+        return $this->availabilityFacade->calculateStockForProduct($itemTransfer->getSku());
     }
 }

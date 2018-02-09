@@ -38,14 +38,11 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     const GROUP_CONCAT = "GROUP_CONCAT";
     const CONCAT = "CONCAT";
     const CONCRETE_NEVER_OUT_OF_STOCK_SET = 'concreteNeverOutOfStockSet';
-    const ID_STORE = 'idStore';
 
     /**
      * @api
      *
      * @param string $sku
-     *
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
      * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
@@ -268,7 +265,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     public function queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale(
         $idProductAbstract,
         $idLocale,
-        $idStore = null,
+        $idStore,
         array $stockNames = []
     ) {
         $query = $this->queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, $stockNames)

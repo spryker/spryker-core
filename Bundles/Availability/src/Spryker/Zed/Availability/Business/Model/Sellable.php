@@ -71,10 +71,10 @@ class Sellable implements SellableInterface
 
     /**
      * @param string $sku
-     * @param string $quantity
+     * @param int $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return mixed
+     * @return bool
      */
     public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer)
     {

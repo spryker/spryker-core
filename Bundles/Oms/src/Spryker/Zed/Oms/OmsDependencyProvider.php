@@ -82,10 +82,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getReservationHandlerPlugins($container);
         };
 
-        $container[static::FACADE_STORE] = function (Container $container) {
-            return new OmsToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
-
+        $container = $this->addStoreFacade($container);
         $container = $this->addReservationExportPlugins($container);
 
         return $container;
@@ -160,5 +157,18 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     protected function getReservationExportPlugins()
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container)
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new OmsToStoreFacadeBridge($container->getLocator()->store()->facade());
+        };
+        return $container;
     }
 }
