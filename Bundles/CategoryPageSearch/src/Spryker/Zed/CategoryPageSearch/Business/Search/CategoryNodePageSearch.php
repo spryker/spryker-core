@@ -15,18 +15,12 @@ use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface;
-use Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilSanitizeServiceInterface;
 use Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CategoryNodePageSearch implements CategoryNodePageSearchInterface
 {
     use DatabaseTransactionHandlerTrait;
-
-    /**
-     * @var \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilSanitizeServiceInterface
-     */
-    protected $utilSanitize;
 
     /**
      * @var \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface
@@ -54,7 +48,6 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
     protected $isSendingToQueue = true;
 
     /**
-     * @param \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilSanitizeServiceInterface $utilSanitize
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface $utilEncoding
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface $searchFacade
      * @param \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface $queryContainer
@@ -62,14 +55,12 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
      * @param bool $isSendingToQueue
      */
     public function __construct(
-        CategoryPageSearchToUtilSanitizeServiceInterface $utilSanitize,
         CategoryPageSearchToUtilEncodingInterface $utilEncoding,
         CategoryPageSearchToSearchInterface $searchFacade,
         CategoryPageSearchQueryContainerInterface $queryContainer,
         Store $store,
         $isSendingToQueue
     ) {
-        $this->utilSanitize = $utilSanitize;
         $this->utilEncoding = $utilEncoding;
         $this->searchFacade = $searchFacade;
         $this->queryContainer = $queryContainer;
@@ -160,7 +151,7 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
             return;
         }
 
-        $categoryTreeNodeData = $this->utilSanitize->arrayFilterRecursive($spyCategoryNodeEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true));
+        $categoryTreeNodeData = $spyCategoryNodeEntity->toArray(TableMap::TYPE_FIELDNAME, true, [], true);
         $data = $this->mapToSearchData($categoryTreeNodeData, $localeName);
         $spyCategoryNodePageSearchEntity->setFkCategoryNode($spyCategoryNodeEntity->getIdCategoryNode());
         $spyCategoryNodePageSearchEntity->setStructuredData($this->utilEncoding->encodeJson($categoryTreeNodeData));

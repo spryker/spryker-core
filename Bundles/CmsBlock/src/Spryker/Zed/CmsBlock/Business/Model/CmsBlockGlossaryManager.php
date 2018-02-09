@@ -141,7 +141,8 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     {
         return $this->cmsBlockQueryContainer
             ->queryCmsBlockByIdWithTemplateWithGlossary($idCmsBlock)
-            ->findOne();
+            ->find()
+            ->getFirst();
     }
 
     /**
