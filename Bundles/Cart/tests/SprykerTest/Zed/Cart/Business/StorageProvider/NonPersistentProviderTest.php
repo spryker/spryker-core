@@ -63,7 +63,6 @@ class NonPersistentProviderTest extends Unit
         $changedItems = $changedCart->getItems();
         $this->assertCount(1, $changedItems);
 
-        /** @var \Generated\Shared\Transfer\ItemTransfer $changedItem */
         $changedItem = $changedItems[0];
 
         $this->assertEquals($itemId, $changedItem->getId());
@@ -95,7 +94,6 @@ class NonPersistentProviderTest extends Unit
         $this->assertCount(2, $changedItems);
 
         $skuIndex = [];
-        /** @var \Generated\Shared\Transfer\ItemTransfer $cartItem */
         foreach ($changedItems as $key => $changedItem) {
             $skuIndex[$changedItem->getId()] = $key;
         }
@@ -103,12 +101,10 @@ class NonPersistentProviderTest extends Unit
         $this->assertArrayHasKey($itemId, $skuIndex);
         $this->assertArrayHasKey($newId, $skuIndex);
 
-        /** @var \Generated\Shared\Transfer\ItemTransfer $addedItem */
         $addedItem = $changedItems[$skuIndex[$newId]];
         $this->assertEquals($newId, $addedItem->getId());
         $this->assertEquals($newQuantity, $addedItem->getQuantity());
 
-        /** @var \Generated\Shared\Transfer\ItemTransfer $existingItem */
         $existingItem = $changedItems[$skuIndex[$itemId]];
         $this->assertEquals($itemId, $existingItem->getId());
         $this->assertEquals($existingQuantity, $existingItem->getQuantity());
@@ -139,7 +135,6 @@ class NonPersistentProviderTest extends Unit
         $this->assertCount(2, $changedItems);
 
         $skuIndex = [];
-        /** @var \Generated\Shared\Transfer\ItemTransfer $cartItem */
         foreach ($changedItems as $key => $changedItem) {
             $skuIndex[$changedItem->getId()] = $key;
         }
@@ -147,12 +142,10 @@ class NonPersistentProviderTest extends Unit
         $this->assertArrayHasKey($existingItemId, $skuIndex);
         $this->assertArrayHasKey($newItemId, $skuIndex);
 
-        /** @var \Generated\Shared\Transfer\ItemTransfer $addedItem */
         $addedItem = $changedItems[$skuIndex[$newItemId]];
         $this->assertEquals($newItemId, $addedItem->getId());
         $this->assertEquals($newFirstItemQuantity + $newSecondItemQuantity, $addedItem->getQuantity());
 
-        /** @var \Generated\Shared\Transfer\ItemTransfer $existingItem */
         $existingItem = $changedItems[$skuIndex[$existingItemId]];
         $this->assertEquals($existingItemId, $existingItem->getId());
         $this->assertEquals($existingItemQuantity, $existingItem->getQuantity());
@@ -196,7 +189,6 @@ class NonPersistentProviderTest extends Unit
         $changedCart = $this->provider->removeItems($change);
         $changedItems = $changedCart->getItems();
         $this->assertCount(1, $changedItems);
-        /** @var \Generated\Shared\Transfer\ItemTransfer $item */
         $item = $changedItems[0];
         $this->assertEquals($itemId, $item->getId());
         $this->assertEquals($existingQuantity, $item->getQuantity());
