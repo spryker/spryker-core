@@ -113,7 +113,7 @@ class NonPersistentProviderTest extends Unit
     /**
      * @return void
      */
-    public function testDoubleAddNewItem()
+    public function testAddDoubleNewItem()
     {
         $existingItemId = '123';
         $newItemId = '321';
