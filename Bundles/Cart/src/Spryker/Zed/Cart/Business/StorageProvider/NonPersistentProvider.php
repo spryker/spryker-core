@@ -21,6 +21,9 @@ class NonPersistentProvider implements StorageProviderInterface
      */
     public function addItems(CartChangeTransfer $cartChangeTransfer)
     {
+        /**
+         * @TODO refactor this [$existingItems, $cartIndex] as separate model. Changes on one reflects on second.
+         */
         $existingItems = $cartChangeTransfer->getQuote()->getItems();
         $cartIndex = $this->createCartIndex($existingItems);
 
@@ -32,6 +35,7 @@ class NonPersistentProvider implements StorageProviderInterface
                 $this->increaseExistingItem($existingItems, $cartIndex[$itemIdentifier], $itemTransfer);
             } else {
                 $existingItems->append($itemTransfer);
+                $cartIndex = $this->createCartIndex($existingItems);
             }
         }
 
