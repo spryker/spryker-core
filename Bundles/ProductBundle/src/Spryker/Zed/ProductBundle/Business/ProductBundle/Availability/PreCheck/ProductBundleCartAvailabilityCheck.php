@@ -210,7 +210,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         ObjectCollection $bundledProducts,
         ItemTransfer $itemTransfer
     ) {
-        if (!$this->checkIfItemIsSellable($itemsInCart, $itemTransfer->getSku(), $itemTransfer->getQuantity())) {
+        if (!$this->checkIfItemIsSellable($itemsInCart, $itemTransfer->getSku(), 0)) {
             return $this->createItemIsNotAvailableMessageTransfer(
                 $itemTransfer->getQuantity(),
                 $itemTransfer->getSku()
