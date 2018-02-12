@@ -24,6 +24,9 @@ use Spryker\Shared\ProductCustomerPermission\ProductCustomerPermissionConfig;
 class ProductCustomerPermissionQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
+     * Specification:
+     * - Adds hasChild filter to the catalog Search query if the customer is logged-in.
+     *
      * @api
      *
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
