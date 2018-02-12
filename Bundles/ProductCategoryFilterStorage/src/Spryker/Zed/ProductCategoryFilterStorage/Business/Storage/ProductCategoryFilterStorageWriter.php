@@ -5,34 +5,85 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductCategoryFilterStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\ProductCategoryFilterStorage\Business\Storage;
 
 use Generated\Shared\Transfer\ProductCategoryFilterStorageTransfer;
 use Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorage;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\ProductCategoryFilterStorage\Dependency\Service\ProductCategoryFilterStorageToUtilEncodingInterface;
+use Spryker\Zed\ProductCategoryFilterStorage\Persistence\ProductCategoryFilterStorageQueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\ProductCategoryFilterStorage\Persistence\ProductCategoryFilterStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductCategoryFilterStorage\Communication\ProductCategoryFilterStorageCommunicationFactory getFactory()
- */
-class AbstractProductCategoryFilterStorageListener extends AbstractPlugin
+class ProductCategoryFilterStorageWriter implements ProductCategoryFilterStorageWriterInterface
 {
     const FK_CATEGORY = 'fkCategory';
     const FILTER_DATA = 'filterData';
+
+    /**
+     * @var \Spryker\Zed\ProductCategoryFilterStorage\Persistence\ProductCategoryFilterStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Zed\ProductCategoryFilterStorage\Dependency\Service\ProductCategoryFilterStorageToUtilEncodingInterface
+     */
+    protected $utilEncodingService;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * ProductCategoryFilterStorageWriter constructor.
+     *
+     * @param \Spryker\Zed\ProductCategoryFilterStorage\Persistence\ProductCategoryFilterStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductCategoryFilterStorage\Dependency\Service\ProductCategoryFilterStorageToUtilEncodingInterface $utilEncodingService
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(
+        ProductCategoryFilterStorageQueryContainerInterface $queryContainer,
+        ProductCategoryFilterStorageToUtilEncodingInterface $utilEncodingService,
+        Store $store,
+        $isSendingToQueue
+    ) {
+        $this->queryContainer = $queryContainer;
+        $this->utilEncodingService = $utilEncodingService;
+        $this->store = $store;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
 
     /**
      * @param array $categoryIds
      *
      * @return void
      */
-    protected function publish(array $categoryIds)
+    public function publish(array $categoryIds)
     {
-        $productCategoryFilters = $this->getQueryContainer()->queryProductCategoryByIdCategories($categoryIds)
+        $productCategoryFilters = $this->queryContainer->queryProductCategoryByIdCategories($categoryIds)
             ->find()
             ->toKeyValue(static::FK_CATEGORY, static::FILTER_DATA);
 
         $categoryFilterStorageEntitiesByCategoryIds = $this->findProductCategoryFilterStorageEntitiesByCategoryIds($categoryIds);
         $this->storeData($productCategoryFilters, $categoryFilterStorageEntitiesByCategoryIds);
+    }
+
+    /**
+     * @param array $categoryIds
+     *
+     * @return void
+     */
+    public function unpublish(array $categoryIds)
+    {
+        $categoryFilterStorageEntities = $this->findProductCategoryFilterStorageEntitiesByCategoryIds($categoryIds);
+        foreach ($categoryFilterStorageEntities as $categoryFilterStorageEntity) {
+            $categoryFilterStorageEntity->delete();
+        }
     }
 
     /**
@@ -44,7 +95,7 @@ class AbstractProductCategoryFilterStorageListener extends AbstractPlugin
     protected function storeData(array $productCategoryFilters, array $categoryFilterStorageEntitiesByCategoryIds)
     {
         foreach ($productCategoryFilters as $idCategory => $filterData) {
-            $filterDataArray = $this->getFactory()->getUtilEncoding()->decodeJson($filterData, true);
+            $filterDataArray = $this->utilEncodingService->decodeJson($filterData, true);
             if (isset($categoryFilterStorageEntitiesByCategoryIds[$idCategory])) {
                 $this->storeDataSet($idCategory, $filterDataArray, $categoryFilterStorageEntitiesByCategoryIds[$idCategory]);
             } else {
@@ -81,6 +132,7 @@ class AbstractProductCategoryFilterStorageListener extends AbstractPlugin
         $spyProductCategoryFilterStorage->setFkCategory($idCategory);
         $spyProductCategoryFilterStorage->setData($spyProductCategoryFilterStorageTransfer->toArray());
         $spyProductCategoryFilterStorage->setStore($this->getStoreName());
+        $spyProductCategoryFilterStorage->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductCategoryFilterStorage->save();
     }
 
@@ -91,7 +143,7 @@ class AbstractProductCategoryFilterStorageListener extends AbstractPlugin
      */
     protected function findProductCategoryFilterStorageEntitiesByCategoryIds(array $idCategories)
     {
-        $productCategoryFilterStorageEntities = $this->getQueryContainer()->queryProductCategoryFilterStorageByFkCategories($idCategories)->find();
+        $productCategoryFilterStorageEntities = $this->queryContainer->queryProductCategoryFilterStorageByFkCategories($idCategories)->find();
         $productAbstractStorageEntitiesByIdCategory = [];
         foreach ($productCategoryFilterStorageEntities as $productCategoryFilterStorageEntity) {
             $productAbstractStorageEntitiesByIdCategory[$productCategoryFilterStorageEntity->getFkCategory()] = $productCategoryFilterStorageEntity;
@@ -105,6 +157,6 @@ class AbstractProductCategoryFilterStorageListener extends AbstractPlugin
      */
     protected function getStoreName()
     {
-        return $this->getFactory()->getStore()->getStoreName();
+        return $this->store->getStoreName();
     }
 }
