@@ -5,22 +5,34 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\ProductSetStorage\Business\Storage;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductImageSetStorageTransfer;
 use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
 use Orm\Zed\ProductSetStorage\Persistence\SpyProductSetStorage;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductSetStorage\Communication\ProductSetStorageCommunicationFactory getFactory()
- */
-class AbstractProductSetStorageListener extends AbstractPlugin
+class ProductSetStorageWriter implements ProductSetStorageWriterInterface
 {
     const COL_ID_PRODUCT_SET = 'id_product_set';
+
+    /**
+     * @var \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
 
     /**
      * @var array
@@ -28,11 +40,23 @@ class AbstractProductSetStorageListener extends AbstractPlugin
     protected $superAttributes = [];
 
     /**
+     * @param \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(ProductSetStorageQueryContainerInterface $queryContainer, Store $store, $isSendingToQueue)
+    {
+        $this->queryContainer = $queryContainer;
+        $this->store = $store;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
+
+    /**
      * @param array $productSetIds
      *
      * @return void
      */
-    protected function publish(array $productSetIds)
+    public function publish(array $productSetIds)
     {
         $spyProductSetLocalizedEntities = $this->findProductSetLocalizedEntities($productSetIds);
         $spyProductSetStorageEntities = $this->findProductSetStorageEntitiesByProductSetIds($productSetIds);
@@ -45,7 +69,7 @@ class AbstractProductSetStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function unpublish(array $productSetIds)
+    public function unpublish(array $productSetIds)
     {
         $spyProductSetStorageEntities = $this->findProductSetStorageEntitiesByProductSetIds($productSetIds);
         foreach ($spyProductSetStorageEntities as $spyProductSetStorageEntityLocales) {
@@ -102,6 +126,7 @@ class AbstractProductSetStorageListener extends AbstractPlugin
         $spyProductSetStorageEntity->setData($productSetStorageTransfer->toArray());
         $spyProductSetStorageEntity->setStore($this->getStoreName());
         $spyProductSetStorageEntity->setLocale($spyProductSetLocalizedEntity['SpyLocale']['locale_name']);
+        $spyProductSetStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductSetStorageEntity->save();
     }
 
@@ -112,7 +137,7 @@ class AbstractProductSetStorageListener extends AbstractPlugin
      */
     protected function findProductSetLocalizedEntities(array $productSetIds)
     {
-        return $this->getQueryContainer()->queryProductSetDataByIds($productSetIds)->find()->getData();
+        return $this->queryContainer->queryProductSetDataByIds($productSetIds)->find()->getData();
     }
 
     /**
@@ -122,7 +147,7 @@ class AbstractProductSetStorageListener extends AbstractPlugin
      */
     protected function findProductSetStorageEntitiesByProductSetIds(array $productSetIds)
     {
-        $productSetStorageEntities = $this->getQueryContainer()->queryProductSetStorageByIds($productSetIds)->find();
+        $productSetStorageEntities = $this->queryContainer->queryProductSetStorageByIds($productSetIds)->find();
         $productSetStorageEntitiesByIdAndLocale = [];
         foreach ($productSetStorageEntities as $productSetStorageEntity) {
             $productSetStorageEntitiesByIdAndLocale[$productSetStorageEntity->getFkProductSet()][$productSetStorageEntity->getLocale()] = $productSetStorageEntity;
@@ -136,7 +161,7 @@ class AbstractProductSetStorageListener extends AbstractPlugin
      */
     protected function getStoreName()
     {
-        return $this->getFactory()->getStore()->getStoreName();
+        return $this->store->getStoreName();
     }
 
     /**
