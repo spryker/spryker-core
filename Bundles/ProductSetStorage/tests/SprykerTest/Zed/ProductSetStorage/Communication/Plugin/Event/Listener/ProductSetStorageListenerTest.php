@@ -245,9 +245,9 @@ class ProductSetStorageListenerTest extends Unit
     {
         $productSetStorageCount = SpyProductSetStorageQuery::create()->count();
         $this->assertSame($beforeCount + 2, $productSetStorageCount);
-        $spyCategoryNodeStorage = SpyProductSetStorageQuery::create()->orderByFkProductSet()->filterByFkProductSet(1)->findOne();
-        $this->assertNotNull($spyCategoryNodeStorage);
-        $data = $spyCategoryNodeStorage->getData();
+        $spyProductSetStorage = SpyProductSetStorageQuery::create()->orderByFkProductSet()->filterByFkProductSet(1)->findOne();
+        $this->assertNotNull($spyProductSetStorage);
+        $data = $spyProductSetStorage->getData();
         $this->assertSame('HP Product Set', $data['name']);
     }
 }

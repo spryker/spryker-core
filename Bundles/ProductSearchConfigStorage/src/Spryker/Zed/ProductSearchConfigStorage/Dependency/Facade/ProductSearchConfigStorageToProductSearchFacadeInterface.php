@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductSearchConfigStorage\Dependency\Facade;
 
-interface ProductSearchConfigStorageToProductSearchToProductSearchInterface
+interface ProductSearchConfigStorageToProductSearchFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer[]

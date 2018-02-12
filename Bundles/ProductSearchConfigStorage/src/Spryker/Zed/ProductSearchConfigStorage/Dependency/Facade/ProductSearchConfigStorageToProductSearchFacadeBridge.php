@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductSearchConfigStorage\Dependency\Facade;
 
-class ProductSearchConfigStorageToProductSearchToProductSearchBridge implements ProductSearchConfigStorageToProductSearchToProductSearchInterface
+class ProductSearchConfigStorageToProductSearchFacadeBridge implements ProductSearchConfigStorageToProductSearchFacadeInterface
 {
     /**
      * @var \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface
