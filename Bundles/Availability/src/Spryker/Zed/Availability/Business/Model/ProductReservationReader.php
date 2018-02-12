@@ -55,7 +55,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
      */
     public function getProductAbstractAvailability($idProductAbstract, $idLocale)
     {
-        $storeTransfer = $this->findStoreTransfer();
+        $storeTransfer = $this->getStoreTransfer();
 
         $stockNames = $this->stockFacade->getStoreToWarehouseMapping()[$storeTransfer->getName()];
 
@@ -80,7 +80,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
      */
     public function findProductAbstractAvailability($idProductAbstract, $idLocale, $idStore)
     {
-        $storeTransfer = $this->findStoreTransfer($idStore);
+        $storeTransfer = $this->getStoreTransfer($idStore);
 
         $stockTypes = $this->stockFacade->getStoreToWarehouseMapping()[$storeTransfer->getName()];
 
@@ -210,9 +210,9 @@ class ProductReservationReader implements ProductReservationReaderInterface
     /**
      * @param null|int $idStore
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    protected function findStoreTransfer($idStore = null)
+    protected function getStoreTransfer($idStore = null)
     {
         $storeTransfer = null;
         if ($idStore) {
@@ -220,9 +220,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
         }
 
         if (!$storeTransfer) {
-            $storeTransfer = $this->storeFacade->getCurrentStore();
+            return $this->storeFacade->getCurrentStore();
         }
-
-        return $storeTransfer;
     }
 }

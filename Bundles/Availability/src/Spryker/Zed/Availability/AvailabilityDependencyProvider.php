@@ -18,13 +18,13 @@ use Spryker\Zed\Kernel\Container;
 
 class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_OMS = 'oms facade';
-    const FACADE_STOCK = 'stock facade';
-    const FACADE_TOUCH = 'touch facade';
-    const FACADE_PRODDUCT = 'product facade';
-    const FACADE_STORE = 'store facade';
+    const FACADE_OMS = 'FACADE_OMS';
+    const FACADE_STOCK = 'FACADE_STOCK';
+    const FACADE_TOUCH = 'FACADE_TOUCH';
+    const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    const FACADE_STORE = 'FACADE_STORE';
 
-    const QUERY_CONTAINER_PRODUCT = 'product query container';
+    const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -75,7 +75,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductFacade(Container $container)
     {
-        $container[static::FACADE_PRODDUCT] = function (Container $container) {
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new AvailabilityToProductBridge($container->getLocator()->product()->facade());
         };
         return $container;

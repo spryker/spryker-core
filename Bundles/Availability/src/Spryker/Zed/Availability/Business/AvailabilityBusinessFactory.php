@@ -88,7 +88,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
      */
     protected function getProductFacade()
     {
-        return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_PRODDUCT);
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_PRODUCT);
     }
 
     /**
