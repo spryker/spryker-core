@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
+use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileStorageTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
@@ -146,6 +148,7 @@ abstract class AbstractFileManagerListener extends AbstractPlugin implements Eve
         $fileStorageTransfer->setLocale($locale->getLocaleName());
         $fileStorageTransfer->setType($fileEntity->getFileInfo()->getType());
         $fileStorageTransfer->setVersion($fileEntity->getFileInfo()->getVersion());
+        $fileStorageTransfer->setVersions($this->getFileVersions($fileEntity));
         $fileStorageTransfer->setSize($fileEntity->getFileInfo()->getSize());
         $fileStorageTransfer->setStorageName($fileEntity->getFileInfo()->getStorageName());
         $fileStorageTransfer->setStorageFileName($fileEntity->getFileInfo()->getStorageFileName());
@@ -154,6 +157,25 @@ abstract class AbstractFileManagerListener extends AbstractPlugin implements Eve
         $this->mapLocalizedAttributes($fileStorageTransfer, $localizedAttributes, $locale);
 
         return $fileStorageTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile $fileEntity
+     *
+     * @return \ArrayObject
+     */
+    protected function getFileVersions(SpyFile $fileEntity)
+    {
+        $fileInfoTransfers = new ArrayObject();
+
+        $fileVersions = $fileEntity->getSpyFileInfos();
+        foreach ($fileVersions as $fileVersion) {
+            $fileInfoTransfer = new FileInfoTransfer();
+            $fileInfoTransfer->fromArray($fileVersion->toArray(), true);
+            $fileInfoTransfers->append($fileInfoTransfer);
+        }
+
+        return $fileInfoTransfers;
     }
 
     /**
