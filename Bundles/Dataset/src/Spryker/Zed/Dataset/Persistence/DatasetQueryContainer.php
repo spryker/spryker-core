@@ -41,6 +41,18 @@ class DatasetQueryContainer extends AbstractQueryContainer implements DatasetQue
     /**
      * @api
      *
+     * @param int $idDataset
+     *
+     * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
+     */
+    public function queryDataseWithValuesById($idDataset)
+    {
+        return $this->queryDataset()->filterByIdDataset($idDataset)->leftJoinSpyDatasetRowColumnValue();
+    }
+
+    /**
+     * @api
+     *
      * @param string $datasetName
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
@@ -97,9 +109,7 @@ class DatasetQueryContainer extends AbstractQueryContainer implements DatasetQue
      */
     public function queryDatasetByNameWithRelation($datasetName)
     {
-        return $this->joinDatasetRelations(
-            $this->queryDatasetByName($datasetName)
-        );
+        return $this->joinDatasetRelations($this->queryDatasetByName($datasetName));
     }
 
     /**

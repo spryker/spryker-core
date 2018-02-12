@@ -73,10 +73,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
      */
     public function createDatasetRowColumnValueSaver()
     {
-        return new DatasetRowColumnValueSaver(
-            $this->createDatasetColumnSaver(),
-            $this->createDatasetRowSaver()
-        );
+        return new DatasetRowColumnValueSaver($this->createDatasetColumnSaver(), $this->createDatasetRowSaver());
     }
 
     /**

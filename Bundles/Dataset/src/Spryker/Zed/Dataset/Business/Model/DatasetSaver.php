@@ -75,21 +75,21 @@ class DatasetSaver implements DatasetSaverInterface
     }
 
     /**
-     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $dataset
+     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $datasetEntity
      * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
      *
      * @return void
      */
-    protected function saveDataset(SpyDataset $dataset, SpyDatasetEntityTransfer $saveRequestTransfer)
+    protected function saveDataset(SpyDataset $datasetEntity, SpyDatasetEntityTransfer $saveRequestTransfer)
     {
-        $this->handleDatabaseTransaction(function () use ($dataset, $saveRequestTransfer) {
-            $dataset->fromArray($saveRequestTransfer->toArray());
-            if ($saveRequestTransfer->getSpyDatasetRowColumnValues()->count() && !$dataset->isNew()) {
-                $this->datasetRowColumnValueSaver->removeDatasetRowColumnValues($dataset);
+        $this->handleDatabaseTransaction(function () use ($datasetEntity, $saveRequestTransfer) {
+            $datasetEntity->fromArray($saveRequestTransfer->toArray());
+            if ($saveRequestTransfer->getSpyDatasetRowColumnValues()->count() && !$datasetEntity->isNew()) {
+                $this->datasetRowColumnValueSaver->removeDatasetRowColumnValues($datasetEntity);
             }
-            $dataset->save();
-            $this->datasetLocalizedAttributesSaver->saveDatasetLocalizedAttributes($dataset, $saveRequestTransfer);
-            $this->datasetRowColumnValueSaver->saveDatasetRowColumnValues($dataset, $saveRequestTransfer);
+            $datasetEntity->save();
+            $this->datasetLocalizedAttributesSaver->saveDatasetLocalizedAttributes($datasetEntity, $saveRequestTransfer);
+            $this->datasetRowColumnValueSaver->saveDatasetRowColumnValues($datasetEntity, $saveRequestTransfer);
         });
     }
 

@@ -41,9 +41,7 @@ class DeleteController extends AbstractController
      */
     protected function redirectBack(Request $request)
     {
-        $referer = $request
-            ->headers
-            ->get(static::REFERER_PARAM);
+        $referer = $request->headers->get(static::REFERER_PARAM);
 
         return $this->redirectResponse($referer);
     }

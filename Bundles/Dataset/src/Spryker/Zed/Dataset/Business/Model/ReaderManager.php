@@ -112,7 +112,7 @@ class ReaderManager implements ReaderManagerInterface
      *
      * @return \Generated\Shared\Transfer\SpyDatasetColumnEntityTransfer
      */
-    private function getDatasetColumnTransfer($column)
+    protected function getDatasetColumnTransfer($column)
     {
         $datasetColumnTransfer = new SpyDatasetColumnEntityTransfer();
         $datasetColumnTransfer->setTitle($column);
@@ -125,7 +125,7 @@ class ReaderManager implements ReaderManagerInterface
      *
      * @return \Generated\Shared\Transfer\SpyDatasetRowEntityTransfer
      */
-    private function getDatasetRowEntityTransfer($row)
+    protected function getDatasetRowEntityTransfer($row)
     {
         $datasetRowTransfer = new SpyDatasetRowEntityTransfer();
         $datasetRowTransfer->setTitle($row);
@@ -140,7 +140,7 @@ class ReaderManager implements ReaderManagerInterface
      *
      * @return \Generated\Shared\Transfer\SpyDatasetRowColumnValueEntityTransfer
      */
-    private function getDatasetRowColumnValueEntityTransfer(
+    protected function getDatasetRowColumnValueEntityTransfer(
         SpyDatasetColumnEntityTransfer $datasetColumnValueTransfer,
         SpyDatasetRowEntityTransfer $datasetRowValueTransfer,
         $value

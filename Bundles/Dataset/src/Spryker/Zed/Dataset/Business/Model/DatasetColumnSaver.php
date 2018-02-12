@@ -28,7 +28,7 @@ class DatasetColumnSaver implements DatasetColumnSaverInterface
     /**
      * @param \Generated\Shared\Transfer\SpyDatasetColumnEntityTransfer $datasetColumnEntityTransfer
      *
-     * @return \Orm\Zed\Dataset\Persistence\SpyDataset
+     * @return \Orm\Zed\Dataset\Persistence\SpyDatasetColumn
      */
     public function findOrCreate(SpyDatasetColumnEntityTransfer $datasetColumnEntityTransfer)
     {
