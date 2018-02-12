@@ -15,32 +15,35 @@ use Orm\Zed\Dataset\Persistence\SpyDatasetLocalizedAttributes;
 class DatasetLocalizedAttributesSaver implements DatasetLocalizedAttributesSaverInterface
 {
     /**
-     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $dataset
+     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $datasetEntity
      * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
      *
      * @return void
      */
-    public function saveDatasetLocalizedAttributes(SpyDataset $dataset, SpyDatasetEntityTransfer $saveRequestTransfer)
-    {
-        $localizedAttributesToSave = $saveRequestTransfer->getSpyDatasetLocalizedAttributess();
-        $existingDatasetLocalizedAttributes = $dataset->getSpyDatasetLocalizedAttributess()->toKeyIndex('fkLocale');
+    public function saveDatasetLocalizedAttributes(
+        SpyDataset $datasetEntity,
+        SpyDatasetEntityTransfer $saveRequestTransfer
+    ) {
+        $localizedAttributes = $saveRequestTransfer->getSpyDatasetLocalizedAttributess();
+        $existingDatasetLocalizedAttributes = $datasetEntity->getSpyDatasetLocalizedAttributess()
+            ->toKeyIndex('fkLocale');
         if (empty($existingDatasetLocalizedAttributes)) {
-            $this->createNewLocalizedAttributes($dataset, $localizedAttributesToSave);
+            $this->createNewLocalizedAttributes($datasetEntity, $localizedAttributes);
 
             return;
         }
-        $this->saveNewLocalizedAttributes($dataset, $localizedAttributesToSave, $existingDatasetLocalizedAttributes);
+        $this->saveNewLocalizedAttributes($datasetEntity, $localizedAttributes, $existingDatasetLocalizedAttributes);
     }
 
     /**
-     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $dataset
+     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $datasetEntity
      * @param array $localizedAttributesToSave
      * @param array $existingDatasetLocalizedAttributes
      *
      * @return void
      */
     protected function saveNewLocalizedAttributes(
-        SpyDataset $dataset,
+        SpyDataset $datasetEntity,
         $localizedAttributesToSave,
         $existingDatasetLocalizedAttributes
     ) {
@@ -50,25 +53,25 @@ class DatasetLocalizedAttributesSaver implements DatasetLocalizedAttributesSaver
                 $this->updateLocalizedAttribute($existingDatasetLocalizedAttributes[$idLocale], $localizedAttribute);
                 continue;
             }
-            $this->createNewLocalizedAttributes($dataset, [$localizedAttribute]);
+            $this->createNewLocalizedAttributes($datasetEntity, [$localizedAttribute]);
         }
     }
 
     /**
-     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $dataset
+     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $datasetEntity
      * @param array $localizedAttributesToSave
      *
      * @return void
      */
-    protected function createNewLocalizedAttributes(SpyDataset $dataset, $localizedAttributesToSave)
+    protected function createNewLocalizedAttributes(SpyDataset $datasetEntity, $localizedAttributesToSave)
     {
         foreach ($localizedAttributesToSave as $localizedAttribute) {
             $spyLocalizedAttribute = new SpyDatasetLocalizedAttributes();
             $spyLocalizedAttribute->fromArray($localizedAttribute->toArray());
             $spyLocalizedAttribute->setFkLocale($localizedAttribute->getLocale()->getIdLocale());
-            $spyLocalizedAttribute->setFkDataset($dataset->getIdDataset());
+            $spyLocalizedAttribute->setFkDataset($datasetEntity->getIdDataset());
             $spyLocalizedAttribute->save();
-            $dataset->addSpyDatasetLocalizedAttributes($spyLocalizedAttribute);
+            $datasetEntity->addSpyDatasetLocalizedAttributes($spyLocalizedAttribute);
         }
     }
 

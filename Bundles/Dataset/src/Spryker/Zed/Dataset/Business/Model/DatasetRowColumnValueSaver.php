@@ -35,71 +35,59 @@ class DatasetRowColumnValueSaver implements DatasetRowColumnValueSaverInterface
     }
 
     /**
-     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $dataset
+     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $datasetEntity
      *
      * @return void
      */
-    public function removeDatasetRowColumnValues(SpyDataset $dataset)
+    public function removeDatasetRowColumnValues(SpyDataset $datasetEntity)
     {
-        $dataset->getSpyDatasetRowColumnValues()->delete();
+        $datasetEntity->getSpyDatasetRowColumnValues()->delete();
     }
 
     /**
-     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $dataset
+     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $datasetEntity
      * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
      *
      * @return void
      */
-    public function saveDatasetRowColumnValues(SpyDataset $dataset, $saveRequestTransfer)
+    public function saveDatasetRowColumnValues(SpyDataset $datasetEntity, $saveRequestTransfer)
     {
         $datasetRowColumnValueTransfers = $saveRequestTransfer->getSpyDatasetRowColumnValues();
-        $datasetRowUniqueEntities = [];
-        $datasetColumnUniqueEntities = [];
 
         foreach ($datasetRowColumnValueTransfers as $datasetRowColumnValueTransfer) {
-            $rowTitle = $datasetRowColumnValueTransfer->getSpyDatasetRow()->getTitle();
-            if (empty($datasetRowUniqueEntities[$rowTitle])) {
-                $datasetRowUniqueEntities[$rowTitle] = $this->datasetRowSaver->findOrCreate(
-                    $datasetRowColumnValueTransfer->getSpyDatasetRow()
-                );
-            }
-            $columnTitle = $datasetRowColumnValueTransfer->getSpyDatasetColumn()->getTitle();
-            if (empty($datasetColumnUniqueEntities[$columnTitle])) {
-                $datasetColumnUniqueEntities[$columnTitle] = $this->datasetColumnSaver->findOrCreate(
-                    $datasetRowColumnValueTransfer->getSpyDatasetColumn()
-                );
-            }
-            $spyDatasetRowColumnValue = $this->createDatasetRowColumnValue(
-                $dataset->getIdDataset(),
-                $datasetColumnUniqueEntities[$columnTitle]->getIdDatasetColumn(),
-                $datasetRowUniqueEntities[$rowTitle]->getIdDatasetRow(),
+            $datasetRowUniqueEntity = $this->datasetRowSaver->findOrCreate(
+                $datasetRowColumnValueTransfer->getSpyDatasetRow()
+            );
+            $datasetColumnUniqueEntity = $this->datasetColumnSaver->findOrCreate(
+                $datasetRowColumnValueTransfer->getSpyDatasetColumn()
+            );
+            $datasetRowColumnValue = $this->createDatasetRowColumnValue(
+                $datasetEntity->getIdDataset(),
+                $datasetColumnUniqueEntity->getIdDatasetColumn(),
+                $datasetRowUniqueEntity->getIdDatasetRow(),
                 $datasetRowColumnValueTransfer->getValue()
             );
-            $dataset->addSpyDatasetRowColumnValue($spyDatasetRowColumnValue);
+            $datasetEntity->addSpyDatasetRowColumnValue($datasetRowColumnValue);
         }
     }
 
     /**
-     * @param int $IdDataset
+     * @param int $idDataset
      * @param int $idDatasetColumn
      * @param int $idDatasetRow
      * @param string $value
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetRowColumnValue
      */
-    protected function createDatasetRowColumnValue(
-        $IdDataset,
-        $idDatasetColumn,
-        $idDatasetRow,
-        $value
-    ) {
-        $spyDatasetRowColumnValue = new SpyDatasetRowColumnValue();
-        $spyDatasetRowColumnValue->setFkDataset($IdDataset);
-        $spyDatasetRowColumnValue->setFkDatasetColumn($idDatasetColumn);
-        $spyDatasetRowColumnValue->setFkDatasetRow($idDatasetRow);
-        $spyDatasetRowColumnValue->setValue($value);
-        $spyDatasetRowColumnValue->save();
+    protected function createDatasetRowColumnValue($idDataset, $idDatasetColumn, $idDatasetRow, $value)
+    {
+        $datasetRowColumnValue = new SpyDatasetRowColumnValue();
+        $datasetRowColumnValue->setFkDataset($idDataset);
+        $datasetRowColumnValue->setFkDatasetColumn($idDatasetColumn);
+        $datasetRowColumnValue->setFkDatasetRow($idDatasetRow);
+        $datasetRowColumnValue->setValue($value);
+        $datasetRowColumnValue->save();
 
-        return $spyDatasetRowColumnValue;
+        return $datasetRowColumnValue;
     }
 }

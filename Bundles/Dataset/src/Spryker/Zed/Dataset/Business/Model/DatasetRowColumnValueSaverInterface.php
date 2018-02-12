@@ -12,17 +12,17 @@ use Orm\Zed\Dataset\Persistence\SpyDataset;
 interface DatasetRowColumnValueSaverInterface
 {
     /**
-     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $dataset
+     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $datasetEntity
      *
      * @return bool
      */
-    public function removeDatasetRowColumnValues(SpyDataset $dataset);
+    public function removeDatasetRowColumnValues(SpyDataset $datasetEntity);
 
     /**
-     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $dataset
+     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $datasetEntity
      * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
      *
      * @return void
      */
-    public function saveDatasetRowColumnValues(SpyDataset $dataset, $saveRequestTransfer);
+    public function saveDatasetRowColumnValues(SpyDataset $datasetEntity, $saveRequestTransfer);
 }

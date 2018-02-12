@@ -50,16 +50,16 @@ class WriterManager implements WriterManagerInterface
         $rowValues = [];
         $headerUnique = [];
         $header = [''];
-        foreach ($datasetTransfer->getSpyDatasetRowColumnValues() as $spyDatasetRowColumnValue) {
-            $datasetColumn = $spyDatasetRowColumnValue->getSpyDatasetColumn();
+        foreach ($datasetTransfer->getSpyDatasetRowColumnValues() as $datasetRowColumnValue) {
+            $datasetColumn = $datasetRowColumnValue->getSpyDatasetColumn();
 
             if (empty($headerUnique[$datasetColumn->getIdDatasetColumn()])) {
                 $headerUnique[$datasetColumn->getIdDatasetColumn()] = true;
                 array_push($header, $datasetColumn->getTitle());
             }
 
-            $rowValues[$spyDatasetRowColumnValue->getSpyDatasetRow()->getTitle()][] =
-                $spyDatasetRowColumnValue->getValue();
+            $rowValues[$datasetRowColumnValue->getSpyDatasetRow()->getTitle()][] =
+                $datasetRowColumnValue->getValue();
         }
         $writer->insertOne($header);
         foreach ($rowValues as $rowTitle => $values) {

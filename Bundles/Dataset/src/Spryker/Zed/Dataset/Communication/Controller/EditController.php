@@ -33,9 +33,7 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $idDataset = $this->castId($request->query->get(static::URL_PARAM_ID_DATASET));
-        $form = $this->getFactory()
-            ->createDatasetForm($idDataset)
-            ->handleRequest($request);
+        $form = $this->getFactory()->createDatasetForm($idDataset)->handleRequest($request);
 
         if ($form->isValid()) {
             $saveRequestTransfer = $form->getData();
@@ -67,8 +65,10 @@ class EditController extends AbstractController
     {
         if ($file instanceof UploadedFile) {
             $this->getFacade()->save($saveRequestTransfer, $file->getRealPath());
-        } else {
-            $this->getFacade()->saveDataset($saveRequestTransfer);
+
+            return;
         }
+
+        $this->getFacade()->saveDataset($saveRequestTransfer);
     }
 }

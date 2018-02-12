@@ -31,9 +31,8 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $form = $this->getFactory()
-            ->createDatasetForm()
-            ->handleRequest($request);
+        $form = $this->getFactory()->createDatasetForm()->handleRequest($request);
+
         if ($form->isValid()) {
             $saveRequestTransfer = $form->getData();
             $file = $form->get('contentFile')->getData();

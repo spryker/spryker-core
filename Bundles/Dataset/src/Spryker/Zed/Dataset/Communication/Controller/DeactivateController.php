@@ -34,9 +34,7 @@ class DeactivateController extends AbstractController
     {
         $idDataset = $this->castId($request->query->get(static::URL_PARAM_ID_DATASET));
         $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
-
         $this->getFacade()->deactivateById($idDataset);
-
         $this->addSuccessMessage(static::MESSAGE_DATASET_DEACTIVATE_SUCCESS);
 
         return $this->redirectResponse($redirectUrl);
@@ -49,9 +47,7 @@ class DeactivateController extends AbstractController
      */
     protected function redirectBack(Request $request)
     {
-        $referer = $request
-            ->headers
-            ->get(static::REFERER_PARAM);
+        $referer = $request->headers->get(static::REFERER_PARAM);
 
         return $this->redirectResponse($referer);
     }

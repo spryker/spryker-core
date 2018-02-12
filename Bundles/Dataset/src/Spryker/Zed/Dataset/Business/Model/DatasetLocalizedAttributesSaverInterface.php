@@ -13,13 +13,13 @@ use Orm\Zed\Dataset\Persistence\SpyDataset;
 interface DatasetLocalizedAttributesSaverInterface
 {
     /**
-     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $dataset
+     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $datasetEntity
      * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
      *
      * @return void
      */
     public function saveDatasetLocalizedAttributes(
-        SpyDataset $dataset,
+        SpyDataset $datasetEntity,
         SpyDatasetEntityTransfer $saveRequestTransfer
     );
 }

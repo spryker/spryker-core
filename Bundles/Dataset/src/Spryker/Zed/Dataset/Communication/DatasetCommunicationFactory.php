@@ -61,7 +61,7 @@ class DatasetCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeBridge
+     * @return \Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeInterface
      */
     public function getLocaleFacade()
     {

@@ -30,6 +30,15 @@ interface DatasetQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param int $idDataset
+     *
+     * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
+     */
+    public function queryDataseWithValuesById($idDataset);
+
+    /**
+     * @api
+     *
      * @param string $title
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
