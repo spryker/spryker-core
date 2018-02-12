@@ -5,27 +5,53 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductReviewStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\ProductReviewStorage\Business\Storage;
 
 use Generated\Shared\Transfer\ProductReviewStorageTransfer;
 use Orm\Zed\ProductReviewStorage\Persistence\SpyProductAbstractReviewStorage;
-use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\ProductReviewStorage\Persistence\ProductReviewStorageQueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\ProductReviewStorage\Persistence\ProductReviewStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductReviewStorage\Communication\ProductReviewStorageCommunicationFactory getFactory()
- */
-abstract class AbstractProductReviewStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductReviewStorageWriter implements ProductReviewStorageWriterInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductReviewStorage\Persistence\ProductReviewStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param \Spryker\Zed\ProductReviewStorage\Persistence\ProductReviewStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(
+        ProductReviewStorageQueryContainerInterface $queryContainer,
+        Store $store,
+        $isSendingToQueue
+    ) {
+        $this->queryContainer = $queryContainer;
+        $this->store = $store;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
+
     /**
      * @param array $productAbstractIds
      *
      * @return void
      */
-    protected function publish(array $productAbstractIds)
+    public function publish(array $productAbstractIds)
     {
-        $productReviewEntities = $this->getQueryContainer()->queryProductReviewsByIdProductAbstracts($productAbstractIds)->find()->toArray();
+        $productReviewEntities = $this->queryContainer->queryProductReviewsByIdProductAbstracts($productAbstractIds)->find()->toArray();
         $productReviewStorageEntities = $this->findProductReviewStorageEntitiesByProductAbstractIds($productAbstractIds);
 
         if (!$productReviewEntities) {
@@ -33,6 +59,19 @@ abstract class AbstractProductReviewStorageListener extends AbstractPlugin imple
         }
 
         $this->storeData($productReviewEntities, $productReviewStorageEntities);
+    }
+
+    /**
+     * @param array $productAbstractIds
+     *
+     * @return void
+     */
+    public function unpublish(array $productAbstractIds)
+    {
+        $productReviewStorageEntities = $this->findProductReviewStorageEntitiesByProductAbstractIds($productAbstractIds);
+        foreach ($productReviewStorageEntities as $productReviewStorageEntity) {
+            $productReviewStorageEntity->delete();
+        }
     }
 
     /**
@@ -82,6 +121,7 @@ abstract class AbstractProductReviewStorageListener extends AbstractPlugin imple
         $spyProductAbstractReviewStorageEntity->setFkProductAbstract($productReview['idProductAbstract']);
         $spyProductAbstractReviewStorageEntity->setData($productReviewStorageTransfer->modifiedToArray());
         $spyProductAbstractReviewStorageEntity->setStore($this->getStoreName());
+        $spyProductAbstractReviewStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductAbstractReviewStorageEntity->save();
     }
 
@@ -92,7 +132,7 @@ abstract class AbstractProductReviewStorageListener extends AbstractPlugin imple
      */
     protected function findProductReviewStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {
-        $productAbstractReviewStorageEntities = $this->getQueryContainer()->queryProductAbstractReviewStorageByIds($productAbstractIds)->find();
+        $productAbstractReviewStorageEntities = $this->queryContainer->queryProductAbstractReviewStorageByIds($productAbstractIds)->find();
         $productAbstractStorageReviewEntitiesById = [];
         foreach ($productAbstractReviewStorageEntities as $productAbstractReviewStorageEntity) {
             $productAbstractStorageReviewEntitiesById[$productAbstractReviewStorageEntity->getFkProductAbstract()] = $productAbstractReviewStorageEntity;
@@ -106,6 +146,6 @@ abstract class AbstractProductReviewStorageListener extends AbstractPlugin imple
      */
     protected function getStoreName()
     {
-        return $this->getFactory()->getStore()->getStoreName();
+        return $this->store->getStoreName();
     }
 }
