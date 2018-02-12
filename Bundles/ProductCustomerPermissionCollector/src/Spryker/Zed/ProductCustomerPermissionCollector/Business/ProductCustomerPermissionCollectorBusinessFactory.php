@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductCustomerPermissionCollector\Business\Search\ProductCustomerPermissionSearchCollector;
 use Spryker\Zed\ProductCustomerPermissionCollector\Business\Storage\ProductCustomerPermissionStorageCollector;
 use Spryker\Zed\ProductCustomerPermissionCollector\Dependency\Facade\ProductCustomerPermissionCollectorToCollectorFacadeInterface;
+use Spryker\Zed\ProductCustomerPermissionCollector\Dependency\Facade\ProductCustomerPermissionCollectorToStoreFacadeInterface;
 use Spryker\Zed\ProductCustomerPermissionCollector\Persistence\Search\Propel\ProductCustomerPermissionSearchCollectorQuery;
 use Spryker\Zed\ProductCustomerPermissionCollector\ProductCustomerPermissionCollectorDependencyProvider;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
@@ -27,7 +28,8 @@ class ProductCustomerPermissionCollectorBusinessFactory extends AbstractBusiness
     public function createSearchProductCustomerPermissionCollector(): ProductCustomerPermissionSearchCollector
     {
         $searchCollector = new ProductCustomerPermissionSearchCollector(
-            $this->getUtilDataReaderService()
+            $this->getUtilDataReaderService(),
+            $this->getStoreFacade()
         );
         $searchCollector->setTouchQueryContainer($this->getTouchQueryContainer());
         $searchCollector->setQueryBuilder($this->createProductCustomerPermissionSearchCollectorQuery());
@@ -48,6 +50,14 @@ class ProductCustomerPermissionCollectorBusinessFactory extends AbstractBusiness
         $storageCollector->setQueryBuilder($this->createProductCustomerPermissionSearchCollectorQuery());
 
         return $storageCollector;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCustomerPermissionCollector\Dependency\Facade\ProductCustomerPermissionCollectorToStoreFacadeInterface
+     */
+    protected function getStoreFacade(): ProductCustomerPermissionCollectorToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductCustomerPermissionCollectorDependencyProvider::FACADE_STORE);
     }
 
     /**

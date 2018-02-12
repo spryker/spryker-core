@@ -9,15 +9,34 @@ namespace Spryker\Zed\ProductCustomerPermissionCollector\Business\Search;
 
 use Generated\Shared\Search\CustomerPageIndexMap;
 use Generated\Shared\Transfer\SearchCollectorConfigurationTransfer;
-use Spryker\Shared\Kernel\Store;
+use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Shared\Product\ProductConfig;
 use Spryker\Shared\ProductCustomerPermission\ProductCustomerPermissionConfig;
 use Spryker\Zed\Collector\Business\Collector\Search\AbstractConfigurableSearchPropelCollector;
 use Spryker\Zed\Collector\CollectorConfig;
+use Spryker\Zed\ProductCustomerPermissionCollector\Dependency\Facade\ProductCustomerPermissionCollectorToStoreFacadeInterface;
 use Spryker\Zed\ProductCustomerPermissionCollector\Persistence\Search\Propel\ProductCustomerPermissionSearchCollectorQuery;
 
 class ProductCustomerPermissionSearchCollector extends AbstractConfigurableSearchPropelCollector
 {
+    /**
+     * @var \Spryker\Zed\ProductCustomerPermissionCollector\Dependency\Facade\ProductCustomerPermissionCollectorToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
+     * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
+     * @param \Spryker\Zed\ProductCustomerPermissionCollector\Dependency\Facade\ProductCustomerPermissionCollectorToStoreFacadeInterface $storeFacade
+     */
+    public function __construct(
+        UtilDataReaderServiceInterface $utilDataReaderService,
+        ProductCustomerPermissionCollectorToStoreFacadeInterface $storeFacade
+    ) {
+        $this->storeFacade = $storeFacade;
+
+        parent::__construct($utilDataReaderService);
+    }
+
     /**
      * @return string
      */
@@ -68,7 +87,7 @@ class ProductCustomerPermissionSearchCollector extends AbstractConfigurableSearc
     protected function getKeyPartsForProduct($idProductAbstract, $localeName): array
     {
         return [
-            Store::getInstance()->getStoreName(),
+            $this->storeFacade->getCurrentStoreName(),
             $localeName,
             $this->getBundleName(),
             ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT . '.' . $idProductAbstract,

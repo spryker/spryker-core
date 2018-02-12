@@ -7,13 +7,17 @@
 
 namespace Spryker\Zed\ProductCustomerPermissionCollector;
 
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductCustomerPermissionCollector\Dependency\Facade\ProductCustomerPermissionCollectorToCollectorFacadeBridge;
+use Spryker\Zed\ProductCustomerPermissionCollector\Dependency\Facade\ProductCustomerPermissionCollectorToStoreFacadeBridge;
 
 class ProductCustomerPermissionCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+
+    public const FACADE_STORE = 'FACADE_STORE';
 
     public const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
 
@@ -28,6 +32,7 @@ class ProductCustomerPermissionCollectorDependencyProvider extends AbstractBundl
     {
         $this->addCollectorFacade($container);
         $this->addDataReaderService($container);
+        $this->addStoreFacade($container);
         $this->addTouchQueryContainer($container);
 
         return $container;
@@ -56,6 +61,20 @@ class ProductCustomerPermissionCollectorDependencyProvider extends AbstractBundl
     {
         $container[static::SERVICE_DATA_READER] = function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new ProductCustomerPermissionCollectorToStoreFacadeBridge(Store::getInstance());
         };
 
         return $container;
