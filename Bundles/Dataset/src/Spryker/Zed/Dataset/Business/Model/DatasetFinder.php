@@ -39,7 +39,7 @@ class DatasetFinder implements DatasetFinderInterface
      */
     public function delete($idDataset)
     {
-        $this->datasetQueryContainer->queryDatasetById($idDataset)->delete();
+        $this->datasetQueryContainer->queryDatasetById($idDataset)->findOne()->delete();
     }
 
     /**
