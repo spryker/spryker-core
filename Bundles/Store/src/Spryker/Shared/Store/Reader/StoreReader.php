@@ -38,7 +38,7 @@ class StoreReader implements StoreReaderInterface
             ->setDefaultCurrencyIsoCode($this->store->getDefaultCurrencyFor($storeName))
             ->setAvailableCurrencyIsoCodes($this->store->getAvailableCurrenciesFor($storeName))
             ->setAvailableLocaleIsoCodes($this->store->getAvailableLocaleIsoCodesFor($storeName))
-            ->setSharedPersistenceWithStores($this->store->getSharedPersistenceWithStores());
+            ->setStoresWithSharedPersistence($this->store->getStoresWithSharedPersistence());
 
         return $storeTransfer;
     }

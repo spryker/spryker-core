@@ -113,9 +113,9 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     /**
      * @return string[]
      */
-    public function getSharedPersistenceWithStores()
+    public function getStoresWithSharedPersistence()
     {
-        return $this->store->getSharedPersistenceWithStores();
+        return $this->store->getStoresWithSharedPersistence();
     }
 
     /**

@@ -200,7 +200,7 @@ class AvailabilityHandlerTest extends Unit
         $availabilityQueryMock->method('findOneOrCreate')
             ->willReturn($availabilityEntity);
 
-        $availabilityContainerMock->method('querySpyAvailabilityBySkuAndIdStore')
+        $availabilityContainerMock->method('queryAvailabilityBySkuAndIdStore')
             ->willReturn($availabilityQueryMock);
 
         $availabilityAbstractEntityMock = $this->createAvailabilityAbstractEntityMock();

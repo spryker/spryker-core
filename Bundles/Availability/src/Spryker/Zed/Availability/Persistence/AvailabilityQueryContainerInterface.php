@@ -26,7 +26,7 @@ interface AvailabilityQueryContainerInterface
      *
      * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
-    public function querySpyAvailabilityBySkuAndIdStore($sku, $idStore);
+    public function queryAvailabilityBySkuAndIdStore($sku, $idStore);
 
     /**
      * @api

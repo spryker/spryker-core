@@ -111,12 +111,12 @@ class Reader implements ReaderInterface
     public function getWarehouseToStoreMapping()
     {
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
-        $sharedPersistenceWithStores = $currentStoreTransfer->getSharedPersistenceWithStores();
-        $sharedPersistenceWithStores[] = $currentStoreTransfer->getName();
+        $storesWithSharedPersistence = $currentStoreTransfer->getStoresWithSharedPersistence();
+        $storesWithSharedPersistence[] = $currentStoreTransfer->getName();
 
         $mapping = [];
         foreach ($this->stockConfig->getStoreToWarehouseMapping() as $storeName => $warehouses) {
-            if (!in_array($storeName, $sharedPersistenceWithStores)) {
+            if (!in_array($storeName, $storesWithSharedPersistence)) {
                 continue;
             }
             foreach ($warehouses as $warehouse) {

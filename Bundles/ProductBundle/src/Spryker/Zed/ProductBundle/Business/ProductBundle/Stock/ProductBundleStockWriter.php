@@ -354,7 +354,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
         ProductConcreteTransfer $productConcreteTransfer,
         StoreTransfer $currentStoreTransfer
     ) {
-        foreach ($currentStoreTransfer->getSharedPersistenceWithStores() as $storeName) {
+        foreach ($currentStoreTransfer->getStoresWithSharedPersistence() as $storeName) {
             $storeTransfer = $this->storeFacade->getStoreByName($storeName);
             $this->productBundleAvailabilityHandler->removeBundleAvailability(
                 $productConcreteTransfer->getSku(),

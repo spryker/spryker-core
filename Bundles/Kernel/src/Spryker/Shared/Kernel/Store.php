@@ -95,7 +95,7 @@ class Store
     /**
      * @var string[]
      */
-    protected $sharedPersistenceWithStores = [];
+    protected $storesWithSharedPersistence = [];
 
     /**
      * @return \Spryker\Shared\Kernel\Store
@@ -409,8 +409,8 @@ class Store
     /**
      * @return string[]
      */
-    public function getSharedPersistenceWithStores()
+    public function getStoresWithSharedPersistence()
     {
-        return $this->sharedPersistenceWithStores;
+        return $this->storesWithSharedPersistence;
     }
 }

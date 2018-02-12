@@ -164,7 +164,7 @@ class StoreReader implements StoreReaderInterface
     public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer)
     {
         $stores = [];
-        foreach ($storeTransfer->getSharedPersistenceWithStores() as $storeName) {
+        foreach ($storeTransfer->getStoresWithSharedPersistence() as $storeName) {
             $stores[] = $this->getStoreByName($storeName);
         }
 

@@ -84,7 +84,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
         $this->updateAvailabilityForStore($sku, $storeTransfer);
 
-        $sharedStores = $storeTransfer->getSharedPersistenceWithStores();
+        $sharedStores = $storeTransfer->getStoresWithSharedPersistence();
         foreach ($sharedStores as $storeName) {
             $storeTransfer = $this->storeFacade->getStoreByName($storeName);
             $this->updateAvailabilityForStore($sku, $storeTransfer);
@@ -215,7 +215,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     protected function querySpyAvailabilityBySku($sku, StoreTransfer $storeTransfer)
     {
-        return $this->queryContainer->querySpyAvailabilityBySkuAndIdStore($sku, $storeTransfer->getIdStore());
+        return $this->queryContainer->queryAvailabilityBySkuAndIdStore($sku, $storeTransfer->getIdStore());
     }
 
     /**

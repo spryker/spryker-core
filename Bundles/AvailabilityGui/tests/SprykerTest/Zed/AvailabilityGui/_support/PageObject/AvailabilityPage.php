@@ -14,7 +14,7 @@ class AvailabilityPage
     const AVAILABILITY_ID_STORE = 1;
 
     const AVAILABILITY_LIST_URL = '/availability-gui';
-    const AVAILABILITY_VIEW_URL = '/availability-gui/index/view?id-product=%d';
+    const AVAILABILITY_VIEW_URL = '/availability-gui/index/view?id-product=%d&id-store=%s';
     const AVAILABILITY_EDIT_STOCK_URL = 'availability-gui/index/edit?id-product=%d&sku=%s&id-abstract=%d&id-store=%s';
 
     const SUCCESS_MESSAGE = 'Stock successfully updated';

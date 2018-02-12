@@ -61,7 +61,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      *
      * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
-    public function querySpyAvailabilityBySkuAndIdStore($sku, $idStore)
+    public function queryAvailabilityBySkuAndIdStore($sku, $idStore)
     {
         return $this->getFactory()
             ->createSpyAvailabilityQuery()
@@ -257,7 +257,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      *
      * @param int $idProductAbstract
      * @param int $idLocale
-     * @param null|int $idStore
+     * @param int $idStore
      * @param array $stockNames
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery

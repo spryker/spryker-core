@@ -112,7 +112,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
         $availabilityEntity = $this->availabilityQueryContainer
-            ->querySpyAvailabilityBySkuAndIdStore($productConcreteAvailabilityRequestTransfer->getSku(), $storeTransfer->getIdStore())
+            ->queryAvailabilityBySkuAndIdStore($productConcreteAvailabilityRequestTransfer->getSku(), $storeTransfer->getIdStore())
             ->findOne();
 
         if (!$availabilityEntity) {
@@ -214,13 +214,10 @@ class ProductReservationReader implements ProductReservationReaderInterface
      */
     protected function getStoreTransfer($idStore = null)
     {
-        $storeTransfer = null;
-        if ($idStore) {
-            $storeTransfer = $this->storeFacade->getStoreById($idStore);
+        if ($idStore !== null) {
+            return $this->storeFacade->getStoreById($idStore);
         }
 
-        if (!$storeTransfer) {
-            return $this->storeFacade->getCurrentStore();
-        }
+        return $this->storeFacade->getCurrentStore();
     }
 }

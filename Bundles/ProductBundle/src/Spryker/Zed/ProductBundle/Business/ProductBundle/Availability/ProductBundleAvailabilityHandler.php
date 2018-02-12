@@ -154,7 +154,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     {
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
 
-        $stores = $currentStoreTransfer->getSharedPersistenceWithStores();
+        $stores = $currentStoreTransfer->getStoresWithSharedPersistence();
         $stores[] = $this->storeFacade->getCurrentStore()->getName();
 
         foreach ($stores as $storeName) {

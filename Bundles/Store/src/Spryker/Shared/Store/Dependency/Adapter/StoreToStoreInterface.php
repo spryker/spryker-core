@@ -69,5 +69,5 @@ interface StoreToStoreInterface
     /**
      * @return string[]
      */
-    public function getSharedPersistenceWithStores();
+    public function getStoresWithSharedPersistence();
 }
