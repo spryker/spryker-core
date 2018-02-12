@@ -103,6 +103,42 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     }
 
     /**
+     * return void
+     *
+     * @return void
+     */
+    public function testCheckCartAvailabilityWhenBundleNotAvailableAndProductsAvailableShouldStoreErrorMessages()
+    {
+        $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
+        $availabilityFacadeMock
+            ->expects($this->once())
+            ->method('isProductSellable')
+            ->withConsecutive(
+                [$this->equalTo($this->fixtures['bundle-sku']), $this->equalTo(8)]
+            )
+            ->willReturn(false);
+
+        $productBundleAvailabilityCheckMock = $this->createProductBundleCartAvailabilityCheckMock($availabilityFacadeMock);
+
+        $this->setupFindBundledProducts($this->fixtures, $productBundleAvailabilityCheckMock);
+
+        $quoteTransfer = $this->createTestQuoteTransfer();
+
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->setQuote($quoteTransfer);
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku($this->fixtures['bundle-sku']);
+        $itemTransfer->setQuantity(3);
+        $cartChangeTransfer->addItem($itemTransfer);
+
+        $cartPreCheckResponseTransfer = $productBundleAvailabilityCheckMock->checkCartAvailability($cartChangeTransfer);
+
+        $this->assertCount(1, $cartPreCheckResponseTransfer->getMessages());
+        $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface|null $availabilityFacadeMock
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface|null $availabilityQueryContainerMock
      *
