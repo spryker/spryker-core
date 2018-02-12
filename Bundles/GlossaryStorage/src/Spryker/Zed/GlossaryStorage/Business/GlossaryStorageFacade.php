@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $glossaryKeyIds
@@ -27,6 +29,8 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $glossaryKeyIds
