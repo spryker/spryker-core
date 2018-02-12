@@ -1,0 +1,15 @@
+{
+  "mappings": {
+    "customer-page": {
+      "properties": {
+        "id-customer": {
+          "type": "integer",
+          "include_in_all": false
+        }
+      },
+      "_parent": {
+        "type": "page"
+      }
+    }
+  }
+}
