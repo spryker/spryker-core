@@ -18,5 +18,5 @@ interface CompanyUserSavePluginInterface
      *
      * @return void
      */
-    public function save(CompanyUserTransfer $companyUserTransfer);
+    public function save(CompanyUserTransfer $companyUserTransfer): void;
 }

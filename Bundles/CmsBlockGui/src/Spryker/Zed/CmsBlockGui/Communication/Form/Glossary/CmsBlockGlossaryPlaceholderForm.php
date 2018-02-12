@@ -128,7 +128,7 @@ class CmsBlockGlossaryPlaceholderForm extends AbstractType
     protected function addTranslationsField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_TRANSLATIONS, CollectionType::class, [
-            'entry_type' => $this->getFactory()->createCmsBlockGlossaryPlaceholderTranslationFormType(),
+            'entry_type' => $this->getFactory()->getCmsBlockGlossaryPlaceholderTranslationFormType(),
             'allow_add' => true,
         ]);
 
@@ -144,15 +144,5 @@ class CmsBlockGlossaryPlaceholderForm extends AbstractType
     public function getBlockPrefix()
     {
         return 'cms_block_glossary_placeholder';
-    }
-
-    /**
-     * @deprecated Use `getBlockPrefix()` instead.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 }

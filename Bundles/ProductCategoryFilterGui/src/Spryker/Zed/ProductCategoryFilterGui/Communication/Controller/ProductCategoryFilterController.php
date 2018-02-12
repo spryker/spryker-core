@@ -58,7 +58,7 @@ class ProductCategoryFilterController extends AbstractController
             ->getCatalogClient()
             ->catalogSearch('', [PageIndexMap::CATEGORY => $idCategory]);
 
-        if ($productCategoryFilterForm->isValid()) {
+        if ($productCategoryFilterForm->isSubmitted() && $productCategoryFilterForm->isValid()) {
             $productCategoryFilterTransfer = $productCategoryFilterFormatter->generateTransferFromJson(
                 $savedProductCategoryFilters->getIdProductCategoryFilter(),
                 $idCategory,

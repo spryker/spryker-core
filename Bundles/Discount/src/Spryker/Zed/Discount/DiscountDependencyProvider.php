@@ -27,7 +27,10 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TotalQuantityDecision
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyBridge;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeBridge;
+use Spryker\Zed\Discount\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
 
 class DiscountDependencyProvider extends AbstractBundleDependencyProvider
@@ -35,6 +38,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_MESSENGER = 'MESSENGER_FACADE';
     const FACADE_MONEY = 'MONEY_FACADE';
     const FACADE_CURRENCY = 'CURRENCY_FACADE';
+    const FACADE_STORE = 'FACADE_STORE';
 
     const PLUGIN_CALCULATOR_PERCENTAGE = 'PLUGIN_CALCULATOR_PERCENTAGE';
     const PLUGIN_CALCULATOR_FIXED = 'PLUGIN_CALCULATOR_FIXED';
@@ -50,6 +54,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     const DECISION_RULE_PLUGINS = 'DECISION_RULE_PLUGINS';
     const CALCULATOR_PLUGINS = 'CALCULATOR_PLUGINS';
     const COLLECTOR_PLUGINS = 'COLLECTOR_PLUGINS';
+    const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -70,6 +75,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDiscountConfigurationExpanderPlugins($container);
         $container = $this->addDiscountApplicableFilterPlugins($container);
         $container = $this->addCurrencyFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -89,6 +95,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDiscountFormDataProviderExpanderPlugins($container);
         $container = $this->addDiscountViewBlockProviderPlugins($container);
         $container = $this->addCurrencyFacade($container);
+        $container = $this->addStoreRelationFormTypePlugin($container);
 
         return $container;
     }
@@ -427,5 +434,49 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container)
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new DiscountToStoreFacadeBridge($container->getLocator()->store()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreRelationFormTypePlugin(Container $container)
+    {
+        $container[static::PLUGIN_STORE_RELATION_FORM_TYPE] = function () {
+            return $this->getStoreRelationFormTypePlugin();
+        };
+        return $container;
+    }
+
+    /**
+     * @throws \Spryker\Zed\Discount\Exception\MissingStoreRelationFormTypePluginException
+     *
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function getStoreRelationFormTypePlugin()
+    {
+        throw new MissingStoreRelationFormTypePluginException(
+            sprintf(
+                'Missing instance of %s! You need to configure StoreRelationFormType ' .
+                'in your own DiscountDependencyProvider::getStoreRelationFormTypePlugin() ' .
+                'to be able to manage discounts.',
+                FormTypeInterface::class
+            )
+        );
     }
 }
