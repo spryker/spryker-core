@@ -1,3 +1,3 @@
 # Stock Changelog
 
-[Stock Changelog](https://github.com/spryker/Stock/releases)
+[Release Changelog](https://github.com/spryker/stock/releases)

@@ -33,6 +33,7 @@
     <table name="spy_touch_storage" phpName="SpyTouchStorage" identifierQuoting="true">
         <column name="id_touch_storage" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_locale" type="INTEGER" required="true"/>
+        <column name="fk_store" type="INTEGER" required="false"/>
         <column name="fk_touch" type="INTEGER" required="true"/>
         <column name="key" type="VARCHAR" required="true"/>
         <unique name="spy_touch_storage-unique-fk_locale">
@@ -49,6 +50,9 @@
         <foreign-key name="spy_touch_storage-fk_touch" foreignTable="spy_touch" phpName="Touch" refPhpName="TouchStorage">
             <reference foreign="id_touch" local="fk_touch"/>
         </foreign-key>
+        <foreign-key name="spy_touch_storage-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="TouchStorage">
+            <reference foreign="id_store" local="fk_store"/>
+        </foreign-key>
         <foreign-key name="spy_touch_storage-fk_locale" foreignTable="spy_locale" phpName="Locale" refPhpName="TouchStorage">
             <reference foreign="id_locale" local="fk_locale"/>
         </foreign-key>
@@ -57,6 +61,7 @@
     <table name="spy_touch_search" phpName="SpyTouchSearch" identifierQuoting="true">
         <column name="id_touch_search" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_locale" type="INTEGER" required="true"/>
+        <column name="fk_store" type="INTEGER" required="false"/>
         <column name="fk_touch" type="INTEGER" required="true"/>
         <column name="key" type="VARCHAR" required="true"/>
         <unique name="spy_touch_search-unique-fk_locale">
@@ -72,6 +77,9 @@
         </behavior>
         <foreign-key name="spy_touch_search-fk_touch" foreignTable="spy_touch" phpName="Touch" refPhpName="TouchSearch">
             <reference foreign="id_touch" local="fk_touch"/>
+        </foreign-key>
+        <foreign-key name="spy_touch_search-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="TouchSearch">
+            <reference foreign="id_store" local="fk_store"/>\
         </foreign-key>
         <foreign-key name="spy_touch_search-fk_locale" foreignTable="spy_locale" phpName="Locale" refPhpName="TouchSearch">
             <reference foreign="id_locale" local="fk_locale"/>

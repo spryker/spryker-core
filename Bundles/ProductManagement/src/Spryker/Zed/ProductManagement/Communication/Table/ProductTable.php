@@ -25,9 +25,9 @@ class ProductTable extends AbstractProductTable
     const COL_TAX_SET = 'tax_set';
     const COL_VARIANT_COUNT = 'variants';
     const COL_STATUS = 'status';
-
     const COL_ACTIONS = 'actions';
     const COL_IS_BUNDLE = 'is_bundle';
+    const COL_STORE_RELATION = 'store_relation';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -66,12 +66,14 @@ class ProductTable extends AbstractProductTable
             static::COL_VARIANT_COUNT => 'Variants',
             static::COL_STATUS => 'Status',
             static::COL_IS_BUNDLE => 'Contains bundles',
+            static::COL_STORE_RELATION => 'Stores',
             static::COL_ACTIONS => 'Actions',
         ]);
 
         $config->setRawColumns([
             static::COL_STATUS,
             static::COL_IS_BUNDLE,
+            static::COL_STORE_RELATION,
             static::COL_ACTIONS,
         ]);
 
@@ -135,8 +137,39 @@ class ProductTable extends AbstractProductTable
             static::COL_VARIANT_COUNT => $productAbstractEntity->getSpyProducts()->count(),
             static::COL_STATUS => $this->getAbstractProductStatusLabel($productAbstractEntity),
             static::COL_IS_BUNDLE => $this->getIsBundleProductLable($productAbstractEntity),
+            static::COL_STORE_RELATION => $this->getStoreNames($productAbstractEntity->getIdProductAbstract()),
             static::COL_ACTIONS => implode(' ', $this->createActionColumn($productAbstractEntity)),
         ];
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return string
+     */
+    protected function getStoreNames($idProductAbstract)
+    {
+        $productAbstractStoreCollection = $this->getProductAbstractStoreWithStore($idProductAbstract);
+
+        $storeNames = [];
+        foreach ($productAbstractStoreCollection as $productAbstractStoreEntity) {
+            $storeNames[] = sprintf(
+                '<span class="label label-info">%s</span>',
+                $productAbstractStoreEntity->getSpyStore()->getName()
+            );
+        }
+
+        return implode(" ", $storeNames);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStore[]
+     */
+    protected function getProductAbstractStoreWithStore($idProductAbstract)
+    {
+        return $this->productQueryQueryContainer->queryProductAbstractStoreWithStoresByFkProductAbstract($idProductAbstract);
     }
 
     /**

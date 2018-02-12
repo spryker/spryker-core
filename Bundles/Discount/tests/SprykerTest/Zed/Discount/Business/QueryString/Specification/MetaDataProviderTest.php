@@ -48,6 +48,51 @@ class MetaDataProviderTest extends Unit
     /**
      * @return void
      */
+    public function testIsFieldAvailableReturnsTrueIfFieldIsAvailable()
+    {
+        // Assign
+        $fieldName = 'sample field';
+        $expectedResult = true;
+
+        $decisionRulePluginMock = $this->createDecisionRulePluginMock();
+        $decisionRulePluginMock
+            ->expects($this->any())
+            ->method('getFieldName')
+            ->willReturn($fieldName);
+
+        // Act
+        $actualResult = $this->createMetaDataProvider($decisionRulePluginMock)->isFieldAvailable($fieldName);
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsFieldAvailableReturnsFalseIfFieldIsNotAvailable()
+    {
+        // Assign
+        $fieldName = 'sample field';
+        $otherFieldName = 'sample field 2';
+        $expectedResult = false;
+
+        $decisionRulePluginMock = $this->createDecisionRulePluginMock();
+        $decisionRulePluginMock
+            ->expects($this->any())
+            ->method('getFieldName')
+            ->willReturn($fieldName);
+
+        // Act
+        $actualResult = $this->createMetaDataProvider($decisionRulePluginMock)->isFieldAvailable($otherFieldName);
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetAcceptedTypesByFieldNameShouldReturnAcceptedDateTypesForGivenPlugin()
     {
         $decisionRulePluginMock = $this->createDecisionRulePluginMock();

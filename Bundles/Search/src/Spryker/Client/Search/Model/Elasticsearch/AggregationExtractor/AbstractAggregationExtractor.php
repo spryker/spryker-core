@@ -13,6 +13,8 @@ abstract class AbstractAggregationExtractor implements AggregationExtractorInter
 {
     const PATH_SEPARATOR = '.';
 
+    const DOC_COUNT = 'doc_count';
+
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *

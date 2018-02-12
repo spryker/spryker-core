@@ -47,6 +47,20 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     */
+    public function queryAllProductAbstractLocalizedAttributes();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
+     */
+    public function queryAllProductLocalizedAttributes();
+
+    /**
+     * @api
+     *
      * @param int $idProduct
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
@@ -116,4 +130,23 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstractWithName($idLocale);
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery
+     */
+    public function queryProductAbstractStoreWithStoresByFkProductAbstract($idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int[] $idStores
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery
+     */
+    public function queryProductAbstractStoresByFkProductAbstractAndFkStores($idProductAbstract, $idStores);
 }

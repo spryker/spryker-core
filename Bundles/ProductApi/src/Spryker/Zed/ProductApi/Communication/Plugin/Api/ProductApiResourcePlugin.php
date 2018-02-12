@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductApi\ProductApiConfig;
 
 /**
- * @method \Spryker\Zed\ProductApi\Business\ProductApiFacade getFacade()
+ * @method \Spryker\Zed\ProductApi\Business\ProductApiFacadeInterface getFacade()
  * @method \Spryker\Zed\Product\Communication\ProductCommunicationFactory getFactory()
  */
 class ProductApiResourcePlugin extends AbstractPlugin implements ApiResourcePluginInterface

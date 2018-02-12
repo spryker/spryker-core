@@ -1,3 +1,3 @@
 # Sales Changelog
 
-[Sales Changelog](https://github.com/spryker/Sales/releases)
+[Release Changelog](https://github.com/spryker/sales/releases)

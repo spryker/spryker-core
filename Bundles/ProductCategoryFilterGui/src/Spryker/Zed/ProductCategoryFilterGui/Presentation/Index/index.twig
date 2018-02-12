@@ -1,0 +1,36 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Overview of Category Filters' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Root nodes list' } %}
+
+        {% block widget_content %}
+            {{ RootCategoriesTable | raw }}
+        {% endblock %}
+
+    {% endembed %}
+
+    <div class="row">
+        <div class="col-lg-6">
+            {% include '@ProductCategoryFilterGui/Index/_partials/category-tree.twig' %}
+        </div>
+
+        <div class="col-lg-6">
+            {% include '@ProductCategoryFilterGui/Index/_partials/product-category-filter-container.twig' %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-product-category-main.css" />
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-product-category-main.js"></script>
+{% endblock %}
+

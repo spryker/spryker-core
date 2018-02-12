@@ -12,6 +12,17 @@
         <property name="fkTemplate" type="int" />
         <property name="templateName" type="string" />
         <property name="glossary" type="CmsBlockGlossary" />
+        <property name="storeRelation" type="StoreRelation"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int" />
+        <property name="idStores" type="int[]" />
+        <property name="stores" type="Store[]" />
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int" />
     </transfer>
 
     <transfer name="CmsBlockGlossary">

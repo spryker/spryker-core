@@ -2,7 +2,7 @@ namespace: CmsBlockProductConnector
 actor: Tester
 
 include:
-  - tests/SprykerTest/Zed/CmsBlockProductConnector
+    - tests/SprykerTest/Zed/CmsBlockProductConnector
 
 paths:
     tests: tests

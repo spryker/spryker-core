@@ -9,13 +9,15 @@ namespace Spryker\Zed\Console;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
 class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
 {
     const COMMANDS = 'commands';
     const EVENT_SUBSCRIBER = 'event_subscriber';
     const SERVICE_PROVIDERS = 'service providers';
+
+    const PLUGINS_CONSOLE_PRE_RUN_HOOK = 'PLUGINS_CONSOLE_PRE_RUN_HOOK';
+    const PLUGINS_CONSOLE_POST_RUN_HOOK = 'PLUGINS_CONSOLE_POST_RUN_HOOK';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,6 +29,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCommands($container);
         $container = $this->addEventSubscriber($container);
         $container = $this->addServiceProviders($container);
+        $container = $this->addConsoleHookPlugins($container);
 
         return $container;
     }
@@ -50,7 +53,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Symfony\Component\Console\Command\Command[]
      */
-    public function getConsoleCommands(Container $container)
+    protected function getConsoleCommands(Container $container)
     {
         return [];
     }
@@ -84,6 +87,44 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addConsoleHookPlugins(Container $container)
+    {
+        $container[static::PLUGINS_CONSOLE_PRE_RUN_HOOK] = function (Container $container) {
+            return $this->getConsolePreRunHookPlugins($container);
+        };
+
+        $container[static::PLUGINS_CONSOLE_POST_RUN_HOOK] = function (Container $container) {
+            return $this->getConsolePostRunHookPlugins($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface[]
+     */
+    protected function getConsolePreRunHookPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface[]
+     */
+    protected function getConsolePostRunHookPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addServiceProviders(Container $container)
     {
         $container[static::SERVICE_PROVIDERS] = function (Container $container) {
@@ -100,8 +141,6 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getServiceProviders(Container $container)
     {
-        return [
-            new PropelServiceProvider(),
-        ];
+        return [];
     }
 }

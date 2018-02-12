@@ -11,8 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer getQueryContainer()
- * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacade getFacade()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface getFacade()
  */
 class CreateController extends BaseOptionController
 {
@@ -25,10 +25,10 @@ class CreateController extends BaseOptionController
     {
         $dataProvider = $this->getFactory()->createGeneralFormDataProvider();
 
-        $productOptionGroupForm = $this->getFactory()->createProductOptionGroup($dataProvider);
+        $productOptionGroupForm = $this->getFactory()->getProductOptionGroupForm($dataProvider);
         $productOptionGroupForm->handleRequest($request);
 
-        if ($productOptionGroupForm->isValid()) {
+        if ($productOptionGroupForm->isSubmitted() && $productOptionGroupForm->isValid()) {
             $productOptionGroupTransfer = $productOptionGroupForm->getData();
             $idProductOptionGroup = $this->getFacade()->saveProductOptionGroup($productOptionGroupTransfer);
 

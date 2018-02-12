@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
- * @method \Spryker\Zed\Sales\Business\SalesFacade getFacade()
+ * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
  */
 class CommentController extends AbstractController
 {
@@ -29,7 +29,7 @@ class CommentController extends AbstractController
         $idSalesOrder = $request->query->get(SalesConfig::PARAM_ID_SALES_ORDER);
 
         $formDataProvider = $this->getFactory()->createCommentFormDataProvider();
-        $form = $this->getFactory()->createCommentForm(
+        $form = $this->getFactory()->getCommentForm(
             $formDataProvider->getData($idSalesOrder)
         );
         $form->handleRequest($request);
@@ -70,7 +70,7 @@ class CommentController extends AbstractController
         $formData = $form->getData();
         $idSalesOrder = $formData[CommentTransfer::FK_SALES_ORDER];
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $commentTransfer = new CommentTransfer();
             $commentTransfer->setMessage($formData[CommentTransfer::MESSAGE]);
             $commentTransfer->setFkSalesOrder($idSalesOrder);

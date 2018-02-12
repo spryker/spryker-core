@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\Shipment\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Spryker\Zed\Shipment\Business\ShipmentFacadeInterface;
 use Spryker\Zed\Shipment\Communication\Form\MethodForm;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface;
-use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
@@ -27,6 +28,11 @@ class MethodFormDataProvider
     protected $plugins;
 
     /**
+     * @var \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface
+     */
+    protected $shipmentFacade;
+
+    /**
      * @var \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface
      */
     protected $taxFacade;
@@ -37,57 +43,44 @@ class MethodFormDataProvider
     protected $moneyFacade;
 
     /**
-     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface|null
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $shipmentQueryContainer
-     * @param \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface $taxFacade
      * @param array $plugins
+     * @param \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface $shipmentFacade
+     * @param \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface $taxFacade
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface $moneyFacade
-     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface|null $store
      */
     public function __construct(
         ShipmentQueryContainerInterface $shipmentQueryContainer,
-        ShipmentToTaxInterface $taxFacade,
         array $plugins,
-        ShipmentToMoneyInterface $moneyFacade,
-        ShipmentToStoreInterface $store = null
+        ShipmentFacadeInterface $shipmentFacade,
+        ShipmentToTaxInterface $taxFacade,
+        ShipmentToMoneyInterface $moneyFacade
     ) {
         $this->shipmentQueryContainer = $shipmentQueryContainer;
-        $this->taxFacade = $taxFacade;
         $this->plugins = $plugins;
+        $this->shipmentFacade = $shipmentFacade;
+        $this->taxFacade = $taxFacade;
         $this->moneyFacade = $moneyFacade;
-        $this->store = $store;
     }
 
     /**
      * @param int|null $idMethod
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
     public function getData($idMethod = null)
     {
         if ($idMethod !== null) {
-            $method = $this->shipmentQueryContainer->queryMethods()->findOneByIdShipmentMethod($idMethod);
+            $shipmentMethodEntity = $this->shipmentQueryContainer
+                ->queryMethodWithMethodPricesAndCarrierById($idMethod)
+                ->find()
+                ->getFirst();
+            $shipmentMethodTransfer = $this->shipmentFacade->transformShipmentMethodEntityToShipmentMethodTransfer($shipmentMethodEntity);
 
-            $data = [
-                MethodForm::FIELD_ID_FIELD => $method->getIdShipmentMethod(),
-                MethodForm::FIELD_CARRIER_FIELD => $method->getFkShipmentCarrier(),
-                MethodForm::FIELD_NAME_FIELD => $method->getName(),
-                MethodForm::FIELD_DEFAULT_PRICE => $method->getDefaultPrice(),
-                MethodForm::FIELD_AVAILABILITY_PLUGIN_FIELD => $method->getAvailabilityPlugin(),
-                MethodForm::FIELD_PRICE_PLUGIN_FIELD => $method->getPricePlugin(),
-                MethodForm::FIELD_DELIVERY_TIME_PLUGIN_FIELD => $method->getDeliveryTimePlugin(),
-                MethodForm::FIELD_IS_ACTIVE => $method->getIsActive(),
-                MethodForm::FIELD_TAX_SET_FIELD => $method->getFkTaxSet(),
-            ];
-
-            return $data;
+            return $shipmentMethodTransfer;
         }
 
-        return [];
+        return new ShipmentMethodTransfer();
     }
 
     /**
@@ -104,10 +97,7 @@ class MethodFormDataProvider
         ];
 
         $options[MethodForm::OPTION_MONEY_FACADE] = $this->moneyFacade;
-
-        if ($this->store) {
-            $options[MethodForm::OPTION_CURRENCY_ISO_CODE] = $this->store->getCurrencyIsoCode();
-        }
+        $options[MethodForm::OPTION_DATA_CLASS] = ShipmentMethodTransfer::class;
 
         return $options;
     }

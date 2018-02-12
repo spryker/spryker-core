@@ -14,8 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
- * @method \Spryker\Zed\Tax\Business\TaxFacade getFacade()
- * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
+ * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
  */
 class SetController extends AbstractController
 {
@@ -30,12 +30,12 @@ class SetController extends AbstractController
     {
         $taxSetFormDataProvider = $this->getFactory()->createTaxSetFormDataProvider();
 
-        $taxSetForm = $this->getFactory()->createTaxSetForm($taxSetFormDataProvider);
+        $taxSetForm = $this->getFactory()->getTaxSetForm($taxSetFormDataProvider);
 
         if ($request->request->count() > 0) {
             $taxSetForm->handleRequest($request);
 
-            if ($taxSetForm->isValid()) {
+            if ($taxSetForm->isSubmitted() && $taxSetForm->isValid()) {
                 $taxSetTransfer = $this->getFacade()->createTaxSet($taxSetForm->getData());
                 $this->addSuccessMessage(sprintf('Tax set %d was created successfully.', $taxSetTransfer->getIdTaxSet()));
                 $redirectUrl = Url::generate('/tax/set/edit', [
@@ -64,12 +64,12 @@ class SetController extends AbstractController
 
         $taxSetTransfer = $this->getFacade()->getTaxSet($idTaxSet);
         $taxSetFormDataProvider = $this->getFactory()->createTaxSetFormDataProvider($taxSetTransfer);
-        $taxSetForm = $this->getFactory()->createTaxSetForm($taxSetFormDataProvider);
+        $taxSetForm = $this->getFactory()->getTaxSetForm($taxSetFormDataProvider);
 
         if ($request->request->count() > 0) {
             $taxSetForm->handleRequest($request);
 
-            if ($taxSetForm->isValid()) {
+            if ($taxSetForm->isSubmitted() && $taxSetForm->isValid()) {
                 $taxSetTransfer = $taxSetForm->getData();
                 $taxSetTransfer->setIdTaxSet($idTaxSet);
                 $rowsAffected = $this->getFacade()->updateTaxSet($taxSetForm->getData());

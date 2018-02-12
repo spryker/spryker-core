@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductManagement;
 
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCategoryBridge;
@@ -16,6 +17,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyB
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceBridge;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBridge;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageBridge;
@@ -25,6 +27,8 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTaxBridge
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToTouchBridge;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingBridge;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextBridge;
+use Spryker\Zed\ProductManagement\Exception\MissingMoneyTypePluginException;
+use Spryker\Zed\ProductManagement\Exception\MissingStoreRelationFormTypePluginException;
 
 class ProductManagementDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -38,6 +42,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_TAX = 'FACADE_TAX';
     const FACADE_PRICE = 'FACADE_PRICE';
+    const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
     const FACADE_STOCK = 'FACADE_STOCK';
     const FACADE_MONEY = 'FACADE_MONEY';
     const FACADE_CURRENCY = 'FACADE_CURRENCY';
@@ -53,6 +58,9 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     const QUERY_CONTAINER_PRODUCT_GROUP = 'QUERY_CONTAINER_PRODUCT_GROUP';
 
     const PLUGINS_PRODUCT_ABSTRACT_VIEW = 'PRODUCT_MANAGEMENT:PLUGINS_PRODUCT_ABSTRACT_VIEW';
+    const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
+
+    const PLUGIN_MONEY_FORM_TYPE = 'MONEY_FORM_TYPE_PLUGIN';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -89,8 +97,8 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToProductImageBridge($container->getLocator()->productImage()->facade());
         };
 
-        $container[static::FACADE_PRICE] = function (Container $container) {
-            return new ProductManagementToPriceBridge($container->getLocator()->price()->facade());
+        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+            return new ProductManagementToPriceProductBridge($container->getLocator()->priceProduct()->facade());
         };
 
         $container[static::FACADE_STOCK] = function (Container $container) {
@@ -115,6 +123,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[static::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
             return $container->getLocator()->productImage()->queryContainer();
+        };
+
+        $container[static::FACADE_PRICE] = function (Container $container) {
+            return new ProductManagementToPriceBridge($container->getLocator()->price()->facade());
         };
 
         return $container;
@@ -151,8 +163,8 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToTaxBridge($container->getLocator()->tax()->facade());
         };
 
-        $container[static::FACADE_PRICE] = function (Container $container) {
-            return new ProductManagementToPriceBridge($container->getLocator()->price()->facade());
+        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+            return new ProductManagementToPriceProductBridge($container->getLocator()->priceProduct()->facade());
         };
 
         $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {
@@ -203,8 +215,14 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToProductAttributeBridge($container->getLocator()->productAttribute()->facade());
         };
 
+        $container[static::FACADE_PRICE] = function (Container $container) {
+            return new ProductManagementToPriceBridge($container->getLocator()->price()->facade());
+        };
+
         $container = $this->addStore($container);
         $container = $this->addProductAbstractViewPlugins($container);
+        $container = $this->addStoreRelationFormTypePlugin($container);
+        $container = $this->addMoneyFormTypePlugin($container);
 
         return $container;
     }
@@ -238,10 +256,74 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMoneyFormTypePlugin(Container $container)
+    {
+        $container[static::PLUGIN_MONEY_FORM_TYPE] = function (Container $container) {
+            return $this->createMoneyFormTypePlugin($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @throws \Spryker\Zed\ProductManagement\Exception\MissingMoneyTypePluginException
+     *
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function createMoneyFormTypePlugin(Container $container)
+    {
+        throw new MissingMoneyTypePluginException(
+            sprintf(
+                'Missing instance of %s! You need to configure MoneyFormTypePlugin ' .
+                'in your own ProductManagementDependencyProvider::createMoneyFormTypePlugin() ' .
+                'to be able to manage product prices.',
+                FormTypeInterface::class
+            )
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductManagement\Communication\Plugin\ProductAbstractViewPluginInterface[]
      */
     protected function getProductAbstractViewPlugins()
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreRelationFormTypePlugin(Container $container)
+    {
+        $container[static::PLUGIN_STORE_RELATION_FORM_TYPE] = function () {
+            return $this->getStoreRelationFormTypePlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @throws \Spryker\Zed\ProductManagement\Exception\MissingStoreRelationFormTypePluginException
+     *
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function getStoreRelationFormTypePlugin()
+    {
+        throw new MissingStoreRelationFormTypePluginException(
+            sprintf(
+                'Missing instance of %s! You need to configure StoreRelationFormType ' .
+                'in your own ProductManagementDependencyProvider::getStoreRelationFormTypePlugin() ' .
+                'to be able to manage shipment prices.',
+                FormTypeInterface::class
+            )
+        );
     }
 }

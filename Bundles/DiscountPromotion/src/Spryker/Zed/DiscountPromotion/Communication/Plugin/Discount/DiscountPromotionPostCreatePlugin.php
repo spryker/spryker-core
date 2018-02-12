@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface;
 
 /**
- * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacade getFacade()
+ * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface getFacade()
  * @method \Spryker\Zed\DiscountPromotion\Communication\DiscountPromotionCommunicationFactory getFactory()
  */
 class DiscountPromotionPostCreatePlugin extends BaseDiscountPromotionSaverPlugin implements DiscountPostCreatePluginInterface

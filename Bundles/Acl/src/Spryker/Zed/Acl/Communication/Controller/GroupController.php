@@ -17,13 +17,18 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
- * @method \Spryker\Zed\Acl\Business\AclFacade getFacade()
+ * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
  */
 class GroupController extends AbstractController
 {
     const USER_LIST_URL = '/acl/users';
     const PARAMETER_ID_GROUP = 'id-group';
     const PARAMETER_ID_USER = 'id-user';
+
+    const MESSAGE_GROUP_CREATE_SUCCESS = 'Group was created successfully.';
+    const MESSAGE_GROUP_UPDATE_SUCCESS = 'Group was updated successfully.';
+    const MESSAGE_USER_IN_GROUP_DELETE_SUCCESS = 'The User was removed from the group.';
+    const MESSAGE_USER_IN_GROUP_DELETE_ERROR = 'User and group are not found.';
 
     /**
      * @return array
@@ -52,7 +57,7 @@ class GroupController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function addAction(Request $request)
     {
@@ -65,7 +70,7 @@ class GroupController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
             $roles = $this->getRoleTransfersFromForm($formData);
@@ -75,7 +80,8 @@ class GroupController extends AbstractController
                 $roles
             );
 
-            return $this->redirectResponse('/acl/group/edit?' . self::PARAMETER_ID_GROUP . '=' . $groupTransfer->getIdAclGroup());
+            $this->addSuccessMessage(static::MESSAGE_GROUP_CREATE_SUCCESS);
+            return $this->redirectResponse('/acl/group/edit?' . static::PARAMETER_ID_GROUP . '=' . $groupTransfer->getIdAclGroup());
         }
 
         return $this->viewResponse([
@@ -86,11 +92,11 @@ class GroupController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function editAction(Request $request)
     {
-        $idAclGroup = $this->castId($request->query->get(self::PARAMETER_ID_GROUP));
+        $idAclGroup = $this->castId($request->query->get(static::PARAMETER_ID_GROUP));
 
         $dataProvider = $this->getFactory()->createGroupFormDataProvider();
 
@@ -101,7 +107,7 @@ class GroupController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
             $roles = $this->getRoleTransfersFromForm($formData);
 
@@ -109,8 +115,8 @@ class GroupController extends AbstractController
             $groupTransfer->setName($formData[GroupForm::FIELD_TITLE]);
             $groupTransfer = $this->getFacade()->updateGroup($groupTransfer, $roles);
 
-            $url = sprintf('/acl/group/edit?%s=%d', self::PARAMETER_ID_GROUP, $groupTransfer->getIdAclGroup());
-
+            $this->addSuccessMessage(static::MESSAGE_GROUP_UPDATE_SUCCESS);
+            $url = sprintf('/acl/group/edit?%s=%d', static::PARAMETER_ID_GROUP, $groupTransfer->getIdAclGroup());
             return $this->redirectResponse($url);
         }
 
@@ -148,7 +154,7 @@ class GroupController extends AbstractController
      */
     public function usersAction(Request $request)
     {
-        $idGroup = $this->castId($request->query->get(self::PARAMETER_ID_GROUP));
+        $idGroup = $this->castId($request->query->get(static::PARAMETER_ID_GROUP));
 
         $usersTable = $this->getFactory()->createGroupUsersTable($idGroup);
 
@@ -162,7 +168,7 @@ class GroupController extends AbstractController
      *
      * @throws \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteUserFromGroupAction(Request $request)
     {
@@ -170,14 +176,14 @@ class GroupController extends AbstractController
             throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
         }
 
-        $idGroup = $this->castId($request->request->get(self::PARAMETER_ID_GROUP));
-        $idUser = $this->castId($request->request->get(self::PARAMETER_ID_USER));
+        $idGroup = $this->castId($request->request->get(static::PARAMETER_ID_GROUP));
+        $idUser = $this->castId($request->request->get(static::PARAMETER_ID_USER));
 
         try {
             $this->getFacade()->removeUserFromGroup($idUser, $idGroup);
-            $this->addSuccessMessage('Deleted user from group');
+            $this->addSuccessMessage(static::MESSAGE_USER_IN_GROUP_DELETE_SUCCESS);
         } catch (UserAndGroupNotFoundException $e) {
-            $this->addErrorMessage('User and group not found');
+            $this->addErrorMessage(static::MESSAGE_USER_IN_GROUP_DELETE_ERROR);
         }
 
         return $this->redirectResponse('/acl/group/edit?id-group=' . $idGroup);
@@ -190,7 +196,7 @@ class GroupController extends AbstractController
      */
     public function rolesAction(Request $request)
     {
-        $idGroup = $this->castId($request->get(self::PARAMETER_ID_GROUP));
+        $idGroup = $this->castId($request->get(static::PARAMETER_ID_GROUP));
 
         $roles = $this->getFactory()->getGroupRoleListByGroupId($idGroup);
 

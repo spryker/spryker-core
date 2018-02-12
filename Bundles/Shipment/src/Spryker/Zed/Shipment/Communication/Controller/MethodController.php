@@ -7,17 +7,19 @@
 
 namespace Spryker\Zed\Shipment\Communication\Controller;
 
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
- * @method \Spryker\Zed\Shipment\Business\ShipmentFacade getFacade()
+ * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
  */
 class MethodController extends AbstractController
 {
     const ID_METHOD_PARAMETER = 'id-method';
+
+    const MESSAGE_UPDATE_SUCCESS = 'Shipment method "%s" was updated successfully.';
+    const MESSAGE_CREATE_SUCCESS = 'Shipment method "%s" was created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -32,14 +34,11 @@ class MethodController extends AbstractController
             ->createMethodForm($dataProvider->getData(), $dataProvider->getOptions())
             ->handleRequest($request);
 
-        if ($form->isValid()) {
-            $data = $form->getData();
-            $methodTransfer = new ShipmentMethodTransfer();
-            $methodTransfer->fromArray($data, true);
-            $this->getFacade()
-                ->createMethod($methodTransfer);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $shipmentMethodTransfer = $form->getData();
+            $this->getFacade()->createMethod($shipmentMethodTransfer);
 
-            $this->addSuccessMessage('Shipment method ' . $methodTransfer->getName() . ' saved');
+            $this->addSuccessMessage(sprintf(static::MESSAGE_CREATE_SUCCESS, $shipmentMethodTransfer->getName()));
 
             return $this->redirectResponse('/shipment');
         }
@@ -52,7 +51,7 @@ class MethodController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return array|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request)
     {
@@ -65,14 +64,12 @@ class MethodController extends AbstractController
                 ->createMethodForm($dataProvider->getData($idMethod), $dataProvider->getOptions())
                 ->handleRequest($request);
 
-            if ($form->isValid()) {
-                $data = $form->getData();
-                $methodTransfer = new ShipmentMethodTransfer();
-                $methodTransfer->fromArray($data, true);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $shipmentMethodTransfer = $form->getData();
 
                 $this->getFacade()
-                    ->updateMethod($methodTransfer);
-                $this->addSuccessMessage('Shipment method ' . $methodTransfer->getName() . ' updated');
+                    ->updateMethod($shipmentMethodTransfer);
+                $this->addSuccessMessage(sprintf(static::MESSAGE_UPDATE_SUCCESS, $shipmentMethodTransfer->getName()));
 
                 return $this->redirectResponse('/shipment');
             }

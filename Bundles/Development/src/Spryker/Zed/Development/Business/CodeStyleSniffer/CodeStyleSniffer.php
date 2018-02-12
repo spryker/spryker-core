@@ -27,6 +27,7 @@ class CodeStyleSniffer
     const OPTION_SNIFFS = 'sniffs';
     const OPTION_VERBOSE = 'verbose';
 
+    const APPLICATION_NAMESPACES = ['Orm'];
     const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared'];
 
     /**
@@ -126,7 +127,6 @@ class CodeStyleSniffer
     protected function buildPaths($module, $pathSuffix = null)
     {
         return [
-            $this->getPathToCoreModule($this->normalizeModuleNameForSplit($module), $pathSuffix),
             $this->getPathToCorePackageNonSplit($this->normalizeModuleNameForSplit($module), $pathSuffix),
             $this->getPathToCoreModule($this->normalizeModuleNameForNonSplit($module), $pathSuffix),
         ];
@@ -262,11 +262,12 @@ class CodeStyleSniffer
     protected function resolveProjectPath($module, $pathSuffix = null)
     {
         $projectNamespaces = $this->config->getProjectNamespaces();
+        $namespaces = array_merge(static::APPLICATION_NAMESPACES, $projectNamespaces);
         $pathToRoot = $this->config->getPathToRoot();
 
         $paths = [];
-        foreach ($projectNamespaces as $projectNamespace) {
-            $path = $pathToRoot . 'src' . DIRECTORY_SEPARATOR . $projectNamespace . DIRECTORY_SEPARATOR;
+        foreach ($namespaces as $namespace) {
+            $path = $pathToRoot . 'src' . DIRECTORY_SEPARATOR . $namespace . DIRECTORY_SEPARATOR;
 
             foreach (static::APPLICATION_LAYERS as $layer) {
                 $layerPath = $path . $layer . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;

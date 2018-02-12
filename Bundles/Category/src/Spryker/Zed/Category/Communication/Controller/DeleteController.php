@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
- * @method \Spryker\Zed\Category\Business\CategoryFacade getFacade()
+ * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
  */
 class DeleteController extends AbstractController
@@ -33,7 +33,7 @@ class DeleteController extends AbstractController
         $form = $this->getFactory()->createCategoryDeleteForm($idCategory);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
             $this

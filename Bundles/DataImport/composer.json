@@ -3,11 +3,12 @@
   "description": "DataImport module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/error-handler": "^2.1.0",
     "spryker/kernel": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0",
-    "spryker/touch": "^3.0.0"
+    "spryker/touch": "^3.0.0 || ^4.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -16,7 +17,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\DataImport\\": "tests/SprykerTest/Zed/DataImport/_support/Helper/"
+      "SprykerTest\\Zed\\DataImport\\Helper\\": "tests/SprykerTest/Zed/DataImport/_support/Helper/"
     }
   },
   "autoload-dev": {

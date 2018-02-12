@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacade getFacade()
+ * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
  */
 class SearchPreferencesController extends AbstractController
@@ -62,7 +62,7 @@ class SearchPreferencesController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $productSearchPreferencesTransfer = new ProductSearchPreferencesTransfer();
             $productSearchPreferencesTransfer->fromArray($form->getData(), true);
 
@@ -98,7 +98,7 @@ class SearchPreferencesController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $productSearchPreferencesTransfer = new ProductSearchPreferencesTransfer();
             $productSearchPreferencesTransfer->fromArray($form->getData(), true);
 

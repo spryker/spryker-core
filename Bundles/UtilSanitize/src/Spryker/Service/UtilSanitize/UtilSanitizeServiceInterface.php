@@ -21,4 +21,16 @@ interface UtilSanitizeServiceInterface
      * @return string
      */
     public function escapeHtml($text, $double = true, $charset = null);
+
+    /**
+     * Specification:
+     *  - Filters null elements of an array recursively
+     *
+     * @api
+     *
+     * @param array $array
+     *
+     * @return array
+     */
+    public function arrayFilterRecursive(array $array);
 }

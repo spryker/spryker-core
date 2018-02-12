@@ -12,12 +12,14 @@ use Generated\Shared\Transfer\DiscountConditionTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Exception\PersistenceException;
 use Spryker\Zed\Discount\Business\Persistence\DiscountPersist;
+use Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationWriter;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
@@ -210,6 +212,7 @@ class DiscountPersistTest extends Unit
 
         $discountGeneralTransfer = new DiscountGeneralTransfer();
         $discountGeneralTransfer->setDiscountType(DiscountConstants::TYPE_VOUCHER);
+        $discountGeneralTransfer->setStoreRelation(new StoreRelationTransfer());
         $discountConfiguratorTransfer->setDiscountGeneral($discountGeneralTransfer);
 
         $discountCalculatorTransfer = new DiscountCalculatorTransfer();
@@ -243,9 +246,21 @@ class DiscountPersistTest extends Unit
             $voucherEngineMock = $this->createVoucherEngineMock();
         }
 
+        $discountStoreRelationWriterMock = $this->createDiscountStoreRelationWriterMock();
+        $postCreatePlugins = [];
+        $postUpdatePlugins = [];
+
         $discountPersistMock = $this->getMockBuilder(DiscountPersist::class)
             ->setMethods(['createDiscountEntity', 'createVoucherPoolEntity'])
-            ->setConstructorArgs([$voucherEngineMock, $discountQueryContainerMock])
+            ->setConstructorArgs(
+                [
+                    $voucherEngineMock,
+                    $discountQueryContainerMock,
+                    $discountStoreRelationWriterMock,
+                    $postCreatePlugins,
+                    $postUpdatePlugins,
+                ]
+            )
             ->getMock();
 
         return $discountPersistMock;
@@ -257,6 +272,16 @@ class DiscountPersistTest extends Unit
     protected function createDiscountQueryContainerMock()
     {
         return $this->getMockBuilder(DiscountQueryContainerInterface::class)->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationWriter
+     */
+    protected function createDiscountStoreRelationWriterMock()
+    {
+        return $this->getMockBuilder(DiscountStoreRelationWriter::class)
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
     /**

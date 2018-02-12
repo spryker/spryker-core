@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 interface SequenceNumberFacadeInterface
 {
     /**
+     * Specification:
+     * - Generates a unique sequence value
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettings

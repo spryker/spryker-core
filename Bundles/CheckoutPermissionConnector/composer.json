@@ -1,0 +1,33 @@
+{
+  "name": "spryker/checkout-permission-connector",
+  "description": "CheckoutPermissionConnector module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/kernel": "^3.0.0",
+    "spryker/permission": "^0.0.3"
+  },
+  "require-dev": {
+    "spryker/checkout": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/checkout": "^4.0.0 If you want to use the permission plugin"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

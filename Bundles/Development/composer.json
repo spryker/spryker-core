@@ -3,6 +3,7 @@
   "description": "Development module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/config": "^3.0.0",
     "spryker/graph": "^3.0.0",
     "spryker/kernel": "^3.0.0",
@@ -16,7 +17,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\Development\\Helper\\": "tests/SprykerTest/Zed/Development/_support/Helper/"
     }
   },
   "autoload-dev": {

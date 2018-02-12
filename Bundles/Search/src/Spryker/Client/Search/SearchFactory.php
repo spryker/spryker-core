@@ -15,22 +15,33 @@ use Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationEx
 use Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\FacetValueTransformerFactory;
 use Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilder;
 use Spryker\Client\Search\Model\Elasticsearch\Query\QueryFactory;
+use Spryker\Client\Search\Model\Elasticsearch\Reader\Reader;
 use Spryker\Client\Search\Model\Elasticsearch\Suggest\SuggestBuilder;
+use Spryker\Client\Search\Model\Elasticsearch\Writer\Writer;
 use Spryker\Client\Search\Model\Handler\ElasticsearchSearchHandler;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\SearchConfig;
 use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
 use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchKeysQuery;
+use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchStringQuery;
 use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\Search\Provider\SearchClientProvider;
 
+/**
+ * @method \Spryker\Client\Search\SearchConfig getConfig()
+ */
 class SearchFactory extends AbstractFactory
 {
     /**
      * @var \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
     protected static $searchConfigInstance;
+
+    /**
+     * @var \Elastica\Client
+     */
+    protected static $searchClient;
 
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
@@ -203,6 +214,18 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @param string $searchString
+     * @param int|null $limit
+     * @param int|null $offset
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     */
+    public function createSearchStringQuery($searchString, $limit = null, $offset = null)
+    {
+        return new SearchStringQuery($searchString, $limit, $offset);
+    }
+
+    /**
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigExpanderPluginInterface[]
      */
     public function getSearchConfigExpanderPlugins()
@@ -216,5 +239,41 @@ class SearchFactory extends AbstractFactory
     public function getStore()
     {
         return $this->getProvidedDependency(SearchDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Writer\WriterInterface
+     */
+    public function createWriter()
+    {
+        return new Writer(
+            $this->createCachedElasticsearchClient(),
+            $this->getConfig()->getSearchIndexName(),
+            $this->getConfig()->getSearchDocumentType()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Reader\ReaderInterface
+     */
+    public function createReader()
+    {
+        return new Reader(
+            $this->createCachedElasticsearchClient(),
+            $this->getConfig()->getSearchIndexName(),
+            $this->getConfig()->getSearchDocumentType()
+        );
+    }
+
+    /**
+     * @return \Elastica\Client
+     */
+    public function createCachedElasticsearchClient()
+    {
+        if (static::$searchClient === null) {
+            static::$searchClient = $this->getElasticsearchClient();
+        }
+
+        return static::$searchClient;
     }
 }

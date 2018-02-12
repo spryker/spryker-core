@@ -83,4 +83,62 @@ interface SearchClientInterface
      * @return \Elastica\ResultSet
      */
     public function searchKeys($searchString, $limit = null, $offset = null);
+
+    /**
+     * Specification:
+     * - Runs a string search for the given search string
+     * - @see https://www.elastic.co/guide/en/elasticsearch/reference/2.4/query-dsl-query-string-query.html
+     * - Returns the raw result set ordered by relevance
+     *
+     * @api
+     *
+     * @param string $searchString
+     * @param int|null $limit
+     * @param int|null $offset
+     *
+     * @return \Elastica\ResultSet|array
+     */
+    public function searchQueryString($searchString, $limit = null, $offset = null);
+
+    /**
+     * Specification:
+     * - Returns data from an external search service (e.g Elasticsearch)
+     *
+     * @api
+     *
+     * @param string $key
+     * @param string|null $typeName
+     * @param string|null $indexName
+     *
+     * @return mixed
+     */
+    public function read($key, $typeName = null, $indexName = null);
+
+    /**
+     * Specification:
+     * - Writes data into an external search service (e.g Elasticsearch)
+     *
+     * @api
+     *
+     * @param array $dataSet
+     * @param string|null $typeName
+     * @param string|null $indexName
+     *
+     * @return bool
+     */
+    public function write(array $dataSet, $typeName = null, $indexName = null);
+
+    /**
+     * Specification:
+     * - Deletes data from an external search service (e.g Elasticsearch)
+     *
+     * @api
+     *
+     * @param array $dataSet
+     * @param string|null $typeName
+     * @param string|null $indexName
+     *
+     * @return bool
+     */
+    public function delete(array $dataSet, $typeName = null, $indexName = null);
 }

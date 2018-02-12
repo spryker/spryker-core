@@ -16,5 +16,5 @@ interface PriceManagerInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function addGrossPriceToItems(CartChangeTransfer $cartChangeTransfer);
+    public function addPriceToItems(CartChangeTransfer $cartChangeTransfer);
 }

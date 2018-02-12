@@ -1,3 +1,3 @@
 # CategoryExporter Changelog
 
-[CategoryExporter Changelog](https://github.com/spryker/CategoryExporter/releases)
+[Release Changelog](https://github.com/spryker/category-exporter/releases)

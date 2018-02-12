@@ -13,7 +13,7 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Payment\Business\PaymentFacade getFacade()
+ * @method \Spryker\Zed\Payment\Business\PaymentFacadeInterface getFacade()
  */
 class PaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
 {
@@ -21,10 +21,10 @@ class PaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreConditi
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->getFacade()->checkoutPreCheck($quoteTransfer, $checkoutResponseTransfer);
+        return $this->getFacade()->checkoutPreCheck($quoteTransfer, $checkoutResponseTransfer);
     }
 }

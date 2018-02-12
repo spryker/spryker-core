@@ -1,3 +1,3 @@
 # ProductReview Changelog
 
-[Release Changelog](https://github.com/spryker/ProductReview/releases)
+[Release Changelog](https://github.com/spryker/product-review/releases)

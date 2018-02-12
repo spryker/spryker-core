@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CustomerApi\CustomerApiConfig getConfig()
- * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CustomerApi\Persistence\CustomerApiQueryContainerInterface getQueryContainer()
  */
 class CustomerApiPersistenceFactory extends AbstractPersistenceFactory
 {

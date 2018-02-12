@@ -3,10 +3,13 @@
   "description": "FlysystemFtpFileSystem module",
   "license": "proprietary",
   "require": {
-    "league/flysystem": "^1.0"
+    "league/flysystem": "^1.0",
+    "php": ">=7.1",
+    "spryker/kernel": "^3.5.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/flysystem": "*",
     "spryker/testify": "*"
   },
   "suggest": {

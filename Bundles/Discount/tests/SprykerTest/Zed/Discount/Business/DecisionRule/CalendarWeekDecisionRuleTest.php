@@ -33,7 +33,7 @@ class CalendarWeekDecisionRuleTest extends BaseRuleTester
         $dateTime = new DateTime();
 
         $comparatorMock = $this->createComparatorMock();
-        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer  $clauseTransfer, $calendarWeek) {
+        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $calendarWeek) {
             return $clauseTransfer->getValue() === $calendarWeek;
         });
 

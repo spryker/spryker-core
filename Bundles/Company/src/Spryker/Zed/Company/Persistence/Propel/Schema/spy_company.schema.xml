@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Company\Persistence" package="src.Orm.Zed.Company.Persistence">
+
+    <table name="spy_company" phpName="SpyCompany">
+        <column name="id_company" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="is_active" type="BOOLEAN" default="false"/>
+        <column name="status" required="true" size="8" type="ENUM" valueSet="pending,approved,denied" defaultValue="pending"/>
+
+        <id-method-parameter value="spy_company_pk_seq"/>
+    </table>
+
+    <table name="spy_company_store">
+        <column name="id_company_store" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_company" type="INTEGER" required="true"/>
+        <column name="fk_store" type="INTEGER" required="true"/>
+
+        <unique name="spy_company_store-unique-company">
+            <unique-column name="fk_company"/>
+            <unique-column name="fk_store"/>
+        </unique>
+
+        <foreign-key name="spy_company_store-fk_company" foreignTable="spy_company" phpName="Company" refPhpName="Company">
+            <reference local="fk_company" foreign="id_company"/>
+        </foreign-key>
+
+        <foreign-key name="spy_company_store-fk_store" foreignTable="spy_store" phpName="CompanyStore" refPhpName="CompanyStore">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_company_store_pk_seq"/>
+    </table>
+
+</database>

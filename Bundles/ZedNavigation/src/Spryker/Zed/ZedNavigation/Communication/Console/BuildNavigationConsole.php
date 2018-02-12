@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacade getFacade()
+ * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacadeInterface getFacade()
  */
 class BuildNavigationConsole extends Console
 {

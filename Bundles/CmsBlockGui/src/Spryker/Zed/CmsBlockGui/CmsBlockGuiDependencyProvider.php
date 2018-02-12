@@ -10,7 +10,9 @@ namespace Spryker\Zed\CmsBlockGui;
 use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToCmsBlockBridge;
 use Spryker\Zed\CmsBlockGui\Dependency\Facade\CmsBlockGuiToLocaleBridge;
 use Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerBridge;
+use Spryker\Zed\CmsBlockGui\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
@@ -23,6 +25,7 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     const PLUGINS_CMS_BLOCK_FORM = 'CMS_BLOCK_GUI:PLUGINS_CMS_BLOCK_FORM';
     const PLUGINS_CMS_BLOCK_VIEW = 'CMS_BLOCK_GUI:PLUGINS_CMS_BLOCK_VIEW';
+    const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
     const TWIG_ENVIRONMENT = 'CMS_BLOCK_GUI:TWIG_ENVIRONMENT';
 
@@ -40,6 +43,7 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCmsBlockFormPlugins($container);
         $container = $this->addCmsBlockViewPlugins($container);
         $container = $this->addTwigEnvironment($container);
+        $container = $this->addStoreRelationFormTypePlugin($container);
 
         return $container;
     }
@@ -151,5 +155,36 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $pimplePlugin = new Pimple();
         return $pimplePlugin->getApplication()['twig'];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreRelationFormTypePlugin(Container $container)
+    {
+        $container[static::PLUGIN_STORE_RELATION_FORM_TYPE] = function () {
+            return $this->getStoreRelationFormTypePlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @throws \Spryker\Zed\CmsBlockGui\Exception\MissingStoreRelationFormTypePluginException
+     *
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function getStoreRelationFormTypePlugin()
+    {
+        throw new MissingStoreRelationFormTypePluginException(
+            sprintf(
+                'Missing instance of %s! You need to configure StoreRelationFormType ' .
+                'in your own CmsBlockGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
+                'to be able to manage cms blocks.',
+                FormTypeInterface::class
+            )
+        );
     }
 }

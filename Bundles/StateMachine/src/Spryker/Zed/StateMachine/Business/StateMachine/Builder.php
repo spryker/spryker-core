@@ -130,23 +130,31 @@ class Builder implements BuilderInterface
     {
         foreach ($this->rootElement->children() as $xmlProcess) {
             $processFile = $this->getAttributeString($xmlProcess, self::PROCESS_FILE_ATTRIBUTE);
+
             if ($processFile === null) {
                  continue;
             }
 
-            $processFile = str_replace(' ', '_', $processFile);
-            $xmlSubProcess = $this->loadXmlFromFileName($pathToXml, $processFile);
-            $this->recursiveMerge($xmlSubProcess, $this->rootElement);
+            $processName = $this->getAttributeString($xmlProcess, 'name');
+            $processPrefix = $this->getAttributeString($xmlProcess, 'prefix');
+            $xmlSubProcess = $this->loadXmlFromFileName($pathToXml, str_replace(' ', '_', $processFile));
+
+            if ($processName) {
+                $xmlSubProcess->children()->process[0]['name'] = $processName;
+            }
+
+            $this->recursiveMerge($xmlSubProcess, $this->rootElement, $processPrefix);
         }
     }
 
     /**
      * @param \SimpleXMLElement $fromXmlElement
      * @param \SimpleXMLElement $intoXmlNode
+     * @param string|null $prefix
      *
      * @return void
      */
-    protected function recursiveMerge($fromXmlElement, $intoXmlNode)
+    protected function recursiveMerge($fromXmlElement, $intoXmlNode, $prefix = null)
     {
         $xmlElements = $fromXmlElement->children();
         if ($xmlElements === null) {
@@ -155,14 +163,59 @@ class Builder implements BuilderInterface
 
         /** @var \SimpleXMLElement $xmlElement */
         foreach ($xmlElements as $xmlElement) {
+            $xmlElement = $this->prefixSubProcessElementValue($xmlElement, $prefix);
+            $xmlElement = $this->prefixSubProcessElementAttributes($xmlElement, $prefix);
+
             $child = $intoXmlNode->addChild($xmlElement->getName(), $xmlElement);
             $attributes = $xmlElement->attributes();
             foreach ($attributes as $name => $value) {
                 $child->addAttribute($name, $value);
             }
 
-            $this->recursiveMerge($xmlElement, $child);
+            $this->recursiveMerge($xmlElement, $child, $prefix);
         }
+    }
+
+    /**
+     * @param \SimpleXMLElement $xmlElement
+     * @param string|null $prefix
+     *
+     * @return \SimpleXMLElement
+     */
+    protected function prefixSubProcessElementValue(SimpleXMLElement $xmlElement, $prefix = null)
+    {
+        if ($prefix === null) {
+            return $xmlElement;
+        }
+
+        $namespaceDependentElementNames = ['source', 'target', 'event'];
+
+        if (in_array($xmlElement->getName(), $namespaceDependentElementNames)) {
+            $xmlElement[0] = $prefix . $this->stateMachineConfig->getSubProcessPrefixDelimiter() . $xmlElement[0];
+        }
+
+        return $xmlElement;
+    }
+
+    /**
+     * @param \SimpleXMLElement $xmlElement
+     * @param string|null $prefix
+     *
+     * @return \SimpleXMLElement
+     */
+    protected function prefixSubProcessElementAttributes(SimpleXMLElement $xmlElement, $prefix = null)
+    {
+        if ($prefix === null) {
+            return $xmlElement;
+        }
+
+        $namespaceDependentElementNames = ['state', 'event'];
+
+        if (in_array($xmlElement->getName(), $namespaceDependentElementNames)) {
+            $xmlElement->attributes()['name'] = $prefix . $this->stateMachineConfig->getSubProcessPrefixDelimiter() . $xmlElement->attributes()['name'];
+        }
+
+        return $xmlElement;
     }
 
     /**
@@ -276,10 +329,10 @@ class Builder implements BuilderInterface
             $processName = $this->getAttributeString($xmlProcess, self::STATE_NAME_ATTRIBUTE);
             $process->setName($processName);
             $processMap[$processName] = $process;
-            $process->setMain($this->getAttributeBoolean($xmlProcess, self::PROCESS_MAIN_FLAG_ATTRIBUTE));
+            $process->setIsMain($this->getAttributeBoolean($xmlProcess, self::PROCESS_MAIN_FLAG_ATTRIBUTE));
             $process->setFile($this->getAttributeString($xmlProcess, self::PROCESS_FILE_ATTRIBUTE));
 
-            if ($process->getMain()) {
+            if ($process->getIsMain()) {
                 $mainProcess = $process;
             }
         }
@@ -516,7 +569,7 @@ class Builder implements BuilderInterface
      * @param \SimpleXMLElement $xmlElement
      * @param string $attributeName
      *
-     * @return string
+     * @return string|null
      */
     protected function getAttributeString(SimpleXMLElement $xmlElement, $attributeName)
     {

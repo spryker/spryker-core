@@ -25,13 +25,13 @@ class ReorderController extends AbstractController
     {
         $dataProvider = $this->getFactory()->createReorderProductSetsFormDataProvider();
         $reorderProductSetsForm = $this->getFactory()
-            ->createReorderProductSetsForm(
+            ->getReorderProductSetsForm(
                 $dataProvider->getData(),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
 
-        if ($reorderProductSetsForm->isValid()) {
+        if ($reorderProductSetsForm->isSubmitted() && $reorderProductSetsForm->isValid()) {
             $productSetTransfers = $this->getFactory()
                 ->createReorderFormDataToTransferMapper()
                 ->mapData($reorderProductSetsForm);

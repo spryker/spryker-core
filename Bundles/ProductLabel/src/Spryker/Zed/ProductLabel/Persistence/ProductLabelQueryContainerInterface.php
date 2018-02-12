@@ -46,11 +46,27 @@ interface ProductLabelQueryContainerInterface
     /**
      * @api
      *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    public function queryActiveProductsLabelByIdProductAbstract($idProductAbstract);
+
+    /**
+     * @api
+     *
      * @param int $idProductLabel
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
      */
     public function queryLocalizedAttributesByIdProductLabel($idProductLabel);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
+     */
+    public function queryAllLocalizedAttributesLabels();
 
     /**
      * @api
@@ -77,6 +93,13 @@ interface ProductLabelQueryContainerInterface
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
     public function queryProductAbstractRelationsByIdProductLabel($idProductLabel);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
+     */
+    public function queryAllProductLabelProductAbstractRelations();
 
     /**
      * @api

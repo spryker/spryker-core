@@ -12,11 +12,11 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Search\Business\SearchFacade getFacade()
+ * @method \Spryker\Zed\Search\Business\SearchFacadeInterface getFacade()
  */
 class GenerateIndexMapConsole extends Console
 {
-    const COMMAND_NAME = 'setup:search:index-map';
+    const COMMAND_NAME = 'search:setup:index-map';
     const DESCRIPTION = 'This command will generate the PageIndexMap without requiring the actual Elasticsearch index';
 
     /**
@@ -26,6 +26,7 @@ class GenerateIndexMapConsole extends Console
     {
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::DESCRIPTION);
+        $this->setAliases(['setup:search:index-map']);
 
         parent::configure();
     }

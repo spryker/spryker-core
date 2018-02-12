@@ -14,4 +14,6 @@ settings:
     log: true
 coverage:
     enabled: true
-    whitelist: { include: ['src/*.php'] }
+    whitelist:
+        include:
+            - 'src/*.php'

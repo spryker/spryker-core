@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductQueryContainer extends AbstractQueryContainer implements ProductQueryContainerInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $concreteSku
@@ -38,6 +40,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
@@ -48,6 +52,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
@@ -58,6 +64,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -73,6 +81,32 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     */
+    public function queryAllProductAbstractLocalizedAttributes()
+    {
+        return $this->getFactory()->createProductAbstractLocalizedAttributesQuery();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
+     */
+    public function queryAllProductLocalizedAttributes()
+    {
+        return $this->getFactory()->createProductLocalizedAttributesQuery();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProduct
@@ -88,6 +122,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $sku
@@ -101,6 +137,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $sku
@@ -114,6 +152,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -132,6 +172,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -150,6 +192,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
@@ -160,6 +204,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -177,6 +223,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idLocale
@@ -190,5 +238,39 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
                 ->filterByFkLocale($idLocale)
                 ->endUse()
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, 'name');
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery
+     */
+    public function queryProductAbstractStoreWithStoresByFkProductAbstract($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createProductAbstractStoreQuery()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->leftJoinWithSpyStore();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int[] $idStores
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery
+     */
+    public function queryProductAbstractStoresByFkProductAbstractAndFkStores($idProductAbstract, $idStores)
+    {
+        return $this->getFactory()->createProductAbstractStoreQuery()
+            ->filterByFkStore_In($idStores)
+            ->filterByFkProductAbstract($idProductAbstract);
     }
 }

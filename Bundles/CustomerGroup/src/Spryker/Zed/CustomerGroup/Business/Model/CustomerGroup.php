@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CustomerGroup\Business\Model;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CustomerGroupToCustomerAssignmentTransfer;
 use Generated\Shared\Transfer\CustomerGroupToCustomerTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -55,7 +56,7 @@ class CustomerGroup implements CustomerGroupInterface
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer[] $customerGroupToCustomerCollection
      *
-     * @return \Generated\Shared\Transfer\CustomerGroupToCustomerTransfer[]
+     * @return \Generated\Shared\Transfer\CustomerGroupToCustomerTransfer[]|\ArrayObject
      */
     protected function entityCollectionToTransferCollection(ObjectCollection $customerGroupToCustomerCollection)
     {
@@ -237,6 +238,7 @@ class CustomerGroup implements CustomerGroupInterface
                 ->addIdCustomerToDeAssign(
                     $customerTransfer->getIdCustomer()
                 );
+
             $this->removeCustomersFromGroup($customerGroupTransfer);
         }
     }
@@ -255,7 +257,12 @@ class CustomerGroup implements CustomerGroupInterface
         $groups = [];
 
         foreach ($customerGroupEntities as $customerGroupEntity) {
+            $customerAssignmentTransfer = new CustomerGroupToCustomerAssignmentTransfer();
+            $customerAssignmentTransfer->setIdCustomerGroup($customerGroupEntity->getIdCustomerGroup());
+
             $customerGroupTransfer = new CustomerGroupTransfer();
+            $customerGroupTransfer->setCustomerAssignment($customerAssignmentTransfer);
+
             $customerGroupTransfer->fromArray($customerGroupEntity->toArray(), true);
 
             $groups[] = $customerGroupTransfer;

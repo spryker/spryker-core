@@ -57,6 +57,18 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
+     *  - Checks if all order items are flagged to exclude order from customer.
+     *
+     * @api
+     *
+     * @param int $idOrder
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedExcludeFromCustomer($idOrder);
+
+    /**
+     * Specification:
      *  - Triggers even for given order items, data is used as additional payload which is passed to commands.
      *  - Locks state machine trigger from concurrent access
      *  - Logs state machine transitions
@@ -268,6 +280,18 @@ interface OmsFacadeInterface
      * @return int
      */
     public function sumReservedProductQuantitiesForSku($sku);
+
+    /**
+     * Specification:
+     *  - Returns reserved quantity for the given sku which aggregated in OMS
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return int
+     */
+    public function getOmsReservedProductQuantityForSku($sku);
 
     /**
      * Specification:

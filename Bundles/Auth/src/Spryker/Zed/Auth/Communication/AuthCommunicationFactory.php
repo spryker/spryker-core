@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Auth\AuthConfig getConfig()
- * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface getQueryContainer()
  */
 class AuthCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -24,9 +24,7 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createLoginForm()
     {
-        $formType = new LoginForm();
-
-        return $this->getFormFactory()->create($formType);
+        return $this->getFormFactory()->create(LoginForm::class);
     }
 
     /**
@@ -34,9 +32,7 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createResetPasswordRequestForm()
     {
-        $formType = new ResetPasswordRequestForm();
-
-        return $this->getFormFactory()->create($formType);
+        return $this->getFormFactory()->create(ResetPasswordRequestForm::class);
     }
 
     /**
@@ -44,9 +40,7 @@ class AuthCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createResetPasswordForm()
     {
-        $formType = new ResetPasswordForm();
-
-        return $this->getFormFactory()->create($formType);
+        return $this->getFormFactory()->create(ResetPasswordForm::class);
     }
 
     /**

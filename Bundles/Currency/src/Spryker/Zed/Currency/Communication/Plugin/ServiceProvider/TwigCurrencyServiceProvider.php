@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Twig_SimpleFunction;
 
 /**
- * @method \Spryker\Zed\Currency\Business\CurrencyFacade getFacade()
+ * @method \Spryker\Zed\Currency\Business\CurrencyFacadeInterface getFacade()
  */
 class TwigCurrencyServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

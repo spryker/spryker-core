@@ -13,10 +13,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
- * @method \Spryker\Zed\Shipment\Business\ShipmentFacade getFacade()
+ * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
  */
 class CarrierController extends AbstractController
 {
+    const MESSAGE_CARRIER_CREATE_SUCCESS = 'Carrier was created successfully.';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -35,13 +37,14 @@ class CarrierController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $carrierTransfer = new ShipmentCarrierTransfer();
             $carrierTransfer->fromArray($data, true);
             $this->getFacade()
                 ->createCarrier($carrierTransfer);
 
+            $this->addSuccessMessage(static::MESSAGE_CARRIER_CREATE_SUCCESS);
             return $this->redirectResponse('/shipment');
         }
 

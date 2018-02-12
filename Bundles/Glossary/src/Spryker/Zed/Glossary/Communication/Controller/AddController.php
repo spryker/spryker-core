@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
- * @method \Spryker\Zed\Glossary\Business\GlossaryFacade getFacade()
+ * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
  */
 class AddController extends AbstractController
 {
@@ -30,11 +30,11 @@ class AddController extends AbstractController
     {
         $glossaryForm = $this
             ->getFactory()
-            ->createTranslationAddForm();
+            ->getTranslationAddForm();
 
         $glossaryForm->handleRequest($request);
 
-        if ($glossaryForm->isValid()) {
+        if ($glossaryForm->isSubmitted() && $glossaryForm->isValid()) {
             $data = $glossaryForm->getData();
 
             $keyTranslationTransfer = new KeyTranslationTransfer();

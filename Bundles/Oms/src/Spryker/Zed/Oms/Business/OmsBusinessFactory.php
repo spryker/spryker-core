@@ -71,10 +71,10 @@ class OmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createLockedOrderStateMachine(array $logContext = [])
     {
-         return new LockedOrderStateMachine(
-             $this->createOrderStateMachine($logContext),
-             $this->createTriggerLocker()
-         );
+        return new LockedOrderStateMachine(
+            $this->createOrderStateMachine($logContext),
+            $this->createTriggerLocker()
+        );
     }
 
     /**
@@ -104,7 +104,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createProcessState(),
             $this->createProcessTransition(),
             $this->createProcessProcess(),
-            $xmlFolder ?: $this->getConfig()->getProcessDefinitionLocation()
+            $xmlFolder ?: $this->getConfig()->getProcessDefinitionLocation(),
+            $this->getConfig()->getSubProcessPrefixDelimiter()
         );
     }
 

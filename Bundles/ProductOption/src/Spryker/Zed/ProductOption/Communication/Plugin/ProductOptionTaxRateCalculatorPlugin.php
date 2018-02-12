@@ -11,13 +11,13 @@ use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacade getFacade()
+ * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()
  */
 class ProductOptionTaxRateCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
     /**
-     * This plugin makes calculations based on the given quote. The result is added to the quote.
+     * {@inheritdoc}
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

@@ -1,7 +1,8 @@
 # Store Module
 [![Build Status](https://travis-ci.org/spryker/Store.svg)](https://travis-ci.org/spryker/Store)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/Store/badge.svg)](https://coveralls.io/github/spryker/Store)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/Store/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/Store/?branch=master)
+
+Store contains store related functionality. It provides store related information on request. Store can deliver current store information, information for all stores and information for a store requested by id. For a store currencies and locales can be retrieved.
 
 ## Installation
 
@@ -11,4 +12,4 @@ composer require spryker/store
 
 ## Documentation
 
-[Spryker Documentation](https://spryker.github.io)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/modules.html)

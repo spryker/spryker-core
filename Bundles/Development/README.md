@@ -1,11 +1,14 @@
 # Development Module
 
+Development is a tooling module for (local) development.
+
 ## Installation
 
+This is a require-dev module:
 ```
-composer require spryker/development
+composer require --dev spryker/development
 ```
 
 ## Documentation
 
-[Documentation](https://spryker.github.io)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/modules.html)

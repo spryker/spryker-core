@@ -10,6 +10,7 @@ use Codeception\Test\Unit;
 use DateTime;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -34,7 +35,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
     /**
      * @return void
      */
-    public function testSumReservedItemsShouldSumAllItemsInReserverdState()
+    public function testSumReservedItemsShouldSumAllItemsInReservedState()
     {
         $this->createTestOrder();
 
@@ -42,6 +43,19 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $sumOfQuantities = $omsFacade->sumReservedProductQuantitiesForSku(self::ORDER_ITEM_SKU);
 
         $this->assertEquals(50, $sumOfQuantities);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOmsReservedProductQuantityForSkuSumAllItemsInReservedState()
+    {
+        $this->createTestOrder();
+
+        $omsFacade = $this->createOmsFacade();
+        $reservationQuantity = $omsFacade->getOmsReservedProductQuantityForSku(self::ORDER_ITEM_SKU);
+
+        $this->assertSame(50, $reservationQuantity);
     }
 
     /**
@@ -55,6 +69,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $omsStateEntity = $this->createOmsOrderItemState();
 
         $this->createSalesOrderItem($omsStateEntity, $salesOrderEntity);
+        $this->updateReservation($salesOrderEntity->getItems()->getFirst());
 
         return $salesOrderEntity;
     }
@@ -140,5 +155,22 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $salesOrderItem->setFkOmsOrderItemState($omsStateEntity->getIdOmsOrderItemState());
         $salesOrderItem->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
         $salesOrderItem->save();
+    }
+
+    /**
+     * @internal param string $sku
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $spySalesOrderItem
+     *
+     * @return void
+     */
+    protected function updateReservation(SpySalesOrderItem $spySalesOrderItem)
+    {
+        $spyOmsReservationEntity = SpyOmsProductReservationQuery::create()
+            ->filterBySku($spySalesOrderItem->getSku())
+            ->findOneOrCreate();
+
+        $spyOmsReservationEntity->setReservationQuantity($spySalesOrderItem->getQuantity());
+        $spyOmsReservationEntity->save();
     }
 }

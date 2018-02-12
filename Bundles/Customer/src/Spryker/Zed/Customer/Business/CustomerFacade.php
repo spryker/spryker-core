@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -20,6 +21,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $email
@@ -34,6 +37,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -64,6 +69,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -78,20 +85,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * @api
+     * {@inheritdoc}
      *
-     * @deprecated Use CustomerFacade::sendPasswordRestoreMail() instead
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
-     */
-    public function forgotPassword(CustomerTransfer $customerTransfer)
-    {
-        return $this->sendPasswordRestoreMail($customerTransfer);
-    }
-
-    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -106,6 +101,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -120,6 +117,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -134,6 +133,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -148,6 +149,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -162,6 +165,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -176,6 +181,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -190,6 +197,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -204,6 +213,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -218,6 +229,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -232,6 +245,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -246,6 +261,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -260,6 +277,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -274,6 +293,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -288,6 +309,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -302,6 +325,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -316,6 +341,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -330,6 +357,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -344,6 +373,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -358,6 +389,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -372,7 +405,11 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
+     *
+     * @deprecated Use saveOrderCustomer() instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -381,24 +418,43 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      */
     public function saveCustomerForOrder(
         QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer  $checkoutResponseTransfer
+        CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
         $this->getFactory()->createCustomerOrderSaver()->saveOrder($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveOrderCustomer(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    {
+        $this->getFactory()
+            ->createCheckoutCustomerOrderSaver()
+            ->saveOrderCustomer($quoteTransfer, $saveOrderTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function checkOrderPreSaveConditions(
         QuoteTransfer $quoteTransfer,
-        CheckoutResponseTransfer  $checkoutResponseTransfer
+        CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
-        $this->getFactory()
+        return $this->getFactory()
             ->createPreConditionChecker()
             ->checkPreConditions($quoteTransfer, $checkoutResponseTransfer);
     }
@@ -420,9 +476,9 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     }
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param string $customerReference
      *

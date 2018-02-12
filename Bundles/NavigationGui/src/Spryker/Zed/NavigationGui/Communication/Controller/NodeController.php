@@ -36,13 +36,13 @@ class NodeController extends AbstractController
             ->createNavigationNodeFormDataProvider();
 
         $navigationNodeForm = $this->getFactory()
-            ->createNavigationNodeForm(
+            ->getNavigationNodeForm(
                 $navigationNodeFormDataProvider->getData(),
                 $navigationNodeFormDataProvider->getOptions()
             )
             ->handleRequest($request);
 
-        if ($navigationNodeForm->isValid()) {
+        if ($navigationNodeForm->isSubmitted() && $navigationNodeForm->isValid()) {
             /** @var \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer */
             $navigationNodeTransfer = $navigationNodeForm->getData();
 
@@ -68,9 +68,9 @@ class NodeController extends AbstractController
 
             if ($idNavigationNode) {
                 return $this->redirectResponse(Url::generate('/navigation-gui/node/update', $queryParams)->build());
-            } else {
-                return $this->redirectResponse(Url::generate('/navigation-gui/node/create', $queryParams)->build());
             }
+
+            return $this->redirectResponse(Url::generate('/navigation-gui/node/create', $queryParams)->build());
         }
 
         return $this->viewResponse([
@@ -97,13 +97,13 @@ class NodeController extends AbstractController
             ->createNavigationNodeFormDataProvider();
 
         $navigationNodeForm = $this->getFactory()
-            ->createNavigationNodeForm(
+            ->getNavigationNodeForm(
                 $navigationNodeFormDataProvider->getData($idNavigationNode),
                 $navigationNodeFormDataProvider->getOptions()
             )
             ->handleRequest($request);
 
-        if ($navigationNodeForm->isValid()) {
+        if ($navigationNodeForm->isSubmitted() && $navigationNodeForm->isValid()) {
             /** @var \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer */
             $navigationNodeTransfer = clone $navigationNodeForm->getData();
 

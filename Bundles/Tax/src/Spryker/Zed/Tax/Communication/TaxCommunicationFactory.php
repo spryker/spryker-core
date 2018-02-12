@@ -21,23 +21,21 @@ use Spryker\Zed\Tax\TaxDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\Tax\Business\TaxFacade getFacade()
+ * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
  * @method \Spryker\Zed\Tax\TaxConfig getConfig()
  */
 class TaxCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider $taxRateFormDataProvider
+     * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider|null $taxRateFormDataProvider Deprecated: TaxRateFormDataProvider must not be passed in.
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createTaxRateForm(TaxRateFormDataProvider $taxRateFormDataProvider)
+    public function getTaxRateForm(TaxRateFormDataProvider $taxRateFormDataProvider = null)
     {
-        $taxRateForm = new TaxRateForm($taxRateFormDataProvider, $this->createPercentageTransformer());
-
         return $this->getFormFactory()->create(
-            $taxRateForm,
-            $taxRateFormDataProvider->getData(),
+            TaxRateForm::class,
+            $this->createTaxRateFormDataProvider()->getData(),
             [
                  'data_class' => TaxRateTransfer::class,
               ]
@@ -45,21 +43,43 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider $taxSetFormDataProvider
+     * @deprecated Use `getTaxRateForm()` instead.
+     *
+     * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider|null $taxRateFormDataProvider Deprecated: TaxRateFormDataProvider must not be passed in.
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createTaxSetForm(TaxSetFormDataProvider $taxSetFormDataProvider)
+    public function createTaxRateForm(TaxRateFormDataProvider $taxRateFormDataProvider = null)
     {
-        $taxSetForm = new TaxSetForm($taxSetFormDataProvider);
+        return $this->getTaxRateForm($taxRateFormDataProvider);
+    }
 
+    /**
+     * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider|null $taxSetFormDataProvider Deprecated: TaxSetFormDataProvider must not be passed in.
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getTaxSetForm(TaxSetFormDataProvider $taxSetFormDataProvider = null)
+    {
         return $this->getFormFactory()->create(
-            $taxSetForm,
-            $taxSetFormDataProvider->getData(),
+            TaxSetForm::class,
+            ($taxSetFormDataProvider) ? $taxSetFormDataProvider->getData() : $this->createTaxSetFormDataProvider()->getData(),
             [
                 'data_class' => TaxSetTransfer::class,
             ]
         );
+    }
+
+    /**
+     * @deprecated Use `getTaxSetForm()` instead.
+     *
+     * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider|null $taxSetFormDataProvider Deprecated: TaxSetFormDataProvider must not be passed in.
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createTaxSetForm(TaxSetFormDataProvider $taxSetFormDataProvider = null)
+    {
+        return $this->getTaxSetForm($taxSetFormDataProvider);
     }
 
     /**
@@ -85,7 +105,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Tax\Communication\Form\Transform\PercentageTransformer
      */
-    protected function createPercentageTransformer()
+    public function createPercentageTransformer()
     {
         return new PercentageTransformer();
     }

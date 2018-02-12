@@ -30,10 +30,11 @@ class ResponseManipulatorPreCondition implements CheckoutPreConditionInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         $checkoutResponseTransfer->fromArray($this->checkoutResponse->toArray(true), true);
+        return true;
     }
 }

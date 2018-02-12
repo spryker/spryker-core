@@ -15,7 +15,6 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
  */
 class CatFaceTransfer extends AbstractTransfer
 {
-
     const NAME = 'name';
 
     const ITEM = 'item';
@@ -270,5 +269,4 @@ class CatFaceTransfer extends AbstractTransfer
 
         return $this;
     }
-
 }

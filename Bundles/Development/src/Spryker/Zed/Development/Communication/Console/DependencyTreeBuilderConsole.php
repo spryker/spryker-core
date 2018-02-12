@@ -13,14 +13,14 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Development\Business\DevelopmentFacade getFacade()
+ * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  */
 class DependencyTreeBuilderConsole extends Console
 {
     const COMMAND_NAME = 'dev:dependency:build-tree';
 
     const OPTION_APPLICATION = 'application';
-    const OPTION_BUNDLE = 'module';
+    const OPTION_MODULE = 'module';
     const OPTION_LAYER = 'layer';
 
     /**
@@ -36,7 +36,7 @@ class DependencyTreeBuilderConsole extends Console
             ->setDescription('Build dependency tree (Spryker core dev only).');
 
         $this->addOption(static::OPTION_APPLICATION, 'a', InputOption::VALUE_OPTIONAL, 'Name of application (Client, Shared, Yves, Zed, Service)');
-        $this->addOption(static::OPTION_BUNDLE, 'm', InputOption::VALUE_OPTIONAL, 'Name of core module');
+        $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of core module');
         $this->addOption(static::OPTION_LAYER, 'l', InputOption::VALUE_OPTIONAL, 'Name of layer (only for Zed)');
     }
 
@@ -48,22 +48,14 @@ class DependencyTreeBuilderConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $application = '*';
-        $bundle = '*';
-        $layer = '*';
+        $module = '*';
 
-        if ($this->input->getOption(static::OPTION_APPLICATION)) {
-            $application = $this->input->getOption(static::OPTION_APPLICATION);
-        }
-        if ($this->input->getOption(static::OPTION_BUNDLE)) {
-            $bundle = $this->input->getOption(static::OPTION_BUNDLE);
-        }
-        if ($this->input->getOption(static::OPTION_LAYER)) {
-            $layer = $this->input->getOption(static::OPTION_LAYER);
+        if ($this->input->getOption(static::OPTION_MODULE)) {
+            $module = $this->input->getOption(static::OPTION_MODULE);
         }
 
         $this->info('Build dependency tree.');
 
-        $this->getFacade()->buildDependencyTree($application, $bundle, $layer);
+        $this->getFacade()->buildDependencyTree($module);
     }
 }

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
- * @method \Spryker\Zed\Auth\Business\AuthFacade getFacade()
+ * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
  */
 class LoginController extends AbstractController
 {
@@ -31,7 +31,7 @@ class LoginController extends AbstractController
             ->createLoginForm()
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
             $isLogged = $this->getFacade()->login(

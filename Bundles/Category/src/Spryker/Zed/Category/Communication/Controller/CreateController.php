@@ -15,9 +15,9 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Category\Business\CategoryFacade getFacade()
+ * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
- * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
  */
 class CreateController extends AbstractController
 {
@@ -34,7 +34,7 @@ class CreateController extends AbstractController
         $form = $this->getFactory()->createCategoryCreateForm($idParentNode);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $categoryTransfer = $this->getCategoryTransferFromForm($form);
             try {
                 $this->getFacade()->create($categoryTransfer);
