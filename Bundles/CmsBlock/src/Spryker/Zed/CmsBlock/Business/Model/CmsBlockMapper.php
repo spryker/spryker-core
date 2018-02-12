@@ -17,6 +17,19 @@ use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping;
 class CmsBlockMapper implements CmsBlockMapperInterface
 {
     /**
+     * @var \Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationMapperInterface
+     */
+    protected $cmsBlockStoreRelationMapper;
+
+    /**
+     * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationMapperInterface $cmsBlockStoreRelationMapper
+     */
+    public function __construct(CmsBlockStoreRelationMapperInterface $cmsBlockStoreRelationMapper)
+    {
+        $this->cmsBlockStoreRelationMapper = $cmsBlockStoreRelationMapper;
+    }
+
+    /**
      * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $spyCmsBlock
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
@@ -26,6 +39,9 @@ class CmsBlockMapper implements CmsBlockMapperInterface
         $cmsBlockTransfer = new CmsBlockTransfer();
         $cmsBlockTransfer->fromArray($spyCmsBlock->toArray(), true);
         $cmsBlockTransfer->setTemplateName($spyCmsBlock->getCmsBlockTemplate()->getTemplateName());
+        $cmsBlockTransfer->setStoreRelation(
+            $this->cmsBlockStoreRelationMapper->mapStoreRelationToTransfer($spyCmsBlock)
+        );
 
         $cmsBlockGlossaryTransfer = $this->createGlossaryTransfer($spyCmsBlock);
         $cmsBlockTransfer->setGlossary($cmsBlockGlossaryTransfer);
