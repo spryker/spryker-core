@@ -79,7 +79,7 @@ class CmsPageSearchSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyCmsPageSearchQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertSame($beforeCount + 2, $afterCount);
         $this->assertCmsPageSearch();
     }
 
@@ -104,7 +104,7 @@ class CmsPageSearchSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyCmsPageSearchQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertSame($beforeCount + 2, $afterCount);
         $this->assertCmsPageSearch();
     }
 
@@ -127,7 +127,7 @@ class CmsPageSearchSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyCmsPageSearchQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertSame($beforeCount + 2, $afterCount);
         $this->assertCmsPageSearch();
     }
 
@@ -156,6 +156,6 @@ class CmsPageSearchSearchListenerTest extends Unit
         $this->assertNotNull($cmsPage);
         $data = $cmsPage->getStructuredData();
         $encodedData = json_decode($data, true);
-        $this->assertEquals('Imprint', $encodedData['name']);
+        $this->assertSame('Imprint', $encodedData['name']);
     }
 }

@@ -5,26 +5,49 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\CmsBlockCategoryStorage\Business\Storage;
 
 use Generated\Shared\Transfer\CmsBlockCategoriesTransfer;
 use Generated\Shared\Transfer\CmsBlockCategoryTransfer;
 use Orm\Zed\CmsBlockCategoryStorage\Persistence\SpyCmsBlockCategoryStorage;
-use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToUtilSanitizeServiceInterface;
+use Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\CmsBlockCategoryStorage\Communication\CmsBlockCategoryStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface getQueryContainer()
- */
-abstract class AbstractCmsBlockCategoryStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInterface
 {
+    /**
+     * @var \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToUtilSanitizeServiceInterface
+     */
+    protected $utilSanitizeService;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToUtilSanitizeServiceInterface $utilSanitizeService
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(CmsBlockCategoryStorageQueryContainerInterface $queryContainer, CmsBlockCategoryStorageToUtilSanitizeServiceInterface $utilSanitizeService, $isSendingToQueue)
+    {
+        $this->queryContainer = $queryContainer;
+        $this->utilSanitizeService = $utilSanitizeService;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
+
     /**
      * @param array $categoryIds
      *
      * @return void
      */
-    protected function publish(array $categoryIds)
+    public function publish(array $categoryIds)
     {
         $cmsBlockCategoriesTransfer = $this->getCmsBlockCategoriesTransfer($categoryIds);
         $spyCmsBlockCategoryStorageEntities = $this->findCmsBlockCategoryStorageEntitiesByCategoryIds($categoryIds);
@@ -36,7 +59,7 @@ abstract class AbstractCmsBlockCategoryStorageListener extends AbstractPlugin im
      *
      * @return void
      */
-    protected function refreshOrUnpublish(array $categoryIds)
+    public function refreshOrUnpublish(array $categoryIds)
     {
         $cmsBlockCategoriesTransfer = $this->getCmsBlockCategoriesTransfer($categoryIds);
         $spyCmsBlockCategoryStorageEntities = $this->findCmsBlockCategoryStorageEntitiesByCategoryIds($categoryIds);
@@ -81,9 +104,10 @@ abstract class AbstractCmsBlockCategoryStorageListener extends AbstractPlugin im
             $spyCmsBlockCategoryStorage = new SpyCmsBlockCategoryStorage();
         }
 
-        $data = $this->getFactory()->getUtilSanitizeService()->arrayFilterRecursive($cmsBlockCategoriesTransfer->toArray());
+        $data = $this->utilSanitizeService->arrayFilterRecursive($cmsBlockCategoriesTransfer->toArray());
         $spyCmsBlockCategoryStorage->setFkCategory($cmsBlockCategoriesTransfer->getIdCategory());
         $spyCmsBlockCategoryStorage->setData($data);
+        $spyCmsBlockCategoryStorage->setIsSendingToQueue($this->isSendingToQueue);
         $spyCmsBlockCategoryStorage->save();
     }
 
@@ -119,7 +143,7 @@ abstract class AbstractCmsBlockCategoryStorageListener extends AbstractPlugin im
      */
     protected function getCmsBlockCategories(array $categoryIds)
     {
-        $cmsBlockCategories = $this->getQueryContainer()
+        $cmsBlockCategories = $this->queryContainer
             ->queryCmsBlockCategories($categoryIds)
             ->find();
 
@@ -138,7 +162,7 @@ abstract class AbstractCmsBlockCategoryStorageListener extends AbstractPlugin im
      */
     protected function findCmsBlockCategoryStorageEntitiesByCategoryIds(array $categoryIds)
     {
-        $cmsBlockCategoryStorageEntities = $this->getQueryContainer()->queryCmsBlockCategoryStorageByIds($categoryIds)->find();
+        $cmsBlockCategoryStorageEntities = $this->queryContainer->queryCmsBlockCategoryStorageByIds($categoryIds)->find();
         $cmsBlockCategoryStorageEntitiesById = [];
         foreach ($cmsBlockCategoryStorageEntities as $cmsBlockCategoryStorageEntity) {
             $cmsBlockCategoryStorageEntitiesById[$cmsBlockCategoryStorageEntity->getFkCategory()] = $cmsBlockCategoryStorageEntity;

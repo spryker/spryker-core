@@ -1,5 +1,5 @@
 <?php
-namespace SprykerTest\Zed\CategoryPageSearch;
+namespace SprykerTest\Zed\CmsBlockCategoryStorage;
 
 use Codeception\Actor;
 
@@ -18,9 +18,9 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class CategoryPageSearchCommunicationTester extends Actor
+class CmsBlockCategoryStorageCommunicationTester extends Actor
 {
-    use _generated\CategoryPageSearchCommunicationTesterActions;
+    use _generated\CmsBlockCategoryStorageCommunicationTesterActions;
 
    /**
     * Define custom actions here

@@ -85,7 +85,7 @@ class ProductSetPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductSetPageSearchQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertSame($beforeCount + 2, $afterCount);
         $this->assertProductSetPageSearch();
     }
 
@@ -110,7 +110,7 @@ class ProductSetPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductSetPageSearchQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertSame($beforeCount + 2, $afterCount);
         $this->assertProductSetPageSearch();
     }
 
@@ -135,7 +135,7 @@ class ProductSetPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductSetPageSearchQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertSame($beforeCount + 2, $afterCount);
         $this->assertProductSetPageSearch();
     }
 
@@ -160,7 +160,7 @@ class ProductSetPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductSetPageSearchQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertSame($beforeCount + 2, $afterCount);
         $this->assertProductSetPageSearch();
     }
 
@@ -188,7 +188,7 @@ class ProductSetPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductSetPageSearchQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertSame($beforeCount + 2, $afterCount);
         $this->assertProductSetPageSearch();
     }
 
@@ -213,7 +213,7 @@ class ProductSetPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductSetPageSearchQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertSame($beforeCount + 2, $afterCount);
         $this->assertProductSetPageSearch();
     }
 
@@ -238,7 +238,7 @@ class ProductSetPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductSetPageSearchQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $afterCount);
+        $this->assertSame($beforeCount + 2, $afterCount);
         $this->assertProductSetPageSearch();
     }
 
@@ -267,6 +267,6 @@ class ProductSetPageSearchListenerTest extends Unit
         $this->assertNotNull($productSet);
         $data = $productSet->getStructuredData();
         $encodedData = json_decode($data, true);
-        $this->assertEquals('HP Product Set', $encodedData['name']);
+        $this->assertSame('HP Product Set', $encodedData['name']);
     }
 }

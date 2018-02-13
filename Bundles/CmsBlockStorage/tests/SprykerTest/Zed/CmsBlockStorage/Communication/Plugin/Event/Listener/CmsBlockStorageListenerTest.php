@@ -71,7 +71,7 @@ class CmsBlockStorageListenerTest extends Unit
         $cmsBlockStorageListener->handleBulk($eventTransfers, CmsBlockEvents::CMS_BLOCK_PUBLISH);
 
         // Assert
-        $this->assertCmsPageStorage($beforeCount);
+        $this->assertCmsBlockCategoryStorage($beforeCount);
     }
 
     /**
@@ -93,7 +93,7 @@ class CmsBlockStorageListenerTest extends Unit
         $cmsBlockGlossaryKeyMappingBlockStorageListener->handleBulk($eventTransfers, CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_CREATE);
 
         // Assert
-        $this->assertCmsPageStorage($beforeCount);
+        $this->assertCmsBlockCategoryStorage($beforeCount);
     }
 
     /**
@@ -115,13 +115,13 @@ class CmsBlockStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function assertCmsPageStorage($beforeCount)
+    protected function assertCmsBlockCategoryStorage($beforeCount)
     {
         $count = SpyCmsBlockStorageQuery::create()->count();
-        $this->assertEquals($beforeCount + 2, $count);
+        $this->assertSame($beforeCount + 2, $count);
         $cmsPage = SpyCmsBlockStorageQuery::create()->orderByIdCmsBlockStorage()->filterByLocale('en_US')->findOneByFkCmsBlock(1);
         $this->assertNotNull($cmsPage);
         $data = $cmsPage->getData();
-        $this->assertEquals('Teaser for home page', $data['name']);
+        $this->assertSame('Teaser for home page', $data['name']);
     }
 }
