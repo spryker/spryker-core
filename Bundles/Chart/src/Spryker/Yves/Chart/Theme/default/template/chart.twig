@@ -4,10 +4,13 @@
 
     {% for trace in data.traces %}
         chartData.push({
+            {% set isPie = (trace.type == 'pie') %}
+            {% set xLabels = isPie ? 'labels' : 'x' %}
+            {% set yValues = isPie ? 'values' : 'y' %}
             name: '{{ trace.name }}',
             type: '{{ trace.type | default('bar') }}',
-            x: {{ trace.labels | json_encode | raw }},
-            y: {{ trace.values | json_encode | raw }}
+            {{ xLabels }}: {{ trace.labels | json_encode | raw }},
+            {{ yValues }}: {{ trace.values | json_encode | raw }}
         });
     {% endfor %}
     /*]]>*/</script>
