@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsPageSearch\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\CmsPageSearch\Business\Search;
 
 use DateTime;
 use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
@@ -13,23 +13,74 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearch;
 use Spryker\Shared\CmsPageSearch\CmsPageSearchConstants;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToCmsInterface;
+use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToSearchInterface;
+use Spryker\Zed\CmsPageSearch\Dependency\Service\CmsPageSearchToUtilEncodingInterface;
+use Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\CmsPageSearch\Communication\CmsPageSearchCommunicationFactory getFactory()
- * @method \Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface getQueryContainer()
- */
-class AbstractCmsPageSearchListener extends AbstractPlugin
+class CmsPageSearchWriter implements CmsPageSearchWriterInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    /**
+     * @var \Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToCmsInterface
+     */
+    protected $cmsFacade;
+
+    /**
+     * @var \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToSearchInterface
+     */
+    protected $searchFacade;
+
+    /**
+     * @var \Spryker\Zed\CmsPageSearch\Dependency\Service\CmsPageSearchToUtilEncodingInterface
+     */
+    protected $utilEncodingService;
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param \Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToCmsInterface $cmsFacade
+     * @param \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToSearchInterface $searchFacade
+     * @param \Spryker\Zed\CmsPageSearch\Dependency\Service\CmsPageSearchToUtilEncodingInterface $utilEncodingService
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(
+        CmsPageSearchQueryContainerInterface $queryContainer,
+        CmsPageSearchToCmsInterface $cmsFacade,
+        CmsPageSearchToSearchInterface $searchFacade,
+        CmsPageSearchToUtilEncodingInterface $utilEncodingService,
+        Store $store,
+        $isSendingToQueue
+    ) {
+        $this->queryContainer = $queryContainer;
+        $this->cmsFacade = $cmsFacade;
+        $this->searchFacade = $searchFacade;
+        $this->utilEncodingService = $utilEncodingService;
+        $this->store = $store;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
 
     /**
      * @param array $cmsPageIds
      *
      * @return void
      */
-    protected function publish(array $cmsPageIds)
+    public function publish(array $cmsPageIds)
     {
         $cmsPageEntities = $this->findCmsPageEntities($cmsPageIds);
         $cmsPageStorageEntities = $this->findCmsPageSearchEntities($cmsPageIds);
@@ -42,7 +93,7 @@ class AbstractCmsPageSearchListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function unpublish(array $cmsPageIds)
+    public function unpublish(array $cmsPageIds)
     {
         $cmsPageStorageEntities = $this->findCmsPageSearchEntities($cmsPageIds);
         foreach ($cmsPageStorageEntities as $cmsPageStorageEntity) {
@@ -58,16 +109,18 @@ class AbstractCmsPageSearchListener extends AbstractPlugin
      */
     protected function storeData(array $cmsPageEntities, array $cmsPageStorageEntities)
     {
-        $localeNames = $this->getStore()->getLocales();
+        $localeNames = $this->store->getLocales();
 
         foreach ($cmsPageEntities as $cmsPageEntity) {
             foreach ($localeNames as $localeName) {
                 $idCmsPage = $cmsPageEntity->getIdCmsPage();
                 if (isset($cmsPageStorageEntities[$idCmsPage][$localeName])) {
                     $this->storeDataSet($cmsPageEntity, $localeName, $cmsPageStorageEntities[$idCmsPage][$localeName]);
-                } else {
-                    $this->storeDataSet($cmsPageEntity, $localeName);
+
+                    continue;
                 }
+
+                $this->storeDataSet($cmsPageEntity, $localeName);
             }
         }
     }
@@ -92,11 +145,12 @@ class AbstractCmsPageSearchListener extends AbstractPlugin
         $localeCmsPageDataTransfer = $this->getLocalCmsPageDataTransfer($cmsPageEntity, $localeName);
         $data = $this->mapToSearchData($localeCmsPageDataTransfer, $localeName);
 
-        $cmsPageStorageEntity->setStructuredData($this->getFactory()->getUtilEncoding()->encodeJson($localeCmsPageDataTransfer->toArray()));
+        $cmsPageStorageEntity->setStructuredData($this->utilEncodingService->encodeJson($localeCmsPageDataTransfer->toArray()));
         $cmsPageStorageEntity->setData($data);
         $cmsPageStorageEntity->setFkCmsPage($cmsPageEntity->getIdCmsPage());
-        $cmsPageStorageEntity->setStore($this->getStore()->getStoreName());
+        $cmsPageStorageEntity->setStore($this->store->getStoreName());
         $cmsPageStorageEntity->setLocale($localeName);
+        $cmsPageStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $cmsPageStorageEntity->save();
     }
 
@@ -108,7 +162,7 @@ class AbstractCmsPageSearchListener extends AbstractPlugin
      */
     public function mapToSearchData(LocaleCmsPageDataTransfer $cmsPageDataTransfer, $localeName)
     {
-        return $this->getFactory()->getSearchFacade()
+        return $this->searchFacade
             ->transformPageMapToDocumentByMapperName(
                 $cmsPageDataTransfer->toArray(),
                 (new LocaleTransfer())->setLocaleName($localeName),
@@ -123,7 +177,7 @@ class AbstractCmsPageSearchListener extends AbstractPlugin
      */
     protected function findCmsPageEntities(array $cmsPageIds)
     {
-        return $this->getQueryContainer()->queryCmsPageVersionByIds($cmsPageIds)->find()->getData();
+        return $this->queryContainer->queryCmsPageVersionByIds($cmsPageIds)->find()->getData();
     }
 
     /**
@@ -133,21 +187,13 @@ class AbstractCmsPageSearchListener extends AbstractPlugin
      */
     protected function findCmsPageSearchEntities(array $cmsPageIds)
     {
-        $spyCmsPageSearchEntities = $this->getQueryContainer()->queryCmsPageSearchEntities($cmsPageIds)->find();
+        $spyCmsPageSearchEntities = $this->queryContainer->queryCmsPageSearchEntities($cmsPageIds)->find();
         $cmsPageStorageEntitiesByIdAndLocale = [];
         foreach ($spyCmsPageSearchEntities as $spyCmsPageSearchEntity) {
             $cmsPageStorageEntitiesByIdAndLocale[$spyCmsPageSearchEntity->getFkCmsPage()][$spyCmsPageSearchEntity->getLocale()] = $spyCmsPageSearchEntity;
         }
 
         return $cmsPageStorageEntitiesByIdAndLocale;
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getFactory()->getStore();
     }
 
     /**
@@ -177,11 +223,9 @@ class AbstractCmsPageSearchListener extends AbstractPlugin
     {
         $url = $this->extractUrlByLocales($cmsPageEntity->getSpyUrls()
             ->getData(), $localeName);
-        $cmsVersionDataTransfer = $this->getFactory()
-            ->getCmsFacade()
+        $cmsVersionDataTransfer = $this->cmsFacade
             ->extractCmsVersionDataTransfer($cmsPageEntity->getSpyCmsVersions()->getFirst()->getData());
-        $localeCmsPageDataTransfer = $this->getFactory()
-            ->getCmsFacade()
+        $localeCmsPageDataTransfer = $this->cmsFacade
             ->extractLocaleCmsPageDataTransfer($cmsVersionDataTransfer, (new LocaleTransfer())->setLocaleName($localeName));
 
         $localeCmsPageDataTransfer->setIsActive($cmsPageEntity->getIsActive());
