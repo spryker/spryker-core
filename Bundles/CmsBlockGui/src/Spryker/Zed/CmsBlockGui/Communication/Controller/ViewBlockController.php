@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsBlockGui\Communication\Controller;
 
+use ArrayObject;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -44,10 +46,13 @@ class ViewBlockController extends AbstractController
             );
         }
 
+        $relatedStoreNames = $this->getStoreNames($cmsBlockTransfer->getStoreRelation()->getStores());
+
         return $this->viewResponse([
             'cmsBlock' => $cmsBlockTransfer,
             'cmsBlockGlossary' => $cmsBlockGlossary,
             'renderedPlugins' => $this->getRenderedViewPlugins($idCmsBlock),
+            'relatedStoreNames' => $relatedStoreNames,
         ]);
     }
 
@@ -73,5 +78,17 @@ class ViewBlockController extends AbstractController
         }
 
         return $viewRenderedPlugins;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $stores
+     *
+     * @return string[]
+     */
+    protected function getStoreNames(ArrayObject $stores)
+    {
+        return array_map(function (StoreTransfer $storeTransfer) {
+            return $storeTransfer->getName();
+        }, $stores->getArrayCopy());
     }
 }

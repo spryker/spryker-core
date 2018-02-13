@@ -6,8 +6,21 @@
 
 namespace Spryker\Zed\Company\Persistence;
 
+use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
+/**
+ * @method \Spryker\Zed\Company\Persistence\CompanyPersistenceFactory getFactory()
+ */
 class CompanyQueryContainer extends AbstractQueryContainer implements CompanyQueryContainerInterface
 {
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Company\Persistence\SpyCompanyQuery
+     */
+    public function queryCompany(): SpyCompanyQuery
+    {
+        return $this->getFactory()->createCompanyQuery();
+    }
 }

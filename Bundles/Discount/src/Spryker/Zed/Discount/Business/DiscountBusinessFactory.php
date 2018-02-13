@@ -33,8 +33,10 @@ use Spryker\Zed\Discount\Business\Filter\DiscountableItemFilter;
 use Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate;
 use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapper;
 use Spryker\Zed\Discount\Business\Persistence\DiscountOrderHydrate;
-use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver as ObsoleteDiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Persistence\DiscountPersist;
+use Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationMapper;
+use Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationReader;
+use Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationWriter;
 use Spryker\Zed\Discount\Business\QueryString\ClauseValidator;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Converter\MoneyValueConverter;
@@ -68,7 +70,8 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->createCalculator(),
             $this->createDecisionRuleBuilder(),
             $this->createVoucherValidator(),
-            $this->createDiscountEntityMapper()
+            $this->createDiscountEntityMapper(),
+            $this->getStoreFacade()
         );
 
         $discount->setDiscountApplicableFilterPlugins($this->getDiscountApplicableFilterPlugins());
@@ -136,19 +139,6 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function getDecisionRulePlugins()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::DECISION_RULE_PLUGINS);
-    }
-
-    /**
-     * @deprecated Use createCheckoutDiscountOrderSaver() instead
-     *
-     * @return \Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaverInterface
-     */
-    public function createDiscountOrderSaver()
-    {
-        return new ObsoleteDiscountOrderSaver(
-            $this->getQueryContainer(),
-            $this->createVoucherCode()
-        );
     }
 
     /**
@@ -317,8 +307,12 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountConfiguratorHydrate()
     {
-        $discountConfiguratorHydrate = new DiscountConfiguratorHydrate($this->getQueryContainer(), $this->createDiscountEntityMapper());
-        $discountConfiguratorHydrate->setDiscountConfigurationExpanderPlugins($this->getConfigurationExpanderPlugins());
+        $discountConfiguratorHydrate = new DiscountConfiguratorHydrate(
+            $this->getQueryContainer(),
+            $this->createDiscountEntityMapper(),
+            $this->createDiscountStoreRelationMapper(),
+            $this->getConfigurationExpanderPlugins()
+        );
 
         return $discountConfiguratorHydrate;
     }
@@ -328,10 +322,13 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createDiscountPersist()
     {
-        $discountPersist = new DiscountPersist($this->createVoucherEngine(), $this->getQueryContainer());
-
-        $discountPersist->setDiscountPostCreatePlugins($this->getDiscountPostCreatePlugins());
-        $discountPersist->setDiscountPostUpdatePlugins($this->getDiscountPostUpdatePlugins());
+        $discountPersist = new DiscountPersist(
+            $this->createVoucherEngine(),
+            $this->getQueryContainer(),
+            $this->createDiscountStoreRelationWriter(),
+            $this->getDiscountPostCreatePlugins(),
+            $this->getDiscountPostUpdatePlugins()
+        );
 
         return $discountPersist;
     }
@@ -494,6 +491,14 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationMapperInterface
+     */
+    protected function createDiscountStoreRelationMapper()
+    {
+        return new DiscountStoreRelationMapper();
+    }
+
+    /**
      * @return \Spryker\Zed\Discount\Business\Calculator\CollectorStrategyResolverInterface
      */
     protected function createCollectorResolver()
@@ -571,5 +576,35 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function getCurrencyFacade()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface
+     */
+    public function getStoreFacade()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationWriterInterface
+     */
+    protected function createDiscountStoreRelationWriter()
+    {
+        return new DiscountStoreRelationWriter(
+            $this->getQueryContainer(),
+            $this->createDiscountStoreRelationReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationReaderInterface
+     */
+    protected function createDiscountStoreRelationReader()
+    {
+        return new DiscountStoreRelationReader(
+            $this->getQueryContainer(),
+            $this->createDiscountStoreRelationMapper()
+        );
     }
 }

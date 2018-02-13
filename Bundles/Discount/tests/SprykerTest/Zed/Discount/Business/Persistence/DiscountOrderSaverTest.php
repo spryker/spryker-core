@@ -9,13 +9,13 @@ namespace SprykerTest\Zed\Discount\Business\Persistence;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
-use Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver;
+use Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 
 /**
@@ -48,6 +48,7 @@ class DiscountOrderSaverTest extends Unit
             ->method('persistSalesDiscount');
 
         $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setStore($this->getCurrentStore());
 
         $discountTransfer = new CalculatedDiscountTransfer();
         $discountTransfer->setDisplayName(self::DISCOUNT_DISPLAY_NAME);
@@ -58,13 +59,11 @@ class DiscountOrderSaverTest extends Unit
 
         $quoteTransfer->addItem($orderItemTransfer);
 
-        $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $saverOrderTransfer = new SaveOrderTransfer();
         $saverOrderTransfer->setIdSalesOrder(self::ID_SALES_ORDER);
         $saverOrderTransfer->setOrderItems($quoteTransfer->getItems());
-        $checkoutResponseTransfer->setSaveOrder($saverOrderTransfer);
 
-        $discountSaver->saveDiscounts($quoteTransfer, $checkoutResponseTransfer);
+        $discountSaver->saveOrderDiscounts($quoteTransfer, $saverOrderTransfer);
     }
 
     /**
@@ -87,13 +86,11 @@ class DiscountOrderSaverTest extends Unit
 
         $quoteTransfer->addItem($orderItemTransfer);
 
-        $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $saverOrderTransfer = new SaveOrderTransfer();
         $saverOrderTransfer->setIdSalesOrder(self::ID_SALES_ORDER);
         $saverOrderTransfer->setOrderItems($quoteTransfer->getItems());
-        $checkoutResponseTransfer->setSaveOrder($saverOrderTransfer);
 
-        $discountSaver->saveDiscounts($quoteTransfer, $checkoutResponseTransfer);
+        $discountSaver->saveOrderDiscounts($quoteTransfer, $saverOrderTransfer);
     }
 
     /**
@@ -119,13 +116,11 @@ class DiscountOrderSaverTest extends Unit
         $orderItemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
         $quoteTransfer->addItem($orderItemTransfer);
 
-        $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $saverOrderTransfer = new SaveOrderTransfer();
         $saverOrderTransfer->setIdSalesOrder(self::ID_SALES_ORDER);
         $saverOrderTransfer->setOrderItems($quoteTransfer->getItems());
-        $checkoutResponseTransfer->setSaveOrder($saverOrderTransfer);
 
-        $discountSaver->saveDiscounts($quoteTransfer, $checkoutResponseTransfer);
+        $discountSaver->saveOrderDiscounts($quoteTransfer, $saverOrderTransfer);
     }
 
     /**
@@ -151,13 +146,11 @@ class DiscountOrderSaverTest extends Unit
         $orderItemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
         $quoteTransfer->addItem($orderItemTransfer);
 
-        $checkoutResponseTransfer = new CheckoutResponseTransfer();
         $saverOrderTransfer = new SaveOrderTransfer();
         $saverOrderTransfer->setIdSalesOrder(self::ID_SALES_ORDER);
         $saverOrderTransfer->setOrderItems($quoteTransfer->getItems());
-        $checkoutResponseTransfer->setSaveOrder($saverOrderTransfer);
 
-        $discountSaver->saveDiscounts($quoteTransfer, $checkoutResponseTransfer);
+        $discountSaver->saveOrderDiscounts($quoteTransfer, $saverOrderTransfer);
     }
 
     /**
@@ -200,7 +193,7 @@ class DiscountOrderSaverTest extends Unit
      * @param array $discountSaverMethods
      * @param array $queryContainerMethods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\Persistence\DiscountOrderSaver
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaver
      */
     private function getDiscountOrderSaverMock(array $discountSaverMethods = [], array $queryContainerMethods = [])
     {
@@ -209,5 +202,15 @@ class DiscountOrderSaverTest extends Unit
             ->getMock();
 
         return $discountSaverMock;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function getCurrentStore()
+    {
+        return (new StoreTransfer())
+            ->setIdStore(1)
+            ->setName('DE');
     }
 }

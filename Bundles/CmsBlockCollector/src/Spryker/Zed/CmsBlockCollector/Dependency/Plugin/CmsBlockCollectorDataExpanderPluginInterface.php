@@ -12,9 +12,8 @@ use Generated\Shared\Transfer\LocaleTransfer;
 interface CmsBlockCollectorDataExpanderPluginInterface
 {
     /**
-     *
      * Specification:
-     *  - Allows providing additional data before exporting to Yves data store
+     * - Allows providing additional data before exporting to Yves data store.
      *
      * @api
      *
