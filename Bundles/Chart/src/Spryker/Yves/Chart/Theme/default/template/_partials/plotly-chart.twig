@@ -6,6 +6,7 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script>/*<![CDATA[*/
         var chartLayout = {{ layout.toArray | json_encode | raw }};
+        chartLayout.title = '{{ layout.title | default(data.title) }}';
 
         Plotly.plot('{{ chartDivId }}', chartData, chartLayout, { displayModeBar: false });
 
