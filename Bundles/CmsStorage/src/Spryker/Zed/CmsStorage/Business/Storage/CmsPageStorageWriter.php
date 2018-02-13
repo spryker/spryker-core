@@ -5,30 +5,71 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\CmsStorage\Business\Storage;
 
 use DateTime;
 use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\CmsStorage\Persistence\SpyCmsPageStorage;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToCmsInterface;
+use Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\CmsStorage\Communication\CmsStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface getQueryContainer()
- */
-class AbstractCmsPageStorageListener extends AbstractPlugin
+class CmsPageStorageWriter implements CmsPageStorageWriterInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    /**
+     * @var \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToCmsInterface
+     */
+    protected $cmsFacade;
+
+    /**
+     * @var \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
+     */
+    protected $contentWidgetDataExpanderPlugins = [];
+    
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToCmsInterface $cmsFacade
+     * @param \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[] $contentWidgetDataExpanderPlugins
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(
+        CmsStorageQueryContainerInterface $queryContainer,
+        CmsStorageToCmsInterface $cmsFacade,
+        array $contentWidgetDataExpanderPlugins,
+        Store $store,
+        $isSendingToQueue
+    ) {
+        $this->queryContainer = $queryContainer;
+        $this->cmsFacade = $cmsFacade;
+        $this->contentWidgetDataExpanderPlugins = $contentWidgetDataExpanderPlugins;
+        $this->store = $store;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
 
     /**
      * @param array $cmsPageIds
      *
      * @return void
      */
-    protected function publish(array $cmsPageIds)
+    public function publish(array $cmsPageIds)
     {
         $cmsPageEntities = $this->findCmsPageEntities($cmsPageIds);
         $cmsPageStorageEntities = $this->findCmsStorageEntities($cmsPageIds);
@@ -41,7 +82,7 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function unpublish(array $cmsPageIds)
+    public function unpublish(array $cmsPageIds)
     {
         $cmsPageStorageEntities = $this->findCmsStorageEntities($cmsPageIds);
         foreach ($cmsPageStorageEntities as $cmsPageStorageEntity) {
@@ -57,16 +98,18 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
      */
     protected function storeData(array $cmsPageEntities, array $cmsPageStorageEntities)
     {
-        $localeNames = $this->getStore()->getLocales();
+        $localeNames = $this->store->getLocales();
 
         foreach ($cmsPageEntities as $cmsPageEntity) {
             foreach ($localeNames as $localeName) {
                 $idCmsPage = $cmsPageEntity->getIdCmsPage();
                 if (isset($cmsPageStorageEntities[$idCmsPage][$localeName])) {
                     $this->storeDataSet($cmsPageEntity, $localeName, $cmsPageStorageEntities[$idCmsPage][$localeName]);
-                } else {
-                    $this->storeDataSet($cmsPageEntity, $localeName);
+
+                    continue;
                 }
+
+                $this->storeDataSet($cmsPageEntity, $localeName);
             }
         }
     }
@@ -92,8 +135,9 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
 
         $cmsPageStorageEntity->setData($localeCmsPageDataTransfer->toArray());
         $cmsPageStorageEntity->setFkCmsPage($cmsPageEntity->getIdCmsPage());
-        $cmsPageStorageEntity->setStore($this->getStore()->getStoreName());
+        $cmsPageStorageEntity->setStore($this->store->getStoreName());
         $cmsPageStorageEntity->setLocale($localeName);
+        $cmsPageStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $cmsPageStorageEntity->save();
     }
 
@@ -104,7 +148,7 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
      */
     protected function findCmsPageEntities(array $cmsPageIds)
     {
-        return $this->getQueryContainer()->queryCmsPageVersionByIds($cmsPageIds)->find()->getData();
+        return $this->queryContainer->queryCmsPageVersionByIds($cmsPageIds)->find()->getData();
     }
 
     /**
@@ -114,21 +158,13 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
      */
     protected function findCmsStorageEntities(array $cmsPageIds)
     {
-        $spyCmsStorageEntities = $this->getQueryContainer()->queryCmsPageStorageEntities($cmsPageIds)->find();
+        $spyCmsStorageEntities = $this->queryContainer->queryCmsPageStorageEntities($cmsPageIds)->find();
         $cmsPageStorageEntitiesByIdAndLocale = [];
         foreach ($spyCmsStorageEntities as $spyCmsStorageEntity) {
             $cmsPageStorageEntitiesByIdAndLocale[$spyCmsStorageEntity->getFkCmsPage()][$spyCmsStorageEntity->getLocale()] = $spyCmsStorageEntity;
         }
 
         return $cmsPageStorageEntitiesByIdAndLocale;
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getFactory()->getStore();
     }
 
     /**
@@ -158,11 +194,9 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
     {
         $url = $this->extractUrlByLocales($cmsPageEntity->getSpyUrls()
             ->getData(), $localeName);
-        $cmsVersionDataTransfer = $this->getFactory()
-            ->getCmsFacade()
+        $cmsVersionDataTransfer = $this->cmsFacade
             ->extractCmsVersionDataTransfer($cmsPageEntity->getSpyCmsVersions()->getFirst()->getData());
-        $localeCmsPageDataTransfer = $this->getFactory()
-            ->getCmsFacade()
+        $localeCmsPageDataTransfer = $this->cmsFacade
             ->extractLocaleCmsPageDataTransfer($cmsVersionDataTransfer, (new LocaleTransfer())->setLocaleName($localeName));
 
         $localeCmsPageDataTransfer->setIsActive($cmsPageEntity->getIsActive());
@@ -171,9 +205,9 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
         $localeCmsPageDataTransfer->setValidTo($this->convertDateTimeToString($cmsPageEntity->getValidTo()));
         $localeCmsPageDataTransfer->setUrl($url);
 
-        $expandedData = [];
-        foreach ($this->getFactory()->getContentWidgetDataExpanderPlugins() as $contentWidgetDataExpanderPlugin) {
-            $expandedData = $contentWidgetDataExpanderPlugin->expand($localeCmsPageDataTransfer->toArray(), (new LocaleTransfer())->setLocaleName($localeName));
+        $expandedData = $localeCmsPageDataTransfer->toArray();
+        foreach ($this->contentWidgetDataExpanderPlugins as $contentWidgetDataExpanderPlugin) {
+            $expandedData = $contentWidgetDataExpanderPlugin->expand($expandedData, (new LocaleTransfer())->setLocaleName($localeName));
         }
 
         return (new LocaleCmsPageDataTransfer())->fromArray($expandedData);
