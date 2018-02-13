@@ -1,0 +1,127 @@
+<?php
+/**
+ * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace SprykerTest\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener;
+
+use Codeception\Test\Unit;
+use Generated\Shared\Transfer\EventEntityTransfer;
+use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockGlossaryKeyMappingTableMap;
+use Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorageQuery;
+use PHPUnit\Framework\SkippedTestError;
+use Propel\Runtime\Propel;
+use Silex\Application;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
+use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
+use Spryker\Zed\CmsBlockStorage\Business\CmsBlockStorageBusinessFactory;
+use Spryker\Zed\CmsBlockStorage\Business\CmsBlockStorageFacade;
+use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockGlossaryKeyMappingBlockStorageListener;
+use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockStorageListener;
+use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
+use SprykerTest\Zed\CmsBlockStorage\CmsBlockStorageConfigMock;
+
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group CmsBlockStorage
+ * @group Communication
+ * @group Plugin
+ * @group Event
+ * @group Listener
+ * @group CmsBlockStorageListenerTest
+ * Add your own group annotations below this line
+ */
+class CmsBlockStorageListenerTest extends Unit
+{
+    /**
+     * @throws \PHPUnit\Framework\SkippedTestError
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+        $dbType = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
+        if ($dbType !== 'pgsql') {
+            throw new SkippedTestError('Warning: no PostgreSQL is detected');
+        }
+
+        Propel::disableInstancePooling();
+        $propelServiceProvider = new PropelServiceProvider();
+        $propelServiceProvider->boot(new Application());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCmsCmsBlockStorageListenerStoreData()
+    {
+        SpyCmsBlockStorageQuery::create()->filterByFkCmsBlock(1)->delete();
+        $beforeCount = SpyCmsBlockStorageQuery::create()->count();
+
+        $cmsBlockStorageListener = new CmsBlockStorageListener();
+        $cmsBlockStorageListener->setFacade($this->getCmsBlockStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId(1),
+        ];
+        $cmsBlockStorageListener->handleBulk($eventTransfers, CmsBlockEvents::CMS_BLOCK_PUBLISH);
+
+        // Assert
+        $this->assertCmsPageStorage($beforeCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCmsBlockGlossaryKeyMappingBlockStorageListenerStoreData()
+    {
+        SpyCmsBlockStorageQuery::create()->filterByFkCmsBlock(1)->delete();
+        $beforeCount = SpyCmsBlockStorageQuery::create()->count();
+
+        $cmsBlockGlossaryKeyMappingBlockStorageListener = new CmsBlockGlossaryKeyMappingBlockStorageListener();
+        $cmsBlockGlossaryKeyMappingBlockStorageListener->setFacade($this->getCmsBlockStorageFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_CMS_BLOCK => 1,
+            ]),
+        ];
+        $cmsBlockGlossaryKeyMappingBlockStorageListener->handleBulk($eventTransfers, CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_CREATE);
+
+        // Assert
+        $this->assertCmsPageStorage($beforeCount);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockStorage\Business\CmsBlockStorageFacade
+     */
+    protected function getCmsBlockStorageFacade()
+    {
+        $factory = new CmsBlockStorageBusinessFactory();
+        $factory->setConfig(new CmsBlockStorageConfigMock());
+
+        $facade = new CmsBlockStorageFacade();
+        $facade->setFactory($factory);
+
+        return $facade;
+    }
+
+    /**
+     * @param int $beforeCount
+     *
+     * @return void
+     */
+    protected function assertCmsPageStorage($beforeCount)
+    {
+        $count = SpyCmsBlockStorageQuery::create()->count();
+        $this->assertEquals($beforeCount + 2, $count);
+        $cmsPage = SpyCmsBlockStorageQuery::create()->orderByIdCmsBlockStorage()->filterByLocale('en_US')->findOneByFkCmsBlock(1);
+        $this->assertNotNull($cmsPage);
+        $data = $cmsPage->getData();
+        $this->assertEquals('Teaser for home page', $data['name']);
+    }
+}

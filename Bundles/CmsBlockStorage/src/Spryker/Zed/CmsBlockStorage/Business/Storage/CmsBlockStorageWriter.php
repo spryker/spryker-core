@@ -5,34 +5,69 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\CmsBlockStorage\Business\Storage;
 
 use Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilSanitizeServiceInterface;
+use Spryker\Zed\CmsBlockStorage\Persistence\CmsBlockStorageQueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\CmsBlockStorage\Communication\CmsBlockStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\CmsBlockStorage\Persistence\CmsBlockStorageQueryContainerInterface getQueryContainer()
- */
-class AbstractCmsBlockStorageListener extends AbstractPlugin
+class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     const ID_CMS_BLOCK = 'id_cms_block';
 
     /**
-     * Specification:
-     * - Aggregates all cms block related data for given cms block IDs
-     * - Saves aggregated data to database
-     * - Sends aggregated data to synchronization queue
-     *
+     * @var \Spryker\Zed\CmsBlockStorage\Persistence\CmsBlockStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Zed\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilSanitizeServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
+     * @var \Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface[]
+     */
+    protected $contentWidgetDataExpanderPlugins = [];
+
+    /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param \Spryker\Zed\CmsBlockStorage\Persistence\CmsBlockStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilSanitizeServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface[] $contentWidgetDataExpanderPlugins
+     * @param \Spryker\Shared\Kernel\Store $store
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(
+        CmsBlockStorageQueryContainerInterface $queryContainer,
+        CmsBlockStorageToUtilSanitizeServiceInterface $utilEncodingService,
+        array $contentWidgetDataExpanderPlugins,
+        Store $store,
+        $isSendingToQueue
+    ) {
+        $this->queryContainer = $queryContainer;
+        $this->utilEncodingService = $utilEncodingService;
+        $this->contentWidgetDataExpanderPlugins = $contentWidgetDataExpanderPlugins;
+        $this->store = $store;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
+
+    /**
      * @param array $cmsBlockIds
      *
      * @return void
      */
-    protected function publish(array $cmsBlockIds)
+    public function publish(array $cmsBlockIds)
     {
         $blockEntities = $this->findCmsBlockEntities($cmsBlockIds);
         $blockStorageEntities = $this->findCmsStorageEntities($cmsBlockIds);
@@ -41,15 +76,11 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
     }
 
     /**
-     * Specification:
-     * - Delete cms stored block data for given cms block IDs
-     * - Sends deleted keys to synchronization queue
-     *
      * @param array $cmsBlockIds
      *
      * @return void
      */
-    protected function unpublish(array $cmsBlockIds)
+    public function unpublish(array $cmsBlockIds)
     {
         $blockStorageEntities = $this->findCmsStorageEntities($cmsBlockIds);
         foreach ($blockStorageEntities as $blockStorageEntity) {
@@ -65,16 +96,18 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
      */
     protected function storeData(array $blockEntities, array $blockStorageEntities)
     {
-        $localeNames = $this->getStore()->getLocales();
+        $localeNames = $this->store->getLocales();
 
         foreach ($blockEntities as $blockEntityArray) {
             foreach ($localeNames as $localeName) {
                 $idCmsBlock = $blockEntityArray[static::ID_CMS_BLOCK];
                 if (isset($blockStorageEntities[$idCmsBlock][$localeName])) {
                     $this->storeDataSet($blockEntityArray, $localeName, $blockStorageEntities[$idCmsBlock][$localeName]);
-                } else {
-                    $this->storeDataSet($blockEntityArray, $localeName);
+
+                    continue;
                 }
+
+                $this->storeDataSet($blockEntityArray, $localeName);
             }
         }
     }
@@ -100,8 +133,8 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
             return;
         }
 
-        $blockEntityArray = $this->getFactory()->getUtilSanitize()->arrayFilterRecursive($blockEntityArray);
-        foreach ($this->getFactory()->getContentWidgetDataExpanderPlugins() as $contentWidgetDataExpanderPlugin) {
+        $blockEntityArray = $this->utilEncodingService->arrayFilterRecursive($blockEntityArray);
+        foreach ($this->contentWidgetDataExpanderPlugins as $contentWidgetDataExpanderPlugin) {
             $blockEntityArray = $contentWidgetDataExpanderPlugin->expand($blockEntityArray, $localeName);
         }
 
@@ -109,6 +142,7 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
         $cmsBlockStorageEntity->setFkCmsBlock($blockEntityArray[static::ID_CMS_BLOCK]);
         $cmsBlockStorageEntity->setLocale($localeName);
         $cmsBlockStorageEntity->setName($blockEntityArray['name']);
+        $cmsBlockStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $cmsBlockStorageEntity->save();
     }
 
@@ -119,7 +153,7 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
      */
     protected function findCmsBlockEntities(array $cmsBlockIds)
     {
-        return $this->getQueryContainer()->queryBlockWithRelationsByIds($cmsBlockIds)->find()->getData();
+        return $this->queryContainer->queryBlockWithRelationsByIds($cmsBlockIds)->find()->getData();
     }
 
     /**
@@ -129,20 +163,12 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
      */
     protected function findCmsStorageEntities(array $cmsBlockIds)
     {
-        $spyCmsBlockStorageEntities = $this->getQueryContainer()->queryCmsStorageEntities($cmsBlockIds)->find();
+        $spyCmsBlockStorageEntities = $this->queryContainer->queryCmsStorageEntities($cmsBlockIds)->find();
         $cmsBlockStorageEntitiesByIdAndLocale = [];
         foreach ($spyCmsBlockStorageEntities as $spyCmsBlockStorageEntity) {
             $cmsBlockStorageEntitiesByIdAndLocale[$spyCmsBlockStorageEntity->getFkCmsBlock()][$spyCmsBlockStorageEntity->getLocale()] = $spyCmsBlockStorageEntity;
         }
 
         return $cmsBlockStorageEntitiesByIdAndLocale;
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return Store::getInstance();
     }
 }
