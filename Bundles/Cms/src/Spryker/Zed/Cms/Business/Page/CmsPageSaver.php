@@ -375,7 +375,8 @@ class CmsPageSaver implements CmsPageSaverInterface
         foreach ($cmsPageTransfer->getPageAttributes() as $cmsPageAttributesTransfer) {
             if (!$cmsPageAttributesTransfer->getIdCmsPageLocalizedAttributes()) {
                 $cmsPageLocalizedAttributesEntity = $this->createLocalizedAttributes($cmsPageAttributesTransfer, $cmsPageEntity);
-                $cmsPageLocalizedAttributesList[] = $cmsPageLocalizedAttributesEntity;
+                $cmsPageLocalizedAttributesList[$cmsPageLocalizedAttributesEntity->getIdCmsPageLocalizedAttributes()]
+                    = $cmsPageLocalizedAttributesEntity;
                 $this->updateMetaAttributeWithLocalizedAttributes($cmsPageTransfer, $cmsPageLocalizedAttributesEntity);
             }
         }
