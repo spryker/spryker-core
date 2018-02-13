@@ -5,15 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Chart\Plugin\Provider;
+namespace Spryker\Zed\Chart\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Twig_Environment;
 
 /**
- * @method \Spryker\Yves\Chart\ChartFactory getFactory()
+ * @method \Spryker\Zed\Chart\Communication\ChartCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Chart\Business\ChartFacadeInterface getFacade()
  */
 class ChartTwigFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -54,7 +55,7 @@ class ChartTwigFunctionServiceProvider extends AbstractPlugin implements Service
     protected function getChartTwigFunctions(Application $app)
     {
         $functions = [];
-        foreach ($this->getFactory()->getTwigFunctionPlugins() as $twigFunction) {
+        foreach ($this->getFactory()->getTwigFunctions() as $twigFunction) {
             $functions = array_merge($functions, $twigFunction->getFunctions($app));
         }
 
