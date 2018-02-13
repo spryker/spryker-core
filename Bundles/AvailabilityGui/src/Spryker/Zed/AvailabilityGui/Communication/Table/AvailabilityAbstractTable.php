@@ -238,7 +238,7 @@ class AvailabilityAbstractTable extends AbstractTable
     {
         $reservation = 0;
         foreach ($reservationItems as $item) {
-            if (is_array($item) || count($item) !== 2) {
+            if (!is_array($item) || count($item) !== 2) {
                 continue;
             }
 
