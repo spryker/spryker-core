@@ -18,5 +18,5 @@ interface CompanyUserHydrationPluginInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function hydrate(CompanyUserTransfer $companyUserTransfer);
+    public function hydrate(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
 }

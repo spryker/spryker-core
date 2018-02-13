@@ -7,6 +7,14 @@
 
 namespace Spryker\Zed\Company\Persistence;
 
+use Orm\Zed\Company\Persistence\SpyCompanyQuery;
+
 interface CompanyQueryContainerInterface
 {
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Company\Persistence\SpyCompanyQuery
+     */
+    public function queryCompany(): SpyCompanyQuery;
 }

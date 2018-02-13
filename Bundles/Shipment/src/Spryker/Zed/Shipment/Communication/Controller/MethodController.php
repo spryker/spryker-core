@@ -34,7 +34,7 @@ class MethodController extends AbstractController
             ->createMethodForm($dataProvider->getData(), $dataProvider->getOptions())
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $shipmentMethodTransfer = $form->getData();
             $this->getFacade()->createMethod($shipmentMethodTransfer);
 
@@ -64,7 +64,7 @@ class MethodController extends AbstractController
                 ->createMethodForm($dataProvider->getData($idMethod), $dataProvider->getOptions())
                 ->handleRequest($request);
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $shipmentMethodTransfer = $form->getData();
 
                 $this->getFacade()

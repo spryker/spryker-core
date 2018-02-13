@@ -9,6 +9,7 @@ namespace SprykerTest\Shared\Discount\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\DiscountConfiguratorBuilder;
+use Generated\Shared\DataBuilder\DiscountGeneralBuilder;
 use Generated\Shared\DataBuilder\DiscountVoucherBuilder;
 use Generated\Shared\DataBuilder\MoneyValueBuilder;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
@@ -32,7 +33,7 @@ class DiscountDataHelper extends Module
         $discountFacade = $this->getDiscountFacade();
 
         $discountConfigurator = (new DiscountConfiguratorBuilder($override))
-            ->withDiscountGeneral()
+            ->withDiscountGeneral((new DiscountGeneralBuilder())->withStoreRelation())
             ->withDiscountCondition()
             ->withDiscountCalculator()
             ->build();
