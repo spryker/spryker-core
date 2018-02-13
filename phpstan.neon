@@ -2,6 +2,7 @@ parameters:
     ignoreErrors:
         - '#Class PHP_CodeSniffer\\Config not found#'
         - '#Parameter \$resolver of method [a-zA-Z0-9\\]+\:\:setDefaultOptions\(\) has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface\.#'
+        - '#Access to undefined constant Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface::TABLE_MAP\.#'
 
     reportUnmatchedIgnoredErrors: false
 

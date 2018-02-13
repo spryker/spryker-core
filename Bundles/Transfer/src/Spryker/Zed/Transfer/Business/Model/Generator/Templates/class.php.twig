@@ -37,7 +37,6 @@ class {{ className }} extends {{ abstractClass }}
 {{ macro.addPropertyNameMap(propertyNameMap) }}
 
 {{ macro.addMetadata(normalizedProperties) }}
-
 {% if entityNamespace is not null -%}
 {{ macro.addEntityNamespace(entityNamespace) }}
 {% endif -%}

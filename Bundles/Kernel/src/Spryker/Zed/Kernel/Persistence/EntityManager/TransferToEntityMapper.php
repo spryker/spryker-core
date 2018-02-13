@@ -113,13 +113,13 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $parentEntity
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      *
      * @return \Propel\Runtime\Map\TableMap
      */
-    protected function getTableMap(ActiveRecordInterface $parentEntity)
+    protected function getTableMap(ActiveRecordInterface $entity)
     {
-        $tableNameClass = $parentEntity::TABLE_MAP;
+        $tableNameClass = $entity::TABLE_MAP;
         return $tableNameClass::getTableMap();
     }
 
