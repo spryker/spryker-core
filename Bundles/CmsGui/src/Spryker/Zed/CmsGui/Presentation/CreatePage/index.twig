@@ -11,7 +11,7 @@
 
 {% block content %}
 
-{{ form_start(pageForm) }}
+{{ form_start(pageForm, {attr: {novalidate: 'novalidate'}}) }}
 
 {{ tabs(pageTabs, {'availableLocales' : availableLocales, 'pageForm' : pageForm} ) }}
 
