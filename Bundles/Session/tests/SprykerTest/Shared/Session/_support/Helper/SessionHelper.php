@@ -10,6 +10,7 @@ namespace SprykerTest\Shared\Session\Helper;
 use Codeception\Module;
 use Spryker\Client\Session\SessionClient;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 class SessionHelper extends Module
 {
@@ -19,6 +20,6 @@ class SessionHelper extends Module
     public function _initialize()
     {
         $sessionClient = new SessionClient();
-        $sessionClient->setContainer(new Session());
+        $sessionClient->setContainer(new Session(new MockArraySessionStorage()));
     }
 }

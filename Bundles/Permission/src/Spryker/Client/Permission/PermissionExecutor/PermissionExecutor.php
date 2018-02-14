@@ -9,32 +9,32 @@ namespace Spryker\Client\Permission\PermissionExecutor;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientInterface;
+use Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface;
 use Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface;
 use Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface;
 
 class PermissionExecutor implements PermissionExecutorInterface
 {
     /**
+     * @var \Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface
+     */
+    protected $permissionStoragePlugin;
+
+    /**
      * @var \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface
      */
     protected $permissionFinder;
 
     /**
-     * @var \Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientInterface
-     */
-    protected $customerClient;
-
-    /**
-     * @param \Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientInterface $customerClient
+     * @param \Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface $permissionStoragePlugin
      * @param \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface $permissionConfigurator
      */
     public function __construct(
-        PermissionToCustomerClientInterface $customerClient,
+        PermissionStoragePluginInterface $permissionStoragePlugin,
         PermissionFinderInterface $permissionConfigurator
     ) {
         $this->permissionFinder = $permissionConfigurator;
-        $this->customerClient = $customerClient;
+        $this->permissionStoragePlugin = $permissionStoragePlugin;
     }
 
     /**
@@ -56,8 +56,10 @@ class PermissionExecutor implements PermissionExecutorInterface
 
     /**
      * If one of the permission configurations wins, then a subject has the permission
-     * Example: even if an admin user assigned to a junior sales manager role (with up to 1000 euro order),
-     *  the user could perform actions as an admin.
+     *
+     * @example A junior sales manager could place an order up to 1000 and
+     *  a senior sales manager up to 2000. A user has both roles assigned, then he/she has
+     *  the permission to place an order up to 2000.
      *
      * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
      * @param string|int|array|null $context
@@ -66,13 +68,13 @@ class PermissionExecutor implements PermissionExecutorInterface
      */
     protected function executePermissionCollection(PermissionCollectionTransfer $permissionCollectionTransfer, $context = null): bool
     {
-        $hasPermission = false;
-
         foreach ($permissionCollectionTransfer->getPermissions() as $permissionTransfer) {
-            $hasPermission |= $this->executePermission($permissionTransfer, $context);
+            if ($this->executePermission($permissionTransfer, $context)) {
+                return true;
+            }
         }
 
-        return (bool)$hasPermission;
+        return false;
     }
 
     /**
@@ -105,15 +107,9 @@ class PermissionExecutor implements PermissionExecutorInterface
     {
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 
-        $companyUser = $this->customerClient->getCompanyUser();
-        /** @var \Generated\Shared\Transfer\CompanyRoleTransfer $companyRole */
-        foreach ($companyUser->getCompanyRoleCollection() as $companyRole) {
-
-            /** @var \Generated\Shared\Transfer\PermissionTransfer $permission */
-            foreach ($companyRole->getPermissionCollection() as $permission) {
-                if ($permission->getKey() === $permissionKey) {
-                    $permissionCollectionTransfer->addPermission($permission);
-                }
+        foreach ($this->permissionStoragePlugin->getPermissionCollection()->getPermissions() as $permission) {
+            if ($permission->getKey() === $permissionKey) {
+                $permissionCollectionTransfer->addPermission($permission);
             }
         }
 
