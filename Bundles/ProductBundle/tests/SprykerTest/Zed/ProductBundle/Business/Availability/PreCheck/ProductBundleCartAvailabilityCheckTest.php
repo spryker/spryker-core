@@ -39,7 +39,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
             ->expects($this->exactly(2))
             ->method('isProductSellable')
             ->withConsecutive(
-                [$this->equalTo($this->fixtures['bundle-sku']), $this->equalTo(8)],
+                [$this->equalTo($this->fixtures['bundle-sku']), $this->equalTo(5)],
                 [$this->equalTo($this->fixtures['bundledProductSku']), $this->equalTo(15)]
             )
             ->willReturn(true);
@@ -114,7 +114,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
             ->expects($this->once())
             ->method('isProductSellable')
             ->withConsecutive(
-                [$this->equalTo($this->fixtures['bundle-sku']), $this->equalTo(8)]
+                [$this->equalTo($this->fixtures['bundle-sku']), $this->equalTo(5)]
             )
             ->willReturn(false);
 
