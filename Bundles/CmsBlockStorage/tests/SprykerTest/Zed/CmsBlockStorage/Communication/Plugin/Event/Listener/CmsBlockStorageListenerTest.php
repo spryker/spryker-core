@@ -119,9 +119,9 @@ class CmsBlockStorageListenerTest extends Unit
     {
         $count = SpyCmsBlockStorageQuery::create()->count();
         $this->assertSame($beforeCount + 2, $count);
-        $cmsPage = SpyCmsBlockStorageQuery::create()->orderByIdCmsBlockStorage()->filterByLocale('en_US')->findOneByFkCmsBlock(1);
-        $this->assertNotNull($cmsPage);
-        $data = $cmsPage->getData();
+        $cmsBlockStorage = SpyCmsBlockStorageQuery::create()->orderByIdCmsBlockStorage()->filterByLocale('en_US')->findOneByFkCmsBlock(1);
+        $this->assertNotNull($cmsBlockStorage);
+        $data = $cmsBlockStorage->getData();
         $this->assertSame('Teaser for home page', $data['name']);
     }
 }

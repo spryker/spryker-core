@@ -145,9 +145,9 @@ class CmsBlockCategoryStorageListenerTest extends Unit
     {
         $count = SpyCmsBlockCategoryStorageQuery::create()->count();
         $this->assertSame($beforeCount + 1, $count);
-        $cmsPage = SpyCmsBlockCategoryStorageQuery::create()->orderByIdCmsBlockCategoryStorage()->findOneByFkCategory(5);
-        $this->assertNotNull($cmsPage);
-        $data = $cmsPage->getData();
+        $cmsBlockCategoryStorage = SpyCmsBlockCategoryStorageQuery::create()->orderByIdCmsBlockCategoryStorage()->findOneByFkCategory(5);
+        $this->assertNotNull($cmsBlockCategoryStorage);
+        $data = $cmsBlockCategoryStorage->getData();
         $this->assertSame(1, count($data['cms_block_categories']));
     }
 }

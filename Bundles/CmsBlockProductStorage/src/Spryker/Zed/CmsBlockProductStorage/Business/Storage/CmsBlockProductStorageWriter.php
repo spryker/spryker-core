@@ -5,25 +5,48 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsBlockProductStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\CmsBlockProductStorage\Business\Storage;
 
 use Generated\Shared\Transfer\CmsBlockProductTransfer;
 use Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorage;
-use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\CmsBlockProductStorage\Dependency\Service\CmsBlockProductStorageToUtilSanitizeServiceInterface;
+use Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainerInterface;
 
-/**
- * @method \Spryker\Zed\CmsBlockProductStorage\Communication\CmsBlockProductStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainerInterface getQueryContainer()
- */
-abstract class AbstractCmsBlockProductStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterface
 {
+    /**
+     * @var \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @var \Spryker\Zed\CmsBlockProductStorage\Dependency\Service\CmsBlockProductStorageToUtilSanitizeServiceInterface
+     */
+    protected $utilSanitizeService;
+
+    /**
+     * @var bool
+     */
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\CmsBlockProductStorage\Dependency\Service\CmsBlockProductStorageToUtilSanitizeServiceInterface $utilSanitizeService
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(CmsBlockProductStorageQueryContainerInterface $queryContainer, CmsBlockProductStorageToUtilSanitizeServiceInterface $utilSanitizeService, $isSendingToQueue)
+    {
+        $this->queryContainer = $queryContainer;
+        $this->utilSanitizeService = $utilSanitizeService;
+        $this->isSendingToQueue = $isSendingToQueue;
+    }
+
     /**
      * @param array $productAbstractIds
      *
      * @return void
      */
-    protected function publish(array $productAbstractIds)
+    public function publish(array $productAbstractIds)
     {
         $cmsBlockProductsTransfer = $this->getCmsBlockProductsTransfer($productAbstractIds);
         $spyCmsBlockProductStorageEntities = $this->findCmsBlockProductStorageEntitiesByProductIds($productAbstractIds);
@@ -35,7 +58,7 @@ abstract class AbstractCmsBlockProductStorageListener extends AbstractPlugin imp
      *
      * @return void
      */
-    protected function refreshOrUnpublish(array $productAbstractIds)
+    public function refreshOrUnpublish(array $productAbstractIds)
     {
         $cmsBlockProductsTransfer = $this->getCmsBlockProductsTransfer($productAbstractIds);
         $spyCmsBlockProductStorageEntities = $this->findCmsBlockProductStorageEntitiesByProductIds($productAbstractIds);
@@ -80,9 +103,10 @@ abstract class AbstractCmsBlockProductStorageListener extends AbstractPlugin imp
             $spyCmsBlockProductStorage = new SpyCmsBlockProductStorage();
         }
 
-        $data = $this->getFactory()->getUtilSanitizeService()->arrayFilterRecursive($cmsBlockProductsTransfer->toArray());
+        $data = $this->utilSanitizeService->arrayFilterRecursive($cmsBlockProductsTransfer->toArray());
         $spyCmsBlockProductStorage->setFkProductAbstract($cmsBlockProductsTransfer->getIdProductAbstract());
         $spyCmsBlockProductStorage->setData($data);
+        $spyCmsBlockProductStorage->setIsSendingToQueue($this->isSendingToQueue);
         $spyCmsBlockProductStorage->save();
     }
 
@@ -113,7 +137,7 @@ abstract class AbstractCmsBlockProductStorageListener extends AbstractPlugin imp
      */
     protected function getCmsBlockProducts(array $productAbstractIds)
     {
-        $cmsBlockProducts = $this->getQueryContainer()
+        $cmsBlockProducts = $this->queryContainer
             ->queryCmsBlockProducts($productAbstractIds)
             ->find();
 
@@ -132,7 +156,7 @@ abstract class AbstractCmsBlockProductStorageListener extends AbstractPlugin imp
      */
     protected function findCmsBlockProductStorageEntitiesByProductIds(array $productAbstractIds)
     {
-        $cmsBlockProductStorageEntities = $this->getQueryContainer()->queryCmsBlockProductStorageByIds($productAbstractIds)->find();
+        $cmsBlockProductStorageEntities = $this->queryContainer->queryCmsBlockProductStorageByIds($productAbstractIds)->find();
         $cmsBlockProductStorageEntitiesById = [];
         foreach ($cmsBlockProductStorageEntities as $cmsBlockProductStorageEntity) {
             $cmsBlockProductStorageEntitiesById[$cmsBlockProductStorageEntity->getFkProductAbstract()] = $cmsBlockProductStorageEntity;
