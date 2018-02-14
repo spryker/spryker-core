@@ -24,7 +24,7 @@ class PermissionClient extends AbstractClient implements PermissionClientInterfa
      *
      * @return bool
      */
-    public function can($permissionKey, $context = null)
+    public function can($permissionKey, $context = null): bool
     {
         return $this->getFactory()
             ->createPermissionExecutor()

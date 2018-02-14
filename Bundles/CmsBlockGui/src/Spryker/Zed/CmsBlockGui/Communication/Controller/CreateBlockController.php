@@ -44,7 +44,7 @@ class CreateBlockController extends AbstractController
             ->createCmsBlockFormDataProvider();
 
         $cmsBlockForm = $this->getFactory()
-            ->createCmsBlockForm($cmsBlockFormDataProvider)
+            ->getCmsBlockForm($cmsBlockFormDataProvider)
             ->handleRequest($request);
 
         if ($cmsBlockForm->isSubmitted()) {

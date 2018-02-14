@@ -26,5 +26,5 @@ interface PermissionClientInterface
      *
      * @return bool
      */
-    public function can($permissionKey, $context = null);
+    public function can($permissionKey, $context = null): bool;
 }

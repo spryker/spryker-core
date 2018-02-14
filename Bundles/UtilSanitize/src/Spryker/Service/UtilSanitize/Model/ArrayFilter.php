@@ -7,6 +7,8 @@
 
 namespace Spryker\Service\UtilSanitize\Model;
 
+use Countable;
+
 class ArrayFilter implements ArrayFilterInterface
 {
     /**
@@ -23,11 +25,24 @@ class ArrayFilter implements ArrayFilterInterface
             }
 
             if (is_array($value)) {
-                $filteredArray[$key] = $this->arrayFilterRecursive($value);
-            } else {
-                if (count($value) !== 0) {
-                    $filteredArray[$key] = $value;
+                $result = $this->arrayFilterRecursive($value);
+                if (!$result) {
+                    continue;
                 }
+
+                $filteredArray[$key] = $result;
+                continue;
+            }
+            if (is_string($value) && strlen($value)) {
+                $filteredArray[$key] = $value;
+                continue;
+            }
+            if ($value instanceof Countable && count($value) !== 0) {
+                $filteredArray[$key] = $value;
+                continue;
+            }
+            if (!$value instanceof Countable && $value) {
+                $filteredArray[$key] = $value;
             }
         }
 
