@@ -3,14 +3,15 @@
   "description": "Dataset module",
   "license": "proprietary",
   "require": {
+    "league/csv": "^9.1",
+    "php": ">=7.1",
+    "spryker/gui": "^3.13.0",
     "spryker/kernel": "^3.16.0",
     "spryker/locale": "^3.1.0",
     "spryker/propel-orm": "^1.5.0",
     "spryker/symfony": "^3.1.2",
-    "spryker/gui": "^3.13.0",
-    "spryker/util-text": "^1.2.1",
     "spryker/touch": "^3.0.0 || ^4.0.0",
-    "league/csv": "^9.1"
+    "spryker/util-text": "^1.2.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -19,11 +20,6 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
