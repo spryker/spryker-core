@@ -92,9 +92,11 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
         foreach ($priceProductConcretes as $idProductConcrete => $prices) {
             if (isset($spyPriceProductStorageEntities[$idProductConcrete])) {
                 $this->storeDataSet($idProductConcrete, $prices, $spyPriceProductStorageEntities[$idProductConcrete]);
-            } else {
-                $this->storeDataSet($idProductConcrete, $prices);
+
+                continue;
             }
+
+            $this->storeDataSet($idProductConcrete, $prices);
         }
     }
 

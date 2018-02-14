@@ -10,6 +10,11 @@ namespace Spryker\Zed\PriceProductStorage\Business;
 interface PriceProductStorageFacadeInterface
 {
     /**
+     * Specification:
+     * - Queries all priceProduct with the given productConcreteIds
+     * - Stores data as json encoded to storage table
+     * - Sends a copy of data to queue based on module config
+     *
      * @api
      *
      * @param array $productConcreteIds
@@ -19,6 +24,10 @@ interface PriceProductStorageFacadeInterface
     public function publishPriceProductConcrete(array $productConcreteIds);
 
     /**
+     * Specification:
+     * - Finds and deletes priceProduct storage entities with the given productConcreteIds
+     * - Sends delete message to queue based on module config
+     *
      * @api
      *
      * @param array $productConcreteIds
@@ -28,6 +37,10 @@ interface PriceProductStorageFacadeInterface
     public function unpublishPriceProductConcrete(array $productConcreteIds);
 
     /**
+     * - Queries all priceProduct with the given productAbstractIds
+     * - Stores data as json encoded to storage table
+     * - Sends a copy of data to queue based on module config
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -37,6 +50,10 @@ interface PriceProductStorageFacadeInterface
     public function publishPriceProductAbstract(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - Finds and deletes priceProduct storage entities with the given productAbstractIds
+     * - Sends delete message to queue based on module config
+     *
      * @api
      *
      * @param array $productAbstractIds

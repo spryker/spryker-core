@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class PriceProductStorageFacade extends AbstractFacade implements PriceProductStorageFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $productConcreteIds
@@ -27,6 +29,8 @@ class PriceProductStorageFacade extends AbstractFacade implements PriceProductSt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $productConcreteIds
@@ -39,6 +43,8 @@ class PriceProductStorageFacade extends AbstractFacade implements PriceProductSt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -51,6 +57,8 @@ class PriceProductStorageFacade extends AbstractFacade implements PriceProductSt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $productAbstractIds

@@ -95,12 +95,15 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
                 continue;
             }
 
+            $storedEntities[] = $idProduct;
+
             if (isset($spyProductAbstractRelationStorageEntities[$idProduct])) {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, $productRelations, $spyProductAbstractRelationStorageEntities[$idProduct]);
-            } else {
-                $this->storeDataSet($spyProductAbstractLocalizedEntity, $productRelations);
+
+                continue;
             }
-            $storedEntities[] = $idProduct;
+
+            $this->storeDataSet($spyProductAbstractLocalizedEntity, $productRelations);
         }
     }
 

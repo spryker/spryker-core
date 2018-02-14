@@ -111,9 +111,11 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
             foreach ($navigationTreeTransfer as $localeName => $navigationTreeByLocaleTransfer) {
                 if (isset($spyNavigationMenuTranslationStorageEntities[$navigationTreeByLocaleTransfer->getNavigation()->getIdNavigation()][$localeName])) {
                     $this->storeDataSet($navigationTreeByLocaleTransfer, $localeName, $spyNavigationMenuTranslationStorageEntities[$navigationTreeByLocaleTransfer->getNavigation()->getIdNavigation()][$localeName]);
-                } else {
-                    $this->storeDataSet($navigationTreeByLocaleTransfer, $localeName);
+
+                    continue;
                 }
+
+                $this->storeDataSet($navigationTreeByLocaleTransfer, $localeName);
             }
         }
     }

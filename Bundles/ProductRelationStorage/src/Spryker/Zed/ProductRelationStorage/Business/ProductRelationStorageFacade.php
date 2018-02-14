@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductRelationStorageFacade extends AbstractFacade implements ProductRelationStorageFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -27,6 +29,8 @@ class ProductRelationStorageFacade extends AbstractFacade implements ProductRela
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $productAbstractIds

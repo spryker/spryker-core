@@ -10,6 +10,11 @@ namespace Spryker\Zed\ProductGroupStorage\Business;
 interface ProductGroupStorageFacadeInterface
 {
     /**
+     * Specification:
+     * - Queries all productGroup with the given productAbstractIds
+     * - Stores data as json encoded to storage table
+     * - Sends a copy of data to queue based on module config
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -19,6 +24,10 @@ interface ProductGroupStorageFacadeInterface
     public function publish(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - Finds and deletes productGroup storage entities with the given productAbstractIds
+     * - Sends delete message to queue based on module config
+     *
      * @api
      *
      * @param array $productAbstractIds

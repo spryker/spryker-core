@@ -100,9 +100,11 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
             $localeName = $spyProductAbstractLocalizedEntity->getLocale()->getLocaleName();
             if (isset($spyProductAbstractImageStorageEntities[$idProduct][$localeName])) {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, $imagesSets, $spyProductAbstractImageStorageEntities[$idProduct][$localeName]);
-            } else {
-                $this->storeDataSet($spyProductAbstractLocalizedEntity, $imagesSets);
+
+                continue;
             }
+
+            $this->storeDataSet($spyProductAbstractLocalizedEntity, $imagesSets);
         }
     }
 

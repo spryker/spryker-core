@@ -115,9 +115,11 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
             $localeName = $spyProductAbstractLocalizedEntity->getLocale()->getLocaleName();
             if (isset($spyProductAbstractStorageEntities[$idProduct][$localeName])) {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, $categories, $spyProductAbstractStorageEntities[$idProduct][$localeName]);
-            } else {
-                $this->storeDataSet($spyProductAbstractLocalizedEntity, $categories);
+
+                continue;
             }
+
+            $this->storeDataSet($spyProductAbstractLocalizedEntity, $categories);
         }
     }
 

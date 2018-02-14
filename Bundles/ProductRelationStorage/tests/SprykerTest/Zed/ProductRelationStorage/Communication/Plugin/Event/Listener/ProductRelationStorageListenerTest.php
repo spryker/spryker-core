@@ -143,9 +143,9 @@ class ProductRelationStorageListenerTest extends Unit
     {
         $productRelationStorageCount = SpyProductAbstractRelationStorageQuery::create()->count();
         $this->assertSame($beforeCount + 1, $productRelationStorageCount);
-        $spyProductAbstractCategoryStorage = SpyProductAbstractRelationStorageQuery::create()->findOneByFkProductAbstract(1);
-        $this->assertNotNull($spyProductAbstractCategoryStorage);
-        $data = $spyProductAbstractCategoryStorage->getData();
+        $productAbstractRelationStorage = SpyProductAbstractRelationStorageQuery::create()->findOneByFkProductAbstract(1);
+        $this->assertNotNull($productAbstractRelationStorage);
+        $data = $productAbstractRelationStorage->getData();
         $this->assertSame(2, count($data['product_relations']));
     }
 }

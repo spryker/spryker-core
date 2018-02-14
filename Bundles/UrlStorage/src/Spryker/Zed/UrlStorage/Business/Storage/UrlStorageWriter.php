@@ -89,13 +89,17 @@ class UrlStorageWriter implements UrlStorageWriterInterface
             if (isset($spyUrlStorageEntities[$idUrl])) {
                 if ($spyUrlStorageEntities[$idUrl]->getUrl() === $spyUrlEntity['url']) {
                     $this->storeDataSet($spyUrlEntity, $spyUrlStorageEntities[$idUrl]);
-                } else {
-                    $this->storeDataSet($spyUrlEntity);
-                    $spyUrlStorageEntities[$idUrl]->delete();
+
+                    continue;
                 }
-            } else {
+
                 $this->storeDataSet($spyUrlEntity);
+                $spyUrlStorageEntities[$idUrl]->delete();
+
+                continue;
             }
+
+            $this->storeDataSet($spyUrlEntity);
         }
     }
 

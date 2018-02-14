@@ -91,9 +91,11 @@ class ProductLabelStorageWriter implements ProductLabelStorageWriterInterface
         foreach ($uniqueProductAbstractIds as $productAbstractId) {
             if (isset($spyProductAbstractLabelStorageEntities[$productAbstractId])) {
                 $this->storeDataSet($productAbstractId, $productLabelsIds, $spyProductAbstractLabelStorageEntities[$productAbstractId]);
-            } else {
-                $this->storeDataSet($productAbstractId, $productLabelsIds);
+
+                continue;
             }
+
+            $this->storeDataSet($productAbstractId, $productLabelsIds);
         }
     }
 

@@ -121,9 +121,11 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
             $localeName = $spyProductAbstractLocalizedEntity->getLocale()->getLocaleName();
             if (isset($spyProductAbstractOptionStorageEntities[$idProduct][$localeName])) {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, $productOptions, $spyProductAbstractOptionStorageEntities[$idProduct][$localeName]);
-            } else {
-                $this->storeDataSet($spyProductAbstractLocalizedEntity, $productOptions);
+
+                continue;
             }
+
+            $this->storeDataSet($spyProductAbstractLocalizedEntity, $productOptions);
         }
     }
 

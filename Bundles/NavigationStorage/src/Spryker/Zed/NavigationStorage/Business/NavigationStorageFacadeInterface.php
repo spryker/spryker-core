@@ -10,6 +10,11 @@ namespace Spryker\Zed\NavigationStorage\Business;
 interface NavigationStorageFacadeInterface
 {
     /**
+     * Specification:
+     * - Queries all navigation with the given navigationIds
+     * - Stores data as json encoded to storage table
+     * - Sends a copy of data to queue based on module config
+     *
      * @api
      *
      * @param array $navigationIds
@@ -19,6 +24,10 @@ interface NavigationStorageFacadeInterface
     public function publish(array $navigationIds);
 
     /**
+     * Specification:
+     * - Finds and deletes navigation storage entities with the given navigationIds
+     * - Sends delete message to queue based on module config
+     *
      * @api
      *
      * @param array $navigationIds

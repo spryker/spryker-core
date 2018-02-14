@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class UrlStorageFacade extends AbstractFacade implements UrlStorageFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $urlIds
@@ -27,6 +29,8 @@ class UrlStorageFacade extends AbstractFacade implements UrlStorageFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $urlIds
@@ -39,6 +43,8 @@ class UrlStorageFacade extends AbstractFacade implements UrlStorageFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $redirectIds
@@ -51,6 +57,8 @@ class UrlStorageFacade extends AbstractFacade implements UrlStorageFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $redirectIds

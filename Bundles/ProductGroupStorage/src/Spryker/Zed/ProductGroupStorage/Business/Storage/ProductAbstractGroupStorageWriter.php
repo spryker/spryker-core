@@ -93,9 +93,11 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
         foreach ($uniqueProductAbstractIds as $productAbstractId) {
             if (isset($spyProductAbstractGroupStorageEntities[$productAbstractId])) {
                 $this->storeDataSet($productAbstractId, $groupedProductAbstractIds, $spyProductAbstractGroupStorageEntities[$productAbstractId]);
-            } else {
-                $this->storeDataSet($productAbstractId, $groupedProductAbstractIds);
+
+                continue;
             }
+
+            $this->storeDataSet($productAbstractId, $groupedProductAbstractIds);
         }
     }
 

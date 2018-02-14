@@ -10,6 +10,10 @@ namespace Spryker\Zed\ProductLabelStorage\Business;
 interface ProductLabelStorageFacadeInterface
 {
     /**
+     * Specification:
+     * - Stores label dictionary data as json encoded to storage table
+     * - Sends a copy of data to queue based on module config
+     *
      * @api
      *
      * @return void
@@ -17,6 +21,10 @@ interface ProductLabelStorageFacadeInterface
     public function publishLabelDictionary();
 
     /**
+     * Specification:
+     * - Finds and deletes label dictionary storage entities
+     * - Sends delete message to queue based on module config
+     *
      * @api
      *
      * @return void
@@ -24,6 +32,11 @@ interface ProductLabelStorageFacadeInterface
     public function unpublishLabelDictionary();
 
     /**
+     * Specification:
+     * - Queries all productLabels with the given productAbstractIds
+     * - Stores data as json encoded to storage table
+     * - Sends a copy of data to queue based on module config
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -33,6 +46,10 @@ interface ProductLabelStorageFacadeInterface
     public function publishProductLabel(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - Finds and deletes productLabels storage entities with the given productAbstractIds
+     * - Sends delete message to queue based on module config
+     *
      * @api
      *
      * @param array $productAbstractIds

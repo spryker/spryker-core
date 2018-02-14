@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelStorageFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
@@ -25,6 +27,8 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
@@ -35,6 +39,8 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -47,6 +53,8 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $productAbstractIds

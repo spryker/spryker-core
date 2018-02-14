@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class NavigationStorageFacade extends AbstractFacade implements NavigationStorageFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $navigationIds
@@ -27,6 +29,8 @@ class NavigationStorageFacade extends AbstractFacade implements NavigationStorag
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $navigationIds

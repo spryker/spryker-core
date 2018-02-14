@@ -89,9 +89,11 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
             $idUrl = $spyRedirectEntity[static::ID_URL_REDIRECT];
             if (isset($spyRedirectStorageEntities[$idUrl])) {
                 $this->storeDataSet($spyRedirectEntity, $spyRedirectStorageEntities[$idUrl]);
-            } else {
-                $this->storeDataSet($spyRedirectEntity);
+
+                continue;
             }
+
+            $this->storeDataSet($spyRedirectEntity);
         }
     }
 

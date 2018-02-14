@@ -81,9 +81,11 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
             $localeName = $spyGlossaryTranslation['Locale']['locale_name'];
             if (isset($spyGlossaryTranslationStorageEntities[$idGlossaryKey][$localeName])) {
                 $this->storeDataSet($spyGlossaryTranslation, $spyGlossaryTranslationStorageEntities[$idGlossaryKey][$localeName]);
-            } else {
-                $this->storeDataSet($spyGlossaryTranslation);
+
+                continue;
             }
+
+            $this->storeDataSet($spyGlossaryTranslation);
         }
     }
 

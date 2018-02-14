@@ -108,9 +108,11 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
             $localeName = $spyProductConcreteLocalizedEntity->getLocale()->getLocaleName();
             if (isset($spyProductConcreteImageStorageEntities[$idProduct][$localeName])) {
                 $this->storeDataSet($spyProductConcreteLocalizedEntity, $imagesSets, $spyProductConcreteImageStorageEntities[$idProduct][$localeName]);
-            } else {
-                $this->storeDataSet($spyProductConcreteLocalizedEntity, $imagesSets);
+
+                continue;
             }
+
+            $this->storeDataSet($spyProductConcreteLocalizedEntity, $imagesSets);
         }
     }
 
