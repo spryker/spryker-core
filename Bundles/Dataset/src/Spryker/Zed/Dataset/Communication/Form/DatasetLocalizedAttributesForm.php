@@ -94,7 +94,7 @@ class DatasetLocalizedAttributesForm extends AbstractType
     protected function addFkLocaleField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_FK_LOCALE, 'hidden', [
+            ->add(self::FIELD_FK_LOCALE, HiddenType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],
