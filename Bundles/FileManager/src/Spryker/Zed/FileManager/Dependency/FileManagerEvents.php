@@ -10,11 +10,11 @@ namespace Spryker\Zed\FileManager\Dependency;
 interface FileManagerEvents
 {
     /**
- * Specification:
- * - This events will be used for spy_file entity creation
- *
- * @api
- */
+     * Specification:
+     * - This events will be used for spy_file entity creation
+     *
+     * @api
+     */
     const ENTITY_FILE_CREATE = 'Entity.spy_file.create';
 
     /**

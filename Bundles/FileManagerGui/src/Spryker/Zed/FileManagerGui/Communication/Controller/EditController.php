@@ -32,7 +32,7 @@ class EditController extends AbstractController
     {
         $idFile = $request->get(static::URL_PARAM_ID_FILE);
         $form = $this->getFactory()
-            ->createFileForm($idFile)
+            ->getFileForm($idFile)
             ->handleRequest($request);
 
         if ($form->isValid()) {

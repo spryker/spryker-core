@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\FileManagerGui\Dependency\QueryContainer;
 
-class FileManagerGuiToFileManagerQueryContainerBridge implements FileManagerGuiToFileManagerQueryContainerBridgeInterface
+class FileManagerGuiToFileManagerQueryContainerBridge implements FileManagerGuiToFileManagerQueryContainerInterface
 {
     /**
      * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface

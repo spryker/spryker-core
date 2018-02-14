@@ -7,8 +7,13 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
+use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+
 class FileRemover implements FileRemoverInterface
 {
+    use DatabaseTransactionHandlerTrait;
+    
     /**
      * @var \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
      */
@@ -20,15 +25,22 @@ class FileRemover implements FileRemoverInterface
     protected $fileContent;
 
     /**
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface
+     */
+    protected $fileManagerQueryContainer;
+
+    /**
      * FileSaver constructor.
      *
      * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
      * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface $fileContent
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $fileManagerQueryContainer
      */
-    public function __construct(FileFinderInterface $fileFinder, FileContentInterface $fileContent)
+    public function __construct(FileFinderInterface $fileFinder, FileContentInterface $fileContent, FileManagerQueryContainerInterface $fileManagerQueryContainer)
     {
         $this->fileFinder = $fileFinder;
         $this->fileContent = $fileContent;
+        $this->fileManagerQueryContainer = $fileManagerQueryContainer;
     }
 
     /**
@@ -44,8 +56,10 @@ class FileRemover implements FileRemoverInterface
             return false;
         }
 
-        $this->fileContent->delete($fileInfo->getStorageFileName());
-        $fileInfo->delete();
+        $this->handleDatabaseTransaction(function () use ($fileInfo) {
+            $this->fileContent->delete($fileInfo->getStorageFileName());
+            $fileInfo->delete();
+        }, $this->fileManagerQueryContainer->getConnection());
 
         return true;
     }
@@ -63,12 +77,14 @@ class FileRemover implements FileRemoverInterface
             return false;
         }
 
-        foreach ($file->getSpyFileInfos() as $fileInfo) {
-            $this->fileContent->delete($fileInfo->getStorageFileName());
-            $fileInfo->delete();
-        }
+        $this->handleDatabaseTransaction(function () use ($file) {
+            foreach ($file->getSpyFileInfos() as $fileInfo) {
+                $this->fileContent->delete($fileInfo->getStorageFileName());
+                $fileInfo->delete();
+            }
 
-        $file->delete();
+            $file->delete();
+        }, $this->fileManagerQueryContainer->getConnection());
 
         return true;
     }

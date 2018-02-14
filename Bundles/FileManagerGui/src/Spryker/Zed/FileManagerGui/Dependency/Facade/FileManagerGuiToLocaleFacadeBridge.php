@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\FileManagerGui\Dependency\Facade;
 
-class FileManagerGuiToLocaleFacadeBridge implements FileManagerGuiToLocaleFacadeBridgeInterface
+class FileManagerGuiToLocaleFacadeBridge implements FileManagerGuiToLocaleFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface

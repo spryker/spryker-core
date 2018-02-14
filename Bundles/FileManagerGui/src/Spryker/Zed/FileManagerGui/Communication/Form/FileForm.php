@@ -35,14 +35,6 @@ class FileForm extends AbstractType
     const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'file';
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *

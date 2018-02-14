@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\FileManagerGui\Dependency\QueryContainer;
 
-interface FileManagerGuiToFileManagerQueryContainerBridgeInterface
+interface FileManagerGuiToFileManagerQueryContainerInterface
 {
     /**
      * @param int $idFile

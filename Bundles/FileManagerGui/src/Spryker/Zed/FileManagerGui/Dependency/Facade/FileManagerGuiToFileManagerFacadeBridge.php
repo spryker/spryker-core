@@ -9,7 +9,7 @@ namespace Spryker\Zed\FileManagerGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
 
-class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileManagerFacadeBridgeInterface
+class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileManagerFacadeInterface
 {
     /**
      * @var \Spryker\Zed\FileManager\Business\FileManagerFacadeInterface
