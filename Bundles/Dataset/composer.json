@@ -10,7 +10,6 @@
     "spryker/locale": "^3.1.0",
     "spryker/propel-orm": "^1.5.0",
     "spryker/symfony": "^3.1.2",
-    "spryker/touch": "^3.0.0 || ^4.0.0",
     "spryker/util-text": "^1.2.1"
   },
   "require-dev": {
