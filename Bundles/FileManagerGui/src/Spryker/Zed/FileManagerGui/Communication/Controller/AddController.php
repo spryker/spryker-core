@@ -28,7 +28,7 @@ class AddController extends AbstractController
     public function indexAction(Request $request)
     {
         $form = $this->getFactory()
-            ->createFileForm()
+            ->getFileForm()
             ->handleRequest($request);
 
         if ($form->isValid()) {
@@ -44,7 +44,6 @@ class AddController extends AbstractController
                 $redirectUrl = Url::generate('/file-manager-gui')->build();
 
                 return $this->redirectResponse($redirectUrl);
-
             } catch (Exception $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }

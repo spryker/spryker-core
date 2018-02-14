@@ -4,9 +4,6 @@
     <table name="spy_file" phpName="SpyFile">
         <column name="id_file" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="file_name" type="VARCHAR" size="500" required="true"/>
-        <behavior name="event">
-            <parameter name="spy_file_all" column="*" />
-        </behavior>
         <id-method-parameter value="spy_file_pk_seq"/>
     </table>
 

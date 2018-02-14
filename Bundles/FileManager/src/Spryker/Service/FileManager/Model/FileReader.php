@@ -1,32 +1,36 @@
 <?php
 
-namespace Spryker\Service\FileManager\Model;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Service\FileManager\Model;
 
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerReadResponseTransfer;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
 use Generated\Shared\Transfer\FileTransfer;
-use Spryker\Service\FileManager\FileManagerServiceConfig;
 use Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface;
+use Spryker\Service\FileManager\FileManagerServiceConfig;
 
 class FileReader implements FileReaderInterface
 {
-
     /**
-     * @var FileManagerToFileSystemBridgeInterface
+     * @var \Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface
      */
     protected $fileSystem;
 
     /**
-     * @var FileManagerServiceConfig
+     * @var \Spryker\Service\FileManager\FileManagerServiceConfig
      */
     protected $config;
 
     /**
      * FileReader constructor.
-     * @param FileManagerToFileSystemBridgeInterface $fileSystem
-     * @param FileManagerServiceConfig $config
+     *
+     * @param \Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface $fileSystem
+     * @param \Spryker\Service\FileManager\FileManagerServiceConfig $config
      */
     public function __construct(FileManagerToFileSystemBridgeInterface $fileSystem, FileManagerServiceConfig $config)
     {
@@ -35,11 +39,11 @@ class FileReader implements FileReaderInterface
     }
 
     /**
-     * @param $fileName
-     * @return FileManagerReadResponseTransfer
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @param string $fileName
+     *
+     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
-    public function read($fileName)
+    public function read(string $fileName)
     {
         $fileSystemQueryTransfer = new FileSystemQueryTransfer();
         $fileSystemQueryTransfer->setFileSystemName($this->config->getStorageName());
@@ -56,10 +60,11 @@ class FileReader implements FileReaderInterface
     }
 
     /**
-     * @param $fileName
-     * @return FileTransfer
+     * @param string $fileName
+     *
+     * @return \Generated\Shared\Transfer\FileTransfer
      */
-    protected function createFileTransfer($fileName)
+    protected function createFileTransfer(string $fileName)
     {
         $file = new FileTransfer();
         $file->setFileName($fileName);
@@ -68,9 +73,9 @@ class FileReader implements FileReaderInterface
     }
 
     /**
-     * @param FileSystemQueryTransfer $fileSystemQueryTransfer
-     * @return FileInfoTransfer
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileInfoTransfer
      */
     protected function createFileInfoTransfer(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
@@ -79,5 +84,4 @@ class FileReader implements FileReaderInterface
 
         return $fileInfo;
     }
-
 }

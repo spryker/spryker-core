@@ -1,15 +1,20 @@
 <?php
 
-namespace Spryker\Service\FileManager\Model;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
-use Generated\Shared\Transfer\FileManagerReadResponseTransfer;
+namespace Spryker\Service\FileManager\Model;
 
 interface FileReaderInterface
 {
     /**
-     * @param $fileName
-     * @return FileManagerReadResponseTransfer
+     * @param string $fileName
+     *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
-    public function read($fileName);
+    public function read(string $fileName);
 }

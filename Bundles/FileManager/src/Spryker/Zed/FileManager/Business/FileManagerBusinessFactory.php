@@ -57,7 +57,8 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     {
         return new FileRemover(
             $this->createFileFinder(),
-            $this->createFileContent()
+            $this->createFileContent(),
+            $this->getQueryContainer()
         );
     }
 
@@ -70,7 +71,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileReader
+     * @return \Spryker\Zed\FileManager\Business\Model\FileReaderInterface
      */
     public function createFileReader()
     {
@@ -99,7 +100,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileContent
+     * @return \Spryker\Zed\FileManager\Business\Model\FileContentInterface
      */
     public function createFileContent()
     {

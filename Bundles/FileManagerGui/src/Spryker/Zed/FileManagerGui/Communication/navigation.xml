@@ -6,8 +6,8 @@
         <icon>fa-file</icon>
         <pages>
             <group>
-                <label>Files list</label>
-                <title>Files list</title>
+                <label>File list</label>
+                <title>File list</title>
                 <bundle>file-manager-gui</bundle>
                 <controller>index</controller>
                 <action>index</action>

@@ -32,7 +32,7 @@ class EditController extends AbstractController
     {
         $idFile = $request->get(static::URL_PARAM_ID_FILE);
         $form = $this->getFactory()
-            ->createFileForm($idFile)
+            ->getFileForm($idFile)
             ->handleRequest($request);
 
         if ($form->isValid()) {
@@ -51,7 +51,6 @@ class EditController extends AbstractController
             } catch (Exception $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
-
         }
 
         $fileInfoTable = $this->getFactory()->createFileInfoEditTable($idFile);

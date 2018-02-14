@@ -9,7 +9,7 @@ namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
-use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface;
+use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -31,7 +31,7 @@ abstract class FileInfoTable extends AbstractTable
      * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer
      * @param int $idFile
      */
-    public function __construct(FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer, int $idFile)
+    public function __construct(FileManagerGuiToFileManagerQueryContainerInterface $queryContainer, int $idFile)
     {
         $this->queryContainer = $queryContainer;
         $this->idFile = $idFile;

@@ -17,6 +17,9 @@ use Spryker\Zed\FileManagerGui\Communication\Table\FileTable;
 use Spryker\Zed\FileManagerGui\FileManagerGuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
+/**
+ * @method \Spryker\Zed\FileManagerGui\FileManagerGuiConfig getConfig()
+ */
 class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -60,7 +63,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createFileForm($idFile = null)
+    public function getFileForm($idFile = null)
     {
         $dataProvider = $this->createFileFormDataProvider();
 
@@ -76,13 +79,6 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getCurrentLocale()
     {
-//        if ($this->currentLocale === null) {
-//            $this->currentLocale = $this->getLocaleFacade()
-//                ->getCurrentLocale();
-//        }
-//
-//        return $this->currentLocale;
-
         return $this->getLocaleFacade()->getCurrentLocale();
     }
 

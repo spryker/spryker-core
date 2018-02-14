@@ -18,7 +18,7 @@ use Generated\Shared\Transfer\FileSystemRenameTransfer;
 use Generated\Shared\Transfer\FileSystemStreamTransfer;
 use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
 
-class FileManagerToFileSystemBridge implements FileManagerToFileSystemBridgeInterface
+class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemServiceInterface
 {
     /**
      * @var \Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface

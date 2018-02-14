@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\FileLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
-use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeBridgeInterface;
-use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface;
+use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeInterface;
+use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface;
 
 class FileFormDataProvider
 {
@@ -33,8 +33,8 @@ class FileFormDataProvider
      * @param \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeBridgeInterface $localeFacade
      */
     public function __construct(
-        FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer,
-        FileManagerGuiToLocaleFacadeBridgeInterface $localeFacade
+        FileManagerGuiToFileManagerQueryContainerInterface $queryContainer,
+        FileManagerGuiToLocaleFacadeInterface $localeFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->localeFacade = $localeFacade;

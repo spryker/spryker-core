@@ -7,11 +7,10 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
-use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
-use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface;
+use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -27,7 +26,7 @@ class FileTable extends AbstractTable
     /**
      * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer
      */
-    public function __construct(FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer)
+    public function __construct(FileManagerGuiToFileManagerQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
     }
@@ -149,24 +148,24 @@ class FileTable extends AbstractTable
      *
      * @return array
      */
-    protected function buildLinks($item)
+    protected function buildLinks(array $item)
     {
         $buttons = [];
 
         $buttons[] = $this->generateViewButton(
-            Url::generate('/file-manager-gui/view', [
+            Url::generate(FileManagerGuiConstants::FILE_MANAGER_GUI_VIEW_URL, [
                 static::REQUEST_ID_FILE => $item[FileManagerGuiConstants::COL_ID_FILE],
             ]),
             'View'
         );
         $buttons[] = $this->generateEditButton(
-            Url::generate('/file-manager-gui/edit', [
+            Url::generate(FileManagerGuiConstants::FILE_MANAGER_GUI_EDIT_URL, [
                 static::REQUEST_ID_FILE => $item[FileManagerGuiConstants::COL_ID_FILE],
             ]),
             'Edit'
         );
         $buttons[] = $this->generateRemoveButton(
-            Url::generate('/file-manager-gui/delete/file', [
+            Url::generate(FileManagerGuiConstants::FILE_MANAGER_GUI_DELETE_URL, [
                 static::REQUEST_ID_FILE => $item[FileManagerGuiConstants::COL_ID_FILE],
             ]),
             'Delete'
