@@ -21,13 +21,16 @@ $(document).ready(function() {
         });
         if (filterObject) {
             if(filterObject.isActive === true) {
-                return alert('Filter "'+ filterToAdd +'" already defined');
+                return window.sweetAlert({
+                    title: 'Error',
+                    text: 'Filter "'+ filterToAdd +'" already defined',
+                    html: false,
+                    type: 'error'
+                });
             }
             filters.removeFromInactiveList(filterToAdd);
-            filters.addToActiveList(filterToAdd);
-        } else {
-            filters.addToActiveList(filterToAdd);
         }
+        filters.addToActiveList(filterToAdd);
 
         filterTextField.val('');
         toggleDisableOnAddButton();
