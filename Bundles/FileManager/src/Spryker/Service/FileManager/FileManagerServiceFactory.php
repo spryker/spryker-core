@@ -1,21 +1,22 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Service\FileManager;
 
-use Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface;
 use Spryker\Service\FileManager\Model\FileReader;
-use Spryker\Service\FileManager\Model\FileReaderInterface;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
 /**
- * @method FileManagerServiceConfig getConfig()
+ * @method \Spryker\Service\FileManager\FileManagerServiceConfig getConfig()
  */
 class FileManagerServiceFactory extends AbstractServiceFactory
 {
-
     /**
-     * @return FileManagerToFileSystemBridgeInterface
-     * @throws \Spryker\Service\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @return \Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface
      */
     public function getFileSystemService()
     {
@@ -23,13 +24,10 @@ class FileManagerServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return FileReaderInterface
-     * @throws \Spryker\Service\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @return \Spryker\Service\FileManager\Model\FileReaderInterface
      */
     public function createFileReader()
     {
         return new FileReader($this->getFileSystemService(), $this->getConfig());
     }
-
-
 }

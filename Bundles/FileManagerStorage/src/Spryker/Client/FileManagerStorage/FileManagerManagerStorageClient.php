@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\AbstractClient;
 /**
  * @method \Spryker\Client\FileManagerStorage\FileStorageFactory getFactory()
  */
-class FileStorageClient extends AbstractClient implements FileStorageClientInterface
+class FileManagerManagerStorageClient extends AbstractClient implements FileManagerStorageClientInterface
 {
     /**
      * {@inheritdoc}

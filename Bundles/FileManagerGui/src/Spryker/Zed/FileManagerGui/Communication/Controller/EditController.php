@@ -51,7 +51,6 @@ class EditController extends AbstractController
             } catch (Exception $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
-
         }
 
         $fileInfoTable = $this->getFactory()->createFileInfoEditTable($idFile);

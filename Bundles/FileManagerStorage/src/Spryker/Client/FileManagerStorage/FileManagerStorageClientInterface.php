@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\FileManagerStorage;
 
-interface FileStorageClientInterface
+interface FileManagerStorageClientInterface
 {
     /**
      * Specification:

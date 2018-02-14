@@ -44,7 +44,6 @@ class AddController extends AbstractController
                 $redirectUrl = Url::generate('/file-manager-gui')->build();
 
                 return $this->redirectResponse($redirectUrl);
-
             } catch (Exception $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }

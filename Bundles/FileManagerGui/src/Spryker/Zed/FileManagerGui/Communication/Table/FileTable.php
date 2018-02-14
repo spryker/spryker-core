@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
-use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;

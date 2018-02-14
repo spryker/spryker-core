@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\FileManagerStorage\Storage;
 
-interface FileStorageInterface
+interface FileManagerStorageInterface
 {
     /**
      * @param int $fileId

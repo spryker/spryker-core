@@ -7,10 +7,10 @@
 
 namespace Spryker\Client\FileManagerStorage;
 
-use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\FileManagerStorage\Storage\FileStorage;
+use Spryker\Client\Kernel\AbstractFactory;
 
-class FileStorageFactory extends AbstractFactory
+class FileManagerStorageFactory extends AbstractFactory
 {
     /**
      * @return \Spryker\Client\FileManagerStorage\Storage\FileStorageInterface

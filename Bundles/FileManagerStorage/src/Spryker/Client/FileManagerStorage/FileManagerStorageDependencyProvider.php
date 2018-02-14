@@ -7,12 +7,12 @@
 
 namespace Spryker\Client\FileManagerStorage;
 
-use Spryker\Client\Kernel\AbstractDependencyProvider;
-use Spryker\Client\Kernel\Container;
 use Spryker\Client\FileManagerStorage\Dependency\Client\FileManagerStorageToStorageClientBridge;
 use Spryker\Client\FileManagerStorage\Dependency\Service\FileManagerStorageToSynchronizationServiceBridge;
+use Spryker\Client\Kernel\AbstractDependencyProvider;
+use Spryker\Client\Kernel\Container;
 
-class FileStorageDependencyProvider extends AbstractDependencyProvider
+class FileManagerStorageDependencyProvider extends AbstractDependencyProvider
 {
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';

@@ -17,6 +17,9 @@ use Spryker\Zed\FileManagerGui\Communication\Table\FileTable;
 use Spryker\Zed\FileManagerGui\FileManagerGuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
+/**
+ * @method \Spryker\Zed\FileManagerGui\FileManagerGuiConfig getConfig()
+ */
 class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
