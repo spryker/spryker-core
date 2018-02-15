@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Zed\ProductCustomerPermission;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,8 +17,8 @@ namespace SprykerTest\Zed\ProductCustomerPermission;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class ProductCustomerPermissionPersistenceTester extends \Codeception\Actor
+ */
+class ProductCustomerPermissionPersistenceTester extends Actor
 {
     use _generated\ProductCustomerPermissionPersistenceTesterActions;
 

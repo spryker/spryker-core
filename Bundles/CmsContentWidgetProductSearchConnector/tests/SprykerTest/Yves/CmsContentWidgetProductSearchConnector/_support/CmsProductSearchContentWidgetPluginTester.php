@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Yves\CmsContentWidgetProductSearchConnector;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,8 +17,8 @@ namespace SprykerTest\Yves\CmsContentWidgetProductSearchConnector;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class CmsProductSearchContentWidgetPluginTester extends \Codeception\Actor
+ */
+class CmsProductSearchContentWidgetPluginTester extends Actor
 {
     use _generated\CmsProductSearchContentWidgetPluginTesterActions;
 
