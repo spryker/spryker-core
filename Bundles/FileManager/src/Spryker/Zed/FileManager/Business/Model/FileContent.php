@@ -10,13 +10,13 @@ namespace Spryker\Zed\FileManager\Business\Model;
 use Generated\Shared\Transfer\FileSystemContentTransfer;
 use Generated\Shared\Transfer\FileSystemDeleteTransfer;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
-use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface;
+use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface;
 use Spryker\Zed\FileManager\FileManagerConfig;
 
 class FileContent implements FileContentInterface
 {
     /**
-     * @var \Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface
+     * @var \Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface
      */
     protected $fileSystemService;
 
@@ -26,10 +26,10 @@ class FileContent implements FileContentInterface
     private $config;
 
     /**
-     * @param \Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface $fileSystemService
+     * @param \Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface $fileSystemService
      * @param \Spryker\Zed\FileManager\FileManagerConfig $config
      */
-    public function __construct(FileManagerToFileSystemBridgeInterface $fileSystemService, FileManagerConfig $config)
+    public function __construct(FileManagerToFileSystemServiceInterface $fileSystemService, FileManagerConfig $config)
     {
         $this->fileSystemService = $fileSystemService;
         $this->config = $config;
