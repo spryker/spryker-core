@@ -98,9 +98,11 @@ class ProductReviewStorageWriter implements ProductReviewStorageWriterInterface
             $idProduct = $productReviewEntity['idProductAbstract'];
             if (isset($spyProductAbstractReviewStorageEntities[$idProduct])) {
                 $this->storeDataSet($productReviewEntity, $spyProductAbstractReviewStorageEntities[$idProduct]);
-            } else {
-                $this->storeDataSet($productReviewEntity);
+
+                continue;
             }
+
+            $this->storeDataSet($productReviewEntity);
         }
     }
 

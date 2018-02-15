@@ -35,7 +35,7 @@ class ProductSetPageSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilEncodingInterface
      */
-    public function getUtilEncoding()
+    protected function getUtilEncoding()
     {
         return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
@@ -43,7 +43,7 @@ class ProductSetPageSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStore()
+    protected function getStore()
     {
         return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::STORE);
     }
@@ -51,7 +51,7 @@ class ProductSetPageSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToSearchInterface
      */
-    public function getSearchFacade()
+    protected function getSearchFacade()
     {
         return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::FACADE_SEARCH);
     }
@@ -59,7 +59,7 @@ class ProductSetPageSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductSetInterface
      */
-    public function getProductSetFacade()
+    protected function getProductSetFacade()
     {
         return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::FACADE_PRODUCT_SET);
     }

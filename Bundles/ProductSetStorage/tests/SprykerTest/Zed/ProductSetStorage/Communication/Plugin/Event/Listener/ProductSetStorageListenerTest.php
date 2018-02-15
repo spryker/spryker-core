@@ -14,8 +14,6 @@ use Orm\Zed\ProductSet\Persistence\Map\SpyProductSetDataTableMap;
 use Orm\Zed\ProductSetStorage\Persistence\SpyProductSetStorageQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use PHPUnit\Framework\SkippedTestError;
-use Propel\Runtime\Propel;
-use Silex\Application;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
@@ -30,7 +28,6 @@ use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSet
 use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetStorageListener;
 use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetUrlStorageListener;
 use Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainer;
-use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 use SprykerTest\Zed\ProductSetStorage\ProductSetStorageConfigMock;
 
@@ -55,14 +52,10 @@ class ProductSetStorageListenerTest extends Unit
      */
     protected function setUp()
     {
-        $dbType = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbType !== 'pgsql') {
+        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
+        if ($dbEngine !== 'pgsql') {
             throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
-
-        Propel::disableInstancePooling();
-        $propelServiceProvider = new PropelServiceProvider();
-        $propelServiceProvider->boot(new Application());
     }
 
     /**

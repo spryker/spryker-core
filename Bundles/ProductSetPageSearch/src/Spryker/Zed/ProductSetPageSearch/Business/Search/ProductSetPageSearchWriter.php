@@ -78,26 +78,26 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param array $productSetIds
      *
      * @return void
      */
-    public function publish(array $productAbstractIds)
+    public function publish(array $productSetIds)
     {
-        $spyProductSetEntities = $this->findProductSetLocalizedEntities($productAbstractIds);
-        $spyProductSetPageSearchEntities = $this->findProductSetPageSearchEntitiesByProductAbstractIds($productAbstractIds);
+        $spyProductSetEntities = $this->findProductSetLocalizedEntities($productSetIds);
+        $spyProductSetPageSearchEntities = $this->findProductSetPageSearchEntitiesByProductSetIds($productSetIds);
 
         $this->storeData($spyProductSetEntities, $spyProductSetPageSearchEntities);
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param array $productSetIds
      *
      * @return void
      */
-    public function unpublish(array $productAbstractIds)
+    public function unpublish(array $productSetIds)
     {
-        $spyProductSetPageSearchEntities = $this->findProductSetPageSearchEntitiesByProductAbstractIds($productAbstractIds);
+        $spyProductSetPageSearchEntities = $this->findProductSetPageSearchEntitiesByProductSetIds($productSetIds);
         foreach ($spyProductSetPageSearchEntities as $spyProductSetPageSearchEntityLocales) {
             foreach ($spyProductSetPageSearchEntityLocales as $spyProductSetPageSearchEntityLocale) {
                 $spyProductSetPageSearchEntityLocale->delete();
@@ -202,7 +202,7 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
      *
      * @return array
      */
-    protected function findProductSetPageSearchEntitiesByProductAbstractIds(array $productSetIds)
+    protected function findProductSetPageSearchEntitiesByProductSetIds(array $productSetIds)
     {
         $productSetStorageEntities = $this->queryContainer->queryProductSetPageSearchPageByIds($productSetIds)->find();
         $productSetStorageEntitiesByIdAndLocale = [];

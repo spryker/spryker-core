@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductReviewSearchFacade extends AbstractFacade implements ProductReviewSearchFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $productReviewIds
@@ -27,6 +29,8 @@ class ProductReviewSearchFacade extends AbstractFacade implements ProductReviewS
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $productReviewIds

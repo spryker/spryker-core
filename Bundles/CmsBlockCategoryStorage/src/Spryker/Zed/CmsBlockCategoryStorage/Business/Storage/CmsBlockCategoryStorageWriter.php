@@ -86,9 +86,11 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
         foreach ($cmsBlockCategoriesTransfer as $cmsBlockCategoryTransfer) {
             if (isset($spyCmsBlockCategoryStorageEntities[$cmsBlockCategoryTransfer->getIdCategory()])) {
                 $this->storeDataSet($cmsBlockCategoryTransfer, $spyCmsBlockCategoryStorageEntities[$cmsBlockCategoryTransfer->getIdCategory()]);
-            } else {
-                $this->storeDataSet($cmsBlockCategoryTransfer);
+
+                continue;
             }
+
+            $this->storeDataSet($cmsBlockCategoryTransfer);
         }
     }
 
@@ -143,10 +145,7 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
      */
     protected function getCmsBlockCategories(array $categoryIds)
     {
-        $cmsBlockCategories = $this->queryContainer
-            ->queryCmsBlockCategories($categoryIds)
-            ->find();
-
+        $cmsBlockCategories = $this->queryContainer->queryCmsBlockCategories($categoryIds)->find();
         $mappedCmsBlockCategories = [];
         foreach ($cmsBlockCategories as $cmsBlockCategory) {
             $mappedCmsBlockCategories[$cmsBlockCategory->getFkCategory()][$cmsBlockCategory->getPosition()][] = $cmsBlockCategory->getName();

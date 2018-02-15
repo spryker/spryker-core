@@ -34,7 +34,7 @@ class ProductSearchConfigStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStore()
+    protected function getStore()
     {
         return $this->getProvidedDependency(ProductSearchConfigStorageDependencyProvider::STORE);
     }
@@ -42,7 +42,7 @@ class ProductSearchConfigStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductSearch\ProductSearchConfig
      */
-    public function getProductSearchConfig()
+    protected function getProductSearchConfig()
     {
         return $this->getProvidedDependency(ProductSearchConfigStorageDependencyProvider::CONFIG_PRODUCT_SEARCH);
     }
@@ -50,7 +50,7 @@ class ProductSearchConfigStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductSearchConfigStorage\Dependency\Facade\ProductSearchConfigStorageToProductSearchFacadeInterface
      */
-    public function getProductSearchFacade()
+    protected function getProductSearchFacade()
     {
         return $this->getProvidedDependency(ProductSearchConfigStorageDependencyProvider::FACADE_PRODUCT_SEARCH);
     }

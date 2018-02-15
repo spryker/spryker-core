@@ -85,9 +85,11 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
         foreach ($cmsBlockProductsTransfer as $cmsBlockProductTransfer) {
             if (isset($spyCmsBlockProductStorageEntities[$cmsBlockProductTransfer->getIdProductAbstract()])) {
                 $this->storeDataSet($cmsBlockProductTransfer, $spyCmsBlockProductStorageEntities[$cmsBlockProductTransfer->getIdProductAbstract()]);
-            } else {
-                $this->storeDataSet($cmsBlockProductTransfer);
+
+                continue;
             }
+
+            $this->storeDataSet($cmsBlockProductTransfer);
         }
     }
 
@@ -137,10 +139,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
      */
     protected function getCmsBlockProducts(array $productAbstractIds)
     {
-        $cmsBlockProducts = $this->queryContainer
-            ->queryCmsBlockProducts($productAbstractIds)
-            ->find();
-
+        $cmsBlockProducts = $this->queryContainer->queryCmsBlockProducts($productAbstractIds)->find();
         $mappedCmsBlockProducts = [];
         foreach ($cmsBlockProducts as $cmsBlockProduct) {
             $mappedCmsBlockProducts[$cmsBlockProduct->getFkProductAbstract()][] = $cmsBlockProduct->getName();

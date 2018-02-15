@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductCategoryFilterStorageFacade extends AbstractFacade implements ProductCategoryFilterStorageFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $categoryIds
@@ -27,6 +29,8 @@ class ProductCategoryFilterStorageFacade extends AbstractFacade implements Produ
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $categoryIds

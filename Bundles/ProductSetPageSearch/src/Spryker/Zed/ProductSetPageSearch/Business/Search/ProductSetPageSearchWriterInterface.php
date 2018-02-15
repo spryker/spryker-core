@@ -10,16 +10,16 @@ namespace Spryker\Zed\ProductSetPageSearch\Business\Search;
 interface ProductSetPageSearchWriterInterface
 {
     /**
-     * @param array $productAbstractIds
+     * @param array $productSetIds
      *
      * @return void
      */
-    public function publish(array $productAbstractIds);
+    public function publish(array $productSetIds);
 
     /**
-     * @param array $productAbstractIds
+     * @param array $productSetIds
      *
      * @return void
      */
-    public function unpublish(array $productAbstractIds);
+    public function unpublish(array $productSetIds);
 }

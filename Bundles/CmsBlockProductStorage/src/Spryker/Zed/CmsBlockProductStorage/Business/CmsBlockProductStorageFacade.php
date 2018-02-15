@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CmsBlockProductStorageFacade extends AbstractFacade implements CmsBlockProductStorageFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -27,6 +29,8 @@ class CmsBlockProductStorageFacade extends AbstractFacade implements CmsBlockPro
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $productAbstractIds

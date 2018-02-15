@@ -98,9 +98,11 @@ class ProductCategoryFilterStorageWriter implements ProductCategoryFilterStorage
             $filterDataArray = $this->utilEncodingService->decodeJson($filterData, true);
             if (isset($categoryFilterStorageEntitiesByCategoryIds[$idCategory])) {
                 $this->storeDataSet($idCategory, $filterDataArray, $categoryFilterStorageEntitiesByCategoryIds[$idCategory]);
-            } else {
-                $this->storeDataSet($idCategory, $filterDataArray);
+
+                continue;
             }
+
+            $this->storeDataSet($idCategory, $filterDataArray);
         }
     }
 

@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CmsPageSearchFacade extends AbstractFacade implements CmsPageSearchFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $cmsPageIds
@@ -27,6 +29,8 @@ class CmsPageSearchFacade extends AbstractFacade implements CmsPageSearchFacadeI
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $cmsPageIds

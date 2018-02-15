@@ -33,7 +33,7 @@ class ProductReviewSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStore()
+    protected function getStore()
     {
         return $this->getProvidedDependency(ProductReviewSearchDependencyProvider::STORE);
     }
@@ -41,7 +41,7 @@ class ProductReviewSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductReviewSearch\Dependency\Service\ProductReviewSearchToUtilEncodingInterface
      */
-    public function getUtilEncoding()
+    protected function getUtilEncoding()
     {
         return $this->getProvidedDependency(ProductReviewSearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }

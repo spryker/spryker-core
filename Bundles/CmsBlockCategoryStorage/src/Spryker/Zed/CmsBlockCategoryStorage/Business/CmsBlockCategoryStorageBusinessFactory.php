@@ -32,7 +32,7 @@ class CmsBlockCategoryStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToUtilSanitizeServiceInterface
      */
-    public function getUtilSanitizeService()
+    protected function getUtilSanitizeService()
     {
         return $this->getProvidedDependency(CmsBlockCategoryStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
     }

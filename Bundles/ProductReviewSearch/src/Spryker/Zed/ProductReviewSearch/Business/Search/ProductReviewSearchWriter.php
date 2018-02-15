@@ -110,9 +110,11 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
             $idProductReview = $productReviewEntity->getIdProductReview();
             if (isset($spyProductReviewSearchEntities[$idProductReview])) {
                 $this->storeDataSet($productReviewEntity, $spyProductReviewSearchEntities[$idProductReview]);
-            } else {
-                $this->storeDataSet($productReviewEntity, null);
+
+                continue;
             }
+
+            $this->storeDataSet($productReviewEntity, null);
         }
     }
 

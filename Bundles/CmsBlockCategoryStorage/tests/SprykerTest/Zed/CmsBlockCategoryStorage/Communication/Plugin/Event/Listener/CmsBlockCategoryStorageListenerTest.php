@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\Map\SpyCmsBlockCategoryConnectorTableMap;
 use Orm\Zed\CmsBlockCategoryStorage\Persistence\SpyCmsBlockCategoryStorageQuery;
 use PHPUnit\Framework\SkippedTestError;
-use Propel\Runtime\Propel;
-use Silex\Application;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\CmsBlockCategoryConnectorEvents;
@@ -22,7 +20,6 @@ use Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Event\Listener\CmsB
 use Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Event\Listener\CmsBlockCategoryConnectorStorageListener;
 use Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Event\Listener\CmsBlockCategoryPositionStorageListener;
 use Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainer;
-use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use SprykerTest\Zed\CmsBlockCategoryStorage\CmsBlockCategoryStorageConfigMock;
 
 /**
@@ -46,14 +43,10 @@ class CmsBlockCategoryStorageListenerTest extends Unit
      */
     protected function setUp()
     {
-        $dbType = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbType !== 'pgsql') {
+        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
+        if ($dbEngine !== 'pgsql') {
             throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
-
-        Propel::disableInstancePooling();
-        $propelServiceProvider = new PropelServiceProvider();
-        $propelServiceProvider->boot(new Application());
     }
 
     /**

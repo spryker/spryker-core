@@ -35,7 +35,7 @@ class CmsPageSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CmsPageSearch\Dependency\Service\CmsPageSearchToUtilEncodingInterface
      */
-    public function getUtilEncoding()
+    protected function getUtilEncoding()
     {
         return $this->getProvidedDependency(CmsPageSearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
@@ -43,7 +43,7 @@ class CmsPageSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToCmsInterface
      */
-    public function getCmsFacade()
+    protected function getCmsFacade()
     {
         return $this->getProvidedDependency(CmsPageSearchDependencyProvider::FACADE_CMS);
     }
@@ -51,7 +51,7 @@ class CmsPageSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStore()
+    protected function getStore()
     {
         return $this->getProvidedDependency(CmsPageSearchDependencyProvider::STORE);
     }
@@ -59,7 +59,7 @@ class CmsPageSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToSearchInterface
      */
-    public function getSearchFacade()
+    protected function getSearchFacade()
     {
         return $this->getProvidedDependency(CmsPageSearchDependencyProvider::FACADE_SEARCH);
     }

@@ -33,7 +33,7 @@ class ProductCategoryFilterStorageBusinessFactory extends AbstractBusinessFactor
     /**
      * @return \Spryker\Zed\ProductCategoryFilterStorage\Dependency\Service\ProductCategoryFilterStorageToUtilEncodingInterface
      */
-    public function getUtilEncoding()
+    protected function getUtilEncoding()
     {
         return $this->getProvidedDependency(ProductCategoryFilterStorageDependencyProvider::SERVICE_UTIL_ENCODING);
     }
@@ -41,7 +41,7 @@ class ProductCategoryFilterStorageBusinessFactory extends AbstractBusinessFactor
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStore()
+    protected function getStore()
     {
         return $this->getProvidedDependency(ProductCategoryFilterStorageDependencyProvider::STORE);
     }

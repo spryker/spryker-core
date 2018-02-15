@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\CmsBlockProductConnector\Persistence\Map\SpyCmsBlockProductConnectorTableMap;
 use Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorageQuery;
 use PHPUnit\Framework\SkippedTestError;
-use Propel\Runtime\Propel;
-use Silex\Application;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\CmsBlockProductConnectorEvents;
@@ -20,7 +18,6 @@ use Spryker\Zed\CmsBlockProductStorage\Business\CmsBlockProductStorageBusinessFa
 use Spryker\Zed\CmsBlockProductStorage\Business\CmsBlockProductStorageFacade;
 use Spryker\Zed\CmsBlockProductStorage\Communication\Plugin\Event\Listener\CmsBlockProductConnectorPublishStorageListener;
 use Spryker\Zed\CmsBlockProductStorage\Communication\Plugin\Event\Listener\CmsBlockProductConnectorStorageListener;
-use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use SprykerTest\Zed\CmsBlockProductStorage\CmsBlockProductStorageConfigMock;
 
 /**
@@ -44,14 +41,10 @@ class CmsBlockProductStorageListenerTest extends Unit
      */
     protected function setUp()
     {
-        $dbType = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbType !== 'pgsql') {
+        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
+        if ($dbEngine !== 'pgsql') {
             throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
-
-        Propel::disableInstancePooling();
-        $propelServiceProvider = new PropelServiceProvider();
-        $propelServiceProvider->boot(new Application());
     }
 
     /**

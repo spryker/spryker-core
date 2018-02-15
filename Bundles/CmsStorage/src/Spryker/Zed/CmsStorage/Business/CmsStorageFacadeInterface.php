@@ -10,6 +10,11 @@ namespace Spryker\Zed\CmsStorage\Business;
 interface CmsStorageFacadeInterface
 {
     /**
+     * Specification:
+     * - Queries all cms pages with cmsPageIds
+     * - Stores data as json encoded to storage table
+     * - Sends a copy of data to queue based on module config
+     *
      * @api
      *
      * @param array $cmsPageIds
@@ -19,6 +24,10 @@ interface CmsStorageFacadeInterface
     public function publish(array $cmsPageIds);
 
     /**
+     * Specification:
+     * - Finds and deletes cms pages storage entities with cmsPageIds
+     * - Sends delete message to queue based on module config
+     *
      * @api
      *
      * @param array $cmsPageIds

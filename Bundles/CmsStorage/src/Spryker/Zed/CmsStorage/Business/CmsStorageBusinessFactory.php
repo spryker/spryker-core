@@ -34,7 +34,7 @@ class CmsStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToCmsInterface
      */
-    public function getCmsFacade()
+    protected function getCmsFacade()
     {
         return $this->getProvidedDependency(CmsStorageDependencyProvider::FACADE_CMS);
     }
@@ -42,7 +42,7 @@ class CmsStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStore()
+    protected function getStore()
     {
         return $this->getProvidedDependency(CmsStorageDependencyProvider::STORE);
     }
@@ -50,7 +50,7 @@ class CmsStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
      */
-    public function getContentWidgetDataExpanderPlugins()
+    protected function getContentWidgetDataExpanderPlugins()
     {
         return $this->getProvidedDependency(CmsStorageDependencyProvider::PLUGIN_CONTENT_WIDGET_DATA_EXPANDER);
     }

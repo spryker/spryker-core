@@ -10,6 +10,11 @@ namespace Spryker\Zed\ProductSetStorage\Business;
 interface ProductSetStorageFacadeInterface
 {
     /**
+     * Specification:
+     * - Queries all productSet with the given productSetIds
+     * - Stores data as json encoded to storage table
+     * - Sends a copy of data to queue based on module config
+     *
      * @api
      *
      * @param array $productSetIds
@@ -19,6 +24,10 @@ interface ProductSetStorageFacadeInterface
     public function publish(array $productSetIds);
 
     /**
+     * Specification:
+     * - Finds and deletes productSet storage entities with productSetIds
+     * - Sends delete message to queue based on module config
+     *
      * @api
      *
      * @param array $productSetIds

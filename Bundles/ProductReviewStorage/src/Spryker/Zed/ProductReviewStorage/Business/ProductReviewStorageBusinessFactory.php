@@ -32,7 +32,7 @@ class ProductReviewStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStore()
+    protected function getStore()
     {
         return $this->getProvidedDependency(ProductReviewStorageDependencyProvider::STORE);
     }

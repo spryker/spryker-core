@@ -34,7 +34,7 @@ class CmsBlockStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilSanitizeServiceInterface
      */
-    public function getUtilSanitize()
+    protected function getUtilSanitize()
     {
         return $this->getProvidedDependency(CmsBlockStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
@@ -42,7 +42,7 @@ class CmsBlockStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface[]
      */
-    public function getContentWidgetDataExpanderPlugins()
+    protected function getContentWidgetDataExpanderPlugins()
     {
         return $this->getProvidedDependency(CmsBlockStorageDependencyProvider::PLUGIN_CONTENT_WIDGET_DATA_EXPANDER);
     }
@@ -50,7 +50,7 @@ class CmsBlockStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStore()
+    protected function getStore()
     {
         return $this->getProvidedDependency(CmsBlockStorageDependencyProvider::STORE);
     }

@@ -15,26 +15,30 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductSetPageSearchFacade extends AbstractFacade implements ProductSetPageSearchFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param array $productSetIds
      *
      * @return void
      */
-    public function publish(array $productAbstractIds)
+    public function publish(array $productSetIds)
     {
-        $this->getFactory()->createProductSetPageSearchWriter()->publish($productAbstractIds);
+        $this->getFactory()->createProductSetPageSearchWriter()->publish($productSetIds);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param array $productSetIds
      *
      * @return void
      */
-    public function unpublish(array $productAbstractIds)
+    public function unpublish(array $productSetIds)
     {
-        $this->getFactory()->createProductSetPageSearchWriter()->unpublish($productAbstractIds);
+        $this->getFactory()->createProductSetPageSearchWriter()->unpublish($productSetIds);
     }
 }

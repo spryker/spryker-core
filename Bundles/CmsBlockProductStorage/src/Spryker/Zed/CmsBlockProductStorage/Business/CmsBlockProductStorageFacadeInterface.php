@@ -10,6 +10,11 @@ namespace Spryker\Zed\CmsBlockProductStorage\Business;
 interface CmsBlockProductStorageFacadeInterface
 {
     /**
+     * Specification:
+     * - Queries all cms block products with productAbstractIds
+     * - Stores data as json encoded to storage table
+     * - Sends a copy of data to queue based on module config
+     *
      * @api
      *
      * @param array $productAbstractIds
@@ -19,6 +24,10 @@ interface CmsBlockProductStorageFacadeInterface
     public function publish(array $productAbstractIds);
 
     /**
+     * Specification:
+     * - Finds and deletes cms block product storage entities with productAbstractIds
+     * - Sends delete message to queue based on module config
+     *
      * @api
      *
      * @param array $productAbstractIds

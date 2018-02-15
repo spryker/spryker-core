@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductSearchConfigStorageFacade extends AbstractFacade implements ProductSearchConfigStorageFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
@@ -25,6 +27,8 @@ class ProductSearchConfigStorageFacade extends AbstractFacade implements Product
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
