@@ -4,8 +4,8 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/cms-block": "^1.0.0",
-    "spryker/collector": "^5.1.1 || ^6.0.0",
+    "spryker/cms-block": "^2.0.0",
+    "spryker/collector": "^6.0.0",
     "spryker/glossary": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
@@ -21,6 +21,11 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

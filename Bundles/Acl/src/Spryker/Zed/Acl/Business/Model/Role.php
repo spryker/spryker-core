@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\RoleTransfer;
 use Orm\Zed\Acl\Persistence\SpyAclRole;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
+use Spryker\Zed\Acl\Business\Exception\RoleNameEmptyException;
 use Spryker\Zed\Acl\Business\Exception\RoleNameExistsException;
 use Spryker\Zed\Acl\Business\Exception\RoleNotFoundException;
 use Spryker\Zed\Acl\Business\Exception\RootNodeModificationException;
@@ -59,6 +60,7 @@ class Role implements RoleInterface
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\RoleNameExistsException
      * @throws \Spryker\Zed\Acl\Business\Exception\RootNodeModificationException
+     * @throws \Spryker\Zed\Acl\Business\Exception\RoleNameEmptyException
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
      */
@@ -72,7 +74,13 @@ class Role implements RoleInterface
             }
         }
 
-        if ($this->hasRoleName($roleTransfer->getName())) {
+        if (!$roleTransfer->getName()) {
+            throw new RoleNameEmptyException(
+                sprintf('Role name should not be empty!')
+            );
+        }
+
+        if ($aclRoleEntity->getName() !== $roleTransfer->getName() && $this->hasRoleName($roleTransfer->getName())) {
             throw new RoleNameExistsException(
                 sprintf('Role with name "%s" already exists!', $roleTransfer->getName())
             );
