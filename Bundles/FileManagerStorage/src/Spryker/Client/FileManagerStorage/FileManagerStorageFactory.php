@@ -7,17 +7,17 @@
 
 namespace Spryker\Client\FileManagerStorage;
 
-use Spryker\Client\FileManagerStorage\Storage\FileStorage;
+use Spryker\Client\FileManagerStorage\Storage\FileManagerStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class FileManagerStorageFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\FileManagerStorage\Storage\FileStorageInterface
+     * @return \Spryker\Client\FileManagerStorage\Storage\FileManagerStorageInterface
      */
     public function createFileStorage()
     {
-        return new FileStorage(
+        return new FileManagerStorage(
             $this->getStorageClient(),
             $this->getSynchronizationService()
         );
@@ -28,7 +28,7 @@ class FileManagerStorageFactory extends AbstractFactory
      */
     protected function getStorageClient()
     {
-        return $this->getProvidedDependency(FileStorageDependencyProvider::CLIENT_STORAGE);
+        return $this->getProvidedDependency(FileManagerStorageDependencyProvider::CLIENT_STORAGE);
     }
 
     /**
@@ -36,6 +36,6 @@ class FileManagerStorageFactory extends AbstractFactory
      */
     protected function getSynchronizationService()
     {
-        return $this->getProvidedDependency(FileStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+        return $this->getProvidedDependency(FileManagerStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
 }
