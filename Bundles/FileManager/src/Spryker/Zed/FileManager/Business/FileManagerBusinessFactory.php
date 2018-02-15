@@ -111,7 +111,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface
+     * @return \Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface
      */
     public function getFileSystemService()
     {

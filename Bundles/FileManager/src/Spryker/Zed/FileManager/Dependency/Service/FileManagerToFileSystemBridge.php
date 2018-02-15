@@ -18,15 +18,15 @@ use Generated\Shared\Transfer\FileSystemRenameTransfer;
 use Generated\Shared\Transfer\FileSystemStreamTransfer;
 use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
 
-class FileManagerToFileSystemBridge implements FileManagerToFileSystemBridgeInterface
+class FileManagerToFileSystemBridge implements FileManagerToFileSystemServiceInterface
 {
     /**
-     * @var \Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface
+     * @var \Spryker\Service\FileSystem\FileSystemServiceInterface
      */
     protected $fileSystemService;
 
     /**
-     * @param \Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface $fileSystemService
+     * @param \Spryker\Service\FileSystem\FileSystemServiceInterface $fileSystemService
      */
     public function __construct($fileSystemService)
     {

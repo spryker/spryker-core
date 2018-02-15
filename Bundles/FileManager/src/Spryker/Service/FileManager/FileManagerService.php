@@ -36,14 +36,22 @@ class FileManagerService extends AbstractService implements FileManagerServiceIn
     }
 
     /**
-     * @param string $fileName
-     *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     * {@inheritdoc}
      */
     public function read(string $fileName)
     {
         return $this->getFactory()
             ->createFileReader()
             ->read($fileName);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function readStream($fileName)
+    {
+        return $this->getFactory()
+            ->createFileReader()
+            ->readStream($fileName);
     }
 }

@@ -18,11 +18,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $fileManagerSaveRequestTransfer
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function save(FileManagerSaveRequestTransfer $fileManagerSaveRequestTransfer)
     {
@@ -32,12 +28,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     /**
      * @api
      *
-     * @param int $idFile
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     * {@inheritdoc}
      */
     public function readLatestFileVersion($idFile)
     {
@@ -47,11 +38,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     /**
      * @api
      *
-     * @param int $idFile
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function delete($idFile)
     {
@@ -61,11 +48,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     /**
      * @api
      *
-     * @param int $idFileInfo
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function deleteFileInfo($idFileInfo)
     {
@@ -75,10 +58,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     /**
      * @api
      *
-     * @param int $idFile
-     * @param int $idFileInfo
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function rollback($idFile, $idFileInfo)
     {
@@ -88,11 +68,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     /**
      * @api
      *
-     * @param int $idFileInfo
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     * {@inheritdoc}
      */
     public function read($idFileInfo)
     {
