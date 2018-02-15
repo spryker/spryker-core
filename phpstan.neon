@@ -1,7 +1,15 @@
+# !!! This is a deprecated file and running core phpstan check !!!
+# Please use phpstan.neon file per module now and console code:phpstan -m ModuleName instead.
+# Never excludes_analyse files from now on, instead use ignoreErrors where necessary then.
+# Also et up a phpstan.json config per module and set the highest defaultLevel possible.
 parameters:
     ignoreErrors:
         - '#Class PHP_CodeSniffer\\Config not found#'
-        - '#Parameter \$resolver of method [a-zA-Z0-9\\]+\:\:setDefaultOptions\(\) has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface\.#'
+        - '#Parameter \$resolver of method [a-zA-Z0-9\\]+::setDefaultOptions\(\) has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface\.#'
+        - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrder::getFkCustomer\(\)\.#'
+        - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrderQuery::filterByFkCustomer\(\)\.#'
+        - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrder::getCustomer\(\)\.#'
+        - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrder::setCustomer\(\)\.#'
 
     reportUnmatchedIgnoredErrors: false
 

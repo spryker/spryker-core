@@ -125,7 +125,7 @@ class Builder implements BuilderInterface
             $processName = $this->getAttributeString($xmlProcess, 'name');
             $processPrefix = $this->getAttributeString($xmlProcess, 'prefix');
 
-            if (isset($processFile)) {
+            if ($processFile) {
                 $xmlSubProcess = $this->loadXmlFromFileName(str_replace(' ', '_', $processFile));
 
                 if ($processName) {
