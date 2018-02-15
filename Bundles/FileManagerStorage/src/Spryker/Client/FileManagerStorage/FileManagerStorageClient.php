@@ -10,9 +10,9 @@ namespace Spryker\Client\FileManagerStorage;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method \Spryker\Client\FileManagerStorage\FileStorageFactory getFactory()
+ * @method \Spryker\Client\FileManagerStorage\FileManagerStorageFactory getFactory()
  */
-class FileManagerManagerStorageClient extends AbstractClient implements FileManagerStorageClientInterface
+class FileManagerStorageClient extends AbstractClient implements FileManagerStorageClientInterface
 {
     /**
      * {@inheritdoc}

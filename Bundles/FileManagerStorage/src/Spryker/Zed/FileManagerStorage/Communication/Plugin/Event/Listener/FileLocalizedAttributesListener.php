@@ -42,9 +42,9 @@ class FileLocalizedAttributesListener extends AbstractFileManagerListener
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventTransfers, SpyFileLocalizedAttributesTableMap::COL_FK_FILE);
 
-        if ($eventName === FileManagerEvents::ENTITY_FILE_LOCALIZED_ATTRIBUTES_CREATE ||
-            $eventName === FileManagerEvents::ENTITY_FILE_LOCALIZED_ATTRIBUTES_UPDATE ||
-            $eventName === FileManagerEvents::ENTITY_FILE_LOCALIZED_ATTRIBUTES_DELETE
+        if ($eventName === FileManagerEvents::ENTITY_FILE_LOCALIZED_ATTRIBUTES_CREATE
+            || $eventName === FileManagerEvents::ENTITY_FILE_LOCALIZED_ATTRIBUTES_UPDATE
+            || $eventName === FileManagerEvents::ENTITY_FILE_LOCALIZED_ATTRIBUTES_DELETE
         ) {
             $this->publish($fileIds);
         }
