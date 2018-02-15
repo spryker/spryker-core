@@ -9,7 +9,6 @@ namespace Spryker\Zed\Event\Dependency;
 
 use ArrayIterator;
 use SplPriorityQueue;
-use Spryker\Shared\Event\EventConstants;
 use Spryker\Zed\Event\Business\Dispatcher\EventListenerContext;
 use Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException;
 use Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface;
@@ -29,7 +28,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @return $this
      */
-    public function addListener($eventName, EventBaseHandlerInterface $eventHandler, $priority = 0, $queuePoolName = EventConstants::QUEUE_POOL_NAME_DEFAULT)
+    public function addListener($eventName, EventBaseHandlerInterface $eventHandler, $priority = 0, $queuePoolName = null)
     {
         $this->add($eventName, $eventHandler, false, $priority, $queuePoolName);
 
@@ -44,7 +43,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @return $this
      */
-    public function addListenerQueued($eventName, EventBaseHandlerInterface $eventHandler, $priority = 0, $queuePoolName = EventConstants::QUEUE_POOL_NAME_DEFAULT)
+    public function addListenerQueued($eventName, EventBaseHandlerInterface $eventHandler, $priority = 0, $queuePoolName = null)
     {
         $this->add($eventName, $eventHandler, true, $priority, $queuePoolName);
 
@@ -70,7 +69,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @return void
      */
-    protected function add($eventName, EventBaseHandlerInterface $eventHandler, $isHandledInQueue = false, $priority = 0, $queuePoolName = EventConstants::QUEUE_POOL_NAME_DEFAULT)
+    protected function add($eventName, EventBaseHandlerInterface $eventHandler, $isHandledInQueue = false, $priority = 0, $queuePoolName = null)
     {
         if (!$this->has($eventName)) {
             $this->eventListeners[$eventName] = new SplPriorityQueue();

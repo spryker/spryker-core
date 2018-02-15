@@ -19,6 +19,8 @@ use Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\UrlStorageListene
  */
 class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
+    const QUEUE_POOL_NAME_SHARED = 'sharedPool';
+
     /**
      * @api
      *
@@ -29,14 +31,14 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new UrlStorageListener())
-            ->addListenerQueued(UrlEvents::URL_PUBLISH, new UrlStorageListener())
-            ->addListenerQueued(UrlEvents::URL_UNPUBLISH, new UrlStorageListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new UrlStorageListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new UrlStorageListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_CREATE, new RedirectStorageListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_UPDATE, new RedirectStorageListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_DELETE, new RedirectStorageListener());
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new UrlStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(UrlEvents::URL_PUBLISH, new UrlStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(UrlEvents::URL_UNPUBLISH, new UrlStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new UrlStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new UrlStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_CREATE, new RedirectStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_UPDATE, new RedirectStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_DELETE, new RedirectStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED);
 
         return $eventCollection;
     }

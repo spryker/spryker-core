@@ -25,6 +25,8 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
+    const QUEUE_POOL_NAME_SHARED = 'sharedPool';
+
     /**
      * @api
      *
@@ -49,9 +51,9 @@ class ProductCategoryStorageEventSubscriber extends AbstractPlugin implements Ev
             ->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_CREATE, new CategoryNodeStorageListener())
             ->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_UPDATE, new CategoryNodeStorageListener())
             ->addListenerQueued(CategoryEvents::ENTITY_SPY_CATEGORY_NODE_DELETE, new CategoryNodeStorageListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new CategoryUrlStorageListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new CategoryUrlStorageListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new CategoryUrlStorageListener());
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new CategoryUrlStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new CategoryUrlStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new CategoryUrlStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED);
 
         return $eventCollection;
     }

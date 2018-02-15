@@ -27,7 +27,7 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-    const QUEUE_POOL_NAME_EXCLUSIVE = 'exclusivePool';
+    const QUEUE_POOL_NAME_SHARED = 'sharedPool';
 
     /**
      * @api
@@ -39,31 +39,31 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, new ProductAbstractStorageListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH, new ProductAbstractStorageListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_CREATE, new ProductAbstractStorageListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE, new ProductAbstractStorageListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE, new ProductConcreteProductAbstractStorageListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE, new ProductAbstractStorageListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_PUBLISH, new ProductConcreteStorageListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_UNPUBLISH, new ProductConcreteStorageListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_CREATE, new ProductConcreteStorageListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new ProductConcreteStorageListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_DELETE, new ProductConcreteStorageListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_CREATE, new ProductConcreteProductAbstractRelationStorageListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new ProductConcreteProductAbstractRelationStorageListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_DELETE, new ProductConcreteProductAbstractRelationStorageListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
+            ->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, new ProductAbstractStorageListener())
+            ->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH, new ProductAbstractStorageListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_CREATE, new ProductAbstractStorageListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE, new ProductAbstractStorageListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE, new ProductConcreteProductAbstractStorageListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE, new ProductAbstractStorageListener())
+            ->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_PUBLISH, new ProductConcreteStorageListener())
+            ->addListenerQueued(ProductEvents::PRODUCT_CONCRETE_UNPUBLISH, new ProductConcreteStorageListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_CREATE, new ProductConcreteStorageListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new ProductConcreteStorageListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_DELETE, new ProductConcreteStorageListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_CREATE, new ProductConcreteProductAbstractRelationStorageListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new ProductConcreteProductAbstractRelationStorageListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_DELETE, new ProductConcreteProductAbstractRelationStorageListener())
             ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_UPDATE, new ProductAbstractLocalizedAttributesStorageListener())
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_UPDATE, new ProductConcreteProductAbstractLocalizedAttributesStorageListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_UPDATE, new ProductConcreteProductAbstractLocalizedAttributesStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
             ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_DELETE, new ProductAbstractLocalizedAttributesStorageListener())
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_UPDATE, new ProductConcreteLocalizedAttributesStorageListener())
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_DELETE, new ProductConcreteLocalizedAttributesStorageListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new ProductAbstractUrlStorageListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new ProductAbstractUrlStorageListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductAbstractUrlStorageListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new ProductConcreteProductAbstractUrlStorageListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new ProductConcreteProductAbstractUrlStorageListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductConcreteProductAbstractUrlStorageListener());
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_UPDATE, new ProductConcreteLocalizedAttributesStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_DELETE, new ProductConcreteLocalizedAttributesStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new ProductAbstractUrlStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new ProductAbstractUrlStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductAbstractUrlStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new ProductConcreteProductAbstractUrlStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new ProductConcreteProductAbstractUrlStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductConcreteProductAbstractUrlStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED);
 
         return $eventCollection;
     }

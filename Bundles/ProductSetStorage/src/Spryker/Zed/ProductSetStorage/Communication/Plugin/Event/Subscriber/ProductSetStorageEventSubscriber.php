@@ -26,6 +26,8 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
+    const QUEUE_POOL_NAME_SHARED = 'sharedPool';
+
     /**
      * @api
      *
@@ -47,8 +49,8 @@ class ProductSetStorageEventSubscriber extends AbstractPlugin implements EventSu
             ->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_ABSTRACT_SET_CREATE, new ProductAbstractProductSetStorageListener())
             ->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_ABSTRACT_SET_UPDATE, new ProductAbstractProductSetStorageListener())
             ->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_ABSTRACT_SET_DELETE, new ProductAbstractProductSetStorageListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new ProductSetUrlStorageListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductSetUrlStorageListener())
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new ProductSetUrlStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductSetUrlStorageListener(), 0, static::QUEUE_POOL_NAME_SHARED)
             ->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_UPDATE, new ProductSetProductImageStorageListener())
             ->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_DELETE, new ProductSetProductImageStorageListener())
             ->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE, new ProductSetProductImageSetStorageListener())

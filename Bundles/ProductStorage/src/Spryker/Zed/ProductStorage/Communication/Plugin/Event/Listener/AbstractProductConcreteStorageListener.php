@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductStorage\Communication\ProductStorageCommunicationFactory getFactory()
  */
+// TODO: update this
 class AbstractProductConcreteStorageListener extends AbstractPlugin
 {
     const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';

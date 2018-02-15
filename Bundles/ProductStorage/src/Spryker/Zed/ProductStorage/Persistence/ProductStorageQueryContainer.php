@@ -30,17 +30,23 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
      */
     public function queryProductAbstractByIds(array $productAbstractIds)
     {
-        $query = $this
-            ->getFactory()
-            ->getProductQueryContainer()
+        $query = $this->getFactory()->getProductQueryContainer()
             ->queryAllProductAbstractLocalizedAttributes()
             ->joinWithLocale()
             ->joinWithSpyProductAbstract()
-            ->joinWith('SpyProductAbstract.SpyProduct')
+            ->useSpyProductAbstractQuery()
+                ->joinWithSpyProduct()
+                ->joinWithSpyProductAbstractStore()
+                ->useSpyProductAbstractStoreQuery()
+                    ->joinWithSpyStore()
+                ->endUse()
+            ->endUse()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+
+        $query
             ->join('SpyProductAbstract.SpyUrl')
             ->addJoinCondition('SpyUrl', 'spy_url.fk_locale = ' . SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE)
-            ->filterByFkProductAbstract_In($productAbstractIds)
-            ->setFormatter(ModelCriteria::FORMAT_ARRAY)
             ->withColumn(SpyUrlTableMap::COL_URL, 'url');
 
         return $query;

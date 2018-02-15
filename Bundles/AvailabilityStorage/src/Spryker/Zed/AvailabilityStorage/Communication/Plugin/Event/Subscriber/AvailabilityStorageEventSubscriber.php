@@ -22,8 +22,6 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
  */
 class AvailabilityStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-    const QUEUE_POOL_NAME_EXCLUSIVE = 'exclusivePool';
-
     /**
      * @api
      *
@@ -101,7 +99,7 @@ class AvailabilityStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new AvailabilityProductStorageListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE);
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new AvailabilityProductStorageListener());
     }
 
     /**

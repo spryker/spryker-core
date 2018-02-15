@@ -38,7 +38,7 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-    const QUEUE_POOL_NAME_EXCLUSIVE = 'exclusivePool';
+    const QUEUE_POOL_NAME_SHARED = 'sharedPool';
 
     /**
      * @api
@@ -50,23 +50,23 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, new ProductPageProductAbstractListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH, new ProductPageProductAbstractListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_CREATE, new ProductPageProductAbstractListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE, new ProductPageProductAbstractListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE, new ProductPageProductAbstractListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
+            ->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, new ProductPageProductAbstractListener())
+            ->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH, new ProductPageProductAbstractListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_CREATE, new ProductPageProductAbstractListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE, new ProductPageProductAbstractListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE, new ProductPageProductAbstractListener())
             ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_CREATE, new ProductPageLocalizedAttributesSearchListener())
             ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_UPDATE, new ProductPageLocalizedAttributesSearchListener())
             ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_DELETE, new ProductPageLocalizedAttributesSearchListener())
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_CREATE, new ProductPageProductConcreteSearchListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new ProductPageProductConcreteSearchListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
-            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_DELETE, new ProductPageProductConcreteSearchListener(), 0, static::QUEUE_POOL_NAME_EXCLUSIVE)
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_CREATE, new ProductPageProductConcreteSearchListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new ProductPageProductConcreteSearchListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_DELETE, new ProductPageProductConcreteSearchListener())
             ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_CREATE, new ProductPageProductConcreteLocalizedAttributesSearchListener())
             ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_UPDATE, new ProductPageProductConcreteLocalizedAttributesSearchListener())
             ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_DELETE, new ProductPageProductConcreteLocalizedAttributesSearchListener())
             ->addListenerQueued(ProductSearchEvents::SYNCHRONIZATION_FILTER_PUBLISH, new ProductPageProductAbstractListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new ProductPageUrlSearchListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductPageUrlSearchListener());
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new ProductPageUrlSearchListener(), 0, static::QUEUE_POOL_NAME_SHARED)
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductPageUrlSearchListener(), 0, static::QUEUE_POOL_NAME_SHARED);
 
         $this->addPriceProductEvents($eventCollection);
         $this->addProductImageEvents($eventCollection);

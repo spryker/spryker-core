@@ -14,6 +14,7 @@ use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterfa
 use Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface;
 use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface;
 
+// TODO: update this
 class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterface
 {
     /**
