@@ -153,7 +153,7 @@ class AbstractUrlStorageListener extends AbstractPlugin
             $urlResource = $this->findResourceArguments($url);
             $urlStorageTransfer = (new UrlStorageTransfer())->fromArray($url, true);
             $urlStorageTransfer->setLocaleUrls(
-                $this->getLocaleUrlsForUrl($localeUrls[$urlResource[static::RESOURCE_TYPE]], $url)
+                $this->getLocaleUrlsForUrl($localeUrls[$urlResource[static::RESOURCE_TYPE]], $urlResource)
             );
 
             $urlStorageTransfers[] = $urlStorageTransfer;
@@ -164,17 +164,16 @@ class AbstractUrlStorageListener extends AbstractPlugin
 
     /**
      * @param array $localeUrls
-     * @param array $url
+     * @param array $urlResourceArguments
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\UrlStorageTransfer[]
      */
-    protected function getLocaleUrlsForUrl(array $localeUrls, array $url)
+    protected function getLocaleUrlsForUrl(array $localeUrls, array $urlResourceArguments)
     {
-        $mainUrlResourceArguments = $this->findResourceArguments($url);
         $siblingUrls = new ArrayObject();
         foreach ($localeUrls as $localeUrl) {
             $resourceArguments = $this->findResourceArguments($localeUrl);
-            if ($mainUrlResourceArguments[static::RESOURCE_VALUE] === $resourceArguments[static::RESOURCE_VALUE]) {
+            if ($urlResourceArguments[static::RESOURCE_VALUE] === $resourceArguments[static::RESOURCE_VALUE]) {
                 $siblingUrls[] = $localeUrl;
             }
         }

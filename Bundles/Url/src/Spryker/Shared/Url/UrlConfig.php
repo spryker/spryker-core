@@ -5,15 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Url;
+namespace Spryker\Shared\Url;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class UrlConfig extends AbstractBundleConfig
 {
     /**
-     * @see \Spryker\Shared\Url\UrlConfig::RESOURCE_TYPE_URL
+     * @see \Spryker\Zed\Url\UrlConfig::RESOURCE_TYPE_URL
      */
     const RESOURCE_TYPE_URL = 'url';
-    const RESOURCE_TYPE_REDIRECT = 'redirect';
 }

@@ -5,26 +5,34 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Collector;
+namespace Spryker\Client\Url;
 
-use Spryker\Client\Collector\Matcher\UrlMatcherInterface;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @todo Rename all YvesExport Bundles to PageExport or just Export.
- *
- * @method \Spryker\Client\Collector\CollectorFactory getFactory()
- *
- * @deprecated use \Spryker\Client\Url\UrlClient
+ * @method \Spryker\Client\Url\UrlFactory getFactory()
  */
-class CollectorClient extends AbstractClient implements UrlMatcherInterface, CollectorClientInterface
+class UrlClient extends AbstractClient implements UrlClientInterface
 {
     /**
      * {@inheritdoc}
      *
      * @api
      *
-     * @deprecated use \Spryker\Client\Url\UrlClient
+     * @param string $url
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\UrlCollectorStorageTransfer|bool
+     */
+    public function findUrl($url, $localeName)
+    {
+        return $this->getFactory()->createUrlMatcher()->findUrl($url, $localeName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
      *
      * @param string $url
      * @param string $localeName
