@@ -1,16 +1,13 @@
 {
-  "name": "spryker/data-import",
-  "description": "DataImport module",
+  "name": "spryker/category-data-import",
+  "description": "CategoryDataImport module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/error-handler": "^2.1.0",
-    "spryker/event": "^2.0.0",
+    "spryker/category": "^3.0.0",
+    "spryker/data-import": "^1.3.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/locale": "^2.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/touch": "^3.0.0 || ^4.0.0"
+    "spryker/url": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -18,8 +15,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\DataImport\\Helper\\": "tests/SprykerTest/Zed/DataImport/_support/Helper/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {

@@ -10,7 +10,7 @@ namespace Spryker\Zed\DataImport\Business\Model;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 
-class DataImporterCollection implements DataImporterCollectionInterface, DataImporterInterface
+class DataImporterCollection implements DataImporterCollectionInterface, DataImporterPluginCollectionInterface, DataImporterInterface
 {
     const IMPORT_TYPE = 'full';
 
@@ -27,6 +27,20 @@ class DataImporterCollection implements DataImporterCollectionInterface, DataImp
     public function addDataImporter(DataImporterInterface $dataImporter)
     {
         $this->dataImporter[$dataImporter->getImportType()] = $dataImporter;
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface[] $dataImporterPluginCollection
+     *
+     * @return $this
+     */
+    public function addDataImporterPlugins(array $dataImporterPluginCollection)
+    {
+        foreach ($dataImporterPluginCollection as $dataImporterPlugin) {
+            $this->dataImporter[$dataImporterPlugin->getImportType()] = $dataImporterPlugin;
+        }
 
         return $this;
     }

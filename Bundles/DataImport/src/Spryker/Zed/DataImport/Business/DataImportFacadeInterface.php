@@ -27,4 +27,14 @@ interface DataImportFacadeInterface
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
     public function import(DataImporterConfigurationTransfer $dataImporterConfiguration = null);
+
+    /**
+     * Specification:
+     * - Dumps all applied DataImporterPlugins and DataImportInterfaces.
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function dumpImporter(): array;
 }
