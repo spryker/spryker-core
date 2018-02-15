@@ -16,9 +16,9 @@ namespace SprykerTest\Yves\CmsContentWidgetProductSearchConnector;
  *
  * @SuppressWarnings(PHPMD)
 */
-class CmsProductSearchContentWidgetPluginTest extends \Codeception\Actor
+class CmsProductSearchContentWidgetPluginTester extends \Codeception\Actor
 {
-    use _generated\CmsProductSearchContentWidgetPluginTestActions;
+    use _generated\CmsProductSearchContentWidgetPluginTesterActions;
 
    /**
     * Define custom actions here
