@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\RepositoryResolverAwareTrait;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -25,6 +26,8 @@ class Console extends SymfonyCommand
 {
     const CODE_SUCCESS = 0;
     const CODE_ERROR = 1;
+
+    use RepositoryResolverAwareTrait;
 
     /**
      * @var \Symfony\Component\Console\Input\InputInterface
