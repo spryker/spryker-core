@@ -50,6 +50,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerAnonymizerPlugins($container);
         $container = $this->addUtilValidateService($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addCustomerTransferExpanderPlugins($container);
 
         return $container;
     }
@@ -64,7 +65,6 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCountryFacade($container);
         $container = $this->addDateFormatterService($container);
         $container = $this->addStore($container);
-        $container = $this->addCustomerTransferExpanderPlugins($container);
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addLocaleFacade($container);
 
