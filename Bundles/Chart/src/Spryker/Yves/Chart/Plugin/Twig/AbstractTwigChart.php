@@ -39,11 +39,11 @@ abstract class AbstractTwigChart extends AbstractPlugin implements TwigFunctionP
     /**
      * @param \Twig_Environment $twig
      * @param string $chartPluginName
-     * @param string $dataIdentifier
+     * @param string|null $dataIdentifier
      *
      * @return string
      */
-    public function renderChart(Twig_Environment $twig, $chartPluginName, $dataIdentifier)
+    public function renderChart(Twig_Environment $twig, $chartPluginName, $dataIdentifier = null)
     {
         $chartPlugin = $this->getChartPluginByName($chartPluginName);
         $rendered = $twig->render($this->getTemplateName(), [

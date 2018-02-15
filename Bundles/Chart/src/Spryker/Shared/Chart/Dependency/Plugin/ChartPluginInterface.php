@@ -25,11 +25,11 @@ interface ChartPluginInterface
      *
      * @api
      *
-     * @param string $dataIdentifier
+     * @param string|null $dataIdentifier
      *
      * @return \Generated\Shared\Transfer\ChartDataTransfer
      */
-    public function getChartData($dataIdentifier);
+    public function getChartData($dataIdentifier = null);
 
     /**
      * Specification:
