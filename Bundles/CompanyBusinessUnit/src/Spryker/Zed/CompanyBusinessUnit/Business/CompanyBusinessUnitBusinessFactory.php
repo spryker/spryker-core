@@ -19,6 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CompanyBusinessUnit\CompanyBusinessUnitConfig getConfig()
  */
 class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
 {

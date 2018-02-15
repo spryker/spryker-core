@@ -5,21 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Company\Dependency\Plugin;
+namespace Spryker\Zed\Company\Business\Model;
 
+use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 
-interface CompanyPostCreatePluginInterface
+interface CompanyReaderInterface
 {
     /**
-     * Specification:
-     * - Plugin is triggered after company is created.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyTransfer
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
-    public function postCreate(CompanyTransfer $companyTransfer): CompanyTransfer;
+    public function getCompanyById(CompanyTransfer $companyTransfer): CompanyResponseTransfer;
 }

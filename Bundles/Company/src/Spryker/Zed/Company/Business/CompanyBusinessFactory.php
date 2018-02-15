@@ -9,6 +9,8 @@ namespace Spryker\Zed\Company\Business;
 
 use Spryker\Zed\Company\Business\Model\CompanyPluginExecutor;
 use Spryker\Zed\Company\Business\Model\CompanyPluginExecutorInterface;
+use Spryker\Zed\Company\Business\Model\CompanyReader;
+use Spryker\Zed\Company\Business\Model\CompanyReaderInterface;
 use Spryker\Zed\Company\Business\Model\CompanyStoreRelationReader;
 use Spryker\Zed\Company\Business\Model\CompanyStoreRelationReaderInterface;
 use Spryker\Zed\Company\Business\Model\CompanyStoreRelationWriter;
@@ -30,6 +32,14 @@ use Spryker\Zed\Kernel\Persistence\PersistenceFactoryInterface;
  */
 class CompanyBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\Company\Business\Model\CompanyReaderInterface
+     */
+    public function createCompanyReader(): CompanyReaderInterface
+    {
+        return new CompanyReader($this->createCompanyRepository());
+    }
+
     /**
      * @return \Spryker\Zed\Company\Business\Model\CompanyWriterInterface
      */
@@ -62,7 +72,7 @@ class CompanyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @todo Use Spryker Infrastructure.
+     * @TODO Remove this. It should be locatable through Spryker infrastructure (CompanyEntityManager?).
      *
      * @return \Spryker\Zed\Company\Persistence\CompanyWriterRepositoryInterface
      */
@@ -91,6 +101,8 @@ class CompanyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @TODO Remove this.
+     *
      * @return \Spryker\Zed\Kernel\Persistence\PersistenceFactoryInterface
      */
     protected function createCompanyPersistenceFactory(): PersistenceFactoryInterface
@@ -99,6 +111,8 @@ class CompanyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @TODO Remove this. It should be locatable through Spryker infrastructure.
+     *
      * @return \Spryker\Zed\Company\Persistence\CompanyRepositoryInterface
      */
     protected function createCompanyRepository(): CompanyRepositoryInterface

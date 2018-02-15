@@ -7,8 +7,20 @@
 
 namespace Spryker\Client\Permission;
 
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
+
 interface PermissionClientInterface
 {
+    /**
+     * Specification:
+     * - Finds available permission list
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findAll(): PermissionCollectionTransfer;
+
     /**
      * Implements a general check for a chosen permission with the provided context
      *

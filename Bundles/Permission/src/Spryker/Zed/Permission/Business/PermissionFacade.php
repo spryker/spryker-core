@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Permission\Business;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 
 /**
  * @method \Spryker\Zed\Permission\Business\PermissionBusinessFactory getFactory()
@@ -23,7 +24,19 @@ class PermissionFacade implements PermissionFacadeInterface
      */
     public function findAll(): PermissionCollectionTransfer
     {
-        return new PermissionCollectionTransfer();
+        $collection = new PermissionCollectionTransfer();
+        $permission = new PermissionTransfer();
+        $permission->setIdPermission(1)
+            ->setConfiguration([])
+            ->setKey('permission.allow.checkout.placeOrder.grandTotalX');
+        $collection->addPermission($permission);
+
+            $permission = new PermissionTransfer();
+        $permission->setIdPermission(2)
+            ->setConfiguration([])
+            ->setKey('permission.allow.user.to.create.another.user');
+        $collection->addPermission($permission);
+        return $collection;
     }
 
     /**

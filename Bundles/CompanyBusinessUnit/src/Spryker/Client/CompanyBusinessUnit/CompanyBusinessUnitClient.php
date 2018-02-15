@@ -29,7 +29,9 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
     public function createCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer {
-        return $this->getFactory()->createZedCompanyBusinessUnitStub()->createCompanyBusinessUnit($companyBusinessUnitTransfer);
+        return $this->getFactory()
+            ->createZedCompanyBusinessUnitStub()
+            ->createCompanyBusinessUnit($companyBusinessUnitTransfer);
     }
 
     /**
@@ -44,7 +46,9 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
     public function getCompanyBusinessUnitCollection(
         CompanyBusinessUnitCollectionTransfer $businessUnitCollectionTransfer
     ): CompanyBusinessUnitCollectionTransfer {
-        return $this->getFactory()->createZedCompanyBusinessUnitStub()->getCompanyBusinessUnitCollection($businessUnitCollectionTransfer);
+        return $this->getFactory()
+            ->createZedCompanyBusinessUnitStub()
+            ->getCompanyBusinessUnitCollection($businessUnitCollectionTransfer);
     }
 
     /**
@@ -59,7 +63,9 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
     public function updateCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer {
-        return $this->getFactory()->createZedCompanyBusinessUnitStub()->updateCompanyBusinessUnit($companyBusinessUnitTransfer);
+        return $this->getFactory()
+            ->createZedCompanyBusinessUnitStub()
+            ->updateCompanyBusinessUnit($companyBusinessUnitTransfer);
     }
 
     /**
@@ -71,14 +77,16 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
      *
      * @return bool
      */
-    public function deleteCompanyBusinessUnit(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool
-    {
-        return $this->getFactory()->createZedCompanyBusinessUnitStub()->deleteCompanyBusinessUnit($companyBusinessUnitTransfer);
+    public function deleteCompanyBusinessUnit(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): bool {
+        return $this->getFactory()
+            ->createZedCompanyBusinessUnitStub()
+            ->deleteCompanyBusinessUnit($companyBusinessUnitTransfer);
     }
 
     /**
-     * Specification:
-     * - Finds a company business unit by CompanyBusinessUnitTransfer::idCompanyBusinessUnit in the transfer
+     * {@inheritdoc}
      *
      * @api
      *
@@ -89,6 +97,8 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
     public function getCompanyBusinessUnitById(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer {
-        return $this->getFactory()->createZedCompanyBusinessUnitStub()->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+        return $this->getFactory()
+            ->createZedCompanyBusinessUnitStub()
+            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
     }
 }

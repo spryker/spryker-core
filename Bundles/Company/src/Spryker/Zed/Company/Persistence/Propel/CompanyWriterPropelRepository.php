@@ -8,12 +8,11 @@
 namespace Spryker\Zed\Company\Persistence\Propel;
 
 use Generated\Shared\Transfer\CompanyTransfer;
-use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Orm\Zed\Company\Persistence\SpyCompanyStore;
-use Orm\Zed\Company\Persistence\SpyCompanyStoreQuery;
+use Spryker\Zed\Company\Persistence\CompanyPersistenceFactory;
 use Spryker\Zed\Company\Persistence\CompanyWriterRepositoryInterface;
 
-class CompanyWriterPropelRepository extends AbstractPropelRepository implements CompanyWriterRepositoryInterface
+class CompanyWriterPropelRepository implements CompanyWriterRepositoryInterface
 {
     /**
      * {@inheritdoc}
@@ -40,7 +39,10 @@ class CompanyWriterPropelRepository extends AbstractPropelRepository implements 
     public function delete(CompanyTransfer $companyTransfer): void
     {
         $companyTransfer->requireIdCompany();
-        $this->queryCompany()->filterByIdCompany($companyTransfer->getIdCompany())->delete();
+        $this->getFactory()
+            ->createCompanyQuery()
+            ->filterByIdCompany($companyTransfer->getIdCompany())
+            ->delete();
     }
 
     /**
@@ -75,24 +77,20 @@ class CompanyWriterPropelRepository extends AbstractPropelRepository implements 
             return;
         }
 
-        $this->queryCompanyStore()->filterByFkCompany($idCompany)
+        $this->getFactory()
+            ->createCompanyStoreQuery()
+            ->filterByFkCompany($idCompany)
             ->filterByFkStore_In($idStores)
             ->delete();
     }
 
     /**
-     * @return \Orm\Zed\Company\Persistence\SpyCompanyQuery
+     * @TODO For removal.
+     *
+     * @return \Spryker\Zed\Company\Persistence\CompanyPersistenceFactory
      */
-    protected function queryCompany(): SpyCompanyQuery
+    protected function getFactory(): CompanyPersistenceFactory
     {
-        return $this->getFactory()->createCompanyQuery();
-    }
-
-    /**
-     * @return \Orm\Zed\Company\Persistence\SpyCompanyStoreQuery
-     */
-    protected function queryCompanyStore(): SpyCompanyStoreQuery
-    {
-        return $this->getFactory()->createCompanyStoreQuery();
+        return new CompanyPersistenceFactory();
     }
 }

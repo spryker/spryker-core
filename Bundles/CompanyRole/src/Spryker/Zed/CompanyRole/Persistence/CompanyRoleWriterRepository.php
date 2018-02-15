@@ -13,7 +13,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
-class CompanyRoleWriterRepository implements CompanyRoleWriterRepositoryInterface, SprykerAwareRepositoryInterface
+class CompanyRoleWriterRepository implements CompanyRoleWriterRepositoryInterface
 {
     /**
      * @var \Spryker\Zed\CompanyRole\Persistence\CompanyRoleQueryContainerInterface
@@ -48,8 +48,8 @@ class CompanyRoleWriterRepository implements CompanyRoleWriterRepositoryInterfac
                 $companyRoleEntity
             );
 
+        $this->cleanupDefaultRoles($companyRoleTransfer);
         $companyRoleEntity->save();
-
         $companyRoleTransfer = $this->persistenceFactory
             ->createCompanyRoleMapper()
             ->mapCompanyRoleEntityToTransfer(
@@ -60,6 +60,25 @@ class CompanyRoleWriterRepository implements CompanyRoleWriterRepositoryInterfac
         $this->saveCompanyRolePermissions($companyRoleTransfer);
 
         return $companyRoleTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return void
+     */
+    protected function cleanupDefaultRoles(CompanyRoleTransfer $companyRoleTransfer): void
+    {
+        $isDefault = $companyRoleTransfer->getIsDefault();
+
+        if ($isDefault === true) {
+            $query = $this->companyRoleQueryContainer->queryCompanyRole();
+            if ($companyRoleTransfer->getIdCompanyRole() !== null) {
+                $query->filterByIdCompanyRole($companyRoleTransfer->getIdCompanyRole(), Criteria::NOT_EQUAL);
+            }
+
+            $query->update(['IsDefault' => false]);
+        }
     }
 
     /**
@@ -92,12 +111,28 @@ class CompanyRoleWriterRepository implements CompanyRoleWriterRepositoryInterfac
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return void
+     */
+    public function delete(CompanyRoleTransfer $companyRoleTransfer): void
+    {
+        $companyRoleTransfer->requireIdCompanyRole();
+        $this->companyRoleQueryContainer
+            ->queryCompanyRole()
+            ->filterByIdCompanyRole($companyRoleTransfer->getIdCompanyRole())
+            ->delete();
+    }
+
+    /**
      * @param int $idCompanyRole
      * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
      * @return void
      */
-    protected function saveCompanyRolePermission(int $idCompanyRole, PermissionTransfer $permissionTransfer)
+    protected function saveCompanyRolePermission(int $idCompanyRole, PermissionTransfer $permissionTransfer): void
     {
         $spyCompanyRoleToPermission = $this->companyRoleQueryContainer
             ->queryCompanyRoleToPermission()

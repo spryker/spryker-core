@@ -8,12 +8,32 @@
 namespace Spryker\Zed\Company\Persistence\Propel;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Company\Persistence\SpyCompanyStoreQuery;
+use Spryker\Zed\Company\Persistence\CompanyPersistenceFactory;
 use Spryker\Zed\Company\Persistence\CompanyRepositoryInterface;
 
-class CompanyPropelRepository extends AbstractPropelRepository implements CompanyRepositoryInterface
+class CompanyPropelRepository implements CompanyRepositoryInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function getCompanyById($idCompany): CompanyTransfer
+    {
+        $companyEntity = $this->getFactory()
+            ->createCompanyQuery()
+            ->filterByIdCompany($idCompany)
+            ->findOne();
+
+        return $this->getFactory()->createCompanyMapper()->mapCompanyEntityToTransfer($companyEntity);
+    }
+
     /**
      * @param int $idCompany
      *
@@ -21,7 +41,10 @@ class CompanyPropelRepository extends AbstractPropelRepository implements Compan
      */
     public function getRelatedStoresByCompanyId($idCompany)
     {
-        $companyStoreCollection = $this->queryCompanyStore()->filterByFkCompany($idCompany)->find();
+        $companyStoreCollection = $this->getFactory()
+            ->createCompanyStoreQuery()
+            ->filterByFkCompany($idCompany)
+            ->find();
 
         $relatedStores = new ArrayObject();
 
@@ -35,10 +58,12 @@ class CompanyPropelRepository extends AbstractPropelRepository implements Compan
     }
 
     /**
-     * @return \Orm\Zed\Company\Persistence\SpyCompanyStoreQuery
+     * @TODO For removal.
+     *
+     * @return \Spryker\Zed\Company\Persistence\CompanyPersistenceFactory
      */
-    protected function queryCompanyStore(): SpyCompanyStoreQuery
+    protected function getFactory(): CompanyPersistenceFactory
     {
-        return $this->getFactory()->createCompanyStoreQuery();
+        return new CompanyPersistenceFactory();
     }
 }

@@ -76,39 +76,4 @@ interface CompanyUnitAddressFacadeInterface
     public function getCompanyUnitAddressCollection(
         CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
     ): CompanyUnitAddressCollectionTransfer;
-
-    /**
-     * Specification:
-     * - Creates a company unit address
-     * - Updates default business unit addresses
-     *
-     * @api
-     *
-     * @deprecated
-     *
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
-    public function createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddresses(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer;
-
-    /**
-     * Specification:
-     * - Finds a company unit address by CompanyUnitAddressTransfer::idCompanyUnitAddress in the transfer
-     * - Updates fields in a company unit address entity
-     * - Updates default business unit addresses
-     *
-     * @api
-     *
-     * @deprecated
-     *
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
-    public function updateCompanyUnitAddressAndBusinessUnitDefaultAddresses(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer;
 }

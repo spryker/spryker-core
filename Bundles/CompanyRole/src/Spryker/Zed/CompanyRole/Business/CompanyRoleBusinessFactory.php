@@ -19,6 +19,7 @@ use Spryker\Zed\Kernel\Persistence\PersistenceFactoryInterface;
 
 /**
  * @method \Spryker\Zed\CompanyRole\Persistence\CompanyRoleQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CompanyRole\CompanyRoleConfig getConfig()
  */
 class CompanyRoleBusinessFactory extends AbstractBusinessFactory
 {

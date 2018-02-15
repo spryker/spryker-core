@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CompanyBusinessUnit\CompanyBusinessUnitConfig getConfig()
  */
 class CompanyBusinessUnitPersistenceFactory extends AbstractPersistenceFactory
 {

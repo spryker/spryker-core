@@ -8,10 +8,18 @@
 namespace Spryker\Zed\CompanyRole\Persistence;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 
 interface CompanyRoleRepositoryInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
+     */
+    public function getCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer;
+
     /**
      * @param int $idCompanyUser
      *
@@ -23,4 +31,20 @@ interface CompanyRoleRepositoryInterface
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
      */
     public function findCompanyRole(): CompanyRoleCollectionTransfer;
+
+    /**
+     * @param int $idCompanyRole
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findCompanyRolePermissions(int $idCompanyRole): PermissionCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
+     */
+    public function getCompanyRoleCollection(
+        CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
+    ): CompanyRoleCollectionTransfer;
 }

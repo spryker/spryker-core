@@ -24,6 +24,20 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
+    public function getCompanyById(CompanyTransfer $companyTransfer): CompanyResponseTransfer
+    {
+        return $this->getFactory()->createCompanyReader()->getCompanyById($companyTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     */
     public function create(CompanyTransfer $companyTransfer): CompanyResponseTransfer
     {
         return $this->getFactory()->createCompanyWriter()->create($companyTransfer);

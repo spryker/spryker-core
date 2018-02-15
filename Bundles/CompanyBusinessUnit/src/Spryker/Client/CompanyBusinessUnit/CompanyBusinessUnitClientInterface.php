@@ -67,7 +67,9 @@ interface CompanyBusinessUnitClientInterface
      *
      * @return bool
      */
-    public function deleteCompanyBusinessUnit(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool;
+    public function deleteCompanyBusinessUnit(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): bool;
 
     /**
      * Specification:

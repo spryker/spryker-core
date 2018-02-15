@@ -22,7 +22,7 @@ class CompanyRoleMapper implements CompanyRoleMapperInterface
      */
     public function mapCompanyRoleEntityToTransfer(SpyCompanyRole $companyRoleEntity, CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer
     {
-        $companyRoleTransfer->fromArray($companyRoleEntity->toArray());
+        $companyRoleTransfer->fromArray($companyRoleEntity->toArray(), true);
 
         return $companyRoleTransfer;
     }
@@ -37,6 +37,7 @@ class CompanyRoleMapper implements CompanyRoleMapperInterface
     public function mapTransferToCompanyRoleEntity(CompanyRoleTransfer $companyRoleTransfer, SpyCompanyRole $companyRoleEntity): SpyCompanyRole
     {
         $companyRoleEntity->fromArray($companyRoleTransfer->modifiedToArray());
+        $companyRoleEntity->setNew($companyRoleTransfer->getIdCompanyRole() === null);
 
         return $companyRoleEntity;
     }

@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\CompanyRole;
+namespace Spryker\Shared\Company\Code;
 
-interface CompanyRoleConstants
+interface Messages
 {
-    public const DEFAULT_COMPANY_ROLE_NAME = 'DEFAULT_COMPANY_ROLE_NAME';
+    public const COMPANY_AUTHORIZATION_SUCCESS = 'company.account.authorization.success.authorization.success';
 }

@@ -87,42 +87,4 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
 
         return $this->getFactory()->createCompanyUnitAddressReader()->getCompanyUnitAddressCollection($companyUnitAddressCollectionTransfer);
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
-    public function createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddresses(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer {
-        return $this->getFactory()
-            ->createCompanyUnitAddressWriter()
-            ->createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddresses($companyUnitAddressTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
-    public function updateCompanyUnitAddressAndBusinessUnitDefaultAddresses(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer {
-        return $this->getFactory()
-            ->createCompanyUnitAddressWriter()
-            ->updateCompanyUnitAddressAndBusinessUnitDefaultAddresses($companyUnitAddressTransfer);
-    }
 }

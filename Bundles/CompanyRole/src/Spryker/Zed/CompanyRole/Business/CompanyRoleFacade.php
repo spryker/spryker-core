@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Zed\CompanyRole\Persistence\CompanyRolePersistenceFactory;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -19,6 +20,20 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
+     */
+    public function getCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer
+    {
+        return $this->getFactory()->createCompanyRoleRepository()->getCompanyRoleById($companyRoleTransfer);
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -62,6 +77,9 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
      */
     public function delete(CompanyRoleTransfer $companyRoleTransfer)
     {
+        $this->getFactory()
+            ->createCompanyRoleWriterRepository()
+            ->delete($companyRoleTransfer);
     }
 
     /**
@@ -76,6 +94,22 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
         return $this->getFactory()
             ->createCompanyRoleRepository()
             ->findCompanyRole();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCompanyRole
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findCompanyRolePermissions(int $idCompanyRole): PermissionCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyRoleRepository()
+            ->findCompanyRolePermissions($idCompanyRole);
     }
 
     /**
@@ -119,5 +153,23 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
         return (new CompanyRolePersistenceFactory)
             ->createCompanyRoleRepository()
             ->findPermissionsByIdCompanyUser($idCompanyUser);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param $idCompany
+     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
+     */
+    public function getCompanyRoleCollection(
+        CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
+    ): CompanyRoleCollectionTransfer {
+        return $this->getFactory()
+            ->createCompanyRoleRepository()
+            ->getCompanyRoleCollection($companyRoleCollectionTransfer);
     }
 }

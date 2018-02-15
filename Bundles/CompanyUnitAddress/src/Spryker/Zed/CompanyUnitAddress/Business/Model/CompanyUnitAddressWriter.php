@@ -94,7 +94,10 @@ class CompanyUnitAddressWriter implements CompanyUnitAddressWriterInterface
     {
         $fkCountry = $this->retrieveFkCountry($companyUnitAddressTransfer);
         $companyUnitAddressTransfer->setFkCountry($fkCountry);
+        $isDefaultBilling = $companyUnitAddressTransfer->getIsDefaultBilling();
         $companyUnitAddressTransfer = $this->companyUnitAddressWriterRepository->save($companyUnitAddressTransfer);
+        $companyUnitAddressTransfer->setIsDefaultBilling($isDefaultBilling);
+        $this->updateBusinessUnitDefaultAddresses($companyUnitAddressTransfer);
         $companyUnitAddressResponseTransfer = new CompanyUnitAddressResponseTransfer();
         $companyUnitAddressResponseTransfer->setCompanyUnitAddressTransfer($companyUnitAddressTransfer);
         $companyUnitAddressResponseTransfer->setIsSuccessful(true);
@@ -147,43 +150,16 @@ class CompanyUnitAddressWriter implements CompanyUnitAddressWriterInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
-    public function createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddresses(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer {
-        $companyUnitAddressResponseTransfer = $this->create($companyUnitAddressTransfer);
-        $this->updateBusinessUnitDefaultAddresses($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer());
-
-        return $companyUnitAddressResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
-    public function updateCompanyUnitAddressAndBusinessUnitDefaultAddresses(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer {
-        $companyUnitAddressResponseTransfer = $this->update($companyUnitAddressTransfer);
-        $this->updateBusinessUnitDefaultAddresses($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer());
-
-        return $companyUnitAddressResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
      * @return void
      */
     protected function updateBusinessUnitDefaultAddresses(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): void {
         $companyUnitAddressTransfer->requireIdCompanyUnitAddress();
-        $companyUnitAddressTransfer->requireFkCompanyBusinessUnit();
 
-        if ($companyUnitAddressTransfer->getIsDefaultBilling()) {
+        if ($companyUnitAddressTransfer->getFkCompanyBusinessUnit()
+            && $companyUnitAddressTransfer->getIsDefaultBilling()
+        ) {
             $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
             $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($companyUnitAddressTransfer->getFkCompanyBusinessUnit())
                 ->setDefaultBillingAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());

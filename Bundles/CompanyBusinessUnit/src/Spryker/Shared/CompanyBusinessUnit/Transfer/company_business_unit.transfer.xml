@@ -19,7 +19,7 @@
     <transfer name="CompanyBusinessUnitResponse">
         <property name="companyBusinessUnitTransfer" type="CompanyBusinessUnit"/>
         <property name="isSuccessful" type="bool"/>
-        <property name="errors" type="ResponseError[]" singular="error"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitCollection">
@@ -49,7 +49,7 @@
         <property name="lastPage" type="int"/>
     </transfer>
 
-    <transfer name="ResponseError">
-        <property name="message" type="string"/>
+    <transfer name="ResponseMessage">
+        <property name="text" type="string"/>
     </transfer>
 </transfers>

@@ -25,6 +25,16 @@ interface CompanyRoleWriterRepositoryInterface
 
     /**
      * Specification:
+     * - Deletes a company role
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return void
+     */
+    public function delete(CompanyRoleTransfer $companyRoleTransfer): void;
+
+    /**
+     * Specification:
      * - Creates/updates related to a company role permissions
      *
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer

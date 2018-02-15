@@ -46,6 +46,7 @@ class CompanyRoleWriter implements CompanyRoleWriterInterface
         $companyRoleTransfer = $this->companyRoleWriterRepository->save($companyRoleTransfer);
         $companyRoleResponseTransfer = new CompanyRoleResponseTransfer();
         $companyRoleResponseTransfer->setCompanyRoleTransfer($companyRoleTransfer);
+        $companyRoleResponseTransfer->setIsSuccessful(true);
 
         return $companyRoleResponseTransfer;
     }
