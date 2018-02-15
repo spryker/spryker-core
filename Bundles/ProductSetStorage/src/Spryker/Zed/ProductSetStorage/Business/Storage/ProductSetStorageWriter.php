@@ -92,9 +92,11 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
             $localeName = $spyProductSetLocalizedEntity['SpyLocale']['locale_name'];
             if (isset($spyProductSetStorageEntities[$idProductSet][$localeName])) {
                 $this->storeDataSet($spyProductSetLocalizedEntity, $spyProductSetStorageEntities[$idProductSet][$localeName]);
-            } else {
-                $this->storeDataSet($spyProductSetLocalizedEntity);
+
+                continue;
             }
+
+            $this->storeDataSet($spyProductSetLocalizedEntity);
         }
     }
 
@@ -171,8 +173,12 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
      */
     protected function getProductImageSets(array $spyProductSetLocalizedEntity)
     {
+        $filteredProductImageSets = $this->filterProductImagesSetsByLocale(
+            $spyProductSetLocalizedEntity['SpyProductSet']['SpyProductImageSets'],
+            $spyProductSetLocalizedEntity['fk_locale']
+        );
         $productImageSet = new ArrayObject();
-        foreach ($spyProductSetLocalizedEntity['SpyProductSet']['SpyProductImageSets'] as $spyProductImageSets) {
+        foreach ($filteredProductImageSets as $spyProductImageSets) {
             $productImageSetStorageTransfer = new ProductImageSetStorageTransfer();
             $productImageSetStorageTransfer->setName($spyProductImageSets['name']);
             foreach ($spyProductImageSets['SpyProductImageSetToProductImages'] as $productImageSetToProductImage) {
@@ -186,5 +192,36 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
         }
 
         return $productImageSet;
+    }
+
+    /**
+     * @param array $productImageSets
+     * @param int $idLocale
+     *
+     * @return array
+     */
+    protected function filterProductImagesSetsByLocale(array $productImageSets, $idLocale)
+    {
+        $localizedProductImageSets = [];
+        $defaultProductImageSets = [];
+        foreach ($productImageSets as $productImageSet) {
+            if (!array_key_exists('fk_locale', $productImageSet)) {
+                continue;
+            }
+
+            if ($productImageSet['fk_locale'] === null) {
+                $defaultProductImageSets[] = $productImageSet;
+
+                continue;
+            }
+
+            $localizedProductImageSets[$productImageSet['fk_locale']][] = $productImageSet;
+        }
+
+        if (array_key_exists($idLocale, $localizedProductImageSets)) {
+            return $localizedProductImageSets[$idLocale];
+        }
+
+        return $defaultProductImageSets;
     }
 }

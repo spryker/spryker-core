@@ -118,9 +118,11 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
             $localeName = $spyProductSetLocalizedEntity['SpyLocale']['locale_name'];
             if (isset($spyProductSetStorageEntities[$idProductSet][$localeName])) {
                 $this->storeDataSet($spyProductSetLocalizedEntity, $spyProductSetStorageEntities[$idProductSet][$localeName]);
-            } else {
-                $this->storeDataSet($spyProductSetLocalizedEntity);
+
+                continue;
             }
+
+            $this->storeDataSet($spyProductSetLocalizedEntity);
         }
     }
 
