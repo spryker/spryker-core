@@ -108,4 +108,12 @@ class CmsGuiToCmsQueryContainerBridge implements CmsGuiToCmsQueryContainerInterf
     {
         return $this->cmsQueryContainer->queryCmsPageLocalizedAttributes();
     }
+
+    /**
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryLocalizedPagesWithTemplates()
+    {
+        return $this->cmsQueryContainer->queryLocalizedPagesWithTemplates();
+    }
 }

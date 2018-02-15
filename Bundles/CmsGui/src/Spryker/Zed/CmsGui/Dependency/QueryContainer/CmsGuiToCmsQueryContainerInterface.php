@@ -67,4 +67,9 @@ interface CmsGuiToCmsQueryContainerInterface
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
      */
     public function queryCmsPageLocalizedAttributes();
+
+    /**
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function queryLocalizedPagesWithTemplates();
 }
