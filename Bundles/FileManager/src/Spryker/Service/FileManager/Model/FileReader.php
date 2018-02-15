@@ -10,14 +10,17 @@ namespace Spryker\Service\FileManager\Model;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerReadResponseTransfer;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
+use Generated\Shared\Transfer\FileSystemStreamTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface;
 use Spryker\Service\FileManager\FileManagerServiceConfig;
 
 class FileReader implements FileReaderInterface
 {
+    const FILE_SYSTEM_DOCUMENT = 'fileSystem';
+
     /**
-     * @var \Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface
+     * @var \Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface
      */
     protected $fileSystem;
 
@@ -39,9 +42,7 @@ class FileReader implements FileReaderInterface
     }
 
     /**
-     * @param string $fileName
-     *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     * {@inheritdoc}
      */
     public function read(string $fileName)
     {
@@ -57,6 +58,30 @@ class FileReader implements FileReaderInterface
         $fileManagerReadResponse->setFileInfo($this->createFileInfoTransfer($fileSystemQueryTransfer));
 
         return $fileManagerReadResponse;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function readStream(string $fileName)
+    {
+        $fileSystemStreamTransfer = $this->createStreamTransfer($fileName);
+
+        return $this->fileSystem->readStream($fileSystemStreamTransfer);
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @return \Generated\Shared\Transfer\FileSystemStreamTransfer
+     */
+    protected function createStreamTransfer(string $fileName)
+    {
+        $fileSystemStreamTransfer = new FileSystemStreamTransfer();
+        $fileSystemStreamTransfer->setFileSystemName($this->config->getStorageName());
+        $fileSystemStreamTransfer->setPath($fileName);
+
+        return $fileSystemStreamTransfer;
     }
 
     /**
