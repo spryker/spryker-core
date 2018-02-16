@@ -12,43 +12,55 @@ use Exception;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionHandlerInterface;
 use Throwable;
 
-/**
- * @deprecated use \Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait instead
- */
-trait DatabaseTransactionHandlerTrait
+class PropelDatabaseTransactionHandler implements TransactionHandlerInterface
 {
     /**
+     * @var \Propel\Runtime\Connection\ConnectionInterface
+     */
+    protected $connection;
+
+    /**
      * @param \Closure $callback
-     * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
      *
      * @throws \Exception
      * @throws \Throwable
      *
      * @return mixed
      */
-    protected function handleDatabaseTransaction(Closure $callback, ConnectionInterface $connection = null)
+    public function handleTransaction(Closure $callback)
     {
-        if (!$connection) {
-            $connection = Propel::getConnection();
+        if (!$this->connection) {
+            $this->connection = Propel::getConnection();
         }
 
-        $connection->beginTransaction();
+        $this->connection->beginTransaction();
 
         try {
             $result = $callback();
 
-            $connection->commit();
+            $this->connection->commit();
 
             return $result;
         } catch (Exception $exception) {
-            $connection->rollBack();
+            $this->connection->rollBack();
             throw $exception;
         } catch (Throwable $exception) {
-            $connection->rollBack();
+            $this->connection->rollBack();
             throw $exception;
         }
+    }
+
+    /**
+     * @param \Propel\Runtime\Connection\ConnectionInterface $connection
+     *
+     * @return void
+     */
+    public function setConnection(ConnectionInterface $connection)
+    {
+        $this->connection = $connection;
     }
 
     /**

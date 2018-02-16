@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Kernel\ClassResolver\QueryContainer;
+namespace Spryker\Zed\Kernel\ClassResolver\EntityManager;
 
 use Exception;
 use Spryker\Shared\Config\Config;
@@ -13,7 +13,7 @@ use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 use Spryker\Shared\Kernel\Exception\Backtrace;
 use Spryker\Shared\Kernel\KernelConstants;
 
-class QueryContainerNotFoundException extends Exception
+class EntityManagerNotFoundException extends Exception
 {
     /**
      * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
@@ -32,14 +32,14 @@ class QueryContainerNotFoundException extends Exception
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
-            'Can not resolve %1$sQueryContainer in persistence layer for your module "%1$s"',
+            'Can not resolve %1$sEntityManager in persistence layer for your module "%1$s"',
             $callerClassInfo->getBundle()
         ) . PHP_EOL;
 
-        $message .= 'You can fix this by adding the missing QueryContainer to your module.' . PHP_EOL;
+        $message .= 'You can fix this by adding the missing EntityManager to your module.' . PHP_EOL;
 
         $message .= sprintf(
-            'E.g. %1$s\\Zed\\%2$s\\Persistence\\%2$sQueryContainer',
+            'E.g. %1$s\\Zed\\%2$s\\Persistence\\%2$sEntityManager',
             Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle()
         );
