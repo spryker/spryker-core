@@ -49,7 +49,7 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductStorage\Business\Attribute\AttributeMapInterface
      */
-    public function createAttributeMap()
+    protected function createAttributeMap()
     {
         return new AttributeMap(
             $this->getProductFacade(),
@@ -60,7 +60,7 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStore()
+    protected function getStore()
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::STORE);
     }
@@ -68,7 +68,7 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductBridge
      */
-    public function getProductFacade()
+    protected function getProductFacade()
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::FACADE_PRODUCT);
     }

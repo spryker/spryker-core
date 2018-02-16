@@ -47,7 +47,7 @@ class ProductImageStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStore()
+    protected function getStore()
     {
         return $this->getProvidedDependency(ProductImageStorageDependencyProvider::STORE);
     }
@@ -55,7 +55,7 @@ class ProductImageStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageBridge
      */
-    public function getProductImageFacade()
+    protected function getProductImageFacade()
     {
         return $this->getProvidedDependency(ProductImageStorageDependencyProvider::FACADE_PRODUCT_IMAGE);
     }

@@ -13,8 +13,6 @@ use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValuePriceTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
 use Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorageQuery;
 use PHPUnit\Framework\SkippedTestError;
-use Propel\Runtime\Propel;
-use Silex\Application;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\ProductOption\Dependency\ProductOptionEvents;
@@ -26,7 +24,6 @@ use Spryker\Zed\ProductOptionStorage\Communication\Plugin\Event\Listener\Product
 use Spryker\Zed\ProductOptionStorage\Communication\Plugin\Event\Listener\ProductOptionValuePriceStorageListener;
 use Spryker\Zed\ProductOptionStorage\Communication\Plugin\Event\Listener\ProductOptionValueStorageListener;
 use Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainer;
-use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use SprykerTest\Zed\ProductOptionStorage\ProductOptionStorageConfigMock;
 
 /**
@@ -50,14 +47,10 @@ class ProductOptionStorageListenerTest extends Unit
      */
     protected function setUp()
     {
-        $dbType = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbType !== 'pgsql') {
+        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
+        if ($dbEngine !== 'pgsql') {
             throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
-
-        Propel::disableInstancePooling();
-        $propelServiceProvider = new PropelServiceProvider();
-        $propelServiceProvider->boot(new Application());
     }
 
     /**

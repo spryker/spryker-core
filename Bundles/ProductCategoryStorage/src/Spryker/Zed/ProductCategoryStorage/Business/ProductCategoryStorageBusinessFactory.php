@@ -33,7 +33,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryBridge
      */
-    public function getCategoryFacade()
+    protected function getCategoryFacade()
     {
         return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::FACADE_CATEGORY);
     }
@@ -41,7 +41,7 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStore()
+    protected function getStore()
     {
         return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::STORE);
     }

@@ -47,7 +47,7 @@ class PriceProductStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface
      */
-    public function getPriceProductFacade()
+    protected function getPriceProductFacade()
     {
         return $this->getProvidedDependency(PriceProductStorageDependencyProvider::FACADE_PRICE_PRODUCT);
     }
@@ -55,7 +55,7 @@ class PriceProductStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStore()
+    protected function getStore()
     {
         return $this->getProvidedDependency(PriceProductStorageDependencyProvider::STORE);
     }

@@ -33,7 +33,7 @@ class ProductOptionStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStore()
+    protected function getStore()
     {
         return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::STORE);
     }
@@ -41,7 +41,7 @@ class ProductOptionStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface
      */
-    public function getProductOptionFacade()
+    protected function getProductOptionFacade()
     {
         return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::FACADE_PRODUCT_OPTION);
     }

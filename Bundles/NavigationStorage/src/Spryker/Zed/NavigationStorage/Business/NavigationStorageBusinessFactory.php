@@ -34,7 +34,7 @@ class NavigationStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\NavigationStorage\Dependency\Service\NavigationStorageToUtilSanitizeServiceInterface
      */
-    public function getUtilSanitizeService()
+    protected function getUtilSanitizeService()
     {
         return $this->getProvidedDependency(NavigationStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
@@ -42,7 +42,7 @@ class NavigationStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToNavigationInterface
      */
-    public function getNavigationFacade()
+    protected function getNavigationFacade()
     {
         return $this->getProvidedDependency(NavigationStorageDependencyProvider::FACADE_NAVIGATION);
     }
@@ -50,7 +50,7 @@ class NavigationStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStore()
+    protected function getStore()
     {
         return $this->getProvidedDependency(NavigationStorageDependencyProvider::STORE);
     }

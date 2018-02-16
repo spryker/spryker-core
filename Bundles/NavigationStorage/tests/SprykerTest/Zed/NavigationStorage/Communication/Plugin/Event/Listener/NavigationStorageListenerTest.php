@@ -12,8 +12,6 @@ use Orm\Zed\Navigation\Persistence\Map\SpyNavigationNodeLocalizedAttributesTable
 use Orm\Zed\Navigation\Persistence\Map\SpyNavigationNodeTableMap;
 use Orm\Zed\NavigationStorage\Persistence\SpyNavigationStorageQuery;
 use PHPUnit\Framework\SkippedTestError;
-use Propel\Runtime\Propel;
-use Silex\Application;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\Navigation\Dependency\NavigationEvents;
@@ -23,7 +21,6 @@ use Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\Navigation
 use Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationNodeStorageListener;
 use Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationStorageListener;
 use Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationUrlRelationStorageListener;
-use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 use SprykerTest\Zed\NavigationStorage\NavigationStorageConfigMock;
 
@@ -48,14 +45,10 @@ class NavigationStorageListenerTest extends Unit
      */
     protected function setUp()
     {
-        $dbType = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbType !== 'pgsql') {
+        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
+        if ($dbEngine !== 'pgsql') {
             throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
-
-        Propel::disableInstancePooling();
-        $propelServiceProvider = new PropelServiceProvider();
-        $propelServiceProvider->boot(new Application());
     }
 
     /**

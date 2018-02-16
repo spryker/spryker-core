@@ -47,7 +47,7 @@ class UrlStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface
      */
-    public function getUtilSanitizeService()
+    protected function getUtilSanitizeService()
     {
         return $this->getProvidedDependency(UrlStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
@@ -55,7 +55,7 @@ class UrlStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStore()
+    protected function getStore()
     {
         return $this->getProvidedDependency(UrlStorageDependencyProvider::STORE);
     }

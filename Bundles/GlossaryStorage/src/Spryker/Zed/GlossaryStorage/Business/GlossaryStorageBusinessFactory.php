@@ -32,7 +32,7 @@ class GlossaryStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilSanitizeServiceInterface
      */
-    public function getUtilSanitizeService()
+    protected function getUtilSanitizeService()
     {
         return $this->getProvidedDependency(GlossaryStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
