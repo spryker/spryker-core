@@ -15,16 +15,22 @@ var filterTextField = $('#product_category_filter_filter-autocomplete');
 
 $(document).ready(function() {
     addButton.on('click', function() {
-        var currentList = Object.assign.apply(Object, filters.getAllFilters());
         var filterToAdd = filterTextField.val();
-        if(currentList[filterToAdd] === true) {
-            alert('Filter "'+ filterToAdd +'" already defined');
-        } else if(currentList[filterToAdd] === false) {
+        var filterObject = filters.getAllFilters().filters.find(function(element) {
+          return element.key === filterToAdd;
+        });
+        if (filterObject) {
+            if(filterObject.isActive === true) {
+                return window.sweetAlert({
+                    title: 'Error',
+                    text: 'Filter "'+ filterToAdd +'" already defined',
+                    html: false,
+                    type: 'error'
+                });
+            }
             filters.removeFromInactiveList(filterToAdd);
-            filters.addToActiveList(filterToAdd);
-        } else {
-            filters.addToActiveList(filterToAdd);
         }
+        filters.addToActiveList(filterToAdd);
 
         filterTextField.val('');
         toggleDisableOnAddButton();
