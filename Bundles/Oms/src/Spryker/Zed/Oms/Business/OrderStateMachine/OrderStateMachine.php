@@ -564,7 +564,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             $log->addSourceState($orderItem, $sourceState->getName());
 
             $targetState = $sourceState;
-            if (isset($eventId) && $sourceState->hasEvent($eventId)) {
+            if ($eventId && $sourceState->hasEvent($eventId)) {
                 $transitions = $sourceState->getEvent($eventId)->getTransitionsBySource($sourceState);
                 $targetState = $this->checkCondition($transitions, $orderItem, $sourceState, $log);
                 $log->addTargetState($orderItem, $targetState->getName());
@@ -633,7 +633,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             $state = $this->states[$stateName];
         } else {
             $state = SpyOmsOrderItemStateQuery::create()->findOneByName($stateName);
-            if (!isset($state)) {
+            if ($state === null) {
                 $state = new SpyOmsOrderItemState();
                 $state->setName($stateName);
                 $state->save();
