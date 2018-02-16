@@ -4,7 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/chart": "^1.0.0",
+    "spryker/chart": "dev-beta/core-2413-chart as 0.1.0",
     "spryker/cms-content-widget": "^1.0.0",
     "spryker/kernel": "^3.0.0"
   },
