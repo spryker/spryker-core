@@ -16,6 +16,8 @@ use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
 
 class FileSaver implements FileSaverInterface
 {
+    const FILE_NAME_PATTERN = '%u%s%s.%s';
+
     /**
      * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface
      */
@@ -164,7 +166,11 @@ class FileSaver implements FileSaverInterface
     protected function saveContent(FileManagerSaveRequestTransfer $saveRequestTransfer, SpyFile $file, SpyFileInfo $fileInfo = null)
     {
         if ($saveRequestTransfer->getContent() !== null || $fileInfo !== null) {
-            $newFileName = $this->getNewFileName($file->getFileName(), $fileInfo->getVersionName());
+            $newFileName = $this->getNewFileName(
+                $file->getIdFile(),
+                $fileInfo->getVersionName(),
+                $fileInfo->getFileExtension()
+            );
             $this->fileContent->save($newFileName, $saveRequestTransfer->getContent());
             $this->addStorageInfo($fileInfo, $newFileName);
         }
@@ -209,16 +215,25 @@ class FileSaver implements FileSaverInterface
     }
 
     /**
-     * @param string $fileName
+     * @param int $idFile
      * @param string $versionName
+     * @param string $fileExtension
      *
      * @return string
      */
-    protected function getNewFileName(string $fileName, string $versionName)
+    protected function getNewFileName(int $idFile, string $versionName, string $fileExtension): string
     {
         $fileNameVersionDelimiter = $this->config->getFileNameVersionDelimiter();
 
-        return $fileName . $fileNameVersionDelimiter . $versionName;
+        $newFileName = sprintf(
+            static::FILE_NAME_PATTERN,
+            $idFile,
+            $fileNameVersionDelimiter,
+            $versionName,
+            $fileExtension
+        );
+
+        return $newFileName;
     }
 
     /**
