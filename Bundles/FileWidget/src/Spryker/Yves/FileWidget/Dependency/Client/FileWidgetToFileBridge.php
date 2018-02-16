@@ -15,7 +15,7 @@ class FileWidgetToFileBridge implements FileWidgetToFileBridgeInterface
     protected $fileManagerStorageClient;
 
     /**
-     * @param \Spryker\Client\FileManagerStorage\FileManagerStorageClient $fileManagerStorageClient
+     * @param \Spryker\Client\FileManagerStorage\FileManagerStorageClientInterface $fileManagerStorageClient
      */
     public function __construct($fileManagerStorageClient)
     {
@@ -23,10 +23,7 @@ class FileWidgetToFileBridge implements FileWidgetToFileBridgeInterface
     }
 
     /**
-     * @param string $fileId
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\FileStorageTransfer|null
+     * {@inheritdoc}
      */
     public function findFileById($fileId, $localeName)
     {
