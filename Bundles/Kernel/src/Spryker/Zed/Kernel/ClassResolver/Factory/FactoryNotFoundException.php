@@ -32,12 +32,12 @@ class FactoryNotFoundException extends Exception
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
-            'Can not resolve %2$s%1$sFactory in %s layer for your bundle "%s"',
+            'Can not resolve %2$s%1$sFactory in %s layer for your module "%s"',
             $callerClassInfo->getLayer(),
             $callerClassInfo->getBundle()
         ) . PHP_EOL;
 
-        $message .= 'You can fix this by adding the missing Factory to your bundle.' . PHP_EOL;
+        $message .= 'You can fix this by adding the missing Factory to your module.' . PHP_EOL;
 
         $message .= sprintf(
             'E.g. %1$s\\Zed\\%2$s\\%3$s\\%2$s%3$sFactory' . PHP_EOL . PHP_EOL,

@@ -86,7 +86,7 @@ class Persistence implements PersistenceInterface
                 $stateMachineProcessTransfer->getProcessName()
             )->findOne();
 
-        if (!isset($stateMachineProcessEntity)) {
+        if ($stateMachineProcessEntity === null) {
             $stateMachineProcessEntity = $this->saveStateMachineProcess($stateMachineProcessTransfer);
         }
 
@@ -127,7 +127,7 @@ class Persistence implements PersistenceInterface
                     $stateName
                 )->findOne();
 
-            if (!isset($stateMachineItemStateEntity)) {
+            if ($stateMachineItemStateEntity === null) {
                 $stateMachineItemStateEntity = $this->saveStateMachineItemEntity($stateMachineItemTransfer, $stateName);
             }
             $this->persistedStates[$stateName] = $stateMachineItemStateEntity;

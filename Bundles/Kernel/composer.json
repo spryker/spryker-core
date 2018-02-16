@@ -7,7 +7,7 @@
     "php": ">=5.6.0",
     "spryker/config": "^3.0.0",
     "spryker/error-handler": "^2.0.0",
-    "spryker/propel-orm": "^1.0.0",
+    "spryker/propel-orm": "^1.6.0",
     "spryker/silex": "^2.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-encoding": "^2.0.0",
@@ -17,7 +17,7 @@
     "spryker/code-sniffer": "*",
     "spryker/console": "^3.0.0 || ^4.0.0",
     "spryker/testify": "^3.3.0",
-    "spryker/transfer": "^3.0.0"
+    "spryker/transfer": "^3.6.0"
   },
   "autoload": {
     "psr-4": {
