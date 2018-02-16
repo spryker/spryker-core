@@ -47,7 +47,7 @@ class PersistenceManager implements PersistenceManagerInterface
 
         $stateEntity = SpyOmsOrderItemStateQuery::create()->findOneByName($stateName);
 
-        if (!isset($stateEntity)) {
+        if ($stateEntity === null) {
             $stateEntity = new SpyOmsOrderItemState();
             $stateEntity->setName($stateName);
             $stateEntity->save();
@@ -80,7 +80,7 @@ class PersistenceManager implements PersistenceManagerInterface
 
         $processEntity = SpyOmsOrderProcessQuery::create()->findOneByName($processName);
 
-        if (!isset($processEntity)) {
+        if ($processEntity === null) {
             $processEntity = new SpyOmsOrderProcess();
             $processEntity->setName($processName);
             $processEntity->save();
