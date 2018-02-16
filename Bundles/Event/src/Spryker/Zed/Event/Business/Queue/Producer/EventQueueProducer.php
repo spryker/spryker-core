@@ -42,7 +42,7 @@ class EventQueueProducer implements EventQueueProducerInterface
      * @param string $eventName
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
      * @param string $listener
-     * @param string $queuePoolName
+     * @param string|null $queuePoolName
      *
      * @return void
      */

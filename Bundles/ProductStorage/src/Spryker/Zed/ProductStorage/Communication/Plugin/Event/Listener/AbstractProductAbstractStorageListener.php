@@ -79,7 +79,7 @@ class AbstractProductAbstractStorageListener extends AbstractPlugin
      */
     protected function storeData(array $spyProductAbstractLocalizedEntities, array $spyProductAbstractStorageEntities)
     {
-        $toRemove = $spyProductAbstractStorageEntities;
+        $toRemoveEntities = $spyProductAbstractStorageEntities;
         foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
             $idProduct = $spyProductAbstractLocalizedEntity['SpyProductAbstract'][static::COL_ID_PRODUCT_ABSTRACT];
             $localeName = $spyProductAbstractLocalizedEntity['Locale']['locale_name'];
@@ -92,19 +92,21 @@ class AbstractProductAbstractStorageListener extends AbstractPlugin
                 } else {
                     $this->storeDataSet($storeName, $spyProductAbstractLocalizedEntity);
                 }
-                unset($toRemove[$idProduct][$storeName][$localeName]);
+                unset($toRemoveEntities[$idProduct][$storeName][$localeName]);
             }
 
-            if (!isset($toRemove[$idProduct])) {
+            if (!isset($toRemoveEntities[$idProduct])) {
                 continue;
             }
-            foreach ($toRemove[$idProduct] as $storeName => $localeEntities) {
+
+            foreach ($toRemoveEntities[$idProduct] as $storeName => $localeEntities) {
                 foreach ($localeEntities as $thisLocaleName => $spyProductAbstractStorageEntity) {
                     if ($localeName !== $thisLocaleName) {
                         continue;
                     }
+
                     $spyProductAbstractStorageEntity->delete();
-                    unset($toRemove[$idProduct][$storeName][$localeName]);
+                    unset($toRemoveEntities[$idProduct][$storeName][$localeName]);
                 }
             }
         }

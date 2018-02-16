@@ -93,7 +93,7 @@ class Store
     protected $currencyIsoCodes = [];
 
     /**
-     * @var array
+     * @var array Keys are queue pool names, values are lists of queue connection names.
      */
     protected $queuePools = [];
 
