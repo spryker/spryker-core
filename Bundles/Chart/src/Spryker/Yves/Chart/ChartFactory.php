@@ -21,14 +21,6 @@ class ChartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
-     */
-    public function getChartPlugins()
-    {
-        return $this->getProvidedDependency(ChartDependencyProvider::CHART_PLUGINS);
-    }
-
-    /**
      * @return \Spryker\Yves\Chart\Plugin\Provider\ChartPluginCollectionInterface
      */
     public function createChartPluginCollection()
@@ -36,5 +28,13 @@ class ChartFactory extends AbstractFactory
         return new ChartPluginCollection(
             $this->getChartPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
+     */
+    protected function getChartPlugins()
+    {
+        return $this->getProvidedDependency(ChartDependencyProvider::CHART_PLUGINS);
     }
 }

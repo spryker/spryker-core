@@ -25,14 +25,6 @@ class ChartCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
-     */
-    public function getChartPlugins()
-    {
-        return $this->getProvidedDependency(ChartDependencyProvider::CHART_PLUGINS);
-    }
-
-    /**
      * @return \Spryker\Zed\Chart\Business\Provider\ChartPluginCollectionInterface
      */
     public function createChartPluginCollection()
@@ -40,5 +32,13 @@ class ChartCommunicationFactory extends AbstractCommunicationFactory
         return new ChartPluginCollection(
             $this->getChartPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
+     */
+    protected function getChartPlugins()
+    {
+        return $this->getProvidedDependency(ChartDependencyProvider::CHART_PLUGINS);
     }
 }
