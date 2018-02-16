@@ -8,6 +8,7 @@
 namespace Spryker\Client\Cart;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -32,6 +33,21 @@ interface CartClientInterface
      * @return void
      */
     public function clearQuote();
+
+    /**
+     * Specification:
+     * - Adds only valid items.
+     * - Makes zed request.
+     * - Returns update quote.
+     * - Quote not saved.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addValidItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer;
 
     /**
      * Specification:

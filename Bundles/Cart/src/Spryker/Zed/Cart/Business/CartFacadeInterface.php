@@ -14,6 +14,28 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface CartFacadeInterface
 {
     /**
+     *  Adds only valid item(s) to the quote. Each item gets additional information (e.g. price).
+     *
+     * Specification:
+     *  - Run cart pre check plugins, per every item.
+     *  - Add to cart only valid items.
+     *  - If some items relay on one stock - items will be added by same order, until stock allow it.
+     *  - For each new item run the item expander plugins (requires a SKU for each new item)
+     *  - Add new item(s) to quote (Requires a quantity > 0 for each new item)
+     *  - Group items in quote (-> ItemGrouper)
+     *  - Recalculate quote (-> Calculation)
+     *  - Add success message to messenger (-> Messenger)
+     *  - Return updated quote
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addValid(CartChangeTransfer $cartChangeTransfer): QuoteTransfer;
+
+    /**
      *  Adds item(s) to the quote. Each item gets additional information (e.g. price).
      *
      * Specification:

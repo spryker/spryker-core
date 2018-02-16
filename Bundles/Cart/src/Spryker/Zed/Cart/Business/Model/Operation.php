@@ -86,6 +86,27 @@ class Operation implements OperationInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
+    public function filterItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
+    {
+        $quoteTransfer = $cartChangeTransfer->getQuote();
+        $itemsTransfer = $cartChangeTransfer->getItems();
+
+        foreach ($itemsTransfer as $currentItemTransfer) {
+            $currentCartChangeTransfer = new CartChangeTransfer();
+            $currentCartChangeTransfer->setQuote($quoteTransfer);
+            $currentCartChangeTransfer->setItems([$currentItemTransfer]);
+
+            $quoteTransfer = $this->add($currentCartChangeTransfer);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
     public function add(CartChangeTransfer $cartChangeTransfer)
     {
         if (!$this->preCheckCart($cartChangeTransfer)) {
