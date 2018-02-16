@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Chart\Communication;
 
-use Spryker\Zed\Chart\Business\Provider\ChartPluginProvider;
+use Spryker\Zed\Chart\Business\Provider\ChartPluginCollection;
 use Spryker\Zed\Chart\ChartDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -33,11 +33,11 @@ class ChartCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Chart\Business\Provider\ChartPluginProviderInterface
+     * @return \Spryker\Zed\Chart\Business\Provider\ChartPluginCollectionInterface
      */
-    public function createChartPluginProvider()
+    public function createChartPluginCollection()
     {
-        return new ChartPluginProvider(
+        return new ChartPluginCollection(
             $this->getChartPlugins()
         );
     }

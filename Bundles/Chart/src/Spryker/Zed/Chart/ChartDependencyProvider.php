@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Chart;
 
-use Spryker\Zed\Chart\Communication\Plugin\Twig\TwigBarChart;
-use Spryker\Zed\Chart\Communication\Plugin\Twig\TwigGeneralChart;
-use Spryker\Zed\Chart\Communication\Plugin\Twig\TwigLineChart;
-use Spryker\Zed\Chart\Communication\Plugin\Twig\TwigPieChart;
+use Spryker\Zed\Chart\Communication\Plugin\Twig\TwigBarChartPlugin;
+use Spryker\Zed\Chart\Communication\Plugin\Twig\TwigChartPlugin;
+use Spryker\Zed\Chart\Communication\Plugin\Twig\TwigLineChartPlugin;
+use Spryker\Zed\Chart\Communication\Plugin\Twig\TwigPieChartPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -18,16 +18,6 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CHART_TWIG_FUNCTIONS = 'CHART_TWIG_FUNCTIONS';
     const CHART_PLUGINS = 'CHART_PLUGINS';
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function provideBusinessLayerDependencies(Container $container)
-    {
-        return $container;
-    }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -76,10 +66,10 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
     protected function getTwigFunctions()
     {
         return [
-            new TwigPieChart(),
-            new TwigBarChart(),
-            new TwigLineChart(),
-            new TwigGeneralChart(),
+            new TwigPieChartPlugin(),
+            new TwigBarChartPlugin(),
+            new TwigLineChartPlugin(),
+            new TwigChartPlugin(),
         ];
     }
 

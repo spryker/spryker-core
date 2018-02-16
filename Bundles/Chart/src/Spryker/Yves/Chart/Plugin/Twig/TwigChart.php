@@ -9,7 +9,7 @@ namespace Spryker\Yves\Chart\Plugin\Twig;
 
 use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
 
-class TwigGeneralChart extends AbstractTwigChart implements TwigFunctionPluginInterface
+class TwigChart extends AbstractTwigChart implements TwigFunctionPluginInterface
 {
     const TWIG_FUNCTION_NAME = 'spyChart';
 

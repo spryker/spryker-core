@@ -16,7 +16,7 @@ use Twig_SimpleFunction;
 /**
  * @method \Spryker\Zed\Chart\Communication\ChartCommunicationFactory getFactory()
  */
-abstract class AbstractTwigChart extends AbstractPlugin implements TwigFunctionPluginInterface
+abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigFunctionPluginInterface
 {
     const TWIG_FUNCTION_NAME = 'spyChart';
 
@@ -86,7 +86,7 @@ abstract class AbstractTwigChart extends AbstractPlugin implements TwigFunctionP
     protected function getChartPluginByName($pluginName)
     {
         return $this->getFactory()
-            ->createChartPluginProvider()
+            ->createChartPluginCollection()
             ->getChartPluginByName($pluginName);
     }
 }

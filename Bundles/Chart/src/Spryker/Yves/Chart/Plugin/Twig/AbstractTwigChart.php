@@ -78,7 +78,7 @@ abstract class AbstractTwigChart extends AbstractPlugin implements TwigFunctionP
     protected function getChartPluginByName($pluginName)
     {
         return $this->getFactory()
-            ->createChartPluginProvider()
+            ->createChartPluginCollection()
             ->getChartPluginByName($pluginName);
     }
 }

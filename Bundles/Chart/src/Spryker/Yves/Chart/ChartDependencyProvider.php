@@ -8,7 +8,7 @@
 namespace Spryker\Yves\Chart;
 
 use Spryker\Yves\Chart\Plugin\Twig\TwigBarChart;
-use Spryker\Yves\Chart\Plugin\Twig\TwigGeneralChart;
+use Spryker\Yves\Chart\Plugin\Twig\TwigChart;
 use Spryker\Yves\Chart\Plugin\Twig\TwigLineChart;
 use Spryker\Yves\Chart\Plugin\Twig\TwigPieChart;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
@@ -69,7 +69,7 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
             new TwigPieChart(),
             new TwigBarChart(),
             new TwigLineChart(),
-            new TwigGeneralChart(),
+            new TwigChart(),
         ];
     }
 

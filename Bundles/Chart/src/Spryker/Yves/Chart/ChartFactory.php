@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\Chart;
 
-use Spryker\Yves\Chart\Plugin\Provider\ChartPluginProvider;
+use Spryker\Yves\Chart\Plugin\Provider\ChartPluginCollection;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class ChartFactory extends AbstractFactory
@@ -29,21 +29,12 @@ class ChartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Chart\Plugin\Provider\ChartPluginProviderInterface
-     */
-    public function createChartPluginProvider()
-    {
-        return new ChartPluginProvider(
-            $this->getChartPlugins()
-        );
-    }
-
-    /**
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
+     * @return \Spryker\Yves\Chart\Plugin\Provider\ChartPluginCollectionInterface
      */
     public function createChartPluginCollection()
     {
-        return $this->createChartPluginProvider()
-            ->getChartPluginCollection();
+        return new ChartPluginCollection(
+            $this->getChartPlugins()
+        );
     }
 }

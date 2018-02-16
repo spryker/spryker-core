@@ -9,7 +9,7 @@ namespace Spryker\Zed\Chart\Business\Provider;
 
 use Spryker\Zed\Chart\Business\Provider\Exception\ChartPluginNotFoundException;
 
-class ChartPluginProvider implements ChartPluginProviderInterface
+class ChartPluginCollection implements ChartPluginCollectionInterface
 {
     /**
      * @var \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
@@ -40,14 +40,6 @@ class ChartPluginProvider implements ChartPluginProviderInterface
         }
 
         return $this->pluginCollection[$name];
-    }
-
-    /**
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
-     */
-    public function getChartPluginCollection()
-    {
-        return $this->pluginCollection;
     }
 
     /**

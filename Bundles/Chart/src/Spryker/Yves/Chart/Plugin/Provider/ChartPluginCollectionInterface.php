@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\Chart\Plugin\Provider;
 
-interface ChartPluginProviderInterface
+interface ChartPluginCollectionInterface
 {
     /**
      * @param string $name
@@ -15,9 +15,4 @@ interface ChartPluginProviderInterface
      * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface
      */
     public function getChartPluginByName($name);
-
-    /**
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
-     */
-    public function getChartPluginCollection();
 }

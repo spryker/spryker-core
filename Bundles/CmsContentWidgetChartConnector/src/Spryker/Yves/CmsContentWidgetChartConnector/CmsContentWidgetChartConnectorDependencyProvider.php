@@ -8,17 +8,7 @@
 namespace Spryker\Yves\CmsContentWidgetChartConnector;
 
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Yves\Kernel\Container;
 
 class CmsContentWidgetChartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    /**
-     * @param \Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Yves\Kernel\Container
-     */
-    public function provideDependencies(Container $container)
-    {
-        return $container;
-    }
 }
