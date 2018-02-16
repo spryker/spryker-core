@@ -22,8 +22,6 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class NavigationStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-    const QUEUE_POOL_NAME_SHARED = 'sharedPool';
-
     /**
      * @api
      *
@@ -45,7 +43,7 @@ class NavigationStorageEventSubscriber extends AbstractPlugin implements EventSu
             ->addListenerQueued(NavigationEvents::ENTITY_SPY_NAVIGATION_NODE_LOCALIZED_ATTRIBUTE_CREATE, new NavigationNodeLocalizedAttributeStorageListener())
             ->addListenerQueued(NavigationEvents::ENTITY_SPY_NAVIGATION_NODE_LOCALIZED_ATTRIBUTE_UPDATE, new NavigationNodeLocalizedAttributeStorageListener())
             ->addListenerQueued(NavigationEvents::ENTITY_SPY_NAVIGATION_NODE_LOCALIZED_ATTRIBUTE_DELETE, new NavigationNodeLocalizedAttributeStorageListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new NavigationUrlRelationStorageListener(), static::QUEUE_POOL_NAME_SHARED);
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new NavigationUrlRelationStorageListener());
 
         return $eventCollection;
     }

@@ -61,25 +61,35 @@ class ProductStorageQueryContainer extends AbstractQueryContainer implements Pro
      */
     public function queryProductConcreteByIds(array $productIds)
     {
-        $query = $this
-            ->getFactory()
-            ->getProductQueryContainer()
+        $query = $this->getFactory()->getProductQueryContainer()
             ->queryAllProductLocalizedAttributes()
             ->joinWithLocale()
             ->joinWithSpyProduct()
-            ->joinWith('SpyProduct.SpyProductAbstract')
+            ->useSpyProductQuery()
+                ->joinWithSpyProductAbstract()
+                ->useSpyProductAbstractQuery()
+                    ->joinWithSpyProductAbstractStore()
+                    ->useSpyProductAbstractStoreQuery()
+                        ->joinWithSpyStore()
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->filterByFkProduct_In($productIds)
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+
+        $query
             ->join('SpyProductAbstract.SpyProductAbstractLocalizedAttributes')
             ->addJoinCondition('SpyProductAbstractLocalizedAttributes', 'SpyProductAbstractLocalizedAttributes.fk_locale = ' . SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE)
-            ->join('SpyProductAbstract.SpyUrl')
-            ->addJoinCondition('SpyUrl', 'spy_url.fk_locale = ' . SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE)
-            ->filterByFkProduct_In($productIds)
-            ->setFormatter(ModelCriteria::FORMAT_ARRAY)
-            ->withColumn(SpyUrlTableMap::COL_URL, 'url')
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_META_TITLE, 'meta_title')
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_META_KEYWORDS, 'meta_keywords')
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_META_DESCRIPTION, 'meta_description')
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_DESCRIPTION, 'abstract_description')
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_ATTRIBUTES, 'abstract_attributes');
+
+        $query
+            ->join('SpyProductAbstract.SpyUrl')
+            ->addJoinCondition('SpyUrl', 'spy_url.fk_locale = ' . SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE)
+            ->withColumn(SpyUrlTableMap::COL_URL, 'url');
 
         return $query;
     }

@@ -34,14 +34,6 @@ class ProductStorageCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(ProductStorageDependencyProvider::STORE);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductBridge
      */
     public function getProductFacade()

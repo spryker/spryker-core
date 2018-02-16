@@ -26,8 +26,6 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class ProductSetPageSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
-    const QUEUE_POOL_NAME_SHARED = 'sharedPool';
-
     /**
      * @api
      *
@@ -49,8 +47,8 @@ class ProductSetPageSearchEventSubscriber extends AbstractPlugin implements Even
             ->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_ABSTRACT_SET_CREATE, new ProductAbstractProductSetPageSearchListener())
             ->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_ABSTRACT_SET_UPDATE, new ProductAbstractProductSetPageSearchListener())
             ->addListenerQueued(ProductSetEvents::ENTITY_SPY_PRODUCT_ABSTRACT_SET_DELETE, new ProductAbstractProductSetPageSearchListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new ProductSetPageUrlSearchListener(), static::QUEUE_POOL_NAME_SHARED)
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductSetPageUrlSearchListener(), static::QUEUE_POOL_NAME_SHARED);
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new ProductSetPageUrlSearchListener())
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductSetPageUrlSearchListener());
 
         $this->addProductImageEvents($eventCollection);
 

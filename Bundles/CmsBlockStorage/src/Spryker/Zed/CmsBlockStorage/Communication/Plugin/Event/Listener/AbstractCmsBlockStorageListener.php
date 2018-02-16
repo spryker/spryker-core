@@ -11,6 +11,7 @@ use Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * @method \Spryker\Zed\CmsBlockStorage\Communication\CmsBlockStorageCommunicationFactory getFactory()
@@ -52,8 +53,12 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
     protected function unpublish(array $cmsBlockIds)
     {
         $blockStorageEntities = $this->findCmsStorageEntities($cmsBlockIds);
-        foreach ($blockStorageEntities as $blockStorageEntity) {
-            $blockStorageEntity->delete();
+        foreach ($blockStorageEntities as $blockStorageStoreEntities) {
+            foreach ($blockStorageStoreEntities as $blockStorageLocalizedEntities) {
+                foreach ($blockStorageLocalizedEntities as $blockStorageEntity) {
+                    $blockStorageEntity->delete();
+                }
+            }
         }
     }
 
@@ -67,9 +72,12 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
     {
         $localeNames = $this->getStore()->getLocales();
 
+        $toRemoveEntities = $blockStorageEntities;
+
         foreach ($blockEntities as $blockEntityArray) {
             foreach ($localeNames as $localeName) {
                 $idCmsBlock = $blockEntityArray[static::ID_CMS_BLOCK];
+
                 if (isset($blockStorageEntities[$idCmsBlock][$localeName])) {
                     $this->storeDataSet($blockEntityArray, $localeName, $blockStorageEntities[$idCmsBlock][$localeName]);
                 } else {
@@ -107,6 +115,7 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
 
         $cmsBlockStorageEntity->setData($blockEntityArray);
         $cmsBlockStorageEntity->setFkCmsBlock($blockEntityArray[static::ID_CMS_BLOCK]);
+        $cmsBlockStorageEntity->setStore((new StoreFacade())->getCurrentStore()->getName());
         $cmsBlockStorageEntity->setLocale($localeName);
         $cmsBlockStorageEntity->setName($blockEntityArray['name']);
         $cmsBlockStorageEntity->save();
@@ -132,7 +141,7 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
         $spyCmsBlockStorageEntities = $this->getQueryContainer()->queryCmsStorageEntities($cmsBlockIds)->find();
         $cmsBlockStorageEntitiesByIdAndLocale = [];
         foreach ($spyCmsBlockStorageEntities as $spyCmsBlockStorageEntity) {
-            $cmsBlockStorageEntitiesByIdAndLocale[$spyCmsBlockStorageEntity->getFkCmsBlock()][$spyCmsBlockStorageEntity->getLocale()] = $spyCmsBlockStorageEntity;
+            $cmsBlockStorageEntitiesByIdAndLocale[$spyCmsBlockStorageEntity->getFkCmsBlock()][$spyCmsBlockStorageEntity->getStore()][$spyCmsBlockStorageEntity->getLocale()] = $spyCmsBlockStorageEntity;
         }
 
         return $cmsBlockStorageEntitiesByIdAndLocale;

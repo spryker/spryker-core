@@ -40,9 +40,11 @@ class CmsBlockStorageQueryContainer extends AbstractQueryContainer implements Cm
     {
         $query = $this->getFactory()->createCmsBlockQuery()
             ->filterByIdCmsBlock_In($cmsBlockIds)
-            ->joinWith('SpyCmsBlock.CmsBlockTemplate')
-            ->joinWith('SpyCmsBlock.SpyCmsBlockGlossaryKeyMapping')
-            ->joinWith('SpyCmsBlockGlossaryKeyMapping.GlossaryKey')
+            ->joinWithCmsBlockTemplate()
+            ->joinWithSpyCmsBlockGlossaryKeyMapping()
+            ->useSpyCmsBlockGlossaryKeyMappingQuery()
+                ->joinWithGlossaryKey()
+            ->endUse()
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
 
         return $query;

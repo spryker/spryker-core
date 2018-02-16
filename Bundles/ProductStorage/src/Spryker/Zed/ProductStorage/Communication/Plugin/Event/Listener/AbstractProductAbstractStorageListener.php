@@ -122,7 +122,7 @@ class AbstractProductAbstractStorageListener extends AbstractPlugin
     protected function storeDataSet($storeName, array $spyProductAbstractLocalizedEntity, SpyProductAbstractStorage $spyProductStorageEntity = null)
     {
         if (!$this->isActive($spyProductAbstractLocalizedEntity)) {
-            $spyProductStorageEntity->delete();
+            $spyProductStorageEntity && $spyProductStorageEntity->delete();
 
             return;
         }
