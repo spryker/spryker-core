@@ -14,7 +14,7 @@ coverage:
 suites:
     Business:
         path: Business
-        class_name: CmsProductSearchContentWidgetPluginTest
+        class_name: CmsProductSearchContentWidgetPluginTester
         modules:
             enabled:
                 - Asserts

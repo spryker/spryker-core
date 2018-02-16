@@ -73,7 +73,7 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testBootShouldAddSessionToSessionClientWHenNotInCliOrPhpDbg()
+    public function testBootShouldAddSessionToSessionClientWhenNotInCliOrPhpDbg()
     {
         $sessionClientMock = $this->getSessionClientMock();
 
