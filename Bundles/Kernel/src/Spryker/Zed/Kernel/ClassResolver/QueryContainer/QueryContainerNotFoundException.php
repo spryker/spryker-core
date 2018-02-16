@@ -32,11 +32,11 @@ class QueryContainerNotFoundException extends Exception
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
-            'Can not resolve %1$sQueryContainer in persistence layer for your bundle "%1$s"',
+            'Can not resolve %1$sQueryContainer in persistence layer for your module "%1$s"',
             $callerClassInfo->getBundle()
         ) . PHP_EOL;
 
-        $message .= 'You can fix this by adding the missing QueryContainer to your bundle.' . PHP_EOL;
+        $message .= 'You can fix this by adding the missing QueryContainer to your module.' . PHP_EOL;
 
         $message .= sprintf(
             'E.g. %1$s\\Zed\\%2$s\\Persistence\\%2$sQueryContainer',

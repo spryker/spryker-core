@@ -18,6 +18,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     const KEY_ENTITY = 'Entity';
     const FOREIGN_TABLE = 'foreignTable';
     const KEY_PHP_NAME = 'phpName';
+    const ENTITY_NAMESPACE = 'entity-namespace';
 
     /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\Helper\PluralizerInterface
@@ -53,6 +54,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
                 self::KEY_NAME => $transferName,
                 self::KEY_DEPRECATED => isset($transferDefinition[self::KEY_DEPRECATED]) ? $transferDefinition[self::KEY_DEPRECATED] : null,
                 self::KEY_PROPERTY => $properties,
+                self::ENTITY_NAMESPACE => isset($transferDefinition[self::KEY_PHP_NAME]) ? $transferDefinition[self::ENTITY_NAMESPACE] . '\\' . $transferDefinition[self::KEY_PHP_NAME] : null,
             ];
 
             $normalizedDefinitions[] = $normalizedDefinition;

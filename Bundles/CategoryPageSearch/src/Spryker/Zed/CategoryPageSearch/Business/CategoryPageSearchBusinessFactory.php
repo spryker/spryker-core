@@ -23,21 +23,12 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     public function createCategoryNodeSearch()
     {
         return new CategoryNodePageSearch(
-            $this->getUtilSanitizeService(),
             $this->getUtilEncoding(),
             $this->getSearchFacade(),
             $this->getQueryContainer(),
             $this->getStore(),
             $this->getConfig()->isSendingToQueue()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilSanitizeServiceInterface
-     */
-    public function getUtilSanitizeService()
-    {
-        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
 
     /**

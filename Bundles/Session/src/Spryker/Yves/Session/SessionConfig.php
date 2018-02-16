@@ -34,13 +34,10 @@ class SessionConfig extends AbstractBundleConfig
             'name' => str_replace('.', '-', $this->get(SessionConstants::YVES_SESSION_COOKIE_NAME)),
             'cookie_lifetime' => $this->getSessionCookieTimeToLive(),
             'cookie_secure' => $this->secureCookie(),
+            'cookie_domain' => $this->getSessionCookieDomain(),
+            'cookie_path' => $this->getSessionCookiePath(),
             'cookie_httponly' => true,
         ];
-
-        $cookieDomain = $this->get(SessionConstants::YVES_SESSION_COOKIE_DOMAIN);
-        if ($cookieDomain) {
-            $sessionStorageOptions['cookie_domain'] = $cookieDomain;
-        }
 
         return $sessionStorageOptions;
     }
@@ -62,6 +59,22 @@ class SessionConfig extends AbstractBundleConfig
     protected function secureCookie()
     {
         return ($this->get(SessionConstants::YVES_SESSION_COOKIE_SECURE, true) && $this->get(SessionConstants::YVES_SSL_ENABLED, true));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSessionCookieDomain(): string
+    {
+        return $this->get(SessionConstants::YVES_SESSION_COOKIE_DOMAIN, '');
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSessionCookiePath(): string
+    {
+        return $this->get(SessionConstants::YVES_SESSION_COOKIE_PATH, '/');
     }
 
     /**

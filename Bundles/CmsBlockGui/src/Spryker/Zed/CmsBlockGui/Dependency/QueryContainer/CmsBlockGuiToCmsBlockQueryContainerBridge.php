@@ -47,4 +47,14 @@ class CmsBlockGuiToCmsBlockQueryContainerBridge implements CmsBlockGuiToCmsBlock
     {
         return $this->cmsBlockQueryContainer->queryTemplates();
     }
+
+    /**
+     * @param int $idCmsBlock
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
+     */
+    public function queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock)
+    {
+        return $this->cmsBlockQueryContainer->queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock);
+    }
 }
