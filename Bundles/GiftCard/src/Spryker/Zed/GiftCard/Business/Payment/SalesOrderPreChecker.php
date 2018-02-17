@@ -14,9 +14,9 @@ use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\GiftCard\GiftCardConfig as SharedGiftCardConfig;
+use Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydratorInterface;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleCheckerInterface;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface;
-use Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface;
 use Spryker\Zed\GiftCard\GiftCardConfig;
 
 class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
@@ -32,28 +32,30 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
     protected $giftCardDecisionRuleChecker;
 
     /**
-     * @var \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface
+     * @var GiftCardActualValueHydratorInterface
      */
-    protected $giftCardValueProvider;
+    protected $giftCardActualValueHydrator;
 
-    /** @var \Spryker\Zed\GiftCard\GiftCardConfig */
+    /**
+     * @var \Spryker\Zed\GiftCard\GiftCardConfig
+     */
     protected $giftCardConfig;
 
     /**
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleCheckerInterface $giftCardDecisionRuleChecker
-     * @param \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface $giftCardValueProvider
+     * @param GiftCardActualValueHydratorInterface $giftCardActualValueHydrator
      * @param \Spryker\Zed\GiftCard\GiftCardConfig $giftCardConfig
      */
     public function __construct(
         GiftCardReaderInterface $giftCardReader,
         GiftCardDecisionRuleCheckerInterface $giftCardDecisionRuleChecker,
-        GiftCardValueProviderPluginInterface $giftCardValueProvider,
+        GiftCardActualValueHydratorInterface $giftCardActualValueHydrator,
         GiftCardConfig $giftCardConfig
     ) {
         $this->giftCardReader = $giftCardReader;
         $this->giftCardDecisionRuleChecker = $giftCardDecisionRuleChecker;
-        $this->giftCardValueProvider = $giftCardValueProvider;
+        $this->giftCardActualValueHydrator = $giftCardActualValueHydrator;
         $this->giftCardConfig = $giftCardConfig;
     }
 
@@ -65,11 +67,11 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
      */
     public function precheckSalesOrderGiftCards(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $result = true;
         if (!$this->hasGiftCardPayments($quoteTransfer)) {
-            return;
+            return true;
         }
 
+        $result = true;
         $validPayments = new ArrayObject();
 
         foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
@@ -80,6 +82,7 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
 
             $paymentTransfer->requireGiftCard();
             $giftCardTransfer = $paymentTransfer->getGiftCard();
+            $giftCardTransfer = $this->giftCardActualValueHydrator->hydrate($giftCardTransfer);
 
             $errors = $this->checkGiftCard($giftCardTransfer, $quoteTransfer, $paymentTransfer);
 
@@ -134,7 +137,7 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
             $result[] = $error;
         }
 
-        if ($this->giftCardValueProvider->getValue($giftCardTransfer) < $paymentTransfer->getAmount()) {
+        if ($giftCardTransfer->getActualValue() < $paymentTransfer->getAmount()) {
             $error = new CheckoutErrorTransfer();
             $error->setMessage('Gift Card ' . $giftCardTransfer->getCode() . ' used amount too high');
             $error->setErrorCode(SharedGiftCardConfig::ERROR_GIFT_CARD_AMOUNT_TOO_HIGH);

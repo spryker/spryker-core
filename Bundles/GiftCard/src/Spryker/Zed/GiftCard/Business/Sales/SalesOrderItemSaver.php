@@ -26,7 +26,7 @@ class SalesOrderItemSaver implements SalesOrderItemSaverInterface
     /**
      * @var \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardAttributePluginInterface[]
      */
-    private $attributePlugins;
+    protected $attributePlugins;
 
     /**
      * @param \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardAttributePluginInterface[] $attributePlugins

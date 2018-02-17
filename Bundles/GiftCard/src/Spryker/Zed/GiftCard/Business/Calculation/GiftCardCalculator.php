@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Orm\Zed\GiftCard\Persistence\SpyGiftCard;
+use Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydratorInterface;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleCheckerInterface;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface;
-use Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface;
 use Spryker\Zed\GiftCard\GiftCardConfig;
 
 class GiftCardCalculator implements GiftCardCalculatorInterface
@@ -30,9 +30,9 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
     protected $giftCardDecisionRuleChecker;
 
     /**
-     * @var \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface
+     * @var GiftCardActualValueHydratorInterface
      */
-    protected $giftCardValueProvider;
+    protected $giftCardActualValueHydrator;
 
     /** @var \Spryker\Zed\GiftCard\GiftCardConfig */
     protected $giftCardConfig;
@@ -40,18 +40,18 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
     /**
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleCheckerInterface $giftCardDecisionRuleChecker
-     * @param \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardValueProviderPluginInterface $giftCardValueProvider
+     * @param \Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydratorInterface $giftCardActualValueHydrator
      * @param \Spryker\Zed\GiftCard\GiftCardConfig $giftCardConfig
      */
     public function __construct(
         GiftCardReaderInterface $giftCardReader,
         GiftCardDecisionRuleCheckerInterface $giftCardDecisionRuleChecker,
-        GiftCardValueProviderPluginInterface $giftCardValueProvider,
+        GiftCardActualValueHydratorInterface $giftCardActualValueHydrator,
         GiftCardConfig $giftCardConfig
     ) {
         $this->giftCardReader = $giftCardReader;
         $this->giftCardDecisionRuleChecker = $giftCardDecisionRuleChecker;
-        $this->giftCardValueProvider = $giftCardValueProvider;
+        $this->giftCardActualValueHydrator = $giftCardActualValueHydrator;
         $this->giftCardConfig = $giftCardConfig;
     }
 
@@ -160,11 +160,15 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
      */
     protected function addGiftCardPaymentsToQuote(CalculableObjectTransfer $calculableObjectTransfer, ArrayObject $applicableGiftCards)
     {
-        foreach ($applicableGiftCards as $giftCard) {
-            $giftCardPaymentTransfer = $this->findPayment($calculableObjectTransfer, $giftCard);
+        foreach ($applicableGiftCards as $giftCardTransfer) {
+            $giftCardPaymentTransfer = $this->findPayment($calculableObjectTransfer, $giftCardTransfer);
+            $giftCardTransfer = $this->giftCardActualValueHydrator->hydrate($giftCardTransfer);
 
             if ($giftCardPaymentTransfer) {
-                $giftCardPaymentTransfer->setAmount($this->giftCardValueProvider->getValue($giftCard));
+                $giftCardPaymentTransfer->setAmount(
+                    $giftCardTransfer->getActualValue()
+                );
+
                 continue;
             }
 
@@ -172,9 +176,9 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
                 ->setPaymentProvider($this->giftCardConfig->getPaymentProviderName())
                 ->setPaymentSelection($this->giftCardConfig->getPaymentProviderName())
                 ->setPaymentMethod($this->giftCardConfig->getPaymentMethodName())
-                ->setAvailableAmount($this->giftCardValueProvider->getValue($giftCard))
+                ->setAvailableAmount($giftCardTransfer->getActualValue())
                 ->setIsLimitedAmount(true)
-                ->setGiftCard($giftCard);
+                ->setGiftCard($giftCardTransfer);
 
             $calculableObjectTransfer->addPayment($giftCardPaymentTransfer);
         }

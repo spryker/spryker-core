@@ -26,12 +26,12 @@ class GiftCardCreator implements GiftCardCreatorInterface
     /**
      * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface
      */
-    private $giftCardReader;
+    protected $giftCardReader;
 
     /**
      * @var \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCodeGeneratorInterface
      */
-    private $giftCardCodeGenerator;
+    protected $giftCardCodeGenerator;
 
     /**
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
@@ -116,11 +116,11 @@ class GiftCardCreator implements GiftCardCreatorInterface
      */
     public function createGiftCardForOrderItem($idSalesOrderItem)
     {
-        $giftCardMetadata = $this->giftCardReader->getGiftCardOrderItemMetadata($idSalesOrderItem);
-        $giftCardTransfer = $this->createGiftCardTransferFromMetadata($giftCardMetadata);
+        $giftCardMetadataEntity = $this->giftCardReader->getGiftCardOrderItemMetadata($idSalesOrderItem);
+        $giftCardTransfer = $this->createGiftCardTransferFromMetadata($giftCardMetadataEntity);
 
-        $giftCardMetadata->setCode($giftCardTransfer->getCode());
-        $giftCardMetadata->save();
+        $giftCardMetadataEntity->setCode($giftCardTransfer->getCode());
+        $giftCardMetadataEntity->save();
 
         return $this->create($giftCardTransfer);
     }
@@ -132,7 +132,8 @@ class GiftCardCreator implements GiftCardCreatorInterface
      */
     protected function createGiftCardTransferFromMetadata(SpySalesOrderItemGiftCard $giftCardOrderItemMetadata)
     {
-        $orderItem = $giftCardOrderItemMetadata->getSpySalesOrderItem();
+        $orderItemEntity = $giftCardOrderItemMetadata->getSpySalesOrderItem();
+
         $giftCardTransfer = new GiftCardTransfer();
         $giftCardMetadata = $giftCardOrderItemMetadata->toArray();
 
@@ -142,8 +143,8 @@ class GiftCardCreator implements GiftCardCreatorInterface
         $giftCardTransfer->fromArray($giftCardMetadata, true);
 
         $giftCardTransfer->setIsActive(true);
-        $giftCardTransfer->setName($orderItem->getName());
-        $giftCardTransfer->setValue($this->getGiftCardValue($orderItem, $giftCardOrderItemMetadata));
+        $giftCardTransfer->setName($orderItemEntity->getName());
+        $giftCardTransfer->setValue($this->getGiftCardValue($orderItemEntity, $giftCardOrderItemMetadata));
         $giftCardTransfer->setCode($this->getCode($giftCardOrderItemMetadata));
         $giftCardTransfer->setReplacementPattern($giftCardOrderItemMetadata->getPattern());
 

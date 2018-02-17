@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\GiftCard\Business;
 
+use Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydrator;
+use Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydratorInterface;
 use Spryker\Zed\GiftCard\Business\Calculation\GiftCardCalculator;
 use Spryker\Zed\GiftCard\Business\Cart\MetadataExpander;
 use Spryker\Zed\GiftCard\Business\Discount\GiftCardDiscountableItemFilter;
@@ -36,6 +38,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     {
         return new GiftCardReader(
             $this->getQueryContainer(),
+            $this->createGiftCardActualValueHydrator(),
             $this->getEncodingService()
         );
     }
@@ -131,8 +134,18 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
         return new GiftCardCalculator(
             $this->createGiftCardReader(),
             $this->createGiftCardDecisionRuleChecker(),
-            $this->getGiftCardValueProviderPlugin(),
+            $this->createGiftCardActualValueHydrator(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return GiftCardActualValueHydratorInterface
+     */
+    public function createGiftCardActualValueHydrator()
+    {
+        return new GiftCardActualValueHydrator(
+            $this->getGiftCardValueProviderPlugin()
         );
     }
 
@@ -170,7 +183,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
         return new SalesOrderPreChecker(
             $this->createGiftCardReader(),
             $this->createGiftCardDecisionRuleChecker(),
-            $this->getGiftCardValueProviderPlugin(),
+            $this->createGiftCardActualValueHydrator(),
             $this->getConfig()
         );
     }

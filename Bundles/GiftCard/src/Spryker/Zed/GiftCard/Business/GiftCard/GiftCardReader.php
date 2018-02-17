@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\GiftCardProductConfigurationTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Orm\Zed\GiftCard\Persistence\SpyGiftCard;
 use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
+use Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydratorInterface;
 use Spryker\Zed\GiftCard\Business\Exception\GiftCardNotFoundException;
 use Spryker\Zed\GiftCard\Business\Exception\GiftCardSalesMetadataNotFoundException;
 use Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface;
@@ -23,22 +24,30 @@ class GiftCardReader implements GiftCardReaderInterface
     /**
      * @var \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface
      */
-    private $queryContainer;
+    protected $queryContainer;
+
+    /**
+     * @var GiftCardActualValueHydratorInterface
+     */
+    protected $giftCardActualValueHydrator;
 
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingService
      */
-    private $encodingService;
+    protected $encodingService;
 
     /**
      * @param \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface $queryContainer
+     * @param GiftCardActualValueHydratorInterface $giftCardActualValueHydrator
      * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $encodingService
      */
     public function __construct(
         GiftCardQueryContainerInterface $queryContainer,
+        GiftCardActualValueHydratorInterface $giftCardActualValueHydrator,
         UtilEncodingServiceInterface $encodingService
     ) {
         $this->queryContainer = $queryContainer;
+        $this->giftCardActualValueHydrator = $giftCardActualValueHydrator;
         $this->encodingService = $encodingService;
     }
 
@@ -142,6 +151,7 @@ class GiftCardReader implements GiftCardReaderInterface
         unset($giftCardData[static::ATTRIBUTES]);
 
         $giftCardTransfer->fromArray($giftCardData, true);
+        $giftCardTransfer = $this->giftCardActualValueHydrator->hydrate($giftCardTransfer);
 
         return $giftCardTransfer;
     }
@@ -239,13 +249,13 @@ class GiftCardReader implements GiftCardReaderInterface
      */
     public function getGiftCardOrderItemMetadata($idSalesOrderItem)
     {
-        $giftCardSalesMetadata = $this->queryContainer->queryGiftCardOrderItemMetadata($idSalesOrderItem)->findOne();
+        $giftCardSalesMetadataEntity = $this->queryContainer->queryGiftCardOrderItemMetadata($idSalesOrderItem)->findOne();
 
-        if (!$giftCardSalesMetadata) {
+        if (!$giftCardSalesMetadataEntity) {
             throw new GiftCardSalesMetadataNotFoundException('Giftcard Metadata for item ' . $idSalesOrderItem . ' were requested but are missing');
         }
 
-        return $giftCardSalesMetadata;
+        return $giftCardSalesMetadataEntity;
     }
 
     /**

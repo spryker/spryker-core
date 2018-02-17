@@ -1,5 +1,5 @@
 <div>
     {% for giftCard in mail.giftCards %}
-        <div style="text-align: center;">{{ giftCard.name }}: {{ giftCard.code }}</div><br />
+        <div style="text-align: center;">{{ giftCard.name }}: {{ giftCard.code }} ({{ giftCard.actualValue / 100 | number_format(2) }})</div><br />
     {% endfor %}
 </div>
