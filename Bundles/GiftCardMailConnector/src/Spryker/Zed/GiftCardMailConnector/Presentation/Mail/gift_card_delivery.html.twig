@@ -2,7 +2,7 @@
         <div style="text-align: center;">
         {{ 'mail.giftCard.delivery.text' | trans }}
         {% for giftCard in mail.giftCards %}
-                {{ giftCard.code }}<br />
+                {{ giftCard.code }} ({{ giftCard.value / 100 | number_format(2) }})<br />
         {% endfor %}
         </div>
 </div>
