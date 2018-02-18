@@ -214,6 +214,12 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
     protected function addNotApplicableGiftCardsToCalculableObject(CalculableObjectTransfer $calculableObjectTransfer, ArrayObject $nonApplicableGiftCards)
     {
         foreach ($nonApplicableGiftCards as $giftCardTransfer) {
+            $giftCardTransfer = $this->giftCardReader->findByCode($giftCardTransfer->getCode());
+
+            if (!$giftCardTransfer) {
+                continue;
+            }
+
             $calculableObjectTransfer->addNotApplicableGiftCardCode($giftCardTransfer->getCode());
             $this->removeGiftCardPayment($calculableObjectTransfer, $giftCardTransfer);
         }
