@@ -133,6 +133,7 @@ class GiftCardCreator implements GiftCardCreatorInterface
     protected function createGiftCardTransferFromMetadata(SpySalesOrderItemGiftCard $giftCardOrderItemMetadata)
     {
         $orderItemEntity = $giftCardOrderItemMetadata->getSpySalesOrderItem();
+        $orderEntity = $orderItemEntity->getOrder();
 
         $giftCardTransfer = new GiftCardTransfer();
         $giftCardMetadata = $giftCardOrderItemMetadata->toArray();
@@ -142,11 +143,16 @@ class GiftCardCreator implements GiftCardCreatorInterface
 
         $giftCardTransfer->fromArray($giftCardMetadata, true);
 
-        $giftCardTransfer->setIsActive(true);
-        $giftCardTransfer->setName($orderItemEntity->getName());
-        $giftCardTransfer->setValue($this->getGiftCardValue($orderItemEntity, $giftCardOrderItemMetadata));
-        $giftCardTransfer->setCode($this->getCode($giftCardOrderItemMetadata));
-        $giftCardTransfer->setReplacementPattern($giftCardOrderItemMetadata->getPattern());
+        $giftCardTransfer
+            ->setIsActive(true)
+            ->setName($orderItemEntity->getName())
+            ->setCurrencyIsoCode($orderEntity->getCurrencyIsoCode())
+            ->setReplacementPattern($giftCardOrderItemMetadata->getPattern())
+            ->setCode($this->getCode($giftCardOrderItemMetadata))
+            ->setValue($this->getGiftCardValue(
+                $orderItemEntity,
+                $giftCardOrderItemMetadata
+            ));
 
         return $giftCardTransfer;
     }

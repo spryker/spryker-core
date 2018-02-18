@@ -80,11 +80,7 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
                 continue;
             }
 
-            $paymentTransfer->requireGiftCard();
-            $giftCardTransfer = $paymentTransfer->getGiftCard();
-            $giftCardTransfer = $this->giftCardActualValueHydrator->hydrate($giftCardTransfer);
-
-            $errors = $this->checkGiftCard($giftCardTransfer, $quoteTransfer, $paymentTransfer);
+            $errors = $this->checkSalesOrderGiftCardPayment($quoteTransfer, $paymentTransfer);
 
             if ($errors->count() === 0) {
                 $validPayments[] = $paymentTransfer;
@@ -100,6 +96,21 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
         $quoteTransfer->setPayments($validPayments);
 
         return $result;
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     * @param PaymentTransfer $paymentTransfer
+     *
+     * @return ArrayObject|CheckoutErrorTransfer[]
+     */
+    protected function checkSalesOrderGiftCardPayment(QuoteTransfer $quoteTransfer, PaymentTransfer $paymentTransfer)
+    {
+        $paymentTransfer->requireGiftCard();
+        $giftCardTransfer = $paymentTransfer->getGiftCard();
+        $giftCardTransfer = $this->giftCardActualValueHydrator->hydrate($giftCardTransfer);
+
+        return $this->checkGiftCard($giftCardTransfer, $quoteTransfer, $paymentTransfer);
     }
 
     /**
@@ -127,24 +138,71 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
      */
     protected function checkGiftCard(GiftCardTransfer $giftCardTransfer, QuoteTransfer $quoteTransfer, PaymentTransfer $paymentTransfer)
     {
-        $result = new ArrayObject();
+        $errors = new ArrayObject();
+        $errors = $this->checkGiftCardApplicability($giftCardTransfer, $quoteTransfer, $errors);
+        $errors = $this->checkGiftCardAmount($giftCardTransfer, $paymentTransfer, $errors);
+        $errors = $this->checkGiftCardCurrency($giftCardTransfer, $quoteTransfer, $errors);
 
+        return $errors;
+    }
+
+    /**
+     * @param GiftCardTransfer $giftCardTransfer
+     * @param QuoteTransfer $quoteTransfer
+     * @param \ArrayObject $errors
+     *
+     * @return \ArrayObject
+     */
+    protected function checkGiftCardApplicability(GiftCardTransfer $giftCardTransfer, QuoteTransfer $quoteTransfer, ArrayObject $errors)
+    {
         if (!$this->giftCardDecisionRuleChecker->isApplicable($giftCardTransfer, $quoteTransfer)) {
             $error = new CheckoutErrorTransfer();
             $error->setMessage('Gift Card ' . $giftCardTransfer->getCode() . ' already used');
             $error->setErrorCode(SharedGiftCardConfig::ERROR_GIFT_CARD_ALREADY_USED);
 
-            $result[] = $error;
+            $errors[] = $error;
         }
 
+        return $errors;
+    }
+
+    /**
+     * @param GiftCardTransfer $giftCardTransfer
+     * @param PaymentTransfer $paymentTransfer
+     * @param ArrayObject $errors
+     *
+     * @return ArrayObject
+     */
+    protected function checkGiftCardAmount(GiftCardTransfer $giftCardTransfer, PaymentTransfer $paymentTransfer, ArrayObject $errors)
+    {
         if ($giftCardTransfer->getActualValue() < $paymentTransfer->getAmount()) {
             $error = new CheckoutErrorTransfer();
             $error->setMessage('Gift Card ' . $giftCardTransfer->getCode() . ' used amount too high');
             $error->setErrorCode(SharedGiftCardConfig::ERROR_GIFT_CARD_AMOUNT_TOO_HIGH);
 
-            $result[] = $error;
+            $errors[] = $error;
         }
 
-        return $result;
+        return $errors;
+    }
+
+    /**
+     * @param GiftCardTransfer $giftCardTransfer
+     * @param QuoteTransfer $quoteTransfer
+     * @param ArrayObject $errors
+     *
+     * @return ArrayObject
+     */
+    protected function checkGiftCardCurrency(GiftCardTransfer $giftCardTransfer, QuoteTransfer $quoteTransfer, ArrayObject $errors)
+    {
+        if ($giftCardTransfer->getCurrencyIsoCode() !== $quoteTransfer->getCurrency()->getCode()) {
+            $error = new CheckoutErrorTransfer();
+            $error->setMessage('Gift Card ' . $giftCardTransfer->getCode() . ' has different currency');
+            $error->setErrorCode(SharedGiftCardConfig::ERROR_GIFT_CARD_WRONG_CURRENCY);
+
+            $errors[] = $error;
+        }
+
+        return $errors;
     }
 }

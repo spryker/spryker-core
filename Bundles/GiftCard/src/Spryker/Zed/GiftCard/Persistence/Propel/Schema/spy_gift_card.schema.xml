@@ -7,6 +7,7 @@
         <column name="replacement_pattern" type="VARCHAR" size="40" required="false"/>
         <column name="code" type="VARCHAR" size="40" required="true"/>
         <column name="value" type="INTEGER" required="true"/>
+        <column name="currency_iso_code" type="VARCHAR" size="5" required="false"/>
         <column name="is_active" type="BOOLEAN" required="true" default="true"/>
         <column name="attributes" type="LONGVARCHAR" required="false"/>
 
