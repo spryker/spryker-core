@@ -81,6 +81,7 @@ interface OmsFacadeInterface
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
      *  - Returns data which was aggregated from state machine plugins
+     *  - Returns NULL is case of an internal failure
      *
      * @api
      *
@@ -88,7 +89,7 @@ interface OmsFacadeInterface
      * @param array $orderItemIds
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = []);
 
@@ -105,13 +106,14 @@ interface OmsFacadeInterface
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
      *  - Returns data which was aggregated from state machine plugins
+     *  - Returns NULL is case of an internal failure
      *
      * @api
      *
      * @param array $orderItemIds
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForNewOrderItems(array $orderItemIds, array $data = []);
 
@@ -127,6 +129,7 @@ interface OmsFacadeInterface
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
      *  - Returns data which was aggregated from state machine plugins
+     *  - Returns NULL is case of an internal failure
      *
      * @api
      *
@@ -134,7 +137,7 @@ interface OmsFacadeInterface
      * @param int $orderItemId
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOneOrderItem($eventId, $orderItemId, array $data = []);
 
@@ -145,7 +148,7 @@ interface OmsFacadeInterface
      *
      * @api
      *
-     * @return \Spryker\Zed\Oms\Business\Process\Process[]
+     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
      */
     public function getProcesses();
 
@@ -200,7 +203,7 @@ interface OmsFacadeInterface
      * @param string|null $format
      * @param int|null $fontSize
      *
-     * @return bool
+     * @return string
      */
     public function drawProcess($processName, $highlightState = null, $format = null, $fontSize = null);
 
@@ -267,7 +270,7 @@ interface OmsFacadeInterface
      *
      * @param string $sku
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function getReservedOrderItemsForSku($sku);
 
@@ -358,6 +361,7 @@ interface OmsFacadeInterface
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
      *  - Returns data which was aggregated from state machine plugins
+     *  - Returns NULL is case of an internal failure
      *
      * @api
      *
@@ -366,7 +370,7 @@ interface OmsFacadeInterface
      * @param array $logContext
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEvent($eventId, ObjectCollection $orderItems, array $logContext, array $data = []);
 
@@ -382,6 +386,7 @@ interface OmsFacadeInterface
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
      *  - Returns data which was aggregated from state machine plugins
+     *  - Returns NULL is case of an internal failure
      *
      * @api
      *
@@ -389,7 +394,7 @@ interface OmsFacadeInterface
      * @param array $logContext
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForNewItem(ObjectCollection $orderItems, array $logContext, array $data = []);
 
@@ -405,15 +410,16 @@ interface OmsFacadeInterface
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
      *  - Returns data which was aggregated from state machine plugins
+     *  - Returns NULL is case of an internal failure
      *
      * @api
      *
      * @param string $eventId
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      * @param array $logContext
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOneItem($eventId, $orderItem, array $logContext, array $data = []);
 
@@ -438,7 +444,7 @@ interface OmsFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder);
 

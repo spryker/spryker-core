@@ -133,39 +133,6 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     /**
      * @api
      *
-     * @deprecated Use sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest) instead.
-     *
-     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
-     * @param string $sku
-     * @param bool $returnTest
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function countSalesOrderItemsForSku(array $states, $sku, $returnTest = true)
-    {
-        $query = $this->getFactory()
-            ->getSalesQueryContainer()
-            ->querySalesOrderItem()
-            ->withColumn('COUNT(*)', 'Count')->select(['Count']);
-
-        if ($returnTest === false) {
-            $query->useOrderQuery()->filterByIsTest(false)->endUse();
-        }
-
-        $stateNames = [];
-        foreach ($states as $state) {
-            $stateNames[] = $state->getName();
-        }
-
-        $query->useStateQuery()->filterByName($stateNames, Criteria::IN)->endUse();
-        $query->filterBySku($sku);
-
-        return $query;
-    }
-
-    /**
-     * @api
-     *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
@@ -290,7 +257,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery
      */
-    public function getActiveProcesses(array $activeProcesses)
+    public function queryActiveProcesses(array $activeProcesses)
     {
         $query = $this->getFactory()
             ->createOmsOrderProcessQuery();
@@ -305,7 +272,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery
      */
-    public function getOrderItemStates(array $orderItemStates)
+    public function queryOrderItemStates(array $orderItemStates)
     {
         $query = $this->getFactory()
             ->createOmsOrderItemStateQuery();
@@ -347,24 +314,6 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         return $this->getFactory()
             ->createOmsOrderItemStateQuery()
             ->filterByName($orderItemStates, Criteria::IN);
-    }
-
-    /**
-     * @api
-     *
-     * @deprecated Not used, will be removed in the next major release.
-     *
-     * @param string $identifier
-     * @param \DateTime $expirationDate
-     *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
-     */
-    public function queryLockedItemsByIdentifierAndExpirationDate($identifier, DateTime $expirationDate)
-    {
-        return $this->getFactory()
-            ->createOmsStateMachineLockQuery()
-            ->filterByIdentifier($identifier)
-            ->filterByExpires(['min' => $expirationDate], Criteria::GREATER_EQUAL);
     }
 
     /**

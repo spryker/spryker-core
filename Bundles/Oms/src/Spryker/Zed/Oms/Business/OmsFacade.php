@@ -94,7 +94,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param array $orderItemIds
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = [])
     {
@@ -111,7 +111,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param array $orderItemIds
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForNewOrderItems(array $orderItemIds, array $data = [])
     {
@@ -129,7 +129,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param int $orderItemId
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOneOrderItem($eventId, $orderItemId, array $data = [])
     {
@@ -143,7 +143,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
-     * @return \Spryker\Zed\Oms\Business\Process\Process[]
+     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
      */
     public function getProcesses()
     {
@@ -411,7 +411,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param array $logContext
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEvent($eventId, ObjectCollection $orderItems, array $logContext, array $data = [])
     {
@@ -431,7 +431,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param array $logContext
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForNewItem(ObjectCollection $orderItems, array $logContext, array $data = [])
     {
@@ -448,11 +448,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @api
      *
      * @param string $eventId
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      * @param array $logContext
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOneItem($eventId, $orderItem, array $logContext, array $data = [])
     {
