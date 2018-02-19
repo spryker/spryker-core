@@ -27,7 +27,7 @@ class GiftCardReader implements GiftCardReaderInterface
     protected $queryContainer;
 
     /**
-     * @var GiftCardActualValueHydratorInterface
+     * @var \Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydratorInterface
      */
     protected $giftCardActualValueHydrator;
 
@@ -38,7 +38,7 @@ class GiftCardReader implements GiftCardReaderInterface
 
     /**
      * @param \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface $queryContainer
-     * @param GiftCardActualValueHydratorInterface $giftCardActualValueHydrator
+     * @param \Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydratorInterface $giftCardActualValueHydrator
      * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $encodingService
      */
     public function __construct(

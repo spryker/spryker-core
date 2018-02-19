@@ -8,7 +8,6 @@
 namespace Spryker\Zed\GiftCard\Business;
 
 use Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydrator;
-use Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydratorInterface;
 use Spryker\Zed\GiftCard\Business\Calculation\GiftCardCalculator;
 use Spryker\Zed\GiftCard\Business\Cart\MetadataExpander;
 use Spryker\Zed\GiftCard\Business\Discount\GiftCardDiscountableItemFilter;
@@ -140,7 +139,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return GiftCardActualValueHydratorInterface
+     * @return \Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydratorInterface
      */
     public function createGiftCardActualValueHydrator()
     {

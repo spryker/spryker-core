@@ -32,7 +32,7 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
     protected $giftCardDecisionRuleChecker;
 
     /**
-     * @var GiftCardActualValueHydratorInterface
+     * @var \Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydratorInterface
      */
     protected $giftCardActualValueHydrator;
 
@@ -44,7 +44,7 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
     /**
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardDecisionRuleCheckerInterface $giftCardDecisionRuleChecker
-     * @param GiftCardActualValueHydratorInterface $giftCardActualValueHydrator
+     * @param \Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydratorInterface $giftCardActualValueHydrator
      * @param \Spryker\Zed\GiftCard\GiftCardConfig $giftCardConfig
      */
     public function __construct(
@@ -99,10 +99,10 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param PaymentTransfer $paymentTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
      *
-     * @return ArrayObject|CheckoutErrorTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[]
      */
     protected function checkSalesOrderGiftCardPayment(QuoteTransfer $quoteTransfer, PaymentTransfer $paymentTransfer)
     {
@@ -147,8 +147,8 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
     }
 
     /**
-     * @param GiftCardTransfer $giftCardTransfer
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \ArrayObject $errors
      *
      * @return \ArrayObject
@@ -167,11 +167,11 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
     }
 
     /**
-     * @param GiftCardTransfer $giftCardTransfer
-     * @param PaymentTransfer $paymentTransfer
-     * @param ArrayObject $errors
+     * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
+     * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
+     * @param \ArrayObject $errors
      *
-     * @return ArrayObject
+     * @return \ArrayObject
      */
     protected function checkGiftCardAmount(GiftCardTransfer $giftCardTransfer, PaymentTransfer $paymentTransfer, ArrayObject $errors)
     {
@@ -187,11 +187,11 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
     }
 
     /**
-     * @param GiftCardTransfer $giftCardTransfer
-     * @param QuoteTransfer $quoteTransfer
-     * @param ArrayObject $errors
+     * @param \Generated\Shared\Transfer\GiftCardTransfer $giftCardTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \ArrayObject $errors
      *
-     * @return ArrayObject
+     * @return \ArrayObject
      */
     protected function checkGiftCardCurrency(GiftCardTransfer $giftCardTransfer, QuoteTransfer $quoteTransfer, ArrayObject $errors)
     {
