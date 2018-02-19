@@ -67,9 +67,9 @@ class Reservation implements ReservationInterface
      */
     public function updateReservationQuantity($sku)
     {
-        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
-        $currentStoreReservationAmount = $this->sumReservedProductQuantitiesForSku($sku, $currentStoreTransfer);
+        $currentStoreReservationAmount = $this->sumReservedProductQuantitiesForSku($sku);
 
+        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
         $this->saveReservation($sku, $currentStoreTransfer->getIdStore(), $currentStoreReservationAmount);
         foreach ($currentStoreTransfer->getStoresWithSharedPersistence() as $storeName) {
             $storeTransfer = $this->storeFacade->getStoreByName($storeName);
@@ -87,7 +87,12 @@ class Reservation implements ReservationInterface
      */
     public function sumReservedProductQuantitiesForSku($sku, StoreTransfer $storeTransfer = null)
     {
-        return $this->sumProductQuantitiesForSku($this->retrieveReservedStates(), $sku, false, $storeTransfer);
+        return $this->sumProductQuantitiesForSku(
+            $this->retrieveReservedStates(),
+            $sku,
+            false,
+            $storeTransfer
+        );
     }
 
     /**
