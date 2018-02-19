@@ -88,6 +88,8 @@ class Operation implements OperationInterface
      */
     public function filterItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
     {
+        $cartChangeTransfer->requireQuote();
+
         $quoteTransfer = $cartChangeTransfer->getQuote();
         $itemsTransfer = $cartChangeTransfer->getItems();
 
@@ -110,6 +112,8 @@ class Operation implements OperationInterface
      */
     public function add(CartChangeTransfer $cartChangeTransfer)
     {
+        $cartChangeTransfer->requireQuote();
+
         if (!$this->preCheckCart($cartChangeTransfer)) {
             return $cartChangeTransfer->getQuote();
         }
@@ -129,6 +133,8 @@ class Operation implements OperationInterface
      */
     public function remove(CartChangeTransfer $cartChangeTransfer)
     {
+        $cartChangeTransfer->requireQuote();
+
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
         $quoteTransfer = $this->cartStorageProvider->removeItems($expandedCartChangeTransfer);
         $quoteTransfer = $this->executePostSavePlugins($quoteTransfer);
