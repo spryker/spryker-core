@@ -108,7 +108,7 @@ abstract class AbstractFileManagerListener extends AbstractPlugin implements Eve
             $this->createDataSet($fileEntity, $localeTransfer);
             return;
         }
-        $fileStorageTransfer = $this->mapToFileStorageTransfer($fileEntity, $localeTransfer);
+        $fileStorageTransfer = $this->mapToFileManagerStorageTransfer($fileEntity, $localeTransfer);
 
         $fileStorageEntity->setData($fileStorageTransfer->toArray());
         $fileStorageEntity->save();
@@ -122,7 +122,7 @@ abstract class AbstractFileManagerListener extends AbstractPlugin implements Eve
      */
     protected function createDataSet(SpyFile $fileEntity, LocaleTransfer $locale)
     {
-        $fileStorageTransfer = $this->mapToFileStorageTransfer($fileEntity, $locale);
+        $fileStorageTransfer = $this->mapToFileManagerStorageTransfer($fileEntity, $locale);
         $fileStorage = new SpyFileStorage();
         $fileStorage->setLocale($locale->getLocaleName());
         $fileStorage->setFileName($fileStorageTransfer->getFileName());
