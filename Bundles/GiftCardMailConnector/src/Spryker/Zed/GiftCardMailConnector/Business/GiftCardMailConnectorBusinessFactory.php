@@ -36,7 +36,8 @@ class GiftCardMailConnectorBusinessFactory extends AbstractBusinessFactory
     public function createGiftCardUsageMailer()
     {
         return new GiftCardUsageMailer(
-            $this->getMailFacade()
+            $this->getMailFacade(),
+            $this->getGiftCardFacade()
         );
     }
 

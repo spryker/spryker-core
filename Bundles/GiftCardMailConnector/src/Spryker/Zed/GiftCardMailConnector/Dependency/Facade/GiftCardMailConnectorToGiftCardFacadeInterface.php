@@ -15,4 +15,11 @@ interface GiftCardMailConnectorToGiftCardFacadeInterface
      * @return \Generated\Shared\Transfer\GiftCardTransfer|null
      */
     public function findGiftCardByIdSalesOrderItem($idSalesOrderItem);
+
+    /**
+     * @param int $idGiftCard
+     *
+     * @return \Generated\Shared\Transfer\GiftCardTransfer|null
+     */
+    public function findById($idGiftCard);
 }
