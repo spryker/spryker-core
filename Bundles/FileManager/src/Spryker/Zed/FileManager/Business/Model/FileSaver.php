@@ -7,15 +7,17 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
-use Exception;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Spryker\Zed\FileManager\FileManagerConfig;
 use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class FileSaver implements FileSaverInterface
 {
+    use DatabaseTransactionHandlerTrait;
+
     const FILE_NAME_PATTERN = '%u%s%s.%s';
 
     /**
@@ -116,15 +118,11 @@ class FileSaver implements FileSaverInterface
      * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
      * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
      *
-     * @throws \Exception
-     *
      * @return int
      */
     protected function saveFile(SpyFile $file, FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
-        $this->queryContainer->getConnection()->beginTransaction();
-
-        try {
+        return $this->handleDatabaseTransaction(function () use ($file, $saveRequestTransfer) {
             $file->fromArray($saveRequestTransfer->getFile()->toArray());
 
             $fileInfo = $this->createFileInfo($saveRequestTransfer);
@@ -134,13 +132,8 @@ class FileSaver implements FileSaverInterface
             $this->attributesSaver->saveFileLocalizedAttributes($file, $saveRequestTransfer);
             $this->saveContent($saveRequestTransfer, $file, $fileInfo);
 
-            $this->queryContainer->getConnection()->commit();
-
             return $savedRowsCount;
-        } catch (Exception $exception) {
-            $this->queryContainer->getConnection()->rollBack();
-            throw $exception;
-        }
+        }, $this->queryContainer->getConnection());
     }
 
     /**
