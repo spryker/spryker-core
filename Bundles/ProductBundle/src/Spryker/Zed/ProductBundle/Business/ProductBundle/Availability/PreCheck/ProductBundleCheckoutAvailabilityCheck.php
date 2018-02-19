@@ -48,11 +48,14 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
      */
     protected function getCheckoutAvailabilityFailedItems(QuoteTransfer $quoteTransfer)
     {
+        $storeTransfer = $quoteTransfer->getStore();
+        $storeTransfer->requireName();
+
+        $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getName());
+
         $checkoutErrorMessages = new ArrayObject();
         $uniqueBundleItems = $this->getUniqueBundleItems($quoteTransfer);
         $itemsInCart = $quoteTransfer->getItems();
-
-        $storeTransfer = $quoteTransfer->getStore();
 
         foreach ($uniqueBundleItems as $bundleItemTransfer) {
             $bundledItems = $this->findBundledProducts($bundleItemTransfer->getSku());

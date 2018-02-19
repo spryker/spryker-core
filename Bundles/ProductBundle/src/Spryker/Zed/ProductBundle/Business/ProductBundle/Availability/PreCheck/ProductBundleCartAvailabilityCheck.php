@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
@@ -33,13 +34,15 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductBundleToAvailabilityInterface $availabilityFacade,
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
-        ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
+        ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer,
+        ProductBundleToStoreFacadeInterface $storeFacade
     ) {
-        parent::__construct($availabilityFacade, $productBundleQueryContainer);
+        parent::__construct($availabilityFacade, $productBundleQueryContainer, $storeFacade);
 
         $this->availabilityQueryContainer = $availabilityQueryContainer;
     }
@@ -55,6 +58,9 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         $itemsInCart = $cartChangeTransfer->getQuote()->getItems();
 
         $storeTransfer = $cartChangeTransfer->getQuote()->getStore();
+        $storeTransfer->requireName();
+
+        $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getName());
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $itemTransfer->requireSku()->requireQuantity();
 

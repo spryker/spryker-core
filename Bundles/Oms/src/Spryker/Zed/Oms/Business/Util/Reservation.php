@@ -98,6 +98,8 @@ class Reservation implements ReservationInterface
      */
     public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer)
     {
+        $storeTransfer->requireIdStore();
+
         $reservationEntity = $this->queryContainer
             ->queryProductReservationBySkuAndStore($sku, $storeTransfer->getIdStore())
             ->findOne();
