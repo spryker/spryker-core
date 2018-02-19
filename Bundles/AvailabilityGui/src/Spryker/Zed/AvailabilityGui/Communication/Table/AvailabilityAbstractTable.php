@@ -241,7 +241,7 @@ class AvailabilityAbstractTable extends AbstractTable
             list($sku, $quantity) = explode(':', $item);
 
             if (!$quantity) {
-                return 0;
+                continue;
             }
 
             $reservation += (int)$quantity;
