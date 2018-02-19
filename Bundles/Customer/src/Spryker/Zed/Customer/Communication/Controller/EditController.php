@@ -56,6 +56,7 @@ class EditController extends AbstractController
             $this->updateCustomerAddresses($customerTransfer);
 
             $this->addSuccessMessage(static::MESSAGE_CUSTOMER_UPDATE_SUCCESS);
+
             return $this->redirectResponse(
                 sprintf('/customer/view?%s=%d', CustomerConstants::PARAM_ID_CUSTOMER, $idCustomer)
             );
