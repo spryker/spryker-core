@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\GiftCard;
 
+use Spryker\Zed\GiftCard\Communication\Plugin\GiftCardCurrencyMatchDecisionRulePlugin;
 use Spryker\Zed\GiftCard\Communication\Plugin\GiftCardIsActiveDecisionRulePlugin;
 use Spryker\Zed\GiftCard\Communication\Plugin\GiftCardRecreateValueProviderPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -145,6 +146,7 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [
             new GiftCardIsActiveDecisionRulePlugin(),
+            new GiftCardCurrencyMatchDecisionRulePlugin(),
         ];
     }
 
