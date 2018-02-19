@@ -98,10 +98,12 @@ class Reservation implements ReservationInterface
      */
     public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer)
     {
-        $storeTransfer->requireIdStore();
+        $storeTransfer->requireName();
+
+        $idStore = $this->getIdStore($storeTransfer);
 
         $reservationEntity = $this->queryContainer
-            ->queryProductReservationBySkuAndStore($sku, $storeTransfer->getIdStore())
+            ->queryProductReservationBySkuAndStore($sku, $idStore)
             ->findOne();
 
         $reservationQuantity = 0;
@@ -209,5 +211,21 @@ class Reservation implements ReservationInterface
         foreach ($this->reservationHandlerPlugins as $reservationHandlerPluginInterface) {
             $reservationHandlerPluginInterface->handle($sku);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    protected function getIdStore(StoreTransfer $storeTransfer)
+    {
+        if ($storeTransfer->getIdStore()) {
+            return $storeTransfer->getIdStore();
+        }
+
+        return $this->storeFacade
+            ->getStoreByName($storeTransfer->getName())
+            ->getIdStore();
     }
 }
