@@ -32,11 +32,11 @@ class FacadeNotFoundException extends Exception
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
-            'Can not resolve `%1$sFacade` in Business layer for your bundle `%1$s`',
+            'Can not resolve `%1$sFacade` in Business layer for your module `%1$s`',
             $callerClassInfo->getBundle()
         ) . PHP_EOL;
 
-        $message .= 'You can fix this by adding the missing facade to your bundle.' . PHP_EOL;
+        $message .= 'You can fix this by adding the missing facade to your module.' . PHP_EOL;
 
         $message .= sprintf(
             'E.g. %s\\Zed\\%2$s\\Business\\%2$sFacade',

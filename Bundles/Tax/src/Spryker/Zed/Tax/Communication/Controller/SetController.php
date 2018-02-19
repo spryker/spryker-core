@@ -35,7 +35,7 @@ class SetController extends AbstractController
         if ($request->request->count() > 0) {
             $taxSetForm->handleRequest($request);
 
-            if ($taxSetForm->isValid()) {
+            if ($taxSetForm->isSubmitted() && $taxSetForm->isValid()) {
                 $taxSetTransfer = $this->getFacade()->createTaxSet($taxSetForm->getData());
                 $this->addSuccessMessage(sprintf('Tax set %d was created successfully.', $taxSetTransfer->getIdTaxSet()));
                 $redirectUrl = Url::generate('/tax/set/edit', [
@@ -69,7 +69,7 @@ class SetController extends AbstractController
         if ($request->request->count() > 0) {
             $taxSetForm->handleRequest($request);
 
-            if ($taxSetForm->isValid()) {
+            if ($taxSetForm->isSubmitted() && $taxSetForm->isValid()) {
                 $taxSetTransfer = $taxSetForm->getData();
                 $taxSetTransfer->setIdTaxSet($idTaxSet);
                 $rowsAffected = $this->getFacade()->updateTaxSet($taxSetForm->getData());

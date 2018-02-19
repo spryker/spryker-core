@@ -2,6 +2,8 @@
 namespace SprykerTest\Zed\CmsBlockGui;
 
 use Codeception\Actor;
+use Spryker\Zed\CmsBlockGui\CmsBlockGuiDependencyProvider;
+use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
 
 /**
  * Inherited Methods
@@ -25,4 +27,14 @@ class CmsBlockGuiCommunicationTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @return void
+     */
+    public function registerCmsBlockStoreRelationFormTypePlugin()
+    {
+        $this->setDependency(CmsBlockGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
+            return new StoreRelationToggleFormTypePlugin();
+        });
+    }
 }

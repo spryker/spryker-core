@@ -68,12 +68,13 @@ class ErrorHandler
     public function handleFatal()
     {
         $error = $this->getLastError();
-
-        if (isset($error)) {
-            $message = sprintf('FATAL ERROR - %s', $error['message']);
-            $exception = new ErrorException($message, 0, $error['type'], $error['file'], $error['line']);
-            $this->handleException($exception);
+        if (!$error) {
+            return;
         }
+
+        $message = sprintf('FATAL ERROR - %s', $error['message']);
+        $exception = new ErrorException($message, 0, $error['type'], $error['file'], $error['line']);
+        $this->handleException($exception);
     }
 
     /**

@@ -19,7 +19,7 @@ interface CmsBlockCollectorFacadeInterface
 {
     /**
      * Specification:
-     * - Collects CMS blocks to storage
+     * - Collects CMS blocks to Storage.
      *
      * @api
      *

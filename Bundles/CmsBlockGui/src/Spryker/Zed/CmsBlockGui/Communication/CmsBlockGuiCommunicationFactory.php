@@ -78,23 +78,6 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getCmsBlockForm()` instead.
-     *
-     * @param \Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockFormDataProvider $cmsBlockFormDataProvider
-     * @param int|null $idCmsBlock
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createCmsBlockForm(CmsBlockFormDataProvider $cmsBlockFormDataProvider, $idCmsBlock = null)
-    {
-        return $this->getFormFactory()->create(
-            CmsBlockForm::class,
-            $cmsBlockFormDataProvider->getData($idCmsBlock),
-            $cmsBlockFormDataProvider->getOptions()
-        );
-    }
-
-    /**
      * @param \Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockFormDataProvider $cmsBlockFormDataProvider
      * @param int|null $idCmsBlock
      *
@@ -102,7 +85,11 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getCmsBlockForm(CmsBlockFormDataProvider $cmsBlockFormDataProvider, $idCmsBlock = null)
     {
-        return $this->createCmsBlockForm($cmsBlockFormDataProvider, $idCmsBlock);
+        return $this->getFormFactory()->create(
+            CmsBlockForm::class,
+            $cmsBlockFormDataProvider->getData($idCmsBlock),
+            $cmsBlockFormDataProvider->getOptions()
+        );
     }
 
     /**
@@ -113,7 +100,10 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
         $cmsBlockQuery = $this->getCmsBlockQueryContainer()
             ->queryCmsBlockWithTemplate();
 
-        return new CmsBlockTable($cmsBlockQuery);
+        return new CmsBlockTable(
+            $cmsBlockQuery,
+            $this->getCmsBlockQueryContainer()
+        );
     }
 
     /**
@@ -137,14 +127,12 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getCmsBlockGlossaryForm()` instead.
-     *
      * @param \Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockGlossaryFormDataProvider $cmsBlockGlossaryFormDataProvider
      * @param int $idCmsBlock
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCmsBlockGlossaryForm(
+    public function getCmsBlockGlossaryForm(
         CmsBlockGlossaryFormDataProvider $cmsBlockGlossaryFormDataProvider,
         $idCmsBlock
     ) {
@@ -157,24 +145,9 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockGlossaryFormDataProvider $cmsBlockGlossaryFormDataProvider
-     * @param int $idCmsBlock
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getCmsBlockGlossaryForm(
-        CmsBlockGlossaryFormDataProvider $cmsBlockGlossaryFormDataProvider,
-        $idCmsBlock
-    ) {
-        return $this->createCmsBlockGlossaryForm($cmsBlockGlossaryFormDataProvider, $idCmsBlock);
-    }
-
-    /**
-     * @deprecated Use FQCN directly.
-     *
      * @return string
      */
-    public function createCmsBlockGlossaryPlaceholderTranslationFormType()
+    public function getCmsBlockGlossaryPlaceholderTranslationFormType()
     {
         return CmsBlockGlossaryPlaceholderTranslationForm::class;
     }
@@ -198,12 +171,18 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use FQCN directly.
-     *
      * @return string
      */
-    public function createCmsBlockGlossaryPlaceholderFormType()
+    public function getCmsBlockGlossaryPlaceholderFormType()
     {
         return CmsBlockGlossaryPlaceholderForm::class;
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    public function getStoreRelationFormTypePlugin()
+    {
+        return $this->getProvidedDependency(CmsBlockGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
     }
 }

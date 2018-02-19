@@ -8,23 +8,18 @@
 namespace Spryker\Client\Permission;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface;
 use Spryker\Client\Permission\PermissionExecutor\PermissionExecutor;
+use Spryker\Client\Permission\PermissionExecutor\PermissionExecutorInterface;
 use Spryker\Client\Permission\PermissionFinder\PermissionFinder;
+use Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface;
 
 class PermissionFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientInterface
-     */
-    public function getCustomerClient()
-    {
-        return $this->getProvidedDependency(PermissionDependencyProvider::CLIENT_CUSTOMER);
-    }
-
-    /**
      * @return \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface
      */
-    public function createPermissionConfigurator()
+    public function createPermissionConfigurator(): PermissionFinderInterface
     {
         return new PermissionFinder(
             $this->getPermissionPlugins()
@@ -34,10 +29,10 @@ class PermissionFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Permission\PermissionExecutor\PermissionExecutorInterface
      */
-    public function createPermissionExecutor()
+    public function createPermissionExecutor(): PermissionExecutorInterface
     {
         return new PermissionExecutor(
-            $this->getCustomerClient(),
+            $this->getPermissionStoragePlugin(),
             $this->createPermissionConfigurator()
         );
     }
@@ -45,8 +40,16 @@ class PermissionFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Permission\Plugin\PermissionPluginInterface[]
      */
-    protected function getPermissionPlugins()
+    protected function getPermissionPlugins(): array
     {
         return $this->getProvidedDependency(PermissionDependencyProvider::PLUGINS_PERMISSION);
+    }
+
+    /**
+     * @return \Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface
+     */
+    protected function getPermissionStoragePlugin(): PermissionStoragePluginInterface
+    {
+        return $this->getProvidedDependency(PermissionDependencyProvider::PLUGIN_PERMISSION_STORAGE);
     }
 }

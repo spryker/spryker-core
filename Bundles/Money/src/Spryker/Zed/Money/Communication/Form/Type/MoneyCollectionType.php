@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Money\Communication\Form\Type;
 
+use Countable;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractCollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -78,7 +79,7 @@ class MoneyCollectionType extends AbstractCollectionType
     {
         $moneyCollectionInitialDataProvider = $this->getFormDataProvider($options);
 
-        if (count($event->getData()) === 0) {
+        if (!($event->getData() instanceof Countable) || count($event->getData()) === 0) {
             $event->setData(
                 $moneyCollectionInitialDataProvider->getInitialData()
             );
