@@ -7,15 +7,19 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
-use Exception;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Spryker\Zed\FileManager\FileManagerConfig;
 use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class FileSaver implements FileSaverInterface
 {
+    use DatabaseTransactionHandlerTrait;
+
+    const FILE_NAME_PATTERN = '%u%s%s.%s';
+
     /**
      * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface
      */
@@ -114,15 +118,11 @@ class FileSaver implements FileSaverInterface
      * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
      * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
      *
-     * @throws \Exception
-     *
      * @return int
      */
     protected function saveFile(SpyFile $file, FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
-        $this->queryContainer->getConnection()->beginTransaction();
-
-        try {
+        return $this->handleDatabaseTransaction(function () use ($file, $saveRequestTransfer) {
             $file->fromArray($saveRequestTransfer->getFile()->toArray());
 
             $fileInfo = $this->createFileInfo($saveRequestTransfer);
@@ -132,13 +132,8 @@ class FileSaver implements FileSaverInterface
             $this->attributesSaver->saveFileLocalizedAttributes($file, $saveRequestTransfer);
             $this->saveContent($saveRequestTransfer, $file, $fileInfo);
 
-            $this->queryContainer->getConnection()->commit();
-
             return $savedRowsCount;
-        } catch (Exception $exception) {
-            $this->queryContainer->getConnection()->rollBack();
-            throw $exception;
-        }
+        }, $this->queryContainer->getConnection());
     }
 
     /**
@@ -164,7 +159,11 @@ class FileSaver implements FileSaverInterface
     protected function saveContent(FileManagerSaveRequestTransfer $saveRequestTransfer, SpyFile $file, SpyFileInfo $fileInfo = null)
     {
         if ($saveRequestTransfer->getContent() !== null || $fileInfo !== null) {
-            $newFileName = $this->getNewFileName($file->getFileName(), $fileInfo->getVersionName());
+            $newFileName = $this->getNewFileName(
+                $file->getIdFile(),
+                $fileInfo->getVersionName(),
+                $fileInfo->getFileExtension()
+            );
             $this->fileContent->save($newFileName, $saveRequestTransfer->getContent());
             $this->addStorageInfo($fileInfo, $newFileName);
         }
@@ -209,16 +208,25 @@ class FileSaver implements FileSaverInterface
     }
 
     /**
-     * @param string $fileName
+     * @param int $idFile
      * @param string $versionName
+     * @param string $fileExtension
      *
      * @return string
      */
-    protected function getNewFileName(string $fileName, string $versionName)
+    protected function getNewFileName(int $idFile, string $versionName, string $fileExtension): string
     {
         $fileNameVersionDelimiter = $this->config->getFileNameVersionDelimiter();
 
-        return $fileName . $fileNameVersionDelimiter . $versionName;
+        $newFileName = sprintf(
+            static::FILE_NAME_PATTERN,
+            $idFile,
+            $fileNameVersionDelimiter,
+            $versionName,
+            $fileExtension
+        );
+
+        return $newFileName;
     }
 
     /**
