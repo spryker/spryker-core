@@ -23,5 +23,5 @@ interface SubFormFilterPluginInterface
      *
      * @return string[]
      */
-    public function provideValidFormNames(QuoteTransfer $quoteTransfer);
+    public function getValidFormNames(QuoteTransfer $quoteTransfer);
 }

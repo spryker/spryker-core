@@ -11,7 +11,9 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 class GiftCardBalanceToMoneyFacadeBridge implements GiftCardBalanceToMoneyFacadeInterface
 {
-    /** @var \Spryker\Zed\Money\Business\MoneyFacadeInterface */
+    /**
+     * @var \Spryker\Zed\Money\Business\MoneyFacadeInterface
+     */
     protected $moneyFacade;
 
     /**

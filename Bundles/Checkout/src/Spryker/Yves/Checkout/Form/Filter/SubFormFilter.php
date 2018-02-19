@@ -93,7 +93,7 @@ class SubFormFilter implements SubFormFilterInterface
         SubFormFilterPluginInterface $subFormFilterPlugin,
         QuoteTransfer $quoteTransfer
     ) {
-        $validFormNames = $subFormFilterPlugin->provideValidFormNames($quoteTransfer);
+        $validFormNames = $subFormFilterPlugin->getValidFormNames($quoteTransfer);
 
         foreach ($subFormPluginCollection as $key => $subFormPlugin) {
             $subFormName = $subFormPlugin->createSubForm()->getName();

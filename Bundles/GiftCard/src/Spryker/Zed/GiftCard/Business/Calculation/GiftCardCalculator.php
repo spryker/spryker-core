@@ -34,7 +34,9 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
      */
     protected $giftCardActualValueHydrator;
 
-    /** @var \Spryker\Zed\GiftCard\GiftCardConfig */
+    /**
+     * @var \Spryker\Zed\GiftCard\GiftCardConfig
+     */
     protected $giftCardConfig;
 
     /**

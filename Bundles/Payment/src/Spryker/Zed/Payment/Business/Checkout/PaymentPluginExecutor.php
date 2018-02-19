@@ -27,6 +27,15 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
     protected $salesPaymentSaver;
 
     /**
+     * @see \Spryker\Zed\Payment\PaymentDependencyProvider for plugin types
+     *
+     * @example
+     * [
+     *  'pluginType1' => [
+     *      'paymentMethod1' => true
+     *  ]
+     * ]
+     *
      * @var array
      */
     protected $executedProviderPlugins = [];

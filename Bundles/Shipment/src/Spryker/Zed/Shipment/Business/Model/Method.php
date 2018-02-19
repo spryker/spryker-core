@@ -166,7 +166,7 @@ class Method implements MethodInterface
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int|null $storeCurrencyPrice
+     * @param int $storeCurrencyPrice
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
