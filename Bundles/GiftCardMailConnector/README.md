@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/GiftCardMailConnector.svg)](https://travis-ci.org/spryker/GiftCardMailConnector)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/GiftCardMailConnector/badge.svg)](https://coveralls.io/github/spryker/GiftCardMailConnector)
 
-{{ADD DESCRIPTION HERE}}
+Provides basic gift card functionality.
 
 ## Installation
 

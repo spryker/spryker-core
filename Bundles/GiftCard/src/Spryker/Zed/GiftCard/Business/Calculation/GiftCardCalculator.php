@@ -109,6 +109,8 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
      */
     protected function findGiftCard(GiftCardTransfer $giftCardTransfer)
     {
+        $giftCardTransfer->requireCode();
+
         return $this->giftCardReader->findByCode($giftCardTransfer->getCode());
     }
 

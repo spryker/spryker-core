@@ -19,7 +19,7 @@ class GiftCardCreator implements GiftCardCreatorInterface
     const ATTRIBUTES = 'attributes';
 
     /**
-     * @var \Spryker\Service\UtilEncoding\UtilEncodingService
+     * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
     protected $encodingService;
 

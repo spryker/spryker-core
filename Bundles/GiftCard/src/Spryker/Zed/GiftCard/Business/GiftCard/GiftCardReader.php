@@ -32,7 +32,7 @@ class GiftCardReader implements GiftCardReaderInterface
     protected $giftCardActualValueHydrator;
 
     /**
-     * @var \Spryker\Service\UtilEncoding\UtilEncodingService
+     * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
     protected $encodingService;
 
@@ -265,14 +265,10 @@ class GiftCardReader implements GiftCardReaderInterface
      */
     public function getGiftCardPaymentsForOrder($idSalesOrder)
     {
-        $result = [];
-
-        $queryResults = $this->queryContainer->queryPaymentGiftCardsForIdSalesOrder($idSalesOrder);
-        foreach ($queryResults as $queryResult) {
-            $result[] = $queryResult;
-        }
-
-        return $result;
+        return $this->queryContainer
+            ->queryPaymentGiftCardsForIdSalesOrder($idSalesOrder)
+            ->find()
+            ->getArrayCopy();
     }
 
     /**
@@ -312,14 +308,10 @@ class GiftCardReader implements GiftCardReaderInterface
      */
     protected function getGiftCardEntitiesByCodes(array $giftCardCodes)
     {
-        $giftCardQuery = $this->queryContainer->queryGiftCardByCodes($giftCardCodes);
-        $giftCardEntities = [];
-
-        foreach ($giftCardQuery->find() as $giftCardEntity) {
-            $giftCardEntities[] = $giftCardEntity;
-        }
-
-        return $giftCardEntities;
+        return $this->queryContainer
+            ->queryGiftCardByCodes($giftCardCodes)
+            ->find()
+            ->getArrayCopy();
     }
 
     /**

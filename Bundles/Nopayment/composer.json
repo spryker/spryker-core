@@ -16,7 +16,7 @@
     "spryker/symfony": "*"
   },
   "suggest": {
-    "spryker/oms": "If you want to use Oms command plugins.",
+    "spryker/oms": "If you want to use Oms command plugins."
   },
   "autoload": {
     "psr-4": {
