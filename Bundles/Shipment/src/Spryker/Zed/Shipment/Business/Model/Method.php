@@ -138,6 +138,10 @@ class Method implements MethodInterface
             return null;
         }
 
+        $quoteTransfer->requireCurrency()
+            ->getCurrency()
+            ->requireCode();
+
         return $this->methodTransformer
             ->transformEntityToTransfer($shipmentMethodEntity)
             ->setStoreCurrencyPrice($storeCurrencyPrice)
