@@ -300,8 +300,6 @@ class Method implements MethodInterface
      */
     public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer)
     {
-        $idStoreCurrent = $this->storeFacade->getCurrentStore()->getIdStore();
-
         $shipmentMethodEntity = $this->queryContainer
             ->queryMethodByIdMethod($idShipmentMethod)
             ->findOne();
@@ -310,7 +308,13 @@ class Method implements MethodInterface
             return null;
         }
 
-        return $this->findAvailableMethod($shipmentMethodEntity, $quoteTransfer, $idStoreCurrent);
+        $storeCurrencyPrice = $this->findStoreCurrencyPriceAmount($shipmentMethodEntity, $quoteTransfer);
+
+        if ($storeCurrencyPrice === null) {
+            return null;
+        }
+
+        return $this->transformShipmentMethod($shipmentMethodEntity, $quoteTransfer, $storeCurrencyPrice);
     }
 
     /**
