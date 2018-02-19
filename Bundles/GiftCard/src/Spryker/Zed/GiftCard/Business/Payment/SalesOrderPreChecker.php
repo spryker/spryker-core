@@ -158,7 +158,6 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
         if (!$this->giftCardDecisionRuleChecker->isApplicable($giftCardTransfer, $quoteTransfer)) {
             $error = new CheckoutErrorTransfer();
             $error->setMessage('Gift Card ' . $giftCardTransfer->getCode() . ' already used');
-            $error->setErrorCode(SharedGiftCardConfig::ERROR_GIFT_CARD_ALREADY_USED);
 
             $errors[] = $error;
         }
@@ -178,7 +177,6 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
         if ($giftCardTransfer->getActualValue() < $paymentTransfer->getAmount()) {
             $error = new CheckoutErrorTransfer();
             $error->setMessage('Gift Card ' . $giftCardTransfer->getCode() . ' used amount too high');
-            $error->setErrorCode(SharedGiftCardConfig::ERROR_GIFT_CARD_AMOUNT_TOO_HIGH);
 
             $errors[] = $error;
         }
@@ -198,7 +196,6 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
         if ($giftCardTransfer->getCurrencyIsoCode() !== $quoteTransfer->getCurrency()->getCode()) {
             $error = new CheckoutErrorTransfer();
             $error->setMessage('Gift Card ' . $giftCardTransfer->getCode() . ' has different currency');
-            $error->setErrorCode(SharedGiftCardConfig::ERROR_GIFT_CARD_WRONG_CURRENCY);
 
             $errors[] = $error;
         }
