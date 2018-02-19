@@ -15,6 +15,7 @@ use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\ProductCategory\Dependency\ProductCategoryEvents;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductAbstractStoreListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageCategoryNodeSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageCategorySearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageImageSetProductImageSearchListener;
@@ -64,7 +65,10 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
             ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_LOCALIZED_ATTRIBUTES_DELETE, new ProductPageProductConcreteLocalizedAttributesSearchListener())
             ->addListenerQueued(ProductSearchEvents::SYNCHRONIZATION_FILTER_PUBLISH, new ProductPageProductAbstractListener())
             ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new ProductPageUrlSearchListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductPageUrlSearchListener());
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductPageUrlSearchListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_CREATE, new ProductAbstractStoreListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_UPDATE, new ProductAbstractStoreListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_DELETE, new ProductAbstractStoreListener());
 
         $this->addPriceProductEvents($eventCollection);
         $this->addProductImageEvents($eventCollection);

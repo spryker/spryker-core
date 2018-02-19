@@ -175,4 +175,8 @@ interface ProductEvents
      * @api
      */
     const ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_DELETE = 'Entity.spy_product_attribute_key.delete';
+
+    const ENTITY_SPY_PRODUCT_ABSTRACT_STORE_CREATE = 'Entity.spy_product_abstract_store.create';
+    const ENTITY_SPY_PRODUCT_ABSTRACT_STORE_UPDATE = 'Entity.spy_product_abstract_store.update';
+    const ENTITY_SPY_PRODUCT_ABSTRACT_STORE_DELETE = 'Entity.spy_product_abstract_store.delete';
 }

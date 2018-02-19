@@ -134,8 +134,8 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             foreach ($spyProductAbstractLocalizedEntity['SpyProductAbstract']['SpyProductAbstractStores'] as $spyProductAbstractStore) {
                 $storeName = $spyProductAbstractStore['SpyStore']['name'];
 
-                if (isset($spyProductAbstractSearchEntities[$idProduct][$localeName])) {
-                    $this->storeDataSet($storeName, $spyProductAbstractLocalizedEntity, $spyProductAbstractSearchEntities[$idProduct][$localeName], $isRefresh);
+                if (isset($spyProductAbstractSearchEntities[$idProduct][$storeName][$localeName])) {
+                    $this->storeDataSet($storeName, $spyProductAbstractLocalizedEntity, $spyProductAbstractSearchEntities[$idProduct][$storeName][$localeName], $isRefresh);
                 } elseif (!$isRefresh) {
                     $this->storeDataSet($storeName, $spyProductAbstractLocalizedEntity, null, false);
                 }
@@ -183,6 +183,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         $spyProductPageSearchEntity->setStore($storeName);
 
         $productPageSearchTransfer = $this->getProductPageSearchTransfer($spyProductAbstractLocalizedEntity, $spyProductPageSearchEntity, $isRefresh);
+        $productPageSearchTransfer->setStore($storeName);
         $data = $this->productPageSearchMapper->mapToSearchData($productPageSearchTransfer);
 
         $this->productPageSearchWriter->save($productPageSearchTransfer, $data, $spyProductPageSearchEntity);

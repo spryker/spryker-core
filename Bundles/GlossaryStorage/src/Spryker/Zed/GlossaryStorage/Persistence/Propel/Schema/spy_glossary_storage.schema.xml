@@ -18,6 +18,7 @@
             <parameter name="locale" required="true"/>
             <parameter name="key_suffix_column" value="glossary_key"/>
             <parameter name="queue_group" value="sync.storage.translation"/>
+            <parameter name="queue_pool" value="synchronizationPool" />
         </behavior>
 
         <behavior name="timestampable"/>

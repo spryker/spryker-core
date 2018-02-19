@@ -81,7 +81,6 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
         $productPageSearchTransfer->setType(ProductPageSearchConstants::PRODUCT_ABSTRACT_RESOURCE_NAME);
         $productPageSearchTransfer->setLocale($productAbstractLocalizedData['Locale']['locale_name']);
         $productPageSearchTransfer->setAttributes($attributes);
-        $productPageSearchTransfer->setStore($this->getStoreName());
 
         return $productPageSearchTransfer;
     }

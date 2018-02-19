@@ -13,6 +13,7 @@
             <parameter name="resource" value="cms_block_category"/>
             <parameter name="key_suffix_column" value="fk_category"/>
             <parameter name="queue_group" value="sync.storage.cms"/>
+            <parameter name="queue_pool" value="synchronizationPool" />
         </behavior>
         <behavior name="timestampable"/>
     </table>

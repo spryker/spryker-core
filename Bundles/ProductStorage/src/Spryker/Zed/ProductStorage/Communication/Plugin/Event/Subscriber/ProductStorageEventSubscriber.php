@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductAbstractLocalizedAttributesStorageListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductAbstractStorageListener;
+use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductAbstractStoreListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductAbstractUrlStorageListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteLocalizedAttributesStorageListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteProductAbstractLocalizedAttributesStorageListener;
@@ -61,7 +62,10 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
             ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductAbstractUrlStorageListener())
             ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new ProductConcreteProductAbstractUrlStorageListener())
             ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new ProductConcreteProductAbstractUrlStorageListener())
-            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductConcreteProductAbstractUrlStorageListener());
+            ->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductConcreteProductAbstractUrlStorageListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_CREATE, new ProductAbstractStoreListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_UPDATE, new ProductAbstractStoreListener())
+            ->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_DELETE, new ProductAbstractStoreListener());
 
         return $eventCollection;
     }

@@ -73,28 +73,48 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
         $localeNames = $this->getStore()->getLocales();
 
         $toRemoveEntities = $blockStorageEntities;
-
         foreach ($blockEntities as $blockEntityArray) {
-            foreach ($localeNames as $localeName) {
-                $idCmsBlock = $blockEntityArray[static::ID_CMS_BLOCK];
+            $idCmsBlock = $blockEntityArray[static::ID_CMS_BLOCK];
 
-                if (isset($blockStorageEntities[$idCmsBlock][$localeName])) {
-                    $this->storeDataSet($blockEntityArray, $localeName, $blockStorageEntities[$idCmsBlock][$localeName]);
-                } else {
-                    $this->storeDataSet($blockEntityArray, $localeName);
+            foreach ($localeNames as $localeName) {
+                foreach ($blockEntityArray['SpyCmsBlockStores'] as $cmsBlockStore) {
+                    $storeName = $cmsBlockStore['SpyStore']['name'];
+
+                    if (isset($blockStorageEntities[$idCmsBlock][$storeName][$localeName])) {
+                        $this->storeDataSet($storeName, $blockEntityArray, $localeName, $blockStorageEntities[$idCmsBlock][$storeName][$localeName]);
+                    } else {
+                        $this->storeDataSet($storeName, $blockEntityArray, $localeName);
+                    }
+                    unset($toRemoveEntities[$idCmsBlock][$storeName][$localeName]);
+                }
+
+                if (!isset($toRemoveEntities[$idCmsBlock])) {
+                    continue;
+                }
+
+                foreach ($toRemoveEntities[$idCmsBlock] as $storeName => $localeEntities) {
+                    foreach ($localeEntities as $thisLocaleName => $blockStorageEntity) {
+                        if ($localeName !== $thisLocaleName) {
+                            continue;
+                        }
+
+                        $blockStorageEntity->delete();
+                        unset($toRemoveEntities[$idCmsBlock][$storeName][$localeName]);
+                    }
                 }
             }
         }
     }
 
     /**
+     * @param string $storeName
      * @param array $blockEntityArray
      * @param string $localeName
      * @param \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage|null $cmsBlockStorageEntity
      *
      * @return void
      */
-    protected function storeDataSet(array $blockEntityArray, $localeName, SpyCmsBlockStorage $cmsBlockStorageEntity = null)
+    protected function storeDataSet($storeName, array $blockEntityArray, $localeName, SpyCmsBlockStorage $cmsBlockStorageEntity = null)
     {
         if ($cmsBlockStorageEntity === null) {
             $cmsBlockStorageEntity = new SpyCmsBlockStorage();
@@ -117,6 +137,7 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
         $cmsBlockStorageEntity->setFkCmsBlock($blockEntityArray[static::ID_CMS_BLOCK]);
         $cmsBlockStorageEntity->setStore((new StoreFacade())->getCurrentStore()->getName());
         $cmsBlockStorageEntity->setLocale($localeName);
+        $cmsBlockStorageEntity->setStore($storeName);
         $cmsBlockStorageEntity->setName($blockEntityArray['name']);
         $cmsBlockStorageEntity->save();
     }

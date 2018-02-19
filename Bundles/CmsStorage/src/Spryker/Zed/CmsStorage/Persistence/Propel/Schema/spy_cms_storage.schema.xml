@@ -15,6 +15,7 @@
             <parameter name="locale" required="true"/>
             <parameter name="key_suffix_column" value="fk_cms_page"/>
             <parameter name="queue_group" value="sync.storage.cms"/>
+            <parameter name="queue_pool" value="synchronizationPool" />
         </behavior>
         <behavior name="timestampable"/>
     </table>
