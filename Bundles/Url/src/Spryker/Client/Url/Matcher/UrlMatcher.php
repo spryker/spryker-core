@@ -9,12 +9,12 @@ namespace Spryker\Client\Url\Matcher;
 
 use Generated\Shared\Transfer\UrlCollectorStorageTransfer;
 use Spryker\Client\Url\Dependency\Client\UrlToStorageClientInterface;
-use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
+use Spryker\Shared\Url\KeyBuilder\UrlKeyBuilder;
 
 class UrlMatcher implements UrlMatcherInterface
 {
     /**
-     * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
+     * @var \Spryker\Shared\Url\KeyBuilder\UrlKeyBuilder
      */
     protected $urlKeyBuilder;
 
@@ -24,10 +24,10 @@ class UrlMatcher implements UrlMatcherInterface
     protected $storageClient;
 
     /**
-     * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $urlKeyBuilder
+     * @param \Spryker\Shared\Url\KeyBuilder\UrlKeyBuilder $urlKeyBuilder
      * @param \Spryker\Client\Url\Dependency\Client\UrlToStorageClientInterface $storageClient
      */
-    public function __construct(KeyBuilderInterface $urlKeyBuilder, UrlToStorageClientInterface $storageClient)
+    public function __construct(UrlKeyBuilder $urlKeyBuilder, UrlToStorageClientInterface $storageClient)
     {
         $this->urlKeyBuilder = $urlKeyBuilder;
         $this->storageClient = $storageClient;
