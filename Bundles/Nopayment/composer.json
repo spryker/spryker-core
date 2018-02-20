@@ -5,18 +5,21 @@
   "require": {
     "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
-    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
-    "spryker/payment": "^4.0.0"
+    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
   },
   "require-dev": {
     "spryker/step-engine": "^3.1.0",
     "spryker/code-sniffer": "*",
     "spryker/oms": "*",
     "spryker/testify": "*",
-    "spryker/symfony": "*"
+    "spryker/symfony": "*",
+    "spryker/payment": "^4.0.0"
   },
   "suggest": {
-    "spryker/oms": "If you want to use Oms command plugins."
+    "spryker/oms": "If you want to use Oms command plugins.",
+    "spryker/payment": "If you want to use Payment command plugins.",
+    "spryker/step-engine": "If you want to use Step engine command plugins.",
+    "spryker/symfony": "If you want to use Step handler plugin."
   },
   "autoload": {
     "psr-4": {
