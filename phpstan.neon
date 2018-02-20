@@ -5,6 +5,8 @@
 parameters:
     ignoreErrors:
         - '#Class PHP_CodeSniffer\\Config not found#'
+        - '#Parameter \$resolver of method [a-zA-Z0-9\\]+\:\:setDefaultOptions\(\) has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface\.#'
+        - '#Access to undefined constant Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface::TABLE_MAP\.#'
         - '#Parameter \$resolver of method [a-zA-Z0-9\\]+::setDefaultOptions\(\) has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface\.#'
         - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrder::getFkCustomer\(\)\.#'
         - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrderQuery::filterByFkCustomer\(\)\.#'

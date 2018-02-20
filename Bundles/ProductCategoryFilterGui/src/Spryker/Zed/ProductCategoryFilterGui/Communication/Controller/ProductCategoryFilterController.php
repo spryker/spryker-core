@@ -41,7 +41,7 @@ class ProductCategoryFilterController extends AbstractController
         $productCategoryFilterFormatter = $this->getFactory()->createProductCategoryFilterFormatter();
 
         $productCategoryFilterForm = $this->getFactory()
-            ->createProductCategoryFilterForm(
+            ->getProductCategoryFilterForm(
                 $productCategoryFilterDataProvider->getData(),
                 $productCategoryFilterDataProvider->getOptions()
             )
@@ -88,14 +88,37 @@ class ProductCategoryFilterController extends AbstractController
                 );
         }
 
+        $nonSearchFilters = $this->getNonSearchFilters(
+            (array)$productCategoryFilterTransfer->getFilters(),
+            $searchResultsForCategory[FacetResultFormatterPlugin::NAME]
+        );
+
         return $this->viewResponse([
             'productCategoryFilterForm' => $productCategoryFilterForm->createView(),
             'category' => $category,
             'filters' => $filters,
             'productCategoryFilters' => $productCategoryFilterTransfer,
             'allFilters' => $searchResultsForCategory[FacetResultFormatterPlugin::NAME],
-            'nonSearchAttributes' => array_diff_key($productCategoryFilterTransfer->getFilterDataArray(), $searchResultsForCategory[FacetResultFormatterPlugin::NAME]),
+            'nonSearchAttributes' => $nonSearchFilters,
         ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductCategoryFilterItemTransfer[] $filters
+     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer[] $searchFilters
+     *
+     * @return array
+     */
+    protected function getNonSearchFilters(array $filters, array $searchFilters)
+    {
+        $nonSearchFilters = [];
+        foreach ($filters as $filter) {
+            if (!isset($searchFilters[$filter->getKey()])) {
+                $nonSearchFilters[] = $filter;
+            }
+        }
+
+        return $nonSearchFilters;
     }
 
     /**

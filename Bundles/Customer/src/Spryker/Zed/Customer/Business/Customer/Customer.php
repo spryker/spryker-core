@@ -440,6 +440,8 @@ class Customer implements CustomerInterface
         }
 
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
+        $customerResponseTransfer->setCustomerTransfer($customerTransfer);
+
         $customerEntity = $this->getCustomer($customerTransfer);
         $customerEntity->fromArray($customerTransfer->modifiedToArray());
 
@@ -448,15 +450,11 @@ class Customer implements CustomerInterface
         }
 
         $customerResponseTransfer = $this->validateCustomerEmail($customerResponseTransfer, $customerEntity);
-        if ($customerResponseTransfer->getIsSuccess() !== true) {
+        if (!$customerEntity->isModified() || $customerResponseTransfer->getIsSuccess() !== true) {
             return $customerResponseTransfer;
         }
 
-        $changedRows = $customerEntity->save();
-
-        $customerResponseTransfer
-            ->setIsSuccess($changedRows > 0)
-            ->setCustomerTransfer($customerTransfer);
+        $customerEntity->save();
 
         if ($customerTransfer->getSendPasswordToken()) {
             $this->sendPasswordRestoreMail($customerTransfer);
