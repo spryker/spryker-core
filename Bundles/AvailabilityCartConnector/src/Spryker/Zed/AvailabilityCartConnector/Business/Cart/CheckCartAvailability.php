@@ -18,6 +18,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     const CART_PRE_CHECK_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
     const CART_PRE_CHECK_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
     const STOCK_TRANSLATION_PARAMETER = 'stock';
+    const SKU_TRANSLATION_PARAMETER = 'sku';
 
     /**
      * @var \Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface
@@ -58,7 +59,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
             if (!$isSellable) {
                 $stock = $this->availabilityFacade->calculateStockForProduct($itemTransfer->getSku());
                 $cartPreCheckResponseTransfer->setIsSuccess(false);
-                $messages[] = $this->createItemIsNotAvailableMessageTransfer($stock);
+                $messages[] = $this->createItemIsNotAvailableMessageTransfer($stock, $itemTransfer->getSku());
             }
         }
 
@@ -88,20 +89,22 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
 
     /**
      * @param int $stock
+     * @param string $sku
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createItemIsNotAvailableMessageTransfer($stock)
+    protected function createItemIsNotAvailableMessageTransfer($stock, $sku)
     {
         $translationKey = $this->getTranslationKey($stock);
 
-        $messageTranfer = new MessageTransfer();
-        $messageTranfer->setValue($translationKey);
-        $messageTranfer->setParameters([
+        $messageTransfer = new MessageTransfer();
+        $messageTransfer->setValue($translationKey);
+        $messageTransfer->setParameters([
             self::STOCK_TRANSLATION_PARAMETER => $stock,
+            self::SKU_TRANSLATION_PARAMETER => $sku,
         ]);
 
-        return $messageTranfer;
+        return $messageTransfer;
     }
 
     /**

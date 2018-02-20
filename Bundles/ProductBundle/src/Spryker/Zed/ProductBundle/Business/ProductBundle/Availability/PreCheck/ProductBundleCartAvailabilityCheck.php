@@ -21,7 +21,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     const CART_PRE_CHECK_ITEM_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
     const CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
     const STOCK_TRANSLATION_PARAMETER = 'stock';
-    const SKU_TRANSLATION_PARAMTER = 'sku';
+    const SKU_TRANSLATION_PARAMETER = 'sku';
 
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
@@ -112,7 +112,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue($translationKey);
         $messageTransfer->setParameters([
-            static::SKU_TRANSLATION_PARAMTER => $sku,
+            static::SKU_TRANSLATION_PARAMETER => $sku,
             static::STOCK_TRANSLATION_PARAMETER => $stock,
         ]);
 
