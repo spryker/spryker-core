@@ -3,6 +3,7 @@
   "description": "GiftCardMailConnector module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/customer": "^6.2.0",
     "spryker/gift-card": "^1.0.0",
     "spryker/kernel": "^3.0.0",
@@ -10,10 +11,10 @@
     "spryker/sales": "^7.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
     "spryker/checkout": "*",
-    "spryker/oms": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/oms": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins (SendEmailToGiftCardUser)",
@@ -22,11 +23,6 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
