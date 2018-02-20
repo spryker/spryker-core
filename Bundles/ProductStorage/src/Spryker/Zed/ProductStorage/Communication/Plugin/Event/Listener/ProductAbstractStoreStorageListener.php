@@ -15,7 +15,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductStorage\Communication\ProductStorageCommunicationFactory getFactory()
  */
-class ProductAbstractStoreListener extends AbstractProductAbstractStorageListener implements EventBulkHandlerInterface
+class ProductAbstractStoreStorageListener extends AbstractProductAbstractStorageListener implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -30,8 +30,8 @@ class ProductAbstractStoreListener extends AbstractProductAbstractStorageListene
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT);
+        $idProductAbstracts = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT);
 
-        $this->publish($productAbstractIds);
+        $this->publish($idProductAbstracts);
     }
 }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Subscriber;
 use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
 use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockGlossaryKeyMappingBlockStorageListener;
 use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockStorageListener;
+use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockStoreStorageListener;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -36,7 +37,10 @@ class CmsBlockStorageEventSubscriber extends AbstractPlugin implements EventSubs
             ->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_CREATE, new CmsBlockGlossaryKeyMappingBlockStorageListener())
             ->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_CREATE, new CmsBlockGlossaryKeyMappingBlockStorageListener())
             ->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_UPDATE, new CmsBlockGlossaryKeyMappingBlockStorageListener())
-            ->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_DELETE, new CmsBlockGlossaryKeyMappingBlockStorageListener());
+            ->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_DELETE, new CmsBlockGlossaryKeyMappingBlockStorageListener())
+            ->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_STORE_CREATE, new CmsBlockStoreStorageListener())
+            ->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_STORE_UPDATE, new CmsBlockStoreStorageListener())
+            ->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_STORE_DELETE, new CmsBlockStoreStorageListener());
 
         return $eventCollection;
     }

@@ -12,12 +12,10 @@ use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
- * TODO: add post fix search and storage
- *
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  */
-class ProductAbstractStoreListener extends AbstractProductPageSearchListener implements EventBulkHandlerInterface
+class ProductPageProductAbstractStoreSearchListener extends AbstractProductPageSearchListener implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 

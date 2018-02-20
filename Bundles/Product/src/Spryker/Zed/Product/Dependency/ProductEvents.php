@@ -176,7 +176,27 @@ interface ProductEvents
      */
     const ENTITY_SPY_PRODUCT_ATTRIBUTE_KEY_DELETE = 'Entity.spy_product_attribute_key.delete';
 
+    /**
+     * Specification:
+     * - Represents spy_product_abstract_store entity creation.
+     *
+     * @api
+     */
     const ENTITY_SPY_PRODUCT_ABSTRACT_STORE_CREATE = 'Entity.spy_product_abstract_store.create';
+
+    /**
+     * Specification:
+     * - Represents spy_product_abstract_store entity changes.
+     *
+     * @api
+     */
     const ENTITY_SPY_PRODUCT_ABSTRACT_STORE_UPDATE = 'Entity.spy_product_abstract_store.update';
+
+    /**
+     * Specification:
+     * - Represents spy_product_abstract_store entity deletion.
+     *
+     * @api
+     */
     const ENTITY_SPY_PRODUCT_ABSTRACT_STORE_DELETE = 'Entity.spy_product_abstract_store.delete';
 }
