@@ -11,7 +11,6 @@ use Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
-use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * @method \Spryker\Zed\CmsBlockStorage\Communication\CmsBlockStorageCommunicationFactory getFactory()
@@ -135,7 +134,6 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
 
         $cmsBlockStorageEntity->setData($blockEntityArray);
         $cmsBlockStorageEntity->setFkCmsBlock($blockEntityArray[static::ID_CMS_BLOCK]);
-        $cmsBlockStorageEntity->setStore((new StoreFacade())->getCurrentStore()->getName());
         $cmsBlockStorageEntity->setLocale($localeName);
         $cmsBlockStorageEntity->setStore($storeName);
         $cmsBlockStorageEntity->setName($blockEntityArray['name']);
