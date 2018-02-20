@@ -22,7 +22,7 @@ class CmsBlockStorageQueryContainer extends AbstractQueryContainer implements Cm
      *
      * @return \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorageQuery
      */
-    public function queryCmsStorageEntities(array $cmsBlockIds)
+    public function queryCmsBlockStorageEntities(array $cmsBlockIds)
     {
         return $this->getFactory()
             ->createSpyCmsBlockStorage()

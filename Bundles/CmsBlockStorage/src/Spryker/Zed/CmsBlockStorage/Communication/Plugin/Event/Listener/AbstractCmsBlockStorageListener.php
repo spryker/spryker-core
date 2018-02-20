@@ -20,7 +20,10 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
 {
     use DatabaseTransactionHandlerTrait;
 
-    const ID_CMS_BLOCK = 'id_cms_block';
+    const RELATION_CMS_BLOCK_STORES = 'SpyCmsBlockStores';
+    const RELATION_STORE = 'SpyStore';
+    const COLUMN_ID_CMS_BLOCK = 'id_cms_block';
+    const COLUMN_STORE_NAME = 'name';
 
     /**
      * Specification:
@@ -34,10 +37,10 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
      */
     protected function publish(array $cmsBlockIds)
     {
-        $blockEntities = $this->findCmsBlockEntities($cmsBlockIds);
-        $blockStorageEntities = $this->findCmsStorageEntities($cmsBlockIds);
+        $cmsBlockEntities = $this->findCmsBlockEntities($cmsBlockIds);
+        $mappedCmsBlockStorageEntities = $this->findCmsBlockStorageEntities($cmsBlockIds);
 
-        $this->storeData($blockEntities, $blockStorageEntities);
+        $this->storeData($cmsBlockEntities, $mappedCmsBlockStorageEntities);
     }
 
     /**
@@ -51,93 +54,135 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
      */
     protected function unpublish(array $cmsBlockIds)
     {
-        $blockStorageEntities = $this->findCmsStorageEntities($cmsBlockIds);
-        foreach ($blockStorageEntities as $blockStorageStoreEntities) {
-            foreach ($blockStorageStoreEntities as $blockStorageLocalizedEntities) {
-                foreach ($blockStorageLocalizedEntities as $blockStorageEntity) {
-                    $blockStorageEntity->delete();
-                }
-            }
-        }
+        $mappedCmsBlockStorageEntities = $this->findCmsBlockStorageEntities($cmsBlockIds);
+
+        $this->deleteCmsBlockStorageEntities($mappedCmsBlockStorageEntities);
     }
 
     /**
-     * @param array $blockEntities
-     * @param array $blockStorageEntities
+     * @param array $cmsBlockEntities
+     * @param array $mappedCmsBlockStorageEntities
      *
      * @return void
      */
-    protected function storeData(array $blockEntities, array $blockStorageEntities)
+    protected function storeData(array $cmsBlockEntities, array $mappedCmsBlockStorageEntities)
     {
         $localeNames = $this->getStore()->getLocales();
 
-        $toRemoveEntities = $blockStorageEntities;
-        foreach ($blockEntities as $blockEntityArray) {
-            $idCmsBlock = $blockEntityArray[static::ID_CMS_BLOCK];
+        foreach ($cmsBlockEntities as $cmsBlockEntity) {
+            $idCmsBlock = $cmsBlockEntity[static::COLUMN_ID_CMS_BLOCK];
 
             foreach ($localeNames as $localeName) {
-                foreach ($blockEntityArray['SpyCmsBlockStores'] as $cmsBlockStore) {
-                    $storeName = $cmsBlockStore['SpyStore']['name'];
+                foreach ($cmsBlockEntity[static::RELATION_CMS_BLOCK_STORES] as $cmsBlockStore) {
+                    $storeName = $cmsBlockStore[static::RELATION_STORE][static::COLUMN_STORE_NAME];
 
-                    if (isset($blockStorageEntities[$idCmsBlock][$storeName][$localeName])) {
-                        $this->storeDataSet($storeName, $blockEntityArray, $localeName, $blockStorageEntities[$idCmsBlock][$storeName][$localeName]);
-                    } else {
-                        $this->storeDataSet($storeName, $blockEntityArray, $localeName);
+                    $cmsBlockStorageEntity = $this->findCmsBlockStorageEntity($mappedCmsBlockStorageEntities, $idCmsBlock, $storeName, $localeName);
+                    unset($mappedCmsBlockStorageEntities[$idCmsBlock][$storeName][$localeName]);
+
+                    if ($this->isDataStorable($cmsBlockEntity)) {
+                        $this->updateStoreData($cmsBlockEntity, $cmsBlockStorageEntity, $storeName, $localeName);
+
+                        continue;
                     }
-                    unset($toRemoveEntities[$idCmsBlock][$storeName][$localeName]);
+
+                    $this->deleteStoreData($cmsBlockStorageEntity);
                 }
+            }
+        }
 
-                if (!isset($toRemoveEntities[$idCmsBlock])) {
-                    continue;
-                }
+        $this->deleteCmsBlockStorageEntities($mappedCmsBlockStorageEntities);
+    }
 
-                foreach ($toRemoveEntities[$idCmsBlock] as $storeName => $localeEntities) {
-                    foreach ($localeEntities as $thisLocaleName => $blockStorageEntity) {
-                        if ($localeName !== $thisLocaleName) {
-                            continue;
-                        }
-
-                        $blockStorageEntity->delete();
-                        unset($toRemoveEntities[$idCmsBlock][$storeName][$localeName]);
-                    }
+    /**
+     * @param array $mappedCmsBlockStorageEntities
+     *
+     * @return void
+     */
+    protected function deleteCmsBlockStorageEntities(array $mappedCmsBlockStorageEntities)
+    {
+        foreach ($mappedCmsBlockStorageEntities as $cmsBlockStorageEntitiesPerId) {
+            foreach ($cmsBlockStorageEntitiesPerId as $cmsBlockStorageEntitiesPerStore) {
+                foreach ($cmsBlockStorageEntitiesPerStore as $cmsBlockStorageEntity) {
+                    $cmsBlockStorageEntity->delete();
                 }
             }
         }
     }
 
     /**
+     * @param array $mappedCmsBlockStorageEntities
+     * @param int $idCmsBlock
      * @param string $storeName
-     * @param array $blockEntityArray
      * @param string $localeName
-     * @param \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage|null $cmsBlockStorageEntity
+     *
+     * @return \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage
+     */
+    protected function findCmsBlockStorageEntity(array $mappedCmsBlockStorageEntities, $idCmsBlock, $storeName, $localeName)
+    {
+        if (isset($mappedCmsBlockStorageEntities[$idCmsBlock][$storeName][$localeName])) {
+            return $mappedCmsBlockStorageEntities[$idCmsBlock][$storeName][$localeName];
+        }
+
+        return new SpyCmsBlockStorage();
+    }
+
+    /**
+     * @param array $cmsBlockEntity
+     *
+     * @return bool
+     */
+    protected function isDataStorable(array $cmsBlockEntity)
+    {
+        return $cmsBlockEntity['is_active'];
+    }
+
+    /**
+     * @param \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage $cmsBlockStorageEntity
      *
      * @return void
      */
-    protected function storeDataSet($storeName, array $blockEntityArray, $localeName, SpyCmsBlockStorage $cmsBlockStorageEntity = null)
+    protected function deleteStoreData(SpyCmsBlockStorage $cmsBlockStorageEntity)
     {
-        if ($cmsBlockStorageEntity === null) {
-            $cmsBlockStorageEntity = new SpyCmsBlockStorage();
+        if (!$cmsBlockStorageEntity->isNew()) {
+            $cmsBlockStorageEntity->delete();
         }
+    }
 
-        if (!$blockEntityArray['is_active']) {
-            if (!$cmsBlockStorageEntity->isNew()) {
-                $cmsBlockStorageEntity->delete();
-            }
+    /**
+     * @param array $cmsBlockEntity
+     * @param \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage $cmsBlockStorageEntity
+     * @param string $storeName
+     * @param string $localeName
+     *
+     * @return void
+     */
+    protected function updateStoreData(array $cmsBlockEntity, SpyCmsBlockStorage $cmsBlockStorageEntity, $storeName, $localeName)
+    {
+        $cmsBlockEntity = $this->prepareDataForSave($cmsBlockEntity, $localeName);
 
-            return;
-        }
+        $cmsBlockStorageEntity
+            ->setData($cmsBlockEntity)
+            ->setFkCmsBlock($cmsBlockEntity[static::COLUMN_ID_CMS_BLOCK])
+            ->setLocale($localeName)
+            ->setStore($storeName)
+            ->setName($cmsBlockEntity['name'])
+            ->save();
+    }
 
-        $blockEntityArray = $this->getFactory()->getUtilSanitize()->arrayFilterRecursive($blockEntityArray);
+    /**
+     * @param array $cmsBlockEntity
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function prepareDataForSave(array $cmsBlockEntity, $localeName)
+    {
+        $cmsBlockEntity = $this->getFactory()->getUtilSanitize()->arrayFilterRecursive($cmsBlockEntity);
         foreach ($this->getFactory()->getContentWidgetDataExpanderPlugins() as $contentWidgetDataExpanderPlugin) {
-            $blockEntityArray = $contentWidgetDataExpanderPlugin->expand($blockEntityArray, $localeName);
+            $cmsBlockEntity = $contentWidgetDataExpanderPlugin->expand($cmsBlockEntity, $localeName);
         }
 
-        $cmsBlockStorageEntity->setData($blockEntityArray);
-        $cmsBlockStorageEntity->setFkCmsBlock($blockEntityArray[static::ID_CMS_BLOCK]);
-        $cmsBlockStorageEntity->setLocale($localeName);
-        $cmsBlockStorageEntity->setStore($storeName);
-        $cmsBlockStorageEntity->setName($blockEntityArray['name']);
-        $cmsBlockStorageEntity->save();
+        return $cmsBlockEntity;
     }
 
     /**
@@ -153,17 +198,28 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
     /**
      * @param array $cmsBlockIds
      *
+     * @return \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage[]
+     */
+    protected function findCmsBlockStorageEntities(array $cmsBlockIds)
+    {
+        $cmsBlockStorageEntities = $this->getQueryContainer()->queryCmsBlockStorageEntities($cmsBlockIds)->find()->getArrayCopy();
+
+        return $this->mapCmsBlockStorageEntities($cmsBlockStorageEntities);
+    }
+
+    /**
+     * @param \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage[] $cmsBlockStorageEntities
+     *
      * @return array
      */
-    protected function findCmsStorageEntities(array $cmsBlockIds)
+    protected function mapCmsBlockStorageEntities(array $cmsBlockStorageEntities)
     {
-        $spyCmsBlockStorageEntities = $this->getQueryContainer()->queryCmsStorageEntities($cmsBlockIds)->find();
-        $cmsBlockStorageEntitiesByIdAndLocale = [];
-        foreach ($spyCmsBlockStorageEntities as $spyCmsBlockStorageEntity) {
-            $cmsBlockStorageEntitiesByIdAndLocale[$spyCmsBlockStorageEntity->getFkCmsBlock()][$spyCmsBlockStorageEntity->getStore()][$spyCmsBlockStorageEntity->getLocale()] = $spyCmsBlockStorageEntity;
+        $mappedCmsBlockStorageEntities = [];
+        foreach ($cmsBlockStorageEntities as $cmsBlockStorageEntity) {
+            $mappedCmsBlockStorageEntities[$cmsBlockStorageEntity->getFkCmsBlock()][$cmsBlockStorageEntity->getStore()][$cmsBlockStorageEntity->getLocale()] = $cmsBlockStorageEntity;
         }
 
-        return $cmsBlockStorageEntitiesByIdAndLocale;
+        return $mappedCmsBlockStorageEntities;
     }
 
     /**
