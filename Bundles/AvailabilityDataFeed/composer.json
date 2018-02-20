@@ -9,7 +9,7 @@
     "spryker/stock": "^4.0.0 || ^5.0.0"
   },
   "require-dev": {
-    "spryker/availability": "^5.0.0",
+    "spryker/availability": "^5.0.0 || ^6.0.0",
     "spryker/code-sniffer": "*",
     "spryker/locale": "^3.0.0",
     "spryker/propel": "^3.0.0",
