@@ -238,11 +238,12 @@ class AvailabilityAbstractTable extends AbstractTable
     {
         $reservation = 0;
         foreach ($reservationItems as $item) {
-            list($sku, $quantity) = explode(':', $item);
-
-            if (!$quantity) {
+            $itemParts = explode(':', $item);
+            if (count($itemParts) !== 2) {
                 continue;
             }
+
+            list($sku, $quantity) = $itemParts;
 
             $reservation += (int)$quantity;
             $reservation += $this->omsFacade->getReservationsFromOtherStores($sku, $this->storeTransfer);
