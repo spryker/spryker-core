@@ -13,7 +13,6 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 use RuntimeException;
 use Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollector;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
@@ -90,6 +89,16 @@ class UrlCollector extends AbstractStoragePropelCollector
             $localeUrls[$resourceArguments[static::RESOURCE_TYPE]] = [$resourceArguments[static::RESOURCE_VALUE]];
         }
 
+        return $this->findLocaleUrlsFromDb($localeUrls);
+    }
+
+    /**
+     * @param array $localeUrls
+     *
+     * @return array
+     */
+    protected function findLocaleUrlsFromDb(array $localeUrls)
+    {
         foreach ($localeUrls as $resourceType => $resourceIds) {
             $localeUrls[$resourceType] = $this->urlQueryContainer
                 ->queryUrlsByResourceTypeAndIds($resourceType, $resourceIds)
@@ -180,7 +189,7 @@ class UrlCollector extends AbstractStoragePropelCollector
             ];
         }
 
-        throw new RuntimeException('Invalid $data array, no resource argument could be extracted.');
+        throw new RuntimeException('Invalid array, no resource argument could be extracted.');
     }
 
     /**
@@ -203,7 +212,7 @@ class UrlCollector extends AbstractStoragePropelCollector
     protected function generateResourceKey($data, $localeName)
     {
         $keyParts = [
-            Store::getInstance()->getStoreName(),
+            $this->getCurrentStore()->getName(),
             $localeName,
             'resource',
             $data[self::RESOURCE_TYPE] . '.' . $data[self::RESOURCE_VALUE],
@@ -224,7 +233,7 @@ class UrlCollector extends AbstractStoragePropelCollector
     protected function getKeyParts($data, $localeName)
     {
         return [
-            Store::getInstance()->getStoreName(),
+            $this->getCurrentStore()->getName(),
             $localeName,
             $this->buildKey($data),
         ];
@@ -358,7 +367,8 @@ class UrlCollector extends AbstractStoragePropelCollector
     ) {
         $oldUrl = $storeReader->read($touchKeyPointer);
 
-        if (!empty($oldUrl[CollectorConfig::COLLECTOR_STORAGE_KEY])) {
+        if (isset($oldUrl[CollectorConfig::COLLECTOR_STORAGE_KEY])
+            && !empty($oldUrl[CollectorConfig::COLLECTOR_STORAGE_KEY])) {
             $storeWriter->delete([
                 $oldUrl[CollectorConfig::COLLECTOR_STORAGE_KEY] => true,
             ]);
