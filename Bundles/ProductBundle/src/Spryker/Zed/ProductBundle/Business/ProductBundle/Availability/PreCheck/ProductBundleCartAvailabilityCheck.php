@@ -20,8 +20,8 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
 {
     const CART_PRE_CHECK_ITEM_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
     const CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
-    const STOCK_TRANSLATION_PARAMETER = 'stock';
-    const SKU_TRANSLATION_PARAMETER = 'sku';
+    const STOCK_TRANSLATION_PARAMETER = '%stock%';
+    const SKU_TRANSLATION_PARAMETER = '%sku%';
 
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
