@@ -18,6 +18,6 @@ class TwigLineChart extends AbstractTwigChart implements TwigFunctionPluginInter
      */
     protected function getTemplateName(): string
     {
-        return '@Chart/line-chart.twig';
+        return '@Chart/_template/line-chart.twig';
     }
 }
