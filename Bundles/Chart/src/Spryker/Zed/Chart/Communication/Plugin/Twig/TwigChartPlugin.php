@@ -16,6 +16,6 @@ class TwigChartPlugin extends AbstractTwigChartPlugin
      */
     protected function getTemplateName(): string
     {
-        return '@Chart/chart.twig';
+        return '@Chart/_template/chart.twig';
     }
 }

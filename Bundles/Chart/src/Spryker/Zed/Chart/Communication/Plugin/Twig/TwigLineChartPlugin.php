@@ -16,6 +16,6 @@ class TwigLineChartPlugin extends AbstractTwigChartPlugin
      */
     protected function getTemplateName(): string
     {
-        return '@Chart/line-chart.twig';
+        return '@Chart/_template/line-chart.twig';
     }
 }
