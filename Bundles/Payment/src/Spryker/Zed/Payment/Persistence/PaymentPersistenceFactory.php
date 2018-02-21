@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Payment\PaymentConfig getConfig()
  */
 class PaymentPersistenceFactory extends AbstractPersistenceFactory
 {
