@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Payment\Business\Order;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -57,8 +58,31 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
      */
     protected function executeSavePaymentMethodsTransaction(QuoteTransfer $quoteTransfer, $idSalesOrder)
     {
-        $this->saveSinglePayment($quoteTransfer, $idSalesOrder);
-        $this->savePaymentCollection($quoteTransfer, $idSalesOrder);
+        $paymentCollection = $this->getPaymentCollection($quoteTransfer);
+        $this->savePaymentCollection($paymentCollection, $idSalesOrder);
+    }
+
+    /**
+     * @deprecated To be removed when the single payment property on the quote is removed
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentTransfer[]|\ArrayObject
+     */
+    protected function getPaymentCollection(QuoteTransfer $quoteTransfer)
+    {
+        $result = new ArrayObject();
+        foreach ($quoteTransfer->getPayments() as $payment) {
+            $result[] = $payment;
+        }
+
+        $singlePayment = $quoteTransfer->getPayment();
+
+        if ($singlePayment) {
+            $result[] = $singlePayment;
+        }
+
+        return $result;
     }
 
     /**
@@ -80,35 +104,14 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\PaymentTransfer[]|\ArrayObject $paymentCollection
      * @param int $idSalesOrder
      *
      * @return void
      */
-    protected function saveSinglePayment(QuoteTransfer $quoteTransfer, $idSalesOrder)
+    protected function savePaymentCollection(ArrayObject $paymentCollection, $idSalesOrder)
     {
-        $paymentTransfer = $quoteTransfer->getPayment();
-        $salesPaymentEntity = $this->mapSalesPaymentEntity($paymentTransfer, $idSalesOrder);
-
-        $numberOfPayments = $quoteTransfer->getPayments()->count();
-        if ($numberOfPayments === 0) {
-            $salesPaymentEntity->setAmount($quoteTransfer->getTotals()->getGrandTotal());
-        }
-
-        $salesPaymentEntity->save();
-
-        $paymentTransfer->setIdSalesPayment($salesPaymentEntity->getIdSalesPayment());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int $idSalesOrder
-     *
-     * @return void
-     */
-    protected function savePaymentCollection(QuoteTransfer $quoteTransfer, $idSalesOrder)
-    {
-        foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
+        foreach ($paymentCollection as $paymentTransfer) {
             $salesPaymentEntity = $this->mapSalesPaymentEntity($paymentTransfer, $idSalesOrder);
             $salesPaymentEntity->save();
             $paymentTransfer->setIdSalesPayment($salesPaymentEntity->getIdSalesPayment());
