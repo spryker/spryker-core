@@ -83,9 +83,6 @@ class DatasetFinder implements DatasetFinderInterface
     protected function updateIsActiveByIdTransaction($idDataset, $isActive)
     {
         $dataset = $this->getDatasetId($idDataset);
-        if ($dataset === null) {
-            throw new DatasetNotFoundException();
-        }
         $dataset->setIsActive($isActive);
         $dataset->save();
     }
@@ -133,12 +130,7 @@ class DatasetFinder implements DatasetFinderInterface
      */
     public function getDatasetRowByTitle($title)
     {
-        $dataset =  $this->datasetQueryContainer->queryDatasetRowByTitle($title)->findOne();
-        if ($dataset === null) {
-            throw new DatasetNotFoundException();
-        }
-
-        return $dataset;
+        return $this->datasetQueryContainer->queryDatasetRowByTitle($title)->findOne();
     }
 
     /**
@@ -148,12 +140,7 @@ class DatasetFinder implements DatasetFinderInterface
      */
     public function getDatasetColumnByTitle($title)
     {
-        $dataset = $this->datasetQueryContainer->queryDatasetColumnByTitle($title)->findOne();
-        if ($dataset === null) {
-            throw new DatasetNotFoundException();
-        }
-
-        return $dataset;
+        return $this->datasetQueryContainer->queryDatasetColumnByTitle($title)->findOne();
     }
 
     /**
