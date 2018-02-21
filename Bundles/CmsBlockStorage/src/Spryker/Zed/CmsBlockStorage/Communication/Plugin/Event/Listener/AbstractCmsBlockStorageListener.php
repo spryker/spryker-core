@@ -173,7 +173,7 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
             }
         }
 
-        array_walk_recursive($mappedCmsBlockStorageEntities, function (SpyCmsBlockStorage $cmsBlockStorageEntity) use ($pairs) {
+        array_walk_recursive($mappedCmsBlockStorageEntities, function (SpyCmsBlockStorage $cmsBlockStorageEntity) use (&$pairs) {
             $pairs[] = [
                 static::PAIR_CMS_BLOCK_ENTITY => null,
                 static::PAIR_CMS_BLOCK_STORAGE_ENTITY => $cmsBlockStorageEntity,
