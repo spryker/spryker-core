@@ -16,6 +16,6 @@ class TwigPieChartPlugin extends AbstractTwigChartPlugin
      */
     protected function getTemplateName(): string
     {
-        return '@Chart/template/pie-chart.twig';
+        return '@Chart/pie-chart.twig';
     }
 }
