@@ -18,7 +18,7 @@ interface CollectorClientInterface
      *
      * @api
      *
-     * @deprecated use \Spryker\Client\Url\UrlClientInterface
+     * @deprecated use \Spryker\Client\Url\UrlClientInterface:matchUrl
      *
      * @param string $url
      * @param string $localeName
