@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" name="zed"
+          namespace="Orm\Zed\SharedCart\Persistence"
+          package="src.Orm.Zed.SharedCart.Persistence"
+>
+
+    <table name="spy_customer_quote" idMethod="native" allowPkInsert="true">
+        <column name="id_customer_quote" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_customer" required="true" type="INTEGER"/>
+        <column name="fk_quote" required="true" type="INTEGER"/>
+        <column name="fk_permission" required="true" type="INTEGER"/>
+        <column name="is_active" required="true" defaultValue="true" type="BOOLEAN"/>
+
+        <id-method-parameter value="id_customer_quote_pk_seq"/>
+
+        <foreign-key name="spy_customer_quote-fk_customer" foreignTable="spy_customer">
+            <reference local="fk_customer" foreign="id_customer"/>
+        </foreign-key>
+        <foreign-key name="spy_customer_quote-fk_quote" foreignTable="spy_quote">
+            <reference local="fk_quote" foreign="id_quote"/>
+        </foreign-key>
+        <foreign-key name="spy_customer_quote-fk_permission" foreignTable="spy_permission">
+            <reference local="fk_permission" foreign="id_permission"/>
+        </foreign-key>
+
+        <index name="spy_quote-fk_customer">
+            <index-column name="fk_customer"/>
+        </index>
+        <index name="spy_quote-fk_quote">
+            <index-column name="fk_quote"/>
+        </index>
+        <index name="spy_quote-fk_permission">
+            <index-column name="fk_permission"/>
+        </index>
+    </table>
+
+</database>
