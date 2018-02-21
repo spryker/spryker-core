@@ -16,16 +16,16 @@ class CartNoteSaver implements CartNoteSaverInterface
     /**
      * @var \Spryker\Zed\CartNote\Persistence\CartNoteEntityManagerInterface
      */
-    protected $cartNotesEntityManager;
+    protected $cartNoteEntityManager;
 
     /**
      * CartNotesSaver constructor.
      *
-     * @param \Spryker\Zed\CartNote\Persistence\CartNoteEntityManagerInterface $cartNotesEntityManager
+     * @param \Spryker\Zed\CartNote\Persistence\CartNoteEntityManagerInterface $cartNoteEntityManager
      */
-    public function __construct(CartNoteEntityManagerInterface $cartNotesEntityManager)
+    public function __construct(CartNoteEntityManagerInterface $cartNoteEntityManager)
     {
-        $this->cartNotesEntityManager = $cartNotesEntityManager;
+        $this->cartNoteEntityManager = $cartNoteEntityManager;
     }
 
     /**
@@ -34,7 +34,7 @@ class CartNoteSaver implements CartNoteSaverInterface
      *
      * @return void
      */
-    public function saveCartNotesToOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function saveCartNoteToOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         if (!$quoteTransfer->getCartNote()) {
             return;
@@ -51,6 +51,6 @@ class CartNoteSaver implements CartNoteSaverInterface
      */
     protected function saveOrderNote($idSalesOrder, $note)
     {
-        $this->cartNotesEntityManager->updateOrderNote($idSalesOrder, $note);
+        $this->cartNoteEntityManager->updateOrderNote($idSalesOrder, $note);
     }
 }

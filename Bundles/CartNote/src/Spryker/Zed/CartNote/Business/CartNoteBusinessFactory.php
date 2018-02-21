@@ -18,7 +18,7 @@ class CartNoteBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartNote\Business\Model\CartNoteSaverInterface
      */
-    public function createCartNotesSaver()
+    public function createCartNoteSaver()
     {
         return new CartNoteSaver($this->getEntityManager());
     }

@@ -31,6 +31,6 @@ class CartNoteSaverPlugin extends AbstractPlugin implements CheckoutDoSaveOrderI
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
-        $this->getFacade()->saveOrderCartNotes($quoteTransfer, $saveOrderTransfer);
+        $this->getFacade()->saveOrderCartNote($quoteTransfer, $saveOrderTransfer);
     }
 }

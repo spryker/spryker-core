@@ -23,5 +23,5 @@ interface CartNoteFacadeInterface
      *
      * @return void
      */
-    public function saveOrderCartNotes(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
+    public function saveOrderCartNote(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
 }

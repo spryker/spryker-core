@@ -26,10 +26,10 @@ class CartNoteFacade extends AbstractFacade implements CartNoteFacadeInterface
      *
      * @return void
      */
-    public function saveOrderCartNotes(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function saveOrderCartNote(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         $this->getFactory()
-            ->createCartNotesSaver()
-            ->saveCartNotesToOrder($quoteTransfer, $saveOrderTransfer);
+            ->createCartNoteSaver()
+            ->saveCartNoteToOrder($quoteTransfer, $saveOrderTransfer);
     }
 }
