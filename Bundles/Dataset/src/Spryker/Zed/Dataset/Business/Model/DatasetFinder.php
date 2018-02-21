@@ -83,6 +83,9 @@ class DatasetFinder implements DatasetFinderInterface
     protected function updateIsActiveByIdTransaction($idDataset, $isActive)
     {
         $dataset = $this->getDatasetId($idDataset);
+        if ($dataset === null) {
+            throw new DatasetNotFoundException();
+        }
         $dataset->setIsActive($isActive);
         $dataset->save();
     }
@@ -130,7 +133,12 @@ class DatasetFinder implements DatasetFinderInterface
      */
     public function getDatasetRowByTitle($title)
     {
-        return $this->datasetQueryContainer->queryDatasetRowByTitle($title)->findOne();
+        $dataset =  $this->datasetQueryContainer->queryDatasetRowByTitle($title)->findOne();
+        if ($dataset === null) {
+            throw new DatasetNotFoundException();
+        }
+
+        return $dataset;
     }
 
     /**
@@ -140,7 +148,12 @@ class DatasetFinder implements DatasetFinderInterface
      */
     public function getDatasetColumnByTitle($title)
     {
-        return $this->datasetQueryContainer->queryDatasetColumnByTitle($title)->findOne();
+        $dataset = $this->datasetQueryContainer->queryDatasetColumnByTitle($title)->findOne();
+        if ($dataset === null) {
+            throw new DatasetNotFoundException();
+        }
+
+        return $dataset;
     }
 
     /**
@@ -151,6 +164,9 @@ class DatasetFinder implements DatasetFinderInterface
     public function getDatasetTransferById($idDataset)
     {
         $datasetEntity = $this->datasetQueryContainer->queryDatasetByIdWithRelation($idDataset)->find()->getFirst();
+        if ($datasetEntity === null) {
+            throw new DatasetNotFoundException();
+        }
         $datasetTransfer = $this->getResponseDatasetTransfer($datasetEntity);
 
         return $datasetTransfer;
@@ -164,6 +180,9 @@ class DatasetFinder implements DatasetFinderInterface
     public function getDatasetTransferByName($datasetName)
     {
         $datasetEntity = $this->datasetQueryContainer->queryDatasetByNameWithRelation($datasetName)->find()->getFirst();
+        if ($datasetEntity === null) {
+            throw new DatasetNotFoundException();
+        }
         $datasetTransfer = $this->getResponseDatasetTransfer($datasetEntity);
 
         return $datasetTransfer;
