@@ -46,9 +46,7 @@ class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceP
      */
     protected function createRenderLanguageSwitcherTwigFunction(Twig_Environment $twig)
     {
-        $options = [
-            'is_safe' => 'html',
-        ];
+        $options = ['is_safe' => ['html']];
 
         return new Twig_SimpleFunction(static::FUNCTION_RENDER_LANGUAGE_SWITCHER, function (Request $request, $templatePath) use ($twig) {
             $currentLanguage = $this->getFactory()->getStore()->getCurrentLanguage();
