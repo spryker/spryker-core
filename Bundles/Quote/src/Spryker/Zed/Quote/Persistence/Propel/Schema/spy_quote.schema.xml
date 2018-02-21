@@ -10,13 +10,12 @@
         <column name="fk_store" required="true" type="INTEGER"/>
         <column name="customer_reference" required="true" type="VARCHAR" size="255"/>
         <column name="quote_data" required="true" type="LONGVARCHAR"/>
-        <column name="is_active" required="true" defaultValue="true" type="BOOLEAN"/>
 
         <behavior name="timestampable"/>
 
         <id-method-parameter value="id_quote_pk_seq"/>
 
-        <foreign-key name="spy_product_review-fk_store" foreignTable="spy_store">
+        <foreign-key name="spy_quote-fk_store" foreignTable="spy_store">
             <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
 
