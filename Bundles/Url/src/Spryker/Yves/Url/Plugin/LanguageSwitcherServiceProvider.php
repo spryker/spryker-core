@@ -20,6 +20,7 @@ use Twig_SimpleFunction;
  */
 class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    const FUNCTION_RENDER_LANGUAGE_SWITCHER = 'render_language_switcher';
     /**
      * @param \Silex\Application $app
      *
@@ -45,7 +46,11 @@ class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceP
      */
     protected function createRenderLanguageSwitcherTwigFunction(Twig_Environment $twig)
     {
-        return new Twig_SimpleFunction('render_language_switcher', function (Request $request, $templatePath) use ($twig) {
+        $options = [
+            'is_safe' => 'html',
+        ];
+
+        return new Twig_SimpleFunction(static::FUNCTION_RENDER_LANGUAGE_SWITCHER, function (Request $request, $templatePath) use ($twig) {
             $currentLanguage = $this->getFactory()->getStore()->getCurrentLanguage();
             $currentUrl = $request->getPathInfo();
             $currentUrlStorage = $this->getClient()->findUrl($currentUrl, $this->getLocale());
@@ -73,7 +78,7 @@ class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceP
                 'currentLanguage' => $currentLanguage,
                 ]
             );
-        });
+        }, $options);
     }
 
     /**
