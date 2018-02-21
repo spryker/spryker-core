@@ -97,7 +97,10 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderReader()
     {
-        return new OrderReader($this->getQueryContainer());
+        return new OrderReader(
+            $this->getQueryContainer(),
+            $this->createOrderHydrator()
+        );
     }
 
     /**

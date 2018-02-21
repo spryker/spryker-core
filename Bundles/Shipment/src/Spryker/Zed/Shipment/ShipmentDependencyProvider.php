@@ -30,6 +30,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_CURRENCY = 'FACADE_CURRENCY';
     const FACADE_STORE = 'FACADE_STORE';
     const FACADE_TAX = 'FACADE_TAX';
+    const SHIPMENT_METHOD_FILTER_PLUGINS = 'SHIPMENT_METHOD_FILTER_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -139,6 +140,21 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addCurrencyFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addMethodFilterPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMethodFilterPlugins(Container $container)
+    {
+        $container[static::SHIPMENT_METHOD_FILTER_PLUGINS] = function (Container $container) {
+            return $this->getMethodFilterPlugins($container);
+        };
 
         return $container;
     }
@@ -190,5 +206,15 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
                 FormTypeInterface::class
             )
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface[]
+     */
+    protected function getMethodFilterPlugins(Container $container)
+    {
+        return [];
     }
 }
