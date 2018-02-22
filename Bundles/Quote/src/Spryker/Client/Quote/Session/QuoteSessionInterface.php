@@ -7,24 +7,11 @@
 
 namespace Spryker\Client\Quote\Session;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface;
 
-interface QuoteSessionInterface
+/**
+ * @deprecated use \Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface instead
+ */
+interface QuoteSessionInterface extends StorageStrategyInterface
 {
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getQuote();
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return $this
-     */
-    public function setQuote(QuoteTransfer $quoteTransfer);
-
-    /**
-     * @return $this
-     */
-    public function clearQuote();
 }
