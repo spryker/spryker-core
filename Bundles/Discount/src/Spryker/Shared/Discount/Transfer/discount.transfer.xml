@@ -43,9 +43,9 @@
         <property name="shippingAddress" type="Address"/>
         <property name="customer" type="Customer"/>
         <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
+        <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
         <property name="priceMode" type="string" />
-        <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
         <property name="currency" type="Currency" />
     </transfer>
 
@@ -109,6 +109,18 @@
         <property name="validTo" type="string" />
         <property name="isExclusive" type="bool" />
         <property name="isActive" type="bool" />
+        <property name="storeRelation" type="StoreRelation" />
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int" />
+        <property name="idStores" type="int[]" />
+        <property name="stores" type="Store[]" />
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int" />
+        <property name="name" type="string" />
     </transfer>
 
     <transfer name="DiscountCalculator">

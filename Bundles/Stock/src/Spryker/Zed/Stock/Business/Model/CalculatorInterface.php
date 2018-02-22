@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Stock\Business\Model;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface CalculatorInterface
 {
     /**
@@ -15,4 +17,12 @@ interface CalculatorInterface
      * @return int
      */
     public function calculateStockForProduct($sku);
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer);
 }

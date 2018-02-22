@@ -32,7 +32,7 @@ class PasswordController extends AbstractController
         $resetRequestForm = $this->getFactory()->createResetPasswordRequestForm();
         $resetRequestForm->handleRequest($request);
 
-        if ($resetRequestForm->isValid()) {
+        if ($resetRequestForm->isSubmitted() && $resetRequestForm->isValid()) {
             $formData = $resetRequestForm->getData();
             $this->getFacade()->requestPasswordReset($formData[ResetPasswordRequestForm::FIELD_EMAIL]);
             $this->addSuccessMessage(
@@ -71,7 +71,7 @@ class PasswordController extends AbstractController
             ->createResetPasswordForm()
             ->handleRequest($request);
 
-        if ($resetPasswordForm->isValid()) {
+        if ($resetPasswordForm->isSubmitted() && $resetPasswordForm->isValid()) {
             $formData = $resetPasswordForm->getData();
             $resetStatus = $this->getFacade()
                 ->resetPassword(

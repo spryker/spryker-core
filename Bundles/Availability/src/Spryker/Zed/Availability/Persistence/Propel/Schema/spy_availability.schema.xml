@@ -5,9 +5,15 @@
         <column name="id_availability_abstract" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="abstract_sku" type="VARCHAR" size="255" required="true"/>
         <column name="quantity" type="INTEGER" required="true" defaultValue="0"/>
+        <column name="fk_store" required="false" type="INTEGER"/>
+
+        <foreign-key name="spy_availability_abstract-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="AvailabilityAbstract">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
 
         <unique name="spy_availability_abstract-sku">
             <unique-column name="abstract_sku"/>
+            <unique-column name="fk_store"/>
         </unique>
         <id-method-parameter value="spy_availability_abstract_pk_seq"/>
     </table>
@@ -18,12 +24,19 @@
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="quantity" type="INTEGER" required="true"/>
         <column name="is_never_out_of_stock" type="BOOLEAN" defaultValue="false"/>
+        <column name="fk_store" required="false" type="INTEGER"/>
+
         <foreign-key name="spy_availability-fk_spy_availability_abstract" foreignTable="spy_availability_abstract">
             <reference local="fk_availability_abstract" foreign="id_availability_abstract"/>
         </foreign-key>
 
+        <foreign-key name="spy_availability-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="Availability">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+
         <unique name="spy_availability-sku">
             <unique-column name="sku"/>
+            <unique-column name="fk_store"/>
         </unique>
 
         <id-method-parameter value="spy_availability_pk_seq"/>

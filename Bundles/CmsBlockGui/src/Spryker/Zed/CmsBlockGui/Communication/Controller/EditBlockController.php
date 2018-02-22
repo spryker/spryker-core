@@ -46,7 +46,7 @@ class EditBlockController extends AbstractController
             ->createCmsBlockFormDataProvider();
 
         $cmsBlockForm = $this->getFactory()
-            ->createCmsBlockForm($cmsBlockFormTypeDataProvider, $idCmsBlock)
+            ->getCmsBlockForm($cmsBlockFormTypeDataProvider, $idCmsBlock)
             ->handleRequest($request);
 
         if ($cmsBlockForm->isSubmitted()) {
@@ -119,7 +119,7 @@ class EditBlockController extends AbstractController
      */
     protected function updateCmsBlock(FormInterface $cmsBlockForm)
     {
-        if ($cmsBlockForm->isValid()) {
+        if ($cmsBlockForm->isSubmitted() && $cmsBlockForm->isValid()) {
             try {
                 $this->getFactory()
                     ->getCmsBlockFacade()

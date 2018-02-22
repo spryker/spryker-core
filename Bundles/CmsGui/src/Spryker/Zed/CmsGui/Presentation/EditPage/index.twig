@@ -27,7 +27,7 @@
 
     {{ include ('@CmsGui/_template/edit-notes.twig') }}
 
-    {{ form_start(pageForm) }}
+    {{ form_start(pageForm, {attr: {novalidate: 'novalidate'}}) }}
 
     {{ tabs(pageTabs, {'availableLocales' : availableLocales, 'pageForm' : pageForm} ) }}
 

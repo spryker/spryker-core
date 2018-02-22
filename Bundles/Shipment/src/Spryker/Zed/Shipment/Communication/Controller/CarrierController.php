@@ -37,7 +37,7 @@ class CarrierController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $carrierTransfer = new ShipmentCarrierTransfer();
             $carrierTransfer->fromArray($data, true);

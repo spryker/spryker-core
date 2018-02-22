@@ -1,0 +1,41 @@
+{
+  "name": "spryker/gift-card-balance",
+  "description": "GiftCardBalance module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/gift-card": "^1.0.0",
+    "spryker/gui": "^3.12.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/money": "^2.3.0",
+    "spryker/propel-orm": "^1.5.0",
+    "spryker/sales": "^8.0.0",
+    "spryker/symfony": "^3.1.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "^3.0.0",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://code.spryker.com/repo/private"
+    }
+  ],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

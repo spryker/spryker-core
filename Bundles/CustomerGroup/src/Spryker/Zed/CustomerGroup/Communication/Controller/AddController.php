@@ -35,7 +35,7 @@ class AddController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             /** @var \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer */
             $customerGroupTransfer = $form->getData();
 

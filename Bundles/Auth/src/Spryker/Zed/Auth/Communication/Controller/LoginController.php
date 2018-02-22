@@ -31,7 +31,7 @@ class LoginController extends AbstractController
             ->createLoginForm()
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
             $isLogged = $this->getFacade()->login(

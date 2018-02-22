@@ -36,7 +36,8 @@ class AvailabilityEditStockCest
                 AvailabilityPage::AVAILABILITY_EDIT_STOCK_URL,
                 AvailabilityPage::AVAILABILITY_ID,
                 AvailabilityPage::AVAILABILITY_SKU,
-                AvailabilityPage::AVAILABILITY_ABSTRACT_PRODUCT_ID
+                AvailabilityPage::AVAILABILITY_ABSTRACT_PRODUCT_ID,
+                AvailabilityPage::AVAILABILITY_ID_STORE
             )
         );
 

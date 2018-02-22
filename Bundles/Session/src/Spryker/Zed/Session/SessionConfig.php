@@ -34,6 +34,8 @@ class SessionConfig extends AbstractBundleConfig
             'name' => str_replace('.', '-', $this->get(SessionConstants::ZED_SESSION_COOKIE_NAME)),
             'cookie_lifetime' => $this->getSessionCookieTimeToLive(),
             'cookie_secure' => $this->secureCookie(),
+            'cookie_domain' => $this->getSessionCookieDomain(),
+            'cookie_path' => $this->getSessionCookiePath(),
             'cookie_httponly' => true,
             'use_only_cookies' => true,
         ];
@@ -58,6 +60,22 @@ class SessionConfig extends AbstractBundleConfig
     protected function secureCookie()
     {
         return ($this->get(SessionConstants::ZED_SESSION_COOKIE_SECURE, true) && $this->get(SessionConstants::ZED_SSL_ENABLED, true));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSessionCookieDomain(): string
+    {
+        return $this->get(SessionConstants::ZED_SESSION_COOKIE_DOMAIN, '');
+    }
+
+    /**
+     * @return string
+     */
+    protected function getSessionCookiePath(): string
+    {
+        return $this->get(SessionConstants::ZED_SESSION_COOKIE_PATH, '/');
     }
 
     /**
