@@ -146,6 +146,8 @@ class DatasetFinder implements DatasetFinderInterface
     /**
      * @param int $idDataset
      *
+     * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException
+     *
      * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
     public function getDatasetTransferById($idDataset)
@@ -161,6 +163,8 @@ class DatasetFinder implements DatasetFinderInterface
 
     /**
      * @param string $datasetName
+     *
+     * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException
      *
      * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
