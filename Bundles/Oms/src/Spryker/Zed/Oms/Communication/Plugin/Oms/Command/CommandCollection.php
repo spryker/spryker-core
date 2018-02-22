@@ -9,9 +9,10 @@ namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
 use ArrayAccess;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface as NewCommandInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\HasAwareCollectionInterface;
 use Spryker\Zed\Oms\Exception\CommandNotFoundException;
 
-class CommandCollection implements CommandCollectionInterface, ArrayAccess
+class CommandCollection implements CommandCollectionInterface, HasAwareCollectionInterface, ArrayAccess
 {
     /**
      * @var \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface[]
