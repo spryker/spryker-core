@@ -17,9 +17,12 @@
           "filter": [
             "lowercase"
           ]
-        },
-        "completion_analyzer": {
-          "tokenizer": "keyword",
+        }
+      },
+      "normalizer": {
+        "lowercase_normalizer": {
+          "type": "custom",
+          "char_filter": [],
           "filter": [
             "lowercase"
           ]
@@ -121,9 +124,9 @@
           }
         },
         "completion-terms": {
-          "type": "text",
+          "type": "keyword",
           "include_in_all": false,
-          "analyzer": "completion_analyzer"
+          "normalizer": "lowercase_normalizer"
         },
         "suggestion-terms": {
           "type": "text",
