@@ -65,8 +65,8 @@ class NonPersistentProviderTest extends Unit
 
         $changedItem = $changedItems[0];
 
-        $this->assertEquals($itemId, $changedItem->getId());
-        $this->assertEquals(
+        $this->assertSame($itemId, $changedItem->getId());
+        $this->assertSame(
             $existingQuantity + $newQuantity,
             $changedItem->getQuantity()
         );
@@ -102,12 +102,12 @@ class NonPersistentProviderTest extends Unit
         $this->assertArrayHasKey($newId, $skuIndex);
 
         $addedItem = $changedItems[$skuIndex[$newId]];
-        $this->assertEquals($newId, $addedItem->getId());
-        $this->assertEquals($newQuantity, $addedItem->getQuantity());
+        $this->assertSame($newId, $addedItem->getId());
+        $this->assertSame($newQuantity, $addedItem->getQuantity());
 
         $existingItem = $changedItems[$skuIndex[$itemId]];
-        $this->assertEquals($itemId, $existingItem->getId());
-        $this->assertEquals($existingQuantity, $existingItem->getQuantity());
+        $this->assertSame($itemId, $existingItem->getId());
+        $this->assertSame($existingQuantity, $existingItem->getQuantity());
     }
 
     /**
@@ -143,12 +143,12 @@ class NonPersistentProviderTest extends Unit
         $this->assertArrayHasKey($newItemId, $skuIndex);
 
         $addedItem = $changedItems[$skuIndex[$newItemId]];
-        $this->assertEquals($newItemId, $addedItem->getId());
-        $this->assertEquals($newFirstItemQuantity + $newSecondItemQuantity, $addedItem->getQuantity());
+        $this->assertSame($newItemId, $addedItem->getId());
+        $this->assertSame($newFirstItemQuantity + $newSecondItemQuantity, $addedItem->getQuantity());
 
         $existingItem = $changedItems[$skuIndex[$existingItemId]];
-        $this->assertEquals($existingItemId, $existingItem->getId());
-        $this->assertEquals($existingItemQuantity, $existingItem->getQuantity());
+        $this->assertSame($existingItemId, $existingItem->getId());
+        $this->assertSame($existingItemQuantity, $existingItem->getQuantity());
     }
 
     /**
@@ -190,8 +190,8 @@ class NonPersistentProviderTest extends Unit
         $changedItems = $changedCart->getItems();
         $this->assertCount(1, $changedItems);
         $item = $changedItems[0];
-        $this->assertEquals($itemId, $item->getId());
-        $this->assertEquals($existingQuantity, $item->getQuantity());
+        $this->assertSame($itemId, $item->getId());
+        $this->assertSame($existingQuantity, $item->getQuantity());
     }
 
     /**
