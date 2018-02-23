@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ProductCategoryStorageTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface;
 use Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface;
 
@@ -35,11 +34,6 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -52,18 +46,15 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     /**
      * @param \Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryInterface $categoryFacade
      * @param \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface $queryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
     public function __construct(
         ProductCategoryStorageToCategoryInterface $categoryFacade,
         ProductCategoryStorageQueryContainerInterface $queryContainer,
-        Store $store,
         $isSendingToQueue
     ) {
         $this->categoryFacade = $categoryFacade;
         $this->queryContainer = $queryContainer;
-        $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
         $this->categoryCacheCollection = new Collection([]);
     }
@@ -148,7 +139,6 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         $productAbstractCategoryStorageTransfer = $this->getProductAbstractCategoryTransfer($spyProductAbstractLocalizedEntity, $categories);
         $spyProductAbstractCategoryStorageEntity->setFkProductAbstract($spyProductAbstractLocalizedEntity->getFkProductAbstract());
         $spyProductAbstractCategoryStorageEntity->setData($productAbstractCategoryStorageTransfer->toArray());
-        $spyProductAbstractCategoryStorageEntity->setStore($this->getStoreName());
         $spyProductAbstractCategoryStorageEntity->setLocale($spyProductAbstractLocalizedEntity->getLocale()->getLocaleName());
         $spyProductAbstractCategoryStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductAbstractCategoryStorageEntity->save();
@@ -276,14 +266,6 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         }
 
         return $productAbstractStorageEntitiesByIdAndLocale;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->store->getStoreName();
     }
 
     /**

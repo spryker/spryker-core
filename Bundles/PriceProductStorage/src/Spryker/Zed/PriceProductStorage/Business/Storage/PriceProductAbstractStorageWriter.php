@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProductStorage\Business\Storage;
 
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainer;
 use Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface;
@@ -27,11 +26,6 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -39,14 +33,12 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     /**
      * @param \Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface $queryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
-    public function __construct(PriceProductStorageToPriceProductFacadeInterface $priceProductFacade, PriceProductStorageQueryContainerInterface $queryContainer, Store $store, $isSendingToQueue)
+    public function __construct(PriceProductStorageToPriceProductFacadeInterface $priceProductFacade, PriceProductStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
     {
         $this->priceProductFacade = $priceProductFacade;
         $this->queryContainer = $queryContainer;
-        $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -126,7 +118,6 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
 
         $spyPriceProductStorageEntity->setFkProductAbstract($idProductAbstract);
         $spyPriceProductStorageEntity->setData($priceProductStorageTransfer->toArray());
-        $spyPriceProductStorageEntity->setStore($this->getStoreName());
         $spyPriceProductStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyPriceProductStorageEntity->save();
     }
@@ -152,13 +143,5 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     protected function findPriceAbstractStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {
         return $this->queryContainer->queryPriceAbstractStorageByPriceAbstractIds($productAbstractIds)->find()->toKeyIndex('fkProductAbstract');
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->store->getStoreName();
     }
 }

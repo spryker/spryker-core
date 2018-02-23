@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductStorage\Business\Storage;
 use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface;
 use Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface;
 
@@ -34,11 +33,6 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -51,18 +45,15 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     /**
      * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface $productFacade
      * @param \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface $queryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
     public function __construct(
         ProductStorageToProductInterface $productFacade,
         ProductStorageQueryContainerInterface $queryContainer,
-        Store $store,
         $isSendingToQueue
     ) {
         $this->productFacade = $productFacade;
         $this->queryContainer = $queryContainer;
-        $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -150,7 +141,6 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
         $productConcreteStorageTransfer = $this->mapToProductConcreteStorageTransfer($spyProductConcreteLocalizedEntity);
         $spyProductStorageEntity->setFkProduct($spyProductConcreteLocalizedEntity[static::COL_FK_PRODUCT]);
         $spyProductStorageEntity->setData($productConcreteStorageTransfer->toArray());
-        $spyProductStorageEntity->setStore($this->getStoreName());
         $spyProductStorageEntity->setLocale($spyProductConcreteLocalizedEntity['Locale']['locale_name']);
         $spyProductStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductStorageEntity->save();
@@ -277,13 +267,5 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
         }
 
         return $productConcreteStorageEntitiesByIdAndLocale;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->store->getStoreName();
     }
 }

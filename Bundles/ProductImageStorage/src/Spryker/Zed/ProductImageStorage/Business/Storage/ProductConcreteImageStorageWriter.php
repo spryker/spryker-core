@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ProductImageSetStorageTransfer;
 use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageInterface;
 use Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface;
 
@@ -34,11 +33,6 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -46,14 +40,12 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     /**
      * @param \Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageInterface $productImageFacade
      * @param \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface $queryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
-    public function __construct(ProductImageStorageToProductImageInterface $productImageFacade, ProductImageStorageQueryContainerInterface $queryContainer, Store $store, $isSendingToQueue)
+    public function __construct(ProductImageStorageToProductImageInterface $productImageFacade, ProductImageStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
     {
         $this->productImageFacade = $productImageFacade;
         $this->queryContainer = $queryContainer;
-        $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -143,7 +135,6 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
 
         $spyProductConcreteImageStorage->setFkProduct($spyProductLocalizedEntity->getFkProduct());
         $spyProductConcreteImageStorage->setData($productConcreteStorageTransfer->toArray());
-        $spyProductConcreteImageStorage->setStore($this->getStoreName());
         $spyProductConcreteImageStorage->setLocale($spyProductLocalizedEntity->getLocale()->getLocaleName());
         $spyProductConcreteImageStorage->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductConcreteImageStorage->save();
@@ -204,13 +195,5 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
         }
 
         return $productConcreteStorageEntitiesByIdAndLocale;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->store->getStoreName();
     }
 }

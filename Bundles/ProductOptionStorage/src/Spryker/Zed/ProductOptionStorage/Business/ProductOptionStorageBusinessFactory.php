@@ -25,17 +25,8 @@ class ProductOptionStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductOptionStorageWriter(
             $this->getProductOptionFacade(),
             $this->getQueryContainer(),
-            $this->getStore(),
             $this->getConfig()->isSendingToQueue()
         );
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::STORE);
     }
 
     /**

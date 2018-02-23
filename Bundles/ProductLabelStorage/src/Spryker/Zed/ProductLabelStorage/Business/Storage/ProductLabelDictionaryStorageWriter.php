@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
 use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabel;
 use Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface;
 
@@ -25,24 +24,17 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var bool
      */
     protected $isSendingToQueue = true;
 
     /**
      * @param \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface $queryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
-    public function __construct(ProductLabelStorageQueryContainerInterface $queryContainer, Store $store, $isSendingToQueue)
+    public function __construct(ProductLabelStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
     {
         $this->queryContainer = $queryContainer;
-        $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -128,7 +120,6 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
         }
 
         $spyProductLabelStorageEntity->setData($productLabelDictionaryStorageTransfer->modifiedToArray());
-        $spyProductLabelStorageEntity->setStore($this->getStoreName());
         $spyProductLabelStorageEntity->setLocale($localeName);
         $spyProductLabelStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductLabelStorageEntity->save();
@@ -173,14 +164,6 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
         }
 
         return $productAbstractStorageEntitiesByIdAndLocale;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->store->getStoreName();
     }
 
     /**

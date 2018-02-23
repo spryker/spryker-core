@@ -9,7 +9,6 @@ namespace Spryker\Client\PriceProductStorage\Storage;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface;
-use Spryker\Shared\Kernel\Store;
 
 class PriceProductStorageKeyGenerator implements PriceProductStorageKeyGeneratorInterface
 {
@@ -19,18 +18,11 @@ class PriceProductStorageKeyGenerator implements PriceProductStorageKeyGenerator
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Shared\Kernel\Store $store
      */
-    public function __construct(PriceProductStorageToSynchronizationServiceInterface $synchronizationService, Store $store)
+    public function __construct(PriceProductStorageToSynchronizationServiceInterface $synchronizationService)
     {
         $this->synchronizationService = $synchronizationService;
-        $this->store = $store;
     }
 
     /**
@@ -43,7 +35,6 @@ class PriceProductStorageKeyGenerator implements PriceProductStorageKeyGenerator
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setStore($this->store->getStoreName())
             ->setReference($resourceId);
 
         return $this->synchronizationService->getStorageKeyBuilder($resourceName)->generateKey($synchronizationDataTransfer);

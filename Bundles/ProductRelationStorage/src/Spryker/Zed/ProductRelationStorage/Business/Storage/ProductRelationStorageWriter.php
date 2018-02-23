@@ -15,7 +15,6 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationProductAbstractTableMap;
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTypeTableMap;
 use Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainerInterface;
 
 class ProductRelationStorageWriter implements ProductRelationStorageWriterInterface
@@ -26,24 +25,17 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var bool
      */
     protected $isSendingToQueue = true;
 
     /**
      * @param \Spryker\Zed\ProductRelationStorage\Persistence\ProductRelationStorageQueryContainerInterface $queryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
-    public function __construct(ProductRelationStorageQueryContainerInterface $queryContainer, Store $store, $isSendingToQueue)
+    public function __construct(ProductRelationStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
     {
         $this->queryContainer = $queryContainer;
-        $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -135,7 +127,6 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
 
         $spyProductAbstractRelationStorageEntity->setFkProductAbstract($spyProductAbstractLocalizedEntity->getFkProductAbstract());
         $spyProductAbstractRelationStorageEntity->setData($productAbstractRelationStorageTransfer->toArray());
-        $spyProductAbstractRelationStorageEntity->setStore($this->getStoreName());
         $spyProductAbstractRelationStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductAbstractRelationStorageEntity->save();
     }
@@ -248,13 +239,5 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
         }
 
         return $productAbstractStorageRelationEntitiesById;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->store->getStoreName();
     }
 }

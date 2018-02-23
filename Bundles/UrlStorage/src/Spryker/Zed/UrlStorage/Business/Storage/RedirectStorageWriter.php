@@ -8,7 +8,6 @@
 namespace Spryker\Zed\UrlStorage\Business\Storage;
 
 use Orm\Zed\UrlStorage\Persistence\SpyUrlRedirectStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface;
 
@@ -28,11 +27,6 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -40,14 +34,12 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
     /**
      * @param \Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface $utilSanitize
      * @param \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface $queryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
-    public function __construct(UrlStorageToUtilSanitizeServiceInterface $utilSanitize, UrlStorageQueryContainerInterface $queryContainer, Store $store, $isSendingToQueue)
+    public function __construct(UrlStorageToUtilSanitizeServiceInterface $utilSanitize, UrlStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
     {
         $this->utilSanitize = $utilSanitize;
         $this->queryContainer = $queryContainer;
-        $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -111,7 +103,6 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
 
         $spyUrlRedirectStorage->setFkUrlRedirect($spyRedirectEntity[static::ID_URL_REDIRECT]);
         $spyUrlRedirectStorage->setData($this->utilSanitize->arrayFilterRecursive($spyRedirectEntity));
-        $spyUrlRedirectStorage->setStore($this->getStoreName());
         $spyUrlRedirectStorage->setIsSendingToQueue($this->isSendingToQueue);
         $spyUrlRedirectStorage->save();
     }
@@ -134,13 +125,5 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
     protected function findRedirectStorageEntitiesByIds(array $redirectIds)
     {
         return $this->queryContainer->queryRedirectStorageByIds($redirectIds)->find()->toKeyIndex(static::FK_URL_REDIRECT);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->store->getStoreName();
     }
 }

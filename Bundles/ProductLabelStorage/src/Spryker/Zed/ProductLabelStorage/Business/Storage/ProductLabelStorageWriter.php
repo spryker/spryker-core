@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelStorage\Business\Storage;
 
 use Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface;
 
 class ProductLabelStorageWriter implements ProductLabelStorageWriterInterface
@@ -20,24 +19,17 @@ class ProductLabelStorageWriter implements ProductLabelStorageWriterInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var bool
      */
     protected $isSendingToQueue = true;
 
     /**
      * @param \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface $queryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
-    public function __construct(ProductLabelStorageQueryContainerInterface $queryContainer, Store $store, $isSendingToQueue)
+    public function __construct(ProductLabelStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
     {
         $this->queryContainer = $queryContainer;
-        $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -126,7 +118,6 @@ class ProductLabelStorageWriter implements ProductLabelStorageWriterInterface
 
         $spyProductAbstractLabelStorageEntity->setFkProductAbstract($productAbstractId);
         $spyProductAbstractLabelStorageEntity->setData($productAbstractLabelStorageTransfer->toArray());
-        $spyProductAbstractLabelStorageEntity->setStore($this->getStoreName());
         $spyProductAbstractLabelStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductAbstractLabelStorageEntity->save();
     }
@@ -165,13 +156,5 @@ class ProductLabelStorageWriter implements ProductLabelStorageWriterInterface
         }
 
         return $productAbstractStorageLabelEntitiesById;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->store->getStoreName();
     }
 }

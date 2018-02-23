@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductOptionStorage\ProductOptionStorageConfig;
 
 class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
@@ -33,26 +32,18 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     protected $valuePriceReader;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface $storageClient
      * @param \Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface $valuePriceReader
-     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         ProductOptionStorageToStorageInterface $storageClient,
         ProductOptionStorageToSynchronizationServiceInterface $synchronizationService,
-        ValuePriceReaderInterface $valuePriceReader,
-        Store $store
+        ValuePriceReaderInterface $valuePriceReader
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
         $this->valuePriceReader = $valuePriceReader;
-        $this->store = $store;
     }
 
     /**
@@ -100,7 +91,6 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setStore($this->store->getStoreName())
             ->setLocale($locale)
             ->setReference($idProductAbstract);
 

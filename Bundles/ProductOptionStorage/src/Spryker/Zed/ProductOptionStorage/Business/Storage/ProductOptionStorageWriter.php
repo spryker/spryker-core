@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\ProductOptionValueStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface;
 use Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainerInterface;
 
@@ -32,11 +31,6 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -44,14 +38,12 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     /**
      * @param \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface $productOptionFacade
      * @param \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainerInterface $queryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
-    public function __construct(ProductOptionStorageToProductOptionFacadeInterface $productOptionFacade, ProductOptionStorageQueryContainerInterface $queryContainer, Store $store, $isSendingToQueue)
+    public function __construct(ProductOptionStorageToProductOptionFacadeInterface $productOptionFacade, ProductOptionStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
     {
         $this->productOptionFacade = $productOptionFacade;
         $this->queryContainer = $queryContainer;
-        $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -157,7 +149,6 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
 
         $spyProductAbstractOptionStorageEntity->setFkProductAbstract($spyProductAbstractLocalizedEntity->getFkProductAbstract());
         $spyProductAbstractOptionStorageEntity->setData($productAbstractOptionStorageTransfer->toArray());
-        $spyProductAbstractOptionStorageEntity->setStore($this->getStoreName());
         $spyProductAbstractOptionStorageEntity->setLocale($spyProductAbstractLocalizedEntity->getLocale()->getLocaleName());
         $spyProductAbstractOptionStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductAbstractOptionStorageEntity->save();
@@ -197,14 +188,6 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         }
 
         return $productAbstractOptionStorageEntitiesByIdAndLocale;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->store->getStoreName();
     }
 
     /**

@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductLabelStorage\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductLabelStorage\Business\Storage\ProductLabelDictionaryStorageWriter;
 use Spryker\Zed\ProductLabelStorage\Business\Storage\ProductLabelStorageWriter;
-use Spryker\Zed\ProductLabelStorage\ProductLabelStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductLabelStorage\ProductLabelStorageConfig getConfig()
@@ -25,7 +24,6 @@ class ProductLabelStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductLabelDictionaryStorageWriter(
             $this->getQueryContainer(),
-            $this->getStore(),
             $this->getConfig()->isSendingToQueue()
         );
     }
@@ -37,16 +35,7 @@ class ProductLabelStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductLabelStorageWriter(
             $this->getQueryContainer(),
-            $this->getStore(),
             $this->getConfig()->isSendingToQueue()
         );
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::STORE);
     }
 }

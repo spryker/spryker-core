@@ -25,7 +25,6 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductCategoryStorageWriter(
             $this->getCategoryFacade(),
             $this->getQueryContainer(),
-            $this->getStore(),
             $this->getConfig()->isSendingToQueue()
         );
     }
@@ -36,13 +35,5 @@ class ProductCategoryStorageBusinessFactory extends AbstractBusinessFactory
     protected function getCategoryFacade()
     {
         return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::FACADE_CATEGORY);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::STORE);
     }
 }

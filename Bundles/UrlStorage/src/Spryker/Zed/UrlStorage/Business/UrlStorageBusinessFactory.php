@@ -26,7 +26,6 @@ class UrlStorageBusinessFactory extends AbstractBusinessFactory
         return new UrlStorageWriter(
             $this->getUtilSanitizeService(),
             $this->getQueryContainer(),
-            $this->getStore(),
             $this->getConfig()->isSendingToQueue()
         );
     }
@@ -39,7 +38,6 @@ class UrlStorageBusinessFactory extends AbstractBusinessFactory
         return new RedirectStorageWriter(
             $this->getUtilSanitizeService(),
             $this->getQueryContainer(),
-            $this->getStore(),
             $this->getConfig()->isSendingToQueue()
         );
     }
@@ -50,13 +48,5 @@ class UrlStorageBusinessFactory extends AbstractBusinessFactory
     protected function getUtilSanitizeService()
     {
         return $this->getProvidedDependency(UrlStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(UrlStorageDependencyProvider::STORE);
     }
 }

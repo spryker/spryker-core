@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductOptionStorage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToEventBehaviorFacadeBridge;
@@ -21,7 +20,6 @@ class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyPro
     const QUERY_CONTAINER_PRODUCT_OPTION = 'QUERY_CONTAINER_PRODUCT_OPTION';
     const FACADE_PRODUCT_OPTION = 'FACADE_PRODUCT_OPTION';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const STORE = 'STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -46,10 +44,6 @@ class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyPro
     {
         $container[static::FACADE_PRODUCT_OPTION] = function (Container $container) {
             return new ProductOptionStorageToProductOptionFacadeBridge($container->getLocator()->productOption()->facade());
-        };
-
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
         };
 
         return $container;

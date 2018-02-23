@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\UrlStorage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToEventBehaviorFacadeBridge;
@@ -19,8 +18,6 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-
-    const STORE = 'STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -45,10 +42,6 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
             return new UrlStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
-
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
         };
 
         return $container;

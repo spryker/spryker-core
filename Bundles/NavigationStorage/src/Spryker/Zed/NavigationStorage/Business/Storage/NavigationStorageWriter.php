@@ -139,7 +139,6 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
         $spyNavigationStorage->setFkNavigation($navigationTreeByLocaleTransfer->getNavigation()->getIdNavigation());
         $spyNavigationStorage->setNavigationKey($navigationTreeByLocaleTransfer->getNavigation()->getKey());
         $spyNavigationStorage->setLocale($localeName);
-        $spyNavigationStorage->setStore($this->store->getStoreName());
         $spyNavigationStorage->setData($data);
         $spyNavigationStorage->setIsSendingToQueue($this->isSendingToQueue);
         $spyNavigationStorage->save();

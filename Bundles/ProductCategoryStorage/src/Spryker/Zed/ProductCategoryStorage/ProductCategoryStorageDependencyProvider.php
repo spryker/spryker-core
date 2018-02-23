@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductCategoryStorage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductCategoryStorage\Dependency\Facade\ProductCategoryStorageToCategoryBridge;
@@ -23,7 +22,6 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const FACADE_CATEGORY = 'FACADE_CATEGORY';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const STORE = 'STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -48,10 +46,6 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
     {
         $container[static::FACADE_CATEGORY] = function (Container $container) {
             return new ProductCategoryStorageToCategoryBridge($container->getLocator()->category()->facade());
-        };
-
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
         };
 
         return $container;

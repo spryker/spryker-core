@@ -41,7 +41,6 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductConcreteStorageWriter(
             $this->getProductFacade(),
             $this->getQueryContainer(),
-            $this->getStore(),
             $this->getConfig()->isSendingToQueue()
         );
     }

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\UrlStorage\Business\Storage;
 
 use Orm\Zed\UrlStorage\Persistence\SpyUrlStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface;
 
@@ -28,11 +27,6 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -40,14 +34,12 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     /**
      * @param \Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface $utilSanitize
      * @param \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface $queryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
-    public function __construct(UrlStorageToUtilSanitizeServiceInterface $utilSanitize, UrlStorageQueryContainerInterface $queryContainer, Store $store, $isSendingToQueue)
+    public function __construct(UrlStorageToUtilSanitizeServiceInterface $utilSanitize, UrlStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
     {
         $this->utilSanitize = $utilSanitize;
         $this->queryContainer = $queryContainer;
-        $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -120,7 +112,6 @@ class UrlStorageWriter implements UrlStorageWriterInterface
         $spyUrlStorageEntity->setUrl($spyUrlEntity['url']);
         $spyUrlStorageEntity->setFkUrl($spyUrlEntity[static::ID_URL]);
         $spyUrlStorageEntity->setData($this->utilSanitize->arrayFilterRecursive($spyUrlEntity));
-        $spyUrlStorageEntity->setStore($this->getStoreName());
         $spyUrlStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyUrlStorageEntity->save();
     }
@@ -177,13 +168,5 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     protected function findUrlStorageEntitiesByIds(array $urlIds)
     {
         return $this->queryContainer->queryUrlStorageByIds($urlIds)->find()->toKeyIndex(static::FK_URL);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->store->getStoreName();
     }
 }

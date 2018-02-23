@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductGroupStorage\Business\Storage;
 use Generated\Shared\Transfer\ProductAbstractGroupStorageTransfer;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\ProductGroupStorage\Persistence\SpyProductAbstractGroupStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ProductGroupStorage\Persistence\ProductGroupStorageQueryContainerInterface;
 
 class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWriterInterface
@@ -21,24 +20,17 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var bool
      */
     protected $isSendingToQueue = true;
 
     /**
      * @param \Spryker\Zed\ProductGroupStorage\Persistence\ProductGroupStorageQueryContainerInterface $queryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
-    public function __construct(ProductGroupStorageQueryContainerInterface $queryContainer, Store $store, $isSendingToQueue)
+    public function __construct(ProductGroupStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
     {
         $this->queryContainer = $queryContainer;
-        $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -128,7 +120,6 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
 
         $spyProductStorageGroupEntity->setFkProductAbstract($productAbstractId);
         $spyProductStorageGroupEntity->setData($productAbstractGroupStorageTransfer->toArray());
-        $spyProductStorageGroupEntity->setStore($this->getStoreName());
         $spyProductStorageGroupEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductStorageGroupEntity->save();
     }
@@ -297,13 +288,5 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
         }
 
         return $productAbstractStorageEntitiesById;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->store->getStoreName();
     }
 }

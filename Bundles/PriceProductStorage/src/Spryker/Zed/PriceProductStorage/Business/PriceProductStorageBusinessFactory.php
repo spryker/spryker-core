@@ -26,7 +26,6 @@ class PriceProductStorageBusinessFactory extends AbstractBusinessFactory
         return new PriceProductAbstractStorageWriter(
             $this->getPriceProductFacade(),
             $this->getQueryContainer(),
-            $this->getStore(),
             $this->getConfig()->isSendingToQueue()
         );
     }
@@ -39,7 +38,6 @@ class PriceProductStorageBusinessFactory extends AbstractBusinessFactory
         return new PriceProductConcreteStorageWriter(
             $this->getPriceProductFacade(),
             $this->getQueryContainer(),
-            $this->getStore(),
             $this->getConfig()->isSendingToQueue()
         );
     }
@@ -50,13 +48,5 @@ class PriceProductStorageBusinessFactory extends AbstractBusinessFactory
     protected function getPriceProductFacade()
     {
         return $this->getProvidedDependency(PriceProductStorageDependencyProvider::FACADE_PRICE_PRODUCT);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::STORE);
     }
 }

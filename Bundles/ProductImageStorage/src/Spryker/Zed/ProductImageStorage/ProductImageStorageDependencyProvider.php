@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductImageStorage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToEventBehaviorFacadeBridge;
@@ -21,7 +20,6 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const QUERY_CONTAINER_PRODUCT_IMAGE = 'QUERY_CONTAINER_PRODUCT_IMAGE';
-    const STORE = 'STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -46,10 +44,6 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
     {
         $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {
             return new ProductImageStorageToProductImageBridge($container->getLocator()->productImage()->facade());
-        };
-
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
         };
 
         return $container;

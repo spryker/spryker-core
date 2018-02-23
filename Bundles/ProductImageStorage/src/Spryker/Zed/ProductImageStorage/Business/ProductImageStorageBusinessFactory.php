@@ -26,7 +26,6 @@ class ProductImageStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductAbstractImageStorageWriter(
             $this->getProductImageFacade(),
             $this->getQueryContainer(),
-            $this->getStore(),
             $this->getConfig()->isSendingToQueue()
         );
     }
@@ -39,17 +38,8 @@ class ProductImageStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductConcreteImageStorageWriter(
             $this->getProductImageFacade(),
             $this->getQueryContainer(),
-            $this->getStore(),
             $this->getConfig()->isSendingToQueue()
         );
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(ProductImageStorageDependencyProvider::STORE);
     }
 
     /**
