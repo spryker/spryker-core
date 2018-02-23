@@ -5,6 +5,8 @@
 
 {% block content %}
 
+    {% include '@AvailabilityGui/_partials/store_switcher.twig' %}
+
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product availability list    ' | trans } %}
 
         {% block widget_content %}

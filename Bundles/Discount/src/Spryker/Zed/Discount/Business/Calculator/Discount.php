@@ -91,11 +91,37 @@ class Discount implements DiscountInterface
      */
     public function calculate(QuoteTransfer $quoteTransfer)
     {
-        $applicableDiscounts = $this->getApplicableDiscounts($quoteTransfer);
+        $activeDiscounts = $this->retrieveActiveCartAndVoucherDiscounts(
+            $this->getVoucherCodes($quoteTransfer),
+            $this->getIdStoreByName($quoteTransfer->getStore()->getName())
+        );
+
+        $nonApplicableDiscounts = $this->filterNonApplicableDiscounts($activeDiscounts, $quoteTransfer);
+        $applicableDiscounts = $this->filterApplicableDiscounts($activeDiscounts, $quoteTransfer);
+
         $collectedDiscounts = $this->calculator->calculate($applicableDiscounts, $quoteTransfer);
+
         $this->addDiscountsToQuote($quoteTransfer, $collectedDiscounts);
+        $this->addNonApplicableDiscountsToQuote($quoteTransfer, $nonApplicableDiscounts);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discounts
+     *
+     * @return void
+     */
+    protected function addNonApplicableDiscountsToQuote(QuoteTransfer $quoteTransfer, array $discounts)
+    {
+        $quoteTransfer->setUsedNotAppliedVoucherCodes([]);
+
+        foreach ($discounts as $discount) {
+            if ($discount->getVoucherCode()) {
+                $quoteTransfer->addUsedNotAppliedVoucherCode($discount->getVoucherCode());
+            }
+        }
     }
 
     /**
@@ -184,9 +210,21 @@ class Discount implements DiscountInterface
             $this->getIdStoreByName($quoteTransfer->getStore()->getName())
         );
 
+        return $this->filterApplicableDiscounts($discounts, $quoteTransfer);
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount[]|\Propel\Runtime\Collection\Collection $discounts
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    protected function filterApplicableDiscounts(Collection $discounts, QuoteTransfer $quoteTransfer)
+    {
         $applicableDiscounts = [];
-        foreach ($discounts as $discountEntity) {
+        foreach ($discounts as $key => $discountEntity) {
             if (!$this->isDiscountApplicable($quoteTransfer, $discountEntity)) {
+                $discounts->remove($key);
                 continue;
             }
 
@@ -206,6 +244,26 @@ class Discount implements DiscountInterface
         $storeTransfer = $this->storeFacade->getStoreByName($storeName);
 
         return $storeTransfer->getIdStore();
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount[]|\Propel\Runtime\Collection\Collection $discounts
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    protected function filterNonApplicableDiscounts(Collection $discounts, QuoteTransfer $quoteTransfer)
+    {
+        $nonApplicableDiscounts = [];
+        foreach ($discounts as $discountEntity) {
+            if ($this->isDiscountApplicable($quoteTransfer, $discountEntity)) {
+                continue;
+            }
+
+            $nonApplicableDiscounts[] = $this->hydrateDiscountTransfer($discountEntity, $quoteTransfer);
+        }
+
+        return $nonApplicableDiscounts;
     }
 
     /**

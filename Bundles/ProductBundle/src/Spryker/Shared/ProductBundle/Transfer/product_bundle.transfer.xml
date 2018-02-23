@@ -44,6 +44,7 @@
 
     <transfer name="Quote">
         <property name="bundleItems" type="Item[]" singular="bundleItem" />
+        <property name="store" type="Store" />
     </transfer>
 
     <transfer name="Order">
@@ -61,6 +62,11 @@
         <property name="groupImage" type="string" />
         <property name="groupItems" type="Item[]" singular="item" />
         <property name="rowCount" type="int" />
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int" />
+        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence" />
     </transfer>
 
 </transfers>

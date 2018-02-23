@@ -13,9 +13,12 @@ use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\RepositoryResolverAwareTrait;
 
 abstract class AbstractPlugin
 {
+    use RepositoryResolverAwareTrait;
+
     /**
      * @var \Spryker\Zed\Kernel\Business\AbstractFacade
      */

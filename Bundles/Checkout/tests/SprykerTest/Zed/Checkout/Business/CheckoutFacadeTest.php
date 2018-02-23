@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
@@ -26,8 +27,8 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
+use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Availability\Communication\Plugin\ProductsAvailableCheckoutPreConditionPlugin;
 use Spryker\Zed\Checkout\Business\CheckoutBusinessFactory;
 use Spryker\Zed\Checkout\Business\CheckoutFacade;
@@ -99,6 +100,7 @@ class CheckoutFacadeTest extends Unit
 
         $quoteTransfer = (new QuoteBuilder())
             ->withItem([ItemTransfer::SKU => $product->getSku(), ItemTransfer::UNIT_PRICE => 1])
+            ->withStore([StoreTransfer::NAME => 'DE'])
             ->withCustomer()
             ->withTotals()
             ->withCurrency()
@@ -122,6 +124,7 @@ class CheckoutFacadeTest extends Unit
 
         $quoteTransfer = (new QuoteBuilder([CustomerTransfer::EMAIL => 'max@mustermann.de']))
             ->withItem([ItemTransfer::SKU => $product->getSku()])
+            ->withStore([StoreTransfer::NAME => 'DE'])
             ->withCustomer()
             ->withTotals()
             ->withCurrency()
@@ -149,6 +152,7 @@ class CheckoutFacadeTest extends Unit
         $quoteTransfer = (new QuoteBuilder())
             ->withItem([ItemTransfer::SKU => $product1->getSku(), ItemTransfer::UNIT_PRICE => 1])
             ->withAnotherItem([ItemTransfer::SKU => $product2->getSku(), ItemTransfer::UNIT_PRICE => 1])
+            ->withStore([StoreTransfer::NAME => 'DE'])
             ->withCustomer()
             ->withTotals()
             ->withCurrency()
@@ -267,13 +271,15 @@ class CheckoutFacadeTest extends Unit
         $orderItem2Query = SpySalesOrderItemQuery::create()
             ->filterBySku('OSB1338');
 
+        $omsConfig = new OmsConfig();
+
         $orderItem1 = $orderItem1Query->findOne();
         $orderItem2 = $orderItem2Query->findOne();
 
         $this->assertNotNull($orderItem1);
         $this->assertNotNull($orderItem2);
 
-        $this->assertNotEquals(OmsConstants::INITIAL_STATUS, $orderItem1->getState()->getName());
+        $this->assertNotEquals($omsConfig->getInitialStatus(), $orderItem1->getState()->getName());
         $this->assertEquals('waiting for payment', $orderItem2->getState()->getName());
     }
 
@@ -283,6 +289,8 @@ class CheckoutFacadeTest extends Unit
     protected function getBaseQuoteTransfer()
     {
         $quoteTransfer = new QuoteTransfer();
+
+        $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
 
         $currencyTransfer = new CurrencyTransfer();
         $currencyTransfer->setCode('EUR');
@@ -315,9 +323,11 @@ class CheckoutFacadeTest extends Unit
             ->setAttributes('{}')
             ->save();
 
-        $stock = new SpyStock();
-        $stock
-            ->setName('testStock');
+        $stock = (new SpyStockQuery())
+            ->filterByName('Warehouse1')
+            ->findOneOrCreate();
+
+        $stock->save();
 
         $stock1 = new SpyStockProduct();
         $stock1

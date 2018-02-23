@@ -83,7 +83,7 @@ function getFilters(selector, isActive) {
 }
 
 function addToActiveList(filterToAdd) {
-    activeFilters.append(createActiveFilter(filterToAdd, true));
+    activeFilters.append(createActiveFilter(filterToAdd, filterToAdd, true));
     activeFiltersContainer.trigger('change');
 }
 
