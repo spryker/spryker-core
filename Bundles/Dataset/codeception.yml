@@ -1,5 +1,9 @@
 namespace: Dataset
 actor: Tester
+
+include:
+    - tests/SprykerTest/Zed/Dataset
+
 paths:
     tests: tests
     log: tests/_output
@@ -17,3 +21,6 @@ coverage:
     whitelist:
         include:
             - 'src/*.php'
+extensions:
+    enabled:
+        - Codeception\Extension\Phantoman

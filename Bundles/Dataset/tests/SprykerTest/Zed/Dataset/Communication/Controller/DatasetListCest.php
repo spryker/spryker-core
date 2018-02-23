@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Dataset\Communication\Controller;
 
 use SprykerTest\Zed\Dataset\DatasetCommunicationTester;
-use SprykerTest\Zed\Dataset\PageObject\DatasetListPage;
+use SprykerTest\Zed\Dataset\DatasetObject\DatasetListPage;
 
 /**
  * Auto-generated group annotations
