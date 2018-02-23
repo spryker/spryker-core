@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
  * @group SprykerTest
  * @group Client
  * @group Quote
- * @group QuoteClient
+ * @group StorageStrategy
  * @group StorageStrategyProviderTest
  * Add your own group annotations below this line
  */
