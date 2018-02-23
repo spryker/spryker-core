@@ -5,7 +5,7 @@
         {
           "search-result-data": {
             "mapping": {
-              "index": "no"
+              "index": "false"
             },
             "path_match": "search-result-data.*"
           }
