@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Dataset\PageObject;
+namespace SprykerTest\Zed\Dataset\DatasetObject;
 
 class DatasetAddDatasetPage
 {

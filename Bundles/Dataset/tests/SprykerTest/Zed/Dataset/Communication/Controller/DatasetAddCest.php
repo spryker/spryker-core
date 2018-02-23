@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Dataset\Communication\Controller;
 
 use SprykerTest\Zed\Dataset\DatasetCommunicationTester;
-use SprykerTest\Zed\Dataset\PageObject\DatasetAddDatasetPage;
+use SprykerTest\Zed\Dataset\DatasetObject\DatasetAddDatasetPage;
 
 /**
  * Auto-generated group annotations
@@ -30,7 +30,6 @@ class DatasetAddCest
     public function breadcrumbIsVisible(DatasetCommunicationTester $i)
     {
         $i->amOnPage(DatasetAddDatasetPage::URL);
-        $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Dataset / Add dashboard');
     }
 }

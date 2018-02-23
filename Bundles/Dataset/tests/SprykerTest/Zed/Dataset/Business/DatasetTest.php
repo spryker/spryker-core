@@ -63,7 +63,7 @@ class DatasetTest extends Unit
     /**
      * @return void
      */
-    public function save()
+    public function testSave()
     {
         $datasetEntityTransfer = $this->mockDatasetTransfer();
         $datasetTransfer = $this->saveDatasetByTransfer($datasetEntityTransfer);
@@ -76,7 +76,7 @@ class DatasetTest extends Unit
     /**
      * @return void
      */
-    public function saveDataset()
+    public function testSaveDataset()
     {
         $datasetEntityTransfer = $this->mockDatasetTransfer();
         $datasetTransfer = $this->saveDatasetByTransfer($datasetEntityTransfer);
@@ -89,7 +89,7 @@ class DatasetTest extends Unit
     /**
      * @return void
      */
-    public function hasDatasetName()
+    public function testHasDatasetName()
     {
         $datasetEntityTransfer = $this->mockDatasetTransfer();
         $this->facade->save($datasetEntityTransfer, $this->filePath);
@@ -101,10 +101,12 @@ class DatasetTest extends Unit
     /**
      * @return void
      */
-    public function getDatasetContent()
+    public function testGetDatasetContent()
     {
         $datasetEntityTransfer = $this->mockDatasetTransfer();
-        $datasetTransfer = $this->saveDatasetByTransfer($datasetEntityTransfer);
+        $this->facade->save($datasetEntityTransfer, $this->filePath);
+        $datasetTransfer = $this->facade->getDatasetTransferByName($datasetEntityTransfer->getName());
+
         $dataContent = $this->facade->getDatasetContent($datasetTransfer);
         $originalFileContent = file_get_contents($this->filePath);
 
@@ -114,7 +116,7 @@ class DatasetTest extends Unit
     /**
      * @return void
      */
-    public function getDatasetTransferById()
+    public function testGetDatasetTransferById()
     {
         $datasetEntityTransfer = $this->mockDatasetTransfer();
         $datasetTransfer = $this->saveDatasetByTransfer($datasetEntityTransfer);
@@ -128,7 +130,7 @@ class DatasetTest extends Unit
     /**
      * @return void
      */
-    public function getDatasetTransferByName()
+    public function testGetDatasetTransferByName()
     {
         $datasetEntityTransfer = $this->mockDatasetTransfer();
         $datasetTransfer = $this->saveDatasetByTransfer($datasetEntityTransfer);
@@ -141,7 +143,7 @@ class DatasetTest extends Unit
     /**
      * @return void
      */
-    public function delete()
+    public function testDelete()
     {
         $datasetEntityTransfer = $this->mockDatasetTransfer();
         $datasetTransfer = $this->saveDatasetByTransfer($datasetEntityTransfer);
@@ -156,7 +158,7 @@ class DatasetTest extends Unit
     /**
      * @return void
      */
-    public function activateById()
+    public function testActivateById()
     {
         $datasetEntityTransfer = $this->mockDatasetTransfer();
         $datasetTransfer = $this->saveDatasetByTransfer($datasetEntityTransfer);
@@ -169,7 +171,7 @@ class DatasetTest extends Unit
     /**
      * @return void
      */
-    public function deactivateById()
+    public function testDeactivateById()
     {
         $datasetEntityTransfer = $this->mockDatasetTransfer();
         $datasetTransfer = $this->saveDatasetByTransfer($datasetEntityTransfer);
@@ -187,6 +189,7 @@ class DatasetTest extends Unit
     protected function saveDatasetByTransfer(SpyDatasetEntityTransfer $datasetEntityTransfer)
     {
         $this->facade->saveDataset($datasetEntityTransfer);
+
         return $this->facade->getDatasetTransferByName($datasetEntityTransfer->getName());
     }
 
