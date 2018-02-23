@@ -11,7 +11,6 @@ use Elastica\Snapshot;
 use Psr\Log\LoggerInterface;
 use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\Search\Provider\SearchClientProvider;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Copier\IndexCopier;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapper;
@@ -67,7 +66,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
             $this->getConfig()->getJsonIndexDefinitionDirectories(),
             $this->createJsonIndexDefinitionMerger(),
             $this->getUtilEncodingService(),
-            [Store::getInstance()->getStoreName()]
+            [$this->getStoreFacade()->getCurrentStore()->getName()]
         );
     }
 
@@ -251,5 +250,13 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     protected function getGuzzleClient()
     {
         return $this->getProvidedDependency(SearchDependencyProvider::GUZZLE_CLIENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeInterface
+     */
+    protected function getStoreFacade()
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::FACADE_STORE);
     }
 }
