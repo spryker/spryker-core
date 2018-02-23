@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductReviewStorage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductReviewStorage\Dependency\Facade\ProductReviewStorageToEventBehaviorFacadeBridge;
@@ -17,7 +16,6 @@ class ProductReviewStorageDependencyProvider extends AbstractBundleDependencyPro
 {
     const QUERY_CONTAINER_PRODUCT_REVIEW = 'QUERY_CONTAINER_PRODUCT_REVIEW';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const STORE = 'STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -28,20 +26,6 @@ class ProductReviewStorageDependencyProvider extends AbstractBundleDependencyPro
     {
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new ProductReviewStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function provideBusinessLayerDependencies(Container $container)
-    {
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
         };
 
         return $container;

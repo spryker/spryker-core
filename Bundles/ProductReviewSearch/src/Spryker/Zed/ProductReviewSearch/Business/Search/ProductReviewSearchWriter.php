@@ -143,7 +143,6 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
         $spyProductReviewSearchEntity->setFkProductReview($productReviewEntity->getIdProductReview());
         $spyProductReviewSearchEntity->setData($result);
         $spyProductReviewSearchEntity->setStructuredData($this->utilEncodingService->encodeJson($productReviewEntity->toArray()));
-        $spyProductReviewSearchEntity->setStore($this->store->getStoreName());
         $spyProductReviewSearchEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductReviewSearchEntity->save();
     }

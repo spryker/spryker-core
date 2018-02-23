@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSearchConfigStorage\Business\Storage;
 
 use Generated\Shared\Transfer\ProductSearchConfigStorageTransfer;
 use Orm\Zed\ProductSearchConfigStorage\Persistence\SpyProductSearchConfigStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ProductSearch\ProductSearchConfig;
 use Spryker\Zed\ProductSearchConfigStorage\Dependency\Facade\ProductSearchConfigStorageToProductSearchFacadeInterface;
 use Spryker\Zed\ProductSearchConfigStorage\Persistence\ProductSearchConfigStorageQueryContainerInterface;
@@ -32,11 +31,6 @@ class ProductSearchConfigStorageWriter implements ProductSearchConfigStorageWrit
     protected $productSearchConfig;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -45,20 +39,17 @@ class ProductSearchConfigStorageWriter implements ProductSearchConfigStorageWrit
      * @param \Spryker\Zed\ProductSearchConfigStorage\Persistence\ProductSearchConfigStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductSearchConfigStorage\Dependency\Facade\ProductSearchConfigStorageToProductSearchFacadeInterface $productSearchFacade
      * @param \Spryker\Zed\ProductSearch\ProductSearchConfig $productSearchConfig
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
     public function __construct(
         ProductSearchConfigStorageQueryContainerInterface $queryContainer,
         ProductSearchConfigStorageToProductSearchFacadeInterface $productSearchFacade,
         ProductSearchConfig $productSearchConfig,
-        Store $store,
         $isSendingToQueue
     ) {
         $this->queryContainer = $queryContainer;
         $this->productSearchFacade = $productSearchFacade;
         $this->productSearchConfig = $productSearchConfig;
-        $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -107,7 +98,6 @@ class ProductSearchConfigStorageWriter implements ProductSearchConfigStorageWrit
         }
 
         $spyProductSearchConfigStorageEntity->setData($searchConfigExtensionTransfer->toArray());
-        $spyProductSearchConfigStorageEntity->setStore($this->getStoreName());
         $spyProductSearchConfigStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductSearchConfigStorageEntity->save();
     }
@@ -118,13 +108,5 @@ class ProductSearchConfigStorageWriter implements ProductSearchConfigStorageWrit
     protected function findProductSearchConfigDictionaryStorageEntity()
     {
         return $this->queryContainer->queryProductSearchConfigStorage()->findOne();
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->store->getStoreName();
     }
 }

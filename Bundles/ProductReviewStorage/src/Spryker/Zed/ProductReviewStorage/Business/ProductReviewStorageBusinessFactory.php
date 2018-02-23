@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductReviewStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductReviewStorage\Business\Storage\ProductReviewStorageWriter;
-use Spryker\Zed\ProductReviewStorage\ProductReviewStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductReviewStorage\ProductReviewStorageConfig getConfig()
@@ -24,16 +23,7 @@ class ProductReviewStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductReviewStorageWriter(
             $this->getQueryContainer(),
-            $this->getStore(),
             $this->getConfig()->isSendingToQueue()
         );
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(ProductReviewStorageDependencyProvider::STORE);
     }
 }

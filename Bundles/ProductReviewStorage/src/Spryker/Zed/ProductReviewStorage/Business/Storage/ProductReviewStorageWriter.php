@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductReviewStorage\Business\Storage;
 
 use Generated\Shared\Transfer\ProductReviewStorageTransfer;
 use Orm\Zed\ProductReviewStorage\Persistence\SpyProductAbstractReviewStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ProductReviewStorage\Persistence\ProductReviewStorageQueryContainerInterface;
 
 class ProductReviewStorageWriter implements ProductReviewStorageWriterInterface
@@ -20,27 +19,19 @@ class ProductReviewStorageWriter implements ProductReviewStorageWriterInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var bool
      */
     protected $isSendingToQueue = true;
 
     /**
      * @param \Spryker\Zed\ProductReviewStorage\Persistence\ProductReviewStorageQueryContainerInterface $queryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
     public function __construct(
         ProductReviewStorageQueryContainerInterface $queryContainer,
-        Store $store,
         $isSendingToQueue
     ) {
         $this->queryContainer = $queryContainer;
-        $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -122,7 +113,6 @@ class ProductReviewStorageWriter implements ProductReviewStorageWriterInterface
         $productReviewStorageTransfer->setAverageRating(round($productReviewStorageTransfer->getAverageRating(), 1));
         $spyProductAbstractReviewStorageEntity->setFkProductAbstract($productReview['idProductAbstract']);
         $spyProductAbstractReviewStorageEntity->setData($productReviewStorageTransfer->modifiedToArray());
-        $spyProductAbstractReviewStorageEntity->setStore($this->getStoreName());
         $spyProductAbstractReviewStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductAbstractReviewStorageEntity->save();
     }
@@ -141,13 +131,5 @@ class ProductReviewStorageWriter implements ProductReviewStorageWriterInterface
         }
 
         return $productAbstractStorageReviewEntitiesById;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->store->getStoreName();
     }
 }

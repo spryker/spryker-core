@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSetStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductSetStorage\Business\Storage\ProductSetStorageWriter;
-use Spryker\Zed\ProductSetStorage\ProductSetStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductSetStorage\ProductSetStorageConfig getConfig()
@@ -24,16 +23,7 @@ class ProductSetStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductSetStorageWriter(
             $this->getQueryContainer(),
-            $this->getStore(),
             $this->getConfig()->isSendingToQueue()
         );
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(ProductSetStorageDependencyProvider::STORE);
     }
 }

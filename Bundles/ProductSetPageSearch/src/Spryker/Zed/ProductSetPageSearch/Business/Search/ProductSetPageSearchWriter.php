@@ -158,7 +158,6 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
         $spyProductSetPageSearchEntity->setFkProductSet($spyProductSetLocalizedEntity['SpyProductSet'][static::COL_ID_PRODUCT_SET]);
         $spyProductSetPageSearchEntity->setStructuredData($this->utilEncodingService->encodeJson($productSetPageSearchTransfer->toArray()));
         $spyProductSetPageSearchEntity->setData($data);
-        $spyProductSetPageSearchEntity->setStore($this->store->getStoreName());
         $spyProductSetPageSearchEntity->setLocale($spyProductSetLocalizedEntity['SpyLocale']['locale_name']);
         $spyProductSetPageSearchEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductSetPageSearchEntity->save();

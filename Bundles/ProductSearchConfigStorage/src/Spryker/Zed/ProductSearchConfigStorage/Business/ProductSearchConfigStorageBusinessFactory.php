@@ -26,17 +26,8 @@ class ProductSearchConfigStorageBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getProductSearchFacade(),
             $this->getProductSearchConfig(),
-            $this->getStore(),
             $this->getConfig()->isSendingToQueue()
         );
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(ProductSearchConfigStorageDependencyProvider::STORE);
     }
 
     /**

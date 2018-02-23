@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductSearchConfigStorage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductSearch\ProductSearchConfig;
@@ -19,7 +18,6 @@ class ProductSearchConfigStorageDependencyProvider extends AbstractBundleDepende
     const FACADE_PRODUCT_SEARCH = 'FACADE_PRODUCT_SEARCH';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     const CONFIG_PRODUCT_SEARCH = 'CONFIG_PRODUCT_SEARCH';
-    const STORE = 'STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -42,10 +40,6 @@ class ProductSearchConfigStorageDependencyProvider extends AbstractBundleDepende
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
-        };
-
         $container[static::CONFIG_PRODUCT_SEARCH] = function (Container $container) {
             return new ProductSearchConfig();
         };

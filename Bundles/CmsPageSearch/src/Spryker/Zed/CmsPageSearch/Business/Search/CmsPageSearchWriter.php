@@ -148,7 +148,6 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
         $cmsPageStorageEntity->setStructuredData($this->utilEncodingService->encodeJson($localeCmsPageDataTransfer->toArray()));
         $cmsPageStorageEntity->setData($data);
         $cmsPageStorageEntity->setFkCmsPage($cmsPageEntity->getIdCmsPage());
-        $cmsPageStorageEntity->setStore($this->store->getStoreName());
         $cmsPageStorageEntity->setLocale($localeName);
         $cmsPageStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $cmsPageStorageEntity->save();

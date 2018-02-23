@@ -25,7 +25,6 @@ class ProductCategoryFilterStorageBusinessFactory extends AbstractBusinessFactor
         return new ProductCategoryFilterStorageWriter(
             $this->getQueryContainer(),
             $this->getUtilEncoding(),
-            $this->getStore(),
             $this->getConfig()->isSendingToQueue()
         );
     }
@@ -36,13 +35,5 @@ class ProductCategoryFilterStorageBusinessFactory extends AbstractBusinessFactor
     protected function getUtilEncoding()
     {
         return $this->getProvidedDependency(ProductCategoryFilterStorageDependencyProvider::SERVICE_UTIL_ENCODING);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(ProductCategoryFilterStorageDependencyProvider::STORE);
     }
 }

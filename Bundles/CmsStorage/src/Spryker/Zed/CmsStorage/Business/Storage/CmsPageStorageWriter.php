@@ -135,7 +135,6 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
 
         $cmsPageStorageEntity->setData($localeCmsPageDataTransfer->toArray());
         $cmsPageStorageEntity->setFkCmsPage($cmsPageEntity->getIdCmsPage());
-        $cmsPageStorageEntity->setStore($this->store->getStoreName());
         $cmsPageStorageEntity->setLocale($localeName);
         $cmsPageStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $cmsPageStorageEntity->save();

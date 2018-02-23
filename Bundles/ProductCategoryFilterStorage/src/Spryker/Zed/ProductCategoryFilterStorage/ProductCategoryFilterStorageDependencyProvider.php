@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductCategoryFilterStorage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductCategoryFilterStorage\Dependency\Facade\ProductCategoryFilterStorageToEventBehaviorFacadeBridge;
@@ -19,7 +18,6 @@ class ProductCategoryFilterStorageDependencyProvider extends AbstractBundleDepen
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     const QUERY_CONTAINER_PRODUCT_CATEGORY_FILTER = 'QUERY_CONTAINER_PRODUCT_CATEGORY_FILTER';
-    const STORE = 'STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -44,10 +42,6 @@ class ProductCategoryFilterStorageDependencyProvider extends AbstractBundleDepen
     {
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new ProductCategoryFilterStorageToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
-
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
         };
 
         return $container;

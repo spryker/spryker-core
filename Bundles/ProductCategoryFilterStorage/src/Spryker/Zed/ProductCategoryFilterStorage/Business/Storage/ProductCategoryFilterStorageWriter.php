@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductCategoryFilterStorage\Business\Storage;
 
 use Generated\Shared\Transfer\ProductCategoryFilterStorageTransfer;
 use Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ProductCategoryFilterStorage\Dependency\Service\ProductCategoryFilterStorageToUtilEncodingInterface;
 use Spryker\Zed\ProductCategoryFilterStorage\Persistence\ProductCategoryFilterStorageQueryContainerInterface;
 
@@ -29,11 +28,6 @@ class ProductCategoryFilterStorageWriter implements ProductCategoryFilterStorage
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -43,18 +37,15 @@ class ProductCategoryFilterStorageWriter implements ProductCategoryFilterStorage
      *
      * @param \Spryker\Zed\ProductCategoryFilterStorage\Persistence\ProductCategoryFilterStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductCategoryFilterStorage\Dependency\Service\ProductCategoryFilterStorageToUtilEncodingInterface $utilEncodingService
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
     public function __construct(
         ProductCategoryFilterStorageQueryContainerInterface $queryContainer,
         ProductCategoryFilterStorageToUtilEncodingInterface $utilEncodingService,
-        Store $store,
         $isSendingToQueue
     ) {
         $this->queryContainer = $queryContainer;
         $this->utilEncodingService = $utilEncodingService;
-        $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -133,7 +124,6 @@ class ProductCategoryFilterStorageWriter implements ProductCategoryFilterStorage
 
         $spyProductCategoryFilterStorage->setFkCategory($idCategory);
         $spyProductCategoryFilterStorage->setData($spyProductCategoryFilterStorageTransfer->toArray());
-        $spyProductCategoryFilterStorage->setStore($this->getStoreName());
         $spyProductCategoryFilterStorage->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductCategoryFilterStorage->save();
     }
@@ -152,13 +142,5 @@ class ProductCategoryFilterStorageWriter implements ProductCategoryFilterStorage
         }
 
         return $productAbstractStorageEntitiesByIdCategory;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->store->getStoreName();
     }
 }

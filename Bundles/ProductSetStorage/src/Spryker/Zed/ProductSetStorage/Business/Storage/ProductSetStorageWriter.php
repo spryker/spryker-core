@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductImageSetStorageTransfer;
 use Generated\Shared\Transfer\ProductImageStorageTransfer;
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
 use Orm\Zed\ProductSetStorage\Persistence\SpyProductSetStorage;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface;
 
 class ProductSetStorageWriter implements ProductSetStorageWriterInterface
@@ -23,11 +22,6 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
      * @var \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface
      */
     protected $queryContainer;
-
-    /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
 
     /**
      * @var bool
@@ -41,13 +35,11 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
 
     /**
      * @param \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface $queryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
      */
-    public function __construct(ProductSetStorageQueryContainerInterface $queryContainer, Store $store, $isSendingToQueue)
+    public function __construct(ProductSetStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
     {
         $this->queryContainer = $queryContainer;
-        $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -126,7 +118,6 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
         $productSetStorageTransfer->setImageSets($productImageSet);
         $spyProductSetStorageEntity->setFkProductSet($spyProductSetLocalizedEntity['SpyProductSet'][static::COL_ID_PRODUCT_SET]);
         $spyProductSetStorageEntity->setData($productSetStorageTransfer->toArray());
-        $spyProductSetStorageEntity->setStore($this->getStoreName());
         $spyProductSetStorageEntity->setLocale($spyProductSetLocalizedEntity['SpyLocale']['locale_name']);
         $spyProductSetStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductSetStorageEntity->save();
@@ -156,14 +147,6 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
         }
 
         return $productSetStorageEntitiesByIdAndLocale;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->store->getStoreName();
     }
 
     /**
