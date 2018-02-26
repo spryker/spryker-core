@@ -54,7 +54,11 @@ class ProductCategoryFilterStorageListenerTest extends Unit
     public function testProductCategoryFilterPublishStorageListenerStoreData()
     {
         $productCategoryFilterFacade = new ProductCategoryFilterFacade();
-        $productCategoryFilterFacade->deleteProductCategoryFilterByCategoryId(1);
+        $productCategory = $productCategoryFilterFacade->findProductCategoryFilterByCategoryId(1);
+        if ($productCategory->getIdProductCategoryFilter()) {
+            $productCategoryFilterFacade->deleteProductCategoryFilterByCategoryId(1);
+        }
+
         $productCategoryFilterFacade->createProductCategoryFilter(
             (new ProductCategoryFilterTransfer())
                 ->setFkCategory(1)
