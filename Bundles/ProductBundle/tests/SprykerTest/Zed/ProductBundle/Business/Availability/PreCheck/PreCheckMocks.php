@@ -7,17 +7,21 @@
 namespace SprykerTest\Zed\ProductBundle\Business\Availability\PreCheck;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\BasePreCheck;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 
 class PreCheckMocks extends Unit
 {
+    const ID_STORE = 1;
     /**
      * @var array
      */
@@ -44,6 +48,8 @@ class PreCheckMocks extends Unit
     protected function createTestQuoteTransfer()
     {
         $quoteTransfer = new QuoteTransfer();
+
+        $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku($this->fixtures['bundle-sku']);
@@ -93,5 +99,29 @@ class PreCheckMocks extends Unit
             ->method('findBundledProducts')
             ->with($this->fixtures['bundle-sku'])
             ->willReturn($bundledProducts);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     */
+    protected function createStoreFacadeMock()
+    {
+        return $this->getMockBuilder(ProductBundleToStoreFacadeInterface::class)->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     */
+    protected function buildStoreFacadeMock()
+    {
+        $storeFacadeMock = $this->createStoreFacadeMock();
+        $storeTransfer = (new StoreBuilder([
+            StoreTransfer::ID_STORE => self::ID_STORE,
+        ]))->build();
+
+        $storeFacadeMock->method('getCurrentStore')->willReturn($storeTransfer);
+        $storeFacadeMock->method('getStoreByName')->willReturn($storeTransfer);
+
+        return $storeFacadeMock;
     }
 }

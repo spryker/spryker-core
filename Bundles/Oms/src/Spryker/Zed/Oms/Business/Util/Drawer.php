@@ -17,6 +17,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\HasAwareCollectionInterface;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface;
 
 class Drawer implements DrawerInterface
@@ -78,12 +79,12 @@ class Drawer implements DrawerInterface
     protected $fontSizeSmall = null;
 
     /**
-     * @var \Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection
+     * @var \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface
      */
     protected $conditions;
 
     /**
-     * @var \Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection
+     * @var \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface
      */
     protected $commands;
 
@@ -372,16 +373,16 @@ class Drawer implements DrawerInterface
 
     /**
      * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
-     * @param string $label
+     * @param string[] $label
      *
-     * @return array
+     * @return string[]
      */
     protected function addEdgeConditionText(TransitionInterface $transition, $label)
     {
         if ($transition->hasCondition()) {
             $conditionLabel = $transition->getCondition();
 
-            if (!$this->conditions->has($transition->getCondition())) {
+            if (!$this->inCollection($this->conditions, $transition->getCondition())) {
                 $conditionLabel .= ' ' . $this->notImplemented;
             }
 
@@ -393,9 +394,9 @@ class Drawer implements DrawerInterface
 
     /**
      * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
-     * @param string $label
+     * @param string[] $label
      *
-     * @return array
+     * @return string[]
      */
     protected function addEdgeEventText(TransitionInterface $transition, $label)
     {
@@ -415,7 +416,7 @@ class Drawer implements DrawerInterface
             if ($event->hasCommand()) {
                 $commandLabel = 'c:' . $event->getCommand();
 
-                if ($this->commands->has($event->getCommand())) {
+                if ($this->inCollection($this->commands, $event->getCommand())) {
                     $commandModel = $this->commands->get($event->getCommand());
                     if ($commandModel instanceof CommandByOrderInterface) {
                         $commandLabel .= ' (by order)';
@@ -439,7 +440,22 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param string $label
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\HasAwareCollectionInterface|mixed $collection
+     * @param string $commandName
+     *
+     * @return bool
+     */
+    protected function inCollection($collection, $commandName)
+    {
+        if ($collection instanceof HasAwareCollectionInterface) {
+            return $collection->has($commandName);
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string[] $label
      *
      * @return string
      */

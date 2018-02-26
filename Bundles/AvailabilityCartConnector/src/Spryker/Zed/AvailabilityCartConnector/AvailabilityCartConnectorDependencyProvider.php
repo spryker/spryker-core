@@ -22,10 +22,21 @@ class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependen
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_AVAILABILITY] = function (Container $container) {
+        $container = $this->addAvailabilityFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAvailabilityFacade(Container $container): \Spryker\Zed\Kernel\Container
+    {
+        $container[static::FACADE_AVAILABILITY] = function (Container $container) {
             return new AvailabilityCartConnectorToAvailabilityBridge($container->getLocator()->availability()->facade());
         };
-
         return $container;
     }
 }
