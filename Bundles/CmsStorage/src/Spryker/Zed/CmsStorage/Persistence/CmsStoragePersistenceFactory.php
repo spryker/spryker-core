@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsStorage\Persistence;
 
-use Orm\Zed\CmsStorage\Persistence\SpyCmspageStorageQuery;
+use Orm\Zed\CmsStorage\Persistence\SpyCmsPageStorageQuery;
 use Spryker\Zed\CmsStorage\CmsStorageDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -22,7 +22,7 @@ class CmsStoragePersistenceFactory extends AbstractPersistenceFactory
      */
     public function createSpyCmsStorageQuery()
     {
-        return SpyCmspageStorageQuery::create();
+        return SpyCmsPageStorageQuery::create();
     }
 
     /**

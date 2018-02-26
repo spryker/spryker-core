@@ -10,11 +10,16 @@
         <property name="defaultCurrencyIsoCode" type="string" />
         <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode" />
         <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode" />
+        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence" />
     </transfer>
 
     <transfer name="StoreRelation">
         <property name="idEntity" type="int" />
         <property name="idStores" type="int[]" />
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="store" type="Store" />
     </transfer>
 
 </transfers>

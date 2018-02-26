@@ -40,6 +40,22 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    public function findOrderByIdSalesOrderItem($idSalesOrderItem)
+    {
+        return $this->getFactory()
+            ->createOrderReader()
+            ->findOrderByIdSalesOrderItem($idSalesOrderItem);
+    }
+
+    /**
      * Specification:
      *  - Returns a list of of orders for the given customer id and (optional) filters.
      *  - Aggregates order totals calls -> SalesAggregator

@@ -46,7 +46,7 @@ class EditGlossaryController extends AbstractController
             ->createCmsBlockGlossaryFormDataProvider();
 
         $glossaryForm = $this->getFactory()
-            ->createCmsBlockGlossaryForm($glossaryFormDataProvider, $idCmsBlock)
+            ->getCmsBlockGlossaryForm($glossaryFormDataProvider, $idCmsBlock)
             ->handleRequest($request);
 
         if ($glossaryForm->isSubmitted()) {

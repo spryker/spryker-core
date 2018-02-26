@@ -7,56 +7,11 @@
 
 namespace Spryker\Zed\Store\Business\Model\Configuration;
 
-interface StoreConfigurationProviderInterface
+use Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface;
+
+/**
+ * @deprecated Use \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface instead.
+ */
+interface StoreConfigurationProviderInterface extends StoreToStoreInterface
 {
-    /**
-     * @return string
-     */
-    public function getCurrentStoreName();
-
-    /**
-     * @return string[]
-     */
-    public function getAllStoreNames();
-
-    /**
-     * @return string[]
-     */
-    public function getCurrentStoreAvailableCurrencyIsoCodes();
-
-    /**
-     * @return string
-     */
-    public function getCurrentStoreSelectedLocaleIsoCode();
-
-    /**
-     * @return string[]
-     */
-    public function getCurrentAvailableLocaleIsoCodes();
-
-    /**
-     * @param string $storeName
-     *
-     * @return array
-     */
-    public function getAvailableCurrenciesFor($storeName);
-
-    /**
-     * @param string $storeName
-     *
-     * @return array
-     */
-    public function getAvailableLocaleIsoCodesFor($storeName);
-
-    /**
-     * @param string $storeName
-     *
-     * @return string
-     */
-    public function getDefaultCurrencyFor($storeName);
-
-    /**
-     * @return string
-     */
-    public function getCurrentStoreSelectedCurrencyIsoCode();
 }

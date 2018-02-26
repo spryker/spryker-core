@@ -15,4 +15,11 @@ interface OrderReaderInterface
      * @return string[]
      */
     public function getDistinctOrderStates($idSalesOrder);
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    public function findOrderByIdSalesOrderItem($idSalesOrderItem);
 }

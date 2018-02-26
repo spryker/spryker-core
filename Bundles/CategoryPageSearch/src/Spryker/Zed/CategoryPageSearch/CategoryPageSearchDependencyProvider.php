@@ -13,13 +13,11 @@ use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchB
 use Spryker\Zed\CategoryPageSearch\Dependency\QueryContainer\CategoryPageSearchToCategoryQueryContainerBridge;
 use Spryker\Zed\CategoryPageSearch\Dependency\QueryContainer\CategoryPageSearchToLocaleQueryContainerBridge;
 use Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingBridge;
-use Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilSanitizeServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
     const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
@@ -49,10 +47,6 @@ class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
-            return new CategoryPageSearchToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
-
         $container[static::STORE] = function (Container $container) {
             return Store::getInstance();
         };

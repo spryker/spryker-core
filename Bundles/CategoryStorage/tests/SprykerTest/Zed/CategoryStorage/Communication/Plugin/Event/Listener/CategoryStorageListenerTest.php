@@ -184,7 +184,7 @@ class CategoryStorageListenerTest extends Unit
         $data = $spyCategoryNodeStorage->getData();
         $this->assertEquals('Demoshop', $data['name']);
         $this->assertEquals('Demoshop', $data['meta_title']);
-        $this->assertEquals(6, count($data['children']));
+        $this->assertGreaterThanOrEqual(6, count($data['children']));
     }
 
     /**

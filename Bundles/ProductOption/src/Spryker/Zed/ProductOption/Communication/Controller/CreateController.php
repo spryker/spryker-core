@@ -28,7 +28,7 @@ class CreateController extends BaseOptionController
         $productOptionGroupForm = $this->getFactory()->getProductOptionGroupForm($dataProvider);
         $productOptionGroupForm->handleRequest($request);
 
-        if ($productOptionGroupForm->isValid()) {
+        if ($productOptionGroupForm->isSubmitted() && $productOptionGroupForm->isValid()) {
             $productOptionGroupTransfer = $productOptionGroupForm->getData();
             $idProductOptionGroup = $this->getFacade()->saveProductOptionGroup($productOptionGroupTransfer);
 

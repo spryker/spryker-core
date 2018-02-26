@@ -70,7 +70,7 @@ class PageController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $pageTransfer = $this->createPageTransfer($data);
 
@@ -109,7 +109,7 @@ class PageController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
             $pageTransfer = $this->createPageTransfer($data);

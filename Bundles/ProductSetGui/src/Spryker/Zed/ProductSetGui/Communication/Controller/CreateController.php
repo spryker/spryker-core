@@ -31,7 +31,7 @@ class CreateController extends AbstractProductSetController
             )
             ->handleRequest($request);
 
-        if ($productSetForm->isValid()) {
+        if ($productSetForm->isSubmitted() && $productSetForm->isValid()) {
             $productSetTransfer = $this->getFactory()
                 ->createCreateFormDataToTransferMapper()
                 ->mapData($productSetForm);

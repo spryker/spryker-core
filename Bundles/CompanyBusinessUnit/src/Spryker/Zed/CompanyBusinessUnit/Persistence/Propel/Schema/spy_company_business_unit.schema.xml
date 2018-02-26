@@ -10,7 +10,7 @@
 
         <column name="fk_company" type="INTEGER" required="true"/>
 
-        <foreign-key name="spy_company_business_unit-fk_company" foreignTable="spy_company" phpName="Company" refPhpName="BusinessUnitCompany">
+        <foreign-key name="spy_company_business_unit-fk_company" foreignTable="spy_company" phpName="Company" refPhpName="CompanyBusinessUnit">
             <reference local="fk_company" foreign="id_company"/>
         </foreign-key>
 

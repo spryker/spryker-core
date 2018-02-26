@@ -8,3 +8,4 @@
 require('./modules/main');
 require('./modules/bundled-products');
 require('./modules/new-date-range');
+require('./modules/new-datetime-range');
