@@ -156,7 +156,6 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
         $spyCategoryNodePageSearchEntity->setFkCategoryNode($spyCategoryNodeEntity->getIdCategoryNode());
         $spyCategoryNodePageSearchEntity->setStructuredData($this->utilEncoding->encodeJson($categoryTreeNodeData));
         $spyCategoryNodePageSearchEntity->setData($data);
-        $spyCategoryNodePageSearchEntity->setStore($this->store->getStoreName());
         $spyCategoryNodePageSearchEntity->setLocale($localeName);
         $spyCategoryNodePageSearchEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyCategoryNodePageSearchEntity->save();

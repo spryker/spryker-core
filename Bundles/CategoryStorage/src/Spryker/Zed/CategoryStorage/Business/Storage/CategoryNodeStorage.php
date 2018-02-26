@@ -139,7 +139,6 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
         $categoryNodeNodeData = $this->utilSanitize->arrayFilterRecursive($categoryNodeStorageTransfer->toArray());
         $spyCategoryNodeStorageEntity->setFkCategoryNode($categoryNodeStorageTransfer->getNodeId());
         $spyCategoryNodeStorageEntity->setData($categoryNodeNodeData);
-        $spyCategoryNodeStorageEntity->setStore($this->store->getStoreName());
         $spyCategoryNodeStorageEntity->setLocale($localeName);
         $spyCategoryNodeStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyCategoryNodeStorageEntity->save();
