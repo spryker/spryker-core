@@ -53,7 +53,7 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPermissionStoragePlugin($container): Container
     {
-        $container[static::PLUGINS_PERMISSION] = function (Container $container) {
+        $container[static::PLUGIN_PERMISSION_STORAGE] = function (Container $container) {
             return $this->getPermissionStoragePlugin();
         };
 

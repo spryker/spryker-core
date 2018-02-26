@@ -12,14 +12,14 @@ class PermissionFinder implements PermissionFinderInterface
     /**
      * @var \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface[]
      */
-    protected $executablePermissionPlugins = [];
+    protected $permissionPlugins = [];
 
     /**
      * @param \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface[] $permissionPlugins
      */
     public function __construct(array $permissionPlugins)
     {
-        $this->executablePermissionPlugins = $this->indexPermissions($permissionPlugins);
+        $this->permissionPlugins = $this->indexPermissions($permissionPlugins);
     }
 
     /**
@@ -29,11 +29,11 @@ class PermissionFinder implements PermissionFinderInterface
      */
     public function findPermissionPlugin($permissionKey)
     {
-        if (!isset($this->executablePermissionPlugins[$permissionKey])) {
+        if (!isset($this->permissionPlugins[$permissionKey])) {
             return null;
         }
 
-        return $this->executablePermissionPlugins[$permissionKey];
+        return $this->permissionPlugins[$permissionKey];
     }
 
     /**

@@ -51,8 +51,10 @@ class CompanyUserStub implements CompanyUserStubInterface
     protected function generatePermissionErrorMessage()
     {
         $messageTransfer = new ResponseErrorTransfer();
+
         $companyUserResponseTransfer = new CompanyUserResponseTransfer();
         $companyUserResponseTransfer->addError($messageTransfer);
+        $companyUserResponseTransfer->setIsSuccessful(false);
 
         return $companyUserResponseTransfer;
     }
