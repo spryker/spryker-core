@@ -33,7 +33,7 @@ interface CartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addValidItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer;
+    public function addValid(CartChangeTransfer $cartChangeTransfer): QuoteTransfer;
 
     /**
      *  Adds item(s) to the quote. Each item gets additional information (e.g. price).

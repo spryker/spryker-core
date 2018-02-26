@@ -23,7 +23,7 @@ class GatewayController extends AbstractGatewayController
      */
     public function addValidItemsAction(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFacade()->addValidItems($cartChangeTransfer);
+        return $this->getFacade()->addValid($cartChangeTransfer);
     }
 
     /**
