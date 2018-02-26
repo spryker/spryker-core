@@ -14,6 +14,7 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToMailBridge;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesBridge;
+use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeBridge;
 use Spryker\Zed\Oms\Dependency\QueryContainer\OmsToSalesBridge as PersistenceOmsToSalesBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeBridge;
@@ -28,10 +29,12 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
 
     const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
     const PLUGINS_RESERVATION = 'PLUGIN_RESERVATION';
+    const PLUGINS_RESERVATION_EXPORT = 'PLUGINS_RESERVATION_EXPORT';
 
     const FACADE_MAIL = 'FACADE_MAIL';
     const FACADE_SALES = 'FACADE_SALES';
 
+    const FACADE_STORE = 'FACADE_STORE';
     const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const SERVICE_UTIL_NETWORK = 'SERVICE_UTIL_NETWORK';
@@ -78,6 +81,9 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::PLUGINS_RESERVATION] = function (Container $container) {
             return $this->getReservationHandlerPlugins($container);
         };
+
+        $container = $this->addStoreFacade($container);
+        $container = $this->addReservationExportPlugins($container);
 
         return $container;
     }
@@ -130,5 +136,39 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     protected function getReservationHandlerPlugins(Container $container)
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addReservationExportPlugins(Container $container)
+    {
+        $container[static::PLUGINS_RESERVATION_EXPORT] = function (Container $container) {
+            return $this->getReservationExportPlugins();
+        };
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Plugin\ReservationExportPluginInterface[]
+     */
+    protected function getReservationExportPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container)
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new OmsToStoreFacadeBridge($container->getLocator()->store()->facade());
+        };
+        return $container;
     }
 }

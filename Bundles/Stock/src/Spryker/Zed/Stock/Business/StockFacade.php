@@ -9,6 +9,7 @@ namespace Spryker\Zed\Stock\Business;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -18,8 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class StockFacade extends AbstractFacade implements StockFacadeInterface
 {
     /**
-     * Specification:
-     * - Checks if the concrete product with the provided SKU has any stock type that is set as "never out of stock".
+     * {@inheritdoc}
      *
      * @api
      *
@@ -33,8 +33,22 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns the total stock amount of the concrete product for all its available stock types.
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer)
+    {
+        return $this->getFactory()->createReaderModel()->isNeverOutOfStockForStore($sku, $storeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
      *
      * @api
      *
@@ -48,10 +62,22 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Persists a new stock type entity to database.
-     * - Touches the newly created stock type.
-     * - Returns the ID of the new stock type entity.
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer)
+    {
+        return $this->getFactory()->createCalculatorModel()->calculateProductStockForStore($sku, $storeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
      *
      * @api
      *
@@ -65,11 +91,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Persists a new stock product entity in database for the given product and stock type.
-     * - If the product already have stock assigned in the given stock type, then it throws an exception.
-     * - Touches the newly created stock product.
-     * - Returns the ID of the new stock product entity.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -83,10 +105,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Updates an existing stock product entity with the provided stock data.
-     * - Touches the stock product.
-     * - Returns the ID of the stock product entity.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -100,9 +119,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Decrements stock amount of the given concrete product for the given stock type.
-     * - Touches the stock product.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -118,9 +135,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Increments stock amount of the given concrete product for the given stock type.
-     * - Touches the stock product.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -136,8 +151,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Checks if the given concrete product for the given stock type has positive amount.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -152,10 +166,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Processes all provided stocks of the concrete product transfer
-     * - If a stock entry from the collection doesn't exists for the product, then it will be newly created.
-     * - If a stock entry from the collection exists for the product, then it will be updated with the provided data.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -171,8 +182,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Expands concrete product transfer (by the ID of the product) with it's stock information from the database.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -188,9 +198,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     *
-     * Specification:
-     *  - Returns all available stock types
+     * {@inheritdoc}
      *
      * @api
      *
@@ -202,9 +210,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     *
-     * Specification:
-     *  - Returns stock product by givent id product
+     * {@inheritdoc}
      *
      * @api
      *
@@ -214,6 +220,67 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      */
     public function getStockProductsByIdProduct($idProductConcrete)
     {
-        return $this->getFactory()->createReaderModel()->getStockProductsByIdProduct($idProductConcrete);
+        return $this->getFactory()
+            ->createReaderModel()
+            ->getStockProductsByIdProduct($idProductConcrete);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer)
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->findStockProductsByIdProductForStore($idProductConcrete, $storeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return array
+     */
+    public function getStockTypesForStore(StoreTransfer $storeTransfer)
+    {
+        return $this->getFactory()->createReaderModel()->getStockTypesForStore($storeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getWarehouseToStoreMapping()
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->getWarehouseToStoreMapping();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getStoreToWarehouseMapping()
+    {
+        return $this->getFactory()
+            ->getConfig()
+            ->getStoreToWarehouseMapping();
     }
 }
