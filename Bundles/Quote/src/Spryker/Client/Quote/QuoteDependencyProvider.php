@@ -20,6 +20,7 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
     const CURRENCY_PLUGIN = 'currency plugin';
     const QUOTE_TRANSFER_EXPANDER_PLUGINS = 'QUOTE_TRANSFER_EXPANDER_PLUGINS';
     const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    const SERVICE_ZED = 'SERVICE_ZED';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -32,6 +33,7 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
         $container = $this->addCurrencyPlugin($container);
         $container = $this->addQuoteTransferExpanderPlugins($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addZedSevice($container);
 
         return $container;
     }
@@ -87,6 +89,20 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new QuoteToCustomerClientBridge($container->getLocator()->customer()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addZedSevice(Container $container)
+    {
+        $container[self::SERVICE_ZED] = function (Container $container) {
+            return $container->getLocator()->zedRequest()->client();
         };
 
         return $container;

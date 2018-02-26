@@ -24,7 +24,7 @@ class QuoteClient extends AbstractClient implements QuoteClientInterface
      */
     public function getQuote()
     {
-        return $this->getFactory()->getStorageStrategy()->getQuote();
+        return $this->getFactory()->createSession()->getQuote();
     }
 
     /**
@@ -38,7 +38,7 @@ class QuoteClient extends AbstractClient implements QuoteClientInterface
      */
     public function setQuote(QuoteTransfer $quoteTransfer)
     {
-        $this->getFactory()->getStorageStrategy()->setQuote($quoteTransfer);
+        $this->getFactory()->createSession()->setQuote($quoteTransfer);
     }
 
     /**
@@ -50,6 +50,6 @@ class QuoteClient extends AbstractClient implements QuoteClientInterface
      */
     public function clearQuote()
     {
-        $this->getFactory()->getStorageStrategy()->clearQuote();
+        $this->getFactory()->createSession()->clearQuote();
     }
 }

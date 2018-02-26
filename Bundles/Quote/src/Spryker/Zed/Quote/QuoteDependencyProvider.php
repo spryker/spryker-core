@@ -1,0 +1,97 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\Quote;
+
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeBridge;
+use Spryker\Zed\Quote\Dependency\Service\QuoteToUtilEncodingServiceBridge;
+
+class QuoteDependencyProvider extends AbstractBundleDependencyProvider
+{
+    const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    const FACADE_STORE = 'FACADE_STORE';
+    const QUOTE_PRE_SAVE_PLUGINS = 'QUOTE_PRE_SAVE_PLUGINS';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container = $this->addStoreFacade($container);
+        $container = $this->addQuotePreSavePlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container = $this->addUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container)
+    {
+        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new QuoteToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container)
+    {
+        $container[self::FACADE_STORE] = function (Container $container) {
+            return new QuoteToStoreFacadeBridge($container->getLocator()->store()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuotePreSavePlugins(Container $container)
+    {
+        $container[static::QUOTE_PRE_SAVE_PLUGINS] = function (Container $container) {
+            return $this->getQuotePreSavePlugins($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Quote\Dependency\Plugin\QuotePreSavePluginInterface[]
+     */
+    protected function getQuotePreSavePlugins(Container $container)
+    {
+        return [];
+    }
+}

@@ -14,6 +14,7 @@ use Spryker\Client\Quote\QuoteConfig;
 use Spryker\Client\Quote\StorageStrategy\DatabaseStorageStrategy;
 use Spryker\Client\Quote\StorageStrategy\SessionStorageStrategy;
 use Spryker\Client\Quote\StorageStrategy\StorageStrategyProvider;
+use Spryker\Client\Quote\Zed\QuoteStubInterface;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Shared\Quote\QuoteConfig as SharedQuoteConfig;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -148,7 +149,7 @@ class StorageStrategyProviderTest extends Unit
      */
     protected function createDatabaseStorageStrategy(QuoteToCustomerClientInterface $customerClient)
     {
-        return new DatabaseStorageStrategy($customerClient);
+        return new DatabaseStorageStrategy($customerClient, $this->createQuoteZedStubMock(), $this->createSessionClient());
     }
 
     /**
@@ -156,11 +157,19 @@ class StorageStrategyProviderTest extends Unit
      */
     protected function createSessionStorageStrategy()
     {
+        return new SessionStorageStrategy($this->createSessionClient());
+    }
+
+    /**
+     * @return \Spryker\Client\Session\SessionClient
+     */
+    protected function createSessionClient()
+    {
         $sessionContainer = new Session(new MockArraySessionStorage());
         $sessionClient = new SessionClient();
         $sessionClient->setContainer($sessionContainer);
 
-        return new SessionStorageStrategy($sessionClient);
+        return $sessionClient;
     }
 
     /**
@@ -169,6 +178,15 @@ class StorageStrategyProviderTest extends Unit
     protected function createCustomerClientMock()
     {
         return $this->getMockBuilder(QuoteToCustomerClientInterface::class)
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Quote\Zed\QuoteStubInterface
+     */
+    protected function createQuoteZedStubMock()
+    {
+        return $this->getMockBuilder(QuoteStubInterface::class)
             ->getMock();
     }
 }

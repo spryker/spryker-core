@@ -12,6 +12,7 @@ use Spryker\Client\Quote\Session\QuoteSession;
 use Spryker\Client\Quote\StorageStrategy\DatabaseStorageStrategy;
 use Spryker\Client\Quote\StorageStrategy\SessionStorageStrategy;
 use Spryker\Client\Quote\StorageStrategy\StorageStrategyProvider;
+use Spryker\Client\Quote\Zed\QuoteStub;
 
 /**
  * @method \Spryker\Client\Quote\QuoteConfig getConfig()
@@ -19,14 +20,13 @@ use Spryker\Client\Quote\StorageStrategy\StorageStrategyProvider;
 class QuoteFactory extends AbstractFactory
 {
     /**
-     * @deprecated use getStorageStrategy() instead
-     *
      * @return \Spryker\Client\Quote\Session\QuoteSession
      */
     public function createSession()
     {
         return new QuoteSession(
             $this->getSessionClient(),
+            $this->getStorageStrategy(),
             $this->getCurrencyPlugin(),
             $this->getQuoteTransferExpanderPlugins()
         );
@@ -69,9 +69,7 @@ class QuoteFactory extends AbstractFactory
     protected function createSessionStorageStrategy()
     {
         return new SessionStorageStrategy(
-            $this->getSessionClient(),
-            $this->getCurrencyPlugin(),
-            $this->getQuoteTransferExpanderPlugins()
+            $this->getSessionClient()
         );
     }
 
@@ -81,8 +79,18 @@ class QuoteFactory extends AbstractFactory
     protected function createDatabaseStorageStrategy()
     {
         return new DatabaseStorageStrategy(
-            $this->getCustomerClient()
+            $this->getCustomerClient(),
+            $this->createZedQuoteStub(),
+            $this->getSessionClient()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\Quote\Zed\QuoteStubInterface
+     */
+    public function createZedQuoteStub()
+    {
+        return new QuoteStub($this->getZedService());
     }
 
     /**
@@ -115,5 +123,13 @@ class QuoteFactory extends AbstractFactory
     protected function getCustomerClient()
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     */
+    protected function getZedService()
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::SERVICE_ZED);
     }
 }

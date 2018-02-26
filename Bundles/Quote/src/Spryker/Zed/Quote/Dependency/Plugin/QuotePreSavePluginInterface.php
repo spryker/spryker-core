@@ -5,26 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Quote\Session;
+namespace Spryker\Zed\Quote\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteSessionInterface
+interface QuotePreSavePluginInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getQuote();
-
-    /**
+     * Specification:
+     * - Plugin is triggered before quote is saved.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return $this
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function setQuote(QuoteTransfer $quoteTransfer);
-
-    /**
-     * @return $this
-     */
-    public function clearQuote();
+    public function preSave(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

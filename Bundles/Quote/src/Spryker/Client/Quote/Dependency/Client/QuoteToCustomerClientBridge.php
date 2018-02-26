@@ -33,4 +33,16 @@ class QuoteToCustomerClientBridge implements QuoteToCustomerClientInterface
     {
         return $this->customerClient->isLoggedIn();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function getCustomer()
+    {
+        return $this->customerClient->getCustomer();
+    }
 }

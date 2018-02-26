@@ -31,10 +31,12 @@ interface StorageStrategyInterface
      *
      * @return $this
      */
-    public function setQuote(QuoteTransfer $quoteTransfer);
+    public function saveQuote(QuoteTransfer $quoteTransfer);
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return $this
      */
-    public function clearQuote();
+    public function clearQuote(QuoteTransfer $quoteTransfer);
 }

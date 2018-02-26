@@ -18,4 +18,14 @@ interface QuoteToCustomerClientInterface
      * @return bool
      */
     public function isLoggedIn();
+
+    /**
+     * Specification:
+     * - Returns customer information from session.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function getCustomer();
 }

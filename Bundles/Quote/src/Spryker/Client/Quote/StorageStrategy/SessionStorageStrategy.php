@@ -8,42 +8,24 @@
 namespace Spryker\Client\Quote\StorageStrategy;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyInterface;
+use Spryker\Client\Quote\Session\QuoteSession;
 use Spryker\Shared\Quote\QuoteConfig;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SessionStorageStrategy implements StorageStrategyInterface
 {
-    const QUOTE_SESSION_IDENTIFIER = 'QUOTE_SESSION_IDENTIFIER';
-
     /**
      * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     protected $session;
 
     /**
-     * @var \Spryker\Client\Currency\Plugin\CurrencyPluginInterface
-     */
-    protected $currencyPlugin;
-
-    /**
-     * @var \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[]
-     */
-    protected $quoteTransferExpanderPlugins;
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyInterface|null $currencyPlugin
-     * @param \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[] $quoteTransferExpanderPlugins
      */
     public function __construct(
-        SessionInterface $session,
-        QuoteToCurrencyInterface $currencyPlugin = null,
-        array $quoteTransferExpanderPlugins = []
+        SessionInterface $session
     ) {
         $this->session = $session;
-        $this->currencyPlugin = $currencyPlugin;
-        $this->quoteTransferExpanderPlugins = $quoteTransferExpanderPlugins;
     }
 
     /**
@@ -68,10 +50,7 @@ class SessionStorageStrategy implements StorageStrategyInterface
     public function getQuote()
     {
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer = $this->session->get(static::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
-        $this->setCurrency($quoteTransfer);
-
-        $quoteTransfer = $this->expandQuoteTransfer($quoteTransfer);
+        $quoteTransfer = $this->session->get(QuoteSession::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -81,50 +60,20 @@ class SessionStorageStrategy implements StorageStrategyInterface
      *
      * @return void
      */
-    public function setQuote(QuoteTransfer $quoteTransfer)
+    public function saveQuote(QuoteTransfer $quoteTransfer)
     {
-        $this->setCurrency($quoteTransfer);
-
-        $quoteTransfer = $this->expandQuoteTransfer($quoteTransfer);
-
-        $this->session->set(static::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
+        $this->session->set(QuoteSession::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return $this
      */
-    public function clearQuote()
+    public function clearQuote(QuoteTransfer $quoteTransfer)
     {
-        $this->setQuote(new QuoteTransfer());
+        $this->saveQuote(new QuoteTransfer());
 
         return $this;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function expandQuoteTransfer(QuoteTransfer $quoteTransfer)
-    {
-        foreach ($this->quoteTransferExpanderPlugins as $quoteTransferExpanderPlugin) {
-            $quoteTransfer = $quoteTransferExpanderPlugin->expandQuote($quoteTransfer);
-        }
-
-        return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    protected function setCurrency(QuoteTransfer $quoteTransfer)
-    {
-        if (!$this->currencyPlugin) {
-            return;
-        }
-
-        $quoteTransfer->setCurrency($this->currencyPlugin->getCurrent());
     }
 }
