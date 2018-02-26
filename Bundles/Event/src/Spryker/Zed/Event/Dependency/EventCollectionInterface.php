@@ -16,7 +16,7 @@ interface EventCollectionInterface extends ArrayAccess, IteratorAggregate
     /**
      * @param string $eventName
      * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface $eventHandler
-     * @param string|null|int $queuePoolName
+     * @param string|null $queuePoolName
      * @param int|null $priority
      *
      * @return $this
@@ -26,7 +26,7 @@ interface EventCollectionInterface extends ArrayAccess, IteratorAggregate
     /**
      * @param string $eventName
      * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface $eventHandler
-     * @param string|null|int $queuePoolName
+     * @param string|null $queuePoolName
      * @param int|null $priority
      *
      * @return $this

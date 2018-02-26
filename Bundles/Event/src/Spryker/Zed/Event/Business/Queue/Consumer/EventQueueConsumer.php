@@ -175,16 +175,16 @@ class EventQueueConsumer implements EventQueueConsumerInterface
 
     /**
      * @param string $message
-     * @param \Throwable|null $t
+     * @param \Throwable|null $throwable
      *
      * @return void
      */
-    protected function logConsumerAction($message, Throwable $t = null)
+    protected function logConsumerAction($message, Throwable $throwable = null)
     {
         $this->eventLogger->log('[async] ' . $message);
 
-        if ($t !== null) {
-            ErrorLogger::getInstance()->log($t);
+        if ($throwable !== null) {
+            ErrorLogger::getInstance()->log($throwable);
         }
     }
 
