@@ -13,7 +13,7 @@
     "spryker/price-product": "^1.0.0",
     "spryker/product": "^5.1.0 || ^6.0.0",
     "spryker/product-label": "^1.0.0 || ^2.0.0",
-    "spryker/product-management": "^0.6.0 || ^0.7.0 || ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0",
+    "spryker/product-management": "^0.6.0 || ^0.7.0 || ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0",
     "spryker/propel-orm": "^1.1.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-text": "^1.1.0"

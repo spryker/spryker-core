@@ -51,7 +51,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductBundleReader(
             $this->getQueryContainer(),
-            $this->getAvailabilityQueryContainer()
+            $this->getAvailabilityQueryContainer(),
+            $this->getStoreFacade()
         );
     }
 
@@ -130,7 +131,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleCartAvailabilityCheck(
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
-            $this->getAvailabilityQueryContainer()
+            $this->getAvailabilityQueryContainer(),
+            $this->getStoreFacade()
         );
     }
 
@@ -141,7 +143,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductBundleCheckoutAvailabilityCheck(
             $this->getAvailabilityFacade(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getStoreFacade()
         );
     }
 
@@ -153,7 +156,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleAvailabilityHandler(
             $this->getAvailabilityQueryContainer(),
             $this->getAvailabilityFacade(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getStoreFacade()
         );
     }
 
@@ -165,7 +169,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleStockWriter(
             $this->getQueryContainer(),
             $this->getStockQueryContainer(),
-            $this->createProductBundleAvailabilityHandler()
+            $this->createProductBundleAvailabilityHandler(),
+            $this->getStoreFacade()
         );
     }
 
@@ -274,5 +279,13 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     protected function getPriceFacade()
     {
         return $this->getProvidedDependency(ProductBundleDependencyProvider::FACADE_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     */
+    protected function getStoreFacade()
+    {
+        return $this->getProvidedDependency(ProductBundleDependencyProvider::FACADE_STORE);
     }
 }

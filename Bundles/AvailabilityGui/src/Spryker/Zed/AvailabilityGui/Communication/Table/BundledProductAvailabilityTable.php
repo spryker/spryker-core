@@ -7,13 +7,15 @@
 
 namespace Spryker\Zed\AvailabilityGui\Communication\Table;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
-use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToAvailabilityQueryContainerInterface;
+use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -25,6 +27,7 @@ class BundledProductAvailabilityTable extends AbstractTable
     const URL_PARAM_SKU = 'sku';
     const URL_PARAM_ID_PRODUCT = 'id-product';
     const URL_PARAM_BUNDLE_ID_PRODUCT_ABSTRACT = 'id-product-bundle-abstract';
+    const URL_PARAM_ID_STORE = 'id-store';
 
     const COL_BUNDLED_ITEMS = 'bundledItems';
     const TABLE_COL_ACTION = 'Actions';
@@ -37,7 +40,7 @@ class BundledProductAvailabilityTable extends AbstractTable
     /**
      * @var \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToAvailabilityQueryContainerInterface
      */
-    protected $availabilityQueryContainer;
+    protected $productAbstractQuery;
 
     /**
      * @var \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface
@@ -55,24 +58,37 @@ class BundledProductAvailabilityTable extends AbstractTable
     protected $idBundleProductAbstract;
 
     /**
-     * @param \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToAvailabilityQueryContainerInterface $availabilityQueryContainer
+     * @var \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected $storeTransfer;
+
+    /**
+     * @var \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface
+     */
+    private $omsFacade;
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery
      * @param \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer
-     * @param int $idLocale
-     * @param int|null $idProductBundle
-     * @param int|null $idBundleProductAbstract
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface $omsFacade
+     * @param null|int $idProductBundle
+     * @param null|int $idBundleProductAbstract
      */
     public function __construct(
-        AvailabilityGuiToAvailabilityQueryContainerInterface $availabilityQueryContainer,
+        SpyProductAbstractQuery $productAbstractQuery,
         AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer,
-        $idLocale,
+        StoreTransfer $storeTransfer,
+        AvailabilityGuiToOmsFacadeInterface $omsFacade,
         $idProductBundle = null,
         $idBundleProductAbstract = null
     ) {
-        $this->availabilityQueryContainer = $availabilityQueryContainer;
+        $this->productAbstractQuery = $productAbstractQuery;
         $this->idProductBundle = $idProductBundle;
-        $this->idLocale = $idLocale;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->idBundleProductAbstract = $idBundleProductAbstract;
+        $this->storeTransfer = $storeTransfer;
+        $this->omsFacade = $omsFacade;
     }
 
     /**
@@ -85,6 +101,7 @@ class BundledProductAvailabilityTable extends AbstractTable
         $url = Url::generate('bundled-product-availability-table', [
             BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_BUNDLE => $this->idProductBundle,
             BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idBundleProductAbstract,
+            static::URL_PARAM_ID_STORE => $this->storeTransfer->getIdStore(),
         ])->build();
 
         $config->setUrl($url);
@@ -143,8 +160,7 @@ class BundledProductAvailabilityTable extends AbstractTable
 
         $ids = $bundledProducts->toArray();
 
-        $queryProductAbstractAvailability = $this->availabilityQueryContainer
-            ->queryAvailabilityWithStockByIdProductAbstractAndIdLocale($this->idProductBundle, $this->idLocale)
+        $queryProductAbstractAvailability = $this->productAbstractQuery
             ->addJoin(SpyProductTableMap::COL_ID_PRODUCT, SpyProductBundleTableMap::COL_FK_BUNDLED_PRODUCT, Criteria::INNER_JOIN)
             ->withColumn(SpyProductBundleTableMap::COL_QUANTITY, static::COL_BUNDLED_ITEMS)
             ->addOr(SpyProductTableMap::COL_ID_PRODUCT, $ids, Criteria::IN)
@@ -154,19 +170,54 @@ class BundledProductAvailabilityTable extends AbstractTable
 
         $result = [];
         foreach ($queryResult as $productItem) {
+            $neverOutOfStockFlag = 'n/a';
+            if ($productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET]) {
+                $neverOutOfStockFlag = $this->isNeverOutOfStock($productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET]) ? 'Yes' : 'No';
+            }
+
             $result[] = [
                 AvailabilityQueryContainer::CONCRETE_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
                 AvailabilityQueryContainer::CONCRETE_NAME => $productItem[AvailabilityQueryContainer::CONCRETE_NAME],
-                AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY],
-                AvailabilityQueryContainer::STOCK_QUANTITY => $productItem[AvailabilityQueryContainer::STOCK_QUANTITY],
-                AvailabilityQueryContainer::RESERVATION_QUANTITY => $productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY],
+                AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY] ? $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY] : 0,
+                AvailabilityQueryContainer::STOCK_QUANTITY => $productItem[AvailabilityQueryContainer::STOCK_QUANTITY] ? $productItem[AvailabilityQueryContainer::STOCK_QUANTITY] : 0,
+                AvailabilityQueryContainer::RESERVATION_QUANTITY => $this->calculateReservation($productItem),
                 SpyProductBundleTableMap::COL_QUANTITY => $productItem[static::COL_BUNDLED_ITEMS],
-                AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => $productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET],
+                AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => $neverOutOfStockFlag,
                 static::TABLE_COL_ACTION => $this->createEditButton($productItem),
             ];
         }
 
         return $result;
+    }
+
+    /**
+     * @param string $neverOutOfStockSet
+     *
+     * @return bool
+     */
+    protected function isNeverOutOfStock($neverOutOfStockSet)
+    {
+        $statusSet = explode(',', $neverOutOfStockSet);
+
+        foreach ($statusSet as $status) {
+            if (filter_var($status, FILTER_VALIDATE_BOOLEAN)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param array $productItem
+     *
+     * @return int
+     */
+    protected function calculateReservation(array $productItem)
+    {
+        $quantity = (int)$productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY];
+        $quantity += $this->omsFacade->getReservationsFromOtherStores($productItem[AvailabilityQueryContainer::CONCRETE_SKU], $this->storeTransfer);
+
+        return $quantity;
     }
 
     /**
@@ -182,6 +233,7 @@ class BundledProductAvailabilityTable extends AbstractTable
                 static::URL_PARAM_ID_PRODUCT => $productItem[AvailabilityQueryContainer::ID_PRODUCT],
                 static::URL_PARAM_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
                 static::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idBundleProductAbstract,
+                static::URL_PARAM_ID_STORE => $this->storeTransfer->getIdStore(),
             ]
         );
 

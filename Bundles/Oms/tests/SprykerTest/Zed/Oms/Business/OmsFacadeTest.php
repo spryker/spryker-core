@@ -140,16 +140,6 @@ class OmsFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\OmsConfig
-     */
-    protected function createOmsConfigMock()
-    {
-        return $this->getMockBuilder(OmsConfig::class)
-            ->setMethods(['getProcessDefinitionLocation', 'getActiveProcesses'])
-            ->getMock();
-    }
-
-    /**
      * @return void
      */
     public function testReservedItemsByNonExistentSku()
