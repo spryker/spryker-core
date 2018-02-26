@@ -6,7 +6,7 @@
     "php": ">=7.1",
     "spryker/error-handler": "^2.1.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/oms": "^5.0.0 || ^6.0.0 || ^7.0.0",
+    "spryker/oms": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/quote": "^1.0.0",
     "spryker/step-engine": "^2.0.0 || ^3.0.0",

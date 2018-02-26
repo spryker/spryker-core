@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Store\Business;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 /**
  * @method \Spryker\Zed\Store\Business\StoreBusinessFactory getFactory()
  */
@@ -58,4 +60,17 @@ interface StoreFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getStoreByName($storeName);
+
+    /**
+     * Specification:
+     *  - Reads all shared store from Store transfer and populates data from configuration.
+     *  - The list of stores with which this store shares database, the value is store name.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer);
 }

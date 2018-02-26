@@ -70,4 +70,9 @@ interface StoreToStoreInterface
      * @return array
      */
     public function getQueuePools();
+
+    /**
+     * @return string[]
+     */
+    public function getStoresWithSharedPersistence();
 }

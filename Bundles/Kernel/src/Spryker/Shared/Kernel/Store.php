@@ -98,6 +98,11 @@ class Store
     protected $queuePools = [];
 
     /**
+     * @var string[]
+     */
+    protected $storesWithSharedPersistence = [];
+
+    /**
      * @return \Spryker\Shared\Kernel\Store
      */
     public static function getInstance()
@@ -412,5 +417,13 @@ class Store
     public function getQueuePools()
     {
         return $this->queuePools;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getStoresWithSharedPersistence()
+    {
+        return $this->storesWithSharedPersistence;
     }
 }
