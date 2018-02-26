@@ -15,10 +15,10 @@ use Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConn
 
 class CheckCartAvailability implements CheckCartAvailabilityInterface
 {
-    const CART_PRE_CHECK_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
-    const CART_PRE_CHECK_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
-    const STOCK_TRANSLATION_PARAMETER = '%stock%';
-    const SKU_TRANSLATION_PARAMETER = '%sku%';
+    public const CART_PRE_CHECK_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
+    public const CART_PRE_CHECK_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
+    public const STOCK_TRANSLATION_PARAMETER = '%stock%';
+    public const SKU_TRANSLATION_PARAMETER = '%sku%';
 
     /**
      * @var \Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface
@@ -100,8 +100,8 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue($translationKey);
         $messageTransfer->setParameters([
-            self::STOCK_TRANSLATION_PARAMETER => $stock,
-            self::SKU_TRANSLATION_PARAMETER => $sku,
+            static::STOCK_TRANSLATION_PARAMETER => $stock,
+            static::SKU_TRANSLATION_PARAMETER => $sku,
         ]);
 
         return $messageTransfer;
@@ -114,9 +114,9 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
      */
     protected function getTranslationKey($stock)
     {
-        $translationKey = self::CART_PRE_CHECK_AVAILABILITY_FAILED;
+        $translationKey = static::CART_PRE_CHECK_AVAILABILITY_FAILED;
         if ($stock <= 0) {
-            $translationKey = self::CART_PRE_CHECK_AVAILABILITY_EMPTY;
+            $translationKey = static::CART_PRE_CHECK_AVAILABILITY_EMPTY;
         }
         return $translationKey;
     }
