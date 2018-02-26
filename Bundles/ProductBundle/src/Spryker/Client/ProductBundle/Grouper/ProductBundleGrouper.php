@@ -31,7 +31,11 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     {
         $items = $this->getGroupedBundleItems($quoteTransfer->getItems(), $quoteTransfer->getBundleItems());
         $items = array_map(function ($groupedItem) {
-            return $groupedItem instanceof ItemTransfer ? $groupedItem : $groupedItem[static::BUNDLE_PRODUCT];
+            if ($groupedItem instanceof ItemTransfer) {
+                return $groupedItem;
+            }
+
+            return $groupedItem[static::BUNDLE_PRODUCT];
         }, $items);
 
         return $items;
