@@ -117,7 +117,7 @@ class UrlStorageListenerTest extends Unit
     {
         $urlStorageCount = SpyUrlStorageQuery::create()->count();
         $this->assertSame($beforeCount + 1, $urlStorageCount);
-        $spyUrlStorage = SpyUrlStorageQuery::create()->findOneByFkUrl(1);
+        $spyUrlStorage = SpyUrlStorageQuery::create()->orderByIdUrlStorage()->findOneByFkUrl(1);
         $this->assertNotNull($spyUrlStorage);
         $data = $spyUrlStorage->getData();
         $this->assertSame('/de', $data['url']);
@@ -133,7 +133,7 @@ class UrlStorageListenerTest extends Unit
     {
         $redirectStorageCount = SpyUrlRedirectStorageQuery::create()->count();
         $this->assertSame($beforeCount + 1, $redirectStorageCount);
-        $spyUrlStorage = SpyUrlRedirectStorageQuery::create()->findOneByFkUrlRedirect($idRedirect);
+        $spyUrlStorage = SpyUrlRedirectStorageQuery::create()->orderByIdUrlRedirectStorage()->findOneByFkUrlRedirect($idRedirect);
         $data = $spyUrlStorage->getData();
         $this->assertSame('/test-redirect', $data['to_url']);
     }

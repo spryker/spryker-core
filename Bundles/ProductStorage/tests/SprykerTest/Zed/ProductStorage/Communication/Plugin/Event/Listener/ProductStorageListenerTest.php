@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\ProductStorage\Persistence\Map\SpyProductAbstractStorageTableMap;
-use Orm\Zed\ProductStorage\Persistence\Map\SpyProductConcreteStorageTableMap;
 use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorageQuery;
 use Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorageQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
@@ -279,7 +277,7 @@ class ProductStorageListenerTest extends Unit
         $afterCount = SpyProductAbstractStorageQuery::create()->count();
         $this->assertSame($beforeCount + 2, $afterCount);
         $spyProductAbstractStorage = SpyProductAbstractStorageQuery::create()
-            ->orderBy(SpyProductAbstractStorageTableMap::COL_ID_PRODUCT_ABSTRACT_STORAGE)
+            ->orderByIdProductAbstractStorage()
             ->findOneByFkProductAbstract(1);
         $this->assertNotNull($spyProductAbstractStorage);
         $data = $spyProductAbstractStorage->getData();
@@ -298,7 +296,7 @@ class ProductStorageListenerTest extends Unit
         $afterCount = SpyProductConcreteStorageQuery::create()->count();
         $this->assertSame($beforeCount + 2, $afterCount);
         $spyProductConcreteStorage = SpyProductConcreteStorageQuery::create()
-            ->orderBy(SpyProductConcreteStorageTableMap::COL_ID_PRODUCT_CONCRETE_STORAGE)
+            ->orderByIdProductConcreteStorage()
             ->findOneByFkProduct(1);
         $this->assertNotNull($spyProductConcreteStorage);
         $data = $spyProductConcreteStorage->getData();

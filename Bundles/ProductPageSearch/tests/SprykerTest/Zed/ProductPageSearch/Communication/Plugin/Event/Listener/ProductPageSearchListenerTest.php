@@ -17,7 +17,6 @@ use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
-use Orm\Zed\ProductPageSearch\Persistence\Map\SpyProductAbstractPageSearchTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use PHPUnit\Framework\SkippedTestError;
@@ -450,7 +449,7 @@ class ProductPageSearchListenerTest extends Unit
     protected function assertProductPageAbstractSearch()
     {
         $productPageSearchEntity = SpyProductAbstractPageSearchQuery::create()
-            ->orderBy(SpyProductAbstractPageSearchTableMap::COL_ID_PRODUCT_ABSTRACT_PAGE_SEARCH)
+            ->orderByIdProductAbstractPageSearch()
             ->findOneByFkProductAbstract(1);
         $this->assertNotNull($productPageSearchEntity);
         $data = $productPageSearchEntity->getStructuredData();

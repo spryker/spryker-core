@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\GlossaryStorage\Communication\Plugin\Event\Listener;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
-use Orm\Zed\GlossaryStorage\Persistence\Map\SpyGlossaryStorageTableMap;
 use Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorageQuery;
 use PHPUnit\Framework\SkippedTestError;
 use Spryker\Shared\Config\Config;
@@ -114,7 +113,7 @@ class GlossaryStorageListenerTest extends Unit
         $glossaryStorageCount = SpyGlossaryStorageQuery::create()->count();
         $this->assertSame($beforeCount + 2, $glossaryStorageCount);
         $spyGlossaryStorage = SpyGlossaryStorageQuery::create()
-            ->orderBy(SpyGlossaryStorageTableMap::COL_FK_GLOSSARY_KEY)
+            ->orderByFkGlossaryKey()
             ->findOneByFkGlossaryKey(1);
         $this->assertNotNull($spyGlossaryStorage);
         $data = $spyGlossaryStorage->getData();

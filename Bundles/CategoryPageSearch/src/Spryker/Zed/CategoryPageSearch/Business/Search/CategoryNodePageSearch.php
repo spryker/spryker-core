@@ -123,9 +123,11 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
             foreach ($categoryTreeWithLocales as $localeName => $categoryTreeWithLocale) {
                 if (isset($spyCategoryNodePageSearchEntities[$categoryNodeId][$localeName])) {
                     $this->storeDataSet($categoryTreeWithLocale, $localeName, $spyCategoryNodePageSearchEntities[$categoryNodeId][$localeName]);
-                } else {
-                    $this->storeDataSet($categoryTreeWithLocale, $localeName);
+
+                    continue;
                 }
+
+                $this->storeDataSet($categoryTreeWithLocale, $localeName);
             }
         }
     }

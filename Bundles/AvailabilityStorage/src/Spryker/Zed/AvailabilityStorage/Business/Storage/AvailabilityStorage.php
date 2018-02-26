@@ -86,9 +86,11 @@ class AvailabilityStorage implements AvailabilityStorageInterface
 
             if ($this->isExistingEntity($availabilityStorageEntityCollection, $idAvailability, $storeName)) {
                 $this->storeDataSet($availability, $availabilityStorageEntityCollection[$idAvailability]);
-            } else {
-                $this->storeDataSet($availability);
+
+                continue;
             }
+
+            $this->storeDataSet($availability);
         }
     }
 

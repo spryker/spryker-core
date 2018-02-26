@@ -148,7 +148,7 @@ class ProductLabelStorageListenerTest extends Unit
     {
         $productLabelStorageCount = SpyProductAbstractLabelStorageQuery::create()->count();
         $this->assertSame($beforeCount + 1, $productLabelStorageCount);
-        $spyProductAbstractLabelStorage = SpyProductAbstractLabelStorageQuery::create()->findOneByFkProductAbstract(1);
+        $spyProductAbstractLabelStorage = SpyProductAbstractLabelStorageQuery::create()->orderByIdProductAbstractLabelStorage()->findOneByFkProductAbstract(1);
         $this->assertNotNull($spyProductAbstractLabelStorage);
         $data = $spyProductAbstractLabelStorage->getData();
         $this->assertSame(2, count($data['product_label_ids']));

@@ -130,7 +130,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             if (isset($spyProductAbstractSearchEntities[$idProduct][$localeName])) {
                 $this->storeDataSet($spyProductAbstractLocalizedEntity, $spyProductAbstractSearchEntities[$idProduct][$localeName], $isRefresh);
             } elseif (!$isRefresh) {
-                $this->storeDataSet($spyProductAbstractLocalizedEntity, null, false);
+                $this->storeDataSet($spyProductAbstractLocalizedEntity);
             }
         }
     }

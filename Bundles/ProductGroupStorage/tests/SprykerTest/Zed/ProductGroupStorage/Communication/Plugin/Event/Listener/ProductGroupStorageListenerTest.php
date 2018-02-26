@@ -112,7 +112,7 @@ class ProductGroupStorageListenerTest extends Unit
     {
         $productGroupStorageCount = SpyProductAbstractGroupStorageQuery::create()->count();
         $this->assertSame($beforeCount + 3, $productGroupStorageCount);
-        $spyProductAbstractGroupStorage = SpyProductAbstractGroupStorageQuery::create()->findOneByFkProductAbstract(1);
+        $spyProductAbstractGroupStorage = SpyProductAbstractGroupStorageQuery::create()->orderByIdProductAbstractGroupStorage()->findOneByFkProductAbstract(1);
         $this->assertNotNull($spyProductAbstractGroupStorage);
         $data = $spyProductAbstractGroupStorage->getData();
         $this->assertSame(3, count($data['group_product_abstract_ids']));

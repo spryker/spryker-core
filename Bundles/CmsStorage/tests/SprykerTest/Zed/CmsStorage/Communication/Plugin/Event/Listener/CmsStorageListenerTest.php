@@ -137,7 +137,7 @@ class CmsStorageListenerTest extends Unit
     {
         $count = SpyCmsPageStorageQuery::create()->count();
         $this->assertSame($beforeCount + 2, $count);
-        $cmsPage = SpyCmsPageStorageQuery::create()->orderByIdCmsPageStorage()->filterByLocale('en_US')->findOneByFkCmsPage(1);
+        $cmsPage = SpyCmsPageStorageQuery::create()->filterByLocale('en_US')->orderByIdCmsPageStorage()->findOneByFkCmsPage(1);
         $this->assertNotNull($cmsPage);
         $data = $cmsPage->getData();
         $this->assertSame('Imprint', $data['name']);

@@ -108,9 +108,11 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
             foreach ($categoryNodeWithLocales as $localeName => $categoryNodeWithLocale) {
                 if (isset($spyCategoryNodeStorageEntities[$categoryNodeId][$localeName])) {
                     $this->storeDataSet($categoryNodeWithLocale, $localeName, $spyCategoryNodeStorageEntities[$categoryNodeId][$localeName]);
-                } else {
-                    $this->storeDataSet($categoryNodeWithLocale, $localeName);
+
+                    continue;
                 }
+
+                $this->storeDataSet($categoryNodeWithLocale, $localeName);
             }
         }
     }

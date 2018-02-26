@@ -145,7 +145,7 @@ class CmsPageSearchListenerTest extends Unit
      */
     protected function assertCmsPageSearch()
     {
-        $cmsPage = SpyCmsPageSearchQuery::create()->orderByIdCmsPageSearch()->filterByLocale('en_US')->findOneByFkCmsPage(1);
+        $cmsPage = SpyCmsPageSearchQuery::create()->filterByLocale('en_US')->orderByIdCmsPageSearch()->findOneByFkCmsPage(1);
         $this->assertNotNull($cmsPage);
         $data = $cmsPage->getStructuredData();
         $encodedData = json_decode($data, true);
