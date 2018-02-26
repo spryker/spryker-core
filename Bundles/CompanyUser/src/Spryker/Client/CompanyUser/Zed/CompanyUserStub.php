@@ -11,12 +11,12 @@ use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ResponseErrorTransfer;
 use Spryker\Client\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
-use Spryker\Client\Kernel\PermissionAwareTrait;
+use Spryker\Client\Kernel\CanAwareTrait;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class CompanyUserStub implements CompanyUserStubInterface
 {
-    use PermissionAwareTrait;
+    use CanAwareTrait;
 
     /**
      * @var \Spryker\Client\ZedRequest\ZedRequestClient
