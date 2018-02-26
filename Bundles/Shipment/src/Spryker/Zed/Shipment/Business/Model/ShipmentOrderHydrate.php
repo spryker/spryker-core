@@ -46,7 +46,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderShipments
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipment[]|\Propel\Runtime\Collection\ObjectCollection $salesOrderShipments
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -59,6 +59,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         foreach ($salesOrderShipments as $salesShipmentEntity) {
             $shipmentMethodTransfer = new ShipmentMethodTransfer();
             $shipmentMethodTransfer->fromArray($salesShipmentEntity->toArray(), true);
+            $shipmentMethodTransfer->setIdShipmentMethod($salesShipmentEntity->getIdSalesShipment());
             $orderTransfer->addShipmentMethod($shipmentMethodTransfer);
         }
 
