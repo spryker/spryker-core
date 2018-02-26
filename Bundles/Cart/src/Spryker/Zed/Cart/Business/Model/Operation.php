@@ -86,7 +86,7 @@ class Operation implements OperationInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function filterItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
+    public function addValid(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
     {
         $cartChangeTransfer->requireQuote();
 

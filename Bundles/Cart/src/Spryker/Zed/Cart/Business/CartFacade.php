@@ -26,7 +26,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
      */
     public function addValidItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
     {
-        return $this->getFactory()->createCartOperation()->filterItems($cartChangeTransfer);
+        return $this->getFactory()->createCartOperation()->addValid($cartChangeTransfer);
     }
 
     /**

@@ -17,7 +17,7 @@ interface OperationInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function filterItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer;
+    public function addValid(CartChangeTransfer $cartChangeTransfer): QuoteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
