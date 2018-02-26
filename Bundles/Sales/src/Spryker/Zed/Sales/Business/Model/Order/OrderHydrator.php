@@ -390,7 +390,7 @@ class OrderHydrator implements OrderHydratorInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return void
      */
     protected function hydrateMissingCustomer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
