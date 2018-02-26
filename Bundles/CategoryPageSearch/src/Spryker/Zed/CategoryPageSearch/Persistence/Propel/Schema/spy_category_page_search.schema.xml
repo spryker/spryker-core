@@ -17,7 +17,6 @@
             <parameter name="locale" required="true"/>
             <parameter name="key_suffix_column" value="fk_category_node"/>
             <parameter name="queue_group" value="sync.search.category"/>
-            <parameter name="queue_pool" value="synchronizationPool" />
             <parameter name="params" value='{"type":"page"}'/>
         </behavior>
         <behavior name="timestampable"/>

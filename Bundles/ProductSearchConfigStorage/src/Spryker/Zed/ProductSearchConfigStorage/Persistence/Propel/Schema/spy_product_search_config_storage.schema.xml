@@ -12,7 +12,6 @@
             <parameter name="resource" value="product_search_config_extension"/>
             <parameter name="store" required="true"/>
             <parameter name="queue_group" value="sync.storage.product"/>
-            <parameter name="queue_pool" value="synchronizationPool" />
         </behavior>
         <behavior name="timestampable"/>
     </table>

@@ -16,7 +16,6 @@
             <parameter name="locale" required="true"/>
             <parameter name="key_suffix_column" value="navigation_key"/>
             <parameter name="queue_group" value="sync.storage.category"/>
-            <parameter name="queue_pool" value="synchronizationPool" />
         </behavior>
 
         <behavior name="timestampable"/>
