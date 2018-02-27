@@ -100,7 +100,7 @@ class CreateBlockController extends AbstractController
     {
         return Url::generate(
             '/cms-block-gui/edit-glossary',
-            [EditGlossaryControllerCms::URL_PARAM_ID_CMS_BLOCK => $cmsBlockTransfer->getIdCmsBlock()]
+            [EditGlossaryController::URL_PARAM_ID_CMS_BLOCK => $cmsBlockTransfer->getIdCmsBlock()]
         )
             ->build();
     }
