@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockGui\Communication\Controller;
 
 use ArrayObject;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -28,9 +27,8 @@ class ViewCmsBlockController extends AbstractCmsBlockController
 
         if ($cmsBlockTransfer === null) {
             $this->addErrorMessage(static::MESSAGE_CMS_BLOCK_INVALID_ID_ERROR);
-            $redirectUrl = Url::generate('/cms-block-gui/list-block')->build();
 
-            return $this->redirectResponse($redirectUrl);
+            return $this->getNotFoundBlockRedirect();
         }
 
         $cmsBlockGlossary = $this
