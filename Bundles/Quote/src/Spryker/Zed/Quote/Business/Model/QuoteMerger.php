@@ -44,7 +44,7 @@ class QuoteMerger implements QuoteMergerInterface
     public function merge(QuoteMergeTransfer $quoteMergeTransfer): QuoteResponseTransfer
     {
         $sourceQuote = $quoteMergeTransfer->getSourceQuote();
-        $targetQuote = $quoteMergeTransfer->getTargetQuote()();
+        $targetQuote = $quoteMergeTransfer->getTargetQuote();
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->fromArray($sourceQuote->modifiedToArray());
         $quoteTransfer->fromArray($targetQuote->modifiedToArray());
