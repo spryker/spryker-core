@@ -27,7 +27,6 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function getQuote()
     {
-        $this->getQuoteClient()->syncQuote();
         return $this->getQuoteClient()->getQuote();
     }
 
@@ -42,6 +41,18 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         $this->getQuoteClient()->syncQuote();
         $this->getQuoteClient()->clearQuote();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function syncQuote()
+    {
+        $this->getQuoteClient()->syncQuote();
     }
 
     /**
