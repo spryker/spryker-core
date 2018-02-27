@@ -52,4 +52,28 @@ class QuoteClient extends AbstractClient implements QuoteClientInterface
     {
         $this->getFactory()->createSession()->clearQuote();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function syncQuote()
+    {
+        $this->getFactory()->createSession()->syncQuote();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function pushQuote()
+    {
+        $this->getFactory()->createSession()->pushQuote();
+    }
 }

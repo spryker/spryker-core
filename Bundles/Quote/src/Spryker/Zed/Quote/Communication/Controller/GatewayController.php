@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Quote\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteMergeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -44,5 +45,15 @@ class GatewayController extends AbstractGatewayController
     public function deleteQuoteAction(QuoteTransfer $quoteTransfer)
     {
         return $this->getFacade()->deleteQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteMergeTransfer $quoteMergeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function mergeQuotesAction(QuoteMergeTransfer $quoteMergeTransfer)
+    {
+        return $this->getFacade()->mergeQuotes($quoteMergeTransfer);
     }
 }

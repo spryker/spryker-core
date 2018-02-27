@@ -17,7 +17,7 @@ interface QuoteRepositoryInterface
      *
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function findQuoteByCustomer($customerReference);
 }

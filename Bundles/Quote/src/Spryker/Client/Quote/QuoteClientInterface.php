@@ -42,4 +42,24 @@ interface QuoteClientInterface
      * @return void
      */
     public function clearQuote();
+
+    /**
+     * Specification:
+     * - Gets quote from storage and save it in customer session.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function syncQuote();
+
+    /**
+     * Specification:
+     * - Gets quote from customer session and save it in storage.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function pushQuote();
 }

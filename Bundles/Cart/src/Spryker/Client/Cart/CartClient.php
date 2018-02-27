@@ -27,6 +27,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function getQuote()
     {
+        $this->getQuoteClient()->syncQuote();
         return $this->getQuoteClient()->getQuote();
     }
 
@@ -39,6 +40,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function clearQuote()
     {
+        $this->getQuoteClient()->syncQuote();
         $this->getQuoteClient()->clearQuote();
     }
 
@@ -74,6 +76,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     public function storeQuote(QuoteTransfer $quoteTransfer)
     {
         $this->getQuoteClient()->setQuote($quoteTransfer);
+        $this->getQuoteClient()->pushQuote();
     }
 
     /**
@@ -276,6 +279,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     protected function createCartChangeTransfer()
     {
+        $this->getQuoteClient()->syncQuote();
         $quoteTransfer = $this->getQuoteClient()->getQuote();
         $items = $quoteTransfer->getItems();
 

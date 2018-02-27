@@ -27,4 +27,14 @@ interface QuoteSessionInterface
      * @return $this
      */
     public function clearQuote();
+
+    /**
+     * @return $this
+     */
+    public function syncQuote();
+
+    /**
+     * @return $this
+     */
+    public function pushQuote();
 }

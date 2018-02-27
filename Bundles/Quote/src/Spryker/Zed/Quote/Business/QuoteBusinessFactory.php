@@ -9,6 +9,7 @@ namespace Spryker\Zed\Quote\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Quote\Business\Model\Quote;
+use Spryker\Zed\Quote\Business\Model\QuoteMerger;
 use Spryker\Zed\Quote\Business\Model\QuotePluginExecutor;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
 
@@ -41,6 +42,17 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Quote\Business\Model\QuoteMergerInterface
+     */
+    public function createQuoteMerger()
+    {
+        return new QuoteMerger(
+            $this->createQuote(),
+            $this->getCalculationFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Quote\Business\Model\QuotePluginExecutorInterface
      */
     protected function createQoutePluginExecutor()
@@ -56,5 +68,13 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     protected function getQuotePreSavePlugins()
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::QUOTE_PRE_SAVE_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Quote\Dependency\Facade\QuoteToCalculationFacadeInterface
+     */
+    protected function getCalculationFacade()
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::FACADE_CALCULATION);
     }
 }

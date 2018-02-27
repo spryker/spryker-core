@@ -8,6 +8,7 @@
 namespace Spryker\Client\Quote;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Quote\Session\QuoteResolver;
 use Spryker\Client\Quote\Session\QuoteSession;
 use Spryker\Client\Quote\StorageStrategy\DatabaseStorageStrategy;
 use Spryker\Client\Quote\StorageStrategy\SessionStorageStrategy;
@@ -39,6 +40,18 @@ class QuoteFactory extends AbstractFactory
     {
         return $this->createStorageStrategyProvider()
             ->provideStorage();
+    }
+
+    /**
+     * @return \Spryker\Client\Quote\Session\QuoteResolverInterface
+     */
+    public function createQuoteResolver()
+    {
+        return new QuoteResolver(
+            $this->createSessionStorageStrategy(),
+            $this->getStorageStrategy(),
+            $this->createZedQuoteStub()
+        );
     }
 
     /**

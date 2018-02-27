@@ -113,6 +113,12 @@ class Quote implements QuoteInterface
      */
     protected function addStoreToQuote(QuoteTransfer $quoteTransfer)
     {
+        if (!$quoteTransfer->getStore()) {
+            $quoteTransfer->setStore(
+                $this->storeFacade->getCurrentStore()
+            );
+            return;
+        }
         if ($quoteTransfer->getStore()->getIdStore()) {
             return;
         }

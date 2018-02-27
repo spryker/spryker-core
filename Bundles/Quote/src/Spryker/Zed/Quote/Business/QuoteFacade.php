@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Quote\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteMergeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -57,5 +58,19 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createQuote()->delete($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteMergeTransfer $quoteMergeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function mergeQuotes(QuoteMergeTransfer $quoteMergeTransfer)
+    {
+        return $this->getFactory()->createQuoteMerger()->merge($quoteMergeTransfer);
     }
 }

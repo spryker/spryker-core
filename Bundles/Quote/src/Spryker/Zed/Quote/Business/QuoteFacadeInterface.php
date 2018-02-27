@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Quote\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteMergeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -49,4 +50,16 @@ interface QuoteFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Merge two quotes and store result in DB
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteMergeTransfer $quoteMergeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function mergeQuotes(QuoteMergeTransfer $quoteMergeTransfer);
 }

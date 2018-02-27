@@ -76,9 +76,10 @@ class QuoteSession implements QuoteSessionInterface
     public function setQuote(QuoteTransfer $quoteTransfer)
     {
         $this->setCurrency($quoteTransfer);
+
         $quoteTransfer = $this->expandQuoteTransfer($quoteTransfer);
 
-        $this->storageStrategy->saveQuote($quoteTransfer);
+        $this->session->set(static::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
     }
 
     /**
@@ -86,9 +87,29 @@ class QuoteSession implements QuoteSessionInterface
      */
     public function clearQuote()
     {
-        $this->storageStrategy->clearQuote();
+        $this->storageStrategy->clearQuote($this->getQuote());
+        $this->syncQuote();
 
         return $this;
+    }
+
+    /**
+     * @return void
+     */
+    public function syncQuote()
+    {
+        $quoteTransfer = $this->getQuote();
+        $quoteTransfer->fromArray($this->storageStrategy->getQuote()->modifiedToArray(), true);
+        $this->session->set(static::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function pushQuote()
+    {
+        $quoteTransfer = $this->getQuote();
+        $this->storageStrategy->saveQuote($quoteTransfer);
     }
 
     /**

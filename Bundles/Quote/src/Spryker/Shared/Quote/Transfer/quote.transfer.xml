@@ -18,5 +18,10 @@
     <transfer name="ResponseMessage">
         <property name="message" type="string"/>
     </transfer>
+
+    <transfer name="QuoteMerge">
+        <property name="targetQuote" type="Quote"/>
+        <property name="sourceQuote" type="Quote"/>
+    </transfer>
 </transfers>
 

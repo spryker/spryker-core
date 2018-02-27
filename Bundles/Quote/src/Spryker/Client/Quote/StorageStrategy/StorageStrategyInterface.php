@@ -29,7 +29,7 @@ interface StorageStrategyInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return $this
+     * @return void
      */
     public function saveQuote(QuoteTransfer $quoteTransfer);
 
