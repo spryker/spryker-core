@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\CmsBlockGui\Communication\CmsBlockGuiCommunicationFactory getFactory()
  */
-class ViewCmsBlockController extends AbstractCmsBlockController
+class ViewBlockController extends AbstractCmsBlockController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
