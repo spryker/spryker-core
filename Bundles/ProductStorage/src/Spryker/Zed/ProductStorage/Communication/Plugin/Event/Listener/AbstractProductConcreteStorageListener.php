@@ -381,7 +381,7 @@ class AbstractProductConcreteStorageListener extends AbstractPlugin
     {
         $map = [];
         foreach ($productConcreteStorageEntities as $entity) {
-            $map[$entity->getFkProductAbstract()][$entity->getStore()][$entity->getLocale()] = $entity;
+            $map[$entity->getFkProduct()][$entity->getStore()][$entity->getLocale()] = $entity;
         }
 
         return $map;
