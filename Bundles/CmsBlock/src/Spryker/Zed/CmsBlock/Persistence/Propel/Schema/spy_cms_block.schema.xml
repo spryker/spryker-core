@@ -56,4 +56,25 @@
 
         <id-method-parameter value="spy_cms_block_pk_seq"/>
     </table>
+
+    <table name="spy_cms_block_store" idMethod="native" allowPkInsert="true" identifierQuoting="true">
+        <column name="id_cms_block_store" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+
+        <column name="fk_cms_block" required="true" type="INTEGER"/>
+        <column name="fk_store" required="true" type="INTEGER"/>
+
+        <unique name="spy_cms_block_store-fk_cms_block-fk_store">
+            <unique-column name="fk_cms_block"/>
+            <unique-column name="fk_store"/>
+        </unique>
+
+        <foreign-key name="spy_cms_block_store-fk_cms_block" foreignTable="spy_cms_block">
+            <reference local="fk_cms_block" foreign="id_cms_block"/>
+        </foreign-key>
+        <foreign-key name="spy_cms_block_store-fk_store" foreignTable="spy_store">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+
+        <id-method-parameter value="id_cms_block_store_pk_seq"/>
+    </table>
 </database>

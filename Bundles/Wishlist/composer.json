@@ -16,7 +16,7 @@
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
-    "spryker/stock": "4.0.0",
+    "spryker/stock": "^4.0.0 || ^5.0.0",
     "spryker/testify": "*"
   },
   "autoload": {

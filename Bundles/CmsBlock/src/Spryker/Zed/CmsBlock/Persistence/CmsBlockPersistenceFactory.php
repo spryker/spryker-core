@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsBlock\Persistence;
 
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -40,5 +41,13 @@ class CmsBlockPersistenceFactory extends AbstractPersistenceFactory
     public function createCmsBlockTemplateQuery()
     {
         return SpyCmsBlockTemplateQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
+     */
+    public function createCmsBlockStoreQuery()
+    {
+        return SpyCmsBlockStoreQuery::create();
     }
 }

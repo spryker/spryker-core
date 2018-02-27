@@ -34,4 +34,9 @@ interface ProductManagementToStockInterface
      * @return bool
      */
     public function hasStockProduct($sku, $stockType);
+
+    /**
+     * @return array
+     */
+    public function getWarehouseToStoreMapping();
 }
