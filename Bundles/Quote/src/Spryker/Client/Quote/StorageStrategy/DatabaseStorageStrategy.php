@@ -68,11 +68,14 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     public function getQuote()
     {
         $quoteTransfer = new QuoteTransfer();
-        $quoteResponseTransfer = $this->quoteStub->getQuoteByCustomer($this->customerClient->getCustomer());
-        if ($quoteResponseTransfer->getIsSuccessful()) {
-            $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+        $customerTransfer = $this->customerClient->getCustomer();
+        if ($customerTransfer) {
+            $quoteResponseTransfer = $this->quoteStub->getQuoteByCustomer($customerTransfer);
+            if ($quoteResponseTransfer->getIsSuccessful()) {
+                $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+            }
+            $quoteTransfer->setCustomer($customerTransfer);
         }
-        $this->addCustomer($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -98,15 +101,5 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
         $this->session->set(QuoteSession::QUOTE_SESSION_IDENTIFIER, new QuoteTransfer());
 
         return $this;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    protected function addCustomer(QuoteTransfer $quoteTransfer)
-    {
-        $quoteTransfer->setCustomer($this->customerClient->getCustomer());
     }
 }

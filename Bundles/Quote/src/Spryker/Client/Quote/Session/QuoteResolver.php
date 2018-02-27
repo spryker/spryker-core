@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteMergeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface;
 use Spryker\Client\Quote\Zed\QuoteStubInterface;
+use Spryker\Shared\Quote\QuoteConfig;
 
 class QuoteResolver implements QuoteResolverInterface
 {
@@ -30,18 +31,23 @@ class QuoteResolver implements QuoteResolverInterface
     protected $zedQuoteStub;
 
     /**
-     * @param \Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface $sessionStorageStrategy
+     * @var \Spryker\Client\Quote\Session\QuoteSessionInterface
+     */
+    protected $quoteSession;
+
+    /**
+     * @param \Spryker\Client\Quote\Session\QuoteSessionInterface $quoteSession
      * @param \Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface $currentStorageStrategy
      * @param \Spryker\Client\Quote\Zed\QuoteStubInterface $zedQuoteStub
      */
     public function __construct(
-        StorageStrategyInterface $sessionStorageStrategy,
+        QuoteSessionInterface $quoteSession,
         StorageStrategyInterface $currentStorageStrategy,
         QuoteStubInterface $zedQuoteStub
     ) {
-        $this->sessionStorageStrategy = $sessionStorageStrategy;
         $this->currentStorageStrategy = $currentStorageStrategy;
         $this->zedQuoteStub = $zedQuoteStub;
+        $this->quoteSession = $quoteSession;
     }
 
     /**
@@ -49,11 +55,11 @@ class QuoteResolver implements QuoteResolverInterface
      */
     public function resolve()
     {
-        if ($this->sessionStorageStrategy->getStorageType() === $this->currentStorageStrategy->getStorageType()) {
+        if ($this->currentStorageStrategy->getStorageType() === QuoteConfig::STORAGE_STRATEGY_SESSION) {
             return;
         }
 
-        $sessionStorageQuote = $this->sessionStorageStrategy->getQuote();
+        $sessionStorageQuote = $this->quoteSession->getQuote();
         if ($sessionStorageQuote->getCustomer()) {
             return;
         }
@@ -74,6 +80,6 @@ class QuoteResolver implements QuoteResolverInterface
         $quoteMergeTransfer->setTargetQuote($currentStorageQuote);
         $quoteMergeTransfer->setSourceQuote($sessionStorageQuote);
         $quoteTransfer = $this->zedQuoteStub->mergeQuotes($quoteMergeTransfer)->getQuoteTransfer();
-        $this->sessionStorageStrategy->saveQuote($quoteTransfer);
+        $this->quoteSession->setQuote($quoteTransfer);
     }
 }

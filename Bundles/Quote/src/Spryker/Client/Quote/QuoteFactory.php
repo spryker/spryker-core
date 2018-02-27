@@ -48,7 +48,7 @@ class QuoteFactory extends AbstractFactory
     public function createQuoteResolver()
     {
         return new QuoteResolver(
-            $this->createSessionStorageStrategy(),
+            $this->createSession(),
             $this->getStorageStrategy(),
             $this->createZedQuoteStub()
         );
