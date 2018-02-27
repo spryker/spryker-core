@@ -28,7 +28,7 @@ class AbstractProductAbstractStorageListener extends AbstractPlugin
     const STORE_NAME = 'STORE_NAME';
 
     /**
-     * @var array Array keys are super attribute keys, values are constant trues.
+     * @var array Array keys are super attribute keys, values are "true" constants.
      */
     protected $superAttributeKeyBuffer = [];
 
