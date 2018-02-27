@@ -9,6 +9,7 @@ namespace Spryker\Client\Quote\StorageStrategy;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface;
+use Spryker\Client\Quote\Session\QuoteSession;
 use Spryker\Client\Quote\Zed\QuoteStubInterface;
 use Spryker\Shared\Quote\QuoteConfig;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -83,7 +84,6 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
      */
     public function saveQuote(QuoteTransfer $quoteTransfer)
     {
-        $this->addCustomer($quoteTransfer);
         $this->quoteStub->persistQuote($quoteTransfer);
     }
 
@@ -95,6 +95,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     public function clearQuote(QuoteTransfer $quoteTransfer)
     {
         $this->quoteStub->deleteQuote($quoteTransfer);
+        $this->session->set(QuoteSession::QUOTE_SESSION_IDENTIFIER, new QuoteTransfer());
 
         return $this;
     }
