@@ -122,6 +122,11 @@ class AbstractProductConcreteStorageListener extends AbstractPlugin
     }
 
     /**
+     * - Returns a paired array with all provided entities.
+     * - ProductConcreteLocalizedEntities without ProductConcreteStorageEntity are paired with a newly created ProductConcreteStorageEntity.
+     * - ProductConcreteStorageEntities without ProductConcreteLocalizedEntity (left outs) are paired with NULL.
+     * - ProductConcreteLocalizedEntities are paired multiple times per store.
+     *
      * @param array $productConcreteLocalizedEntities
      * @param \Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage[] $productConcreteStorageEntities
      *
@@ -135,7 +140,7 @@ class AbstractProductConcreteStorageListener extends AbstractPlugin
 
         $pairs = [];
         foreach ($productConcreteLocalizedEntities as $productConcreteLocalizedEntity) {
-            list($pairs, $mappedProductConcreteStorageEntities) = $this->pairProductConcreteLocalizedEntitiesWithProductConcreteStorageEntitiesByStoresAndLocales(
+            list($pairs, $mappedProductConcreteStorageEntities) = $this->pairProductConcreteLocalizedEntityWithProductConcreteStorageEntitiesByStoresAndLocale(
                 $productConcreteLocalizedEntity[static::COL_FK_PRODUCT],
                 $productConcreteLocalizedEntity['Locale']['locale_name'],
                 $productConcreteLocalizedEntity,
@@ -160,7 +165,7 @@ class AbstractProductConcreteStorageListener extends AbstractPlugin
      *
      * @return array
      */
-    protected function pairProductConcreteLocalizedEntitiesWithProductConcreteStorageEntitiesByStoresAndLocales(
+    protected function pairProductConcreteLocalizedEntityWithProductConcreteStorageEntitiesByStoresAndLocale(
         $idProduct,
         $localeName,
         $productConcreteLocalizedEntity,
@@ -274,25 +279,19 @@ class AbstractProductConcreteStorageListener extends AbstractPlugin
      */
     protected function getConcreteAttributes(array $productConcreteLocalizedEntity)
     {
-        $abstractDecodedAttributes = $this->getFactory()
-            ->getProductFacade()
-            ->decodeProductAttributes($productConcreteLocalizedEntity['SpyProduct']['SpyProductAbstract']['attributes']);
-        $concreteDecodedAttributes = $this->getFactory()
-            ->getProductFacade()
-            ->decodeProductAttributes($productConcreteLocalizedEntity['SpyProduct']['attributes']);
+        $productFacade = $this->getFactory()->getProductFacade();
 
-        $abstractLocalizedDecodedAttributes = $this->getFactory()
-            ->getProductFacade()
-            ->decodeProductAttributes($productConcreteLocalizedEntity[static::ABSTRACT_ATTRIBUTES]);
-        $concreteLocalizedDecodedAttributes = $this->getFactory()
-            ->getProductFacade()
-            ->decodeProductAttributes($productConcreteLocalizedEntity[static::CONCRETE_ATTRIBUTES]);
+        $abstractAttributes = $productFacade->decodeProductAttributes($productConcreteLocalizedEntity['SpyProduct']['SpyProductAbstract']['attributes']);
+        $concreteAttributes = $productFacade->decodeProductAttributes($productConcreteLocalizedEntity['SpyProduct']['attributes']);
+
+        $abstractLocalizedAttributes = $productFacade->decodeProductAttributes($productConcreteLocalizedEntity[static::ABSTRACT_ATTRIBUTES]);
+        $concreteLocalizedAttributes = $productFacade->decodeProductAttributes($productConcreteLocalizedEntity[static::CONCRETE_ATTRIBUTES]);
 
         $rawProductAttributesTransfer = (new RawProductAttributesTransfer())
-            ->setAbstractAttributes($abstractDecodedAttributes)
-            ->setAbstractLocalizedAttributes($abstractLocalizedDecodedAttributes)
-            ->setConcreteAttributes($concreteDecodedAttributes)
-            ->setConcreteLocalizedAttributes($concreteLocalizedDecodedAttributes);
+            ->setAbstractAttributes($abstractAttributes)
+            ->setAbstractLocalizedAttributes($abstractLocalizedAttributes)
+            ->setConcreteAttributes($concreteAttributes)
+            ->setConcreteLocalizedAttributes($concreteLocalizedAttributes);
 
         return $this->getFactory()->getProductFacade()->combineRawProductAttributes($rawProductAttributesTransfer);
     }
@@ -379,11 +378,11 @@ class AbstractProductConcreteStorageListener extends AbstractPlugin
      */
     protected function mapProductConcreteStorageEntities(array $productConcreteStorageEntities)
     {
-        $map = [];
+        $mappedProductConcreteStorageEntities = [];
         foreach ($productConcreteStorageEntities as $entity) {
-            $map[$entity->getFkProduct()][$entity->getStore()][$entity->getLocale()] = $entity;
+            $mappedProductConcreteStorageEntities[$entity->getFkProduct()][$entity->getStore()][$entity->getLocale()] = $entity;
         }
 
-        return $map;
+        return $mappedProductConcreteStorageEntities;
     }
 }

@@ -30,8 +30,8 @@ class CmsBlockStoreStorageListener extends AbstractCmsBlockStorageListener imple
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $idCmsBlocks = $this->getFactory()->getEventBehaviourFacade()->getEventTransferForeignKeys($eventTransfers, SpyCmsBlockStoreTableMap::COL_FK_CMS_BLOCK);
+        $cmsBlockIds = $this->getFactory()->getEventBehaviourFacade()->getEventTransferForeignKeys($eventTransfers, SpyCmsBlockStoreTableMap::COL_FK_CMS_BLOCK);
 
-        $this->publish($idCmsBlocks);
+        $this->publish($cmsBlockIds);
     }
 }
