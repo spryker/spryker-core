@@ -22,6 +22,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
 use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemGroupKeyExpander;
@@ -47,6 +48,7 @@ class ProductBundleFacadeTest extends Unit
 
     const BUNDLED_PRODUCT_PRICE_1 = 50;
     const BUNDLED_PRODUCT_PRICE_2 = 100;
+    const ID_STORE = 1;
 
     /**
      * @return void
@@ -61,12 +63,12 @@ class ProductBundleFacadeTest extends Unit
         $cartChangeTransfer = new CartChangeTransfer();
         $currencyTransfer = new CurrencyTransfer();
         $currencyTransfer->setCode('EUR');
-        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer = $this->createBaseQuoteTransfer();
         $quoteTransfer->setCurrency($currencyTransfer);
         $cartChangeTransfer->setQuote($quoteTransfer);
 
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity(1);
+        $itemTransfer->setQuantity(self::ID_STORE);
         $itemTransfer->setUnitGrossPrice($productConcreteTransfer->getPrices()[0]->getPrice());
         $itemTransfer->setId($productConcreteTransfer->getIdProductConcrete());
         $itemTransfer->setSku($productConcreteTransfer->getSku());
@@ -79,7 +81,7 @@ class ProductBundleFacadeTest extends Unit
         $quoteTransfer = $cartChangeTransfer->getQuote();
 
         $this->assertCount(3, $cartChangeTransfer->getItems());
-        $this->assertCount(1, $quoteTransfer->getBundleItems());
+        $this->assertCount(self::ID_STORE, $quoteTransfer->getBundleItems());
 
         $bundledItemTransfer = $quoteTransfer->getBundleItems()[0];
         $bundleItemIdentifier = $bundledItemTransfer->getBundleItemIdentifier();
@@ -90,7 +92,7 @@ class ProductBundleFacadeTest extends Unit
         $this->assertSame(20, $itemTransfer->getUnitGrossPrice());
         $this->assertSame($bundleItemIdentifier, $itemTransfer->getRelatedBundleItemIdentifier());
 
-        $itemTransfer = $cartChangeTransfer->getItems()[1];
+        $itemTransfer = $cartChangeTransfer->getItems()[self::ID_STORE];
         $itemTransfer->getUnitGrossPrice();
         $this->assertSame(40, $itemTransfer->getUnitGrossPrice());
         $this->assertSame($bundleItemIdentifier, $itemTransfer->getRelatedBundleItemIdentifier());
@@ -132,7 +134,7 @@ class ProductBundleFacadeTest extends Unit
      */
     public function testPostSaveCartUpdateWhenBundleRemoveShouldReturnQuoteWithouBundles()
     {
-        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer = $this->createBaseQuoteTransfer();
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setBundleItemIdentifier('bundleid');
@@ -159,14 +161,14 @@ class ProductBundleFacadeTest extends Unit
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku($productConcreteTransfer->getSku());
 
-        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer = $this->createBaseQuoteTransfer();
         $quoteTransfer->addItem($itemTransfer);
 
         $cartChangeTransfer->setQuote($quoteTransfer);
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku($productConcreteTransfer->getSku());
-        $itemTransfer->setQuantity(1);
+        $itemTransfer->setQuantity(self::ID_STORE);
 
         $cartChangeTransfer->addItem($itemTransfer);
 
@@ -190,7 +192,7 @@ class ProductBundleFacadeTest extends Unit
         $itemTransfer->setQuantity(5);
         $itemTransfer->setSku($productConcreteTransfer->getSku());
 
-        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer = $this->createBaseQuoteTransfer();
         $quoteTransfer->addItem($itemTransfer);
 
         $cartChangeTransfer->setQuote($quoteTransfer);
@@ -215,7 +217,7 @@ class ProductBundleFacadeTest extends Unit
 
         $productBundleFacade = $this->createProductBundleFacade();
 
-        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer = $this->createBaseQuoteTransfer();
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setQuantity(50);
@@ -224,7 +226,7 @@ class ProductBundleFacadeTest extends Unit
         $quoteTransfer->addItem($itemTransfer);
 
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity(1);
+        $itemTransfer->setQuantity(self::ID_STORE);
         $itemTransfer->setSku($productConcreteTransfer->getSku());
         $quoteTransfer->addBundleItem($itemTransfer);
 
@@ -244,16 +246,16 @@ class ProductBundleFacadeTest extends Unit
 
         $productBundleFacade = $this->createProductBundleFacade();
 
-        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer = $this->createBaseQuoteTransfer();
 
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity(1);
+        $itemTransfer->setQuantity(self::ID_STORE);
         $itemTransfer->setSku(self::SKU_BUNDLED_1);
 
         $quoteTransfer->addItem($itemTransfer);
 
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity(1);
+        $itemTransfer->setQuantity(self::ID_STORE);
         $itemTransfer->setSku($productConcreteTransfer->getSku());
         $quoteTransfer->addBundleItem($itemTransfer);
 
@@ -274,14 +276,14 @@ class ProductBundleFacadeTest extends Unit
         $productBundleFacade = $this->createProductBundleFacade();
 
         $availabilityQueryContainer = $this->createAvailabilityQueryContainer();
-        $bundledProductAvailability = $availabilityQueryContainer->querySpyAvailabilityBySku(self::SKU_BUNDLED_2)->findOne();
+        $bundledProductAvailability = $availabilityQueryContainer->querySpyAvailabilityBySku(self::SKU_BUNDLED_2, self::ID_STORE)->findOne();
 
         $bundledProductAvailability->setQuantity(0)
             ->save();
 
         $productBundleFacade->updateAffectedBundlesAvailability(self::SKU_BUNDLED_2);
 
-        $bundledProductAvailability = $availabilityQueryContainer->querySpyAvailabilityBySku(self::BUNDLE_SKU_3)->findOne();
+        $bundledProductAvailability = $availabilityQueryContainer->querySpyAvailabilityBySku(self::BUNDLE_SKU_3, self::ID_STORE)->findOne();
 
         $this->assertSame(0, $bundledProductAvailability->getQuantity());
     }
@@ -311,7 +313,7 @@ class ProductBundleFacadeTest extends Unit
 
         $bundledProducts = SpyProductBundleQuery::create()->findByFkProduct($productConcreteBundleTransfer->getIdProductConcrete());
 
-        $this->assertCount(1, $bundledProducts);
+        $this->assertCount(self::ID_STORE, $bundledProducts);
 
         $bundledProductEntity = $bundledProducts[0];
 
@@ -339,7 +341,7 @@ class ProductBundleFacadeTest extends Unit
 
         $bundledProducts = SpyProductBundleQuery::create()->findByFkProduct($productConcreteBundleTransfer->getIdProductConcrete());
 
-        $this->assertCount(1, $bundledProducts);
+        $this->assertCount(self::ID_STORE, $bundledProducts);
     }
 
     /**
@@ -385,9 +387,9 @@ class ProductBundleFacadeTest extends Unit
 
         $quoteTransfer = (new QuoteBuilder())
             ->withBundleItem([
-                ItemTransfer::BUNDLE_ITEM_IDENTIFIER => 1,
+                ItemTransfer::BUNDLE_ITEM_IDENTIFIER => self::ID_STORE,
             ])->withItem([
-                ItemTransfer::RELATED_BUNDLE_ITEM_IDENTIFIER => 1,
+                ItemTransfer::RELATED_BUNDLE_ITEM_IDENTIFIER => self::ID_STORE,
             ])->withAnotherItem([
                 ItemTransfer::SKU => '123',
             ])
@@ -499,7 +501,7 @@ class ProductBundleFacadeTest extends Unit
         $productBundleTransfer = new ProductBundleTransfer();
 
         $bundledProductTransfer = new ProductForBundleTransfer();
-        $bundledProductTransfer->setQuantity(1);
+        $bundledProductTransfer->setQuantity(self::ID_STORE);
         $bundledProductTransfer->setIdProductConcrete($productConcreteTransferToAssign1->getIdProductConcrete());
         $productBundleTransfer->addBundledProduct($bundledProductTransfer);
 
@@ -515,5 +517,16 @@ class ProductBundleFacadeTest extends Unit
         $productBundleFacade->saveBundledProducts($productConcreteTransfer);
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createBaseQuoteTransfer()
+    {
+        $storeTransfer = (new StoreTransfer())->setName('DE');
+
+        return (new QuoteTransfer())
+            ->setStore($storeTransfer);
     }
 }

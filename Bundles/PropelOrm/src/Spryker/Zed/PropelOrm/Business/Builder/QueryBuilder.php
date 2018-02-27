@@ -210,9 +210,10 @@ SCRIPT;
      * <code>
      * \$query->filterBy$colPhpName('fooValue');   // WHERE $colName = 'fooValue'
      * \$query->filterBy$colPhpName('%fooValue%', Criteria::LIKE); // WHERE $colName LIKE '%fooValue%'
+     * \$query->filterBy$colPhpName([1, 'foo'], Criteria::IN); // WHERE $colName IN (1, 'foo')
      * </code>
      *
-     * @param     string \$$variableName The value to use as filter.
+     * @param     string|string[] \$$variableName The value to use as filter.
      *              Accepts wildcards (* and % trigger a LIKE). Add Criteria::LIKE explicitly.";
         } elseif ($col->isBooleanType()) {
             $script .= "
