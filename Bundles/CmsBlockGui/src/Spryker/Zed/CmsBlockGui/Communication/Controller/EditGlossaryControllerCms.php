@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\CmsBlockGui\Communication\CmsBlockGuiCommunicationFactory getFactory()
  */
-class EditGlossaryController extends AbstractBlockController
+class EditGlossaryControllerCms extends AbstractCmsBlockController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

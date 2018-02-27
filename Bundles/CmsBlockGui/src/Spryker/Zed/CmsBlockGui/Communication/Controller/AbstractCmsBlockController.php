@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\CmsBlockGui\Communication\CmsBlockGuiCommunicationFactory getFactory()
  */
-class AbstractBlockController extends AbstractController
+abstract class AbstractCmsBlockController extends AbstractController
 {
     const URL_PARAM_ID_CMS_BLOCK = 'id-cms-block';
     const REDIRECT_URL_DEFAULT = '/cms-block-gui/list-block';
