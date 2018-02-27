@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsBlockGui\Communication\Controller;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Exception\Controller\InvalidIdException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -31,11 +32,9 @@ abstract class AbstractCmsBlockController extends AbstractController
     {
         $idCmsBlock = $request->query->get(static::URL_PARAM_ID_CMS_BLOCK);
 
-        if (!$idCmsBlock) {
-            return null;
-        }
-
-        if (!is_numeric($idCmsBlock) || $idCmsBlock === 0) {
+        try {
+            $idCmsBlock = $this->castId($idCmsBlock);
+        } catch (InvalidIdException $exception) {
             return null;
         }
 
