@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\CmsBlockGui\Communication\CmsBlockGuiCommunicationFactory getFactory()
  */
-class EditCmsBlockController extends AbstractCmsBlockController
+class EditBlockController extends AbstractCmsBlockController
 {
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
