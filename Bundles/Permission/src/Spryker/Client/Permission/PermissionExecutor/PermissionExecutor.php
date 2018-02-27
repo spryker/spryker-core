@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface;
 use Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface;
 use Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface;
-use Spryker\Client\Permission\Plugin\PermissionPluginInterface;
 
 class PermissionExecutor implements PermissionExecutorInterface
 {
@@ -72,7 +71,7 @@ class PermissionExecutor implements PermissionExecutorInterface
      *  a senior sales manager up to 2000. A user has both roles assigned, then he/she has
      *  the permission to place an order up to 2000.
      *
-     * @param ExecutablePermissionPluginInterface $permissionPlugin
+     * @param \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface $permissionPlugin
      * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
      * @param string|int|array|null $context
      *
@@ -82,8 +81,7 @@ class PermissionExecutor implements PermissionExecutorInterface
         ExecutablePermissionPluginInterface $permissionPlugin,
         PermissionCollectionTransfer $permissionCollectionTransfer,
         $context = null
-    ): bool
-    {
+    ): bool {
         foreach ($permissionCollectionTransfer->getPermissions() as $permissionTransfer) {
             if ($this->executePermission($permissionPlugin, $permissionTransfer, $context)) {
                 return true;
@@ -94,7 +92,7 @@ class PermissionExecutor implements PermissionExecutorInterface
     }
 
     /**
-     * @param ExecutablePermissionPluginInterface $permissionPlugin
+     * @param \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface $permissionPlugin
      * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      * @param string|int|array|null $context
      *

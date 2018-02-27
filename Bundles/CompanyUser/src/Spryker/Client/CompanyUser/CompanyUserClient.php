@@ -9,10 +9,7 @@ namespace Spryker\Client\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\ResponseErrorTransfer;
-use Spryker\Client\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\Kernel\CanAwareTrait;
 
 /**
  * @method \Spryker\Client\CompanyUser\CompanyUserFactory getFactory()

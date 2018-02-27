@@ -70,7 +70,7 @@ class PermissionExecutor implements PermissionExecutorInterface
      *  a senior sales manager up to 2000. A user has both roles assigned, then he/she has
      *  the permission to place an order up to 2000.
      *
-     * @param ExecutablePermissionPluginInterface $permissionPlugin
+     * @param \Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface $permissionPlugin
      * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
      * @param string|int|array|null $context
      *
@@ -80,8 +80,7 @@ class PermissionExecutor implements PermissionExecutorInterface
         ExecutablePermissionPluginInterface $permissionPlugin,
         PermissionCollectionTransfer $permissionCollectionTransfer,
         $context = null
-    ): bool
-    {
+    ): bool {
         foreach ($permissionCollectionTransfer->getPermissions() as $permissionTransfer) {
             if ($this->executePermission($permissionPlugin, $permissionTransfer, $context)) {
                 return true;
@@ -92,7 +91,7 @@ class PermissionExecutor implements PermissionExecutorInterface
     }
 
     /**
-     * @param ExecutablePermissionPluginInterface $permissionPlugin
+     * @param \Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface $permissionPlugin
      * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      * @param string|int|array|null $context
      *
@@ -102,8 +101,7 @@ class PermissionExecutor implements PermissionExecutorInterface
         ExecutablePermissionPluginInterface $permissionPlugin,
         PermissionTransfer $permissionTransfer,
         $context = null
-    ): bool
-    {
+    ): bool {
         return $permissionPlugin->can($permissionTransfer->getConfiguration(), $context);
     }
 

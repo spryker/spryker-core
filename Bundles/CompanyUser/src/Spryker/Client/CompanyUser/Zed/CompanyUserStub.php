@@ -46,7 +46,7 @@ class CompanyUserStub implements CompanyUserStubInterface
     }
 
     /**
-     * @return CompanyUserResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     protected function generatePermissionErrorMessage()
     {
