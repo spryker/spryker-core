@@ -16,6 +16,11 @@ use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInt
 
 class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterface
 {
+    const PRODUCT_ABSTRACT_LOCALIZED_ENTITY = 'ProductAbstractLocalizedEntity';
+    const PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY = 'ProductAbstractPageSearchEntity';
+    const STORE_NAME = 'localeName';
+    const LOCALE_NAME = 'storeName';
+
     /**
      * @var \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface
      */
@@ -56,147 +61,168 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
     public function publish(array $productAbstractIds)
     {
-        $spyProductAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
-        $spyProductAbstractSearchEntities = $this->findProductPageSearchEntitiesByProductAbstractIds($productAbstractIds);
-
-        if (!$spyProductAbstractLocalizedEntities) {
-            $this->deleteSearchData($spyProductAbstractSearchEntities);
-        }
-
-        $this->storeData($spyProductAbstractLocalizedEntities, $spyProductAbstractSearchEntities);
+        $this->publishEntities($productAbstractIds, [], false);
     }
 
     /**
-     * @param array $productAbstractIds
-     * @param array $pageDataExpanderPluginNames
+     * @param int[] $productAbstractIds
+     * @param string[] $pageDataExpanderPluginNames
      *
      * @return void
      */
-    public function refresh(array $productAbstractIds, $pageDataExpanderPluginNames = [])
+    public function refresh(array $productAbstractIds, array $pageDataExpanderPluginNames = [])
     {
-        if (!empty($pageDataExpanderPluginNames)) {
-            $this->pageDataExpanderPlugins = $this->getPageDataExpanderPlugins($pageDataExpanderPluginNames);
-        }
-
-        $spyProductAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
-        $spyProductAbstractSearchEntities = $this->findProductPageSearchEntitiesByProductAbstractIds($productAbstractIds);
-
-        $this->storeData($spyProductAbstractLocalizedEntities, $spyProductAbstractSearchEntities, true);
+        $this->publishEntities($productAbstractIds, $pageDataExpanderPluginNames, true);
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
     public function unpublish(array $productAbstractIds)
     {
-        $spyProductPageSearchEntities = $this->findProductPageSearchEntitiesByProductAbstractIds($productAbstractIds);
-        $this->deleteSearchData($spyProductPageSearchEntities);
+        $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
+
+        $this->deleteProductAbstractPageSearchEntities($productAbstractPageSearchEntities);
     }
 
     /**
-     * @param array $spyProductAbstractSearchEntities
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch[] $productAbstractPageSearchEntities
      *
      * @return void
      */
-    protected function deleteSearchData(array $spyProductAbstractSearchEntities)
+    protected function deleteProductAbstractPageSearchEntities(array $productAbstractPageSearchEntities)
     {
-        foreach ($spyProductAbstractSearchEntities as $spyProductAbstractSearchStoreEntities) {
-            foreach ($spyProductAbstractSearchStoreEntities as $spyProductAbstractSearchLocalizedEntities) {
-                foreach ($spyProductAbstractSearchLocalizedEntities as $spyProductAbstractSearchLocalizedEntity) {
-                    $spyProductAbstractSearchLocalizedEntity->delete();
-                }
-            }
+        foreach ($productAbstractPageSearchEntities as $productAbstractPageSearchEntity) {
+            $productAbstractPageSearchEntity->delete();
         }
     }
 
     /**
-     * @param array $spyProductAbstractLocalizedEntities
-     * @param array $spyProductAbstractSearchEntities
+     * @param int[] $productAbstractIds
+     * @param string[] $pageDataExpanderPluginNames
      * @param bool $isRefresh
      *
      * @return void
      */
-    protected function storeData(array $spyProductAbstractLocalizedEntities, array $spyProductAbstractSearchEntities, $isRefresh = false)
+    protected function publishEntities(array $productAbstractIds, array $pageDataExpanderPluginNames, $isRefresh = false)
     {
-        $toRemoveEntities = $spyProductAbstractSearchEntities;
-        foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
-            $idProduct = $spyProductAbstractLocalizedEntity['fk_product_abstract'];
-            $localeName = $spyProductAbstractLocalizedEntity['Locale']['locale_name'];
+        $pageDataExpanderPlugins = $this->getPageDataExpanderPlugins($pageDataExpanderPluginNames);
 
-            foreach ($spyProductAbstractLocalizedEntity['SpyProductAbstract']['SpyProductAbstractStores'] as $spyProductAbstractStore) {
-                $storeName = $spyProductAbstractStore['SpyStore']['name'];
+        $productAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
+        $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
 
-                if (isset($spyProductAbstractSearchEntities[$idProduct][$storeName][$localeName])) {
-                    $this->storeDataSet($storeName, $spyProductAbstractLocalizedEntity, $spyProductAbstractSearchEntities[$idProduct][$storeName][$localeName], $isRefresh);
-                } elseif (!$isRefresh) {
-                    $this->storeDataSet($storeName, $spyProductAbstractLocalizedEntity, null, false);
-                }
-
-                unset($toRemoveEntities[$idProduct][$storeName][$localeName]);
-            }
-
-            if (!isset($toRemoveEntities[$idProduct])) {
-                continue;
-            }
-
-            foreach ($toRemoveEntities[$idProduct] as $storeName => $localeEntities) {
-                foreach ($localeEntities as $thisLocaleName => $spyProductAbstractSearchLocalizedEntity) {
-                    if ($localeName !== $thisLocaleName) {
-                        continue;
-                    }
-
-                    $spyProductAbstractSearchLocalizedEntity->delete();
-                    unset($toRemoveEntities[$idProduct][$storeName][$localeName]);
-                }
-            }
-        }
-    }
-
-    /**
-     * @param string $storeName
-     * @param array $spyProductAbstractLocalizedEntity
-     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch|null $spyProductPageSearchEntity
-     * @param bool $isRefresh
-     *
-     * @return void
-     */
-    protected function storeDataSet($storeName, array $spyProductAbstractLocalizedEntity, SpyProductAbstractPageSearch $spyProductPageSearchEntity = null, $isRefresh = false)
-    {
-        if (!$this->isActive($spyProductAbstractLocalizedEntity)) {
-            $spyProductPageSearchEntity && $spyProductPageSearchEntity->delete();
+        if (!$productAbstractLocalizedEntities) {
+            $this->deleteProductAbstractPageSearchEntities($productAbstractPageSearchEntities);
 
             return;
         }
 
-        if ($spyProductPageSearchEntity === null) {
-            $spyProductPageSearchEntity = new SpyProductAbstractPageSearch();
-        }
-
-        $spyProductPageSearchEntity->setStore($storeName);
-
-        $productPageSearchTransfer = $this->getProductPageSearchTransfer($spyProductAbstractLocalizedEntity, $spyProductPageSearchEntity, $isRefresh);
-        $productPageSearchTransfer->setStore($storeName);
-        $data = $this->productPageSearchMapper->mapToSearchData($productPageSearchTransfer);
-
-        $this->productPageSearchWriter->save($productPageSearchTransfer, $data, $spyProductPageSearchEntity);
+        $this->storeData($productAbstractLocalizedEntities, $productAbstractPageSearchEntities, $pageDataExpanderPlugins, $isRefresh);
     }
 
     /**
-     * @param array $spyProductAbstractLocalizedEntity
+     * @param array $productAbstractLocalizedEntities
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch[] $productAbstractPageSearchEntities
+     * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
+     * @param bool $isRefresh
+     *
+     * @return void
+     */
+    protected function storeData(
+        array $productAbstractLocalizedEntities,
+        array $productAbstractPageSearchEntities,
+        array $pageDataExpanderPlugins,
+        $isRefresh = false
+    ) {
+        $pairedEntities = $this->pairProductAbstractLocalizedEntitiesWithProductAbstractPageSearchEntities(
+            $productAbstractLocalizedEntities,
+            $productAbstractPageSearchEntities
+        );
+
+        foreach ($pairedEntities as $pairedEntity) {
+            $productAbstractLocalizedEntity = $pairedEntity[static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY];
+            $productAbstractPageSearchEntity = $pairedEntity[static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY];
+
+            if ($productAbstractLocalizedEntity === null || !$this->isActive($productAbstractLocalizedEntity)) {
+                $this->deleteProductAbstractPageSearchEntity($productAbstractPageSearchEntity);
+
+                continue;
+            }
+
+            $this->storeProductAbstractPageSearchEntity(
+                $productAbstractLocalizedEntity,
+                $productAbstractPageSearchEntity,
+                $pairedEntity[static::STORE_NAME],
+                $pairedEntity[static::LOCALE_NAME],
+                $pageDataExpanderPlugins,
+                $isRefresh
+            );
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productAbstractPageSearchEntity
+     *
+     * @return void
+     */
+    protected function deleteProductAbstractPageSearchEntity(SpyProductAbstractPageSearch $productAbstractPageSearchEntity)
+    {
+        if (!$productAbstractPageSearchEntity->isNew()) {
+            $productAbstractPageSearchEntity->delete();
+        }
+    }
+
+    /**
+     * @param array $productAbstractLocalizedEntity
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productAbstractPageSearchEntity
+     * @param string $storeName
+     * @param string $localeName
+     * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
+     * @param bool $isRefresh
+     *
+     * @return void
+     */
+    protected function storeProductAbstractPageSearchEntity(
+        array $productAbstractLocalizedEntity,
+        SpyProductAbstractPageSearch $productAbstractPageSearchEntity,
+        $storeName,
+        $localeName,
+        array $pageDataExpanderPlugins,
+        $isRefresh = false
+    ) {
+        $productAbstractPageSearchEntity->setStore($storeName);
+        $productAbstractPageSearchEntity->setLocale($localeName);
+
+        $productPageSearchTransfer = $this->getProductPageSearchTransfer(
+            $pageDataExpanderPlugins,
+            $productAbstractLocalizedEntity,
+            $productAbstractPageSearchEntity,
+            $isRefresh
+        );
+        $productPageSearchTransfer->setStore($storeName);
+        $productPageSearchTransfer->setLocale($localeName);
+
+        $searchDocument = $this->productPageSearchMapper->mapToSearchData($productPageSearchTransfer);
+
+        $this->productPageSearchWriter->save($productPageSearchTransfer, $searchDocument, $productAbstractPageSearchEntity);
+    }
+
+    /**
+     * @param array $productAbstractLocalizedEntity
      *
      * @return bool
      */
-    protected function isActive(array $spyProductAbstractLocalizedEntity)
+    protected function isActive(array $productAbstractLocalizedEntity)
     {
-        foreach ($spyProductAbstractLocalizedEntity['SpyProductAbstract']['SpyProducts'] as $spyProduct) {
+        foreach ($productAbstractLocalizedEntity['SpyProductAbstract']['SpyProducts'] as $spyProduct) {
             if ($spyProduct['is_active']) {
                 return true;
             }
@@ -206,39 +232,49 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param array $productAbstractLocalizedData
-     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productPageSearchEntity
+     * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
+     * @param array $productAbstractLocalizedEntity
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productAbstractPageSearchEntity
      * @param bool $isRefresh
      *
      * @return \Generated\Shared\Transfer\ProductPageSearchTransfer
      */
-    protected function getProductPageSearchTransfer(array $productAbstractLocalizedData, SpyProductAbstractPageSearch $productPageSearchEntity, $isRefresh = false)
-    {
+    protected function getProductPageSearchTransfer(
+        array $pageDataExpanderPlugins,
+        array $productAbstractLocalizedEntity,
+        SpyProductAbstractPageSearch $productAbstractPageSearchEntity,
+        $isRefresh = false
+    ) {
         if ($isRefresh) {
-            $productPageSearchTransfer = $this->productPageSearchMapper->mapToProductPageSearchTransferFromJson($productPageSearchEntity->getStructuredData());
+            $productPageSearchTransfer = $this->productPageSearchMapper->mapToProductPageSearchTransferFromJson($productAbstractPageSearchEntity->getStructuredData());
         } else {
-            $productPageSearchTransfer = $this->productPageSearchMapper->mapToProductPageSearchTransfer($productAbstractLocalizedData);
+            $productPageSearchTransfer = $this->productPageSearchMapper->mapToProductPageSearchTransfer($productAbstractLocalizedEntity);
         }
 
-        $this->expandTransferWithPlugins($productAbstractLocalizedData, $productPageSearchTransfer);
+        $this->expandPageSearchTransferWithPlugins($pageDataExpanderPlugins, $productAbstractLocalizedEntity, $productPageSearchTransfer);
 
         return $productPageSearchTransfer;
     }
 
     /**
-     * @param array $pageDataExpanderPluginNames
+     * @param string[] $pageDataExpanderPluginNames
      *
-     * @return array
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[]
      */
     protected function getPageDataExpanderPlugins(array $pageDataExpanderPluginNames)
     {
-        $expanderPlugins = [];
-        foreach ($pageDataExpanderPluginNames as $pageDataExpanderPluginName) {
-            $this->checkHasPlugin($pageDataExpanderPluginName);
-            $expanderPlugins[] = $this->pageDataExpanderPlugins[$pageDataExpanderPluginName];
+        if (!$pageDataExpanderPluginNames) {
+            return $this->pageDataExpanderPlugins;
         }
 
-        return $expanderPlugins;
+        $selectedExpanderPlugins = [];
+        foreach ($pageDataExpanderPluginNames as $pageDataExpanderPluginName) {
+            $this->assertPageDataExpanderPluginName($pageDataExpanderPluginName);
+
+            $selectedExpanderPlugins[] = $this->pageDataExpanderPlugins[$pageDataExpanderPluginName];
+        }
+
+        return $selectedExpanderPlugins;
     }
 
     /**
@@ -248,7 +284,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      *
      * @return void
      */
-    protected function checkHasPlugin($pageDataExpanderPluginName)
+    protected function assertPageDataExpanderPluginName($pageDataExpanderPluginName)
     {
         if (!isset($this->pageDataExpanderPlugins[$pageDataExpanderPluginName])) {
             throw new PluginNotFoundException(sprintf('The plugin with this name: %s is not found', $pageDataExpanderPluginName));
@@ -256,20 +292,53 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param array $productAbstractLocalizedData
+     * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
+     * @param array $productAbstractLocalizedEntity
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productPageSearchTransfer
      *
      * @return void
      */
-    protected function expandTransferWithPlugins(array $productAbstractLocalizedData, ProductPageSearchTransfer $productPageSearchTransfer)
-    {
-        foreach ($this->pageDataExpanderPlugins as $productPageDataExpanderPlugin) {
-            $productPageDataExpanderPlugin->expandProductPageData($productAbstractLocalizedData, $productPageSearchTransfer);
+    protected function expandPageSearchTransferWithPlugins(
+        array $pageDataExpanderPlugins,
+        array $productAbstractLocalizedEntity,
+        ProductPageSearchTransfer $productPageSearchTransfer
+    ) {
+        foreach ($pageDataExpanderPlugins as $pageDataExpanderPlugin) {
+            $pageDataExpanderPlugin->expandProductPageData($productAbstractLocalizedEntity, $productPageSearchTransfer);
         }
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param array $productAbstractLocalizedEntities
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch[] $productAbstractPageSearchEntities
+     *
+     * @return array
+     */
+    protected function pairProductAbstractLocalizedEntitiesWithProductAbstractPageSearchEntities(
+        array $productAbstractLocalizedEntities,
+        array $productAbstractPageSearchEntities
+    ) {
+        $mappedProductAbstractPageSearchEntities = $this->mapProductAbstractPageSearchEntities($productAbstractPageSearchEntities);
+
+        $pairs = [];
+        foreach ($productAbstractLocalizedEntities as $productAbstractLocalizedEntity) {
+            list($pairs, $mappedProductAbstractPageSearchEntities) = $this->pairEntitiesByLocalesAndStores(
+                $productAbstractLocalizedEntity['fk_product_abstract'],
+                $productAbstractLocalizedEntity['Locale']['locale_name'],
+                $productAbstractLocalizedEntity['SpyProductAbstract']['SpyProductAbstractStores'],
+                $productAbstractLocalizedEntity,
+                $mappedProductAbstractPageSearchEntities,
+                $pairs
+            );
+        }
+
+        $pairs = $this->pairRemainingProductAbstractPageSearchEntities($mappedProductAbstractPageSearchEntities, $pairs);
+
+        return $pairs;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
      *
      * @return array
      */
@@ -279,18 +348,85 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch[]
+     */
+    protected function findProductAbstractPageSearchEntities(array $productAbstractIds)
+    {
+        return $this->queryContainer->queryProductAbstractSearchPageByIds($productAbstractIds)->find()->getArrayCopy();
+    }
+
+    /**
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch[] $productAbstractPageSearchEntities
      *
      * @return array
      */
-    protected function findProductPageSearchEntitiesByProductAbstractIds(array $productAbstractIds)
+    protected function mapProductAbstractPageSearchEntities(array $productAbstractPageSearchEntities)
     {
-        $productAbstractSearchEntities = $this->queryContainer->queryProductAbstractSearchPageByIds($productAbstractIds)->find();
-        $productAbstractSearchEntitiesByIdAndLocale = [];
-        foreach ($productAbstractSearchEntities as $productAbstractSearchEntity) {
-            $productAbstractSearchEntitiesByIdAndLocale[$productAbstractSearchEntity->getFkProductAbstract()][$productAbstractSearchEntity->getStore()][$productAbstractSearchEntity->getLocale()] = $productAbstractSearchEntity;
+        $map = [];
+        foreach ($productAbstractPageSearchEntities as $entity) {
+            $map[$entity->getFkProductAbstract()][$entity->getStore()][$entity->getLocale()] = $entity;
         }
 
-        return $productAbstractSearchEntitiesByIdAndLocale;
+        return $map;
+    }
+
+    /**
+     * @param array $mappedProductAbstractPageSearchEntities
+     * @param array $pairs
+     *
+     * @return array
+     */
+    protected function pairRemainingProductAbstractPageSearchEntities(array $mappedProductAbstractPageSearchEntities, array $pairs)
+    {
+        array_walk_recursive($mappedProductAbstractPageSearchEntities, function (SpyProductAbstractPageSearch $productAbstractPageSearchEntity) use (&$pairs) {
+            $pairs[] = [
+                static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY => null,
+                static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY => $productAbstractPageSearchEntity,
+                static::LOCALE_NAME => $productAbstractPageSearchEntity->getLocale(),
+                static::STORE_NAME => $productAbstractPageSearchEntity->getStore(),
+            ];
+        });
+
+        return $pairs;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $localeName
+     * @param array $productAbstractStores
+     * @param array $productAbstractLocalizedEntity
+     * @param array $mappedProductAbstractPageSearchEntities
+     * @param array $pairs
+     *
+     * @return array
+     */
+    protected function pairEntitiesByLocalesAndStores(
+        $idProductAbstract,
+        $localeName,
+        array $productAbstractStores,
+        array $productAbstractLocalizedEntity,
+        array $mappedProductAbstractPageSearchEntities,
+        array $pairs
+    ) {
+        foreach ($productAbstractStores as $productAbstractStore) {
+            $storeName = $productAbstractStore['SpyStore']['name'];
+
+            $searchEntity = isset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]) ?
+                $mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName] :
+                new SpyProductAbstractPageSearch();
+
+            $pairs[] = [
+                static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY => $productAbstractLocalizedEntity,
+                static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY => $searchEntity,
+                static::LOCALE_NAME => $localeName,
+                static::STORE_NAME => $storeName,
+            ];
+
+            unset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]);
+        }
+
+        return [$pairs, $mappedProductAbstractPageSearchEntities];
     }
 }
