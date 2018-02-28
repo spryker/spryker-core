@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyRole;
 
-use Spryker\Shared\CompanyRole\CompanyRoleConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CompanyRoleConfig extends AbstractBundleConfig
@@ -15,8 +14,8 @@ class CompanyRoleConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getCompanyRoleDefaultName(): string
+    public function getDefaultAdminRoleName(): string
     {
-        return $this->get(CompanyRoleConstants::DEFAULT_COMPANY_ROLE_NAME);
+        return 'Admin';
     }
 }
