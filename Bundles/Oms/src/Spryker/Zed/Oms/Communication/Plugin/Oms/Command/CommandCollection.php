@@ -30,7 +30,7 @@ class CommandCollection implements CommandCollectionInterface, HasAwareCollectio
      */
     public function add($command, $name)
     {
-        if (!$command instanceof CommandInterface && !$command instanceof NewCommandInterface) {
+        if (!($command instanceof CommandInterface) && !($command instanceof NewCommandInterface)) {
             throw new InvalidArgumentException(
                 sprintf(
                     "Invalid command '%s' interface. Must implement '%s' or '%s'.",

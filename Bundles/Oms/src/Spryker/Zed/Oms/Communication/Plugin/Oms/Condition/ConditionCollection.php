@@ -31,7 +31,7 @@ class ConditionCollection implements ConditionCollectionInterface, HasAwareColle
      */
     public function add($condition, $name)
     {
-        if (!$condition instanceof DependencyConditionInterface && !$condition instanceof ConditionInterface) {
+        if (!($condition instanceof DependencyConditionInterface) && !($condition instanceof ConditionInterface)) {
             throw new InvalidArgumentException(
                 sprintf(
                     "Invalid condition '%s' interface!. Must implement '%s' or '%s'.",
