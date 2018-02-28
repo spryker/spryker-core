@@ -7,6 +7,6 @@
 
 namespace Spryker\Zed\Permission\Persistence;
 
-interface PermissionQueryContainerInterface
+interface PermissionEntityManagerInterface
 {
 }
