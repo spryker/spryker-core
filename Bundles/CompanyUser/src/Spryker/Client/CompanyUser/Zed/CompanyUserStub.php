@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\ResponseErrorTransfer;
+use Generated\Shared\Transfer\ResponseMessageTransfer;
 use Spryker\Client\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
 use Spryker\Client\Kernel\CanAwareTrait;
 use Spryker\Client\ZedRequest\ZedRequestClient;
@@ -86,10 +86,10 @@ class CompanyUserStub implements CompanyUserStubInterface
      */
     protected function generatePermissionErrorMessage()
     {
-        $messageTransfer = new ResponseErrorTransfer();
+        $messageTransfer = new ResponseMessageTransfer();
 
         $companyUserResponseTransfer = new CompanyUserResponseTransfer();
-        $companyUserResponseTransfer->addError($messageTransfer);
+        $companyUserResponseTransfer->addMessage($messageTransfer);
         $companyUserResponseTransfer->setIsSuccessful(false);
 
         return $companyUserResponseTransfer;
