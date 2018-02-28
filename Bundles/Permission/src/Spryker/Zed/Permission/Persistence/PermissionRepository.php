@@ -20,7 +20,7 @@ class PermissionRepository extends AbstractRepository implements PermissionRepos
      *
      * @api
      *
-     * @return PermissionCollectionTransfer
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function findAll(): PermissionCollectionTransfer
     {

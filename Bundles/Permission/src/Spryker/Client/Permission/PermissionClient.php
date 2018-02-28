@@ -34,6 +34,20 @@ class PermissionClient extends AbstractClient implements PermissionClientInterfa
      *
      * @api
      *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getRegisteredPermissions(): PermissionCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createPermissionFinder()
+            ->getRegisteredPermissionCollection();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $permissionKey
      * @param string|int|array|null $context
      *
