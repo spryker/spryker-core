@@ -41,8 +41,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
         return new ProductPageSearchMapper(
             $this->createProductPageAttribute(),
             $this->getSearchFacade(),
-            $this->getUtilEncoding(),
-            $this->getStore()
+            $this->getUtilEncoding()
         );
     }
 
@@ -72,14 +71,6 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     public function getUtilEncoding()
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::SERVICE_UTIL_ENCODING);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::STORE);
     }
 
     /**

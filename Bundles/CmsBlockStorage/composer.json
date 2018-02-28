@@ -4,7 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/cms-block": "^2.1.0",
+    "spryker/cms-block": "^1.5.0 || ^2.0.0",
     "spryker/event-behavior": "^0.1.2",
     "spryker/kernel": "^3.16.0",
     "spryker/propel-orm": "^1.5.0",
@@ -16,6 +16,7 @@
     "spryker/event": "*"
   },
   "suggest": {
+    "spryker/cms-block": "If you want to use Event plugins, minimum required version: 2.1.0",
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
   },
   "autoload": {
