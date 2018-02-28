@@ -71,15 +71,15 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
     public function getCompanyUserCollection(
-        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+        CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUserCollectionTransfer {
         return $this->getFactory()
             ->createZedCompanyUserStub()
-            ->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
+            ->getCompanyUserCollection($criteriaFilterTransfer);
     }
 }

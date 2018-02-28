@@ -49,13 +49,13 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
     public function getCompanyUserCollectionAction(
-        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+        CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUserCollectionTransfer {
-        return $this->getFacade()->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
+        return $this->getFacade()->getCompanyUserCollection($criteriaFilterTransfer);
     }
 }

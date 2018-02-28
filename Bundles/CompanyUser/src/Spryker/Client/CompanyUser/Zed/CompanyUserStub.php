@@ -68,23 +68,23 @@ class CompanyUserStub implements CompanyUserStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getCompanyUserCollection(
-        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+        CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUserCollectionTransfer {
         return $this->zedRequestClient->call(
             '/company-user/gateway/get-company-user-collection',
-            $companyUserCriteriaFilterTransfer
+            $criteriaFilterTransfer
         );
     }
 
     /**
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    protected function generatePermissionErrorMessage()
+    protected function generatePermissionErrorMessage(): CompanyUserResponseTransfer
     {
         $messageTransfer = new ResponseMessageTransfer();
 

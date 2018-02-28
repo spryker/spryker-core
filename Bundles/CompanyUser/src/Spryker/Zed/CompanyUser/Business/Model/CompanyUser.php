@@ -123,7 +123,7 @@ class CompanyUser implements CompanyUserInterface
     public function getCompanyUserCollection(
         CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
     ): CompanyUserCollectionTransfer {
-        $collectionTransfer = $this->companyUserRepository->filterCompanyUsers($companyUserCriteriaFilterTransfer);
+        $collectionTransfer = $this->companyUserRepository->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
 
         foreach ($collectionTransfer->getCompanyUsers() as &$companyUserTransfer) {
             $this->companyUserPluginExecutor->executeHydrationPlugins($companyUserTransfer);

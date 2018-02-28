@@ -42,27 +42,27 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function filterCompanyUsers(CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer): CompanyUserCollectionTransfer
+    public function getCompanyUserCollection(CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer): CompanyUserCollectionTransfer
     {
         $queryCompanyUser = $this->getFactory()->createCompanyUserQuery();
 
-        if ($companyUserCriteriaFilterTransfer->getIdCompany() !== null) {
-            $queryCompanyUser->filterByFkCompany($companyUserCriteriaFilterTransfer->getIdCompany());
+        if ($criteriaFilterTransfer->getIdCompany() !== null) {
+            $queryCompanyUser->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
         }
 
-        $collection = $this->buildQueryFromCriteria($queryCompanyUser, $companyUserCriteriaFilterTransfer->getFilter());
-        $collection = $this->getPaginatedCollection($collection, $companyUserCriteriaFilterTransfer->getPagination());
+        $collection = $this->buildQueryFromCriteria($queryCompanyUser, $criteriaFilterTransfer->getFilter());
+        $collection = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
         $this->populateCollectionWithRelation($collection, 'SpyCustomer');
 
         $collectionTransfer = $this->getFactory()
             ->createCompanyUserMapper()
             ->mapCompanyUserCollection($collection);
 
-        $collectionTransfer->setPagination($companyUserCriteriaFilterTransfer->getPagination());
+        $collectionTransfer->setPagination($criteriaFilterTransfer->getPagination());
 
         return $collectionTransfer;
     }
