@@ -50,12 +50,12 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     {
         $query = $this->getFactory()
             ->createCompanyRoleToPermissionQuery()
-            ->joinPermission()
+            ->joinWithPermission()
             ->joinCompanyRole()
             ->useCompanyRoleQuery()
                 ->joinSpyCompanyRoleToCompanyUser()
                     ->useSpyCompanyRoleToCompanyUserQuery()
-                        ->filterByIdCompanyRoleToCompanyUser($idCompanyUser)
+                        ->filterByFkCompanyUser($idCompanyUser)
                     ->endUse()
             ->endUse();
 
@@ -65,7 +65,13 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
         foreach ($companyRoleToPermissionEntities as $companyRoleToPermissionEntity) {
             $permissionTransfer = new PermissionTransfer();
-            $permissionTransfer->setConfiguration($companyRoleToPermissionEntity->getConfiguration());
+
+            $configuration = \json_decode($companyRoleToPermissionEntity->getConfiguration());
+            if (json_last_error() === \JSON_ERROR_NONE) {
+                $configuration = [];
+            }
+
+            $permissionTransfer->setConfiguration($configuration);
             $permissionTransfer->setKey($companyRoleToPermissionEntity->getPermission()->getKey());
 
             $permissionCollectionTransfer->addPermission($permissionTransfer);
@@ -80,27 +86,28 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     public function findCompanyRole(): CompanyRoleCollectionTransfer
     {
         $query = SpyCompanyRoleQuery::create()
-            ->joinSpyCompanyRoleToPermission()
+            ->joinWithSpyCompanyRoleToPermission()
             ->useSpyCompanyRoleToPermissionQuery()
-            ->joinPermission()
+                ->joinWithPermission()
             ->endUse();
 
-        $companyRoleEntities = $this->buildQueryFromCriteria($query)->find();
+        $companyRoleEntityTransfers = $this->buildQueryFromCriteria($query)->find();
 
         $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
 
-        foreach ($companyRoleEntities as $companyRoleEntity) {
+        /** @var \Generated\Shared\Transfer\SpyCompanyRoleEntityTransfer $companyRoleEntityTransfer */
+        foreach ($companyRoleEntityTransfers as $companyRoleEntityTransfer) {
             $companyRoleTransfer = (new CompanyRolePersistenceFactory)
                 ->createCompanyRoleMapper()
                 ->mapEntityTransferToCompanyRoleTransfer(
-                    $companyRoleEntity,
+                    $companyRoleEntityTransfer,
                     new CompanyRoleTransfer()
                 );
 
             $companyRoleTransfer = (new CompanyRolePersistenceFactory())
                 ->createCompanyRolePermissionMapper()
                 ->hydratePermissionCollection(
-                    $companyRoleEntity,
+                    $companyRoleEntityTransfer,
                     $companyRoleTransfer
                 );
 
