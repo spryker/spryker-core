@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyUser\Persistence\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\SpyCompanyUserEntityTransfer;
 
 class CompanyUserMapper implements CompanyUserMapperInterface
@@ -23,7 +24,7 @@ class CompanyUserMapper implements CompanyUserMapperInterface
         CompanyUserTransfer $companyUserTransfer
     ): SpyCompanyUserEntityTransfer {
         $companyUserEntityTransfer = new SpyCompanyUserEntityTransfer();
-        $data = $companyUserTransfer->modifiedToArray();
+        $data = $companyUserTransfer->toArray();
         unset($data['customer']);
         $companyUserEntityTransfer->fromArray($data, true);
 
@@ -38,7 +39,24 @@ class CompanyUserMapper implements CompanyUserMapperInterface
     public function mapEntityTransferToCompanyUserTransfer(
         SpyCompanyUserEntityTransfer $companyUserEntityTransfer
     ): CompanyUserTransfer {
-        return (new CompanyUserTransfer())->fromArray($companyUserEntityTransfer->toArray(), true);
+        $data = $companyUserEntityTransfer->toArray();
+        $customerData = $data['customer'];
+        unset($data['customer'], $data['spy_company_role_to_company_users']);
+        $companyUserTransfer = new CompanyUserTransfer();
+        $companyUserTransfer->fromArray($data, true);
+
+        if ($customerData !== null) {
+            $customerTransfer = new CustomerTransfer();
+            $customerTransfer->setIdCustomer($customerData['id_customer']);
+            $customerTransfer->setSalutation($customerData['salutation']);
+            $customerTransfer->setFirstName($customerData['first_name']);
+            $customerTransfer->setLastName($customerData['last_name']);
+            $customerTransfer->setEmail($customerData['email']);
+
+            $companyUserTransfer->setCustomer($customerTransfer);
+        }
+
+        return $companyUserTransfer;
     }
 
     /**

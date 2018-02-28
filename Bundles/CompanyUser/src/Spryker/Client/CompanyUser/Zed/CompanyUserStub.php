@@ -82,6 +82,19 @@ class CompanyUserStub implements CompanyUserStubInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function getCompanyUserById(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
+    {
+        return $this->zedRequestClient->call(
+            '/company-user/gateway/get-company-user-by-id',
+            $companyUserTransfer
+        );
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     protected function generatePermissionErrorMessage(): CompanyUserResponseTransfer

@@ -44,4 +44,14 @@ class CompanyUserToCustomerFacadeBridge implements CompanyUserToCustomerFacadeIn
     {
         $this->customerFacade->anonymizeCustomer($customerTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function updateCustomer(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        return $this->customerFacade->updateCustomer($customerTransfer);
+    }
 }
