@@ -17,7 +17,8 @@ interface CompanyRoleClientInterface
 {
     /**
      * Specification:
-     * - Creates new company role.
+     * - Creates a company role
+     * - Creates company role permissions
      *
      * @api
      *
@@ -41,7 +42,8 @@ interface CompanyRoleClientInterface
 
     /**
      * Specification:
-     * - Deletse company role.
+     * - Finds a company role by CompanyRoleTransfer::idCompanyRole
+     * - Deletes the company role
      *
      * @api
      *
@@ -53,16 +55,16 @@ interface CompanyRoleClientInterface
 
     /**
      * Specification:
-     * - Finds a company roles by company id.
+     * - Finds a company roles according CompanyRoleCriteriaFilterTransfer
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
      */
     public function getCompanyRoleCollection(
-        CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+        CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyRoleCollectionTransfer;
 
     /**

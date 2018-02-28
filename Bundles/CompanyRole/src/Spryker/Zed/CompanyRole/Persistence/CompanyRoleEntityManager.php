@@ -53,33 +53,6 @@ class CompanyRoleEntityManager extends AbstractEntityManager implements CompanyR
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
-     *
-     * @return void
-     */
-    public function saveCompanyRolePermissions(CompanyRoleTransfer $companyRoleTransfer): void
-    {
-        $permissions = [];
-
-        if ($companyRoleTransfer->getPermissionCollection()) {
-            $permissions = $companyRoleTransfer->getPermissionCollection()->getPermissions();
-        }
-
-        $assignedIdPermissions = [];
-
-        foreach ($permissions as $permissionTransfer) {
-            $this->saveCompanyRolePermission($companyRoleTransfer->getIdCompanyRole(), $permissionTransfer);
-            $assignedIdPermissions[] = $permissionTransfer->getIdPermission();
-        }
-
-        $this->getFactory()
-            ->createCompanyRoleToPermissionQuery()
-            ->filterByFkCompanyRole($companyRoleTransfer->getIdCompanyRole())
-            ->filterByFkPermission($assignedIdPermissions, Criteria::NOT_IN)
-            ->delete();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return void
@@ -109,6 +82,38 @@ class CompanyRoleEntityManager extends AbstractEntityManager implements CompanyR
             ->createCompanyRoleToCompanyUserQuery()
             ->filterByFkCompanyUser($companyUserTransfer->getIdCompanyUser())
             ->filterByFkCompanyRole($assignedIdCompanyRoles, Criteria::NOT_IN)
+            ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PermissionTransfer[] $permissions
+     * @param int $idCompanyRole
+     *
+     * @return void
+     */
+    public function addPermissions(array $permissions, int $idCompanyRole): void
+    {
+        foreach ($permissions as $permission) {
+            $this->saveCompanyRolePermission($idCompanyRole, $permission);
+        }
+    }
+
+    /**
+     * @param array $idPermissions
+     * @param int $idCompanyRole
+     *
+     * @return void
+     */
+    public function removePermissions(array $idPermissions, int $idCompanyRole): void
+    {
+        if (count($idPermissions) === 0) {
+            return;
+        }
+
+        $this->getFactory()
+            ->createCompanyRoleToPermissionQuery()
+            ->filterByFkCompanyRole($idCompanyRole)
+            ->filterByFkPermission_In($idPermissions)
             ->delete();
     }
 

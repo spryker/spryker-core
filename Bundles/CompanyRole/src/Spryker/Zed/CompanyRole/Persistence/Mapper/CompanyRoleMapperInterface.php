@@ -13,9 +13,6 @@ use Generated\Shared\Transfer\SpyCompanyRoleEntityTransfer;
 interface CompanyRoleMapperInterface
 {
     /**
-     * Specification:
-     * - Maps company role entity to transfer object.
-     *
      * @param \Generated\Shared\Transfer\SpyCompanyRoleEntityTransfer $companyRoleEntityTransfer
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
@@ -27,9 +24,6 @@ interface CompanyRoleMapperInterface
     ): CompanyRoleTransfer;
 
     /**
-     * Specification:
-     * - Maps transfer object to company role entity.
-     *
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      * @param \Generated\Shared\Transfer\SpyCompanyRoleEntityTransfer $companyRoleEntityTransfer
      *
