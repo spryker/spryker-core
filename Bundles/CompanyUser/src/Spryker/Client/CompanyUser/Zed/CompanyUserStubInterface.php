@@ -43,4 +43,11 @@ interface CompanyUserStubInterface
     public function getCompanyUserCollection(
         CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUserCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function getCompanyUserById(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
 }

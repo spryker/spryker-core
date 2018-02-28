@@ -79,7 +79,13 @@ class CompanyUser implements CompanyUserInterface
     public function save(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyUserTransfer) {
-            return $this->executeSaveCompanyUserTransaction($companyUserTransfer);
+            $companyUserTransfer = $this->executeSaveCompanyUserTransaction($companyUserTransfer);
+
+            $companyUserResponseTransfer = new CompanyUserResponseTransfer();
+            $companyUserResponseTransfer->setIsSuccessful(true);
+            $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
+
+            return $companyUserResponseTransfer;
         });
     }
 
@@ -91,7 +97,9 @@ class CompanyUser implements CompanyUserInterface
     public function delete(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyUserTransfer) {
-            $companyUserTransfer->requireCustomer();
+            $companyUserTransfer = $this->companyUserRepository->getCompanyUserById(
+                $companyUserTransfer->getIdCompanyUser()
+            );
             $this->companyUserEntityManager->deleteCompanyUserById($companyUserTransfer->getIdCompanyUser());
             $this->customerFacade->anonymizeCustomer($companyUserTransfer->getCustomer());
 
@@ -177,6 +185,7 @@ class CompanyUser implements CompanyUserInterface
     protected function executeSaveCompanyUserTransaction(
         CompanyUserTransfer $companyUserTransfer
     ): CompanyUserTransfer {
+        $this->customerFacade->updateCustomer($companyUserTransfer->getCustomer());
         $companyUserTransfer = $this->companyUserEntityManager->saveCompanyUser($companyUserTransfer);
 
         return $this->companyUserPluginExecutor->executePostSavePlugins($companyUserTransfer);

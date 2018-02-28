@@ -77,4 +77,16 @@ interface CompanyUserFacadeInterface
     public function getCompanyUserCollection(
         CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
     ): CompanyUserCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves company user by id
+     *
+     * @api
+     *
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer;
 }

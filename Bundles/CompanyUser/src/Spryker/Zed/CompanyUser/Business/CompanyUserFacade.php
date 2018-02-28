@@ -64,7 +64,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
      */
     public function delete(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createCompanyUser()
             ->delete($companyUserTransfer);
     }
@@ -100,5 +100,19 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
         return $this->getFactory()
             ->createCompanyUser()
             ->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer
+    {
+        return $this->getRepository()->getCompanyUserById($idCompanyUser);
     }
 }

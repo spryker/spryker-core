@@ -48,7 +48,9 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      */
     public function getCompanyUserCollection(CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer): CompanyUserCollectionTransfer
     {
-        $queryCompanyUser = $this->getFactory()->createCompanyUserQuery();
+        $queryCompanyUser = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->joinWithCustomer();
 
         if ($criteriaFilterTransfer->getIdCompany() !== null) {
             $queryCompanyUser->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
@@ -56,7 +58,6 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
 
         $collection = $this->buildQueryFromCriteria($queryCompanyUser, $criteriaFilterTransfer->getFilter());
         $collection = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
-        $this->populateCollectionWithRelation($collection, 'SpyCustomer');
 
         $collectionTransfer = $this->getFactory()
             ->createCompanyUserMapper()
@@ -65,6 +66,24 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
         $collectionTransfer->setPagination($criteriaFilterTransfer->getPagination());
 
         return $collectionTransfer;
+    }
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer
+    {
+        $query = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->joinWithCustomer()
+            ->filterByIdCompanyUser($idCompanyUser);
+        $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+
+        return $this->getFactory()
+            ->createCompanyUserMapper()
+            ->mapEntityTransferToCompanyUserTransfer($entityTransfer);
     }
 
     /**
