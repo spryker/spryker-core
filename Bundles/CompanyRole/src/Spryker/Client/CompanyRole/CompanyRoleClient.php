@@ -40,16 +40,16 @@ class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
      */
     public function getCompanyRoleCollection(
-        CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+        CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyRoleCollectionTransfer {
         return $this->getFactory()
             ->createZedCompanyRoleStub()
-            ->getCompanyRoleCollection($companyRoleCriteriaFilterTransfer);
+            ->getCompanyRoleCollection($criteriaFilterTransfer);
     }
 
     /**

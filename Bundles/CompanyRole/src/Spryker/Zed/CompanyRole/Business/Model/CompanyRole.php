@@ -30,15 +30,23 @@ class CompanyRole implements CompanyRoleInterface
     protected $entityManager;
 
     /**
+     * @var \Spryker\Zed\CompanyRole\Business\Model\CompanyRolePermissionWriterInterface
+     */
+    protected $permissionWriter;
+
+    /**
      * @param \Spryker\Zed\CompanyRole\Persistence\CompanyRoleRepositoryInterface $repository
      * @param \Spryker\Zed\CompanyRole\Persistence\CompanyRoleEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\CompanyRole\Business\Model\CompanyRolePermissionWriterInterface $permissionWriter
      */
     public function __construct(
         CompanyRoleRepositoryInterface $repository,
-        CompanyRoleEntityManagerInterface $entityManager
+        CompanyRoleEntityManagerInterface $entityManager,
+        CompanyRolePermissionWriterInterface $permissionWriter
     ) {
         $this->repository = $repository;
         $this->entityManager = $entityManager;
+        $this->permissionWriter = $permissionWriter;
     }
 
     /**
@@ -113,7 +121,11 @@ class CompanyRole implements CompanyRoleInterface
      */
     protected function executeCompanyRoleSaveTransaction(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
     {
+        $permissionCollection = $companyRoleTransfer->getPermissionCollection();
         $companyRoleTransfer = $this->entityManager->saveCompanyRole($companyRoleTransfer);
+        $companyRoleTransfer->setPermissionCollection($permissionCollection);
+
+        $this->permissionWriter->saveCompanyRolePermissions($companyRoleTransfer);
 
         return (new CompanyRoleResponseTransfer())
             ->setIsSuccessful(true)
