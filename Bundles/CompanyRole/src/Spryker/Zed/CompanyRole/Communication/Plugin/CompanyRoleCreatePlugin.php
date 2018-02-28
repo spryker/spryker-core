@@ -43,7 +43,7 @@ class CompanyRoleCreatePlugin extends AbstractPlugin implements CompanyPostCreat
     {
         $companyRoleTransfer = new CompanyRoleTransfer();
         $companyRoleTransfer->setFkCompany($companyTransfer->getIdCompany())
-            ->setName($this->getConfig()->getCompanyRoleDefaultName())
+            ->setName($this->getConfig()->getDefaultAdminRoleName())
             ->setIsDefault(true);
 
         $this->getFacade()->create($companyRoleTransfer);

@@ -23,7 +23,9 @@ class PermissionCustomerExpanderPlugin extends AbstractPlugin implements Custome
      */
     public function expandTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        $customerTransfer->requireCompanyUserTransfer();
+        if (!$customerTransfer->getCompanyUserTransfer()) {
+            return $customerTransfer;
+        }
 
         $permissionCollectionTransfer = $this->getFacade()
             ->findPermissionsByIdCompanyUser(
