@@ -121,6 +121,7 @@ class Writer implements WriterInterface
         $this->reader->checkStockDoesNotExist($idStockType, $idProduct);
         $idStockProduct = $this->saveStockProduct($transferStockProduct, $idStockType, $idProduct);
 
+        //should be runned
         $this->handleStockUpdatePlugins($transferStockProduct->getSku());
 
         return $idStockProduct;
