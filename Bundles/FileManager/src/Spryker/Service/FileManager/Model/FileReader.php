@@ -33,7 +33,7 @@ class FileReader implements FileReaderInterface
      * FileReader constructor.
      *
      * @param \Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface $fileSystem
-     * @param \Spryker\Service\FileManager\FileManagerServiceConfig $config
+     * @param \Spryker\Service\FileManager\FileManagerServiceConfig                                  $config
      */
     public function __construct(FileManagerToFileSystemBridgeInterface $fileSystem, FileManagerServiceConfig $config)
     {

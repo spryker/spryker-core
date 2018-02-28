@@ -49,12 +49,12 @@ class FileSaver implements FileSaverInterface
     /**
      * FileSaver constructor.
      *
-     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\FileManager\Business\Model\FileVersionInterface $fileVersion
-     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
-     * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface $fileContent
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface       $queryContainer
+     * @param \Spryker\Zed\FileManager\Business\Model\FileVersionInterface                  $fileVersion
+     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface                   $fileFinder
+     * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface                  $fileContent
      * @param \Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaverInterface $attributesSaver
-     * @param \Spryker\Zed\FileManager\FileManagerConfig $config
+     * @param \Spryker\Zed\FileManager\FileManagerConfig                                    $config
      */
     public function __construct(
         FileManagerQueryContainerInterface $queryContainer,
@@ -111,7 +111,7 @@ class FileSaver implements FileSaverInterface
     }
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile                  $file
      * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
      *
      * @throws \Exception
@@ -142,7 +142,7 @@ class FileSaver implements FileSaverInterface
     }
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile          $file
      * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo|null $fileInfo
      *
      * @return void
@@ -156,8 +156,8 @@ class FileSaver implements FileSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo|null $fileInfo
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile                  $file
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo|null         $fileInfo
      *
      * @return void
      */
@@ -172,7 +172,7 @@ class FileSaver implements FileSaverInterface
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
-     * @param string $newFileName
+     * @param string                                       $newFileName
      *
      * @return void
      */
