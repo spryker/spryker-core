@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CompanyRole\Communication\Controller;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
@@ -29,13 +30,14 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
      */
-    public function getCompanyRoleCollectionAction(CompanyRoleCollectionTransfer $companyRoleCollectionTransfer): CompanyRoleCollectionTransfer
-    {
-        return $this->getFacade()->getCompanyRoleCollection($companyRoleCollectionTransfer);
+    public function getCompanyRoleCollectionAction(
+        CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+    ): CompanyRoleCollectionTransfer {
+        return $this->getFacade()->getCompanyRoleCollection($companyRoleCriteriaFilterTransfer);
     }
 
     /**
@@ -68,8 +70,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function findCompanyRolePermissionsAction(CompanyRoleTransfer $companyRoleTransfer): PermissionCollectionTransfer
-    {
+    public function findCompanyRolePermissionsAction(
+        CompanyRoleTransfer $companyRoleTransfer
+    ): PermissionCollectionTransfer {
         $companyRoleTransfer->requireIdCompanyRole();
 
         return $this->getFacade()->findCompanyRolePermissions($companyRoleTransfer->getIdCompanyRole());

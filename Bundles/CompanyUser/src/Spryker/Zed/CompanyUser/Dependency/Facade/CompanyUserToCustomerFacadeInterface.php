@@ -18,4 +18,11 @@ interface CompanyUserToCustomerFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function registerCustomer(CustomerTransfer $customerTransfer): CustomerResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    public function anonymizeCustomer(CustomerTransfer $customerTransfer): void;
 }

@@ -7,6 +7,7 @@
 namespace Spryker\Zed\CompanyBusinessUnit\Business;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -23,12 +24,14 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
     public function getCompanyBusinessUnitById(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): CompanyBusinessUnitResponseTransfer {
-        return $this->getFactory()->createCompanyBusinessUnitReader()->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+    ): CompanyBusinessUnitTransfer {
+        return $this->getFactory()
+            ->createCompanyBusinessUnit()
+            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
     }
 
     /**
@@ -40,9 +43,12 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    public function create(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
-    {
-        return $this->getFactory()->createCompanyBusinessUnitWriter()->create($companyBusinessUnitTransfer);
+    public function create(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitResponseTransfer {
+        return $this->getFactory()
+            ->createCompanyBusinessUnit()
+            ->create($companyBusinessUnitTransfer);
     }
 
     /**
@@ -54,9 +60,12 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    public function update(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
-    {
-        return $this->getFactory()->createCompanyBusinessUnitWriter()->update($companyBusinessUnitTransfer);
+    public function update(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitResponseTransfer {
+        return $this->getFactory()
+            ->createCompanyBusinessUnit()
+            ->update($companyBusinessUnitTransfer);
     }
 
     /**
@@ -66,11 +75,14 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    public function delete(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool
-    {
-        return $this->getFactory()->createCompanyBusinessUnitWriter()->delete($companyBusinessUnitTransfer);
+    public function delete(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitResponseTransfer {
+        return $this->getFactory()
+            ->createCompanyBusinessUnit()
+            ->delete($companyBusinessUnitTransfer);
     }
 
     /**
@@ -78,13 +90,15 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer $businessUnitCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
     public function getCompanyBusinessUnitCollection(
-        CompanyBusinessUnitCollectionTransfer $businessUnitCollectionTransfer
+        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer {
-        return $this->getFactory()->createCompanyBusinessUnitReader()->getCompanyBusinessUnitCollection($businessUnitCollectionTransfer);
+        return $this->getFactory()
+            ->createCompanyBusinessUnit()
+            ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
     }
 }

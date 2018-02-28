@@ -8,17 +8,21 @@
 namespace Spryker\Zed\CompanyRole\Persistence;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Orm\Zed\CompanyRole\Persistence\Base\SpyCompanyRoleToPermissionQuery;
 use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery;
-use Spryker\Zed\CompanyRole\Persistence\Propel\Repository\RepositoryCollectionHandlerTrait;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
-class CompanyRoleRepository implements CompanyRoleRepositoryInterface
+/**
+ * @method \Spryker\Zed\CompanyRole\Persistence\CompanyRolePersistenceFactory getFactory()
+ */
+class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRepositoryInterface
 {
-    use RepositoryCollectionHandlerTrait;
-
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
@@ -27,18 +31,15 @@ class CompanyRoleRepository implements CompanyRoleRepositoryInterface
     public function getCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer
     {
         $companyRoleTransfer->requireIdCompanyRole();
-        $companyRoleEntity = SpyCompanyRoleQuery::create()
-            ->filterByIdCompanyRole($companyRoleTransfer->getIdCompanyRole())
-            ->findOne();
+        $query = $this->getFactory()
+            ->createCompanyRoleQuery()
+            ->filterByIdCompanyRole($companyRoleTransfer->getIdCompanyRole());
 
-        $companyRoleTransfer = (new CompanyRolePersistenceFactory)
+        $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+
+        return $this->getFactory()
             ->createCompanyRoleMapper()
-            ->mapCompanyRoleEntityToTransfer(
-                $companyRoleEntity,
-                new CompanyRoleTransfer()
-            );
-
-        return $companyRoleTransfer;
+            ->mapEntityTransferToCompanyRoleTransfer($entityTransfer, $companyRoleTransfer);
     }
 
     /**
@@ -48,16 +49,17 @@ class CompanyRoleRepository implements CompanyRoleRepositoryInterface
      */
     public function findPermissionsByIdCompanyUser(int $idCompanyUser): PermissionCollectionTransfer
     {
-        $companyRoleToPermissionEntities = SpyCompanyRoleToPermissionQuery::create()
+        $query = SpyCompanyRoleToPermissionQuery::create()
             ->joinPermission()
             ->joinCompanyRole()
             ->useCompanyRoleQuery()
-                ->joinSpyCompanyRoleToCompanyUser()
-                    ->useSpyCompanyRoleToCompanyUserQuery()
-                        ->filterByIdCompanyRoleToCompanyUser($idCompanyUser)
-                    ->endUse()
+            ->joinSpyCompanyRoleToCompanyUser()
+            ->useSpyCompanyRoleToCompanyUserQuery()
+            ->filterByIdCompanyRoleToCompanyUser($idCompanyUser)
             ->endUse()
-            ->find();
+            ->endUse();
+
+        $companyRoleToPermissionEntities = $this->buildQueryFromCriteria($query)->find();
 
         //mapper
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
@@ -77,19 +79,20 @@ class CompanyRoleRepository implements CompanyRoleRepositoryInterface
      */
     public function findCompanyRole(): CompanyRoleCollectionTransfer
     {
-        $companyRoleEntities = SpyCompanyRoleQuery::create()
+        $query = SpyCompanyRoleQuery::create()
             ->joinSpyCompanyRoleToPermission()
             ->useSpyCompanyRoleToPermissionQuery()
-                ->joinPermission()
-            ->endUse()
-            ->find();
+            ->joinPermission()
+            ->endUse();
+
+        $companyRoleEntities = $this->buildQueryFromCriteria($query)->find();
 
         $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
 
         foreach ($companyRoleEntities as $companyRoleEntity) {
             $companyRoleTransfer = (new CompanyRolePersistenceFactory)
                 ->createCompanyRoleMapper()
-                ->mapCompanyRoleEntityToTransfer(
+                ->mapEntityTransferToCompanyRoleTransfer(
                     $companyRoleEntity,
                     new CompanyRoleTransfer()
                 );
@@ -114,18 +117,20 @@ class CompanyRoleRepository implements CompanyRoleRepositoryInterface
      */
     public function findCompanyRolePermissions(int $idCompanyRole): PermissionCollectionTransfer
     {
-        $companyRoleEntity = SpyCompanyRoleQuery::create()
+        $query = SpyCompanyRoleQuery::create()
             ->joinSpyCompanyRoleToPermission()
             ->useSpyCompanyRoleToPermissionQuery()
-                ->joinPermission()
+            ->joinPermission()
             ->endUse()
-            ->filterByIdCompanyRole($idCompanyRole)
-            ->findOne();
+            ->filterByIdCompanyRole($idCompanyRole);
+
+        /** @var \Generated\Shared\Transfer\SpyCompanyRoleEntityTransfer $companyRoleEntity */
+        $companyRoleEntity = $this->buildQueryFromCriteria($query)->findOne();
 
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 
         if ($companyRoleEntity !== null) {
-            foreach ($companyRoleEntity->getSpyCompanyRoleToPermissionsJoinPermission() as $roleToPermission) {
+            foreach ($companyRoleEntity->getSpyCompanyRoleToPermissions() as $roleToPermission) {
                 $permissionTransfer = (new PermissionTransfer())
                     ->setIdPermission($roleToPermission->getFkPermission())
                     ->setConfiguration(\json_decode($roleToPermission->getConfiguration(), true))
@@ -139,38 +144,85 @@ class CompanyRoleRepository implements CompanyRoleRepositoryInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
      */
     public function getCompanyRoleCollection(
-        CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
+        CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
     ): CompanyRoleCollectionTransfer {
-        $companyRoleCollectionTransfer->requireIdCompany();
-        $query = SpyCompanyRoleQuery::create()
-            ->filterByFkCompany($companyRoleCollectionTransfer->getIdCompany());
+        $companyRoleCriteriaFilterTransfer->requireIdCompany();
 
-        $query = $this->mergeQueryWithFilter($query, $companyRoleCollectionTransfer->getFilter());
-        $companyRoleEntities = $this->getCollection($query, $companyRoleCollectionTransfer);
+        $query = $this->getFactory()
+            ->createCompanyRoleQuery();
 
-        foreach ($companyRoleEntities as $companyRoleEntity) {
-            $companyRoleTransfer = (new CompanyRolePersistenceFactory)
+        if ($companyRoleCriteriaFilterTransfer->getIdCompany() !== null) {
+            $query->filterByFkCompany($companyRoleCriteriaFilterTransfer->getIdCompany());
+        }
+
+        if ($companyRoleCriteriaFilterTransfer->getIdCompanyUser() !== null) {
+            $query->useSpyCompanyRoleToCompanyUserQuery()
+                ->filterByFkCompanyUser($companyRoleCriteriaFilterTransfer->getIdCompanyUser())
+                ->endUse();
+        }
+
+        $collection = $this->buildQueryFromCriteria($query, $companyRoleCriteriaFilterTransfer->getFilter());
+        $collection = $this->getPaginatedCollection($collection, $companyRoleCriteriaFilterTransfer->getPagination());
+
+        $collectionTransfer = new CompanyRoleCollectionTransfer();
+        foreach ($collection as $companyRoleEntity) {
+            $companyRoleTransfer = $this->getFactory()
                 ->createCompanyRoleMapper()
-                ->mapCompanyRoleEntityToTransfer(
+                ->mapEntityTransferToCompanyRoleTransfer(
                     $companyRoleEntity,
                     new CompanyRoleTransfer()
                 );
 
-            $companyRoleTransfer = (new CompanyRolePersistenceFactory())
+            $companyRoleTransfer = $this->getFactory()
                 ->createCompanyRolePermissionMapper()
                 ->hydratePermissionCollection(
                     $companyRoleEntity,
                     $companyRoleTransfer
                 );
 
-            $companyRoleCollectionTransfer->addRole($companyRoleTransfer);
+            $collectionTransfer->addRole($companyRoleTransfer);
         }
 
-        return $companyRoleCollectionTransfer;
+        $collectionTransfer->setPagination($companyRoleCriteriaFilterTransfer->getPagination());
+
+        return $collectionTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
+     *
+     * @return mixed|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function getPaginatedCollection(ModelCriteria $query, PaginationTransfer $paginationTransfer = null)
+    {
+        if ($paginationTransfer !== null) {
+            $page = $paginationTransfer
+                ->requirePage()
+                ->getPage();
+
+            $maxPerPage = $paginationTransfer
+                ->requireMaxPerPage()
+                ->getMaxPerPage();
+
+            $paginationModel = $query->paginate($page, $maxPerPage);
+
+            $paginationTransfer->setNbResults($paginationModel->getNbResults());
+            $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
+            $paginationTransfer->setLastIndex($paginationModel->getLastIndex());
+            $paginationTransfer->setFirstPage($paginationModel->getFirstPage());
+            $paginationTransfer->setLastPage($paginationModel->getLastPage());
+            $paginationTransfer->setNextPage($paginationModel->getNextPage());
+            $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
+
+            return $paginationModel->getResults();
+        }
+
+        return $query->find();
     }
 }

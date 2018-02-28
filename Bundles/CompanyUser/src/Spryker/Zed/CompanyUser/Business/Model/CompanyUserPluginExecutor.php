@@ -12,37 +12,25 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 class CompanyUserPluginExecutor implements CompanyUserPluginExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserSavePluginInterface[]
+     * @var array|\Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserPostSavePluginInterface[]
      */
-    protected $companyUserSavePlugins;
+    protected $companyUserPostSavePlugins;
 
     /**
-     * @var \Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
+     * @var array|\Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
      */
     protected $companyUserHydrationPlugins;
 
     /**
-     * @param \Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserSavePluginInterface[] $companyUserSavePlugins
+     * @param \Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserPostSavePluginInterface[] $companyUserPostSavePlugins
      * @param \Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserHydrationPluginInterface[] $companyUserHydrationPlugins
      */
     public function __construct(
-        array $companyUserSavePlugins = [],
+        array $companyUserPostSavePlugins = [],
         array $companyUserHydrationPlugins = []
     ) {
-        $this->companyUserSavePlugins = $companyUserSavePlugins;
+        $this->companyUserPostSavePlugins = $companyUserPostSavePlugins;
         $this->companyUserHydrationPlugins = $companyUserHydrationPlugins;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return void
-     */
-    public function executeCompanyUserSavePlugins(CompanyUserTransfer $companyUserTransfer): void
-    {
-        foreach ($this->companyUserSavePlugins as $companyUserSavePlugin) {
-            $companyUserSavePlugin->save($companyUserTransfer);
-        }
     }
 
     /**
@@ -50,7 +38,21 @@ class CompanyUserPluginExecutor implements CompanyUserPluginExecutorInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function executeCompanyUserHydrationPlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
+    public function executePostSavePlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
+    {
+        foreach ($this->companyUserPostSavePlugins as $companyUserPostSavePlugin) {
+            $companyUserTransfer = $companyUserPostSavePlugin->postSave($companyUserTransfer);
+        }
+
+        return $companyUserTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function executeHydrationPlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
     {
         foreach ($this->companyUserHydrationPlugins as $companyUserHydrationPlugin) {
             $companyUserTransfer = $companyUserHydrationPlugin->hydrate($companyUserTransfer);

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CompanyRole\Business;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
@@ -51,7 +52,7 @@ interface CompanyRoleFacadeInterface
      *
      * @return void
      */
-    public function update(CompanyRoleTransfer $companyRoleTransfer);
+    public function update(CompanyRoleTransfer $companyRoleTransfer): void;
 
     /**
      * Specification:
@@ -64,7 +65,7 @@ interface CompanyRoleFacadeInterface
      *
      * @return void
      */
-    public function delete(CompanyRoleTransfer $companyRoleTransfer);
+    public function delete(CompanyRoleTransfer $companyRoleTransfer): void;
 
     /**
      * Specification:
@@ -99,7 +100,7 @@ interface CompanyRoleFacadeInterface
      *
      * @return void
      */
-    public function saveCompanyUser(CompanyUserTransfer $companyUserTransfer);
+    public function saveCompanyUser(CompanyUserTransfer $companyUserTransfer): void;
 
     /**
      * Specification:
@@ -123,7 +124,7 @@ interface CompanyRoleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function findPermissionsByIdCompanyUser(int $idCompanyUser);
+    public function findPermissionsByIdCompanyUser(int $idCompanyUser): PermissionCollectionTransfer;
 
     /**
      * Specification:
@@ -131,11 +132,11 @@ interface CompanyRoleFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
      */
     public function getCompanyRoleCollection(
-        CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
+        CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
     ): CompanyRoleCollectionTransfer;
 }

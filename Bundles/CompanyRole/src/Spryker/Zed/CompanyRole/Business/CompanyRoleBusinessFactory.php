@@ -7,55 +7,25 @@
 
 namespace Spryker\Zed\CompanyRole\Business;
 
-use Spryker\Zed\CompanyRole\Business\Model\CompanyRoleWriter;
-use Spryker\Zed\CompanyRole\Business\Model\CompanyRoleWriterInterface;
-use Spryker\Zed\CompanyRole\Persistence\CompanyRolePersistenceFactory;
-use Spryker\Zed\CompanyRole\Persistence\CompanyRoleRepository;
-use Spryker\Zed\CompanyRole\Persistence\CompanyRoleRepositoryInterface;
-use Spryker\Zed\CompanyRole\Persistence\CompanyRoleWriterRepository;
-use Spryker\Zed\CompanyRole\Persistence\CompanyRoleWriterRepositoryInterface;
+use Spryker\Zed\CompanyRole\Business\Model\CompanyRole;
+use Spryker\Zed\CompanyRole\Business\Model\CompanyRoleInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Kernel\Persistence\PersistenceFactoryInterface;
 
 /**
- * @method \Spryker\Zed\CompanyRole\Persistence\CompanyRoleQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CompanyRole\Persistence\CompanyRoleRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CompanyRole\Persistence\CompanyRoleEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\CompanyRole\CompanyRoleConfig getConfig()
  */
 class CompanyRoleBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\CompanyRole\Business\Model\CompanyRoleWriterInterface
+     * @return \Spryker\Zed\CompanyRole\Business\Model\CompanyRoleInterface
      */
-    public function createCompanyRoleWriter(): CompanyRoleWriterInterface
+    public function createCompanyRole(): CompanyRoleInterface
     {
-        return new CompanyRoleWriter($this->createCompanyRoleWriterRepository());
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyRole\Persistence\CompanyRoleWriterRepositoryInterface
-     */
-    public function createCompanyRoleWriterRepository(): CompanyRoleWriterRepositoryInterface
-    {
-        $companyRoleWriterRepository = new CompanyRoleWriterRepository();
-        $companyRoleWriterRepository->setQueryContainer($this->getQueryContainer());
-        $companyRoleWriterRepository->setPersistenceFactory($this->createPersistenceFactory());
-
-        return $companyRoleWriterRepository;
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyRole\Persistence\CompanyRoleRepositoryInterface
-     */
-    public function createCompanyRoleRepository(): CompanyRoleRepositoryInterface
-    {
-        return new CompanyRoleRepository();
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\Persistence\PersistenceFactoryInterface
-     */
-    protected function createPersistenceFactory(): PersistenceFactoryInterface
-    {
-        return new CompanyRolePersistenceFactory();
+        return new CompanyRole(
+            $this->getRepository(),
+            $this->getEntityManager()
+        );
     }
 }

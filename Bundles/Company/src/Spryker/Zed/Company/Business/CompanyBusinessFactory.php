@@ -7,49 +7,43 @@
 
 namespace Spryker\Zed\Company\Business;
 
+use Spryker\Zed\Company\Business\Model\Company;
+use Spryker\Zed\Company\Business\Model\CompanyInterface;
 use Spryker\Zed\Company\Business\Model\CompanyPluginExecutor;
 use Spryker\Zed\Company\Business\Model\CompanyPluginExecutorInterface;
-use Spryker\Zed\Company\Business\Model\CompanyReader;
-use Spryker\Zed\Company\Business\Model\CompanyReaderInterface;
 use Spryker\Zed\Company\Business\Model\CompanyStoreRelationReader;
 use Spryker\Zed\Company\Business\Model\CompanyStoreRelationReaderInterface;
 use Spryker\Zed\Company\Business\Model\CompanyStoreRelationWriter;
 use Spryker\Zed\Company\Business\Model\CompanyStoreRelationWriterInterface;
-use Spryker\Zed\Company\Business\Model\CompanyWriter;
-use Spryker\Zed\Company\Business\Model\CompanyWriterInterface;
 use Spryker\Zed\Company\CompanyDependencyProvider;
 use Spryker\Zed\Company\Dependency\Facade\CompanyToStoreFacadeInterface;
-use Spryker\Zed\Company\Persistence\CompanyPersistenceFactory;
-use Spryker\Zed\Company\Persistence\CompanyRepositoryInterface;
-use Spryker\Zed\Company\Persistence\CompanyWriterRepositoryInterface;
-use Spryker\Zed\Company\Persistence\Propel\CompanyPropelRepository;
-use Spryker\Zed\Company\Persistence\Propel\CompanyWriterPropelRepository;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Kernel\Persistence\PersistenceFactoryInterface;
 
 /**
- * @method \Spryker\Zed\Company\Persistence\CompanyQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Company\Persistence\CompanyRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Company\Persistence\CompanyEntityManagerInterface getEntityManager()
  */
 class CompanyBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Company\Business\Model\CompanyReaderInterface
+     * @return \Spryker\Zed\Company\Business\Model\CompanyInterface
      */
-    public function createCompanyReader(): CompanyReaderInterface
+    public function createCompany(): CompanyInterface
     {
-        return new CompanyReader($this->createCompanyRepository());
+        return new Company(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->createPluginExecutor(),
+            $this->createStoreRelationWriter()
+        );
     }
 
     /**
-     * @return \Spryker\Zed\Company\Business\Model\CompanyWriterInterface
+     * @return \Spryker\Zed\Company\Dependency\Facade\CompanyToStoreFacadeInterface
      */
-    public function createCompanyWriter(): CompanyWriterInterface
+    public function getStoreFacade(): CompanyToStoreFacadeInterface
     {
-        return new CompanyWriter(
-            $this->createCompanyWriterRepository(),
-            $this->createStoreRelationWriter(),
-            $this->createPluginExecutor()
-        );
+        return $this->getProvidedDependency(CompanyDependencyProvider::FACADE_STORE);
     }
 
     /**
@@ -58,7 +52,7 @@ class CompanyBusinessFactory extends AbstractBusinessFactory
     protected function createStoreRelationWriter(): CompanyStoreRelationWriterInterface
     {
         return new CompanyStoreRelationWriter(
-            $this->createCompanyWriterRepository(),
+            $this->getEntityManager(),
             $this->createCompanyStoreRelationReader()
         );
     }
@@ -68,17 +62,7 @@ class CompanyBusinessFactory extends AbstractBusinessFactory
      */
     protected function createCompanyStoreRelationReader(): CompanyStoreRelationReaderInterface
     {
-        return new CompanyStoreRelationReader($this->createCompanyRepository());
-    }
-
-    /**
-     * @TODO Remove this. It should be locatable through Spryker infrastructure (CompanyEntityManager?).
-     *
-     * @return \Spryker\Zed\Company\Persistence\CompanyWriterRepositoryInterface
-     */
-    protected function createCompanyWriterRepository(): CompanyWriterRepositoryInterface
-    {
-        return new CompanyWriterPropelRepository();
+        return new CompanyStoreRelationReader($this->getRepository());
     }
 
     /**
@@ -90,34 +74,6 @@ class CompanyBusinessFactory extends AbstractBusinessFactory
             $this->getCompanyPreSavePlugins(),
             $this->getCompanyPostCreatePlugins()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\Company\Dependency\Facade\CompanyToStoreFacadeInterface
-     */
-    protected function getStoreFacade(): CompanyToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(CompanyDependencyProvider::FACADE_STORE);
-    }
-
-    /**
-     * @TODO Remove this.
-     *
-     * @return \Spryker\Zed\Kernel\Persistence\PersistenceFactoryInterface
-     */
-    protected function createCompanyPersistenceFactory(): PersistenceFactoryInterface
-    {
-        return new CompanyPersistenceFactory();
-    }
-
-    /**
-     * @TODO Remove this. It should be locatable through Spryker infrastructure.
-     *
-     * @return \Spryker\Zed\Company\Persistence\CompanyRepositoryInterface
-     */
-    protected function createCompanyRepository(): CompanyRepositoryInterface
-    {
-        return new CompanyPropelRepository();
     }
 
     /**

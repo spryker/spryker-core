@@ -14,18 +14,6 @@ interface CompanyFacadeInterface
 {
     /**
      * Specification:
-     * - Finds a company by CompanyTransfer::idCompany in the transfer
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
-     */
-    public function getCompanyById(CompanyTransfer $companyTransfer): CompanyResponseTransfer;
-
-    /**
-     * Specification:
      * - Creates a company
      *
      * @api

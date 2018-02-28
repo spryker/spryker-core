@@ -4,10 +4,15 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="CompanyRoleCollection">
+        <property name="roles" type="CompanyRole[]" singular="role"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="CompanyRoleCriteriaFilter">
         <property name="idCompany" type="int"/>
+        <property name="idCompanyUser" type="int"/>
         <property name="filter" type="Filter"/>
         <property name="pagination" type="Pagination"/>
-        <property name="roles" type="CompanyRole[]" singular="role"/>
     </transfer>
 
     <transfer name="CompanyRole">
@@ -55,14 +60,14 @@
     <transfer name="CompanyRoleResponse">
         <property name="companyRoleTransfer" type="CompanyRole"/>
         <property name="isSuccessful" type="bool"/>
-        <property name="errors" type="ResponseError[]" singular="error"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
     </transfer>
 
     <transfer name="Customer">
         <property name="Permissions" type="PermissionCollection"/>
     </transfer>
 
-    <transfer name="ResponseError">
-        <property name="message" type="string"/>
+    <transfer name="ResponseMessage">
+        <property name="text" type="string"/>
     </transfer>
 </transfers>

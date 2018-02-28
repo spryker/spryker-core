@@ -7,22 +7,8 @@
 
 namespace Spryker\Zed\Company\Persistence;
 
-use Generated\Shared\Transfer\CompanyTransfer;
-
 interface CompanyRepositoryInterface
 {
-    /**
-     * Specification:
-     * - Finds a company by CompanyTransfer::idCompany in the transfer
-     *
-     * @api
-     *
-     * @param int $idCompany
-     *
-     * @return \Generated\Shared\Transfer\CompanyTransfer
-     */
-    public function getCompanyById($idCompany): CompanyTransfer;
-
     /**
      * Specification:
      * - Retrieve stores related to company
@@ -31,5 +17,5 @@ interface CompanyRepositoryInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
      */
-    public function getRelatedStoresByCompanyId($idCompany);
+    public function getRelatedStoresByCompanyId(int $idCompany);
 }

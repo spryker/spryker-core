@@ -20,7 +20,7 @@ class PermissionCustomerExpanderPlugin implements CustomerTransferExpanderPlugin
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function expandTransfer(CustomerTransfer $customerTransfer)
+    public function expandTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         $customerTransfer->requireCompanyUserTransfer();
 

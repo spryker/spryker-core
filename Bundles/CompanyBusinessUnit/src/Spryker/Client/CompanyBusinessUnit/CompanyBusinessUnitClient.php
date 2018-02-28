@@ -8,6 +8,7 @@
 namespace Spryker\Client\CompanyBusinessUnit;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -39,16 +40,16 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer $businessUnitCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
     public function getCompanyBusinessUnitCollection(
-        CompanyBusinessUnitCollectionTransfer $businessUnitCollectionTransfer
+        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer {
         return $this->getFactory()
             ->createZedCompanyBusinessUnitStub()
-            ->getCompanyBusinessUnitCollection($businessUnitCollectionTransfer);
+            ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
     }
 
     /**
@@ -75,11 +76,11 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
     public function deleteCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): bool {
+    ): CompanyBusinessUnitResponseTransfer {
         return $this->getFactory()
             ->createZedCompanyBusinessUnitStub()
             ->deleteCompanyBusinessUnit($companyBusinessUnitTransfer);
@@ -92,11 +93,11 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
      *
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
     public function getCompanyBusinessUnitById(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): CompanyBusinessUnitResponseTransfer {
+    ): CompanyBusinessUnitTransfer {
         return $this->getFactory()
             ->createZedCompanyBusinessUnitStub()
             ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);

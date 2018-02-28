@@ -8,6 +8,7 @@
 namespace Spryker\Client\CompanyRole\Zed;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
@@ -39,16 +40,16 @@ class CompanyRoleStub implements CompanyRoleStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getCompanyRoleCollection(
-        CompanyRoleCollectionTransfer $companyRoleCollectionTransfer
+        CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
     ): CompanyRoleCollectionTransfer {
         return $this->zedRequestClient->call(
             '/company-role/gateway/get-company-role-collection',
-            $companyRoleCollectionTransfer
+            $companyRoleCriteriaFilterTransfer
         );
     }
 
