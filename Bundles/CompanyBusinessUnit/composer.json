@@ -5,6 +5,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/company": "^0.0.2",
+    "spryker/company-user": "^0.0.2",
     "spryker/kernel": "^3.0.0",
     "spryker/propel": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",

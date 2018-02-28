@@ -15,14 +15,12 @@ use Spryker\Zed\CompanyUnitAddress\CompanyUnitAddressDependencyProvider;
 use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCountryFacadeInterface;
 use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToLocaleFacadeInterface;
-use Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressRepositoryInterface;
-use Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressWriterRepositoryInterface;
-use Spryker\Zed\CompanyUnitAddress\Persistence\Propel\CompanyUnitAddressPropelRepository;
-use Spryker\Zed\CompanyUnitAddress\Persistence\Propel\CompanyUnitAddressWriterPropelRepository;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressBusinessFactory getFactory()
+ * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressEntityManagerInterface getEntityManager()
  */
 class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
 {
@@ -45,22 +43,6 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
     public function createCompanyUnitAddressReader(): CompanyUnitAddressReaderInterface
     {
         return new CompanyUnitAddressReader($this->createCompanyUnitAddressRepository());
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressRepositoryInterface
-     */
-    public function createCompanyUnitAddressRepository(): CompanyUnitAddressRepositoryInterface
-    {
-        return new CompanyUnitAddressPropelRepository();
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressWriterRepositoryInterface
-     */
-    public function createCompanyUnitAddressWriterRepository(): CompanyUnitAddressWriterRepositoryInterface
-    {
-        return new CompanyUnitAddressWriterPropelRepository();
     }
 
     /**

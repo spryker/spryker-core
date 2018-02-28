@@ -9,5 +9,5 @@ namespace Spryker\Shared\CompanyBusinessUnit;
 
 interface CompanyBusinessUnitConstants
 {
-    public const COMPANY_BUSINESS_UNIT_DEFAULT_NAME = 'Default';
+    public const COMPANY_BUSINESS_UNIT_DEFAULT_NAME = 'COMPANY_BUSINESS_UNIT_DEFAULT_NAME';
 }

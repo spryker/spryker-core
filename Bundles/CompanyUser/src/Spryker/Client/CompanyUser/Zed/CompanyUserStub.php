@@ -7,9 +7,11 @@
 
 namespace Spryker\Client\CompanyUser\Zed;
 
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\ResponseErrorTransfer;
+use Generated\Shared\Transfer\ResponseMessageTransfer;
 use Spryker\Client\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
 use Spryker\Client\Kernel\CanAwareTrait;
 use Spryker\Client\ZedRequest\ZedRequestClient;
@@ -46,14 +48,48 @@ class CompanyUserStub implements CompanyUserStubInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function updateCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        return $this->zedRequestClient->call('/company-user/gateway/update', $companyUserTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function deleteCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        return $this->zedRequestClient->call('/company-user/gateway/delete', $companyUserTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function getCompanyUserCollection(
+        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+    ): CompanyUserCollectionTransfer {
+        return $this->zedRequestClient->call(
+            '/company-user/gateway/get-company-user-collection',
+            $companyUserCriteriaFilterTransfer
+        );
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     protected function generatePermissionErrorMessage()
     {
-        $messageTransfer = new ResponseErrorTransfer();
+        $messageTransfer = new ResponseMessageTransfer();
 
         $companyUserResponseTransfer = new CompanyUserResponseTransfer();
-        $companyUserResponseTransfer->addError($messageTransfer);
+        $companyUserResponseTransfer->addMessage($messageTransfer);
         $companyUserResponseTransfer->setIsSuccessful(false);
 
         return $companyUserResponseTransfer;

@@ -8,17 +8,35 @@
 namespace Spryker\Zed\CompanyRole\Business;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Zed\CompanyRole\Persistence\CompanyRolePersistenceFactory;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CompanyRole\Business\CompanyRoleBusinessFactory getFactory()
+ * @method \Spryker\Zed\CompanyRole\Persistence\CompanyRoleRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CompanyRole\Persistence\CompanyRoleEntityManagerInterface getEntityManager()
  */
 class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
+     */
+    public function getCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer
+    {
+        return $this->getRepository()
+            ->getCompanyRoleById($companyRoleTransfer);
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -31,7 +49,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     public function create(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
     {
         return $this->getFactory()
-            ->createCompanyRoleWriter()
+            ->createCompanyRole()
             ->create($companyRoleTransfer);
     }
 
@@ -44,11 +62,11 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
      *
      * @return void
      */
-    public function update(CompanyRoleTransfer $companyRoleTransfer)
+    public function update(CompanyRoleTransfer $companyRoleTransfer): void
     {
         $this->getFactory()
-            ->createCompanyRoleWriterRepository()
-            ->save($companyRoleTransfer);
+            ->createCompanyRole()
+            ->update($companyRoleTransfer);
     }
 
     /**
@@ -60,8 +78,11 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
      *
      * @return void
      */
-    public function delete(CompanyRoleTransfer $companyRoleTransfer)
+    public function delete(CompanyRoleTransfer $companyRoleTransfer): void
     {
+        $this->getFactory()
+            ->createCompanyRole()
+            ->delete($companyRoleTransfer);
     }
 
     /**
@@ -73,9 +94,23 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
      */
     public function findCompanyRoles(): CompanyRoleCollectionTransfer
     {
-        return $this->getFactory()
-            ->createCompanyRoleRepository()
+        return $this->getRepository()
             ->findCompanyRole();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCompanyRole
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findCompanyRolePermissions(int $idCompanyRole): PermissionCollectionTransfer
+    {
+        return $this->getRepository()
+            ->findCompanyRolePermissions($idCompanyRole);
     }
 
     /**
@@ -87,8 +122,11 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
      *
      * @return void
      */
-    public function saveCompanyUser(CompanyUserTransfer $companyUserTransfer)
+    public function saveCompanyUser(CompanyUserTransfer $companyUserTransfer): void
     {
+        $this->getFactory()
+            ->createCompanyRole()
+            ->saveCompanyUser($companyUserTransfer);
     }
 
     /**
@@ -102,7 +140,9 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
      */
     public function hydrateCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
     {
-        return $companyUserTransfer->setCompanyRoleCollection(new CompanyRoleCollectionTransfer());
+        return $this->getFactory()
+            ->createCompanyRole()
+            ->hydrateCompanyUser($companyUserTransfer);
     }
 
     /**
@@ -114,10 +154,25 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function findPermissionsByIdCompanyUser(int $idCompanyUser)
+    public function findPermissionsByIdCompanyUser(int $idCompanyUser): PermissionCollectionTransfer
     {
-        return (new CompanyRolePersistenceFactory)
-            ->createCompanyRoleRepository()
+        return $this->getRepository()
             ->findPermissionsByIdCompanyUser($idCompanyUser);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
+     */
+    public function getCompanyRoleCollection(
+        CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+    ): CompanyRoleCollectionTransfer {
+        return $this->getRepository()
+            ->getCompanyRoleCollection($companyRoleCriteriaFilterTransfer);
     }
 }

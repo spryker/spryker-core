@@ -9,5 +9,5 @@ namespace Spryker\Shared\CompanyRole;
 
 interface CompanyRoleConstants
 {
-    public const DEFAULT_COMPANY_ROLE_NAME = 'Admin';
+    public const DEFAULT_COMPANY_ROLE_NAME = 'DEFAULT_COMPANY_ROLE_NAME';
 }

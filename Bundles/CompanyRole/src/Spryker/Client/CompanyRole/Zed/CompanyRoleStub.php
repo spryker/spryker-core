@@ -7,32 +7,101 @@
 
 namespace Spryker\Client\CompanyRole\Zed;
 
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
-use Spryker\Client\ZedRequest\ZedRequestClient;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToZedRequestClientInterface;
 
 class CompanyRoleStub implements CompanyRoleStubInterface
 {
     /**
-     * @var \Spryker\Client\ZedRequest\ZedRequestClient
+     * @var \Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToZedRequestClientInterface
      */
-    protected $zedStub;
+    protected $zedRequestClient;
 
     /**
-     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
+     * @param \Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToZedRequestClientInterface $zedRequestClient
      */
-    public function __construct(ZedRequestClient $zedStub)
+    public function __construct(CompanyRoleToZedRequestClientInterface $zedRequestClient)
     {
-        $this->zedStub = $zedStub;
+        $this->zedRequestClient = $zedRequestClient;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function createCompanyRole(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
     {
-        return $this->zedStub->call('/company-role/gateway/create', $companyRoleTransfer);
+        return $this->zedRequestClient->call('/company-role/gateway/create', $companyRoleTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function getCompanyRoleCollection(
+        CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+    ): CompanyRoleCollectionTransfer {
+        return $this->zedRequestClient->call(
+            '/company-role/gateway/get-company-role-collection',
+            $companyRoleCriteriaFilterTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function getCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer
+    {
+        return $this->zedRequestClient->call(
+            '/company-role/gateway/get-company-role-by-id',
+            $companyRoleTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return void
+     */
+    public function updateCompanyRole(CompanyRoleTransfer $companyRoleTransfer): void
+    {
+        $this->zedRequestClient->call(
+            '/company-role/gateway/update-company-role',
+            $companyRoleTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return void
+     */
+    public function deleteCompanyRole(CompanyRoleTransfer $companyRoleTransfer): void
+    {
+        $this->zedRequestClient->call(
+            '/company-role/gateway/delete-company-role',
+            $companyRoleTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function findCompanyRolePermissions(CompanyRoleTransfer $companyRoleTransfer): PermissionCollectionTransfer
+    {
+        return $this->zedRequestClient->call(
+            '/company-role/gateway/find-company-role-permissions',
+            $companyRoleTransfer
+        );
     }
 }

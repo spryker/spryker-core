@@ -9,12 +9,12 @@ namespace Spryker\Zed\CompanyRole\Communication\Plugin;
 
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
-use Spryker\Shared\CompanyRole\CompanyRoleConstants;
 use Spryker\Zed\Company\Dependency\Plugin\CompanyPostCreatePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface getFacade()
+ * @method \Spryker\Zed\CompanyRole\CompanyRoleConfig getConfig()
  */
 class CompanyRoleCreatePlugin extends AbstractPlugin implements CompanyPostCreatePluginInterface
 {
@@ -43,7 +43,7 @@ class CompanyRoleCreatePlugin extends AbstractPlugin implements CompanyPostCreat
     {
         $companyRoleTransfer = new CompanyRoleTransfer();
         $companyRoleTransfer->setFkCompany($companyTransfer->getIdCompany())
-            ->setName(CompanyRoleConstants::DEFAULT_COMPANY_ROLE_NAME)
+            ->setName($this->getConfig()->getCompanyRoleDefaultName())
             ->setIsDefault(true);
 
         $this->getFacade()->create($companyRoleTransfer);

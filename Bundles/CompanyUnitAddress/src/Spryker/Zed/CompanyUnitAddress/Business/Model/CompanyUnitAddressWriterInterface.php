@@ -32,22 +32,4 @@ interface CompanyUnitAddressWriterInterface
      * @return void
      */
     public function delete(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
-    public function createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddresses(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
-    public function updateCompanyUnitAddressAndBusinessUnitDefaultAddresses(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer;
 }

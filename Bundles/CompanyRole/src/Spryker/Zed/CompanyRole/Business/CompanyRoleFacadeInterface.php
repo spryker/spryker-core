@@ -8,12 +8,26 @@
 namespace Spryker\Zed\CompanyRole\Business;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
 
 interface CompanyRoleFacadeInterface
 {
+    /**
+     * Specification:
+     * - Finds a company role by CompanyRoleTransfer::idCompanyRole in the transfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
+     */
+    public function getCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer;
+
     /**
      * Specification:
      * - Creates a company role
@@ -38,7 +52,7 @@ interface CompanyRoleFacadeInterface
      *
      * @return void
      */
-    public function update(CompanyRoleTransfer $companyRoleTransfer);
+    public function update(CompanyRoleTransfer $companyRoleTransfer): void;
 
     /**
      * Specification:
@@ -51,7 +65,7 @@ interface CompanyRoleFacadeInterface
      *
      * @return void
      */
-    public function delete(CompanyRoleTransfer $companyRoleTransfer);
+    public function delete(CompanyRoleTransfer $companyRoleTransfer): void;
 
     /**
      * Specification:
@@ -65,6 +79,18 @@ interface CompanyRoleFacadeInterface
 
     /**
      * Specification:
+     * - Finds company role permissions
+     *
+     * @api
+     *
+     * @param int $idCompanyRole
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findCompanyRolePermissions(int $idCompanyRole): PermissionCollectionTransfer;
+
+    /**
+     * Specification:
      * - Removes related to the company user roles
      * - Creates relations roles to the company user according CompanyUserTransfer::companyRoleCollection
      *
@@ -74,7 +100,7 @@ interface CompanyRoleFacadeInterface
      *
      * @return void
      */
-    public function saveCompanyUser(CompanyUserTransfer $companyUserTransfer);
+    public function saveCompanyUser(CompanyUserTransfer $companyUserTransfer): void;
 
     /**
      * Specification:
@@ -98,5 +124,19 @@ interface CompanyRoleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function findPermissionsByIdCompanyUser(int $idCompanyUser);
+    public function findPermissionsByIdCompanyUser(int $idCompanyUser): PermissionCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds a company roles by company id.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
+     */
+    public function getCompanyRoleCollection(
+        CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+    ): CompanyRoleCollectionTransfer;
 }

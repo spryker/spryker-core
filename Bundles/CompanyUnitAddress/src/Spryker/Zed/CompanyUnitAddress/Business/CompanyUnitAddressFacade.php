@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressBusinessFactory getFactory()
+ * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressEntityManagerInterface getEntityManager()
  */
 class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddressFacadeInterface
 {
@@ -69,7 +71,7 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
      */
     public function getCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
     {
-        return $this->getFactory()->createCompanyUnitAddressReader()->getCompanyUnitAddressById($companyUnitAddressTransfer);
+        return $this->getRepository()->getCompanyUnitAddressById($companyUnitAddressTransfer);
     }
 
     /**
@@ -86,43 +88,5 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
     ): CompanyUnitAddressCollectionTransfer {
 
         return $this->getFactory()->createCompanyUnitAddressReader()->getCompanyUnitAddressCollection($companyUnitAddressCollectionTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
-    public function createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddresses(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer {
-        return $this->getFactory()
-            ->createCompanyUnitAddressWriter()
-            ->createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddresses($companyUnitAddressTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
-    public function updateCompanyUnitAddressAndBusinessUnitDefaultAddresses(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer {
-        return $this->getFactory()
-            ->createCompanyUnitAddressWriter()
-            ->updateCompanyUnitAddressAndBusinessUnitDefaultAddresses($companyUnitAddressTransfer);
     }
 }
