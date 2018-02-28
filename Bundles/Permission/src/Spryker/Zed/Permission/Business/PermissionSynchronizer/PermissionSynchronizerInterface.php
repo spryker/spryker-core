@@ -5,8 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Permission\Persistence;
+namespace Spryker\Zed\Permission\Business\PermissionSynchronizer;
 
-interface PermissionQueryContainerInterface
+interface PermissionSynchronizerInterface
 {
+    /**
+     * @return void
+     */
+    public function sync(): void;
 }

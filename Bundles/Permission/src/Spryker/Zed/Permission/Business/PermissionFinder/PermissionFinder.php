@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\Permission\Business\PermissionFinder;
 
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
+use Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface;
+
 class PermissionFinder implements PermissionFinderInterface
 {
     /**
@@ -25,9 +29,9 @@ class PermissionFinder implements PermissionFinderInterface
     /**
      * @param string $permissionKey
      *
-     * @return null|\Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface
+     * @return null|\Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface
      */
-    public function findPermissionPlugin($permissionKey)
+    public function findPermissionPlugin($permissionKey): ?PermissionPluginInterface
     {
         if (!isset($this->permissionPlugins[$permissionKey])) {
             return null;
@@ -37,11 +41,26 @@ class PermissionFinder implements PermissionFinderInterface
     }
 
     /**
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getRegisteredPermissions(): PermissionCollectionTransfer
+    {
+        $permissionCollectionTransfer = new PermissionCollectionTransfer();
+
+        foreach ($this->permissionPlugins as $permissionPlugin) {
+            $permissionTransfer = (new PermissionTransfer())->setKey($permissionPlugin->getKey());
+            $permissionCollectionTransfer->addPermission($permissionTransfer);
+        }
+
+        return $permissionCollectionTransfer;
+    }
+
+    /**
      * @param \Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface[] $permissionPlugins
      *
      * @return array
      */
-    protected function indexPermissions(array $permissionPlugins)
+    protected function indexPermissions(array $permissionPlugins): array
     {
         $plugins = [];
 

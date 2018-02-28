@@ -39,4 +39,15 @@ interface PermissionClientInterface
      * @return bool
      */
     public function can($permissionKey, $context = null): bool;
+
+    /**
+     * Specification:
+     * - Finds permission plugin stack registered in the permission client dependency provider
+     * - Returns a mapped permission collection transfer
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getRegisteredPermissions(): PermissionCollectionTransfer;
 }

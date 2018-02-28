@@ -8,12 +8,13 @@
 namespace Spryker\Zed\Permission\Business;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
-use Generated\Shared\Transfer\PermissionTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
+ * @method \Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface getRepository()
  * @method \Spryker\Zed\Permission\Business\PermissionBusinessFactory getFactory()
  */
-class PermissionFacade implements PermissionFacadeInterface
+class PermissionFacade extends AbstractFacade implements PermissionFacadeInterface
 {
     /**
      * {@inheritdoc}
@@ -24,19 +25,7 @@ class PermissionFacade implements PermissionFacadeInterface
      */
     public function findAll(): PermissionCollectionTransfer
     {
-        $collection = new PermissionCollectionTransfer();
-        $permission = new PermissionTransfer();
-        $permission->setIdPermission(1)
-            ->setConfiguration([])
-            ->setKey('permission.allow.checkout.placeOrder.grandTotalX');
-        $collection->addPermission($permission);
-
-            $permission = new PermissionTransfer();
-        $permission->setIdPermission(2)
-            ->setConfiguration([])
-            ->setKey('permission.allow.user.to.create.another.user');
-        $collection->addPermission($permission);
-        return $collection;
+        return $this->getRepository()->findAll();
     }
 
     /**
@@ -50,10 +39,22 @@ class PermissionFacade implements PermissionFacadeInterface
      *
      * @return bool
      */
-    public function can($permissionKey, $identifier, $context = null)
+    public function can($permissionKey, $identifier, $context = null): bool
     {
         $this->getFactory()
             ->createPermissionExecutor()
             ->can($permissionKey, $identifier, $context);
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function syncPermissionPlugins(): void
+    {
+        $this->getFactory()
+            ->createPermissionSynchronizer()
+            ->sync();
     }
 }
