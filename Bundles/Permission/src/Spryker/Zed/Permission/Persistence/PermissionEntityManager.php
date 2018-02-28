@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Permission\Persistence;
 
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
-class PermissionQueryContainer extends AbstractQueryContainer implements PermissionQueryContainerInterface
+class PermissionEntityManager extends AbstractEntityManager
 {
 }
