@@ -40,16 +40,16 @@ class CompanyRoleStub implements CompanyRoleStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getCompanyRoleCollection(
-        CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+        CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyRoleCollectionTransfer {
         return $this->zedRequestClient->call(
             '/company-role/gateway/get-company-role-collection',
-            $companyRoleCriteriaFilterTransfer
+            $criteriaFilterTransfer
         );
     }
 

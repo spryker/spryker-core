@@ -23,12 +23,12 @@ interface CompanyRoleStubInterface
     public function createCompanyRole(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
      */
     public function getCompanyRoleCollection(
-        CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+        CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyRoleCollectionTransfer;
 
     /**

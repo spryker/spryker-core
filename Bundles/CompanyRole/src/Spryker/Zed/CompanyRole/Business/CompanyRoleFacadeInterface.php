@@ -31,6 +31,7 @@ interface CompanyRoleFacadeInterface
     /**
      * Specification:
      * - Creates a company role
+     * - Creates company role permissions
      *
      * @api
      *
@@ -44,7 +45,8 @@ interface CompanyRoleFacadeInterface
      * Specification:
      * - Finds a company role by CompanyRoleTransfer::idCompanyRole in the transfer
      * - Updates fields in a company role entity
-     * - Finds/creates permissions according CompanyRoleTransfer::permission and updates configuration in them
+     * - Finds/creates/updates permissions according CompanyRoleTransfer::permissionCollection and updates
+     * configuration in them
      *
      * @api
      *
@@ -128,15 +130,15 @@ interface CompanyRoleFacadeInterface
 
     /**
      * Specification:
-     * - Finds a company roles by company id.
+     * - Finds a company roles according CompanyRoleCriteriaFilterTransfer
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
      */
     public function getCompanyRoleCollection(
-        CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+        CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyRoleCollectionTransfer;
 }
