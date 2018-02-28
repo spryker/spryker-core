@@ -14,6 +14,7 @@ interface QuoteClientInterface
     /**
      * Specification:
      * - Returns the stored quote.
+     * - TODO: what happens when persistent quote is enabled?
      *
      * @api
      *
@@ -24,6 +25,7 @@ interface QuoteClientInterface
     /**
      * Specification:
      * - Stores the quote.
+     * - TODO: what happens when persistent quote is enabled?
      *
      * @api
      *
@@ -36,6 +38,7 @@ interface QuoteClientInterface
     /**
      * Specification:
      * - Resets all data which is stored in the quote.
+     * - TODO: what happens when persistent quote is enabled?
      *
      * @api
      *
@@ -46,6 +49,7 @@ interface QuoteClientInterface
     /**
      * Specification:
      * - Gets quote from storage and save it in customer session.
+     * - TODO: what happens when persistent quote is NOT enabled?
      *
      * @api
      *
@@ -56,6 +60,7 @@ interface QuoteClientInterface
     /**
      * Specification:
      * - Gets quote from customer session and save it in storage.
+     * - TODO: what happens when persistent quote is NOT enabled?
      *
      * @api
      *

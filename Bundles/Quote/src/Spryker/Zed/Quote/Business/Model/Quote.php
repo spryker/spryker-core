@@ -14,6 +14,7 @@ use Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface;
 use Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface;
 use Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface;
 
+// TODO: this class is doing too much. Split it to QuoteReader, QuoteWriter, QuoteDeleter
 class Quote implements QuoteInterface
 {
     /**

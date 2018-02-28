@@ -26,6 +26,7 @@ interface CartClientInterface
     /**
      * Specification:
      *  - Empty existing quote and store to session
+     * - TODO: update spec
      *
      * @api
      *
@@ -160,6 +161,7 @@ interface CartClientInterface
     /**
      * Specification:
      *  - Store current quote into session
+     * - TODO: update spec
      *
      * @api
      *

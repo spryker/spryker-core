@@ -9,6 +9,7 @@ namespace Spryker\Zed\Quote\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
+// TODO: what's the use case?
 interface QuotePreSavePluginInterface
 {
     /**

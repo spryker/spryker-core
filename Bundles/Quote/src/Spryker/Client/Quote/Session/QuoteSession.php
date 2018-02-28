@@ -44,7 +44,7 @@ class QuoteSession implements QuoteSessionInterface
      */
     public function __construct(
         SessionInterface $session,
-        StorageStrategyInterface $storageStrategy,
+        StorageStrategyInterface $storageStrategy, // TODO: Storage shouldn't be part of the session strategy, it should be the other way around.
         QuoteToCurrencyInterface $currencyPlugin = null,
         array $quoteTransferExpanderPlugins = []
     ) {

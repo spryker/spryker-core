@@ -15,6 +15,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
  * @method \Spryker\Client\Quote\QuoteClientInterface getClient()
  * @method \Spryker\Client\Quote\QuoteFactory getFactory()
  */
+// TODO: rename to
 class CustomerChangeQuoteSyncPlugin extends AbstractPlugin implements CustomerSessionSetPluginInterface
 {
     /**

@@ -39,17 +39,19 @@ class QuoteMerger implements QuoteMergerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteMergeTransfer $quoteMergeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer TODO: you are using only QuoteTransfer so far, are you planning to use the other attributes of the QuoteResponseTransfer?
      */
     public function merge(QuoteMergeTransfer $quoteMergeTransfer): QuoteResponseTransfer
     {
         $sourceQuote = $quoteMergeTransfer->getSourceQuote();
         $targetQuote = $quoteMergeTransfer->getTargetQuote();
         $quoteTransfer = new QuoteTransfer();
+        // TODO: clarify this part
         $quoteTransfer->fromArray($sourceQuote->modifiedToArray());
         $quoteTransfer->fromArray($targetQuote->modifiedToArray());
         $quoteTransfer = $this->mergeItems($quoteTransfer, $sourceQuote);
         $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
+        // TODO: What happens if persistent quote is not enabled?
         $quoteResponseTransfer = $this->quoteModel->save($quoteTransfer);
         $quoteTransfer->setIdQuote(
             $quoteResponseTransfer->getQuoteTransfer()->getIdQuote()
@@ -115,6 +117,7 @@ class QuoteMerger implements QuoteMergerInterface
      * @param array $cartIndex
      *
      * @return void
+     * TODO: this method is not used
      */
     protected function decreaseExistingItem($existingItems, $itemIdentifier, $itemTransfer, array $cartIndex)
     {

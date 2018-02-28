@@ -13,6 +13,7 @@ use Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface;
 use Spryker\Client\Quote\Zed\QuoteStubInterface;
 use Spryker\Shared\Quote\QuoteConfig;
 
+// TODO: why is this class in Session namespace? Class name should represent what it does exactly, in this case something like CustomerLoginQuoteMerger.
 class QuoteResolver implements QuoteResolverInterface
 {
     /**

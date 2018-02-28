@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
 use Spryker\Zed\Quote\Dependency\Service\QuoteToUtilEncodingServiceInterface;
 
+// TODO: move this class to Propel namespace
 class QuoteMapper implements QuoteMapperInterface
 {
     /**
@@ -32,6 +33,7 @@ class QuoteMapper implements QuoteMapperInterface
      * @param \Generated\Shared\Transfer\SpyQuoteEntityTransfer $quoteEntityTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
+     * TODO: method name could be `mapQuoteTransfer()`
      */
     public function mapEntityTransferToTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer
     {
@@ -62,6 +64,7 @@ class QuoteMapper implements QuoteMapperInterface
      * @param \Generated\Shared\Transfer\SpyQuoteEntityTransfer $quoteEntityTransfer
      *
      * @return array
+     * TODO: rename to `decodeQuoteData()`
      */
     protected function restoreQuoteData(SpyQuoteEntityTransfer $quoteEntityTransfer)
     {
@@ -72,6 +75,7 @@ class QuoteMapper implements QuoteMapperInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string
+     * TODO: rename to `encodeQuoteData()`
      */
     protected function extractQuoteData(QuoteTransfer $quoteTransfer)
     {

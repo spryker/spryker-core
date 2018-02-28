@@ -74,7 +74,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
             if ($quoteResponseTransfer->getIsSuccessful()) {
                 $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
             }
-            $quoteTransfer->setCustomer($customerTransfer);
+            $quoteTransfer->setCustomer($customerTransfer); // TODO: remove side effect!
         }
 
         return $quoteTransfer;

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Quote\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
+// TODO: this class seems unnecessary
 class QuotePluginExecutor implements QuotePluginExecutorInterface
 {
     /**

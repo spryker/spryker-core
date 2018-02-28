@@ -15,10 +15,12 @@
         <property name="messages" type="ResponseMessage[]" singular="message" />
     </transfer>
 
+    <!-- TODO: if you need a list of messages, drop this transfer and use plain array instead -->
     <transfer name="ResponseMessage">
         <property name="message" type="string"/>
     </transfer>
 
+    <!-- TODO: rename to QuoteMergeRequest -->
     <transfer name="QuoteMerge">
         <property name="targetQuote" type="Quote"/>
         <property name="sourceQuote" type="Quote"/>
