@@ -13,8 +13,7 @@ interface CompanyPreSavePluginInterface
 {
     /**
      * Specification:
-     *
-     * Plugin is triggered before company is saved.
+     * - Plugin is triggered before company is saved.
      *
      * @api
      *
@@ -22,5 +21,5 @@ interface CompanyPreSavePluginInterface
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function preSave(CompanyTransfer $companyTransfer): CompanyTransfer;
+    public function preSaveValidation(CompanyTransfer $companyTransfer): CompanyTransfer;
 }

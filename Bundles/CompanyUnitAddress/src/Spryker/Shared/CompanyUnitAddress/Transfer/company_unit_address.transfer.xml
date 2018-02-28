@@ -5,12 +5,13 @@
 
     <transfer name="CompanyBusinessUnit">
         <property name="defaultBillingAddress" type="int"/>
+        <property name="addressCollection" type="CompanyUnitAddressCollection"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressResponse">
         <property name="companyUnitAddressTransfer" type="CompanyUnitAddress"/>
         <property name="isSuccessful" type="bool"/>
-        <property name="errors" type="ResponseError[]" singular="error"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
     </transfer>
 
     <transfer name="CompanyUnitAddress">
@@ -31,9 +32,13 @@
     </transfer>
 
     <transfer name="CompanyUnitAddressCollection">
-        <property name="fkCompanyBusinessUnit" type="int"/>
-        <property name="fkCompany" type="int"/>
         <property name="companyUnitAddresses" type="CompanyUnitAddress[]" singular="companyUnitAddress"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="CompanyUnitAddressCriteriaFilter">
+        <property name="idCompany" type="int"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
         <property name="filter" type="Filter"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
@@ -57,7 +62,7 @@
         <property name="lastPage" type="int"/>
     </transfer>
 
-    <transfer name="ResponseError">
-        <property name="message" type="string"/>
+    <transfer name="ResponseMessage">
+        <property name="text" type="string"/>
     </transfer>
 </transfers>

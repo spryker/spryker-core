@@ -44,13 +44,23 @@ class PermissionExecutor implements PermissionExecutorInterface
      */
     public function can($permissionKey, $identifier, $context = null): bool
     {
+        $permissionPlugin = $this->permissionFinder->findPermissionPlugin($permissionKey);
+
+        if (!$permissionPlugin) {
+            return true;
+        }
+
         $permissionCollectionTransfer = $this->findPermissions($permissionKey, $identifier);
 
-        if ($permissionCollectionTransfer->getPermissions()->count() === 0) {
+        if ($permissionCollectionTransfer->getPermissions()->count() <= 0) {
             return false;
         }
 
-        return $this->executePermissionCollection($permissionCollectionTransfer, $context);
+        if (!($permissionPlugin instanceof ExecutablePermissionPluginInterface)) {
+            return true;
+        }
+
+        return $this->executePermissionCollection($permissionPlugin, $permissionCollectionTransfer, $context);
     }
 
     /**
@@ -60,15 +70,19 @@ class PermissionExecutor implements PermissionExecutorInterface
      *  a senior sales manager up to 2000. A user has both roles assigned, then he/she has
      *  the permission to place an order up to 2000.
      *
+     * @param \Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface $permissionPlugin
      * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
      * @param string|int|array|null $context
      *
      * @return bool
      */
-    protected function executePermissionCollection(PermissionCollectionTransfer $permissionCollectionTransfer, $context = null): bool
-    {
+    protected function executePermissionCollection(
+        ExecutablePermissionPluginInterface $permissionPlugin,
+        PermissionCollectionTransfer $permissionCollectionTransfer,
+        $context = null
+    ): bool {
         foreach ($permissionCollectionTransfer->getPermissions() as $permissionTransfer) {
-            if ($this->executePermission($permissionTransfer, $context)) {
+            if ($this->executePermission($permissionPlugin, $permissionTransfer, $context)) {
                 return true;
             }
         }
@@ -77,23 +91,17 @@ class PermissionExecutor implements PermissionExecutorInterface
     }
 
     /**
+     * @param \Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface $permissionPlugin
      * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      * @param string|int|array|null $context
      *
      * @return bool
      */
-    protected function executePermission(PermissionTransfer $permissionTransfer, $context = null): bool
-    {
-        $permissionPlugin = $this->permissionFinder->findPermissionPlugin($permissionTransfer);
-
-        if (!$permissionPlugin) {
-            return true;
-        }
-
-        if (!($permissionPlugin instanceof ExecutablePermissionPluginInterface)) {
-            return true;
-        }
-
+    protected function executePermission(
+        ExecutablePermissionPluginInterface $permissionPlugin,
+        PermissionTransfer $permissionTransfer,
+        $context = null
+    ): bool {
         return $permissionPlugin->can($permissionTransfer->getConfiguration(), $context);
     }
 

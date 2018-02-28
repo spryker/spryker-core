@@ -7,8 +7,20 @@
 
 namespace Spryker\Client\Permission;
 
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
+
 interface PermissionClientInterface
 {
+    /**
+     * Specification:
+     * - Finds available permission list
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findAll(): PermissionCollectionTransfer;
+
     /**
      * Implements a general check for a chosen permission with the provided context
      *
@@ -27,4 +39,15 @@ interface PermissionClientInterface
      * @return bool
      */
     public function can($permissionKey, $context = null): bool;
+
+    /**
+     * Specification:
+     * - Finds permission plugin stack registered in the permission client dependency provider
+     * - Returns a mapped permission collection transfer
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getRegisteredPermissions(): PermissionCollectionTransfer;
 }
