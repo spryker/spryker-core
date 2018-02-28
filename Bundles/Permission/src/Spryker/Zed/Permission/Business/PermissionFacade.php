@@ -39,10 +39,22 @@ class PermissionFacade extends AbstractFacade implements PermissionFacadeInterfa
      *
      * @return bool
      */
-    public function can($permissionKey, $identifier, $context = null)
+    public function can($permissionKey, $identifier, $context = null): bool
     {
         $this->getFactory()
             ->createPermissionExecutor()
             ->can($permissionKey, $identifier, $context);
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function syncPermissionPlugins(): void
+    {
+        $this->getFactory()
+            ->createPermissionSynchronizer()
+            ->sync();
     }
 }

@@ -44,4 +44,17 @@ class PermissionMapper
     ) {
         return $permissionTransfer->fromArray($permissionEntity->toArray(), true);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
+     * @param \Orm\Zed\Permission\Persistence\SpyPermission $permissionEntity
+     *
+     * @return \Orm\Zed\Permission\Persistence\SpyPermission
+     */
+    public function mapPermissionTransferToEntity(PermissionTransfer $permissionTransfer, SpyPermission $permissionEntity)
+    {
+        $permissionEntity->setKey($permissionTransfer->getKey());
+
+        return $permissionEntity;
+    }
 }

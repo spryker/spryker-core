@@ -22,7 +22,7 @@ class PermissionFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface
      */
-    public function createPermissionConfigurator(): PermissionFinderInterface
+    public function createPermissionFinder(): PermissionFinderInterface
     {
         return new PermissionFinder(
             $this->getPermissionPlugins()
@@ -36,7 +36,7 @@ class PermissionFactory extends AbstractFactory
     {
         return new PermissionExecutor(
             $this->getPermissionStoragePlugin(),
-            $this->createPermissionConfigurator()
+            $this->createPermissionFinder()
         );
     }
 

@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\Permission\PermissionFinder;
 
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
+
 class PermissionFinder implements PermissionFinderInterface
 {
     /**
@@ -34,6 +37,21 @@ class PermissionFinder implements PermissionFinderInterface
         }
 
         return $this->permissionPlugins[$permissionKey];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getRegisteredPermissionCollection(): PermissionCollectionTransfer
+    {
+        $permissionCollectionTransfer = new PermissionCollectionTransfer();
+
+        foreach ($this->permissionPlugins as $permissionPlugin) {
+            $permissionTransfer = (new PermissionTransfer())->setKey($permissionPlugin->getKey());
+            $permissionCollectionTransfer->addPermission($permissionTransfer);
+        }
+
+        return $permissionCollectionTransfer;
     }
 
     /**

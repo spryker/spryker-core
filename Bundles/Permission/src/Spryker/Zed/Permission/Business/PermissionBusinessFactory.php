@@ -10,10 +10,12 @@ namespace Spryker\Zed\Permission\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Permission\Business\PermissionExecutor\PermissionExecutor;
 use Spryker\Zed\Permission\Business\PermissionFinder\PermissionFinder;
+use Spryker\Zed\Permission\Business\PermissionSynchronizer\PermissionSynchronizer;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 
 /**
- * @method \Spryker\Zed\Permission\Persistence\PermissionQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Permission\Persistence\PermissionEntityManagerInterface getEntityManager()
  */
 class PermissionBusinessFactory extends AbstractBusinessFactory
 {
@@ -47,10 +49,30 @@ class PermissionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Permission\Business\PermissionSynchronizer\PermissionSynchronizerInterface
+     */
+    public function createPermissionSynchronizer()
+    {
+        return new PermissionSynchronizer(
+            $this->getPermissionClient(),
+            $this->createPermissionFinder(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface[]
      */
     public function getPermissionPlugins()
     {
         return $this->getProvidedDependency(PermissionDependencyProvider::PLUGINS_PERMISSION);
+    }
+
+    /**
+     * @return \Spryker\Client\Permission\PermissionClientInterface
+     */
+    public function getPermissionClient()
+    {
+        return $this->getProvidedDependency(PermissionDependencyProvider::CLIENT_PERMISSION);
     }
 }
