@@ -30,34 +30,34 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
         $query = $this->getFactory()
             ->createCompanyBusinessUnitQuery()
             ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit);
-        $entitytransfer = $this->buildQueryFromCriteria($query)->findOne();
+        $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
 
         return $this->getFactory()
             ->createCompanyBusinessUnitMapper()
-            ->mapEntityTransferToBusinessUnitTransfer($entitytransfer, new CompanyBusinessUnitTransfer());
+            ->mapEntityTransferToBusinessUnitTransfer($entityTransfer, new CompanyBusinessUnitTransfer());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
-    public function filterCompanyBusinessUnits(
-        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
+    public function getCompanyBusinessUnitCollection(
+        CompanyBusinessUnitCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer {
-        $companyBusinessUnitCriteriaFilterTransfer->requireIdCompany();
+        $criteriaFilterTransfer->requireIdCompany();
         $query = $this->getFactory()
             ->createCompanyBusinessUnitQuery()
-            ->filterByFkCompany($companyBusinessUnitCriteriaFilterTransfer->getIdCompany());
+            ->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
 
-        if ($companyBusinessUnitCriteriaFilterTransfer->getIdCompanyUser() !== null) {
+        if ($criteriaFilterTransfer->getIdCompanyUser() !== null) {
             $query->useCompanyUserQuery()
-                ->filterByIdCompanyUser($companyBusinessUnitCriteriaFilterTransfer->getIdCompanyUser())
+                ->filterByIdCompanyUser($criteriaFilterTransfer->getIdCompanyUser())
                 ->endUse();
         }
 
-        $collection = $this->buildQueryFromCriteria($query, $companyBusinessUnitCriteriaFilterTransfer->getFilter());
-        $collection = $this->getPaginatedCollection($collection, $companyBusinessUnitCriteriaFilterTransfer->getPagination());
+        $collection = $this->buildQueryFromCriteria($query, $criteriaFilterTransfer->getFilter());
+        $collection = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
 
         $collectionTransfer = new CompanyBusinessUnitCollectionTransfer();
 
@@ -72,7 +72,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
             $collectionTransfer->addCompanyBusinessUnit($businessUnitTransfer);
         }
 
-        $collectionTransfer->setPagination($companyBusinessUnitCriteriaFilterTransfer->getPagination());
+        $collectionTransfer->setPagination($criteriaFilterTransfer->getPagination());
 
         return $collectionTransfer;
     }

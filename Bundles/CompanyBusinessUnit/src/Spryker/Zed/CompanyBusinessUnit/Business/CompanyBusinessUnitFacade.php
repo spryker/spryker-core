@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitBusinessFactory getFactory()
+ * @method \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface getEntityManager()
  */
 class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusinessUnitFacadeInterface
 {
@@ -29,9 +31,10 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     public function getCompanyBusinessUnitById(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitTransfer {
-        return $this->getFactory()
-            ->createCompanyBusinessUnit()
-            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+        return $this->getRepository()
+            ->getCompanyBusinessUnitById(
+                $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
+            );
     }
 
     /**
@@ -97,8 +100,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     public function getCompanyBusinessUnitCollection(
         CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer {
-        return $this->getFactory()
-            ->createCompanyBusinessUnit()
+        return $this->getRepository()
             ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
     }
 }

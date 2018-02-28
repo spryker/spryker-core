@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CompanyBusinessUnit\Business\Model;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
-use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface;
@@ -39,21 +37,6 @@ class CompanyBusinessUnit implements CompanyBusinessUnitInterface
     ) {
         $this->repository = $companyBusinessUnitRepository;
         $this->entityManager = $companyBusinessUnitEntityManager;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
-     */
-    public function getCompanyBusinessUnitById(
-        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): CompanyBusinessUnitTransfer {
-        $companyBusinessUnitTransfer->requireIdCompanyBusinessUnit();
-
-        return $this->repository->getCompanyBusinessUnitById(
-            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
-        );
     }
 
     /**
@@ -92,23 +75,17 @@ class CompanyBusinessUnit implements CompanyBusinessUnitInterface
     ): CompanyBusinessUnitResponseTransfer {
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyBusinessUnitTransfer) {
             $companyBusinessUnitTransfer->requireIdCompanyBusinessUnit();
+            $hasUsers = $this->repository->hasUsers($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
+            if ($hasUsers) {
+                return (new CompanyBusinessUnitResponseTransfer())->setIsSuccessful(false);
+            }
+
             $this->entityManager->deleteCompanyBusinessUnitById(
                 $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
             );
 
             return (new CompanyBusinessUnitResponseTransfer())->setIsSuccessful(true);
         });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
-     */
-    public function getCompanyBusinessUnitCollection(
-        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
-    ): CompanyBusinessUnitCollectionTransfer {
-        return $this->repository->filterCompanyBusinessUnits($companyBusinessUnitCriteriaFilterTransfer);
     }
 
     /**
