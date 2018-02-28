@@ -19,6 +19,8 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param int $idCompany
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]

@@ -14,23 +14,27 @@ class CompanyMapper implements CompanyMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     * @param \Generated\Shared\Transfer\SpyCompanyEntityTransfer $companyEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyCompanyEntityTransfer
      */
     public function mapCompanyTransferToEntityTransfer(
-        CompanyTransfer $companyTransfer
+        CompanyTransfer $companyTransfer,
+        SpyCompanyEntityTransfer $companyEntityTransfer
     ): SpyCompanyEntityTransfer {
-        return (new SpyCompanyEntityTransfer())->fromArray($companyTransfer->modifiedToArray(), true);
+        return $companyEntityTransfer->fromArray($companyTransfer->modifiedToArray(), true);
     }
 
     /**
      * @param \Generated\Shared\Transfer\SpyCompanyEntityTransfer $companyEntityTransfer
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
     public function mapEntityTransferToCompanyTransfer(
-        SpyCompanyEntityTransfer $companyEntityTransfer
+        SpyCompanyEntityTransfer $companyEntityTransfer,
+        CompanyTransfer $companyTransfer
     ): CompanyTransfer {
-        return (new CompanyTransfer())->fromArray($companyEntityTransfer->toArray(), true);
+        return $companyTransfer->fromArray($companyEntityTransfer->toArray(), true);
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Company\Persistence;
 
 use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\SpyCompanyEntityTransfer;
 use Generated\Shared\Transfer\SpyCompanyStoreEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -27,12 +28,12 @@ class CompanyEntityManager extends AbstractEntityManager implements CompanyEntit
     {
         $entityTransfer = $this->getFactory()
             ->createCompanyMapper()
-            ->mapCompanyTransferToEntityTransfer($companyTransfer);
+            ->mapCompanyTransferToEntityTransfer($companyTransfer, new SpyCompanyEntityTransfer());
         $entityTransfer = $this->save($entityTransfer);
 
         return $this->getFactory()
             ->createCompanyMapper()
-            ->mapEntityTransferToCompanyTransfer($entityTransfer);
+            ->mapEntityTransferToCompanyTransfer($entityTransfer, $companyTransfer);
     }
 
     /**

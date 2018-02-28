@@ -13,6 +13,8 @@ interface CompanyRepositoryInterface
      * Specification:
      * - Retrieve stores related to company
      *
+     * @api
+     *
      * @param int $idCompany
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
