@@ -65,10 +65,10 @@ class ProductBundleStockHandler implements ProductBundleStockHandlerInterface
      */
     protected function getBundlesUsingProductBySku($bundledProductSku)
     {
-        $isMissingInCache = !isset(static::$bundledItemEntityCache[$bundledProductSku])
-            || count(static::$bundledItemEntityCache[$bundledProductSku]) == 0;
+        $isInCache = isset(static::$bundledItemEntityCache[$bundledProductSku])
+            && count(static::$bundledItemEntityCache[$bundledProductSku]) > 0;
 
-        if ($isMissingInCache) {
+        if (!$isInCache) {
             static::$bundledItemEntityCache[$bundledProductSku] = $this->productBundleQueryContainer
                 ->queryBundledProductBySku($bundledProductSku)
                 ->find();
