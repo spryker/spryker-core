@@ -39,11 +39,10 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $availabilityFacadeMock
-            ->expects($this->exactly(2))
+            ->expects($this->once())
             ->method('isProductSellableForStore')
             ->withConsecutive(
                 [$this->equalTo($this->fixtures['bundle-sku']), $this->equalTo(5)],
-                [$this->equalTo($this->fixtures['bundledProductSku']), $this->equalTo(15)]
             )
             ->willReturn(true);
 
