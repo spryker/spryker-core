@@ -29,6 +29,7 @@ class AbstractProductConcreteStorageListener extends AbstractPlugin
     const PRODUCT_CONCRETE_STORAGE_ENTITY = 'PRODUCT_CONCRETE_STORAGE_ENTITY';
     const LOCALE_NAME = 'LOCALE_NAME';
     const STORE_NAME = 'STORE_NAME';
+
     /**
      * @var array Array keys are super attribute keys, values are "true" constants.
      */
@@ -143,8 +144,8 @@ class AbstractProductConcreteStorageListener extends AbstractPlugin
             list($pairs, $mappedProductConcreteStorageEntities) = $this->pairProductConcreteLocalizedEntityWithProductConcreteStorageEntitiesByStoresAndLocale(
                 $productConcreteLocalizedEntity[static::COL_FK_PRODUCT],
                 $productConcreteLocalizedEntity['Locale']['locale_name'],
-                $productConcreteLocalizedEntity,
                 $productConcreteLocalizedEntity['SpyProduct']['SpyProductAbstract']['SpyProductAbstractStores'],
+                $productConcreteLocalizedEntity,
                 $mappedProductConcreteStorageEntities,
                 $pairs
             );
@@ -158,8 +159,8 @@ class AbstractProductConcreteStorageListener extends AbstractPlugin
     /**
      * @param int $idProduct
      * @param string $localeName
-     * @param array $productConcreteLocalizedEntity
      * @param array $productAbstractStoreEntities
+     * @param array $productConcreteLocalizedEntity
      * @param array $mappedProductConcreteStorageEntities
      * @param array $pairs
      *
@@ -168,8 +169,8 @@ class AbstractProductConcreteStorageListener extends AbstractPlugin
     protected function pairProductConcreteLocalizedEntityWithProductConcreteStorageEntitiesByStoresAndLocale(
         $idProduct,
         $localeName,
-        $productConcreteLocalizedEntity,
         $productAbstractStoreEntities,
+        $productConcreteLocalizedEntity,
         array $mappedProductConcreteStorageEntities,
         array $pairs
     ) {

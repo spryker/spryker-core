@@ -120,6 +120,11 @@ class AbstractProductAbstractStorageListener extends AbstractPlugin
     }
 
     /**
+     * - Returns a paired array with all provided entities.
+     * - ProductAbstractLocalizedEntities without ProductAbstractStorageEntity are paired with a newly created ProductAbstractStorageEntity.
+     * - ProductAbstractStorageEntity without ProductAbstractLocalizedEntities (left outs) are paired with NULL.
+     * - ProductAbstractLocalizedEntities are paired multiple times per store.
+     *
      * @param array $productAbstractLocalizedEntities
      * @param \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage[] $productAbstractStorageEntities
      *
@@ -133,11 +138,11 @@ class AbstractProductAbstractStorageListener extends AbstractPlugin
 
         $pairs = [];
         foreach ($productAbstractLocalizedEntities as $productAbstractLocalizedEntity) {
-            list($pairs, $mappedProductAbstractStorageEntities) = $this->pairProductAbstractLocalizedEntitiesWithProductAbstractStorageEntitiesByStoresAndLocales(
+            list($pairs, $mappedProductAbstractStorageEntities) = $this->pairProductAbstractLocalizedEntitiesWithProductAbstractStorageEntitiesByStoresAndLocale(
                 $productAbstractLocalizedEntity['SpyProductAbstract'][static::COL_ID_PRODUCT_ABSTRACT],
                 $productAbstractLocalizedEntity['Locale']['locale_name'],
-                $productAbstractLocalizedEntity,
                 $productAbstractLocalizedEntity['SpyProductAbstract']['SpyProductAbstractStores'],
+                $productAbstractLocalizedEntity,
                 $mappedProductAbstractStorageEntities,
                 $pairs
             );
@@ -151,18 +156,18 @@ class AbstractProductAbstractStorageListener extends AbstractPlugin
     /**
      * @param int $idProduct
      * @param string $localeName
-     * @param array $productAbstractLocalizedEntity
      * @param array $productAbstractStoreEntities
+     * @param array $productAbstractLocalizedEntity
      * @param array $mappedProductAbstractStorageEntities
      * @param array $pairs
      *
      * @return array
      */
-    protected function pairProductAbstractLocalizedEntitiesWithProductAbstractStorageEntitiesByStoresAndLocales(
+    protected function pairProductAbstractLocalizedEntitiesWithProductAbstractStorageEntitiesByStoresAndLocale(
         $idProduct,
         $localeName,
-        array $productAbstractLocalizedEntity,
         array $productAbstractStoreEntities,
+        array $productAbstractLocalizedEntity,
         array $mappedProductAbstractStorageEntities,
         array $pairs
     ) {
@@ -372,11 +377,11 @@ class AbstractProductAbstractStorageListener extends AbstractPlugin
      */
     protected function mapProductAbstractStorageEntities(array $productAbstractStorageEntities)
     {
-        $map = [];
+        $mappedProductAbstractStorageEntities = [];
         foreach ($productAbstractStorageEntities as $entity) {
-            $map[$entity->getFkProductAbstract()][$entity->getStore()][$entity->getLocale()] = $entity;
+            $mappedProductAbstractStorageEntities[$entity->getFkProductAbstract()][$entity->getStore()][$entity->getLocale()] = $entity;
         }
 
-        return $map;
+        return $mappedProductAbstractStorageEntities;
     }
 }

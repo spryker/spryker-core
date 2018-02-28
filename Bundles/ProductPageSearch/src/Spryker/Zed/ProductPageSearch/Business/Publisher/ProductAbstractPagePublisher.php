@@ -16,10 +16,10 @@ use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInt
 
 class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterface
 {
-    const PRODUCT_ABSTRACT_LOCALIZED_ENTITY = 'ProductAbstractLocalizedEntity';
-    const PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY = 'ProductAbstractPageSearchEntity';
-    const STORE_NAME = 'localeName';
-    const LOCALE_NAME = 'storeName';
+    const PRODUCT_ABSTRACT_LOCALIZED_ENTITY = 'PRODUCT_ABSTRACT_LOCALIZED_ENTITY';
+    const PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY = 'PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY';
+    const STORE_NAME = 'STORE_NAME';
+    const LOCALE_NAME = 'LOCALE_NAME';
 
     /**
      * @var \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface
@@ -309,6 +309,11 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
+     * - Returns a paired array with all provided entities.
+     * - ProductAbstractLocalizedEntities without ProductAbstractPageSearchEntity are paired with a newly created ProductAbstractPageSearchEntity.
+     * - ProductAbstractPageSearchEntity without ProductAbstractLocalizedEntities (left outs) are paired with NULL.
+     * - ProductAbstractLocalizedEntities are paired multiple times per store.
+     *
      * @param array $productAbstractLocalizedEntities
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch[] $productAbstractPageSearchEntities
      *
@@ -322,7 +327,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
         $pairs = [];
         foreach ($productAbstractLocalizedEntities as $productAbstractLocalizedEntity) {
-            list($pairs, $mappedProductAbstractPageSearchEntities) = $this->pairEntitiesByLocalesAndStores(
+            list($pairs, $mappedProductAbstractPageSearchEntities) = $this->pairProductAbstractLocalizedEntityWithProductAbstractPageSearchEntityByStoresAndLocale(
                 $productAbstractLocalizedEntity['fk_product_abstract'],
                 $productAbstractLocalizedEntity['Locale']['locale_name'],
                 $productAbstractLocalizedEntity['SpyProductAbstract']['SpyProductAbstractStores'],
@@ -364,12 +369,12 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      */
     protected function mapProductAbstractPageSearchEntities(array $productAbstractPageSearchEntities)
     {
-        $map = [];
+        $mappedProductAbstractPageSearchEntities = [];
         foreach ($productAbstractPageSearchEntities as $entity) {
-            $map[$entity->getFkProductAbstract()][$entity->getStore()][$entity->getLocale()] = $entity;
+            $mappedProductAbstractPageSearchEntities[$entity->getFkProductAbstract()][$entity->getStore()][$entity->getLocale()] = $entity;
         }
 
-        return $map;
+        return $mappedProductAbstractPageSearchEntities;
     }
 
     /**
@@ -402,7 +407,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      *
      * @return array
      */
-    protected function pairEntitiesByLocalesAndStores(
+    protected function pairProductAbstractLocalizedEntityWithProductAbstractPageSearchEntityByStoresAndLocale(
         $idProductAbstract,
         $localeName,
         array $productAbstractStores,

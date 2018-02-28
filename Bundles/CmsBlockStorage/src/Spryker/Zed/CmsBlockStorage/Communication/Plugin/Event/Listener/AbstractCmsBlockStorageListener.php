@@ -169,8 +169,8 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
                 $cmsBlockEntity[static::COLUMN_ID_CMS_BLOCK],
                 $localeNames,
                 $cmsBlockEntity[static::RELATION_CMS_BLOCK_STORES],
-                $mappedCmsBlockStorageEntities,
                 $cmsBlockEntity,
+                $mappedCmsBlockStorageEntities,
                 $pairs
             );
         }
@@ -245,10 +245,10 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
 
     /**
      * @param int $idCmsBlock
-     * @param array $localeNames
+     * @param string[] $localeNames
      * @param array $cmsBlockStores
-     * @param array $mappedCmsBlockStorageEntities
      * @param array $cmsBlockEntity
+     * @param array $mappedCmsBlockStorageEntities
      * @param array $pairs
      *
      * @return array
@@ -257,8 +257,8 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
         $idCmsBlock,
         array $localeNames,
         array $cmsBlockStores,
-        array $mappedCmsBlockStorageEntities,
         array $cmsBlockEntity,
+        array $mappedCmsBlockStorageEntities,
         array $pairs
     ) {
         foreach ($localeNames as $localeName) {

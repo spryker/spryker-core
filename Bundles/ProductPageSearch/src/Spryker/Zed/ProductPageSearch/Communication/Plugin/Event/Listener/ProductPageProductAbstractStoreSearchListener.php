@@ -30,8 +30,11 @@ class ProductPageProductAbstractStoreSearchListener extends AbstractProductPageS
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $idProductAbstracts = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT);
+        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
+            $eventTransfers,
+            SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT
+        );
 
-        $this->publish($idProductAbstracts);
+        $this->publish($productAbstractIds);
     }
 }
