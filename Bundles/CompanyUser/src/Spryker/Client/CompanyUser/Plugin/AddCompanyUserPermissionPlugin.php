@@ -12,7 +12,7 @@ use Spryker\Client\Permission\Plugin\PermissionPluginInterface;
 
 class AddCompanyUserPermissionPlugin extends AbstractPlugin implements PermissionPluginInterface
 {
-    public const KEY = 'allow.company.user.add';
+    public const KEY = 'AddCompanyUserPermissionPlugin';
 
     /**
      * @return string
