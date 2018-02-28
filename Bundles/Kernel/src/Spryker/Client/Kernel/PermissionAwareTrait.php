@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Kernel;
+namespace Spryker\Client\Kernel;
 
-trait CanAwareTrait
+trait PermissionAwareTrait
 {
     /**
      * @param string $permissionKey

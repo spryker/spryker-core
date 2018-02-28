@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Kernel;
 
-trait CanAwareTrait
+trait PermissionAwareTrait
 {
     /**
      * @param string $permissionKey
