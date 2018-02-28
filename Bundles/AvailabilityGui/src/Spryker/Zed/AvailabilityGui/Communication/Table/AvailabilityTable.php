@@ -137,6 +137,11 @@ class AvailabilityTable extends AbstractTable
         foreach ($queryResult as $productItem) {
             $isBundleProduct = $this->isBundleProduct($productItem[AvailabilityQueryContainer::ID_PRODUCT]);
 
+            $isNeverOutOfStock = $this->isNeverOutOfStock(
+                $productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET],
+                $isBundleProduct
+            );
+
             $result[] = [
                 AvailabilityQueryContainer::CONCRETE_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
                 AvailabilityQueryContainer::CONCRETE_NAME => $productItem[AvailabilityQueryContainer::CONCRETE_NAME],
@@ -144,7 +149,7 @@ class AvailabilityTable extends AbstractTable
                 AvailabilityQueryContainer::STOCK_QUANTITY => $productItem[AvailabilityQueryContainer::STOCK_QUANTITY],
                 AvailabilityQueryContainer::RESERVATION_QUANTITY => ($isBundleProduct) ? 'N/A' : $this->calculateReservation($productItem),
                 static::IS_BUNDLE_PRODUCT => ($isBundleProduct) ? 'Yes' : 'No',
-                AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => ($this->isNeverOutOfStock($productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET])) ? 'Yes' : 'No',
+                AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => $isNeverOutOfStock ? 'Yes' : 'No',
                 static::TABLE_COL_ACTION => $this->createButtons($productItem, $isBundleProduct),
             ];
         }
@@ -154,11 +159,17 @@ class AvailabilityTable extends AbstractTable
 
     /**
      * @param string $neverOutOfStockSet
+     * @param bool $isBundle
      *
      * @return bool
      */
-    protected function isNeverOutOfStock($neverOutOfStockSet)
+    protected function isNeverOutOfStock(string $neverOutOfStockSet, bool $isBundle): bool
     {
+        $hasNeverOutOfStock = strpos($neverOutOfStockSet, 'true') !== false;
+        if ($isBundle && $hasNeverOutOfStock) {
+            return true;
+        }
+
         return filter_var($neverOutOfStockSet, FILTER_VALIDATE_BOOLEAN) ?: false;
     }
 
