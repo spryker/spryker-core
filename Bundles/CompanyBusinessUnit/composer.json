@@ -11,16 +11,16 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
+    "spryker/company-user": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
     "spryker/company-user": "*"
   },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
     }
-  },
-  "suggest": {
-    "spryker/company-user": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
