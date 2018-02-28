@@ -5,6 +5,7 @@
 
     <transfer name="CompanyBusinessUnit">
         <property name="defaultBillingAddress" type="int"/>
+        <property name="addressCollection" type="CompanyUnitAddressCollection"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressResponse">

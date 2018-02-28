@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CompanyUnitAddress\Zed;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
@@ -74,11 +75,11 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getCompanyUnitAddressById(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer {
+    ): CompanyUnitAddressTransfer {
         return $this->zedRequestClient->call('/company-unit-address/gateway/get-company-unit-address-by-id', $companyUnitAddressTransfer);
     }
 
@@ -107,6 +108,20 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
         return $this->zedRequestClient->call(
             '/company-unit-address/gateway/update-company-unit-address-and-business-unit-default-addresses',
             $companyUnitAddressTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return void
+     */
+    public function saveCompanyBusinessUnitAddresses(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): void {
+        $this->zedRequestClient->call(
+            '/company-unit-address/gateway/save-company-business-unit-addresses',
+            $companyBusinessUnitTransfer
         );
     }
 }

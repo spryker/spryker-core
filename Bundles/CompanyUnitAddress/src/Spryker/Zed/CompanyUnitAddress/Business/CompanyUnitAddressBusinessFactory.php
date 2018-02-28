@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\CompanyUnitAddress\Business;
 
-use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressReader;
-use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressReaderInterface;
-use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressWriter;
-use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressWriterInterface;
+use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReader;
+use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReaderInterface;
+use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressWriter;
+use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressWriterInterface;
+use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddress;
+use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressInterface;
 use Spryker\Zed\CompanyUnitAddress\CompanyUnitAddressDependencyProvider;
 use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCountryFacadeInterface;
@@ -25,12 +27,12 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressWriterInterface
+     * @return \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressInterface
      */
-    public function createCompanyUnitAddressWriter(): CompanyUnitAddressWriterInterface
+    public function createCompanyUnitAddress(): CompanyUnitAddressInterface
     {
-        return new CompanyUnitAddressWriter(
-            $this->createCompanyUnitAddressWriterRepository(),
+        return new CompanyUnitAddress(
+            $this->getEntityManager(),
             $this->getCountryFacade(),
             $this->getLocaleFacade(),
             $this->getCompanyBusinessUnitFacade()
@@ -38,11 +40,22 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressReaderInterface
+     * @return \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressWriterInterface
      */
-    public function createCompanyUnitAddressReader(): CompanyUnitAddressReaderInterface
+    public function createCompanyBusinessUnitAddressWriter(): CompanyBusinessUnitAddressWriterInterface
     {
-        return new CompanyUnitAddressReader($this->createCompanyUnitAddressRepository());
+        return new CompanyBusinessUnitAddressWriter(
+            $this->createCompanyBusinessUnitAddressReader(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReaderInterface
+     */
+    protected function createCompanyBusinessUnitAddressReader(): CompanyBusinessUnitAddressReaderInterface
+    {
+        return new CompanyBusinessUnitAddressReader($this->getRepository());
     }
 
     /**
