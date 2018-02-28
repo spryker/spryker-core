@@ -27,17 +27,15 @@ class CompanyBusinessUnitCreatePlugin extends AbstractPlugin implements CompanyP
      */
     public function postCreate(CompanyTransfer $companyTransfer): CompanyTransfer
     {
-        $this->createCompanyBusinessUnit($companyTransfer);
-
-        return $companyTransfer;
+        return $this->createCompanyBusinessUnit($companyTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    protected function createCompanyBusinessUnit(CompanyTransfer $companyTransfer): void
+    protected function createCompanyBusinessUnit(CompanyTransfer $companyTransfer): CompanyTransfer
     {
         $companyTransfer->requireIdCompany();
 
@@ -45,6 +43,13 @@ class CompanyBusinessUnitCreatePlugin extends AbstractPlugin implements CompanyP
         $companyBusinessUnitTransfer->setFkCompany($companyTransfer->getIdCompany())
             ->setName($this->getConfig()->getCompanyBusinessUnitDefaultName());
 
-        $this->getFacade()->create($companyBusinessUnitTransfer);
+        $companyBusinessUnitResponseTransfer = $this->getFacade()->create($companyBusinessUnitTransfer);
+        $companyTransfer->getInitialUserTransfer()
+            ->setFkCompanyBusinessUnit(
+                $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()
+                    ->getIdCompanyBusinessUnit()
+            );
+
+        return $companyTransfer;
     }
 }

@@ -36,4 +36,20 @@ interface CompanyUnitAddressEntityManagerInterface
      * @return void
      */
     public function deleteCompanyUnitAddressById(int $idCompanyUnitAddress): void;
+
+    /**
+     * @param array $idAddresses
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return void
+     */
+    public function assignToCompanyBusinessUnit(array $idAddresses, int $idCompanyBusinessUnit): void;
+
+    /**
+     * @param array $idAddresses
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return void
+     */
+    public function unAssignFromCompanyBusinessUnit(array $idAddresses, int $idCompanyBusinessUnit): void;
 }
