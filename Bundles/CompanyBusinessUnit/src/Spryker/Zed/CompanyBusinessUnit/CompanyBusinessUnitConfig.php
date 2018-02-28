@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyBusinessUnit;
 
-use Spryker\Shared\CompanyBusinessUnit\CompanyBusinessUnitConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CompanyBusinessUnitConfig extends AbstractBundleConfig
@@ -17,6 +16,6 @@ class CompanyBusinessUnitConfig extends AbstractBundleConfig
      */
     public function getCompanyBusinessUnitDefaultName(): string
     {
-        return $this->get(CompanyBusinessUnitConstants::COMPANY_BUSINESS_UNIT_DEFAULT_NAME);
+        return 'Default';
     }
 }
