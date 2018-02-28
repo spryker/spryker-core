@@ -1,0 +1,15 @@
+{{ form_start(form) }}
+<h3>{{ 'Comments' | trans }}</h3>
+<div class="order-details-chat">
+    {% for note in form.vars.customer_notes_option.notes %}
+        <div class="chat">
+            <div class="chat-author"><span>{{ note.username }} @ {{ note.virtualProperties.created_at | formatDateTime }}</span></div>
+            <div class="chat-body">{{ note.message }}</div>
+        </div>
+    {% endfor %}
+</div>
+
+    {{ form_widget(form) }}
+
+<input type="submit" class="btn btn-xs btn-primary" value="{{ 'Add Note' | trans }}" />
+{{ form_end(form) }}
