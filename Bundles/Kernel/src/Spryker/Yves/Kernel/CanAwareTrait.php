@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Yves\Kernel;
+
+trait CanAwareTrait
+{
+    /**
+     * @param string $permissionKey
+     * @param string|int|array|null $context
+     *
+     * @return bool
+     */
+    protected function can($permissionKey, $context = null)
+    {
+        if (interface_exists('\Spryker\Client\Permission\PermissionClientInterface')) {
+            return Locator::getInstance()->permission()->client()->can($permissionKey, $context);
+        }
+
+        return true;
+    }
+}

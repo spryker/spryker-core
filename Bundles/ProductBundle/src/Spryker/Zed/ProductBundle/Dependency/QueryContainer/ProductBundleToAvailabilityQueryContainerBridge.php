@@ -24,31 +24,15 @@ class ProductBundleToAvailabilityQueryContainerBridge implements ProductBundleTo
 
     /**
      * @param string $sku
+     * @param int $idStore
      *
      * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
      */
-    public function querySpyAvailabilityBySku($sku)
+    public function querySpyAvailabilityBySku($sku, $idStore)
     {
+        if (method_exists($this->queryContainer, 'queryAvailabilityBySkuAndIdStore')) {
+            return $this->queryContainer->queryAvailabilityBySkuAndIdStore($sku, $idStore);
+        }
         return $this->queryContainer->querySpyAvailabilityBySku($sku);
-    }
-
-    /**
-     * @param int $idAvailabilityAbstract
-     *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
-     */
-    public function queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract)
-    {
-        return $this->queryContainer->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract);
-    }
-
-    /**
-     * @param int $idAvailabilityAbstract
-     *
-     * @return \Orm\Zed\Availability\Persistence\Base\SpyAvailabilityQuery
-     */
-    public function querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract)
-    {
-        return $this->queryContainer->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract);
     }
 }

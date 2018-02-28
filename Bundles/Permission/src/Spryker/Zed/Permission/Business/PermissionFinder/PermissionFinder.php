@@ -7,21 +7,19 @@
 
 namespace Spryker\Zed\Permission\Business\PermissionFinder;
 
-use Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface;
-
 class PermissionFinder implements PermissionFinderInterface
 {
     /**
      * @var \Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface[]
      */
-    protected $executablePermissionPluginStack = [];
+    protected $permissionPlugins = [];
 
     /**
      * @param \Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface[] $permissionPlugins
      */
     public function __construct(array $permissionPlugins)
     {
-        $this->executablePermissionPluginStack = $this->indexPermissions($permissionPlugins);
+        $this->permissionPlugins = $this->indexPermissions($permissionPlugins);
     }
 
     /**
@@ -31,11 +29,11 @@ class PermissionFinder implements PermissionFinderInterface
      */
     public function findPermissionPlugin($permissionKey)
     {
-        if (!isset($this->executablePermissionPluginStack[$permissionKey])) {
+        if (!isset($this->permissionPlugins[$permissionKey])) {
             return null;
         }
 
-        return $this->executablePermissionPluginStack[$permissionKey];
+        return $this->permissionPlugins[$permissionKey];
     }
 
     /**
@@ -48,9 +46,7 @@ class PermissionFinder implements PermissionFinderInterface
         $plugins = [];
 
         foreach ($permissionPlugins as $permissionPlugin) {
-            if ($permissionPlugin instanceof ExecutablePermissionPluginInterface) {
-                $plugins[$permissionPlugin->getKey()] = $permissionPlugin;
-            }
+            $plugins[$permissionPlugin->getKey()] = $permissionPlugin;
         }
 
         return $plugins;

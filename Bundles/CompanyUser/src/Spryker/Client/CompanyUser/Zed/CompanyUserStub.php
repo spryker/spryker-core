@@ -11,10 +11,15 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\ResponseErrorTransfer;
+use Spryker\Client\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
+use Spryker\Client\Kernel\CanAwareTrait;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class CompanyUserStub implements CompanyUserStubInterface
 {
+    use CanAwareTrait;
+
     /**
      * @var \Spryker\Client\ZedRequest\ZedRequestClient
      */
@@ -35,6 +40,10 @@ class CompanyUserStub implements CompanyUserStubInterface
      */
     public function createCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
+        if (!$this->can(AddCompanyUserPermissionPlugin::KEY)) {
+            return $this->generatePermissionErrorMessage();
+        }
+
         return $this->zedRequestClient->call('/company-user/gateway/create', $companyUserTransfer);
     }
 
@@ -70,5 +79,19 @@ class CompanyUserStub implements CompanyUserStubInterface
             '/company-user/gateway/get-company-user-collection',
             $companyUserCriteriaFilterTransfer
         );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    protected function generatePermissionErrorMessage()
+    {
+        $messageTransfer = new ResponseErrorTransfer();
+
+        $companyUserResponseTransfer = new CompanyUserResponseTransfer();
+        $companyUserResponseTransfer->addError($messageTransfer);
+        $companyUserResponseTransfer->setIsSuccessful(false);
+
+        return $companyUserResponseTransfer;
     }
 }

@@ -17,6 +17,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelper;
+use Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelper;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductValidity\ProductValidityActivityMessenger;
 use Spryker\Zed\ProductManagement\Communication\Table\BundledProductTable;
 use Spryker\Zed\ProductManagement\Communication\Table\ProductGroupTable;
@@ -330,7 +331,11 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductTable()
     {
-        return new ProductTable($this->getProductQueryContainer(), $this->getLocaleFacade()->getCurrentLocale());
+        return new ProductTable(
+            $this->getProductQueryContainer(),
+            $this->getLocaleFacade()->getCurrentLocale(),
+            $this->createProductTypeHelper()
+        );
     }
 
     /**
@@ -432,6 +437,16 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface
+     */
+    public function createProductTypeHelper()
+    {
+        return new ProductTypeHelper(
+            $this->getProductQueryContainer()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface
      */
     public function getMoneyFacade()
@@ -477,5 +492,13 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getMoneyFormTypePlugin()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGIN_MONEY_FORM_TYPE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStockInterface
+     */
+    public function getStockFacade()
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_STOCK);
     }
 }

@@ -9,6 +9,9 @@ namespace Spryker\Client\Permission\Plugin;
 
 interface ExecutablePermissionPluginInterface extends PermissionPluginInterface
 {
+    public const CONFIG_FIELD_TYPE_INT = 'CONFIG_FIELD_TYPE_INT';
+    public const CONFIG_FIELD_TYPE_STRING = 'CONFIG_FIELD_TYPE_STRING';
+
     /**
      * Specification:
      * - Implements a business login against the configuration and the passed context
