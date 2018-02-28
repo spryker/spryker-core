@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CompanyRole;
 
+use Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToCustomerClientBridge;
 use Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToZedRequestClientBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
@@ -51,7 +52,7 @@ class CompanyRoleDependencyProvider extends AbstractDependencyProvider
     protected function addCustomerClient(Container $container): Container
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
-            return $container->getLocator()->customer()->client();
+            return new CompanyRoleToCustomerClientBridge($container->getLocator()->customer()->client());
         };
 
         return $container;
