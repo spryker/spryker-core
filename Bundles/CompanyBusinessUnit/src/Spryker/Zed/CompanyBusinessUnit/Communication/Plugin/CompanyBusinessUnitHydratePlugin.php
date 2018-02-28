@@ -27,10 +27,12 @@ class CompanyBusinessUnitHydratePlugin extends AbstractPlugin implements Company
      */
     public function hydrate(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
     {
-        $businessUnitTransfer = new CompanyBusinessUnitTransfer();
-        $businessUnitTransfer->setIdCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit());
-        $businessUnitTransfer = $this->getFacade()->getCompanyBusinessUnitById($businessUnitTransfer);
-        $companyUserTransfer->setCompanyBusinessUnit($businessUnitTransfer);
+        if ($companyUserTransfer->getFkCompanyBusinessUnit() !== null) {
+            $businessUnitTransfer = new CompanyBusinessUnitTransfer();
+            $businessUnitTransfer->setIdCompanyBusinessUnit($companyUserTransfer->getFkCompanyBusinessUnit());
+            $businessUnitTransfer = $this->getFacade()->getCompanyBusinessUnitById($businessUnitTransfer);
+            $companyUserTransfer->setCompanyBusinessUnit($businessUnitTransfer);
+        }
 
         return $companyUserTransfer;
     }

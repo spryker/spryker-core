@@ -9,6 +9,7 @@ namespace Spryker\Client\CompanyUnitAddress;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -74,16 +75,16 @@ class CompanyUnitAddressClient extends AbstractClient implements CompanyUnitAddr
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
      */
     public function getCompanyUnitAddressCollection(
-        CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
+        CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer {
         return $this->getFactory()
             ->createZedCompanyUnitAddressStub()
-            ->getCompanyUnitAddressCollection($companyUnitAddressCollectionTransfer);
+            ->getCompanyUnitAddressCollection($criteriaFilterTransfer);
     }
 
     /**

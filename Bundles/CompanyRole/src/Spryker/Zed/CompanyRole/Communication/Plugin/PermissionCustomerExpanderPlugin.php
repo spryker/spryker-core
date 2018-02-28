@@ -9,11 +9,12 @@ namespace Spryker\Zed\CompanyRole\Communication\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface getFacade()
  */
-class PermissionCustomerExpanderPlugin implements CustomerTransferExpanderPluginInterface
+class PermissionCustomerExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

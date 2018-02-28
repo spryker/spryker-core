@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Orm\Zed\CompanyRole\Persistence\Base\SpyCompanyRoleToPermissionQuery;
 use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -49,14 +48,15 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
      */
     public function findPermissionsByIdCompanyUser(int $idCompanyUser): PermissionCollectionTransfer
     {
-        $query = SpyCompanyRoleToPermissionQuery::create()
+        $query = $this->getFactory()
+            ->createCompanyRoleToPermissionQuery()
             ->joinPermission()
             ->joinCompanyRole()
             ->useCompanyRoleQuery()
-            ->joinSpyCompanyRoleToCompanyUser()
-            ->useSpyCompanyRoleToCompanyUserQuery()
-            ->filterByIdCompanyRoleToCompanyUser($idCompanyUser)
-            ->endUse()
+                ->joinSpyCompanyRoleToCompanyUser()
+                    ->useSpyCompanyRoleToCompanyUserQuery()
+                        ->filterByIdCompanyRoleToCompanyUser($idCompanyUser)
+                    ->endUse()
             ->endUse();
 
         $companyRoleToPermissionEntities = $this->buildQueryFromCriteria($query)->find();
@@ -117,27 +117,22 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
      */
     public function findCompanyRolePermissions(int $idCompanyRole): PermissionCollectionTransfer
     {
-        $query = SpyCompanyRoleQuery::create()
-            ->joinSpyCompanyRoleToPermission()
-            ->useSpyCompanyRoleToPermissionQuery()
-            ->joinPermission()
-            ->endUse()
-            ->filterByIdCompanyRole($idCompanyRole);
+        $query = $this->getFactory()
+            ->createCompanyRoleToPermissionQuery()
+            ->filterByFkCompanyRole($idCompanyRole)
+            ->joinWithPermission();
 
-        /** @var \Generated\Shared\Transfer\SpyCompanyRoleEntityTransfer $companyRoleEntity */
-        $companyRoleEntity = $this->buildQueryFromCriteria($query)->findOne();
+        $companyRoleToPermissionEntities = $this->buildQueryFromCriteria($query)->find();
 
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 
-        if ($companyRoleEntity !== null) {
-            foreach ($companyRoleEntity->getSpyCompanyRoleToPermissions() as $roleToPermission) {
-                $permissionTransfer = (new PermissionTransfer())
-                    ->setIdPermission($roleToPermission->getFkPermission())
-                    ->setConfiguration(\json_decode($roleToPermission->getConfiguration(), true))
-                    ->setKey($roleToPermission->getPermission()->getKey());
+        foreach ($companyRoleToPermissionEntities as $roleToPermissionEntity) {
+            $permissionTransfer = (new PermissionTransfer())
+                ->setIdPermission($roleToPermissionEntity->getFkPermission())
+                ->setConfiguration(\json_decode($roleToPermissionEntity->getConfiguration(), true))
+                ->setKey($roleToPermissionEntity->getPermission()->getKey());
 
-                $permissionCollectionTransfer->addPermission($permissionTransfer);
-            }
+            $permissionCollectionTransfer->addPermission($permissionTransfer);
         }
 
         return $permissionCollectionTransfer;
