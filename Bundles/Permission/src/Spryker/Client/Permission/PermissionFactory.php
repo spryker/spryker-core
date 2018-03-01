@@ -8,18 +8,21 @@
 namespace Spryker\Client\Permission;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Permission\Dependency\Client\PermissionToZedRequestClientInterface;
 use Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface;
 use Spryker\Client\Permission\PermissionExecutor\PermissionExecutor;
 use Spryker\Client\Permission\PermissionExecutor\PermissionExecutorInterface;
 use Spryker\Client\Permission\PermissionFinder\PermissionFinder;
 use Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface;
+use Spryker\Client\Permission\Zed\PermissionStub;
+use Spryker\Client\Permission\Zed\PermissionStubInterface;
 
 class PermissionFactory extends AbstractFactory
 {
     /**
      * @return \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface
      */
-    public function createPermissionConfigurator(): PermissionFinderInterface
+    public function createPermissionFinder(): PermissionFinderInterface
     {
         return new PermissionFinder(
             $this->getPermissionPlugins()
@@ -33,8 +36,16 @@ class PermissionFactory extends AbstractFactory
     {
         return new PermissionExecutor(
             $this->getPermissionStoragePlugin(),
-            $this->createPermissionConfigurator()
+            $this->createPermissionFinder()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\Permission\Zed\PermissionStubInterface
+     */
+    public function createZedPermissionStub(): PermissionStubInterface
+    {
+        return new PermissionStub($this->getZedRequestClient());
     }
 
     /**
@@ -51,5 +62,13 @@ class PermissionFactory extends AbstractFactory
     protected function getPermissionStoragePlugin(): PermissionStoragePluginInterface
     {
         return $this->getProvidedDependency(PermissionDependencyProvider::PLUGIN_PERMISSION_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\Permission\Dependency\Client\PermissionToZedRequestClientInterface
+     */
+    protected function getZedRequestClient(): PermissionToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(PermissionDependencyProvider::CLIENT_ZED_REQUEST);
     }
 }

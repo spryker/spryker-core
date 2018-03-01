@@ -7,28 +7,20 @@
 
 namespace Spryker\Zed\CompanyGui\Communication;
 
+use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Spryker\Zed\CompanyGui\Communication\Table\CompanyTable;
 use Spryker\Zed\CompanyGui\CompanyGuiDependencyProvider;
 use Spryker\Zed\CompanyGui\Dependency\Facade\CompanyGuiToCompanyFacadeInterface;
-use Spryker\Zed\CompanyGui\Dependency\QueryContainer\CompanyGuiToCompanyQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\CompanyGui\Dependency\QueryContainer\CompanyGuiToCompanyQueryContainerInterface
-     */
-    public function getCompanyQueryContainer(): CompanyGuiToCompanyQueryContainerInterface
-    {
-        return $this->getProvidedDependency(CompanyGuiDependencyProvider::QUERY_CONTAINER_COMPANY);
-    }
-
-    /**
      * @return \Spryker\Zed\CompanyGui\Communication\Table\CompanyTable
      */
     public function createCompanyTable(): CompanyTable
     {
-        $companyQuery = $this->getCompanyQueryContainer()->queryCompany();
+        $companyQuery = $this->getPropelCompanyQuery();
 
         return new CompanyTable($companyQuery);
     }
@@ -39,5 +31,13 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCompanyFacade(): CompanyGuiToCompanyFacadeInterface
     {
         return $this->getProvidedDependency(CompanyGuiDependencyProvider::FACADE_COMPANY);
+    }
+
+    /**
+     * @return \Orm\Zed\Company\Persistence\SpyCompanyQuery
+     */
+    protected function getPropelCompanyQuery(): SpyCompanyQuery
+    {
+        return $this->getProvidedDependency(CompanyGuiDependencyProvider::PROPEL_COMPANY_QUERY);
     }
 }
