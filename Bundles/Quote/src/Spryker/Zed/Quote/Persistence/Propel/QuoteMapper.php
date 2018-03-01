@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Quote\Persistence\Mappers;
+namespace Spryker\Zed\Quote\Persistence\Propel;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
+use Orm\Zed\Quote\Persistence\SpyQuote;
 use Spryker\Zed\Quote\Dependency\Service\QuoteToUtilEncodingServiceInterface;
 
-// TODO: move this class to Propel namespace
 class QuoteMapper implements QuoteMapperInterface
 {
     /**
@@ -33,12 +33,11 @@ class QuoteMapper implements QuoteMapperInterface
      * @param \Generated\Shared\Transfer\SpyQuoteEntityTransfer $quoteEntityTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
-     * TODO: method name could be `mapQuoteTransfer()`
      */
-    public function mapEntityTransferToTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer
+    public function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->fromArray($this->restoreQuoteData($quoteEntityTransfer));
+        $quoteTransfer->fromArray($this->decodeQuoteData($quoteEntityTransfer));
         $quoteTransfer->setIdQuote($quoteEntityTransfer->getIdQuote());
         // TODO: all data that was filtered out need to be set back for the result
 
@@ -48,27 +47,25 @@ class QuoteMapper implements QuoteMapperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer
+     * @return \Orm\Zed\Quote\Persistence\SpyQuote
      */
-    public function mapTransferToEntityTransfer(QuoteTransfer $quoteTransfer): SpyQuoteEntityTransfer
+    public function mapTransferToEntity(QuoteTransfer $quoteTransfer): SpyQuote
     {
-        $quoteEntityTransfer = new SpyQuoteEntityTransfer();
-        $quoteEntityTransfer->fromArray($quoteTransfer->modifiedToArray(), true);
-        $quoteEntityTransfer->setIdQuote($quoteTransfer->getIdQuote());
-        $quoteEntityTransfer->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
-        $quoteEntityTransfer->setFkStore($quoteTransfer->getStore()->getIdStore());
-        $quoteEntityTransfer->setQuoteData($this->extractQuoteData($quoteTransfer));
+        $quoteEntity = new SpyQuote();
+        $quoteEntity->setIdQuote($quoteTransfer->getIdQuote());
+        $quoteEntity->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
+        $quoteEntity->setFkStore($quoteTransfer->getStore()->getIdStore());
+        $quoteEntity->setQuoteData($this->encodeQuoteData($quoteTransfer));
 
-        return $quoteEntityTransfer;
+        return $quoteEntity;
     }
 
     /**
      * @param \Generated\Shared\Transfer\SpyQuoteEntityTransfer $quoteEntityTransfer
      *
      * @return array
-     * TODO: rename to `decodeQuoteData()`
      */
-    protected function restoreQuoteData(SpyQuoteEntityTransfer $quoteEntityTransfer)
+    protected function decodeQuoteData(SpyQuoteEntityTransfer $quoteEntityTransfer)
     {
         return $this->encodingService->decodeJson($quoteEntityTransfer->getQuoteData(), true);
     }
@@ -77,9 +74,8 @@ class QuoteMapper implements QuoteMapperInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string
-     * TODO: rename to `encodeQuoteData()`
      */
-    protected function extractQuoteData(QuoteTransfer $quoteTransfer)
+    protected function encodeQuoteData(QuoteTransfer $quoteTransfer)
     {
         $quoteData = $quoteTransfer->modifiedToArray();
         $quoteData = $this->clearCheckoutQuoteData($quoteData);

@@ -36,16 +36,6 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Gets quote from storage and save it in customer session.
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function syncQuote();
-
-    /**
-     * Specification:
      * - Adds single item
      * - Makes zed request.
      * - Returns update quote.

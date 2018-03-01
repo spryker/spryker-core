@@ -5,10 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Quote\Persistence\Mappers;
+namespace Spryker\Zed\Quote\Persistence\Propel;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
+use Orm\Zed\Quote\Persistence\SpyQuote;
 
 interface QuoteMapperInterface
 {
@@ -17,12 +18,12 @@ interface QuoteMapperInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function mapEntityTransferToTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer;
+    public function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer
+     * @return \Orm\Zed\Quote\Persistence\SpyQuote
      */
-    public function mapTransferToEntityTransfer(QuoteTransfer $quoteTransfer): SpyQuoteEntityTransfer;
+    public function mapTransferToEntity(QuoteTransfer $quoteTransfer): SpyQuote;
 }

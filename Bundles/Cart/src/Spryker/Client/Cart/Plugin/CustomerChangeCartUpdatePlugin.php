@@ -24,10 +24,6 @@ class CustomerChangeCartUpdatePlugin extends AbstractPlugin implements CustomerS
     public function execute(CustomerTransfer $customerTransfer)
     {
         $quoteTransfer = $this->getClient()->getQuote();
-        // TODO: what happens when persistent cart is not enabled?
-        if ($quoteTransfer->getCustomer()) {
-            return;
-        }
         $quoteTransfer->setCustomer($customerTransfer);
 
         $this->getClient()->storeQuote($quoteTransfer);

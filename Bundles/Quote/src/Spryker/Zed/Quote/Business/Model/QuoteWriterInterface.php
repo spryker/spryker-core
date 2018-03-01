@@ -5,26 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Quote\Session;
+namespace Spryker\Zed\Quote\Business\Model;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteSessionInterface
+interface QuoteWriterInterface
 {
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getQuote();
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return $this
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setQuote(QuoteTransfer $quoteTransfer);
-
-    /**
-     * @return $this
-     */
-    public function clearQuote();
+    public function save(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

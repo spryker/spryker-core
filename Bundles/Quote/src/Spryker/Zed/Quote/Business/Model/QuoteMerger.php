@@ -9,56 +9,46 @@ namespace Spryker\Zed\Quote\Business\Model;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteMergeTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Quote\Dependency\Facade\QuoteToCalculationFacadeInterface;
 
 class QuoteMerger implements QuoteMergerInterface
 {
     /**
-     * @var \Spryker\Zed\Quote\Business\Model\QuoteInterface
-     */
-    protected $quoteModel;
-
-    /**
      * @var \Spryker\Zed\Quote\Dependency\Facade\QuoteToCalculationFacadeInterface
      */
     protected $calculationFacade;
 
     /**
-     * @param \Spryker\Zed\Quote\Business\Model\QuoteInterface $quoteModel
      * @param \Spryker\Zed\Quote\Dependency\Facade\QuoteToCalculationFacadeInterface $calculationFacade
      */
-    public function __construct(QuoteInterface $quoteModel, QuoteToCalculationFacadeInterface $calculationFacade)
+    public function __construct(QuoteToCalculationFacadeInterface $calculationFacade)
     {
-        $this->quoteModel = $quoteModel;
         $this->calculationFacade = $calculationFacade;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteMergeTransfer $quoteMergeTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $targetQuote
+     * @param \Generated\Shared\Transfer\QuoteTransfer $sourceQuote
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer TODO: you are using only QuoteTransfer so far, are you planning to use the other attributes of the QuoteResponseTransfer?
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function merge(QuoteMergeTransfer $quoteMergeTransfer): QuoteResponseTransfer
+    public function merge(QuoteTransfer $targetQuote, QuoteTransfer $sourceQuote): QuoteTransfer
     {
-        $sourceQuote = $quoteMergeTransfer->getSourceQuote();
-        $targetQuote = $quoteMergeTransfer->getTargetQuote();
-        $quoteTransfer = new QuoteTransfer();
-        // TODO: clarify this part
-        $quoteTransfer->fromArray($sourceQuote->modifiedToArray());
-        $quoteTransfer->fromArray($targetQuote->modifiedToArray());
-        $quoteTransfer = $this->mergeItems($quoteTransfer, $sourceQuote);
-        $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
-        // TODO: What happens if persistent quote is not enabled?
-        $quoteResponseTransfer = $this->quoteModel->save($quoteTransfer);
-        $quoteTransfer->setIdQuote(
-            $quoteResponseTransfer->getQuoteTransfer()->getIdQuote()
-        );
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
+        $targetQuote = $this->mergeItems($targetQuote, $sourceQuote);
+        $targetQuote = $this->calculationFacade->recalculateQuote($targetQuote);
 
-        return $quoteResponseTransfer;
+        return $targetQuote;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function recalculateQuote(QuoteTransfer $quoteTransfer)
+    {
+        return $this->calculationFacade->recalculateQuote($quoteTransfer);
     }
 
     /**
@@ -108,41 +98,6 @@ class QuoteMerger implements QuoteMergerInterface
     protected function getItemIdentifier(ItemTransfer $itemTransfer)
     {
         return $itemTransfer->getGroupKey() ?: $itemTransfer->getSku();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $existingItems
-     * @param string $itemIdentifier
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param array $cartIndex
-     *
-     * @return void
-     * TODO: this method is not used
-     */
-    protected function decreaseExistingItem($existingItems, $itemIdentifier, $itemTransfer, array $cartIndex)
-    {
-        $existingItemTransfer = null;
-        $itemIndex = null;
-        foreach ($existingItems as $index => $currentItemTransfer) {
-            if ($currentItemTransfer->getGroupKey() === $itemIdentifier) {
-                $existingItemTransfer = $currentItemTransfer;
-                $itemIndex = $index;
-                break;
-            }
-        }
-
-        if ($existingItemTransfer === null) {
-            $itemIndex = $cartIndex[$itemIdentifier];
-            $existingItemTransfer = $existingItems[$itemIndex];
-        }
-
-        $changedQuantity = $existingItemTransfer->getQuantity() - $itemTransfer->getQuantity();
-
-        if ($changedQuantity > 0) {
-            $existingItemTransfer->setQuantity($changedQuantity);
-        } else {
-            unset($existingItems[$itemIndex]);
-        }
     }
 
     /**

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Quote\Persistence;
 
 use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Quote\Persistence\Mappers\QuoteMapper;
+use Spryker\Zed\Quote\Persistence\Propel\QuoteMapper;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
 
 /**
@@ -26,7 +26,7 @@ class QuotePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\Quote\Persistence\Mappers\QuoteMapperInterface
+     * @return \Spryker\Zed\Quote\Persistence\Propel\QuoteMapperInterface
      */
     public function createQuoteMapper()
     {

@@ -35,6 +35,6 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
             return null;
         }
 
-        return $this->getFactory()->createQuoteMapper()->mapEntityTransferToTransfer($quoteEntityTransfer);
+        return $this->getFactory()->createQuoteMapper()->mapQuoteTransfer($quoteEntityTransfer);
     }
 }

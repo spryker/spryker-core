@@ -9,10 +9,9 @@ namespace Spryker\Client\Quote\StorageStrategy;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface;
-use Spryker\Client\Quote\Session\QuoteSession;
+use Spryker\Client\Quote\Session\QuoteSessionInterface;
 use Spryker\Client\Quote\Zed\QuoteStubInterface;
 use Spryker\Shared\Quote\QuoteConfig;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class DatabaseStorageStrategy implements StorageStrategyInterface
 {
@@ -27,23 +26,23 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     protected $quoteStub;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @var \Spryker\Client\Quote\Session\QuoteSessionInterface
      */
-    protected $session;
+    protected $quoteSession;
 
     /**
      * @param \Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface $customerClient
      * @param \Spryker\Client\Quote\Zed\QuoteStubInterface $quoteStub
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * @param \Spryker\Client\Quote\Session\QuoteSessionInterface $quoteSession
      */
     public function __construct(
         QuoteToCustomerClientInterface $customerClient,
         QuoteStubInterface $quoteStub,
-        SessionInterface $session
+        QuoteSessionInterface $quoteSession
     ) {
         $this->customerClient = $customerClient;
         $this->quoteStub = $quoteStub;
-        $this->session = $session;
+        $this->quoteSession = $quoteSession;
     }
 
     /**
@@ -67,17 +66,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
      */
     public function getQuote()
     {
-        $quoteTransfer = new QuoteTransfer();
-        $customerTransfer = $this->customerClient->getCustomer();
-        if ($customerTransfer) {
-            $quoteResponseTransfer = $this->quoteStub->getQuoteByCustomer($customerTransfer);
-            if ($quoteResponseTransfer->getIsSuccessful()) {
-                $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-            }
-            $quoteTransfer->setCustomer($customerTransfer); // TODO: remove side effect!
-        }
-
-        return $quoteTransfer;
+        return $this->quoteSession->getQuote();
     }
 
     /**
@@ -85,20 +74,20 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
      *
      * @return void
      */
-    public function saveQuote(QuoteTransfer $quoteTransfer)
+    public function setQuote(QuoteTransfer $quoteTransfer)
     {
-        $this->quoteStub->persistQuote($quoteTransfer);
+        $this->quoteSession->setQuote($quoteTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return $this
      */
-    public function clearQuote(QuoteTransfer $quoteTransfer)
+    public function clearQuote()
     {
-        $this->quoteStub->deleteQuote($quoteTransfer);
-        $this->session->set(QuoteSession::QUOTE_SESSION_IDENTIFIER, new QuoteTransfer());
+        $quoteResponseTransfer = $this->quoteStub->deleteQuote($this->getQuote());
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $this->quoteSession->clearQuote();
+        }
 
         return $this;
     }

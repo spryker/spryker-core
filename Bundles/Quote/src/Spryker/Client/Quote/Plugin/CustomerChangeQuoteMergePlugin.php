@@ -15,8 +15,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
  * @method \Spryker\Client\Quote\QuoteClientInterface getClient()
  * @method \Spryker\Client\Quote\QuoteFactory getFactory()
  */
-// TODO: rename to
-class CustomerChangeQuoteSyncPlugin extends AbstractPlugin implements CustomerSessionSetPluginInterface
+class CustomerChangeQuoteMergePlugin extends AbstractPlugin implements CustomerSessionSetPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -29,6 +28,6 @@ class CustomerChangeQuoteSyncPlugin extends AbstractPlugin implements CustomerSe
      */
     public function execute(CustomerTransfer $customerTransfer)
     {
-        $this->getFactory()->createQuoteResolver()->resolve();
+        $this->getFactory()->createCustomerLoginQuoteMerger()->syncQuoteForCustomer($customerTransfer);
     }
 }

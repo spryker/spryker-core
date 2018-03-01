@@ -5,12 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Quote\Session;
+namespace Spryker\Zed\Quote\Business\Exception;
 
-interface QuoteResolverInterface
+use Exception;
+
+class QuoteSynchronizationNotAvailable extends Exception
 {
-    /**
-     * @return void
-     */
-    public function resolve();
 }

@@ -8,24 +8,23 @@
 namespace Spryker\Client\Quote\StorageStrategy;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Quote\Session\QuoteSession;
+use Spryker\Client\Quote\Session\QuoteSessionInterface;
 use Spryker\Shared\Quote\QuoteConfig;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SessionStorageStrategy implements StorageStrategyInterface
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @var \Spryker\Client\Quote\Session\QuoteSessionInterface
      */
-    protected $session;
+    protected $quoteSession;
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * @param \Spryker\Client\Quote\Session\QuoteSessionInterface $quoteSession
      */
     public function __construct(
-        SessionInterface $session
+        QuoteSessionInterface $quoteSession
     ) {
-        $this->session = $session;
+        $this->quoteSession = $quoteSession;
     }
 
     /**
@@ -49,10 +48,7 @@ class SessionStorageStrategy implements StorageStrategyInterface
      */
     public function getQuote()
     {
-        $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer = $this->session->get(QuoteSession::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
-
-        return $quoteTransfer;
+        return $this->quoteSession->getQuote();
     }
 
     /**
@@ -60,20 +56,16 @@ class SessionStorageStrategy implements StorageStrategyInterface
      *
      * @return void
      */
-    public function saveQuote(QuoteTransfer $quoteTransfer)
+    public function setQuote(QuoteTransfer $quoteTransfer)
     {
-        $this->session->set(QuoteSession::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
+        $this->quoteSession->setQuote($quoteTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return $this
+     * @return void
      */
-    public function clearQuote(QuoteTransfer $quoteTransfer)
+    public function clearQuote()
     {
-        $this->saveQuote(new QuoteTransfer());
-
-        return $this;
+        $this->quoteSession->clearQuote();
     }
 }

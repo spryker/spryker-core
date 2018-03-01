@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Quote\Persistence;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+
 interface QuoteRepositoryInterface
 {
     /**
@@ -17,7 +19,7 @@ interface QuoteRepositoryInterface
      *
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return null|\Generated\Shared\Transfer\QuoteTransfer
      */
-    public function findQuoteByCustomer($customerReference);
+    public function findQuoteByCustomer($customerReference): ?QuoteTransfer;
 }

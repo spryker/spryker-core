@@ -8,15 +8,15 @@
 namespace Spryker\Zed\Quote\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteMergeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteFacadeInterface
 {
     /**
      * Specification:
-     * - Craetes quote from quote transfer if it does not exist
+     * - Creates quote from quote transfer if it does not exist
      * - Updates quote from quote transfer
      *
      * @api
@@ -29,7 +29,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Returns quote for customer
+     * - Find quote for customer
      *
      * @api
      *
@@ -41,7 +41,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Removes quote from database
+     * - Remove quote from DB
      *
      * @api
      *
@@ -53,13 +53,15 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Merge two quotes and store result in DB
+     * - Merge provided quote with quote from DB for provided customer
+     * - Saves quote to DB
+     * - Throws QuoteSynchronizationNotAvailable exception if database quote storage strategy is not used
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteMergeTransfer $quoteMergeTransfer
+     * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function mergeQuotes(QuoteMergeTransfer $quoteMergeTransfer);
+    public function syncStorageQuote(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer;
 }

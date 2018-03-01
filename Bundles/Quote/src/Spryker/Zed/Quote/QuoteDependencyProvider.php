@@ -18,7 +18,6 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     const FACADE_STORE = 'FACADE_STORE';
     const FACADE_CALCULATION = 'FACADE_CALCULATION';
-    const QUOTE_PRE_SAVE_PLUGINS = 'QUOTE_PRE_SAVE_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,7 +28,6 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addStoreFacade($container);
         $container = $this->addCalculationFacade($container);
-        $container = $this->addQuotePreSavePlugins($container);
 
         return $container;
     }
@@ -86,29 +84,5 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addQuotePreSavePlugins(Container $container)
-    {
-        $container[static::QUOTE_PRE_SAVE_PLUGINS] = function (Container $container) {
-            return $this->getQuotePreSavePlugins($container);
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Quote\Dependency\Plugin\QuotePreSavePluginInterface[]
-     */
-    protected function getQuotePreSavePlugins(Container $container)
-    {
-        return [];
     }
 }

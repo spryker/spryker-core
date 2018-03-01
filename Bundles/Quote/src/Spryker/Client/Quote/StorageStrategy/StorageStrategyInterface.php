@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\Quote\StorageStrategy;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\Quote\QuoteClientInterface;
 
-interface StorageStrategyInterface
+interface StorageStrategyInterface extends QuoteClientInterface
 {
     /**
      * @return string
@@ -20,23 +20,4 @@ interface StorageStrategyInterface
      * @return bool
      */
     public function isAllowed();
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getQuote();
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function saveQuote(QuoteTransfer $quoteTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return $this
-     */
-    public function clearQuote(QuoteTransfer $quoteTransfer);
 }
