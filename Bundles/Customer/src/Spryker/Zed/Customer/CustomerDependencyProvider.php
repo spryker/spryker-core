@@ -11,7 +11,10 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToMoneyFacadeBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberBridge;
+use Spryker\Zed\Customer\Dependency\QueryContainer\CustomerToSalesQueryContainerBridge;
+use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -23,12 +26,15 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_COUNTRY = 'FACADE_COUNTRY';
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_MAIL = 'FACADE_MAIL';
+    const FACADE_MONEY = 'FACADE_MONEY';
 
     const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
     const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    const SERVICE_UTIL_DATE_TIME = 'SERIVCE_UTIL_DATE_TIME';
 
     const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+    const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
     const STORE = 'STORE';
 
@@ -66,7 +72,10 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDateFormatterService($container);
         $container = $this->addStore($container);
         $container = $this->addUtilSanitizeService($container);
+        $container = $this->addUtilDateTimeService($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addSalesQueryContainer($container);
+        $container = $this->addMoneyFacade($container);
 
         return $container;
     }
@@ -236,6 +245,48 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SERVICE_DATE_FORMATTER] = function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesQueryContainer($container)
+    {
+        $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
+            return new CustomerToSalesQueryContainerBridge($container->getLocator()->sales()->queryContainer());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilDateTimeService($container)
+    {
+        $container[static::SERVICE_UTIL_DATE_TIME] = function (Container $container) {
+            return new CustomerToUtilDateTimeServiceBridge($container->getLocator()->utilDateTime()->service());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMoneyFacade($container)
+    {
+        $container[static::FACADE_MONEY] = function (Container $container) {
+            return new CustomerToMoneyFacadeBridge($container->getLocator()->money()->facade());
         };
 
         return $container;

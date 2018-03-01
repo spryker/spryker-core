@@ -37,15 +37,18 @@ class ViewController extends AbstractController
 
         $addresses = $customerTransfer->getAddresses();
 
-        $table = $this->getFactory()
+        $addressTable = $this->getFactory()
             ->createCustomerAddressTable($idCustomer);
+
+        $orderTable = $this->getFactory()
+            ->createCustomerOrderTable($idCustomer);
 
         return $this->viewResponse([
             'customer' => $customerTransfer,
             'addresses' => $addresses,
             'idCustomer' => $idCustomer,
-            'addressTable' => $table->render(),
-
+            'addressTable' => $addressTable->render(),
+            'orderTable' => $orderTable->render(),
         ]);
     }
 
@@ -62,12 +65,27 @@ class ViewController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function tableAction(Request $request)
+    public function addressTableAction(Request $request)
     {
         $idCustomer = $this->castId($request->get(CustomerConstants::PARAM_ID_CUSTOMER));
 
         $table = $this->getFactory()
             ->createCustomerAddressTable($idCustomer);
+
+        return $this->jsonResponse($table->fetchData());
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function orderTableAction(Request $request)
+    {
+        $idCustomer = $this->castId($request->get(CustomerConstants::PARAM_ID_CUSTOMER));
+
+        $table = $this->getFactory()
+            ->createCustomerOrderTable($idCustomer);
 
         return $this->jsonResponse($table->fetchData());
     }

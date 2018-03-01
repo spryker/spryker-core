@@ -91,4 +91,11 @@
     {% endembed %}
 
 
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Orders' } %}
+        {% block widget_content %}
+            {{ orderTable | raw }}
+        {% endblock %}
+    {% endembed %}
+
 {% endblock %}

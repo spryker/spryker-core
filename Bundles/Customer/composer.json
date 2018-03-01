@@ -17,7 +17,9 @@
     "spryker/util-sanitize": "^2.0.0",
     "spryker/util-text": "^1.1.0",
     "spryker/util-validate": "^1.0.0",
-    "spryker/zed-request": "^3.0.0"
+    "spryker/zed-request": "^3.0.0",
+    "spryker/money": "^2.4.0",
+    "spryker/sales": "^8.6.1"
   },
   "require-dev": {
     "spryker/application": "*",
@@ -27,7 +29,6 @@
     "spryker/config": "*",
     "spryker/console": "*",
     "spryker/propel": "*",
-    "spryker/sales": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/twig": "*"
