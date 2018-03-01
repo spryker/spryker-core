@@ -34,8 +34,7 @@ class CompanyUnitAddressTable extends AbstractTable
 
     const REQUEST_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
 
-    const URL_COMPANY_UNIT_ADDRESS_VIEW = '/cms-company-unit-address/view-block';
-    const URL_COMPANY_UNIT_ADDRESS_EDIT = '/cms-company-unit-address/edit-block';
+    const URL_COMPANY_UNIT_ADDRESS_EDIT = '/cms-company-unit-address/edit-address';
 
     /**
      * @var \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
@@ -139,18 +138,11 @@ class CompanyUnitAddressTable extends AbstractTable
     {
         $buttons = [];
 
-        $buttons[] = $this->generateViewButton(
-            Url::generate(static::URL_COMPANY_UNIT_ADDRESS_VIEW, [
-                static::REQUEST_ID_COMPANY_UNIT_ADDRESS => $item[static::COL_ID_COMPANY_UNIT_ADDRESS],
-            ]),
-            'View Company Address'
-        );
-
         $buttons[] = $this->generateEditButton(
             Url::generate(static::URL_COMPANY_UNIT_ADDRESS_EDIT, [
                 static::REQUEST_ID_COMPANY_UNIT_ADDRESS => $item[static::COL_ID_COMPANY_UNIT_ADDRESS],
             ]),
-            'Edit Company Address'
+            'Edit Company Unit Address'
         );
 
         return implode(' ', $buttons);
