@@ -57,6 +57,14 @@ class AutoloadUpdater implements UpdaterInterface
     ];
 
     /**
+     * @var array
+     */
+    protected $sprykerCodeNamespaces = [
+        self::SPRYKER_NAMESPACE,
+        self::SPRYKER_SHOP_NAMESPACE,
+    ];
+
+    /**
      * @param array $composerJson
      * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
      *
@@ -103,15 +111,18 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function updateAutoloadWithDefaultSrcDirectory(array $composerJson, $modulePath)
     {
-        $pathParts = [
-            static::BASE_SRC_DIRECTORY,
-            static::SPRYKER_NAMESPACE,
-        ];
-        $directoryPath = $this->getPath(array_merge([rtrim($modulePath, DIRECTORY_SEPARATOR)], $pathParts));
+        foreach ($this->sprykerCodeNamespaces as $sprykerCodeNamespace) {
+            $pathParts = [
+                static::BASE_SRC_DIRECTORY,
+                $sprykerCodeNamespace,
+            ];
 
-        if ($this->pathExists($directoryPath)) {
-            $composerJson = $this->addAutoloadPsr4($composerJson);
-            $composerJson[static::AUTOLOAD_KEY][static::PSR_4][static::SPRYKER_NAMESPACE . '\\'] = $this->getPath($pathParts);
+            $directoryPath = $this->getPath(array_merge([rtrim($modulePath, DIRECTORY_SEPARATOR)], $pathParts));
+
+            if ($this->pathExists($directoryPath)) {
+                $composerJson = $this->addAutoloadPsr4($composerJson);
+                $composerJson[static::AUTOLOAD_KEY][static::PSR_4][$sprykerCodeNamespace . '\\'] = $this->getPath($pathParts);
+            }
         }
 
         return $composerJson;
@@ -240,7 +251,17 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function pathExists($path)
     {
-        return (is_dir($path) || is_file(rtrim($path, '/')));
+        return (is_dir($path) || $this->isPathAFile($path));
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return bool
+     */
+    protected function isPathAFile($path)
+    {
+        return is_file(rtrim($path, '/'));
     }
 
     /**
@@ -383,7 +404,7 @@ class AutoloadUpdater implements UpdaterInterface
             ]);
 
             if (!$this->pathExists($path) || !in_array($this->getLastPartOfPath($relativeDirectory), $this->autoloadPSR4Whitelist)) {
-                if (is_file($path)) {
+                if ($this->isPathAFile($path)) {
                     continue;
                 }
 
