@@ -13,6 +13,7 @@ use Spryker\Client\Messenger\Dependency\Client\MessengerToSessionClientBridge;
 
 class MessengerDependencyProvider extends AbstractDependencyProvider
 {
+    const SERVICE_ZED = 'SERVICE ZED';
     const CLIENT_SESSION = 'SESSION CLIENT';
 
     /**
@@ -20,9 +21,10 @@ class MessengerDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addSessionClient($container);
+        $container = $this->addZedRequest($container);
 
         return $container;
     }
@@ -32,10 +34,24 @@ class MessengerDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addSessionClient(Container $container)
+    protected function addSessionClient(Container $container): Container
     {
         $container[static::CLIENT_SESSION] = function (Container $container) {
             return new MessengerToSessionClientBridge($container->getLocator()->session()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addZedRequest(Container $container): Container
+    {
+        $container[self::SERVICE_ZED] = function (Container $container) {
+            return $container->getLocator()->zedRequest()->client();
         };
 
         return $container;
