@@ -1,15 +1,23 @@
-{{ form_start(form) }}
-<h3>{{ 'Comments' | trans }}</h3>
-<div class="order-details-chat">
-    {% for note in form.vars.customer_notes_option.notes %}
-        <div class="chat">
-            <div class="chat-author"><span>{{ note.username }} @ {{ note.virtualProperties.created_at | formatDateTime }}</span></div>
-            <div class="chat-body">{{ note.message }}</div>
+<div class="col-lg-12">
+    <div class="ibox">
+        {{ form_start(form) }}
+        <div class="ibox-title">
+            <h3>{{ 'Notes' | trans }}</h3>
         </div>
-    {% endfor %}
+        <div class="ibox-content">
+            <div class="order-details-chat">
+                {% for note in form.vars.customer_notes_option.notes %}
+                    <div class="chat">
+                        <div class="chat-author"><span>{{ note.username }} @ {{ note.virtualProperties.created_at | formatDateTime }}</span></div>
+                        <div class="chat-body">{{ note.message }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {{ form_widget(form) }}
+
+            <input type="submit" class="btn btn-xs btn-primary" value="{{ 'Add Note' | trans }}" />
+        </div>
+        {{ form_end(form) }}
+    </div>
 </div>
-
-    {{ form_widget(form) }}
-
-<input type="submit" class="btn btn-xs btn-primary" value="{{ 'Add Note' | trans }}" />
-{{ form_end(form) }}

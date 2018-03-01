@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
-    protected const PARAM_ID_CUSTOMER = 'id-customer';
+    protected const PARAM_CUSTOMER = 'customerTransfer';
     protected const SUCCESS_MESSAGE = 'Comment successfully added';
     protected const REFERER_HEADER = 'referer';
 
@@ -27,9 +27,8 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCustomer = 1;
-//        TODO: use id from request
-//        $idCustomer = $request->query->get(self::PARAM_ID_CUSTOMER);
+        $customerTransfer = $request->request->get(self::PARAM_CUSTOMER);
+        $idCustomer = $customerTransfer->getIdCustomer();
 
         $formDataProvider = $this->getFactory()->createNoteFormDataProvider();
         $form = $this->getFactory()->getNoteForm(

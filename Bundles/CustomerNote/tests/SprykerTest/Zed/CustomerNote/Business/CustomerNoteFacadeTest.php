@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Customer\Business;
+namespace SprykerTest\Zed\CustomerNote\Business;
 
 use Codeception\Test\Unit;
 
@@ -21,6 +21,9 @@ use Codeception\Test\Unit;
  */
 class CustomerNoteFacadeTest extends Unit
 {
+    /**
+     * @return void
+     */
     public function testAddNote()
     {
         $this->assertTrue(true);
