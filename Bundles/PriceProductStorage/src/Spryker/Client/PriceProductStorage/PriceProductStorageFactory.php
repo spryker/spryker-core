@@ -60,7 +60,7 @@ class PriceProductStorageFactory extends AbstractFactory
      */
     protected function createPriceProductStorageKeyGenerator()
     {
-        return new PriceProductStorageKeyGenerator($this->getSynchronizationService(), $this->getStore());
+        return new PriceProductStorageKeyGenerator($this->getSynchronizationService());
     }
 
     /**
@@ -69,13 +69,5 @@ class PriceProductStorageFactory extends AbstractFactory
     protected function getSynchronizationService()
     {
         return $this->getProvidedDependency(PriceProductStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::STORE);
     }
 }

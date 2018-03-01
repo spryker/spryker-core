@@ -9,8 +9,7 @@
     "spryker/product-category-filter": "^1.1.0",
     "spryker/storage": "^3.4.0",
     "spryker/synchronization": "^0.2.0",
-    "spryker/util-encoding": "^2.0.0",
-    "spryker/util-sanitize": "^2.1.0"
+    "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
     "spryker/event": "*",
@@ -23,6 +22,11 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

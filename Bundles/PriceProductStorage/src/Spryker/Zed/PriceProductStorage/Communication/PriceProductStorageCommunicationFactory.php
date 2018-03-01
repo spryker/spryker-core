@@ -17,34 +17,10 @@ use Spryker\Zed\PriceProductStorage\PriceProductStorageDependencyProvider;
 class PriceProductStorageCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\PriceProductStorage\Dependency\Service\PriceProductStorageToUtilSanitizeServiceInterface
-     */
-    public function getUtilSanitizeService()
-    {
-        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
-    }
-
-    /**
      * @return \Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
         return $this->getProvidedDependency(PriceProductStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface
-     */
-    public function getPriceProductFacade()
-    {
-        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::FACADE_PRICE_PRODUCT);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::STORE);
     }
 }

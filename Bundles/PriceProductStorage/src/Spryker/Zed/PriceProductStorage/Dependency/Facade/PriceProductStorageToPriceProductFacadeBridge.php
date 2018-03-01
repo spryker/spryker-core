@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProductStorage\Dependency\Facade;
 
-class PriceProductStorageToPriceProductFacadeBridge
+class PriceProductStorageToPriceProductFacadeBridge implements PriceProductStorageToPriceProductFacadeInterface
 {
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
