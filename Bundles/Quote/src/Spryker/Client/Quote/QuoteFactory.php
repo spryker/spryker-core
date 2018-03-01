@@ -8,8 +8,16 @@
 namespace Spryker\Client\Quote;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Quote\Session\QuoteResolver;
 use Spryker\Client\Quote\Session\QuoteSession;
+use Spryker\Client\Quote\StorageStrategy\DatabaseStorageStrategy;
+use Spryker\Client\Quote\StorageStrategy\SessionStorageStrategy;
+use Spryker\Client\Quote\StorageStrategy\StorageStrategyProvider;
+use Spryker\Client\Quote\Zed\QuoteStub;
 
+/**
+ * @method \Spryker\Client\Quote\QuoteConfig getConfig()
+ */
 class QuoteFactory extends AbstractFactory
 {
     /**
@@ -19,9 +27,83 @@ class QuoteFactory extends AbstractFactory
     {
         return new QuoteSession(
             $this->getSessionClient(),
+            $this->getStorageStrategy(),
             $this->getCurrencyPlugin(),
             $this->getQuoteTransferExpanderPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface
+     */
+    public function getStorageStrategy()
+    {
+        return $this->createStorageStrategyProvider()
+            ->provideStorage();
+    }
+
+    /**
+     * @return \Spryker\Client\Quote\Session\QuoteResolverInterface
+     */
+    public function createQuoteResolver()
+    {
+        return new QuoteResolver(
+            $this->createSession(),
+            $this->getStorageStrategy(),
+            $this->createZedQuoteStub()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Quote\StorageStrategy\StorageStrategyProviderInterface
+     */
+    protected function createStorageStrategyProvider()
+    {
+        return new StorageStrategyProvider(
+            $this->getConfig(),
+            $this->getStorageStrategyList()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface[]
+     */
+    protected function getStorageStrategyList()
+    {
+        return [
+            $this->createSessionStorageStrategy(),
+            $this->createDatabaseStorageStrategy(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface
+     */
+    protected function createSessionStorageStrategy()
+    {
+        return new SessionStorageStrategy(
+            $this->getSessionClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface
+     */
+    protected function createDatabaseStorageStrategy()
+    {
+        return new DatabaseStorageStrategy(
+            $this->getCustomerClient(),
+            $this->createZedQuoteStub(),
+            $this->getSessionClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Quote\Zed\QuoteStubInterface
+     */
+    public function createZedQuoteStub()
+    {
+        return new QuoteStub($this->getZedService());
     }
 
     /**
@@ -46,5 +128,21 @@ class QuoteFactory extends AbstractFactory
     protected function getQuoteTransferExpanderPlugins()
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::QUOTE_TRANSFER_EXPANDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface
+     */
+    protected function getCustomerClient()
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     */
+    protected function getZedService()
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::SERVICE_ZED);
     }
 }

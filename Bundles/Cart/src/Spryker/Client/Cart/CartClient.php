@@ -15,6 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 
 /**
  * @method \Spryker\Client\Cart\CartFactory getFactory()
+ * TODO: all public method need to do the similar as we did in QuoteClient (e.g. $this->createStrategyProvider()->x())
  */
 class CartClient extends AbstractClient implements CartClientInterface
 {
@@ -24,6 +25,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @api
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
+     * TODO: get from session all the time
      */
     public function getQuote()
     {
@@ -36,9 +38,11 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @api
      *
      * @return void
+     * TODO: delegate to QuoteClient::clearQuote()
      */
     public function clearQuote()
     {
+        $this->getQuoteClient()->syncQuote();
         $this->getQuoteClient()->clearQuote();
     }
 
@@ -47,7 +51,21 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @api
      *
+     * @return void
+     * TODO: not needed
+     */
+    public function syncQuote()
+    {
+        $this->getQuoteClient()->syncQuote();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return int
+     * TODO: get from session all the time
      */
     public function getItemCount()
     {
@@ -70,10 +88,12 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
+     * TODO: deprecate this method and remove usages in core
      */
     public function storeQuote(QuoteTransfer $quoteTransfer)
     {
         $this->getQuoteClient()->setQuote($quoteTransfer);
+        $this->getQuoteClient()->pushQuote();
     }
 
     /**
@@ -84,6 +104,9 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
+     * TODO:
+     * - session strategy: additionally stores quote in session internally after zed request
+     * - persistent strategy: make zed request with $itemTransfer as parameter and do everything in zed side (read quote from DB, prepare CartChangeTransfer, recalculate, store quote in db) then store in session after zed request
      */
     public function addItem(ItemTransfer $itemTransfer)
     {
@@ -100,6 +123,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
+     * TODO: similar as addItem()
      */
     public function addItems(array $itemTransfers)
     {
@@ -120,6 +144,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @param string|null $groupKey
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
+     * TODO: similar as addItem()
      */
     public function removeItem($sku, $groupKey = null)
     {
@@ -141,6 +166,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
+     * TODO: similar as addItem()
      */
     public function removeItems(ArrayObject $items)
     {
@@ -180,6 +206,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
+     * TODO: similar as addItem()
      */
     public function changeItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
@@ -215,6 +242,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
+     * TODO: similar as addItem()
      */
     public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
@@ -241,6 +269,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @param int $quantity
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
+     * TODO: similar as addItem()
      */
     public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
@@ -263,6 +292,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @api
      *
      * @return void
+     * TODO: similar as addItem()
      */
     public function reloadItems()
     {
@@ -276,6 +306,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     protected function createCartChangeTransfer()
     {
+        $this->getQuoteClient()->syncQuote();
         $quoteTransfer = $this->getQuoteClient()->getQuote();
         $items = $quoteTransfer->getItems();
 

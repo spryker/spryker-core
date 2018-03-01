@@ -26,12 +26,23 @@ interface CartClientInterface
     /**
      * Specification:
      *  - Empty existing quote and store to session
+     * - TODO: update spec
      *
      * @api
      *
      * @return void
      */
     public function clearQuote();
+
+    /**
+     * Specification:
+     * - Gets quote from storage and save it in customer session.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function syncQuote();
 
     /**
      * Specification:
@@ -150,6 +161,7 @@ interface CartClientInterface
     /**
      * Specification:
      *  - Store current quote into session
+     * - TODO: update spec
      *
      * @api
      *

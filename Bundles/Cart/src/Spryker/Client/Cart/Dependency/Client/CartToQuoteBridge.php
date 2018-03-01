@@ -49,4 +49,20 @@ class CartToQuoteBridge implements CartToQuoteInterface
     {
         $this->quoteClient->clearQuote();
     }
+
+    /**
+     * @return void
+     */
+    public function syncQuote()
+    {
+        $this->quoteClient->syncQuote();
+    }
+
+    /**
+     * @return void
+     */
+    public function pushQuote()
+    {
+        $this->quoteClient->pushQuote();
+    }
 }

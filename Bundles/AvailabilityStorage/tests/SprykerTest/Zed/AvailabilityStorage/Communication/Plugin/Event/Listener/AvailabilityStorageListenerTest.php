@@ -69,6 +69,7 @@ class AvailabilityStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId(2),
         ];
         $availabilityStorageListener->handleBulk($eventTransfers, AvailabilityEvents::AVAILABILITY_ABSTRACT_PUBLISH);
 
@@ -121,7 +122,7 @@ class AvailabilityStorageListenerTest extends Unit
     protected function assertAvailabilityStorage($previousCount)
     {
         $availabilityStorageCount = SpyAvailabilityStorageQuery::create()->count();
-        $this->assertEquals($previousCount + 1, $availabilityStorageCount);
+        $this->assertEquals($previousCount + 2, $availabilityStorageCount);
         $availabilityStorageEntity = SpyAvailabilityStorageQuery::create()->findOneByFkProductAbstract(1);
         $this->assertNotNull($availabilityStorageEntity);
         $data = $availabilityStorageEntity->getData();

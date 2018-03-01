@@ -9,6 +9,7 @@ namespace Spryker\Client\Quote\Session;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyInterface;
+use Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class QuoteSession implements QuoteSessionInterface
@@ -31,18 +32,26 @@ class QuoteSession implements QuoteSessionInterface
     protected $quoteTransferExpanderPlugins;
 
     /**
+     * @var \Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface
+     */
+    protected $storageStrategy;
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * @param \Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface $storageStrategy
      * @param \Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyInterface|null $currencyPlugin
      * @param \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[] $quoteTransferExpanderPlugins
      */
     public function __construct(
         SessionInterface $session,
+        StorageStrategyInterface $storageStrategy, // TODO: Storage shouldn't be part of the session strategy, it should be the other way around.
         QuoteToCurrencyInterface $currencyPlugin = null,
         array $quoteTransferExpanderPlugins = []
     ) {
         $this->session = $session;
         $this->currencyPlugin = $currencyPlugin;
         $this->quoteTransferExpanderPlugins = $quoteTransferExpanderPlugins;
+        $this->storageStrategy = $storageStrategy;
     }
 
     /**
@@ -78,9 +87,29 @@ class QuoteSession implements QuoteSessionInterface
      */
     public function clearQuote()
     {
-        $this->setQuote(new QuoteTransfer());
+        $this->storageStrategy->clearQuote($this->getQuote());
+        $this->syncQuote();
 
         return $this;
+    }
+
+    /**
+     * @return void
+     */
+    public function syncQuote()
+    {
+        $quoteTransfer = $this->getQuote();
+        $quoteTransfer->fromArray($this->storageStrategy->getQuote()->modifiedToArray(), true);
+        $this->session->set(static::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function pushQuote()
+    {
+        $quoteTransfer = $this->getQuote();
+        $this->storageStrategy->saveQuote($quoteTransfer);
     }
 
     /**

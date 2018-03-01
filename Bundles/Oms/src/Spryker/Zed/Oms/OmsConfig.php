@@ -66,4 +66,12 @@ class OmsConfig extends AbstractBundleConfig
     {
         return ' - ';
     }
+
+    /**
+     * @return string
+     */
+    public function getInitialStatus()
+    {
+        return 'new';
+    }
 }
