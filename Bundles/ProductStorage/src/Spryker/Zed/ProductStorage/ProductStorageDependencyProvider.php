@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductStorage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToEventBehaviorFacadeBridge;
@@ -19,7 +18,6 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
-    const STORE = 'STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -44,10 +42,6 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductStorageToProductBridge($container->getLocator()->product()->facade());
-        };
-
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
         };
 
         return $container;

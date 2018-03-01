@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductAbstractLocalizedAttributesStorageListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductAbstractStorageListener;
+use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductAbstractStoreStorageListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductAbstractUrlStorageListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteLocalizedAttributesStorageListener;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener\ProductConcreteProductAbstractLocalizedAttributesStorageListener;
@@ -62,6 +63,9 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
         $this->addProductConcreteProductAbstractUrlCreateStorageListener($eventCollection);
         $this->addProductConcreteProductAbstractUrlUpdateStorageListener($eventCollection);
         $this->addProductConcreteProductAbstractUrlDeleteStorageListener($eventCollection);
+        $this->addProductAbstractStoreCreateStorageListener($eventCollection);
+        $this->addProductAbstractStoreUpdateStorageListener($eventCollection);
+        $this->addProductAbstractStoreDeleteStorageListener($eventCollection);
 
         return $eventCollection;
     }
@@ -315,5 +319,35 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     protected function addProductConcreteProductAbstractUrlDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new ProductConcreteProductAbstractUrlStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductAbstractStoreCreateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_CREATE, new ProductAbstractStoreStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductAbstractStoreUpdateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_UPDATE, new ProductAbstractStoreStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductAbstractStoreDeleteStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_STORE_DELETE, new ProductAbstractStoreStorageListener());
     }
 }

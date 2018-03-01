@@ -22,6 +22,7 @@
             <parameter name="resource" value="url"/>
             <parameter name="key_suffix_column" value="url"/>
             <parameter name="queue_group" value="sync.storage.url"/>
+            <parameter name="queue_pool" value="synchronizationPool" />
         </behavior>
         <behavior name="timestampable"/>
     </table>
@@ -37,6 +38,7 @@
             <parameter name="resource" value="redirect"/>
             <parameter name="key_suffix_column" value="fk_url_redirect"/>
             <parameter name="queue_group" value="sync.storage.url"/>
+            <parameter name="queue_pool" value="synchronizationPool" />
         </behavior>
         <behavior name="timestampable"/>
     </table>

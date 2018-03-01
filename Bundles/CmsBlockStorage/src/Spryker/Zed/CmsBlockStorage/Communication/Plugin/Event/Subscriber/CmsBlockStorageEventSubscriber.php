@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Subscriber;
 use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
 use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockGlossaryKeyMappingBlockStorageListener;
 use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockStorageListener;
+use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockStoreStorageListener;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -36,6 +37,9 @@ class CmsBlockStorageEventSubscriber extends AbstractPlugin implements EventSubs
         $this->addCmsBlockGlossaryKeyMappingBlockCreateStorageListener($eventCollection);
         $this->addCmsBlockGlossaryKeyMappingBlockUpdateStorageListener($eventCollection);
         $this->addCmsBlockGlossaryKeyMappingBlockDeleteStorageListener($eventCollection);
+        $this->addCmsBlockStoreCreateStorageListener($eventCollection);
+        $this->addCmsBlockStoreUpdateStorageListener($eventCollection);
+        $this->addCmsBlockStoreDeleteStorageListener($eventCollection);
 
         return $eventCollection;
     }
@@ -108,5 +112,35 @@ class CmsBlockStorageEventSubscriber extends AbstractPlugin implements EventSubs
     protected function addCmsBlockGlossaryKeyMappingBlockDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_DELETE, new CmsBlockGlossaryKeyMappingBlockStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsBlockStoreCreateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_STORE_CREATE, new CmsBlockStoreStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsBlockStoreUpdateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_STORE_UPDATE, new CmsBlockStoreStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsBlockStoreDeleteStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_STORE_DELETE, new CmsBlockStoreStorageListener());
     }
 }

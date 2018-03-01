@@ -16,6 +16,7 @@
             <parameter name="resource" value="cms_block_product"/>
             <parameter name="key_suffix_column" value="fk_product_abstract"/>
             <parameter name="queue_group" value="sync.storage.cms"/>
+            <parameter name="queue_pool" value="synchronizationPool" />
         </behavior>
         <behavior name="timestampable"/>
     </table>
