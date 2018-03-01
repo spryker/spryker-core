@@ -154,7 +154,7 @@ class AutoloadUpdater implements UpdaterInterface
                 foreach ($nonEmptySupportDirectories as $directory) {
                     preg_match('/' . static::BASE_SUPPORT_DIRECTORY . '\/(.+)/', $directory, $subNameSpace);
                     $composerJson[static::AUTOLOAD_KEY][static::PSR_4][static::SPRYKER_TEST_NAMESPACE . '\\' . $application . '\\' . $moduleName . '\\' . str_replace('/', '\\', $subNameSpace[1]) . '\\']
-                        = $this->getPath(array_merge($pathParts, explode('/', $subNameSpace[1])));
+                        = $this->getPath(array_merge($pathParts, explode(DIRECTORY_SEPARATOR, $subNameSpace[1])));
                 }
             }
         }
@@ -188,7 +188,7 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function getLastPartOfPath($path)
     {
-        $pathArray = explode('/', rtrim($path, '/'));
+        $pathArray = explode(DIRECTORY_SEPARATOR, rtrim($path, DIRECTORY_SEPARATOR));
         return end($pathArray);
     }
 
@@ -234,7 +234,7 @@ class AutoloadUpdater implements UpdaterInterface
 
         if ($this->pathExists($directoryPath)) {
             $composerJson = $this->addAutoloadDevPsr0($composerJson);
-            $composerJson[static::AUTOLOAD_DEV_KEY][static::PSR_0][$testDirectoryKey] = static::BASE_TESTS_DIRECTORY . '/';
+            $composerJson[static::AUTOLOAD_DEV_KEY][static::PSR_0][$testDirectoryKey] = static::BASE_TESTS_DIRECTORY . DIRECTORY_SEPARATOR;
         }
 
         if (isset($composerJson[static::AUTOLOAD_KEY][static::PSR_0][$testDirectoryKey])) {
@@ -251,7 +251,7 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function pathExists($path)
     {
-        return (is_dir($path) || $this->isPathAFile($path));
+        return (is_dir($path) || $this->isFile($path));
     }
 
     /**
@@ -259,9 +259,9 @@ class AutoloadUpdater implements UpdaterInterface
      *
      * @return bool
      */
-    protected function isPathAFile($path)
+    protected function isFile($path)
     {
-        return is_file(rtrim($path, '/'));
+        return is_file(rtrim($path, DIRECTORY_SEPARATOR));
     }
 
     /**
@@ -287,7 +287,7 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function getPath(array $pathParts)
     {
-        return implode($pathParts, DIRECTORY_SEPARATOR) . '/';
+        return implode($pathParts, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -404,7 +404,7 @@ class AutoloadUpdater implements UpdaterInterface
             ]);
 
             if (!$this->pathExists($path) || !in_array($this->getLastPartOfPath($relativeDirectory), $this->autoloadPSR4Whitelist)) {
-                if ($this->isPathAFile($path)) {
+                if ($this->isFile($path)) {
                     continue;
                 }
 
