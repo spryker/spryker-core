@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 /**
  * @method \Spryker\Zed\Cart\Business\CartFacadeInterface getFacade()
  */
+// TODO: new gateway controller and stub
 class GatewayController extends AbstractGatewayController
 {
     /**
