@@ -32,7 +32,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CustomerTable(
             $this->getQueryContainer(),
-            $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_DATE_FORMATTER)
+            $this->getUtilDateTimeService()
         );
     }
 
