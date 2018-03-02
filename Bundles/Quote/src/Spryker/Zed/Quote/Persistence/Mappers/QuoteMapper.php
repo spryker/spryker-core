@@ -40,6 +40,7 @@ class QuoteMapper implements QuoteMapperInterface
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->fromArray($this->restoreQuoteData($quoteEntityTransfer));
         $quoteTransfer->setIdQuote($quoteEntityTransfer->getIdQuote());
+        // TODO: all data that was filtered out need to be set back for the result
 
         return $quoteTransfer;
     }
@@ -52,6 +53,7 @@ class QuoteMapper implements QuoteMapperInterface
     public function mapTransferToEntityTransfer(QuoteTransfer $quoteTransfer): SpyQuoteEntityTransfer
     {
         $quoteEntityTransfer = new SpyQuoteEntityTransfer();
+        $quoteEntityTransfer->fromArray($quoteTransfer->modifiedToArray(), true);
         $quoteEntityTransfer->setIdQuote($quoteTransfer->getIdQuote());
         $quoteEntityTransfer->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
         $quoteEntityTransfer->setFkStore($quoteTransfer->getStore()->getIdStore());
