@@ -307,7 +307,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @api
      *
-     * @return \Spryker\Client\Cart\Zed\CartStubInterface
+     * @return \Spryker\Client\Cart\Zed\CartStubInterface|\Spryker\Client\ZedRequest\Stub\ZedRequestStub
      */
     public function getZedStub()
     {
