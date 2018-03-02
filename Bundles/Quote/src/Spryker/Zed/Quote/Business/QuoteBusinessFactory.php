@@ -61,7 +61,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
         return new QuoteStorageSynchronizer(
             $this->getConfig(),
             $this->getRepository(),
-            $this->getEntityManager(),
+            $this->createQuoteWriter(),
             $this->createQuoteMerger()
         );
     }

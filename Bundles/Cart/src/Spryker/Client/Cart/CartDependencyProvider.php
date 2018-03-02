@@ -17,6 +17,7 @@ class CartDependencyProvider extends AbstractDependencyProvider
     const CLIENT_QUOTE = 'quote client';
     const CLIENT_ZED_REQUEST = 'zed request client';
     const PLUGIN_ITEM_COUNT = 'item count plugin';
+    const PLUGINS_QUOTE_STORAGE_STRATEGY = 'PLUGINS_QUOTE_STORAGE_STRATEGY';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -28,6 +29,7 @@ class CartDependencyProvider extends AbstractDependencyProvider
         $container = $this->addQuoteClient($container);
         $container = $this->addZedRequestClient($container);
         $container = $this->addItemCountPlugin($container);
+        $container = $this->addQuoteStorageStrategyPlugins($container);
 
         return $container;
     }
@@ -72,5 +74,27 @@ class CartDependencyProvider extends AbstractDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addQuoteStorageStrategyPlugins(Container $container)
+    {
+        $container[static::PLUGINS_QUOTE_STORAGE_STRATEGY] = function (Container $container) {
+            return $this->getQuoteStorageStrategyPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface[]
+     */
+    protected function getQuoteStorageStrategyPlugins()
+    {
+        return [];
     }
 }

@@ -29,12 +29,7 @@ interface CartToQuoteInterface
     public function clearQuote();
 
     /**
-     * @return void
+     * @return string
      */
-    public function syncQuote();
-
-    /**
-     * @return void
-     */
-    public function pushQuote();
+    public function getStorageStrategy();
 }

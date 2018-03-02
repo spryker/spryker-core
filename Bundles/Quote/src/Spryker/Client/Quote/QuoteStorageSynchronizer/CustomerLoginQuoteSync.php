@@ -49,7 +49,7 @@ class CustomerLoginQuoteSync implements CustomerLoginQuoteSyncInterface
      */
     public function syncQuoteForCustomer(CustomerTransfer $customerTransfer)
     {
-        if ($this->currentStorageStrategy->getStorageType() !== QuoteConfig::STORAGE_STRATEGY_DATABASE) {
+        if ($this->currentStorageStrategy->getStorageStrategy() !== QuoteConfig::STORAGE_STRATEGY_DATABASE) {
             return;
         }
 

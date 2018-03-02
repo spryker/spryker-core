@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Quote\QuoteConfig as SharedQuoteConfig;
 use Spryker\Zed\Quote\Business\Exception\QuoteSynchronizationNotAvailable;
+use Spryker\Zed\Quote\Business\Model\QuoteWriterInterface;
 use Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface;
 use Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface;
 use Spryker\Zed\Quote\QuoteConfig;
@@ -34,26 +35,26 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
     protected $quoteRepository;
 
     /**
-     * @var \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface
+     * @var \Spryker\Zed\Quote\Business\Model\QuoteWriterInterface
      */
-    protected $quoteEntityManager;
+    protected $quoteWriter;
 
     /**
      * @param \Spryker\Zed\Quote\QuoteConfig $quoteConfig
      * @param \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
-     * @param \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface $quoteEntityManager
+     * @param \Spryker\Zed\Quote\Business\Model\QuoteWriterInterface $quoteWriter
      * @param \Spryker\Zed\Quote\Business\Model\QuoteMergerInterface $quoteMerger
      */
     public function __construct(
         QuoteConfig $quoteConfig,
         QuoteRepositoryInterface $quoteRepository,
-        QuoteEntityManagerInterface $quoteEntityManager,
+        QuoteWriterInterface $quoteWriter,
         QuoteMergerInterface $quoteMerger
     ) {
         $this->quoteConfig = $quoteConfig;
         $this->quoteMerger = $quoteMerger;
         $this->quoteRepository = $quoteRepository;
-        $this->quoteEntityManager = $quoteEntityManager;
+        $this->quoteWriter = $quoteWriter;
     }
 
     /**
@@ -80,7 +81,8 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
             $quoteTransfer = $this->mergeQuotes($quoteTransfer, $customerQuoteTransfer);
         }
 
-        return $this->saveQuote($quoteTransfer);
+        $quoteTransfer->setCustomer($customerTransfer);
+        return $this->quoteWriter->save($quoteTransfer);
     }
 
     /**
@@ -107,22 +109,5 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
         $targetQuote->setIdQuote($sourceQuote->getIdQuote());
 
         return $targetQuote;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function saveQuote(QuoteTransfer $quoteTransfer)
-    {
-        $savedQuoteTransfer = $this->quoteEntityManager->saveQuote($quoteTransfer);
-        $quoteTransfer->setIdQuote($savedQuoteTransfer->getIdQuote());
-
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-        $quoteResponseTransfer->setIsSuccessful(true);
-
-        return $quoteResponseTransfer;
     }
 }

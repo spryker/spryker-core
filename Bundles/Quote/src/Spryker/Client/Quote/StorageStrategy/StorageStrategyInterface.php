@@ -12,11 +12,6 @@ use Spryker\Client\Quote\QuoteClientInterface;
 interface StorageStrategyInterface extends QuoteClientInterface
 {
     /**
-     * @return string
-     */
-    public function getStorageType();
-
-    /**
      * @return bool
      */
     public function isAllowed();

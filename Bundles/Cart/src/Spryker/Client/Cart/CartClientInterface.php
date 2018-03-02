@@ -151,9 +151,10 @@ interface CartClientInterface
     /**
      * Specification:
      *  - Store current quote into session
-     * - TODO: update spec
      *
      * @api
+     *
+     * @deprecated
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

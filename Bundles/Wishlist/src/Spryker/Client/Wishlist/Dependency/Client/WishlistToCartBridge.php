@@ -46,6 +46,8 @@ class WishlistToCartBridge implements WishlistToCartInterface
     }
 
     /**
+     * @deprecated
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

@@ -21,7 +21,6 @@ class QuoteClient extends AbstractClient implements QuoteClientInterface
      * @api
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
-     * TODO: get from session all the time
      */
     public function getQuote()
     {
@@ -36,9 +35,6 @@ class QuoteClient extends AbstractClient implements QuoteClientInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
-     * TODO:
-     * - session strategy: set quote in session
-     * - persistence strategy: set quote in session, throw exception when something is changed in quote which is stored in database
      */
     public function setQuote(QuoteTransfer $quoteTransfer)
     {
@@ -51,20 +47,21 @@ class QuoteClient extends AbstractClient implements QuoteClientInterface
      * @api
      *
      * @return void
-     * TODO:
-     * - session strategy: clear it from session
-     * - persistent strategy: we do a zed request to clear the quote, then we clear it from session as well
      */
     public function clearQuote()
     {
-        $this->getFactory()->createSession()->clearQuote();
+        $this->getFactory()->getStorageStrategy()->clearQuote();
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getStorageStrategy()
     {
-
+        return $this->getFactory()->getStorageStrategy()->getStorageStrategy();
     }
 }

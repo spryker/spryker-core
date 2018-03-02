@@ -48,7 +48,7 @@ class DatabaseStorageStrategy implements StorageStrategyInterface
     /**
      * @return string
      */
-    public function getStorageType()
+    public function getStorageStrategy()
     {
         return QuoteConfig::STORAGE_STRATEGY_DATABASE;
     }
