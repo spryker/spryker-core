@@ -13,7 +13,6 @@ use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Orm\Zed\Country\Persistence\Map\SpyRegionTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -42,20 +41,12 @@ class CompanyUnitAddressTable extends AbstractTable
     protected $companyUnitAddressQuery;
 
     /**
-     * @var \Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface
-     */
-    protected $companyUnitAddressQueryContainer;
-
-    /**
      * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery $companyUnitAddressQuery
-     * @param \Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface $companyUnitAddressQueryContainer
      */
     public function __construct(
-        SpyCompanyUnitAddressQuery $companyUnitAddressQuery,
-        CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface $companyUnitAddressQueryContainer
+        SpyCompanyUnitAddressQuery $companyUnitAddressQuery
     ) {
         $this->companyUnitAddressQuery = $companyUnitAddressQuery;
-        $this->companyUnitAddressQueryContainer = $companyUnitAddressQueryContainer;
     }
 
     /**

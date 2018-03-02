@@ -24,8 +24,7 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
             ->queryCompanyUnitAddress();
 
         return new CompanyUnitAddressTable(
-            $companyUnitAddressQuery,
-            $this->getCompanyUnitAddressGuiQueryContainer()
+            $companyUnitAddressQuery
         );
     }
 
@@ -79,7 +78,6 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
     protected function createCompanyUnitAddressDataProvider()
     {
         return new CompanyUnitAddressFormDataProvider(
-            $this->getCompanyUnitAddressGuiQueryContainer(),
             $this->getCompanyUnitAddressFacade()
         );
     }
