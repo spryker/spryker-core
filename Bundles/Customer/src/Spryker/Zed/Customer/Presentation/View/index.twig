@@ -90,12 +90,8 @@
         {% endblock %}
     {% endembed %}
 
-
-
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Orders' } %}
-        {% block widget_content %}
-            {{ orderTable | raw }}
-        {% endblock %}
-    {% endembed %}
+    {% for blockName, externalBlock in blocks %}
+        <div id="{{ blockName }}">{{ externalBlock | raw }}</div>
+    {% endfor %}
 
 {% endblock %}

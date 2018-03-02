@@ -15,7 +15,6 @@ use Spryker\Zed\Customer\Communication\Form\DataProvider\CustomerFormDataProvide
 use Spryker\Zed\Customer\Communication\Form\DataProvider\CustomerUpdateFormDataProvider;
 use Spryker\Zed\Customer\Communication\Table\AddressTable;
 use Spryker\Zed\Customer\Communication\Table\CustomerTable;
-use Spryker\Zed\Customer\Communication\Table\OrderTable;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -44,22 +43,6 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     public function createCustomerAddressTable($idCustomer)
     {
         return new AddressTable($this->getQueryContainer(), $idCustomer, $this->getUtilSanitizeService());
-    }
-
-    /**
-     * @param int $idCustomer
-     *
-     * @return \Spryker\Zed\Customer\Communication\Table\OrderTable
-     */
-    public function createCustomerOrderTable($idCustomer)
-    {
-        return new OrderTable(
-            $idCustomer,
-            $this->getSalesQueryContainer(),
-            $this->getQueryContainer(),
-            $this->getUtilDateTimeService(),
-            $this->getMoneyFacade()
-        );
     }
 
     /**
@@ -168,18 +151,10 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Dependency\QueryContainer\CustomerToSalesQueryContainerInterface
+     * @return array
      */
-    public function getSalesQueryContainer()
+    public function getCustomerDetailExternalBlocksUrls()
     {
-        return $this->getProvidedDependency(CustomerDependencyProvider::QUERY_CONTAINER_SALES);
-    }
-
-    /**
-     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToMoneyFacadeInterface
-     */
-    protected function getMoneyFacade()
-    {
-        return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_MONEY);
+        return $this->getConfig()->getCustomerDetailExternalBlocksUrls();
     }
 }
