@@ -20,11 +20,11 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
      */
     public function createAddressTable()
     {
-        $cmsBlockQuery = $this->getCompanyUnitAddressGuiQueryContainer()
+        $companyUnitAddressQuery = $this->getCompanyUnitAddressGuiQueryContainer()
             ->queryCompanyUnitAddress();
 
         return new CompanyUnitAddressTable(
-            $cmsBlockQuery,
+            $companyUnitAddressQuery,
             $this->getCompanyUnitAddressGuiQueryContainer()
         );
     }
