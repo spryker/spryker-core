@@ -80,9 +80,9 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
     }
 
     /**
-     * @return array
+     * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\EditCompanyUnitAddressExpanderPluginInterface[]
      */
-    protected function getCompanyUnitAddressFromPlugins()
+    protected function getCompanyUnitAddressFromPlugins(): array
     {
         return [];
     }

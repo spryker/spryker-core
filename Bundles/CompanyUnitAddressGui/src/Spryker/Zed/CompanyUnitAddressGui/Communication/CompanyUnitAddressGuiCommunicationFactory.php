@@ -66,7 +66,7 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
-     * @return mixed
+     * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\EditCompanyUnitAddressExpanderPluginInterface[]
      */
     public function getCompanyUnitAddressFormPlugins()
     {
