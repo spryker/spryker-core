@@ -8,18 +8,16 @@
 namespace SprykerTest\Zed\Quote\Business\QuoteFacade;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\ProductGroupBuilder;
-use Generated\Shared\Transfer\ProductGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group MultiCart
+ * @group Quote
  * @group Business
- * @group MultiCartFacade
- * @group ReadCartTest
+ * @group QuoteFacade
+ * @group ReadQuoteTest
  * Add your own group annotations below this line
  */
 class ReadQuoteTest extends Unit

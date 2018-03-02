@@ -7,21 +7,19 @@
 
 namespace SprykerTest\Zed\Quote\Business\QuoteFacade;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
-use Generated\Shared\DataBuilder\ProductGroupBuilder;
-use Generated\Shared\Transfer\ProductGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\ProductGroup\ProductGroupConfig;
 
 /**
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
- * @group MultiCart
+ * @group Quote
  * @group Business
- * @group MultiCartFacade
- * @group UpdateCartTest
+ * @group QuoteFacade
+ * @group UpdateQuoteTest
  * Add your own group annotations below this line
  */
 class UpdateQuoteTest extends Unit
@@ -43,7 +41,7 @@ class UpdateQuoteTest extends Unit
         ]);
 
         $itemTransfer = (new ItemBuilder())->build();
-        $itemCollection = new \ArrayObject([
+        $itemCollection = new ArrayObject([
             $itemTransfer,
         ]);
 
