@@ -41,7 +41,7 @@ class MessengerFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Messenger\Dependency\Client\MessengerToSessionClientInterface
      */
-    protected function getSessionClient(): MessengerToSessionClientInterface
+    public function getSessionClient(): MessengerToSessionClientInterface
     {
         return $this->getProvidedDependency(MessengerDependencyProvider::CLIENT_SESSION);
     }
@@ -49,7 +49,7 @@ class MessengerFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
      */
-    protected function getZedClient(): ZedRequestClientInterface
+    public function getZedClient(): ZedRequestClientInterface
     {
         return $this->getProvidedDependency(MessengerDependencyProvider::SERVICE_ZED);
     }
