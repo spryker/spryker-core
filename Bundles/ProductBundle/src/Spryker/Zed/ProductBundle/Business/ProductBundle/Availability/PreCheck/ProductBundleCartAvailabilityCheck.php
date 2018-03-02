@@ -229,13 +229,6 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         ItemTransfer $itemTransfer,
         StoreTransfer $storeTransfer
     ) {
-        if (!$this->checkIfItemIsSellable($itemsInCart, $itemTransfer->getSku(), $storeTransfer, 0)) {
-            return $this->createItemIsNotAvailableMessageTransfer(
-                $itemTransfer->getQuantity(),
-                $itemTransfer->getSku()
-            );
-        }
-
         if ($this->isAllBundleItemsAvailable($itemsInCart, $bundledProducts, $itemTransfer->getQuantity(), $storeTransfer)) {
             return null;
         }
