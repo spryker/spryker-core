@@ -22,7 +22,7 @@ interface MessengerClientInterface
      *
      * @return void
      */
-    public function addSuccessMessage($message): void;
+    public function addSuccessMessage($message);
 
     /**
      * Specification:
@@ -34,7 +34,7 @@ interface MessengerClientInterface
      *
      * @return void
      */
-    public function addInfoMessage($message): void;
+    public function addInfoMessage($message);
 
     /**
      * Specification:
@@ -46,7 +46,7 @@ interface MessengerClientInterface
      *
      * @return void
      */
-    public function addErrorMessage($message): void;
+    public function addErrorMessage($message);
 
     /**
      * Specification:
