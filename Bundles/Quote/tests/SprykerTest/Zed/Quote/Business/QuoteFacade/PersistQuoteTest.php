@@ -11,6 +11,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\DiscountBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\DataBuilder\TotalsBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Quote\Business\QuoteFacade;
@@ -85,7 +87,7 @@ class PersistQuoteTest extends Unit
         $actualQuoteData = $actualQuoteTransfer->modifiedToArray();
         unset($actualQuoteData['id_quote']);
 
-        $this->assertSame($expectedQuoteTransfer->modifiedToArray(), $actualQuoteData);
+        $this->assertEquals($expectedQuoteTransfer->modifiedToArray(), $actualQuoteData, 'Quote from database should have returned expected data.');
     }
 
     /**
@@ -104,8 +106,8 @@ class PersistQuoteTest extends Unit
      */
     protected function providePersistEmptyQuoteData()
     {
-        $quoteTransfer = new QuoteTransfer();
-        $expectedQuoteTransfer = new QuoteTransfer();
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $expectedQuoteTransfer = clone $quoteTransfer;
 
         return [$quoteTransfer, $expectedQuoteTransfer];
     }
@@ -115,13 +117,18 @@ class PersistQuoteTest extends Unit
      */
     protected function providePersistFilteredQuoteData()
     {
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $expectedQuoteTransfer = clone $quoteTransfer;
+
         $itemTransfer1 = (new ItemBuilder())->build();
         $itemTransfer2 = (new ItemBuilder())->build();
 
-        $totalsTransfer = new TotalsTransfer();
-        $totalsTransfer->setGrandTotal(100);
+        $totalsTransfer = (new TotalsBuilder())
+            ->seed([
+                TotalsTransfer::GRAND_TOTAL => 100,
+            ])
+            ->build();
 
-        $quoteTransfer = new QuoteTransfer();
         $quoteTransfer
             ->addItem($itemTransfer1)
             ->addItem($itemTransfer2)
@@ -131,7 +138,6 @@ class PersistQuoteTest extends Unit
             ->setBillingSameAsShipping(true)
             ->addCartRuleDiscount((new DiscountBuilder())->build());
 
-        $expectedQuoteTransfer = new QuoteTransfer();
         $expectedQuoteTransfer
             ->addItem($itemTransfer1)
             ->addItem($itemTransfer2)
