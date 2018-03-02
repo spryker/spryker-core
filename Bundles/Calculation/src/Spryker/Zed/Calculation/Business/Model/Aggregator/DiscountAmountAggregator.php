@@ -159,12 +159,11 @@ class DiscountAmountAggregator implements CalculatorInterface
         $appliedDiscounts = [];
         foreach ($calculateDiscounts as $calculatedDiscountTransfer) {
             $idDiscount = $calculatedDiscountTransfer->getIdDiscount();
-
-            $discountAmount = $calculatedDiscountTransfer->getUnitAmount();
             if (isset($appliedDiscounts[$idDiscount])) {
                 continue;
             }
-
+            
+            $discountAmount = $calculatedDiscountTransfer->getUnitAmount();
             $itemUnitDiscountAmountAggregation += $discountAmount;
             $appliedDiscounts[$idDiscount] = true;
         }

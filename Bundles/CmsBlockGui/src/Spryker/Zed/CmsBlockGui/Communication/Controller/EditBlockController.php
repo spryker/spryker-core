@@ -10,7 +10,6 @@ namespace Spryker\Zed\CmsBlockGui\Communication\Controller;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplateNotFoundException;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Block\CmsBlockForm;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,11 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\CmsBlockGui\Communication\CmsBlockGuiCommunicationFactory getFactory()
  */
-class EditBlockController extends AbstractController
+class EditBlockController extends AbstractCmsBlockController
 {
-    const URL_PARAM_ID_CMS_BLOCK = 'id-cms-block';
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
-    const REDIRECT_URL_DEFAULT = '/cms-block-gui/list-block';
 
     const MESSAGE_CMS_BLOCK_UPDATE_ERROR = 'Invalid data provided.';
     const MESSAGE_CMS_BLOCK_UPDATE_SUCCESS = 'CMS Block was updated successfully.';
@@ -40,20 +37,26 @@ class EditBlockController extends AbstractController
             ->getCmsBlockFacade()
             ->syncTemplate($this->getFactory()->getConfig()->getTemplatePath());
 
-        $idCmsBlock = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_BLOCK));
+        $cmsBlockTransfer = $this->findCmsBlockById($request);
+
+        if (!$cmsBlockTransfer) {
+            $this->addErrorMessage(static::MESSAGE_CMS_BLOCK_INVALID_ID_ERROR);
+
+            return $this->getNotFoundBlockRedirect();
+        }
 
         $cmsBlockFormTypeDataProvider = $this->getFactory()
             ->createCmsBlockFormDataProvider();
 
         $cmsBlockForm = $this->getFactory()
-            ->getCmsBlockForm($cmsBlockFormTypeDataProvider, $idCmsBlock)
+            ->getCmsBlockForm($cmsBlockFormTypeDataProvider, $cmsBlockTransfer->getIdCmsBlock())
             ->handleRequest($request);
 
         if ($cmsBlockForm->isSubmitted()) {
             $isUpdated = $this->updateCmsBlock($cmsBlockForm);
 
             if ($isUpdated) {
-                $redirectUrl = $this->createEditCmsBlockUrl($idCmsBlock);
+                $redirectUrl = $this->createEditCmsBlockUrl($cmsBlockTransfer->getIdCmsBlock());
                 return $this->redirectResponse($redirectUrl);
             }
         }
@@ -62,12 +65,8 @@ class EditBlockController extends AbstractController
             ->getLocaleFacade()
             ->getLocaleCollection();
 
-        $cmsBlockTransfer = $this->getFactory()
-            ->getCmsBlockFacade()
-            ->findCmsBlockById($idCmsBlock);
-
         return $this->viewResponse([
-            'idCmsBlock' => $idCmsBlock,
+            'idCmsBlock' => $cmsBlockTransfer->getIdCmsBlock(),
             'cmsBlockForm' => $cmsBlockForm->createView(),
             'availableLocales' => $availableLocales,
             'cmsBlock' => $cmsBlockTransfer,

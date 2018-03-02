@@ -15,7 +15,6 @@ interface CompanyClientInterface
     /**
      * Specification:
      * - Creates new company.
-     * - Assigns current store to company.
      *
      * @api
      *

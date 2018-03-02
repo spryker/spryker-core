@@ -8,6 +8,7 @@
 namespace Spryker\Client\CompanyBusinessUnit\Zed;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Spryker\Client\CompanyBusinessUnit\Dependency\Client\CompanyBusinessUnitToZedRequestClientInterface;
@@ -30,12 +31,15 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getCompanyBusinessUnitById(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): CompanyBusinessUnitResponseTransfer {
-        return $this->zedRequestClient->call('/company-business-unit/gateway/get-company-business-unit-by-id', $companyBusinessUnitTransfer);
+    ): CompanyBusinessUnitTransfer {
+        return $this->zedRequestClient->call(
+            '/company-business-unit/gateway/get-company-business-unit-by-id',
+            $companyBusinessUnitTransfer
+        );
     }
 
     /**
@@ -46,7 +50,10 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
     public function createCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer {
-        return $this->zedRequestClient->call('/company-business-unit/gateway/create', $companyBusinessUnitTransfer);
+        return $this->zedRequestClient->call(
+            '/company-business-unit/gateway/create',
+            $companyBusinessUnitTransfer
+        );
     }
 
     /**
@@ -57,31 +64,38 @@ class CompanyBusinessUnitStub implements CompanyBusinessUnitStubInterface
     public function updateCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer {
-        return $this->zedRequestClient->call('/company-business-unit/gateway/update', $companyBusinessUnitTransfer);
+        return $this->zedRequestClient->call(
+            '/company-business-unit/gateway/update',
+            $companyBusinessUnitTransfer
+        );
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function deleteCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): bool {
-        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer */
-        $companyBusinessUnitResponseTransfer = $this->zedRequestClient->call('/company-business-unit/gateway/delete', $companyBusinessUnitTransfer);
+    ): CompanyBusinessUnitResponseTransfer {
 
-        return $companyBusinessUnitResponseTransfer->getIsSuccessful();
+        return $this->zedRequestClient->call(
+            '/company-business-unit/gateway/delete',
+            $companyBusinessUnitTransfer
+        );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer $businessUnitCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getCompanyBusinessUnitCollection(
-        CompanyBusinessUnitCollectionTransfer $businessUnitCollectionTransfer
+        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer {
-        return $this->zedRequestClient->call('/company-business-unit/gateway/get-company-business-unit-collection', $businessUnitCollectionTransfer);
+        return $this->zedRequestClient->call(
+            '/company-business-unit/gateway/get-company-business-unit-collection',
+            $companyBusinessUnitCriteriaFilterTransfer
+        );
     }
 }
