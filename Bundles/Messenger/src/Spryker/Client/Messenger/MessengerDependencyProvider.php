@@ -21,7 +21,7 @@ class MessengerDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container): Container
+    public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addSessionClient($container);
         $container = $this->addZedRequest($container);
@@ -34,7 +34,7 @@ class MessengerDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addSessionClient(Container $container): Container
+    protected function addSessionClient(Container $container)
     {
         $container[static::CLIENT_SESSION] = function (Container $container) {
             return new MessengerToSessionClientBridge($container->getLocator()->session()->client());
