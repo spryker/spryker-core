@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUnitAddressGui;
 
+use Spryker\Zed\CompanyUnitAddressGui\Dependency\Facade\CompanyUnitAddressGuiToCompanyUnitAddressFacadeBridge;
 use Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -14,6 +15,8 @@ use Spryker\Zed\Kernel\Container;
 class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     const QUERY_CONTAINER_COMPANY_UNIT_ADDRESS = 'COMPANY_UNIT_ADDRESS_GUI:QUERY_CONTAINER_COMPANY_UNIT_ADDRESS';
+    const FACADE_COMPANY_UNIT_ADDRESS = 'COMPANY_UNIT_ADDRESS_GUI:FACADE_COMPANY_UNIT_ADDRESS';
+    const PLUGINS_COMPANY_UNIT_ADDRESS_FORM = 'COMPANY_UNIT_ADDRESS_GUI:PLUGINS_COMPANY_UNIT_ADDRESS_FORM';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -24,6 +27,8 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addCompanyUnitAddressQueryContainer($container);
+        $container = $this->addCompanyUnitAddressFacade($container);
+        $container = $this->addCompanyUnitAddressFromPlugins($container);
 
         return $container;
     }
@@ -36,9 +41,49 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
     protected function addCompanyUnitAddressQueryContainer(Container $container)
     {
         $container[static::QUERY_CONTAINER_COMPANY_UNIT_ADDRESS] = function (Container $container) {
-            return new CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerBridge($container->getLocator()->companyUnitAddress()->queryContainer());
+            return new CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerBridge(
+                $container->getLocator()->companyUnitAddress()->queryContainer()
+            );
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUnitAddressFacade(Container $container)
+    {
+        $container[static::FACADE_COMPANY_UNIT_ADDRESS] = function (Container $container) {
+            return new CompanyUnitAddressGuiToCompanyUnitAddressFacadeBridge(
+                $container->getLocator()->companyUnitAddress()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUnitAddressFromPlugins(Container $container)
+    {
+        $container[static::PLUGINS_COMPANY_UNIT_ADDRESS_FORM] = function (Container $container) {
+            return $this->getCompanyUnitAddressFromPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCompanyUnitAddressFromPlugins()
+    {
+        return [];
     }
 }

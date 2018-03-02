@@ -34,7 +34,7 @@ class CompanyUnitAddressTable extends AbstractTable
 
     const REQUEST_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
 
-    const URL_COMPANY_UNIT_ADDRESS_EDIT = '/cms-company-unit-address/edit-address';
+    const URL_COMPANY_UNIT_ADDRESS_EDIT = '/company-unit-address-gui/edit-company-unit-address';
 
     /**
      * @var \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
