@@ -27,13 +27,12 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $customerTransfer = $request->request->get(self::PARAM_CUSTOMER);
+        $customerTransfer = $request->request->get(static::PARAM_CUSTOMER);
         $idCustomer = $customerTransfer->getIdCustomer();
 
         $formDataProvider = $this->getFactory()->createNoteFormDataProvider();
         $form = $this->getFactory()->getNoteForm(
-            $formDataProvider->getData($idCustomer),
-            $formDataProvider->getOptions($idCustomer)
+            $formDataProvider->getData($idCustomer)
         );
         $form->handleRequest($request);
 
@@ -44,7 +43,7 @@ class IndexController extends AbstractController
             );
             $this->addSuccessMessage(static::SUCCESS_MESSAGE);
 
-            return $this->redirectResponse($request->headers->get(self::REFERER_HEADER));
+            return $this->redirectResponse($request->headers->get(static::REFERER_HEADER));
         }
 
         foreach ($form->getErrors(true) as $error) {
@@ -53,6 +52,7 @@ class IndexController extends AbstractController
 
         return [
             'form' => $form->createView(),
+            'notes' => $this->getFactory()->getCustomerNoteFacade()->getNotes($idCustomer),
         ];
     }
 }

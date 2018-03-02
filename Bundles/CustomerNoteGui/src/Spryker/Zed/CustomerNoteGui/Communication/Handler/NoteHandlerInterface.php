@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CustomerNoteGui\Communication\Handler;
 
+use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
+
 interface NoteHandlerInterface
 {
     /**
@@ -15,5 +17,5 @@ interface NoteHandlerInterface
      *
      * @return \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer
      */
-    public function handleNoteAddition(int $idCustomer, string $note);
+    public function handleNoteAddition(int $idCustomer, string $note): SpyCustomerNoteEntityTransfer;
 }

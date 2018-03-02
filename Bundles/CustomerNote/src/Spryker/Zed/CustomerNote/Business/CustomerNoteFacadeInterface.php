@@ -14,7 +14,7 @@ interface CustomerNoteFacadeInterface
 {
     /**
      * Specification:
-     * - Saves note to database
+     * - Saves a note to database
      *
      * @api
      *
@@ -26,7 +26,7 @@ interface CustomerNoteFacadeInterface
 
     /**
      * Specification:
-     * - Fetches notes using repository
+     * - Fetches notes using repository by customer id
      *
      * @api
      *

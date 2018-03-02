@@ -118,13 +118,9 @@ class ViewController extends AbstractController
     {
         $subRequest = clone $request;
         $subRequest->setMethod(Request::METHOD_POST);
-        $subRequest->request->set(self::PARAM_CUSTOMER, $customerTransfer);
+        $subRequest->request->set(static::PARAM_CUSTOMER, $customerTransfer);
 
         $responseData = [];
-        /*
-         * @var string $blockName
-         * @var \Symfony\Component\HttpFoundation\Response $blockResponse
-         */
         foreach ($renderBlocks as $blockName => $blockUrl) {
             $blockResponse = $this->handleSubRequest($subRequest, $blockUrl);
             if ($blockResponse instanceof RedirectResponse) {

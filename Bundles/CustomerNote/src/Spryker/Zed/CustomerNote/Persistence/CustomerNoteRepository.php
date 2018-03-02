@@ -21,12 +21,12 @@ class CustomerNoteRepository extends AbstractRepository implements CustomerNoteR
      *
      * @return \Generated\Shared\Transfer\CustomerNotesCollectionTransfer
      */
-    public function findCustomerCommentCollectionByCustomerId(int $idCustomer): CustomerNotesCollectionTransfer
+    public function getCustomerCommentCollectionByIdCustomer(int $idCustomer): CustomerNotesCollectionTransfer
     {
         $customerNoteQuery = $this->getFactory()->createCustomerNoteQuery();
         $customerNoteQuery->filterByFkCustomer($idCustomer);
-        $customerNotes = $this->buildQueryFromCriteria($customerNoteQuery)->find();
-        $notesCollection = new ArrayObject($customerNotes);
+        $customerNoteEntityTransfers = $this->buildQueryFromCriteria($customerNoteQuery)->find();
+        $notesCollection = new ArrayObject($customerNoteEntityTransfers);
         $collectionTransfer = new CustomerNotesCollectionTransfer();
         $collectionTransfer->setNotes($notesCollection);
 

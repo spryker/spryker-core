@@ -5,7 +5,8 @@
   "require": {
     "php": ">=7.1",
     "spryker/customer": "^4.3.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
-    "spryker/kernel": "^3.0.0"
+    "spryker/kernel": "^3.0.0",
+    "spryker/user": "^3.0.0"
   },
   "require-dev": {
     "spryker/application": "*",
@@ -15,6 +16,9 @@
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/customer": "Use Customer 7.6.0 to show notes on customer view details page"
   },
   "autoload": {
     "psr-4": {

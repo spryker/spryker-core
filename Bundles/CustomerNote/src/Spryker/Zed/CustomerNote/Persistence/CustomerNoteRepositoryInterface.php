@@ -16,5 +16,5 @@ interface CustomerNoteRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\CustomerNotesCollectionTransfer
      */
-    public function findCustomerCommentCollectionByCustomerId(int $idCustomer): CustomerNotesCollectionTransfer;
+    public function getCustomerCommentCollectionByIdCustomer(int $idCustomer): CustomerNotesCollectionTransfer;
 }

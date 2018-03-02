@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\CustomerNote\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
 use Spryker\Zed\CustomerNote\Business\CustomerNoteFacade;
 use Spryker\Zed\CustomerNote\Persistence\CustomerNoteEntityManager;
 
@@ -25,6 +26,8 @@ class CustomerNoteFacadeTest extends Unit
 {
     const TESTER_EMAIL = 'tester@spryker.com';
     const TESTER_PASSWORD = 'tester';
+    const TEST_NOTE_AUTHOR = 'Admin';
+    const TEST_NOTE_MESSAGE = 'test';
 
     /**
      * @var \SprykerTest\Zed\CustomerNote\CustomerNoteBusinessTester
@@ -42,12 +45,18 @@ class CustomerNoteFacadeTest extends Unit
     protected $businessLayerDependencies;
 
     /**
+     * @var \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected $customer;
+
+    /**
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
         $this->customerNoteFacade = new CustomerNoteFacade();
+        $this->customer = $this->createCustomerTransfer();
     }
 
     /**
@@ -55,21 +64,34 @@ class CustomerNoteFacadeTest extends Unit
      */
     protected function getEntityManager()
     {
-        $customerNoteEntity = new CustomerNoteEntityManager();
+        $customerNoteEntityManger = new CustomerNoteEntityManager();
 
-        return $customerNoteEntity;
+        return $customerNoteEntityManger;
     }
 
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function createTestCustomerTransfer()
+    protected function createCustomerTransfer()
     {
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setEmail(self::TESTER_EMAIL);
-        $customerTransfer->setPassword(self::TESTER_PASSWORD);
+        $customerTransfer = $this->tester->haveCustomer();
 
         return $customerTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer
+     */
+    protected function createNoteTransfer()
+    {
+        $noteTransfer = new SpyCustomerNoteEntityTransfer();
+        $commentTransfer->setMessage(self::TEST_NOTE_MESSAGE);
+        $commentTransfer->setUsername(
+            self::TEST_NOTE_AUTHOR
+        );
+        $noteTransfer->setFkCustomer($this->customer->getIdCustomer());
+
+        return $noteTransfer;
     }
 
     /**
@@ -77,7 +99,8 @@ class CustomerNoteFacadeTest extends Unit
      */
     public function testAddNote()
     {
-        $customer = $this->tester->haveCustomer();
-        $this->assertTrue(true);
+        $note = $this->customerNoteFacade->addNote($this->createNoteTransfer());
+
+        $this->assertTrue((bool)$note->getIdCustomerNote());
     }
 }

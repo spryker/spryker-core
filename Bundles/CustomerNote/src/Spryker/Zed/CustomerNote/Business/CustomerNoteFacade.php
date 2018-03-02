@@ -42,6 +42,6 @@ class CustomerNoteFacade extends AbstractFacade implements CustomerNoteFacadeInt
      */
     public function getNotes(int $idCustomer): CustomerNotesCollectionTransfer
     {
-        return $this->getRepository()->findCustomerCommentCollectionByCustomerId($idCustomer);
+        return $this->getRepository()->getCustomerCommentCollectionByIdCustomer($idCustomer);
     }
 }

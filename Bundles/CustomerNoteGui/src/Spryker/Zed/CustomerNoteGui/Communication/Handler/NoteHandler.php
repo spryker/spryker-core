@@ -41,15 +41,16 @@ class NoteHandler implements NoteHandlerInterface
      *
      * @return \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer
      */
-    public function handleNoteAddition(int $idCustomer, string $note)
+    public function handleNoteAddition(int $idCustomer, string $note): SpyCustomerNoteEntityTransfer
     {
         $commentTransfer = new SpyCustomerNoteEntityTransfer();
         $commentTransfer->setMessage($note);
         $commentTransfer->setFkCustomer($idCustomer);
         $currentUserTransfer = $this->userFacade->getCurrentUser();
         $commentTransfer->setUsername(
-            sprintf(self::USERNAME_FORMAT, $currentUserTransfer->getFirstName(), $currentUserTransfer->getLastName())
+            sprintf(static::USERNAME_FORMAT, $currentUserTransfer->getFirstName(), $currentUserTransfer->getLastName())
         );
+        $commentTransfer->setFkUser($currentUserTransfer->getIdUser());
 
         return $this->customerNoteFacade->addNote($commentTransfer);
     }

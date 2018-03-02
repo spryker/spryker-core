@@ -6,7 +6,7 @@
         </div>
         <div class="ibox-content">
             <div class="order-details-chat">
-                {% for note in form.vars.customer_notes_option.notes %}
+                {% for note in notes %}
                     <div class="chat">
                         <div class="chat-author"><span>{{ note.username }} @ {{ note.virtualProperties.created_at | formatDateTime }}</span></div>
                         <div class="chat-body">{{ note.message }}</div>

@@ -12,9 +12,6 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -24,36 +21,15 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class NoteForm extends AbstractType
 {
-    const FORM_NAME = 'note';
-    const VALIDATION_MESSAGE = 'Please add your message to post a comment';
-    const CUSTOMER_NOTES_OPTION = 'customer_notes_option';
+    protected const FORM_NAME = 'note';
+    protected const VALIDATION_MESSAGE = 'Please add your message to post a comment';
 
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
-        return self::FORM_NAME;
-    }
-
-    /**
-     * @deprecated Use `getBlockPrefix()` instead.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([self::CUSTOMER_NOTES_OPTION => []]);
+        return static::FORM_NAME;
     }
 
     /**
@@ -62,37 +38,23 @@ class NoteForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->setAttribute(self::CUSTOMER_NOTES_OPTION, $options[self::CUSTOMER_NOTES_OPTION]);
-
         $this->addNoteField($builder)
             ->addFkCustomerField($builder);
     }
 
     /**
-     * @param \Symfony\Component\Form\FormView $view
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
-     *
-     * @return void
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        $view->vars[self::CUSTOMER_NOTES_OPTION] = $options[self::CUSTOMER_NOTES_OPTION];
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return $this
+     * @return \Spryker\Zed\CustomerNoteGui\Communication\Form\NoteForm
      */
-    protected function addNoteField(FormBuilderInterface $builder)
+    protected function addNoteField(FormBuilderInterface $builder): NoteForm
     {
         $builder->add(SpyCustomerNoteEntityTransfer::MESSAGE, TextareaType::class, [
             'constraints' => [
                 new NotBlank([
-                    'message' => self::VALIDATION_MESSAGE,
+                    'message' => static::VALIDATION_MESSAGE,
                 ]),
             ],
         ]);
@@ -103,9 +65,9 @@ class NoteForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return $this
+     * @return \Spryker\Zed\CustomerNoteGui\Communication\Form\NoteForm
      */
-    protected function addFkCustomerField(FormBuilderInterface $builder)
+    protected function addFkCustomerField(FormBuilderInterface $builder): NoteForm
     {
         $builder->add(SpyCustomerNoteEntityTransfer::FK_CUSTOMER, HiddenType::class);
 

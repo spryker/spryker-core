@@ -22,7 +22,7 @@ class CustomerNoteGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addCustomerNoteFacade($container);
@@ -36,7 +36,7 @@ class CustomerNoteGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCustomerNoteFacade(Container $container)
+    protected function addCustomerNoteFacade(Container $container): Container
     {
         $container[static::FACADE_CUSTOMER_NOTE] = function (Container $container) {
             return new CustomerNoteGuiToCustomerNoteFacadeBridge($container->getLocator()->customerNote()->facade());
@@ -50,7 +50,7 @@ class CustomerNoteGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUserFacade(Container $container)
+    protected function addUserFacade(Container $container): Container
     {
         $container[static::FACADE_USER] = function (Container $container) {
             return new CustomerNoteGuiToUserFacadeBridge($container->getLocator()->user()->facade());

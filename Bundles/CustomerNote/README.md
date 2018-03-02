@@ -1,6 +1,6 @@
 # CustomerNote Module
 
-Todo: description
+CustomerNote provides functionality for adding and fetching comments related to Customer entity.
 
 ## Installation
 

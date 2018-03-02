@@ -1,6 +1,6 @@
 # CustomerNoteGui Module
 
-TODO: description here
+CustomerNoteGui provides functionality for rendering "add note form" and list of comments, and handles adding comment.  
 
 ## Installation
 

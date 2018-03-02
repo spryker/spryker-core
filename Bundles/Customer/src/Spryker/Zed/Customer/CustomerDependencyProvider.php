@@ -252,7 +252,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSubRequestHandler(Container $container): \Spryker\Zed\Kernel\Container
     {
-        $container[self::SUB_REQUEST_HANDLER] = function () {
+        $container[static::SUB_REQUEST_HANDLER] = function () {
             $pimple = new Pimple();
             return $pimple->getApplication()['sub_request'];
         };
