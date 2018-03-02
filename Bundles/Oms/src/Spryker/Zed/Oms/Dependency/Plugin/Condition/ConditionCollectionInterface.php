@@ -19,7 +19,7 @@ interface ConditionCollectionInterface
      *
      * @return $this
      */
-    public function add(ConditionInterface $condition, $name);
+    public function add($condition, $name);
 
     /**
      *
