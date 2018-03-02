@@ -10,6 +10,7 @@ namespace Spryker\Client\Messenger;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Messenger\Dependency\Client\MessengerToSessionClientBridge;
+use Spryker\Client\Messenger\Dependency\Client\MessengerToZedRequestClientBridge;
 
 class MessengerDependencyProvider extends AbstractDependencyProvider
 {
@@ -51,7 +52,7 @@ class MessengerDependencyProvider extends AbstractDependencyProvider
     protected function addZedRequest(Container $container): Container
     {
         $container[self::SERVICE_ZED] = function (Container $container) {
-            return $container->getLocator()->zedRequest()->client();
+            return new MessengerToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
         };
 
         return $container;

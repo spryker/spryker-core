@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\Messenger\ZedRequest;
 
+use Spryker\Client\Messenger\Dependency\Client\MessengerToZedRequestClientInterface;
 use Spryker\Client\Messenger\FlashBag\FlashBagInterface;
-use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 class Messages implements MessagesInterface
 {
@@ -23,11 +23,11 @@ class Messages implements MessagesInterface
     protected $flashBag;
 
     /**
-     * @param \Spryker\Client\ZedRequest\ZedRequestClientInterface $zedRequestStub
+     * @param \Spryker\Client\Messenger\Dependency\Client\MessengerToZedRequestClientInterface $zedRequestStub
      * @param \Spryker\Client\Messenger\FlashBag\FlashBagInterface $flashBag
      */
     public function __construct(
-        ZedRequestClientInterface $zedRequestStub,
+        MessengerToZedRequestClientInterface $zedRequestStub,
         FlashBagInterface $flashBag
     ) {
         $this->zedRequestStub = $zedRequestStub;
