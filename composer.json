@@ -130,6 +130,8 @@
     "spryker/new-relic-api": "*",
     "spryker/newsletter": "*",
     "spryker/nopayment": "*",
+    "spryker/company-unit-address": "*",
+    "spryker/company-unit-address-gui": "*",
     "spryker/oms": "*",
     "spryker/oms-discount-connector": "*",
     "spryker/payment": "*",
