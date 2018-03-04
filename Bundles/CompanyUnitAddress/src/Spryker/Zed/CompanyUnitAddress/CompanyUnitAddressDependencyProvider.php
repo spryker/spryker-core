@@ -18,6 +18,7 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
     public const FACADE_COUNTRY = 'FACADE_COUNTRY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
+    public const PLUGIN_ADDRESS_POST_UPDATE = 'PLUGIN_ADDRESS_POST_UPDATE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,6 +32,7 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addCountryFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
+        $container = $this->addAddressPostUpdatePlugins($container);
 
         return $container;
     }
@@ -75,5 +77,27 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAddressPostUpdatePlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_ADDRESS_POST_UPDATE] = function (Container $container) {
+            return $this->getAddressPostUpdatePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getAddressPostUpdatePlugins()
+    {
+        return [];
     }
 }
