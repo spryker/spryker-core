@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-interface EditCompanyUnitAddressExpanderPluginInterface
+interface EditCompanyUnitAddressFormExpanderPluginInterface
 {
     /**
      * Specification:
