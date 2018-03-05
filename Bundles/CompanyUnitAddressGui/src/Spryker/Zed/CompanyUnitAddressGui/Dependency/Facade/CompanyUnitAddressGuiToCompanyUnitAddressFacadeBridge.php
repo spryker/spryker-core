@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyUnitAddressGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 
 class CompanyUnitAddressGuiToCompanyUnitAddressFacadeBridge implements CompanyUnitAddressGuiToCompanyUnitAddressFacadeInterface
@@ -28,9 +27,9 @@ class CompanyUnitAddressGuiToCompanyUnitAddressFacadeBridge implements CompanyUn
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function getCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
+    public function getCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
     {
         return $this->companyUnitAddressFacade
             ->getCompanyUnitAddressById($companyUnitAddressTransfer);

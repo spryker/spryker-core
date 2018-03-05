@@ -53,8 +53,7 @@ class CompanyUnitAddressFormDataProvider
         $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
 
         $companyUnitAddressTransfer = $this->companyUnitAddressFacade
-            ->getCompanyUnitAddressById($companyUnitAddressTransfer)
-            ->getCompanyUnitAddressTransfer();
+            ->getCompanyUnitAddressById($companyUnitAddressTransfer);
 
         return $companyUnitAddressTransfer;
     }
