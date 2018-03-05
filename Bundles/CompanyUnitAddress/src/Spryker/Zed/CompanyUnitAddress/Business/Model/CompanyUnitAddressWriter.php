@@ -38,21 +38,29 @@ class CompanyUnitAddressWriter implements CompanyUnitAddressWriterInterface
     protected $companyBusinessUnitFacade;
 
     /**
+     * @var \Spryker\Zed\CompanyUnitAddressExtension\Communication\Plugin\CompanyUnitAddressPreUpdatePluginInterface[]
+     */
+    protected $companyUnitAddressPreUpdatePlugins;
+
+    /**
      * @param \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressWriterRepositoryInterface $companyUnitAddressWriterRepository
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCountryFacadeInterface $countryFacade
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
+     * @param \Spryker\Zed\CompanyUnitAddressExtension\Communication\Plugin\CompanyUnitAddressPreUpdatePluginInterface[] $companyUnitAddressPreUpdatePlugins
      */
     public function __construct(
         CompanyUnitAddressWriterRepositoryInterface $companyUnitAddressWriterRepository,
         CompanyUnitAddressToCountryFacadeInterface $countryFacade,
         CompanyUnitAddressToLocaleFacadeInterface $localeFacade,
-        CompanyUnitAddressToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
+        CompanyUnitAddressToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
+        array $companyUnitAddressPreUpdatePlugins
     ) {
         $this->companyUnitAddressWriterRepository = $companyUnitAddressWriterRepository;
         $this->countryFacade = $countryFacade;
         $this->localeFacade = $localeFacade;
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
+        $this->companyUnitAddressPreUpdatePlugins = $companyUnitAddressPreUpdatePlugins;
     }
 
     /**
@@ -92,6 +100,9 @@ class CompanyUnitAddressWriter implements CompanyUnitAddressWriterInterface
      */
     protected function save(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
     {
+        //TODO: discussion needed. If post update is done, no labels inside
+        $this->executePreUpdatePlugins($companyUnitAddressTransfer);
+
         $fkCountry = $this->retrieveFkCountry($companyUnitAddressTransfer);
         $companyUnitAddressTransfer->setFkCountry($fkCountry);
         $companyUnitAddressTransfer = $this->companyUnitAddressWriterRepository->save($companyUnitAddressTransfer);
@@ -189,6 +200,18 @@ class CompanyUnitAddressWriter implements CompanyUnitAddressWriterInterface
                 ->setDefaultBillingAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
 
             $this->companyBusinessUnitFacade->update($companyBusinessUnitTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return void
+     */
+    protected function executePreUpdatePlugins(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
+    {
+        foreach ($this->companyUnitAddressPreUpdatePlugins as $plugin) {
+            $plugin->preUpdate($companyUnitAddressTransfer);
         }
     }
 }

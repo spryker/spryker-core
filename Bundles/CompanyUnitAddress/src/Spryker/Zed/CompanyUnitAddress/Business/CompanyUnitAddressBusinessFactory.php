@@ -35,7 +35,8 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
             $this->createCompanyUnitAddressWriterRepository(),
             $this->getCountryFacade(),
             $this->getLocaleFacade(),
-            $this->getCompanyBusinessUnitFacade()
+            $this->getCompanyBusinessUnitFacade(),
+            $this->getCompanyUnitAddressPreUpdatePlugins()
         );
     }
 
@@ -85,5 +86,13 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
     protected function getLocaleFacade(): CompanyUnitAddressToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(CompanyUnitAddressDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCompanyUnitAddressPreUpdatePlugins()
+    {
+        return $this->getProvidedDependency(CompanyUnitAddressDependencyProvider::PLUGIN_ADDRESS_POST_UPDATE);
     }
 }

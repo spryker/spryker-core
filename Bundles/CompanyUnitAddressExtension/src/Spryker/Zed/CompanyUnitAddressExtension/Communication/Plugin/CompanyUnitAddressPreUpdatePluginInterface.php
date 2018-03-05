@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyUnitAddressExtension\Communication\Plugin;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 
-interface CompanyUnitAddressPostUpdatePluginInterface
+interface CompanyUnitAddressPreUpdatePluginInterface
 {
     /**
      * {@inheritdoc}
@@ -20,5 +20,5 @@ interface CompanyUnitAddressPostUpdatePluginInterface
      *
      * @return void
      */
-    public function postUpdate(CompanyUnitAddressTransfer $companyUnitAddressTransfer);
+    public function preUpdate(CompanyUnitAddressTransfer $companyUnitAddressTransfer);
 }
