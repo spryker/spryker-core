@@ -19,6 +19,8 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
     public const PLUGIN_ADDRESS_POST_UPDATE = 'PLUGIN_ADDRESS_POST_UPDATE';
+    public const PLUGINS_ADDRESS_ENTITY_TRANSFER_HYDRATOR = 'PLUGINS_ADDRESS_ENTITY_TRANSFER_HYDRATOR';
+    public const PLUGINS_ADDRESS_TRANSFER_HYDRATOR = 'PLUGINS_ADDRESS_TRANSFER_HYDRATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -33,6 +35,21 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addLocaleFacade($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
         $container = $this->addAddressPostUpdatePlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+
+        $container = $this->addAddressEntityTransferHydratorPlugins($container);
+        $container = $this->addAddressTransferHydratorPlugins($container);
 
         return $container;
     }
@@ -94,9 +111,53 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
     }
 
     /**
-     * @return array
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function getAddressPostUpdatePlugins()
+    protected function addAddressEntityTransferHydratorPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_ADDRESS_ENTITY_TRANSFER_HYDRATOR] = function (Container $container) {
+            return $this->getAddressEntityTransferHydratorPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAddressTransferHydratorPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_ADDRESS_TRANSFER_HYDRATOR] = function (Container $container) {
+            return $this->getAddressTransferHydratorPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressExtension\Communication\Plugin\CompanyUnitAddressPreUpdatePluginInterface[]
+     */
+    protected function getAddressPostUpdatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressExtension\Communication\Plugin\CompanyUnitAddressEntityTransferHydratorPluginInterface[]
+     */
+    protected function getAddressEntityTransferHydratorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressExtension\Communication\Plugin\CompanyUnitAddressTransferHydratorPluginInterface[]
+     */
+    protected function getAddressTransferHydratorPlugins(): array
     {
         return [];
     }
