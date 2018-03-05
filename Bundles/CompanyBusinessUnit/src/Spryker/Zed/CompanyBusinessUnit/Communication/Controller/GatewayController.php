@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CompanyBusinessUnit\Communication\Controller;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -20,11 +21,11 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
     public function getCompanyBusinessUnitByIdAction(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): CompanyBusinessUnitResponseTransfer {
+    ): CompanyBusinessUnitTransfer {
         return $this->getFacade()->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
     }
 
@@ -33,8 +34,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    public function createAction(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
-    {
+    public function createAction(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitResponseTransfer {
         return $this->getFacade()->create($companyBusinessUnitTransfer);
     }
 
@@ -43,8 +45,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    public function updateAction(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
-    {
+    public function updateAction(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitResponseTransfer {
         return $this->getFacade()->update($companyBusinessUnitTransfer);
     }
 
@@ -53,23 +56,20 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    public function deleteAction(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
-    {
-        $isDeleted = $this->getFacade()->delete($companyBusinessUnitTransfer);
-
-        $companyBusinessUnitResponseTransfer = new CompanyBusinessUnitResponseTransfer();
-        $companyBusinessUnitResponseTransfer->setIsSuccessful($isDeleted);
-
-        return $companyBusinessUnitResponseTransfer;
+    public function deleteAction(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitResponseTransfer {
+        return $this->getFacade()->delete($companyBusinessUnitTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer $companyBusinessUnitTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
-    public function getCompanyBusinessUnitCollectionAction(CompanyBusinessUnitCollectionTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitCollectionTransfer
-    {
-        return $this->getFacade()->getCompanyBusinessUnitCollection($companyBusinessUnitTransfer);
+    public function getCompanyBusinessUnitCollectionAction(
+        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
+    ): CompanyBusinessUnitCollectionTransfer {
+        return $this->getFacade()->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
     }
 }
