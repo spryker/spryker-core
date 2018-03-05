@@ -42,6 +42,9 @@ class EditCompanyUnitAddressFormExpanderPlugin extends AbstractPlugin implements
             ->addModelTransformer(
                 new CallbackTransformer(
                     function ($model) {
+                        $result['labels'] = $model->getLabels();
+
+                        return $result;
                     },
                     function ($labels) {
                         $collection = new CompanyUnitAddressLabelCollectionTransfer();

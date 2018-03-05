@@ -9,10 +9,14 @@ namespace Spryker\Zed\CompanyUnitAddress\Persistence;
 
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressToCompanyBusinessUnitQuery;
+use Spryker\Zed\CompanyUnitAddress\CompanyUnitAddressDependencyProvider;
 use Spryker\Zed\CompanyUnitAddress\Persistence\Mapper\CompanyUnitAddressMapper;
 use Spryker\Zed\CompanyUnitAddress\Persistence\Mapper\CompanyUnitAddressMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
+/**
+ * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressQueryContainerInterface getQueryContainer()
+ */
 class CompanyUnitAddressPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
@@ -28,7 +32,10 @@ class CompanyUnitAddressPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createCompanyUniAddressMapper(): CompanyUnitAddressMapperInterface
     {
-        return new CompanyUnitAddressMapper();
+        return new CompanyUnitAddressMapper(
+            $this->getCompanyUnitAddressEntityTransferHydratorPlugins(),
+            $this->getCompanyUnitAddressTransferHydratorPlugins()
+        );
     }
 
     /**
@@ -37,5 +44,18 @@ class CompanyUnitAddressPersistenceFactory extends AbstractPersistenceFactory
     public function createCompanyUnitAddressToCompanyBusinessUnitQuery(): SpyCompanyUnitAddressToCompanyBusinessUnitQuery
     {
         return SpyCompanyUnitAddressToCompanyBusinessUnitQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressExtension\Communication\Plugin\CompanyUnitAddressEntityTransferHydratorPluginInterface[]
+     */
+    protected function getCompanyUnitAddressEntityTransferHydratorPlugins()
+    {
+        return $this->getProvidedDependency(CompanyUnitAddressDependencyProvider::PLUGINS_ADDRESS_ENTITY_TRANSFER_HYDRATOR);
+    }
+
+    protected function getCompanyUnitAddressTransferHydratorPlugins()
+    {
+        return $this->getProvidedDependency(CompanyUnitAddressDependencyProvider::PLUGINS_ADDRESS_TRANSFER_HYDRATOR);
     }
 }

@@ -38,8 +38,6 @@ class CompanyUnitAddressLabelChoiceFormType extends AbstractType
 
         $this->addModelTransformer($builder);
 
-        $builder->get(static::FIELD_VALUES)->resetViewTransformers();
-
         return $this;
     }
 
@@ -63,9 +61,16 @@ class CompanyUnitAddressLabelChoiceFormType extends AbstractType
     {
         $builder->get(static::FIELD_VALUES)->addModelTransformer(
             new CallbackTransformer(
-                function ($model) {
-                    //TODO: clarify what to do here
-                    $test = $model;
+                function ($labels) {
+                    if (empty($labels)) {
+                        return $labels;
+                    }
+                    $result = [];
+                    foreach ($labels as $label) {
+                        $result[] = $label->getIdCompanyUnitAddressLabel();
+                    }
+
+                    return $result;
                 },
                 function ($data) {
                     $labels = [];

@@ -45,6 +45,20 @@ class CompanyUnitAddressLabelRepository extends AbstractRepository implements Co
     }
 
     /**
+     * @param int $idCompanyUnitAddressLabel
+     *
+     * @return \ArrayObject
+     */
+    public function findCompanyUnitAddressLabelToCompanyUnitAddressRelations(int $idCompanyUnitAddressLabel)
+    {
+        $query = $this->getFactory()
+            ->createCompanyUnitAddressLabelToCompanyUnitAddressQuery()
+            ->filterByFkCompanyUnitAddress($idCompanyUnitAddressLabel);
+
+        return new ArrayObject($this->buildQueryFromCriteria($query)->find());
+    }
+
+    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer
