@@ -36,8 +36,8 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
         $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer();
         $persistentCartChangeTransfer->addItem($itemTransfer);
         $quoteTransfer = $this->getZedStub()->addItem($persistentCartChangeTransfer);
-        $this->saveQuote($quoteTransfer);
-        return $quoteTransfer;
+
+        return $this->saveQuote($quoteTransfer);
     }
 
     /**
@@ -56,8 +56,8 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
             $persistentCartChangeTransfer->addItem($itemTransfer);
         }
         $quoteTransfer = $this->getZedStub()->addItem($persistentCartChangeTransfer);
-        $this->saveQuote($quoteTransfer);
-        return $quoteTransfer;
+
+        return $this->saveQuote($quoteTransfer);
     }
 
     /**
@@ -78,8 +78,8 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
         $itemTransfer->setGroupKey($groupKey);
         $persistentCartChangeTransfer->addItem($itemTransfer);
         $quoteTransfer = $this->getZedStub()->removeItem($persistentCartChangeTransfer);
-        $this->saveQuote($quoteTransfer);
-        return $quoteTransfer;
+
+        return $this->saveQuote($quoteTransfer);
     }
 
     /**
@@ -98,8 +98,8 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
             $persistentCartChangeTransfer->addItem($itemTransfer);
         }
         $quoteTransfer = $this->getZedStub()->removeItem($persistentCartChangeTransfer);
-        $this->saveQuote($quoteTransfer);
-        return $quoteTransfer;
+
+        return $this->saveQuote($quoteTransfer);
     }
 
     /**
@@ -122,8 +122,8 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
         $itemTransfer->setQuantity($quantity);
         $persistentCartChangeTransfer->setItem($itemTransfer);
         $quoteTransfer = $this->getZedStub()->changeItemQuantity($persistentCartChangeTransfer);
-        $this->saveQuote($quoteTransfer);
-        return $quoteTransfer;
+
+        return $this->saveQuote($quoteTransfer);
     }
 
     /**
@@ -146,8 +146,8 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
         $itemTransfer->setQuantity($quantity);
         $persistentCartChangeTransfer->setItem($itemTransfer);
         $quoteTransfer = $this->getZedStub()->decreaseItemQuantity($persistentCartChangeTransfer);
-        $this->saveQuote($quoteTransfer);
-        return $quoteTransfer;
+
+        return $this->saveQuote($quoteTransfer);
     }
 
     /**
@@ -170,8 +170,8 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
         $itemTransfer->setQuantity($quantity);
         $persistentCartChangeTransfer->setItem($itemTransfer);
         $quoteTransfer = $this->getZedStub()->increaseItemQuantity($persistentCartChangeTransfer);
-        $this->saveQuote($quoteTransfer);
-        return $quoteTransfer;
+
+        return $this->saveQuote($quoteTransfer);
     }
 
     /**
@@ -226,13 +226,15 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function saveQuote(QuoteTransfer $quoteTransfer)
     {
         $sessionQuoteTransfer = $this->getQuoteClient()->getQuote();
         $sessionQuoteTransfer->fromArray($quoteTransfer->modifiedToArray(), true);
         $this->getQuoteClient()->setQuote($sessionQuoteTransfer);
+
+        return $sessionQuoteTransfer;
     }
 
     /**
