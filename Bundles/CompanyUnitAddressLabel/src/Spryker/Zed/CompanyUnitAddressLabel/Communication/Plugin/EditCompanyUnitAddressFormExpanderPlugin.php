@@ -20,7 +20,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * @method \Spryker\Zed\CompanyUnitAddressLabel\Communication\CompanyUnitAddressLabelCommunicationFactory getFactory()
  * @method \Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface getFacade()
  */
-class EditCompanyUnitAddressFormFormExpanderPlugin extends AbstractPlugin implements EditCompanyUnitAddressFormExpanderPluginInterface
+class EditCompanyUnitAddressFormExpanderPlugin extends AbstractPlugin implements EditCompanyUnitAddressFormExpanderPluginInterface
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
