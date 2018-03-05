@@ -36,9 +36,10 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Adds only valid items.
-     * - Makes zed request.
-     * - Returns update quote.
+     * - Adds only items, that passed cart validation.
+     * - Makes zed request to stored cart into persistent store if used.
+     * - Adds notification to response.
+     * - Returns updated quote.
      * - Quote not saved.
      *
      * @api
@@ -65,8 +66,9 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Adds multiple items (identified by SKU and quantity)
+     * - Adds multiple items (identified by SKU and quantity), if all passed validation.
      * - Makes zed request to stored cart into persistent store if used.
+     * - Adds notification to response.
      *
      * @api
      *
