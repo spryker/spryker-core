@@ -16,7 +16,6 @@
             <parameter name="resource" value="price_product_abstract"/>
             <parameter name="key_suffix_column" value="fk_product_abstract"/>
             <parameter name="queue_group" value="sync.storage.price"/>
-            <parameter name="queue_pool" value="synchronizationPool" />
         </behavior>
         <behavior name="timestampable"/>
     </table>
@@ -32,7 +31,6 @@
             <parameter name="resource" value="price_product_concrete"/>
             <parameter name="key_suffix_column" value="fk_product"/>
             <parameter name="queue_group" value="sync.storage.price"/>
-            <parameter name="queue_pool" value="synchronizationPool" />
         </behavior>
         <behavior name="timestampable"/>
     </table>

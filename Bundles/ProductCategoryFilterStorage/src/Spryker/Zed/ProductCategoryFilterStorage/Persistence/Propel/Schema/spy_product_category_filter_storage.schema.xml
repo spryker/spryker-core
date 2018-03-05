@@ -16,7 +16,6 @@
             <parameter name="resource" value="product_category_filter"/>
             <parameter name="key_suffix_column" value="fk_category"/>
             <parameter name="queue_group" value="sync.storage.category"/>
-            <parameter name="queue_pool" value="synchronizationPool" />
         </behavior>
         <behavior name="timestampable"/>
     </table>

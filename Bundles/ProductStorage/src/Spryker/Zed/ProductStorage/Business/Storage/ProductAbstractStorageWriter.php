@@ -19,6 +19,11 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
 
+    const PRODUCT_ABSTRACT_LOCALIZED_ENTITY = 'PRODUCT_ABSTRACT_LOCALIZED_ENTITY';
+    const PRODUCT_ABSTRACT_STORAGE_ENTITY = 'PRODUCT_ABSTRACT_STORAGE_ENTITY';
+    const LOCALE_NAME = 'LOCALE_NAME';
+    const STORE_NAME = 'STORE_NAME';
+
     /**
      * @var \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface
      */
@@ -40,9 +45,9 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected $isSendingToQueue = true;
 
     /**
-     * @var array
+     * @var array Array keys are super attribute keys, values are "true" constants.
      */
-    protected $superAttributes = [];
+    protected $superAttributeKeyBuffer = [];
 
     /**
      * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface $productFacade
@@ -69,14 +74,16 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      */
     public function publish(array $productAbstractIds)
     {
-        $spyProductAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
-        $spyProductAbstractStorageEntities = $this->findProductStorageEntitiesByProductAbstractIds($productAbstractIds);
+        $productAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
+        $productAbstractStorageEntities = $this->findProductAbstractStorageEntities($productAbstractIds);
 
-        if (!$spyProductAbstractLocalizedEntities) {
-            $this->deleteStorageData($spyProductAbstractStorageEntities);
+        if (!$productAbstractLocalizedEntities) {
+            $this->deleteProductAbstractStorageEntities($productAbstractStorageEntities);
+
+            return;
         }
 
-        $this->storeData($spyProductAbstractLocalizedEntities, $spyProductAbstractStorageEntities);
+        $this->storeData($productAbstractLocalizedEntities, $productAbstractStorageEntities);
     }
 
     /**
@@ -86,107 +93,196 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      */
     public function unpublish(array $productAbstractIds)
     {
-        $spyProductStorageEntities = $this->findProductStorageEntitiesByProductAbstractIds($productAbstractIds);
-        $this->deleteStorageData($spyProductStorageEntities);
+        $spyProductStorageEntities = $this->findProductAbstractStorageEntities($productAbstractIds);
+
+        $this->deleteProductAbstractStorageEntities($spyProductStorageEntities);
     }
 
     /**
-     * @param array $spyProductAbstractStorageEntities
+     * @param \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage[] $productAbstractStorageEntities
      *
      * @return void
      */
-    protected function deleteStorageData(array $spyProductAbstractStorageEntities)
+    protected function deleteProductAbstractStorageEntities(array $productAbstractStorageEntities)
     {
-        foreach ($spyProductAbstractStorageEntities as $spyProductAbstractStoreEntities) {
-            foreach ($spyProductAbstractStoreEntities as $spyProductStorageLocalizedEntities) {
-                foreach ($spyProductStorageLocalizedEntities as $spyProductAbstractStorageEntity) {
-                    $spyProductAbstractStorageEntity->delete();
-                }
-            }
+        foreach ($productAbstractStorageEntities as $productAbstractStorageEntity) {
+            $productAbstractStorageEntity->delete();
         }
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes[][] $spyProductAbstractLocalizedEntities
-     * @param array $spyProductAbstractStorageEntities
+     * @param \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage $productAbstractStorage
      *
      * @return void
      */
-    protected function storeData(array $spyProductAbstractLocalizedEntities, array $spyProductAbstractStorageEntities)
+    protected function deleteProductAbstractStorageEntity(SpyProductAbstractStorage $productAbstractStorage)
     {
-        $toRemoveEntities = $spyProductAbstractStorageEntities;
-        foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
-            $idProduct = $spyProductAbstractLocalizedEntity['SpyProductAbstract'][static::COL_ID_PRODUCT_ABSTRACT];
-            $localeName = $spyProductAbstractLocalizedEntity['Locale']['locale_name'];
+        if (!$productAbstractStorage->isNew()) {
+            $productAbstractStorage->delete();
+        }
+    }
 
-            foreach ($spyProductAbstractLocalizedEntity['SpyProductAbstract']['SpyProductAbstractStores'] as $spyProductAbstractStore) {
-                $storeName = $spyProductAbstractStore['SpyStore']['name'];
+    /**
+     * @param array $productAbstractLocalizedEntities
+     * @param \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage[] $productAbstractStorageEntities
+     *
+     * @return void
+     */
+    protected function storeData(array $productAbstractLocalizedEntities, array $productAbstractStorageEntities)
+    {
+        $pairedEntities = $this->pairProductAbstractLocalizedEntitiesWithProductAbstractStorageEntities(
+            $productAbstractLocalizedEntities,
+            $productAbstractStorageEntities
+        );
 
-                if (isset($spyProductAbstractStorageEntities[$idProduct][$storeName][$localeName])) {
-                    $this->storeDataSet($storeName, $spyProductAbstractLocalizedEntity, $spyProductAbstractStorageEntities[$idProduct][$storeName][$localeName]);
-                } else {
-                    $this->storeDataSet($storeName, $spyProductAbstractLocalizedEntity);
-                }
-                unset($toRemoveEntities[$idProduct][$storeName][$localeName]);
-            }
+        foreach ($pairedEntities as $pair) {
+            $productAbstractLocalizedEntity = $pair[static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY];
+            $productAbstractStorageEntity = $pair[static::PRODUCT_ABSTRACT_STORAGE_ENTITY];
 
-            if (!isset($toRemoveEntities[$idProduct])) {
+            if ($productAbstractLocalizedEntity === null || !$this->isActive($productAbstractLocalizedEntity)) {
+                $this->deleteProductAbstractStorageEntity($productAbstractStorageEntity);
+
                 continue;
             }
 
-            foreach ($toRemoveEntities[$idProduct] as $storeName => $localeEntities) {
-                foreach ($localeEntities as $thisLocaleName => $spyProductAbstractStorageEntity) {
-                    if ($localeName !== $thisLocaleName) {
-                        continue;
-                    }
-
-                    $spyProductAbstractStorageEntity->delete();
-                    unset($toRemoveEntities[$idProduct][$storeName][$localeName]);
-                }
-            }
+            $this->storeProductAbstractStorageEntity(
+                $productAbstractLocalizedEntity,
+                $productAbstractStorageEntity,
+                $pair[static::STORE_NAME],
+                $pair[static::LOCALE_NAME]
+            );
         }
     }
 
     /**
+     * - Returns a paired array with all provided entities.
+     * - ProductAbstractLocalizedEntities without ProductAbstractStorageEntity are paired with a newly created ProductAbstractStorageEntity.
+     * - ProductAbstractStorageEntity without ProductAbstractLocalizedEntities (left outs) are paired with NULL.
+     * - ProductAbstractLocalizedEntities are paired multiple times per store.
+     *
+     * @param array $productAbstractLocalizedEntities
+     * @param \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage[] $productAbstractStorageEntities
+     *
+     * @return array
+     */
+    protected function pairProductAbstractLocalizedEntitiesWithProductAbstractStorageEntities(
+        array $productAbstractLocalizedEntities,
+        array $productAbstractStorageEntities
+    ) {
+        $mappedProductAbstractStorageEntities = $this->mapProductAbstractStorageEntities($productAbstractStorageEntities);
+
+        $pairs = [];
+        foreach ($productAbstractLocalizedEntities as $productAbstractLocalizedEntity) {
+            list($pairs, $mappedProductAbstractStorageEntities) = $this->pairProductAbstractLocalizedEntitiesWithProductAbstractStorageEntitiesByStoresAndLocale(
+                $productAbstractLocalizedEntity['SpyProductAbstract'][static::COL_ID_PRODUCT_ABSTRACT],
+                $productAbstractLocalizedEntity['Locale']['locale_name'],
+                $productAbstractLocalizedEntity['SpyProductAbstract']['SpyProductAbstractStores'],
+                $productAbstractLocalizedEntity,
+                $mappedProductAbstractStorageEntities,
+                $pairs
+            );
+        }
+
+        $pairs = $this->pairRemainingProductAbstractStorageEntities($mappedProductAbstractStorageEntities, $pairs);
+
+        return $pairs;
+    }
+
+    /**
+     * @param int $idProduct
+     * @param string $localeName
+     * @param array $productAbstractStoreEntities
+     * @param array $productAbstractLocalizedEntity
+     * @param array $mappedProductAbstractStorageEntities
+     * @param array $pairs
+     *
+     * @return array
+     */
+    protected function pairProductAbstractLocalizedEntitiesWithProductAbstractStorageEntitiesByStoresAndLocale(
+        $idProduct,
+        $localeName,
+        array $productAbstractStoreEntities,
+        array $productAbstractLocalizedEntity,
+        array $mappedProductAbstractStorageEntities,
+        array $pairs
+    ) {
+        foreach ($productAbstractStoreEntities as $productAbstractStoreEntity) {
+            $storeName = $productAbstractStoreEntity['SpyStore']['name'];
+
+            $productAbstractStorageEntity = isset($mappedProductAbstractStorageEntities[$idProduct][$storeName][$localeName]) ?
+                $mappedProductAbstractStorageEntities[$idProduct][$storeName][$localeName] :
+                new SpyProductAbstractStorage();
+
+            $pairs[] = [
+                static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY => $productAbstractLocalizedEntity,
+                static::PRODUCT_ABSTRACT_STORAGE_ENTITY => $productAbstractStorageEntity,
+                static::LOCALE_NAME => $localeName,
+                static::STORE_NAME => $storeName,
+            ];
+
+            unset($mappedProductAbstractStorageEntities[$idProduct][$storeName][$localeName]);
+        }
+
+        return [$pairs, $mappedProductAbstractStorageEntities];
+    }
+
+    /**
+     * @param array $mappedProductAbstractStorageEntities
+     * @param array $pairs
+     *
+     * @return array
+     */
+    protected function pairRemainingProductAbstractStorageEntities(array $mappedProductAbstractStorageEntities, array $pairs)
+    {
+        array_walk_recursive($mappedProductAbstractStorageEntities, function (SpyProductAbstractStorage $productAbstractStorageEntity) use (&$pairs) {
+            $pairs[] = [
+                static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY => null,
+                static::PRODUCT_ABSTRACT_STORAGE_ENTITY => $productAbstractStorageEntity,
+                static::LOCALE_NAME => $productAbstractStorageEntity->getLocale(),
+                static::STORE_NAME => $productAbstractStorageEntity->getStore(),
+            ];
+        });
+
+        return $pairs;
+    }
+
+    /**
+     * @param array $productAbstractLocalizedEntity
+     * @param \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage $spyProductStorageEntity
      * @param string $storeName
-     * @param array $spyProductAbstractLocalizedEntity
-     * @param \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage|null $spyProductStorageEntity
+     * @param string $localeName
      *
      * @return void
      */
-    protected function storeDataSet($storeName, array $spyProductAbstractLocalizedEntity, SpyProductAbstractStorage $spyProductStorageEntity = null)
-    {
-        if (!$this->isActive($spyProductAbstractLocalizedEntity)) {
-            $spyProductStorageEntity && $spyProductStorageEntity->delete();
-
-            return;
-        }
-
-        if ($spyProductStorageEntity === null) {
-            $spyProductStorageEntity = new SpyProductAbstractStorage();
-        }
-
+    protected function storeProductAbstractStorageEntity(
+        array $productAbstractLocalizedEntity,
+        SpyProductAbstractStorage $spyProductStorageEntity,
+        $storeName,
+        $localeName
+    ) {
         $productAbstractStorageTransfer = $this->mapToProductAbstractStorageTransfer(
-            $spyProductAbstractLocalizedEntity,
+            $productAbstractLocalizedEntity,
             new ProductAbstractStorageTransfer()
         );
-        $spyProductStorageEntity->setFkProductAbstract($spyProductAbstractLocalizedEntity['SpyProductAbstract'][static::COL_ID_PRODUCT_ABSTRACT]);
-        $spyProductStorageEntity->setData($productAbstractStorageTransfer->toArray());
-        $spyProductStorageEntity->setStore($storeName);
-        $spyProductStorageEntity->setLocale($spyProductAbstractLocalizedEntity['Locale']['locale_name']);
-        $spyProductStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
-        $spyProductStorageEntity->save();
+
+        $spyProductStorageEntity
+            ->setFkProductAbstract($productAbstractLocalizedEntity['SpyProductAbstract'][static::COL_ID_PRODUCT_ABSTRACT])
+            ->setData($productAbstractStorageTransfer->toArray())
+            ->setStore($storeName)
+            ->setLocale($localeName)
+            ->setIsSendingToQueue($this->isSendingToQueue)
+            ->save();
     }
 
     /**
-     * @param array $spyProductAbstractLocalizedEntity
+     * @param array $productAbstractLocalizedEntity
      *
      * @return bool
      */
-    protected function isActive(array $spyProductAbstractLocalizedEntity)
+    protected function isActive(array $productAbstractLocalizedEntity)
     {
-        foreach ($spyProductAbstractLocalizedEntity['SpyProductAbstract']['SpyProducts'] as $spyProduct) {
-            if ($spyProduct['is_active']) {
+        foreach ($productAbstractLocalizedEntity['SpyProductAbstract']['SpyProducts'] as $productEntity) {
+            if ($productEntity['is_active']) {
                 return true;
             }
         }
@@ -195,53 +291,56 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
-     * @param array $spyProductAbstractLocalizedEntity
-     * @param \Generated\Shared\Transfer\ProductAbstractStorageTransfer|null $productStorageTransfer
+     * @param array $productAbstractLocalizedEntity
+     * @param \Generated\Shared\Transfer\ProductAbstractStorageTransfer $productAbstractStorageTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
      */
-    protected function mapToProductAbstractStorageTransfer(array $spyProductAbstractLocalizedEntity, ProductAbstractStorageTransfer $productStorageTransfer = null)
-    {
-        $attributes = $this->getAbstractAttributes($spyProductAbstractLocalizedEntity);
+    protected function mapToProductAbstractStorageTransfer(
+        array $productAbstractLocalizedEntity,
+        ProductAbstractStorageTransfer $productAbstractStorageTransfer
+    ) {
+        $attributes = $this->getProductAbstractAttributes($productAbstractLocalizedEntity);
         $attributeMap = $this->attributeMap->generateAttributeMap(
-            $spyProductAbstractLocalizedEntity[static::COL_FK_PRODUCT_ABSTRACT],
-            $spyProductAbstractLocalizedEntity['Locale']['id_locale']
+            $productAbstractLocalizedEntity[static::COL_FK_PRODUCT_ABSTRACT],
+            $productAbstractLocalizedEntity['Locale']['id_locale']
         );
-        $spyProductAbstractEntityArray = $spyProductAbstractLocalizedEntity['SpyProductAbstract'];
-        unset($spyProductAbstractLocalizedEntity['attributes']);
-        unset($spyProductAbstractEntityArray['attributes']);
+        $productAbstractEntity = $productAbstractLocalizedEntity['SpyProductAbstract'];
+        unset($productAbstractLocalizedEntity['attributes']);
+        unset($productAbstractEntity['attributes']);
 
-        if ($productStorageTransfer === null) {
-            $productStorageTransfer = new ProductAbstractStorageTransfer();
-        }
-        $productStorageTransfer->fromArray($spyProductAbstractLocalizedEntity, true);
-        $productStorageTransfer->fromArray($spyProductAbstractEntityArray, true);
-        $productStorageTransfer->setAttributes($attributes);
-        $productStorageTransfer->setAttributeMap($attributeMap);
-        $productStorageTransfer->setSuperAttributesDefinition($this->getVariantSuperAttributes($attributes));
+        $productAbstractStorageTransfer
+            ->fromArray($productAbstractLocalizedEntity, true)
+            ->fromArray($productAbstractEntity, true)
+            ->setAttributes($attributes)
+            ->setAttributeMap($attributeMap)
+            ->setSuperAttributesDefinition($this->getSuperAttributeKeys($attributes));
 
-        return $productStorageTransfer;
+        return $productAbstractStorageTransfer;
     }
 
     /**
-     * @param array $data
+     * @param array $productAbstractLocalizedEntity
      *
      * @return array
      */
-    protected function getAbstractAttributes(array $data)
+    protected function getProductAbstractAttributes(array $productAbstractLocalizedEntity)
     {
-        $abstractAttributesData = $this->productFacade->decodeProductAttributes($data['SpyProductAbstract']['attributes']);
-        $abstractLocalizedAttributesData = $this->productFacade->decodeProductAttributes($data['attributes']);
+        $productAbstractDecodedAttributes = $this->productFacade->decodeProductAttributes(
+            $productAbstractLocalizedEntity['SpyProductAbstract']['attributes']
+        );
+        $productAbstractLocalizedDecodedAttributes = $this->productFacade->decodeProductAttributes(
+            $productAbstractLocalizedEntity['attributes']
+        );
 
-        $rawProductAttributesTransfer = new RawProductAttributesTransfer();
-        $rawProductAttributesTransfer
-            ->setAbstractAttributes($abstractAttributesData)
-            ->setAbstractLocalizedAttributes($abstractLocalizedAttributesData);
+        $rawProductAttributesTransfer = (new RawProductAttributesTransfer())
+            ->setAbstractAttributes($productAbstractDecodedAttributes)
+            ->setAbstractLocalizedAttributes($productAbstractLocalizedDecodedAttributes);
 
         $attributes = $this->productFacade->combineRawProductAttributes($rawProductAttributesTransfer);
 
-        $attributes = array_filter($attributes, function ($key) {
-            return !empty($key);
+        $attributes = array_filter($attributes, function ($attributeKey) {
+            return !empty($attributeKey);
         }, ARRAY_FILTER_USE_KEY);
 
         return $attributes;
@@ -252,33 +351,39 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      *
      * @return array
      */
-    protected function getVariantSuperAttributes(array $attributes)
+    protected function getSuperAttributeKeys(array $attributes)
     {
-        if (empty($this->superAttributes)) {
-            $superAttributes = $this->queryContainer
-                ->queryProductAttributeKey()
-                ->find();
-
-            foreach ($superAttributes as $attribute) {
-                $this->superAttributes[$attribute->getKey()] = true;
-            }
+        if (empty($this->superAttributeKeyBuffer)) {
+            $this->loadSuperAttributes();
         }
 
-        return $this->filterVariantSuperAttributes($attributes);
+        return $this->filterSuperAttributeKeys($attributes);
     }
 
     /**
-     * @param array $attributes
-     *
-     * @return array
+     * @return void
      */
-    protected function filterVariantSuperAttributes(array $attributes)
+    protected function loadSuperAttributes()
     {
-        $variantSuperAttributes = array_filter($attributes, function ($key) {
-            return isset($this->superAttributes[$key]);
-        }, ARRAY_FILTER_USE_KEY);
+        $superAttributes = $this->queryContainer
+            ->queryProductAttributeKey()
+            ->find();
 
-        return array_keys($variantSuperAttributes);
+        foreach ($superAttributes as $attribute) {
+            $this->superAttributeKeyBuffer[$attribute->getKey()] = true;
+        }
+    }
+
+    /**
+     * @param array $attributes Array keys are attribute keys.
+     *
+     * @return string[]
+     */
+    protected function filterSuperAttributeKeys(array $attributes)
+    {
+        $superAttributes = array_intersect_key($attributes, $this->superAttributeKeyBuffer);
+
+        return array_keys($superAttributes);
     }
 
     /**
@@ -292,18 +397,27 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage[]
+     */
+    protected function findProductAbstractStorageEntities(array $productAbstractIds)
+    {
+        return $this->queryContainer->queryProductAbstractStorageByIds($productAbstractIds)->find()->getArrayCopy();
+    }
+
+    /**
+     * @param \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage[] $productAbstractStorageEntities
      *
      * @return array
      */
-    protected function findProductStorageEntitiesByProductAbstractIds(array $productAbstractIds)
+    protected function mapProductAbstractStorageEntities(array $productAbstractStorageEntities)
     {
-        $productAbstractStorageEntities = $this->queryContainer->queryProductAbstractStorageByIds($productAbstractIds)->find();
-        $productAbstractStorageEntitiesByIdAndLocale = [];
-        foreach ($productAbstractStorageEntities as $productAbstractStorageEntity) {
-            $productAbstractStorageEntitiesByIdAndLocale[$productAbstractStorageEntity->getFkProductAbstract()][$productAbstractStorageEntity->getStore()][$productAbstractStorageEntity->getLocale()] = $productAbstractStorageEntity;
+        $mappedProductAbstractStorageEntities = [];
+        foreach ($productAbstractStorageEntities as $entity) {
+            $mappedProductAbstractStorageEntities[$entity->getFkProductAbstract()][$entity->getStore()][$entity->getLocale()] = $entity;
         }
 
-        return $productAbstractStorageEntitiesByIdAndLocale;
+        return $mappedProductAbstractStorageEntities;
     }
 }

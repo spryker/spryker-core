@@ -19,7 +19,6 @@
             <parameter name="locale" required="true"/>
             <parameter name="key_suffix_column" value="fk_product_set"/>
             <parameter name="queue_group" value="sync.search.product"/>
-            <parameter name="queue_pool" value="synchronizationPool" />
             <parameter name="params" value='{"type":"page"}'/>
         </behavior>
         <behavior name="timestampable"/>

@@ -46,7 +46,7 @@ class EventQueueProducer implements EventQueueProducerInterface
      *
      * @return void
      */
-    public function enqueueListener($eventName, TransferInterface $eventTransfer, $listener, $queuePoolName)
+    public function enqueueListener($eventName, TransferInterface $eventTransfer, $listener, $queuePoolName = null)
     {
         $messageTransfer = new QueueSendMessageTransfer();
         $messageTransfer->setQueuePoolName($queuePoolName);

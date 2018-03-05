@@ -16,6 +16,7 @@
     "spryker/event": "*"
   },
   "suggest": {
+    "spryker/cms-block": "If you want to use Event plugins, minimum required version: 2.1.0",
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
   },
   "autoload": {

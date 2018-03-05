@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductPageSearch;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander\PricePageDataExpanderPlugin;
@@ -49,7 +48,6 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const PLUGIN_PRODUCT_PAGE_DATA_EXPANDER = 'PLUGIN_PRODUCT_PAGE_DATA_EXPANDER';
     const PLUGIN_PRODUCT_PAGE_MAP_EXPANDER = 'PLUGIN_PRODUCT_PAGE_MAP_EXPANDER';
-    const STORE = 'STORE';
     const PLUGIN_PRODUCT_PRICE_PAGE_DATA = 'PLUGIN_PRODUCT_PRICE_PAGE_DATA';
     const PLUGIN_PRODUCT_CATEGORY_PAGE_DATA = 'PLUGIN_PRODUCT_CATEGORY_PAGE_DATA';
     const PLUGIN_PRODUCT_IMAGE_PAGE_DATA = 'PLUGIN_PRODUCT_IMAGE_PAGE_DATA';
@@ -121,10 +119,6 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::FACADE_SEARCH] = function (Container $container) {
             return new ProductPageSearchToSearchBridge($container->getLocator()->search()->facade());
-        };
-
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
         };
 
         $container[static::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER] = function (Container $container) {

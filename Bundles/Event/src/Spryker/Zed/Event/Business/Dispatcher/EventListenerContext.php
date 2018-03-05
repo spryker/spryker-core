@@ -34,7 +34,7 @@ class EventListenerContext implements EventListenerContextInterface
      * @param bool $isHandledInQueue
      * @param string|null $queuePoolName
      */
-    public function __construct(EventBaseHandlerInterface $eventHandler, $isHandledInQueue, $queuePoolName)
+    public function __construct(EventBaseHandlerInterface $eventHandler, $isHandledInQueue, $queuePoolName = null)
     {
         $this->eventHandler = $eventHandler;
         $this->isHandledInQueue = $isHandledInQueue;

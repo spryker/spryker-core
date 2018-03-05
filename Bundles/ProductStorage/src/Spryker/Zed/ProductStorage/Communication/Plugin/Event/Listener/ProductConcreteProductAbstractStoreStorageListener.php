@@ -9,15 +9,15 @@ namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractStoreTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductStorage\Communication\ProductStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacade getFacade()
  */
-class ProductAbstractStoreStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductConcreteProductAbstractStoreStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -32,10 +32,26 @@ class ProductAbstractStoreStorageListener extends AbstractPlugin implements Even
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
+
         $productAbstractIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventTransfers, SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT);
+        $productConcreteIds = $this->getProductConcreteIds($productAbstractIds);
 
-        $this->getFacade()->publishAbstractProducts($productAbstractIds);
+        if (!$productConcreteIds) {
+            return;
+        }
+
+        $this->getFacade()->publishConcreteProducts($productConcreteIds);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    protected function getProductConcreteIds(array $productAbstractIds)
+    {
+        return $this->getQueryContainer()->queryProductIdsByProductAbstractIds($productAbstractIds)->find()->getData();
     }
 }

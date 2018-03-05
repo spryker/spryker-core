@@ -28,8 +28,6 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
     const FK_CATEGORY = 'fkCategory';
 
     /**
-     * TODO locale condition does not work here for SpyProducts
-     *
      * @api
      *
      * @param array $productAbstractIds
