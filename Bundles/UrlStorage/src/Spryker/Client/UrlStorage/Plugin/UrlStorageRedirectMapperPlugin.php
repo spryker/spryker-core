@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\UrlStorage\Plugin;
 
-use Generated\Shared\Transfer\SpyUrlEntityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageResourceMapTransfer;
+use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface;
 use Spryker\Shared\UrlStorage\UrlStorageConstants;
@@ -20,15 +20,15 @@ use Spryker\Shared\UrlStorage\UrlStorageConstants;
 class UrlStorageRedirectMapperPlugin extends AbstractPlugin implements UrlStorageResourceMapperPluginInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyUrlEntityTransfer $spyUrlEntityTransfer
+     * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer
      * @param array $options
      *
      * @return \Generated\Shared\Transfer\UrlStorageResourceMapTransfer
      */
-    public function map(SpyUrlEntityTransfer $spyUrlEntityTransfer, array $options = [])
+    public function map(UrlStorageTransfer $urlStorageTransfer, array $options = [])
     {
         $urlStorageResourceMapTransfer = new UrlStorageResourceMapTransfer();
-        $idRedirectUrl = $spyUrlEntityTransfer->getFkResourceRedirect();
+        $idRedirectUrl = $urlStorageTransfer->getFkResourceRedirect();
         if ($idRedirectUrl) {
             $resourceKey = $this->generateKey($idRedirectUrl);
             $urlStorageResourceMapTransfer->setResourceKey($resourceKey);
