@@ -11,7 +11,7 @@
     "spryker/kernel": "^3.0.0",
     "spryker/mail": "^4.0.0",
     "spryker/money": "^2.0.0",
-    "spryker/oms": "^6.0.0 || ^7.0.0",
+    "spryker/oms": "^6.0.0 || ^7.0.0 || ^8.0.0",
     "spryker/payment": "^3.0.0 || ^4.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^6.0.0 || ^7.0.0 || ^8.0.0",

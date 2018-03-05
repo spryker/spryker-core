@@ -18,6 +18,7 @@ use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 use Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface;
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class Discount implements DiscountInterface
@@ -55,24 +56,32 @@ class Discount implements DiscountInterface
     protected $discountEntityMapper;
 
     /**
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Discount\Business\Calculator\CalculatorInterface $calculator
      * @param \Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface $decisionRuleBuilder
      * @param \Spryker\Zed\Discount\Business\Voucher\VoucherValidatorInterface $voucherValidator
      * @param \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface $discountEntityMapper
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         DiscountQueryContainerInterface $queryContainer,
         CalculatorInterface $calculator,
         SpecificationBuilderInterface $decisionRuleBuilder,
         VoucherValidatorInterface $voucherValidator,
-        DiscountEntityMapperInterface $discountEntityMapper
+        DiscountEntityMapperInterface $discountEntityMapper,
+        DiscountToStoreFacadeInterface $storeFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->calculator = $calculator;
         $this->decisionRuleBuilder = $decisionRuleBuilder;
         $this->voucherValidator = $voucherValidator;
         $this->discountEntityMapper = $discountEntityMapper;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -82,11 +91,37 @@ class Discount implements DiscountInterface
      */
     public function calculate(QuoteTransfer $quoteTransfer)
     {
-        $applicableDiscounts = $this->getApplicableDiscounts($quoteTransfer);
+        $activeDiscounts = $this->retrieveActiveCartAndVoucherDiscounts(
+            $this->getVoucherCodes($quoteTransfer),
+            $this->getIdStoreByName($quoteTransfer->getStore()->getName())
+        );
+
+        $nonApplicableDiscounts = $this->filterNonApplicableDiscounts($activeDiscounts, $quoteTransfer);
+        $applicableDiscounts = $this->filterApplicableDiscounts($activeDiscounts, $quoteTransfer);
+
         $collectedDiscounts = $this->calculator->calculate($applicableDiscounts, $quoteTransfer);
+
         $this->addDiscountsToQuote($quoteTransfer, $collectedDiscounts);
+        $this->addNonApplicableDiscountsToQuote($quoteTransfer, $nonApplicableDiscounts);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discounts
+     *
+     * @return void
+     */
+    protected function addNonApplicableDiscountsToQuote(QuoteTransfer $quoteTransfer, array $discounts)
+    {
+        $quoteTransfer->setUsedNotAppliedVoucherCodes([]);
+
+        foreach ($discounts as $discount) {
+            if ($discount->getVoucherCode()) {
+                $quoteTransfer->addUsedNotAppliedVoucherCode($discount->getVoucherCode());
+            }
+        }
     }
 
     /**
@@ -112,18 +147,19 @@ class Discount implements DiscountInterface
 
     /**
      * @param string[] $voucherCodes
+     * @param int $idStore
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
      */
-    protected function retrieveActiveCartAndVoucherDiscounts(array $voucherCodes = [])
+    protected function retrieveActiveCartAndVoucherDiscounts(array $voucherCodes, $idStore)
     {
         $discounts = $this->queryContainer
-            ->queryActiveCartRules()
+            ->queryActiveCartRulesForStore($idStore)
             ->find();
 
         if (count($voucherCodes) > 0) {
             $voucherDiscounts = $this->queryContainer
-                ->queryDiscountsBySpecifiedVouchers($voucherCodes)
+                ->queryDiscountsBySpecifiedVouchersForStore($idStore, $voucherCodes)
                 ->find();
 
             $voucherDiscounts = $this->filterUniqueVoucherDiscounts($voucherDiscounts);
@@ -167,13 +203,28 @@ class Discount implements DiscountInterface
      */
     protected function getApplicableDiscounts(QuoteTransfer $quoteTransfer)
     {
+        $quoteTransfer->requireStore();
+
         $discounts = $this->retrieveActiveCartAndVoucherDiscounts(
-            $this->getVoucherCodes($quoteTransfer)
+            $this->getVoucherCodes($quoteTransfer),
+            $this->getIdStoreByName($quoteTransfer->getStore()->getName())
         );
 
+        return $this->filterApplicableDiscounts($discounts, $quoteTransfer);
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount[]|\Propel\Runtime\Collection\Collection $discounts
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    protected function filterApplicableDiscounts(Collection $discounts, QuoteTransfer $quoteTransfer)
+    {
         $applicableDiscounts = [];
-        foreach ($discounts as $discountEntity) {
+        foreach ($discounts as $key => $discountEntity) {
             if (!$this->isDiscountApplicable($quoteTransfer, $discountEntity)) {
+                $discounts->remove($key);
                 continue;
             }
 
@@ -181,6 +232,38 @@ class Discount implements DiscountInterface
         }
 
         return $applicableDiscounts;
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return int
+     */
+    protected function getIdStoreByName($storeName)
+    {
+        $storeTransfer = $this->storeFacade->getStoreByName($storeName);
+
+        return $storeTransfer->getIdStore();
+    }
+
+    /**
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount[]|\Propel\Runtime\Collection\Collection $discounts
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    protected function filterNonApplicableDiscounts(Collection $discounts, QuoteTransfer $quoteTransfer)
+    {
+        $nonApplicableDiscounts = [];
+        foreach ($discounts as $discountEntity) {
+            if ($this->isDiscountApplicable($quoteTransfer, $discountEntity)) {
+                continue;
+            }
+
+            $nonApplicableDiscounts[] = $this->hydrateDiscountTransfer($discountEntity, $quoteTransfer);
+        }
+
+        return $nonApplicableDiscounts;
     }
 
     /**

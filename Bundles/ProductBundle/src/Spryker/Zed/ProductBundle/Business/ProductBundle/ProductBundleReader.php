@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
@@ -27,15 +28,23 @@ class ProductBundleReader implements ProductBundleReaderInterface
     protected $availabilityQueryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
-        ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
+        ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer,
+        ProductBundleToStoreFacadeInterface $storeFacade
     ) {
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->availabilityQueryContainer = $availabilityQueryContainer;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -112,8 +121,10 @@ class ProductBundleReader implements ProductBundleReaderInterface
      */
     protected function findOrCreateProductBundleAvailabilityEntity(ProductConcreteTransfer $productConcreteTransfer)
     {
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+
         return $this->availabilityQueryContainer
-            ->querySpyAvailabilityBySku($productConcreteTransfer->getSku())
+            ->querySpyAvailabilityBySku($productConcreteTransfer->getSku(), $storeTransfer->getIdStore())
             ->findOneOrCreate();
     }
 }

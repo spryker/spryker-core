@@ -23,6 +23,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleIdHydrator;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaver;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundlesSalesOrderHydrate;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandler;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandlerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter;
 use Spryker\Zed\ProductBundle\ProductBundleDependencyProvider;
 
@@ -51,7 +53,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductBundleReader(
             $this->getQueryContainer(),
-            $this->getAvailabilityQueryContainer()
+            $this->getAvailabilityQueryContainer(),
+            $this->getStoreFacade()
         );
     }
 
@@ -130,7 +133,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleCartAvailabilityCheck(
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
-            $this->getAvailabilityQueryContainer()
+            $this->getAvailabilityQueryContainer(),
+            $this->getStoreFacade()
         );
     }
 
@@ -141,7 +145,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductBundleCheckoutAvailabilityCheck(
             $this->getAvailabilityFacade(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getStoreFacade()
         );
     }
 
@@ -153,7 +158,19 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleAvailabilityHandler(
             $this->getAvailabilityQueryContainer(),
             $this->getAvailabilityFacade(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandlerInterface
+     */
+    public function createProductBundleStockHandler(): ProductBundleStockHandlerInterface
+    {
+        return new ProductBundleStockHandler(
+            $this->getQueryContainer(),
+            $this->createProductBundleStockWriter()
         );
     }
 
@@ -165,7 +182,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleStockWriter(
             $this->getQueryContainer(),
             $this->getStockQueryContainer(),
-            $this->createProductBundleAvailabilityHandler()
+            $this->createProductBundleAvailabilityHandler(),
+            $this->getStoreFacade()
         );
     }
 
@@ -274,5 +292,13 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     protected function getPriceFacade()
     {
         return $this->getProvidedDependency(ProductBundleDependencyProvider::FACADE_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     */
+    protected function getStoreFacade()
+    {
+        return $this->getProvidedDependency(ProductBundleDependencyProvider::FACADE_STORE);
     }
 }

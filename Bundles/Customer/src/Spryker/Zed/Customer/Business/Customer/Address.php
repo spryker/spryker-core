@@ -242,19 +242,19 @@ class Address implements AddressInterface
     {
         $address = [];
 
-        if (count($addressTransfer->getCompany()) > 0) {
+        if ($addressTransfer->getCompany() !== null) {
             $address[] = $addressTransfer->getCompany();
         }
 
         $address[] = sprintf('%s %s %s', $addressTransfer->getSalutation(), $addressTransfer->getFirstName(), $addressTransfer->getLastName());
 
-        if (count($addressTransfer->getAddress1()) > 0) {
+        if ($addressTransfer->getAddress1() !== null) {
             $address[] = $addressTransfer->getAddress1();
         }
-        if (count($addressTransfer->getAddress2()) > 0) {
+        if ($addressTransfer->getAddress2() !== null) {
             $address[] = $addressTransfer->getAddress2();
         }
-        if (count($addressTransfer->getAddress3()) > 0) {
+        if ($addressTransfer->getAddress3() !== null) {
             $address[] = $addressTransfer->getAddress3();
         }
 

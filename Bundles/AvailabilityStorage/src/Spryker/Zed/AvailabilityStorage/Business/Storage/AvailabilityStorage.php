@@ -16,6 +16,8 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const ID_AVAILABILITY_ABSTRACT = 'id_availability_abstract';
     const FK_AVAILABILITY_ABSTRACT = 'fkAvailabilityAbstract';
+    const STORE = 'Store';
+    const STORE_NAME = 'name';
 
     /**
      * @var \Spryker\Shared\Kernel\Store
@@ -51,10 +53,10 @@ class AvailabilityStorage implements AvailabilityStorageInterface
      */
     public function publish(array $availabilityIds)
     {
-        $spyAvailabilityEntities = $this->findAvailabilityAbstractEntities($availabilityIds);
-        $spyAvailabilityStorageEntities = $this->findAvailabilityStorageEntitiesByAvailabilityAbstractIds($availabilityIds);
+        $availabilityEntitityCollection = $this->findAvailabilityAbstractEntities($availabilityIds);
+        $availabilityStorageEntityCollection = $this->findAvailabilityStorageEntitiesByAvailabilityAbstractIds($availabilityIds);
 
-        $this->storeData($spyAvailabilityEntities, $spyAvailabilityStorageEntities);
+        $this->storeData($availabilityEntitityCollection, $availabilityStorageEntityCollection);
     }
 
     /**
@@ -64,47 +66,52 @@ class AvailabilityStorage implements AvailabilityStorageInterface
      */
     public function unpublish(array $availabilityIds)
     {
-        $spyAvailabilityStorageEntities = $this->findAvailabilityStorageEntitiesByAvailabilityAbstractIds($availabilityIds);
-        foreach ($spyAvailabilityStorageEntities as $spyAvailabilityStorageEntity) {
-            $spyAvailabilityStorageEntity->delete();
+        $availabilityStorageEntityCollection = $this->findAvailabilityStorageEntitiesByAvailabilityAbstractIds($availabilityIds);
+        foreach ($availabilityStorageEntityCollection as $availabilityStorageEntity) {
+            $availabilityStorageEntity->delete();
         }
     }
 
     /**
-     * @param array $spyAvailabilityEntities
-     * @param array $spyAvailabilityStorageEntities
+     * @param array $availabilityEntities
+     * @param array $availabilityStorageEntityCollection
      *
      * @return void
      */
-    protected function storeData(array $spyAvailabilityEntities, array $spyAvailabilityStorageEntities)
+    protected function storeData(array $availabilityEntities, array $availabilityStorageEntityCollection)
     {
-        foreach ($spyAvailabilityEntities as $spyAvailability) {
-            $idAvailability = $spyAvailability[static::ID_AVAILABILITY_ABSTRACT];
-            if (isset($spyAvailabilityStorageEntities[$idAvailability])) {
-                $this->storeDataSet($spyAvailability, $spyAvailabilityStorageEntities[$idAvailability]);
+        foreach ($availabilityEntities as $availability) {
+            $idAvailability = $availability[static::ID_AVAILABILITY_ABSTRACT];
+            $storeName = $availability[static::STORE][static::STORE_NAME];
+
+            if ($this->isExistingEntity($availabilityStorageEntityCollection, $idAvailability, $storeName)) {
+                $this->storeDataSet($availability, $availabilityStorageEntityCollection[$idAvailability]);
             } else {
-                $this->storeDataSet($spyAvailability);
+                $this->storeDataSet($availability);
             }
         }
     }
 
     /**
-     * @param array $spyAvailabilityEntity
-     * @param \Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorage|null $spyAvailabilityStorageEntity
+     * @param array $availability
+     * @param \Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorage|null $availabilityStorageEntity
      *
      * @return void
      */
-    protected function storeDataSet(array $spyAvailabilityEntity, SpyAvailabilityStorage $spyAvailabilityStorageEntity = null)
+    protected function storeDataSet(array $availability, SpyAvailabilityStorage $availabilityStorageEntity = null)
     {
-        if ($spyAvailabilityStorageEntity === null) {
-            $spyAvailabilityStorageEntity = new SpyAvailabilityStorage();
+        if ($availabilityStorageEntity === null) {
+            $availabilityStorageEntity = new SpyAvailabilityStorage();
         }
-        $spyAvailabilityStorageEntity->setFkProductAbstract($spyAvailabilityEntity[static::ID_PRODUCT_ABSTRACT]);
-        $spyAvailabilityStorageEntity->setFkAvailabilityAbstract($spyAvailabilityEntity[static::ID_AVAILABILITY_ABSTRACT]);
-        $spyAvailabilityStorageEntity->setData($spyAvailabilityEntity);
-        $spyAvailabilityStorageEntity->setStore($this->getStoreName());
-        $spyAvailabilityStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
-        $spyAvailabilityStorageEntity->save();
+
+        $storeName = $availability[static::STORE][static::STORE_NAME];
+        $availabilityStorageEntity->setFkProductAbstract($availability[static::ID_PRODUCT_ABSTRACT])
+            ->setFkAvailabilityAbstract($availability[static::ID_AVAILABILITY_ABSTRACT])
+            ->setData($availability)
+            ->setStore($storeName)
+            ->setIsSendingToQueue($this->isSendingToQueue);
+
+        $availabilityStorageEntity->save();
     }
 
     /**
@@ -114,7 +121,10 @@ class AvailabilityStorage implements AvailabilityStorageInterface
      */
     protected function findAvailabilityAbstractEntities(array $availabilityIds)
     {
-        return $this->queryContainer->queryAvailabilityAbstractWithRelationsByIds($availabilityIds)->find()->getData();
+        return $this->queryContainer
+            ->queryAvailabilityAbstractWithRelationsByIds($availabilityIds)
+            ->find()
+            ->getData();
     }
 
     /**
@@ -124,7 +134,10 @@ class AvailabilityStorage implements AvailabilityStorageInterface
      */
     protected function findAvailabilityStorageEntitiesByAvailabilityAbstractIds(array $availabilityAbstractIds)
     {
-        return $this->queryContainer->queryAvailabilityStorageByAvailabilityAbstractIds($availabilityAbstractIds)->find()->toKeyIndex(static::FK_AVAILABILITY_ABSTRACT);
+        return $this->queryContainer
+            ->queryAvailabilityStorageByAvailabilityAbstractIds($availabilityAbstractIds)
+            ->find()
+            ->toKeyIndex(static::FK_AVAILABILITY_ABSTRACT);
     }
 
     /**
@@ -133,5 +146,17 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     protected function getStoreName()
     {
         return $this->store->getStoreName();
+    }
+
+    /**
+     * @param array $availabilityStorageEntityCollection
+     * @param int $idAvailability
+     * @param string $storeName
+     *
+     * @return bool
+     */
+    protected function isExistingEntity(array $availabilityStorageEntityCollection, $idAvailability, $storeName)
+    {
+        return (isset($availabilityStorageEntityCollection[$idAvailability]) && $availabilityStorageEntityCollection[$idAvailability]->getStore() === $storeName);
     }
 }

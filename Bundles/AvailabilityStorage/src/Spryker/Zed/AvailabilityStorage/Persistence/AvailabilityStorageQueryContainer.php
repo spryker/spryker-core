@@ -60,13 +60,14 @@ class AvailabilityStorageQueryContainer extends AbstractQueryContainer implement
         return $this->getFactory()
             ->getAvailabilityQueryContainer()
             ->queryAllAvailabilityAbstracts()
-            ->filterByIdAvailabilityAbstract_In($availabilityAbstractIds)
             ->joinWithSpyAvailability()
+            ->joinWithStore()
             ->addJoin(
                 SpyAvailabilityAbstractTableMap::COL_ABSTRACT_SKU,
                 SpyProductAbstractTableMap::COL_SKU,
                 Criteria::INNER_JOIN
             )
+            ->filterByIdAvailabilityAbstract_In($availabilityAbstractIds)
             ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::ID_PRODUCT_ABSTRACT)
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
     }

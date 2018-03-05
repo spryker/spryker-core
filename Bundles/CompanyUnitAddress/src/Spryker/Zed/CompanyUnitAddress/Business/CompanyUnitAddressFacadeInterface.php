@@ -7,10 +7,26 @@
 
 namespace Spryker\Zed\CompanyUnitAddress\Business;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 
 interface CompanyUnitAddressFacadeInterface
 {
+    /**
+     * Specification:
+     * - Finds a company unit address by CompanyUnitAddressTransfer::idCompanyUnitAddress in the transfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     */
+    public function getCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer;
+
     /**
      * Specification:
      * - Creates a company unit address
@@ -19,9 +35,9 @@ interface CompanyUnitAddressFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function create(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer;
+    public function create(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
 
     /**
      * Specification:
@@ -32,9 +48,9 @@ interface CompanyUnitAddressFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function update(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void;
+    public function update(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
 
     /**
      * Specification:
@@ -48,4 +64,32 @@ interface CompanyUnitAddressFacadeInterface
      * @return void
      */
     public function delete(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void;
+
+    /**
+     * Specification:
+     * - Returns the company unit address collection.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     */
+    public function getCompanyUnitAddressCollection(
+        CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUnitAddressCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Saves Company Business Unit address collection
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return void
+     */
+    public function saveCompanyBusinessUnitAddresses(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): void;
 }

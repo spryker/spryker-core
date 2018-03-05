@@ -8,23 +8,21 @@
 namespace Spryker\Client\Permission;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Permission\Dependency\Client\PermissionToZedRequestClientInterface;
+use Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface;
 use Spryker\Client\Permission\PermissionExecutor\PermissionExecutor;
+use Spryker\Client\Permission\PermissionExecutor\PermissionExecutorInterface;
 use Spryker\Client\Permission\PermissionFinder\PermissionFinder;
+use Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface;
+use Spryker\Client\Permission\Zed\PermissionStub;
+use Spryker\Client\Permission\Zed\PermissionStubInterface;
 
 class PermissionFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientInterface
-     */
-    public function getCustomerClient()
-    {
-        return $this->getProvidedDependency(PermissionDependencyProvider::CLIENT_CUSTOMER);
-    }
-
-    /**
      * @return \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface
      */
-    public function createPermissionConfigurator()
+    public function createPermissionFinder(): PermissionFinderInterface
     {
         return new PermissionFinder(
             $this->getPermissionPlugins()
@@ -34,19 +32,43 @@ class PermissionFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Permission\PermissionExecutor\PermissionExecutorInterface
      */
-    public function createPermissionExecutor()
+    public function createPermissionExecutor(): PermissionExecutorInterface
     {
         return new PermissionExecutor(
-            $this->getCustomerClient(),
-            $this->createPermissionConfigurator()
+            $this->getPermissionStoragePlugin(),
+            $this->createPermissionFinder()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\Permission\Zed\PermissionStubInterface
+     */
+    public function createZedPermissionStub(): PermissionStubInterface
+    {
+        return new PermissionStub($this->getZedRequestClient());
     }
 
     /**
      * @return \Spryker\Client\Permission\Plugin\PermissionPluginInterface[]
      */
-    protected function getPermissionPlugins()
+    protected function getPermissionPlugins(): array
     {
         return $this->getProvidedDependency(PermissionDependencyProvider::PLUGINS_PERMISSION);
+    }
+
+    /**
+     * @return \Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface
+     */
+    protected function getPermissionStoragePlugin(): PermissionStoragePluginInterface
+    {
+        return $this->getProvidedDependency(PermissionDependencyProvider::PLUGIN_PERMISSION_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\Permission\Dependency\Client\PermissionToZedRequestClientInterface
+     */
+    protected function getZedRequestClient(): PermissionToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(PermissionDependencyProvider::CLIENT_ZED_REQUEST);
     }
 }

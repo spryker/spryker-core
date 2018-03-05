@@ -5,11 +5,16 @@
   "require": {
     "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
-    "spryker/store": "^1.0.0"
+    "spryker/store": "^1.0.0",
+    "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/mail": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/mail": "If you want to use mail plugins."
   },
   "autoload": {
     "psr-4": {

@@ -4,7 +4,7 @@
     <table name="spy_company_business_unit" phpName="SpyCompanyBusinessUnit">
         <column name="default_billing_address" type="INTEGER"/>
 
-        <foreign-key name="spy_company_business_unit-default_billing_address" foreignTable="spy_company_unit_address" phpName="BillingAddress" refPhpName="CompanyBusinessUnitBillingAddress" onDelete="SETNULL">
+        <foreign-key name="spy_co_b_u-default_billing_address" foreignTable="spy_company_unit_address" phpName="CompanyBusinessUnitDefaultBillingAddress" onDelete="SETNULL">
             <reference foreign="id_company_unit_address" local="default_billing_address"/>
         </foreign-key>
     </table>

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlockCollector\Persistence\Collector\Storage\Propel;
 
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockGlossaryKeyMappingTableMap;
+use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockStoreTableMap;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTemplateTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
@@ -25,6 +26,7 @@ class CmsBlockCollectorQuery extends AbstractPropelCollectorQuery
     const COL_PLACEHOLDERS = 'placeholders';
     const COL_GLOSSARY_KEYS = 'glossary_keys';
     const COL_TEMPLATE_PATH = 'template_path';
+    const COL_IS_IN_STORE = 'is_in_store';
 
     /**
      * @return void
@@ -65,8 +67,21 @@ class CmsBlockCollectorQuery extends AbstractPropelCollectorQuery
             static::COL_TEMPLATE_PATH
         );
 
+        $this->touchQuery->addJoin(
+            [
+                SpyCmsBlockTableMap::COL_ID_CMS_BLOCK,
+                SpyCmsBlockStoreTableMap::COL_FK_STORE,
+            ],
+            [
+                SpyCmsBlockStoreTableMap::COL_FK_CMS_BLOCK,
+                $this->storeTransfer->getIdStore(),
+            ],
+            Criteria::LEFT_JOIN
+        );
+
         $this->touchQuery->addAnd(SpyCmsBlockTableMap::COL_IS_ACTIVE, true);
 
+        $this->touchQuery->withColumn(SpyCmsBlockStoreTableMap::COL_FK_STORE, static::COL_IS_IN_STORE);
         $this->touchQuery->withColumn(SpyCmsBlockTableMap::COL_IS_ACTIVE, static::COL_IS_ACTIVE);
         $this->touchQuery->withColumn(SpyCmsBlockTableMap::COL_VALID_FROM, static::COL_VALID_FROM);
         $this->touchQuery->withColumn(SpyCmsBlockTableMap::COL_VALID_TO, static::COL_VALID_TO);

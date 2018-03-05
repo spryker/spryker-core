@@ -8,17 +8,22 @@
         <property name="name" type="string"/>
         <property name="isActive" type="bool"/>
         <property name="status" type="string"/>
+        <property name="storeRelation" type="StoreRelation"/>
+    </transfer>
+
+    <transfer name="CompanyResponse">
+        <property name="companyTransfer" type="Company"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int"/>
+        <property name="idStores" type="int[]"/>
         <property name="stores" type="Store[]"/>
     </transfer>
 
-    <!-- Infrastructure -->
-    <transfer name="Response">
-        <property name="code" type="int"/>
-        <property name="errors" type="ResponseError[]" singular="error"/>
+    <transfer name="ResponseMessage">
+        <property name="text" type="string"/>
     </transfer>
-
-    <transfer name="ResponseError">
-        <property name="message" type="string"/>
-    </transfer>
-    <!-- /Infrastructure -->
 </transfers>
