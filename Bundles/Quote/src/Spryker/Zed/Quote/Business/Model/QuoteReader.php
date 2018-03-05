@@ -45,6 +45,7 @@ class QuoteReader implements QuoteReaderInterface
     {
         $customerTransfer->requireCustomerReference();
         $quoteResponseTransfer = new QuoteResponseTransfer();
+        $quoteResponseTransfer->setIsSuccessful(false);
         $quoteTransfer = $this->quoteRepository
             ->findQuoteByCustomer($customerTransfer->getCustomerReference());
         if (!$quoteTransfer) {

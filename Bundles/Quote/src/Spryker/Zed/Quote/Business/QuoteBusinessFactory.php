@@ -48,6 +48,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     public function createQuoteDeleter()
     {
         return new QuoteDeleter(
+            $this->getRepository(),
             $this->getEntityManager()
         );
     }

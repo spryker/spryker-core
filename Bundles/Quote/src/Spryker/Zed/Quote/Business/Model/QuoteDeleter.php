@@ -10,6 +10,7 @@ namespace Spryker\Zed\Quote\Business\Model;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface;
+use Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface;
 
 class QuoteDeleter implements QuoteDeleterInterface
 {
@@ -19,12 +20,20 @@ class QuoteDeleter implements QuoteDeleterInterface
     protected $quoteEntityManager;
 
     /**
+     * @var \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface
+     */
+    protected $quoteRepository;
+
+    /**
+     * @param \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
      * @param \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface $quoteEntityManager
      */
     public function __construct(
+        QuoteRepositoryInterface $quoteRepository,
         QuoteEntityManagerInterface $quoteEntityManager
     ) {
         $this->quoteEntityManager = $quoteEntityManager;
+        $this->quoteRepository = $quoteRepository;
     }
 
     /**
@@ -34,10 +43,31 @@ class QuoteDeleter implements QuoteDeleterInterface
      */
     public function delete(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $this->quoteEntityManager->deleteQuoteById($quoteTransfer->getIdQuote());
         $quoteResponseTransfer = new QuoteResponseTransfer();
-        $quoteResponseTransfer->setIsSuccessful(true);
+        $quoteResponseTransfer->setIsSuccessful(false);
+        if ($this->validateQuote($quoteTransfer)) {
+            $this->quoteEntityManager->deleteQuoteById($quoteTransfer->getIdQuote());
+            $quoteResponseTransfer->setIsSuccessful(true);
+        }
 
         return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function validateQuote(QuoteTransfer $quoteTransfer)
+    {
+        if (!$quoteTransfer->getCustomer()) {
+            return false;
+        }
+        $loadedQuoteTransfer = $this->quoteRepository->findQuoteById($quoteTransfer->getIdQuote());
+        if (!$loadedQuoteTransfer) {
+            return false;
+        }
+
+        return strcmp($loadedQuoteTransfer->getCustomerReference(), $quoteTransfer->getCustomer()->getCustomerReference()) === 0;
     }
 }

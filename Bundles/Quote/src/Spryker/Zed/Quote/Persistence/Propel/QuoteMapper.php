@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
 use Orm\Zed\Quote\Persistence\SpyQuote;
 use Spryker\Zed\Quote\Dependency\Service\QuoteToUtilEncodingServiceInterface;
+use Spryker\Zed\Quote\QuoteConfig;
 
 class QuoteMapper implements QuoteMapperInterface
 {
@@ -20,13 +21,22 @@ class QuoteMapper implements QuoteMapperInterface
     protected $encodingService;
 
     /**
+     * @var \Spryker\Zed\Quote\QuoteConfig
+     */
+    protected $quoteConfig;
+
+    /**
      * QuoteMapper constructor.
      *
      * @param \Spryker\Zed\Quote\Dependency\Service\QuoteToUtilEncodingServiceInterface $encodingService
+     * @param \Spryker\Zed\Quote\QuoteConfig $quoteConfig
      */
-    public function __construct(QuoteToUtilEncodingServiceInterface $encodingService)
-    {
+    public function __construct(
+        QuoteToUtilEncodingServiceInterface $encodingService,
+        QuoteConfig $quoteConfig
+    ) {
         $this->encodingService = $encodingService;
+        $this->quoteConfig = $quoteConfig;
     }
 
     /**
@@ -39,7 +49,6 @@ class QuoteMapper implements QuoteMapperInterface
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->fromArray($this->decodeQuoteData($quoteEntityTransfer));
         $quoteTransfer->setIdQuote($quoteEntityTransfer->getIdQuote());
-        // TODO: all data that was filtered out need to be set back for the result
 
         return $quoteTransfer;
     }
@@ -79,7 +88,7 @@ class QuoteMapper implements QuoteMapperInterface
     protected function encodeQuoteData(QuoteTransfer $quoteTransfer)
     {
         $quoteData = $quoteTransfer->modifiedToArray();
-        $quoteData = $this->clearCheckoutQuoteData($quoteData);
+        $quoteData = $this->filterDisallowedQuoteData($quoteData);
 
         return $this->encodingService->encodeJson($quoteData);
     }
@@ -89,20 +98,14 @@ class QuoteMapper implements QuoteMapperInterface
      *
      * @return array
      */
-    protected function clearCheckoutQuoteData(array $quoteData)
+    protected function filterDisallowedQuoteData(array $quoteData)
     {
-        unset(
-            $quoteData['customer'],
-            $quoteData['billing_address'],
-            $quoteData['shipping_address'],
-            $quoteData['billing_same_as_shipping'],
-            $quoteData['checkout_confirmed'],
-            $quoteData['shipment'],
-            $quoteData['payment'],
-            $quoteData['payments'],
-            $quoteData['cart_rule_discounts'],
-            $quoteData['expenses']
-        );
-        return $quoteData;
+        $data = [];
+        foreach ($this->quoteConfig->getQuoteFieldsAllowedForSaving() as $dataKey) {
+            if (isset($quoteData[$dataKey])) {
+                $data[$dataKey] = $quoteData[$dataKey];
+            }
+        }
+        return $data;
     }
 }

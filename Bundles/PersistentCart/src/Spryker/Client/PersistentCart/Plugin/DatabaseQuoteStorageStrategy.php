@@ -230,7 +230,9 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      */
     protected function saveQuote(QuoteTransfer $quoteTransfer)
     {
-        $this->getQuoteClient()->setQuote($quoteTransfer);
+        $sessionQuoteTransfer = $this->getQuoteClient()->getQuote();
+        $sessionQuoteTransfer->fromArray($quoteTransfer->modifiedToArray(), true);
+        $this->getQuoteClient()->setQuote($sessionQuoteTransfer);
     }
 
     /**

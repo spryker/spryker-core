@@ -30,7 +30,7 @@ class QuotePersistenceFactory extends AbstractPersistenceFactory
      */
     public function createQuoteMapper()
     {
-        return new QuoteMapper($this->getUtilEncodingService());
+        return new QuoteMapper($this->getUtilEncodingService(), $this->getConfig());
     }
 
     /**

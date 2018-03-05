@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface;
 use Spryker\Client\Quote\Exception\StorageStrategyNotFound;
 use Spryker\Client\Quote\QuoteConfig;
+use Spryker\Client\Quote\Session\QuoteSession;
 use Spryker\Client\Quote\StorageStrategy\DatabaseStorageStrategy;
 use Spryker\Client\Quote\StorageStrategy\SessionStorageStrategy;
 use Spryker\Client\Quote\StorageStrategy\StorageStrategyProvider;
@@ -149,7 +150,7 @@ class StorageStrategyProviderTest extends Unit
      */
     protected function createDatabaseStorageStrategy(QuoteToCustomerClientInterface $customerClient)
     {
-        return new DatabaseStorageStrategy($customerClient, $this->createQuoteZedStubMock(), $this->createSessionClient());
+        return new DatabaseStorageStrategy($customerClient, $this->createQuoteZedStubMock(), $this->createQuoteSession());
     }
 
     /**
@@ -157,19 +158,19 @@ class StorageStrategyProviderTest extends Unit
      */
     protected function createSessionStorageStrategy()
     {
-        return new SessionStorageStrategy($this->createSessionClient());
+        return new SessionStorageStrategy($this->createQuoteSession());
     }
 
     /**
-     * @return \Spryker\Client\Session\SessionClient
+     * @return \Spryker\Client\Quote\Session\QuoteSessionInterface
      */
-    protected function createSessionClient()
+    protected function createQuoteSession()
     {
         $sessionContainer = new Session(new MockArraySessionStorage());
         $sessionClient = new SessionClient();
         $sessionClient->setContainer($sessionContainer);
 
-        return $sessionClient;
+        return new QuoteSession($sessionClient);
     }
 
     /**
