@@ -4,7 +4,11 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="CompanyUnitAddressLabelCollection">
-        <property name="labels" type="SpyCompanyUnitAddressLabelEntityTransfer[]" />
+        <property name="labels" type="SpyCompanyUnitAddressLabelEntity[]" />
+    </transfer>
+
+    <transfer name="CompanyUnitAddress">
+        <property name="labelCollection" type="CompanyUnitAddressLabelCollection"/>
     </transfer>
 
 </transfers>

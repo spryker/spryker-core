@@ -8,11 +8,13 @@
 namespace Spryker\Zed\CompanyUnitAddressLabel\Persistence;
 
 use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelQuery;
+use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelToCompanyUnitAddressQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CompanyUnitAddressLabel\CompanyUnitAddressLabelConfig getConfig()
  * @method \Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepositoryInterface getRepository()
  */
 class CompanyUnitAddressLabelPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -22,5 +24,13 @@ class CompanyUnitAddressLabelPersistenceFactory extends AbstractPersistenceFacto
     public function createCompanyUnitAddressLabelQuery()
     {
         return SpyCompanyUnitAddressLabelQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelToCompanyUnitAddressQuery
+     */
+    public function createCompanyUnitAddressLabelToCompanyUnitAddressQuery()
+    {
+        return SpyCompanyUnitAddressLabelToCompanyUnitAddressQuery::create();
     }
 }
