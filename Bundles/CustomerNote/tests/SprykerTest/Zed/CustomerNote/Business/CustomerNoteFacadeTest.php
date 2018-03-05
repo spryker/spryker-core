@@ -67,7 +67,7 @@ class CustomerNoteFacadeTest extends Unit
         $this->tester->hydrateCustomerNotesTableForCustomer($this->customerTransfer->getIdCustomer(), static::NOTES_COUNT);
         $customerNotesCollectionTransfer = $this->customerNoteFacade->getNotes($this->customerTransfer->getIdCustomer());
 
-        $this->assertEquals(static::NOTES_COUNT, $customerNotesCollectionTransfer->getNotes()->count());
+        $this->assertSame(static::NOTES_COUNT, $customerNotesCollectionTransfer->getNotes()->count());
     }
 
     /**

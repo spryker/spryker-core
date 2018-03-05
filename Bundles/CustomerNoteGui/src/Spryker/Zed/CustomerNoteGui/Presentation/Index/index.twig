@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/assets/css/spryker-zed-customer-note-gui-main.css">
 <div class="col-lg-12">
     <div class="ibox">
         {{ form_start(form) }}
@@ -5,7 +6,7 @@
             <h3>{{ 'Notes' | trans }}</h3>
         </div>
         <div class="ibox-content">
-            <div class="order-details-chat">
+            <div class="customer-note-chat">
                 {% for note in notes %}
                     <div class="chat">
                         <div class="chat-author"><span>{{ note.username }} @ {{ note.virtualProperties.created_at | formatDateTime }}</span></div>
