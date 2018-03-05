@@ -7,35 +7,52 @@
 
 namespace Spryker\Zed\Permission\Business\PermissionFinder;
 
-use Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
+use Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface;
 
 class PermissionFinder implements PermissionFinderInterface
 {
     /**
      * @var \Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface[]
      */
-    protected $executablePermissionPluginStack = [];
+    protected $permissionPlugins = [];
 
     /**
      * @param \Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface[] $permissionPlugins
      */
     public function __construct(array $permissionPlugins)
     {
-        $this->executablePermissionPluginStack = $this->indexPermissions($permissionPlugins);
+        $this->permissionPlugins = $this->indexPermissions($permissionPlugins);
     }
 
     /**
      * @param string $permissionKey
      *
-     * @return null|\Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface
+     * @return null|\Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface
      */
-    public function findPermissionPlugin($permissionKey)
+    public function findPermissionPlugin($permissionKey): ?PermissionPluginInterface
     {
-        if (!isset($this->executablePermissionPluginStack[$permissionKey])) {
+        if (!isset($this->permissionPlugins[$permissionKey])) {
             return null;
         }
 
-        return $this->executablePermissionPluginStack[$permissionKey];
+        return $this->permissionPlugins[$permissionKey];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getRegisteredPermissions(): PermissionCollectionTransfer
+    {
+        $permissionCollectionTransfer = new PermissionCollectionTransfer();
+
+        foreach ($this->permissionPlugins as $permissionPlugin) {
+            $permissionTransfer = (new PermissionTransfer())->setKey($permissionPlugin->getKey());
+            $permissionCollectionTransfer->addPermission($permissionTransfer);
+        }
+
+        return $permissionCollectionTransfer;
     }
 
     /**
@@ -43,14 +60,12 @@ class PermissionFinder implements PermissionFinderInterface
      *
      * @return array
      */
-    protected function indexPermissions(array $permissionPlugins)
+    protected function indexPermissions(array $permissionPlugins): array
     {
         $plugins = [];
 
         foreach ($permissionPlugins as $permissionPlugin) {
-            if ($permissionPlugin instanceof ExecutablePermissionPluginInterface) {
-                $plugins[$permissionPlugin->getKey()] = $permissionPlugin;
-            }
+            $plugins[$permissionPlugin->getKey()] = $permissionPlugin;
         }
 
         return $plugins;

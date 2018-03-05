@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\CompanyRole\Communication\Controller;
 
+use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
+use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -24,5 +27,69 @@ class GatewayController extends AbstractGatewayController
     public function createAction(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
     {
         return $this->getFacade()->create($companyRoleTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
+     */
+    public function getCompanyRoleCollectionAction(
+        CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
+    ): CompanyRoleCollectionTransfer {
+        return $this->getFacade()->getCompanyRoleCollection($companyRoleCriteriaFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
+     */
+    public function getCompanyRoleByIdAction(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleTransfer
+    {
+        return $this->getFacade()->getCompanyRoleById($companyRoleTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function updateCompanyRoleAction(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
+    {
+        $this->getFacade()->update($companyRoleTransfer);
+
+        $response = new CompanyRoleResponseTransfer();
+        $response->setIsSuccessful(true);
+
+        return $response;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findCompanyRolePermissionsAction(
+        CompanyRoleTransfer $companyRoleTransfer
+    ): PermissionCollectionTransfer {
+        $companyRoleTransfer->requireIdCompanyRole();
+
+        return $this->getFacade()->findCompanyRolePermissions($companyRoleTransfer->getIdCompanyRole());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function deleteCompanyRoleAction(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
+    {
+        $this->getFacade()->delete($companyRoleTransfer);
+
+        $response = new CompanyRoleResponseTransfer();
+        $response->setIsSuccessful(true);
+
+        return $response;
     }
 }
