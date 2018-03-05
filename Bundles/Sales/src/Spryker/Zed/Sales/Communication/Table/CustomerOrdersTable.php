@@ -29,19 +29,19 @@ class CustomerOrdersTable extends OrdersTable
     protected $salesQueryContainer;
 
     /**
-     * @param string $customerReference
-     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
      * @param \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface $queryBuilder
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface $sanitizeService
      * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface $customerFacade
+     * @param string $customerReference
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
      */
-    public function __construct($customerReference, SalesQueryContainerInterface $salesQueryContainer, OrdersTableQueryBuilderInterface $queryBuilder, SalesToMoneyInterface $moneyFacade, SalesToUtilSanitizeInterface $sanitizeService, UtilDateTimeServiceInterface $utilDateTimeService, SalesToCustomerInterface $customerFacade)
+    public function __construct(OrdersTableQueryBuilderInterface $queryBuilder, SalesToMoneyInterface $moneyFacade, SalesToUtilSanitizeInterface $sanitizeService, UtilDateTimeServiceInterface $utilDateTimeService, SalesToCustomerInterface $customerFacade, $customerReference, SalesQueryContainerInterface $salesQueryContainer)
     {
+        parent::__construct($queryBuilder, $moneyFacade, $sanitizeService, $utilDateTimeService, $customerFacade);
         $this->customerReference = $customerReference;
         $this->salesQueryContainer = $salesQueryContainer;
-        parent::__construct($queryBuilder, $moneyFacade, $sanitizeService, $utilDateTimeService, $customerFacade);
     }
 
     /**
@@ -66,7 +66,7 @@ class CustomerOrdersTable extends OrdersTable
             SpySalesOrderTableMap::COL_ORDER_REFERENCE => 'Order Reference',
             SpySalesOrderTableMap::COL_CREATED_AT => 'Created',
             static::ITEM_STATE_NAMES_CSV => 'Order State',
-            static::GRAND_TOTAL => 'GrandTotal',
+            static::GRAND_TOTAL => 'Grand Total',
             static::NUMBER_OF_ORDER_ITEMS => 'Number of Items',
             static::URL => 'Actions',
         ];

@@ -73,6 +73,18 @@ class ViewController extends AbstractController
     }
 
     /**
+     * @deprecated use addressTableAction
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction(Request $request)
+    {
+        return $this->addressTableAction($request);
+    }
+
+    /**
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer

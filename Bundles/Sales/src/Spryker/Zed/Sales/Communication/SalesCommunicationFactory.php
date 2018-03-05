@@ -149,13 +149,13 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function createCustomerOrdersTable($customerReference)
     {
         return new CustomerOrdersTable(
-            $customerReference,
-            $this->getQueryContainer(),
             $this->createOrdersTableQueryBuilder(),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_MONEY),
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_SANITIZE),
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER),
-            $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER)
+            $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER),
+            $customerReference,
+            $this->getQueryContainer()
         );
     }
 
