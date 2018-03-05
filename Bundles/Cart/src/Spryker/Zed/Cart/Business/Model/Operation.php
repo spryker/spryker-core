@@ -94,10 +94,10 @@ class Operation implements OperationInterface
         $itemsTransfer = $cartChangeTransfer->getItems();
 
         foreach ($itemsTransfer as $currentItemTransfer) {
+            $itemsCollection = new ArrayObject([$currentItemTransfer]);
             $currentCartChangeTransfer = new CartChangeTransfer();
             $currentCartChangeTransfer->setQuote($quoteTransfer);
-            $itemsObject = new ArrayObject([$currentItemTransfer]);
-            $currentCartChangeTransfer->setItems($itemsObject);
+            $currentCartChangeTransfer->setItems($itemsCollection);
 
             $quoteTransfer = $this->add($currentCartChangeTransfer);
         }
