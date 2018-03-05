@@ -25,6 +25,9 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_MAIL = 'FACADE_MAIL';
 
+    /**
+     * @deprecated use SERVICE_UTIL_DATE_TIME instead
+     */
     const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
     const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
