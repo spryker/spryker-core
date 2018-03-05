@@ -64,6 +64,23 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     /**
      * @api
      *
+     * @param string $resourceType
+     * @param array $resourceIds
+     *
+     * @throws Exception\UnknownResourceTypeException
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryUrlsByResourceTypeAndIds($resourceType, array $resourceIds)
+    {
+        return $this->getFactory()
+            ->createUrlQuery()
+            ->filterByResourceTypeAndIds($resourceType, $resourceIds);
+    }
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrlsWithRedirect()
