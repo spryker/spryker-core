@@ -28,7 +28,6 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->createAttributeMap(),
             $this->getQueryContainer(),
-            $this->getStore(),
             $this->getConfig()->isSendingToQueue()
         );
     }
@@ -54,14 +53,6 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->getQueryContainer()
         );
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(ProductStorageDependencyProvider::STORE);
     }
 
     /**
