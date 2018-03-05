@@ -78,7 +78,10 @@ class ElasticsearchWriter implements WriterInterface, ConfigurableSearchWriterIn
         $keys = array_keys($dataSet);
         foreach ($keys as $key) {
             try {
-                $documents[] = $this->getType()->getDocument($key);
+                $options = ['routing' => $key];
+                $document = $this->getType()->getDocument($key, $options);
+                $document->setRouting($key);
+                $documents[] = $document;
             } catch (NotFoundException $e) {
                 continue;
             }
