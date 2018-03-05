@@ -52,7 +52,7 @@ class IndexController extends AbstractController
 
         return [
             'form' => $form->createView(),
-            'notes' => $this->getFactory()->getCustomerNoteFacade()->getNotes($idCustomer),
+            'notes' => $this->getFactory()->getCustomerNoteFacade()->getNotes($idCustomer)->getNotes(),
         ];
     }
 }
