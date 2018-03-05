@@ -9,6 +9,7 @@ namespace Spryker\Zed\PersistentCart\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PersistentCart\Business\Model\CartOperation;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizer;
 use Spryker\Zed\PersistentCart\PersistentCartDependencyProvider;
 
 class PersistentCartBusinessFactory extends AbstractBusinessFactory
@@ -19,6 +20,17 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     public function createCartOperation()
     {
         return new CartOperation(
+            $this->getCartFacade(),
+            $this->getQuoteFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizerInterface
+     */
+    public function createQuoteStorageSynchronizer()
+    {
+        return new QuoteStorageSynchronizer(
             $this->getCartFacade(),
             $this->getQuoteFacade()
         );

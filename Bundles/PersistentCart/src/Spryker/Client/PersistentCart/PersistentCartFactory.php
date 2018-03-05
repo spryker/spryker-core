@@ -8,6 +8,7 @@
 namespace Spryker\Client\PersistentCart;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\PersistentCart\QuoteStorageSynchronizer\CustomerLoginQuoteSync;
 use Spryker\Client\PersistentCart\Zed\PersistentCartStub;
 
 class PersistentCartFactory extends AbstractFactory
@@ -42,5 +43,16 @@ class PersistentCartFactory extends AbstractFactory
     public function getCustomerClient()
     {
         return $this->getProvidedDependency(PersistentCartDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCart\QuoteStorageSynchronizer\CustomerLoginQuoteSyncInterface
+     */
+    public function createCustomerLoginQuoteSync()
+    {
+        return new CustomerLoginQuoteSync(
+            $this->createZedPersistentCartStub(),
+            $this->getQuoteClient()
+        );
     }
 }

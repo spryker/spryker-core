@@ -23,8 +23,7 @@ interface QuoteClientInterface
 
     /**
      * Specification:
-     * - session strategy: set quote in session
-     * - persistence strategy: set quote in session, throw exception when something is changed in quote which is stored in database
+     * - Set quote in session.
      *
      * @api
      *
@@ -36,8 +35,8 @@ interface QuoteClientInterface
 
     /**
      * Specification:
-     * - Session strategy: clear it from session
-     * - Persistent strategy: removes current quote from DB and session
+     * - Session strategy: clear quote in session.
+     * - Persistent strategy: removes current quote from DB and session.
      *
      * @api
      *
@@ -47,7 +46,7 @@ interface QuoteClientInterface
 
     /**
      * Specification:
-     * - Get quote storage strategy type
+     * - Get quote storage strategy type.
      *
      * @api
      *

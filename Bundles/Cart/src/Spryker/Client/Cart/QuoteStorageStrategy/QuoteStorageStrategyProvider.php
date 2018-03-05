@@ -9,7 +9,7 @@ namespace Spryker\Client\Cart\QuoteStorageStrategy;
 
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
 use Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
-use Spryker\Client\Quote\Exception\StorageStrategyNotFound;
+use Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound;
 
 class QuoteStorageStrategyProvider implements QuoteStorageStrategyProviderInterface
 {
@@ -36,33 +36,23 @@ class QuoteStorageStrategyProvider implements QuoteStorageStrategyProviderInterf
     }
 
     /**
+     * @throws \Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound
+     *
      * @return \Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface
      */
     public function provideStorage(): QuoteStorageStrategyPluginInterface
     {
-        $storageStrategy = $this->findStorageStrategy($this->quoteClient->getStorageStrategy());
-
-        return $storageStrategy;
-    }
-
-    /**
-     * @param string $storageStrategyType
-     *
-     * @throws \Spryker\Client\Quote\Exception\StorageStrategyNotFound
-     *
-     * @return \Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface
-     */
-    protected function findStorageStrategy($storageStrategyType): QuoteStorageStrategyPluginInterface
-    {
+        $storageStrategyType = $this->quoteClient->getStorageStrategy();
         foreach ($this->quoteStorageStrategyPlugins as $storageStrategy) {
             if ($storageStrategy->getStorageStrategy() === $storageStrategyType) {
                 return $storageStrategy;
             }
         }
 
-        throw new StorageStrategyNotFound(
+        throw new QuoteStorageStrategyPluginNotFound(
             sprintf(
-                'There is no quote storage strategy with name: %s',
+                'There is no quote storage strategy with name: %s. ' .
+                'It should be added to \Spryker\Client\Cart\CartDependencyProvider::getQuoteStorageStrategyPlugins()',
                 $storageStrategyType
             )
         );

@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Quote\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteMergeRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -65,12 +65,24 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteMergeRequestTransfer $quoteMergeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function syncStorageQuote(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer
+    public function mergeQuotes(QuoteMergeRequestTransfer $quoteMergeRequestTransfer): QuoteTransfer
     {
-        return $this->getFactory()->createQuoteStorageSynchronizer()->syncStorageQuote($quoteSyncRequestTransfer);
+        return $this->getFactory()->createQuoteMerger()->merge($quoteMergeRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getStorageStrategy()
+    {
+        return $this->getFactory()->getBundleConfig()->getStorageStrategy();
     }
 }

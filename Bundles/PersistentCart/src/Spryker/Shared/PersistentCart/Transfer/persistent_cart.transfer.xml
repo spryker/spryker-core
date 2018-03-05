@@ -8,5 +8,15 @@
         <property name="customer" type="Customer"/>
     </transfer>
 
+    <transfer name="QuoteSyncRequest">
+        <property name="quoteTransfer" type="Quote"/>
+        <property name="customerTransfer" type="Customer"/>
+    </transfer>
+
+    <transfer name="PersistentCartChangeQuantity">
+        <property name="customer" type="Customer"/>
+        <property name="item" type="Item"/>
+    </transfer>
+
 </transfers>
 

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Quote\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -46,15 +45,5 @@ class GatewayController extends AbstractGatewayController
     public function deleteQuoteAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->deleteQuote($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function syncStorageQuoteAction(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer
-    {
-        return $this->getFacade()->syncStorageQuote($quoteSyncRequestTransfer);
     }
 }

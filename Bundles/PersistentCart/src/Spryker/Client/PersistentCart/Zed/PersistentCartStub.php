@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\PersistentCart\Zed;
 
+use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ZedRequest\Stub\ZedRequestStub;
 
@@ -38,8 +40,48 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteTransfer
      */
-    public function reloadItems(QuoteTransfer $quoteTransfer)
+    public function reloadItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->zedStub->call('/persistent-cart/gateway/reload-items', $quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function changeItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer)
+    {
+        return $this->zedStub->call('/persistent-cart/gateway/change-item-quantity', $persistentCartChangeQuantityTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function decreaseItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer)
+    {
+        return $this->zedStub->call('/persistent-cart/gateway/decrease-item-quantity', $persistentCartChangeQuantityTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function increaseItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer)
+    {
+        return $this->zedStub->call('/persistent-cart/gateway/increase-item-quantity', $persistentCartChangeQuantityTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function syncStorageQuote(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteTransfer
+    {
+        return $this->zedStub->call('/persistent-cart/gateway/sync-storage-quote', $quoteSyncRequestTransfer);
     }
 }

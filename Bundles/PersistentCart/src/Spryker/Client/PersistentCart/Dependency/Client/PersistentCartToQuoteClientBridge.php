@@ -25,6 +25,14 @@ class PersistentCartToQuoteClientBridge implements PersistentCartToQuoteClientIn
     }
 
     /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote()
+    {
+        return $this->quoteClient->getQuote();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -32,5 +40,13 @@ class PersistentCartToQuoteClientBridge implements PersistentCartToQuoteClientIn
     public function setQuote(QuoteTransfer $quoteTransfer)
     {
         $this->quoteClient->setQuote($quoteTransfer);
+    }
+
+    /**
+     * @return string
+     */
+    public function getStorageStrategy()
+    {
+        return $this->quoteClient->getStorageStrategy();
     }
 }

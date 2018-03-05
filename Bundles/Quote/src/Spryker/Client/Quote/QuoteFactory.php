@@ -8,7 +8,6 @@
 namespace Spryker\Client\Quote;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Quote\QuoteStorageSynchronizer\CustomerLoginQuoteSync;
 use Spryker\Client\Quote\Session\QuoteSession;
 use Spryker\Client\Quote\StorageStrategy\DatabaseStorageStrategy;
 use Spryker\Client\Quote\StorageStrategy\SessionStorageStrategy;
@@ -39,17 +38,6 @@ class QuoteFactory extends AbstractFactory
     {
         return $this->createStorageStrategyProvider()
             ->provideStorage();
-    }
-
-    /**
-     * @return \Spryker\Client\Quote\QuoteStorageSynchronizer\CustomerLoginQuoteSyncInterface
-     */
-    public function createCustomerLoginQuoteMerger()
-    {
-        return new CustomerLoginQuoteSync(
-            $this->getStorageStrategy(),
-            $this->createZedQuoteStub()
-        );
     }
 
     /**

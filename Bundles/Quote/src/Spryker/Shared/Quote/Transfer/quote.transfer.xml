@@ -14,9 +14,9 @@
         <property name="isSuccessful" type="bool" />
     </transfer>
 
-    <transfer name="QuoteSyncRequest">
-        <property name="quoteTransfer" type="Quote"/>
-        <property name="customerTransfer" type="Customer"/>
+    <transfer name="QuoteMergeRequest">
+        <property name="targetQuote" type="Quote"/>
+        <property name="sourceQuote" type="Quote"/>
     </transfer>
 </transfers>
 

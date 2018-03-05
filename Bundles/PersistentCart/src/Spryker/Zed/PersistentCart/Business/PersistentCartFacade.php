@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\PersistentCart\Business;
 
+use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -56,5 +58,61 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     public function reloadItems(QuoteTransfer $quoteTransfer)
     {
         return $this->getFactory()->createCartOperation()->reloadItems($quoteTransfer);
+    }
+
+    /**
+     * Specification:
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function changeItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer)
+    {
+        return $this->getFactory()->createCartOperation()->changeItemQuantity($persistentCartChangeQuantityTransfer);
+    }
+
+    /**
+     * Specification:
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function decreaseItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer)
+    {
+        return $this->getFactory()->createCartOperation()->decreaseItemQuantity($persistentCartChangeQuantityTransfer);
+    }
+
+    /**
+     * Specification:
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function increaseItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer)
+    {
+        return $this->getFactory()->createCartOperation()->increaseItemQuantity($persistentCartChangeQuantityTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function syncStorageQuote(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteTransfer
+    {
+        return $this->getFactory()->createQuoteStorageSynchronizer()->syncStorageQuote($quoteSyncRequestTransfer);
     }
 }

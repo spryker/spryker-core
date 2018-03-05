@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Quote\Business\Model\QuoteDeleter;
 use Spryker\Zed\Quote\Business\Model\QuoteMerger;
 use Spryker\Zed\Quote\Business\Model\QuoteReader;
-use Spryker\Zed\Quote\Business\Model\QuoteStorageSynchronizer;
 use Spryker\Zed\Quote\Business\Model\QuoteWriter;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
 
@@ -54,16 +53,19 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Quote\Business\Model\QuoteStorageSynchronizer
+     * @return \Spryker\Zed\Quote\QuoteConfig
      */
-    public function createQuoteStorageSynchronizer()
+    public function getBundleConfig()
     {
-        return new QuoteStorageSynchronizer(
-            $this->getConfig(),
-            $this->getRepository(),
-            $this->createQuoteWriter(),
-            $this->createQuoteMerger()
-        );
+        return $this->getConfig();
+    }
+
+    /**
+     * @return \Spryker\Zed\Quote\Business\Model\QuoteMergerInterface
+     */
+    public function createQuoteMerger()
+    {
+        return new QuoteMerger();
     }
 
     /**
@@ -72,23 +74,5 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     protected function getStoreFacade()
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::FACADE_STORE);
-    }
-
-    /**
-     * @return \Spryker\Zed\Quote\Business\Model\QuoteMergerInterface
-     */
-    protected function createQuoteMerger()
-    {
-        return new QuoteMerger(
-            $this->getCalculationFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Quote\Dependency\Facade\QuoteToCalculationFacadeInterface
-     */
-    protected function getCalculationFacade()
-    {
-        return $this->getProvidedDependency(QuoteDependencyProvider::FACADE_CALCULATION);
     }
 }

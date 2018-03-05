@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Quote\Plugin;
+namespace Spryker\Client\PersistentCart\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\Customer\Dependency\Plugin\CustomerSessionSetPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Client\Quote\QuoteClientInterface getClient()
- * @method \Spryker\Client\Quote\QuoteFactory getFactory()
+ * @method \Spryker\Client\PersistentCart\PersistentCartClientInterface getClient()
+ * @method \Spryker\Client\PersistentCart\PersistentCartFactory getFactory()
  */
 class CustomerChangeQuoteMergePlugin extends AbstractPlugin implements CustomerSessionSetPluginInterface
 {
@@ -28,6 +28,6 @@ class CustomerChangeQuoteMergePlugin extends AbstractPlugin implements CustomerS
      */
     public function execute(CustomerTransfer $customerTransfer)
     {
-        $this->getFactory()->createCustomerLoginQuoteMerger()->syncQuoteForCustomer($customerTransfer);
+        $this->getFactory()->createCustomerLoginQuoteSync()->syncQuoteForCustomer($customerTransfer);
     }
 }

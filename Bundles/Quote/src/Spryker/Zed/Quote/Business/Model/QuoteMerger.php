@@ -9,46 +9,21 @@ namespace Spryker\Zed\Quote\Business\Model;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteMergeRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Quote\Dependency\Facade\QuoteToCalculationFacadeInterface;
 
 class QuoteMerger implements QuoteMergerInterface
 {
     /**
-     * @var \Spryker\Zed\Quote\Dependency\Facade\QuoteToCalculationFacadeInterface
-     */
-    protected $calculationFacade;
-
-    /**
-     * @param \Spryker\Zed\Quote\Dependency\Facade\QuoteToCalculationFacadeInterface $calculationFacade
-     */
-    public function __construct(QuoteToCalculationFacadeInterface $calculationFacade)
-    {
-        $this->calculationFacade = $calculationFacade;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $targetQuote
-     * @param \Generated\Shared\Transfer\QuoteTransfer $sourceQuote
+     * @param \Generated\Shared\Transfer\QuoteMergeRequestTransfer $quoteMergeRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function merge(QuoteTransfer $targetQuote, QuoteTransfer $sourceQuote): QuoteTransfer
+    public function merge(QuoteMergeRequestTransfer $quoteMergeRequestTransfer): QuoteTransfer
     {
-        $targetQuote = $this->mergeItems($targetQuote, $sourceQuote);
-        $targetQuote = $this->calculationFacade->recalculateQuote($targetQuote);
+        $targetQuote = $this->mergeItems($quoteMergeRequestTransfer->getTargetQuote(), $quoteMergeRequestTransfer->getSourceQuote());
 
         return $targetQuote;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function recalculateQuote(QuoteTransfer $quoteTransfer)
-    {
-        return $this->calculationFacade->recalculateQuote($quoteTransfer);
     }
 
     /**

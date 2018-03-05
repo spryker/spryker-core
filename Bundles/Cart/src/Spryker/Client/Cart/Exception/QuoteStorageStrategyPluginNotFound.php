@@ -5,8 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PersistentCart;
+namespace Spryker\Client\Cart\Exception;
 
-interface PersistentCartClientInterface
+use Exception;
+
+class QuoteStorageStrategyPluginNotFound extends Exception
 {
 }

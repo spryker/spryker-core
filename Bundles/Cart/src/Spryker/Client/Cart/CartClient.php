@@ -74,7 +74,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function storeQuote(QuoteTransfer $quoteTransfer)
     {
-        $this->getFactory()->getQuoteStorageStrategy()->storeQuote($quoteTransfer);
+        $this->getQuoteClient()->setQuote($quoteTransfer);
     }
 
     /**
@@ -85,9 +85,6 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
-     * TODO:
-     * - session strategy: additionally stores quote in session internally after zed request
-     * - persistent strategy: make zed request with $itemTransfer as parameter and do everything in zed side (read quote from DB, prepare CartChangeTransfer, recalculate, store quote in db) then store in session after zed request
      */
     public function addItem(ItemTransfer $itemTransfer)
     {

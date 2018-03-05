@@ -9,6 +9,7 @@ namespace Spryker\Client\PersistentCart\Plugin;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
@@ -114,7 +115,15 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      */
     public function changeItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
-        // TODO: Implement changeItemQuantity() method.
+        $persistentCartChangeTransfer = $this->createPersistentCartChangeQuantityTransfer();
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku($sku);
+        $itemTransfer->setGroupKey($groupKey);
+        $itemTransfer->setQuantity($quantity);
+        $persistentCartChangeTransfer->setItem($itemTransfer);
+        $quoteTransfer = $this->getZedStub()->changeItemQuantity($persistentCartChangeTransfer);
+        $this->saveQuote($quoteTransfer);
+        return $quoteTransfer;
     }
 
     /**
@@ -130,7 +139,15 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      */
     public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
-        // TODO: Implement decreaseItemQuantity() method.
+        $persistentCartChangeTransfer = $this->createPersistentCartChangeQuantityTransfer();
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku($sku);
+        $itemTransfer->setGroupKey($groupKey);
+        $itemTransfer->setQuantity($quantity);
+        $persistentCartChangeTransfer->setItem($itemTransfer);
+        $quoteTransfer = $this->getZedStub()->decreaseItemQuantity($persistentCartChangeTransfer);
+        $this->saveQuote($quoteTransfer);
+        return $quoteTransfer;
     }
 
     /**
@@ -146,7 +163,15 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      */
     public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
-        // TODO: Implement increaseItemQuantity() method.
+        $persistentCartChangeTransfer = $this->createPersistentCartChangeQuantityTransfer();
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku($sku);
+        $itemTransfer->setGroupKey($groupKey);
+        $itemTransfer->setQuantity($quantity);
+        $persistentCartChangeTransfer->setItem($itemTransfer);
+        $quoteTransfer = $this->getZedStub()->increaseItemQuantity($persistentCartChangeTransfer);
+        $this->saveQuote($quoteTransfer);
+        return $quoteTransfer;
     }
 
     /**
@@ -158,7 +183,9 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      */
     public function reloadItems()
     {
-        // TODO: Implement reloadItems() method.
+        $quoteTransfer = $this->getQuoteClient()->getQuote();
+        $quoteTransfer = $this->getZedStub()->reloadItems($quoteTransfer);
+        $this->getQuoteClient()->setQuote($quoteTransfer);
     }
 
     /**
@@ -186,13 +213,24 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
+     * @return \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer
+     */
+    protected function createPersistentCartChangeQuantityTransfer()
+    {
+        $persistentQuoteChange = new PersistentCartChangeQuantityTransfer();
+        $persistentQuoteChange->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
+
+        return $persistentQuoteChange;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
     protected function saveQuote(QuoteTransfer $quoteTransfer)
     {
-        $this->getFactory()->getQuoteClient()->setQuote($quoteTransfer);
+        $this->getQuoteClient()->setQuote($quoteTransfer);
     }
 
     /**
@@ -201,5 +239,13 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     protected function getZedStub(): PersistentCartStubInterface
     {
         return $this->getFactory()->createZedPersistentCartStub();
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface
+     */
+    protected function getQuoteClient()
+    {
+        return $this->getFactory()->getQuoteClient();
     }
 }

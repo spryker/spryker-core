@@ -73,5 +73,4 @@ class PersistentCartDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

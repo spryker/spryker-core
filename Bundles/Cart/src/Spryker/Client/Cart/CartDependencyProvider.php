@@ -9,6 +9,7 @@ namespace Spryker\Client\Cart;
 
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteBridge;
 use Spryker\Client\Cart\Plugin\ItemCountPlugin;
+use Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -95,6 +96,8 @@ class CartDependencyProvider extends AbstractDependencyProvider
      */
     protected function getQuoteStorageStrategyPlugins()
     {
-        return [];
+        return [
+            new SessionQuoteStorageStrategyPlugin(),
+        ];
     }
 }

@@ -12,9 +12,19 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface PersistentCartToQuoteClientInterface
 {
     /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuote();
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
     public function setQuote(QuoteTransfer $quoteTransfer);
+
+    /**
+     * @return string
+     */
+    public function getStorageStrategy();
 }
