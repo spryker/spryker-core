@@ -8,14 +8,8 @@
 namespace SprykerTest\Shared\CustomerNote\Helper;
 
 use Codeception\Module;
-use Codeception\Util\Stub;
-use Generated\Shared\DataBuilder\CustomerBuilder;
-use Generated\Shared\Transfer\CustomerNotesCollectionTransfer;
 use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
 use Orm\Zed\CustomerNote\Persistence\SpyCustomerNote;
-use Spryker\Zed\Customer\CustomerDependencyProvider;
-use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
-use Spryker\Zed\Mail\Business\MailFacadeInterface;
 use SprykerTest\Shared\Customer\Helper\CustomerDataHelper;
 use SprykerTest\Shared\User\Helper\UserDataHelper;
 
@@ -24,9 +18,9 @@ class CustomerNoteDataHelper extends Module
     const TEST_NOTE_MESSAGE = 'test';
 
     /**
-     * @return SpyCustomerNoteEntityTransfer
+     * @param int $fkCustomer
      *
-     * @throws \Codeception\Exception\ModuleException
+     * @return \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer
      */
     public function getCustomerNoteTransfer(int $fkCustomer = 0): SpyCustomerNoteEntityTransfer
     {
@@ -46,15 +40,19 @@ class CustomerNoteDataHelper extends Module
         return $noteTransfer;
     }
 
-    public function hydrateCustomerNotes(int $fkCustomer, int $number)
+    /**
+     * @param int $fkCustomer
+     * @param int $number
+     *
+     * @return void
+     */
+    public function hydrateCustomerNotesTableForCustomer(int $fkCustomer, int $number)
     {
-        $customerNotesCollectionTransfer = new CustomerNotesCollectionTransfer();
-        for($i = 0; $i < $number; $i++) {
+        for ($i = 0; $i < $number; $i++) {
             $noteTransfer = $this->getCustomerNoteTransfer($fkCustomer);
             $noteEntity = new SpyCustomerNote();
             $noteEntity->fromArray($noteTransfer->toArray());
             $noteEntity->save();
         }
-
     }
 }

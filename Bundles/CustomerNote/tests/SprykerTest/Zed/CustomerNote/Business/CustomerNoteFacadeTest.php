@@ -8,9 +8,7 @@
 namespace SprykerTest\Zed\CustomerNote\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
 use Spryker\Zed\CustomerNote\Business\CustomerNoteFacade;
-use Spryker\Zed\CustomerNote\Persistence\CustomerNoteEntityManager;
 
 /**
  * Auto-generated group annotations
@@ -24,6 +22,8 @@ use Spryker\Zed\CustomerNote\Persistence\CustomerNoteEntityManager;
  */
 class CustomerNoteFacadeTest extends Unit
 {
+    const NOTES_COUNT = 10;
+
     /**
      * @var \SprykerTest\Zed\CustomerNote\CustomerNoteBusinessTester
      */
@@ -34,7 +34,10 @@ class CustomerNoteFacadeTest extends Unit
      */
     protected $customerNoteFacade;
 
-    protected $customerTranfer;
+    /**
+     * @var \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected $customerTransfer;
 
     /**
      * @return void
@@ -43,7 +46,7 @@ class CustomerNoteFacadeTest extends Unit
     {
         parent::setUp();
         $this->customerNoteFacade = new CustomerNoteFacade();
-        $this->customerTranfer = $this->getCustomer();
+        $this->customerTransfer = $this->getCustomer();
     }
 
     /**
@@ -56,14 +59,20 @@ class CustomerNoteFacadeTest extends Unit
         $this->assertTrue((bool)$note->getIdCustomerNote());
     }
 
+    /**
+     * @return void
+     */
     public function testGetNotes()
     {
-        $this->tester->hydrateCustomerNotes($this->getCustomer()->getIdCustomer(), 10);
-        $customerNotesCollectionTransfer = $this->customerNoteFacade->getNotes($this->customerTranfer->getIdCustomer());
+        $this->tester->hydrateCustomerNotesTableForCustomer($this->customerTransfer->getIdCustomer(), static::NOTES_COUNT);
+        $customerNotesCollectionTransfer = $this->customerNoteFacade->getNotes($this->customerTransfer->getIdCustomer());
 
-        $this->assertTrue(true);
+        $this->assertEquals(static::NOTES_COUNT, $customerNotesCollectionTransfer->getNotes()->count());
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
     protected function getCustomer()
     {
         return $this->tester->haveCustomer();
