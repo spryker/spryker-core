@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface;
 use Spryker\Shared\Quote\QuoteConfig;
 
 /**
@@ -240,7 +239,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     /**
      * @return \Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface
      */
-    protected function getZedStub(): PersistentCartStubInterface
+    protected function getZedStub()
     {
         return $this->getFactory()->createZedPersistentCartStub();
     }
@@ -251,5 +250,16 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     protected function getQuoteClient()
     {
         return $this->getFactory()->getQuoteClient();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateQuote()
+    {
+        $quoteTransfer = $this->getQuoteClient()->getQuote();
+        $quoteValidationResponseTransfer = $this->getZedStub()->validateQuote($quoteTransfer);
+        $this->saveQuote($quoteValidationResponseTransfer->getQuoteTransfer());
+        return $quoteValidationResponseTransfer;
     }
 }

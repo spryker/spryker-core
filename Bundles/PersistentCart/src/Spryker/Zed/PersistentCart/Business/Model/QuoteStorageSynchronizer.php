@@ -63,7 +63,6 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
             $quoteTransfer = $this->mergeQuotes($quoteTransfer, $customerQuoteTransfer->getQuoteTransfer());
         }
         $quoteTransfer->setCustomer($customerTransfer);
-        $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
         $this->quoteFacade->persistQuote($quoteTransfer);
 
         return $quoteTransfer;
@@ -82,19 +81,19 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $targetQuote
-     * @param \Generated\Shared\Transfer\QuoteTransfer $sourceQuote
+     * @param \Generated\Shared\Transfer\QuoteTransfer $targetQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $sourceQuoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function mergeQuotes(QuoteTransfer $targetQuote, QuoteTransfer $sourceQuote)
+    protected function mergeQuotes(QuoteTransfer $targetQuoteTransfer, QuoteTransfer $sourceQuoteTransfer)
     {
         $quoteMergeRequestTransfer = new QuoteMergeRequestTransfer();
-        $quoteMergeRequestTransfer->setTargetQuote($targetQuote);
-        $quoteMergeRequestTransfer->setSourceQuote($sourceQuote);
-        $targetQuote = $this->quoteFacade->mergeQuotes($quoteMergeRequestTransfer);
-        $targetQuote->setIdQuote($sourceQuote->getIdQuote());
+        $quoteMergeRequestTransfer->setTargetQuote($targetQuoteTransfer);
+        $quoteMergeRequestTransfer->setSourceQuote($sourceQuoteTransfer);
+        $targetQuoteTransfer = $this->quoteFacade->mergeQuotes($quoteMergeRequestTransfer);
+        $targetQuoteTransfer->setIdQuote($sourceQuoteTransfer->getIdQuote());
 
-        return $targetQuote;
+        return $targetQuoteTransfer;
     }
 }

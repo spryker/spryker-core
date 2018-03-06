@@ -197,6 +197,18 @@ class CartClient extends AbstractClient implements CartClientInterface
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateQuote()
+    {
+        return $this->getFactory()->getQuoteStorageStrategy()->validateQuote();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @deprecated
      *
      * @api

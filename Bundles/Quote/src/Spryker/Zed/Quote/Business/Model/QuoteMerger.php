@@ -21,7 +21,8 @@ class QuoteMerger implements QuoteMergerInterface
      */
     public function merge(QuoteMergeRequestTransfer $quoteMergeRequestTransfer): QuoteTransfer
     {
-        $targetQuote = $this->mergeItems($quoteMergeRequestTransfer->getTargetQuote(), $quoteMergeRequestTransfer->getSourceQuote());
+        $targetQuote = clone $quoteMergeRequestTransfer->getTargetQuote();
+        $targetQuote = $this->mergeItems($targetQuote, $quoteMergeRequestTransfer->getSourceQuote());
 
         return $targetQuote;
     }

@@ -115,4 +115,18 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     {
         return $this->getFactory()->createQuoteStorageSynchronizer()->syncStorageQuote($quoteSyncRequestTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateQuote($quoteTransfer)
+    {
+        return $this->getFactory()->createCartOperation()->validate($quoteTransfer);
+    }
 }

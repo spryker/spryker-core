@@ -189,7 +189,6 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      */
     public function storeQuote(QuoteTransfer $quoteTransfer)
     {
-        die('storeQuote');
         $this->getQuoteClient()->setQuote($quoteTransfer);
     }
 
@@ -276,5 +275,17 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     protected function getQuote()
     {
         return $this->getQuoteClient()->getQuote();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateQuote()
+    {
+        $quoteTransfer = $this->getQuote();
+        $quoteValidationResponseTransfer = $this->getCartZedStub()->validateQuote($quoteTransfer);
+        $this->getQuoteClient()->setQuote($quoteValidationResponseTransfer->getQuoteTransfer());
+
+        return $quoteValidationResponseTransfer;
     }
 }

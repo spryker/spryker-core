@@ -42,4 +42,14 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     {
         return $this->zedStub->call('/cart/gateway/reload-items', $quoteTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateQuote(QuoteTransfer $quoteTransfer)
+    {
+        return $this->zedStub->call('/cart/gateway/validate-quote', $quoteTransfer);
+    }
 }

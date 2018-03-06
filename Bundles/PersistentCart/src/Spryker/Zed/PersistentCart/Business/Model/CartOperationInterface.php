@@ -54,4 +54,11 @@ interface CartOperationInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function increaseItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validate($quoteTransfer);
 }

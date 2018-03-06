@@ -18,5 +18,10 @@
         <property name="targetQuote" type="Quote"/>
         <property name="sourceQuote" type="Quote"/>
     </transfer>
+
+    <transfer name="QuoteValidationResponse">
+        <property name="quoteTransfer" type="Quote"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
 </transfers>
 

@@ -54,4 +54,14 @@ class PersistentCartToCartFacadeBridge implements PersistentCartToCartFacadeInte
     {
         return $this->cartFacade->reloadItems($quoteTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateQuote($quoteTransfer)
+    {
+        return $this->cartFacade->validateQuote($quoteTransfer);
+    }
 }

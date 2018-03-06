@@ -84,4 +84,14 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
     {
         return $this->zedStub->call('/persistent-cart/gateway/sync-storage-quote', $quoteSyncRequestTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateQuote(QuoteTransfer $quoteTransfer)
+    {
+        return $this->zedStub->call('/persistent-cart/gateway/validate-quote', $quoteTransfer);
+    }
 }

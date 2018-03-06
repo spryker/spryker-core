@@ -57,4 +57,18 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     {
         return $this->getFactory()->createCartOperation()->reloadItems($quoteTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateQuote($quoteTransfer)
+    {
+        return $this->getFactory()->createQuoteValidator()->validate($quoteTransfer);
+    }
 }

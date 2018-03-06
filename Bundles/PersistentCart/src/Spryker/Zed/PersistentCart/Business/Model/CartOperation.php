@@ -253,4 +253,23 @@ class CartOperation implements CartOperationInterface
 
         return $cartChangeTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validate($quoteTransfer)
+    {
+        $quoteTransfer->requireCustomer();
+        $customerQuoteTransfer = $this->quoteFacade
+            ->findQuoteByCustomer($quoteTransfer->getCustomer());
+        if ($customerQuoteTransfer) {
+            $quoteTransfer->fromArray($customerQuoteTransfer->modifiedToArray(), true);
+        }
+        $quoteValidationResponseTransfer = $this->cartFacade->validateQuote($quoteTransfer);
+        $this->quoteFacade->persistQuote($quoteValidationResponseTransfer->getQuoteTransfer());
+
+        return $quoteValidationResponseTransfer;
+    }
 }

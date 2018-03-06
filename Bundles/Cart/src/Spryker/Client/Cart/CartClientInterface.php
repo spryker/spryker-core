@@ -261,4 +261,30 @@ interface CartClientInterface
      * @return void
      */
     public function reloadItems();
+
+    /**
+     * Specification:
+     * - Session strategy:
+     *   - Makes zed request.
+     *   - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *   - Add changes as notices to messages
+     *   - Check error messages
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
+     *
+     * - Persistent strategy:
+     *   - Makes zed request.
+     *   - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *   - Add changes as notices to messages
+     *   - Check error messages
+     *   - Recalculates quote totals.
+     *   - Save updated quote to database.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateQuote();
 }
