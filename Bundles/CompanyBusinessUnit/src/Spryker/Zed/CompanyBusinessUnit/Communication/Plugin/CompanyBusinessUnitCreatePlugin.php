@@ -9,12 +9,12 @@ namespace Spryker\Zed\CompanyBusinessUnit\Communication\Plugin;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
-use Spryker\Shared\CompanyBusinessUnit\CompanyBusinessUnitConstants;
 use Spryker\Zed\Company\Dependency\Plugin\CompanyPostCreatePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface getFacade()
+ * @method \Spryker\Zed\CompanyBusinessUnit\CompanyBusinessUnitConfig getConfig()
  */
 class CompanyBusinessUnitCreatePlugin extends AbstractPlugin implements CompanyPostCreatePluginInterface
 {
@@ -27,24 +27,29 @@ class CompanyBusinessUnitCreatePlugin extends AbstractPlugin implements CompanyP
      */
     public function postCreate(CompanyTransfer $companyTransfer): CompanyTransfer
     {
-        $this->createCompanyBusinessUnit($companyTransfer);
-
-        return $companyTransfer;
+        return $this->createCompanyBusinessUnit($companyTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    protected function createCompanyBusinessUnit(CompanyTransfer $companyTransfer): void
+    protected function createCompanyBusinessUnit(CompanyTransfer $companyTransfer): CompanyTransfer
     {
         $companyTransfer->requireIdCompany();
 
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->setFkCompany($companyTransfer->getIdCompany())
-            ->setName(CompanyBusinessUnitConstants::COMPANY_BUSINESS_UNIT_DEFAULT_NAME);
+            ->setName($this->getConfig()->getCompanyBusinessUnitDefaultName());
 
-        $this->getFacade()->create($companyBusinessUnitTransfer);
+        $companyBusinessUnitResponseTransfer = $this->getFacade()->create($companyBusinessUnitTransfer);
+        $companyTransfer->getInitialUserTransfer()
+            ->setFkCompanyBusinessUnit(
+                $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()
+                    ->getIdCompanyBusinessUnit()
+            );
+
+        return $companyTransfer;
     }
 }

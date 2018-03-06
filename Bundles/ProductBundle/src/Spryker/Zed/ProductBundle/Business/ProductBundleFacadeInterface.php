@@ -140,6 +140,21 @@ interface ProductBundleFacadeInterface
     public function updateAffectedBundlesAvailability($concreteSku);
 
     /**
+     * Specification:
+     *
+     * - Gets all items which belong to bundle
+     * - Updates bundle products with new stock, given sku belong
+     * - Touch abstract stock for bundle product
+     *
+     * @api
+     *
+     * @param string $concreteSku
+     *
+     * @return void
+     */
+    public function updateAffectedBundlesStock($concreteSku): void;
+
+    /**
      *
      * Specification:
      *

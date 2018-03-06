@@ -13,8 +13,7 @@ interface CompanyPostCreatePluginInterface
 {
     /**
      * Specification:
-     *
-     * Plugin is triggered after company is created.
+     * - Plugin is triggered after company is created.
      *
      * @api
      *

@@ -10,6 +10,7 @@ namespace Spryker\Client\Permission;
 use Exception;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\Permission\Dependency\Client\PermissionToZedRequestClientBridge;
 use Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface;
 
 class PermissionDependencyProvider extends AbstractDependencyProvider
@@ -17,6 +18,7 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
     public const PLUGINS_PERMISSION = 'PLUGINS_PERMISSION';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const PLUGIN_PERMISSION_STORAGE = 'PLUGIN_PERMISSION_STORAGE';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -28,6 +30,7 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addPermissionPlugins($container);
         $container = $this->addPermissionStoragePlugin($container);
+        $container = $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -51,9 +54,23 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
+    protected function addZedRequestClient(Container $container): Container
+    {
+        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+            return new PermissionToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
     protected function addPermissionStoragePlugin($container): Container
     {
-        $container[static::PLUGINS_PERMISSION] = function (Container $container) {
+        $container[static::PLUGIN_PERMISSION_STORAGE] = function (Container $container) {
             return $this->getPermissionStoragePlugin();
         };
 
