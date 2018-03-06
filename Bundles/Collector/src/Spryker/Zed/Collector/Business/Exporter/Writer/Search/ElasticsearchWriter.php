@@ -81,7 +81,6 @@ class ElasticsearchWriter implements WriterInterface, ConfigurableSearchWriterIn
                 $documents[] = $this->getType()
                     ->getDocument($key, ['routing' => $key])
                     ->setRouting($key);
-
             } catch (NotFoundException $e) {
                 continue;
             }
