@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepositoryInterface getRepository()
  * @method \Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface getFacade()
- * @method CompanyUnitAddressLabelCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyUnitAddressLabel\Communication\CompanyUnitAddressLabelCommunicationFactory getFactory()
  */
 class CompanyUnitAddressEntityTransferHydratorPlugin extends AbstractPlugin implements CompanyUnitAddressEntityTransferHydratorPluginInterface
 {

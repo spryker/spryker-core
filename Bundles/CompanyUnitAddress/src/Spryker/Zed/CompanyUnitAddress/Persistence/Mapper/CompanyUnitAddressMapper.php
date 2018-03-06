@@ -12,15 +12,17 @@ use Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer;
 
 class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
 {
-    protected $companyUnitAddressEntityHydratorPlugins;
-
+    /**
+     * @var array
+     */
     protected $companyUnitAddressTransferHydratorPlugins;
 
+    /**
+     * @param array $companyUnitAddressTransferHydratorPlugins
+     */
     public function __construct(
-        array $companyUnitAddressEntityHydratorPlugins,
         array $companyUnitAddressTransferHydratorPlugins
     ) {
-        $this->companyUnitAddressEntityHydratorPlugins = $companyUnitAddressEntityHydratorPlugins;
         $this->companyUnitAddressTransferHydratorPlugins = $companyUnitAddressTransferHydratorPlugins;
     }
 
@@ -60,24 +62,12 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
             true
         );
 
-        $this->executeAddressEntityTransferHydratorPlugins($spyCompanyUnitAddressEntityTransfer);
-
         return $spyCompanyUnitAddressEntityTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer $addressEntityTransfer
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $addressTransfer
      *
-     * @return void
-     */
-    protected function executeAddressEntityTransferHydratorPlugins(SpyCompanyUnitAddressEntityTransfer $addressEntityTransfer): void
-    {
-        foreach ($this->companyUnitAddressEntityHydratorPlugins as $plugin) {
-            $plugin->hydrate($addressEntityTransfer);
-        }
-    }
-
-    /**
      * @return void
      */
     protected function executeAddressTransferHydratorPlugins(CompanyUnitAddressTransfer $addressTransfer): void

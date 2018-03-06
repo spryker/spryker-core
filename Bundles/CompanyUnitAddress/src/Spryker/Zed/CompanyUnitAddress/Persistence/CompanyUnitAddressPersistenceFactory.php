@@ -33,7 +33,6 @@ class CompanyUnitAddressPersistenceFactory extends AbstractPersistenceFactory
     public function createCompanyUniAddressMapper(): CompanyUnitAddressMapperInterface
     {
         return new CompanyUnitAddressMapper(
-            $this->getCompanyUnitAddressEntityTransferHydratorPlugins(),
             $this->getCompanyUnitAddressTransferHydratorPlugins()
         );
     }
@@ -47,13 +46,8 @@ class CompanyUnitAddressPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddressExtension\Communication\Plugin\CompanyUnitAddressEntityTransferHydratorPluginInterface[]
+     * @return \Spryker\Zed\CompanyUnitAddressExtension\Communication\Plugin\CompanyUnitAddressTransferHydratorPluginInterface[]
      */
-    protected function getCompanyUnitAddressEntityTransferHydratorPlugins()
-    {
-        return $this->getProvidedDependency(CompanyUnitAddressDependencyProvider::PLUGINS_ADDRESS_ENTITY_TRANSFER_HYDRATOR);
-    }
-
     protected function getCompanyUnitAddressTransferHydratorPlugins()
     {
         return $this->getProvidedDependency(CompanyUnitAddressDependencyProvider::PLUGINS_ADDRESS_TRANSFER_HYDRATOR);

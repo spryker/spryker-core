@@ -19,7 +19,6 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
     public const PLUGIN_ADDRESS_POST_UPDATE = 'PLUGIN_ADDRESS_POST_UPDATE';
-    public const PLUGINS_ADDRESS_ENTITY_TRANSFER_HYDRATOR = 'PLUGINS_ADDRESS_ENTITY_TRANSFER_HYDRATOR';
     public const PLUGINS_ADDRESS_TRANSFER_HYDRATOR = 'PLUGINS_ADDRESS_TRANSFER_HYDRATOR';
 
     /**
@@ -48,7 +47,6 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container = parent::providePersistenceLayerDependencies($container);
 
-        $container = $this->addAddressEntityTransferHydratorPlugins($container);
         $container = $this->addAddressTransferHydratorPlugins($container);
 
         return $container;
@@ -104,21 +102,7 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
     protected function addAddressPostUpdatePlugins(Container $container): Container
     {
         $container[static::PLUGIN_ADDRESS_POST_UPDATE] = function (Container $container) {
-            return $this->getAddressPostUpdatePlugins();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addAddressEntityTransferHydratorPlugins(Container $container): Container
-    {
-        $container[static::PLUGINS_ADDRESS_ENTITY_TRANSFER_HYDRATOR] = function (Container $container) {
-            return $this->getAddressEntityTransferHydratorPlugins();
+            return $this->getAddressPreUpdatePlugins();
         };
 
         return $container;
@@ -141,15 +125,7 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
     /**
      * @return \Spryker\Zed\CompanyUnitAddressExtension\Communication\Plugin\CompanyUnitAddressPreUpdatePluginInterface[]
      */
-    protected function getAddressPostUpdatePlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddressExtension\Communication\Plugin\CompanyUnitAddressEntityTransferHydratorPluginInterface[]
-     */
-    protected function getAddressEntityTransferHydratorPlugins(): array
+    protected function getAddressPreUpdatePlugins(): array
     {
         return [];
     }

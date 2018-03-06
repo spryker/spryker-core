@@ -21,6 +21,8 @@ class EditCompanyUnitAddressController extends AbstractController
     const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_SUCCESS = 'Company unit address has been successfully updated.';
     const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_ERROR = 'Company unit address update failed.';
 
+    const REFERER = 'referer';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -36,7 +38,7 @@ class EditCompanyUnitAddressController extends AbstractController
 
         if ($companyUnitAddressForm->isSubmitted()) {
             $this->updateCompanyUnitAddress($companyUnitAddressForm);
-            return $this->redirectResponse($request->headers->get('referer'));
+            return $this->redirectResponse($request->headers->get(static::REFERER));
         }
 
         $companyUnitAddressTransfer = $this->getFactory()

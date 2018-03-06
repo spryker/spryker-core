@@ -20,4 +20,11 @@ interface CompanyUnitAddressLabelRepositoryInterface
      * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer
      */
     public function findCompanyUnitAddressLabelsByAddress(int $idCompanyUnitAddressLabel);
+
+    /**
+     * @param int $idCompanyUnitAddressLabel
+     *
+     * @return \ArrayObject
+     */
+    public function findCompanyUnitAddressLabelToCompanyUnitAddressRelations(int $idCompanyUnitAddressLabel);
 }

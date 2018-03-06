@@ -174,7 +174,7 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer {
 
-        //TODO: discussion needed. If post update is done, no labels inside
+        //TODO: discussion needed. Save company unit address label relations inside entityManager?
         $this->executePreUpdatePlugins($companyUnitAddressTransfer);
 
         $fkCountry = $this->retrieveFkCountry($companyUnitAddressTransfer);

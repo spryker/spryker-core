@@ -24,12 +24,12 @@ class CompanyUnitAddressLabelEntityManager extends AbstractEntityManager impleme
     public function saveLabelToAddressRelation(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ) {
+        //TODO: calculate labels that should be removed. NO need to delete all of them and recreate.
+        $this->deleteLabelRelationsByCompanyUnitAddress($companyUnitAddressTransfer);
         $labelCollection = $companyUnitAddressTransfer->getLabelCollection();
         if (empty($labelCollection) || empty($labelCollection->getLabels())) {
             return;
         }
-
-        $this->deleteLabelRelationsByCompanyUnitAddress($companyUnitAddressTransfer);
 
         foreach ($labelCollection->getLabels() as $label) {
             $transfer = new SpyCompanyUnitAddressLabelToCompanyUnitAddressEntityTransfer();
