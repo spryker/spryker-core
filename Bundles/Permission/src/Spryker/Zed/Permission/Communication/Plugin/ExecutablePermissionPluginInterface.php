@@ -9,19 +9,19 @@ namespace Spryker\Zed\Permission\Communication\Plugin;
 
 interface ExecutablePermissionPluginInterface extends PermissionPluginInterface
 {
-    const CONFIG_FIELD_TYPE_INT = 'CONFIG_FIELD_TYPE_INT';
-    const CONFIG_FIELD_TYPE_STRING = 'CONFIG_FIELD_TYPE_INT';
+    public const CONFIG_FIELD_TYPE_INT = 'CONFIG_FIELD_TYPE_INT';
+    public const CONFIG_FIELD_TYPE_STRING = 'CONFIG_FIELD_TYPE_STRING';
 
     /**
      * Specification:
      * - Implements a business login against the configuration and the passed context
      *
      * @param array $configuration
-     * @param mixed $context
+     * @param mixed|null $context
      *
      * @return bool
      */
-    public function can(array $configuration, $context);
+    public function can(array $configuration, $context = null);
 
     /**
      * The signature is used to draw a form for filling on assigning a permission to a role.

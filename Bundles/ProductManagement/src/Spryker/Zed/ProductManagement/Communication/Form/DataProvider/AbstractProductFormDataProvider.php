@@ -519,7 +519,10 @@ class AbstractProductFormDataProvider
 
         foreach ($productAttributeKeys as $type) {
             $isDefined = $this->attributeTransferCollection->has($type);
-
+            if ($isDefined) {
+                continue;
+            }
+            
             $isProductSpecificAttribute = true;
             $id = null;
             $isSuper = false;
@@ -529,10 +532,6 @@ class AbstractProductFormDataProvider
             $shouldBeTextArea = mb_strlen($value) > 255;
             $checkboxDisabled = true;
             $valueDisabled = true;
-
-            if ($isDefined) {
-                continue;
-            }
 
             if ($shouldBeTextArea) {
                 $inputType = self::TEXT_AREA_INPUT_TYPE;

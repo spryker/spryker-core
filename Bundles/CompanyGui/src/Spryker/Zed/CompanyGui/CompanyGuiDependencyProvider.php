@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\CompanyGui;
 
+use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Spryker\Zed\CompanyGui\Dependency\Facade\CompanyGuiToCompanyFacadeBridge;
-use Spryker\Zed\CompanyGui\Dependency\QueryContainer\CompanyGuiToCompanyQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const QUERY_CONTAINER_COMPANY = 'QUERY_CONTAINER_COMPANY';
+    public const PROPEL_COMPANY_QUERY = 'PROPEL_COMPANY_QUERY';
     public const FACADE_COMPANY = 'FACADE_COMPANY';
 
     /**
@@ -25,7 +25,7 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
-        $container = $this->addCompanyQueryContainer($container);
+        $container = $this->addPropelCompanyQuery($container);
         $container = $this->addCompanyFacade($container);
 
         return $container;
@@ -36,10 +36,10 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCompanyQueryContainer(Container $container): Container
+    protected function addPropelCompanyQuery(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_COMPANY] = function (Container $container) {
-            return new CompanyGuiToCompanyQueryContainerBridge($container->getLocator()->company()->queryContainer());
+        $container[static::PROPEL_COMPANY_QUERY] = function (Container $container) {
+            return SpyCompanyQuery::create();
         };
 
         return $container;
