@@ -10,22 +10,16 @@ namespace Spryker\Client\ZedRequest\Messenger;
 interface MessengerInterface
 {
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseInfoMessages();
 
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseErrorMessages();
 
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseSuccessMessages();
@@ -33,5 +27,5 @@ interface MessengerInterface
     /**
      * @return void
      */
-    public function addFlashMessagesFromLastZedRequest(): void;
+    public function addFlashMessagesFromLastZedRequest();
 }

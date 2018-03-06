@@ -69,5 +69,5 @@ interface ZedRequestClientInterface
      *
      * @return void
      */
-    public function addFlashMessagesFromLastZedRequest(): void;
+    public function addFlashMessagesFromLastZedRequest();
 }

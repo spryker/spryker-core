@@ -10,7 +10,6 @@ namespace Spryker\Client\ZedRequest;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ZedRequest\Client\HttpClient;
 use Spryker\Client\ZedRequest\Client\ZedClient;
-use Spryker\Client\ZedRequest\Dependency\Client\ZedRequestToMessengerClientInterface;
 use Spryker\Client\ZedRequest\Messenger\Messenger;
 use Spryker\Client\ZedRequest\Messenger\MessengerInterface;
 
@@ -112,7 +111,7 @@ class ZedRequestFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ZedRequest\Dependency\Client\ZedRequestToMessengerClientInterface
      */
-    public function getMessengerClient(): ZedRequestToMessengerClientInterface
+    public function getMessengerClient()
     {
         return $this->getProvidedDependency(ZedRequestDependencyProvider::CLIENT_MESSENGER);
     }

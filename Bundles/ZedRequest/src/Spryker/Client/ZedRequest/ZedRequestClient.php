@@ -93,7 +93,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      *
      * @return void
      */
-    public function addFlashMessagesFromLastZedRequest(): void
+    public function addFlashMessagesFromLastZedRequest()
     {
         $this->getFactory()
             ->createMessenger()

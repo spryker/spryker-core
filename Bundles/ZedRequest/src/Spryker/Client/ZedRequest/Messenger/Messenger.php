@@ -23,8 +23,6 @@ class Messenger implements MessengerInterface
     private $messengerClient;
 
     /**
-     * Messenger constructor.
-     *
      * @param \Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface $zedClient
      * @param \Spryker\Client\ZedRequest\Dependency\Client\ZedRequestToMessengerClientInterface $messengerClient
      */
@@ -38,8 +36,6 @@ class Messenger implements MessengerInterface
     }
 
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseInfoMessages()
@@ -52,8 +48,6 @@ class Messenger implements MessengerInterface
     }
 
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseErrorMessages()
@@ -66,8 +60,6 @@ class Messenger implements MessengerInterface
     }
 
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseSuccessMessages()
@@ -82,7 +74,7 @@ class Messenger implements MessengerInterface
     /**
      * @return void
      */
-    public function addFlashMessagesFromLastZedRequest(): void
+    public function addFlashMessagesFromLastZedRequest()
     {
         $this->processErrorMessages();
         $this->processSuccessMessages();
@@ -92,7 +84,7 @@ class Messenger implements MessengerInterface
     /**
      * @return void
      */
-    protected function processErrorMessages(): void
+    protected function processErrorMessages()
     {
         foreach ($this->getLastResponseErrorMessages() as $errorMessage) {
             $this->messengerClient->addErrorMessage($errorMessage->getValue());
@@ -102,7 +94,7 @@ class Messenger implements MessengerInterface
     /**
      * @return void
      */
-    protected function processSuccessMessages(): void
+    protected function processSuccessMessages()
     {
         foreach ($this->getLastResponseSuccessMessages() as $successMessage) {
             $this->messengerClient->addSuccessMessage($successMessage->getValue());
@@ -112,7 +104,7 @@ class Messenger implements MessengerInterface
     /**
      * @return void
      */
-    protected function processInfoMessages(): void
+    protected function processInfoMessages()
     {
         foreach ($this->getLastResponseInfoMessages() as $infoMessage) {
             $this->messengerClient->addInfoMessage($infoMessage->getValue());
