@@ -55,7 +55,6 @@ class CompanyUnitAddressLabelFormDataProvider
     {
         $labelCollection = $this->companyUnitAddressLabelRepository->findCompanyUnitAddressLabels();
 
-        //TODO: remove copypaste
         $result = [];
         foreach ($labelCollection->getLabels() as $label) {
             $result[$label->getName()] = $label->getIdCompanyUnitAddressLabel();
