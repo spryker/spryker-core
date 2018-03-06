@@ -118,9 +118,9 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption $orderItemOptionEntity
      *
-     * @return int
+     * @return int|null
      */
-    protected function getIdProductOptionValue(SpySalesOrderItemOption $orderItemOptionEntity)
+    protected function getIdProductOptionValue(SpySalesOrderItemOption $orderItemOptionEntity): ?int
     {
         return $this->productOptionQueryContainer
             ->queryProductOptionValueBySku($orderItemOptionEntity->getSku())
