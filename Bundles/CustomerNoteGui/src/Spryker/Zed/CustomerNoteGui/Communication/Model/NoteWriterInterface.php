@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CustomerNoteGui\Communication\Handler;
+namespace Spryker\Zed\CustomerNoteGui\Communication\Model;
 
 use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
 
-interface NoteHandlerInterface
+interface NoteWriterInterface
 {
     /**
      * @param int $idCustomer
@@ -17,5 +17,5 @@ interface NoteHandlerInterface
      *
      * @return \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer
      */
-    public function handleNoteAddition(int $idCustomer, string $note): SpyCustomerNoteEntityTransfer;
+    public function createCustomerNote(int $idCustomer, string $note): SpyCustomerNoteEntityTransfer;
 }

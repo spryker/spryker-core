@@ -14,13 +14,23 @@ class NoteFormDataProvider
     /**
      * @param int $idCustomer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer
      */
     public function getData($idCustomer)
     {
+        $spyCustomerNoteEntityTransfer = new SpyCustomerNoteEntityTransfer();
+        $spyCustomerNoteEntityTransfer->setFkCustomer($idCustomer);
+
+        return $spyCustomerNoteEntityTransfer;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
         return [
-            SpyCustomerNoteEntityTransfer::MESSAGE => '',
-            SpyCustomerNoteEntityTransfer::FK_CUSTOMER => $idCustomer,
+            'data_class' => SpyCustomerNoteEntityTransfer::class,
         ];
     }
 }

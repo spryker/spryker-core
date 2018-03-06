@@ -9,11 +9,11 @@ namespace Spryker\Zed\CustomerNoteGui\Communication;
 
 use Spryker\Zed\CustomerNoteGui\Communication\Form\DataProvider\NoteFormDataProvider;
 use Spryker\Zed\CustomerNoteGui\Communication\Form\NoteForm;
-use Spryker\Zed\CustomerNoteGui\Communication\Handler\NoteHandler;
-use Spryker\Zed\CustomerNoteGui\Communication\Handler\NoteHandlerInterface;
+use Spryker\Zed\CustomerNoteGui\Communication\Model\NoteWriter;
+use Spryker\Zed\CustomerNoteGui\Communication\Model\NoteWriterInterface;
 use Spryker\Zed\CustomerNoteGui\CustomerNoteGuiDependencyProvider;
-use Spryker\Zed\CustomerNoteGui\Dependency\CustomerNoteGuiToCustomerNoteFacadeInterface;
-use Spryker\Zed\CustomerNoteGui\Dependency\CustomerNoteGuiToUserFacadeInterface;
+use Spryker\Zed\CustomerNoteGui\Dependency\Facade\CustomerNoteGuiToCustomerNoteFacadeInterface;
+use Spryker\Zed\CustomerNoteGui\Dependency\Facade\CustomerNoteGuiToUserFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -28,18 +28,18 @@ class CustomerNoteGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $formData
+     * @param array|null $formData
      * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getNoteForm(array $formData = [], array $formOptions = []): FormInterface
+    public function getNoteForm($formData = null, array $formOptions = []): FormInterface
     {
         return $this->getFormFactory()->create(NoteForm::class, $formData, $formOptions);
     }
 
     /**
-     * @return \Spryker\Zed\CustomerNoteGui\Dependency\CustomerNoteGuiToCustomerNoteFacadeInterface
+     * @return \Spryker\Zed\CustomerNoteGui\Dependency\Facade\CustomerNoteGuiToCustomerNoteFacadeInterface
      */
     public function getCustomerNoteFacade(): CustomerNoteGuiToCustomerNoteFacadeInterface
     {
@@ -47,7 +47,7 @@ class CustomerNoteGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CustomerNoteGui\Dependency\CustomerNoteGuiToUserFacadeInterface
+     * @return \Spryker\Zed\CustomerNoteGui\Dependency\Facade\CustomerNoteGuiToUserFacadeInterface
      */
     protected function getUserFacade(): CustomerNoteGuiToUserFacadeInterface
     {
@@ -55,11 +55,11 @@ class CustomerNoteGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CustomerNoteGui\Communication\Handler\NoteHandlerInterface
+     * @return \Spryker\Zed\CustomerNoteGui\Communication\Model\NoteWriterInterface
      */
-    public function createNoteHandler(): NoteHandlerInterface
+    public function createNoteWriter(): NoteWriterInterface
     {
-        return new NoteHandler(
+        return new NoteWriter(
             $this->getUserFacade(),
             $this->getCustomerNoteFacade()
         );

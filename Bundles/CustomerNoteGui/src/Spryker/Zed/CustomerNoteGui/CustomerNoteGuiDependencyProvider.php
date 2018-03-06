@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CustomerNoteGui;
 
-use Spryker\Zed\CustomerNoteGui\Dependency\CustomerNoteGuiToCustomerNoteFacadeBridge;
-use Spryker\Zed\CustomerNoteGui\Dependency\CustomerNoteGuiToUserFacadeBridge;
+use Spryker\Zed\CustomerNoteGui\Dependency\Facade\CustomerNoteGuiToCustomerNoteFacadeBridge;
+use Spryker\Zed\CustomerNoteGui\Dependency\Facade\CustomerNoteGuiToUserFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 

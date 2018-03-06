@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CustomerNoteGui\Communication\Controller;
 
-use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -32,14 +31,15 @@ class IndexController extends AbstractController
 
         $formDataProvider = $this->getFactory()->createNoteFormDataProvider();
         $form = $this->getFactory()->getNoteForm(
-            $formDataProvider->getData($idCustomer)
+            $formDataProvider->getData($idCustomer),
+            $formDataProvider->getOptions()
         );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getFactory()->createNoteHandler()->handleNoteAddition(
+            $this->getFactory()->createNoteWriter()->createCustomerNote(
                 $idCustomer,
-                $form->getData()[SpyCustomerNoteEntityTransfer::MESSAGE]
+                $form->getData()->getMessage()
             );
             $this->addSuccessMessage(static::SUCCESS_MESSAGE);
 
