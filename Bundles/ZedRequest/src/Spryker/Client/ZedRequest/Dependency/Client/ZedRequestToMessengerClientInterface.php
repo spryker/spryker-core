@@ -5,40 +5,28 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Messenger\FlashBag;
+namespace Spryker\Client\ZedRequest\Dependency\Client;
 
-interface FlashBagInterface
+interface ZedRequestToMessengerClientInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $message
      *
      * @return void
      */
-    public function addSuccessMessage($message);
+    public function addErrorMessage(string $message): void;
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $message
      *
      * @return void
      */
-    public function addInfoMessage($message);
+    public function addInfoMessage(string $message): void;
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $message
      *
      * @return void
      */
-    public function addErrorMessage($message);
+    public function addSuccessMessage(string $message): void;
 }

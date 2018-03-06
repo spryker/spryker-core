@@ -8,6 +8,8 @@
 namespace Spryker\Client\Messenger;
 
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Shared\Messenger\MessengerConfig;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 
 /**
  * @method \Spryker\Client\Messenger\MessengerFactory getFactory()
@@ -25,9 +27,7 @@ class MessengerClient extends AbstractClient implements MessengerClientInterface
      */
     public function addSuccessMessage($message)
     {
-        $this->getFactory()
-            ->createFlashBag()
-            ->addSuccessMessage($message);
+        $this->addToFlashBag(MessengerConfig::FLASH_MESSAGES_SUCCESS, $message);
     }
 
     /**
@@ -41,9 +41,7 @@ class MessengerClient extends AbstractClient implements MessengerClientInterface
      */
     public function addInfoMessage($message)
     {
-        $this->getFactory()
-            ->createFlashBag()
-            ->addInfoMessage($message);
+        $this->addToFlashBag(MessengerConfig::FLASH_MESSAGES_INFO, $message);
     }
 
     /**
@@ -57,22 +55,33 @@ class MessengerClient extends AbstractClient implements MessengerClientInterface
      */
     public function addErrorMessage($message)
     {
-        $this->getFactory()
-            ->createFlashBag()
-            ->addErrorMessage($message);
+        $this->addToFlashBag(MessengerConfig::FLASH_MESSAGES_ERROR, $message);
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * @param string $key
+     * @param string $value
      *
      * @return void
      */
-    public function processFlashMessagesFromLastZedRequest(): void
+    protected function addToFlashBag($key, $value)
     {
-        $this->getFactory()
-            ->createZedRequestMessages()
-            ->processFlashMessagesFromLastZedRequest();
+        $this->getFlashBag()->add($key, $value);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface|\Symfony\Component\HttpFoundation\Session\SessionBagInterface
+     */
+    protected function getFlashBag()
+    {
+        return $this->getFactory()->getSessionClient()->getBag($this->getFlashBagName());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getFlashBagName()
+    {
+        return (new FlashBag())->getName();
     }
 }

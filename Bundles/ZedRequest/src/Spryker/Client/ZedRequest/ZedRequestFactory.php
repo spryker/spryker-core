@@ -10,12 +10,43 @@ namespace Spryker\Client\ZedRequest;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ZedRequest\Client\HttpClient;
 use Spryker\Client\ZedRequest\Client\ZedClient;
+use Spryker\Client\ZedRequest\Dependency\Client\ZedRequestToMessengerClientInterface;
+use Spryker\Client\ZedRequest\Messenger\Messenger;
+use Spryker\Client\ZedRequest\Messenger\MessengerInterface;
 
 /**
  * @method \Spryker\Client\ZedRequest\ZedRequestConfig getConfig()
  */
 class ZedRequestFactory extends AbstractFactory
 {
+    /**
+     * @var \Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface
+     */
+    private static $zedClient;
+
+    /**
+     * @return \Spryker\Client\ZedRequest\Messenger\MessengerInterface
+     */
+    public function createMessenger(): MessengerInterface
+    {
+        return new Messenger(
+            $this->getCashedClient(),
+            $this->getMessengerClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface
+     */
+    public function getCashedClient()
+    {
+        if (!static::$zedClient) {
+            static::$zedClient = $this->createClient();
+        }
+
+        return static::$zedClient;
+    }
+
     /**
      * @return \Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface
      */
@@ -76,5 +107,13 @@ class ZedRequestFactory extends AbstractFactory
     public function getMetaDataProviderPlugins()
     {
         return $this->getProvidedDependency(ZedRequestDependencyProvider::META_DATA_PROVIDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Client\ZedRequest\Dependency\Client\ZedRequestToMessengerClientInterface
+     */
+    public function getMessengerClient(): ZedRequestToMessengerClientInterface
+    {
+        return $this->getProvidedDependency(ZedRequestDependencyProvider::CLIENT_MESSENGER);
     }
 }

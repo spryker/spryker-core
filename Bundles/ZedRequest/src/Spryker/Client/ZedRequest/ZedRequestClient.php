@@ -18,20 +18,12 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 class ZedRequestClient extends AbstractClient implements ZedRequestClientInterface
 {
     /**
-     * @var \Spryker\Client\ZedRequest\Client\ZedClient
-     */
-    private $zedClient;
-
-    /**
-     * @return \Spryker\Client\ZedRequest\Client\ZedClient
+     * @return \Spryker\Client\ZedRequest\Client\ZedClient|\Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface
      */
     private function getClient()
     {
-        if ($this->zedClient === null) {
-            $this->zedClient = $this->getFactory()->createClient();
-        }
-
-        return $this->zedClient;
+        return $this->getFactory()
+            ->getCashedClient();
     }
 
     /**
@@ -65,11 +57,9 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      */
     public function getLastResponseInfoMessages()
     {
-        if (!$this->getClient()->hasLastResponse()) {
-            return [];
-        }
-
-        return $this->getClient()->getLastResponse()->getInfoMessages();
+        return $this->getFactory()
+            ->createMessenger()
+            ->getLastResponseInfoMessages();
     }
 
     /**
@@ -79,11 +69,9 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      */
     public function getLastResponseErrorMessages()
     {
-        if (!$this->getClient()->hasLastResponse()) {
-            return [];
-        }
-
-        return $this->getClient()->getLastResponse()->getErrorMessages();
+        return $this->getFactory()
+            ->createMessenger()
+            ->getLastResponseErrorMessages();
     }
 
     /**
@@ -93,11 +81,23 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      */
     public function getLastResponseSuccessMessages()
     {
-        if (!$this->getClient()->hasLastResponse()) {
-            return [];
-        }
+        return $this->getFactory()
+            ->createMessenger()
+            ->getLastResponseSuccessMessages();
+    }
 
-        return $this->getClient()->getLastResponse()->getSuccessMessages();
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function addFlashMessagesFromLastZedRequest(): void
+    {
+        $this->getFactory()
+            ->createMessenger()
+            ->addFlashMessagesFromLastZedRequest();
     }
 
     /**

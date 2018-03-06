@@ -5,22 +5,33 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Messenger\Dependency\Client;
+namespace Spryker\Client\ZedRequest\Messenger;
 
-interface MessengerToZedRequestClientInterface
+interface MessengerInterface
 {
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseInfoMessages();
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseErrorMessages();
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseSuccessMessages();
+
+    /**
+     * @return void
+     */
+    public function addFlashMessagesFromLastZedRequest(): void;
 }

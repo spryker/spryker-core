@@ -20,7 +20,7 @@ interface MessengerClientInterface
      *
      * @param string $message
      *
-     * @return void
+     * @return $this
      */
     public function addSuccessMessage($message);
 
@@ -47,17 +47,4 @@ interface MessengerClientInterface
      * @return void
      */
     public function addErrorMessage($message);
-
-    /**
-     * Specification:
-     *  - Get messages from zed request and put them to session in next order:
-     *  - Writes error message to flash bag.
-     *  - Writes success message to flash bag.
-     *  - Writes informational message to flash bag.
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function processFlashMessagesFromLastZedRequest(): void;
 }
