@@ -20,7 +20,7 @@ class Messenger implements MessengerInterface
     /**
      * @var \Spryker\Client\Messenger\MessengerClientInterface
      */
-    private $messengerClient;
+    protected $messengerClient;
 
     /**
      * @param \Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface $zedClient
