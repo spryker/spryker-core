@@ -356,7 +356,9 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
      */
     protected function addProductConcreteProductAbastractStoreCreateStorageListener(EventCollectionInterface $eventCollection)
     {
@@ -364,7 +366,9 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
      */
     protected function addProductConcreteProductAbstractStoreUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
@@ -372,7 +376,9 @@ class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubsc
     }
 
     /**
-     * @param EventCollectionInterface $eventCollection
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
      */
     protected function addProductConcreteProductAbstractStoreDeleteStorageListener(EventCollectionInterface $eventCollection)
     {

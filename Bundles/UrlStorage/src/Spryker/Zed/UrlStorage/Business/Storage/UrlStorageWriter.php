@@ -10,10 +10,10 @@ namespace Spryker\Zed\UrlStorage\Business\Storage;
 use ArrayObject;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Orm\Zed\UrlStorage\Persistence\SpyUrlStorage;
-use Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface;
-use Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface;
 use Spryker\Zed\Url\Persistence\Propel\AbstractSpyUrl;
 use Spryker\Zed\UrlStorage\Business\Exception\MissingResourceException;
+use Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface;
+use Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface;
 
 class UrlStorageWriter implements UrlStorageWriterInterface
 {
