@@ -6,6 +6,7 @@
  */
 
 namespace {vendor}\{application}\{module}\Dependency\{toType};
+{useStatements}
 
 class {module}To{toModule}{toType}Bridge implements {module}To{toModule}{toType}Interface
 {
@@ -21,4 +22,6 @@ class {module}To{toModule}{toType}Bridge implements {module}To{toModule}{toType}
     {
         $this->{toModuleVariable}{toType} = ${toModuleVariable}{toType};
     }
+
+    {methods}
 }
