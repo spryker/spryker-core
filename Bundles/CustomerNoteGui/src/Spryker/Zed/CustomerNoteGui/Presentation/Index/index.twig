@@ -9,7 +9,7 @@
             <div class="customer-note-chat">
                 {% for note in notes %}
                     <div class="chat">
-                        <div class="chat-author"><span>{{ note.username }} @ {{ note.virtualProperties.created_at | formatDateTime }}</span></div>
+                        <div class="chat-author"><span>{{ note.username }} @ {{ note.createdAt | formatDateTime }}</span></div>
                         <div class="chat-body">{{ note.message }}</div>
                     </div>
                 {% endfor %}

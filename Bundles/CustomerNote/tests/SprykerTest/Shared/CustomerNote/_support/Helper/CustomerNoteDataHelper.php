@@ -10,12 +10,25 @@ namespace SprykerTest\Shared\CustomerNote\Helper;
 use Codeception\Module;
 use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
 use Orm\Zed\CustomerNote\Persistence\SpyCustomerNote;
-use SprykerTest\Shared\Customer\Helper\CustomerDataHelper;
-use SprykerTest\Shared\User\Helper\UserDataHelper;
+use SprykerTest\Shared\Customer\Helper\CustomerDataHelperTrait;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
+use SprykerTest\Shared\User\Helper\UserDataHelperTrait;
 
 class CustomerNoteDataHelper extends Module
 {
+    use LocatorHelperTrait;
+    use CustomerDataHelperTrait;
+    use UserDataHelperTrait;
+
     const TEST_NOTE_MESSAGE = 'test';
+
+    /**
+     * @return \Spryker\Zed\CustomerNote\Business\CustomerNoteFacadeInterface
+     */
+    protected function getCustomerNoteFacade()
+    {
+        $this->getLocator()->customerNote()->facade();
+    }
 
     /**
      * @param int $fkCustomer
@@ -25,10 +38,10 @@ class CustomerNoteDataHelper extends Module
     public function getCustomerNoteTransfer(int $fkCustomer = 0): SpyCustomerNoteEntityTransfer
     {
         if (!$fkCustomer) {
-            $fkCustomer = $this->getModule('\\' . CustomerDataHelper::class)->haveCustomer()->getIdCustomer();
+            $fkCustomer = $this->getCustomerDataHelper()->haveCustomer()->getIdCustomer();
         }
 
-        $userTransfer = $this->getModule('\\' . UserDataHelper::class)->haveUser();
+        $userTransfer = $this->getUserDataHelper()->haveUser();
         $noteTransfer = new SpyCustomerNoteEntityTransfer();
         $noteTransfer->setMessage(static::TEST_NOTE_MESSAGE);
         $noteTransfer->setUsername(
