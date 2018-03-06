@@ -20,6 +20,7 @@ class CustomerNoteDataHelper extends Module
     use CustomerDataHelperTrait;
     use UserDataHelperTrait;
 
+    const TEST_NOTE_AUTHOR = 'test';
     const TEST_NOTE_MESSAGE = 'test';
 
     /**
@@ -31,38 +32,41 @@ class CustomerNoteDataHelper extends Module
     }
 
     /**
+     * @param int $fkUser
      * @param int $fkCustomer
      *
      * @return \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer
      */
-    public function getCustomerNoteTransfer(int $fkCustomer = 0): SpyCustomerNoteEntityTransfer
+    public function getCustomerNoteTransfer(int $fkUser = 0, int $fkCustomer = 0): SpyCustomerNoteEntityTransfer
     {
+        if (!$fkUser) {
+            $fkUser = $this->getUserDataHelper()->haveUser()->getIdUser();
+        }
+
         if (!$fkCustomer) {
             $fkCustomer = $this->getCustomerDataHelper()->haveCustomer()->getIdCustomer();
         }
 
-        $userTransfer = $this->getUserDataHelper()->haveUser();
         $noteTransfer = new SpyCustomerNoteEntityTransfer();
         $noteTransfer->setMessage(static::TEST_NOTE_MESSAGE);
-        $noteTransfer->setUsername(
-            $userTransfer->getFirstName()
-        );
+        $noteTransfer->setUsername(static::TEST_NOTE_AUTHOR);
         $noteTransfer->setFkCustomer($fkCustomer);
-        $noteTransfer->setFkUser($userTransfer->getIdUser());
+        $noteTransfer->setFkUser($fkUser);
 
         return $noteTransfer;
     }
 
     /**
+     * @param int $fkUser
      * @param int $fkCustomer
      * @param int $number
      *
      * @return void
      */
-    public function hydrateCustomerNotesTableForCustomer(int $fkCustomer, int $number)
+    public function hydrateCustomerNotesTableForCustomer(int $fkUser, int $fkCustomer, int $number)
     {
         for ($i = 0; $i < $number; $i++) {
-            $noteTransfer = $this->getCustomerNoteTransfer($fkCustomer);
+            $noteTransfer = $this->getCustomerNoteTransfer($fkUser, $fkCustomer);
             $noteEntity = new SpyCustomerNote();
             $noteEntity->fromArray($noteTransfer->toArray());
             $noteEntity->save();

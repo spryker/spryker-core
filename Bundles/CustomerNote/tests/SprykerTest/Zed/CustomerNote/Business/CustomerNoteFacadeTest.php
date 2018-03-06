@@ -40,6 +40,11 @@ class CustomerNoteFacadeTest extends Unit
     protected $customerTransfer;
 
     /**
+     * @var \Generated\Shared\Transfer\UserTransfer
+     */
+    protected $userTransfer;
+
+    /**
      * @return void
      */
     public function setUp()
@@ -47,6 +52,7 @@ class CustomerNoteFacadeTest extends Unit
         parent::setUp();
         $this->customerNoteFacade = new CustomerNoteFacade();
         $this->customerTransfer = $this->getCustomer();
+        $this->userTransfer = $this->getUser();
     }
 
     /**
@@ -64,7 +70,11 @@ class CustomerNoteFacadeTest extends Unit
      */
     public function testGetNotes()
     {
-        $this->tester->hydrateCustomerNotesTableForCustomer($this->customerTransfer->getIdCustomer(), static::NOTES_COUNT);
+        $this->tester->hydrateCustomerNotesTableForCustomer(
+            $this->userTransfer->getIdUser(),
+            $this->customerTransfer->getIdCustomer(),
+            static::NOTES_COUNT
+        );
         $customerNotesCollectionTransfer = $this->customerNoteFacade->getNotes($this->customerTransfer->getIdCustomer());
 
         $this->assertSame(static::NOTES_COUNT, $customerNotesCollectionTransfer->getNotes()->count());
@@ -76,5 +86,13 @@ class CustomerNoteFacadeTest extends Unit
     protected function getCustomer()
     {
         return $this->tester->haveCustomer();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function getUser()
+    {
+        return $this->tester->haveUser();
     }
 }
