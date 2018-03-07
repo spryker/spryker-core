@@ -37,7 +37,8 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
             $this->getCountryFacade(),
             $this->getLocaleFacade(),
             $this->getCompanyBusinessUnitFacade(),
-            $this->getCompanyUnitAddressPreUpdatePlugins()
+            $this->createCompanyBusinessUnitAddressReader(),
+            $this->getCompanyUnitAddressPostSavePlugins()
         );
     }
 
@@ -55,9 +56,12 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReaderInterface
      */
-    protected function createCompanyBusinessUnitAddressReader(): CompanyBusinessUnitAddressReaderInterface
+    public function createCompanyBusinessUnitAddressReader(): CompanyBusinessUnitAddressReaderInterface
     {
-        return new CompanyBusinessUnitAddressReader($this->getRepository());
+        return new CompanyBusinessUnitAddressReader(
+            $this->getRepository(),
+            $this->getCompanyUnitAddressHydratingPlugins()
+        );
     }
 
     /**
@@ -85,10 +89,18 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array
+     * @return \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressPostSavePluginInterface[]
      */
-    protected function getCompanyUnitAddressPreUpdatePlugins()
+    protected function getCompanyUnitAddressPostSavePlugins(): array
     {
-        return $this->getProvidedDependency(CompanyUnitAddressDependencyProvider::PLUGIN_ADDRESS_POST_UPDATE);
+        return $this->getProvidedDependency(CompanyUnitAddressDependencyProvider::PLUGIN_ADDRESS_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratingPluginInterface[]
+     */
+    protected function getCompanyUnitAddressHydratingPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyUnitAddressDependencyProvider::PLUGIN_ADDRESS_TRANSFER_HYDRATING);
     }
 }

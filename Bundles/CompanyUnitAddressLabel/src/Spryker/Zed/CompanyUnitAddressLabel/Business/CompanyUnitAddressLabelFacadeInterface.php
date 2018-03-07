@@ -12,11 +12,28 @@ use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 interface CompanyUnitAddressLabelFacadeInterface
 {
     /**
+     * Specification:
+     *  - Save label to address relation to their relations table.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
      * @return void
      */
-    public function updateLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer);
+    public function saveLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void;
+
+    /**
+     * Specification:
+     *  - Fill a labelCollection property of company unit address.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     */
+    public function hydrateCompanyUnitAddressWithLabelCollection(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+    ): CompanyUnitAddressTransfer;
 }

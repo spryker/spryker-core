@@ -5,16 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUnitAddressExtension\Communication\Plugin;
+namespace Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
-//TODO: move to Dependency/Plugin
-interface CompanyUnitAddressPreUpdatePluginInterface
+
+interface CompanyUnitAddressPostSavePluginInterface
 {
-    //TODO: add specification instead of inheritdoc
-    //TODO: rename plugin to postSave
     /**
-     * {@inheritdoc}
+     * Specification:
+     *  - Plug in operations to be run after the entity is saved.
      *
      * @api
      *
@@ -22,5 +21,5 @@ interface CompanyUnitAddressPreUpdatePluginInterface
      *
      * @return void
      */
-    public function preUpdate(CompanyUnitAddressTransfer $companyUnitAddressTransfer);
+    public function postSave(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void;
 }

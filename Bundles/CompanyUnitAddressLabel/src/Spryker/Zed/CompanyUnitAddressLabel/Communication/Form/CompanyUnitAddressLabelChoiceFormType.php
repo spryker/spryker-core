@@ -34,8 +34,6 @@ class CompanyUnitAddressLabelChoiceFormType extends AbstractType
             'property_path' => '[labels]',
             'choices' => $options[static::OPTION_VALUES_CHOICES],
             'multiple' => true,
-            //TODO: remove
-            //'by_reference' => false,
         ]);
 
         $this->addModelTransformer($builder);

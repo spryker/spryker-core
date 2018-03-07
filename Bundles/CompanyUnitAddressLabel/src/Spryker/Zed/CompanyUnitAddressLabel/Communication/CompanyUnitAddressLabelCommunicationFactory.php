@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyUnitAddressLabel\Communication;
 
-use Spryker\Zed\CompanyUnitAddressLabel\Communication\Form\CompanyUnitAddressLabelChoiceFormType;
 use Spryker\Zed\CompanyUnitAddressLabel\Communication\Form\DataProvider\CompanyUnitAddressLabelFormDataProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -18,23 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CompanyUnitAddressLabelCommunicationFactory extends AbstractCommunicationFactory
 {
-    //TODO: remove
-    /**
-     * @param int $idCompanyUnitAddress
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createUnitAddressLabelChoiceForm(int $idCompanyUnitAddress)
-    {
-        $companyUnitAddressDataProvider = $this->createCompanyUnitAddressLabelChoiceFormDataProvider();
-
-        return $this->getFormFactory()->create(
-            CompanyUnitAddressLabelChoiceFormType::class,
-            $companyUnitAddressDataProvider->getData($idCompanyUnitAddress),
-            $companyUnitAddressDataProvider->getOptions()
-        );
-    }
-
     /**
      * @return \Spryker\Zed\CompanyUnitAddressLabel\Communication\Form\DataProvider\CompanyUnitAddressLabelFormDataProvider
      */

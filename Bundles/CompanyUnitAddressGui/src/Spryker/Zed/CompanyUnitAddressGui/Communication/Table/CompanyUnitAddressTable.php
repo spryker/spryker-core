@@ -7,12 +7,9 @@
 
 namespace Spryker\Zed\CompanyUnitAddressGui\Communication\Table;
 
-use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\CompanyUnitAddress\Persistence\Map\SpyCompanyUnitAddressTableMap;
-use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
-use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
-use Orm\Zed\Country\Persistence\Map\SpyRegionTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -36,18 +33,17 @@ class CompanyUnitAddressTable extends AbstractTable
     const URL_COMPANY_UNIT_ADDRESS_EDIT = '/company-unit-address-gui/edit-company-unit-address';
 
     /**
-     * @var \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     * @var \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressQueryContainerInterface
      */
-    protected $companyUnitAddressQuery;
+    protected $companyUnitAddressQueryContainer;
 
-    //TODO: inject only query container
     /**
-     * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery $companyUnitAddressQuery
+     * @param \Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface $companyUnitAddressQueryContainer
      */
     public function __construct(
-        SpyCompanyUnitAddressQuery $companyUnitAddressQuery
+        CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface $companyUnitAddressQueryContainer
     ) {
-        $this->companyUnitAddressQuery = $companyUnitAddressQuery;
+        $this->companyUnitAddressQueryContainer = $companyUnitAddressQueryContainer;
     }
 
     /**
@@ -99,17 +95,18 @@ class CompanyUnitAddressTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $queryResults = $this->runQuery($this->companyUnitAddressQuery, $config);
+        $query = $this->companyUnitAddressQueryContainer->queryCompanyUnitAddress();
+        $queryResults = $this->runQuery($query, $config);
         $results = [];
 
         foreach ($queryResults as $item) {
             $results[] = [
                 static::COL_ID_COMPANY_UNIT_ADDRESS => $item[static::COL_ID_COMPANY_UNIT_ADDRESS],
-                static::COL_COUNTRY_RELATION => $this->getCountryName($item[static::COL_COUNTRY_RELATION]),
-                static::COL_REGION_RELATION => $this->getRegionName($item[static::COL_REGION_RELATION]),
+                static::COL_COUNTRY_RELATION => $this->getCountryName((int)$item[static::COL_ID_COMPANY_UNIT_ADDRESS]),
+                static::COL_REGION_RELATION => $this->getRegionName((int)$item[static::COL_ID_COMPANY_UNIT_ADDRESS]),
                 static::COL_CITY => $item[static::COL_CITY],
                 static::COL_ZIPCODE => $item[static::COL_ZIPCODE],
-                static::COL_COMPANY_RELATION => $this->getCompanyName($item[static::COL_COMPANY_RELATION]),
+                static::COL_COMPANY_RELATION => $this->getCompanyName((int)$item[static::COL_ID_COMPANY_UNIT_ADDRESS]),
                 static::COL_ADDRESS1 => $item[static::COL_ADDRESS1],
                 static::COL_ADDRESS2 => $item[static::COL_ADDRESS2],
                 static::COL_ADDRESS3 => $item[static::COL_ADDRESS3],
@@ -141,32 +138,47 @@ class CompanyUnitAddressTable extends AbstractTable
     }
 
     /**
-     * @param array $item
+     * @param int $idCompanyUnitAddress
      *
      * @return string
      */
-    protected function getCountryName(array $item)
+    protected function getCountryName(int $idCompanyUnitAddress): string
     {
-        return $item[SpyCountryTableMap::COL_NAME];
+        $companyUnitAddress = $this->companyUnitAddressQueryContainer
+            ->queryCompanyUnitAddressWithCountryById($idCompanyUnitAddress)
+            ->findOne();
+        if ($companyUnitAddress) {
+            return $companyUnitAddress->getCountry()->getName();
+        }
     }
 
     /**
-     * @param array $item
+     * @param int $idCompanyUnitAddress
      *
      * @return string
      */
-    protected function getRegionName(array $item)
+    protected function getRegionName(int $idCompanyUnitAddress): string
     {
-        return $item[SpyRegionTableMap::COL_NAME];
+        $companyUnitAddress = $this->companyUnitAddressQueryContainer
+            ->queryCompanyUnitAddressWithRegionById($idCompanyUnitAddress)
+            ->findOne();
+        if ($companyUnitAddress) {
+            return $companyUnitAddress->getRegion()->getName();
+        }
     }
 
     /**
-     * @param array $item
+     * @param int $idCompanyUnitAddress
      *
      * @return string
      */
-    protected function getCompanyName(array $item)
+    protected function getCompanyName(int $idCompanyUnitAddress): string
     {
-        return $item[SpyCompanyTableMap::COL_NAME];
+        $companyUnitAddress = $this->companyUnitAddressQueryContainer
+            ->queryCompanyUnitAddressWithCompanyById($idCompanyUnitAddress)
+            ->findOne();
+        if ($companyUnitAddress) {
+            return $companyUnitAddress->getCompany()->getName();
+        }
     }
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer;
 
+use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
+
 class CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerBridge implements CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface
 {
     /**
@@ -28,5 +30,38 @@ class CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerBridge implements C
     public function queryCompanyUnitAddress()
     {
         return $this->companyUnitAddressQueryContainer->queryCompanyUnitAddress();
+    }
+
+    /**
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     */
+    public function queryCompanyUnitAddressWithCountryById(int $idCompanyUnitAddress): SpyCompanyUnitAddressQuery
+    {
+        return $this->companyUnitAddressQueryContainer
+            ->queryCompanyUnitAddressWithCountryById($idCompanyUnitAddress);
+    }
+
+    /**
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     */
+    public function queryCompanyUnitAddressWithCompanyById(int $idCompanyUnitAddress): SpyCompanyUnitAddressQuery
+    {
+        return $this->companyUnitAddressQueryContainer
+            ->queryCompanyUnitAddressWithCompanyById($idCompanyUnitAddress);
+    }
+
+    /**
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     */
+    public function queryCompanyUnitAddressWithRegionById(int $idCompanyUnitAddress): SpyCompanyUnitAddressQuery
+    {
+        return $this->companyUnitAddressQueryContainer
+            ->queryCompanyUnitAddressWithRegionById($idCompanyUnitAddress);
     }
 }

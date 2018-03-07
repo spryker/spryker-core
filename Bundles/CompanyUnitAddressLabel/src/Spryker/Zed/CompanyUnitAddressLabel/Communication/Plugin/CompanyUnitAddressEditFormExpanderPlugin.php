@@ -10,7 +10,7 @@ namespace Spryker\Zed\CompanyUnitAddressLabel\Communication\Plugin;
 use ArrayObject;
 use Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
-use Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\EditCompanyUnitAddressFormExpanderPluginInterface;
+use Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\CompanyUnitAddressEditFormExpanderPluginInterface;
 use Spryker\Zed\CompanyUnitAddressLabel\Communication\Form\CompanyUnitAddressLabelChoiceFormType;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\CallbackTransformer;
@@ -20,7 +20,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * @method \Spryker\Zed\CompanyUnitAddressLabel\Communication\CompanyUnitAddressLabelCommunicationFactory getFactory()
  * @method \Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface getFacade()
  */
-class EditCompanyUnitAddressFormExpanderPlugin extends AbstractPlugin implements EditCompanyUnitAddressFormExpanderPluginInterface
+class CompanyUnitAddressEditFormExpanderPlugin extends AbstractPlugin implements CompanyUnitAddressEditFormExpanderPluginInterface
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

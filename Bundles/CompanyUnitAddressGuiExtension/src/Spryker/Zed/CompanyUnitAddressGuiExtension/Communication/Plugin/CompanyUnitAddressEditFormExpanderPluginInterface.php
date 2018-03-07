@@ -9,10 +9,8 @@ namespace Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-interface EditCompanyUnitAddressFormExpanderPluginInterface
+interface CompanyUnitAddressEditFormExpanderPluginInterface
 {
-
-    //TODO: RENAME TO CompanyUnitAddressEditFormExpanderPluginInterface
     /**
      * Specification:
      * - Add form parts to the main form builder

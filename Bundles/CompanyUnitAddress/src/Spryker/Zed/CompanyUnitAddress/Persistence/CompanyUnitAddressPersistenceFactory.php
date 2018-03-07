@@ -9,7 +9,6 @@ namespace Spryker\Zed\CompanyUnitAddress\Persistence;
 
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressToCompanyBusinessUnitQuery;
-use Spryker\Zed\CompanyUnitAddress\CompanyUnitAddressDependencyProvider;
 use Spryker\Zed\CompanyUnitAddress\Persistence\Mapper\CompanyUnitAddressMapper;
 use Spryker\Zed\CompanyUnitAddress\Persistence\Mapper\CompanyUnitAddressMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -32,9 +31,7 @@ class CompanyUnitAddressPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createCompanyUniAddressMapper(): CompanyUnitAddressMapperInterface
     {
-        return new CompanyUnitAddressMapper(
-            $this->getCompanyUnitAddressTransferHydratorPlugins()
-        );
+        return new CompanyUnitAddressMapper();
     }
 
     /**
@@ -43,13 +40,5 @@ class CompanyUnitAddressPersistenceFactory extends AbstractPersistenceFactory
     public function createCompanyUnitAddressToCompanyBusinessUnitQuery(): SpyCompanyUnitAddressToCompanyBusinessUnitQuery
     {
         return SpyCompanyUnitAddressToCompanyBusinessUnitQuery::create();
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddressExtension\Communication\Plugin\CompanyUnitAddressTransferHydratorPluginInterface[]
-     */
-    protected function getCompanyUnitAddressTransferHydratorPlugins()
-    {
-        return $this->getProvidedDependency(CompanyUnitAddressDependencyProvider::PLUGINS_ADDRESS_TRANSFER_HYDRATOR);
     }
 }

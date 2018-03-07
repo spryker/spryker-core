@@ -16,19 +16,36 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CompanyUnitAddressLabelFacade extends AbstractFacade implements CompanyUnitAddressLabelFacadeInterface
 {
-
-    //TODO: rename to save
-    //Inherit doc
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
      * @return void
      */
-    public function updateLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer)
+    public function saveLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
     {
         $this->getEntityManager()
             ->saveLabelToAddressRelation($companyUnitAddressTransfer);
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     */
+    public function hydrateCompanyUnitAddressWithLabelCollection(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer
+    ): CompanyUnitAddressTransfer {
+        return $this->getFactory()
+            ->createCompanyUnitAddressHydrator()
+            ->hydrate($companyUnitAddressTransfer);
     }
 }

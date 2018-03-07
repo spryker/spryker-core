@@ -22,8 +22,7 @@ class EditCompanyUnitAddressController extends AbstractController
     const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_SUCCESS = 'Company unit address has been successfully updated.';
     const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_ERROR = 'Company unit address update failed.';
 
-    //rename to HEADER_REFERER
-    const REFERER = 'referer';
+    const HEADER_REFERER = 'referer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -40,7 +39,7 @@ class EditCompanyUnitAddressController extends AbstractController
 
         if ($companyUnitAddressForm->isSubmitted()) {
             $this->updateCompanyUnitAddress($companyUnitAddressForm);
-            return $this->redirectResponse($request->headers->get(static::REFERER));
+            return $this->redirectResponse($request->headers->get(static::HEADER_REFERER));
         }
 
         $companyUnitAddressTransfer = $this->getFactory()
@@ -50,8 +49,6 @@ class EditCompanyUnitAddressController extends AbstractController
             );
 
         return $this->viewResponse([
-            //TODO: rename id if possible
-            'idCompanyUnitAddress' => $idCompanyUnitAddress,
             'companyUnitAddressForm' => $companyUnitAddressForm->createView(),
             'companyUnitAddress' => $companyUnitAddressTransfer,
         ]);
@@ -64,19 +61,23 @@ class EditCompanyUnitAddressController extends AbstractController
      */
     protected function updateCompanyUnitAddress(FormInterface $companyUnitAddressForm)
     {
-        //TODO: check if not valid. Early return. On if statement.
-        if ($companyUnitAddressForm->isValid()) {
-            $response = $this->getFactory()
-                ->getCompanyUnitAddressFacade()
-                ->update($companyUnitAddressForm->getData());
-            if ($response->getIsSuccessful()) {
-                $this->addSuccessMessage(static::MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_SUCCESS);
+        if (!$companyUnitAddressForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_ERROR);
 
-                return;
-            }
+            return;
         }
 
-        $this->addErrorMessage(static::MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_ERROR);
+        $response = $this->getFactory()
+            ->getCompanyUnitAddressFacade()
+            ->update($companyUnitAddressForm->getData());
+
+        if (!$response->getIsSuccessful()) {
+            $this->addErrorMessage(static::MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_ERROR);
+
+            return;
+        }
+
+        $this->addSuccessMessage(static::MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_SUCCESS);
     }
 
     /**

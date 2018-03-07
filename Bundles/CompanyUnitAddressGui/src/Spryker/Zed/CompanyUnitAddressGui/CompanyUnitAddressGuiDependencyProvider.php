@@ -28,7 +28,7 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addCompanyUnitAddressQueryContainer($container);
         $container = $this->addCompanyUnitAddressFacade($container);
-        $container = $this->addCompanyUnitAddressFromPlugins($container);
+        $container = $this->addCompanyUnitAddressFormPlugins($container);
 
         return $container;
     }
@@ -70,20 +70,19 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCompanyUnitAddressFromPlugins(Container $container)
+    protected function addCompanyUnitAddressFormPlugins(Container $container)
     {
         $container[static::PLUGINS_COMPANY_UNIT_ADDRESS_FORM] = function (Container $container) {
-            return $this->getCompanyUnitAddressFromPlugins();
+            return $this->getCompanyUnitAddressFormPlugins();
         };
 
         return $container;
     }
 
-    //TODO: rename from to form
     /**
-     * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\EditCompanyUnitAddressFormExpanderPluginInterface[]
+     * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\CompanyUnitAddressEditFormExpanderPluginInterface[]
      */
-    protected function getCompanyUnitAddressFromPlugins(): array
+    protected function getCompanyUnitAddressFormPlugins(): array
     {
         return [];
     }

@@ -41,29 +41,37 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
     protected $companyBusinessUnitFacade;
 
     /**
-     * @var \Spryker\Zed\CompanyUnitAddressExtension\Communication\Plugin\CompanyUnitAddressPreUpdatePluginInterface[]
+     * @var \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReaderInterface
      */
-    protected $companyUnitAddressPreUpdatePlugins;
+    protected $addressReader;
+
+    /**
+     * @var \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressPostSavePluginInterface[]
+     */
+    protected $companyUnitAddressPostSavePlugins;
 
     /**
      * @param \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressEntityManagerInterface $entityManager
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCountryFacadeInterface $countryFacade
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
-     * @param \Spryker\Zed\CompanyUnitAddressExtension\Communication\Plugin\CompanyUnitAddressPreUpdatePluginInterface[] $companyUnitAddressPreUpdatePlugins
+     * @param \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReaderInterface $addressReader
+     * @param array $companyUnitAddressPreUpdatePlugins
      */
     public function __construct(
         CompanyUnitAddressEntityManagerInterface $entityManager,
         CompanyUnitAddressToCountryFacadeInterface $countryFacade,
         CompanyUnitAddressToLocaleFacadeInterface $localeFacade,
         CompanyUnitAddressToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
+        CompanyBusinessUnitAddressReaderInterface $addressReader,
         array $companyUnitAddressPreUpdatePlugins
     ) {
         $this->entityManager = $entityManager;
         $this->countryFacade = $countryFacade;
         $this->localeFacade = $localeFacade;
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
-        $this->companyUnitAddressPreUpdatePlugins = $companyUnitAddressPreUpdatePlugins;
+        $this->addressReader = $addressReader;
+        $this->companyUnitAddressPostSavePlugins = $companyUnitAddressPreUpdatePlugins;
     }
 
     /**
@@ -174,15 +182,15 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer {
 
-        //TODO: move to post update place.
-        $this->executePreUpdatePlugins($companyUnitAddressTransfer);
-
         $fkCountry = $this->retrieveFkCountry($companyUnitAddressTransfer);
         $companyUnitAddressTransfer->setFkCountry($fkCountry);
         $isDefaultBilling = $companyUnitAddressTransfer->getIsDefaultBilling();
-        $companyUnitAddressTransfer = $this->entityManager->saveCompanyUnitAddress($companyUnitAddressTransfer);
+        $companyUnitAddressSavedTransfer = $this->entityManager->saveCompanyUnitAddress($companyUnitAddressTransfer);
         $companyUnitAddressTransfer->setIsDefaultBilling($isDefaultBilling);
+        $companyUnitAddressTransfer->setIdCompanyUnitAddress($companyUnitAddressSavedTransfer->getIdCompanyUnitAddress());
         $this->updateBusinessUnitDefaultAddresses($companyUnitAddressTransfer);
+
+        $this->executePostSavePlugins($companyUnitAddressTransfer);
 
         return (new CompanyUnitAddressResponseTransfer())->setIsSuccessful(true)
             ->setCompanyUnitAddressTransfer($companyUnitAddressTransfer);
@@ -208,10 +216,10 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
      *
      * @return void
      */
-    protected function executePreUpdatePlugins(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
+    protected function executePostSavePlugins(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
     {
-        foreach ($this->companyUnitAddressPreUpdatePlugins as $plugin) {
-            $plugin->preUpdate($companyUnitAddressTransfer);
+        foreach ($this->companyUnitAddressPostSavePlugins as $plugin) {
+            $plugin->postSave($companyUnitAddressTransfer);
         }
     }
 }

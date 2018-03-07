@@ -20,13 +20,54 @@ class CompanyUnitAddressQueryContainer extends AbstractQueryContainer implements
      *
      * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
      */
-    public function queryCompanyUnitAddress()
+    public function queryCompanyUnitAddress(): SpyCompanyUnitAddressQuery
     {
-        //TODO: move create to factory
-        //TODO: move joins to separate method named like ...WIthSmth
-        return SpyCompanyUnitAddressQuery::create()
-            ->innerJoinWithCompany()
-            ->innerJoinWithCountry()
-            ->innerJoinWithRegion();
+        return $this->getFactory()
+            ->createCompanyUnitAddressQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     */
+    public function queryCompanyUnitAddressWithCountryById(int $idCompanyUnitAddress): SpyCompanyUnitAddressQuery
+    {
+        return $this->getFactory()
+            ->createCompanyUnitAddressQuery()
+            ->joinWithCountry()
+            ->filterByIdCompanyUnitAddress($idCompanyUnitAddress);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     */
+    public function queryCompanyUnitAddressWithCompanyById(int $idCompanyUnitAddress): SpyCompanyUnitAddressQuery
+    {
+        return $this->getFactory()
+            ->createCompanyUnitAddressQuery()
+            ->joinWithCompany()
+            ->filterByIdCompanyUnitAddress($idCompanyUnitAddress);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     */
+    public function queryCompanyUnitAddressWithRegionById(int $idCompanyUnitAddress): SpyCompanyUnitAddressQuery
+    {
+        return $this->getFactory()
+            ->createCompanyUnitAddressQuery()
+            ->joinWithRegion()
+            ->filterByIdCompanyUnitAddress($idCompanyUnitAddress);
     }
 }

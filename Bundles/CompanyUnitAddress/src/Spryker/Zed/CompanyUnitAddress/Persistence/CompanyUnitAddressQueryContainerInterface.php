@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyUnitAddress\Persistence;
 
+use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
+
 interface CompanyUnitAddressQueryContainerInterface
 {
     /**
@@ -14,5 +16,32 @@ interface CompanyUnitAddressQueryContainerInterface
      *
      * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
      */
-    public function queryCompanyUnitAddress();
+    public function queryCompanyUnitAddress(): SpyCompanyUnitAddressQuery;
+
+    /**
+     * @api
+     *
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     */
+    public function queryCompanyUnitAddressWithCountryById(int $idCompanyUnitAddress): SpyCompanyUnitAddressQuery;
+
+    /**
+     * @api
+     *
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     */
+    public function queryCompanyUnitAddressWithCompanyById(int $idCompanyUnitAddress): SpyCompanyUnitAddressQuery;
+
+    /**
+     * @api
+     *
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     */
+    public function queryCompanyUnitAddressWithRegionById(int $idCompanyUnitAddress): SpyCompanyUnitAddressQuery;
 }

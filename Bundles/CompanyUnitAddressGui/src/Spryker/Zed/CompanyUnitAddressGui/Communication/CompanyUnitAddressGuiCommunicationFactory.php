@@ -20,19 +20,15 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
      */
     public function createAddressTable()
     {
-        //TODO: Pass query container, not query
-        $companyUnitAddressQuery = $this->getCompanyUnitAddressGuiQueryContainer()
-            ->queryCompanyUnitAddress();
-
         return new CompanyUnitAddressTable(
-            $companyUnitAddressQuery
+            $this->getCompanyUnitAddressQueryContainer()
         );
     }
 
     /**
      * @return \Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface
      */
-    public function getCompanyUnitAddressGuiQueryContainer()
+    public function getCompanyUnitAddressQueryContainer()
     {
         return $this->getProvidedDependency(
             CompanyUnitAddressGuiDependencyProvider::QUERY_CONTAINER_COMPANY_UNIT_ADDRESS
@@ -66,7 +62,7 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\EditCompanyUnitAddressFormExpanderPluginInterface[]
+     * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\CompanyUnitAddressEditFormExpanderPluginInterface[]
      */
     public function getCompanyUnitAddressFormPlugins()
     {

@@ -7,10 +7,33 @@
 
 namespace Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer;
 
+use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
+
 interface CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface
 {
     /**
      * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
      */
     public function queryCompanyUnitAddress();
+
+    /**
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     */
+    public function queryCompanyUnitAddressWithCountryById(int $idCompanyUnitAddress): SpyCompanyUnitAddressQuery;
+
+    /**
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     */
+    public function queryCompanyUnitAddressWithCompanyById(int $idCompanyUnitAddress): SpyCompanyUnitAddressQuery;
+
+    /**
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     */
+    public function queryCompanyUnitAddressWithRegionById(int $idCompanyUnitAddress): SpyCompanyUnitAddressQuery;
 }

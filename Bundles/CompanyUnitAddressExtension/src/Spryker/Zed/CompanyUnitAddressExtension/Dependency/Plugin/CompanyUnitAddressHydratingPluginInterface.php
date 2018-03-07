@@ -5,13 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUnitAddressExtension\Communication\Plugin;
+namespace Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 
-interface CompanyUnitAddressTransferHydratorPluginInterface
+interface CompanyUnitAddressHydratingPluginInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $addressTransfer
      *
      * @return void
