@@ -9,10 +9,15 @@
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create Order' | trans } %}
         {% block widget_content %}
+
             {{ form_start(checkoutForm) }}
+            {{ form_row(checkoutForm.id_customer) }}
+            {{ createActionButton('/cms-block-gui/create-block', 'Create Customer' | trans) }}
+
             {{ form_widget(checkoutForm) }}
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+
             {{ form_end(checkoutForm) }}
         {% endblock %}
     {% endembed %}
