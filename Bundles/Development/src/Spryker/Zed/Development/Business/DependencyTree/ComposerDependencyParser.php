@@ -72,6 +72,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
                 'composerRequire' => in_array($moduleName, $requireNames) ? $moduleName : '',
                 'composerRequireDev' => in_array($moduleName, $requireDevNames) ? $moduleName : '',
                 'suggested' => in_array($moduleName, $suggestedNames) ? $moduleName : '',
+                'isOwnExtensionModule' => $this->isOwnExtensionModule($moduleName, $moduleDependencyCollectionTransfer),
             ];
         }
 
@@ -365,5 +366,16 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
         $name = ucfirst($filter->filter($name));
 
         return $name;
+    }
+
+    /**
+     * @param string $moduleName
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer
+     *
+     * @return bool
+     */
+    protected function isOwnExtensionModule($moduleName, $moduleDependencyCollectionTransfer)
+    {
+        return $moduleName === $moduleDependencyCollectionTransfer->getBundle() . 'Extension';
     }
 }

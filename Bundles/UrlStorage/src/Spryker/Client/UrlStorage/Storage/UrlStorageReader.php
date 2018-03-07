@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\UrlStorage\Storage;
 
-use Generated\Shared\Transfer\SpyUrlEntityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageInterface;
 use Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServiceInterface;
 use Spryker\Shared\Kernel\Store;
@@ -59,8 +59,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
      */
     public function matchUrl($url, $localeName)
     {
-        $urlKey = $this->getUrlKey($url);
-        $urlDetails = $this->storageClient->get($urlKey);
+        $urlDetails = $this->getUrlFromStorage($url);
         if ($urlDetails === null) {
             return [];
         }
@@ -87,6 +86,33 @@ class UrlStorageReader implements UrlStorageReaderInterface
     /**
      * @param string $url
      *
+     * @return \Generated\Shared\Transfer\UrlStorageTransfer|null
+     */
+    public function findUrlStorageTransferByUrl($url)
+    {
+        $urlDetails = $this->getUrlFromStorage($url);
+
+        if ($urlDetails === null) {
+            return null;
+        }
+
+        return (new UrlStorageTransfer())->fromArray($urlDetails, true);
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return array
+     */
+    protected function getUrlFromStorage($url)
+    {
+        $urlKey = $this->getUrlKey($url);
+        return $this->storageClient->get($urlKey);
+    }
+
+    /**
+     * @param string $url
+     *
      * @return string
      */
     protected function getUrlKey($url)
@@ -106,7 +132,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
      */
     protected function getUrlStorageResourceMapTransfer(array $urlDetails, array $options = [])
     {
-        $spyUrlTransfer = new SpyUrlEntityTransfer();
+        $spyUrlTransfer = new UrlStorageTransfer();
         $spyUrlTransfer->fromArray($urlDetails, true);
 
         foreach ($this->urlStorageResourceMapperPlugins as $urlStorageResourceMapperPlugin) {

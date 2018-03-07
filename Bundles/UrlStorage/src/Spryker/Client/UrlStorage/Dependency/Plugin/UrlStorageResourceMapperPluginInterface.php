@@ -7,17 +7,17 @@
 
 namespace Spryker\Client\UrlStorage\Dependency\Plugin;
 
-use Generated\Shared\Transfer\SpyUrlEntityTransfer;
+use Generated\Shared\Transfer\UrlStorageTransfer;
 
 interface UrlStorageResourceMapperPluginInterface
 {
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\SpyUrlEntityTransfer $spyUrlEntityTransfer
+     * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer
      * @param array $options
      *
      * @return \Generated\Shared\Transfer\UrlStorageResourceMapTransfer
      */
-    public function map(SpyUrlEntityTransfer $spyUrlEntityTransfer, array $options = []);
+    public function map(UrlStorageTransfer $urlStorageTransfer, array $options = []);
 }

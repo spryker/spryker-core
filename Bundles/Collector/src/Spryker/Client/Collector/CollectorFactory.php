@@ -14,7 +14,7 @@ use Spryker\Client\Kernel\AbstractFactory;
 class CollectorFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\Collector\Matcher\UrlMatcher
+     * @return \Spryker\Client\Collector\Matcher\UrlMatcherInterface
      */
     public function createUrlMatcher()
     {
