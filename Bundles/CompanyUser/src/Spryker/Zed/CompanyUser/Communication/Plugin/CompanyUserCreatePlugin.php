@@ -41,7 +41,7 @@ class CompanyUserCreatePlugin extends AbstractPlugin implements CompanyPostCreat
         $companyUserTransfer = $companyTransfer->getInitialUserTransfer();
         $companyUserTransfer->setFkCompany($companyTransfer->getIdCompany());
         $companyUserResponseTransfer = $this->getFacade()->create($companyUserTransfer);
-        $companyTransfer->setInitialUserTransfer($companyUserResponseTransfer->getCompanyUserTransfer());
+        $companyTransfer->setInitialUserTransfer($companyUserResponseTransfer->getCompanyUser());
 
         return $companyTransfer;
     }

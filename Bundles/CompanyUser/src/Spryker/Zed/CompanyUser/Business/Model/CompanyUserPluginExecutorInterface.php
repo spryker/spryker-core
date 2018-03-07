@@ -14,14 +14,14 @@ interface CompanyUserPluginExecutorInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function executeCompanyUserSavePlugins(CompanyUserTransfer $companyUserTransfer): void;
+    public function executePostSavePlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function executeCompanyUserHydrationPlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
+    public function executeHydrationPlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
 }
