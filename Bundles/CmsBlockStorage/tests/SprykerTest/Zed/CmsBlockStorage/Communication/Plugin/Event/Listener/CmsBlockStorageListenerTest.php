@@ -34,6 +34,9 @@ use SprykerTest\Zed\CmsBlockStorage\CmsBlockStorageConfigMock;
  */
 class CmsBlockStorageListenerTest extends Unit
 {
+    const NUMBER_OF_LOCALES = 2;
+    const NUMBER_OF_STORES = 3;
+
     /**
      * @throws \PHPUnit\Framework\SkippedTestError
      *
@@ -50,7 +53,7 @@ class CmsBlockStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testCmsCmsBlockStorageListenerStoreData()
+    public function testCmsBlockStorageListenerStoreData()
     {
         SpyCmsBlockStorageQuery::create()->filterByFkCmsBlock(1)->delete();
         $beforeCount = SpyCmsBlockStorageQuery::create()->count();
@@ -111,7 +114,7 @@ class CmsBlockStorageListenerTest extends Unit
     protected function assertCmsBlockCategoryStorage($beforeCount)
     {
         $count = SpyCmsBlockStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 2, $count);
+        $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES * static::NUMBER_OF_STORES, $count);
         $cmsBlockStorage = SpyCmsBlockStorageQuery::create()->filterByLocale('en_US')->orderByIdCmsBlockStorage()->findOneByFkCmsBlock(1);
         $this->assertNotNull($cmsBlockStorage);
         $data = $cmsBlockStorage->getData();

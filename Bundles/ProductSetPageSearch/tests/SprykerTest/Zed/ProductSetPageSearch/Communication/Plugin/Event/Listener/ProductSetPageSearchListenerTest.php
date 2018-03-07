@@ -191,7 +191,7 @@ class ProductSetPageSearchListenerTest extends Unit
     public function testProductSetPageProductImageSearchListenerStoreData()
     {
         $productSetPageQueryContainer = new ProductSetPageSearchQueryContainer();
-        $productSetIds = $productSetPageQueryContainer->queryProductSetIdsByProductImageIds([208])->find()->getData();
+        $productSetIds = $productSetPageQueryContainer->queryProductSetIdsByProductImageIds([209])->find()->getData();
         SpyProductSetPageSearchQuery::create()->filterByFkProductSet_In($productSetIds)->delete();
         $beforeCount = SpyProductSetPageSearchQuery::create()->count();
 
@@ -200,7 +200,7 @@ class ProductSetPageSearchListenerTest extends Unit
         $productSetPageProductImageSearchListener->setFacade($this->getProductSetPageSearchFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(208),
+            (new EventEntityTransfer())->setId(209),
         ];
         $productSetPageProductImageSearchListener->handleBulk($eventTransfers, ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_UPDATE);
 

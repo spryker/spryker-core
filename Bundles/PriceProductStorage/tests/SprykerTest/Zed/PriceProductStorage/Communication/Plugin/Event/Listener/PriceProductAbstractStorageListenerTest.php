@@ -125,7 +125,7 @@ class PriceProductAbstractStorageListenerTest extends Unit
         $priceProductQueryContainer = new PriceProductStorageQueryContainer();
         $productAbstractIds = $priceProductQueryContainer->queryAllProductAbstractIdsByPriceTypeIds([1])->find()->getData();
         SpyPriceProductAbstractStorageQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->delete();
-        $beforeCount = SpyPriceProductAbstractStorageQuery::create()->count();
+        $beforeCount = SpyPriceProductAbstractStorageQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->count();
 
         $priceTypeProductAbstractStorageListener = new PriceTypeProductAbstractStorageListener();
         $priceTypeProductAbstractStorageListener->setFacade($this->getPriceProductStorageFacade());
@@ -136,8 +136,8 @@ class PriceProductAbstractStorageListenerTest extends Unit
         $priceTypeProductAbstractStorageListener->handleBulk($eventTransfers, PriceProductEvents::ENTITY_SPY_PRICE_TYPE_CREATE);
 
         // Assert
-        $priceProductAbstractStorageCount = SpyPriceProductAbstractStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 214, $priceProductAbstractStorageCount);
+        $priceProductAbstractStorageCount = SpyPriceProductAbstractStorageQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->count();
+        $this->assertSame($beforeCount + count($productAbstractIds), $priceProductAbstractStorageCount);
     }
 
     /**

@@ -46,6 +46,9 @@ use SprykerTest\Zed\ProductStorage\ProductStorageConfigMock;
  */
 class ProductStorageListenerTest extends Unit
 {
+    const NUMBER_OF_STORES = 3;
+    const NUMBER_OF_LOCALES = 2;
+
     /**
      * @throws \PHPUnit\Framework\SkippedTestError
      *
@@ -275,7 +278,7 @@ class ProductStorageListenerTest extends Unit
     protected function assertProductAbstractStorage($beforeCount)
     {
         $afterCount = SpyProductAbstractStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 2, $afterCount);
+        $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES * static::NUMBER_OF_STORES, $afterCount);
         $spyProductAbstractStorage = SpyProductAbstractStorageQuery::create()
             ->orderByIdProductAbstractStorage()
             ->findOneByFkProductAbstract(1);
@@ -294,7 +297,7 @@ class ProductStorageListenerTest extends Unit
     protected function assertProductConcreteStorage($beforeCount)
     {
         $afterCount = SpyProductConcreteStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 2, $afterCount);
+        $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES * static::NUMBER_OF_STORES, $afterCount);
         $spyProductConcreteStorage = SpyProductConcreteStorageQuery::create()
             ->orderByIdProductConcreteStorage()
             ->findOneByFkProduct(1);
