@@ -8,9 +8,10 @@
 namespace Spryker\Zed\Quote\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Quote\Business\Model\Quote;
+use Spryker\Zed\Quote\Business\Model\QuoteDeleter;
 use Spryker\Zed\Quote\Business\Model\QuoteMerger;
-use Spryker\Zed\Quote\Business\Model\QuotePluginExecutor;
+use Spryker\Zed\Quote\Business\Model\QuoteReader;
+use Spryker\Zed\Quote\Business\Model\QuoteWriter;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
 
 /**
@@ -21,24 +22,43 @@ use Spryker\Zed\Quote\QuoteDependencyProvider;
 class QuoteBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Quote\Business\Model\QuoteInterface
+     * @return \Spryker\Zed\Quote\Business\Model\QuoteWriterInterface
      */
-    public function createQuote()
+    public function createQuoteWriter()
     {
-        return new Quote(
-            $this->getRepository(),
+        return new QuoteWriter(
             $this->getEntityManager(),
-            $this->createQoutePluginExecutor(),
             $this->getStoreFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface
+     * @return \Spryker\Zed\Quote\Business\Model\QuoteReaderInterface
      */
-    public function getStoreFacade()
+    public function createQuoteReader()
     {
-        return $this->getProvidedDependency(QuoteDependencyProvider::FACADE_STORE);
+        return new QuoteReader(
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Quote\Business\Model\QuoteDeleterInterface
+     */
+    public function createQuoteDeleter()
+    {
+        return new QuoteDeleter(
+            $this->getRepository(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Quote\QuoteConfig
+     */
+    public function getBundleConfig()
+    {
+        return $this->getConfig();
     }
 
     /**
@@ -46,35 +66,14 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
      */
     public function createQuoteMerger()
     {
-        return new QuoteMerger(
-            $this->createQuote(),
-            $this->getCalculationFacade()
-        );
+        return new QuoteMerger();
     }
 
     /**
-     * @return \Spryker\Zed\Quote\Business\Model\QuotePluginExecutorInterface
+     * @return \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface
      */
-    protected function createQoutePluginExecutor()
+    protected function getStoreFacade()
     {
-        return new QuotePluginExecutor(
-            $this->getQuotePreSavePlugins()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Quote\Dependency\Plugin\QuotePreSavePluginInterface[]
-     */
-    protected function getQuotePreSavePlugins()
-    {
-        return $this->getProvidedDependency(QuoteDependencyProvider::QUOTE_PRE_SAVE_PLUGINS);
-    }
-
-    /**
-     * @return \Spryker\Zed\Quote\Dependency\Facade\QuoteToCalculationFacadeInterface
-     */
-    protected function getCalculationFacade()
-    {
-        return $this->getProvidedDependency(QuoteDependencyProvider::FACADE_CALCULATION);
+        return $this->getProvidedDependency(QuoteDependencyProvider::FACADE_STORE);
     }
 }

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Quote\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteMergeTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -22,7 +22,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findQuoteByCustomerAction(CustomerTransfer $customerTransfer)
+    public function findQuoteByCustomerAction(CustomerTransfer $customerTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->findQuoteByCustomer($customerTransfer);
     }
@@ -32,7 +32,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function persistQuoteAction(QuoteTransfer $quoteTransfer)
+    public function persistQuoteAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->persistQuote($quoteTransfer);
     }
@@ -42,18 +42,8 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function deleteQuoteAction(QuoteTransfer $quoteTransfer)
+    public function deleteQuoteAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->deleteQuote($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteMergeTransfer $quoteMergeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function mergeQuotesAction(QuoteMergeTransfer $quoteMergeTransfer)
-    {
-        return $this->getFacade()->mergeQuotes($quoteMergeTransfer);
     }
 }

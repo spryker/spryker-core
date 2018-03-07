@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\Quote\Business\Model;
 
-use Generated\Shared\Transfer\QuoteMergeTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteMergeRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteMergerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteMergeTransfer $quoteMergeTransfer
+     * @param \Generated\Shared\Transfer\QuoteMergeRequestTransfer $quoteMergeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function merge(QuoteMergeTransfer $quoteMergeTransfer): QuoteResponseTransfer;
+    public function merge(QuoteMergeRequestTransfer $quoteMergeRequestTransfer): QuoteTransfer;
 }

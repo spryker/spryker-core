@@ -25,7 +25,7 @@ interface QuoteStubInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteByCustomer(CustomerTransfer $customerTransfer): QuoteResponseTransfer;
+    public function findQuoteByCustomer(CustomerTransfer $customerTransfer): QuoteResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

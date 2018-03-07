@@ -51,18 +51,10 @@ class CartToQuoteBridge implements CartToQuoteInterface
     }
 
     /**
-     * @return void
+     * @return string
      */
-    public function syncQuote()
+    public function getStorageStrategy()
     {
-        $this->quoteClient->syncQuote();
-    }
-
-    /**
-     * @return void
-     */
-    public function pushQuote()
-    {
-        $this->quoteClient->pushQuote();
+        return $this->quoteClient->getStorageStrategy();
     }
 }

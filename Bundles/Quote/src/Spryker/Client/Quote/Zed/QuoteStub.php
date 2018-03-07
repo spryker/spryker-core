@@ -8,7 +8,6 @@
 namespace Spryker\Client\Quote\Zed;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteMergeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClientInterface;
@@ -43,7 +42,7 @@ class QuoteStub implements QuoteStubInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getQuoteByCustomer(CustomerTransfer $customerTransfer): QuoteResponseTransfer
+    public function findQuoteByCustomer(CustomerTransfer $customerTransfer): QuoteResponseTransfer
     {
         return $this->zedStub->call('/quote/gateway/find-quote-by-customer', $customerTransfer);
     }
@@ -56,15 +55,5 @@ class QuoteStub implements QuoteStubInterface
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->zedStub->call('/quote/gateway/delete-quote', $quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteMergeTransfer $quoteMergeTransfer
-     *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function mergeQuotes(QuoteMergeTransfer $quoteMergeTransfer): QuoteResponseTransfer
-    {
-        return $this->zedStub->call('/quote/gateway/merge-quotes', $quoteMergeTransfer);
     }
 }

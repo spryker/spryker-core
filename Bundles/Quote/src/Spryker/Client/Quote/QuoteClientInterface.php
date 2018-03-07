@@ -14,7 +14,6 @@ interface QuoteClientInterface
     /**
      * Specification:
      * - Returns the stored quote.
-     * - TODO: what happens when persistent quote is enabled?
      *
      * @api
      *
@@ -24,8 +23,7 @@ interface QuoteClientInterface
 
     /**
      * Specification:
-     * - Stores the quote.
-     * - TODO: what happens when persistent quote is enabled?
+     * - Set quote in session.
      *
      * @api
      *
@@ -37,8 +35,8 @@ interface QuoteClientInterface
 
     /**
      * Specification:
-     * - Resets all data which is stored in the quote.
-     * - TODO: what happens when persistent quote is enabled?
+     * - Session strategy: clear quote in session.
+     * - Persistent strategy: removes current quote from DB and session.
      *
      * @api
      *
@@ -48,23 +46,11 @@ interface QuoteClientInterface
 
     /**
      * Specification:
-     * - Gets quote from storage and save it in customer session.
-     * - TODO: what happens when persistent quote is NOT enabled?
+     * - Get quote storage strategy type.
      *
      * @api
      *
-     * @return void
+     * @return string
      */
-    public function syncQuote();
-
-    /**
-     * Specification:
-     * - Gets quote from customer session and save it in storage.
-     * - TODO: what happens when persistent quote is NOT enabled?
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function pushQuote();
+    public function getStorageStrategy();
 }

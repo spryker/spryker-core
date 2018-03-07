@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 /**
  * @method \Spryker\Zed\Cart\Business\CartFacadeInterface getFacade()
  */
-// TODO: new gateway controller and stub
 class GatewayController extends AbstractGatewayController
 {
     /**
@@ -45,5 +44,15 @@ class GatewayController extends AbstractGatewayController
     public function reloadItemsAction(QuoteTransfer $quoteTransfer)
     {
         return $this->getFacade()->reloadItems($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateQuoteAction(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFacade()->validateQuote($quoteTransfer);
     }
 }

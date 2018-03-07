@@ -8,7 +8,6 @@
 namespace Spryker\Client\Quote;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\Quote\Session\QuoteResolver;
 use Spryker\Client\Quote\Session\QuoteSession;
 use Spryker\Client\Quote\StorageStrategy\DatabaseStorageStrategy;
 use Spryker\Client\Quote\StorageStrategy\SessionStorageStrategy;
@@ -21,13 +20,12 @@ use Spryker\Client\Quote\Zed\QuoteStub;
 class QuoteFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\Quote\Session\QuoteSession
+     * @return \Spryker\Client\Quote\Session\QuoteSessionInterface
      */
     public function createSession()
     {
         return new QuoteSession(
             $this->getSessionClient(),
-            $this->getStorageStrategy(),
             $this->getCurrencyPlugin(),
             $this->getQuoteTransferExpanderPlugins()
         );
@@ -40,18 +38,6 @@ class QuoteFactory extends AbstractFactory
     {
         return $this->createStorageStrategyProvider()
             ->provideStorage();
-    }
-
-    /**
-     * @return \Spryker\Client\Quote\Session\QuoteResolverInterface
-     */
-    public function createQuoteResolver()
-    {
-        return new QuoteResolver(
-            $this->createSession(),
-            $this->getStorageStrategy(),
-            $this->createZedQuoteStub()
-        );
     }
 
     /**
@@ -82,7 +68,7 @@ class QuoteFactory extends AbstractFactory
     protected function createSessionStorageStrategy()
     {
         return new SessionStorageStrategy(
-            $this->getSessionClient()
+            $this->createSession()
         );
     }
 
@@ -94,7 +80,7 @@ class QuoteFactory extends AbstractFactory
         return new DatabaseStorageStrategy(
             $this->getCustomerClient(),
             $this->createZedQuoteStub(),
-            $this->getSessionClient()
+            $this->createSession()
         );
     }
 

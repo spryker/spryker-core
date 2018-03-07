@@ -4,7 +4,6 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/calculation": "^4.0.0",
     "spryker/currency": "^2.0.0 || ^3.0.0",
     "spryker/customer": "^6.0.0 || ^7.0.0",
     "spryker/kernel": "^3.0.0",
@@ -20,7 +19,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\Quote\\Helper\\": "tests/SprykerTest/Shared/Quote/_support/Helper/"
     }
   },
   "autoload-dev": {

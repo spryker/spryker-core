@@ -59,7 +59,7 @@ class StorageStrategyProvider implements StorageStrategyProviderInterface
     protected function findStorageStrategy($storageStrategyType): StorageStrategyInterface
     {
         foreach ($this->storageStrategyList as $storageStrategy) {
-            if ($storageStrategy->getStorageType() === $storageStrategyType) {
+            if ($storageStrategy->getStorageStrategy() === $storageStrategyType) {
                 return $storageStrategy;
             }
         }

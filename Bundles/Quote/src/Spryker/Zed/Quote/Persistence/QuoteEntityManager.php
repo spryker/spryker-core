@@ -22,11 +22,12 @@ class QuoteEntityManager extends AbstractEntityManager implements QuoteEntityMan
      */
     public function saveQuote(QuoteTransfer $quoteTransfer)
     {
-        // TODO: too much mapping here, we need to map directly from QuoteTransfer to SpyQuote only and don't use the magic `save()` method from AbstractEntityManager.
         $quoteMapper = $this->getFactory()->createQuoteMapper();
-        $quoteEntityTransfer = $quoteMapper->mapTransferToEntityTransfer($quoteTransfer);
+        $quoteEntity = $quoteMapper->mapTransferToEntity($quoteTransfer);
+        $quoteEntity->save();
+        $quoteTransfer->setIdQuote($quoteEntity->getIdQuote());
 
-        return $quoteMapper->mapEntityTransferToTransfer($this->save($quoteEntityTransfer));
+        return $quoteTransfer;
     }
 
     /**

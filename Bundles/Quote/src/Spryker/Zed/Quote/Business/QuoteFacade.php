@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Quote\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteMergeTransfer;
+use Generated\Shared\Transfer\QuoteMergeRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -29,7 +29,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
      */
     public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->getFactory()->createQuote()->save($quoteTransfer);
+        return $this->getFactory()->createQuoteWriter()->save($quoteTransfer);
     }
 
     /**
@@ -43,7 +43,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
      */
     public function findQuoteByCustomer(CustomerTransfer $customerTransfer): QuoteResponseTransfer
     {
-        return $this->getFactory()->createQuote()->findQuoteByCustomer($customerTransfer);
+        return $this->getFactory()->createQuoteReader()->findQuoteByCustomer($customerTransfer);
     }
 
     /**
@@ -57,7 +57,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
      */
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->getFactory()->createQuote()->delete($quoteTransfer);
+        return $this->getFactory()->createQuoteDeleter()->delete($quoteTransfer);
     }
 
     /**
@@ -65,12 +65,24 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteMergeTransfer $quoteMergeTransfer
+     * @param \Generated\Shared\Transfer\QuoteMergeRequestTransfer $quoteMergeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function mergeQuotes(QuoteMergeTransfer $quoteMergeTransfer)
+    public function mergeQuotes(QuoteMergeRequestTransfer $quoteMergeRequestTransfer): QuoteTransfer
     {
-        return $this->getFactory()->createQuoteMerger()->merge($quoteMergeTransfer);
+        return $this->getFactory()->createQuoteMerger()->merge($quoteMergeRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getStorageStrategy()
+    {
+        return $this->getFactory()->getBundleConfig()->getStorageStrategy();
     }
 }
