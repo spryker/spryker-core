@@ -51,11 +51,14 @@
         <property name="vendor" type="string"/>
         <property name="application" type="string"/>
         <property name="module" type="string"/>
+        <property name="moduleLayer" type="string"/>
         <property name="type" type="string"/>
         <property name="toVendor" type="string"/>
         <property name="toApplication" type="string"/>
         <property name="toModule" type="string"/>
+        <property name="toModuleLayer" type="string"/>
         <property name="toType" type="string"/>
+        <property name="methods" type="string[]"/>
     </transfer>
 
 </transfers>
