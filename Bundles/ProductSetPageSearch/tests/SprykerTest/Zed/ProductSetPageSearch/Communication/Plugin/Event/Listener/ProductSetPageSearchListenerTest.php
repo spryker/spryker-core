@@ -58,6 +58,8 @@ class ProductSetPageSearchListenerTest extends Unit
      */
     protected function setUp()
     {
+        parent::setUp();
+
         if (!$this->tester->isSuiteProject()) {
             throw new SkippedTestError('Warning: not in suite environment');
         }
