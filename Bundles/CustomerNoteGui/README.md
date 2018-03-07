@@ -10,4 +10,4 @@ composer require spryker/customer-note-gui
 
 ## Documentation
 
-[Module Documentation](TODO: link here)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/modules.html)
