@@ -9,11 +9,14 @@ namespace Spryker\Client\CompanyRole\Zed;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToZedRequestClientInterface;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class CompanyRoleStub implements CompanyRoleStubInterface
 {
@@ -116,6 +119,32 @@ class CompanyRoleStub implements CompanyRoleStubInterface
         $this->zedRequestClient->call(
             '/company-role/gateway/save-company-user',
             $companyUserTransfer
+        );
+    }
+
+    /**
+     * @param PermissionTransfer $permissionTransfer
+     *
+     * @return PermissionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function findPermissionByIdCompanyRoleByIdPermission(PermissionTransfer $permissionTransfer): PermissionTransfer
+    {
+        return $this->zedRequestClient->call(
+            '/company-role/gateway/find-permission-by-id-company-role-by-id-permission',
+            $permissionTransfer
+        );
+    }
+
+    /**
+     * @param PermissionTransfer $permissionTransfer
+     *
+     * @return CompanyRolePermissionResponseTransfer|TransferInterface
+     */
+    public function updateCompanyRolePermission(PermissionTransfer $permissionTransfer): CompanyRolePermissionResponseTransfer
+    {
+        return $this->zedRequestClient->call(
+            '/company-role/gateway/update-company-role-permission',
+            $permissionTransfer
         );
     }
 }

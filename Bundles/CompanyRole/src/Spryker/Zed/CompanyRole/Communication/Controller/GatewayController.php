@@ -9,10 +9,12 @@ namespace Spryker\Zed\CompanyRole\Communication\Controller;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -107,5 +109,32 @@ class GatewayController extends AbstractGatewayController
         $response->setIsSuccessful(true);
 
         return $response;
+    }
+
+    /**
+     * @param PermissionTransfer $permissionTransfer
+     *
+     * @return PermissionTransfer
+     */
+    public function findPermissionByIdCompanyRoleByIdPermissionAction(PermissionTransfer $permissionTransfer)
+    {
+        return $this->getFacade()->findPermissionByIdCompanyRoleByIdPermission(
+            $permissionTransfer->getIdCompanyRole(),
+            $permissionTransfer->getIdPermission()
+        );
+    }
+
+    /**
+     * @param PermissionTransfer $permissionTransfer
+     *
+     * @return CompanyRolePermissionResponseTransfer
+     */
+    public function updateCompanyRolePermissionAction(PermissionTransfer $permissionTransfer): CompanyRolePermissionResponseTransfer
+    {
+        $this->getFacade()->updateCompanyRolePermission($permissionTransfer);
+
+        return (new CompanyRolePermissionResponseTransfer)
+            ->setPermission($permissionTransfer)
+            ->setIsSuccessful(true);
     }
 }

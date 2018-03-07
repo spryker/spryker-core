@@ -9,10 +9,12 @@ namespace Spryker\Client\CompanyRole;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -131,5 +133,37 @@ class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInter
         $this->getFactory()
             ->createZedCompanyRoleStub()
             ->saveCompanyUser($companyUserTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param PermissionTransfer $permissionTransfer
+     *
+     * @return PermissionTransfer
+     */
+    public function findPermissionByIdCompanyRoleByIdPermission(PermissionTransfer $permissionTransfer): PermissionTransfer
+    {
+        return $this->getFactory()
+            ->createZedCompanyRoleStub()
+            ->findPermissionByIdCompanyRoleByIdPermission($permissionTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param PermissionTransfer $permissionTransfer
+     *
+     * @return CompanyRolePermissionResponseTransfer
+     */
+    public function updateCompanyRolePermission(PermissionTransfer $permissionTransfer): CompanyRolePermissionResponseTransfer
+    {
+        return $this->getFactory()
+            ->createZedCompanyRoleStub()
+            ->updateCompanyRolePermission($permissionTransfer);
     }
 }

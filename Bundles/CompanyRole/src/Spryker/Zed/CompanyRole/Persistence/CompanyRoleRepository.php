@@ -60,23 +60,79 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
 
         $companyRoleToPermissionEntities = $this->buildQueryFromCriteria($query)->find();
 
-        //mapper
+        //todo: mapper
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
         foreach ($companyRoleToPermissionEntities as $companyRoleToPermissionEntity) {
             $permissionTransfer = new PermissionTransfer();
 
-            $configuration = \json_decode($companyRoleToPermissionEntity->getConfiguration());
-            if (json_last_error() === \JSON_ERROR_NONE) {
-                $configuration = [];
-            }
-
-            $permissionTransfer->setConfiguration($configuration);
             $permissionTransfer->setKey($companyRoleToPermissionEntity->getPermission()->getKey());
+
+            $permissionTransfer->setConfigurationSignature(
+                $this->jsonDecode($companyRoleToPermissionEntity->getPermission()->getConfigurationSignature())
+            );
+
+            $permissionTransfer->setConfiguration(
+                $this->jsonDecode($companyRoleToPermissionEntity->getConfiguration())
+            );
 
             $permissionCollectionTransfer->addPermission($permissionTransfer);
         }
 
         return $permissionCollectionTransfer;
+    }
+
+    /**
+     * @param int $idCompanyRole
+     * @param int $idPermission
+     *
+     * @return PermissionTransfer
+     */
+    public function findPermissionsByIdCompanyRoleByIdPermission(int $idCompanyRole, int $idPermission): PermissionTransfer
+    {
+        $query = $this->getFactory()
+            ->createCompanyRoleToPermissionQuery()
+            ->filterByFkCompanyRole($idCompanyRole)
+            ->filterByFkPermission($idPermission)
+            ->joinWithPermission();
+
+        $companyRoleToPermissionEntity = $this->buildQueryFromCriteria($query)->findOne();
+
+        //todo: mapper
+        $permissionTransfer = new PermissionTransfer();
+
+        if (!$companyRoleToPermissionEntity) {
+            return $permissionTransfer;
+        }
+
+        $permissionTransfer->setKey($companyRoleToPermissionEntity->getPermission()->getKey());
+        $permissionTransfer->setIdPermission($companyRoleToPermissionEntity->getFkPermission());
+        $permissionTransfer->setIdCompanyRole($companyRoleToPermissionEntity->getFkCompanyRole());
+
+        $permissionTransfer->setConfigurationSignature(
+            $this->jsonDecode($companyRoleToPermissionEntity->getPermission()->getConfigurationSignature())
+        );
+
+        $permissionTransfer->setConfiguration(
+            $this->jsonDecode($companyRoleToPermissionEntity->getConfiguration())
+        );
+
+        return $permissionTransfer;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return array
+     */
+    protected function jsonDecode($value)
+    {
+        $decodedValue = \json_decode($value, true);
+
+        if (json_last_error() === \JSON_ERROR_NONE) {
+            return $decodedValue;
+        }
+
+        return [];
     }
 
     /**

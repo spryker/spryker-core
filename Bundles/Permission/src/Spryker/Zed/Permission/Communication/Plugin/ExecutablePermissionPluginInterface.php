@@ -7,36 +7,12 @@
 
 namespace Spryker\Zed\Permission\Communication\Plugin;
 
-interface ExecutablePermissionPluginInterface extends PermissionPluginInterface
+use Spryker\Shared\Permission\Dependency\Plugin\ExecutablePermissionPluginInterface as SharedExecutablePermissionPluginInterface;
+
+/**
+ * @method bool can(array $configuration, $context = null)
+ * @method array getConfigurationSignature()
+ */
+interface ExecutablePermissionPluginInterface extends SharedExecutablePermissionPluginInterface
 {
-    public const CONFIG_FIELD_TYPE_INT = 'CONFIG_FIELD_TYPE_INT';
-    public const CONFIG_FIELD_TYPE_STRING = 'CONFIG_FIELD_TYPE_STRING';
-
-    /**
-     * Specification:
-     * - Implements a business login against the configuration and the passed context
-     *
-     * @param array $configuration
-     * @param mixed|null $context
-     *
-     * @return bool
-     */
-    public function can(array $configuration, $context = null);
-
-    /**
-     * The signature is used to draw a form for filling on assigning a permission to a role.
-     * Used a configuration array generation as well.
-     *
-     * Specification:
-     * - Provides a signature for collection the plugin configuration
-     *
-     * @example
-     * [
-     *      'amount' => ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT,
-     *      'item_count' => ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT
-     * ]
-     *
-     * @return array
-     */
-    public function getConfigurationSignature();
 }

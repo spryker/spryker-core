@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 
 interface CompanyRoleRepositoryInterface
 {
@@ -27,6 +28,14 @@ interface CompanyRoleRepositoryInterface
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function findPermissionsByIdCompanyUser(int $idCompanyUser): PermissionCollectionTransfer;
+
+    /**
+     * @param int $idCompanyRole
+     * @param int $idPermission
+     *
+     * @return PermissionTransfer
+     */
+    public function findPermissionsByIdCompanyRoleByIdPermission(int $idCompanyRole, int $idPermission): PermissionTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer

@@ -7,15 +7,11 @@
 
 namespace Spryker\Client\Permission\Plugin;
 
-interface PermissionPluginInterface
+use \Spryker\Shared\Permission\Dependency\Plugin\PermissionPluginInterface as SharedPermissionPluginInterface;
+
+/**
+ * @method string getKey()
+ */
+interface PermissionPluginInterface extends SharedPermissionPluginInterface
 {
-    /**
-     * Specification:
-     * - Defines a permission plugin
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getKey();
 }

@@ -9,10 +9,12 @@ namespace Spryker\Client\CompanyRole;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 
 interface CompanyRoleClientInterface
 {
@@ -104,4 +106,30 @@ interface CompanyRoleClientInterface
      * @return void
      */
     public function saveCompanyUser(CompanyUserTransfer $companyUserTransfer): void;
+
+    /**
+     * Specification:
+     * - Finds a permission configuration by id company role and id permission
+     * - Finds a permission plugin
+     * - Fills a configuration signature
+     *
+     * @api
+     *
+     * @param PermissionTransfer $permissionTransfer
+     *
+     * @return PermissionTransfer
+     */
+    public function findPermissionByIdCompanyRoleByIdPermission(PermissionTransfer $permissionTransfer): PermissionTransfer;
+
+    /**
+     * Specification:
+     * - Updates a company role permission configuration
+     *
+     * @api
+     *
+     * @param PermissionTransfer $permissionTransfer
+     *
+     * @return CompanyRolePermissionResponseTransfer
+     */
+    public function updateCompanyRolePermission(PermissionTransfer $permissionTransfer): CompanyRolePermissionResponseTransfer;
 }
