@@ -7,111 +7,31 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
-use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
-class CmsBlockGuiToCmsBlockBridge implements CmsBlockGuiToCmsBlockInterface
+class ManualOrderEntryGuiToCustomerFacadeBridge implements ManualOrderEntryGuiToCustomerFacadeInterface
 {
     /**
-     * @var \Spryker\Zed\CmsBlock\Business\CmsBlockFacadeInterface
+     * @var \Spryker\Zed\Customer\Business\CustomerFacadeInterface
      */
-    protected $cmsBlockFacade;
+    protected $customerFacade;
 
     /**
-     * @param \Spryker\Zed\CmsBlock\Business\CmsBlockFacadeInterface $cmsBlockFacade
+     * @param \Spryker\Zed\Customer\Business\CustomerFacadeInterface $customerFacade
      */
-    public function __construct($cmsBlockFacade)
+    public function __construct($customerFacade)
     {
-        $this->cmsBlockFacade = $cmsBlockFacade;
+        $this->customerFacade = $customerFacade;
     }
 
     /**
-     * @param int $idCmsBlock
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function findCmsBlockById($idCmsBlock)
+    public function registerCustomer(CustomerTransfer $customerTransfer)
     {
-        return $this->cmsBlockFacade->findCmsBlockById($idCmsBlock);
+        return $this->customerFacade->registerCustomer($customerTransfer);
     }
 
-    /**
-     * @param int $idCmsBlock
-     *
-     * @return void
-     */
-    public function activateById($idCmsBlock)
-    {
-        $this->cmsBlockFacade->activateById($idCmsBlock);
-    }
-
-    /**
-     * @param int $idCmsBlock
-     *
-     * @return void
-     */
-    public function deactivateById($idCmsBlock)
-    {
-        $this->cmsBlockFacade->deactivateById($idCmsBlock);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer
-     */
-    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
-    {
-        return $this->cmsBlockFacade->updateCmsBlock($cmsBlockTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer
-     */
-    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
-    {
-        return $this->cmsBlockFacade->createCmsBlock($cmsBlockTransfer);
-    }
-
-    /**
-     * @param string $templatePath
-     *
-     * @return void
-     */
-    public function syncTemplate($templatePath)
-    {
-        $this->cmsBlockFacade->syncTemplate($templatePath);
-    }
-
-    /**
-     * @param int $idCmsBlock
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
-     */
-    public function findGlossary($idCmsBlock)
-    {
-        return $this->cmsBlockFacade->findGlossary($idCmsBlock);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
-     */
-    public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer)
-    {
-        return $this->cmsBlockFacade->saveGlossary($cmsBlockGlossaryTransfer);
-    }
-
-    /**
-     * @param int $idCmsBlockTemplate
-     *
-     * @return bool
-     */
-    public function hasTemplateFileById($idCmsBlockTemplate)
-    {
-        return $this->cmsBlockFacade->hasTemplateFileById($idCmsBlockTemplate);
-    }
 }

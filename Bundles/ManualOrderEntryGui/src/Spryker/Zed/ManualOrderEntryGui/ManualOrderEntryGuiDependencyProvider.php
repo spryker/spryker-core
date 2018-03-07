@@ -9,11 +9,14 @@ namespace Spryker\Zed\ManualOrderEntryGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\CheckoutCustomerFormPlugin;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\CheckoutCustomersListFormPlugin;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerBridge;
 
 class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    const FACADE_CUSTOMER = 'MANUAL_ORDER_ENTRY_GUI:FACADE_CUSTOMER';
+
     const QUERY_CONTAINER_CUSTOMER = 'MANUAL_ORDER_ENTRY_GUI:QUERY_CONTAINER_CUSTOMER';
 
     const PLUGINS_CHECKOUT_FORM = 'MANUAL_ORDER_ENTRY_GUI:PLUGINS_CHECKOUT_FORM';
@@ -26,8 +29,23 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = parent::provideCommunicationLayerDependencies($container);
+        $container = $this->addCustomerFacade($container);
         $container = $this->addCustomerQueryContainer($container);
         $container = $this->addCheckoutFormPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomerFacade(Container $container)
+    {
+        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+            return new ManualOrderEntryGuiToCustomerFacadeBridge($container->getLocator()->customer()->facade());
+        };
 
         return $container;
     }
@@ -66,7 +84,8 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     protected function getCheckoutFormPlugins()
     {
         $plugins = [
-            new CheckoutCustomerFormPlugin(),
+            new CheckoutCustomersListFormPlugin(),
+//            new CheckoutCustomerFormPlugin(),
         ];
 
         return $plugins;

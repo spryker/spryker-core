@@ -37,37 +37,12 @@ class CheckoutForm extends AbstractType
     const GROUP_UNIQUE_BLOCK_CHECK = 'unique_block_check';
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-//        $resolver->setRequired(static::OPTION_TEMPLATE_CHOICES);
-//
-//        $resolver->setDefaults([
-//            'validation_groups' => function (FormInterface $form) {
-//                $defaultData = $form->getConfig()->getData();
-//                $formData = $form->getData();
-//
-//                if (!array_key_exists(static::FIELD_NAME, $defaultData)) {
-//                    return [Constraint::DEFAULT_GROUP, static::GROUP_UNIQUE_BLOCK_CHECK];
-//                }
-//
-//                if ($defaultData[static::FIELD_NAME] !== $formData[static::FIELD_NAME]) {
-//                    return [Constraint::DEFAULT_GROUP, static::GROUP_UNIQUE_BLOCK_CHECK];
-//                }
-//
-//                return [Constraint::DEFAULT_GROUP];
-//            },
-//        ]);
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return void
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -78,6 +53,8 @@ class CheckoutForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
+      *
+      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     protected function addPluginForms(FormBuilderInterface $builder)
     {

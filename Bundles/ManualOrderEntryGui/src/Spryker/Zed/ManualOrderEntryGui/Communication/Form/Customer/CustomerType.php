@@ -7,19 +7,22 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer;
 
-use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
 class CustomerType extends AbstractType
 {
-    const FIELD_CUSTOMER = 'id_customer';
-
-    const OPTION_CUSTOMER_ARRAY = 'option-category-array';
+    const FIELD_SALUTATION = 'salutation';
+    const FIELD_FIRST_NAME = 'first_name';
+    const FIELD_LAST_NAME = 'last_name';
+    const FIELD_EMAIL = 'email';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -29,38 +32,95 @@ class CustomerType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addCustomerField(
-            $builder,
-            $options[static::OPTION_CUSTOMER_ARRAY]
-        );
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver
-            ->setRequired(static::OPTION_CUSTOMER_ARRAY);
+        $this
+            ->addSalutationField($builder)
+            ->addFirstNameField($builder)
+            ->addLastNameField($builder)
+            ->addEmailField($builder)
+        ;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $customerList
      *
      * @return $this
      */
-    protected function addCustomerField(FormBuilderInterface $builder, array $customerList)
+    protected function addSalutationField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_CUSTOMER, Select2ComboBoxType::class, [
-            'property_path' => static::FIELD_CUSTOMER,
-            'label' => 'Customers',
-            'choices' => array_flip($customerList),
-            'choices_as_values' => true,
-            'multiple' => false,
+        $builder->add(self::FIELD_SALUTATION, ChoiceType::class, [
+            'choices' => $this->getSalutationChoices(),
             'required' => true,
+            'label' => 'Salutation',
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getSalutationChoices()
+    {
+        return [
+            'Ms' => 'Ms',
+            'Mr' => 'Mr',
+            'Mrs' => 'Mrs',
+            'Dr' => 'Dr',
+        ];
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addFirstNameField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_FIRST_NAME, TextType::class, [
+            'label' => 'First Name',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addLastNameField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_LAST_NAME, TextType::class, [
+            'label' => 'Last Name',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addEmailField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_EMAIL, EmailType::class, [
+            'label' => 'Email',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
 
         return $this;
@@ -71,16 +131,7 @@ class CustomerType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'customers';
+        return 'customer';
     }
 
-    /**
-     * @deprecated Use `getBlockPrefix()` instead.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
-    }
 }

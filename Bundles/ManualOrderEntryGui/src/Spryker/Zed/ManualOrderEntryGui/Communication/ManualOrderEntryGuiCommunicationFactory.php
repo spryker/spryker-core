@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication;
 
+use Pyz\Yves\Customer\Form\RegisterForm;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Checkout\CheckoutForm;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomerType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CheckoutFormDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomerDataProvider;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomersListDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiDependencyProvider;
 
 /**
@@ -19,8 +22,11 @@ use Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiDependencyProvider;
  */
 class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFactory
 {
+
     /**
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CheckoutFormDataProvider
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function createCheckoutFormDataProvider()
     {
@@ -30,7 +36,19 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @return \Spryker\Zed\Customer\Business\CustomerFacade
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function getCustomerFacade()
+    {
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_CUSTOMER);
+    }
+
+    /**
      * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function getCustomerQueryContainer()
     {
@@ -42,7 +60,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getCheckoutForm(CheckoutFormDataProvider $checkoutFormDataProvider)
+    public function createCheckoutForm(CheckoutFormDataProvider $checkoutFormDataProvider)
     {
         return $this->getFormFactory()->create(
             CheckoutForm::class,
@@ -53,10 +71,32 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
 
     /**
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\CheckoutFormPluginInterface[]
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function getCheckoutFormPlugins()
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::PLUGINS_CHECKOUT_FORM);
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType
+     */
+    public function createCustomersListType()
+    {
+        return new CustomersListType();
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomersListDataProvider
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function createCustomersListDataProvider()
+    {
+        return new CustomersListDataProvider(
+            $this->getCustomerQueryContainer()
+        );
     }
 
     /**
@@ -72,8 +112,20 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
      */
     public function createCustomerDataProvider()
     {
-        return new CustomerDataProvider(
-            $this->getCustomerQueryContainer()
+        return new CustomerDataProvider();
+    }
+
+    /**
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomerDataProvider $customerFormDataProvider
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCustomerForm(CustomerDataProvider $customerFormDataProvider)
+    {
+        return $this->getFormFactory()->create(
+            CustomerType::class,
+           null,
+            $customerFormDataProvider->getOptions()
         );
     }
 

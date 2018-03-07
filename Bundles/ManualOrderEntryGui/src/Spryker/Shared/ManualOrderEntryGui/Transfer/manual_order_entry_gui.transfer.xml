@@ -7,6 +7,7 @@
         <property name="idOrder" type="int" />
 
         <property name="idCustomer" type="int" />
+        <property name="idCustomer2" type="int" />
     </transfer>
 
 </transfers>

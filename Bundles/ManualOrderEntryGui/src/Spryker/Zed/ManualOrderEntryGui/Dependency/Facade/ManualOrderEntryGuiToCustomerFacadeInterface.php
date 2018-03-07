@@ -7,71 +7,16 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
-use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
-interface CmsBlockGuiToCmsBlockInterface
+interface ManualOrderEntryGuiToCustomerFacadeInterface
 {
-    /**
-     * @param int $idCmsBlock
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
-     */
-    public function findCmsBlockById($idCmsBlock);
 
     /**
-     * @param int $idCmsBlock
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function activateById($idCmsBlock);
+    public function registerCustomer(CustomerTransfer $customerTransfer);
 
-    /**
-     * @param int $idCmsBlock
-     *
-     * @return void
-     */
-    public function deactivateById($idCmsBlock);
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer
-     */
-    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer
-     */
-    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
-
-    /**
-     * @param string $templatePath
-     *
-     * @return void
-     */
-    public function syncTemplate($templatePath);
-
-    /**
-     * @param int $idCmsBlock
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
-     */
-    public function findGlossary($idCmsBlock);
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
-     */
-    public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer);
-
-    /**
-     * @param int $idCmsBlockTemplate
-     *
-     * @return bool
-     */
-    public function hasTemplateFileById($idCmsBlockTemplate);
 }

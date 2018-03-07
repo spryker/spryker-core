@@ -7,25 +7,10 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\ManualOrderEntryTransfer;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomerType;
-use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 class CustomerDataProvider
 {
-    /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface
-     */
-    protected $customerQueryContainer;
-
-    /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface $customerQueryContainer
-     */
-    public function __construct(
-        ManualOrderEntryGuiToCustomerQueryContainerInterface $customerQueryContainer
-    ) {
-        $this->customerQueryContainer = $customerQueryContainer;
-    }
 
     /**
      * @return array
@@ -33,43 +18,18 @@ class CustomerDataProvider
     public function getOptions()
     {
         return [
-            'data_class' => ManualOrderEntryTransfer::class,
-            CustomerType::OPTION_CUSTOMER_ARRAY => $this->getCustomerList(),
+            'data_class' => CustomerTransfer::class
         ];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ManualOrderEntryTransfer $manualOrderEntryTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\ManualOrderEntryTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function getData(ManualOrderEntryTransfer $manualOrderEntryTransfer)
+    public function getData(CustomerTransfer $customerTransfer)
     {
-        return $manualOrderEntryTransfer;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getCustomerList()
-    {
-        $customerCollection = $this->customerQueryContainer
-            ->queryCustomers()
-            ->find();
-
-        $customerList = [];
-
-        /** @var \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity */
-        foreach ($customerCollection as $customerEntity) {
-            $customerFieldData = $customerEntity->getLastName()
-                . ' '
-                . $customerEntity->getFirstName()
-                . ' [' . $customerEntity->getEmail() . ']';
-
-            $customerList[$customerEntity->getIdCustomer()] = $customerFieldData;
-        }
-
-        return $customerList;
+        return $customerTransfer;
     }
 
 }
