@@ -23,8 +23,9 @@ class CompanyUnitAddressLabelEntityManager extends AbstractEntityManager impleme
      */
     public function saveLabelToAddressRelation(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ) {
+    ):void {
         //TODO: calculate labels that should be removed. NO need to delete all of them and recreate.
+        //TODO: calculate redundant relations in business layer
         $this->deleteLabelRelationsByCompanyUnitAddress($companyUnitAddressTransfer);
         $labelCollection = $companyUnitAddressTransfer->getLabelCollection();
         if (empty($labelCollection) || empty($labelCollection->getLabels())) {
@@ -46,6 +47,7 @@ class CompanyUnitAddressLabelEntityManager extends AbstractEntityManager impleme
      */
     protected function deleteLabelRelationsByCompanyUnitAddress(CompanyUnitAddressTransfer $companyUnitAddressTransfer)
     {
+        //Check delete all.
         $this->getFactory()
             ->createCompanyUnitAddressLabelToCompanyUnitAddressQuery()
             ->filterByFkCompanyUnitAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress())

@@ -18,6 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CompanyUnitAddressLabelCommunicationFactory extends AbstractCommunicationFactory
 {
+    //TODO: remove
     /**
      * @param int $idCompanyUnitAddress
      *

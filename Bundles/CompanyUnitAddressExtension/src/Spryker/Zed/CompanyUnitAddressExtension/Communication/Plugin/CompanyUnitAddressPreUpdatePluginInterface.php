@@ -8,9 +8,11 @@
 namespace Spryker\Zed\CompanyUnitAddressExtension\Communication\Plugin;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
-
+//TODO: move to Dependency/Plugin
 interface CompanyUnitAddressPreUpdatePluginInterface
 {
+    //TODO: add specification instead of inheritdoc
+    //TODO: rename plugin to postSave
     /**
      * {@inheritdoc}
      *

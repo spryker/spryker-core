@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CompanyUnitAddressTransferHydratorPlugin extends AbstractPlugin implements CompanyUnitAddressTransferHydratorPluginInterface
 {
+
+    //TODO: remove "transfer" from name
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $addressTransfer
      *
@@ -25,6 +27,7 @@ class CompanyUnitAddressTransferHydratorPlugin extends AbstractPlugin implements
      */
     public function hydrate(CompanyUnitAddressTransfer $addressTransfer)
     {
+        //TODO: move logic to facade method()
         $labelCollection = $this->getRepository()
             ->findCompanyUnitAddressLabelsByAddress($addressTransfer->getIdCompanyUnitAddress());
         $addressTransfer->setLabelCollection($labelCollection);

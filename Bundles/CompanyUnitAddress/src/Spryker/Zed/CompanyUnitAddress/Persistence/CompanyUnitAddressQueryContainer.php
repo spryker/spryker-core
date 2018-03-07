@@ -22,6 +22,8 @@ class CompanyUnitAddressQueryContainer extends AbstractQueryContainer implements
      */
     public function queryCompanyUnitAddress()
     {
+        //TODO: move create to factory
+        //TODO: move joins to separate method named like ...WIthSmth
         return SpyCompanyUnitAddressQuery::create()
             ->innerJoinWithCompany()
             ->innerJoinWithCountry()

@@ -20,6 +20,7 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
      */
     public function createAddressTable()
     {
+        //TODO: Pass query container, not query
         $companyUnitAddressQuery = $this->getCompanyUnitAddressGuiQueryContainer()
             ->queryCompanyUnitAddress();
 

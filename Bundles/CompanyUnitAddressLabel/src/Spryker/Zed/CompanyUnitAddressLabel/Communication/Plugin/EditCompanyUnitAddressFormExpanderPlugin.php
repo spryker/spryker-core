@@ -30,6 +30,7 @@ class EditCompanyUnitAddressFormExpanderPlugin extends AbstractPlugin implements
     public function buildForm(FormBuilderInterface $builder)
     {
         //TODO: set data from database to form
+        //TODO: MOve logic to CompanyUnitAddressEditFormExpander in communication
         $dataProvider = $this->getFactory()->createCompanyUnitAddressLabelChoiceFormDataProvider();
 
         $builder->add(
@@ -38,6 +39,7 @@ class EditCompanyUnitAddressFormExpanderPlugin extends AbstractPlugin implements
             $dataProvider->getOptions()
         );
 
+        //TODO: move to inner form
         $builder->get(CompanyUnitAddressTransfer::LABEL_COLLECTION)
             ->addModelTransformer(
                 new CallbackTransformer(

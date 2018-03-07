@@ -43,4 +43,6 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
 
         return $this->repository->getCompanyUnitAddressCollection($criteriaFilterTransfer);
     }
+
+    //TODO: add retrieving by id  + hydrate entity with labels.
 }

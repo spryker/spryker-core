@@ -40,6 +40,7 @@ class CompanyUnitAddressTable extends AbstractTable
      */
     protected $companyUnitAddressQuery;
 
+    //TODO: inject only query container
     /**
      * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery $companyUnitAddressQuery
      */

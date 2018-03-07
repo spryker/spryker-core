@@ -37,6 +37,7 @@ class CompanyUnitAddressLabelFormDataProvider
         ];
     }
 
+    //TODO: use \Spryker\Zed\CmsBlockProductConnector\Communication\Plugin\CmsBlockProductAbstractFormPlugin::buildForm
     /**
      * @param int|null $idCompanyUnitAddress
      *
@@ -48,6 +49,7 @@ class CompanyUnitAddressLabelFormDataProvider
             ->findCompanyUnitAddressLabelsByAddress($idCompanyUnitAddress);
     }
 
+    //TODO:rename choices to labelChoices
     /**
      * @return array
      */

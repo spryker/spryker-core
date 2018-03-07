@@ -30,10 +30,12 @@ class CompanyUnitAddressLabelChoiceFormType extends AbstractType
         $builder->add(static::FIELD_VALUES, Select2ComboBoxType::class, [
             'label' => 'Labels',
             'required' => false,
+            //TODO: get data from collection
             'property_path' => '[labels]',
             'choices' => $options[static::OPTION_VALUES_CHOICES],
             'multiple' => true,
-            'by_reference' => false,
+            //TODO: remove
+            //'by_reference' => false,
         ]);
 
         $this->addModelTransformer($builder);
@@ -59,6 +61,7 @@ class CompanyUnitAddressLabelChoiceFormType extends AbstractType
      */
     protected function addModelTransformer(FormBuilderInterface $builder)
     {
+        //TODO: use these transformers only
         $builder->get(static::FIELD_VALUES)->addModelTransformer(
             new CallbackTransformer(
                 function ($labels) {

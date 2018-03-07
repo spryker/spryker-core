@@ -18,9 +18,11 @@ use Symfony\Component\HttpFoundation\Request;
 class EditCompanyUnitAddressController extends AbstractController
 {
     const URL_PARAM_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
+
     const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_SUCCESS = 'Company unit address has been successfully updated.';
     const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_ERROR = 'Company unit address update failed.';
 
+    //rename to HEADER_REFERER
     const REFERER = 'referer';
 
     /**
@@ -48,6 +50,7 @@ class EditCompanyUnitAddressController extends AbstractController
             );
 
         return $this->viewResponse([
+            //TODO: rename id if possible
             'idCompanyUnitAddress' => $idCompanyUnitAddress,
             'companyUnitAddressForm' => $companyUnitAddressForm->createView(),
             'companyUnitAddress' => $companyUnitAddressTransfer,
@@ -61,7 +64,8 @@ class EditCompanyUnitAddressController extends AbstractController
      */
     protected function updateCompanyUnitAddress(FormInterface $companyUnitAddressForm)
     {
-        if ($companyUnitAddressForm->isSubmitted() && $companyUnitAddressForm->isValid()) {
+        //TODO: check if not valid. Early return. On if statement.
+        if ($companyUnitAddressForm->isValid()) {
             $response = $this->getFactory()
                 ->getCompanyUnitAddressFacade()
                 ->update($companyUnitAddressForm->getData());
