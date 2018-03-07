@@ -42,12 +42,21 @@ use SprykerTest\Zed\ProductImageStorage\ProductImageStorageConfigMock;
 class ProductImageStorageListenerTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\ProductImageStorage\ProductImageStorageCommunicationTester
+     */
+    protected $tester;
+
+    /**
      * @throws \PHPUnit\Framework\SkippedTestError
      *
      * @return void
      */
     protected function setUp()
     {
+        if ($this->tester->isSuiteProject()) {
+            throw new SkippedTestError('Warning: not in suite environment');
+        }
+
         $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
         if ($dbEngine !== 'pgsql') {
             throw new SkippedTestError('Warning: no PostgreSQL is detected');

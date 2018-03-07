@@ -25,4 +25,20 @@ class ProductSetPageSearchCommunicationTester extends Actor
    /**
     * Define custom actions here
     */
+
+    const PROJECT = 'PROJECT';
+
+    const PROJECT_SUITE = 'suite';
+
+    /**
+     * @return bool
+     */
+    public function isSuiteProject()
+    {
+        if (isset($_SERVER[static::PROJECT]) && $_SERVER[static::PROJECT] === static::PROJECT_SUITE) {
+            return true;
+        }
+
+        return false;
+    }
 }
