@@ -35,7 +35,7 @@ class ProductSetPageSearchCommunicationTester extends Actor
      */
     public function isSuiteProject()
     {
-        if (isset($_SERVER[static::PROJECT]) && $_SERVER[static::PROJECT] === static::PROJECT_SUITE) {
+        if (getenv(static::PROJECT) === static::PROJECT_SUITE) {
             return true;
         }
 
