@@ -22,7 +22,10 @@ class CompanyMapper implements CompanyMapperInterface
         CompanyTransfer $companyTransfer,
         SpyCompanyEntityTransfer $companyEntityTransfer
     ): SpyCompanyEntityTransfer {
-        return $companyEntityTransfer->fromArray($companyTransfer->modifiedToArray(), true);
+        return $companyEntityTransfer->fromArray(
+            $companyTransfer->modifiedToArray(false),
+            true
+        );
     }
 
     /**
@@ -35,6 +38,9 @@ class CompanyMapper implements CompanyMapperInterface
         SpyCompanyEntityTransfer $companyEntityTransfer,
         CompanyTransfer $companyTransfer
     ): CompanyTransfer {
-        return $companyTransfer->fromArray($companyEntityTransfer->toArray(), true);
+        return $companyTransfer->fromArray(
+            $companyEntityTransfer->toArray(),
+            true
+        );
     }
 }

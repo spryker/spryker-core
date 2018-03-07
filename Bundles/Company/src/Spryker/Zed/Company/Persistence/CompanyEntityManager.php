@@ -9,7 +9,7 @@ namespace Spryker\Zed\Company\Persistence;
 
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\SpyCompanyEntityTransfer;
-use Generated\Shared\Transfer\SpyCompanyStoreEntityTransfer;
+use Orm\Zed\Company\Persistence\SpyCompanyStore;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -62,10 +62,10 @@ class CompanyEntityManager extends AbstractEntityManager implements CompanyEntit
     public function addStores(array $idStores, $idCompany): void
     {
         foreach ($idStores as $idStore) {
-            $companyStoreEntityTransfer = new SpyCompanyStoreEntityTransfer();
+            $companyStoreEntityTransfer = new SpyCompanyStore();
             $companyStoreEntityTransfer->setFkCompany($idCompany)
-                ->setFkStore($idStore);
-            $this->save($companyStoreEntityTransfer);
+                ->setFkStore($idStore)
+                ->save();
         }
     }
 

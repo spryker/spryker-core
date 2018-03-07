@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToZedRequestClientInterface;
 
@@ -102,6 +103,19 @@ class CompanyRoleStub implements CompanyRoleStubInterface
         return $this->zedRequestClient->call(
             '/company-role/gateway/find-company-role-permissions',
             $companyRoleTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return void
+     */
+    public function saveCompanyUser(CompanyUserTransfer $companyUserTransfer): void
+    {
+        $this->zedRequestClient->call(
+            '/company-role/gateway/save-company-user',
+            $companyUserTransfer
         );
     }
 }

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -114,5 +115,21 @@ class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInter
         return $this->getFactory()
             ->createZedCompanyRoleStub()
             ->findCompanyRolePermissions($companyRoleTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return void
+     */
+    public function saveCompanyUser(CompanyUserTransfer $companyUserTransfer): void
+    {
+        $this->getFactory()
+            ->createZedCompanyRoleStub()
+            ->saveCompanyUser($companyUserTransfer);
     }
 }

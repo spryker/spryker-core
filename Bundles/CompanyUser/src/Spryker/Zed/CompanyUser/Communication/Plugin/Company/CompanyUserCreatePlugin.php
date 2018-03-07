@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUser\Communication\Plugin;
+namespace Spryker\Zed\CompanyUser\Communication\Plugin\Company;
 
 use Generated\Shared\Transfer\CompanyTransfer;
-use Spryker\Zed\Company\Dependency\Plugin\CompanyPostCreatePluginInterface;
+use Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**

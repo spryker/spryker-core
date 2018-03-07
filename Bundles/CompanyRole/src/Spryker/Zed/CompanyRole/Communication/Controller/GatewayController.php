@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -86,6 +87,21 @@ class GatewayController extends AbstractGatewayController
     public function deleteCompanyRoleAction(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
     {
         $this->getFacade()->delete($companyRoleTransfer);
+
+        $response = new CompanyRoleResponseTransfer();
+        $response->setIsSuccessful(true);
+
+        return $response;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function saveCompanyUserAction(CompanyUserTransfer $companyUserTransfer): CompanyRoleResponseTransfer
+    {
+        $this->getFacade()->saveCompanyUser($companyUserTransfer);
 
         $response = new CompanyRoleResponseTransfer();
         $response->setIsSuccessful(true);

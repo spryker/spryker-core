@@ -21,8 +21,12 @@
         <property name="name" type="string"/>
         <property name="isDefault" type="bool"/>
         <property name="permissionCollection" type="PermissionCollection"/>
+        <property name="companyUserCollection" type="CompanyUserCollection"/>
     </transfer>
 
+    <transfer name="CompanyUserCollection">
+        <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
+    </transfer>
     <transfer name="PermissionCollection">
         <property name="permissions" type="Permission[]" singular="permission"/>
     </transfer>

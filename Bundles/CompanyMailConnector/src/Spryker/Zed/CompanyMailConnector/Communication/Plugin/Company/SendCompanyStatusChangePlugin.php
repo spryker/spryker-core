@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Company\Dependency\Plugin;
+namespace Spryker\Zed\CompanyMailConnector\Communication\Plugin\Company;
 
 use Generated\Shared\Transfer\CompanyTransfer;
+use Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostSavePluginInterface;
 
-interface CompanyPreSavePluginInterface
+class SendCompanyStatusChangePlugin implements CompanyPostSavePluginInterface
 {
     /**
-     * Specification:
-     * - Plugin is triggered before company is saved.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -21,5 +21,8 @@ interface CompanyPreSavePluginInterface
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function preSaveValidation(CompanyTransfer $companyTransfer): CompanyTransfer;
+    public function postSave(CompanyTransfer $companyTransfer): CompanyTransfer
+    {
+        return $companyTransfer;
+    }
 }

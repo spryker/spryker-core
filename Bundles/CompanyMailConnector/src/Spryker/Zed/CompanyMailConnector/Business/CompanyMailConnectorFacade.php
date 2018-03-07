@@ -5,21 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Company\Dependency\Plugin;
+namespace Spryker\Zed\CompanyMailConnector\Business;
 
 use Generated\Shared\Transfer\CompanyTransfer;
 
-interface CompanyPostCreatePluginInterface
+class CompanyMailConnectorFacade implements CompanyMailConnectorFacadeInterface
 {
     /**
-     * Specification:
-     * - Plugin is triggered after company is created.
+     * {@inheritdoc}
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyTransfer
+     * @return void
      */
-    public function postCreate(CompanyTransfer $companyTransfer): CompanyTransfer;
+    public function sendCompanyStatusEmail(CompanyTransfer $companyTransfer): void
+    {
+        // TODO: Implement sendCompanyStatusEmail() method.
+    }
 }

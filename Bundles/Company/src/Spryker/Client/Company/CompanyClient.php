@@ -29,4 +29,18 @@ class CompanyClient extends AbstractClient implements CompanyClientInterface
     {
         return $this->getFactory()->createZedCompanyStub()->createCompany($companyTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function getCompanyById(CompanyTransfer $companyTransfer): CompanyTransfer
+    {
+        return $this->getFactory()->createZedCompanyStub()->getCompanyById($companyTransfer);
+    }
 }

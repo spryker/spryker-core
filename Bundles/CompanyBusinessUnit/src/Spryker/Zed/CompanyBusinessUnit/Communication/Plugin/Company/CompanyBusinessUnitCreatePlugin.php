@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyBusinessUnit\Communication\Plugin;
+namespace Spryker\Zed\CompanyBusinessUnit\Communication\Plugin\Company;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
-use Spryker\Zed\Company\Dependency\Plugin\CompanyPostCreatePluginInterface;
+use Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -44,11 +44,13 @@ class CompanyBusinessUnitCreatePlugin extends AbstractPlugin implements CompanyP
             ->setName($this->getConfig()->getCompanyBusinessUnitDefaultName());
 
         $companyBusinessUnitResponseTransfer = $this->getFacade()->create($companyBusinessUnitTransfer);
-        $companyTransfer->getInitialUserTransfer()
-            ->setFkCompanyBusinessUnit(
-                $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()
-                    ->getIdCompanyBusinessUnit()
-            );
+        if ($companyTransfer->getInitialUserTransfer() !== null) {
+            $companyTransfer->getInitialUserTransfer()
+                ->setFkCompanyBusinessUnit(
+                    $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer()
+                        ->getIdCompanyBusinessUnit()
+                );
+        }
 
         return $companyTransfer;
     }

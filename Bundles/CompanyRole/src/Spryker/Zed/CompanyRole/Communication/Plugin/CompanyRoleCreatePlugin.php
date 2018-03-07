@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyRole\Communication\Plugin;
 
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
-use Spryker\Zed\Company\Dependency\Plugin\CompanyPostCreatePluginInterface;
+use Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**

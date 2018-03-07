@@ -12,25 +12,33 @@ use Generated\Shared\Transfer\CompanyTransfer;
 class CompanyPluginExecutor implements CompanyPluginExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\Company\Dependency\Plugin\CompanyPreSavePluginInterface[]
+     * @var \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPreSavePluginInterface[]
      */
     protected $companyPreSavePlugins;
 
     /**
-     * @var \Spryker\Zed\Company\Dependency\Plugin\CompanyPostCreatePluginInterface[]
+     * @var \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostSavePluginInterface[]
+     */
+    protected $companyPostSavePlugins;
+
+    /**
+     * @var \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface[]
      */
     protected $companyPostCreatePlugins;
 
     /**
-     * @param \Spryker\Zed\Company\Dependency\Plugin\CompanyPreSavePluginInterface[] $companyPreSavePlugins
-     * @param \Spryker\Zed\Company\Dependency\Plugin\CompanyPostCreatePluginInterface[] $companyPostCreatePlugins
+     * @param \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPreSavePluginInterface[] $companyPreSavePlugins
+     * @param \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostSavePluginInterface[] $companyPostSavePlugins
+     * @param \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface[] $companyPostCreatePlugins
      */
     public function __construct(
         array $companyPreSavePlugins = [],
+        array $companyPostSavePlugins = [],
         array $companyPostCreatePlugins = []
     ) {
         $this->companyPreSavePlugins = $companyPreSavePlugins;
         $this->companyPostCreatePlugins = $companyPostCreatePlugins;
+        $this->companyPostSavePlugins = $companyPostSavePlugins;
     }
 
     /**
@@ -42,6 +50,20 @@ class CompanyPluginExecutor implements CompanyPluginExecutorInterface
     {
         foreach ($this->companyPreSavePlugins as $companyPreSavePlugin) {
             $companyTransfer = $companyPreSavePlugin->preSaveValidation($companyTransfer);
+        }
+
+        return $companyTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function executeCompanyPostSavePlugins(CompanyTransfer $companyTransfer): CompanyTransfer
+    {
+        foreach ($this->companyPostSavePlugins as $companyPostSavePlugin) {
+            $companyTransfer = $companyPostSavePlugin->postSave($companyTransfer);
         }
 
         return $companyTransfer;

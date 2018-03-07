@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Company\Persistence;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -27,19 +28,40 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
      */
     public function getRelatedStoresByCompanyId(int $idCompany)
     {
-        $companyStoreCollection = $this->getFactory()
+        $companyStoreEntities = $this->getFactory()
             ->createCompanyStoreQuery()
             ->filterByFkCompany($idCompany)
             ->find();
 
         $relatedStores = new ArrayObject();
 
-        foreach ($companyStoreCollection as $companyStore) {
+        foreach ($companyStoreEntities as $companyStoreEntity) {
             $storeTransfer = new StoreTransfer();
-            $storeTransfer->fromArray($companyStore->toArray(), true);
+            $storeTransfer->setIdStore($companyStoreEntity->getFkStore());
             $relatedStores->append($storeTransfer);
         }
 
         return $relatedStores;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function getCompanyById(int $idCompany): CompanyTransfer
+    {
+        $query = $this->getFactory()
+            ->createCompanyQuery()
+            ->filterByIdCompany($idCompany);
+        $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+
+        return $this->getFactory()
+            ->createCompanyMapper()
+            ->mapEntityTransferToCompanyTransfer($entityTransfer, new CompanyTransfer());
     }
 }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\CompanyRole\Persistence;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Generated\Shared\Transfer\SpyCompanyRoleEntityTransfer;
+use Orm\Zed\CompanyRole\Persistence\SpyCompanyRole;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -27,16 +27,16 @@ class CompanyRoleEntityManager extends AbstractEntityManager implements CompanyR
     public function saveCompanyRole(
         CompanyRoleTransfer $companyRoleTransfer
     ): CompanyRoleTransfer {
-        $entityTransfer = $this->getFactory()
+        $spyCompanyRole = $this->getFactory()
             ->createCompanyRoleMapper()
-            ->mapCompanyRoleTransferToEntityTransfer($companyRoleTransfer, new SpyCompanyRoleEntityTransfer());
+            ->mapCompanyRoleTransferToEntity($companyRoleTransfer, new SpyCompanyRole());
 
-        $this->cleanupDefaultRoles($entityTransfer);
-        $entityTransfer = $this->save($entityTransfer);
+        $this->cleanupDefaultRoles($spyCompanyRole);
+        $spyCompanyRole->save();
 
         return $this->getFactory()
             ->createCompanyRoleMapper()
-            ->mapEntityTransferToCompanyRoleTransfer($entityTransfer, $companyRoleTransfer);
+            ->mapEntityToCompanyRoleTransfer($spyCompanyRole, $companyRoleTransfer);
     }
 
     /**
@@ -136,18 +136,18 @@ class CompanyRoleEntityManager extends AbstractEntityManager implements CompanyR
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCompanyRoleEntityTransfer $companyRoleEntityTransfer
+     * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole $spyCompanyRole
      *
      * @return void
      */
-    protected function cleanupDefaultRoles(SpyCompanyRoleEntityTransfer $companyRoleEntityTransfer): void
+    protected function cleanupDefaultRoles(SpyCompanyRole $spyCompanyRole): void
     {
-        $isDefault = $companyRoleEntityTransfer->getIsDefault();
+        $isDefault = $spyCompanyRole->getIsDefault();
 
         if ($isDefault === true) {
             $query = $this->getFactory()->createCompanyRoleQuery();
-            if ($companyRoleEntityTransfer->getIdCompanyRole() !== null) {
-                $query->filterByIdCompanyRole($companyRoleEntityTransfer->getIdCompanyRole(), Criteria::NOT_EQUAL);
+            if ($spyCompanyRole->getIdCompanyRole() !== null) {
+                $query->filterByIdCompanyRole($spyCompanyRole->getIdCompanyRole(), Criteria::NOT_EQUAL);
             }
 
             $query->update(['IsDefault' => false]);

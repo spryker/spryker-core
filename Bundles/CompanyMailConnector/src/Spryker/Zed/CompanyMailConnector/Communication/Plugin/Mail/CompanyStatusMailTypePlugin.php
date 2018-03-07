@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Company\Communication\Plugin\Mail;
+namespace Spryker\Zed\CompanyMailConnector\Communication\Plugin\Mail;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
@@ -68,7 +68,7 @@ class CompanyStatusMailTypePlugin extends AbstractPlugin implements MailTypePlug
      */
     protected function setHtmlTemplate(MailBuilderInterface $mailBuilder): self
     {
-        $mailBuilder->setHtmlTemplate('company/mail/company_status.html.twig');
+        $mailBuilder->setHtmlTemplate('company-mail-connector/mail/company_status.html.twig');
 
         return $this;
     }
@@ -80,7 +80,7 @@ class CompanyStatusMailTypePlugin extends AbstractPlugin implements MailTypePlug
      */
     protected function setTextTemplate(MailBuilderInterface $mailBuilder): self
     {
-        $mailBuilder->setTextTemplate('company/mail/company_status.text.twig');
+        $mailBuilder->setTextTemplate('company-mail-connector/mail/company_status.text.twig');
 
         return $this;
     }
