@@ -48,11 +48,11 @@ interface DevelopmentFacadeInterface
      *
      * @param string $module
      * @param string $toModule
-     * @param string $methods
+     * @param array $methods
      *
      * @return void
      */
-    public function createBridge($module, $toModule, $methods);
+    public function createBridge($module, $toModule, array $methods);
 
     /**
      * @api

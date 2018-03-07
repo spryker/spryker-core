@@ -53,7 +53,7 @@ class BridgeBuilder
     /**
      * @param string $bundle
      * @param string $toBundle
-     * @param string $methods
+     * @param array $methods
      *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      *
@@ -251,11 +251,11 @@ class BridgeBuilder
     /**
      * @param string $source
      * @param string $target
-     * @param string $methods
+     * @param array $methods
      *
      * @return \Generated\Shared\Transfer\BridgeBuilderDataTransfer
      */
-    protected function getBridgeBuilderData($source, $target, $methods)
+    protected function getBridgeBuilderData($source, $target, array $methods)
     {
         list($vendor, $module, $type) = $this->interpretInputParameter($source);
         list($toVendor, $toModule, $toType) = $this->interpretInputParameter($target);
@@ -272,7 +272,7 @@ class BridgeBuilder
             ->setToModuleLayer($this->getModuleLayer($toType))
             ->setToType($toType)
             ->setToApplication($this->getApplicationLayer($toType))
-            ->setMethods(explode(',', $methods));
+            ->setMethods($methods);
 
         return $bridgeBuilderDataTransfer;
     }
@@ -557,7 +557,7 @@ class BridgeBuilder
 
         foreach ($method->getParameters() as $parameter) {
             if ($parameter->hasType()) {
-                $finalOutput .= $this->getClassNameFromFQCN($parameter->getType()->getName()) . ' ';
+                $finalOutput .= $this->getClassNameFromFqcn($parameter->getType()->getName()) . ' ';
             }
 
             $finalOutput .= '$' . $parameter->getName();
@@ -579,13 +579,13 @@ class BridgeBuilder
     }
 
     /**
-     * @param string $FQCN
+     * @param string $fqcn
      *
      * @return string
      */
-    protected function getClassNameFromFQCN($FQCN)
+    protected function getClassNameFromFqcn($fqcn)
     {
-        $arr = explode('\\', $FQCN);
+        $arr = explode('\\', $fqcn);
         return end($arr);
     }
 
