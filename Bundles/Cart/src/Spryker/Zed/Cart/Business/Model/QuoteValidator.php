@@ -72,6 +72,6 @@ class QuoteValidator implements QuoteValidatorInterface
     {
         $storedMessages = $this->messengerFacade->getStoredMessages();
 
-        return count($storedMessages->getErrorMessages()) === 0;
+        return !$storedMessages || count($storedMessages->getErrorMessages()) === 0;
     }
 }
