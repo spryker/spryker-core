@@ -10,15 +10,11 @@ namespace SprykerTest\Shared\CustomerNote\Helper;
 use Codeception\Module;
 use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
 use Orm\Zed\CustomerNote\Persistence\SpyCustomerNote;
-use SprykerTest\Shared\Customer\Helper\CustomerDataHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
-use SprykerTest\Shared\User\Helper\UserDataHelperTrait;
 
 class CustomerNoteDataHelper extends Module
 {
     use LocatorHelperTrait;
-    use CustomerDataHelperTrait;
-    use UserDataHelperTrait;
 
     const TEST_NOTE_AUTHOR = 'test';
     const TEST_NOTE_MESSAGE = 'test';
@@ -37,16 +33,8 @@ class CustomerNoteDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer
      */
-    public function getCustomerNoteTransfer(int $fkUser = 0, int $fkCustomer = 0): SpyCustomerNoteEntityTransfer
+    public function getCustomerNoteTransfer(int $fkUser, int $fkCustomer): SpyCustomerNoteEntityTransfer
     {
-        if (!$fkUser) {
-            $fkUser = $this->getUserDataHelper()->haveUser()->getIdUser();
-        }
-
-        if (!$fkCustomer) {
-            $fkCustomer = $this->getCustomerDataHelper()->haveCustomer()->getIdCustomer();
-        }
-
         $noteTransfer = new SpyCustomerNoteEntityTransfer();
         $noteTransfer->setMessage(static::TEST_NOTE_MESSAGE);
         $noteTransfer->setUsername(static::TEST_NOTE_AUTHOR);

@@ -60,7 +60,10 @@ class CustomerNoteFacadeTest extends Unit
      */
     public function testAddNote()
     {
-        $note = $this->customerNoteFacade->addNote($this->tester->getCustomerNoteTransfer());
+        $note = $this->customerNoteFacade->addNote($this->tester->getCustomerNoteTransfer(
+            $this->userTransfer->getIdUser(),
+            $this->customerTransfer->getIdCustomer()
+        ));
 
         $this->assertTrue((bool)$note->getIdCustomerNote());
     }
