@@ -9,6 +9,7 @@ namespace Spryker\Client\Permission\PermissionFinder;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
+use Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface;
 
 class PermissionFinder implements PermissionFinderInterface
 {
@@ -47,7 +48,13 @@ class PermissionFinder implements PermissionFinderInterface
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 
         foreach ($this->permissionPlugins as $permissionPlugin) {
-            $permissionTransfer = (new PermissionTransfer())->setKey($permissionPlugin->getKey());
+            $permissionTransfer = (new PermissionTransfer())
+                ->setKey($permissionPlugin->getKey());
+
+            if ($permissionPlugin instanceof ExecutablePermissionPluginInterface) {
+                $permissionTransfer->setConfigurationSignature($permissionPlugin->getConfigurationSignature());
+            }
+
             $permissionCollectionTransfer->addPermission($permissionTransfer);
         }
 

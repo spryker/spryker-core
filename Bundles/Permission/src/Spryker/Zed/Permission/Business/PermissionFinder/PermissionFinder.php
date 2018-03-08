@@ -9,6 +9,7 @@ namespace Spryker\Zed\Permission\Business\PermissionFinder;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
+use Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface;
 use Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface;
 
 class PermissionFinder implements PermissionFinderInterface
@@ -48,7 +49,13 @@ class PermissionFinder implements PermissionFinderInterface
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 
         foreach ($this->permissionPlugins as $permissionPlugin) {
-            $permissionTransfer = (new PermissionTransfer())->setKey($permissionPlugin->getKey());
+            $permissionTransfer = (new PermissionTransfer())
+                ->setKey($permissionPlugin->getKey());
+
+            if ($permissionPlugin instanceof ExecutablePermissionPluginInterface) {
+                $permissionTransfer->setConfigurationSignature($permissionPlugin->getConfigurationSignature());
+            }
+
             $permissionCollectionTransfer->addPermission($permissionTransfer);
         }
 

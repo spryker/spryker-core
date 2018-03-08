@@ -7,13 +7,11 @@
 
 namespace Spryker\Zed\Permission\Communication\Plugin;
 
-interface PermissionPluginInterface
+use \Spryker\Shared\Permission\Dependency\Plugin\PermissionPluginInterface as SharedPermissionPluginInterface;
+
+/**
+ * @method string getKey()
+ */
+interface PermissionPluginInterface extends SharedPermissionPluginInterface
 {
-    /**
-     * Specification:
-     * - The is used to identify the permission
-     *
-     * @return string
-     */
-    public function getKey();
 }

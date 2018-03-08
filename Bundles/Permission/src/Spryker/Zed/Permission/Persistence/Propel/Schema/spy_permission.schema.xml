@@ -4,6 +4,7 @@
     <table name="spy_permission" idMethod="native" allowPkInsert="true" phpName="SpyPermission">
         <column name="id_permission" required="true" type="INTEGER" primaryKey="true" autoIncrement="true" />
         <column name="key" required="true" type="VARCHAR" size="255" />
+        <column name="configuration_signature" type="LONGVARCHAR" />
 
         <unique name="spy_permission-key">
             <unique-column name="key" />

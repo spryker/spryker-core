@@ -118,6 +118,27 @@ class CompanyRoleEntityManager extends AbstractEntityManager implements CompanyR
     }
 
     /**
+     * @param PermissionTransfer $permissionTransfer
+     *
+     * @return void
+     */
+    public function updateCompanyRolePermission(PermissionTransfer $permissionTransfer): void
+    {
+        $spyCompanyRoleToPermission = $this->getFactory()
+            ->createCompanyRoleToPermissionQuery()
+            ->filterByFkCompanyRole($permissionTransfer->getIdCompanyRole())
+            ->filterByFkPermission($permissionTransfer->getIdPermission())
+            ->findOne();
+
+        if (!$spyCompanyRoleToPermission) {
+            return;
+        }
+
+        $spyCompanyRoleToPermission->setConfiguration(\json_encode($permissionTransfer->getConfiguration()));
+        $spyCompanyRoleToPermission->save();
+    }
+
+    /**
      * @param int $idCompanyRole
      * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *

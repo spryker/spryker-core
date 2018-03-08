@@ -9,10 +9,12 @@ namespace Spryker\Zed\CompanyRole\Business;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 
 interface CompanyRoleFacadeInterface
 {
@@ -130,6 +132,19 @@ interface CompanyRoleFacadeInterface
 
     /**
      * Specification:
+     * - Finds a permission for a role
+     * - Hydrates permission
+     * - Returns an empty permission transfer if a desired combination does not exist
+     *
+     * @param int $idCompanyRole
+     * @param int $idPermission
+     *
+     * @return PermissionTransfer
+     */
+    public function findPermissionByIdCompanyRoleByIdPermission(int $idCompanyRole, int $idPermission): PermissionTransfer;
+
+    /**
+     * Specification:
      * - Finds a company roles according CompanyRoleCriteriaFilterTransfer
      *
      * @api
@@ -141,4 +156,17 @@ interface CompanyRoleFacadeInterface
     public function getCompanyRoleCollection(
         CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyRoleCollectionTransfer;
+
+
+    /**
+     * Specification:
+     * - Updates company role permission configuration
+     *
+     * @api
+     *
+     * @param PermissionTransfer $permissionTransfer
+     *
+     * @return void
+     */
+    public function updateCompanyRolePermission(PermissionTransfer $permissionTransfer): void;
 }
