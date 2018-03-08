@@ -58,7 +58,7 @@ class CustomerNoteFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddNote()
+    public function testAddNoteReturnsNotEmptyValueOnSuccess()
     {
         $note = $this->customerNoteFacade->addNote($this->tester->getCustomerNoteTransfer(
             $this->userTransfer->getIdUser(),
@@ -71,16 +71,16 @@ class CustomerNoteFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetNotes()
+    public function testGetNotesReturnsProperAmountOfNotes()
     {
-        $this->tester->hydrateCustomerNotesTableForCustomer(
+        $this->createCustomerNotesWithFkUserAndFkCustomer(
             $this->userTransfer->getIdUser(),
             $this->customerTransfer->getIdCustomer(),
             static::NOTES_COUNT
         );
-        $customerNotesCollectionTransfer = $this->customerNoteFacade->getNotes($this->customerTransfer->getIdCustomer());
+        $customerNoteCollectionTransfer = $this->customerNoteFacade->getNotes($this->customerTransfer->getIdCustomer());
 
-        $this->assertSame(static::NOTES_COUNT, $customerNotesCollectionTransfer->getNotes()->count());
+        $this->assertSame(static::NOTES_COUNT, $customerNoteCollectionTransfer->getNotes()->count());
     }
 
     /**
@@ -97,5 +97,21 @@ class CustomerNoteFacadeTest extends Unit
     protected function getUser()
     {
         return $this->tester->haveUser();
+    }
+
+    /**
+     * @param int $fkUser
+     * @param int $fkCustomer
+     * @param int $number
+     *
+     * @return void
+     */
+    protected function createCustomerNotesWithFkUserAndFkCustomer(int $fkUser, int $fkCustomer, int $number)
+    {
+        for ($i = 0; $i < $number; $i++) {
+            $this->customerNoteFacade->addNote(
+                $this->tester->getCustomerNoteTransfer($fkUser, $fkCustomer)
+            );
+        }
     }
 }

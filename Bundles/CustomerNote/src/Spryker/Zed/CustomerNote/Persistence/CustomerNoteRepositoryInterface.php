@@ -7,14 +7,19 @@
 
 namespace Spryker\Zed\CustomerNote\Persistence;
 
-use Generated\Shared\Transfer\CustomerNotesCollectionTransfer;
+use Generated\Shared\Transfer\CustomerNoteCollectionTransfer;
 
 interface CustomerNoteRepositoryInterface
 {
     /**
+     * Specification:
+     * - Fetches customer notes by id customer
+     *
+     * @api
+     *
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\CustomerNotesCollectionTransfer
+     * @return \Generated\Shared\Transfer\CustomerNoteCollectionTransfer
      */
-    public function getCustomerCommentCollectionByIdCustomer(int $idCustomer): CustomerNotesCollectionTransfer;
+    public function getCustomerNoteCollectionByIdCustomer(int $idCustomer): CustomerNoteCollectionTransfer;
 }

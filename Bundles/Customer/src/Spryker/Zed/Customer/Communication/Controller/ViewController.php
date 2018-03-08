@@ -102,7 +102,7 @@ class ViewController extends AbstractController
      */
     protected function renderExternalBlocks(Request $request, CustomerTransfer $customerTransfer)
     {
-        $externalBlocksConfig = $this->getFactory()->getConfig()->getCustomerViewExternalBlocksUrls();
+        $externalBlocksConfig = $this->getFactory()->getConfig()->getCustomerViewExternalBlockUrls();
 
         return $this->renderMultipleActions($request, $externalBlocksConfig, $customerTransfer);
     }

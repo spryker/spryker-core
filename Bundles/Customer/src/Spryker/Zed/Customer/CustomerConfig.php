@@ -75,7 +75,6 @@ class CustomerConfig extends AbstractBundleConfig
     /**
      * This method provides list of URLs to render blocks inside customer view page.
      * URL defines path to external bundle controller.
-     * Action should return return array or redirect response.
      *
      * example:
      * [
@@ -84,7 +83,7 @@ class CustomerConfig extends AbstractBundleConfig
      *
      * @return array
      */
-    public function getCustomerViewExternalBlocksUrls()
+    public function getCustomerViewExternalBlockUrls()
     {
         return [];
     }

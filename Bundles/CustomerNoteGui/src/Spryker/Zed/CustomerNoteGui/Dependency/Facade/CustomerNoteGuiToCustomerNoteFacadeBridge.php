@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CustomerNoteGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\CustomerNotesCollectionTransfer;
+use Generated\Shared\Transfer\CustomerNoteCollectionTransfer;
 use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
 
 class CustomerNoteGuiToCustomerNoteFacadeBridge implements CustomerNoteGuiToCustomerNoteFacadeInterface
@@ -38,9 +38,9 @@ class CustomerNoteGuiToCustomerNoteFacadeBridge implements CustomerNoteGuiToCust
     /**
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\CustomerNotesCollectionTransfer
+     * @return \Generated\Shared\Transfer\CustomerNoteCollectionTransfer
      */
-    public function getNotes(int $idCustomer): CustomerNotesCollectionTransfer
+    public function getNotes(int $idCustomer): CustomerNoteCollectionTransfer
     {
         return $this->customerNoteFacade->getNotes($idCustomer);
     }

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CustomerNote\Persistence;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CustomerNotesCollectionTransfer;
+use Generated\Shared\Transfer\CustomerNoteCollectionTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -17,17 +17,32 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CustomerNoteRepository extends AbstractRepository implements CustomerNoteRepositoryInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\CustomerNotesCollectionTransfer
+     * @return \Generated\Shared\Transfer\CustomerNoteCollectionTransfer
      */
-    public function getCustomerCommentCollectionByIdCustomer(int $idCustomer): CustomerNotesCollectionTransfer
+    public function getCustomerNoteCollectionByIdCustomer(int $idCustomer): CustomerNoteCollectionTransfer
     {
         $customerNoteQuery = $this->getFactory()->createCustomerNoteQuery();
         $customerNoteQuery->filterByFkCustomer($idCustomer);
         $customerNoteEntityTransfers = $this->buildQueryFromCriteria($customerNoteQuery)->find();
+
+        return $this->prepareCustomerNoteCollectionTransfer($customerNoteEntityTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer[] $customerNoteEntityTransfers
+     *
+     * @return \Generated\Shared\Transfer\CustomerNoteCollectionTransfer
+     */
+    protected function prepareCustomerNoteCollectionTransfer(array $customerNoteEntityTransfers): CustomerNoteCollectionTransfer
+    {
         $notesCollection = new ArrayObject($customerNoteEntityTransfers);
-        $collectionTransfer = new CustomerNotesCollectionTransfer();
+        $collectionTransfer = new CustomerNoteCollectionTransfer();
         $collectionTransfer->setNotes($notesCollection);
 
         return $collectionTransfer;

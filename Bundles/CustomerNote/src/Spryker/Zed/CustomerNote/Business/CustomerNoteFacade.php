@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CustomerNote\Business;
 
-use Generated\Shared\Transfer\CustomerNotesCollectionTransfer;
+use Generated\Shared\Transfer\CustomerNoteCollectionTransfer;
 use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -38,9 +38,9 @@ class CustomerNoteFacade extends AbstractFacade implements CustomerNoteFacadeInt
      *
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\CustomerNotesCollectionTransfer
+     * @return \Generated\Shared\Transfer\CustomerNoteCollectionTransfer
      */
-    public function getNotes(int $idCustomer): CustomerNotesCollectionTransfer
+    public function getNotes(int $idCustomer): CustomerNoteCollectionTransfer
     {
         return $this->getRepository()->getCustomerCommentCollectionByIdCustomer($idCustomer);
     }

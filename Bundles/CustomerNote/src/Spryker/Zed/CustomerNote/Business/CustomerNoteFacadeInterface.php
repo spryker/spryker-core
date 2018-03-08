@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\CustomerNote\Business;
 
-use Generated\Shared\Transfer\CustomerNotesCollectionTransfer;
+use Generated\Shared\Transfer\CustomerNoteCollectionTransfer;
 use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
 
 interface CustomerNoteFacadeInterface
 {
     /**
      * Specification:
-     * - Saves a note to database
+     * - Inserts a note to database
      *
      * @api
      *
@@ -32,7 +32,7 @@ interface CustomerNoteFacadeInterface
      *
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\CustomerNotesCollectionTransfer
+     * @return \Generated\Shared\Transfer\CustomerNoteCollectionTransfer
      */
-    public function getNotes(int $idCustomer): CustomerNotesCollectionTransfer;
+    public function getNotes(int $idCustomer): CustomerNoteCollectionTransfer;
 }

@@ -9,15 +9,14 @@ namespace SprykerTest\Shared\CustomerNote\Helper;
 
 use Codeception\Module;
 use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
-use Orm\Zed\CustomerNote\Persistence\SpyCustomerNote;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CustomerNoteDataHelper extends Module
 {
     use LocatorHelperTrait;
 
-    const TEST_NOTE_AUTHOR = 'test';
-    const TEST_NOTE_MESSAGE = 'test';
+    const TEST_NOTE_AUTHOR = 'test_author';
+    const TEST_NOTE_MESSAGE = 'test_message';
 
     /**
      * @return \Spryker\Zed\CustomerNote\Business\CustomerNoteFacadeInterface
@@ -47,17 +46,13 @@ class CustomerNoteDataHelper extends Module
     /**
      * @param int $fkUser
      * @param int $fkCustomer
-     * @param int $number
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer
      */
-    public function hydrateCustomerNotesTableForCustomer(int $fkUser, int $fkCustomer, int $number)
+    public function haveCustomerNote(int $fkUser, int $fkCustomer)
     {
-        for ($i = 0; $i < $number; $i++) {
-            $noteTransfer = $this->getCustomerNoteTransfer($fkUser, $fkCustomer);
-            $noteEntity = new SpyCustomerNote();
-            $noteEntity->fromArray($noteTransfer->toArray());
-            $noteEntity->save();
-        }
+        return $this->getCustomerNoteFacade()->addNote(
+            $this->getCustomerNoteTransfer($fkUser, $fkCustomer)
+        );
     }
 }
