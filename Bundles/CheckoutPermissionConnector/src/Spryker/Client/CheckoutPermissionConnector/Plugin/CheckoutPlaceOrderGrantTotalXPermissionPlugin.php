@@ -19,13 +19,13 @@ class CheckoutPlaceOrderGrantTotalXPermissionPlugin implements ExecutablePermiss
 
     /**
      * @param array $configuration
-     * @param array|int|null|string $amount
+     * @param array|int|null|string $centAmount
      *
      * @return bool
      */
-    public function can(array $configuration, $amount = null)
+    public function can(array $configuration, $centAmount = null)
     {
-        return $amount < static::OPTION_CART_MAX_GRAND_TOTAL;
+        return $centAmount < static::OPTION_CART_MAX_GRAND_TOTAL;
     }
 
     /**
