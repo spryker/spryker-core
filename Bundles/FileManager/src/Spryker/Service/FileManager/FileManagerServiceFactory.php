@@ -16,7 +16,7 @@ use Spryker\Service\Kernel\AbstractServiceFactory;
 class FileManagerServiceFactory extends AbstractServiceFactory
 {
     /**
-     * @return \Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface
+     * @return \Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface
      */
     public function getFileSystemService()
     {

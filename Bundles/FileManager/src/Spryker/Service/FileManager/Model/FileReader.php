@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\FileManagerReadResponseTransfer;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
 use Generated\Shared\Transfer\FileSystemStreamTransfer;
 use Generated\Shared\Transfer\FileTransfer;
-use Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface;
+use Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface;
 use Spryker\Service\FileManager\FileManagerServiceConfig;
 
 class FileReader implements FileReaderInterface
@@ -32,10 +32,10 @@ class FileReader implements FileReaderInterface
     /**
      * FileReader constructor.
      *
-     * @param \Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemBridgeInterface $fileSystem
+     * @param \Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface $fileSystem
      * @param \Spryker\Service\FileManager\FileManagerServiceConfig                                  $config
      */
-    public function __construct(FileManagerToFileSystemBridgeInterface $fileSystem, FileManagerServiceConfig $config)
+    public function __construct(FileManagerToFileSystemServiceInterface $fileSystem, FileManagerServiceConfig $config)
     {
         $this->fileSystem = $fileSystem;
         $this->config = $config;
