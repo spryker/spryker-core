@@ -179,6 +179,7 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
             $permissionTransfer = (new PermissionTransfer())
                 ->setIdPermission($roleToPermissionEntity->getFkPermission())
                 ->setConfiguration(\json_decode($roleToPermissionEntity->getConfiguration(), true))
+                ->setConfigurationSignature(\json_decode($roleToPermissionEntity->getPermission()->getConfigurationSignature(), true))
                 ->setKey($roleToPermissionEntity->getPermission()->getKey());
 
             $permissionCollectionTransfer->addPermission($permissionTransfer);
