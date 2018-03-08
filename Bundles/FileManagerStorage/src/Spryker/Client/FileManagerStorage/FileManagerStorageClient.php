@@ -22,7 +22,7 @@ class FileManagerStorageClient extends AbstractClient implements FileManagerStor
      * @param int $fileId
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\FileStorageTransfer|null
+     * @return \Generated\Shared\Transfer\FileManagerStorageTransfer|null
      */
     public function findFileById($fileId, $localeName)
     {

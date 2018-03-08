@@ -9,7 +9,7 @@ namespace Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener;
 
 use ArrayObject;
 use Generated\Shared\Transfer\FileInfoTransfer;
-use Generated\Shared\Transfer\FileStorageTransfer;
+use Generated\Shared\Transfer\FileManagerStorageTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManagerStorage\Persistence\SpyFileStorage;
@@ -108,7 +108,7 @@ abstract class AbstractFileManagerListener extends AbstractPlugin implements Eve
             $this->createDataSet($fileEntity, $localeTransfer);
             return;
         }
-        $fileStorageTransfer = $this->mapToFileStorageTransfer($fileEntity, $localeTransfer);
+        $fileStorageTransfer = $this->mapToFileManagerStorageTransfer($fileEntity, $localeTransfer);
 
         $fileStorageEntity->setData($fileStorageTransfer->toArray());
         $fileStorageEntity->save();
@@ -122,7 +122,7 @@ abstract class AbstractFileManagerListener extends AbstractPlugin implements Eve
      */
     protected function createDataSet(SpyFile $fileEntity, LocaleTransfer $locale)
     {
-        $fileStorageTransfer = $this->mapToFileStorageTransfer($fileEntity, $locale);
+        $fileStorageTransfer = $this->mapToFileManagerStorageTransfer($fileEntity, $locale);
         $fileStorage = new SpyFileStorage();
         $fileStorage->setLocale($locale->getLocaleName());
         $fileStorage->setFileName($fileStorageTransfer->getFileName());
@@ -137,13 +137,13 @@ abstract class AbstractFileManagerListener extends AbstractPlugin implements Eve
      * @param \Orm\Zed\FileManager\Persistence\SpyFile $fileEntity
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return \Generated\Shared\Transfer\FileStorageTransfer
+     * @return \Generated\Shared\Transfer\FileManagerStorageTransfer
      */
-    protected function mapToFileStorageTransfer(SpyFile $fileEntity, LocaleTransfer $locale)
+    protected function mapToFileManagerStorageTransfer(SpyFile $fileEntity, LocaleTransfer $locale)
     {
         $localizedAttributes = $fileEntity->getLocalizedAttributes();
 
-        $fileStorageTransfer = new FileStorageTransfer();
+        $fileStorageTransfer = new FileManagerStorageTransfer();
         $fileStorageTransfer->fromArray($fileEntity->toArray(), true);
         $fileStorageTransfer->setLocale($locale->getLocaleName());
         $fileStorageTransfer->setType($fileEntity->getFileInfo()->getType());
@@ -179,13 +179,13 @@ abstract class AbstractFileManagerListener extends AbstractPlugin implements Eve
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileStorageTransfer $fileStorageTransfer
+     * @param \Generated\Shared\Transfer\FileManagerStorageTransfer $fileStorageTransfer
      * @param array $localizedAttributes
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    protected function mapLocalizedAttributes(FileStorageTransfer $fileStorageTransfer, $localizedAttributes, LocaleTransfer $localeTransfer)
+    protected function mapLocalizedAttributes(FileManagerStorageTransfer $fileStorageTransfer, $localizedAttributes, LocaleTransfer $localeTransfer)
     {
         if (empty($localizedAttributes[$localeTransfer->getIdLocale()])) {
             return;
