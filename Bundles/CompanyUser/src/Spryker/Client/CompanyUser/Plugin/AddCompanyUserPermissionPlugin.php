@@ -8,7 +8,7 @@
 namespace Spryker\Client\CompanyUser\Plugin;
 
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Permission\Plugin\PermissionPluginInterface;
+use Spryker\Client\Permission\Dependency\Plugin\PermissionPluginInterface;
 
 class AddCompanyUserPermissionPlugin extends AbstractPlugin implements PermissionPluginInterface
 {
@@ -17,7 +17,7 @@ class AddCompanyUserPermissionPlugin extends AbstractPlugin implements Permissio
     /**
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return static::KEY;
     }

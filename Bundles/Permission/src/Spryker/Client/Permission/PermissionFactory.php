@@ -49,7 +49,7 @@ class PermissionFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Permission\Plugin\PermissionPluginInterface[]
+     * @return \Spryker\Client\Permission\Dependency\Plugin\PermissionPluginInterface[]
      */
     protected function getPermissionPlugins(): array
     {

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Zed\Permission\Dependency\Plugin\ExecutablePermissionPluginInterface;
 
 /**
  * @example
@@ -92,7 +92,7 @@ class CheckoutPlaceOrderGrandTotalXPermissionPlugin extends AbstractPlugin imple
     /**
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return 'permission.allow.checkout.placeOrder.grandTotalX';
     }

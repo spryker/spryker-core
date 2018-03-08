@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Permission\Plugin;
+namespace Spryker\Client\Permission\Dependency\Plugin;
 
 use Spryker\Shared\Permission\Dependency\Plugin\ExecutablePermissionPluginInterface as SharedExecutablePermissionPluginInterface;
 

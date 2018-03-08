@@ -13,5 +13,5 @@ interface PermissionPluginInterface
      *
      * @return string
      */
-    public function getKey();
+    public function getKey(): string;
 }

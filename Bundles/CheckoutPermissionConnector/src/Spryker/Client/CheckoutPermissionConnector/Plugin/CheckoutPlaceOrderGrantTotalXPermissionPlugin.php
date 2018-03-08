@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\CheckoutPermissionConnector\Plugin;
 
-use Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Client\Permission\Dependency\Plugin\ExecutablePermissionPluginInterface;
 
 /**
  * @example
@@ -39,7 +39,7 @@ class CheckoutPlaceOrderGrantTotalXPermissionPlugin implements ExecutablePermiss
     /**
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return static::KEY;
     }

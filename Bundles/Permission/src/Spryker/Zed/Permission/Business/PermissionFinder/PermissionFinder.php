@@ -9,18 +9,18 @@ namespace Spryker\Zed\Permission\Business\PermissionFinder;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface;
-use Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface;
+use Spryker\Zed\Permission\Dependency\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Zed\Permission\Dependency\Plugin\PermissionPluginInterface;
 
 class PermissionFinder implements PermissionFinderInterface
 {
     /**
-     * @var \Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface[]
+     * @var \Spryker\Zed\Permission\Dependency\Plugin\ExecutablePermissionPluginInterface[]
      */
     protected $permissionPlugins = [];
 
     /**
-     * @param \Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface[] $permissionPlugins
+     * @param \Spryker\Zed\Permission\Dependency\Plugin\PermissionPluginInterface[] $permissionPlugins
      */
     public function __construct(array $permissionPlugins)
     {
@@ -30,7 +30,7 @@ class PermissionFinder implements PermissionFinderInterface
     /**
      * @param string $permissionKey
      *
-     * @return null|\Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface
+     * @return null|\Spryker\Zed\Permission\Dependency\Plugin\PermissionPluginInterface
      */
     public function findPermissionPlugin($permissionKey): ?PermissionPluginInterface
     {
@@ -63,7 +63,7 @@ class PermissionFinder implements PermissionFinderInterface
     }
 
     /**
-     * @param \Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface[] $permissionPlugins
+     * @param \Spryker\Zed\Permission\Dependency\Plugin\PermissionPluginInterface[] $permissionPlugins
      *
      * @return array
      */

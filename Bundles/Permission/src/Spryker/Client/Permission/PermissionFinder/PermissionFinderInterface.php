@@ -17,7 +17,7 @@ interface PermissionFinderInterface
      *
      * @param string $permissionKey
      *
-     * @return \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface
+     * @return \Spryker\Client\Permission\Dependency\Plugin\ExecutablePermissionPluginInterface
      */
     public function findPermissionPlugin($permissionKey);
 

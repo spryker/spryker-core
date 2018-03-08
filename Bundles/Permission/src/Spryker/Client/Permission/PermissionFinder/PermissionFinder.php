@@ -9,17 +9,17 @@ namespace Spryker\Client\Permission\PermissionFinder;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Client\Permission\Dependency\Plugin\ExecutablePermissionPluginInterface;
 
 class PermissionFinder implements PermissionFinderInterface
 {
     /**
-     * @var \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface[]
+     * @var \Spryker\Client\Permission\Dependency\Plugin\ExecutablePermissionPluginInterface[]
      */
     protected $permissionPlugins = [];
 
     /**
-     * @param \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface[] $permissionPlugins
+     * @param \Spryker\Client\Permission\Dependency\Plugin\ExecutablePermissionPluginInterface[] $permissionPlugins
      */
     public function __construct(array $permissionPlugins)
     {
@@ -29,7 +29,7 @@ class PermissionFinder implements PermissionFinderInterface
     /**
      * @param string $permissionKey
      *
-     * @return \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface|null
+     * @return \Spryker\Client\Permission\Dependency\Plugin\ExecutablePermissionPluginInterface|null
      */
     public function findPermissionPlugin($permissionKey)
     {
@@ -62,9 +62,9 @@ class PermissionFinder implements PermissionFinderInterface
     }
 
     /**
-     * @param \Spryker\Client\Permission\Plugin\PermissionPluginInterface[] $permissionPlugins
+     * @param \Spryker\Client\Permission\Dependency\Plugin\PermissionPluginInterface[] $permissionPlugins
      *
-     * @return \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface[]
+     * @return \Spryker\Client\Permission\Dependency\Plugin\ExecutablePermissionPluginInterface[]
      */
     protected function indexPermissions(array $permissionPlugins)
     {

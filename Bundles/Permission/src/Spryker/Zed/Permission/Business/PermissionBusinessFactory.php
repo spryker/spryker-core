@@ -20,7 +20,7 @@ use Spryker\Zed\Permission\PermissionDependencyProvider;
 class PermissionBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface
+     * @return \Spryker\Zed\Permission\Dependency\Plugin\PermissionStoragePluginInterface
      */
     public function getPermissionStoragePlugin()
     {
@@ -61,7 +61,7 @@ class PermissionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface[]
+     * @return \Spryker\Zed\Permission\Dependency\Plugin\PermissionPluginInterface[]
      */
     public function getPermissionPlugins()
     {

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Permission\Communication\Plugin;
+namespace Spryker\Zed\Permission\Dependency\Plugin;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 

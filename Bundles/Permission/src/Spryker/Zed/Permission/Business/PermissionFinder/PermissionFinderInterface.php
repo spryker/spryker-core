@@ -19,7 +19,7 @@ interface PermissionFinderInterface
      *
      * @param string $permissionKey
      *
-     * @return \Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface
+     * @return \Spryker\Zed\Permission\Dependency\Plugin\ExecutablePermissionPluginInterface
      */
     public function findPermissionPlugin($permissionKey);
 

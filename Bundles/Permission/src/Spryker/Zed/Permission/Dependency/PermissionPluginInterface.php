@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Permission\Communication\Plugin;
+namespace Spryker\Zed\Permission\Dependency\Plugin;
 
-use \Spryker\Shared\Permission\Dependency\Plugin\PermissionPluginInterface as SharedPermissionPluginInterface;
+use Spryker\Shared\Permission\Dependency\Plugin\PermissionPluginInterface as SharedPermissionPluginInterface;
 
 /**
- * @method string getKey()
+ * @method string getKey(): string
  */
 interface PermissionPluginInterface extends SharedPermissionPluginInterface
 {
