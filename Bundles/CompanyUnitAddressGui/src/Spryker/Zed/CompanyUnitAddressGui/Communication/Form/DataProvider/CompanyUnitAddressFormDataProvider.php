@@ -39,7 +39,7 @@ class CompanyUnitAddressFormDataProvider
     /**
      * @param int|null $idCompanyUnitAddress
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer|\Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
     public function getData($idCompanyUnitAddress = null)
     {
