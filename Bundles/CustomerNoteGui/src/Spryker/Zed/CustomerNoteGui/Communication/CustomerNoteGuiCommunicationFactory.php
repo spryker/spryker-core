@@ -9,11 +9,8 @@ namespace Spryker\Zed\CustomerNoteGui\Communication;
 
 use Spryker\Zed\CustomerNoteGui\Communication\Form\DataProvider\NoteFormDataProvider;
 use Spryker\Zed\CustomerNoteGui\Communication\Form\NoteForm;
-use Spryker\Zed\CustomerNoteGui\Communication\Model\NoteWriter;
-use Spryker\Zed\CustomerNoteGui\Communication\Model\NoteWriterInterface;
 use Spryker\Zed\CustomerNoteGui\CustomerNoteGuiDependencyProvider;
 use Spryker\Zed\CustomerNoteGui\Dependency\Facade\CustomerNoteGuiToCustomerNoteFacadeInterface;
-use Spryker\Zed\CustomerNoteGui\Dependency\Facade\CustomerNoteGuiToUserFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -44,24 +41,5 @@ class CustomerNoteGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCustomerNoteFacade(): CustomerNoteGuiToCustomerNoteFacadeInterface
     {
         return $this->getProvidedDependency(CustomerNoteGuiDependencyProvider::FACADE_CUSTOMER_NOTE);
-    }
-
-    /**
-     * @return \Spryker\Zed\CustomerNoteGui\Dependency\Facade\CustomerNoteGuiToUserFacadeInterface
-     */
-    protected function getUserFacade(): CustomerNoteGuiToUserFacadeInterface
-    {
-        return $this->getProvidedDependency(CustomerNoteGuiDependencyProvider::FACADE_USER);
-    }
-
-    /**
-     * @return \Spryker\Zed\CustomerNoteGui\Communication\Model\NoteWriterInterface
-     */
-    public function createNoteWriter(): NoteWriterInterface
-    {
-        return new NoteWriter(
-            $this->getUserFacade(),
-            $this->getCustomerNoteFacade()
-        );
     }
 }

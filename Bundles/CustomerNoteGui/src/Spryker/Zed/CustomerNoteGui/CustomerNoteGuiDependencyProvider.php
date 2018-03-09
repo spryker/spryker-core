@@ -8,14 +8,12 @@
 namespace Spryker\Zed\CustomerNoteGui;
 
 use Spryker\Zed\CustomerNoteGui\Dependency\Facade\CustomerNoteGuiToCustomerNoteFacadeBridge;
-use Spryker\Zed\CustomerNoteGui\Dependency\Facade\CustomerNoteGuiToUserFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CustomerNoteGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CUSTOMER_NOTE = 'FACADE_CUSTOMER_NOTE';
-    public const FACADE_USER = 'FACADE_USER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -26,7 +24,6 @@ class CustomerNoteGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addCustomerNoteFacade($container);
-        $container = $this->addUserFacade($container);
 
         return $container;
     }
@@ -40,20 +37,6 @@ class CustomerNoteGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_CUSTOMER_NOTE] = function (Container $container) {
             return new CustomerNoteGuiToCustomerNoteFacadeBridge($container->getLocator()->customerNote()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addUserFacade(Container $container): Container
-    {
-        $container[static::FACADE_USER] = function (Container $container) {
-            return new CustomerNoteGuiToUserFacadeBridge($container->getLocator()->user()->facade());
         };
 
         return $container;

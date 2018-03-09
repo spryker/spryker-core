@@ -8,7 +8,11 @@
 namespace SprykerTest\Zed\CustomerNote\Business;
 
 use Codeception\Test\Unit;
+use Spryker\Zed\CustomerNote\Business\CustomerNoteBusinessFactory;
 use Spryker\Zed\CustomerNote\Business\CustomerNoteFacade;
+use Spryker\Zed\CustomerNote\CustomerNoteDependencyProvider;
+use Spryker\Zed\CustomerNote\Dependency\Facade\CustomerNoteToUserFacadeInterface;
+use Spryker\Zed\Kernel\Container;
 
 /**
  * Auto-generated group annotations
@@ -45,6 +49,11 @@ class CustomerNoteFacadeTest extends Unit
     protected $userTransfer;
 
     /**
+     * @var \Spryker\Zed\Kernel\Container
+     */
+    protected $businessLayerDependencies;
+
+    /**
      * @return void
      */
     public function setUp()
@@ -56,9 +65,51 @@ class CustomerNoteFacadeTest extends Unit
     }
 
     /**
+     * @return \Spryker\Zed\CustomerNote\Business\CustomerNoteBusinessFactory
+     */
+    protected function getBusinessFactory()
+    {
+        $customerNoteBusinessFactory = new CustomerNoteBusinessFactory();
+        $customerNoteBusinessFactory->setContainer($this->getContainer());
+
+        return $customerNoteBusinessFactory;
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function getContainer()
+    {
+        $dependencyProvider = new CustomerNoteDependencyProvider();
+        $this->businessLayerDependencies = new Container();
+
+        $dependencyProvider->provideBusinessLayerDependencies($this->businessLayerDependencies);
+
+        $this->businessLayerDependencies[CustomerNoteDependencyProvider::FACADE_USER] =
+            $this->getMockBuilder(CustomerNoteToUserFacadeInterface::class)->getMock()
+            ->method('getCurrentUser')
+            ->willReturn($this->userTransfer);
+
+        return $this->businessLayerDependencies;
+    }
+
+    /**
      * @return void
      */
     public function testAddNoteReturnsNotEmptyValueOnSuccess()
+    {
+        $note = $this->customerNoteFacade->addNote($this->tester->getCustomerNoteTransfer(
+            $this->userTransfer->getIdUser(),
+            $this->customerTransfer->getIdCustomer()
+        ));
+
+        $this->assertTrue((bool)$note->getIdCustomerNote());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddNoteFromCurrentUserReturnsNotEmptyValueOnSuccess()
     {
         $note = $this->customerNoteFacade->addNote($this->tester->getCustomerNoteTransfer(
             $this->userTransfer->getIdUser(),

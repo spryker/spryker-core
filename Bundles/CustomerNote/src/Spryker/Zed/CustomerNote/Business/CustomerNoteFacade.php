@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\CustomerNote\Persistence\CustomerNoteEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\CustomerNote\Persistence\CustomerNoteRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CustomerNote\Business\CustomerNoteBusinessFactory getFactory()
  */
 class CustomerNoteFacade extends AbstractFacade implements CustomerNoteFacadeInterface
 {
@@ -36,12 +37,26 @@ class CustomerNoteFacade extends AbstractFacade implements CustomerNoteFacadeInt
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer $customerNoteEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer
+     */
+    public function addNoteFromCurrentUser(SpyCustomerNoteEntityTransfer $customerNoteEntityTransfer): SpyCustomerNoteEntityTransfer
+    {
+        return $this->getFactory()->createNoteWriter()->createCustomerNote($customerNoteEntityTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CustomerNoteCollectionTransfer
      */
     public function getNotes(int $idCustomer): CustomerNoteCollectionTransfer
     {
-        return $this->getRepository()->getCustomerCommentCollectionByIdCustomer($idCustomer);
+        return $this->getRepository()->getCustomerNoteCollectionByIdCustomer($idCustomer);
     }
 }

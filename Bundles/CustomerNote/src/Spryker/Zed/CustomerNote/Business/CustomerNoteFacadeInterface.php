@@ -14,7 +14,7 @@ interface CustomerNoteFacadeInterface
 {
     /**
      * Specification:
-     * - Inserts a note to database
+     * - Inserts a note to the database
      *
      * @api
      *
@@ -23,6 +23,18 @@ interface CustomerNoteFacadeInterface
      * @return \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer
      */
     public function addNote(SpyCustomerNoteEntityTransfer $customerNoteEntityTransfer): SpyCustomerNoteEntityTransfer;
+
+    /**
+     * Specification:
+     * - Inserts a note from logged-in Zed user to the database
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer $customerNoteEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer
+     */
+    public function addNoteFromCurrentUser(SpyCustomerNoteEntityTransfer $customerNoteEntityTransfer): SpyCustomerNoteEntityTransfer;
 
     /**
      * Specification:

@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CustomerNoteGui\Dependency\Facade;
+namespace Spryker\Zed\CustomerNote\Dependency\Facade;
 
 use Generated\Shared\Transfer\UserTransfer;
 
-interface CustomerNoteGuiToUserFacadeInterface
+interface CustomerNoteToUserFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\UserTransfer
