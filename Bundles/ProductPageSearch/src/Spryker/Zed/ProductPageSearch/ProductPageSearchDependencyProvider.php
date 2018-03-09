@@ -22,6 +22,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceProd
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageSearchToCategoryQueryContainerBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageSearchToProductCategoryQueryContainerBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageSearchToProductImageQueryContainerBridge;
@@ -40,6 +41,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     const SERVICE_UTIL_ENCODING = 'util encoding service';
     const CLIENT_CATALOG_PRICE_PRODUCT_CONNECTOR = 'CLIENT_CATALOG_PRICE_PRODUCT_CONNECTOR';
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    const FACADE_STORE = 'FACADE_STORE';
     const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
     const FACADE_PRODUCT_SEARCH = 'FACADE_PRODUCT_SEARCH';
     const FACADE_SEARCH = 'FACADE_SEARCH';
@@ -77,6 +79,10 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::FACADE_PRICE_PRODUCT] = function (Container $container) {
             return new ProductPageSearchToPriceProductBridge($container->getLocator()->priceProduct()->facade());
+        };
+
+        $container[self::FACADE_STORE] = function (Container $container) {
+            return new ProductPageSearchToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
 
         $container[self::FACADE_CATEGORY] = function (Container $container) {

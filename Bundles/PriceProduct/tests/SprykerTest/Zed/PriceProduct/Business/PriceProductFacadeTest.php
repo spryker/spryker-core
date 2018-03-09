@@ -387,6 +387,68 @@ class PriceProductFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGroupPriceProductCollectionGroupsProvidedCollection()
+    {
+        // Assign
+        $priceProductFacade = $this->getPriceProductFacade();
+        $expectedResult = [
+            'dummy currency 1' => [
+                'GROSS_MODE' => [
+                    'dummy price type 1' => 100,
+                    'dummy price type 2' => 200,
+                ],
+                'NET_MODE' => [
+                    'dummy price type 1' => 300,
+                    'dummy price type 2' => 400,
+                ],
+            ],
+            'dummy currency 2' => [
+                'GROSS_MODE' => [
+                    'dummy price type 1' => 1100,
+                    'dummy price type 2' => 1200,
+                ],
+                'NET_MODE' => [
+                    'dummy price type 1' => 1300,
+                    'dummy price type 2' => 1400,
+                ],
+            ],
+        ];
+        $priceProductCollection = [];
+        $priceProductCollection[] = $this->createPriceProduct('dummy price type 1', 'dummy currency 1', 100, 300);
+        $priceProductCollection[] = $this->createPriceProduct('dummy price type 1', 'dummy currency 2', 200, 400);
+        $priceProductCollection[] = $this->createPriceProduct('dummy price type 2', 'dummy currency 1', 1100, 1300);
+        $priceProductCollection[] = $this->createPriceProduct('dummy price type 2', 'dummy currency 2', 1200, 1400);
+
+        // Act
+        $actualResult = $priceProductFacade->groupPriceProductCollection($priceProductCollection);
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @param string $priceTypeName
+     * @param string $currencyCode
+     * @param int $grossAmount
+     * @param int $netAmount
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function createPriceProduct($priceTypeName, $currencyCode, $grossAmount, $netAmount)
+    {
+        return (new PriceProductTransfer())
+            ->setPriceType((new PriceTypeTransfer())->setName($priceTypeName))
+            ->setMoneyValue(
+                (new MoneyValueTransfer())
+                    ->setCurrency((new CurrencyTransfer())->setCode($currencyCode))
+                    ->setGrossAmount($grossAmount)
+                    ->setNetAmount($netAmount)
+            );
+    }
+
+    /**
      * @param int $grossAmount
      * @param int $netAmount
      * @param string $skuAbstract

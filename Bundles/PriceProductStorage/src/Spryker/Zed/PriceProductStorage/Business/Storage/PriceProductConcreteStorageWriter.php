@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceProductStorage\Business\Storage;
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorage;
 use Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface;
+use Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToStoreFacadeInterface;
 use Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainer;
 use Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface;
 
@@ -19,6 +20,11 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
      * @var \Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface
      */
     protected $priceProductFacade;
+
+    /**
+     * @var \Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToStoreFacadeInterface
+     */
+    protected $storeFacade;
 
     /**
      * @var \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface
@@ -31,13 +37,24 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     protected $isSendingToQueue = true;
 
     /**
+     * @var int[] Keys are store ids, values are store names.
+     */
+    protected $storeNameMapBuffer;
+
+    /**
      * @param \Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface $priceProductFacade
+     * @param \Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface $queryContainer
      * @param bool $isSendingToQueue
      */
-    public function __construct(PriceProductStorageToPriceProductFacadeInterface $priceProductFacade, PriceProductStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
-    {
+    public function __construct(
+        PriceProductStorageToPriceProductFacadeInterface $priceProductFacade,
+        PriceProductStorageToStoreFacadeInterface $storeFacade,
+        PriceProductStorageQueryContainerInterface $queryContainer,
+        $isSendingToQueue
+    ) {
         $this->priceProductFacade = $priceProductFacade;
+        $this->storeFacade = $storeFacade;
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
     }
@@ -49,99 +66,205 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
      */
     public function publish(array $productConcreteIds)
     {
-        $skus = $this->getProductConcreteSkus($productConcreteIds);
-        $priceProducts = [];
+        $productAbstractIdMap = $this->getProductAbstractIdMap($productConcreteIds);
+        $priceGroups = $this->getProductConcretePriceGroup($productAbstractIdMap);
 
-        foreach ($skus as $idProductConcrete => $sku) {
-            $priceProducts[$idProductConcrete] = $this->priceProductFacade->findPricesBySkuGroupedForCurrentStore($sku);
-        }
+        $priceProductConcreteStorageEntities = $this->findPriceProductConcreteStorageEntities($productConcreteIds);
+        $priceProductConcreteStorageMap = $this->getPriceProductConcreteStorageMap($priceProductConcreteStorageEntities);
 
-        $spyPriceProductStorageEntities = $this->findPriceConcreteStorageEntitiesByProductConcreteIds($productConcreteIds);
-        $this->storeData($priceProducts, $spyPriceProductStorageEntities);
+        $this->storeData($priceGroups, $priceProductConcreteStorageMap);
     }
 
     /**
-     * @param array $productConcreteIds
+     * @param int[] $productConcreteIds
      *
      * @return void
      */
     public function unpublish(array $productConcreteIds)
     {
-        $spyPriceConcreteStorageEntities = $this->findPriceConcreteStorageEntitiesByProductConcreteIds($productConcreteIds);
-        foreach ($spyPriceConcreteStorageEntities as $spyPriceConcreteStorageEntity) {
-            $spyPriceConcreteStorageEntity->delete();
+        $priceProductConcreteStorageEntities = $this->findPriceProductConcreteStorageEntities($productConcreteIds);
+        foreach ($priceProductConcreteStorageEntities as $priceProductConcreteStorageEntity) {
+            $priceProductConcreteStorageEntity->delete();
         }
     }
 
     /**
-     * @param array $priceProductConcretes
-     * @param array $spyPriceProductStorageEntities
+     * @param array $priceGroups First level keys are product concrete ids, second level keys are store names, values are grouped prices.
+     * @param array $priceProductConcreteStorageMap First level keys are product concrete ids, second level keys are store names, values are SpyPriceProductConcreteStorage objects
      *
      * @return void
      */
-    protected function storeData(array $priceProductConcretes, array $spyPriceProductStorageEntities)
+    protected function storeData(array $priceGroups, array $priceProductConcreteStorageMap)
     {
-        foreach ($priceProductConcretes as $idProductConcrete => $prices) {
-            if (isset($spyPriceProductStorageEntities[$idProductConcrete])) {
-                $this->storeDataSet($idProductConcrete, $prices, $spyPriceProductStorageEntities[$idProductConcrete]);
+        foreach ($priceGroups as $idProductConcrete => $storePriceGroups) {
+            foreach ($storePriceGroups as $storeName => $priceGroup) {
+                $priceProductConcreteStorage = isset($priceProductConcreteStorageMap[$idProductConcrete][$storeName]) ?
+                    $priceProductConcreteStorageMap[$idProductConcrete][$storeName] :
+                    new SpyPriceProductConcreteStorage();
 
-                continue;
+                unset($priceProductConcreteStorageMap[$idProductConcrete][$storeName]);
+
+                if ($this->hasProductConcretePrices($priceGroup)) {
+                    $this->storePriceProduct(
+                        $idProductConcrete,
+                        $storeName,
+                        $priceGroup,
+                        $priceProductConcreteStorage
+                    );
+
+                    continue;
+                }
+
+                $this->deletePriceProduct($priceProductConcreteStorage);
             }
-
-            $this->storeDataSet($idProductConcrete, $prices);
         }
+
+        array_walk_recursive($priceProductConcreteStorageMap, function (SpyPriceProductConcreteStorage $priceProductConcreteStorageEntity) {
+            $priceProductConcreteStorageEntity->delete();
+        });
+    }
+
+    /**
+     * @param array $priceGroup
+     *
+     * @return bool
+     */
+    protected function hasProductConcretePrices(array $priceGroup)
+    {
+        if ($priceGroup) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
      * @param int $idProductConcrete
-     * @param array $prices
-     * @param \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorage|null $spyPriceProductStorageEntity
+     * @param string $storeName
+     * @param array $priceGroup
+     * @param \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorage $priceProductConcreteStorageEntity
      *
      * @return void
      */
-    protected function storeDataSet($idProductConcrete, array $prices, SpyPriceProductConcreteStorage $spyPriceProductStorageEntity = null)
-    {
-        if ($spyPriceProductStorageEntity === null) {
-            $spyPriceProductStorageEntity = new SpyPriceProductConcreteStorage();
-        }
+    protected function storePriceProduct(
+        $idProductConcrete,
+        $storeName,
+        array $priceGroup,
+        SpyPriceProductConcreteStorage $priceProductConcreteStorageEntity
+    ) {
+        $priceProductStorageTransfer = (new PriceProductStorageTransfer())
+            ->setPrices($priceGroup);
 
-        if (!$prices) {
-            if (!$spyPriceProductStorageEntity->isNew()) {
-                $spyPriceProductStorageEntity->delete();
+        $priceProductConcreteStorageEntity
+            ->setFkProduct($idProductConcrete)
+            ->setStore($storeName)
+            ->setData($priceProductStorageTransfer->toArray(true))
+            ->setIsSendingToQueue($this->isSendingToQueue)
+            ->save();
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorage $priceProductConcreteStorageEntity
+     *
+     * @return void
+     */
+    protected function deletePriceProduct(SpyPriceProductConcreteStorage $priceProductConcreteStorageEntity)
+    {
+        if (!$priceProductConcreteStorageEntity->isNew()) {
+            $priceProductConcreteStorageEntity->delete();
+        }
+    }
+
+    /**
+     * @param int[] $productAbstractIdMap Keys are product concrete ids, values are product abstract ids
+     *
+     * @return array First level keys are product concrete ids, second level keys are store names, values are grouped prices.
+     */
+    protected function getProductConcretePriceGroup(array $productAbstractIdMap)
+    {
+        $priceGroups = [];
+        foreach ($productAbstractIdMap as $idProductConcrete => $idProductAbstract) {
+            $productConcretePriceProductTransfers = $this->priceProductFacade->findProductConcretePrices($idProductConcrete, $idProductAbstract);
+            foreach ($productConcretePriceProductTransfers as $priceProductTransfer) {
+                $storeName = $this->getStoreNameById($priceProductTransfer->getMoneyValue()->getFkStore());
+                $priceGroups[$idProductConcrete][$storeName][] = $priceProductTransfer;
             }
 
-            return;
+            foreach ($priceGroups[$idProductConcrete] as $storeName => $priceProductTransferCollection) {
+                $priceGroups[$idProductConcrete][$storeName] = $this->priceProductFacade->groupPriceProductCollection(
+                    $priceProductTransferCollection
+                );
+            }
         }
 
-        $priceProductStorageTransfer = new PriceProductStorageTransfer();
-        $priceProductStorageTransfer->setPrices($prices);
-
-        $spyPriceProductStorageEntity->setFkProduct($idProductConcrete);
-        $spyPriceProductStorageEntity->setData($priceProductStorageTransfer->toArray());
-        $spyPriceProductStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
-        $spyPriceProductStorageEntity->save();
+        return $priceGroups;
     }
 
     /**
-     * @param array $productConcreteIds
+     * @param \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorage[] $priceProductConcreteStorageEntities
      *
      * @return array
      */
-    protected function getProductConcreteSkus(array $productConcreteIds)
+    protected function getPriceProductConcreteStorageMap(array $priceProductConcreteStorageEntities)
+    {
+        $priceProductConcreteStorageMap = [];
+        foreach ($priceProductConcreteStorageEntities as $storageEntity) {
+            $priceProductConcreteStorageMap[$storageEntity->getFkProduct()][$storageEntity->getStore()] = $storageEntity;
+        }
+
+        return $priceProductConcreteStorageMap;
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[] Keys are product concrete ids, values are product abstract ids
+     */
+    protected function getProductAbstractIdMap(array $productConcreteIds)
     {
         return $this->queryContainer
-            ->queryProductConcreteSkuByIds($productConcreteIds)
+            ->queryProductAbstractIdsByProductConcreteIds($productConcreteIds)
             ->find()
-            ->toKeyValue(PriceProductStorageQueryContainer::ID_PRODUCT_CONCRETE, PriceProductStorageQueryContainer::SKU);
+            ->toKeyValue(PriceProductStorageQueryContainer::ID_PRODUCT_CONCRETE, PriceProductStorageQueryContainer::ID_PRODUCT_ABSTRACT);
     }
 
     /**
-     * @param array $productConcreteIds
+     * @param int $idStore
      *
-     * @return array
+     * @return string
      */
-    protected function findPriceConcreteStorageEntitiesByProductConcreteIds(array $productConcreteIds)
+    protected function getStoreNameById($idStore)
     {
-        return $this->queryContainer->queryPriceConcreteStorageByProductIds($productConcreteIds)->find()->toKeyIndex('fkProduct');
+        if (!$this->storeNameMapBuffer) {
+            $this->loadStoreNameMap();
+        }
+
+        return $this->storeNameMapBuffer[$idStore];
+    }
+
+    /**
+     * @return void
+     */
+    protected function loadStoreNameMap()
+    {
+        $storeTransfers = $this->storeFacade->getAllStores();
+
+        $this->storeNameMapBuffer = [];
+        foreach ($storeTransfers as $storeTransfer) {
+            $this->storeNameMapBuffer[$storeTransfer->getIdStore()] = $storeTransfer->getName();
+        }
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorage[]
+     */
+    protected function findPriceProductConcreteStorageEntities(array $productConcreteIds)
+    {
+        return $this->queryContainer
+            ->queryPriceConcreteStorageByProductIds($productConcreteIds)
+            ->find()
+            ->getArrayCopy();
     }
 }

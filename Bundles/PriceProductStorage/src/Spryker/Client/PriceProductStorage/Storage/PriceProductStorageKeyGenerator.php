@@ -8,6 +8,7 @@
 namespace Spryker\Client\PriceProductStorage\Storage;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientInterface;
 use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface;
 
 class PriceProductStorageKeyGenerator implements PriceProductStorageKeyGeneratorInterface
@@ -18,11 +19,20 @@ class PriceProductStorageKeyGenerator implements PriceProductStorageKeyGenerator
     protected $synchronizationService;
 
     /**
-     * @param \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface $synchronizationService
+     * @var \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientInterface
      */
-    public function __construct(PriceProductStorageToSynchronizationServiceInterface $synchronizationService)
-    {
+    protected $storeClient;
+
+    /**
+     * @param \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientInterface $storeClient
+     */
+    public function __construct(
+        PriceProductStorageToSynchronizationServiceInterface $synchronizationService,
+        PriceProductStorageToStoreClientInterface $storeClient
+    ) {
         $this->synchronizationService = $synchronizationService;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -35,7 +45,8 @@ class PriceProductStorageKeyGenerator implements PriceProductStorageKeyGenerator
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setReference($resourceId);
+            ->setReference($resourceId)
+            ->setStore($this->storeClient->getCurrentStore()->getName());
 
         return $this->synchronizationService->getStorageKeyBuilder($resourceName)->generateKey($synchronizationDataTransfer);
     }

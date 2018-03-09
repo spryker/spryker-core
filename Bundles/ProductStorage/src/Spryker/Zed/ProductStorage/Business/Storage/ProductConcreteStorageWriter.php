@@ -25,7 +25,6 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     const PRODUCT_CONCRETE_LOCALIZED_ENTITY = 'PRODUCT_CONCRETE_LOCALIZED_ENTITY';
     const PRODUCT_CONCRETE_STORAGE_ENTITY = 'PRODUCT_CONCRETE_STORAGE_ENTITY';
     const LOCALE_NAME = 'LOCALE_NAME';
-    const STORE_NAME = 'STORE_NAME';
 
     /**
      * @var \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface
@@ -143,7 +142,6 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
             $this->storeProductConcreteStorageEntity(
                 $productConcreteLocalizedEntity,
                 $productConcreteStorageEntity,
-                $pair[static::STORE_NAME],
                 $pair[static::LOCALE_NAME]
             );
         }
@@ -153,7 +151,6 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
      * - Returns a paired array with all provided entities.
      * - ProductConcreteLocalizedEntities without ProductConcreteStorageEntity are paired with a newly created ProductConcreteStorageEntity.
      * - ProductConcreteStorageEntities without ProductConcreteLocalizedEntity (left outs) are paired with NULL.
-     * - ProductConcreteLocalizedEntities are paired multiple times per store.
      *
      * @param array $productConcreteLocalizedEntities
      * @param \Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage[] $productConcreteStorageEntities
@@ -171,7 +168,6 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
             list($pairs, $mappedProductConcreteStorageEntities) = $this->pairProductConcreteLocalizedEntityWithProductConcreteStorageEntitiesByStoresAndLocale(
                 $productConcreteLocalizedEntity[static::COL_FK_PRODUCT],
                 $productConcreteLocalizedEntity['Locale']['locale_name'],
-                $productConcreteLocalizedEntity['SpyProduct']['SpyProductAbstract']['SpyProductAbstractStores'],
                 $productConcreteLocalizedEntity,
                 $mappedProductConcreteStorageEntities,
                 $pairs
@@ -186,7 +182,6 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     /**
      * @param int $idProduct
      * @param string $localeName
-     * @param array $productAbstractStoreEntities
      * @param array $productConcreteLocalizedEntity
      * @param array $mappedProductConcreteStorageEntities
      * @param array $pairs
@@ -196,27 +191,21 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     protected function pairProductConcreteLocalizedEntityWithProductConcreteStorageEntitiesByStoresAndLocale(
         $idProduct,
         $localeName,
-        $productAbstractStoreEntities,
         $productConcreteLocalizedEntity,
         array $mappedProductConcreteStorageEntities,
         array $pairs
     ) {
-        foreach ($productAbstractStoreEntities as $productAbstractStoreEntity) {
-            $storeName = $productAbstractStoreEntity['SpyStore']['name'];
+        $productConcreteStorageEntity = isset($mappedProductConcreteStorageEntities[$idProduct][$localeName]) ?
+            $mappedProductConcreteStorageEntities[$idProduct][$localeName] :
+            new SpyProductConcreteStorage();
 
-            $productConcreteStorageEntity = isset($mappedProductConcreteStorageEntities[$idProduct][$storeName][$localeName]) ?
-                $mappedProductConcreteStorageEntities[$idProduct][$storeName][$localeName] :
-                new SpyProductConcreteStorage();
+        $pairs[] = [
+            static::PRODUCT_CONCRETE_LOCALIZED_ENTITY => $productConcreteLocalizedEntity,
+            static::PRODUCT_CONCRETE_STORAGE_ENTITY => $productConcreteStorageEntity,
+            static::LOCALE_NAME => $localeName,
+        ];
 
-            $pairs[] = [
-                static::PRODUCT_CONCRETE_LOCALIZED_ENTITY => $productConcreteLocalizedEntity,
-                static::PRODUCT_CONCRETE_STORAGE_ENTITY => $productConcreteStorageEntity,
-                static::LOCALE_NAME => $localeName,
-                static::STORE_NAME => $storeName,
-            ];
-
-            unset($mappedProductConcreteStorageEntities[$idProduct][$storeName][$localeName]);
-        }
+        unset($mappedProductConcreteStorageEntities[$idProduct][$localeName]);
 
         return [$pairs, $mappedProductConcreteStorageEntities];
     }
@@ -234,7 +223,6 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
                 static::PRODUCT_CONCRETE_LOCALIZED_ENTITY => null,
                 static::PRODUCT_CONCRETE_STORAGE_ENTITY => $productConcreteStorageEntity,
                 static::LOCALE_NAME => $productConcreteStorageEntity->getLocale(),
-                static::STORE_NAME => $productConcreteStorageEntity->getStore(),
             ];
         });
 
@@ -254,7 +242,6 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     /**
      * @param array $productConcreteLocalizedEntity
      * @param \Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage $productConcreteStorageEntity
-     * @param string $storeName
      * @param string $localeName
      *
      * @return void
@@ -262,7 +249,6 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     protected function storeProductConcreteStorageEntity(
         array $productConcreteLocalizedEntity,
         SpyProductConcreteStorage $productConcreteStorageEntity,
-        $storeName,
         $localeName
     ) {
         $productConcreteStorageTransfer = $this->mapToProductConcreteStorageTransfer($productConcreteLocalizedEntity);
@@ -270,7 +256,6 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
         $productConcreteStorageEntity
             ->setFkProduct($productConcreteLocalizedEntity[static::COL_FK_PRODUCT])
             ->setData($productConcreteStorageTransfer->toArray())
-            ->setStore($storeName)
             ->setLocale($localeName)
             ->setIsSendingToQueue($this->isSendingToQueue)
             ->save();
@@ -407,7 +392,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     {
         $mappedProductConcreteStorageEntities = [];
         foreach ($productConcreteStorageEntities as $entity) {
-            $mappedProductConcreteStorageEntities[$entity->getFkProduct()][$entity->getStore()][$entity->getLocale()] = $entity;
+            $mappedProductConcreteStorageEntities[$entity->getFkProduct()][$entity->getLocale()] = $entity;
         }
 
         return $mappedProductConcreteStorageEntities;

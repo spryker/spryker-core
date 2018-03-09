@@ -205,9 +205,9 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             $pageDataExpanderPlugins,
             $productAbstractLocalizedEntity,
             $productAbstractPageSearchEntity,
+            $storeName,
             $isRefresh
         );
-        $productPageSearchTransfer->setStore($storeName);
         $productPageSearchTransfer->setLocale($localeName);
 
         $searchDocument = $this->productPageSearchMapper->mapToSearchData($productPageSearchTransfer);
@@ -235,6 +235,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
      * @param array $productAbstractLocalizedEntity
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productAbstractPageSearchEntity
+     * @param string $storeName
      * @param bool $isRefresh
      *
      * @return \Generated\Shared\Transfer\ProductPageSearchTransfer
@@ -243,6 +244,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         array $pageDataExpanderPlugins,
         array $productAbstractLocalizedEntity,
         SpyProductAbstractPageSearch $productAbstractPageSearchEntity,
+        $storeName,
         $isRefresh = false
     ) {
         if ($isRefresh) {
@@ -250,6 +252,8 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         } else {
             $productPageSearchTransfer = $this->productPageSearchMapper->mapToProductPageSearchTransfer($productAbstractLocalizedEntity);
         }
+
+        $productPageSearchTransfer->setStore($storeName);
 
         $this->expandPageSearchTransferWithPlugins($pageDataExpanderPlugins, $productAbstractLocalizedEntity, $productPageSearchTransfer);
 

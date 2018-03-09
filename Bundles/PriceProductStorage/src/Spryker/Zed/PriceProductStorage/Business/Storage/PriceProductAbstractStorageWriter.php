@@ -10,7 +10,7 @@ namespace Spryker\Zed\PriceProductStorage\Business\Storage;
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage;
 use Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface;
-use Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainer;
+use Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToStoreFacadeInterface;
 use Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface;
 
 class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWriterInterface
@@ -19,6 +19,11 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
      * @var \Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface
      */
     protected $priceProductFacade;
+
+    /**
+     * @var \Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToStoreFacadeInterface
+     */
+    protected $storeFacade;
 
     /**
      * @var \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface
@@ -31,117 +36,220 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     protected $isSendingToQueue = true;
 
     /**
+     * @var int[] Keys are store ids, values are store names.
+     */
+    protected $storeNameMapBuffer;
+
+    /**
      * @param \Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface $priceProductFacade
+     * @param \Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface $queryContainer
      * @param bool $isSendingToQueue
      */
-    public function __construct(PriceProductStorageToPriceProductFacadeInterface $priceProductFacade, PriceProductStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
-    {
+    public function __construct(
+        PriceProductStorageToPriceProductFacadeInterface $priceProductFacade,
+        PriceProductStorageToStoreFacadeInterface $storeFacade,
+        PriceProductStorageQueryContainerInterface $queryContainer,
+        $isSendingToQueue
+    ) {
         $this->priceProductFacade = $priceProductFacade;
+        $this->storeFacade = $storeFacade;
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
     public function publish(array $productAbstractIds)
     {
-        $skus = $this->getProductAbstractSkus($productAbstractIds);
-        $priceProducts = [];
+        $priceGroups = $this->getProductAbstractPriceGroups($productAbstractIds);
 
-        foreach ($skus as $idProductAbstract => $sku) {
-            $priceProducts[$idProductAbstract] = $this->priceProductFacade->findPricesBySkuGroupedForCurrentStore($sku);
-        }
+        $priceProductAbstractStorageEntities = $this->findPriceProductAbstractStorageEntities($productAbstractIds);
+        $priceProductAbstractStorageMap = $this->getPriceProductAbstractStorageMap($priceProductAbstractStorageEntities);
 
-        $spyPriceProductStorageEntities = $this->findPriceAbstractStorageEntitiesByProductAbstractIds($productAbstractIds);
-        $this->storeData($priceProducts, $spyPriceProductStorageEntities);
+        $this->storeData($priceGroups, $priceProductAbstractStorageMap);
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
     public function unpublish(array $productAbstractIds)
     {
-        $spyPriceAbstractStorageEntities = $this->findPriceAbstractStorageEntitiesByProductAbstractIds($productAbstractIds);
-        foreach ($spyPriceAbstractStorageEntities as $spyPriceAbstractStorageEntity) {
-            $spyPriceAbstractStorageEntity->delete();
+        $priceProductAbstractStorageEntities = $this->findPriceProductAbstractStorageEntities($productAbstractIds);
+        foreach ($priceProductAbstractStorageEntities as $priceProductAbstractStorageEntity) {
+            $priceProductAbstractStorageEntity->delete();
         }
     }
 
     /**
-     * @param array $priceProductAbstracts
-     * @param array $spyPriceProductStorageEntities
+     * @param array $priceGroups First level keys are product abstract ids, second level keys are store names, values are grouped prices
+     * @param array $priceProductAbstractStorageMap First level keys are product abstract ids, second level keys are store names, values are SpyPriceProductAbstractStorage objects
      *
      * @return void
      */
-    protected function storeData(array $priceProductAbstracts, array $spyPriceProductStorageEntities)
+    protected function storeData(array $priceGroups, array $priceProductAbstractStorageMap)
     {
-        foreach ($priceProductAbstracts as $idProductAbstract => $prices) {
-            if (isset($spyPriceProductStorageEntities[$idProductAbstract])) {
-                $this->storeDataSet($idProductAbstract, $prices, $spyPriceProductStorageEntities[$idProductAbstract]);
+        foreach ($priceGroups as $idProductAbstract => $storePriceGroups) {
+            foreach ($storePriceGroups as $storeName => $priceGroup) {
+                $priceProductAbstractStorage = isset($priceProductAbstractStorageMap[$idProductAbstract][$storeName]) ?
+                    $priceProductAbstractStorageMap[$idProductAbstract][$storeName] :
+                    new SpyPriceProductAbstractStorage();
 
-                continue;
+                unset($priceProductAbstractStorageMap[$idProductAbstract][$storeName]);
+
+                if ($this->hasProductAbstractPrices($priceGroup)) {
+                    $this->storePriceProduct(
+                        $idProductAbstract,
+                        $storeName,
+                        $priceGroup,
+                        $priceProductAbstractStorage
+                    );
+
+                    continue;
+                }
+
+                $this->deletePriceProduct($priceProductAbstractStorage);
             }
-
-            $this->storeDataSet($idProductAbstract, $prices);
         }
+
+        array_walk_recursive($priceProductAbstractStorageMap, function (SpyPriceProductAbstractStorage $priceProductAbstractStorageEntity) {
+            $priceProductAbstractStorageEntity->delete();
+        });
+    }
+
+    /**
+     * @param array $priceGroup
+     *
+     * @return bool
+     */
+    protected function hasProductAbstractPrices(array $priceGroup)
+    {
+        if ($priceGroup) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
      * @param int $idProductAbstract
-     * @param array $prices
-     * @param \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage|null $spyPriceProductStorageEntity
+     * @param string $storeName
+     * @param array $priceGroup
+     * @param \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage $priceProductAbstractStorageEntity
      *
      * @return void
      */
-    protected function storeDataSet($idProductAbstract, array $prices, SpyPriceProductAbstractStorage $spyPriceProductStorageEntity = null)
-    {
-        if ($spyPriceProductStorageEntity === null) {
-            $spyPriceProductStorageEntity = new SpyPriceProductAbstractStorage();
-        }
+    protected function storePriceProduct(
+        $idProductAbstract,
+        $storeName,
+        array $priceGroup,
+        SpyPriceProductAbstractStorage $priceProductAbstractStorageEntity
+    ) {
+        $priceProductStorageTransfer = (new PriceProductStorageTransfer())
+            ->setPrices($priceGroup);
 
-        if (!$prices) {
-            if (!$spyPriceProductStorageEntity->isNew()) {
-                $spyPriceProductStorageEntity->delete();
-            }
-
-            return;
-        }
-
-        $priceProductStorageTransfer = new PriceProductStorageTransfer();
-        $priceProductStorageTransfer->setPrices($prices);
-
-        $spyPriceProductStorageEntity->setFkProductAbstract($idProductAbstract);
-        $spyPriceProductStorageEntity->setData($priceProductStorageTransfer->toArray());
-        $spyPriceProductStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
-        $spyPriceProductStorageEntity->save();
+        $priceProductAbstractStorageEntity
+            ->setFkProductAbstract($idProductAbstract)
+            ->setStore($storeName)
+            ->setData($priceProductStorageTransfer->toArray())
+            ->setIsSendingToQueue($this->isSendingToQueue)
+            ->save();
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage $priceProductAbstractStorageEntity
      *
-     * @return array
+     * @return void
      */
-    protected function getProductAbstractSkus(array $productAbstractIds)
+    protected function deletePriceProduct(SpyPriceProductAbstractStorage $priceProductAbstractStorageEntity)
+    {
+        if (!$priceProductAbstractStorageEntity->isNew()) {
+            $priceProductAbstractStorageEntity->delete();
+        }
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage[]
+     */
+    protected function findPriceProductAbstractStorageEntities(array $productAbstractIds)
     {
         return $this->queryContainer
-            ->queryProductAbstractSkuByIds($productAbstractIds)
+            ->queryPriceAbstractStorageByPriceAbstractIds($productAbstractIds)
             ->find()
-            ->toKeyValue(PriceProductStorageQueryContainer::ID_PRODUCT_ABSTRACT, PriceProductStorageQueryContainer::SKU);
+            ->getArrayCopy();
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return array
      */
-    protected function findPriceAbstractStorageEntitiesByProductAbstractIds(array $productAbstractIds)
+    protected function getProductAbstractPriceGroups(array $productAbstractIds)
     {
-        return $this->queryContainer->queryPriceAbstractStorageByPriceAbstractIds($productAbstractIds)->find()->toKeyIndex('fkProductAbstract');
+        $priceGroups = [];
+        foreach ($productAbstractIds as $idProductAbstract) {
+            $productAbstractPriceProductTransfers = $this->priceProductFacade->findProductAbstractPrices($idProductAbstract);
+            foreach ($productAbstractPriceProductTransfers as $priceProductTransfer) {
+                $storeName = $this->getStoreNameById($priceProductTransfer->getMoneyValue()->getFkStore());
+                $priceGroups[$idProductAbstract][$storeName][] = $priceProductTransfer;
+            }
+
+            foreach ($priceGroups[$idProductAbstract] as $storeName => $priceProductTransferCollection) {
+                $priceGroups[$idProductAbstract][$storeName] = $this->priceProductFacade->groupPriceProductCollection(
+                    $priceProductTransferCollection
+                );
+            }
+        }
+
+        return $priceGroups;
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage[] $priceProductAbstractStorageEntities
+     *
+     * @return array
+     */
+    protected function getPriceProductAbstractStorageMap(array $priceProductAbstractStorageEntities)
+    {
+        $priceProductAbstractStorageMap = [];
+        foreach ($priceProductAbstractStorageEntities as $storageEntity) {
+            $priceProductAbstractStorageMap[$storageEntity->getFkProductAbstract()][$storageEntity->getStore()] = $storageEntity;
+        }
+
+        return $priceProductAbstractStorageMap;
+    }
+
+    /**
+     * @param int $idStore
+     *
+     * @return string
+     */
+    protected function getStoreNameById($idStore)
+    {
+        if (!$this->storeNameMapBuffer) {
+            $this->loadStoreNameMap();
+        }
+
+        return $this->storeNameMapBuffer[$idStore];
+    }
+
+    /**
+     * @return void
+     */
+    protected function loadStoreNameMap()
+    {
+        $storeTransfers = $this->storeFacade->getAllStores();
+
+        $this->storeNameMapBuffer = [];
+        foreach ($storeTransfers as $storeTransfer) {
+            $this->storeNameMapBuffer[$storeTransfer->getIdStore()] = $storeTransfer->getName();
+        }
     }
 }
