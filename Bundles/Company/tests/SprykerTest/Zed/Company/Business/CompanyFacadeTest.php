@@ -29,6 +29,16 @@ class CompanyFacadeTest extends Test
     /**
      * @return void
      */
+    public function testGetCompanyByIdShouldReturnTransfer()
+    {
+        $companyTransfer = $this->tester->haveCompany(['is_active' => false]);
+        $foundCompanyTransfer = $this->getFacade()->getCompanyById($companyTransfer);
+        $this->assertNotNull($foundCompanyTransfer->getIdCompany());
+    }
+
+    /**
+     * @return void
+     */
     public function testCreateShouldPersistCompany()
     {
         $companyTransfer = (new CompanyBuilder())->build();
@@ -42,8 +52,7 @@ class CompanyFacadeTest extends Test
      */
     public function testUpdateShouldPersistCompanyChanges()
     {
-        $companyTransfer = (new CompanyBuilder(['is_active' => false]))->build();
-        $companyTransfer = $this->getFacade()->create($companyTransfer)->getCompanyTransfer();
+        $companyTransfer = $this->tester->haveCompany(['is_active' => false]);
 
         $companyTransfer->setIsActive(true);
         $companyTransfer->setStatus(SpyCompanyTableMap::COL_STATUS_APPROVED);
@@ -60,18 +69,15 @@ class CompanyFacadeTest extends Test
      */
     public function testDeleteShouldRemoveCompanyFromStorage()
     {
-        $companyTransfer = (new CompanyBuilder(['is_active' => false]))->build();
-        $companyTransfer = $this->getFacade()->create($companyTransfer)->getCompanyTransfer();
-
+        $companyTransfer = $this->tester->haveCompany(['is_active' => false]);
         $this->getFacade()->delete($companyTransfer);
-
         $this->assertNull($this->tester->findCompanyById($companyTransfer->getIdCompany()));
     }
 
     /**
      * @return void
      */
-    public function testSaveCompanyShouldPersistStoreRelation()
+    public function testCreateOrUpdateCompanyShouldPersistStoreRelation()
     {
         $storeIds = [];
         foreach ($this->getAllStores() as $store) {

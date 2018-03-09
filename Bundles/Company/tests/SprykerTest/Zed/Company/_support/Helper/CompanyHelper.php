@@ -3,11 +3,15 @@
 namespace SprykerTest\Zed\Company\Helper;
 
 use Codeception\Module;
+use Generated\Shared\DataBuilder\CompanyBuilder;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CompanyHelper extends Module
 {
+    use LocatorHelperTrait;
+
     /**
      * @param int $idCompany
      *
@@ -24,5 +28,20 @@ class CompanyHelper extends Module
         }
 
         return null;
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function haveCompany(array $seedData = [])
+    {
+        $companyTransfer = (new CompanyBuilder($seedData))->build();
+        $companyTransfer->setIdCompany(null);
+
+        $this->getLocator()->company()->facade()->create($companyTransfer);
+
+        return $companyTransfer;
     }
 }
