@@ -16,4 +16,11 @@ interface UrlStorageReaderInterface
      * @return array
      */
     public function matchUrl($url, $localeName);
+
+    /**
+     * @param string $url
+     *
+     * @return \Generated\Shared\Transfer\UrlStorageTransfer|null
+     */
+    public function findUrlStorageTransferByUrl($url);
 }

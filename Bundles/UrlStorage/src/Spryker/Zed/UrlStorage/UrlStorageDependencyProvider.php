@@ -29,16 +29,9 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
-            return new UrlStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
-
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
-            return new UrlStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
-        };
+        $this->addUtilSanitizeService($container);
+        $this->addEventBehaviorFacade($container);
+        $this->addStore($container);
 
         return $container;
     }
@@ -50,10 +43,56 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
+        $this->addUrlQueryContainer($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addUtilSanitizeService(Container $container)
+    {
+        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+            return new UrlStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addEventBehaviorFacade(Container $container)
+    {
+        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+            return new UrlStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addStore(Container $container)
+    {
+        $container[static::STORE] = function (Container $container) {
+            return Store::getInstance();
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addUrlQueryContainer(Container $container)
+    {
         $container[static::QUERY_CONTAINER_URL] = function (Container $container) {
             return new UrlStorageToUrlQueryContainerBridge($container->getLocator()->url()->queryContainer());
         };
-
-        return $container;
     }
 }

@@ -9,6 +9,9 @@ namespace Spryker\Client\Collector\KeyBuilder;
 
 use Spryker\Shared\Collector\Code\KeyBuilder\UrlKeyBuilder as SharedUrlKeyBuilder;
 
+/**
+ * @deprecated use \Spryker\Client\Url\KeyBuilder\UrlKeyBuilder
+ */
 class UrlKeyBuilder extends SharedUrlKeyBuilder
 {
 }
