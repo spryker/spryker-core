@@ -55,13 +55,13 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
      */
     public function getCompanyById(int $idCompany): CompanyTransfer
     {
-        $query = $this->getFactory()
+        $spyCompany = $this->getFactory()
             ->createCompanyQuery()
-            ->filterByIdCompany($idCompany);
-        $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+            ->filterByIdCompany($idCompany)
+            ->findOne();
 
         return $this->getFactory()
             ->createCompanyMapper()
-            ->mapEntityTransferToCompanyTransfer($entityTransfer, new CompanyTransfer());
+            ->mapEntityToCompanyTransfer($spyCompany, new CompanyTransfer());
     }
 }

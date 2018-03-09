@@ -9,9 +9,16 @@ namespace Spryker\Zed\CompanyMailConnector\Communication\Plugin\Company;
 
 use Generated\Shared\Transfer\CompanyTransfer;
 use Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostSavePluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-class SendCompanyStatusChangePlugin implements CompanyPostSavePluginInterface
+/**
+ * @method \Spryker\Zed\CompanyMailConnector\Communication\CompanyMailConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyMailConnector\Business\CompanyMailConnectorFacadeInterface getFacade()
+ */
+class SendCompanyStatusChangePlugin extends AbstractPlugin implements CompanyPostSavePluginInterface
 {
+    public const PROPERTY_COMPANY_STATUS = 'status';
+
     /**
      * {@inheritdoc}
      *
@@ -23,6 +30,10 @@ class SendCompanyStatusChangePlugin implements CompanyPostSavePluginInterface
      */
     public function postSave(CompanyTransfer $companyTransfer): CompanyTransfer
     {
+        if ($companyTransfer->isPropertyModified(static::PROPERTY_COMPANY_STATUS)) {
+            $this->getFacade()->sendCompanyStatusEmail($companyTransfer);
+        }
+
         return $companyTransfer;
     }
 }

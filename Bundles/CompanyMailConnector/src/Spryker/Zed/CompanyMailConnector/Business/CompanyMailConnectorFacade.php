@@ -8,8 +8,12 @@
 namespace Spryker\Zed\CompanyMailConnector\Business;
 
 use Generated\Shared\Transfer\CompanyTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
-class CompanyMailConnectorFacade implements CompanyMailConnectorFacadeInterface
+/**
+ * @method \Spryker\Zed\CompanyMailConnector\Business\CompanyMailConnectorBusinessFactory getFactory()
+ */
+class CompanyMailConnectorFacade extends AbstractFacade implements CompanyMailConnectorFacadeInterface
 {
     /**
      * {@inheritdoc}
@@ -22,6 +26,6 @@ class CompanyMailConnectorFacade implements CompanyMailConnectorFacadeInterface
      */
     public function sendCompanyStatusEmail(CompanyTransfer $companyTransfer): void
     {
-        // TODO: Implement sendCompanyStatusEmail() method.
+        $this->getFactory()->createCompanyStatusMailer()->sendCompanyStatusEmail($companyTransfer);
     }
 }

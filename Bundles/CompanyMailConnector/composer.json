@@ -3,11 +3,14 @@
   "description": "CompanyMailConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "spryker/company-extension": "0.0.1",
+    "spryker/company-user": "0.0.3",
+    "spryker/kernel": "^3.0.0",
+    "spryker/mail": "^4.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/company-extension": "0.0.1",
     "spryker/testify": "*"
   },
   "autoload": {
