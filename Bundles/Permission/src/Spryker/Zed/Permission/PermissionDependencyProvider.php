@@ -47,7 +47,7 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Permission\Dependency\Plugin\PermissionPluginInterface[]
+     * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[]
      */
     protected function getPermissionPlugins()
     {
@@ -71,7 +71,7 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @throws \Exception
      *
-     * @return \Spryker\Zed\Permission\Dependency\Plugin\PermissionStoragePluginInterface
+     * @return \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface
      */
     protected function getPermissionStoragePlugin()
     {

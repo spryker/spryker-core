@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\CheckoutPermissionConnector\Plugin;
 
-use Spryker\Client\Permission\Dependency\Plugin\PermissionPluginInterface;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 
 /**
  * @example

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Permission\Dependency\Plugin;
+namespace Spryker\Client\PermissionExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 
@@ -13,12 +13,12 @@ interface PermissionStoragePluginInterface
 {
     /**
      * Specification:
-     * - Finds permission in a database for a specific user
-     * - Populates them into a permission collection with configurations
+     * - Finds permissions in a user session
+     * - Populates them in a permission collection with configurations
      *
-     * @param int|string $identifier
+     * @api
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function getPermissionCollection($identifier): PermissionCollectionTransfer;
+    public function getPermissionCollection(): PermissionCollectionTransfer;
 }

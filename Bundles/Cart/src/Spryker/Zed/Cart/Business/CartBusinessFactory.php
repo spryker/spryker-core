@@ -10,6 +10,7 @@ namespace Spryker\Zed\Cart\Business;
 use Spryker\Zed\Cart\Business\Model\Operation;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 use Spryker\Zed\Cart\CartDependencyProvider;
+use Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -28,7 +29,8 @@ class CartBusinessFactory extends AbstractBusinessFactory
             $this->getMessengerFacade(),
             $this->getItemExpanderPlugins(),
             $this->getCartPreCheckPlugins(),
-            $this->getPostSavePlugins()
+            $this->getPostSavePlugins(),
+            $this->getTerminationPlugins()
         );
 
         $operation->setPreReloadLoadPlugins($this->getPreReloadItemsPlugins());
@@ -90,5 +92,13 @@ class CartBusinessFactory extends AbstractBusinessFactory
     protected function getPreReloadItemsPlugins()
     {
         return $this->getProvidedDependency(CartDependencyProvider::CART_PRE_RELOAD_PLUGINS);
+    }
+
+    /**
+     * @return CartTerminationPluginInterface[]
+     */
+    protected function getTerminationPlugins()
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::CART_TERMINATION_PLUGINS);
     }
 }

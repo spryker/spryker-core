@@ -9,6 +9,7 @@ namespace Spryker\Zed\Cart;
 
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationBridge;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerBridge;
+use Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -21,6 +22,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     const CART_PRE_CHECK_PLUGINS = 'pre check plugins';
     const CART_POST_SAVE_PLUGINS = 'cart post save plugins';
     const CART_PRE_RELOAD_PLUGINS = 'cart pre reload plugins';
+    const CART_TERMINATION_PLUGINS = 'CART_TERMINATION_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -35,6 +37,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPostSavePlugins($container);
         $container = $this->addPreCheckPlugins($container);
         $container = $this->addPreReloadPlugins($container);
+        $container = $this->addTerminationPlugins($container);
 
         return $container;
     }
@@ -118,6 +121,20 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addTerminationPlugins(Container $container)
+    {
+        $container[static::CART_TERMINATION_PLUGINS] = function (Container $container) {
+            return $this->getTerminationPlugins($container);
+        };
+
+        return $container;
+    }
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[]
@@ -153,6 +170,16 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Cart\Dependency\PreReloadItemsPluginInterface[]
      */
     protected function getPreReloadPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return CartTerminationPluginInterface[]
+     */
+    protected function getTerminationPlugins(Container $container)
     {
         return [];
     }
