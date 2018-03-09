@@ -5,7 +5,6 @@ namespace Spryker\Zed\CartPermissionConnector\Communication\Plugin;
 
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface;
