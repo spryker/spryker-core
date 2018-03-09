@@ -8,9 +8,7 @@
 namespace Spryker\Zed\CompanyMailConnector\Business\Company;
 
 use Generated\Shared\Transfer\CompanyTransfer;
-use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Zed\CompanyMailConnector\Communication\Plugin\Mail\CompanyStatusMailTypePlugin;
 use Spryker\Zed\CompanyMailConnector\Dependency\Facade\CompanyMailConnectorToCompanyUserFacadeInterface;
@@ -47,34 +45,10 @@ class CompanyStatusMailer implements CompanyStatusMailerInterface
      */
     public function sendCompanyStatusEmail(CompanyTransfer $companyTransfer): void
     {
-        $companyUserTransfer = $this->getFirstCompanyUserByCompanyId($companyTransfer->getIdCompany());
+        $companyUserTransfer = $this->companyUserFacade->getInitialCompanyUserByCompanyId($companyTransfer->getIdCompany());
         $mailTransfer = $this->prepareMailTransfer($companyTransfer, $companyUserTransfer);
 
         $this->mailFacade->handleMail($mailTransfer);
-    }
-
-    /**
-     * @param int $idCompany
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
-     */
-    protected function getFirstCompanyUserByCompanyId(int $idCompany): CompanyUserTransfer
-    {
-        $companyUserCriteriaFilterTransfer = new CompanyUserCriteriaFilterTransfer();
-
-        $filterTransfer = (new FilterTransfer())
-            ->setLimit(1)
-            ->setOrderBy('id_company_user')
-            ->setOrderDirection('ASC');
-
-        $companyUserCriteriaFilterTransfer->setIdCompany($idCompany)
-            ->setFilter($filterTransfer);
-
-        $companyUsers = $this->companyUserFacade->getCompanyUserCollection($companyUserCriteriaFilterTransfer)
-            ->getCompanyUsers()
-            ->getArrayCopy();
-
-        return reset($companyUsers);
     }
 
     /**

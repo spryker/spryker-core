@@ -115,4 +115,18 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     {
         return $this->getRepository()->getCompanyUserById($idCompanyUser);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function getInitialCompanyUserByCompanyId(int $idCompany): CompanyUserTransfer
+    {
+        return $this->getRepository()->getInitialCompanyUserByCompanyId($idCompany);
+    }
 }

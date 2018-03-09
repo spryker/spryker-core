@@ -7,17 +7,14 @@
 
 namespace Spryker\Zed\CompanyMailConnector\Dependency\Facade;
 
-use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
-use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 
 interface CompanyMailConnectorToCompanyUserFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
+     * @param int $idCompany
      *
-     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function getCompanyUserCollection(
-        CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
-    ): CompanyUserCollectionTransfer;
+    public function getInitialCompanyUserByCompanyId(int $idCompany): CompanyUserTransfer;
 }

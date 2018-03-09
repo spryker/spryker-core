@@ -17,8 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class SendCompanyStatusChangePlugin extends AbstractPlugin implements CompanyPostSavePluginInterface
 {
-    public const PROPERTY_COMPANY_STATUS = 'status';
-
     /**
      * {@inheritdoc}
      *
@@ -30,7 +28,7 @@ class SendCompanyStatusChangePlugin extends AbstractPlugin implements CompanyPos
      */
     public function postSave(CompanyTransfer $companyTransfer): CompanyTransfer
     {
-        if ($companyTransfer->isPropertyModified(static::PROPERTY_COMPANY_STATUS)) {
+        if ($companyTransfer->isPropertyModified(CompanyTransfer::STATUS)) {
             $this->getFacade()->sendCompanyStatusEmail($companyTransfer);
         }
 

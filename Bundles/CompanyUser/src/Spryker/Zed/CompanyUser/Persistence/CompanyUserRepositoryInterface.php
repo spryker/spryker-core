@@ -33,4 +33,11 @@ interface CompanyUserRepositoryInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
     public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer;
+
+    /**
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function getInitialCompanyUserByCompanyId(int $idCompany): CompanyUserTransfer;
 }

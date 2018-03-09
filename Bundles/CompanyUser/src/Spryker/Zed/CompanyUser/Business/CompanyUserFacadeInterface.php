@@ -89,4 +89,16 @@ interface CompanyUserFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
     public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves initial company user (first created) by $idCompany,
+     *
+     * @api
+     *
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function getInitialCompanyUserByCompanyId(int $idCompany): CompanyUserTransfer;
 }
