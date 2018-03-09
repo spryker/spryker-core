@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use DateTime;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Zed\CompanySupplier\Communication\Plugin\ProductConcreteEditFormExpanderPlugin;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
@@ -61,7 +62,8 @@ class ProductConcreteFormEdit extends ProductFormAdd
             ->addStockForm($builder, $options)
             ->addImageLocalizedForms($builder)
             ->addAssignBundledProductForm($builder, $options)
-            ->addBundledProductsToBeRemoved($builder);
+            ->addBundledProductsToBeRemoved($builder)
+            ->addFormBuildPlugins($builder, $options);
     }
 
     /**
@@ -351,5 +353,16 @@ class ProductConcreteFormEdit extends ProductFormAdd
         parent::configureOptions($resolver);
 
         $resolver->setRequired(self::OPTION_IS_BUNDLE_ITEM);
+    }
+
+    protected function addFormBuildPlugins(FormBuilderInterface $builder, array $options)
+    {
+        $plugins = [
+            new ProductConcreteEditFormExpanderPlugin(),
+        ];
+
+        foreach ($plugins as $plugin) {
+//            $plugins->
+        }
     }
 }
