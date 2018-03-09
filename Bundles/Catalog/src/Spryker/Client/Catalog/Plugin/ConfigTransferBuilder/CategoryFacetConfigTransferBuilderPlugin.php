@@ -18,7 +18,7 @@ class CategoryFacetConfigTransferBuilderPlugin extends AbstractPlugin implements
 {
     const NAME = 'category';
     const PARAMETER_NAME = 'category';
-    const SIZE_UNLIMITED = 0;
+    const SIZE = 1000;
 
     /**
      * @return \Generated\Shared\Transfer\FacetConfigTransfer
@@ -31,7 +31,7 @@ class CategoryFacetConfigTransferBuilderPlugin extends AbstractPlugin implements
             ->setFieldName(PageIndexMap::CATEGORY_ALL_PARENTS)
             ->setType(SearchConfig::FACET_TYPE_CATEGORY)
             ->setAggregationParams([
-                CategoryFacetAggregation::AGGREGATION_PARAM_SIZE => static::SIZE_UNLIMITED,
+                CategoryFacetAggregation::AGGREGATION_PARAM_SIZE => static::SIZE,
             ]);
     }
 }

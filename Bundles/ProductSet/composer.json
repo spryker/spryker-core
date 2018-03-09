@@ -9,7 +9,7 @@
     "spryker/locale": "^3.1.0",
     "spryker/product-image": "^3.3.0",
     "spryker/propel-orm": "^1.1.0",
-    "spryker/search": "^6.0.0 || ^7.0.0",
+    "spryker/search": "^6.0.0 || ^7.0.0 || ^8.0.0",
     "spryker/storage": "^3.0.0",
     "spryker/touch": "^3.0.0 || ^4.0.0",
     "spryker/url": "^3.2.1"
