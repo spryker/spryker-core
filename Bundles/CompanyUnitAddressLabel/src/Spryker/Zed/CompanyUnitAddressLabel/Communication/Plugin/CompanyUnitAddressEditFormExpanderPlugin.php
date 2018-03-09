@@ -7,13 +7,8 @@
 
 namespace Spryker\Zed\CompanyUnitAddressLabel\Communication\Plugin;
 
-use ArrayObject;
-use Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer;
-use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\CompanyUnitAddressEditFormExpanderPluginInterface;
-use Spryker\Zed\CompanyUnitAddressLabel\Communication\Form\CompanyUnitAddressLabelChoiceFormType;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -29,33 +24,18 @@ class CompanyUnitAddressEditFormExpanderPlugin extends AbstractPlugin implements
      */
     public function buildForm(FormBuilderInterface $builder)
     {
-        //TODO: set data from database to form
-        //TODO: MOve logic to CompanyUnitAddressEditFormExpander in communication
-        $dataProvider = $this->getFactory()->createCompanyUnitAddressLabelChoiceFormDataProvider();
+        $formType = $this->getFactory()
+            ->createCompanyUnitAddressLabelChoiceFormType();
 
-        $builder->add(
-            CompanyUnitAddressTransfer::LABEL_COLLECTION,
-            CompanyUnitAddressLabelChoiceFormType::class,
+        $dataProvider = $this->getFactory()
+            ->createCompanyUnitAddressLabelChoiceFormDataProvider();
+
+        $companyUnitAddressTransfer = $builder->getData();
+        $dataProvider->getData($companyUnitAddressTransfer);
+
+        $formType->buildForm(
+            $builder,
             $dataProvider->getOptions()
         );
-
-        //TODO: move to inner form
-        $builder->get(CompanyUnitAddressTransfer::LABEL_COLLECTION)
-            ->addModelTransformer(
-                new CallbackTransformer(
-                    function ($model) {
-                        $result['labels'] = $model->getLabels();
-
-                        return $result;
-                    },
-                    function ($labels) {
-                        $collection = new CompanyUnitAddressLabelCollectionTransfer();
-
-                        $collection->setLabels(new ArrayObject($labels['labels']));
-
-                        return $collection;
-                    }
-                )
-            );
     }
 }

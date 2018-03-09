@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CompanyUnitAddressLabel\Persistence;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
-use Generated\Shared\Transfer\SpyCompanyUnitAddressLabelToCompanyUnitAddressEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -21,36 +20,38 @@ class CompanyUnitAddressLabelEntityManager extends AbstractEntityManager impleme
      *
      * @return void
      */
-    public function saveLabelToAddressRelation(
+    public function saveLabelToAddressRelations(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): void {
-        //TODO: calculate labels that should be removed. NO need to delete all of them and recreate.
-        //TODO: calculate redundant relations in business layer
-        $this->deleteLabelRelationsByCompanyUnitAddress($companyUnitAddressTransfer);
+
         $labelCollection = $companyUnitAddressTransfer->getLabelCollection();
         if (empty($labelCollection) || empty($labelCollection->getLabels())) {
             return;
         }
 
         foreach ($labelCollection->getLabels() as $label) {
-            $transfer = new SpyCompanyUnitAddressLabelToCompanyUnitAddressEntityTransfer();
-            $transfer->setFkCompanyUnitAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
-            $transfer->setFkCompanyUnitAddressLabel($label->getIdCompanyUnitAddressLabel());
-            $this->save($transfer);
+            $labelAddressRelation = $this->getFactory()->createCompanyUnitAddressLabelToCompanyUnitAddressQuery()
+                ->filterByFkCompanyUnitAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress())
+                ->filterByFkCompanyUnitAddressLabel($label->getIdCompanyUnitAddressLabel())
+                ->findOneOrCreate();
+
+            $labelAddressRelation->save();
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     * @param array $labelToAddressRelationIds
      *
      * @return void
      */
-    protected function deleteLabelRelationsByCompanyUnitAddress(CompanyUnitAddressTransfer $companyUnitAddressTransfer)
-    {
-        //Check delete all.
+    public function deleteRedundantLabelToAddressRelations(
+        array $labelToAddressRelationIds
+    ): void {
         $this->getFactory()
             ->createCompanyUnitAddressLabelToCompanyUnitAddressQuery()
-            ->filterByFkCompanyUnitAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress())
-            ->deleteAll();
+            ->filterByIdCompanyUnitAddressLabelToCompanyUnitAddress_In(
+                $labelToAddressRelationIds
+            )
+            ->delete();
     }
 }

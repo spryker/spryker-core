@@ -15,16 +15,16 @@ interface CompanyUnitAddressLabelRepositoryInterface
     public function findCompanyUnitAddressLabels();
 
     /**
-     * @param int $idCompanyUnitAddressLabel
+     * @param int $idCompanyUnitAddress
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer
      */
-    public function findCompanyUnitAddressLabelsByAddress(int $idCompanyUnitAddressLabel);
+    public function findCompanyUnitAddressLabelsByAddress(int $idCompanyUnitAddress);
 
     /**
-     * @param int $idCompanyUnitAddressLabel
+     * @param int $idCompanyUnitAddress
      *
      * @return \ArrayObject
      */
-    public function findCompanyUnitAddressLabelToCompanyUnitAddressRelations(int $idCompanyUnitAddressLabel);
+    public function findCompanyUnitAddressLabelToCompanyUnitAddressRelations(int $idCompanyUnitAddress);
 }

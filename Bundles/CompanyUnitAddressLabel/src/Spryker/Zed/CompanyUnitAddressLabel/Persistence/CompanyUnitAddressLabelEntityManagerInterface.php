@@ -16,7 +16,16 @@ interface CompanyUnitAddressLabelEntityManagerInterface
      *
      * @return void
      */
-    public function saveLabelToAddressRelation(
+    public function saveLabelToAddressRelations(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    );
+    ): void;
+
+    /**
+     * @param array $labelToAddressRelationIds
+     *
+     * @return void
+     */
+    public function deleteRedundantLabelToAddressRelations(
+        array $labelToAddressRelationIds
+    ): void;
 }

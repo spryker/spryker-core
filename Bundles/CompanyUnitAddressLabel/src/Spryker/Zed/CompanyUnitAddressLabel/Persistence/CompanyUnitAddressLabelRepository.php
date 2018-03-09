@@ -29,31 +29,31 @@ class CompanyUnitAddressLabelRepository extends AbstractRepository implements Co
     }
 
     /**
-     * @param int $idCompanyUnitAddressLabel
+     * @param int $idCompanyUnitAddress
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer
      */
-    public function findCompanyUnitAddressLabelsByAddress(int $idCompanyUnitAddressLabel)
+    public function findCompanyUnitAddressLabelsByAddress(int $idCompanyUnitAddress)
     {
         $companyUnitAddressLabelQuery = $this->getFactory()
             ->createCompanyUnitAddressLabelQuery()
             ->useSpyCompanyUnitAddressLabelToCompanyUnitAddressQuery()
-                ->filterByFkCompanyUnitAddress($idCompanyUnitAddressLabel)
+                ->filterByFkCompanyUnitAddress($idCompanyUnitAddress)
             ->endUse();
 
         return $this->createCollection($companyUnitAddressLabelQuery);
     }
 
     /**
-     * @param int $idCompanyUnitAddressLabel
+     * @param int $idCompanyUnitAddress
      *
      * @return \ArrayObject
      */
-    public function findCompanyUnitAddressLabelToCompanyUnitAddressRelations(int $idCompanyUnitAddressLabel)
+    public function findCompanyUnitAddressLabelToCompanyUnitAddressRelations(int $idCompanyUnitAddress)
     {
         $query = $this->getFactory()
             ->createCompanyUnitAddressLabelToCompanyUnitAddressQuery()
-            ->filterByFkCompanyUnitAddress($idCompanyUnitAddressLabel);
+            ->filterByFkCompanyUnitAddress($idCompanyUnitAddress);
 
         return new ArrayObject($this->buildQueryFromCriteria($query)->find());
     }

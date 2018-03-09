@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\CompanyUnitAddressLabel\Communication\Form;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\SpyCompanyUnitAddressLabelEntityTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
@@ -16,8 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CompanyUnitAddressLabelChoiceFormType extends AbstractType
 {
-    const FIELD_VALUES = 'company_unit_address_label_choice_field';
-    const OPTION_VALUES_CHOICES = 'company_unit_address_label_value_options';
+    const OPTION_VALUES_LABEL_CHOICES = 'company_unit_address_label_value_options';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -27,16 +29,7 @@ class CompanyUnitAddressLabelChoiceFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_VALUES, Select2ComboBoxType::class, [
-            'label' => 'Labels',
-            'required' => false,
-            //TODO: get data from collection
-            'property_path' => '[labels]',
-            'choices' => $options[static::OPTION_VALUES_CHOICES],
-            'multiple' => true,
-        ]);
-
-        $this->addModelTransformer($builder);
+        $this->addLabelSelectField($builder, $options);
 
         return $this;
     }
@@ -49,7 +42,30 @@ class CompanyUnitAddressLabelChoiceFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
-        $resolver->setRequired(static::OPTION_VALUES_CHOICES);
+        $resolver->setRequired(static::OPTION_VALUES_LABEL_CHOICES);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
+    protected function addLabelSelectField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(
+            CompanyUnitAddressTransfer::LABEL_COLLECTION,
+            Select2ComboBoxType::class,
+            [
+                'label' => 'Labels',
+                'required' => false,
+                'property_path' => CompanyUnitAddressTransfer::LABEL_COLLECTION . '.' . CompanyUnitAddressLabelCollectionTransfer::LABELS,
+                'choices' => $options[static::OPTION_VALUES_LABEL_CHOICES],
+                'multiple' => true,
+            ]
+        );
+
+        $this->addModelTransformer($builder);
     }
 
     /**
@@ -59,8 +75,7 @@ class CompanyUnitAddressLabelChoiceFormType extends AbstractType
      */
     protected function addModelTransformer(FormBuilderInterface $builder)
     {
-        //TODO: use these transformers only
-        $builder->get(static::FIELD_VALUES)->addModelTransformer(
+        $builder->get(CompanyUnitAddressTransfer::LABEL_COLLECTION)->addModelTransformer(
             new CallbackTransformer(
                 function ($labels) {
                     if (empty($labels)) {
@@ -80,7 +95,7 @@ class CompanyUnitAddressLabelChoiceFormType extends AbstractType
                             ->setIdCompanyUnitAddressLabel($id);
                     }
 
-                    return $labels;
+                    return new ArrayObject($labels);
                 }
             )
         );

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUnitAddressLabel\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Zed\CompanyUnitAddressLabel\Communication\Form\CompanyUnitAddressLabelChoiceFormType;
 use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepositoryInterface;
 
@@ -32,28 +33,29 @@ class CompanyUnitAddressLabelFormDataProvider
     public function getOptions()
     {
         return [
-            CompanyUnitAddressLabelChoiceFormType::OPTION_VALUES_CHOICES => $this->getChoices(),
+            CompanyUnitAddressLabelChoiceFormType::OPTION_VALUES_LABEL_CHOICES => $this->getLabelChoices(),
             'label' => false,
         ];
     }
 
-    //TODO: use \Spryker\Zed\CmsBlockProductConnector\Communication\Plugin\CmsBlockProductAbstractFormPlugin::buildForm
     /**
-     * @param int|null $idCompanyUnitAddress
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function getData($idCompanyUnitAddress = null)
+    public function getData(CompanyUnitAddressTransfer $companyUnitAddressTransfer)
     {
-        return $this->companyUnitAddressLabelRepository
-            ->findCompanyUnitAddressLabelsByAddress($idCompanyUnitAddress);
+        $labelCollection = $this->companyUnitAddressLabelRepository
+            ->findCompanyUnitAddressLabelsByAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
+        $companyUnitAddressTransfer->setLabelCollection($labelCollection);
+
+        return $companyUnitAddressTransfer;
     }
 
-    //TODO:rename choices to labelChoices
     /**
      * @return array
      */
-    protected function getChoices()
+    protected function getLabelChoices()
     {
         $labelCollection = $this->companyUnitAddressLabelRepository->findCompanyUnitAddressLabels();
 

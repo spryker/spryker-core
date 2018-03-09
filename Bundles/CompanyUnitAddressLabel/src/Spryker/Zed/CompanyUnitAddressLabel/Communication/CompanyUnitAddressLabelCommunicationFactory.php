@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUnitAddressLabel\Communication;
 
+use Spryker\Zed\CompanyUnitAddressLabel\Communication\Form\CompanyUnitAddressLabelChoiceFormType;
 use Spryker\Zed\CompanyUnitAddressLabel\Communication\Form\DataProvider\CompanyUnitAddressLabelFormDataProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -25,5 +26,13 @@ class CompanyUnitAddressLabelCommunicationFactory extends AbstractCommunicationF
         return new CompanyUnitAddressLabelFormDataProvider(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressLabel\Communication\Form\CompanyUnitAddressLabelChoiceFormType
+     */
+    public function createCompanyUnitAddressLabelChoiceFormType()
+    {
+        return new CompanyUnitAddressLabelChoiceFormType();
     }
 }
