@@ -40,8 +40,6 @@ class CompanyHelper extends Module
         $companyTransfer = (new CompanyBuilder($seedData))->build();
         $companyTransfer->setIdCompany(null);
 
-        $this->getLocator()->company()->facade()->create($companyTransfer);
-
-        return $companyTransfer;
+        return $this->getLocator()->company()->facade()->create($companyTransfer)->getCompanyTransfer();
     }
 }
