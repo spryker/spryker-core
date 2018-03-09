@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyBusinessUnit\Communication\Plugin\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserHydrationPluginInterface;
+use Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**

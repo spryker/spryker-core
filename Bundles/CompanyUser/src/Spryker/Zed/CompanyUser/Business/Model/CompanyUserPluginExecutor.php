@@ -12,18 +12,18 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 class CompanyUserPluginExecutor implements CompanyUserPluginExecutorInterface
 {
     /**
-     * @var array|\Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserPostSavePluginInterface[]
+     * @var array|\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface[]
      */
     protected $companyUserPostSavePlugins;
 
     /**
-     * @var array|\Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
+     * @var array|\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
      */
     protected $companyUserHydrationPlugins;
 
     /**
-     * @param \Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserPostSavePluginInterface[] $companyUserPostSavePlugins
-     * @param \Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserHydrationPluginInterface[] $companyUserHydrationPlugins
+     * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface[] $companyUserPostSavePlugins
+     * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[] $companyUserHydrationPlugins
      */
     public function __construct(
         array $companyUserPostSavePlugins = [],

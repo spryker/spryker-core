@@ -5,18 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUser\Dependency\Plugin;
+namespace Spryker\Zed\CompanyUserExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 
-interface CompanyUserHydrationPluginInterface
+interface CompanyUserPostSavePluginInterface
 {
     /**
+     * Specification:
+     * - Executes plugins after a company user is saved
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function hydrate(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
+    public function postSave(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
 }
