@@ -24,6 +24,32 @@ class CustomerAccessGuiToCustomerAccessFacadeBridge implements CustomerAccessGui
     }
 
     /**
+	 * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
+     *
+     * @return void
+     */
+    public function updateOnlyContentTypesToAccessible($customerAccessTransfer)
+    {
+        return $this->customerAccessFacade->updateOnlyContentTypesToAccessible($customerAccessTransfer);
+    }
+
+	/**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function findAllContentTypes()
+    {
+        return $this->customerAccessFacade->findAllContentTypes();
+    }
+
+	/**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function findUnauthenticatedCustomerAccess()

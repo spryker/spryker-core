@@ -16,4 +16,9 @@ interface CustomerAccessReaderInterface
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function findUnauthenticatedCustomerAccess();
+
+    /**
+     * @return \Generated\Shared\Transfer\ContentTypeAccessTransfer[]
+     */
+    public function findAllContentTypes();
 }

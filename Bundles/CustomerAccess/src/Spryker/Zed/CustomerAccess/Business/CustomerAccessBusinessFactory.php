@@ -5,6 +5,7 @@ namespace Spryker\Zed\CustomerAccess\Business;
 use Spryker\Zed\CustomerAccess\Business\Installer\CustomerAccessInstaller;
 use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessCreator;
 use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessReader;
+use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessUpdater;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -38,6 +39,15 @@ class CustomerAccessBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerAccessReader()
     {
-        return new CustomerAccessReader($this->getQueryContainer(), $this->getConfig());
+        return new CustomerAccessReader($this->getQueryContainer());
+    }
+
+    /**
+     *
+     * @return \Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessUpdaterInterface
+     */
+    public function createCustomerAccessUpdater()
+    {
+        return new CustomerAccessUpdater($this->getQueryContainer());
     }
 }

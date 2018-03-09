@@ -32,4 +32,26 @@ class CustomerAccessFacade extends AbstractFacade implements CustomerAccessFacad
     {
         return $this->getFactory()->createCustomerAccessReader()->findUnauthenticatedCustomerAccess();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function findAllContentTypes()
+    {
+        return $this->getFactory()->createCustomerAccessReader()->findAllContentTypes();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
+     *
+     * @return void
+     */
+    public function updateOnlyContentTypesToAccessible($customerAccessTransfer)
+    {
+        $this->getFactory()->createCustomerAccessUpdater()->updateOnlyContentTypesToAccessible($customerAccessTransfer);
+    }
 }

@@ -1,8 +1,34 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Overview of Category Filters' %}
+{% set widget_title = 'Customer Access' %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
+{#{% block content %}#}
+    {#Content hidden from not logged-in users:#}
+    {#<div>#}
+        {#{% for contentTypeAccess in customerAccess.contentTypeAccess %}#}
+            {#<input name="{{ contentTypeAccess.contentType }}" title="Show/hide {{ contentTypeAccess.contentType }}" type="checkbox" value="{{ contentTypeAccess.canAccess }}"/>#}
+            {#<span>{{ contentTypeAccess.contentType }}</span>#}
+        {#{% endfor %}#}
+    {#</div>#}
+{#{% endblock %}#}
+
 {% block content %}
-    
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Accessible content for not logged-in customers' | trans } %}
+
+        {% block widget_content %}
+            {{ form_start(form) }}
+
+            {{ form_label(form.contentTypeAccess) }}
+            <div class="country-select-box">
+                {{ form_widget(form.contentTypeAccess) }}
+                {{ form_errors(form.contentTypeAccess) }}
+            </div>
+
+            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+            {{ form_end(form) }}
+        {% endblock %}
+
+    {% endembed %}
 {% endblock %}

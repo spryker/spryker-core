@@ -13,7 +13,7 @@ use Orm\Zed\CustomerAccess\Persistence\Base\SpyUnauthenticatedCustomerAccessQuer
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-class AbstractSpyUnauthenticatedCustomerAccessQuery extends BaseSpyUnauthenticatedCustomerAccessQuery
+abstract class AbstractSpyUnauthenticatedCustomerAccessQuery extends BaseSpyUnauthenticatedCustomerAccessQuery
 {
 
 }

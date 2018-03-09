@@ -4,7 +4,6 @@ namespace Spryker\Zed\CustomerAccess\Business\Model;
 
 use Generated\Shared\Transfer\ContentTypeAccessTransfer;
 use Generated\Shared\Transfer\CustomerAccessTransfer;
-use Spryker\Zed\CustomerAccess\CustomerAccessConfig;
 use Spryker\Zed\CustomerAccess\Persistence\CustomerAccessQueryContainerInterface;
 
 class CustomerAccessReader implements CustomerAccessReaderInterface
@@ -15,17 +14,11 @@ class CustomerAccessReader implements CustomerAccessReaderInterface
     protected $customerAccessQueryContainer;
 
     /**
-     * @var \Spryker\Zed\CustomerAccess\CustomerAccessConfig
-     */
-    protected $customerAccessConfig;
-
-    /**
      * @param \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessQueryContainerInterface $customerAccessQueryContainer
      */
-    public function __construct(CustomerAccessQueryContainerInterface $customerAccessQueryContainer, CustomerAccessConfig $customerAccessConfig)
+    public function __construct(CustomerAccessQueryContainerInterface $customerAccessQueryContainer)
     {
         $this->customerAccessQueryContainer = $customerAccessQueryContainer;
-        $this->customerAccessConfig = $customerAccessConfig;
     }
 
     /**
@@ -54,26 +47,38 @@ class CustomerAccessReader implements CustomerAccessReaderInterface
     {
         $unauthenticatedCustomerAccess = $this->customerAccessQueryContainer
             ->queryCustomerAccess()
+            ->filterByCanAccess(true)
             ->find();
 
-        $defaultContentTypes = $this->customerAccessConfig->getDefaultContentTypes();
-        $defaultAccess = $this->customerAccessConfig->getDefaultContentTypeAccess();
+        return $this->fillCustomerAccessTransferFromEntities($unauthenticatedCustomerAccess);
+    }
 
-        $combinedContentAccess = [];
+    /**
+     * @return \Generated\Shared\Transfer\ContentTypeAccessTransfer[]
+     */
+    public function findAllContentTypes()
+    {
+        $unauthenticatedCustomerAccess = $this->customerAccessQueryContainer
+            ->queryCustomerAccess()
+            ->find();
 
-        foreach($defaultContentTypes as $contentType) {
-            $combinedContentAccess[$contentType] = $defaultAccess;
-        }
+        return $this->fillCustomerAccessTransferFromEntities($unauthenticatedCustomerAccess)->getContentTypeAccess();
+    }
 
-        foreach($unauthenticatedCustomerAccess as $customerAccess) {
-            $combinedContentAccess[$customerAccess->getContentType()] = $customerAccess->getCanAccess();
-        }
-
+    /**
+     * @param \Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess[] $customerAccessEntities
+     *
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    protected function fillCustomerAccessTransferFromEntities($customerAccessEntities)
+    {
         $customerAccessTransfer = new CustomerAccessTransfer();
 
-        foreach($combinedContentAccess as $contentType => $contentAccess) {
+        foreach($customerAccessEntities as $customerAccess) {
             $customerAccessTransfer->addContentTypeAccess(
-                (new ContentTypeAccessTransfer())->setContentType($contentType)->setCanAccess($contentAccess)
+                (new ContentTypeAccessTransfer())
+                    ->setContentType($customerAccess->getContentType())
+                    ->setCanAccess($customerAccess->getCanAccess())
             );
         }
 
