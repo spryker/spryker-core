@@ -1,6 +1,6 @@
 <?php
 
-namespace Spryker\Zed\CompanySupplier;
+namespace Spryker\Zed\CompanySupplierGui;
 
 use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCompanySupplierFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -28,7 +28,7 @@ class CompanySupplierGuiDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCompanyFacade(Container $container): Container
+    protected function addCompanySupplierFacade(Container $container): Container
     {
         $container[static::FACADE_COMPANY_SUPPLIER] = function (Container $container) {
             return new CompanySupplierGuiToCompanySupplierFacadeBridge($container->getLocator()->companySupplier()->facade());

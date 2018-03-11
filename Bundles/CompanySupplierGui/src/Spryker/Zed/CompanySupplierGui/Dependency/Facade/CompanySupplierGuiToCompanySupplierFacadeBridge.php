@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\CompanySupplierGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CompanySupplierCollectionTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+
 class CompanySupplierGuiToCompanySupplierFacadeBridge implements CompanySupplierGuiToCompanySupplierFacadeInterface
 {
     /**
@@ -28,5 +31,15 @@ class CompanySupplierGuiToCompanySupplierFacadeBridge implements CompanySupplier
     public function getAllSuppliers(): array
     {
         return $this->companySupplierFacade->getAllSuppliers();
+    }
+
+    public function getSuppliersByIdProduct(int $idProduct): CompanySupplierCollectionTransfer
+    {
+        return $this->companySupplierFacade->getSuppliersByIdProduct($idProduct);
+    }
+
+    public function saveCompanySuppliersForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
+    {
+        $this->companySupplierFacade->saveCompanySuppliersForProductConcrete($productConcreteTransfer);
     }
 }

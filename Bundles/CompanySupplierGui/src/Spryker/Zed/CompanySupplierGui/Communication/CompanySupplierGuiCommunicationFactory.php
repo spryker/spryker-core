@@ -1,11 +1,12 @@
 <?php
 
 
-namespace Spryker\Zed\CompanySupplier\Communication;
+namespace Spryker\Zed\CompanySupplierGui\Communication;
 
 
-use Spryker\Zed\CompanySupplier\CompanySupplierGuiDependencyProvider;
-use Spryker\Zed\CompanySupplierGui\Communication\CompanySupplierForm;
+use Spryker\Zed\CompanySupplierGui\Communication\Form\CompanySupplierForm;
+use Spryker\Zed\CompanySupplierGui\Communication\Form\DataProvider\CompanySupplierFormDataProvider;
+use Spryker\Zed\CompanySupplierGui\CompanySupplierGuiDependencyProvider;
 use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCompanySupplierFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -14,15 +15,20 @@ class CompanySupplierGuiCommunicationFactory extends AbstractCommunicationFactor
     /**
      * @return CompanySupplierGuiToCompanySupplierFacadeInterface
      */
-    protected function getCompanySupplierFacade(): CompanySupplierGuiToCompanySupplierFacadeInterface
+    public function getCompanySupplierFacade(): CompanySupplierGuiToCompanySupplierFacadeInterface
     {
         return $this->getProvidedDependency(CompanySupplierGuiDependencyProvider::FACADE_COMPANY_SUPPLIER);
     }
 
     public function createCompanySupplierForm()
     {
-        return $this->getFormFactory()->create(
-            CompanySupplierForm::class
+        return new CompanySupplierForm();
+    }
+
+    public function createCompanySupplierFormDataProvider()
+    {
+        return new CompanySupplierFormDataProvider(
+            $this->getCompanySupplierFacade()
         );
     }
 

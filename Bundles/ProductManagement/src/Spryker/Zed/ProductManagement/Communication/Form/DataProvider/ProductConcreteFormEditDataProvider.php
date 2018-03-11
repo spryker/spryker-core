@@ -8,11 +8,14 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Everon\Component\Collection\Collection;
+use Generated\Shared\Transfer\CompanySupplierCollectionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\SpyCompanyEntityTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use Spryker\Zed\CompanySupplierGui\Communication\Plugin\ProductConcreteFormEditDataProviderExpanderPlugin;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\BundledProductForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
@@ -155,6 +158,15 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $formData = $this->appendVariantPriceAndStock($productAbstractTransfer, $productTransfer, $formData);
             $formData = $this->appendConcreteProductImages($productAbstractTransfer, $productTransfer, $formData);
             $formData = $this->appendBundledProducts($productTransfer, $formData);
+        }
+
+        //TODO: inject plugins
+        $expanderPlugins = [
+            new ProductConcreteFormEditDataProviderExpanderPlugin(),
+        ];
+
+        foreach ($expanderPlugins as $expanderPlugin) {
+            $expanderPlugin->expand($productTransfer, $formData);
         }
 
         return $formData;

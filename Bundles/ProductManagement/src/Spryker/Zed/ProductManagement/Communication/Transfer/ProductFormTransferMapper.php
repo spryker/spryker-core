@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Spryker\Zed\CompanySupplierGui\Communication\Plugin\ProductFormTransferMapperExpanderPlugin;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeSuperForm;
@@ -179,6 +180,14 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
         $productConcreteTransfer->setValidFrom($formData[ProductConcreteFormEdit::FIELD_VALID_FROM]);
         $productConcreteTransfer->setValidTo($formData[ProductConcreteFormEdit::FIELD_VALID_TO]);
+
+        //TODO: inject plugins
+        $productConcreteMapperPlugins = [
+            new ProductFormTransferMapperExpanderPlugin(),
+        ];
+        foreach ($productConcreteMapperPlugins as $plugin) {
+            $plugin->map($productConcreteTransfer, $formData);
+        }
 
         return $productConcreteTransfer;
     }

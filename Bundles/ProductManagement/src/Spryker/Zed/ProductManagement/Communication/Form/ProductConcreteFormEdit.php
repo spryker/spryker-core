@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use DateTime;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Zed\CompanySupplier\Communication\Plugin\ProductConcreteEditFormExpanderPlugin;
+use Spryker\Zed\CompanySupplierGui\Communication\Plugin\ProductConcreteEditFormExpanderPlugin;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
@@ -357,12 +357,13 @@ class ProductConcreteFormEdit extends ProductFormAdd
 
     protected function addFormBuildPlugins(FormBuilderInterface $builder, array $options)
     {
+        //TODO: inject plugins
         $plugins = [
             new ProductConcreteEditFormExpanderPlugin(),
         ];
 
         foreach ($plugins as $plugin) {
-//            $plugins->
+            $plugin->buildForm($builder, $options);
         }
     }
 }

@@ -10,6 +10,9 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\SpyCompanySupplierToProductEntityTransfer;
+use Orm\Zed\CompanySupplier\Persistence\SpyCompanySupplierToProduct;
+use Spryker\Zed\CompanySupplier\Communication\Plugin\ProductConcreteManagerPersistEntityExpanderPlugin;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
@@ -320,6 +323,16 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
 
         $productConcreteEntity->fromArray($productConcreteData);
         $productConcreteEntity->setAttributes($encodedAttributes);
+
+
+        //TODO: inject plugins
+        $persistRelatedDataPlugins = [
+            new ProductConcreteManagerPersistEntityExpanderPlugin(),
+        ];
+
+        foreach ($persistRelatedDataPlugins as $persistRelatedDataPlugin) {
+            $persistRelatedDataPlugin->persistRelatedData($productConcreteTransfer);
+        }
 
         $productConcreteEntity->save();
 

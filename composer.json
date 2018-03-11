@@ -75,6 +75,8 @@
     "spryker/collector": "*",
     "spryker/collector-search-connector": "*",
     "spryker/collector-storage-connector": "*",
+    "spryker/company-supplier": "*",
+    "spryker/company-supplier-gui": "*",
     "spryker/config": "*",
     "spryker/console": "*",
     "spryker/country": "*",

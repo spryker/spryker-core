@@ -1,6 +1,6 @@
 <?php
 
-namespace Spryker\Zed\CompanySupplier\Communication\Plugin;
+namespace Spryker\Zed\CompanySupplierGui\Communication\Plugin;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
