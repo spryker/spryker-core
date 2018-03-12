@@ -79,10 +79,30 @@ class CompanyUser implements CompanyUserInterface
     public function save(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyUserTransfer) {
-            $companyUserTransfer = $this->executeSaveCompanyUserTransaction($companyUserTransfer);
+            $customerResponseTransfer = $this->customerFacade->updateCustomer($companyUserTransfer->getCustomer());
 
             $companyUserResponseTransfer = new CompanyUserResponseTransfer();
             $companyUserResponseTransfer->setIsSuccessful(true);
+            $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
+
+            if (!$customerResponseTransfer->getIsSuccess()) {
+                $companyUserResponseTransfer->setIsSuccessful(false);
+
+                foreach ($customerResponseTransfer->getErrors() as $error) {
+                    $message = new ResponseMessageTransfer();
+                    $message->setText($error->getMessage());
+                    $companyUserResponseTransfer->addMessage($message);
+                }
+
+                return $companyUserResponseTransfer;
+            }
+
+            $companyUserTransfer = $this->executeSaveCompanyUserTransaction($companyUserTransfer);
+            $companyUserTransfer->setFkCustomer(
+                $customerResponseTransfer->getCustomerTransfer()->getIdCustomer()
+            )
+                ->setCustomer($customerResponseTransfer->getCustomerTransfer());
+
             $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
 
             return $companyUserResponseTransfer;
@@ -185,7 +205,6 @@ class CompanyUser implements CompanyUserInterface
     protected function executeSaveCompanyUserTransaction(
         CompanyUserTransfer $companyUserTransfer
     ): CompanyUserTransfer {
-        $this->customerFacade->updateCustomer($companyUserTransfer->getCustomer());
         $companyUserTransfer = $this->companyUserEntityManager->saveCompanyUser($companyUserTransfer);
 
         return $this->companyUserPluginExecutor->executePostSavePlugins($companyUserTransfer);
