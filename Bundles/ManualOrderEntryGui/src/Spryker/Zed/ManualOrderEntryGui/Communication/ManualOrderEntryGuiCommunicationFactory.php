@@ -9,13 +9,18 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication;
 
 use Pyz\Yves\Customer\Form\RegisterForm;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Checkout\CheckoutForm;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomerType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\AddressCollectionDataProvider;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\AddressDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CheckoutFormDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomerDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomersListDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiDependencyProvider;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiConfig getConfig()
@@ -24,14 +29,17 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
 {
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CheckoutFormDataProvider
      *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    public function createCheckoutFormDataProvider()
+    public function createCheckoutFormDataProvider(Request $request)
     {
         return new CheckoutFormDataProvider(
-            $this->getCustomerQueryContainer()
+            $this->getCustomerQueryContainer(),
+            $request
         );
     }
 
@@ -53,6 +61,16 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getCustomerQueryContainer()
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::QUERY_CONTAINER_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreInterface
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function getStore()
+    {
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::STORE);
     }
 
     /**
@@ -127,6 +145,46 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
            null,
             $customerFormDataProvider->getOptions()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType
+     */
+    public function createAddressCollectionType()
+    {
+        return new AddressCollectionType();
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\AddressCollectionDataProvider
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function createAddressCollectionDataProvider()
+    {
+        return new AddressCollectionDataProvider($this->getStore());
+    }
+
+    /**
+     * @todo @Artem delete
+     *
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressType
+     */
+    public function createAddressType()
+    {
+        return new AddressType();
+    }
+
+    /**
+     * @todo @Artem delete
+     *
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\AddressDataProvider
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function createAddressDataProvider()
+    {
+        return new AddressDataProvider($this->getStore());
     }
 
 }

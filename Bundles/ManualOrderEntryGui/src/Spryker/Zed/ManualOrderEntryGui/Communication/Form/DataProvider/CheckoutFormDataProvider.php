@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\ManualOrderEntryTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Checkout\CheckoutForm;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class CheckoutFormDataProvider
 {
@@ -18,12 +21,20 @@ class CheckoutFormDataProvider
     protected $customerQueryContainer;
 
     /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
+    protected $request;
+
+    /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface $customerQueryContainer
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function __construct(
-        ManualOrderEntryGuiToCustomerQueryContainerInterface $customerQueryContainer
+        ManualOrderEntryGuiToCustomerQueryContainerInterface $customerQueryContainer,
+        Request $request
     ) {
         $this->customerQueryContainer = $customerQueryContainer;
+        $this->request = $request;
     }
 
     /**
@@ -32,16 +43,25 @@ class CheckoutFormDataProvider
     public function getOptions()
     {
         return [
-            'data_class' => ManualOrderEntryTransfer::class
+            'data_class' => QuoteTransfer::class,
+            CheckoutForm::OPTION_REQUEST => $this->request
         ];
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ManualOrderEntryTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function getData()
     {
-        return new ManualOrderEntryTransfer();
+        $quoteTransfer = new QuoteTransfer();
+
+        if ($this->request->getMethod() === $this->request::METHOD_GET
+            && $this->request->query->get(CustomersListType::FIELD_CUSTOMER)
+        ) {
+            $quoteTransfer->setIdCustomer($this->request->query->get(CustomersListType::FIELD_CUSTOMER));
+        }
+
+        return $quoteTransfer;
     }
 
 }

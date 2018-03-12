@@ -19,6 +19,8 @@ class CheckoutCustomersListFormPlugin extends AbstractPlugin implements Checkout
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return void
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function buildForm(FormBuilderInterface $builder)
     {
@@ -28,8 +30,8 @@ class CheckoutCustomersListFormPlugin extends AbstractPlugin implements Checkout
         $dataProvider = $this->getFactory()
             ->createCustomersListDataProvider();
 
-        $manualOrderEntryTransfer = $builder->getData();
-        $dataProvider->getData($manualOrderEntryTransfer);
+        $quoteTransfer = $builder->getData();
+        $dataProvider->getData($quoteTransfer);
 
         $formType->buildForm(
             $builder,

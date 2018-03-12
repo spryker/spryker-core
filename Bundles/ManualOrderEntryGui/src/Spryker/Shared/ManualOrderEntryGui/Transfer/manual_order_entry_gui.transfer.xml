@@ -3,11 +3,10 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="ManualOrderEntry">
+    <transfer name="Quote">
         <property name="idOrder" type="int" />
-
         <property name="idCustomer" type="int" />
-        <property name="idCustomer2" type="int" />
+        <property name="customer" type="Customer" />
     </transfer>
 
 </transfers>

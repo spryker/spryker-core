@@ -13,23 +13,25 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class CheckoutCustomerFormPlugin extends AbstractPlugin implements CheckoutFormPluginInterface
+class AddressFormPlugin extends AbstractPlugin implements CheckoutFormPluginInterface
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return void
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function buildForm(FormBuilderInterface $builder)
     {
         $formType = $this->getFactory()
-            ->createCustomerType();
+            ->createAddressCollectionType();
 
         $dataProvider = $this->getFactory()
-            ->createCustomerDataProvider();
+            ->createAddressCollectionDataProvider();
 
-        $manualOrderEntryTransfer = $builder->getData();
-        $dataProvider->getData($manualOrderEntryTransfer);
+        $quoteTransfer = $builder->getData();
+        $dataProvider->getData($quoteTransfer);
 
         $formType->buildForm(
             $builder,

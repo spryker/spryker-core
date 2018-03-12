@@ -7,34 +7,33 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Checkout;
 
-use DateTime;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
 class CheckoutForm extends AbstractType
 {
+    //@todo @Artem rename to manual-order-entry TYPE!
     const FIELD_CUSTOMERS = 'customers';
 
     const OPTION_TEMPLATE_CHOICES = 'template_choices';
+    const OPTION_REQUEST = 'request';
 
     const GROUP_UNIQUE_BLOCK_CHECK = 'unique_block_check';
+
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setRequired(self::OPTION_REQUEST);
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -72,4 +71,5 @@ class CheckoutForm extends AbstractType
     {
         return 'checkout';
     }
+
 }

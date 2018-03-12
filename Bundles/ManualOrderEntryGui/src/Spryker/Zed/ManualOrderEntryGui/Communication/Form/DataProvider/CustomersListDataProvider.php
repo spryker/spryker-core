@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\ManualOrderEntryTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface;
 
@@ -33,19 +34,23 @@ class CustomersListDataProvider
     public function getOptions()
     {
         return [
-            'data_class' => ManualOrderEntryTransfer::class,
+            'data_class' => QuoteTransfer::class,
             CustomersListType::OPTION_CUSTOMER_ARRAY => $this->getCustomerList(),
         ];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ManualOrderEntryTransfer $manualOrderEntryTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ManualOrderEntryTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData(ManualOrderEntryTransfer $manualOrderEntryTransfer)
+    public function getData(QuoteTransfer $quoteTransfer)
     {
-        return $manualOrderEntryTransfer;
+        if ($quoteTransfer->getCustomer() === null) {
+            $quoteTransfer->setCustomer(new CustomerTransfer());
+        }
+
+        return $quoteTransfer;
     }
 
     /**

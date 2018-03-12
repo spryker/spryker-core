@@ -9,7 +9,7 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\ManualOrderEntryTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
@@ -37,30 +37,22 @@ class CreateController extends AbstractController
     public function indexAction(Request $request)
     {
         $checkoutFormDataProvider = $this->getFactory()
-            ->createCheckoutFormDataProvider();
+            ->createCheckoutFormDataProvider($request);
 
         $checkoutForm = $this->getFactory()
-            ->createCheckoutForm($checkoutFormDataProvider)
-            ->handleRequest($request)
-        ;
-
-        if ($request->getMethod() === $request::METHOD_GET
-            && $request->query->get(CustomersListType::FIELD_CUSTOMER)
-        ) {
-            $checkoutForm->get(CustomersListType::FIELD_CUSTOMER)
-                ->setData($request->query->get(CustomersListType::FIELD_CUSTOMER));
-        }
+            ->createCheckoutForm($checkoutFormDataProvider);
+        $checkoutForm->handleRequest($request);
 
         if ($checkoutForm->isSubmitted()) {
             if ($checkoutForm->isValid()) {
                 // @todo @Artem Manage subform activation.
                 // Some simple Step Engine inject to form
 
-                $manualOrderEntryTransfer = $this->createOrder($checkoutForm);
+                $quoteTransfer = $this->createOrder($checkoutForm);
 
                 // @todo @Artem redirect to order details
-                if (0 && !empty($manualOrderEntryTransfer)) {
-                    $redirectUrl = $this->createRedirectUrlAfterOrderCreation($manualOrderEntryTransfer);
+                if (0 && !empty($quoteTransfer)) {
+                    $redirectUrl = $this->createRedirectUrlAfterOrderCreation($quoteTransfer);
 
                     return $this->redirectResponse($redirectUrl);
                 }
@@ -116,22 +108,22 @@ class CreateController extends AbstractController
     /**
      * @param \Symfony\Component\Form\FormInterface $checkoutForm
      *
-     * @return \Generated\Shared\Transfer\ManualOrderEntryTransfer|null
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
     protected function createOrder(FormInterface $checkoutForm)
     {
-        $manualOrderEntryTransfer = $checkoutForm->getData();
+        $quoteTransfer = $checkoutForm->getData();
 
         try {
             // @todo @Artem create Order here
-            $manualOrderEntryTransfer->setIdOrder(1);
+            $quoteTransfer->setIdOrder(1);
 
             $this->addSuccessMessage(static::SUCCESSFUL_MESSAGE_ORDER_CREATED);
         } catch (\Exception $exception) {
             $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
         }
 
-        return $manualOrderEntryTransfer;
+        return $quoteTransfer;
     }
 
     /**
@@ -182,15 +174,15 @@ class CreateController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ManualOrderEntryTransfer $manualOrderEntryTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string
      */
-    protected function createRedirectUrlAfterOrderCreation(ManualOrderEntryTransfer $manualOrderEntryTransfer)
+    protected function createRedirectUrlAfterOrderCreation(QuoteTransfer $quoteTransfer)
     {
         return Url::generate(
             '/sales/detail',
-            [SalesConfig::PARAM_ID_SALES_ORDER => $manualOrderEntryTransfer->getIdOrder()]
+            [SalesConfig::PARAM_ID_SALES_ORDER => $quoteTransfer->getIdOrder()]
         )
             ->build();
     }
