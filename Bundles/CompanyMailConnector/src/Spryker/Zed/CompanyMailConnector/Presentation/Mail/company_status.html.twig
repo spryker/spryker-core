@@ -1,4 +1,4 @@
 <div>
-    <div style="text-align: center;">{{ 'mail.company.status.text' | trans }}</div>
-    <div>{{ mail.company.status | trans }}</div>
+    <div style="text-align: center;">{{ 'mail.company.status.text' | trans }}{{ ('mail.company.status.' ~ mail.company.status) | trans }}</div>
+
 </div>

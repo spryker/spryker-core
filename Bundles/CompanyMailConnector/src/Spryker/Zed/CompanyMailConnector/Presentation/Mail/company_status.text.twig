@@ -1,2 +1,1 @@
-{{ 'mail.company.status.text' | trans }}
-{{ mail.company.status | trans }}
+{{ 'mail.company.status.text' | trans }}{{ ('mail.company.status.' ~ mail.company.status) | trans }}
