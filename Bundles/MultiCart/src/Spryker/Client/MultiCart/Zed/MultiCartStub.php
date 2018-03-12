@@ -20,7 +20,7 @@ class MultiCartStub extends ZedRequestStub implements MultiCartStubInterface
      */
     public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/multi-cart/gateway/change-quote', $quoteTransfer);
+        return $this->zedStub->call('/multi-cart/gateway/create-quote', $quoteTransfer);
     }
 
     /**
