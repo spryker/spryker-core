@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanySupplier\Communication\Plugin;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteManagerPersistEntityExpanderPluginInterface;
 
 /**
  * @method \Spryker\Zed\CompanySupplier\Business\CompanySupplierFacadeInterface getFacade()
@@ -16,6 +17,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductConcreteManagerPersistEntityExpanderPlugin extends AbstractPlugin implements ProductConcreteManagerPersistEntityExpanderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcrete
      *
      * @return void

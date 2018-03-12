@@ -10,9 +10,6 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\SpyCompanySupplierToProductEntityTransfer;
-use Orm\Zed\CompanySupplier\Persistence\SpyCompanySupplierToProduct;
-use Spryker\Zed\CompanySupplier\Communication\Plugin\ProductConcreteManagerPersistEntityExpanderPlugin;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
@@ -61,6 +58,11 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     private $productTransferMapper;
 
     /**
+     * @var \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteManagerPersistEntityExpanderPluginInterface[]
+     */
+    protected $persistRelatedDataPlugins;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
@@ -68,6 +70,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      * @param \Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertionInterface $productConcreteAssertion
      * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
      * @param \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface $productTransferMapper
+     * @param \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteManagerPersistEntityExpanderPluginInterface[] $persistRelatedDataPlugins
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
@@ -76,7 +79,8 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         ProductAbstractAssertionInterface $productAbstractAssertion,
         ProductConcreteAssertionInterface $productConcreteAssertion,
         AttributeEncoderInterface $attributeEncoder,
-        ProductTransferMapperInterface $productTransferMapper
+        ProductTransferMapperInterface $productTransferMapper,
+        array $persistRelatedDataPlugins
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->touchFacade = $touchFacade;
@@ -85,6 +89,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         $this->productConcreteAssertion = $productConcreteAssertion;
         $this->attributeEncoder = $attributeEncoder;
         $this->productTransferMapper = $productTransferMapper;
+        $this->persistRelatedDataPlugins = $persistRelatedDataPlugins;
     }
 
     /**
@@ -324,17 +329,11 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         $productConcreteEntity->fromArray($productConcreteData);
         $productConcreteEntity->setAttributes($encodedAttributes);
 
+        $productConcreteEntity->save();
 
-        //TODO: inject plugins
-        $persistRelatedDataPlugins = [
-            new ProductConcreteManagerPersistEntityExpanderPlugin(),
-        ];
-
-        foreach ($persistRelatedDataPlugins as $persistRelatedDataPlugin) {
+        foreach ($this->persistRelatedDataPlugins as $persistRelatedDataPlugin) {
             $persistRelatedDataPlugin->persistRelatedData($productConcreteTransfer);
         }
-
-        $productConcreteEntity->save();
 
         return $productConcreteEntity;
     }

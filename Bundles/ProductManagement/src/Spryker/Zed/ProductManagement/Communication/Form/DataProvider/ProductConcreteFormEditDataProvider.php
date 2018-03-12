@@ -8,14 +8,11 @@
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Everon\Component\Collection\Collection;
-use Generated\Shared\Transfer\CompanySupplierCollectionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\SpyCompanyEntityTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Spryker\Zed\CompanySupplierGui\Communication\Plugin\ProductConcreteFormEditDataProviderExpanderPlugin;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\BundledProductForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeAbstractForm;
@@ -40,6 +37,11 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
     protected $productStockHelper;
 
     /**
+     * @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface[]
+     */
+    protected $formEditDataProviderExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
@@ -53,6 +55,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      * @param string $imageUrlPrefix
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface|null $store
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface $productStockHelper
+     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface[] $formEditDataProviderExpanderPlugins
      */
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
@@ -67,7 +70,8 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         array $taxCollection,
         $imageUrlPrefix,
         ProductManagementToStoreInterface $store,
-        ProductStockHelperInterface $productStockHelper
+        ProductStockHelperInterface $productStockHelper,
+        array $formEditDataProviderExpanderPlugins
     ) {
         parent::__construct(
             $categoryQueryContainer,
@@ -86,6 +90,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
         $this->attributeTransferCollection = new Collection($attributeCollection);
         $this->productStockHelper = $productStockHelper;
+        $this->formEditDataProviderExpanderPlugins = $formEditDataProviderExpanderPlugins;
     }
 
     /**
@@ -160,12 +165,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $formData = $this->appendBundledProducts($productTransfer, $formData);
         }
 
-        //TODO: inject plugins
-        $expanderPlugins = [
-            new ProductConcreteFormEditDataProviderExpanderPlugin(),
-        ];
-
-        foreach ($expanderPlugins as $expanderPlugin) {
+        foreach ($this->formEditDataProviderExpanderPlugins as $expanderPlugin) {
             $expanderPlugin->expand($productTransfer, $formData);
         }
 

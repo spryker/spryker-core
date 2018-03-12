@@ -96,7 +96,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductAbstractAssertion(),
             $this->createProductConcreteAssertion(),
             $this->createAttributeEncoder(),
-            $this->createProductTransferMapper()
+            $this->createProductTransferMapper(),
+            $this->getPersistRelatedDataPlugins()
         );
 
         $productConcreteManager->setEventFacade($this->getEventFacade());
@@ -550,5 +551,13 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function getEventFacade()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::FACADE_EVENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteManagerPersistEntityExpanderPluginInterface[]
+     */
+    protected function getPersistRelatedDataPlugins()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PERSIST_RELATED_DATA_PLUGINS);
     }
 }

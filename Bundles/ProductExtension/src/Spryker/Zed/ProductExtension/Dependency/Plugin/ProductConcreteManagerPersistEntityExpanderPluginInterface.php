@@ -5,13 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanySupplier\Communication\Plugin;
+namespace Spryker\Zed\ProductExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductConcreteManagerPersistEntityExpanderPluginInterface
 {
     /**
+     * Specification:
+     * - persists data related to the product concrete
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcrete
      *
      * @return void

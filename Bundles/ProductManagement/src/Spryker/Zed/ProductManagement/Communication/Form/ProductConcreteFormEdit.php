@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Communication\Form;
 
 use DateTime;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Zed\CompanySupplierGui\Communication\Plugin\ProductConcreteEditFormExpanderPlugin;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyCollectionType;
@@ -355,14 +354,16 @@ class ProductConcreteFormEdit extends ProductFormAdd
         $resolver->setRequired(self::OPTION_IS_BUNDLE_ITEM);
     }
 
-    protected function addFormBuildPlugins(FormBuilderInterface $builder, array $options)
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
+    protected function addFormBuildPlugins(FormBuilderInterface $builder, array $options): void
     {
-        //TODO: inject plugins
-        $plugins = [
-            new ProductConcreteEditFormExpanderPlugin(),
-        ];
-
-        foreach ($plugins as $plugin) {
+        /** @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditFormExpanderPluginInterface $plugin */
+        foreach ($this->getFactory()->getProductConcreteEditFormExpanderPlugins() as $plugin) {
             $plugin->buildForm($builder, $options);
         }
     }

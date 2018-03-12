@@ -18,7 +18,6 @@ use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
-use Spryker\Zed\CompanySupplierGui\Communication\Plugin\ProductFormTransferMapperExpanderPlugin;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\AttributeSuperForm;
@@ -63,24 +62,32 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     protected $utilTextService;
 
     /**
+     * @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransferMapperExpanderPluginInterface[]
+     */
+    protected $productFormTransferMapperExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilTextInterface $utilTextService
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
+     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransferMapperExpanderPluginInterface[] $productFormTransferMapperExpanderPlugins
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
         ProductManagementQueryContainerInterface $productManagementQueryContainer,
         ProductManagementToLocaleInterface $localeFacade,
         ProductManagementToUtilTextInterface $utilTextService,
-        LocaleProvider $localeProvider
+        LocaleProvider $localeProvider,
+        array $productFormTransferMapperExpanderPlugins
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
         $this->localeFacade = $localeFacade;
         $this->utilTextService = $utilTextService;
         $this->localeProvider = $localeProvider;
+        $this->productFormTransferMapperExpanderPlugins = $productFormTransferMapperExpanderPlugins;
     }
 
     /**
@@ -181,11 +188,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $productConcreteTransfer->setValidFrom($formData[ProductConcreteFormEdit::FIELD_VALID_FROM]);
         $productConcreteTransfer->setValidTo($formData[ProductConcreteFormEdit::FIELD_VALID_TO]);
 
-        //TODO: inject plugins
-        $productConcreteMapperPlugins = [
-            new ProductFormTransferMapperExpanderPlugin(),
-        ];
-        foreach ($productConcreteMapperPlugins as $plugin) {
+        foreach ($this->productFormTransferMapperExpanderPlugins as $plugin) {
             $plugin->map($productConcreteTransfer, $formData);
         }
 
