@@ -142,7 +142,7 @@ interface QuoteStorageStrategyPluginInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote();
 }

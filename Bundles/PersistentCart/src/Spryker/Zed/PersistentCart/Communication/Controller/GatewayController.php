@@ -9,6 +9,7 @@ namespace Spryker\Zed\PersistentCart\Communication\Controller;
 
 use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -21,9 +22,9 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function addItemAction(PersistentCartChangeTransfer $persistentCartChangeTransfer)
+    public function addItemAction(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->add($persistentCartChangeTransfer);
     }
@@ -31,9 +32,9 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function removeItemAction(PersistentCartChangeTransfer $persistentCartChangeTransfer)
+    public function removeItemAction(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->remove($persistentCartChangeTransfer);
     }
@@ -41,9 +42,9 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function reloadItemsAction(QuoteTransfer $quoteTransfer)
+    public function reloadItemsAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->reloadItems($quoteTransfer);
     }
@@ -51,9 +52,9 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function changeItemQuantityAction(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer)
+    public function changeItemQuantityAction(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->changeItemQuantity($persistentCartChangeQuantityTransfer);
     }
@@ -61,9 +62,9 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function decreaseItemQuantityAction(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer)
+    public function decreaseItemQuantityAction(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->decreaseItemQuantity($persistentCartChangeQuantityTransfer);
     }
@@ -71,9 +72,9 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function increaseItemQuantityAction(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer)
+    public function increaseItemQuantityAction(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->increaseItemQuantity($persistentCartChangeQuantityTransfer);
     }
@@ -91,10 +92,20 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function validateQuoteAction(QuoteTransfer $quoteTransfer)
+    public function validateQuoteAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->validateQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function deleteQuoteAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->deleteQuote($quoteTransfer);
     }
 }

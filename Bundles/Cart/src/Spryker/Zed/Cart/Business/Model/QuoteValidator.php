@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Cart\Business\Model;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
 
 class QuoteValidator implements QuoteValidatorInterface
@@ -48,11 +48,11 @@ class QuoteValidator implements QuoteValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validate(QuoteTransfer $quoteTransfer)
     {
-        $quoteValidationResponseTransfer = new QuoteValidationResponseTransfer();
+        $quoteValidationResponseTransfer = new QuoteResponseTransfer();
         $quoteValidationResponseTransfer->setQuoteTransfer($quoteTransfer);
         $quoteValidationResponseTransfer->setIsSuccessful(false);
         if (count($quoteTransfer->getItems())) {

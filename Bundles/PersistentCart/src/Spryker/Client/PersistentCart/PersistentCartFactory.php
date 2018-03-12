@@ -55,4 +55,12 @@ class PersistentCartFactory extends AbstractFactory
             $this->getQuoteClient()
         );
     }
+
+    /**
+     * @return \Spryker\Client\PersistentCart\Dependency\Plugin\QuoteUpdatePluginInterface[]
+     */
+    public function getQuoteUpdatePlugins()
+    {
+        return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGINS_QUOTE_UPDATE);
+    }
 }

@@ -8,5 +8,12 @@
         <property name="name" type="string"/>
         <property name="isActive" type="bool" />
     </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="quoteTransfer" type="Quote"/>
+        <property name="isSuccessful" type="bool" />
+        <property name="customerQuotes" type="QuoteCollection"/>
+    </transfer>
+
 </transfers>
 

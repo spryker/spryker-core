@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Quote\Persistence;
 
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -55,5 +57,28 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
             ->filterByIdQuote($idQuote);
 
         return $this->buildQueryFromCriteria($quoteQuery)->findOne();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function filterQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
+    {
+        $quoteQuery = $this->getFactory()->createQuoteQuery()
+            ->joinWithSpyStore();
+        $quoteEntityCollectionTransfer = $this->buildQueryFromCriteria($quoteQuery, $quoteCriteriaFilterTransfer->getFilter())
+                    ->find();
+
+        $quoteCollectionTransfer = new QuoteCollectionTransfer();
+        $quoteMapper = $this->getFactory()->createQuoteMapper();
+        foreach ($quoteEntityCollectionTransfer as $quoteEntityTransfer) {
+            $quoteCollectionTransfer->addQuote(
+                $quoteMapper->mapQuoteTransfer($quoteEntityTransfer)
+            );
+        }
+
+        return $quoteCollectionTransfer;
     }
 }

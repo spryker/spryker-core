@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Client\MultiCart;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,8 +17,8 @@ namespace SprykerTest\Client\MultiCart;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class MultiCartClientTester extends \Codeception\Actor
+ */
+class MultiCartClientTester extends Actor
 {
     use _generated\MultiCartClientTesterActions;
 

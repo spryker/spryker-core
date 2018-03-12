@@ -16,6 +16,7 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FACADE_CART = 'FACADE_CART';
     const FACADE_QUOTE = 'FACADE_QUOTE';
+    const PLUGINS_QUOTE_RESPONSE_EXPANDER = 'PLUGINS_QUOTE_RESPONSE_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -24,8 +25,9 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container = $this->addQuoteFacade($container);
         $container = $this->addCartFacade($container);
+        $container = $this->addQuoteFacade($container);
+        $container = $this->addQuoteResponseExpanderPlugins($container);
 
         return $container;
     }
@@ -56,5 +58,27 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteResponseExpanderPlugins(Container $container)
+    {
+        $container[static::PLUGINS_QUOTE_RESPONSE_EXPANDER] = function (Container $container) {
+            return $this->getQuoteResponseExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteResponseExpanderPluginInterface[]
+     */
+    protected function getQuoteResponseExpanderPlugins()
+    {
+        return [];
     }
 }

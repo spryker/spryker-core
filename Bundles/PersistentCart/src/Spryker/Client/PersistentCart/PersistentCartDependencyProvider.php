@@ -14,9 +14,10 @@ use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientB
 
 class PersistentCartDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_QUOTE = 'CLIENT_QUOTE';
-    const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
-    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const PLUGINS_QUOTE_UPDATE = 'PLUGINS_QUOTE_UPDATE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -28,6 +29,7 @@ class PersistentCartDependencyProvider extends AbstractDependencyProvider
         $container = $this->addQuoteClient($container);
         $container = $this->addZedRequestClient($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addQuoteUpdatePlugins($container);
 
         return $container;
     }
@@ -72,5 +74,27 @@ class PersistentCartDependencyProvider extends AbstractDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addQuoteUpdatePlugins(Container $container)
+    {
+        $container[static::PLUGINS_QUOTE_UPDATE] = function (Container $container) {
+            return $this->getQuoteUpdatePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCart\Dependency\Plugin\QuoteUpdatePluginInterface[]
+     */
+    protected function getQuoteUpdatePlugins()
+    {
+        return [];
     }
 }

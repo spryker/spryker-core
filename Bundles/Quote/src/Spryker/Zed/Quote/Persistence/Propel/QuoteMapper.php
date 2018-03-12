@@ -62,6 +62,7 @@ class QuoteMapper implements QuoteMapperInterface
     {
         $quoteEntity = new SpyQuote();
         $quoteEntity->setNew(!$quoteTransfer->getIdQuote());
+        $quoteEntity->fromArray($quoteTransfer->modifiedToArray());
         $quoteEntity->setIdQuote($quoteTransfer->getIdQuote());
         $quoteEntity->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
         $quoteEntity->setFkStore($quoteTransfer->getStore()->getIdStore());

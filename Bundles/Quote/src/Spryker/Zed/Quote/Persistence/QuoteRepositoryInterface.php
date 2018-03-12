@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Quote\Persistence;
 
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
 
@@ -35,4 +37,16 @@ interface QuoteRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer|null
      */
     public function findQuoteById($idQuote): ?SpyQuoteEntityTransfer;
+
+    /**
+     * Specification:
+     * - Get quote collection filtered by criteria
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function filterQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
 }
