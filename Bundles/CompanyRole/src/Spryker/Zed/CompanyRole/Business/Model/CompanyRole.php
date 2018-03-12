@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\CompanyRole\Business\Model;
 
+use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Spryker\Zed\CompanyRole\CompanyRoleConfig;
 use Spryker\Zed\CompanyRole\Persistence\CompanyRoleEntityManagerInterface;
 use Spryker\Zed\CompanyRole\Persistence\CompanyRoleRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -35,18 +37,26 @@ class CompanyRole implements CompanyRoleInterface
     protected $permissionWriter;
 
     /**
+     * @var CompanyRoleConfig
+     */
+    protected $companyRoleConfig;
+
+    /**
      * @param \Spryker\Zed\CompanyRole\Persistence\CompanyRoleRepositoryInterface $repository
      * @param \Spryker\Zed\CompanyRole\Persistence\CompanyRoleEntityManagerInterface $entityManager
      * @param \Spryker\Zed\CompanyRole\Business\Model\CompanyRolePermissionWriterInterface $permissionWriter
+     * @param CompanyRoleConfig $companyRoleConfig
      */
     public function __construct(
         CompanyRoleRepositoryInterface $repository,
         CompanyRoleEntityManagerInterface $entityManager,
-        CompanyRolePermissionWriterInterface $permissionWriter
+        CompanyRolePermissionWriterInterface $permissionWriter,
+        CompanyRoleConfig $companyRoleConfig
     ) {
         $this->repository = $repository;
         $this->entityManager = $entityManager;
         $this->permissionWriter = $permissionWriter;
+        $this->companyRoleConfig = $companyRoleConfig;
     }
 
     /**
@@ -59,6 +69,33 @@ class CompanyRole implements CompanyRoleInterface
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyRoleTransfer) {
             return $this->executeCompanyRoleSaveTransaction($companyRoleTransfer);
         });
+    }
+
+    /**
+     * @param CompanyResponseTransfer $companyResponseTransfer
+     *
+     * @return CompanyResponseTransfer
+     */
+    public function createByCompany(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
+    {
+        $companyTransfer = $companyResponseTransfer->getCompanyTransfer();
+
+        $companyRoleTransfer = (new CompanyRoleTransfer())
+            ->setFkCompany($companyTransfer->getIdCompany())
+            ->setName($this->companyRoleConfig->getDefaultAdminRoleName())
+            ->setIsDefault(true);
+
+        $companyRoleResponseTransfer = $this->create($companyRoleTransfer);
+
+        if ($companyRoleResponseTransfer->getIsSuccessful()) {
+            return $companyResponseTransfer;
+        }
+
+        foreach ($companyRoleResponseTransfer->getMessages() as $messageTransfer) {
+            $companyResponseTransfer->addMessage($messageTransfer);
+        }
+
+        return $companyResponseTransfer;
     }
 
     /**

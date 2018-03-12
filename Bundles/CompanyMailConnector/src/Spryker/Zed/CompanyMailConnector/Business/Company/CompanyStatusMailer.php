@@ -45,9 +45,13 @@ class CompanyStatusMailer implements CompanyStatusMailerInterface
      */
     public function sendCompanyStatusEmail(CompanyTransfer $companyTransfer): void
     {
-        $companyUserTransfer = $this->companyUserFacade->getInitialCompanyUserByCompanyId($companyTransfer->getIdCompany());
-        $mailTransfer = $this->prepareMailTransfer($companyTransfer, $companyUserTransfer);
+        $companyUserTransfer = $this->companyUserFacade->findInitialCompanyUserByCompanyId($companyTransfer->getIdCompany());
 
+        if (!$companyUserTransfer) {
+            return;
+        }
+
+        $mailTransfer = $this->prepareMailTransfer($companyTransfer, $companyUserTransfer);
         $this->mailFacade->handleMail($mailTransfer);
     }
 

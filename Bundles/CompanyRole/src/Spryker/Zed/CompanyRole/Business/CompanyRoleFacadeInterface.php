@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyRole\Business;
 
+use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer;
@@ -33,7 +34,7 @@ interface CompanyRoleFacadeInterface
     /**
      * Specification:
      * - Creates a company role
-     * - Creates company role permissions
+     * - Creates company role permission relations
      *
      * @api
      *
@@ -42,6 +43,18 @@ interface CompanyRoleFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
      */
     public function create(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer;
+
+    /**
+     * Specification:
+     * - Creates a company role by for a company
+     * - Fills default name from a module configuration
+     * - Creates company role permission relations
+     *
+     * @param CompanyResponseTransfer $companyResponseTransfer
+     *
+     * @return CompanyResponseTransfer
+     */
+    public function createByCompany(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer;
 
     /**
      * Specification:

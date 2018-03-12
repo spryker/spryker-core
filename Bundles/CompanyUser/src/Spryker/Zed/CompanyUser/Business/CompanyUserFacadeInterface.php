@@ -112,7 +112,7 @@ interface CompanyUserFacadeInterface
      *
      * @param int $idCompany
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
-    public function getInitialCompanyUserByCompanyId(int $idCompany): CompanyUserTransfer;
+    public function findInitialCompanyUserByCompanyId(int $idCompany): ?CompanyUserTransfer;
 }

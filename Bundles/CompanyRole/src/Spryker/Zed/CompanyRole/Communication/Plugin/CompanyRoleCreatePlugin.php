@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\CompanyRole\Communication\Plugin;
 
-use Generated\Shared\Transfer\CompanyRoleTransfer;
-use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -23,29 +22,12 @@ class CompanyRoleCreatePlugin extends AbstractPlugin implements CompanyPostCreat
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyTransfer
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
-    public function postCreate(CompanyTransfer $companyTransfer): CompanyTransfer
+    public function postCreate(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
     {
-        $this->createCompanyRole($companyTransfer);
-
-        return $companyTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     *
-     * @return void
-     */
-    protected function createCompanyRole(CompanyTransfer $companyTransfer): void
-    {
-        $companyRoleTransfer = new CompanyRoleTransfer();
-        $companyRoleTransfer->setFkCompany($companyTransfer->getIdCompany())
-            ->setName($this->getConfig()->getDefaultAdminRoleName())
-            ->setIsDefault(true);
-
-        $this->getFacade()->create($companyRoleTransfer);
+        return $this->getFacade()->createByCompany($companyResponseTransfer);
     }
 }

@@ -27,7 +27,9 @@ class CompanyClient extends AbstractClient implements CompanyClientInterface
      */
     public function createCompany(CompanyTransfer $companyTransfer): CompanyResponseTransfer
     {
-        return $this->getFactory()->createZedCompanyStub()->createCompany($companyTransfer);
+        return $this->getFactory()
+            ->createZedCompanyStub()
+            ->createCompany($companyTransfer);
     }
 
     /**
@@ -41,6 +43,8 @@ class CompanyClient extends AbstractClient implements CompanyClientInterface
      */
     public function getCompanyById(CompanyTransfer $companyTransfer): CompanyTransfer
     {
-        return $this->getFactory()->createZedCompanyStub()->getCompanyById($companyTransfer);
+        return $this->getFactory()
+            ->createZedCompanyStub()
+            ->getCompanyById($companyTransfer);
     }
 }

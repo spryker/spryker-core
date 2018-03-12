@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyResponseTransfer;
 
 interface CompanyBusinessUnitFacadeInterface
 {
@@ -38,9 +39,19 @@ interface CompanyBusinessUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    public function create(
-        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): CompanyBusinessUnitResponseTransfer;
+    public function create(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer;
+
+    /**
+     * Specification:
+     * - Creates a company business unit by a company transfer
+     *
+     * @api
+     *
+     * @param CompanyResponseTransfer $companyResponseTransfer
+     *
+     * @return CompanyResponseTransfer
+     */
+    public function createByCompany(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer;
 
     /**
      * Specification:

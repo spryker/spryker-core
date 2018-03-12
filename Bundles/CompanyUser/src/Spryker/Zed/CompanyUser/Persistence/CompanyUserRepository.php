@@ -152,7 +152,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function getInitialCompanyUserByCompanyId(int $idCompany): CompanyUserTransfer
+    public function findInitialCompanyUserByCompanyId(int $idCompany): ?CompanyUserTransfer
     {
         $query = $this->getFactory()
             ->createCompanyUserQuery()
@@ -160,6 +160,10 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->filterByFkCompany($idCompany)
             ->orderBy(SpyCompanyUserTableMap::COL_ID_COMPANY_USER, Criteria::ASC);
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+
+        if (!$entityTransfer) {
+            return null;
+        }
 
         return $this->getFactory()
             ->createCompanyUserMapper()

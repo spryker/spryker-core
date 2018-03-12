@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyRole\Business;
 
+use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer;
@@ -53,6 +54,18 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
         return $this->getFactory()
             ->createCompanyRole()
             ->create($companyRoleTransfer);
+    }
+
+    /**
+     * @param CompanyResponseTransfer $companyResponseTransfer
+     *
+     * @return CompanyResponseTransfer
+     */
+    public function createByCompany(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyRole()
+            ->createByCompany($companyResponseTransfer);
     }
 
     /**

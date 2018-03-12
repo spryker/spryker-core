@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Company\Business\Model;
 
+use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 
 class CompanyPluginExecutor implements CompanyPluginExecutorInterface
 {
@@ -42,44 +44,44 @@ class CompanyPluginExecutor implements CompanyPluginExecutorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyTransfer
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
-    public function executeCompanyPreSavePlugins(CompanyTransfer $companyTransfer): CompanyTransfer
+    public function executeCompanyPreSavePlugins(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
     {
         foreach ($this->companyPreSavePlugins as $companyPreSavePlugin) {
-            $companyTransfer = $companyPreSavePlugin->preSaveValidation($companyTransfer);
+            $companyResponseTransfer = $companyPreSavePlugin->preSaveValidation($companyResponseTransfer);
         }
 
-        return $companyTransfer;
+        return $companyResponseTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyTransfer
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
-    public function executeCompanyPostSavePlugins(CompanyTransfer $companyTransfer): CompanyTransfer
+    public function executeCompanyPostSavePlugins(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
     {
         foreach ($this->companyPostSavePlugins as $companyPostSavePlugin) {
-            $companyTransfer = $companyPostSavePlugin->postSave($companyTransfer);
+            $companyResponseTransfer = $companyPostSavePlugin->postSave($companyResponseTransfer);
         }
 
-        return $companyTransfer;
+        return $companyResponseTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyTransfer
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
-    public function executeCompanyPostCreatePlugins(CompanyTransfer $companyTransfer): CompanyTransfer
+    public function executeCompanyPostCreatePlugins(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
     {
         foreach ($this->companyPostCreatePlugins as $companyPostCreatePlugin) {
-            $companyTransfer = $companyPostCreatePlugin->postCreate($companyTransfer);
+            $companyResponseTransfer = $companyPostCreatePlugin->postCreate($companyResponseTransfer);
         }
 
-        return $companyTransfer;
+        return $companyResponseTransfer;
     }
 }

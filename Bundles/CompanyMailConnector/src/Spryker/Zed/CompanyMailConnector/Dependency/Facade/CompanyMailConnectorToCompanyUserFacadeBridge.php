@@ -27,10 +27,10 @@ class CompanyMailConnectorToCompanyUserFacadeBridge implements CompanyMailConnec
     /**
      * @param int $idCompany
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
-    public function getInitialCompanyUserByCompanyId(int $idCompany): CompanyUserTransfer
+    public function findInitialCompanyUserByCompanyId(int $idCompany): ?CompanyUserTransfer
     {
-        return $this->companyUserFacade->getInitialCompanyUserByCompanyId($idCompany);
+        return $this->companyUserFacade->findInitialCompanyUserByCompanyId($idCompany);
     }
 }

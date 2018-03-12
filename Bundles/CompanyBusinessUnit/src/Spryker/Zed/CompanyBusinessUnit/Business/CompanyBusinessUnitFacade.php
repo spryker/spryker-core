@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -46,12 +47,27 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    public function create(
-        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): CompanyBusinessUnitResponseTransfer {
+    public function create(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
+    {
         return $this->getFactory()
-            ->createCompanyBusinessUnit()
+            ->createCompanyBusinessUnitCreator()
             ->create($companyBusinessUnitTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param CompanyResponseTransfer $companyResponseTransfer
+     *
+     * @return CompanyResponseTransfer
+     */
+    public function createByCompany(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitCreator()
+            ->createByCompany($companyResponseTransfer);
     }
 
     /**
@@ -67,7 +83,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer {
         return $this->getFactory()
-            ->createCompanyBusinessUnit()
+            ->createCompanyBusinessUnitWriter()
             ->update($companyBusinessUnitTransfer);
     }
 
@@ -84,7 +100,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer {
         return $this->getFactory()
-            ->createCompanyBusinessUnit()
+            ->createCompanyBusinessUnitWriter()
             ->delete($companyBusinessUnitTransfer);
     }
 

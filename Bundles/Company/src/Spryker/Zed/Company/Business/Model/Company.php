@@ -62,10 +62,15 @@ class Company implements CompanyInterface
      */
     public function create(CompanyTransfer $companyTransfer): CompanyResponseTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($companyTransfer) {
-            $companyResponseTransfer = $this->executeSaveCompanyTransaction($companyTransfer);
+        $companyResponseTransfer = (new CompanyResponseTransfer())
+            ->setCompanyTransfer($companyTransfer)
+            ->setIsSuccessful(true);
 
-            return $this->executePostCreatePlugins($companyResponseTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($companyResponseTransfer) {
+            $companyResponseTransfer = $this->executeSaveCompanyTransaction($companyResponseTransfer);
+            $companyResponseTransfer = $this->executePostCreatePlugins($companyResponseTransfer);
+
+            return $companyResponseTransfer;
         });
     }
 
@@ -76,8 +81,12 @@ class Company implements CompanyInterface
      */
     public function save(CompanyTransfer $companyTransfer): CompanyResponseTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($companyTransfer) {
-            return $this->executeSaveCompanyTransaction($companyTransfer);
+        $companyResponseTansfer = (new CompanyResponseTransfer())
+            ->setCompanyTransfer($companyTransfer)
+            ->setIsSuccessful(true);
+
+        return $this->getTransactionHandler()->handleTransaction(function () use ($companyResponseTansfer) {
+            return $this->executeSaveCompanyTransaction($companyResponseTansfer);
         });
     }
 
@@ -93,20 +102,26 @@ class Company implements CompanyInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
-    protected function executeSaveCompanyTransaction(CompanyTransfer $companyTransfer): CompanyResponseTransfer
+    protected function executeSaveCompanyTransaction(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
     {
-        $companyTransfer = $this->companyPluginExecutor->executeCompanyPreSavePlugins($companyTransfer);
-        $companyTransfer = $this->companyEntityManager->saveCompany($companyTransfer);
-        $this->persistStoreRelations($companyTransfer);
-        $companyTransfer = $this->companyPluginExecutor->executeCompanyPostSavePlugins($companyTransfer);
+        $companyResponseTransfer = $this->companyPluginExecutor->executeCompanyPreSavePlugins($companyResponseTransfer);
 
-        return (new CompanyResponseTransfer())
-            ->setIsSuccessful(true)
-            ->setCompanyTransfer($companyTransfer);
+        if (!$companyResponseTransfer->getIsSuccessful()) {
+            return $companyResponseTransfer;
+        }
+
+        $companyTransfer =  $companyResponseTransfer->getCompanyTransfer();
+        $companyTransfer = $this->companyEntityManager->saveCompany($companyTransfer);
+        $companyResponseTransfer->setCompanyTransfer($companyTransfer);
+
+        $this->persistStoreRelations($companyResponseTransfer->getCompanyTransfer());
+        $companyResponseTransfer = $this->companyPluginExecutor->executeCompanyPostSavePlugins($companyResponseTransfer);
+
+        return $companyResponseTransfer;
     }
 
     /**
@@ -117,9 +132,8 @@ class Company implements CompanyInterface
     protected function executePostCreatePlugins(
         CompanyResponseTransfer $companyResponseTransfer
     ): CompanyResponseTransfer {
-        $companyTransfer = $companyResponseTransfer->getCompanyTransfer();
-        $companyTransfer = $this->companyPluginExecutor->executeCompanyPostCreatePlugins($companyTransfer);
-        $companyResponseTransfer->setCompanyTransfer($companyTransfer);
+
+        $companyResponseTransfer = $this->companyPluginExecutor->executeCompanyPostCreatePlugins($companyResponseTransfer);
 
         return $companyResponseTransfer;
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 
 interface CompanyPostSavePluginInterface
@@ -17,9 +18,9 @@ interface CompanyPostSavePluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyTransfer
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
-    public function postSave(CompanyTransfer $companyTransfer): CompanyTransfer;
+    public function postSave(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer;
 }
