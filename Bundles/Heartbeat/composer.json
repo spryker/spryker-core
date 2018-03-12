@@ -6,7 +6,7 @@
     "php": ">=7.1",
     "spryker/application": "^3.4.0",
     "spryker/config": "^3.0.0",
-    "spryker/elastica": "^2.0.0 || ^3.0.0",
+    "spryker/elastica": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/redis": "^2.0.0",

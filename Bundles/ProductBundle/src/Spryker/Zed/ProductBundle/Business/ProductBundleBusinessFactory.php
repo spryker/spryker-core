@@ -23,6 +23,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleIdHydrator;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaver;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundlesSalesOrderHydrate;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandler;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandlerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter;
 use Spryker\Zed\ProductBundle\ProductBundleDependencyProvider;
 
@@ -158,6 +160,17 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
             $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandlerInterface
+     */
+    public function createProductBundleStockHandler(): ProductBundleStockHandlerInterface
+    {
+        return new ProductBundleStockHandler(
+            $this->getQueryContainer(),
+            $this->createProductBundleStockWriter()
         );
     }
 

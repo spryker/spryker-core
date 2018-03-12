@@ -4,10 +4,10 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/elastica": "^2.0.0 || ^3.0.0",
+    "spryker/elastica": "^2.0.0 || ^3.0.0 || ^4.0.0",
     "spryker/kernel": "^3.4.0",
     "spryker/queue": "^1.0.0",
-    "spryker/search": "^6.8.0 || ^7.0.0",
+    "spryker/search": "^6.8.0 || ^7.0.0 || ^8.0.0",
     "spryker/storage": "^3.3.2",
     "spryker/util-encoding": "^2.0.0"
   },

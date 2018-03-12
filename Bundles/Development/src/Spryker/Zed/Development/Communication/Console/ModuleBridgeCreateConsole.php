@@ -10,6 +10,7 @@ namespace Spryker\Zed\Development\Communication\Console;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -18,8 +19,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ModuleBridgeCreateConsole extends Console
 {
     const COMMAND_NAME = 'dev:bridge:create';
+
+    const OPTION_BRIDGE_TYPE = 'bridge type';
     const OPTION_MODULE = 'from module';
     const OPTION_TO_MODULE = 'to module';
+
+    const OPTION_METHODS = 'methods';
+    const OPTION_METHODS_SHORT = 'm';
 
     /**
      * @return void
@@ -30,10 +36,12 @@ class ModuleBridgeCreateConsole extends Console
 
         $this->setName(static::COMMAND_NAME)
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
-            ->setDescription('Create bridge and facade interface (Spryker core dev only)');
+            ->setDescription('Create a bridge and its interface (facade, query container or client) from one module to another (Spryker core dev only)');
 
-        $this->addArgument(static::OPTION_MODULE, InputArgument::REQUIRED, 'Name of core module where the bridge should be created in');
-        $this->addArgument(static::OPTION_TO_MODULE, InputArgument::REQUIRED, 'Name of core module to which the module must be connected to');
+        $this->addArgument(static::OPTION_MODULE, InputArgument::REQUIRED, 'Name of core module where the bridge should be created in. Accepted format is "[VendorName.]ModuleName[.BridgeType]", i.e. "Spryker.MyModule.Facade".');
+        $this->addArgument(static::OPTION_TO_MODULE, InputArgument::REQUIRED, 'Name of core module to which the module must be connected to. Accepted format is "[VendorName.]ModuleName[.BridgeType]", i.e. "Spryker.MyModule.Facade".');
+
+        $this->addOption(static::OPTION_METHODS, static::OPTION_METHODS_SHORT, InputOption::VALUE_OPTIONAL, 'Methods to be added to bridge if it already exists, if bridge does not exist, a new bridge with its interface with this comma separated function names is created');
     }
 
     /**
@@ -46,11 +54,12 @@ class ModuleBridgeCreateConsole extends Console
     {
         $module = $this->input->getArgument(static::OPTION_MODULE);
         $toModule = $this->input->getArgument(static::OPTION_TO_MODULE);
+        $methods = explode(',', $this->input->getOption(static::OPTION_METHODS));
 
         $message = 'Create bridge in ' . $module;
 
         $this->info($message);
 
-        $this->getFacade()->createBridge($module, $toModule);
+        $this->getFacade()->createBridge($module, $toModule, $methods);
     }
 }
