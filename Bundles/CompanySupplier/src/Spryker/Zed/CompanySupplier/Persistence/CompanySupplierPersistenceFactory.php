@@ -1,8 +1,14 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CompanySupplier\Persistence;
 
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
+use Orm\Zed\CompanySupplier\Persistence\SpyCompanySupplierToProductQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -16,5 +22,13 @@ class CompanySupplierPersistenceFactory extends AbstractPersistenceFactory
     public function createCompanyQuery(): SpyCompanyQuery
     {
         return SpyCompanyQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\CompanySupplier\Persistence\SpyCompanySupplierToProductQuery
+     */
+    public function createCompanySupplierToProductQuery(): SpyCompanySupplierToProductQuery
+    {
+        return SpyCompanySupplierToProductQuery::create();
     }
 }

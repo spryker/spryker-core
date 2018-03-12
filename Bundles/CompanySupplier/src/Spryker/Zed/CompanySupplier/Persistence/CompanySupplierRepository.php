@@ -1,11 +1,16 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CompanySupplier\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CompanySupplierCollectionTransfer;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
+use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Orm\Zed\CompanySupplier\Persistence\Map\SpyCompanySupplierToProductTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -15,24 +20,52 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class CompanySupplierRepository extends AbstractRepository implements CompanySupplierRepositoryInterface
 {
-
-    public function getAllSuppliers(): array
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CompanySupplierCollectionTransfer
+     */
+    public function getAllSuppliers(): CompanySupplierCollectionTransfer
     {
-        return $this->buildQueryFromCriteria(
-            $this->getFactory()->createCompanyQuery()
-            //TODO: filter by company type
-        )
-        ->find();
+        $query = $this->getFactory()->createCompanyQuery();
+        //TODO: filter by company type
+
+        return $this->getCompanySupplierCollectionFromQuery($query);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\CompanySupplierCollectionTransfer
+     */
     public function getSuppliersByIdProduct(int $idProduct): CompanySupplierCollectionTransfer
     {
         $query = $this->getFactory()->createCompanyQuery();
         $query->addJoin(SpyCompanyTableMap::COL_ID_COMPANY, SpyCompanySupplierToProductTableMap::COL_FK_COMPANY, Criteria::LEFT_JOIN);
-        $query->where(SpyCompanySupplierToProductTableMap::COL_FK_PRODUCT . ' = '. $idProduct);
-        $companySuppliers = new ArrayObject($this->buildQueryFromCriteria($query)->find());
-        $result = new CompanySupplierCollectionTransfer();
-        $result->setSuppliers($companySuppliers);
+        $query->where(SpyCompanySupplierToProductTableMap::COL_FK_PRODUCT . ' = ' . $idProduct);
 
-        return $result;}
+        return $this->getCompanySupplierCollectionFromQuery($query);
+    }
+
+    /**
+     * @param \Orm\Zed\Company\Persistence\SpyCompanyQuery $query
+     *
+     * @return \Generated\Shared\Transfer\CompanySupplierCollectionTransfer
+     */
+    protected function getCompanySupplierCollectionFromQuery(SpyCompanyQuery $query): CompanySupplierCollectionTransfer
+    {
+        $companySuppliers = new ArrayObject(
+            $this->buildQueryFromCriteria($query)->find()
+        );
+        $companySupplierCollection = new CompanySupplierCollectionTransfer();
+        $companySupplierCollection->setSuppliers($companySuppliers);
+
+        return $companySupplierCollection;
+    }
 }

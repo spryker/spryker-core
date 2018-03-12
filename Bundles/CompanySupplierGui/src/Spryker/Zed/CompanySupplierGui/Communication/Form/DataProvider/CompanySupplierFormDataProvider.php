@@ -1,40 +1,48 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CompanySupplierGui\Communication\Form\DataProvider;
 
-
-use Generated\Shared\Transfer\SpyCompanyEntityTransfer;
-use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCompanySupplierFacadeInterface;
 use Spryker\Zed\CompanySupplierGui\Communication\Form\CompanySupplierForm;
+use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCompanySupplierFacadeInterface;
 
 class CompanySupplierFormDataProvider
 {
     /**
-     * @var CompanySupplierGuiToCompanySupplierFacadeInterface
+     * @var \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCompanySupplierFacadeInterface
      */
     protected $companySupplierFacade;
 
     /**
-     * @param CompanySupplierGuiToCompanySupplierFacadeInterface $companySupplierFacade
+     * @param \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCompanySupplierFacadeInterface $companySupplierFacade
      */
     public function __construct(CompanySupplierGuiToCompanySupplierFacadeInterface $companySupplierFacade)
     {
         $this->companySupplierFacade = $companySupplierFacade;
     }
 
-    public function getOptions()
+    /**
+     * @return array
+     */
+    public function getOptions(): array
     {
         return [
             CompanySupplierForm::OPTION_VALUES_COMPANY_SUPPLIER => $this->getSuppliersForSelect(),
         ];
     }
 
-    protected function getSuppliersForSelect()
+    /**
+     * @return array
+     */
+    protected function getSuppliersForSelect(): array
     {
         $result = [];
-        /** @var SpyCompanyEntityTransfer $supplier */
-        foreach ($this->companySupplierFacade->getAllSuppliers() as $supplier) {
+        /** @var \Generated\Shared\Transfer\SpyCompanyEntityTransfer $supplier */
+        foreach ($this->companySupplierFacade->getAllSuppliers()->getSuppliers() as $supplier) {
             $result[$supplier->getName()] = $supplier->getIdCompany();
         }
 

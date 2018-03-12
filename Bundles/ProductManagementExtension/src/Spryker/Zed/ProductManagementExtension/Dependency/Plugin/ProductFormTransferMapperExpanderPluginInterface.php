@@ -5,16 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanySupplier\Communication\Plugin;
+namespace Spryker\Zed\ProductManagementExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-interface ProductConcreteManagerPersistEntityExpanderPluginInterface
+interface ProductFormTransferMapperExpanderPluginInterface
 {
     /**
+     * Specification:
+     * - Expands ProductConcreteTransfer with submitted data
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcrete
+     * @param array $formData
      *
      * @return void
      */
-    public function persistRelatedData(ProductConcreteTransfer $productConcrete): void;
+    public function map(ProductConcreteTransfer &$productConcrete, array $formData): void;
 }

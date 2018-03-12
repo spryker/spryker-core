@@ -28,16 +28,26 @@ class CompanySupplierGuiToCompanySupplierFacadeBridge implements CompanySupplier
     /**
      * @return array
      */
-    public function getAllSuppliers(): array
+    public function getAllSuppliers(): CompanySupplierCollectionTransfer
     {
         return $this->companySupplierFacade->getAllSuppliers();
     }
 
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\CompanySupplierCollectionTransfer
+     */
     public function getSuppliersByIdProduct(int $idProduct): CompanySupplierCollectionTransfer
     {
         return $this->companySupplierFacade->getSuppliersByIdProduct($idProduct);
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
     public function saveCompanySuppliersForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $this->companySupplierFacade->saveCompanySuppliersForProductConcrete($productConcreteTransfer);

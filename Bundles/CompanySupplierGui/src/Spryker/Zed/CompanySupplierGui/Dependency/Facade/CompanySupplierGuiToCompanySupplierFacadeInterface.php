@@ -13,11 +13,21 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 interface CompanySupplierGuiToCompanySupplierFacadeInterface
 {
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\CompanySupplierCollectionTransfer
      */
-    public function getAllSuppliers(): array;
+    public function getAllSuppliers(): CompanySupplierCollectionTransfer;
 
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\CompanySupplierCollectionTransfer
+     */
     public function getSuppliersByIdProduct(int $idProduct): CompanySupplierCollectionTransfer;
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
     public function saveCompanySuppliersForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void;
 }

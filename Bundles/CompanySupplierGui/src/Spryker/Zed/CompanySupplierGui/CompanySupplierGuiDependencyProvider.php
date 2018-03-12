@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CompanySupplierGui;
 
 use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCompanySupplierFacadeBridge;
@@ -8,7 +13,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CompanySupplierGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     public const FACADE_COMPANY_SUPPLIER = 'FACADE_COMPANY_SUPPLIER';
 
     /**
@@ -36,5 +40,4 @@ class CompanySupplierGuiDependencyProvider extends AbstractBundleDependencyProvi
 
         return $container;
     }
-
 }
