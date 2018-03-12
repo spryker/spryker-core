@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Checkout\CheckoutForm;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Main\ManualOrderEntryType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,7 +44,7 @@ class CheckoutFormDataProvider
     {
         return [
             'data_class' => QuoteTransfer::class,
-            CheckoutForm::OPTION_REQUEST => $this->request
+            ManualOrderEntryType::OPTION_REQUEST => $this->request
         ];
     }
 

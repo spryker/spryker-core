@@ -11,7 +11,7 @@ use Pyz\Yves\Customer\Form\RegisterForm;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressType;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Checkout\CheckoutForm;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Main\ManualOrderEntryType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomerType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\AddressCollectionDataProvider;
@@ -81,14 +81,14 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createCheckoutForm(CheckoutFormDataProvider $checkoutFormDataProvider)
     {
         return $this->getFormFactory()->create(
-            CheckoutForm::class,
+            ManualOrderEntryType::class,
             $checkoutFormDataProvider->getData(),
             $checkoutFormDataProvider->getOptions()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\CheckoutFormPluginInterface[]
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */

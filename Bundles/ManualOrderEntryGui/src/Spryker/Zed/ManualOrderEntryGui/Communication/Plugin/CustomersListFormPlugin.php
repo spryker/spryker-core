@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class CheckoutCustomersListFormPlugin extends AbstractPlugin implements CheckoutFormPluginInterface
+class CustomersListFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

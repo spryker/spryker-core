@@ -11,7 +11,7 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\AddressFormPlugin;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\CheckoutCustomersListFormPlugin;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\CustomersListFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreBridge;
@@ -104,7 +104,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     protected function getCheckoutFormPlugins()
     {
         $plugins = [
-            new CheckoutCustomersListFormPlugin(),
+            new CustomersListFormPlugin(),
             new AddressFormPlugin(),
         ];
 

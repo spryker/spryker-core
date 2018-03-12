@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Checkout;
+namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Main;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class CheckoutForm extends AbstractType
+class ManualOrderEntryType extends AbstractType
 {
     //@todo @Artem rename to manual-order-entry TYPE!
     const FIELD_CUSTOMERS = 'customers';
@@ -69,7 +69,7 @@ class CheckoutForm extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'checkout';
+        return 'manualOrderEntry';
     }
 
 }

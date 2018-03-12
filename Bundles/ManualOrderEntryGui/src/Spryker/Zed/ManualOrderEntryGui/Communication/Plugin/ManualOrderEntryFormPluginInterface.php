@@ -9,7 +9,7 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-interface CheckoutFormPluginInterface
+interface ManualOrderEntryFormPluginInterface
 {
     /**
      * Specification:
