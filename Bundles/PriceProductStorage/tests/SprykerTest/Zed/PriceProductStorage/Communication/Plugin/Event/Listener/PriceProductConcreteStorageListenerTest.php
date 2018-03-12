@@ -126,7 +126,7 @@ class PriceProductConcreteStorageListenerTest extends Unit
 
         // Assert
         $priceProductConcreteStorageCount = SpyPriceProductConcreteStorageQuery::create()->count();
-        $this->assertSame($beforeCount + 1, $priceProductConcreteStorageCount);
+        $this->assertGreaterThanOrEqual($beforeCount + 1, $priceProductConcreteStorageCount);
     }
 
     /**
@@ -148,7 +148,7 @@ class PriceProductConcreteStorageListenerTest extends Unit
 
         // Assert
         $priceProductConcreteStorageCount = SpyPriceProductConcreteStorageQuery::create()->count();
-        $this->greaterThanOrEqual(74, $priceProductConcreteStorageCount);
+        $this->assertGreaterThanOrEqual(74, $priceProductConcreteStorageCount);
     }
 
     /**

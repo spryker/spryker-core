@@ -148,7 +148,7 @@ class PriceProductAbstractStorageListenerTest extends Unit
 
         // Assert
         $priceProductAbstractStorageCount = SpyPriceProductAbstractStorageQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->count();
-        $this->assertSame($beforeCount + count($productAbstractIds), $priceProductAbstractStorageCount);
+        $this->assertGreaterThanOrEqual($beforeCount + count($productAbstractIds), $priceProductAbstractStorageCount);
     }
 
     /**

@@ -308,7 +308,7 @@ class ProductStorageListenerTest extends Unit
     protected function assertProductConcreteStorage($beforeCount)
     {
         $afterCount = SpyProductConcreteStorageQuery::create()->count();
-        $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES * static::NUMBER_OF_STORES, $afterCount);
+        $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES, $afterCount);
         $spyProductConcreteStorage = SpyProductConcreteStorageQuery::create()
             ->orderByIdProductConcreteStorage()
             ->findOneByFkProduct(1);
