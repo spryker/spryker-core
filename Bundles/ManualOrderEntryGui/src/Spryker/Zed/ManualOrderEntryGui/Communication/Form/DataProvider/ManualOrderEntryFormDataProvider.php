@@ -13,7 +13,7 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListTyp
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class CheckoutFormDataProvider
+class ManualOrderEntryFormDataProvider
 {
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface

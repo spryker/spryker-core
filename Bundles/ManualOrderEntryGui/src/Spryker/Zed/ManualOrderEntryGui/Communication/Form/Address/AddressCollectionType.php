@@ -63,7 +63,7 @@ class AddressCollectionType extends AbstractType
         $this
             ->addShippingAddressSubForm($builder, $options)
             ->addSameAsShipmentCheckbox($builder)
-//            ->addBillingAddressSubForm($builder, $options)
+            ->addBillingAddressSubForm($builder, $options)
         ;
     }
 

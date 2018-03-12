@@ -16,14 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ManualOrderEntryType extends AbstractType
 {
-    //@todo @Artem rename to manual-order-entry TYPE!
-    const FIELD_CUSTOMERS = 'customers';
-
-    const OPTION_TEMPLATE_CHOICES = 'template_choices';
     const OPTION_REQUEST = 'request';
-
-    const GROUP_UNIQUE_BLOCK_CHECK = 'unique_block_check';
-
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -33,6 +26,7 @@ class ManualOrderEntryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(self::OPTION_REQUEST);
+        $resolver->setRequired('next');
     }
 
     /**
@@ -45,19 +39,20 @@ class ManualOrderEntryType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addPluginForms($builder);
+        $this->addPluginForms($builder, $options);
     }
 
      /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
       *
       * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    protected function addPluginForms(FormBuilderInterface $builder)
+    protected function addPluginForms(FormBuilderInterface $builder, array $options)
     {
-        foreach ($this->getFactory()->getCheckoutFormPlugins() as $formPlugin) {
+        foreach ($this->getFactory()->getManualOrderEntryFormPlugins($options[self::OPTION_REQUEST]) as $formPlugin) {
             $formPlugin->buildForm($builder);
         }
 

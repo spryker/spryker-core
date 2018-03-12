@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Pyz\Yves\Customer\Form\RegisterForm;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
@@ -16,9 +17,10 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListTyp
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomerType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\AddressCollectionDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\AddressDataProvider;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CheckoutFormDataProvider;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ManualOrderEntryFormDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomerDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomersListDataProvider;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Service\StepEngine;
 use Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -31,13 +33,13 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CheckoutFormDataProvider
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ManualOrderEntryFormDataProvider
      *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    public function createCheckoutFormDataProvider(Request $request)
+    public function createManualOrderEntryFormDataProvider(Request $request)
     {
-        return new CheckoutFormDataProvider(
+        return new ManualOrderEntryFormDataProvider(
             $this->getCustomerQueryContainer(),
             $request
         );
@@ -74,27 +76,40 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CheckoutFormDataProvider $checkoutFormDataProvider
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ManualOrderEntryFormDataProvider $manualOrderEntryFormDataProvider
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCheckoutForm(CheckoutFormDataProvider $checkoutFormDataProvider)
+    public function createManualOrderEntryForm(ManualOrderEntryFormDataProvider $manualOrderEntryFormDataProvider, $next = false)
     {
         return $this->getFormFactory()->create(
             ManualOrderEntryType::class,
-            $checkoutFormDataProvider->getData(),
-            $checkoutFormDataProvider->getOptions()
+            $manualOrderEntryFormDataProvider->getData(),
+            $manualOrderEntryFormDataProvider->getOptions() + ['next'=>$next]
         );
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    public function getCheckoutFormPlugins()
+    public function getManualOrderEntryFormPlugins(Request $request)
     {
-        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::PLUGINS_CHECKOUT_FORM);
+        // @todo @Artem here filter pluging with Step Engine
+        $formPlugins = $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::PLUGINS_MANUAL_ORDER_ENTRY_FORM);
+
+        return $this->createStepEngine()->filterFormPlugins($formPlugins, $request);
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Service\StepEngine
+     */
+    public function createStepEngine()
+    {
+        return new StepEngine();
     }
 
     /**
@@ -106,23 +121,36 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomersListDataProvider
      *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    public function createCustomersListDataProvider()
+    public function createCustomersListDataProvider(Request $request)
     {
         return new CustomersListDataProvider(
-            $this->getCustomerQueryContainer()
+            $this->getCustomerQueryContainer(),
+            $request
         );
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomerType
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    public function createCustomerType()
+    public function createCustomersListForm(Request $request)
     {
-        return new CustomerType();
+        $formDataProvider = $this->createCustomersListDataProvider($request);
+
+        return $this->getFormFactory()->create(
+            CustomersListType::class,
+            $formDataProvider->getData(new QuoteTransfer()),
+            $formDataProvider->getOptions()
+        );
     }
 
     /**
@@ -166,25 +194,19 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @todo @Artem delete
-     *
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressType
-     */
-    public function createAddressType()
-    {
-        return new AddressType();
-    }
-
-    /**
-     * @todo @Artem delete
-     *
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\AddressDataProvider
+     * @return \Symfony\Component\Form\FormInterface
      *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    public function createAddressDataProvider()
+    public function createAddressCollectionForm()
     {
-        return new AddressDataProvider($this->getStore());
+        $formDataProvider = $this->createAddressCollectionDataProvider();
+
+        return $this->getFormFactory()->create(
+            AddressCollectionType::class,
+            $formDataProvider->getData(new QuoteTransfer()),
+            $formDataProvider->getOptions()
+        );
     }
 
 }

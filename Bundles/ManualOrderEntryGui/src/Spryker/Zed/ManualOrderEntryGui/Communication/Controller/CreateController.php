@@ -36,34 +36,83 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $checkoutFormDataProvider = $this->getFactory()
-            ->createCheckoutFormDataProvider($request);
+        $quoteTransfer = new QuoteTransfer();
+        $forms = [];
+        $validForms = true;
 
-        $checkoutForm = $this->getFactory()
-            ->createCheckoutForm($checkoutFormDataProvider);
-        $checkoutForm->handleRequest($request);
+        foreach ($this->getFactory()->getManualOrderEntryFormPlugins($request) as $formPlugin) {
+            $form = $formPlugin->createForm($request);
+            $form->setData($quoteTransfer->toArray());
+            $form->handleRequest($request);
 
-        if ($checkoutForm->isSubmitted()) {
-            if ($checkoutForm->isValid()) {
-                // @todo @Artem Manage subform activation.
-                // Some simple Step Engine inject to form
+            $data = $form->getData();
+            $modifiedData = $data->modifiedToArray();
+            $quoteTransfer->fromArray($modifiedData);
 
-                $quoteTransfer = $this->createOrder($checkoutForm);
-
-                // @todo @Artem redirect to order details
-                if (0 && !empty($quoteTransfer)) {
-                    $redirectUrl = $this->createRedirectUrlAfterOrderCreation($quoteTransfer);
-
-                    return $this->redirectResponse($redirectUrl);
-                }
-            } else {
-                $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
+            $forms[] = $form;
+            if (!$form->isValid()) {
+                $validForms = false;
             }
         }
 
+        if ($validForms) {
+            $this->createOrder($quoteTransfer);
+
+            // @todo @Artem redirect to order details
+            if (0 && !empty($quoteTransfer)) {
+                $redirectUrl = $this->createRedirectUrlAfterOrderCreation($quoteTransfer);
+
+                return $this->redirectResponse($redirectUrl);
+            }
+        }
+
+        $formsView = [];
+        foreach ($forms as $form) {
+            $formsView[] = $form->createView();
+        }
+
         return $this->viewResponse([
-            'checkoutForm' => $checkoutForm->createView(),
+            'forms' => $formsView,
         ]);
+
+
+
+
+//        $manualOrderEntryFormDataProvider = $this->getFactory()
+//            ->createManualOrderEntryFormDataProvider($request);
+//
+//        $manualOrderEntryForm = $this->getFactory()
+//            ->createManualOrderEntryForm($manualOrderEntryFormDataProvider);
+//        $manualOrderEntryForm->handleRequest($request);
+//
+//
+//
+//        if ($manualOrderEntryForm->isSubmitted()) {
+//            if ($manualOrderEntryForm->isValid()) {
+//                // @todo @Artem Manage subform activation.
+//                // Some simple Step Engine inject to form
+//
+//                $quoteTransfer = $manualOrderEntryForm->getData();
+//                $manualOrderEntryForm = $this->getFactory()
+//                    ->createManualOrderEntryForm($manualOrderEntryFormDataProvider, true);
+//
+//
+//                $this->createOrder($quoteTransfer);
+//
+//                // @todo @Artem redirect to order details
+//                if (0 && !empty($quoteTransfer)) {
+//                    $redirectUrl = $this->createRedirectUrlAfterOrderCreation($quoteTransfer);
+//
+//                    return $this->redirectResponse($redirectUrl);
+//                }
+//            } else {
+//                $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
+//            }
+//        }
+//
+//        return $this->viewResponse([
+//            'manualOrderEntryForm' => $manualOrderEntryForm->createView(),
+//        ]);
     }
 
     /**
@@ -106,13 +155,13 @@ class CreateController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $checkoutForm
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createOrder(FormInterface $checkoutForm)
+    protected function createOrder(QuoteTransfer $quoteTransfer)
     {
-        $quoteTransfer = $checkoutForm->getData();
+//        $quoteTransfer = $manualOrderEntryForm->getData();
 
         try {
             // @todo @Artem create Order here

@@ -24,7 +24,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
 
     const STORE = 'MANUAL_ORDER_ENTRY_GUI:STORE';
 
-    const PLUGINS_CHECKOUT_FORM = 'MANUAL_ORDER_ENTRY_GUI:PLUGINS_CHECKOUT_FORM';
+    const PLUGINS_MANUAL_ORDER_ENTRY_FORM = 'MANUAL_ORDER_ENTRY_GUI:PLUGINS_MANUAL_ORDER_ENTRY_FORM';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,7 +37,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addCustomerFacade($container);
         $container = $this->addCustomerQueryContainer($container);
         $container = $this->addStore($container);
-        $container = $this->addCheckoutFormPlugins($container);
+        $container = $this->addManualOrderEntryFormPlugins($container);
 
         return $container;
     }
@@ -89,26 +89,24 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCheckoutFormPlugins(Container $container)
+    protected function addManualOrderEntryFormPlugins(Container $container)
     {
-        $container[static::PLUGINS_CHECKOUT_FORM] = function (Container $container) {
-            return $this->getCheckoutFormPlugins();
+        $container[static::PLUGINS_MANUAL_ORDER_ENTRY_FORM] = function (Container $container) {
+            return $this->getManualOrderEntryFormPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @return array
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      */
-    protected function getCheckoutFormPlugins()
+    protected function getManualOrderEntryFormPlugins()
     {
-        $plugins = [
+        return [
             new CustomersListFormPlugin(),
             new AddressFormPlugin(),
         ];
-
-        return $plugins;
     }
 
 }

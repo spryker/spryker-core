@@ -53,6 +53,8 @@ class AddressCollectionDataProvider extends AbstractAddressDataProvider
     public function getOptions()
     {
         return [
+            'allow_extra_fields' => true,
+            'csrf_protection' => false,
             AddressCollectionType::OPTION_ADDRESS_CHOICES => $this->getAddressChoices(),
             AddressCollectionType::OPTION_COUNTRY_CHOICES => $this->getAvailableCountries(),
         ];

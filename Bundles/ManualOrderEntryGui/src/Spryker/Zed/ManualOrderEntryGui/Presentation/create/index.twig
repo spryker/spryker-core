@@ -1,0 +1,40 @@
+{% extends '@ManualOrderEntryGui/_layout/layout.twig' %}
+
+{% set widget_title = 'Create Order' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create Order' | trans } %}
+        {% block widget_content %}
+
+            {{ form_start(forms[0]) }}
+
+                {% for form in forms %}
+                    {{ form_widget(form) }}
+                {% endfor %}
+
+                <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+
+            {{ form_end(forms[0]) }}
+
+            {#{{ form_start(manualOrderEntryForm) }}#}
+
+            {#@Todo @Artem step Engine here#}
+
+            {#{{ form_row(manualOrderEntryForm.id_customer) }}#}
+            {#{{ createActionButton('/manual-order-entry-gui/create/customer', 'Create Customer' | trans) }}#}
+
+            {#{% include '@ManualOrderEntryGui/create/partials/address.twig' with {'manualOrderEntryForm': manualOrderEntryForm} %}#}
+
+            {#{{ form_widget(manualOrderEntryForm) }}#}
+
+            {#<input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />#}
+
+            {#{{ form_end(manualOrderEntryForm) }}#}
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

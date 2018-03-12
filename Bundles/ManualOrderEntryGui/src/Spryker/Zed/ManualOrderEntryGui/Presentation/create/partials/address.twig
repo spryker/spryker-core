@@ -1,0 +1,20 @@
+<div class="small-12 large-6 columns">
+    <div class="callout">
+        <h4>{{ 'Shipping address' | trans }}</h4>
+
+        {% include '@ManualOrderEntryGui/create/partials/address-selection.twig' with {'addressForm': manualOrderEntryForm.shippingAddress} %}
+    </div>
+</div>
+
+<div class="small-12 large-6 columns">
+    <div class="callout">
+        <h4>{{ 'Billing address' | trans }}</h4>
+
+        {{ form_widget(manualOrderEntryForm.billingSameAsShipping, {'attr': {'class': '__toggler __inverted'}}) }}
+        <label for="manualOrderEntryForm_billingSameAsShipping">{{ 'customer.billingSameAsShipping' | trans }}</label>
+
+        <div class="__toggler-target">
+            {% include '@ManualOrderEntryGui/create/partials/address-selection.twig' with {'addressForm': manualOrderEntryForm.billingAddress} %}
+        </div>
+    </div>
+</div>

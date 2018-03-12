@@ -9,6 +9,7 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
@@ -37,6 +38,18 @@ class CustomersListFormPlugin extends AbstractPlugin implements ManualOrderEntry
             $builder,
             $dataProvider->getOptions()
         );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function createForm(Request $request)
+    {
+        return $this->getFactory()->createCustomersListForm($request);
     }
 
 }
