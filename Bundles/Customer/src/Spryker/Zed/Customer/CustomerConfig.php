@@ -71,4 +71,21 @@ class CustomerConfig extends AbstractBundleConfig
     {
         return '-';
     }
+
+    /**
+     * This method provides list of urls to render blocks inside customer detail page.
+     * URL defines path to external bundle controller. For example: /sales/customer/customer-orders would call sales bundle, customer controller, customerOrders action.
+     * Action should return return array or redirect response.
+     *
+     * example:
+     * [
+     *    'sales' => '/sales/customer/customer-orders',
+     * ]
+     *
+     * @return array
+     */
+    public function getCustomerDetailExternalBlocksUrls()
+    {
+        return [];
+    }
 }

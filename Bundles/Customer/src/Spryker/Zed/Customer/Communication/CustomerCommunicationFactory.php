@@ -31,7 +31,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CustomerTable(
             $this->getQueryContainer(),
-            $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_DATE_FORMATTER)
+            $this->getUtilDateTimeService()
         );
     }
 
@@ -140,5 +140,21 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     protected function getUtilSanitizeService()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_UTIL_SANITIZE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceInterface
+     */
+    protected function getUtilDateTimeService()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_UTIL_DATE_TIME);
+    }
+
+    /**
+     * @return array
+     */
+    public function getCustomerDetailExternalBlocksUrls()
+    {
+        return $this->getConfig()->getCustomerDetailExternalBlocksUrls();
     }
 }
