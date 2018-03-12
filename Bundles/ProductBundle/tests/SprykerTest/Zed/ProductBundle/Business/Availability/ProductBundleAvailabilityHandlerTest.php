@@ -8,12 +8,15 @@
 namespace SprykerTest\Zed\ProductBundle\Business\Availability;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\StoreBuilder;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
@@ -29,6 +32,8 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  */
 class ProductBundleAvailabilityHandlerTest extends Unit
 {
+    const ID_STORE = 1;
+
     /**
      * @return void
      */
@@ -58,7 +63,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $this->setupProductBundleAvailability($bundledItemAvailability, $productBundleAvailabilityHandlerMock);
 
         $availabilityFacadeMock->expects($this->once())
-            ->method('saveProductAvailability')
+            ->method('saveProductAvailabilityForStore')
             ->with($bundleSku, $expectedBundleAvailability);
 
         $productBundleAvailabilityHandlerMock->updateAffectedBundlesAvailability('sku-1');
@@ -83,7 +88,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $productBundleAvailabilityHandlerMock->method('findBundleProductEntityBySku')->willReturn($bundleProductEntity);
 
         $availabilityFacadeMock->expects($this->once())
-            ->method('saveProductAvailability')
+            ->method('saveProductAvailabilityForStore')
             ->with($bundleSku, $expectedBundleAvailability);
 
         $this->setupProductBundleAvailability($bundledItemAvailability, $productBundleAvailabilityHandlerMock);
@@ -94,11 +99,14 @@ class ProductBundleAvailabilityHandlerTest extends Unit
 
     /**
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface|null $availabilityFacadeMock
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler
      */
-    protected function createProductBundleAvailabilityHandler(ProductBundleToAvailabilityInterface $availabilityFacadeMock = null)
-    {
+    protected function createProductBundleAvailabilityHandler(
+        ProductBundleToAvailabilityInterface $availabilityFacadeMock = null,
+        ProductBundleToStoreFacadeInterface $storeFacadeMock = null
+    ) {
         $productBundleQueryContainerMock = $this->createProductBundleQueryContainerMock();
         $availabilityQueryContainerMock = $this->createAvailabilityQueryContainerMock();
 
@@ -106,8 +114,18 @@ class ProductBundleAvailabilityHandlerTest extends Unit
             $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         }
 
+        if ($storeFacadeMock === null) {
+            $storeFacadeMock = $this->createStoreFacadeMock();
+            $storeTransfer = (new StoreBuilder([
+                StoreTransfer::ID_STORE => self::ID_STORE,
+            ]))
+            ->build();
+            $storeFacadeMock->method('getCurrentStore')->willReturn($storeTransfer);
+            $storeFacadeMock->method('getStoreByName')->willReturn($storeTransfer);
+        }
+
         return $this->getMockBuilder(ProductBundleAvailabilityHandler::class)
-            ->setConstructorArgs([$availabilityQueryContainerMock, $availabilityFacadeMock, $productBundleQueryContainerMock])
+            ->setConstructorArgs([$availabilityQueryContainerMock, $availabilityFacadeMock, $productBundleQueryContainerMock, $storeFacadeMock])
             ->setMethods(['getBundleItemsByIdProduct', 'getBundlesUsingProductBySku', 'findBundleProductEntityBySku', 'findBundledItemAvailabilityEntityBySku'])
             ->getMock();
     }
@@ -134,6 +152,14 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     protected function createProductBundleQueryContainerMock()
     {
         return $this->getMockBuilder(ProductBundleQueryContainerInterface::class)->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     */
+    protected function createStoreFacadeMock()
+    {
+        return $this->getMockBuilder(ProductBundleToStoreFacadeInterface::class)->getMock();
     }
 
     /**

@@ -156,6 +156,22 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @api
      *
+     * @param string $concreteSku
+     *
+     * @return void
+     */
+    public function updateAffectedBundlesStock($concreteSku): void
+    {
+        $this->getFactory()
+            ->createProductBundleStockHandler()
+            ->updateAffectedBundlesStock($concreteSku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $productBundleSku
      *
      * @return void

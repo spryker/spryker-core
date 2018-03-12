@@ -38,5 +38,17 @@ interface PermissionFacadeInterface
      *
      * @return bool
      */
-    public function can($permissionKey, $identifier, $context = null);
+    public function can($permissionKey, $identifier, $context = null): bool;
+
+    /**
+     * Specification:
+     * - Finds permission plugin stack registered in the permission client dependency provider
+     * - Adds permission plugin stack registered in the permission zed dependency provider
+     * - Adds new permission keys to permission table in a DB
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function syncPermissionPlugins(): void;
 }

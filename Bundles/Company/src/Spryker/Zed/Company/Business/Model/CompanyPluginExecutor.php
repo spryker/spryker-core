@@ -41,7 +41,7 @@ class CompanyPluginExecutor implements CompanyPluginExecutorInterface
     public function executeCompanyPreSavePlugins(CompanyTransfer $companyTransfer): CompanyTransfer
     {
         foreach ($this->companyPreSavePlugins as $companyPreSavePlugin) {
-            $companyTransfer = $companyPreSavePlugin->preSave($companyTransfer);
+            $companyTransfer = $companyPreSavePlugin->preSaveValidation($companyTransfer);
         }
 
         return $companyTransfer;
