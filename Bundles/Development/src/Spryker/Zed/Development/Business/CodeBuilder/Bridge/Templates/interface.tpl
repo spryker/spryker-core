@@ -6,7 +6,9 @@
  */
 
 namespace {vendor}\{application}\{module}\Dependency\{toType};
+{useStatements}
 
 interface {module}To{toModule}{toType}Interface
 {
+    {methods}
 }
