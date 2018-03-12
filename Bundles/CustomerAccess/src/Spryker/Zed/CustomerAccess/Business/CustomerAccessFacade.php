@@ -2,6 +2,7 @@
 
 namespace Spryker\Zed\CustomerAccess\Business;
 
+use Generated\Shared\Transfer\CustomerAccessTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -50,7 +51,7 @@ class CustomerAccessFacade extends AbstractFacade implements CustomerAccessFacad
      *
      * @return void
      */
-    public function updateOnlyContentTypesToAccessible($customerAccessTransfer)
+    public function updateOnlyContentTypesToAccessible(CustomerAccessTransfer $customerAccessTransfer)
     {
         $this->getFactory()->createCustomerAccessUpdater()->updateOnlyContentTypesToAccessible($customerAccessTransfer);
     }

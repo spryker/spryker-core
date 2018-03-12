@@ -30,7 +30,7 @@ class CustomerAccessGuiToCustomerAccessFacadeBridge implements CustomerAccessGui
      */
     public function updateOnlyContentTypesToAccessible($customerAccessTransfer)
     {
-        return $this->customerAccessFacade->updateOnlyContentTypesToAccessible($customerAccessTransfer);
+        $this->customerAccessFacade->updateOnlyContentTypesToAccessible($customerAccessTransfer);
     }
 
 	/**

@@ -7,12 +7,10 @@
 
     <table name="spy_unauthenticated_customer_access_storage">
         <column name="id_unauthenticated_customer_access_storage" type="integer" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_product_abstract" type="INTEGER" required="true"/>
-        <id-method-parameter value="unauthenticated_customer_access_storag_pk_seq"/>
+        <id-method-parameter value="unauthenticated_customer_access_storage_pk_seq"/>
         <behavior name="synchronization">
             <parameter name="resource" value="unauthenticated_customer_access"/>
-            <parameter name="store" required="false"/>
-            <parameter name="queue_group" value="sync.storage.unauthenticated_customer_access"/>
+            <parameter name="queue_group" value="sync.storage.access"/>
         </behavior>
         <behavior name="timestampable"/>
     </table>

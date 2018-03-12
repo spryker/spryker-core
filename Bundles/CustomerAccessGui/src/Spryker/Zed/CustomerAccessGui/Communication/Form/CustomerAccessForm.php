@@ -47,6 +47,8 @@ class CustomerAccessForm extends AbstractType
                 if ($customerAccess) {
                     return (array)$customerAccess;
                 }
+
+                return [];
             }, function($customerAccess) {
                 return new ArrayObject($customerAccess);
             }));

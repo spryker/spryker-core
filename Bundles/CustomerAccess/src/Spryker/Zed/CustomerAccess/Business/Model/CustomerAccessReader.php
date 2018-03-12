@@ -60,6 +60,7 @@ class CustomerAccessReader implements CustomerAccessReaderInterface
     {
         $unauthenticatedCustomerAccess = $this->customerAccessQueryContainer
             ->queryCustomerAccess()
+            ->orderByIdUnauthenticatedCustomerAccess()
             ->find();
 
         return $this->fillCustomerAccessTransferFromEntities($unauthenticatedCustomerAccess)->getContentTypeAccess();

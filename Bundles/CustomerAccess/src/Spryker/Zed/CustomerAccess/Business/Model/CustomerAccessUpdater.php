@@ -42,9 +42,12 @@ class CustomerAccessUpdater implements CustomerAccessUpdaterInterface
      */
     protected function setAllContentTypesToInaccessible()
     {
-        $this->customerAccessQueryContainer->queryCustomerAccess()->update([
-            'CanAccess' => false,
-        ]);
+        $customerAccessEntities = $this->customerAccessQueryContainer->queryCustomerAccess()->find();
+
+        foreach($customerAccessEntities as $customerAccessEntity) {
+            $customerAccessEntity->setCanAccess(false);
+            $customerAccessEntity->save();
+        }
     }
 
     /**
@@ -54,14 +57,14 @@ class CustomerAccessUpdater implements CustomerAccessUpdaterInterface
      */
     protected function setContentTypesToAccessible(CustomerAccessTransfer $customerAccessTransfer)
     {
-        $accessibleContent = [];
-
         foreach($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
-            $accessibleContent[] = $contentTypeAccess->getContentType();
-        }
+            $customerAccessEntity = $this->customerAccessQueryContainer
+                ->queryCustomerAccess()
+                ->filterByContentType($contentTypeAccess->getContentType())
+                ->findOne();
 
-        $this->customerAccessQueryContainer->queryCustomerAccess()->filterByContentType_In($accessibleContent)->update([
-            'CanAccess' => true,
-        ]);
+            $customerAccessEntity->setCanAccess(true);
+            $customerAccessEntity->save();
+        }
     }
 }

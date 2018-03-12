@@ -2,6 +2,8 @@
 
 namespace Spryker\Zed\CustomerAccess\Business;
 
+use Generated\Shared\Transfer\CustomerAccessTransfer;
+
 interface CustomerAccessFacadeInterface
 {
     /**
@@ -40,9 +42,9 @@ interface CustomerAccessFacadeInterface
      *
      * @api
      *
-     * @param string[] $customerAccessTransfer
+     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
      *
      * @return void
      */
-    public function updateOnlyContentTypesToAccessible($customerAccessTransfer);
+    public function updateOnlyContentTypesToAccessible(CustomerAccessTransfer $customerAccessTransfer);
 }
