@@ -66,7 +66,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @api
      *
-     * @deprecated
+     * @deprecated Use QuoteClient::setQuote() instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

@@ -27,12 +27,10 @@ class QuoteStorageStrategyProvider implements QuoteStorageStrategyProviderInterf
      * @param \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface $quoteClient
      * @param \Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface[] $quoteStorageStrategyPlugins
      */
-    public function __construct(
-        CartToQuoteInterface $quoteClient,
-        array $quoteStorageStrategyPlugins
-    ) {
-        $this->quoteStorageStrategyPlugins = $quoteStorageStrategyPlugins;
+    public function __construct(CartToQuoteInterface $quoteClient, array $quoteStorageStrategyPlugins)
+    {
         $this->quoteClient = $quoteClient;
+        $this->quoteStorageStrategyPlugins = $quoteStorageStrategyPlugins;
     }
 
     /**

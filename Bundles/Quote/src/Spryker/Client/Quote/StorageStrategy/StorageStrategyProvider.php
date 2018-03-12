@@ -27,10 +27,8 @@ class StorageStrategyProvider implements StorageStrategyProviderInterface
      * @param \Spryker\Client\Quote\QuoteConfig $quoteConfig
      * @param \Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface[] $storageStrategyList
      */
-    public function __construct(
-        QuoteConfig $quoteConfig,
-        array $storageStrategyList
-    ) {
+    public function __construct(QuoteConfig $quoteConfig, array $storageStrategyList)
+    {
         $this->quoteConfig = $quoteConfig;
         $this->storageStrategyList = $storageStrategyList;
     }

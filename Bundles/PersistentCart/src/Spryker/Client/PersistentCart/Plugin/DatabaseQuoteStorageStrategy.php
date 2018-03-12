@@ -54,6 +54,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
         foreach ($itemTransfers as $itemTransfer) {
             $persistentCartChangeTransfer->addItem($itemTransfer);
         }
+
         $quoteTransfer = $this->getZedStub()->addItem($persistentCartChangeTransfer);
 
         return $this->saveQuote($quoteTransfer);
@@ -72,9 +73,12 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     public function removeItem($sku, $groupKey = null)
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer();
+
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku($sku);
-        $itemTransfer->setGroupKey($groupKey);
+        $itemTransfer
+            ->setSku($sku)
+            ->setGroupKey($groupKey);
+
         $persistentCartChangeTransfer->addItem($itemTransfer);
         $quoteTransfer = $this->getZedStub()->removeItem($persistentCartChangeTransfer);
 
@@ -96,6 +100,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
         foreach ($itemTransfers as $itemTransfer) {
             $persistentCartChangeTransfer->addItem($itemTransfer);
         }
+
         $quoteTransfer = $this->getZedStub()->removeItem($persistentCartChangeTransfer);
 
         return $this->saveQuote($quoteTransfer);

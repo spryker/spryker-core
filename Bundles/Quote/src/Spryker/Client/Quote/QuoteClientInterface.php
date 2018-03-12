@@ -13,7 +13,7 @@ interface QuoteClientInterface
 {
     /**
      * Specification:
-     * - Returns the stored quote.
+     * - Returns the stored quote from session.
      *
      * @api
      *
@@ -35,8 +35,8 @@ interface QuoteClientInterface
 
     /**
      * Specification:
-     * - Session strategy: clear quote in session.
-     * - Persistent strategy: removes current quote from DB and session.
+     * - Empty existing quote and store to session.
+     * - In case of persistent strategy the quote is also deleted from database.
      *
      * @api
      *

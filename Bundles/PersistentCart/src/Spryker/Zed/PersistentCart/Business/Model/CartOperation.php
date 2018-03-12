@@ -33,10 +33,8 @@ class CartOperation implements CartOperationInterface
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface $quoteFacade
      */
-    public function __construct(
-        PersistentCartToCartFacadeInterface $cartFacade,
-        PersistentCartToQuoteFacadeInterface $quoteFacade
-    ) {
+    public function __construct(PersistentCartToCartFacadeInterface $cartFacade, PersistentCartToQuoteFacadeInterface $quoteFacade)
+    {
         $this->cartFacade = $cartFacade;
         $this->quoteFacade = $quoteFacade;
     }

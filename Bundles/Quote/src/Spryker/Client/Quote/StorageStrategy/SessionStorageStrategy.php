@@ -21,9 +21,8 @@ class SessionStorageStrategy implements StorageStrategyInterface
     /**
      * @param \Spryker\Client\Quote\Session\QuoteSessionInterface $quoteSession
      */
-    public function __construct(
-        QuoteSessionInterface $quoteSession
-    ) {
+    public function __construct(QuoteSessionInterface $quoteSession)
+    {
         $this->quoteSession = $quoteSession;
     }
 

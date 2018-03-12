@@ -16,8 +16,8 @@ interface QuoteFacadeInterface
 {
     /**
      * Specification:
-     * - Creates quote from quote transfer if it does not exist
-     * - Updates quote from quote transfer
+     * - Persists new quote entity if it does not exist.
+     * - Updates existing quote entity from QuoteTransfer.
      *
      * @api
      *

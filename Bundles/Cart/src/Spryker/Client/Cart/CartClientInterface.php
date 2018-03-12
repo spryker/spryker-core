@@ -25,8 +25,8 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Session strategy: clear quote in session.
-     * - Persistent strategy: removes current quote from DB and session.
+     * - Empty existing quote and store to session.
+     * - In case of persistent strategy the quote is also deleted from database.
      *
      * @api
      *
@@ -232,7 +232,7 @@ interface CartClientInterface
      *
      * @api
      *
-     * @deprecated
+     * @deprecated Use QuoteClient::setQuote() instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
