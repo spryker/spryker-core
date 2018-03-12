@@ -37,7 +37,7 @@ class CustomerTransferCompanyUserExpanderPlugin extends AbstractPlugin implement
      */
     protected function addCompanyUserTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        $companyUserTransfer = $this->getFacade()->findCompanyUserByCustomerId($customerTransfer);
+        $companyUserTransfer = $this->getFacade()->findActiveCompanyUserByCustomerId($customerTransfer);
         $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
 
         return $customerTransfer;

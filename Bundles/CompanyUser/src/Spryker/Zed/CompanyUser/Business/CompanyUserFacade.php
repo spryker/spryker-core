@@ -88,6 +88,20 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     /**
      * {@inheritdoc}
      *
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return CompanyUserTransfer|null
+     */
+    public function findActiveCompanyUserByCustomerId(CustomerTransfer $customerTransfer): ?CompanyUserTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyUser()
+            ->findActiveCompanyUserByCustomerId($customerTransfer->getIdCustomer());
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer

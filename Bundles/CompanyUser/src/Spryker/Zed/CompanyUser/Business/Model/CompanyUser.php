@@ -130,6 +130,22 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
+     * @param int $idCustomer
+     *
+     * @return CompanyUserTransfer|null
+     */
+    public function findActiveCompanyUserByCustomerId(int $idCustomer): ?CompanyUserTransfer
+    {
+        $companyUserTransfer = $this->companyUserRepository->findActiveCompanyUserByCustomerId($idCustomer);
+
+        if ($companyUserTransfer !== null) {
+            return $this->companyUserPluginExecutor->executeHydrationPlugins($companyUserTransfer);
+        }
+
+        return null;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer

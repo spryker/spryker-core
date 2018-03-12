@@ -44,6 +44,32 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findActiveCompanyUserByCustomerId(int $idCustomer): ?CompanyUserTransfer
+    {
+        $query = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->filterByFkCustomer($idCustomer)
+            ->joinCompany()
+            ->useCompanyQuery()
+                ->filterByIsActive(true)
+            ->endUse();
+
+        $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+
+        if ($entityTransfer !== null) {
+            return $this->getFactory()
+                ->createCompanyUserMapper()
+                ->mapEntityTransferToCompanyUserTransfer($entityTransfer);
+        }
+
+        return null;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
