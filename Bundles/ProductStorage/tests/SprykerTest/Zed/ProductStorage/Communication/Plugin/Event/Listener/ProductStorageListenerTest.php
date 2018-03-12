@@ -50,12 +50,23 @@ class ProductStorageListenerTest extends Unit
     const NUMBER_OF_LOCALES = 2;
 
     /**
+     * @var \SprykerTest\Zed\ProductStorage\ProductStorageCommunicationTester
+     */
+    protected $tester;
+
+    /**
      * @throws \PHPUnit\Framework\SkippedTestError
      *
      * @return void
      */
     protected function setUp()
     {
+        parent::setUp();
+
+        if (!$this->tester->isSuiteProject()) {
+            throw new SkippedTestError('Warning: not in suite environment');
+        }
+
         $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
         if ($dbEngine !== 'pgsql') {
             throw new SkippedTestError('Warning: no PostgreSQL is detected');

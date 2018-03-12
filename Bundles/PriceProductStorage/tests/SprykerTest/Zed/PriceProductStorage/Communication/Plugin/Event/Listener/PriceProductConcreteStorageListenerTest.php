@@ -39,12 +39,23 @@ use SprykerTest\Zed\PriceProductStorage\PriceProductStorageConfigMock;
 class PriceProductConcreteStorageListenerTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\PriceProductStorage\PriceProductStorageCommunicationTester
+     */
+    protected $tester;
+
+    /**
      * @throws \PHPUnit\Framework\SkippedTestError
      *
      * @return void
      */
     protected function setUp()
     {
+        parent::setUp();
+
+        if (!$this->tester->isSuiteProject()) {
+            throw new SkippedTestError('Warning: not in suite environment');
+        }
+
         $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
         if ($dbEngine !== 'pgsql') {
             throw new SkippedTestError('Warning: no PostgreSQL is detected');
