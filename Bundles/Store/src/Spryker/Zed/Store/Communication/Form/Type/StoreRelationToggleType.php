@@ -147,7 +147,8 @@ class StoreRelationToggleType extends AbstractType
                 'disabled' => true,
                 'property_path' => static::FIELD_ID_STORES,
                 'multiple' => true,
-                'choices' => $this->getStoreNameMap(),
+                'choices' => array_flip($this->getStoreNameMap()),
+                'choices_as_values' => true,
             ]
         );
 

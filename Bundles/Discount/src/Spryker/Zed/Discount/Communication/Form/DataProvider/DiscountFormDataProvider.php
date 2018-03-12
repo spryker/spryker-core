@@ -10,7 +10,6 @@ use DateTime;
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
@@ -61,7 +60,6 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
         $discountGeneralTransfer->setIsExclusive(false);
         $discountGeneralTransfer->setValidFrom(new DateTime());
         $discountGeneralTransfer->setValidTo(new DateTime());
-        $discountGeneralTransfer->setStoreRelation(new StoreRelationTransfer());
 
         return $discountGeneralTransfer;
     }
