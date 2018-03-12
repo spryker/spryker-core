@@ -13,6 +13,9 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPlu
 
 
 /**
+ * For Zed PermissionDependencyProvider::getPermissionPlugins() and
+ * CartDependencyProvider::getTerminationPlugins() registration
+ *
  * @method \Spryker\Zed\CartPermissionConnector\Communication\CartPermissionConnectorCommunicationFactory getFactory()
  */
 class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface, CartTerminationPluginInterface
