@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 interface CompanyUnitAddressHydratePluginInterface
 {
     /**
+     * Specification:
+     *  - Hydrate CompanyUnitAddress entity after loading.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $addressTransfer
