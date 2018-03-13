@@ -13,7 +13,7 @@ interface PermissionFinderInterface
 {
     /**
      * Specification:
-     * - Configures a permission by its transfer
+     * - Finds a permission plugin by its key
      *
      * @param string $permissionKey
      *
