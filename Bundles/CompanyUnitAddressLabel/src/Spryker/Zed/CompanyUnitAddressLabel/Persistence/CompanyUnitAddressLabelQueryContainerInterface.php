@@ -7,8 +7,15 @@
 
 namespace Spryker\Zed\CompanyUnitAddressLabel\Persistence;
 
+use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CompanyUnitAddressLabelQueryContainerInterface extends QueryContainerInterface
 {
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelQuery
+     */
+    public function queryCompanyUnitAddressLabelQuery(): SpyCompanyUnitAddressLabelQuery;
 }
