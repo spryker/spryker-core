@@ -41,11 +41,6 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
     protected $companyBusinessUnitFacade;
 
     /**
-     * @var \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReaderInterface
-     */
-    protected $addressReader;
-
-    /**
      * @var \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressPostSavePluginInterface[]
      */
     protected $companyUnitAddressPostSavePlugins;
@@ -55,7 +50,6 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCountryFacadeInterface $countryFacade
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
-     * @param \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReaderInterface $addressReader
      * @param array $companyUnitAddressPreUpdatePlugins
      */
     public function __construct(
@@ -63,14 +57,12 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         CompanyUnitAddressToCountryFacadeInterface $countryFacade,
         CompanyUnitAddressToLocaleFacadeInterface $localeFacade,
         CompanyUnitAddressToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
-        CompanyBusinessUnitAddressReaderInterface $addressReader,
         array $companyUnitAddressPreUpdatePlugins
     ) {
         $this->entityManager = $entityManager;
         $this->countryFacade = $countryFacade;
         $this->localeFacade = $localeFacade;
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
-        $this->addressReader = $addressReader;
         $this->companyUnitAddressPostSavePlugins = $companyUnitAddressPreUpdatePlugins;
     }
 

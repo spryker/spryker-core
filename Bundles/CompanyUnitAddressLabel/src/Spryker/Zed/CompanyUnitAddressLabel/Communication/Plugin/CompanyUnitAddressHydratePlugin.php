@@ -21,11 +21,11 @@ class CompanyUnitAddressHydratePlugin extends AbstractPlugin implements CompanyU
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $addressTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function hydrate(CompanyUnitAddressTransfer $addressTransfer)
+    public function hydrate(CompanyUnitAddressTransfer $addressTransfer): CompanyUnitAddressTransfer
     {
-        $this->getFacade()
+        return $this->getFacade()
             ->hydrateCompanyUnitAddressWithLabelCollection($addressTransfer);
     }
 }

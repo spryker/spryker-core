@@ -34,7 +34,7 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addLocaleFacade($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
         $container = $this->addAddressPostUpdatePlugins($container);
-        $container = $this->addCompanyUnitAddressHydratingPlugins($container);
+        $container = $this->addCompanyUnitAddressHydratePlugins($container);
 
         return $container;
     }
@@ -100,10 +100,10 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCompanyUnitAddressHydratingPlugins(Container $container): Container
+    protected function addCompanyUnitAddressHydratePlugins(Container $container): Container
     {
         $container[static::PLUGIN_ADDRESS_TRANSFER_HYDRATING] = function (Container $container) {
-            return $this->getCompanyUnitAddressHydratingPlugins();
+            return $this->getCompanyUnitAddressHydratePlugins();
         };
 
         return $container;
@@ -120,7 +120,7 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
     /**
      * @return \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratePluginInterface[]
      */
-    protected function getCompanyUnitAddressHydratingPlugins(): array
+    protected function getCompanyUnitAddressHydratePlugins(): array
     {
         return [];
     }

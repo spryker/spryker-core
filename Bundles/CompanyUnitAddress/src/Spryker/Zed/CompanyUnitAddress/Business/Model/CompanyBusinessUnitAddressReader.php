@@ -23,18 +23,18 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
     /**
      * @var \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratePluginInterface[]
      */
-    protected $companyUnitAddressHydratingPlugins;
+    protected $CompanyUnitAddressHydratePlugins;
 
     /**
      * @param \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressRepositoryInterface $repository
-     * @param \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratePluginInterface[] $companyUnitAddressHydratingPlugins
+     * @param \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratePluginInterface[] $CompanyUnitAddressHydratePlugins
      */
     public function __construct(
         CompanyUnitAddressRepositoryInterface $repository,
-        array $companyUnitAddressHydratingPlugins
+        array $CompanyUnitAddressHydratePlugins
     ) {
         $this->repository = $repository;
-        $this->companyUnitAddressHydratingPlugins = $companyUnitAddressHydratingPlugins;
+        $this->CompanyUnitAddressHydratePlugins = $CompanyUnitAddressHydratePlugins;
     }
 
     /**
@@ -64,8 +64,7 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
         $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
 
         $companyUnitAddress = $this->repository->getCompanyUnitAddressById($companyUnitAddressTransfer);
-
-        $this->executeCompanyUnitAddressHydratorPlugins($companyUnitAddress);
+        $companyUnitAddress = $this->executeCompanyUnitAddressHydratorPlugins($companyUnitAddress);
 
         return $companyUnitAddress;
     }
@@ -73,12 +72,14 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    protected function executeCompanyUnitAddressHydratorPlugins(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
+    protected function executeCompanyUnitAddressHydratorPlugins(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
     {
-        foreach ($this->companyUnitAddressHydratingPlugins as $plugin) {
-            $plugin->hydrate($companyUnitAddressTransfer);
+        foreach ($this->CompanyUnitAddressHydratePlugins as $plugin) {
+            $companyUnitAddressTransfer = $plugin->hydrate($companyUnitAddressTransfer);
         }
+
+        return $companyUnitAddressTransfer;
     }
 }

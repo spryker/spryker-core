@@ -37,7 +37,6 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
             $this->getCountryFacade(),
             $this->getLocaleFacade(),
             $this->getCompanyBusinessUnitFacade(),
-            $this->createCompanyBusinessUnitAddressReader(),
             $this->getCompanyUnitAddressPostSavePlugins()
         );
     }
@@ -60,7 +59,7 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyBusinessUnitAddressReader(
             $this->getRepository(),
-            $this->getCompanyUnitAddressHydratingPlugins()
+            $this->getCompanyUnitAddressHydratePlugins()
         );
     }
 
@@ -99,7 +98,7 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratePluginInterface[]
      */
-    protected function getCompanyUnitAddressHydratingPlugins(): array
+    protected function getCompanyUnitAddressHydratePlugins(): array
     {
         return $this->getProvidedDependency(CompanyUnitAddressDependencyProvider::PLUGIN_ADDRESS_TRANSFER_HYDRATING);
     }
