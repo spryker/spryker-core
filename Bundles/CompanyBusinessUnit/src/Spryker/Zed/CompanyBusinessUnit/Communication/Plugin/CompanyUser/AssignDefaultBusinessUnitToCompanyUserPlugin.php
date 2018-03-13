@@ -29,11 +29,14 @@ class AssignDefaultBusinessUnitToCompanyUserPlugin extends AbstractPlugin implem
     public function preSave(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
         if ($companyUserResponseTransfer->getCompanyUser()->getIdCompanyUser() === null) {
-            $companyUserResponseTransfer->getCompanyUser()->setFkCompanyBusinessUnit(
-                $this->getFacade()
-                    ->getDefaultBusinessUnitByCompanyId($companyUserResponseTransfer->getCompanyUser()->getFkCompany())
-                    ->getIdCompanyBusinessUnit()
-            );
+            $companyBusinessUnit = $this->getFacade()
+                ->findDefaultBusinessUnitByCompanyId($companyUserResponseTransfer->getCompanyUser()->getFkCompany());
+
+            if ($companyBusinessUnit !== null) {
+                $companyUserResponseTransfer->getCompanyUser()->setFkCompanyBusinessUnit(
+                    $companyBusinessUnit->getIdCompanyBusinessUnit()
+                );
+            }
         }
 
         return $companyUserResponseTransfer;

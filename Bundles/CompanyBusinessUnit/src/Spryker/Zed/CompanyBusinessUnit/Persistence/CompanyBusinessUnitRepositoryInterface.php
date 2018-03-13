@@ -41,7 +41,7 @@ interface CompanyBusinessUnitRepositoryInterface
     /**
      * @param int $idCompany
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
      */
-    public function getDefaultBusinessUnitByCompanyId(int $idCompany): CompanyBusinessUnitTransfer;
+    public function findDefaultBusinessUnitByCompanyId(int $idCompany): ?CompanyBusinessUnitTransfer;
 }
