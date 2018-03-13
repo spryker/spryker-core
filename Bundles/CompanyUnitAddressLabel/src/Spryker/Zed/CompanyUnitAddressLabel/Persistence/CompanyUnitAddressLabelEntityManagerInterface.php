@@ -23,6 +23,8 @@ interface CompanyUnitAddressLabelEntityManagerInterface
     ): void;
 
     /**
+     * @api
+     *
      * @param array $labelToAddressRelationIds
      *
      * @return void
