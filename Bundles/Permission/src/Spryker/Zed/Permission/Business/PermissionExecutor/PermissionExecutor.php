@@ -116,8 +116,8 @@ class PermissionExecutor implements PermissionExecutorInterface
     {
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 
-        foreach ($this->getPermissionCollectionsByIdentifier($identifier) as $permissionCollectionFromStorage) {
-            foreach ($permissionCollectionFromStorage->getPermissions() as $permission) {
+        foreach ($this->permissionStoragePlugins as $permissionStoragePlugin) {
+            foreach ($permissionStoragePlugin->getPermissionCollection($identifier)->getPermissions() as $permission) {
                 if ($permission->getKey() === $permissionKey) {
                     $permissionCollectionTransfer->addPermission($permission);
                 }
@@ -125,20 +125,5 @@ class PermissionExecutor implements PermissionExecutorInterface
         }
 
         return $permissionCollectionTransfer;
-    }
-
-    /**
-     * @param int|string $identifier
-     *
-     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer[]
-     */
-    protected function getPermissionCollectionsByIdentifier($identifier)
-    {
-        $permissionCollections = [];
-        foreach ($this->permissionStoragePlugins as $permissionStoragePlugin) {
-            $permissionCollections[] = $permissionStoragePlugin->getPermissionCollection($identifier);
-        }
-
-        return $permissionCollections;
     }
 }
