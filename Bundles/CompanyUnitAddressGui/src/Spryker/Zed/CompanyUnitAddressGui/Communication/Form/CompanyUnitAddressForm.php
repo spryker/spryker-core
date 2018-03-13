@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints\Required;
 class CompanyUnitAddressForm extends AbstractType
 {
     const FIELD_ID_COMPANY_UNIT_ADDRESS = 'id_company_unit_address';
-    const FIELD_NAME = 'name';
+    const FIELD_ADDRESS_1 = 'address1';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -32,7 +32,7 @@ class CompanyUnitAddressForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addIdCompanyUnitAddressField($builder)
-            ->addNameField($builder)
+            ->addAddressField($builder)
             ->addPluginForms($builder);
     }
 
@@ -53,11 +53,11 @@ class CompanyUnitAddressForm extends AbstractType
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder)
+    protected function addAddressField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_NAME, TextType::class, [
-            'label' => 'Address 1 *',
-            'property_path' => 'address1',
+        $builder->add(static::FIELD_ADDRESS_1, TextType::class, [
+            'label' => 'Address',
+            'disabled' => true,
             'constraints' => [
                 new Required(),
                 new NotBlank(),

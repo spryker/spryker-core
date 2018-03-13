@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/CompanyUnitAddressExtension.svg)](https://travis-ci.org/spryker/CompanyUnitAddressExtension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/CompanyUnitAddressExtension/badge.svg)](https://coveralls.io/github/spryker/CompanyUnitAddressExtension)
 
-Company unit address gui extension module provides an interface of plugin to be used in company unit address for rendering a part of form.
+CompanyUnitAddressExtension module provides interfaces of plugins to influence on module CompanyUnitAddress from other modules.
 
 ## Installation
 

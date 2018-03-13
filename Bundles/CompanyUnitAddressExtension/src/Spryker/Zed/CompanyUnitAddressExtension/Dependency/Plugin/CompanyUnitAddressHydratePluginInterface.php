@@ -13,7 +13,7 @@ interface CompanyUnitAddressHydratePluginInterface
 {
     /**
      * Specification:
-     *  - Hydrate CompanyUnitAddress entity after loading.
+     *  - Hydrate CompanyUnitAddress entity after loading it from db.
      *
      * @api
      *
