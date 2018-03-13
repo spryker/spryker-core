@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config>
+    <customer>
+        <pages>
+            <group>
+                <label>Access</label>
+                <title>Access</title>
+                <bundle>customer-access</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <visible>1</visible>
+            </group>
+        </pages>
+    </customer>
+</config>

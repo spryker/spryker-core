@@ -14,12 +14,14 @@ class CustomerAccessStorageClient extends AbstractClient implements CustomerAcce
      *
      * @api
      *
-     * @param string $content
+     * @param string $contentType
      *
      * @return bool
      */
-    public function canUnauthenticatedCustomerAccessContent($content)
+    public function canUnauthenticatedCustomerAccessContentType($contentType)
     {
-        return $this->getFactory()->createCustomerAccessStorageReader()->findUnauthenticatedCustomerAccess();
+        return $this->getFactory()
+            ->createCustomerAccessStorageReader()
+            ->canUnauthenticatedCustomerAccessContentType($contentType);
     }
 }

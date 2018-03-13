@@ -10,9 +10,8 @@ interface CustomerAccessStorageClientInterface
      *
      * @api
      *
-     * @param string $content
-     *
+     * @param $contentType
      * @return bool
      */
-    public function canUnauthenticatedCustomerAccessContent($content);
+    public function canUnauthenticatedCustomerAccessContentType($contentType);
 }

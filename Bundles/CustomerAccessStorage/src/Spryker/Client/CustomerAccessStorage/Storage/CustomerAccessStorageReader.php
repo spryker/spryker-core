@@ -2,6 +2,7 @@
 
 namespace Spryker\Client\CustomerAccessStorage\Storage;
 
+use Generated\Shared\Transfer\ContentTypeAccessTransfer;
 use Generated\Shared\Transfer\CustomerAccessTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CustomerAccessStorage\Dependency\Client\CustomerAccessStorageToStorageClientInterface;
@@ -19,6 +20,11 @@ class CustomerAccessStorageReader implements CustomerAccessStorageReaderInterfac
      * @var \Spryker\Client\CustomerAccessStorage\Dependency\Service\CustomerAccessStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
+
+    /**
+     * @var \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    protected $unauthenticatedCustomerAccess;
 
     /**
      * @param \Spryker\Client\CustomerAccessStorage\Dependency\Client\CustomerAccessStorageToStorageClientInterface $storageClient
@@ -41,33 +47,28 @@ class CustomerAccessStorageReader implements CustomerAccessStorageReaderInterfac
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
-     */
-    public function findUnauthenticatedCustomerAccess()
-    {
-        $unauthenticatedCustomerAccess = $this->storageClient->get($this->generateKey());
-
-        $customerAccessTransfer = new CustomerAccessTransfer();
-        if ($unauthenticatedCustomerAccess === null) {
-            return $customerAccessTransfer;
-        }
-
-        return $customerAccessTransfer->fromArray($unauthenticatedCustomerAccess, true);
-    }
-
-    /**
-     * @param string $content
+     * @param string $contentType
      *
      * @return bool
      */
-    public function canUnauthenticatedCustomerAccessContent($content)
+    public function canUnauthenticatedCustomerAccessContentType($contentType)
     {
-        $unauthenticatedCustomerAccess = $this->storageClient->get($this->generateKey());
+        if(!$this->unauthenticatedCustomerAccess) {
+            $unauthenticatedCustomerAccess = $this->storageClient->get($this->generateKey());
 
-        if($unauthenticatedCustomerAccess === null) {
-            return true;
+            if($unauthenticatedCustomerAccess === null) {
+                return true;
+            }
+
+            $this->unauthenticatedCustomerAccess = (new CustomerAccessTransfer())->fromArray($unauthenticatedCustomerAccess, true);
         }
 
+        foreach($this->unauthenticatedCustomerAccess->getContentTypeAccess() as $contentTypeAccess) {
+            if($contentTypeAccess->getContentType() === $contentType) {
+                return $contentTypeAccess->getCanAccess();
+            }
+        }
 
+        return true;
     }
 }

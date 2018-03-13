@@ -26,5 +26,5 @@ class CustomerAccessStorageConstants
      *
      * @api
      */
-    const CUSTOMER_ACCESS_RESOURCE_NAME = 'customer_access';
+    const CUSTOMER_ACCESS_RESOURCE_NAME = 'unauthenticated_customer_access';
 }
