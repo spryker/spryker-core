@@ -14,7 +14,7 @@ interface CompanyUnitAddressLabelRelationSaverInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function saveLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void;
+    public function saveLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer;
 }

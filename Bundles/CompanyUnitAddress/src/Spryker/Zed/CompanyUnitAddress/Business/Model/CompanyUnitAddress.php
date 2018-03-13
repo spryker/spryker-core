@@ -182,7 +182,7 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         $companyUnitAddressTransfer->setIdCompanyUnitAddress($companyUnitAddressSavedTransfer->getIdCompanyUnitAddress());
         $this->updateBusinessUnitDefaultAddresses($companyUnitAddressTransfer);
 
-        $this->executePostSavePlugins($companyUnitAddressTransfer);
+        $companyUnitAddressTransfer = $this->executePostSavePlugins($companyUnitAddressTransfer);
 
         return (new CompanyUnitAddressResponseTransfer())->setIsSuccessful(true)
             ->setCompanyUnitAddressTransfer($companyUnitAddressTransfer);
@@ -206,12 +206,14 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    protected function executePostSavePlugins(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
+    protected function executePostSavePlugins(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
     {
         foreach ($this->companyUnitAddressPostSavePlugins as $plugin) {
-            $plugin->postSave($companyUnitAddressTransfer);
+            $companyUnitAddressTransfer = $plugin->postSave($companyUnitAddressTransfer);
         }
+
+        return $companyUnitAddressTransfer;
     }
 }

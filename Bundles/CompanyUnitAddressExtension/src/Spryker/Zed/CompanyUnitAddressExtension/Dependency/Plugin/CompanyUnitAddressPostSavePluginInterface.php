@@ -19,7 +19,7 @@ interface CompanyUnitAddressPostSavePluginInterface
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function postSave(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void;
+    public function postSave(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer;
 }

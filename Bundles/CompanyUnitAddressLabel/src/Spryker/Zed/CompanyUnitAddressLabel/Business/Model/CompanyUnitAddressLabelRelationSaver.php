@@ -39,15 +39,17 @@ class CompanyUnitAddressLabelRelationSaver implements CompanyUnitAddressLabelRel
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function saveLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
+    public function saveLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
     {
         $redundantRelationIds = $this->getRedundantLabelToAddressRelationIds($companyUnitAddressTransfer);
         $this->entityManager->deleteRedundantLabelToAddressRelations(
             $redundantRelationIds
         );
         $this->entityManager->saveLabelToAddressRelations($companyUnitAddressTransfer);
+
+        return $companyUnitAddressTransfer;
     }
 
     /**

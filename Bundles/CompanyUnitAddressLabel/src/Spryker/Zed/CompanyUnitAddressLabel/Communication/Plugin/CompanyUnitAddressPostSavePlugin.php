@@ -22,10 +22,10 @@ class CompanyUnitAddressPostSavePlugin extends AbstractPlugin implements Company
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function postSave(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
+    public function postSave(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
     {
-        $this->getFacade()->saveLabelToAddressRelations($companyUnitAddressTransfer);
+        return $this->getFacade()->saveLabelToAddressRelations($companyUnitAddressTransfer);
     }
 }
