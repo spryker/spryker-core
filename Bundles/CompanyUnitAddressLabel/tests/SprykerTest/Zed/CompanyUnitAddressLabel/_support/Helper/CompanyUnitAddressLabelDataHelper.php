@@ -135,7 +135,7 @@ class CompanyUnitAddressLabelDataHelper extends Module
     public function haveLabelCollection()
     {
         $queryContainer = $this->getLocator()->companyUnitAddressLabel()->queryContainer();
-        $label = $queryContainer->queryCompanyUnitAddressLabelQuery()->findOne();
+        $label = $queryContainer->queryCompanyUnitAddressLabel()->findOne();
 
         if (empty($label)) {
             throw new EntityNotFoundException(

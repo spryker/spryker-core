@@ -21,7 +21,7 @@ class CompanyUnitAddressLabelPersistenceFactory extends AbstractPersistenceFacto
     /**
      * @return \Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelQuery
      */
-    public function createCompanyUnitAddressLabelQuery()
+    public function createCompanyUnitAddressLabelQuery(): SpyCompanyUnitAddressLabelQuery
     {
         return SpyCompanyUnitAddressLabelQuery::create();
     }
@@ -29,7 +29,7 @@ class CompanyUnitAddressLabelPersistenceFactory extends AbstractPersistenceFacto
     /**
      * @return \Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelToCompanyUnitAddressQuery
      */
-    public function createCompanyUnitAddressLabelToCompanyUnitAddressQuery()
+    public function createCompanyUnitAddressLabelToCompanyUnitAddressQuery(): SpyCompanyUnitAddressLabelToCompanyUnitAddressQuery
     {
         return SpyCompanyUnitAddressLabelToCompanyUnitAddressQuery::create();
     }

@@ -17,5 +17,5 @@ interface CompanyUnitAddressLabelQueryContainerInterface extends QueryContainerI
      *
      * @return \Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelQuery
      */
-    public function queryCompanyUnitAddressLabelQuery(): SpyCompanyUnitAddressLabelQuery;
+    public function queryCompanyUnitAddressLabel(): SpyCompanyUnitAddressLabelQuery;
 }

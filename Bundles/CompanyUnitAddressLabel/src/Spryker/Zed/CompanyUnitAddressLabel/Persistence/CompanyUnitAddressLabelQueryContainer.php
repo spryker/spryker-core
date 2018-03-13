@@ -20,7 +20,7 @@ class CompanyUnitAddressLabelQueryContainer extends AbstractQueryContainer imple
      *
      * @return \Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelQuery
      */
-    public function queryCompanyUnitAddressLabelQuery(): SpyCompanyUnitAddressLabelQuery
+    public function queryCompanyUnitAddressLabel(): SpyCompanyUnitAddressLabelQuery
     {
         return $this->getFactory()
             ->createCompanyUnitAddressLabelQuery();
