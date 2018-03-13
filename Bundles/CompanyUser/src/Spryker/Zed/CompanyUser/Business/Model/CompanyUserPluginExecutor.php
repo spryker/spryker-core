@@ -51,17 +51,17 @@ class CompanyUserPluginExecutor implements CompanyUserPluginExecutorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function executePreSavePlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
+    public function executePreSavePlugins(CompanyUserTransfer $companyUserResponseTransfer): CompanyUserTransfer
     {
         foreach ($this->companyUserPreSavePlugins as $companyUserPreSavePlugin) {
-            $companyUserTransfer = $companyUserPreSavePlugin->preSave($companyUserTransfer);
+            $companyUserResponseTransfer = $companyUserPreSavePlugin->preSave($companyUserResponseTransfer);
         }
 
-        return $companyUserTransfer;
+        return $companyUserResponseTransfer;
     }
 
     /**

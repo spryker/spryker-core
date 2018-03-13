@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 
 interface CompanyUserPreSavePluginInterface
 {
@@ -17,9 +17,9 @@ interface CompanyUserPreSavePluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function preSave(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
+    public function preSave(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer;
 }

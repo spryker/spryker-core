@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CompanyBusinessUnit\Communication\Plugin\CompanyUser;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSavePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -22,20 +22,20 @@ class AssignDefaultBusinessUnitToCompanyUserPlugin extends AbstractPlugin implem
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function preSave(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
+    public function preSave(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
-        if ($companyUserTransfer->getIdCompanyUser() === null) {
-            $companyUserTransfer->setFkCompanyBusinessUnit(
+        if ($companyUserResponseTransfer->getCompanyUser()->getIdCompanyUser() === null) {
+            $companyUserResponseTransfer->getCompanyUser()->setFkCompanyBusinessUnit(
                 $this->getFacade()
-                    ->getDefaultBusinessUnitByCompanyId($companyUserTransfer->getFkCompany())
+                    ->getDefaultBusinessUnitByCompanyId($companyUserResponseTransfer->getCompanyUser()->getFkCompany())
                     ->getIdCompanyBusinessUnit()
             );
         }
 
-        return $companyUserTransfer;
+        return $companyUserResponseTransfer;
     }
 }
