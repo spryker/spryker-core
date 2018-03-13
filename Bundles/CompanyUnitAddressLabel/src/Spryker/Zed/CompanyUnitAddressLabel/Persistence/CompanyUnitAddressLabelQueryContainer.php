@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUnitAddressLabel\Persistence;
 
+use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -14,4 +15,14 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CompanyUnitAddressLabelQueryContainer extends AbstractQueryContainer implements CompanyUnitAddressLabelQueryContainerInterface
 {
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelQuery
+     */
+    public function queryCompanyUnitAddressLabelQuery(): SpyCompanyUnitAddressLabelQuery
+    {
+        return $this->getFactory()
+            ->createCompanyUnitAddressLabelQuery();
+    }
 }

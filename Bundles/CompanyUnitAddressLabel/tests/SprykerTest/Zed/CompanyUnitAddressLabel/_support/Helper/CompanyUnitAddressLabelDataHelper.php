@@ -1,13 +1,21 @@
 <?php
-namespace Helper;
+namespace SprykerTest\Zed\CompanyUnitAddressLabel\Helper;
 
+use ArrayObject;
 use Codeception\Module;
+use Exception;
 use Generated\Shared\DataBuilder\CompanyUnitAddressBuilder;
 use Generated\Shared\DataBuilder\CountryBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\SpyCompanyUnitAddressLabelEntityTransfer;
 use Generated\Shared\Transfer\SpyRegionEntityTransfer;
+use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use Orm\Zed\Country\Persistence\SpyRegionQuery;
+use Propel\Runtime\Exception\EntityNotFoundException;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CompanyUnitAddressLabelDataHelper extends Module
@@ -26,6 +34,7 @@ class CompanyUnitAddressLabelDataHelper extends Module
 
         $companyUnitAddressTransfer = (new CompanyUnitAddressBuilder())
             ->build();
+
         $companyUnitAddressTransfer->setFkCompany($companyTransfer->getIdCompany());
         $companyUnitAddressTransfer->setFkCountry($countryTransfer->getIdCountry());
         $companyUnitAddressTransfer->setFkRegion($regionTransfer->getIdRegion());
@@ -35,6 +44,24 @@ class CompanyUnitAddressLabelDataHelper extends Module
             ->create($companyUnitAddressTransfer);
 
         return $response->getCompanyUnitAddressTransfer();
+    }
+
+    /**
+     * @throws \Exception
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     */
+    public function haveExistingCompanyUnitAddressTransfer()
+    {
+        $companyUnitAddressEntity = SpyCompanyUnitAddressQuery::create()
+            ->findOne();
+
+        if (empty($companyUnitAddressEntity)) {
+            throw new Exception('CompanyUnitAddress entity was not found');
+        }
+
+        return (new CompanyUnitAddressTransfer())
+            ->fromArray($companyUnitAddressEntity->toArray());
     }
 
     /**
@@ -76,6 +103,7 @@ class CompanyUnitAddressLabelDataHelper extends Module
                     ->setStatus('approved')
                     ->setName('Test company')
                     ->setIsActive(true)
+                    ->setInitialUserTransfer((new CompanyUserTransfer()))
             );
 
         return $response->getCompanyTransfer();
@@ -97,6 +125,37 @@ class CompanyUnitAddressLabelDataHelper extends Module
             );
 
         return $response->getCompanyBusinessUnitTransfer();
+    }
+
+    /**
+     * @throws \Propel\Runtime\Exception\EntityNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer
+     */
+    public function haveLabelCollection()
+    {
+        $queryContainer = $this->getLocator()->companyUnitAddressLabel()->queryContainer();
+        $label = $queryContainer->queryCompanyUnitAddressLabelQuery()->findOne();
+
+        if (empty($label)) {
+            throw new EntityNotFoundException(
+                "
+                Label entity is supposed to be in table, but was not found.
+                Please import labels before running the test.
+                "
+            );
+        }
+
+        return (new CompanyUnitAddressLabelCollectionTransfer())
+            ->setLabels(
+                new ArrayObject(
+                    [
+                        (new SpyCompanyUnitAddressLabelEntityTransfer())
+                            ->setName($label->getName())
+                            ->setIdCompanyUnitAddressLabel($label->getIdCompanyUnitAddressLabel()),
+                    ]
+                )
+            );
     }
 
     /**

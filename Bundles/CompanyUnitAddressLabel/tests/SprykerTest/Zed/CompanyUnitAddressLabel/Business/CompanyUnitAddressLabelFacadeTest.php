@@ -3,6 +3,11 @@
 namespace SprykerTest\Zed\CompanyUnitAddressLabel\Business;
 
 use Codeception\Test\Unit;
+use Exception;
+use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+use Generated\Shared\Transfer\SpyCompanyUnitAddressLabelEntityTransfer;
+use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelToCompanyUnitAddress;
+use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelToCompanyUnitAddressQuery;
 
 /**
  * Auto-generated group annotations
@@ -28,7 +33,12 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
     {
         $facade = $this->tester->getCompanyUnitAddressLabelFacade();
         $companyUnitAddressTransfer = $this->tester->haveCompanyUnitAddressTransfer();
+
+        $labels = $this->tester->haveLabelCollection();
+        $companyUnitAddressTransfer->setLabelCollection($labels);
+
         $facade->saveLabelToAddressRelations($companyUnitAddressTransfer);
+        $this->assertLabelsAreStored($companyUnitAddressTransfer);
     }
 
     /**
@@ -36,5 +46,38 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
      */
     public function testHydrateCompanyUnitAddressWithLabelCollection(): void
     {
+        $facade = $this->tester->getCompanyUnitAddressLabelFacade();
+        $companyUnitAddressTransfer = $this->tester->haveExistingCompanyUnitAddressTransfer();
+        $this->assertEmpty($companyUnitAddressTransfer->getLabelCollection());
+        $companyUnitAddressTransfer = $facade->hydrateCompanyUnitAddressWithLabelCollection($companyUnitAddressTransfer);
+        $this->assertNotEmpty($companyUnitAddressTransfer->getLabelCollection());
+        $this->assertNotEmpty($companyUnitAddressTransfer->getLabelCollection()->getLabels());
+        foreach ($companyUnitAddressTransfer->getLabelCollection()->getLabels() as $label) {
+            $this->assertInstanceOf(SpyCompanyUnitAddressLabelEntityTransfer::class, $label);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @throws \Exception
+     *
+     * @return void
+     */
+    protected function assertLabelsAreStored(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
+    {
+        $labels = (array)$companyUnitAddressTransfer->getLabelCollection()->getLabels();
+        if (empty($labels)) {
+            throw new Exception("No labels found in collection");
+        }
+        $label = $labels[0];
+        $labelAddressRelation = SpyCompanyUnitAddressLabelToCompanyUnitAddressQuery::create()
+            ->filterByFkCompanyUnitAddressLabel(
+                $label->getIdCompanyUnitAddressLabel()
+            )->filterByFkCompanyUnitAddress(
+                $companyUnitAddressTransfer->getIdCompanyUnitAddress()
+            )->findOne();
+
+        $this->assertInstanceOf(SpyCompanyUnitAddressLabelToCompanyUnitAddress::class, $labelAddressRelation);
     }
 }
