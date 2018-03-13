@@ -60,7 +60,6 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
 
         $companyRoleToPermissionEntities = $this->buildQueryFromCriteria($query)->find();
 
-        //todo: mapper
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
         foreach ($companyRoleToPermissionEntities as $companyRoleToPermissionEntity) {
             $permissionTransfer = new PermissionTransfer();

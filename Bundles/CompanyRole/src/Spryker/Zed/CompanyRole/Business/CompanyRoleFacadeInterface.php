@@ -122,7 +122,7 @@ interface CompanyRoleFacadeInterface
 
     /**
      * Specification:
-     * - Hydrates a list of assigned to a company user rights
+     * - Hydrates a list of assigned to a company user permissions
      *
      * @api
      *
@@ -161,7 +161,7 @@ interface CompanyRoleFacadeInterface
 
     /**
      * Specification:
-     * - Finds a company roles according CompanyRoleCriteriaFilterTransfer
+     * - Finds company roles according CompanyRoleCriteriaFilterTransfer
      *
      * @api
      *
