@@ -121,7 +121,9 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     *{@inheritdoc}
+     * {@inheritdoc}
+     *
+     * @api
      *
      * @param int $idCompany
      *

@@ -101,6 +101,8 @@ interface CompanyBusinessUnitFacadeInterface
      * Specification:
      * - Retrieve default business unit by company id.
      *
+     * @api
+     *
      * @param int $idCompany
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
