@@ -14,11 +14,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/permission": "*",
+    "spryker/permission": "^1.0.0",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/permission": "Permission 0.0.* to have possibility use user permissions."
+    "spryker/permission": "Permission ^1.0.0 to have possibility use user permissions."
   },
   "autoload": {
     "psr-4": {
