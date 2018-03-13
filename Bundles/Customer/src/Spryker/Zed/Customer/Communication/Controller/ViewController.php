@@ -38,9 +38,7 @@ class ViewController extends AbstractController
 
         $customerTransfer = $this->loadCustomerTransfer($idCustomer);
 
-        $addresses = $customerTransfer->getAddresses();
-
-        $table = $this->getFactory()
+        $addressTable = $this->getFactory()
             ->createCustomerAddressTable($idCustomer);
 
         $externalBlocks = $this->renderExternalBlocks($request, $customerTransfer);
@@ -50,10 +48,9 @@ class ViewController extends AbstractController
 
         return $this->viewResponse([
             'customer' => $customerTransfer,
-            'addresses' => $addresses,
             'idCustomer' => $idCustomer,
-            'addressTable' => $table->render(),
-            'externalBlocks' => $externalBlocks,
+            'addressTable' => $addressTable->render(),
+            'blocks' => $externalBlocks,
         ]);
     }
 
@@ -70,7 +67,7 @@ class ViewController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function tableAction(Request $request)
+    public function addressTableAction(Request $request)
     {
         $idCustomer = $this->castId($request->get(CustomerConstants::PARAM_ID_CUSTOMER));
 
@@ -78,6 +75,18 @@ class ViewController extends AbstractController
             ->createCustomerAddressTable($idCustomer);
 
         return $this->jsonResponse($table->fetchData());
+    }
+
+    /**
+     * @deprecated use addressTableAction
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction(Request $request)
+    {
+        return $this->addressTableAction($request);
     }
 
     /**
@@ -94,34 +103,23 @@ class ViewController extends AbstractController
         return $customerTransfer;
     }
 
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
-    protected function renderExternalBlocks(Request $request, CustomerTransfer $customerTransfer)
-    {
-        $externalBlocksConfig = $this->getFactory()->getConfig()->getCustomerViewExternalBlockUrls();
-
-        return $this->renderMultipleActions($request, $externalBlocksConfig, $customerTransfer);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $renderBlocks
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function renderMultipleActions(Request $request, array $renderBlocks, CustomerTransfer $customerTransfer)
+    protected function renderCustomerDetailBlocks(Request $request, CustomerTransfer $customerTransfer)
     {
         $subRequest = clone $request;
         $subRequest->setMethod(Request::METHOD_POST);
         $subRequest->request->set(static::PARAM_CUSTOMER, $customerTransfer);
 
         $responseData = [];
-        foreach ($renderBlocks as $blockName => $blockUrl) {
+        $blocks = $this->getFactory()->getCustomerDetailExternalBlocksUrls();
+
+        foreach ($blocks as $blockName => $blockUrl) {
             $blockResponse = $this->handleSubRequest($subRequest, $blockUrl);
             if ($blockResponse instanceof RedirectResponse) {
                 return $blockResponse;

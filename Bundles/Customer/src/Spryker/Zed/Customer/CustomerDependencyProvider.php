@@ -12,6 +12,7 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberBridge;
+use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -25,9 +26,13 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_MAIL = 'FACADE_MAIL';
 
+    /**
+     * @deprecated use SERVICE_UTIL_DATE_TIME instead
+     */
     const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
     const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
     const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
 
@@ -69,6 +74,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDateFormatterService($container);
         $container = $this->addStore($container);
         $container = $this->addUtilSanitizeService($container);
+        $container = $this->addUtilDateTimeService($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addSubRequestHandler($container);
 
@@ -240,6 +246,20 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SERVICE_DATE_FORMATTER] = function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilDateTimeService($container)
+    {
+        $container[static::SERVICE_UTIL_DATE_TIME] = function (Container $container) {
+            return new CustomerToUtilDateTimeServiceBridge($container->getLocator()->utilDateTime()->service());
         };
 
         return $container;
