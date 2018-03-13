@@ -107,9 +107,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param PermissionTransfer $permissionTransfer
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
-     * @return PermissionTransfer
+     * @return \Generated\Shared\Transfer\PermissionTransfer
      */
     public function findPermissionByIdCompanyRoleByIdPermissionAction(PermissionTransfer $permissionTransfer)
     {
@@ -120,9 +120,9 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param PermissionTransfer $permissionTransfer
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
-     * @return CompanyRolePermissionResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer
      */
     public function updateCompanyRolePermissionAction(PermissionTransfer $permissionTransfer): CompanyRolePermissionResponseTransfer
     {

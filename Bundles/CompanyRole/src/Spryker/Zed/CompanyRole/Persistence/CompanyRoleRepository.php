@@ -85,7 +85,7 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
      * @param int $idCompanyRole
      * @param int $idPermission
      *
-     * @return PermissionTransfer
+     * @return \Generated\Shared\Transfer\PermissionTransfer
      */
     public function findPermissionsByIdCompanyRoleByIdPermission(int $idCompanyRole, int $idPermission): PermissionTransfer
     {

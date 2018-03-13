@@ -56,9 +56,11 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
-     * @param CompanyResponseTransfer $companyResponseTransfer
+     * @api
      *
-     * @return CompanyResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
     public function createByCompany(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
     {
@@ -177,10 +179,12 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param int $idCompanyRole
      * @param int $idPermission
      *
-     * @return PermissionTransfer
+     * @return \Generated\Shared\Transfer\PermissionTransfer
      */
     public function findPermissionByIdCompanyRoleByIdPermission(int $idCompanyRole, int $idPermission): PermissionTransfer
     {
@@ -209,7 +213,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
      *
      * @api
      *
-     * @param PermissionTransfer $permissionTransfer
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
      * @return void
      */

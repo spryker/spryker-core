@@ -40,7 +40,7 @@ class CompanyRole implements CompanyRoleInterface
     protected $permissionWriter;
 
     /**
-     * @var CompanyRoleConfig
+     * @var \Spryker\Zed\CompanyRole\CompanyRoleConfig
      */
     protected $companyRoleConfig;
 
@@ -48,7 +48,7 @@ class CompanyRole implements CompanyRoleInterface
      * @param \Spryker\Zed\CompanyRole\Persistence\CompanyRoleRepositoryInterface $repository
      * @param \Spryker\Zed\CompanyRole\Persistence\CompanyRoleEntityManagerInterface $entityManager
      * @param \Spryker\Zed\CompanyRole\Business\Model\CompanyRolePermissionWriterInterface $permissionWriter
-     * @param CompanyRoleConfig $companyRoleConfig
+     * @param \Spryker\Zed\CompanyRole\CompanyRoleConfig $companyRoleConfig
      */
     public function __construct(
         CompanyRoleRepositoryInterface $repository,
@@ -75,9 +75,9 @@ class CompanyRole implements CompanyRoleInterface
     }
 
     /**
-     * @param CompanyResponseTransfer $companyResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
      *
-     * @return CompanyResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
     public function createByCompany(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
     {

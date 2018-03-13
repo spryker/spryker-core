@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Client\CompanyRole\Dependency\Client\CompanyRoleToZedRequestClientInterface;
-use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class CompanyRoleStub implements CompanyRoleStubInterface
 {
@@ -123,9 +122,9 @@ class CompanyRoleStub implements CompanyRoleStubInterface
     }
 
     /**
-     * @param PermissionTransfer $permissionTransfer
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
-     * @return PermissionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\PermissionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function findPermissionByIdCompanyRoleByIdPermission(PermissionTransfer $permissionTransfer): PermissionTransfer
     {
@@ -136,9 +135,9 @@ class CompanyRoleStub implements CompanyRoleStubInterface
     }
 
     /**
-     * @param PermissionTransfer $permissionTransfer
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
-     * @return CompanyRolePermissionResponseTransfer|TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function updateCompanyRolePermission(PermissionTransfer $permissionTransfer): CompanyRolePermissionResponseTransfer
     {

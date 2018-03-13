@@ -65,7 +65,7 @@ interface CompanyRoleEntityManagerInterface
     /**
      * @api
      *
-     * @param PermissionTransfer $permissionTransfer
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
      * @return void
      */
