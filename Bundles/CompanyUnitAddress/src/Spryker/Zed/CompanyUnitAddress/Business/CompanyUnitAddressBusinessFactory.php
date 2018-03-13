@@ -97,7 +97,7 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratingPluginInterface[]
+     * @return \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratePluginInterface[]
      */
     protected function getCompanyUnitAddressHydratingPlugins(): array
     {

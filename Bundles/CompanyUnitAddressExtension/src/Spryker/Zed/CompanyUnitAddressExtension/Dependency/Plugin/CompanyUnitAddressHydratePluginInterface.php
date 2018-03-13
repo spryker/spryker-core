@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 
-interface CompanyUnitAddressHydratingPluginInterface
+interface CompanyUnitAddressHydratePluginInterface
 {
     /**
      * @api

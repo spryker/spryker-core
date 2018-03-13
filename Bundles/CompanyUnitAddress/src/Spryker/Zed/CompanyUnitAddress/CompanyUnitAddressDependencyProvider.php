@@ -118,7 +118,7 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratingPluginInterface[]
+     * @return \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratePluginInterface[]
      */
     protected function getCompanyUnitAddressHydratingPlugins(): array
     {

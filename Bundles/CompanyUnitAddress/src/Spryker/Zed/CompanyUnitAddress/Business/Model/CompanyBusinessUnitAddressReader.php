@@ -21,13 +21,13 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
     protected $repository;
 
     /**
-     * @var \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratingPluginInterface[]
+     * @var \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratePluginInterface[]
      */
     protected $companyUnitAddressHydratingPlugins;
 
     /**
      * @param \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressRepositoryInterface $repository
-     * @param \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratingPluginInterface[] $companyUnitAddressHydratingPlugins
+     * @param \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratePluginInterface[] $companyUnitAddressHydratingPlugins
      */
     public function __construct(
         CompanyUnitAddressRepositoryInterface $repository,
