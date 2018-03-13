@@ -10,4 +10,6 @@
     <transfer name="ProductConcrete">
         <property name="companySuppliers" type="SpyCompanyEntity[]"/>
     </transfer>
+
+    <!--<transfer name=""-->
 </transfers>

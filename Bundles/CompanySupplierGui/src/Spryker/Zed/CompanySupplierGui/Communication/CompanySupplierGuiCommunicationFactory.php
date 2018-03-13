@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanySupplierGui\Communication;
 
 use Spryker\Zed\CompanySupplierGui\Communication\Form\CompanySupplierForm;
 use Spryker\Zed\CompanySupplierGui\Communication\Form\DataProvider\CompanySupplierFormDataProvider;
+use Spryker\Zed\CompanySupplierGui\Communication\Table\ProductSupplierTable;
 use Spryker\Zed\CompanySupplierGui\CompanySupplierGuiDependencyProvider;
 use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCompanySupplierFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -37,6 +38,13 @@ class CompanySupplierGuiCommunicationFactory extends AbstractCommunicationFactor
     public function createCompanySupplierFormDataProvider(): CompanySupplierFormDataProvider
     {
         return new CompanySupplierFormDataProvider(
+            $this->getCompanySupplierFacade()
+        );
+    }
+
+    public function createProductSuppliersTable()
+    {
+        return new ProductSupplierTable(
             $this->getCompanySupplierFacade()
         );
     }

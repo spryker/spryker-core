@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CompanySupplierCollectionTransfer;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Orm\Zed\CompanySupplier\Persistence\Map\SpyCompanySupplierToProductTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -67,5 +68,19 @@ class CompanySupplierRepository extends AbstractRepository implements CompanySup
         $companySupplierCollection->setSuppliers($companySuppliers);
 
         return $companySupplierCollection;
+    }
+
+    public function getAllProductSuppliers()
+    {
+        $query = $this->getFactory()->createProductQueryContainer();
+//        $query->addJoin(SpyProductTableMap::COL_ID_PRODUCT, SpyCompanySupplierToProductTableMap::COL_FK_PRODUCT,Criteria::RIGHT_JOIN);
+//        $query->joinWithStockProduct();
+        $result = $query->find();
+//        $result = $this->buildQueryFromCriteria($query)->find();
+//        $this->populateCollectionWithRelation($result, 'SpyStockProduct');
+
+        return $result;
+
+//        return $this->getCompanySupplierCollectionFromQuery($query);
     }
 }

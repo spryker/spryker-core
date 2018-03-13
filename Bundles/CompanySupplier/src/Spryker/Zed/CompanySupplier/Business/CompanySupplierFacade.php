@@ -56,4 +56,9 @@ class CompanySupplierFacade extends AbstractFacade implements CompanySupplierFac
     {
         $this->getEntityManager()->saveCompanySuppliersForProductConcrete($productConcreteTransfer);
     }
+
+    public function getAllProductSuppliers()
+    {
+        return $this->getRepository()->getAllProductSuppliers();
+    }
 }

@@ -26,7 +26,7 @@ class CompanySupplierGuiToCompanySupplierFacadeBridge implements CompanySupplier
     }
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\CompanySupplierCollectionTransfer
      */
     public function getAllSuppliers(): CompanySupplierCollectionTransfer
     {
@@ -51,5 +51,10 @@ class CompanySupplierGuiToCompanySupplierFacadeBridge implements CompanySupplier
     public function saveCompanySuppliersForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $this->companySupplierFacade->saveCompanySuppliersForProductConcrete($productConcreteTransfer);
+    }
+
+    public function getAllProductSupplements()
+    {
+        return $this->companySupplierFacade->getAllProductSuppliers();
     }
 }
