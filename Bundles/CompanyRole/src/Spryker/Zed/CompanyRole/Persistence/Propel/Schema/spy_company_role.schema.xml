@@ -33,7 +33,7 @@
 
     <table name="spy_company_role_to_company_user" idMethod="native" allowPkInsert="true" phpName="SpyCompanyRoleToCompanyUser" isCrossRef="true">
         <column name="id_company_role_to_company_user" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_company_role" required="true" type="INTEGER"/>
+        <column name="fk_company_role" required="true" type="INTEGER" />
         <column name="fk_company_user" required="true" type="INTEGER"/>
 
         <behavior name="timestampable"/>
@@ -41,7 +41,7 @@
         <foreign-key name="spy_company_role_to_company_user-fk_company_role" foreignTable="spy_company_role" phpName="CompanyRole" onDelete="CASCADE">
             <reference local="fk_company_role" foreign="id_company_role"/>
         </foreign-key>
-        <foreign-key name="spy_company_role_to_company_user-fk_company_user" foreignTable="spy_company_user" phpName="CompanyUser">
+        <foreign-key name="spy_company_role_to_company_user-fk_company_user" foreignTable="spy_company_user" phpName="CompanyUser" onDelete="CASCADE">
             <reference local="fk_company_user" foreign="id_company_user"/>
         </foreign-key>
 
