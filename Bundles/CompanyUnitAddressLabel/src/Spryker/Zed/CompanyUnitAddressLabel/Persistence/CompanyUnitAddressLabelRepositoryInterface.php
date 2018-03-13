@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyUnitAddressLabel\Persistence;
 
+use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
+
 interface CompanyUnitAddressLabelRepositoryInterface
 {
     /**
@@ -27,4 +29,22 @@ interface CompanyUnitAddressLabelRepositoryInterface
      * @return \ArrayObject
      */
     public function findCompanyUnitAddressLabelToCompanyUnitAddressRelations(int $idCompanyUnitAddress);
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return int[]
+     */
+    public function findCompanyUnitAddressLabelIdsByAddress(CompanyUnitAddressTransfer $companyUnitAddressTransfer);
+
+    /**
+     * @param int $idCompanyUnitAddress
+     * @param int[] $labelIds
+     *
+     * @return int[]
+     */
+    public function findCompanyUnitAddressLabelToCompanyUnitAddressRelationIdsByAddressIdAndLabelIds(
+        int $idCompanyUnitAddress,
+        array $labelIds
+    ): array;
 }

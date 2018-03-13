@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CompanyUnitAddressLabel\Business\Model;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
-use Generated\Shared\Transfer\SpyCompanyUnitAddressLabelToCompanyUnitAddressEntityTransfer;
+use Generated\Shared\Transfer\SpyCompanyUnitAddressLabelEntityTransfer;
 use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelEntityManagerInterface;
 use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepositoryInterface;
 
@@ -43,14 +43,9 @@ class CompanyUnitAddressLabelRelationSaver implements CompanyUnitAddressLabelRel
      */
     public function saveLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
     {
-        $redundantRelations = $this->getRedundantLabelToAddressRelations($companyUnitAddressTransfer);
+        $redundantRelationIds = $this->getRedundantLabelToAddressRelationIds($companyUnitAddressTransfer);
         $this->entityManager->deleteRedundantLabelToAddressRelations(
-            array_map(
-                function (SpyCompanyUnitAddressLabelToCompanyUnitAddressEntityTransfer $item) {
-                    return $item->getIdCompanyUnitAddressLabelToCompanyUnitAddress();
-                },
-                $redundantRelations
-            )
+            $redundantRelationIds
         );
         $this->entityManager->saveLabelToAddressRelations($companyUnitAddressTransfer);
     }
@@ -58,48 +53,35 @@ class CompanyUnitAddressLabelRelationSaver implements CompanyUnitAddressLabelRel
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddress
      *
-     * @return \Generated\Shared\Transfer\SpyCompanyUnitAddressLabelToCompanyUnitAddressEntityTransfer[]
+     * @return int[]
      */
-    protected function getRedundantLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddress): array
+    protected function getRedundantLabelToAddressRelationIds(CompanyUnitAddressTransfer $companyUnitAddress): array
     {
-        $relations = $this->labelRepository->findCompanyUnitAddressLabelToCompanyUnitAddressRelations(
-            $companyUnitAddress->getIdCompanyUnitAddress()
-        );
+        $actualLabelIds = $this->labelRepository->findCompanyUnitAddressLabelIdsByAddress($companyUnitAddress);
+        $validLabelIds = $this->getValidLabelIds($companyUnitAddress);
 
-        return array_filter(
-            (array)$relations,
-            function (SpyCompanyUnitAddressLabelToCompanyUnitAddressEntityTransfer $relation) use ($companyUnitAddress) {
-                return $this->isRedundant($relation, $companyUnitAddress);
-            }
+        $redundantLabelIds = array_diff($actualLabelIds, $validLabelIds);
+
+        return $this->labelRepository->findCompanyUnitAddressLabelToCompanyUnitAddressRelationIdsByAddressIdAndLabelIds(
+            $companyUnitAddress->getIdCompanyUnitAddress(),
+            $redundantLabelIds
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressLabelToCompanyUnitAddressEntityTransfer $relation
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddress
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return bool
+     * @return array
      */
-    protected function isRedundant(
-        SpyCompanyUnitAddressLabelToCompanyUnitAddressEntityTransfer $relation,
-        CompanyUnitAddressTransfer $companyUnitAddress
-    ): bool {
-        if (empty($companyUnitAddress->getLabelCollection())) {
-            return true;
-        }
+    protected function getValidLabelIds(CompanyUnitAddressTransfer $companyUnitAddressTransfer)
+    {
+        $labels = (array)$companyUnitAddressTransfer->getLabelCollection()->getLabels();
 
-        $labels = $companyUnitAddress->getLabelCollection()->getLabels();
-        $addressId = $companyUnitAddress->getIdCompanyUnitAddress();
-
-        foreach ($labels as $label) {
-            $labelId = $label->getIdCompanyUnitAddressLabel();
-            if ($labelId === $relation->getFkCompanyUnitAddressLabel() &&
-                $addressId === $relation->getFkCompanyUnitAddress()
-            ) {
-                return false;
-            }
-        }
-
-        return true;
+        return array_map(
+            function (SpyCompanyUnitAddressLabelEntityTransfer $label) {
+                return $label->getIdCompanyUnitAddressLabel();
+            },
+            $labels
+        );
     }
 }
