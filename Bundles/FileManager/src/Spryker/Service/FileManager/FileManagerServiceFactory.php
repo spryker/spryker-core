@@ -11,7 +11,7 @@ use Spryker\Service\FileManager\Model\FileReader;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
 /**
- * @method \Spryker\Service\FileManager\FileManagerServiceConfig getConfig()
+ * @method \Spryker\Service\FileManager\FileManagerConfig getConfig()
  */
 class FileManagerServiceFactory extends AbstractServiceFactory
 {
