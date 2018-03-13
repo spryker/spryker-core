@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUser\Business\Model;
 
+use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 
 class CompanyUserPluginExecutor implements CompanyUserPluginExecutorInterface
@@ -70,16 +71,16 @@ class CompanyUserPluginExecutor implements CompanyUserPluginExecutorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function executePostCreatePlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
+    public function executePostCreatePlugins(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
         foreach ($this->companyUserPostCreatePlugins as $companyUserPostCreatePlugin) {
-            $companyUserTransfer = $companyUserPostCreatePlugin->postCreate($companyUserTransfer);
+            $companyUserResponseTransfer = $companyUserPostCreatePlugin->postCreate($companyUserResponseTransfer);
         }
 
-        return $companyUserTransfer;
+        return $companyUserResponseTransfer;
     }
 }
