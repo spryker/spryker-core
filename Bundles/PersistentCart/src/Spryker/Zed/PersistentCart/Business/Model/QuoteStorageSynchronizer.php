@@ -56,6 +56,9 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
         }
 
         $quoteTransfer->setCustomer($customerTransfer);
+        if (empty($quoteTransfer->getItems())) {
+            $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
+        }
         $this->quoteFacade->persistQuote($quoteTransfer);
 
         return $quoteTransfer;
