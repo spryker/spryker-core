@@ -1,7 +1,11 @@
 <?php
 
-namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
@@ -10,20 +14,24 @@ use Spryker\Zed\CompanyBusinessUnit\CompanyBusinessUnitConfig;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
-class CompanyBusinessUnitCreator implements  CompanyBusinessUnitCreatorInterface
+class CompanyBusinessUnitCreator implements CompanyBusinessUnitCreatorInterface
 {
     use TransactionTrait;
 
     /**
-     * @var CompanyBusinessUnitEntityManagerInterface
+     * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface
      */
     protected $companyBusinessUnitEntityManager;
 
     /**
-     * @var CompanyBusinessUnitConfig
+     * @var \Spryker\Zed\CompanyBusinessUnit\CompanyBusinessUnitConfig
      */
     protected $companyBusinessUnitConfig;
 
+    /**
+     * @param \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface $companyBusinessUnitEntityManager
+     * @param \Spryker\Zed\CompanyBusinessUnit\CompanyBusinessUnitConfig $companyBusinessUnitConfig
+     */
     public function __construct(
         CompanyBusinessUnitEntityManagerInterface $companyBusinessUnitEntityManager,
         CompanyBusinessUnitConfig $companyBusinessUnitConfig
@@ -33,9 +41,9 @@ class CompanyBusinessUnitCreator implements  CompanyBusinessUnitCreatorInterface
     }
 
     /**
-     * @param CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @return CompanyBusinessUnitResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
     public function create(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
     {
@@ -49,9 +57,9 @@ class CompanyBusinessUnitCreator implements  CompanyBusinessUnitCreatorInterface
     }
 
     /**
-     * @param CompanyResponseTransfer $companyResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
      *
-     * @return CompanyResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
     public function createByCompany(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
     {
@@ -75,9 +83,9 @@ class CompanyBusinessUnitCreator implements  CompanyBusinessUnitCreatorInterface
     }
 
     /**
-     * @param CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer
      *
-     * @return CompanyBusinessUnitResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
     protected function executeCreateTransaction(CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer): CompanyBusinessUnitResponseTransfer
     {
@@ -87,5 +95,4 @@ class CompanyBusinessUnitCreator implements  CompanyBusinessUnitCreatorInterface
 
         return $companyBusinessUnitResponseTransfer;
     }
-
 }

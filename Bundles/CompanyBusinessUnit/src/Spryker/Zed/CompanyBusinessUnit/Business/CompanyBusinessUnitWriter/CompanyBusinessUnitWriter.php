@@ -14,7 +14,7 @@ use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManager
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
-class CompanyBusinessUnitWriterWriter implements CompanyBusinessUnitWriterInterface
+class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
 {
     use TransactionTrait;
 
@@ -74,6 +74,11 @@ class CompanyBusinessUnitWriterWriter implements CompanyBusinessUnitWriterInterf
         });
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     */
     protected function executeDeleteTransaction(CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer): CompanyBusinessUnitResponseTransfer
     {
         $companyBusinessUnitResponseTransfer
@@ -96,11 +101,11 @@ class CompanyBusinessUnitWriterWriter implements CompanyBusinessUnitWriterInterf
     }
 
     /**
-     * @param CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer
      *
-     * @return CompanyBusinessUnitResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    protected function checkOnRelatedUsers(CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer)
+    protected function checkOnRelatedUsers(CompanyBusinessUnitResponseTransfer $companyBusinessUnitResponseTransfer): CompanyBusinessUnitResponseTransfer
     {
         $hasUsers = $this->repository->hasUsers(
             $companyBusinessUnitResponseTransfer

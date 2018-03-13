@@ -59,9 +59,9 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
      *
      * @api
      *
-     * @param CompanyResponseTransfer $companyResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
      *
-     * @return CompanyResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
     public function createByCompany(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
     {

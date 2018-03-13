@@ -84,12 +84,14 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
      */
     public function hasUsers(int $idCompanyBusinessUnit): bool
     {
-        $query = $this->getFactory()
+        $spyCompanyBusinessUnit = $this->getFactory()
             ->createCompanyBusinessUnitQuery()
-            ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit)
-            ->joinWithCompanyUser();
+            ->useCompanyUserQuery()
+                ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->endUse()
+            ->findOne();
 
-        return ($this->buildQueryFromCriteria($query)->count() > 0);
+        return ($spyCompanyBusinessUnit !== null);
     }
 
     /**

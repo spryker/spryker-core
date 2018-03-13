@@ -1,7 +1,11 @@
 <?php
 
-namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
@@ -17,9 +21,9 @@ interface CompanyBusinessUnitCreatorInterface
     public function create(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer;
 
     /**
-     * @param CompanyResponseTransfer $companyResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
      *
-     * @return CompanyResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
     public function createByCompany(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer;
 }

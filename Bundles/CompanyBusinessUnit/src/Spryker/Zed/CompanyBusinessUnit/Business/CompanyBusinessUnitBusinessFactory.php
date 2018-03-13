@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyBusinessUnit\Business;
 
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator\CompanyBusinessUnitCreator;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator\CompanyBusinessUnitCreatorInterface;
-use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter\CompanyBusinessUnitWriterWriter;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter\CompanyBusinessUnitWriter;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter\CompanyBusinessUnitWriterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -25,14 +25,14 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createCompanyBusinessUnitWriter(): CompanyBusinessUnitWriterInterface
     {
-        return new CompanyBusinessUnitWriterWriter(
+        return new CompanyBusinessUnitWriter(
             $this->getRepository(),
             $this->getEntityManager()
         );
     }
 
     /**
-     * @return CompanyBusinessUnitCreatorInterface
+     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator\CompanyBusinessUnitCreatorInterface
      */
     public function createCompanyBusinessUnitCreator(): CompanyBusinessUnitCreatorInterface
     {

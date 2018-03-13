@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\CompanyBusinessUnit\Communication\Plugin\Company;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
-use Generated\Shared\Transfer\CompanyTransfer;
 use Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
