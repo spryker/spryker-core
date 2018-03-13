@@ -20,6 +20,8 @@ class CompanyUserStub implements CompanyUserStubInterface
 {
     use PermissionAwareTrait;
 
+    protected const ERROR_MESSAGE_PERMISSION_FAILED = 'global.permission.failed';
+
     /**
      * @var \Spryker\Client\ZedRequest\ZedRequestClient
      */
@@ -99,10 +101,11 @@ class CompanyUserStub implements CompanyUserStubInterface
      */
     protected function generatePermissionErrorMessage(): CompanyUserResponseTransfer
     {
-        $messageTransfer = new ResponseMessageTransfer();
-
         $companyUserResponseTransfer = new CompanyUserResponseTransfer();
-        $companyUserResponseTransfer->addMessage($messageTransfer);
+        $companyUserResponseTransfer->addMessage(
+            (new ResponseMessageTransfer())
+                ->setText(static::ERROR_MESSAGE_PERMISSION_FAILED)
+        );
         $companyUserResponseTransfer->setIsSuccessful(false);
 
         return $companyUserResponseTransfer;
