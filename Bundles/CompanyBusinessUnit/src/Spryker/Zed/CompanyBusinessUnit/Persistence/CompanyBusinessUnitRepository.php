@@ -95,6 +95,24 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     }
 
     /**
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    public function getDefaultBusinessUnitByCompanyId(int $idCompany): CompanyBusinessUnitTransfer
+    {
+        $query = $this->getFactory()
+            ->createCompanyBusinessUnitQuery()
+            ->filterByFkCompany($idCompany);
+
+        $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+
+        return $this->getFactory()
+            ->createCompanyBusinessUnitMapper()
+            ->mapEntityTransferToBusinessUnitTransfer($entityTransfer, new CompanyBusinessUnitTransfer());
+    }
+
+    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *

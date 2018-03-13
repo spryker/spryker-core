@@ -119,4 +119,17 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
         return $this->getRepository()
             ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
     }
+
+    /**
+     *{@inheritdoc}
+     *
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    public function getDefaultBusinessUnitByCompanyId(int $idCompany): CompanyBusinessUnitTransfer
+    {
+        return $this->getRepository()
+            ->getDefaultBusinessUnitByCompanyId($idCompany);
+    }
 }

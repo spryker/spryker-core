@@ -96,4 +96,14 @@ interface CompanyBusinessUnitFacadeInterface
     public function getCompanyBusinessUnitCollection(
         CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieve default business unit by company id.
+     *
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    public function getDefaultBusinessUnitByCompanyId(int $idCompany): CompanyBusinessUnitTransfer;
 }

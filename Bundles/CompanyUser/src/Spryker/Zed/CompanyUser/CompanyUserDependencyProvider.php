@@ -15,6 +15,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
 
+    public const PLUGINS_COMPANY_USER_PRE_SAVE = 'PLUGINS_COMPANY_USER_PRE_SAVE';
     public const PLUGINS_COMPANY_USER_POST_SAVE = 'PLUGINS_COMPANY_USER_POST_SAVE';
     public const PLUGINS_COMPANY_USER_POST_CREATE = 'PLUGINS_COMPANY_USER_POST_CREATE';
     public const PLUGINS_COMPANY_USER_HYDRATE = 'PLUGINS_COMPANY_USER_HYDRATE';
@@ -27,6 +28,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addCompanyUserPreSavePlugins($container);
         $container = $this->addCompanyUserPostSavePlugins($container);
         $container = $this->addCompanyUserPostCreatePlugins($container);
         $container = $this->addCompanyUserHydrationPlugins($container);
@@ -44,6 +46,20 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_CUSTOMER] = function (Container $container) {
             return new CompanyUserToCustomerFacadeBridge($container->getLocator()->customer()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserPreSavePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_COMPANY_USER_PRE_SAVE] = function () {
+            return $this->getCompanyUserPreSavePlugins();
         };
 
         return $container;
@@ -89,6 +105,14 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSavePluginInterface[]
+     */
+    protected function getCompanyUserPreSavePlugins(): array
+    {
+        return [];
     }
 
     /**

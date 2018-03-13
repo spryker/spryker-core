@@ -175,6 +175,7 @@ class CompanyUser implements CompanyUserInterface
         }
 
         $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
+        $companyUserTransfer = $this->companyUserPluginExecutor->executePreSavePlugins($companyUserTransfer);
         $companyUserTransfer = $this->companyUserEntityManager->saveCompanyUser($companyUserTransfer);
         $companyUserTransfer = $this->companyUserPluginExecutor->executePostSavePlugins($companyUserTransfer);
         $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
@@ -200,6 +201,7 @@ class CompanyUser implements CompanyUserInterface
         }
 
         $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
+        $companyUserTransfer = $this->companyUserPluginExecutor->executePreSavePlugins($companyUserTransfer);
         $companyUserTransfer = $this->companyUserEntityManager->saveCompanyUser($companyUserTransfer);
         $companyUserTransfer = $this->companyUserPluginExecutor->executePostSavePlugins($companyUserTransfer);
         $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);

@@ -13,6 +13,11 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 class CompanyUserPluginExecutor implements CompanyUserPluginExecutorInterface
 {
     /**
+     * @var array|\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSavePluginInterface[]
+     */
+    protected $companyUserPreSavePlugins;
+
+    /**
      * @var array|\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface[]
      */
     protected $companyUserPostSavePlugins;
@@ -28,11 +33,13 @@ class CompanyUserPluginExecutor implements CompanyUserPluginExecutorInterface
     protected $companyUserPostCreatePlugins;
 
     /**
+     * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSavePluginInterface[] $companyUserPreSavePlugins
      * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface[] $companyUserPostSavePlugins
      * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostCreatePluginInterface[] $companyUserPostCreatePlugins
      * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[] $companyUserHydrationPlugins
      */
     public function __construct(
+        array $companyUserPreSavePlugins = [],
         array $companyUserPostSavePlugins = [],
         array $companyUserPostCreatePlugins = [],
         array $companyUserHydrationPlugins = []
@@ -40,6 +47,21 @@ class CompanyUserPluginExecutor implements CompanyUserPluginExecutorInterface
         $this->companyUserPostSavePlugins = $companyUserPostSavePlugins;
         $this->companyUserHydrationPlugins = $companyUserHydrationPlugins;
         $this->companyUserPostCreatePlugins = $companyUserPostCreatePlugins;
+        $this->companyUserPreSavePlugins = $companyUserPreSavePlugins;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function executePreSavePlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
+    {
+        foreach ($this->companyUserPreSavePlugins as $companyUserPreSavePlugin) {
+            $companyUserTransfer = $companyUserPreSavePlugin->preSave($companyUserTransfer);
+        }
+
+        return $companyUserTransfer;
     }
 
     /**
