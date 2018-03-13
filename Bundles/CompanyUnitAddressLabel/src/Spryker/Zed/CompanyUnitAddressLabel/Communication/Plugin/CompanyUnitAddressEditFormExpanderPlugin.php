@@ -18,6 +18,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CompanyUnitAddressEditFormExpanderPlugin extends AbstractPlugin implements CompanyUnitAddressEditFormExpanderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return void

@@ -34,7 +34,6 @@ class CompanyUnitAddressLabelFormDataProvider
     {
         return [
             CompanyUnitAddressLabelChoiceFormType::OPTION_VALUES_LABEL_CHOICES => $this->getLabelChoices(),
-            'label' => false,
         ];
     }
 
