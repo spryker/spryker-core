@@ -96,7 +96,6 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
 
         $companyRoleToPermissionEntity = $this->buildQueryFromCriteria($query)->findOne();
 
-        //todo: mapper
         $permissionTransfer = new PermissionTransfer();
 
         if (!$companyRoleToPermissionEntity) {
@@ -177,8 +176,8 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         foreach ($companyRoleToPermissionEntities as $roleToPermissionEntity) {
             $permissionTransfer = (new PermissionTransfer())
                 ->setIdPermission($roleToPermissionEntity->getFkPermission())
-                ->setConfiguration(\json_decode($roleToPermissionEntity->getConfiguration(), true))
-                ->setConfigurationSignature(\json_decode($roleToPermissionEntity->getPermission()->getConfigurationSignature(), true))
+                ->setConfiguration($this->jsonDecode($roleToPermissionEntity->getConfiguration()))
+                ->setConfigurationSignature($this->jsonDecode($roleToPermissionEntity->getPermission()->getConfigurationSignature()))
                 ->setKey($roleToPermissionEntity->getPermission()->getKey());
 
             $permissionCollectionTransfer->addPermission($permissionTransfer);
