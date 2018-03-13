@@ -8,7 +8,6 @@
 namespace Spryker\Client\Wishlist\Dependency\Client;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 interface WishlistToCartInterface
 {
@@ -25,11 +24,4 @@ interface WishlistToCartInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addItems(array $itemTransfers);
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function storeQuote(QuoteTransfer $quoteTransfer);
 }

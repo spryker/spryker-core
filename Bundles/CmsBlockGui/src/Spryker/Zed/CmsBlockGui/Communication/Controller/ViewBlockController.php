@@ -9,49 +9,39 @@ namespace Spryker\Zed\CmsBlockGui\Communication\Controller;
 
 use ArrayObject;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\CmsBlockGui\Communication\CmsBlockGuiCommunicationFactory getFactory()
  */
-class ViewBlockController extends AbstractController
+class ViewBlockController extends AbstractCmsBlockController
 {
-    const URL_PARAM_ID_CMS_BLOCK = 'id-cms-block';
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
-        $idCmsBlock = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_BLOCK));
+        $cmsBlockTransfer = $this->findCmsBlockById($request);
 
-        $cmsBlockTransfer = $this->getFactory()
-            ->getCmsBlockFacade()
-            ->findCmsBlockById($idCmsBlock);
+        if ($cmsBlockTransfer === null) {
+            $this->addErrorMessage(static::MESSAGE_CMS_BLOCK_INVALID_ID_ERROR);
+
+            return $this->getNotFoundBlockRedirect();
+        }
 
         $cmsBlockGlossary = $this
             ->getFactory()
             ->getCmsBlockFacade()
-            ->findGlossary($idCmsBlock);
-
-        if ($cmsBlockTransfer === null) {
-            throw new NotFoundHttpException(
-                sprintf('Cms block with id "%d" is not found.', $idCmsBlock)
-            );
-        }
+            ->findGlossary($cmsBlockTransfer->getIdCmsBlock());
 
         $relatedStoreNames = $this->getStoreNames($cmsBlockTransfer->getStoreRelation()->getStores());
 
         return $this->viewResponse([
             'cmsBlock' => $cmsBlockTransfer,
             'cmsBlockGlossary' => $cmsBlockGlossary,
-            'renderedPlugins' => $this->getRenderedViewPlugins($idCmsBlock),
+            'renderedPlugins' => $this->getRenderedViewPlugins($cmsBlockTransfer->getIdCmsBlock()),
             'relatedStoreNames' => $relatedStoreNames,
         ]);
     }

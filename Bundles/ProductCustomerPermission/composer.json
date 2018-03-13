@@ -19,7 +19,7 @@
     "spryker/code-sniffer": "*",
     "spryker/elastica": "*",
     "spryker/propel": "*",
-    "spryker/search": "^6.0.0 || ^7.0.0"
+    "spryker/search": "^6.0.0 || ^7.0.0 || ^8.0.0"
   },
   "suggest": {
     "spryker/cart": "*",

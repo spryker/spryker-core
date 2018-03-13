@@ -62,12 +62,16 @@ class CheckoutPlaceOrderGrandTotalXPermissionPlugin extends AbstractPlugin imple
 
     /**
      * @param array $configuration
-     * @param int $amount
+     * @param int|null $amount
      *
      * @return bool
      */
-    public function can(array $configuration, $amount)
+    public function can(array $configuration, $amount = null)
     {
+        if ($amount === null) {
+            return false;
+        }
+
         if ($amount > $configuration[static::CONFIG_FIELD_AMOUNT]) {
             return false;
         }

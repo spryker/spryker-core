@@ -73,6 +73,8 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
 
         switch ($valueType) {
             case 'string':
+            case 'keyword':
+            case 'text':
                 return $this->createStringFacetAggregation($facetConfigTransfer);
 
             case 'integer':

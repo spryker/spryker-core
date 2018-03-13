@@ -101,9 +101,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToPriceProductBridge($container->getLocator()->priceProduct()->facade());
         };
 
-        $container[static::FACADE_STOCK] = function (Container $container) {
-            return new ProductManagementToStockBridge($container->getLocator()->stock()->facade());
-        };
+        $container = $this->addStockFacade($container);
 
         $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
             return $container->getLocator()->category()->queryContainer();
@@ -171,9 +169,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToProductImageBridge($container->getLocator()->productImage()->facade());
         };
 
-        $container[static::FACADE_STOCK] = function (Container $container) {
-            return new ProductManagementToStockBridge($container->getLocator()->stock()->facade());
-        };
+        $container = $this->addStockFacade($container);
 
         $container[static::FACADE_MONEY] = function (Container $container) {
             return new ProductManagementToMoneyBridge($container->getLocator()->money()->facade());
@@ -219,6 +215,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToPriceBridge($container->getLocator()->price()->facade());
         };
 
+        $container = $this->addStockFacade($container);
         $container = $this->addStore($container);
         $container = $this->addProductAbstractViewPlugins($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
@@ -325,5 +322,18 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
                 FormTypeInterface::class
             )
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStockFacade(Container $container)
+    {
+        $container[static::FACADE_STOCK] = function (Container $container) {
+            return new ProductManagementToStockBridge($container->getLocator()->stock()->facade());
+        };
+        return $container;
     }
 }

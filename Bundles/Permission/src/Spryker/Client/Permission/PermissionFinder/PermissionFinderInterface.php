@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Permission\PermissionFinder;
 
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
+
 interface PermissionFinderInterface
 {
     /**
@@ -18,4 +20,9 @@ interface PermissionFinderInterface
      * @return \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface
      */
     public function findPermissionPlugin($permissionKey);
+
+    /**
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getRegisteredPermissionCollection(): PermissionCollectionTransfer;
 }

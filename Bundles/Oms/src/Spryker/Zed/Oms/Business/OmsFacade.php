@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Oms\Business;
 
+use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -92,7 +94,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param array $orderItemIds
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = [])
     {
@@ -109,7 +111,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param array $orderItemIds
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForNewOrderItems(array $orderItemIds, array $data = [])
     {
@@ -127,7 +129,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param int $orderItemId
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOneOrderItem($eventId, $orderItemId, array $data = [])
     {
@@ -141,7 +143,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
-     * @return \Spryker\Zed\Oms\Business\Process\Process[]
+     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
      */
     public function getProcesses()
     {
@@ -309,14 +311,15 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @api
      *
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
      */
-    public function sumReservedProductQuantitiesForSku($sku)
+    public function sumReservedProductQuantitiesForSku($sku, StoreTransfer $storeTransfer = null)
     {
         return $this->getFactory()
             ->createUtilReservation()
-            ->sumReservedProductQuantitiesForSku($sku);
+            ->sumReservedProductQuantitiesForSku($sku, $storeTransfer);
     }
 
     /**
@@ -325,14 +328,15 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @api
      *
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function getOmsReservedProductQuantityForSku($sku)
+    public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer)
     {
         return $this->getFactory()
             ->createUtilReservation()
-            ->getOmsReservedProductQuantityForSku($sku);
+            ->getOmsReservedProductQuantityForSku($sku, $storeTransfer);
     }
 
     /**
@@ -407,7 +411,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param array $logContext
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEvent($eventId, ObjectCollection $orderItems, array $logContext, array $data = [])
     {
@@ -427,7 +431,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param array $logContext
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForNewItem(ObjectCollection $orderItems, array $logContext, array $data = [])
     {
@@ -444,11 +448,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @api
      *
      * @param string $eventId
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      * @param array $logContext
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOneItem($eventId, $orderItem, array $logContext, array $data = [])
     {
@@ -537,5 +541,73 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function sendOrderShippedMail(SpySalesOrder $salesOrderEntity)
     {
         $this->getFactory()->createMailHandler()->sendOrderShippedMail($salesOrderEntity);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return void
+     */
+    public function saveReservationVersion($sku)
+    {
+        $this->getFactory()->createReservationVersionHandler()->saveReservationVersion($sku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
+     *
+     * @return void
+     */
+    public function importReservation(
+        OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
+    ) {
+        $this->getFactory()->createReservationWriter()->saveReservationRequest($omsAvailabilityReservationRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function exportReservation()
+    {
+        $this->getFactory()->createExportReservation()->exportReservation();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function getReservationsFromOtherStores($sku, StoreTransfer $storeTransfer)
+    {
+        return $this->getFactory()->createUtilReservation()->getReservationsFromOtherStores($sku, $storeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getLastExportedReservationVersion()
+    {
+        return $this->getFactory()->createExportReservation()->getLastExportedVersion();
     }
 }

@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\AvailabilityGui\Communication\Table;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
+use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -22,6 +24,7 @@ class AvailabilityTable extends AbstractTable
     const URL_PARAM_ID_PRODUCT = 'id-product';
     const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-abstract';
     const URL_PARAM_SKU = 'sku';
+    const URL_PARAM_ID_STORE = 'id-store';
     const URL_BACK_BUTTON = 'url-back-button';
 
     const IS_BUNDLE_PRODUCT = 'Is bundle product';
@@ -42,14 +45,28 @@ class AvailabilityTable extends AbstractTable
     protected $productBundleQueryContainer;
 
     /**
+     * @var \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected $storeTransfer;
+
+    /**
+     * @var \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface
+     */
+    protected $omsFacade;
+
+    /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $queryProductAbstractAvailabilityGui
      * @param int $idProductAbstract
      * @param \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface $omsFacade
      */
     public function __construct(
         SpyProductAbstractQuery $queryProductAbstractAvailabilityGui,
         $idProductAbstract,
-        AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer
+        AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer,
+        StoreTransfer $storeTransfer,
+        AvailabilityGuiToOmsFacadeInterface $omsFacade
     ) {
 
         $this->setTableIdentifier('availability-table');
@@ -57,6 +74,8 @@ class AvailabilityTable extends AbstractTable
         $this->queryProductAbstractAvailability = $queryProductAbstractAvailabilityGui;
         $this->idProductAbstract = $idProductAbstract;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
+        $this->storeTransfer = $storeTransfer;
+        $this->omsFacade = $omsFacade;
     }
 
     /**
@@ -68,6 +87,7 @@ class AvailabilityTable extends AbstractTable
     {
         $url = Url::generate('availability-table', [
             AvailabilityAbstractTable::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
+            static::URL_PARAM_ID_STORE => $this->storeTransfer->getIdStore(),
         ])->build();
 
         $config->setUrl($url);
@@ -117,19 +137,53 @@ class AvailabilityTable extends AbstractTable
         foreach ($queryResult as $productItem) {
             $isBundleProduct = $this->isBundleProduct($productItem[AvailabilityQueryContainer::ID_PRODUCT]);
 
+            $isNeverOutOfStock = $this->isNeverOutOfStock(
+                $productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET],
+                $isBundleProduct
+            );
+
             $result[] = [
                 AvailabilityQueryContainer::CONCRETE_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
                 AvailabilityQueryContainer::CONCRETE_NAME => $productItem[AvailabilityQueryContainer::CONCRETE_NAME],
                 AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY],
                 AvailabilityQueryContainer::STOCK_QUANTITY => $productItem[AvailabilityQueryContainer::STOCK_QUANTITY],
-                AvailabilityQueryContainer::RESERVATION_QUANTITY => ($isBundleProduct) ? 'N/A' : $productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY] ?: 0,
+                AvailabilityQueryContainer::RESERVATION_QUANTITY => ($isBundleProduct) ? 'N/A' : $this->calculateReservation($productItem),
                 static::IS_BUNDLE_PRODUCT => ($isBundleProduct) ? 'Yes' : 'No',
-                AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => ($productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET]) ? 'Yes' : 'No',
-                static::TABLE_COL_ACTION => $this->createEditButton($productItem, $isBundleProduct),
+                AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => $isNeverOutOfStock ? 'Yes' : 'No',
+                static::TABLE_COL_ACTION => $this->createButtons($productItem, $isBundleProduct),
             ];
         }
 
         return $result;
+    }
+
+    /**
+     * @param string $neverOutOfStockSet
+     * @param bool $isBundle
+     *
+     * @return bool
+     */
+    protected function isNeverOutOfStock(string $neverOutOfStockSet, bool $isBundle): bool
+    {
+        $hasNeverOutOfStock = strpos($neverOutOfStockSet, 'true') !== false;
+        if ($isBundle && $hasNeverOutOfStock) {
+            return true;
+        }
+
+        return filter_var($neverOutOfStockSet, FILTER_VALIDATE_BOOLEAN) ?: false;
+    }
+
+    /**
+     * @param array $productItem
+     *
+     * @return int
+     */
+    protected function calculateReservation(array $productItem)
+    {
+        $quantity = (int)$productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY];
+        $quantity += $this->omsFacade->getReservationsFromOtherStores($productItem[AvailabilityQueryContainer::CONCRETE_SKU], $this->storeTransfer);
+
+        return $quantity;
     }
 
     /**
@@ -152,32 +206,48 @@ class AvailabilityTable extends AbstractTable
      *
      * @return string
      */
-    protected function createEditButton(array $productAbstract, $isBundle)
+    protected function createButtons(array $productAbstract, $isBundle)
     {
-        $availabilityEditUrl = Url::generate(
+        if (!$isBundle) {
+            $availabilityEditUrl = $this->createAvailabilityEditUrl($productAbstract);
+            return $this->generateEditButton($availabilityEditUrl, 'Edit Stock');
+        }
+        $viewBundleUrl = $this->createViewBundleUrl($productAbstract);
+        return $this->generateViewButton($viewBundleUrl, 'View bundled products');
+    }
+
+    /**
+     * @param array $productAbstract
+     *
+     * @return string
+     */
+    protected function createAvailabilityEditUrl(array $productAbstract)
+    {
+        return Url::generate(
             '/availability-gui/index/edit',
             [
                 static::URL_PARAM_ID_PRODUCT => $productAbstract[AvailabilityQueryContainer::ID_PRODUCT],
                 static::URL_PARAM_SKU => $productAbstract[AvailabilityQueryContainer::CONCRETE_SKU],
                 static::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
+                static::URL_PARAM_ID_STORE => $this->storeTransfer->getIdStore(),
             ]
         );
+    }
 
-        $buttons = '';
-        if (!$isBundle) {
-            $buttons = $this->generateEditButton($availabilityEditUrl, 'Edit Stock');
-        } else {
-            $viewBundleUrl = Url::generate(
-                '/availability-gui/index/bundled-product-availability-table',
-                [
-                    BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_BUNDLE => $productAbstract[AvailabilityQueryContainer::ID_PRODUCT],
-                    BundledProductAvailabilityTable::URL_PARAM_BUNDLE_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
-                ]
-            );
-
-            $buttons .= ' ' . $this->generateViewButton($viewBundleUrl, 'View bundled products');
-        }
-
-        return $buttons;
+    /**
+     * @param array $productAbstract
+     *
+     * @return string
+     */
+    protected function createViewBundleUrl(array $productAbstract)
+    {
+        return Url::generate(
+            '/availability-gui/index/bundled-product-availability-table',
+            [
+                BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_BUNDLE => $productAbstract[AvailabilityQueryContainer::ID_PRODUCT],
+                BundledProductAvailabilityTable::URL_PARAM_BUNDLE_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
+                static::URL_PARAM_ID_STORE => $this->storeTransfer->getIdStore(),
+            ]
+        );
     }
 }

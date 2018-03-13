@@ -21,4 +21,18 @@ class QuoteConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getStorageStrategy();
     }
+
+    /**
+     * @return array
+     */
+    public function getQuoteFieldsAllowedForSaving()
+    {
+        return [
+            'items',
+            'totals',
+            'currency',
+            'price_mode',
+            'store',
+        ];
+    }
 }

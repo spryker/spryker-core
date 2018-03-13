@@ -8,7 +8,6 @@
 namespace Spryker\Client\Cart;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -67,6 +66,8 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @api
      *
+     * @deprecated
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -87,9 +88,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function addItem(ItemTransfer $itemTransfer)
     {
-        $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
-
-        return $this->getZedStub()->addItem($cartChangeTransfer);
+        return $this->getFactory()->getQuoteStorageStrategy()->addItem($itemTransfer);
     }
 
     /**
@@ -103,12 +102,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function addItems(array $itemTransfers)
     {
-        $cartChangeTransfer = $this->createCartChangeTransfer();
-        foreach ($itemTransfers as $itemTransfer) {
-            $cartChangeTransfer->addItem($itemTransfer);
-        }
-
-        return $this->getZedStub()->addItem($cartChangeTransfer);
+        return $this->getFactory()->getQuoteStorageStrategy()->addItems($itemTransfers);
     }
 
     /**
@@ -123,14 +117,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function removeItem($sku, $groupKey = null)
     {
-        $itemTransfer = $this->findItem($sku, $groupKey);
-        if (!$itemTransfer) {
-            return $this->getQuote();
-        }
-
-        $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
-
-        return $this->getZedStub()->removeItem($cartChangeTransfer);
+        return $this->getFactory()->getQuoteStorageStrategy()->removeItem($sku, $groupKey);
     }
 
     /**
@@ -144,30 +131,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function removeItems(ArrayObject $items)
     {
-        $cartChangeTransfer = $this->createCartChangeTransfer();
-        $cartChangeTransfer->setItems($items);
-
-        return $this->getZedStub()->removeItem($cartChangeTransfer);
-    }
-
-    /**
-     * @param string $sku
-     * @param string|null $groupKey
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer|null
-     */
-    protected function findItem($sku, $groupKey = null)
-    {
-        $quoteTransfer = $this->getQuote();
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (($itemTransfer->getSku() === $sku && $groupKey === null) ||
-                $itemTransfer->getGroupKey() === $groupKey) {
-                return $itemTransfer;
-            }
-        }
-
-        return null;
+        return $this->getFactory()->getQuoteStorageStrategy()->removeItems($items);
     }
 
     /**
@@ -183,26 +147,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function changeItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
-        if ($quantity === 0) {
-            return $this->removeItem($sku, $groupKey);
-        }
-
-        $itemTransfer = $this->findItem($sku, $groupKey);
-        if (!$itemTransfer) {
-            return $this->getQuote();
-        }
-
-        $delta = abs($itemTransfer->getQuantity() - $quantity);
-
-        if ($delta === 0) {
-            return $this->getQuoteClient()->getQuote();
-        }
-
-        if ($itemTransfer->getQuantity() > $quantity) {
-            return $this->decreaseItemQuantity($sku, $groupKey, $delta);
-        }
-
-        return $this->increaseItemQuantity($sku, $groupKey, $delta);
+        return $this->getFactory()->getQuoteStorageStrategy()->changeItemQuantity($sku, $groupKey, $quantity);
     }
 
     /**
@@ -218,17 +163,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
-        $decreaseItemTransfer = $this->findItem($sku, $groupKey);
-        if (!$decreaseItemTransfer) {
-            return $this->getQuote();
-        }
-
-        $itemTransfer = clone $decreaseItemTransfer;
-        $itemTransfer->setQuantity($quantity);
-
-        $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
-
-        return $this->getZedStub()->removeItem($cartChangeTransfer);
+        return $this->getFactory()->getQuoteStorageStrategy()->decreaseItemQuantity($sku, $groupKey, $quantity);
     }
 
     /**
@@ -244,17 +179,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1)
     {
-        $increaseItemTransfer = $this->findItem($sku, $groupKey);
-        if (!$increaseItemTransfer) {
-            return $this->getQuote();
-        }
-
-        $itemTransfer = clone $increaseItemTransfer;
-        $itemTransfer->setQuantity($quantity);
-
-        $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
-
-        return $this->getZedStub()->addItem($cartChangeTransfer);
+        return $this->getFactory()->getQuoteStorageStrategy()->increaseItemQuantity($sku, $groupKey, $quantity);
     }
 
     /**
@@ -266,40 +191,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function reloadItems()
     {
-        $quoteTransfer = $this->getQuote();
-        $quoteTransfer = $this->getZedStub()->reloadItems($quoteTransfer);
-        $this->storeQuote($quoteTransfer);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
-    protected function createCartChangeTransfer()
-    {
-        $quoteTransfer = $this->getQuoteClient()->getQuote();
-        $items = $quoteTransfer->getItems();
-
-        if (count($items) === 0) {
-            $quoteTransfer->setItems(new ArrayObject());
-        }
-
-        $cartChangeTransfer = new CartChangeTransfer();
-        $cartChangeTransfer->setQuote($quoteTransfer);
-
-        return $cartChangeTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
-    protected function prepareCartChangeTransfer(ItemTransfer $itemTransfer)
-    {
-        $cartChangeTransfer = $this->createCartChangeTransfer();
-        $cartChangeTransfer->addItem($itemTransfer);
-
-        return $cartChangeTransfer;
+        $this->getFactory()->getQuoteStorageStrategy()->reloadItems();
     }
 
     /**
@@ -307,7 +199,21 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @api
      *
-     * @return \Spryker\Client\Cart\Zed\CartStubInterface
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function validateQuote()
+    {
+        return $this->getFactory()->getQuoteStorageStrategy()->validateQuote();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @deprecated
+     *
+     * @api
+     *
+     * @return \Spryker\Client\Cart\Zed\CartStubInterface|\Spryker\Client\ZedRequest\Stub\ZedRequestStub
      */
     public function getZedStub()
     {
