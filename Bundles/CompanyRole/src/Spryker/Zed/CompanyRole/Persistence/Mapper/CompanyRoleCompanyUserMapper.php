@@ -32,12 +32,13 @@ class CompanyRoleCompanyUserMapper implements CompanyRoleCompanyUserMapperInterf
                 ->fromArray($spyCompanyRoleToCompanyUser->getCompanyUser()->toArray(), true);
 
             $spyCustomer = $spyCompanyRoleToCompanyUser->getCompanyUser()->getCustomer();
-            $companyUserTransfer->setCustomer(
-                (new CustomerTransfer())->fromArray(
-                    $spyCustomer->toArray(),
-                    true
-                )
-            );
+
+            $customerTransfer = new CustomerTransfer();
+            if ($spyCustomer) {
+                $customerTransfer->fromArray($spyCustomer->toArray(), true);
+            }
+
+            $companyUserTransfer->setCustomer($customerTransfer);
 
             $companyUserCollectionTransfer->addCompanyUser($companyUserTransfer);
         }

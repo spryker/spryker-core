@@ -105,6 +105,7 @@ class CompanyUser implements CompanyUserInterface
             $companyUserTransfer = $this->companyUserRepository->getCompanyUserById(
                 $companyUserTransfer->getIdCompanyUser()
             );
+
             $this->companyUserEntityManager->deleteCompanyUserById($companyUserTransfer->getIdCompanyUser());
             $this->customerFacade->anonymizeCustomer($companyUserTransfer->getCustomer());
 
