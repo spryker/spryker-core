@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\SpyCompanyUnitAddressLabelToCompanyUnitAddressEnti
 use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelEntityManagerInterface;
 use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepositoryInterface;
 
-class CompanyUnitAddressLabelManager implements CompanyUnitAddressLabelManagerInterface
+class CompanyUnitAddressLabelRelationSaver implements CompanyUnitAddressLabelRelationSaverInterface
 {
     /**
      * @var \Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelEntityManagerInterface
@@ -60,7 +60,7 @@ class CompanyUnitAddressLabelManager implements CompanyUnitAddressLabelManagerIn
      *
      * @return \Generated\Shared\Transfer\SpyCompanyUnitAddressLabelToCompanyUnitAddressEntityTransfer[]
      */
-    public function getRedundantLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddress): array
+    protected function getRedundantLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddress): array
     {
         $relations = $this->labelRepository->findCompanyUnitAddressLabelToCompanyUnitAddressRelations(
             $companyUnitAddress->getIdCompanyUnitAddress()

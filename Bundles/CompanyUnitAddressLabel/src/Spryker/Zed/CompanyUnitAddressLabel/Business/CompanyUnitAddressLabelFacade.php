@@ -27,7 +27,7 @@ class CompanyUnitAddressLabelFacade extends AbstractFacade implements CompanyUni
      */
     public function saveLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
     {
-        $this->getFactory()->createCompanyUnitAddressLabelManager()
+        $this->getFactory()->createCompanyUnitAddressLabelRelationSaver()
             ->saveLabelToAddressRelations($companyUnitAddressTransfer);
     }
 

@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyUnitAddressLabel\Business\Model;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 
-interface CompanyUnitAddressLabelManagerInterface
+interface CompanyUnitAddressLabelRelationSaverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
@@ -17,11 +17,4 @@ interface CompanyUnitAddressLabelManagerInterface
      * @return void
      */
     public function saveLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddress
-     *
-     * @return \Generated\Shared\Transfer\SpyCompanyUnitAddressLabelToCompanyUnitAddressEntityTransfer[]
-     */
-    public function getRedundantLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddress): array;
 }

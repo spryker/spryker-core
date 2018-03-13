@@ -9,8 +9,8 @@ namespace Spryker\Zed\CompanyUnitAddressLabel\Business;
 
 use Spryker\Zed\CompanyUnitAddressLabel\Business\Model\CompanyUnitAddressHydrator;
 use Spryker\Zed\CompanyUnitAddressLabel\Business\Model\CompanyUnitAddressHydratorInterface;
-use Spryker\Zed\CompanyUnitAddressLabel\Business\Model\CompanyUnitAddressLabelManager;
-use Spryker\Zed\CompanyUnitAddressLabel\Business\Model\CompanyUnitAddressLabelManagerInterface;
+use Spryker\Zed\CompanyUnitAddressLabel\Business\Model\CompanyUnitAddressLabelRelationSaver;
+use Spryker\Zed\CompanyUnitAddressLabel\Business\Model\CompanyUnitAddressLabelRelationSaverInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -32,11 +32,11 @@ class CompanyUnitAddressLabelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddressLabel\Business\Model\CompanyUnitAddressLabelManagerInterface
+     * @return \Spryker\Zed\CompanyUnitAddressLabel\Business\Model\CompanyUnitAddressLabelRelationSaverInterface
      */
-    public function createCompanyUnitAddressLabelManager(): CompanyUnitAddressLabelManagerInterface
+    public function createCompanyUnitAddressLabelRelationSaver(): CompanyUnitAddressLabelRelationSaverInterface
     {
-        return new CompanyUnitAddressLabelManager(
+        return new CompanyUnitAddressLabelRelationSaver(
             $this->getEntityManager(),
             $this->getRepository()
         );
