@@ -143,6 +143,14 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\Application\Business\Model\Request\SubRequestHandlerInterface
+     */
+    public function getSubRequestHandler()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::SUB_REQUEST_HANDLER);
+    }
+
+    /**
      * @return \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceInterface
      */
     protected function getUtilDateTimeService()

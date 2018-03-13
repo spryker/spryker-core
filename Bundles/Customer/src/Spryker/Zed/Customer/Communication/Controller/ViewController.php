@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AbstractController
 {
+    protected const PARAM_CUSTOMER = 'customerTransfer';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -40,13 +42,16 @@ class ViewController extends AbstractController
             ->createCustomerAddressTable($idCustomer);
 
         $externalBlocks = $this->renderCustomerDetailBlocks($request, $customerTransfer);
+        if ($externalBlocks instanceof RedirectResponse) {
+            return $externalBlocks;
+        }
 
-        return [
+        return $this->viewResponse([
             'customer' => $customerTransfer,
             'idCustomer' => $idCustomer,
             'addressTable' => $addressTable->render(),
             'blocks' => $externalBlocks,
-        ];
+        ]);
     }
 
     /**
@@ -108,13 +113,18 @@ class ViewController extends AbstractController
     {
         $subRequest = clone $request;
         $subRequest->setMethod(Request::METHOD_POST);
-        $subRequest->request->set('customerTransfer', $customerTransfer);
+        $subRequest->request->set(static::PARAM_CUSTOMER, $customerTransfer);
 
         $responseData = [];
         $blocks = $this->getFactory()->getCustomerDetailExternalBlocksUrls();
 
         foreach ($blocks as $blockName => $blockUrl) {
-            $responseData[$blockName] = $this->handleSubRequest($subRequest, $blockUrl);
+            $blockResponse = $this->handleSubRequest($subRequest, $blockUrl);
+            if ($blockResponse instanceof RedirectResponse) {
+                return $blockResponse;
+            }
+
+            $responseData[$blockName] = $blockResponse;
         }
 
         return $responseData;
@@ -128,19 +138,11 @@ class ViewController extends AbstractController
      */
     protected function handleSubRequest(Request $request, $blockUrl)
     {
-        $blockResponse = $this->getSubRequestHandler()->handleSubRequest($request, $blockUrl);
+        $blockResponse = $this->getFactory()->getSubRequestHandler()->handleSubRequest($request, $blockUrl);
         if ($blockResponse instanceof RedirectResponse) {
             return $blockResponse;
         }
 
         return $blockResponse->getContent();
-    }
-
-    /**
-     * @return \Spryker\Zed\Application\Business\Model\Request\SubRequestHandlerInterface
-     */
-    protected function getSubRequestHandler()
-    {
-        return $this->getApplication()['sub_request'];
     }
 }

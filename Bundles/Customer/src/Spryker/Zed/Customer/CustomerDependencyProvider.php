@@ -16,6 +16,7 @@ use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
 class CustomerDependencyProvider extends AbstractBundleDependencyProvider
@@ -39,6 +40,8 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 
     const PLUGINS_CUSTOMER_ANONYMIZER = 'PLUGINS_CUSTOMER_ANONYMIZER';
     const PLUGINS_CUSTOMER_TRANSFER_EXPANDER = 'PLUGINS_CUSTOMER_TRANSFER_EXPANDER';
+
+    public const SUB_REQUEST_HANDLER = 'SUB_REQUEST_HANDLER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -73,6 +76,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addSubRequestHandler($container);
 
         return $container;
     }
@@ -252,10 +256,25 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilDateTimeService($container)
+    protected function addUtilDateTimeService($container): \Spryker\Zed\Kernel\Container
     {
         $container[static::SERVICE_UTIL_DATE_TIME] = function (Container $container) {
             return new CustomerToUtilDateTimeServiceBridge($container->getLocator()->utilDateTime()->service());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSubRequestHandler(Container $container): \Spryker\Zed\Kernel\Container
+    {
+        $container[static::SUB_REQUEST_HANDLER] = function () {
+            $pimple = new Pimple();
+            return $pimple->getApplication()['sub_request'];
         };
 
         return $container;

@@ -90,8 +90,10 @@
         {% endblock %}
     {% endembed %}
 
-    {% for blockName, externalBlock in blocks %}
-        <div id="{{ blockName }}">{{ externalBlock | raw }}</div>
-    {% endfor %}
+    <div>
+        {% for blockName, externalBlock in blocks %}
+            <div id="{{ blockName }}">{{ externalBlock | raw }}</div>
+        {% endfor %}
+    </div>
 
 {% endblock %}
