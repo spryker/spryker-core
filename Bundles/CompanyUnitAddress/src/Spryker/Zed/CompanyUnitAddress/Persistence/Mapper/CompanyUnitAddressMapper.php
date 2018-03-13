@@ -23,12 +23,12 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
         CompanyUnitAddressTransfer $unitAddressTransfer
     ): CompanyUnitAddressTransfer {
 
-        $addressTransfer = (new CompanyUnitAddressTransfer())->fromArray(
+        $companyUnitAddressTransfer = (new CompanyUnitAddressTransfer())->fromArray(
             $unitAddressEntityTransfer->toArray(),
             true
         );
 
-        return $addressTransfer;
+        return $companyUnitAddressTransfer;
     }
 
     /**
@@ -41,11 +41,11 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
         SpyCompanyUnitAddressEntityTransfer $unitAddressEntityTransfer
     ): SpyCompanyUnitAddressEntityTransfer {
-        $spyCompanyUnitAddressEntityTransfer = (new SpyCompanyUnitAddressEntityTransfer())->fromArray(
+        $companyUnitAddressEntityTransfer = (new SpyCompanyUnitAddressEntityTransfer())->fromArray(
             $companyUnitAddressTransfer->modifiedToArray(),
             true
         );
 
-        return $spyCompanyUnitAddressEntityTransfer;
+        return $companyUnitAddressEntityTransfer;
     }
 }
