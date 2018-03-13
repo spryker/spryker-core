@@ -34,7 +34,7 @@ class PermissionFactory extends AbstractFactory
     public function createPermissionExecutor(): PermissionExecutorInterface
     {
         return new PermissionExecutor(
-            $this->getPermissionStoragePlugin(),
+            $this->getPermissionStoragePlugins(),
             $this->createPermissionFinder()
         );
     }
@@ -58,9 +58,9 @@ class PermissionFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
      */
-    protected function getPermissionStoragePlugin(): array
+    protected function getPermissionStoragePlugins(): array
     {
-        return $this->getProvidedDependency(PermissionDependencyProvider::PLUGIN_PERMISSION_STORAGE);
+        return $this->getProvidedDependency(PermissionDependencyProvider::PLUGINS_PERMISSION_STORAGE);
     }
 
     /**

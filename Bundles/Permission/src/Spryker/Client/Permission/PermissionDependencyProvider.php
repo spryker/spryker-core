@@ -16,7 +16,7 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
 {
     public const PLUGINS_PERMISSION = 'PLUGINS_PERMISSION';
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    public const PLUGIN_PERMISSION_STORAGE = 'PLUGIN_PERMISSION_STORAGE';
+    public const PLUGINS_PERMISSION_STORAGE = 'PLUGINS_PERMISSION_STORAGE';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
@@ -28,7 +28,7 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addPermissionPlugins($container);
-        $container = $this->addPermissionStoragePlugin($container);
+        $container = $this->addPermissionStoragePlugins($container);
         $container = $this->addZedRequestClient($container);
 
         return $container;
@@ -67,10 +67,10 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addPermissionStoragePlugin($container): Container
+    protected function addPermissionStoragePlugins($container): Container
     {
-        $container[static::PLUGIN_PERMISSION_STORAGE] = function (Container $container) {
-            return $this->getPermissionStoragePlugin();
+        $container[static::PLUGINS_PERMISSION_STORAGE] = function (Container $container) {
+            return $this->getPermissionStoragePlugins();
         };
 
         return $container;
@@ -89,7 +89,7 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
      */
-    protected function getPermissionStoragePlugin(): array
+    protected function getPermissionStoragePlugins(): array
     {
         throw new Exception('Please set an array of permission storage plugins, 
         all implementing the interface \Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface');

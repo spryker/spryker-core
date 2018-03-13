@@ -22,9 +22,9 @@ class PermissionBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
      */
-    public function getPermissionStoragePlugin()
+    public function getPermissionStoragePlugins()
     {
-        return $this->getProvidedDependency(PermissionDependencyProvider::PLUGIN_PERMISSION_STORAGE);
+        return $this->getProvidedDependency(PermissionDependencyProvider::PLUGINS_PERMISSION_STORAGE);
     }
 
     /**
@@ -33,7 +33,7 @@ class PermissionBusinessFactory extends AbstractBusinessFactory
     public function createPermissionExecutor()
     {
         return new PermissionExecutor(
-            $this->getPermissionStoragePlugin(),
+            $this->getPermissionStoragePlugins(),
             $this->createPermissionFinder()
         );
     }

@@ -15,7 +15,7 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
     public const PLUGINS_PERMISSION = 'PLUGINS_PERMISSION';
-    public const PLUGIN_PERMISSION_STORAGE = 'PLUGIN_PERMISSION_STORAGE';
+    public const PLUGINS_PERMISSION_STORAGE = 'PLUGINS_PERMISSION_STORAGE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -61,7 +61,7 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPermissionStoragePlugins(Container $container)
     {
-        $container[static::PLUGIN_PERMISSION_STORAGE] = function (Container $container) {
+        $container[static::PLUGINS_PERMISSION_STORAGE] = function (Container $container) {
             return $this->getPermissionStoragePlugins();
         };
 
