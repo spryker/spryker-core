@@ -15,7 +15,6 @@ use Spryker\Client\Permission\PermissionFinder\PermissionFinder;
 use Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface;
 use Spryker\Client\Permission\Zed\PermissionStub;
 use Spryker\Client\Permission\Zed\PermissionStubInterface;
-use Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 
 class PermissionFactory extends AbstractFactory
 {
@@ -57,9 +56,9 @@ class PermissionFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface
+     * @return \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
      */
-    protected function getPermissionStoragePlugin(): PermissionStoragePluginInterface
+    protected function getPermissionStoragePlugin(): array
     {
         return $this->getProvidedDependency(PermissionDependencyProvider::PLUGIN_PERMISSION_STORAGE);
     }

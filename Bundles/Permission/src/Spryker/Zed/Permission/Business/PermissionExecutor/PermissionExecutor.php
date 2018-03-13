@@ -11,12 +11,13 @@ use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 use Spryker\Zed\Permission\Business\PermissionFinder\PermissionFinderInterface;
-use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 
 class PermissionExecutor implements PermissionExecutorInterface
 {
-    /** @var \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface */
-    protected $permissionStoragePlugin;
+    /**
+     * @var \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
+     */
+    protected $permissionStoragePlugins;
 
     /**
      * @var \Spryker\Zed\Permission\Business\PermissionFinder\PermissionFinderInterface
@@ -24,14 +25,14 @@ class PermissionExecutor implements PermissionExecutorInterface
     protected $permissionFinder;
 
     /**
-     * @param \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface $permissionStoragePlugin
+     * @param \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[] $permissionStoragePlugins
      * @param \Spryker\Zed\Permission\Business\PermissionFinder\PermissionFinderInterface $permissionFinder
      */
     public function __construct(
-        PermissionStoragePluginInterface $permissionStoragePlugin,
+        array $permissionStoragePlugins,
         PermissionFinderInterface $permissionFinder
     ) {
-        $this->permissionStoragePlugin = $permissionStoragePlugin;
+        $this->permissionStoragePlugins = $permissionStoragePlugins;
         $this->permissionFinder = $permissionFinder;
     }
 
@@ -115,12 +116,29 @@ class PermissionExecutor implements PermissionExecutorInterface
     {
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 
-        foreach ($this->permissionStoragePlugin->getPermissionCollection($identifier)->getPermissions() as $permission) {
-            if ($permission->getKey() === $permissionKey) {
-                $permissionCollectionTransfer->addPermission($permission);
+        foreach ($this->getPermissionCollectionsByIdentifier($identifier) as $permissionCollectionFromStorage) {
+            foreach ($permissionCollectionFromStorage->getPermissions() as $permission) {
+                if ($permission->getKey() === $permissionKey) {
+                    $permissionCollectionTransfer->addPermission($permission);
+                }
             }
         }
 
         return $permissionCollectionTransfer;
+    }
+
+    /**
+     * @param int|string $identifier
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer[]
+     */
+    protected function getPermissionCollectionsByIdentifier($identifier)
+    {
+        $permissionCollections = [];
+        foreach ($this->permissionStoragePlugins as $permissionStoragePlugin) {
+            $permissionCollections[] = $permissionStoragePlugin->getPermissionCollection($identifier);
+        }
+
+        return $permissionCollections;
     }
 }

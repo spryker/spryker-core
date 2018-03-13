@@ -11,7 +11,6 @@ use Exception;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Permission\Dependency\Client\PermissionToZedRequestClientBridge;
-use Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 
 class PermissionDependencyProvider extends AbstractDependencyProvider
 {
@@ -88,11 +87,11 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
     /**
      * @throws \Exception
      *
-     * @return \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface
+     * @return \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
      */
-    protected function getPermissionStoragePlugin(): PermissionStoragePluginInterface
+    protected function getPermissionStoragePlugin(): array
     {
-        throw new Exception('Please set a permission storage plugin, implementation of 
-        \Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface');
+        throw new Exception('Please set an array of permission storage plugins, 
+        all implementing the interface \Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface');
     }
 }
