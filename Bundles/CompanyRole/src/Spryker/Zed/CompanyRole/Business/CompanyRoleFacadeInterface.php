@@ -80,9 +80,9 @@ interface CompanyRoleFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
      */
-    public function delete(CompanyRoleTransfer $companyRoleTransfer): void;
+    public function delete(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer;
 
     /**
      * Specification:

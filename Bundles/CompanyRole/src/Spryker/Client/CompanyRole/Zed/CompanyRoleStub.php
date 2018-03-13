@@ -86,11 +86,11 @@ class CompanyRoleStub implements CompanyRoleStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function deleteCompanyRole(CompanyRoleTransfer $companyRoleTransfer): void
+    public function deleteCompanyRole(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
     {
-        $this->zedRequestClient->call(
+        return $this->zedRequestClient->call(
             '/company-role/gateway/delete-company-role',
             $companyRoleTransfer
         );

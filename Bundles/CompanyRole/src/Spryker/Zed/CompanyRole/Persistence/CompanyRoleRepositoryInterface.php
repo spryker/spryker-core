@@ -57,4 +57,11 @@ interface CompanyRoleRepositoryInterface
     public function getCompanyRoleCollection(
         CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
     ): CompanyRoleCollectionTransfer;
+
+    /**
+     * @param int $idCompanyRole
+     *
+     * @return bool
+     */
+    public function hasUsers(int $idCompanyRole): bool;
 }

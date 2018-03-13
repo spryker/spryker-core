@@ -313,4 +313,19 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
 
         return $companyRoleTransfer;
     }
+
+    /**
+     * @param int $idCompanyRole
+     *
+     * @return bool
+     */
+    public function hasUsers(int $idCompanyRole): bool
+    {
+        $companyUserCount = $this->getFactory()
+            ->createCompanyRoleToCompanyUserQuery()
+            ->filterByFkCompanyRole($idCompanyRole)
+            ->count();
+
+        return ($companyUserCount > 0);
+    }
 }

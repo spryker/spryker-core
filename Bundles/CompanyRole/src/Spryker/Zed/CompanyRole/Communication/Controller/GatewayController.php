@@ -88,12 +88,7 @@ class GatewayController extends AbstractGatewayController
      */
     public function deleteCompanyRoleAction(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
     {
-        $this->getFacade()->delete($companyRoleTransfer);
-
-        $response = new CompanyRoleResponseTransfer();
-        $response->setIsSuccessful(true);
-
-        return $response;
+        return $this->getFacade()->delete($companyRoleTransfer);
     }
 
     /**
