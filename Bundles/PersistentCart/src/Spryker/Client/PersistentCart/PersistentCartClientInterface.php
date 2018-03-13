@@ -7,6 +7,32 @@
 
 namespace Spryker\Client\PersistentCart;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+
 interface PersistentCartClientInterface
 {
+    /**
+     * Specification:
+     * - Deletes existing quote in database
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Saves quote to database
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

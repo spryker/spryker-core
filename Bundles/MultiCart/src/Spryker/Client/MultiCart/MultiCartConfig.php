@@ -21,4 +21,12 @@ class MultiCartConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getGuestQuoteDefaultName();
     }
+
+    /**
+     * @return string
+     */
+    public function getDuplicatedQuoteNameSuffix()
+    {
+        return $this->getSharedConfig()->getDuplicatedQuoteNameSuffix();
+    }
 }

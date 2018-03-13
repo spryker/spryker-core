@@ -14,9 +14,10 @@ use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientB
 
 class PersistentCartDependencyProvider extends AbstractDependencyProvider
 {
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
-    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
     public const PLUGINS_QUOTE_UPDATE = 'PLUGINS_QUOTE_UPDATE';
 
     /**
@@ -26,10 +27,11 @@ class PersistentCartDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $container = $this->addQuoteClient($container);
-        $container = $this->addZedRequestClient($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addMessengerClient($container);
+        $container = $this->addQuoteClient($container);
         $container = $this->addQuoteUpdatePlugins($container);
+        $container = $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -71,6 +73,20 @@ class PersistentCartDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
             return $container->getLocator()->zedRequest()->client();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addMessengerClient(Container $container)
+    {
+        $container[static::CLIENT_MESSENGER] = function (Container $container) {
+            return $container->getLocator()->messenger()->client();
         };
 
         return $container;

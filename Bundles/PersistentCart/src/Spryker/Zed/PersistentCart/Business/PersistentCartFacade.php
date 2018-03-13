@@ -132,8 +132,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * Specification:
-     *  - Remove quote from database
+     * {@inheritdoc}
      *
      * @api
      *
@@ -143,6 +142,20 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
      */
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        // TODO: Implement deleteQuote() method.
+        return $this->getFactory()->createQuoteDeleter()->deleteQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function persistQuote($quoteTransfer)
+    {
+        return $this->getFactory()->createQuoteWriter()->persistQuote($quoteTransfer);
     }
 }

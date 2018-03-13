@@ -38,8 +38,18 @@ class MultiCartStub extends ZedRequestStub implements MultiCartStubInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function setActiveQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/persistent-cart/gateway/delete-quote', $quoteTransfer);
+        return $this->zedStub->call('/multi-cart/gateway/set-active-quote', $quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function duplicateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->zedStub->call('/multi-cart/gateway/duplicate-quote', $quoteTransfer);
     }
 }

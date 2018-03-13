@@ -257,13 +257,9 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function executeUpdateQuotePlugins(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
+    protected function executeUpdateQuotePlugins(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        foreach ($this->getFactory()->getQuoteUpdatePlugins() as $quoteUpdatePlugin) {
-            $quoteResponseTransfer = $quoteUpdatePlugin->processResponse($quoteResponseTransfer);
-        }
-
-        return $quoteResponseTransfer;
+        return $this->getFactory()->createQuoteUpdatePluginExecutor()->executePlugins($quoteResponseTransfer);
     }
 
     /**

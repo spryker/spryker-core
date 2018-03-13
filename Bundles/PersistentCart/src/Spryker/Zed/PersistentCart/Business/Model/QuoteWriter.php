@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
 
-class QuoteDeleter implements QuoteDeleterInterface
+class QuoteWriter implements QuoteWriterInterface
 {
     /**
      * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface
@@ -40,8 +40,8 @@ class QuoteDeleter implements QuoteDeleterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->quoteResponseExpander->expand($this->quoteFacade->deleteQuote($quoteTransfer));
+        return $this->quoteResponseExpander->expand($this->quoteFacade->persistQuote($quoteTransfer));
     }
 }

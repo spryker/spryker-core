@@ -11,8 +11,9 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class MultiCartConfig extends AbstractSharedConfig
 {
-    const QUOTE_NAME_DEFAULT_GUEST = 'Guest shopping cart';
-    const QUOTE_NAME_DEFAULT_CUSTOMER = 'Shopping cart';
+    public const QUOTE_NAME_DEFAULT_GUEST = 'Guest shopping cart';
+    public const QUOTE_NAME_DEFAULT_CUSTOMER = 'Shopping cart';
+    public const QUOTE_NAME_SUFFIX_DUPLICATE = ' Duplicate';
 
     /**
      * @return string
@@ -28,5 +29,13 @@ class MultiCartConfig extends AbstractSharedConfig
     public function getCustomerQuoteDefaultName()
     {
         return static::QUOTE_NAME_DEFAULT_GUEST;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDuplicatedQuoteNameSuffix()
+    {
+        return static::QUOTE_NAME_SUFFIX_DUPLICATE;
     }
 }

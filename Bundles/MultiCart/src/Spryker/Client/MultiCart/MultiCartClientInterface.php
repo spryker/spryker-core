@@ -8,60 +8,10 @@
 namespace Spryker\Client\MultiCart;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface MultiCartClientInterface
 {
-    /**
-     * Specification:
-     * - Create new quote in database
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function createCart(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
-
-    /**
-     * Specification:
-     * - Updates existing quote in database
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function updateCart(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
-
-    /**
-     * Specification:
-     * - Deletes existing quote in database
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function deleteCart(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
-
-    /**
-     * Specification:
-     * - Mark existing quote as active
-     * - Saves quote in database
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function setActiveCart(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
-
     /**
      * Specification:
      * - Gets active quote
@@ -70,7 +20,7 @@ interface MultiCartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getActiveCart(): QuoteTransfer;
+    public function findActiveCart(): ?QuoteTransfer;
 
     /**
      * Specification:
@@ -81,4 +31,36 @@ interface MultiCartClientInterface
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function getQuoteCollection(): QuoteCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Find quote by name in customer session
+     *
+     * @api
+     *
+     * @param string $quoteName
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    public function findQuoteByName($quoteName): ?QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Checks if multicart functionality allowed
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isMultiCartAllowed();
+
+    /**
+     * Specification:
+     * - Get suffix for duplicated quote name
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getDuplicatedQuoteNameSuffix();
 }

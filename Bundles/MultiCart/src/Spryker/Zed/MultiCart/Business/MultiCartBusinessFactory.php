@@ -10,22 +10,10 @@ namespace Spryker\Zed\MultiCart\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MultiCart\Business\Model\QuoteReader;
 use Spryker\Zed\MultiCart\Business\Model\QuoteReaderInterface;
-use Spryker\Zed\MultiCart\Business\Model\QuoteWriter;
-use Spryker\Zed\MultiCart\Business\Model\QuoteWriterInterface;
 use Spryker\Zed\MultiCart\MultiCartDependencyProvider;
 
 class MultiCartBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\MultiCart\Business\Model\QuoteWriterInterface
-     */
-    public function createQuoteWriter(): QuoteWriterInterface
-    {
-        return new QuoteWriter(
-            $this->getQuoteFacade()
-        );
-    }
-
     /**
      * @return \Spryker\Zed\MultiCart\Business\Model\QuoteReaderInterface
      */
