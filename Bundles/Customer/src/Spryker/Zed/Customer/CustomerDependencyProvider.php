@@ -256,7 +256,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilDateTimeService($container)
+    protected function addUtilDateTimeService($container): \Spryker\Zed\Kernel\Container
     {
         $container[static::SERVICE_UTIL_DATE_TIME] = function (Container $container) {
             return new CustomerToUtilDateTimeServiceBridge($container->getLocator()->utilDateTime()->service());

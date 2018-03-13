@@ -41,7 +41,7 @@ class ViewController extends AbstractController
         $addressTable = $this->getFactory()
             ->createCustomerAddressTable($idCustomer);
 
-        $externalBlocks = $this->renderExternalBlocks($request, $customerTransfer);
+        $externalBlocks = $this->renderCustomerDetailBlocks($request, $customerTransfer);
         if ($externalBlocks instanceof RedirectResponse) {
             return $externalBlocks;
         }
@@ -102,7 +102,6 @@ class ViewController extends AbstractController
 
         return $customerTransfer;
     }
-
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
