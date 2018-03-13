@@ -1,19 +1,21 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CartPermissionConnector\Dependency\Facade;
-
-
-use Spryker\Zed\Permission\Business\PermissionFacadeInterface;
 
 class CartPermissionConnectorToPermissionFacadeBridge implements CartPermissionConnectorToPermissionFacadeInterface
 {
     /**
-     * @var PermissionFacadeInterface
+     * @var \Spryker\Zed\Permission\Business\PermissionFacadeInterface
      */
     protected $permissionFacade;
 
     /**
-     * @param PermissionFacadeInterface $permissionFacade
+     * @param \Spryker\Zed\Permission\Business\PermissionFacadeInterface $permissionFacade
      */
     public function __construct($permissionFacade)
     {

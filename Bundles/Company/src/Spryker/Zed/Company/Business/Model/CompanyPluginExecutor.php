@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Company\Business\Model;
 
 use Generated\Shared\Transfer\CompanyResponseTransfer;
-use Generated\Shared\Transfer\CompanyTransfer;
-use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 
 class CompanyPluginExecutor implements CompanyPluginExecutorInterface
 {

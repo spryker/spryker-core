@@ -9,8 +9,8 @@ namespace Spryker\Zed\Permission\Business\PermissionExecutor;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Spryker\Zed\Permission\Business\PermissionFinder\PermissionFinderInterface;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Zed\Permission\Business\PermissionFinder\PermissionFinderInterface;
 use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 
 class PermissionExecutor implements PermissionExecutorInterface

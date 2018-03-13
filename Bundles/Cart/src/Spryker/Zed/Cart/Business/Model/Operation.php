@@ -12,12 +12,10 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Yves\Ide\Quote;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
 use Spryker\Zed\Cart\Dependency\TerminationAwareCartPreCheckPluginInterface;
-use Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface;
 
 class Operation implements OperationInterface
 {
@@ -64,7 +62,7 @@ class Operation implements OperationInterface
     protected $preReloadPlugins = [];
 
     /**
-     * @var CartTerminationPluginInterface[]
+     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[]
      */
     protected $terminationPlugins = [];
 
@@ -75,7 +73,7 @@ class Operation implements OperationInterface
      * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[] $itemExpanderPlugins
      * @param \Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface[] $preCheckPlugins
      * @param \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[] $postSavePlugins
-     * @param CartTerminationPluginInterface[] $terminationPlugins
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[] $terminationPlugins
      */
     public function __construct(
         StorageProviderInterface $cartStorageProvider,
@@ -113,7 +111,7 @@ class Operation implements OperationInterface
         $quoteTransfer = $this->executePostSavePlugins($quoteTransfer);
         $quoteTransfer = $this->recalculate($quoteTransfer);
 
-        if ($this->isTerminated(static::TERMINATION_EVENT_NAME_ADD, $cartChangeTransfer,$quoteTransfer)) {
+        if ($this->isTerminated(static::TERMINATION_EVENT_NAME_ADD, $cartChangeTransfer, $quoteTransfer)) {
             return $originalQuoteTransfer;
         }
 
@@ -136,7 +134,7 @@ class Operation implements OperationInterface
         $quoteTransfer = $this->executePostSavePlugins($quoteTransfer);
         $quoteTransfer = $this->recalculate($quoteTransfer);
 
-        if ($this->isTerminated(static::TERMINATION_EVENT_NAME_REMOVE, $cartChangeTransfer,$quoteTransfer)) {
+        if ($this->isTerminated(static::TERMINATION_EVENT_NAME_REMOVE, $cartChangeTransfer, $quoteTransfer)) {
             return $originalQuoteTransfer;
         }
 
@@ -172,7 +170,7 @@ class Operation implements OperationInterface
         $quoteTransfer = $this->executePostSavePlugins($quoteTransfer);
         $quoteTransfer = $this->recalculate($quoteTransfer);
 
-        if ($this->isTerminated(static::TERMINATION_EVENT_NAME_RELOAD, $cartChangeTransfer,$quoteTransfer)) {
+        if ($this->isTerminated(static::TERMINATION_EVENT_NAME_RELOAD, $cartChangeTransfer, $quoteTransfer)) {
             return $originalQuoteTransfer;
         }
 
@@ -181,8 +179,8 @@ class Operation implements OperationInterface
 
     /**
      * @param string $terminationEventName
-     * @param CartChangeTransfer $cartChangeTransfer
-     * @param QuoteTransfer $calculatedQuoteTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $calculatedQuoteTransfer
      *
      * @return bool
      */

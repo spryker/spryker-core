@@ -9,13 +9,13 @@ namespace Spryker\Client\Permission;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Permission\Dependency\Client\PermissionToZedRequestClientInterface;
-use Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 use Spryker\Client\Permission\PermissionExecutor\PermissionExecutor;
 use Spryker\Client\Permission\PermissionExecutor\PermissionExecutorInterface;
 use Spryker\Client\Permission\PermissionFinder\PermissionFinder;
 use Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface;
 use Spryker\Client\Permission\Zed\PermissionStub;
 use Spryker\Client\Permission\Zed\PermissionStubInterface;
+use Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 
 class PermissionFactory extends AbstractFactory
 {

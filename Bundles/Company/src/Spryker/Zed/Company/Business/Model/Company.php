@@ -59,6 +59,8 @@ class Company implements CompanyInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
+     * @throws \Spryker\Zed\Company\Business\Exception\InvalidCompanyCreationException
+     *
      * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
     public function create(CompanyTransfer $companyTransfer): CompanyResponseTransfer

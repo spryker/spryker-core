@@ -16,6 +16,8 @@ interface PermissionStoragePluginInterface
      * - Finds permission in a database for a specific user
      * - Populates them into a permission collection with configurations
      *
+     * @api
+     *
      * @param int|string $identifier
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer

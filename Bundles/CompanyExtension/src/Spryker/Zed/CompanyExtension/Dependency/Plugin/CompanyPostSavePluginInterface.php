@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CompanyExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CompanyResponseTransfer;
-use Generated\Shared\Transfer\CompanyTransfer;
 
 interface CompanyPostSavePluginInterface
 {

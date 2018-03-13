@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Permission\Communication\Controller;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
-use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**

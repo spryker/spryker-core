@@ -9,8 +9,8 @@ namespace Spryker\Client\Permission\PermissionExecutor;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 use Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface;
+use Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 
 class PermissionExecutor implements PermissionExecutorInterface

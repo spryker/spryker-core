@@ -10,9 +10,9 @@ namespace Spryker\Zed\CheckoutPermissionConnector\Communication\Plugin;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 
 /**
  * @example

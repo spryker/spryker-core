@@ -1,9 +1,13 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CartPermissionConnector\Communication;
 
 use Spryker\Zed\CartPermissionConnector\CartPermissionConnectorDependencyProvider;
-use Spryker\Zed\CartPermissionConnector\Dependency\Facade\CartPermissionConnectorToMessengerFacadeBridge;
 use Spryker\Zed\CartPermissionConnector\Dependency\Facade\CartPermissionConnectorToMessengerFacadeInterface;
 use Spryker\Zed\CartPermissionConnector\Dependency\Facade\CartPermissionConnectorToPermissionFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -11,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class CartPermissionConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return CartPermissionConnectorToPermissionFacadeInterface
+     * @return \Spryker\Zed\CartPermissionConnector\Dependency\Facade\CartPermissionConnectorToPermissionFacadeInterface
      */
     public function getPermissionFacade(): CartPermissionConnectorToPermissionFacadeInterface
     {
@@ -19,7 +23,7 @@ class CartPermissionConnectorCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @return CartPermissionConnectorToMessengerFacadeInterface
+     * @return \Spryker\Zed\CartPermissionConnector\Dependency\Facade\CartPermissionConnectorToMessengerFacadeInterface
      */
     public function getMessengerFacade(): CartPermissionConnectorToMessengerFacadeInterface
     {

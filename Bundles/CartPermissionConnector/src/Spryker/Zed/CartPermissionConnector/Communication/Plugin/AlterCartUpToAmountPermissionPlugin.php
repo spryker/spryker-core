@@ -1,16 +1,18 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CartPermissionConnector\Communication\Plugin;
-
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 use Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
-
 
 /**
  * For Zed PermissionDependencyProvider::getPermissionPlugins() and
@@ -25,13 +27,13 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
     protected const FIELD_CENT_AMOUNT = 'cent_amount';
     protected const SUBSCRIBED_TERMINATION_NAMES = [
         'add',
-        'reload'
+        'reload',
     ];
 
     /**
      * @param string $terminationEventName
-     * @param CartChangeTransfer $cartChangeTransfer
-     * @param QuoteTransfer $calculatedQuoteTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $calculatedQuoteTransfer
      *
      * @return bool
      */
@@ -77,7 +79,7 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
     public function getConfigurationSignature(): array
     {
         return [
-            static::FIELD_CENT_AMOUNT => ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT
+            static::FIELD_CENT_AMOUNT => ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT,
         ];
     }
 
@@ -90,17 +92,17 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
     }
 
     /**
-     * @param $terminationEventName
+     * @param string $terminationEventName
      *
      * @return bool
      */
-    protected function isSubscribedToTerminationEventName($terminationEventName)
+    protected function isSubscribedToTerminationEventName(string $terminationEventName)
     {
         return in_array($terminationEventName, static::SUBSCRIBED_TERMINATION_NAMES);
     }
 
     /**
-     * @param CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return bool
      */
@@ -122,8 +124,8 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
     }
 
     /**
-     * @param CartChangeTransfer $companyUserTransfer
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */

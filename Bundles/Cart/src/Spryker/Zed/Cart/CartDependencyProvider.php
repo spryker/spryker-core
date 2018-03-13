@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cart;
 
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationBridge;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerBridge;
-use Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -121,9 +120,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addTerminationPlugins(Container $container)
     {
@@ -175,9 +174,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return CartTerminationPluginInterface[]
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[]
      */
     protected function getTerminationPlugins(Container $container)
     {
