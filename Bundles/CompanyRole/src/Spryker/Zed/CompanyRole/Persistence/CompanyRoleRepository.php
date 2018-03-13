@@ -315,6 +315,20 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     }
 
     /**
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
+     */
+    public function getDefaultCompanyRole(): CompanyRoleTransfer
+    {
+        $query = $this->getFactory()
+            ->createCompanyRoleQuery()
+            ->filterByIsDefault(true);
+
+        $spyCompanyRole = $this->buildQueryFromCriteria($query)->findOne();
+
+        return $this->prepareCompanyRoleTransfer($spyCompanyRole);
+    }
+
+    /**
      * @param int $idCompanyRole
      *
      * @return bool

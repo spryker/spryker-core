@@ -184,4 +184,14 @@ interface CompanyRoleFacadeInterface
      * @return void
      */
     public function updateCompanyRolePermission(PermissionTransfer $permissionTransfer): void;
+
+    /**
+     * Specification:
+     * - Retrieve default company role.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
+     */
+    public function getDefaultCompanyRole(): CompanyRoleTransfer;
 }

@@ -22,15 +22,23 @@ class CompanyUserPluginExecutor implements CompanyUserPluginExecutorInterface
     protected $companyUserHydrationPlugins;
 
     /**
+     * @var array|\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostCreatePluginInterface[]
+     */
+    protected $companyUserPostCreatePlugins;
+
+    /**
      * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface[] $companyUserPostSavePlugins
+     * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostCreatePluginInterface[] $companyUserPostCreatePlugins
      * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[] $companyUserHydrationPlugins
      */
     public function __construct(
         array $companyUserPostSavePlugins = [],
+        array $companyUserPostCreatePlugins = [],
         array $companyUserHydrationPlugins = []
     ) {
         $this->companyUserPostSavePlugins = $companyUserPostSavePlugins;
         $this->companyUserHydrationPlugins = $companyUserHydrationPlugins;
+        $this->companyUserPostCreatePlugins = $companyUserPostCreatePlugins;
     }
 
     /**
@@ -56,6 +64,20 @@ class CompanyUserPluginExecutor implements CompanyUserPluginExecutorInterface
     {
         foreach ($this->companyUserHydrationPlugins as $companyUserHydrationPlugin) {
             $companyUserTransfer = $companyUserHydrationPlugin->hydrate($companyUserTransfer);
+        }
+
+        return $companyUserTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function executePostCreatePlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
+    {
+        foreach ($this->companyUserPostCreatePlugins as $companyUserPostCreatePlugin) {
+            $companyUserTransfer = $companyUserPostCreatePlugin->postCreate($companyUserTransfer);
         }
 
         return $companyUserTransfer;

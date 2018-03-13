@@ -221,4 +221,17 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     {
         $this->getEntityManager()->updateCompanyRolePermission($permissionTransfer);
     }
+
+    /**
+     * Specification:
+     * - Retrieve default company role.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
+     */
+    public function getDefaultCompanyRole(): CompanyRoleTransfer
+    {
+        return $this->getRepository()->getDefaultCompanyRole();
+    }
 }

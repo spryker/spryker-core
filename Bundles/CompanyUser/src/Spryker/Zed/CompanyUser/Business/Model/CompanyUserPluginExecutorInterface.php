@@ -23,5 +23,12 @@ interface CompanyUserPluginExecutorInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
+    public function executePostCreatePlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
     public function executeHydrationPlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
 }

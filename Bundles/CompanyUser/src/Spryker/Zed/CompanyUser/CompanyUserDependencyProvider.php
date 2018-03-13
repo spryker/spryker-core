@@ -16,6 +16,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
 
     public const PLUGINS_COMPANY_USER_POST_SAVE = 'PLUGINS_COMPANY_USER_POST_SAVE';
+    public const PLUGINS_COMPANY_USER_POST_CREATE = 'PLUGINS_COMPANY_USER_POST_CREATE';
     public const PLUGINS_COMPANY_USER_HYDRATE = 'PLUGINS_COMPANY_USER_HYDRATE';
 
     /**
@@ -27,6 +28,7 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addCompanyUserPostSavePlugins($container);
+        $container = $this->addCompanyUserPostCreatePlugins($container);
         $container = $this->addCompanyUserHydrationPlugins($container);
         $container = $this->addCustomerFacade($container);
 
@@ -66,6 +68,20 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addCompanyUserPostCreatePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_COMPANY_USER_POST_CREATE] = function () {
+            return $this->getCompanyUserPostCreatePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addCompanyUserHydrationPlugins(Container $container): Container
     {
         $container[static::PLUGINS_COMPANY_USER_HYDRATE] = function () {
@@ -87,6 +103,14 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
      */
     protected function getCompanyUserHydrationPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostCreatePluginInterface[]
+     */
+    protected function getCompanyUserPostCreatePlugins(): array
     {
         return [];
     }

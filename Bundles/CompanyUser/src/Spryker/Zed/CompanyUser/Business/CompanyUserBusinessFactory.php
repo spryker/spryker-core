@@ -41,6 +41,7 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyUserPluginExecutor(
             $this->getCompanyUserPostSavePlugins(),
+            $this->getCompanyUserPostCreatePlugins(),
             $this->getCompanyUserHydrationPlugins()
         );
     }
@@ -59,6 +60,14 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     protected function getCompanyUserPostSavePlugins(): array
     {
         return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_COMPANY_USER_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostCreatePluginInterface[]
+     */
+    protected function getCompanyUserPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_COMPANY_USER_POST_CREATE);
     }
 
     /**

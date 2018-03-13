@@ -7,12 +7,11 @@
 
 namespace Spryker\Zed\CompanyUser\Business\Model;
 
-use Generated\Shared\Transfer\CompanyResponseTransfer;
+use ArrayObject;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
 use Spryker\Zed\CompanyUser\Dependency\Facade\CompanyUserToCustomerFacadeInterface;
 use Spryker\Zed\CompanyUser\Persistence\CompanyUserEntityManagerInterface;
@@ -132,7 +131,7 @@ class CompanyUser implements CompanyUserInterface
     /**
      * @param int $idCustomer
      *
-     * @return CompanyUserTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
     public function findActiveCompanyUserByCustomerId(int $idCustomer): ?CompanyUserTransfer
     {
@@ -178,13 +177,14 @@ class CompanyUser implements CompanyUserInterface
         $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
         $companyUserTransfer = $this->companyUserEntityManager->saveCompanyUser($companyUserTransfer);
         $companyUserTransfer = $this->companyUserPluginExecutor->executePostSavePlugins($companyUserTransfer);
+        $companyUserTransfer = $this->companyUserPluginExecutor->executePostCreatePlugins($companyUserTransfer);
         $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
 
         return $companyUserResponseTransfer;
     }
 
     /**
-     * @param CompanyUserResponseTransfer $companyUserResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
@@ -208,9 +208,9 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
-     * @param CompanyUserResponseTransfer $companyUserResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
-     * @return CompanyUserResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     protected function updateCustomer(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
@@ -233,12 +233,11 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
-     * @param CompanyUserResponseTransfer $companyUserResponseTransfer
-     * @param CompanyUserResponseTransfer $companyUserResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
-     * @return CompanyUserResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    protected function registerCustomer(CompanyUserResponseTransfer $companyUserResponseTransfer)
+    protected function registerCustomer(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
         $companyUserResponseTransfer->requireCompanyUser();
         $companyUserResponseTransfer->getCompanyUser()->requireCustomer();
@@ -269,16 +268,16 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
-     * @param CompanyUserResponseTransfer $companyUserResponseTransfer
-     * @param \ArrayObject|CustomerErrorTransfer[] $errors
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\CustomerErrorTransfer[] $errors
      *
-     * @return CompanyUserResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    protected function addErrorsToResponse(CompanyUserResponseTransfer $companyUserResponseTransfer, \ArrayObject $errors): CompanyUserResponseTransfer
+    protected function addErrorsToResponse(CompanyUserResponseTransfer $companyUserResponseTransfer, ArrayObject $errors): CompanyUserResponseTransfer
     {
         foreach ($errors as $error) {
             $companyUserResponseTransfer->addMessage(
-                (new ResponseMessageTransfer())->setText(    $error->getMessage())
+                (new ResponseMessageTransfer())->setText($error->getMessage())
             );
         }
 

@@ -59,6 +59,11 @@ interface CompanyRoleRepositoryInterface
     ): CompanyRoleCollectionTransfer;
 
     /**
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
+     */
+    public function getDefaultCompanyRole(): CompanyRoleTransfer;
+
+    /**
      * @param int $idCompanyRole
      *
      * @return bool
