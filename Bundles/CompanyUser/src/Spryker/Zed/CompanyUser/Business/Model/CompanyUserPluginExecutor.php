@@ -51,12 +51,13 @@ class CompanyUserPluginExecutor implements CompanyUserPluginExecutorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function executePreSavePlugins(CompanyUserTransfer $companyUserResponseTransfer): CompanyUserTransfer
-    {
+    public function executePreSavePlugins(
+        CompanyUserResponseTransfer $companyUserResponseTransfer
+    ): CompanyUserResponseTransfer {
         foreach ($this->companyUserPreSavePlugins as $companyUserPreSavePlugin) {
             $companyUserResponseTransfer = $companyUserPreSavePlugin->preSave($companyUserResponseTransfer);
         }
@@ -65,17 +66,18 @@ class CompanyUserPluginExecutor implements CompanyUserPluginExecutorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function executePostSavePlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
-    {
+    public function executePostSavePlugins(
+        CompanyUserResponseTransfer $companyUserResponseTransfer
+    ): CompanyUserResponseTransfer {
         foreach ($this->companyUserPostSavePlugins as $companyUserPostSavePlugin) {
-            $companyUserTransfer = $companyUserPostSavePlugin->postSave($companyUserTransfer);
+            $companyUserResponseTransfer = $companyUserPostSavePlugin->postSave($companyUserResponseTransfer);
         }
 
-        return $companyUserTransfer;
+        return $companyUserResponseTransfer;
     }
 
     /**
@@ -97,8 +99,9 @@ class CompanyUserPluginExecutor implements CompanyUserPluginExecutorInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function executePostCreatePlugins(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
-    {
+    public function executePostCreatePlugins(
+        CompanyUserResponseTransfer $companyUserResponseTransfer
+    ): CompanyUserResponseTransfer {
         foreach ($this->companyUserPostCreatePlugins as $companyUserPostCreatePlugin) {
             $companyUserResponseTransfer = $companyUserPostCreatePlugin->postCreate($companyUserResponseTransfer);
         }
