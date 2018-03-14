@@ -161,7 +161,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
             'concreteNames' => implode(', ', $concreteNames),
             'concreteSkus' => implode(', ', $concreteSkus),
             'concreteAttributes' => implode(', ', $concreteAttributes),
-            'concreteLocalizedAttributes' => implode(',', $concreteLocalizedAttributes),
+            'concreteLocalizedAttributes' => implode(', ', $concreteLocalizedAttributes),
             'concreteDescriptions' => implode(', ', $concreteDescriptions),
         ];
     }
