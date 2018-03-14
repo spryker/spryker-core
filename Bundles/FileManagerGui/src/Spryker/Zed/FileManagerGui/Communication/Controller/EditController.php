@@ -43,7 +43,7 @@ class EditController extends AbstractController
                 $this->getFactory()->getFileManagerFacade()->save($saveRequestTransfer);
 
                 $this->addSuccessMessage(
-                    'The file was added successfully.'
+                    'The file was edited successfully.'
                 );
                 $redirectUrl = Url::generate(sprintf('/file-manager-gui/edit?id-file=%d', $idFile))->build();
 
@@ -93,6 +93,7 @@ class EditController extends AbstractController
     protected function createFileManagerSaveRequestTransfer(FileTransfer $fileTransfer)
     {
         $requestTransfer = new FileManagerSaveRequestTransfer();
+        $this->setFileName($fileTransfer);
 
         $requestTransfer->setFile($fileTransfer);
         $requestTransfer->setFileInfo($this->createFileInfoTransfer($fileTransfer));
@@ -100,6 +101,20 @@ class EditController extends AbstractController
         $requestTransfer->setFileLocalizedAttributes($fileTransfer->getFileLocalizedAttributes());
 
         return $requestTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileTransfer
+     */
+    protected function setFileName(FileTransfer $fileTransfer)
+    {
+        if (!$fileTransfer->getFileName()) {
+            $fileTransfer->setFileName($fileTransfer->getFileContent()->getClientOriginalName());
+        }
+
+        return $fileTransfer;
     }
 
     /**

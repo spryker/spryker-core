@@ -14,14 +14,14 @@ interface FileManagerServiceInterface
      *
      * @return string
      */
-    public function getPublicUrl($fileName);
+    public function getPublicUrl(string $fileName);
 
     /**
      * @param string $fileName
      *
      * @return string
      */
-    public function getZedUrl($fileName);
+    public function getZedUrl(string $fileName);
 
     /**
      * @param string $fileName
@@ -31,7 +31,7 @@ interface FileManagerServiceInterface
      *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
-    public function read($fileName);
+    public function read(string $fileName);
 
     /**
      * @param string $fileName
@@ -40,5 +40,5 @@ interface FileManagerServiceInterface
      *
      * @return mixed
      */
-    public function readStream($fileName);
+    public function readStream(string $fileName);
 }

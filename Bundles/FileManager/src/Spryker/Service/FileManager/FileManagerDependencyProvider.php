@@ -11,7 +11,7 @@ use Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemBridge
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
 
-class FileManagerServiceDependencyProvider extends AbstractBundleDependencyProvider
+class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FILE_SYSTEM_SERVICE = 'FILE_SYSTEM_SERVICE';
 

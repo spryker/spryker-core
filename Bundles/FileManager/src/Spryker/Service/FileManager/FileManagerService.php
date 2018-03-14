@@ -48,7 +48,7 @@ class FileManagerService extends AbstractService implements FileManagerServiceIn
     /**
      * {@inheritdoc}
      */
-    public function readStream($fileName)
+    public function readStream(string $fileName)
     {
         return $this->getFactory()
             ->createFileReader()

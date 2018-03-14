@@ -184,7 +184,7 @@ interface FileManagerToFileSystemServiceInterface
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     * @param mixed $stream
+     * @param mixed                                               $stream
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
      *
@@ -203,7 +203,7 @@ interface FileManagerToFileSystemServiceInterface
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     * @param mixed $stream
+     * @param mixed                                               $stream
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
      *
@@ -213,7 +213,7 @@ interface FileManagerToFileSystemServiceInterface
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     * @param mixed $stream
+     * @param mixed                                               $stream
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
      *
