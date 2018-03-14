@@ -53,9 +53,10 @@ class FileManagerStorage implements FileManagerStorageInterface
         $storageKey = $this->generateKey($fileId, $localeName);
         $fileContent = $this->storageClient->get($storageKey);
 
-        $fileStorageTransfer = new FileManagerStorageTransfer();
-        $fileStorageTransfer->fromArray(($fileContent), true);
-        return $fileStorageTransfer;
+        $fileManagerStorageTransfer = new FileManagerStorageTransfer();
+        $fileManagerStorageTransfer->fromArray(($fileContent), true);
+
+        return $fileManagerStorageTransfer;
     }
 
     /**

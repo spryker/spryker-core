@@ -32,8 +32,8 @@ class FileRemover implements FileRemoverInterface
     /**
      * FileSaver constructor.
      *
-     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
-     * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface $fileContent
+     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface             $fileFinder
+     * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface            $fileContent
      * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $fileManagerQueryContainer
      */
     public function __construct(FileFinderInterface $fileFinder, FileContentInterface $fileContent, FileManagerQueryContainerInterface $fileManagerQueryContainer)
@@ -56,10 +56,12 @@ class FileRemover implements FileRemoverInterface
             return false;
         }
 
-        $this->handleDatabaseTransaction(function () use ($fileInfo) {
-            $this->fileContent->delete($fileInfo->getStorageFileName());
-            $fileInfo->delete();
-        }, $this->fileManagerQueryContainer->getConnection());
+        $this->handleDatabaseTransaction(
+            function () use ($fileInfo) {
+                $this->fileContent->delete($fileInfo->getStorageFileName());
+                $fileInfo->delete();
+            }, $this->fileManagerQueryContainer->getConnection()
+        );
 
         return true;
     }
@@ -77,14 +79,16 @@ class FileRemover implements FileRemoverInterface
             return false;
         }
 
-        $this->handleDatabaseTransaction(function () use ($file) {
-            foreach ($file->getSpyFileInfos() as $fileInfo) {
-                $this->fileContent->delete($fileInfo->getStorageFileName());
-                $fileInfo->delete();
-            }
+        $this->handleDatabaseTransaction(
+            function () use ($file) {
+                foreach ($file->getSpyFileInfos() as $fileInfo) {
+                    $this->fileContent->delete($fileInfo->getStorageFileName());
+                    $fileInfo->delete();
+                }
 
-            $file->delete();
-        }, $this->fileManagerQueryContainer->getConnection());
+                $file->delete();
+            }, $this->fileManagerQueryContainer->getConnection()
+        );
 
         return true;
     }

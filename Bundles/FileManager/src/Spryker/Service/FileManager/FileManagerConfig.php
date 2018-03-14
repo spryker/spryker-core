@@ -10,7 +10,7 @@ namespace Spryker\Service\FileManager;
 use Spryker\Service\Kernel\AbstractBundleConfig;
 use Spryker\Shared\FileManager\FileManagerConstants;
 
-class FileManagerServiceConfig extends AbstractBundleConfig
+class FileManagerConfig extends AbstractBundleConfig
 {
     /**
      * @return mixed

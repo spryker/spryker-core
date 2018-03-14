@@ -53,12 +53,12 @@ class FileSaver implements FileSaverInterface
     /**
      * FileSaver constructor.
      *
-     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\FileManager\Business\Model\FileVersionInterface $fileVersion
-     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
-     * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface $fileContent
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface       $queryContainer
+     * @param \Spryker\Zed\FileManager\Business\Model\FileVersionInterface                  $fileVersion
+     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface                   $fileFinder
+     * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface                  $fileContent
      * @param \Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaverInterface $attributesSaver
-     * @param \Spryker\Zed\FileManager\FileManagerConfig $config
+     * @param \Spryker\Zed\FileManager\FileManagerConfig                                    $config
      */
     public function __construct(
         FileManagerQueryContainerInterface $queryContainer,
