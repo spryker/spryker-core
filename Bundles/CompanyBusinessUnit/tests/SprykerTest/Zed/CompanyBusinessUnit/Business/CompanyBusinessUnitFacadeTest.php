@@ -30,7 +30,13 @@ class CompanyBusinessUnitFacadeTest extends Test
     public function testCreateShouldPersistCompanyBusinessUnit()
     {
         $idCompany = $this->tester->getCompany()->getIdCompany();
-        $businessUnitTransfer = (new CompanyBusinessUnitBuilder(['fkCompany' => $idCompany]))->build();
+
+        $seedData = [
+            'fkCompany' => $idCompany,
+            'idCompanyBusinessUnit' => null,
+        ];
+
+        $businessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
 
         $createdTransfer = $this->getFacade()
             ->create($businessUnitTransfer)
@@ -45,7 +51,13 @@ class CompanyBusinessUnitFacadeTest extends Test
     public function testGetCompanyBusinessUnitByIdShouldReturnTransferObject()
     {
         $idCompany = $this->tester->getCompany()->getIdCompany();
-        $businessUnitTransfer = (new CompanyBusinessUnitBuilder(['fkCompany' => $idCompany]))->build();
+
+        $seedData = [
+            'fkCompany' => $idCompany,
+            'idCompanyBusinessUnit' => null,
+        ];
+
+        $businessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
 
         $createdBusinessUnitTransfer = $this->getFacade()
             ->create($businessUnitTransfer)
@@ -61,7 +73,13 @@ class CompanyBusinessUnitFacadeTest extends Test
     public function testUpdateShouldPersistCompanyBusinessUnitChanges()
     {
         $idCompany = $this->tester->getCompany()->getIdCompany();
-        $businessUnitTransfer = (new CompanyBusinessUnitBuilder(['fkCompany' => $idCompany]))->build();
+
+        $seedData = [
+            'fkCompany' => $idCompany,
+            'idCompanyBusinessUnit' => null,
+        ];
+
+        $businessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
 
         $createdBusinessUnitTransfer = $this->getFacade()
             ->create(clone $businessUnitTransfer)
@@ -79,7 +97,13 @@ class CompanyBusinessUnitFacadeTest extends Test
     public function testDeleteShouldRemoveCompanyBusinessUnitFromStorage()
     {
         $idCompany = $this->tester->getCompany()->getIdCompany();
-        $businessUnitTransfer = (new CompanyBusinessUnitBuilder(['fkCompany' => $idCompany]))->build();
+
+        $seedData = [
+            'fkCompany' => $idCompany,
+            'idCompanyBusinessUnit' => null,
+        ];
+
+        $businessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
 
         $createdBusinessUnitTransfer = $this->getFacade()
             ->create(clone $businessUnitTransfer)

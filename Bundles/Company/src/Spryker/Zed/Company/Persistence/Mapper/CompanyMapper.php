@@ -40,7 +40,7 @@ class CompanyMapper implements CompanyMapperInterface
         CompanyTransfer $companyTransfer
     ): CompanyTransfer {
         return $companyTransfer->fromArray(
-            $spyCompany->getModifiedColumns(),
+            $spyCompany->toArray(),
             true
         );
     }
