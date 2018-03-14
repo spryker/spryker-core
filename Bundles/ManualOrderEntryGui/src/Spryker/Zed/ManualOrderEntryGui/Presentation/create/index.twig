@@ -13,7 +13,20 @@
             {{ form_start(forms[0]) }}
 
                 {% for form in forms %}
-                    {{ form_widget(form) }}
+
+                    ==={{ form.vars.id }}----
+                    {#{{ dump(form.manualOrderProductsSku) }}#}
+                    {#{{ dump(form.manualOrderProductsQuantity) }}#}
+
+
+                    {% if form.vars.id == 'products' %}
+                        {% include '@ManualOrderEntryGui/create/partials/products.twig' with {'form': form} %}
+                    {% elseif form.vars.id == 'addresses' %}
+                        {% include '@ManualOrderEntryGui/create/partials/addresses.twig' with {'form': form} %}
+                    {% else %}
+                        {{ form_widget(form) }}
+                    {% endif %}
+
                 {% endfor %}
 
                 <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />

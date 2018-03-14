@@ -150,7 +150,7 @@ class AddressCollectionType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'addressesForm';
+        return 'addresses';
     }
 
 }

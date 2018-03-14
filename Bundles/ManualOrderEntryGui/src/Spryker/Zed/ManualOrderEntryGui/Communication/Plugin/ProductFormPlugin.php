@@ -7,24 +7,24 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-interface ManualOrderEntryFormPluginInterface
+/**
+ * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
+ */
+class ProductFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
-    /**
-     * @todo @Artem May be this delete
-     *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     */
-//    public function buildForm(FormBuilderInterface $builder);
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request);
+    public function createForm(Request $request)
+    {
+        return $this->getFactory()->createProductsCollectionForm();
+    }
+
 }

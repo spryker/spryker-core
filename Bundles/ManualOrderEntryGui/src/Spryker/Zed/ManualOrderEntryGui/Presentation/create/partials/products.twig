@@ -1,0 +1,9 @@
+
+<table class="manualOrderProducts">
+{% for product in form.manualOrderProducts %}
+    <tr>
+        <td>{{ form_row(product.sku) }}</td>
+        <td>{{ form_row(product.quantity) }}</td>
+    </tr>
+{% endfor %}
+</table>

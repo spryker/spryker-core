@@ -8,18 +8,18 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Pyz\Yves\Customer\Form\RegisterForm;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ProductDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Main\ManualOrderEntryType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomerType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\AddressCollectionDataProvider;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\AddressDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ManualOrderEntryFormDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomerDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomersListDataProvider;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductsCollectionType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Service\StepEngine;
 use Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
@@ -204,6 +204,28 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
 
         return $this->getFormFactory()->create(
             AddressCollectionType::class,
+            $formDataProvider->getData(new QuoteTransfer()),
+            $formDataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ProductDataProvider
+     */
+    public function createProductCollectionDataProvider()
+    {
+        return new ProductDataProvider();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createProductsCollectionForm()
+    {
+        $formDataProvider = $this->createProductCollectionDataProvider();
+
+        return $this->getFormFactory()->create(
+            ProductsCollectionType::class,
             $formDataProvider->getData(new QuoteTransfer()),
             $formDataProvider->getOptions()
         );
