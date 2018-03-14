@@ -142,7 +142,8 @@ class Company implements CompanyInterface
      *
      * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
-    protected function executePostCreatePlugins(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer {
+    protected function executePostCreatePlugins(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
+    {
 
         $companyResponseTransfer = $this->companyPluginExecutor->executeCompanyPostCreatePlugins($companyResponseTransfer);
 

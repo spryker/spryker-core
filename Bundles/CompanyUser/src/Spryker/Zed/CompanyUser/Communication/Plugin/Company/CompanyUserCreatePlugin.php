@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\CompanyUser\Communication\Plugin\Company;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
-use Generated\Shared\Transfer\CompanyTransfer;
-use Generated\Shared\Transfer\CompanyUserResponseTransfer;
-use Generated\Shared\Transfer\ResponseMessageTransfer;
 use Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -53,13 +51,13 @@ class CompanyUserCreatePlugin extends AbstractPlugin implements CompanyPostCreat
     }
 
     /**
-     * @param \ArrayObject|ResponseMessageTransfer[] $messages
-     * @param CompanyResponseTransfer $companyResponseTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ResponseMessageTransfer[] $messages
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
      *
-     * @return CompanyResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
     protected function addMessagesToCompanyResponse(
-        \ArrayObject $messages,
+        ArrayObject $messages,
         CompanyResponseTransfer $companyResponseTransfer
     ) {
         foreach ($messages as $messageTransfer) {

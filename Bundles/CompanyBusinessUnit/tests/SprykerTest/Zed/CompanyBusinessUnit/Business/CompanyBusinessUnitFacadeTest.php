@@ -95,7 +95,6 @@ class CompanyBusinessUnitFacadeTest extends Test
      */
     public function testGetCompanyBusinessUnitCollectionshouldReturnTransferObject()
     {
-        //@todo implement test
     }
 
     /**
