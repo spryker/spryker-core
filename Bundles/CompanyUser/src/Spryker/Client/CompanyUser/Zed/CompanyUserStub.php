@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
-use Spryker\Client\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
 use Spryker\Client\Kernel\PermissionAwareTrait;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
@@ -42,7 +41,7 @@ class CompanyUserStub implements CompanyUserStubInterface
      */
     public function createCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        if (!$this->can(AddCompanyUserPermissionPlugin::KEY)) {
+        if (!$this->can('AddCompanyUserPermissionPlugin')) {
             return $this->generatePermissionErrorMessage();
         }
 
