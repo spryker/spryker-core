@@ -10,6 +10,7 @@ namespace Spryker\Zed\Customer\Communication\Controller;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -18,6 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AbstractController
 {
+    protected const PARAM_CUSTOMER = 'customerTransfer';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -35,17 +38,19 @@ class ViewController extends AbstractController
 
         $customerTransfer = $this->loadCustomerTransfer($idCustomer);
 
-        $addresses = $customerTransfer->getAddresses();
-
-        $table = $this->getFactory()
+        $addressTable = $this->getFactory()
             ->createCustomerAddressTable($idCustomer);
+
+        $externalBlocks = $this->renderCustomerDetailBlocks($request, $customerTransfer);
+        if ($externalBlocks instanceof RedirectResponse) {
+            return $externalBlocks;
+        }
 
         return $this->viewResponse([
             'customer' => $customerTransfer,
-            'addresses' => $addresses,
             'idCustomer' => $idCustomer,
-            'addressTable' => $table->render(),
-
+            'addressTable' => $addressTable->render(),
+            'blocks' => $externalBlocks,
         ]);
     }
 
@@ -62,7 +67,7 @@ class ViewController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function tableAction(Request $request)
+    public function addressTableAction(Request $request)
     {
         $idCustomer = $this->castId($request->get(CustomerConstants::PARAM_ID_CUSTOMER));
 
@@ -70,6 +75,18 @@ class ViewController extends AbstractController
             ->createCustomerAddressTable($idCustomer);
 
         return $this->jsonResponse($table->fetchData());
+    }
+
+    /**
+     * @deprecated use addressTableAction
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction(Request $request)
+    {
+        return $this->addressTableAction($request);
     }
 
     /**
@@ -84,5 +101,48 @@ class ViewController extends AbstractController
         $customerTransfer = $this->getFacade()->getCustomer($customerTransfer);
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return array
+     */
+    protected function renderCustomerDetailBlocks(Request $request, CustomerTransfer $customerTransfer)
+    {
+        $subRequest = clone $request;
+        $subRequest->setMethod(Request::METHOD_POST);
+        $subRequest->request->set(static::PARAM_CUSTOMER, $customerTransfer);
+
+        $responseData = [];
+        $blocks = $this->getFactory()->getCustomerDetailExternalBlocksUrls();
+
+        foreach ($blocks as $blockName => $blockUrl) {
+            $blockResponse = $this->handleSubRequest($subRequest, $blockUrl);
+            if ($blockResponse instanceof RedirectResponse) {
+                return $blockResponse;
+            }
+
+            $responseData[$blockName] = $blockResponse;
+        }
+
+        return $responseData;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $blockUrl
+     *
+     * @return string|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function handleSubRequest(Request $request, $blockUrl)
+    {
+        $blockResponse = $this->getFactory()->getSubRequestHandler()->handleSubRequest($request, $blockUrl);
+        if ($blockResponse instanceof RedirectResponse) {
+            return $blockResponse;
+        }
+
+        return $blockResponse->getContent();
     }
 }
