@@ -60,7 +60,7 @@ class EditController extends AbstractController
             'userForm' => $userForm->createView(),
         ];
 
-        if ($userForm->isValid()) {
+        if ($userForm->isSubmitted() && $userForm->isValid()) {
             $formData = $userForm->getData();
 
             $userTransfer = $this->getFacade()->addUser(
@@ -106,7 +106,7 @@ class EditController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($userForm->isValid()) {
+        if ($userForm->isSubmitted() && $userForm->isValid()) {
             $formData = $userForm->getData();
             $userTransfer = new UserTransfer();
             $userTransfer->fromArray($formData, true);
@@ -220,7 +220,7 @@ class EditController extends AbstractController
             ->createResetPasswordForm($this->getFacade())
             ->handleRequest($request);
 
-        if ($resetPasswordForm->isValid()) {
+        if ($resetPasswordForm->isSubmitted() && $resetPasswordForm->isValid()) {
             $formData = $resetPasswordForm->getData();
             $currentUserTransfer->setPassword(
                 $formData[ResetPasswordForm::FIELD_PASSWORD]

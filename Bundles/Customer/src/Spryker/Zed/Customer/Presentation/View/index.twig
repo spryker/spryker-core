@@ -90,5 +90,10 @@
         {% endblock %}
     {% endembed %}
 
+    <div>
+        {% for blockName, externalBlock in blocks %}
+            <div id="{{ blockName }}">{{ externalBlock | raw }}</div>
+        {% endfor %}
+    </div>
 
 {% endblock %}

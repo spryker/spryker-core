@@ -39,6 +39,8 @@ class IndexControllerCest
      */
     public function testICanGoFromOverviewPageToCreatePage(DiscountCommunicationTester $i)
     {
+        $i->registerStoreRelationToggleFormTypePlugin();
+
         $i->amOnPage('/discount/index/list');
         $i->click('Create new Discount');
         $i->seeResponseCodeIs(200);

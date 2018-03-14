@@ -66,7 +66,7 @@ class FilterPreferencesController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $productSearchAttributeTransfer = $this
                 ->getFactory()
                 ->createAttributeFormTransferMapper()
@@ -108,7 +108,7 @@ class FilterPreferencesController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $productSearchAttributeTransfer = $this
                 ->getFactory()
                 ->createAttributeFormTransferMapper()

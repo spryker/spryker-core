@@ -14,10 +14,10 @@ use Spryker\Client\Kernel\Container;
 
 class AvailabilityDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_LOCALE = 'client locale';
-    const CLIENT_ZED_REQUEST = 'zed request client';
+    const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
-    const KV_STORAGE = 'kv storage';
+    const KV_STORAGE = 'KV_STORAGE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container

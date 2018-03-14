@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
+use DateTime;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\ConcreteGeneralForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete\StockForm;
@@ -14,25 +15,32 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyC
 use Spryker\Zed\ProductManagement\Communication\Form\Product\Price\ProductMoneyType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
  */
 class ProductConcreteFormEdit extends ProductFormAdd
 {
     const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const FIELD_ID_PRODUCT_CONCRETE = 'id_product';
+    const FIELD_VALID_FROM = 'valid_from';
+    const FIELD_VALID_TO = 'valid_to';
 
     const FORM_ASSIGNED_BUNDLED_PRODUCTS = 'assigned_bundled_products';
     const BUNDLED_PRODUCTS_TO_BE_REMOVED = 'product_bundles_to_be_removed';
 
     const OPTION_IS_BUNDLE_ITEM = 'is_bundle_item';
+    const VALIDITY_DATETIME_FORMAT = 'yyyy-MM-dd H:mm:ss';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -44,6 +52,8 @@ class ProductConcreteFormEdit extends ProductFormAdd
     {
         $this
             ->addSkuField($builder)
+            ->addValidFromField($builder)
+            ->addValidToField($builder)
             ->addProductAbstractIdHiddenField($builder)
             ->addProductConcreteIdHiddenField($builder)
             ->addGeneralLocalizedForms($builder)
@@ -101,6 +111,106 @@ class ProductConcreteFormEdit extends ProductFormAdd
                     'readonly' => 'readonly',
                 ],
             ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addValidFromField(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_VALID_FROM,
+            DateTimeType::class,
+            [
+                'format' => static::VALIDITY_DATETIME_FORMAT,
+                'label' => 'Valid From (GMT)',
+                'widget' => 'single_text',
+                'required' => false,
+                'attr' => [
+                    'class' => 'datepicker js-from-datetime safe-datetime',
+                ],
+                'constraints' => [
+                    new Callback([
+                        'callback' => function ($newFrom, ExecutionContextInterface $context) {
+                            $formData = $context->getRoot()->getData();
+
+                            if (!$newFrom) {
+                                return;
+                            }
+
+                            if (empty($formData[static::FIELD_VALID_TO])) {
+                                return;
+                            }
+
+                            $newValidFromDateTime = new DateTime($newFrom);
+                            $validToDateTime = new DateTime($formData[static::FIELD_VALID_TO]);
+
+                            if ($newValidFromDateTime > $validToDateTime) {
+                                $context->addViolation('Date "Valid from" can not be later than "Valid to".');
+                            }
+
+                            if ($newValidFromDateTime->format('c') === $validToDateTime->format('c')) {
+                                $context->addViolation('Date "Valid from" can not be the same as "Valid to".');
+                            }
+                        },
+                    ]),
+                ],
+            ]
+        );
+
+        $this->addDateTimeTransformer(static::FIELD_VALID_FROM, $builder);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addValidToField(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_VALID_TO,
+            DateTimeType::class,
+            [
+                'format' => static::VALIDITY_DATETIME_FORMAT,
+                'label' => 'Valid To (GMT)',
+                'widget' => 'single_text',
+                'required' => false,
+                'attr' => [
+                    'class' => 'datepicker js-to-datetime safe-datetime',
+                ],
+                'constraints' => [
+                    new Callback([
+                        'callback' => function ($newTo, ExecutionContextInterface $context) {
+                            $formData = $context->getRoot()->getData();
+
+                            if (!$newTo) {
+                                return;
+                            }
+
+                            if (empty($formData[static::FIELD_VALID_FROM])) {
+                                return;
+                            }
+
+                            $newValidToDateTime = new DateTime($newTo);
+                            $validFromDateTime = new DateTime($formData[static::FIELD_VALID_FROM]);
+
+                            if ($newValidToDateTime < $validFromDateTime) {
+                                $context->addViolation('Date "Valid to" can not be earlier than "Valid from".');
+                            }
+                        },
+                    ]),
+                ],
+            ]
+        );
+
+        $this->addDateTimeTransformer(static::FIELD_VALID_TO, $builder);
 
         return $this;
     }
@@ -198,6 +308,37 @@ class ProductConcreteFormEdit extends ProductFormAdd
     protected function createGeneralForm()
     {
         return ConcreteGeneralForm::class;
+    }
+
+    /**
+     * @param string $fieldName
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
+     */
+    protected function addDateTimeTransformer($fieldName, FormBuilderInterface $builder)
+    {
+        $timeFormat = $this->getConfig()->getValidityTimeFormat();
+
+        $builder
+            ->get($fieldName)
+            ->addModelTransformer(new CallbackTransformer(
+                function ($dateAsString) {
+                    if (!$dateAsString) {
+                        return null;
+                    }
+
+                    return new DateTime($dateAsString);
+                },
+                function ($dateAsObject) use ($timeFormat) {
+                    /** @var \DateTime|null $dateAsObject */
+                    if (!$dateAsObject) {
+                        return null;
+                    }
+
+                    return $dateAsObject->format($timeFormat);
+                }
+            ));
     }
 
     /**

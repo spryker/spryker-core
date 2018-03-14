@@ -25,7 +25,8 @@
     "spryker/transfer": "*"
   },
   "suggest": {
-    "spryker/checkout": "If you want to use Checkout plugins."
+    "spryker/checkout": "If you want to use Checkout plugins.",
+    "spryker/store": "StoreQuoteTransferExpander plugin can help to populate current Store into Quote, minimum required version: 1.4.0"
   },
   "autoload": {
     "psr-4": {

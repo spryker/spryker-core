@@ -10,6 +10,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Availability\AvailabilityConfig;
 
 class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckoutPreConditionInterface
@@ -42,11 +43,15 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
+        $quoteTransfer->requireStore();
+
         $isPassed = true;
+
+        $storeTransfer = $quoteTransfer->getStore();
         $groupedItemQuantities = $this->groupItemsBySku($quoteTransfer->getItems());
 
         foreach ($groupedItemQuantities as $sku => $quantity) {
-            if ($this->isProductSellable($sku, $quantity) === true) {
+            if ($this->isProductSellable($sku, $quantity, $storeTransfer) === true) {
                 continue;
             }
             $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse);
@@ -59,12 +64,13 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     /**
      * @param string $sku
      * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    protected function isProductSellable($sku, $quantity)
+    protected function isProductSellable($sku, $quantity, StoreTransfer $storeTransfer)
     {
-        return $this->sellable->isProductSellable($sku, $quantity);
+        return $this->sellable->isProductSellableForStore($sku, $quantity, $storeTransfer);
     }
 
     /**

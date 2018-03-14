@@ -142,6 +142,7 @@ class StepEngineTest extends AbstractStepEngineTest
 
         $formMock = $this->getFormMock();
         $formMock->method('isValid')->willReturn(true);
+        $formMock->method('isSubmitted')->willReturn(true);
         $formMock->method('getData')->willReturn($dataTransferMock);
 
         $formCollectionHandlerMock->expects($this->once())->method('handleRequest')->willReturn($formMock);

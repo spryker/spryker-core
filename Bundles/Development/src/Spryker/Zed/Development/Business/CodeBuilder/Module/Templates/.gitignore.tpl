@@ -14,3 +14,5 @@
 
 /tests/_output/*
 !/tests/_output/.gitkeep
+phpstan.neon
+phpstan.json

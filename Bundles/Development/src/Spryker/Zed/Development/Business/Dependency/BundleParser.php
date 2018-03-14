@@ -249,18 +249,28 @@ class BundleParser implements BundleParserInterface
         foreach ($allFileDependencies as $file => $fileDependencies) {
             foreach ($fileDependencies as $fileDependency) {
                 $fileNameParts = explode('\\', $fileDependency);
-                $foreignBundle = $fileNameParts[2];
-                if ($this->bundleDependencyCollectionTransfer->getBundle() !== $foreignBundle) {
+                $foreignModule = $fileNameParts[2];
+                if ($this->bundleDependencyCollectionTransfer->getBundle() !== $foreignModule) {
                     $dependencyTransfer = new DependencyTransfer();
-                    $dependencyTransfer->setBundle($foreignBundle);
+                    $dependencyTransfer->setBundle($foreignModule);
                     $dependencyTransfer->setType('spryker');
-                    $dependencyTransfer->setIsOptional($this->isPluginFile($file));
+                    $dependencyTransfer->setIsOptional($this->isPluginFile($file) && !$this->isExtensionModule($foreignModule));
                     $dependencyTransfer->setIsInTest($this->isTestFile($file));
 
                     $this->addDependency($dependencyTransfer);
                 }
             }
         }
+    }
+
+    /**
+     * @param string $moduleName
+     *
+     * @return bool
+     */
+    protected function isExtensionModule($moduleName)
+    {
+        return preg_match('/Extension$/', $moduleName);
     }
 
     /**
