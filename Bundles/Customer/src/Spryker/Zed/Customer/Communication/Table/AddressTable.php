@@ -96,7 +96,7 @@ class AddressTable extends AbstractTable
             SpyCustomerAddressTableMap::COL_ZIP_CODE,
         ]);
 
-        $config->setUrl(sprintf('table?id-customer=%d', $this->idCustomer));
+        $config->setUrl(sprintf('address-table?id-customer=%d', $this->idCustomer));
 
         return $config;
     }
