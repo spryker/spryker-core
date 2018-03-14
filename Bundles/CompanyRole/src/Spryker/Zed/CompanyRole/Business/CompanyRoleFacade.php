@@ -56,6 +56,8 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
@@ -223,8 +225,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     }
 
     /**
-     * Specification:
-     * - Retrieve default company role.
+     * {@inheritdoc}
      *
      * @api
      *

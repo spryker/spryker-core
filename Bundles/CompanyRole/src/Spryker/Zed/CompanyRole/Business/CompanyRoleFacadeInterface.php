@@ -187,7 +187,7 @@ interface CompanyRoleFacadeInterface
 
     /**
      * Specification:
-     * - Retrieve default company role.
+     * - Retrieves default company role.
      *
      * @api
      *
