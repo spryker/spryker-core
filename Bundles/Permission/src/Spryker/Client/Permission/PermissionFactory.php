@@ -9,7 +9,6 @@ namespace Spryker\Client\Permission;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Permission\Dependency\Client\PermissionToZedRequestClientInterface;
-use Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface;
 use Spryker\Client\Permission\PermissionExecutor\PermissionExecutor;
 use Spryker\Client\Permission\PermissionExecutor\PermissionExecutorInterface;
 use Spryker\Client\Permission\PermissionFinder\PermissionFinder;
@@ -35,7 +34,7 @@ class PermissionFactory extends AbstractFactory
     public function createPermissionExecutor(): PermissionExecutorInterface
     {
         return new PermissionExecutor(
-            $this->getPermissionStoragePlugin(),
+            $this->getPermissionStoragePlugins(),
             $this->createPermissionFinder()
         );
     }
@@ -49,7 +48,7 @@ class PermissionFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Permission\Plugin\PermissionPluginInterface[]
+     * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[]
      */
     protected function getPermissionPlugins(): array
     {
@@ -57,11 +56,11 @@ class PermissionFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface
+     * @return \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
      */
-    protected function getPermissionStoragePlugin(): PermissionStoragePluginInterface
+    protected function getPermissionStoragePlugins(): array
     {
-        return $this->getProvidedDependency(PermissionDependencyProvider::PLUGIN_PERMISSION_STORAGE);
+        return $this->getProvidedDependency(PermissionDependencyProvider::PLUGINS_PERMISSION_STORAGE);
     }
 
     /**

@@ -1,0 +1,26 @@
+<div class="row">
+    <link rel="stylesheet" href="/assets/css/spryker-zed-customer-note-gui-main.css">
+    <div class="col-lg-12">
+        <div class="ibox">
+            {{ form_start(form) }}
+            <div class="ibox-title">
+                <h3>{{ 'Notes' | trans }}</h3>
+            </div>
+            <div class="ibox-content">
+                <div class="customer-note-chat">
+                    {% for note in notes %}
+                        <div class="chat">
+                            <div class="chat-author"><span>{{ note.username }} @ {{ note.createdAt | formatDateTime }}</span></div>
+                            <div class="chat-body">{{ note.message }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                {{ form_widget(form) }}
+
+                <input type="submit" class="btn btn-xs btn-primary" value="{{ 'Add Note' | trans }}" />
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>

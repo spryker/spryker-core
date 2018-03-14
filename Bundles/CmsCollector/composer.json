@@ -8,7 +8,7 @@
     "spryker/collector": "^5.1.1 || ^6.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/propel-orm": "^1.1.0",
-    "spryker/search": "^6.2.0 || ^7.0.0",
+    "spryker/search": "^6.2.0 || ^7.0.0 || ^8.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/touch": "^3.0.0 || ^4.0.0",
     "spryker/url": "^3.0.0",
