@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -16,30 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddressFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     */
-    public function buildForm(FormBuilderInterface $builder)
-    {
-        $formType = $this->getFactory()
-            ->createAddressCollectionType();
-
-        $dataProvider = $this->getFactory()
-            ->createAddressCollectionDataProvider();
-
-        $quoteTransfer = $builder->getData();
-        $dataProvider->getData($quoteTransfer);
-
-        $formType->buildForm(
-            $builder,
-            $dataProvider->getOptions()
-        );
-    }
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

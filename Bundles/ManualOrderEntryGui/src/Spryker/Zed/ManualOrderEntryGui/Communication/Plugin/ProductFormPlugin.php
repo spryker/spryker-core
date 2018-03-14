@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

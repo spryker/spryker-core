@@ -7,20 +7,10 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 interface ManualOrderEntryFormPluginInterface
 {
-    /**
-     * @todo @Artem May be this delete
-     *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     */
-//    public function buildForm(FormBuilderInterface $builder);
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
