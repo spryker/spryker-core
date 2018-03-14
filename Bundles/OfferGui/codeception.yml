@@ -1,4 +1,4 @@
-namespace: CustomerOfferGui
+namespace: OfferGui
 actor: Tester
 paths:
     tests: tests

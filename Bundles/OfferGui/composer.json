@@ -1,6 +1,6 @@
 {
-  "name": "spryker/customer-offer-gui",
-  "description": "CustomerOfferGui module",
+  "name": "spryker/offer-gui",
+  "description": "OfferGui module",
   "license": "proprietary",
   "require": {
   },

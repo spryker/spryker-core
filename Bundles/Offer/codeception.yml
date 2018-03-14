@@ -1,4 +1,4 @@
-namespace: CustomerOffer
+namespace: Offer
 actor: Tester
 paths:
     tests: tests

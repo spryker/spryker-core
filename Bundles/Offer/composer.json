@@ -1,6 +1,6 @@
 {
-  "name": "spryker/customer-offer",
-  "description": "CustomerOffer module",
+  "name": "spryker/offer",
+  "description": "Offer module",
   "license": "proprietary",
   "require": {
   },
