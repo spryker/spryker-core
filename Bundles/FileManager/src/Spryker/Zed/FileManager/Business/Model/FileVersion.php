@@ -10,6 +10,7 @@ namespace Spryker\Zed\FileManager\Business\Model;
 class FileVersion implements FileVersionInterface
 {
     const DEFAULT_VERSION_NUMBER = 1;
+    const VERSION_FORMAT = 'v.%d';
 
     /**
      * @var \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
@@ -50,6 +51,6 @@ class FileVersion implements FileVersionInterface
      */
     public function getNewVersionName($versionNumber)
     {
-        return sprintf('v. %d', $versionNumber);
+        return sprintf(static::VERSION_FORMAT, $versionNumber);
     }
 }

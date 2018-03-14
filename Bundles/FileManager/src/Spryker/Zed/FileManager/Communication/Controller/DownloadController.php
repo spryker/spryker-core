@@ -46,7 +46,7 @@ class DownloadController extends AbstractController
     protected function createResponse(FileManagerReadResponseTransfer $fileManagerReadResponseTransfer)
     {
         $response = new Response($fileManagerReadResponseTransfer->getContent());
-        $fileName = $fileManagerReadResponseTransfer->getFileInfo()->getStorageFileName();
+        $fileName = $fileManagerReadResponseTransfer->getFile()->getFileName();
         $contentType = $fileManagerReadResponseTransfer->getFileInfo()->getType();
         $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $fileName);
 
