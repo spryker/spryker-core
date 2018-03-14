@@ -41,6 +41,18 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
+     * - Find quote by id
+     *
+     * @api
+     *
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteById($idQuote): QuoteResponseTransfer;
+
+    /**
+     * Specification:
      * - Remove quote from DB
      *
      * @api

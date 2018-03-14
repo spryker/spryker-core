@@ -8,13 +8,12 @@
 namespace Spryker\Zed\Quote\Persistence;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
 
 interface QuoteRepositoryInterface
 {
     /**
      * Specification:
-     * - Find quote by customer reference
+     * - Find quote by customer reference.
      *
      * @api
      *
@@ -26,13 +25,13 @@ interface QuoteRepositoryInterface
 
     /**
      * Specification:
-     * - Find quote by quote id
+     * - Find quote by quote id.
      *
      * @api
      *
      * @param int $idQuote
      *
-     * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer|null
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findQuoteById($idQuote): ?SpyQuoteEntityTransfer;
+    public function findQuoteById($idQuote): ?QuoteTransfer;
 }

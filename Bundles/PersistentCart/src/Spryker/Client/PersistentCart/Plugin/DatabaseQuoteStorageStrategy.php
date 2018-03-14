@@ -212,6 +212,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     {
         $persistentQuoteChange = new PersistentCartChangeTransfer();
         $persistentQuoteChange->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
+        $persistentQuoteChange->setIdQuote($this->getQuoteClient()->getQuote()->getIdQuote());
 
         return $persistentQuoteChange;
     }
@@ -223,6 +224,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     {
         $persistentQuoteChange = new PersistentCartChangeQuantityTransfer();
         $persistentQuoteChange->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
+        $persistentQuoteChange->setIdQuote($this->getQuoteClient()->getQuote()->getIdQuote());
 
         return $persistentQuoteChange;
     }

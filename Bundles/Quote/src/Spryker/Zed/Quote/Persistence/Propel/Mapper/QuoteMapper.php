@@ -49,6 +49,7 @@ class QuoteMapper implements QuoteMapperInterface
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->fromArray($this->decodeQuoteData($quoteEntityTransfer));
         $quoteTransfer->setIdQuote($quoteEntityTransfer->getIdQuote());
+        $quoteTransfer->setCustomerReference($quoteEntityTransfer->getCustomerReference());
 
         return $quoteTransfer;
     }
