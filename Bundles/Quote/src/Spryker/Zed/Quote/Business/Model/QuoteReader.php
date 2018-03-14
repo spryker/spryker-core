@@ -58,4 +58,26 @@ class QuoteReader implements QuoteReaderInterface
 
         return $quoteResponseTransfer;
     }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteById($idQuote): QuoteResponseTransfer
+    {
+        $quoteResponseTransfer = new QuoteResponseTransfer();
+        $quoteResponseTransfer->setIsSuccessful(false);
+        $quoteTransfer = $this->quoteRepository
+            ->findQuoteById($idQuote);
+        if (!$quoteTransfer) {
+            $quoteResponseTransfer->setIsSuccessful(false);
+            return $quoteResponseTransfer;
+        }
+
+        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
+        $quoteResponseTransfer->setIsSuccessful(true);
+
+        return $quoteResponseTransfer;
+    }
 }

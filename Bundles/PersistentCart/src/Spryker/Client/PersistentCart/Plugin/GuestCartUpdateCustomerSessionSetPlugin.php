@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
  * @method \Spryker\Client\PersistentCart\PersistentCartClientInterface getClient()
  * @method \Spryker\Client\PersistentCart\PersistentCartFactory getFactory()
  */
-class CustomerChangeQuoteMergePlugin extends AbstractPlugin implements CustomerSessionSetPluginInterface
+class GuestCartUpdateCustomerSessionSetPlugin extends AbstractPlugin implements CustomerSessionSetPluginInterface
 {
     /**
      * {@inheritdoc}

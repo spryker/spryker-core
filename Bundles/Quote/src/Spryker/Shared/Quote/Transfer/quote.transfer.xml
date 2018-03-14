@@ -5,6 +5,7 @@
 
     <transfer name="Quote">
         <property name="idQuote" type="int"/>
+        <property name="customerReference" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="currency" type="Currency"/>
     </transfer>

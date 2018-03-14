@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Quote\Persistence\Propel;
+namespace Spryker\Zed\Quote\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
@@ -49,6 +49,8 @@ class QuoteMapper implements QuoteMapperInterface
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->fromArray($quoteEntityTransfer->modifiedToArray(), true);
         $quoteTransfer->fromArray($this->decodeQuoteData($quoteEntityTransfer));
+        $quoteTransfer->setIdQuote($quoteEntityTransfer->getIdQuote());
+        $quoteTransfer->setCustomerReference($quoteEntityTransfer->getCustomerReference());
 
         return $quoteTransfer;
     }
