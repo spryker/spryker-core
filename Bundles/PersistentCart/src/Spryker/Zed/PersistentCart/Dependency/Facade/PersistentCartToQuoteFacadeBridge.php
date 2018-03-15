@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PersistentCart\Dependency\Facade;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteMergeRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -34,6 +35,16 @@ class PersistentCartToQuoteFacadeBridge implements PersistentCartToQuoteFacadeIn
     public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->quoteFacade->persistQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByCustomer(CustomerTransfer $customerTransfer): QuoteResponseTransfer
+    {
+        return $this->quoteFacade->findQuoteByCustomer($customerTransfer);
     }
 
     /**

@@ -21,6 +21,13 @@ interface CompanyUserRepositoryInterface
     public function findCompanyUserByCustomerId(int $idCustomer): ?CompanyUserTransfer;
 
     /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findActiveCompanyUserByCustomerId(int $idCustomer): ?CompanyUserTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
@@ -33,4 +40,11 @@ interface CompanyUserRepositoryInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
     public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer;
+
+    /**
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findInitialCompanyUserByCompanyId(int $idCompany): ?CompanyUserTransfer;
 }

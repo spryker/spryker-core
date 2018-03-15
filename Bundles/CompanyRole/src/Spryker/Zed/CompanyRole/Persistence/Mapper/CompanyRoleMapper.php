@@ -8,33 +8,35 @@
 namespace Spryker\Zed\CompanyRole\Persistence\Mapper;
 
 use Generated\Shared\Transfer\CompanyRoleTransfer;
-use Generated\Shared\Transfer\SpyCompanyRoleEntityTransfer;
+use Orm\Zed\CompanyRole\Persistence\SpyCompanyRole;
 
 class CompanyRoleMapper implements CompanyRoleMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyCompanyRoleEntityTransfer $companyRoleEntityTransfer
+     * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole $spyCompanyRole
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
-    public function mapEntityTransferToCompanyRoleTransfer(
-        SpyCompanyRoleEntityTransfer $companyRoleEntityTransfer,
+    public function mapEntityToCompanyRoleTransfer(
+        SpyCompanyRole $spyCompanyRole,
         CompanyRoleTransfer $companyRoleTransfer
     ): CompanyRoleTransfer {
-        return $companyRoleTransfer->fromArray($companyRoleEntityTransfer->toArray(), true);
+        return $companyRoleTransfer->fromArray($spyCompanyRole->toArray(), true);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
-     * @param \Generated\Shared\Transfer\SpyCompanyRoleEntityTransfer $companyRoleEntityTransfer
+     * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole $spyCompanyRole
      *
-     * @return \Generated\Shared\Transfer\SpyCompanyRoleEntityTransfer
+     * @return \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole
      */
-    public function mapCompanyRoleTransferToEntityTransfer(
+    public function mapCompanyRoleTransferToEntity(
         CompanyRoleTransfer $companyRoleTransfer,
-        SpyCompanyRoleEntityTransfer $companyRoleEntityTransfer
-    ): SpyCompanyRoleEntityTransfer {
-        return $companyRoleEntityTransfer->fromArray($companyRoleTransfer->modifiedToArray(), true);
+        SpyCompanyRole $spyCompanyRole
+    ): SpyCompanyRole {
+        $spyCompanyRole->fromArray($companyRoleTransfer->modifiedToArray());
+        $spyCompanyRole->setNew($companyRoleTransfer->getIdCompanyRole() === null);
+        return $spyCompanyRole;
     }
 }
