@@ -19,7 +19,7 @@ class PermissionStoragePlugin extends AbstractPlugin implements PermissionStorag
     /**
      * @param int|string $identifier
      *
-     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer TODO: create PermissionCollectionTransfer based on spy_customer_quote
      */
     public function getPermissionCollection($identifier): PermissionCollectionTransfer
     {

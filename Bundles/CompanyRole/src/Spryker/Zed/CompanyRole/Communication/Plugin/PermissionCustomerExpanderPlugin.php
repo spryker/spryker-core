@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface getFacade()
  */
+// TODO: based on this create CompanyUserQuotePermissionCustomerExpanderPlugin
 class PermissionCustomerExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
     /**
@@ -34,7 +35,7 @@ class PermissionCustomerExpanderPlugin extends AbstractPlugin implements Custome
                     ->getIdCompanyUser()
             );
 
-        $customerTransfer->setPermissions($permissionCollectionTransfer);
+        $customerTransfer->setPermissions($permissionCollectionTransfer); // TODO: fix to ADD instead of SET
 
         return $customerTransfer;
     }
