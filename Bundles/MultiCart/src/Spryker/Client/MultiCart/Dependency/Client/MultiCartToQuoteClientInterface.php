@@ -22,4 +22,9 @@ interface MultiCartToQuoteClientInterface
      * @return void
      */
     public function setQuote(QuoteTransfer $quoteTransfer);
+
+    /**
+     * @return string
+     */
+    public function getStorageStrategy();
 }

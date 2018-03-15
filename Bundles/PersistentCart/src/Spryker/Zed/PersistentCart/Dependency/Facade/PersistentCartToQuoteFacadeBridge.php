@@ -48,6 +48,16 @@ class PersistentCartToQuoteFacadeBridge implements PersistentCartToQuoteFacadeIn
     }
 
     /**
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteById($idQuote): QuoteResponseTransfer
+    {
+        return $this->quoteFacade->findQuoteById($idQuote);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteMergeRequestTransfer $quoteMergeRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

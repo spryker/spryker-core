@@ -42,6 +42,6 @@ class QuoteDeleter implements QuoteDeleterInterface
      */
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->quoteFacade->deleteQuote($quoteTransfer);
+        return $this->quoteResponseExpander->expand($this->quoteFacade->deleteQuote($quoteTransfer));
     }
 }

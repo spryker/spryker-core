@@ -8,9 +8,9 @@
 namespace Spryker\Client\MultiCart;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Shared\Quote\QuoteConfig;
 
 /**
  * @method \Spryker\Client\MultiCart\MultiCartFactory getFactory()
@@ -22,67 +22,17 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return null|\Generated\Shared\Transfer\QuoteTransfer
      */
-    public function createCart(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function findActiveCart(): ?QuoteTransfer
     {
-        return $this->getFactory()->createZedMultiCartStub()->createQuote($quoteTransfer);
-    }
+        foreach ($this->getQuoteCollection()->getQuotes() as $quoteTransfer) {
+            if ($quoteTransfer->getIsActive()) {
+                return $quoteTransfer;
+            }
+        }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function updateCart(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
-        return $this->getFactory()->createZedMultiCartStub()->updateQuote($quoteTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function setActiveCart(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
-        // TODO: Implement setCartActive() method.
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getActiveCart(): QuoteTransfer
-    {
-        return $this->getFactory()->getQuoteClient()->getQuote();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function deleteCart(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
-        return $this->getFactory()->createZedMultiCartStub()->deleteQuote($quoteTransfer);
+        return null;
     }
 
     /**
@@ -95,5 +45,51 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     public function getQuoteCollection(): QuoteCollectionTransfer
     {
         return $this->getFactory()->createMultiCartSession()->getQuoteCollection();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $quoteName
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    public function findQuoteByName($quoteName): ?QuoteTransfer
+    {
+        $quoteCollection = $this->getQuoteCollection();
+        foreach ($quoteCollection->getQuotes() as $quoteTransfer) {
+            if ($quoteTransfer->getName() === $quoteName) {
+                return $quoteTransfer;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isMultiCartAllowed()
+    {
+        return $this->getFactory()->getQuoteClient()->getStorageStrategy() === QuoteConfig::STORAGE_STRATEGY_DATABASE;
+    }
+
+    /**
+     * Specification:
+     * - Get suffix for duplicated quote name
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getDuplicatedQuoteNameSuffix()
+    {
+        return $this->getFactory()->getBundleConfig()->getDuplicatedQuoteNameSuffix();
     }
 }

@@ -9,8 +9,10 @@ namespace Spryker\Zed\PersistentCart\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PersistentCart\Business\Model\CartOperation;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleter;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpander;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizer;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteWriter;
 use Spryker\Zed\PersistentCart\PersistentCartDependencyProvider;
 
 class PersistentCartBusinessFactory extends AbstractBusinessFactory
@@ -35,6 +37,28 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
         return new QuoteStorageSynchronizer(
             $this->getCartFacade(),
             $this->getQuoteFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteDeleterInterface
+     */
+    public function createQuoteDeleter()
+    {
+        return new QuoteDeleter(
+            $this->getQuoteFacade(),
+            $this->createQuoteResponseExpander()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteWriterInterface
+     */
+    public function createQuoteWriter()
+    {
+        return new QuoteWriter(
+            $this->getQuoteFacade(),
+            $this->createQuoteResponseExpander()
         );
     }
 

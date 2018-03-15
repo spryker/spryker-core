@@ -18,8 +18,8 @@ interface QuoteFacadeInterface
 {
     /**
      * Specification:
-     * - Creates quote from quote transfer if it does not exist
-     * - Updates quote from quote transfer
+     * - Persists new quote entity if it does not exist.
+     * - Updates existing quote entity from QuoteTransfer.
      *
      * @api
      *
@@ -40,6 +40,18 @@ interface QuoteFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function findQuoteByCustomer(CustomerTransfer $customerTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Find quote by id
+     *
+     * @api
+     *
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteById($idQuote): QuoteResponseTransfer;
 
     /**
      * Specification:

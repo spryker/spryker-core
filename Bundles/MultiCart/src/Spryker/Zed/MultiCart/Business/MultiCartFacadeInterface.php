@@ -9,12 +9,13 @@ namespace Spryker\Zed\MultiCart\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 interface MultiCartFacadeInterface
 {
     /**
+     * Specification:
+     * -
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -22,31 +23,4 @@ interface MultiCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function findCustomerQuotes(CustomerTransfer $customerTransfer): QuoteCollectionTransfer;
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
-
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function setCartActive(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

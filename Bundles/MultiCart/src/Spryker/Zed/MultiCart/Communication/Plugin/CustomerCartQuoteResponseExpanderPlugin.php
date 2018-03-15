@@ -34,7 +34,11 @@ class CustomerCartQuoteResponseExpanderPlugin extends AbstractPlugin implements 
         }
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $quoteTransfer->requireCustomer();
-        $customerQuoteCollectionTransfer = $this->getFacade()->findCustomerQuotes($quoteTransfer->getCustomer());
+        $customerTransfer = $quoteTransfer->getCustomer();
+        $customerQuoteCollectionTransfer = $this->getFacade()->findCustomerQuotes($customerTransfer);
+        foreach ($customerQuoteCollectionTransfer->getQuotes() as $customerQuoteTransfer) {
+            $customerQuoteTransfer->setCustomer($customerTransfer);
+        }
         $quoteResponseTransfer->setCustomerQuotes($customerQuoteCollectionTransfer);
 
         return $quoteResponseTransfer;

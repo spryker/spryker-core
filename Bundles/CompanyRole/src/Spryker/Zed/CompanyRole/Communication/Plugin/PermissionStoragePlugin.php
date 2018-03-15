@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyRole\Communication\Plugin;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface;
+use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 
 /**
  * @method \Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface getFacade()

@@ -54,6 +54,20 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
      *
      * @api
      *
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteById($idQuote): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteReader()->findQuoteById($idQuote);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

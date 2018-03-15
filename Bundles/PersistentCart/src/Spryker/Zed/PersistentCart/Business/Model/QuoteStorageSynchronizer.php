@@ -31,10 +31,8 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface $quoteFacade
      */
-    public function __construct(
-        PersistentCartToCartFacadeInterface $cartFacade,
-        PersistentCartToQuoteFacadeInterface $quoteFacade
-    ) {
+    public function __construct(PersistentCartToCartFacadeInterface $cartFacade, PersistentCartToQuoteFacadeInterface $quoteFacade)
+    {
         $this->cartFacade = $cartFacade;
         $this->quoteFacade = $quoteFacade;
     }
@@ -42,19 +40,13 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
      *
-     * @throws \Spryker\Zed\PersistentCart\Business\Exception\QuoteSynchronizationNotAvailable
-     *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function syncStorageQuote(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteTransfer
     {
-        if ($this->quoteFacade->getStorageStrategy() !== SharedQuoteConfig::STORAGE_STRATEGY_DATABASE) {
-            throw new QuoteSynchronizationNotAvailable(
-                sprintf('Synchronization available for "%s" storage strategy only', SharedQuoteConfig::STORAGE_STRATEGY_DATABASE)
-            );
-        }
-
+        $this->assertDatabaseStorageStrategy();
         $this->validateRequest($quoteSyncRequestTransfer);
+
         $customerTransfer = $quoteSyncRequestTransfer->getCustomerTransfer();
         $quoteTransfer = $quoteSyncRequestTransfer->getQuoteTransfer();
         $customerQuoteTransfer = $this->quoteFacade->findQuoteByCustomer($customerTransfer);
@@ -62,7 +54,11 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
         if ($customerQuoteTransfer->getIsSuccessful()) {
             $quoteTransfer = $this->mergeQuotes($quoteTransfer, $customerQuoteTransfer->getQuoteTransfer());
         }
+
         $quoteTransfer->setCustomer($customerTransfer);
+        if (count($quoteTransfer->getItems())) {
+            $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
+        }
         $this->quoteFacade->persistQuote($quoteTransfer);
 
         return $quoteTransfer;
@@ -75,8 +71,10 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
      */
     protected function validateRequest(QuoteSyncRequestTransfer $quoteSyncRequestTransfer)
     {
-        $quoteSyncRequestTransfer->requireCustomerTransfer();
-        $quoteSyncRequestTransfer->requireQuoteTransfer();
+        $quoteSyncRequestTransfer
+            ->requireCustomerTransfer()
+            ->requireQuoteTransfer();
+
         $quoteSyncRequestTransfer->getCustomerTransfer()->requireCustomerReference();
     }
 
@@ -89,11 +87,28 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
     protected function mergeQuotes(QuoteTransfer $targetQuoteTransfer, QuoteTransfer $sourceQuoteTransfer)
     {
         $quoteMergeRequestTransfer = new QuoteMergeRequestTransfer();
-        $quoteMergeRequestTransfer->setTargetQuote($targetQuoteTransfer);
-        $quoteMergeRequestTransfer->setSourceQuote($sourceQuoteTransfer);
+        $quoteMergeRequestTransfer
+            ->setTargetQuote($targetQuoteTransfer)
+            ->setSourceQuote($sourceQuoteTransfer);
+
         $targetQuoteTransfer = $this->quoteFacade->mergeQuotes($quoteMergeRequestTransfer);
         $targetQuoteTransfer->setIdQuote($sourceQuoteTransfer->getIdQuote());
 
         return $targetQuoteTransfer;
+    }
+
+    /**
+     * @throws \Spryker\Zed\PersistentCart\Business\Exception\QuoteSynchronizationNotAvailable
+     *
+     * @return void
+     */
+    protected function assertDatabaseStorageStrategy(): void
+    {
+        if ($this->quoteFacade->getStorageStrategy() !== SharedQuoteConfig::STORAGE_STRATEGY_DATABASE) {
+            throw new QuoteSynchronizationNotAvailable(sprintf(
+                'Synchronization available for "%s" storage strategy only',
+                SharedQuoteConfig::STORAGE_STRATEGY_DATABASE
+            ));
+        }
     }
 }

@@ -29,6 +29,13 @@ interface PersistentCartToQuoteFacadeInterface
     public function findQuoteByCustomer(CustomerTransfer $customerTransfer): QuoteResponseTransfer;
 
     /**
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteById($idQuote): QuoteResponseTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteMergeRequestTransfer $quoteMergeRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

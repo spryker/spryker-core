@@ -8,8 +8,7 @@
 namespace Spryker\Zed\Company\Persistence;
 
 use Generated\Shared\Transfer\CompanyTransfer;
-use Generated\Shared\Transfer\SpyCompanyEntityTransfer;
-use Generated\Shared\Transfer\SpyCompanyStoreEntityTransfer;
+use Orm\Zed\Company\Persistence\SpyCompanyStore;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -26,14 +25,20 @@ class CompanyEntityManager extends AbstractEntityManager implements CompanyEntit
      */
     public function saveCompany(CompanyTransfer $companyTransfer): CompanyTransfer
     {
-        $entityTransfer = $this->getFactory()
-            ->createCompanyMapper()
-            ->mapCompanyTransferToEntityTransfer($companyTransfer, new SpyCompanyEntityTransfer());
-        $entityTransfer = $this->save($entityTransfer);
+        $spyCompany = $this->getFactory()
+            ->createCompanyQuery()
+            ->filterByIdCompany($companyTransfer->getIdCompany())
+            ->findOneOrCreate();
 
-        return $this->getFactory()
+        $spyCompany = $this->getFactory()
             ->createCompanyMapper()
-            ->mapEntityTransferToCompanyTransfer($entityTransfer, $companyTransfer);
+            ->mapCompanyTransferToEntity($companyTransfer, $spyCompany);
+
+        $spyCompany->save();
+
+        $companyTransfer->setIdCompany($spyCompany->getIdCompany());
+
+        return $companyTransfer;
     }
 
     /**
@@ -62,10 +67,10 @@ class CompanyEntityManager extends AbstractEntityManager implements CompanyEntit
     public function addStores(array $idStores, $idCompany): void
     {
         foreach ($idStores as $idStore) {
-            $companyStoreEntityTransfer = new SpyCompanyStoreEntityTransfer();
+            $companyStoreEntityTransfer = new SpyCompanyStore();
             $companyStoreEntityTransfer->setFkCompany($idCompany)
-                ->setFkStore($idStore);
-            $this->save($companyStoreEntityTransfer);
+                ->setFkStore($idStore)
+                ->save();
         }
     }
 
