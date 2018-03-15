@@ -5,15 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanySupplier\Persistence;
+namespace Spryker\Zed\CompanySupplierGui\Dependency\QueryContainer;
 
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 
-interface CompanySupplierQueryContainerInterface
+interface CompanySupplierGuiToCompanySupplierQueryContainerInterface
 {
     /**
-     * @api
-     *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function queryProductSuppliers(): SpyProductQuery;

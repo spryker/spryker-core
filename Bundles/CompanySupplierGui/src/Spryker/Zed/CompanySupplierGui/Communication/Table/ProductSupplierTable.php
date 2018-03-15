@@ -6,69 +6,56 @@
 
 namespace Spryker\Zed\CompanySupplierGui\Communication\Table;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProduct;
-use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
-use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\CompanySupplier\Persistence\CompanySupplierQueryContainerInterface;
-use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCompanySupplierFacadeInterface;
+use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCurrencyFacadeInterface;
+use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToMoneyFacadeInterface;
+use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToStoreFacadeInterface;
+use Spryker\Zed\CompanySupplierGui\Dependency\QueryContainer\CompanySupplierGuiToCompanySupplierQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\Money\Business\MoneyFacadeInterface;
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
-use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
-use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingInterface;
-use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
 class ProductSupplierTable extends AbstractTable
 {
-    const COL_SKU = 'sku';
-    const COL_SUPPLIER_PRICE = 'supplier_price';
-    const COL_DEFAULT_PRICE = 'default_price';
-    protected const PRICE_FORMAT = '%s: %s';
-
+    protected const COL_SKU = 'sku';
+    protected const COL_SUPPLIER_PRICE = 'supplier_price';
+    protected const COL_DEFAULT_PRICE = 'default_price';
+    protected const PRICE_FORMAT = '%s: %s%s';
     protected const PRICE_SEPARATOR = '<br/>';
+    protected const PRICE_TYPE_SUPPLIER = 'SUPPLIER';
+    protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
-    public const PRICE_TYPE_SUPPLIER = 'SUPPLIER';
-
-    public const PRICE_TYPE_DEFAULT = 'DEFAULT';
-
-    /**
-     * @var CompanySupplierGuiToCompanySupplierFacadeInterface
-     */
-    protected $companySupplierFacade;
-
+    /** @var \Spryker\Zed\CompanySupplierGui\Dependency\QueryContainer\CompanySupplierGuiToCompanySupplierQueryContainerInterface */
     protected $companySupplierQueryContainer;
 
+    /** @var \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToMoneyFacadeInterface */
     protected $moneyFacade;
 
+    /** @var \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToStoreFacadeInterface */
     protected $storeFacade;
 
+    /** @var \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCurrencyFacadeInterface */
+    protected $currencyFacade;
 
     /**
-     * @param CompanySupplierGuiToCompanySupplierFacadeInterface $companySupplierFacade
+     * @param \Spryker\Zed\CompanySupplierGui\Dependency\QueryContainer\CompanySupplierGuiToCompanySupplierQueryContainerInterface $companySupplierQueryContainer
+     * @param \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToMoneyFacadeInterface $moneyFacade
+     * @param \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCurrencyFacadeInterface $currencyFacade
      */
     public function __construct(
-        CompanySupplierGuiToCompanySupplierFacadeInterface $companySupplierFacade,
-        CompanySupplierQueryContainerInterface $companySupplierQueryContainer,
-        MoneyFacadeInterface $moneyFacade,
-        StoreFacadeInterface $storeFacade
-    )
-    {
+        CompanySupplierGuiToCompanySupplierQueryContainerInterface $companySupplierQueryContainer,
+        CompanySupplierGuiToMoneyFacadeInterface $moneyFacade,
+        CompanySupplierGuiToStoreFacadeInterface $storeFacade,
+        CompanySupplierGuiToCurrencyFacadeInterface $currencyFacade
+    ) {
         $this->setTableIdentifier('product-suppliers-table');
-        $this->companySupplierFacade = $companySupplierFacade;
         $this->companySupplierQueryContainer = $companySupplierQueryContainer;
         $this->moneyFacade = $moneyFacade;
         $this->storeFacade = $storeFacade;
+        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -76,7 +63,7 @@ class ProductSupplierTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config->setUrl('table');
 
@@ -92,7 +79,7 @@ class ProductSupplierTable extends AbstractTable
         ]);
 
         $config->setSearchable([
-            static::COL_SKU
+            static::COL_SKU,
         ]);
 
         return $config;
@@ -103,7 +90,7 @@ class ProductSupplierTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         $productSupplierCollection = $this->runQuery(
             $this->prepareQuery(),
@@ -116,42 +103,42 @@ class ProductSupplierTable extends AbstractTable
         }
 
         return $this->format($productSupplierCollection);
-
-//        $productSupplierCollection = $this->companySupplierFacade->getAllProductSupplements();
-//
-//        $tableData = [];
-//        /** @var ProductConcreteTransfer $productSupplier */
-//        foreach ($productSupplierCollection->getProducts() as $productSupplier) {
-//            $tableData[] = [
-//                static::COL_SKU => $productSupplier->getSku(),
-//                static::COL_SUPPLIER_PRICE => $productSupplier->getSupplierPrice(),
-//                static::COL_DEFAULT_PRICE => $productSupplier->getDefaultPrice(),
-//            ];
-//        }
-//
-//        return $tableData;
     }
 
-    protected function prepareQuery()
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function prepareQuery(): SpyProductQuery
     {
-        return $this->companySupplierQueryContainer->queryAProductSuppliers();
+        return $this->companySupplierQueryContainer->queryProductSuppliers();
     }
 
-    public function format(ObjectCollection $spyProductCollection)
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $spyProductCollection
+     *
+     * @return array
+     */
+    public function format(ObjectCollection $spyProductCollection): array
     {
         $productSuppliers = [];
-        /** @var SpyProduct $item */
+        /** @var \Orm\Zed\Product\Persistence\SpyProduct $item */
         foreach ($spyProductCollection as $spyProductEntity) {
             $productTransfer = new ProductConcreteTransfer();
             $productTransfer->fromArray($spyProductEntity->toArray(), true);
-            $this->setSupplierPrices($spyProductEntity,$productTransfer);
+            $this->setProductSupplierPrices($spyProductEntity, $productTransfer);
             $productSuppliers[] = $productTransfer->toArray();
         }
 
         return $productSuppliers;
     }
 
-    protected function setSupplierPrices(SpyProduct $spyProductEntity, ProductConcreteTransfer &$productTransfer)
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $spyProductEntity
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
+     *
+     * @return void
+     */
+    protected function setProductSupplierPrices(SpyProduct $spyProductEntity, ProductConcreteTransfer &$productTransfer): void
     {
         $productTransfer->setSupplierPrice('');
         $productTransfer->setDefaultPrice('');
@@ -175,7 +162,12 @@ class ProductSupplierTable extends AbstractTable
         }
     }
 
-    protected function formatPrices(ObjectCollection $priceProductCollection)
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $priceProductCollection
+     *
+     * @return string
+     */
+    protected function formatPrices(ObjectCollection $priceProductCollection): string
     {
         $prices = [];
         if ($priceProductCollection->count() > 0) {
@@ -184,6 +176,7 @@ class ProductSupplierTable extends AbstractTable
                 $prices[] = sprintf(
                     static::PRICE_FORMAT,
                     $this->storeFacade->getStoreById($priceProductEntity->getFkStore())->getName(),
+                    $this->currencyFacade->getByIdCurrency($priceProductEntity->getFkCurrency())->getSymbol(),
                     $this->moneyFacade->convertIntegerToDecimal($priceProductEntity->getGrossPrice())
                 );
             }

@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\CompanySupplierGui\Communication;
 
-use Spryker\Zed\CompanySupplier\Persistence\CompanySupplierQueryContainerInterface;
 use Spryker\Zed\CompanySupplierGui\Communication\Form\CompanySupplierForm;
 use Spryker\Zed\CompanySupplierGui\Communication\Form\DataProvider\CompanySupplierFormDataProvider;
 use Spryker\Zed\CompanySupplierGui\Communication\Table\ProductSupplierTable;
 use Spryker\Zed\CompanySupplierGui\CompanySupplierGuiDependencyProvider;
 use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCompanySupplierFacadeInterface;
+use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCurrencyFacadeInterface;
+use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToMoneyFacadeInterface;
+use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToStoreFacadeInterface;
+use Spryker\Zed\CompanySupplierGui\Dependency\QueryContainer\CompanySupplierGuiToCompanySupplierQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 class CompanySupplierGuiCommunicationFactory extends AbstractCommunicationFactory
@@ -26,9 +29,9 @@ class CompanySupplierGuiCommunicationFactory extends AbstractCommunicationFactor
     }
 
     /**
-     * @return \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCompanySupplierFacadeInterface
+     * @return \Spryker\Zed\CompanySupplierGui\Dependency\QueryContainer\CompanySupplierGuiToCompanySupplierQueryContainerInterface
      */
-    public function getCompanySupplierQueryContainer(): CompanySupplierQueryContainerInterface
+    protected function getCompanySupplierQueryContainer(): CompanySupplierGuiToCompanySupplierQueryContainerInterface
     {
         return $this->getProvidedDependency(CompanySupplierGuiDependencyProvider::QUERY_CONTAINER_COMPANY_SUPPLIER);
     }
@@ -51,23 +54,40 @@ class CompanySupplierGuiCommunicationFactory extends AbstractCommunicationFactor
         );
     }
 
-    public function createProductSuppliersTable()
+    /**
+     * @return \Spryker\Zed\CompanySupplierGui\Communication\Table\ProductSupplierTable
+     */
+    public function createProductSuppliersTable(): ProductSupplierTable
     {
         return new ProductSupplierTable(
-            $this->getCompanySupplierFacade(),
             $this->getCompanySupplierQueryContainer(),
             $this->getMoneyFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getCurrencyFacade()
         );
     }
 
-    protected function getMoneyFacade()
+    /**
+     * @return \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToMoneyFacadeInterface
+     */
+    protected function getMoneyFacade(): CompanySupplierGuiToMoneyFacadeInterface
     {
         return $this->getProvidedDependency(CompanySupplierGuiDependencyProvider::FACADE_MONEY);
     }
 
-    protected function getStoreFacade()
+    /**
+     * @return \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToStoreFacadeInterface
+     */
+    protected function getStoreFacade(): CompanySupplierGuiToStoreFacadeInterface
     {
         return $this->getProvidedDependency(CompanySupplierGuiDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCurrencyFacadeInterface
+     */
+    protected function getCurrencyFacade(): CompanySupplierGuiToCurrencyFacadeInterface
+    {
+        return $this->getProvidedDependency(CompanySupplierGuiDependencyProvider::FACADE_CURRENCY);
     }
 }

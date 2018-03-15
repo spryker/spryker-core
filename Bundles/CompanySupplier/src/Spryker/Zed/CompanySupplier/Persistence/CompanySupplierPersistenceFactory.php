@@ -12,6 +12,9 @@ use Orm\Zed\CompanySupplier\Persistence\SpyCompanySupplierToProductQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
+/**
+ * @method \Spryker\Zed\CompanySupplier\Persistence\CompanySupplierQueryContainerInterface getQueryContainer()
+ */
 class CompanySupplierPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
@@ -30,6 +33,9 @@ class CompanySupplierPersistenceFactory extends AbstractPersistenceFactory
         return SpyCompanySupplierToProductQuery::create();
     }
 
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
     public function createProductQueryContainer(): SpyProductQuery
     {
         return SpyProductQuery::create();

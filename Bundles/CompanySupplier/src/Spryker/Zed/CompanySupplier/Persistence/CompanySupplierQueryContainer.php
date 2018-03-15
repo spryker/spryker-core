@@ -1,11 +1,15 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CompanySupplier\Persistence;
 
-
 use Orm\Zed\CompanySupplier\Persistence\Map\SpyCompanySupplierToProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -14,11 +18,15 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class CompanySupplierQueryContainer extends AbstractQueryContainer implements CompanySupplierQueryContainerInterface
 {
-    public function queryAProductSuppliers()
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function queryProductSuppliers(): SpyProductQuery
     {
         $query = $this->getFactory()->createProductQueryContainer();
-        $query->addJoin(SpyProductTableMap::COL_ID_PRODUCT, SpyCompanySupplierToProductTableMap::COL_FK_PRODUCT,Criteria::RIGHT_JOIN);
-        //$query->joinWithPriceProduct();
+        $query->addJoin(SpyProductTableMap::COL_ID_PRODUCT, SpyCompanySupplierToProductTableMap::COL_FK_PRODUCT, Criteria::RIGHT_JOIN);
 
         return $query;
     }

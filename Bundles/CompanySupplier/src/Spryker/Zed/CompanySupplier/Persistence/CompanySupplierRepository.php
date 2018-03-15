@@ -9,17 +9,9 @@ namespace Spryker\Zed\CompanySupplier\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CompanySupplierCollectionTransfer;
-use Generated\Shared\Transfer\CurrentProductPriceTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductSupplierCollectionTransfer;
-use Generated\Shared\Transfer\StockProductTransfer;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Orm\Zed\CompanySupplier\Persistence\Map\SpyCompanySupplierToProductTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\Product\Persistence\SpyProduct;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -28,8 +20,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class CompanySupplierRepository extends AbstractRepository implements CompanySupplierRepositoryInterface
 {
-
-
     /**
      * {@inheritdoc}
      *
@@ -77,23 +67,5 @@ class CompanySupplierRepository extends AbstractRepository implements CompanySup
         $companySupplierCollection->setSuppliers($companySuppliers);
 
         return $companySupplierCollection;
-    }
-
-    public function getAllProductSuppliers()
-    {
-        $query = $this->getFactory()->createProductQueryContainer();
-        $query->addJoin(SpyProductTableMap::COL_ID_PRODUCT, SpyCompanySupplierToProductTableMap::COL_FK_PRODUCT,Criteria::RIGHT_JOIN);
-        $query->joinWithPriceProduct();
-
-        return $query->find();
-    }
-
-    public function queryAllProductSuppliers()
-    {
-        $query = $this->getFactory()->createProductQueryContainer();
-        $query->addJoin(SpyProductTableMap::COL_ID_PRODUCT, SpyCompanySupplierToProductTableMap::COL_FK_PRODUCT,Criteria::RIGHT_JOIN);
-        $query->joinWithPriceProduct();
-
-        return $query;
     }
 }
