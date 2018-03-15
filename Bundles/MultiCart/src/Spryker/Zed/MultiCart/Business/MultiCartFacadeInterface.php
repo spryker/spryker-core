@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\MultiCart\Business;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteActivatorRequestTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 interface MultiCartFacadeInterface
 {
@@ -18,9 +18,22 @@ interface MultiCartFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findCustomerQuotes(CustomerTransfer $customerTransfer): QuoteCollectionTransfer;
+    public function setActiveQuote(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Adds customer quote collection to quote response transfer after cart operation handling.
+     * - Replace quote with active quote if it exist.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function expandQuoteResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer;
 }

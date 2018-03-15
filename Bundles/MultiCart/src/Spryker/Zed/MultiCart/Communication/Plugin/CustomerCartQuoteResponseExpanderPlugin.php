@@ -19,7 +19,8 @@ class CustomerCartQuoteResponseExpanderPlugin extends AbstractPlugin implements 
 {
     /**
      * Specification:
-     * - Adds customer quote collection to quote response transfer after cart operation handling
+     * - Adds customer quote collection to quote response transfer after cart operation handling.
+     * - Replace quote with active quote if it exist.
      *
      * @api
      *
@@ -32,15 +33,7 @@ class CustomerCartQuoteResponseExpanderPlugin extends AbstractPlugin implements 
         if (!$quoteResponseTransfer->getQuoteTransfer()) {
             return $quoteResponseTransfer;
         }
-        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        $quoteTransfer->requireCustomer();
-        $customerTransfer = $quoteTransfer->getCustomer();
-        $customerQuoteCollectionTransfer = $this->getFacade()->findCustomerQuotes($customerTransfer);
-        foreach ($customerQuoteCollectionTransfer->getQuotes() as $customerQuoteTransfer) {
-            $customerQuoteTransfer->setCustomer($customerTransfer);
-        }
-        $quoteResponseTransfer->setCustomerQuotes($customerQuoteCollectionTransfer);
 
-        return $quoteResponseTransfer;
+        return $this->getFacade()->expandQuoteResponse($quoteResponseTransfer);
     }
 }

@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\MultiCart;
 
+use Generated\Shared\Transfer\QuoteActivatorRequestTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\Quote\QuoteConfig;
@@ -22,17 +24,25 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
      *
      * @api
      *
-     * @return null|\Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function findActiveCart(): ?QuoteTransfer
+    public function getActiveCart(): QuoteTransfer
     {
-        foreach ($this->getQuoteCollection()->getQuotes() as $quoteTransfer) {
-            if ($quoteTransfer->getIsActive()) {
-                return $quoteTransfer;
-            }
-        }
+        return $this->getFactory()->getQuoteClient()->getQuote();
+    }
 
-        return null;
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setActiveQuote(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createZedMultiCartStub()->setActiveQuote($quoteActivatorRequestTransfer);
     }
 
     /**

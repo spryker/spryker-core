@@ -8,7 +8,9 @@
 namespace Spryker\Zed\MultiCart\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteActivatorRequestTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -28,5 +30,33 @@ class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
     public function findCustomerQuotes(CustomerTransfer $customerTransfer): QuoteCollectionTransfer
     {
         return $this->getFactory()->createQuoteReader()->findCustomerQuotes($customerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setActiveQuote(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteActivator()->setQuoteActive($quoteActivatorRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function expandQuoteResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createQuoteResponseExpander()->expand($quoteResponseTransfer);
     }
 }

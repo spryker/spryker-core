@@ -15,5 +15,10 @@
         <property name="customerQuotes" type="QuoteCollection"/>
     </transfer>
 
+    <transfer name="QuoteActivatorRequest">
+        <property name="customer" type="Customer"/>
+        <property name="idQuote" type="int"/>
+    </transfer>
+
 </transfers>
 

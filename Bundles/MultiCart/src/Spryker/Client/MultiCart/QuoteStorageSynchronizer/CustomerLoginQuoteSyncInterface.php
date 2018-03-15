@@ -5,17 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MultiCart\Business\Model;
+namespace Spryker\Client\MultiCart\QuoteStorageSynchronizer;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
 
-interface QuoteReaderInterface
+interface CustomerLoginQuoteSyncInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     * @return void
      */
-    public function findCustomerQuotes(CustomerTransfer $customerTransfer): QuoteCollectionTransfer;
+    public function syncQuoteForCustomer(CustomerTransfer $customerTransfer);
 }

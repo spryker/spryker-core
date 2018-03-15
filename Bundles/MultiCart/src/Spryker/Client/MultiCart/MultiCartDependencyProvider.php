@@ -9,10 +9,12 @@ namespace Spryker\Client\MultiCart;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\MultiCart\Dependency\Client\MultiCartToPersistentCartClientBridge;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToQuoteClientBridge;
 
 class MultiCartDependencyProvider extends AbstractDependencyProvider
 {
+    const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
     const CLIENT_QUOTE = 'CLIENT_QUOTE';
     const CLIENT_SESSION = 'CLIENT_SESSION';
     const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
@@ -25,6 +27,7 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addQuoteClient($container);
+        $container = $this->addPersistentCartClient($container);
         $container = $this->addSessionClient($container);
         $container = $this->addZedRequestClient($container);
 
@@ -68,6 +71,20 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
             return $container->getLocator()->zedRequest()->client();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPersistentCartClient(Container $container)
+    {
+        $container[static::CLIENT_PERSISTENT_CART] = function (Container $container) {
+            return new MultiCartToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());
         };
 
         return $container;

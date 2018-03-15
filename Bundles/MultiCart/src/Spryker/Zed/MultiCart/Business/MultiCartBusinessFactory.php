@@ -8,20 +8,31 @@
 namespace Spryker\Zed\MultiCart\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MultiCart\Business\Model\QuoteReader;
-use Spryker\Zed\MultiCart\Business\Model\QuoteReaderInterface;
+use Spryker\Zed\MultiCart\Business\Model\QuoteActivator;
+use Spryker\Zed\MultiCart\Business\Model\QuoteActivatorInterface;
+use Spryker\Zed\MultiCart\Business\Model\QuoteResponseExpander;
+use Spryker\Zed\MultiCart\Business\Model\QuoteResponseExpanderInterface;
 use Spryker\Zed\MultiCart\MultiCartDependencyProvider;
 
 class MultiCartBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\MultiCart\Business\Model\QuoteReaderInterface
+     * @return \Spryker\Zed\MultiCart\Business\Model\QuoteActivatorInterface
      */
-    public function createQuoteReader(): QuoteReaderInterface
+    public function createQuoteActivator(): QuoteActivatorInterface
     {
-        return new QuoteReader(
-            $this->getQuoteFacade()
+        return new QuoteActivator(
+            $this->getQuoteFacade(),
+            $this->getPersistentCartFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MultiCart\Business\Model\QuoteResponseExpanderInterface
+     */
+    public function createQuoteResponseExpander(): QuoteResponseExpanderInterface
+    {
+        return new QuoteResponseExpander($this->getQuoteFacade());
     }
 
     /**

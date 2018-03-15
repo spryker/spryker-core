@@ -56,4 +56,14 @@ class MultiCartToQuoteFacadeBridge implements MultiCartToQuoteFacadeInterface
     {
         return $this->quoteFacade->persistQuote($quoteTransfer);
     }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteById($idQuote): QuoteResponseTransfer
+    {
+        return $this->quoteFacade->findQuoteById($idQuote);
+    }
 }
