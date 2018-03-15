@@ -17,7 +17,9 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
@@ -72,8 +74,25 @@ class FileForm extends AbstractType
     protected function addFileNameField(FormBuilderInterface $builder)
     {
         $formData = $builder->getData();
+        $fileNameCallback = function ($object, ExecutionContextInterface $context) use ($formData) {
+            if (!empty($formData[static::FIELD_ID_FILE])) {
+                if (empty($formData[static::FIELD_FILE_CONTENT]) && empty($formData[static::FIELD_FILE_NAME])) {
+                    $context->addViolation(FileManagerGuiConstants::ERROR_FILE_MISSED_EDIT_MESSAGE);
+                }
+            } else {
+                if (empty($formData[static::FIELD_FILE_CONTENT])) {
+                    $context->addViolation(FileManagerGuiConstants::ERROR_FILE_MISSED_ADD_MESSAGE);
+                } elseif (empty($formData[static::FIELD_FILE_NAME]) && empty($formData[static::FIELD_USE_REAL_NAME])) {
+                    $context->addViolation(FileManagerGuiConstants::ERROR_FILE_NAME_MISSED_ADD_MESSAGE);
+                }
+            }
+        };
+
         $builder->add(static::FIELD_FILE_NAME, TextType::class, [
             'required' => !empty($formData[static::FIELD_USE_REAL_NAME]),
+            'constraints' => [
+                new Callback($fileNameCallback),
+            ]
         ]);
 
         return $this;
