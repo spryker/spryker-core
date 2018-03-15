@@ -9,9 +9,12 @@ namespace Spryker\Zed\CompanyRole\Communication\Controller;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -85,11 +88,48 @@ class GatewayController extends AbstractGatewayController
      */
     public function deleteCompanyRoleAction(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
     {
-        $this->getFacade()->delete($companyRoleTransfer);
+        return $this->getFacade()->delete($companyRoleTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function saveCompanyUserAction(CompanyUserTransfer $companyUserTransfer): CompanyRoleResponseTransfer
+    {
+        $this->getFacade()->saveCompanyUser($companyUserTransfer);
 
         $response = new CompanyRoleResponseTransfer();
         $response->setIsSuccessful(true);
 
         return $response;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PermissionTransfer
+     */
+    public function findPermissionByIdCompanyRoleByIdPermissionAction(PermissionTransfer $permissionTransfer)
+    {
+        return $this->getFacade()->findPermissionByIdCompanyRoleByIdPermission(
+            $permissionTransfer->getIdCompanyRole(),
+            $permissionTransfer->getIdPermission()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer
+     */
+    public function updateCompanyRolePermissionAction(PermissionTransfer $permissionTransfer): CompanyRolePermissionResponseTransfer
+    {
+        $this->getFacade()->updateCompanyRolePermission($permissionTransfer);
+
+        return (new CompanyRolePermissionResponseTransfer)
+            ->setPermission($permissionTransfer)
+            ->setIsSuccessful(true);
     }
 }

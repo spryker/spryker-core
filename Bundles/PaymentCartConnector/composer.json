@@ -7,7 +7,7 @@
     "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
-    "spryker/cart": "^3.0.0"
+    "spryker/cart": "^4.0.0"
   },
   "suggest": {
     "spryker/cart": "If you want to use Cart plugins."

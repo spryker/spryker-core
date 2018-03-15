@@ -8,29 +8,29 @@
 namespace Spryker\Zed\Company\Persistence\Mapper;
 
 use Generated\Shared\Transfer\CompanyTransfer;
-use Generated\Shared\Transfer\SpyCompanyEntityTransfer;
+use Orm\Zed\Company\Persistence\SpyCompany;
 
 interface CompanyMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     * @param \Generated\Shared\Transfer\SpyCompanyEntityTransfer $companyEntityTransfer
+     * @param \Orm\Zed\Company\Persistence\SpyCompany $spyCompany
      *
-     * @return \Generated\Shared\Transfer\SpyCompanyEntityTransfer
+     * @return \Orm\Zed\Company\Persistence\SpyCompany
      */
-    public function mapCompanyTransferToEntityTransfer(
+    public function mapCompanyTransferToEntity(
         CompanyTransfer $companyTransfer,
-        SpyCompanyEntityTransfer $companyEntityTransfer
-    ): SpyCompanyEntityTransfer;
+        SpyCompany $spyCompany
+    ): SpyCompany;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCompanyEntityTransfer $companyEntityTransfer
+     * @param \Orm\Zed\Company\Persistence\SpyCompany $spyCompany
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function mapEntityTransferToCompanyTransfer(
-        SpyCompanyEntityTransfer $companyEntityTransfer,
+    public function mapEntityToCompanyTransfer(
+        SpyCompany $spyCompany,
         CompanyTransfer $companyTransfer
     ): CompanyTransfer;
 }
