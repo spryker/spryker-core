@@ -3,6 +3,9 @@
   "description": "Offer module",
   "license": "proprietary",
   "require": {
+    "spryker/kernel": "^3.0.0",
+    "spryker/sales": "^8.0.0",
+    "spryker/sales-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
