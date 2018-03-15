@@ -96,9 +96,11 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     {
         foreach ($priceGroups as $idProductAbstract => $storePriceGroups) {
             foreach ($storePriceGroups as $storeName => $priceGroup) {
-                $priceProductAbstractStorage = isset($priceProductAbstractStorageMap[$idProductAbstract][$storeName]) ?
-                    $priceProductAbstractStorageMap[$idProductAbstract][$storeName] :
-                    new SpyPriceProductAbstractStorage();
+                $priceProductAbstractStorage = $this->getRelatedPriceProductAbstractStorageEntity(
+                    $priceProductAbstractStorageMap,
+                    $idProductAbstract,
+                    $storeName
+                );
 
                 unset($priceProductAbstractStorageMap[$idProductAbstract][$storeName]);
 
@@ -120,6 +122,22 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
         array_walk_recursive($priceProductAbstractStorageMap, function (SpyPriceProductAbstractStorage $priceProductAbstractStorageEntity) {
             $priceProductAbstractStorageEntity->delete();
         });
+    }
+
+    /**
+     * @param array $priceProductAbstractStorageMap
+     * @param int $idProductAbstract
+     * @param string $storeName
+     *
+     * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage
+     */
+    protected function getRelatedPriceProductAbstractStorageEntity($priceProductAbstractStorageMap, $idProductAbstract, $storeName)
+    {
+        if (isset($priceProductAbstractStorageMap[$idProductAbstract][$storeName])) {
+            return $priceProductAbstractStorageMap[$idProductAbstract][$storeName];
+        }
+
+        return new SpyPriceProductAbstractStorage();
     }
 
     /**

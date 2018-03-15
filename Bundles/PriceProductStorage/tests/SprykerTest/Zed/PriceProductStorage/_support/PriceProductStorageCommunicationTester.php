@@ -26,7 +26,7 @@ class PriceProductStorageCommunicationTester extends Actor
     * Define custom actions here
     */
 
-    const PROJECT = 'PROJECT';
+    const PARAM_PROJECT = 'PROJECT';
 
     const PROJECT_SUITE = 'suite';
 
@@ -35,7 +35,7 @@ class PriceProductStorageCommunicationTester extends Actor
      */
     public function isSuiteProject()
     {
-        if (getenv(static::PROJECT) === static::PROJECT_SUITE) {
+        if (getenv(static::PARAM_PROJECT) === static::PROJECT_SUITE) {
             return true;
         }
 
