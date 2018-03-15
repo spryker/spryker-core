@@ -47,6 +47,7 @@ class QuoteMapper implements QuoteMapperInterface
     public function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->fromArray($quoteEntityTransfer->modifiedToArray(), true);
         $quoteTransfer->fromArray($this->decodeQuoteData($quoteEntityTransfer));
         $quoteTransfer->setIdQuote($quoteEntityTransfer->getIdQuote());
         $quoteTransfer->setCustomerReference($quoteEntityTransfer->getCustomerReference());
@@ -56,13 +57,13 @@ class QuoteMapper implements QuoteMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Orm\Zed\Quote\Persistence\SpyQuote $quoteEntity
      *
      * @return \Orm\Zed\Quote\Persistence\SpyQuote
      */
-    public function mapTransferToEntity(QuoteTransfer $quoteTransfer): SpyQuote
+    public function mapTransferToEntity(QuoteTransfer $quoteTransfer, SpyQuote $quoteEntity): SpyQuote
     {
-        $quoteEntity = new SpyQuote();
-        $quoteEntity->setNew(!$quoteTransfer->getIdQuote());
+        $quoteEntity->fromArray($quoteTransfer->modifiedToArray());
         $quoteEntity->setIdQuote($quoteTransfer->getIdQuote());
         $quoteEntity->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
         $quoteEntity->setFkStore($quoteTransfer->getStore()->getIdStore());

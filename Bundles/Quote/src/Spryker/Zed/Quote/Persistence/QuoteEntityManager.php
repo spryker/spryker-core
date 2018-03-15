@@ -23,7 +23,11 @@ class QuoteEntityManager extends AbstractEntityManager implements QuoteEntityMan
     public function saveQuote(QuoteTransfer $quoteTransfer)
     {
         $quoteMapper = $this->getFactory()->createQuoteMapper();
-        $quoteEntity = $quoteMapper->mapTransferToEntity($quoteTransfer);
+        $quoteEntity = $this->getFactory()
+            ->createQuoteQuery()
+            ->filterByIdQuote($quoteTransfer->getIdQuote())
+            ->findOneOrCreate();
+        $quoteEntity = $quoteMapper->mapTransferToEntity($quoteTransfer, $quoteEntity);
         $quoteEntity->save();
         $quoteTransfer->setIdQuote($quoteEntity->getIdQuote());
 
