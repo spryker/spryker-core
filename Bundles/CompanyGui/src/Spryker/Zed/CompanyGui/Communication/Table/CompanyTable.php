@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CompanyGui\Communication\Table;
 
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
+use Orm\Zed\Company\Persistence\Map\SpyCompanyTypeTableMap;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -19,6 +20,7 @@ class CompanyTable extends AbstractTable
     public const COL_NAME = SpyCompanyTableMap::COL_NAME;
     public const COL_IS_ACTIVE = SpyCompanyTableMap::COL_IS_ACTIVE;
     public const COL_STATUS = SpyCompanyTableMap::COL_STATUS;
+    public const COL_TYPE = 'company_type';
     public const COL_ACTIONS = 'Actions';
 
     public const REQUEST_ID_COMPANY = 'id-company';
@@ -27,6 +29,7 @@ class CompanyTable extends AbstractTable
     public const URL_COMPANY_ACTIVATE = '/company-gui/edit-company/activate';
     public const URL_COMPANY_DENY = '/company-gui/edit-company/deny';
     public const URL_COMPANY_APPROVE = '/company-gui/edit-company/approve';
+    public const URL_COMPANY_EDIT = '/company-gui/edit-company/index?id-company=%d';
 
     /**
      * @var \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
@@ -39,6 +42,7 @@ class CompanyTable extends AbstractTable
     public function __construct(SpyCompanyQuery $companyQuery)
     {
         $this->companyQuery = $companyQuery;
+        $this->prepareQuery();
     }
 
     /**
@@ -51,6 +55,7 @@ class CompanyTable extends AbstractTable
         $config->setHeader([
             static::COL_ID_COMPANY => 'Company Id',
             static::COL_NAME => 'Name',
+            static::COL_TYPE => 'Type',
             static::COL_IS_ACTIVE => 'Active',
             static::COL_STATUS => 'Status',
             static::COL_ACTIONS => static::COL_ACTIONS,
@@ -63,6 +68,7 @@ class CompanyTable extends AbstractTable
         $config->setSortable([
             static::COL_ID_COMPANY,
             static::COL_NAME,
+            static::COL_TYPE,
             static::COL_STATUS,
             static::COL_IS_ACTIVE,
         ]);
@@ -91,6 +97,7 @@ class CompanyTable extends AbstractTable
             $results[] = [
                 static::COL_ID_COMPANY => $item[SpyCompanyTableMap::COL_ID_COMPANY],
                 static::COL_NAME => $item[SpyCompanyTableMap::COL_NAME],
+                static::COL_TYPE => $item[static::COL_TYPE],
                 static::COL_IS_ACTIVE => $this->generateStatusLabels($item),
                 static::COL_STATUS => $this->generateCompanyStatusLabels($item),
                 static::COL_ACTIONS => $this->buildLinks($item),
@@ -110,6 +117,10 @@ class CompanyTable extends AbstractTable
     {
         $buttons = [];
 
+        $buttons[] = $this->generateEditButton(
+            sprintf(static::URL_COMPANY_EDIT, $item[static::COL_ID_COMPANY]),
+            'Edit'
+        );
         $buttons[] = $this->generateStatusChangeButton($item);
         $buttons = array_merge($buttons, $this->generateCompanyStatusChangeButton($item));
 
@@ -213,5 +224,14 @@ class CompanyTable extends AbstractTable
             case SpyCompanyTableMap::COL_STATUS_DENIED:
                 return '<span class="label label-danger">Denied</span>';
         }
+    }
+
+    /**
+     * @return void
+     */
+    protected function prepareQuery(): void
+    {
+        $this->companyQuery->leftJoinWithCompanyType()
+            ->withColumn(SpyCompanyTypeTableMap::COL_NAME, static::COL_TYPE);
     }
 }

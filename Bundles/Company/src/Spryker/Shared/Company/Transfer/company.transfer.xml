@@ -6,6 +6,7 @@
     <transfer name="Company">
         <property name="idCompany" type="int"/>
         <property name="name" type="string"/>
+        <property name="fkCompanyType" type="int"/>
         <property name="isActive" type="bool"/>
         <property name="status" type="string"/>
         <property name="storeRelation" type="StoreRelation"/>
@@ -25,5 +26,9 @@
 
     <transfer name="ResponseMessage">
         <property name="text" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyTypeCollection">
+        <property name="companyTypes" type="SpyCompanyTypeEntity[]" singular="companyType"/>
     </transfer>
 </transfers>

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\CompanyGui\Communication;
 
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
+use Spryker\Zed\CompanyGui\Communication\Form\CompanyForm;
+use Spryker\Zed\CompanyGui\Communication\Form\DataProvider\CompanyFormDataProvider;
 use Spryker\Zed\CompanyGui\Communication\Table\CompanyTable;
 use Spryker\Zed\CompanyGui\CompanyGuiDependencyProvider;
 use Spryker\Zed\CompanyGui\Dependency\Facade\CompanyGuiToCompanyFacadeInterface;
@@ -23,6 +25,27 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
         $companyQuery = $this->getPropelCompanyQuery();
 
         return new CompanyTable($companyQuery);
+    }
+
+    /**
+     * @param array|null $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCompanyForm($data = null, array $options = [])
+    {
+        return $this->getFormFactory()->create(CompanyForm::class, $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyGui\Communication\Form\DataProvider\CompanyFormDataProvider
+     */
+    public function createCompanyFormDataProvider(): CompanyFormDataProvider
+    {
+        return new CompanyFormDataProvider(
+            $this->getCompanyFacade()
+        );
     }
 
     /**
