@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
+namespace Spryker\Zed\ManualOrderEntryGui\Communication\Service;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\CartFacade;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
- */
-class ProductFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
+class ProductMapper
 {
+    /**
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeInterface
+     */
+    protected $productFacade;
 
     /**
      * @var CartFacade
@@ -25,23 +25,13 @@ class ProductFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPl
     protected $cartFacade;
 
     /**
-     * @todo @Artem use bridge
+     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeInterface $productFacade
      * @param CartFacade $cartFacade
      */
-    public function __construct($cartFacade)
+    public function __construct($productFacade, $cartFacade)
     {
+        $this->productFacade = $productFacade;
         $this->cartFacade = $cartFacade;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createForm(Request $request, $dataTransfer = null)
-    {
-        return $this->getFactory()->createProductsCollectionForm();
     }
 
     /**
@@ -49,7 +39,7 @@ class ProductFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPl
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer)
+    public function mapSkusToItemsTransfer(QuoteTransfer $quoteTransfer)
     {
         $cartChangeTransfer = new CartChangeTransfer();
         $cartChangeTransfer->setQuote($quoteTransfer);
@@ -57,7 +47,7 @@ class ProductFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPl
         foreach($quoteTransfer->getManualOrderProducts() as $manualOrderProduct) {
             if (!strlen($manualOrderProduct->getSku())
                 || (int)$manualOrderProduct->getQuantity()<=0
-//                || !$this->productFacade->hasProductConcrete($manualOrderProduct->getSku())
+                || !$this->productFacade->hasProductConcrete($manualOrderProduct->getSku())
             ) {
                 continue;
             }
@@ -77,5 +67,6 @@ class ProductFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPl
 
         return $quoteTransfer;
     }
+
 
 }

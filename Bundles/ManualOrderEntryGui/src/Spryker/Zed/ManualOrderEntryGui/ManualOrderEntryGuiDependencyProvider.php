@@ -14,12 +14,15 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\AddressFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\CustomersListFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ProductFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeBridge;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreBridge;
 
 class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FACADE_CUSTOMER = 'MANUAL_ORDER_ENTRY_GUI:FACADE_CUSTOMER';
+    const FACADE_PRODUCT = 'MANUAL_ORDER_ENTRY_GUI:FACADE_PRODUCT';
+    const FACADE_CART = 'MANUAL_ORDER_ENTRY_GUI:FACADE_CART';
 
     const QUERY_CONTAINER_CUSTOMER = 'MANUAL_ORDER_ENTRY_GUI:QUERY_CONTAINER_CUSTOMER';
 
@@ -36,6 +39,8 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addCustomerFacade($container);
+        $container = $this->addProductFacade($container);
+        $container = $this->addCartFacade($container);
         $container = $this->addCustomerQueryContainer($container);
         $container = $this->addStore($container);
         $container = $this->addManualOrderEntryFormPlugins($container);
@@ -55,6 +60,41 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductFacade(Container $container)
+    {
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
+            return new ManualOrderEntryGuiToProductFacadeBridge($container->getLocator()->product()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCartFacade(Container $container)
+    {
+        $container[static::FACADE_CART] = function (Container $container) {
+            // @todo @Artem add bridge
+            return $this->getCartFacade($container);
+        };
+
+        return $container;
+    }
+
+    protected function getCartFacade(Container $container)
+    {
+        // @todo @Artem add bridge
+        return $container->getLocator()->cart()->facade();
     }
 
     /**
@@ -93,19 +133,21 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     protected function addManualOrderEntryFormPlugins(Container $container)
     {
         $container[static::PLUGINS_MANUAL_ORDER_ENTRY_FORM] = function (Container $container) {
-            return $this->getManualOrderEntryFormPlugins();
+            return $this->getManualOrderEntryFormPlugins($container);
         };
 
         return $container;
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      */
-    protected function getManualOrderEntryFormPlugins()
+    protected function getManualOrderEntryFormPlugins(Container $container)
     {
         return [
-            new ProductFormPlugin(),
+            new ProductFormPlugin($this->getCartFacade($container)),
             new CustomersListFormPlugin(),
             new AddressFormPlugin(),
         ];

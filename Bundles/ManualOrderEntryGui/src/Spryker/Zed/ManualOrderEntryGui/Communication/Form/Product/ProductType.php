@@ -24,7 +24,6 @@ class ProductType extends AbstractType
     const FIELD_SKU = 'sku';
     const FIELD_QUANTITY = 'quantity';
 
-
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -61,6 +60,10 @@ class ProductType extends AbstractType
             'label' => 'SKU',
             'required' => false,
         ]);
+        //@todo @Artem validate on (or not)
+        // - sku
+        // - is active
+        // - stock
 
         return $this;
     }

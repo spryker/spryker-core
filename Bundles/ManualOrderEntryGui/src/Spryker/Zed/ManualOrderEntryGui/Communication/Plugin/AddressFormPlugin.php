@@ -17,14 +17,25 @@ class AddressFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPl
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    public function createForm(Request $request)
+    public function createForm(Request $request, $dataTransfer = null)
     {
         return $this->getFactory()->createAddressCollectionForm();
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    public function handleData($dataTransfer)
+    {
+        return $dataTransfer;
     }
 
 }

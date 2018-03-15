@@ -8,9 +8,12 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product;
 
 use ArrayObject;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 
@@ -45,6 +48,17 @@ class ProductsCollectionType extends AbstractType
         $this
             ->addProductsField($builder, $options)
         ;
+
+        // @todo @Artem
+//        $builder->addEventListener(FormEvents::POST_SUBMIT,
+//            function (FormEvent $event) {
+//                /** @var QuoteTransfer $quoteTransfer */
+//                $quoteTransfer = $event->getData();
+//                $quote = $event->getForm()->getData();
+//                // Set Items Here
+//                $productMapper = $this->getFactory()->createProductMapper();
+//                $productMapper->mapSkusToItemsTransfer($quoteTransfer);
+//            });
     }
 
     /**

@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
@@ -24,8 +26,8 @@ class CreateController extends AbstractController
 {
     const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
 
-    const SUCCESSFUL_MESSAGE_CUSTOMER_CREATED = 'Customer was registered successfully.';
-    const SUCCESSFUL_MESSAGE_ORDER_CREATED = 'Order was created successfully.';
+    const SUCCESSFUL_MESSAGE_CUSTOMER_CREATED = 'Customer is registered successfully.';
+    const SUCCESSFUL_MESSAGE_ORDER_CREATED = 'Order is created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -37,22 +39,37 @@ class CreateController extends AbstractController
     public function indexAction(Request $request)
     {
         $quoteTransfer = new QuoteTransfer();
+        // @todo @Artem Add select Currency field
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode('EUR');
+        $currencyTransfer->setIdCurrency(93);
+        $quoteTransfer->setCurrency($currencyTransfer);
+
+        $storeTransfer = new StoreTransfer();
+        $storeTransfer->setIdStore(1);
+        $storeTransfer->setName('DE');
+        $quoteTransfer->setStore($storeTransfer);
+
         $forms = [];
         $validForms = true;
 
-        foreach ($this->getFactory()->getManualOrderEntryFormPlugins($request) as $formPlugin) {
-            $form = $formPlugin->createForm($request);
+        foreach ($this->getFactory()->getManualOrderEntryFormPlugins($request, $quoteTransfer) as $formPlugin) {
+            $form = $formPlugin->createForm($request, $quoteTransfer);
             $form->setData($quoteTransfer->toArray());
             $form->handleRequest($request);
 
             $data = $form->getData();
+
             $modifiedData = $data->modifiedToArray();
             $quoteTransfer->fromArray($modifiedData);
 
-            $forms[] = $form;
-            if (!$form->isValid()) {
+            if ($form->isValid()) {
+                $quoteTransfer = $formPlugin->handleData($quoteTransfer);
+            } else {
                 $validForms = false;
             }
+
+            $forms[] = $form;
         }
 
         if ($validForms) {
@@ -75,44 +92,6 @@ class CreateController extends AbstractController
             'forms' => $formsView,
         ]);
 
-
-
-
-//        $manualOrderEntryFormDataProvider = $this->getFactory()
-//            ->createManualOrderEntryFormDataProvider($request);
-//
-//        $manualOrderEntryForm = $this->getFactory()
-//            ->createManualOrderEntryForm($manualOrderEntryFormDataProvider);
-//        $manualOrderEntryForm->handleRequest($request);
-//
-//
-//
-//        if ($manualOrderEntryForm->isSubmitted()) {
-//            if ($manualOrderEntryForm->isValid()) {
-//                // @todo @Artem Manage subform activation.
-//                // Some simple Step Engine inject to form
-//
-//                $quoteTransfer = $manualOrderEntryForm->getData();
-//                $manualOrderEntryForm = $this->getFactory()
-//                    ->createManualOrderEntryForm($manualOrderEntryFormDataProvider, true);
-//
-//
-//                $this->createOrder($quoteTransfer);
-//
-//                // @todo @Artem redirect to order details
-//                if (0 && !empty($quoteTransfer)) {
-//                    $redirectUrl = $this->createRedirectUrlAfterOrderCreation($quoteTransfer);
-//
-//                    return $this->redirectResponse($redirectUrl);
-//                }
-//            } else {
-//                $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
-//            }
-//        }
-//
-//        return $this->viewResponse([
-//            'manualOrderEntryForm' => $manualOrderEntryForm->createView(),
-//        ]);
     }
 
     /**

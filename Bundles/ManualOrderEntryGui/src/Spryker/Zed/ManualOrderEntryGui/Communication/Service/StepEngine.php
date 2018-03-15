@@ -15,16 +15,17 @@ class StepEngine
     /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $formPlugins
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    public function filterFormPlugins($formPlugins, Request $request)
+    public function filterFormPlugins($formPlugins, Request $request, $quoteTransfer)
     {
         $filteredPlugins = [];
 
         foreach($formPlugins as $formPlugin) {
             $filteredPlugins[] = $formPlugin;
-            if (!$this->isFormValid($formPlugin, $request)) {
+            if (!$this->isFormValid($formPlugin, $request, $quoteTransfer)) {
                 break;
             }
         }
@@ -35,12 +36,15 @@ class StepEngine
     /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface $formPlugin
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function isFormValid($formPlugin, $request)
+    protected function isFormValid($formPlugin, $request, $quoteTransfer)
     {
-        $form = $formPlugin->createForm($request);
+        $form = $formPlugin->createForm($request, $quoteTransfer);
+        $form->setData($quoteTransfer->toArray());
+        $data = $form->getData();
         $form->handleRequest($request);
 
         if ($form->isValid()) {

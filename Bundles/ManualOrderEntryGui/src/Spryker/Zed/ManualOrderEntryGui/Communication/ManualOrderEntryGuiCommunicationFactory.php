@@ -11,15 +11,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ProductDataProvider;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Main\ManualOrderEntryType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomerType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\AddressCollectionDataProvider;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ManualOrderEntryFormDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomerDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomersListDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductsCollectionType;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Service\ProductMapper;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Service\StepEngine;
 use Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,28 +29,34 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
 {
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ManualOrderEntryFormDataProvider
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     */
-    public function createManualOrderEntryFormDataProvider(Request $request)
-    {
-        return new ManualOrderEntryFormDataProvider(
-            $this->getCustomerQueryContainer(),
-            $request
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Customer\Business\CustomerFacade
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeInterface
      *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function getCustomerFacade()
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeInterface
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function getProductFacade()
+    {
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * // @todo change on bridge
+     * @return \Spryker\Zed\Cart\Business\CartFacade
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function getCartFacade()
+    {
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_CART);
     }
 
     /**
@@ -76,32 +80,18 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ManualOrderEntryFormDataProvider $manualOrderEntryFormDataProvider
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createManualOrderEntryForm(ManualOrderEntryFormDataProvider $manualOrderEntryFormDataProvider, $next = false)
-    {
-        return $this->getFormFactory()->create(
-            ManualOrderEntryType::class,
-            $manualOrderEntryFormDataProvider->getData(),
-            $manualOrderEntryFormDataProvider->getOptions() + ['next'=>$next]
-        );
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    public function getManualOrderEntryFormPlugins(Request $request)
+    public function getManualOrderEntryFormPlugins(Request $request, $quoteTransfer)
     {
-        // @todo @Artem here filter pluging with Step Engine
         $formPlugins = $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::PLUGINS_MANUAL_ORDER_ENTRY_FORM);
 
-        return $this->createStepEngine()->filterFormPlugins($formPlugins, $request);
+        return $this->createStepEngine()->filterFormPlugins($formPlugins, $request, $quoteTransfer);
     }
 
     /**
@@ -113,11 +103,16 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Service\ProductMapper
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    public function createCustomersListType()
+    public function createProductMapper()
     {
-        return new CustomersListType();
+        return new ProductMapper(
+            $this->getProductFacade(),
+            $this->getCartFacade()
+        );
     }
 
     /**
@@ -137,18 +132,19 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    public function createCustomersListForm(Request $request)
+    public function createCustomersListForm(Request $request, $quoteTransfer)
     {
         $formDataProvider = $this->createCustomersListDataProvider($request);
 
         return $this->getFormFactory()->create(
             CustomersListType::class,
-            $formDataProvider->getData(new QuoteTransfer()),
+            $formDataProvider->getData($quoteTransfer),
             $formDataProvider->getOptions()
         );
     }
