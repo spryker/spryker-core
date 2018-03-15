@@ -8,6 +8,8 @@
 namespace Spryker\Zed\FileManager\Communication\Controller;
 
 use Generated\Shared\Transfer\FileManagerReadResponseTransfer;
+use Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\FileManager\FileManagerConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +23,7 @@ class DownloadController extends AbstractController
 {
     const CONTENT_DISPOSITION = 'Content-Disposition';
     const CONTENT_TYPE = 'Content-Type';
+    const MESSAGE_FILE_UNAVAILABLE = 'File is unavailable';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -31,9 +34,16 @@ class DownloadController extends AbstractController
     {
         $idFileInfo = $request->get(FileManagerConstants::URL_PARAM_ID_FILE_INFO);
 
-        $file = $this->getFactory()
-            ->getFileManagerFacade()
-            ->read($idFileInfo);
+        try {
+            $file = $this->getFactory()
+                ->getFileManagerFacade()
+                ->read($idFileInfo);
+        } catch (FileSystemReadException $e) {
+            $this->addErrorMessage(static::MESSAGE_FILE_UNAVAILABLE);
+            $redirectUrl = Url::generate('/file-manager-gui')->build();
+
+            return $this->redirectResponse($redirectUrl);
+        }
 
         return $this->createResponse($file);
     }
