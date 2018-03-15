@@ -12,8 +12,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreInterface;
 
-class AddressCollectionDataProvider extends AbstractAddressDataProvider
+class AddressCollectionDataProvider
 {
+
+    /**
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreInterface
+     */
+    protected $store;
 
     /**
      * @var \Generated\Shared\Transfer\CustomerTransfer
@@ -27,7 +32,7 @@ class AddressCollectionDataProvider extends AbstractAddressDataProvider
     {
         // @todo @ARtem Pyz\Yves\Customer\Form\DataProvider\CheckoutAddressFormDataProvider
         // CustomerClient for data about his addresses
-        parent::__construct($store);
+        $this->store = $store;
     }
 
     /**
@@ -37,6 +42,8 @@ class AddressCollectionDataProvider extends AbstractAddressDataProvider
      */
     public function getData(QuoteTransfer $quoteTransfer)
     {
+        $this->customerTransfer = $quoteTransfer->getCustomer();
+
         $quoteTransfer->setShippingAddress($this->getShippingAddress($quoteTransfer));
         $quoteTransfer->setBillingAddress($this->getBillingAddress($quoteTransfer));
 
@@ -128,5 +135,19 @@ class AddressCollectionDataProvider extends AbstractAddressDataProvider
         }
 
         return $choices;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getAvailableCountries()
+    {
+        $countries = [];
+
+        foreach ($this->store->getCountries() as $iso2Code) {
+            $countries[$iso2Code] = $iso2Code;
+        }
+
+        return $countries;
     }
 }

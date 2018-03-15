@@ -10,6 +10,7 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Constraint\SkuExists;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ItemCollectionDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ProductCollectionDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
@@ -192,17 +193,19 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
+     *
      * @return \Symfony\Component\Form\FormInterface
      *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
-    public function createAddressCollectionForm()
+    public function createAddressCollectionForm($quoteTransfer)
     {
         $formDataProvider = $this->createAddressCollectionDataProvider();
 
         return $this->getFormFactory()->create(
             AddressCollectionType::class,
-            $formDataProvider->getData(new QuoteTransfer()),
+            $formDataProvider->getData($quoteTransfer),
             $formDataProvider->getOptions()
         );
     }
@@ -229,6 +232,18 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
             $formDataProvider->getData($quoteTransfer),
             $formDataProvider->getOptions()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function createSkuExistsConstraint()
+    {
+        return new SkuExists([
+            SkuExists::OPTION_PRODUCT_FACADE => $this->getProductFacade()
+        ]);
     }
 
     /**

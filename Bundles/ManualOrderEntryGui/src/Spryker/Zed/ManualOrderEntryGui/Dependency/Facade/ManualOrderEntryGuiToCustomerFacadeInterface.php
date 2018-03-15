@@ -19,4 +19,11 @@ interface ManualOrderEntryGuiToCustomerFacadeInterface
      */
     public function registerCustomer(CustomerTransfer $customerTransfer);
 
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerById(CustomerTransfer $customerTransfer);
+
 }

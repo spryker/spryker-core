@@ -147,7 +147,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
                 $container[static::FACADE_PRODUCT]
             ),
             new ItemFormPlugin($container[static::FACADE_CART]),
-            new CustomersListFormPlugin(),
+            new CustomersListFormPlugin($container[static::FACADE_CUSTOMER]),
             new AddressFormPlugin(),
         ];
     }

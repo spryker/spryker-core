@@ -24,7 +24,7 @@ class AddressFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
      */
     public function createForm(Request $request, $dataTransfer = null)
     {
-        return $this->getFactory()->createAddressCollectionForm();
+        return $this->getFactory()->createAddressCollectionForm($dataTransfer);
     }
 
 }

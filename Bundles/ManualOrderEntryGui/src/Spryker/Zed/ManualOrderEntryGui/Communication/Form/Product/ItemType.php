@@ -31,10 +31,16 @@ class ItemType extends AbstractType
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-
+        $resolver->setDefaults([
+            'constraints' => [
+                $this->getFactory()->createSkuExistsConstraint(),
+            ],
+        ]);
     }
 
     /**
@@ -65,10 +71,6 @@ class ItemType extends AbstractType
             'label' => 'SKU',
             'required' => false,
         ]);
-        //@todo @Artem validate on (or not)
-        // - sku
-        // - is active
-        // - stock
 
         return $this;
     }

@@ -28,10 +28,16 @@ class ProductType extends AbstractType
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-
+        $resolver->setDefaults([
+            'constraints' => [
+                $this->getFactory()->createSkuExistsConstraint(),
+            ],
+        ]);
     }
 
     /**

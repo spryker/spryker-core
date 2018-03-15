@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
+use ArrayObject;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -48,7 +49,17 @@ class ItemFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormP
      */
     public function handleData($quoteTransfer, &$form, $request)
     {
+        $items = new ArrayObject();
+        foreach($quoteTransfer->getItems() as $item) {
+            if ($item->getQuantity()>0) {
+                $items->append($item);
+            }
+        }
+        $quoteTransfer->setItems($items);
         $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
+
+        $form = $this->createForm($request, $quoteTransfer);
+        $form->setData($quoteTransfer->toArray());
 
         return $quoteTransfer;
     }
