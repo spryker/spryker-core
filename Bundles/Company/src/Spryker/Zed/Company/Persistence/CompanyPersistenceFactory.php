@@ -13,6 +13,9 @@ use Spryker\Zed\Company\Persistence\Mapper\CompanyMapper;
 use Spryker\Zed\Company\Persistence\Mapper\CompanyMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
+/**
+ * @method \Spryker\Zed\Company\CompanyConfig getConfig()
+ */
 class CompanyPersistenceFactory extends AbstractPersistenceFactory
 {
     /**

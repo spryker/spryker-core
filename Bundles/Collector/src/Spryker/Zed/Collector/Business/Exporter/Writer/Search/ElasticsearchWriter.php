@@ -91,7 +91,7 @@ class ElasticsearchWriter implements WriterInterface, ConfigurableSearchWriterIn
         }
 
         $response = $this->getIndex()->deleteDocuments($documents);
-        $this->getIndex()->flush(true);
+        $this->getIndex()->flush();
 
         return $response->isOk();
     }

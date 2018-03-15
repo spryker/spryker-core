@@ -9,7 +9,7 @@
     "spryker/installer": "^4.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/propel": "^3.0.0",
-    "spryker/search": "^6.0.0 || ^7.0.0",
+    "spryker/search": "^6.0.0 || ^7.0.0 || ^8.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/transfer": "^3.0.0",
     "spryker/zed-navigation": "^1.0.0"

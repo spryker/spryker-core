@@ -23,4 +23,16 @@ interface CompanyClientInterface
      * @return \Generated\Shared\Transfer\CompanyResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function createCompany(CompanyTransfer $companyTransfer): CompanyResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Retrieve a company by CompanyTransfer::idCompany in the transfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function getCompanyById(CompanyTransfer $companyTransfer): CompanyTransfer;
 }

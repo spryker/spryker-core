@@ -66,6 +66,20 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves company user information by customer ID
+     * - Checks activity flag in a related company
+     * - Returns NULL when an activity flag is false
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findActiveCompanyUserByCustomerId(CustomerTransfer $customerTransfer): ?CompanyUserTransfer;
+
+    /**
+     * Specification:
      * - Retrieves company users collection.
      *
      * @api
@@ -89,4 +103,16 @@ interface CompanyUserFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
     public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves initial company user (first created) by $idCompany,
+     *
+     * @api
+     *
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findInitialCompanyUserByCompanyId(int $idCompany): ?CompanyUserTransfer;
 }
