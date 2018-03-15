@@ -84,6 +84,12 @@ class CompanyStoreRelationWriter implements CompanyStoreRelationWriterInterface
         $storeRelationTransfer->setIdEntity($idCompany);
         $storeRelations = $this->companyStoreRelationReader->getStoreRelation($storeRelationTransfer);
 
-        return $storeRelations->getStores();
+        $idStores = [];
+
+        foreach ($storeRelations->getStores() as $store) {
+            $idStores[] = $store->getIdStore();
+        }
+
+        return $idStores;
     }
 }

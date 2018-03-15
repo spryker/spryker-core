@@ -9,17 +9,18 @@ namespace Spryker\Zed\Permission\Business\PermissionFinder;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface;
 
 class PermissionFinder implements PermissionFinderInterface
 {
     /**
-     * @var \Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface[]
+     * @var \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface[]
      */
     protected $permissionPlugins = [];
 
     /**
-     * @param \Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface[] $permissionPlugins
+     * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[] $permissionPlugins
      */
     public function __construct(array $permissionPlugins)
     {
@@ -29,7 +30,7 @@ class PermissionFinder implements PermissionFinderInterface
     /**
      * @param string $permissionKey
      *
-     * @return null|\Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface
+     * @return null|\Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface
      */
     public function findPermissionPlugin($permissionKey): ?PermissionPluginInterface
     {
@@ -48,7 +49,13 @@ class PermissionFinder implements PermissionFinderInterface
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 
         foreach ($this->permissionPlugins as $permissionPlugin) {
-            $permissionTransfer = (new PermissionTransfer())->setKey($permissionPlugin->getKey());
+            $permissionTransfer = (new PermissionTransfer())
+                ->setKey($permissionPlugin->getKey());
+
+            if ($permissionPlugin instanceof ExecutablePermissionPluginInterface) {
+                $permissionTransfer->setConfigurationSignature($permissionPlugin->getConfigurationSignature());
+            }
+
             $permissionCollectionTransfer->addPermission($permissionTransfer);
         }
 
@@ -56,7 +63,7 @@ class PermissionFinder implements PermissionFinderInterface
     }
 
     /**
-     * @param \Spryker\Zed\Permission\Communication\Plugin\PermissionPluginInterface[] $permissionPlugins
+     * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[] $permissionPlugins
      *
      * @return array
      */

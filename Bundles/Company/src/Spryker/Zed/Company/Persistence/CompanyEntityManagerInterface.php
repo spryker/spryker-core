@@ -16,17 +16,16 @@ interface CompanyEntityManagerInterface
      * - Creates a company
      * - Finds a company by CompanyTransfer::idCompany in the transfer
      * - Updates fields in a company entity
-     * - Updates relation to stores
      *
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfeк
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function saveCompany(CompanyTransfer $companyTransfeк): CompanyTransfer;
+    public function saveCompany(CompanyTransfer $companyTransfer): CompanyTransfer;
 
     /**
      * Specification:
-     * - Finds a company by CompanyTransfer::idCompany in the transfer
+     * - Finds a company by#idCompany
      * - Deletes the company
      *
      * @param int $idCompany

@@ -18,6 +18,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SalesConfig extends AbstractBundleConfig
 {
     const PARAM_ID_SALES_ORDER = 'id-sales-order';
+    const PARAM_CUSTOMER_REFERENCE = 'customer-reference';
     const TEST_CUSTOMER_FIRST_NAME = 'test order';
 
     /**
