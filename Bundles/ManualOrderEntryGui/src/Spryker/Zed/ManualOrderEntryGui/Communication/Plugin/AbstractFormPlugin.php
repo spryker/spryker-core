@@ -7,17 +7,13 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
-use Symfony\Component\HttpFoundation\Request;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-interface ManualOrderEntryFormPluginInterface
+/**
+ * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
+ */
+abstract class AbstractFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createForm(Request $request, $dataTransfer = null);
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
@@ -26,5 +22,9 @@ interface ManualOrderEntryFormPluginInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function handleData($dataTransfer, &$form, $request);
+    public function handleData($dataTransfer, &$form, $request)
+    {
+        return $dataTransfer;
+    }
+
 }

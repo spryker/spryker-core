@@ -12,7 +12,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\AddressFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\CustomersListFormPlugin;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ItemFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ProductFormPlugin;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerBridge;
@@ -84,17 +86,10 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     protected function addCartFacade(Container $container)
     {
         $container[static::FACADE_CART] = function (Container $container) {
-            // @todo @Artem add bridge
-            return $this->getCartFacade($container);
+            return new ManualOrderEntryGuiToCartFacadeBridge($container->getLocator()->cart()->facade());
         };
 
         return $container;
-    }
-
-    protected function getCartFacade(Container $container)
-    {
-        // @todo @Artem add bridge
-        return $container->getLocator()->cart()->facade();
     }
 
     /**
@@ -147,7 +142,11 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     protected function getManualOrderEntryFormPlugins(Container $container)
     {
         return [
-            new ProductFormPlugin($this->getCartFacade($container)),
+            new ProductFormPlugin(
+                $container[static::FACADE_CART],
+                $container[static::FACADE_PRODUCT]
+            ),
+            new ItemFormPlugin($container[static::FACADE_CART]),
             new CustomersListFormPlugin(),
             new AddressFormPlugin(),
         ];

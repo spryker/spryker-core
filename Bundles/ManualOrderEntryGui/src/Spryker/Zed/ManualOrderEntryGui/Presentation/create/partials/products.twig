@@ -1,9 +1,34 @@
 
-<table class="manualOrderProducts">
-{% for product in form.manualOrderProducts %}
-    <tr>
-        <td>{{ form_row(product.sku) }}</td>
-        <td>{{ form_row(product.quantity) }}</td>
-    </tr>
-{% endfor %}
-</table>
+{#{% if form.items|length > 0 %}#}
+    {#<h4>Added Items</h4>#}
+    {#<table class="manualOrderItems">#}
+        {#{% for item in form.items %}#}
+            {#<tr>#}
+                {#<td>{{ form_row(item.sku) }}</td>#}
+                {#<td>{{ form_row(item.quantity) }}</td>#}
+                {#<td>{{ form_row(item.unitGrossPrice) }}</td>#}
+            {#</tr>#}
+        {#{% endfor %}#}
+    {#</table>#}
+{#{% else %}#}
+    {#<div style="visibility: hidden">#}
+        {#{{ form_widget(form.items) }}#}
+    {#</div>#}
+{#{% endif %}#}
+
+{% if form.manualOrderProducts|length > 0 %}
+    <h4>Add Products</h4>
+    <table class="manualOrderProducts">
+        {% for product in form.manualOrderProducts %}
+            <tr>
+                <td>{{ form_row(product.sku) }}</td>
+                <td>{{ form_row(product.quantity) }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <div style="visibility: hidden">
+        {{ form_widget(form.manualOrderProducts) }}
+    </div>
+{% endif %}
+

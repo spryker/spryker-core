@@ -10,13 +10,15 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ProductDataProvider;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ItemCollectionDataProvider;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ProductCollectionDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomerType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\AddressCollectionDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomerDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomersListDataProvider;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductsCollectionType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ItemCollectionType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductCollectionType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Service\ProductMapper;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Service\StepEngine;
 use Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiDependencyProvider;
@@ -206,23 +208,49 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ProductDataProvider
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ProductCollectionDataProvider
      */
-    public function createProductCollectionDataProvider()
+    public function createProductsCollectionDataProvider()
     {
-        return new ProductDataProvider();
+        return new ProductCollectionDataProvider();
     }
 
     /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductsCollectionForm()
+    public function createProductsCollectionForm($quoteTransfer)
     {
-        $formDataProvider = $this->createProductCollectionDataProvider();
+        $formDataProvider = $this->createProductsCollectionDataProvider();
 
         return $this->getFormFactory()->create(
-            ProductsCollectionType::class,
-            $formDataProvider->getData(new QuoteTransfer()),
+            ProductCollectionType::class,
+            $formDataProvider->getData($quoteTransfer),
+            $formDataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ItemCollectionDataProvider
+     */
+    public function createItemsCollectionDataProvider()
+    {
+        return new ItemCollectionDataProvider();
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createItemsCollectionForm($quoteTransfer)
+    {
+        $formDataProvider = $this->createItemsCollectionDataProvider();
+
+        return $this->getFormFactory()->create(
+            ItemCollectionType::class,
+            $formDataProvider->getData($quoteTransfer),
             $formDataProvider->getOptions()
         );
     }

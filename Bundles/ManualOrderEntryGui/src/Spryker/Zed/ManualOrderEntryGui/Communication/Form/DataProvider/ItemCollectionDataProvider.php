@@ -7,24 +7,23 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ManualOrderProductTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductsCollectionType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ItemCollectionType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductCollectionType;
 
-class ProductDataProvider
+class ItemCollectionDataProvider
 {
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function getData(QuoteTransfer $quoteTransfer)
     {
-        for ($i=0; $i<3; $i++) {
-            $quoteTransfer->addManualOrderProducts(new ManualOrderProductTransfer());
-        }
-
         return $quoteTransfer;
     }
 
@@ -36,7 +35,7 @@ class ProductDataProvider
     {
         return [
             'data_class' => QuoteTransfer::class,
-            ProductsCollectionType::OPTION_DATA_CLASS_COLLECTION => ManualOrderProductTransfer::class,
+            ItemCollectionType::OPTION_ITEM_CLASS_COLLECTION => ItemTransfer::class,
             'allow_extra_fields' => true,
             'csrf_protection' => false,
         ];

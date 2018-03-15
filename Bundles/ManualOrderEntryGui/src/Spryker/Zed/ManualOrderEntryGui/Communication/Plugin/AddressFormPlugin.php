@@ -7,13 +7,12 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class AddressFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
+class AddressFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -26,16 +25,6 @@ class AddressFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPl
     public function createForm(Request $request, $dataTransfer = null)
     {
         return $this->getFactory()->createAddressCollectionForm();
-    }
-
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
-     *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
-     */
-    public function handleData($dataTransfer)
-    {
-        return $dataTransfer;
     }
 
 }

@@ -44,7 +44,6 @@ class StepEngine
     {
         $form = $formPlugin->createForm($request, $quoteTransfer);
         $form->setData($quoteTransfer->toArray());
-        $data = $form->getData();
         $form->handleRequest($request);
 
         if ($form->isValid()) {

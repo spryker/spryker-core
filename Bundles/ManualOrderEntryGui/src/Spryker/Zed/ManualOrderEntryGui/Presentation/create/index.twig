@@ -21,6 +21,8 @@
 
                     {% if form.vars.id == 'products' %}
                         {% include '@ManualOrderEntryGui/create/partials/products.twig' with {'form': form} %}
+                    {% elseif form.vars.id == 'items' %}
+                        {% include '@ManualOrderEntryGui/create/partials/items.twig' with {'form': form} %}
                     {% elseif form.vars.id == 'addresses' %}
                         {% include '@ManualOrderEntryGui/create/partials/addresses.twig' with {'form': form} %}
                     {% else %}

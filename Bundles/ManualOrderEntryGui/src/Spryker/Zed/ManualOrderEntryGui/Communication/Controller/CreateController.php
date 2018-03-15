@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\CustomersListFormPlugin;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ProductFormPlugin;
 use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,7 +41,7 @@ class CreateController extends AbstractController
     public function indexAction(Request $request)
     {
         $quoteTransfer = new QuoteTransfer();
-        // @todo @Artem Add select Currency field
+        // @todo @Artem Add select Currency, Store field
         $currencyTransfer = new CurrencyTransfer();
         $currencyTransfer->setCode('EUR');
         $currencyTransfer->setIdCurrency(93);
@@ -64,7 +66,7 @@ class CreateController extends AbstractController
             $quoteTransfer->fromArray($modifiedData);
 
             if ($form->isValid()) {
-                $quoteTransfer = $formPlugin->handleData($quoteTransfer);
+                $quoteTransfer = $formPlugin->handleData($quoteTransfer, $form, $request);
             } else {
                 $validForms = false;
             }

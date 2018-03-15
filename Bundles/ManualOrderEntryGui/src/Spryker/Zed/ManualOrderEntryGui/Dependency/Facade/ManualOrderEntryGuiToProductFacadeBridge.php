@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-
 class ManualOrderEntryGuiToProductFacadeBridge implements ManualOrderEntryGuiToProductFacadeInterface
 {
     /**

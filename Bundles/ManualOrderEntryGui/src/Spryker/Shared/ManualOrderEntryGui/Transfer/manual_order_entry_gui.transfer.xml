@@ -14,7 +14,12 @@
         <property name="customer" type="Customer" />
 
         <property name="manualOrderProducts" type="ManualOrderProduct[]" />
+        <property name="isProductPosted" type="int" />
 
+    </transfer>
+
+    <transfer name="Item">
+        <property name="forcedUnitGrossPrice" type="bool" />
     </transfer>
 
 </transfers>

@@ -1,0 +1,21 @@
+
+{% if form.items|length > 0 %}
+    <h4>Added Items</h4>
+    <table class="manualOrderItems">
+        {% for item in form.items %}
+            <tr>
+                <td>{{ form_row(item.sku) }}</td>
+                <td>{{ form_row(item.quantity) }}</td>
+                <td>
+                    {{ form_row(item.unitGrossPrice) }}
+                    {{ form_row(item.forcedUnitGrossPrice) }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <div style="visibility: hidden">
+        {{ form_widget(form.items) }}
+    </div>
+{% endif %}
+

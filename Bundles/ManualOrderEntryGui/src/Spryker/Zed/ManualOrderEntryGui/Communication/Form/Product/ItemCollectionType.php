@@ -20,12 +20,12 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class ProductsCollectionType extends AbstractType
+class ItemCollectionType extends AbstractType
 {
 
-    const FIELD_PRODUCTS = 'manualOrderProducts';
+    const FIELD_ITEMS = 'items';
 
-    const OPTION_DATA_CLASS_COLLECTION = 'data_class_collection';
+    const OPTION_ITEM_CLASS_COLLECTION = 'item_class_collection';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -34,7 +34,7 @@ class ProductsCollectionType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(static::OPTION_DATA_CLASS_COLLECTION);
+        $resolver->setRequired(static::OPTION_ITEM_CLASS_COLLECTION);
     }
 
     /**
@@ -46,19 +46,8 @@ class ProductsCollectionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addProductsField($builder, $options)
+            ->addItemsField($builder, $options)
         ;
-
-        // @todo @Artem
-//        $builder->addEventListener(FormEvents::POST_SUBMIT,
-//            function (FormEvent $event) {
-//                /** @var QuoteTransfer $quoteTransfer */
-//                $quoteTransfer = $event->getData();
-//                $quote = $event->getForm()->getData();
-//                // Set Items Here
-//                $productMapper = $this->getFactory()->createProductMapper();
-//                $productMapper->mapSkusToItemsTransfer($quoteTransfer);
-//            });
     }
 
     /**
@@ -67,38 +56,20 @@ class ProductsCollectionType extends AbstractType
      *
      * @return $this
      */
-    protected function addProductsField(FormBuilderInterface $builder, array $options)
+    protected function addItemsField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_PRODUCTS, CollectionType::class, [
-            'entry_type' => ProductType::class,
-            'label' => 'Products',
+        $builder->add(self::FIELD_ITEMS, CollectionType::class, [
+            'entry_type' => ItemType::class,
+            'label' => 'Added Items',
             'required' => false,
             'allow_add' => true,
             'allow_delete' => true,
             'entry_options' => [
-                'data_class' => $options[static::OPTION_DATA_CLASS_COLLECTION],
+                'data_class' => $options[static::OPTION_ITEM_CLASS_COLLECTION],
             ],
         ]);
 
-        $builder->get(static::FIELD_PRODUCTS)
-            ->addModelTransformer($this->createArrayObjectModelTransformer());
-
         return $this;
-    }
-
-    /**
-     * @return \Symfony\Component\Form\CallbackTransformer
-     */
-    protected function createArrayObjectModelTransformer()
-    {
-        return new CallbackTransformer(
-            function ($value) {
-                return (array)$value;
-            },
-            function ($value) {
-                return new ArrayObject($value);
-            }
-        );
     }
 
     /**
@@ -106,7 +77,7 @@ class ProductsCollectionType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'products';
+        return 'items';
     }
 
 }
