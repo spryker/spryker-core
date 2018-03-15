@@ -14,40 +14,61 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\CompanySupplier\Persistence\CompanySupplierQueryContainerInterface;
 use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCompanySupplierFacadeInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\Money\Business\MoneyFacadeInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingInterface;
+use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
 class ProductSupplierTable extends AbstractTable
 {
     const COL_SKU = 'sku';
-    const COL_NAME = 'name';
-    const COL_PRICE = 'price';
-    const COL_STOCK = 'stocks';
-    const COL_DISCOUNT = 'discount';
-    const COL_WAREHOUSE = 'warehouse';
+    const COL_SUPPLIER_PRICE = 'supplier_price';
+    const COL_DEFAULT_PRICE = 'default_price';
+    protected const PRICE_FORMAT = '%s: %s';
+
+    protected const PRICE_SEPARATOR = '<br/>';
+
+    public const PRICE_TYPE_SUPPLIER = 'SUPPLIER';
+
+    public const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
     /**
      * @var CompanySupplierGuiToCompanySupplierFacadeInterface
      */
     protected $companySupplierFacade;
 
+    protected $companySupplierQueryContainer;
+
+    protected $moneyFacade;
+
+    protected $storeFacade;
+
 
     /**
      * @param CompanySupplierGuiToCompanySupplierFacadeInterface $companySupplierFacade
      */
     public function __construct(
-        CompanySupplierGuiToCompanySupplierFacadeInterface $companySupplierFacade
-    ) {
+        CompanySupplierGuiToCompanySupplierFacadeInterface $companySupplierFacade,
+        CompanySupplierQueryContainerInterface $companySupplierQueryContainer,
+        MoneyFacadeInterface $moneyFacade,
+        StoreFacadeInterface $storeFacade
+    )
+    {
         $this->setTableIdentifier('product-suppliers-table');
         $this->companySupplierFacade = $companySupplierFacade;
+        $this->companySupplierQueryContainer = $companySupplierQueryContainer;
+        $this->moneyFacade = $moneyFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -57,43 +78,21 @@ class ProductSupplierTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-//        $config->setUrl(
-//            sprintf(
-//                'bundledProductTable?id-product-concrete=%d',
-//                $this->idProductConcrete
-//            )
-//        );
-//
-//        $defaultPriceMode = $this->priceFacade->getDefaultPriceMode();
-//
-//        $priceLabel = sprintf('Price (%s)', $defaultPriceMode);
+        $config->setUrl('table');
 
         $config->setHeader([
             static::COL_SKU => 'SKU',
-            static::COL_NAME => 'Name',
-            static::COL_PRICE => 'Purchasing price',
-            static::COL_STOCK => 'Internal Warehouses',
-            static::COL_DISCOUNT => 'Discount (in %)',
-            static::COL_WAREHOUSE => 'External Warehouses',
-
+            static::COL_SUPPLIER_PRICE => 'Purchasing price',
+            static::COL_DEFAULT_PRICE => 'Customer price',
         ]);
 
         $config->setRawColumns([
-            static::COL_STOCK,
-            static::COL_DISCOUNT,
-            static::COL_WAREHOUSE,
+            static::COL_SUPPLIER_PRICE,
+            static::COL_DEFAULT_PRICE,
         ]);
 
         $config->setSearchable([
-//            static::COL_SKU => 'SKU',
-//            static::COL_NAME => 'Name',
-        ]);
-//
-        $config->setSortable([
-//            SpyProductLocalizedAttributesTableMap::COL_NAME,
-//            SpyProductTableMap::COL_SKU,
-//            SpyStockProductTableMap::COL_QUANTITY,
-//            SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK,
+            static::COL_SKU
         ]);
 
         return $config;
@@ -106,130 +105,90 @@ class ProductSupplierTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $productSupplierCollection = $this->companySupplierFacade->getAllProductSupplements();
+        $productSupplierCollection = $this->runQuery(
+            $this->prepareQuery(),
+            $config,
+            true
+        );
 
-        $tableData = [];
-        /** @var ProductConcreteTransfer $productSupplier */
-        foreach ($productSupplierCollection as $productSupplier) {
-            $tableData[] = [
-                static::COL_SKU => $productSupplier->getSku(),
-                static::COL_NAME => 'test',
-                static::COL_PRICE => '1000',
-                static::COL_STOCK => $productSupplier->getStocks()[0]->getQuantity(),
-                static::COL_DISCOUNT => '100',
-                static::COL_WAREHOUSE => '100',
-            ];
+        if ($productSupplierCollection->count() < 1) {
+            return [];
         }
 
-//        $query = $this
-//            ->productQueryContainer
-//            ->queryProduct()
-//            ->leftJoinSpyProductBundleRelatedByFkProduct()
-//            ->joinSpyProductLocalizedAttributes()
-//            ->joinStockProduct()
-//            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, self::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME)
-//            ->withColumn(sprintf('SUM(%s)', SpyStockProductTableMap::COL_QUANTITY), 'stockQuantity')
-//            ->withColumn(SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK, self::IS_NEVER_OUT_OF_STOCK)
-//            ->where(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE . ' = ?', $this->localeTransfer->getIdLocale())
-//            ->add(SpyProductBundleTableMap::COL_ID_PRODUCT_BUNDLE, null, Criteria::ISNULL)
-//            ->groupBy(SpyProductTableMap::COL_ID_PRODUCT)
-//            ->addGroupByColumn(self::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME)
-//            ->addGroupByColumn(self::IS_NEVER_OUT_OF_STOCK);
+        return $this->format($productSupplierCollection);
+
+//        $productSupplierCollection = $this->companySupplierFacade->getAllProductSupplements();
 //
-//        $queryResults = $this->runQuery($query, $config, true);
-//
-//        $productAbstractCollection = [];
-//        foreach ($queryResults as $item) {
-//            $productAbstractCollection[] = [
-//                static::COL_SELECT => $this->addCheckBox($item),
-//                static::COL_ID_PRODUCT_CONCRETE => $item->getIdProduct(),
-//                SpyProductLocalizedAttributesTableMap::COL_NAME => $item->getName(),
-//                SpyProductTableMap::COL_SKU => $this->getProductEditPageLink($item->getSku(), $item->getFkProductAbstract(), $item->getIdProduct()),
-//                static::COL_PRICE => $this->getFormattedPrice($item->getSku()),
-//                SpyStockProductTableMap::COL_QUANTITY => $item->getStockQuantity(),
-//                static::COL_AVAILABILITY => $this->getAvailability($item),
-//                SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => $item->getIsNeverOutOfStock(),
+//        $tableData = [];
+//        /** @var ProductConcreteTransfer $productSupplier */
+//        foreach ($productSupplierCollection->getProducts() as $productSupplier) {
+//            $tableData[] = [
+//                static::COL_SKU => $productSupplier->getSku(),
+//                static::COL_SUPPLIER_PRICE => $productSupplier->getSupplierPrice(),
+//                static::COL_DEFAULT_PRICE => $productSupplier->getDefaultPrice(),
 //            ];
 //        }
 //
-//        return $productAbstractCollection;
-
-        return $tableData;
+//        return $tableData;
     }
 
-    /**
-     * @param string $sku
-     * @param int $idProductAbstract
-     * @param int $idProductConcrete
-     *
-     * @return string
-     */
-//    protected function getProductEditPageLink($sku, $idProductAbstract, $idProductConcrete)
-//    {
-//        $pageEditUrl = Url::generate('/product-management/edit/variant', [
-//            'id-product-abstract' => $idProductAbstract,
-//            'id-product' => $idProductConcrete,
-//        ])->build();
-//
-//        $pageEditLink = '<a target="_blank" href="' . $pageEditUrl . '">' . $sku . '</a>';
-//
-//        return $pageEditLink;
-//    }
+    protected function prepareQuery()
+    {
+        return $this->companySupplierQueryContainer->queryAProductSuppliers();
+    }
 
-    /**
-     * @param string $sku
-     *
-     * @return string
-     */
-//    protected function getFormattedPrice($sku)
-//    {
-//        $priceInCents = $this->priceProductFacade->findPriceBySku($sku);
-//
-//        if ($priceInCents === null) {
-//            return 'N/A';
-//        }
-//
-//        $moneyTransfer = $this->moneyFacade->fromInteger($priceInCents);
-//
-//        return $this->moneyFacade->formatWithSymbol($moneyTransfer);
-//    }
-//
-//    /**
-//     * @param \Orm\Zed\Product\Persistence\SpyProduct $productConcreteEntity
-//     *
-//     * @return string
-//     */
-//    protected function addCheckBox(SpyProduct $productConcreteEntity)
-//    {
-//        $checked = '';
-//        if ($this->idProductConcrete) {
-//            $criteria = new Criteria();
-//            $criteria->add(SpyProductBundleTableMap::COL_FK_PRODUCT, $this->idProductConcrete);
-//
-//            if ($productConcreteEntity->getSpyProductBundlesRelatedByFkBundledProduct($criteria)->count() > 0) {
-//                $checked = 'checked="checked"';
-//            }
-//        }
-//
-//        return sprintf(
-//            "<input id='product_assign_checkbox_%d' class='product_assign_checkbox' type='checkbox' data-info='%s' %s >",
-//            $productConcreteEntity->getIdProduct(),
-//            $this->utilEncodingService->encodeJson($productConcreteEntity->toArray()),
-//            $checked
-//        );
-//    }
-//
-//    /**
-//     * @param \Orm\Zed\Product\Persistence\SpyProduct $productConcreteEntity
-//     *
-//     * @return int
-//     */
-//    protected function getAvailability(SpyProduct $productConcreteEntity)
-//    {
-//        $availability = 0;
-//        if (!$productConcreteEntity->getIsNeverOutOfStock()) {
-//            $availability = $this->availabilityFacade->calculateStockForProduct($productConcreteEntity->getSku());
-//        }
-//        return $availability;
-//    }
+    public function format(ObjectCollection $spyProductCollection)
+    {
+        $productSuppliers = [];
+        /** @var SpyProduct $item */
+        foreach ($spyProductCollection as $spyProductEntity) {
+            $productTransfer = new ProductConcreteTransfer();
+            $productTransfer->fromArray($spyProductEntity->toArray(), true);
+            $this->setSupplierPrices($spyProductEntity,$productTransfer);
+            $productSuppliers[] = $productTransfer->toArray();
+        }
+
+        return $productSuppliers;
+    }
+
+    protected function setSupplierPrices(SpyProduct $spyProductEntity, ProductConcreteTransfer &$productTransfer)
+    {
+        $productTransfer->setSupplierPrice('');
+        $productTransfer->setDefaultPrice('');
+        if ($spyProductEntity->getPriceProductsJoinPriceType()->count() > 0) {
+            foreach ($spyProductEntity->getPriceProductsJoinPriceType() as $priceProduct) {
+                if ($priceProduct->getPriceType()->getName() === static::PRICE_TYPE_SUPPLIER) {
+                    $productTransfer->setSupplierPrice(
+                        $this->formatPrices($priceProduct->getPriceProductStores())
+                    );
+
+                    continue;
+                }
+                if ($priceProduct->getPriceType()->getName() === static::PRICE_TYPE_DEFAULT) {
+                    $productTransfer->setDefaultPrice(
+                        $this->formatPrices($priceProduct->getPriceProductStores())
+                    );
+
+                    continue;
+                }
+            }
+        }
+    }
+
+    protected function formatPrices(ObjectCollection $priceProductCollection)
+    {
+        $prices = [];
+        if ($priceProductCollection->count() > 0) {
+            /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductEntity */
+            foreach ($priceProductCollection as $priceProductEntity) {
+                $prices[] = sprintf(
+                    static::PRICE_FORMAT,
+                    $this->storeFacade->getStoreById($priceProductEntity->getFkStore())->getName(),
+                    $this->moneyFacade->convertIntegerToDecimal($priceProductEntity->getGrossPrice())
+                );
+            }
+        }
+
+        return implode(static::PRICE_SEPARATOR, $prices);
+    }
 }

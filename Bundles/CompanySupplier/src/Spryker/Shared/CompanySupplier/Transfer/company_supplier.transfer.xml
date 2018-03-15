@@ -9,7 +9,11 @@
 
     <transfer name="ProductConcrete">
         <property name="companySuppliers" type="SpyCompanyEntity[]"/>
+        <property name="supplierPrice" type="string"/>
+        <property name="defaultPrice" type="string"/>
     </transfer>
 
-    <!--<transfer name=""-->
+    <transfer name="ProductSupplierCollection">
+        <property name="products" type="ProductConcrete[]"/>
+    </transfer>
 </transfers>

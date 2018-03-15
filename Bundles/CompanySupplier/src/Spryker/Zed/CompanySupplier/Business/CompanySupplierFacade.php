@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanySupplier\Business;
 
 use Generated\Shared\Transfer\CompanySupplierCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -57,8 +58,8 @@ class CompanySupplierFacade extends AbstractFacade implements CompanySupplierFac
         $this->getEntityManager()->saveCompanySuppliersForProductConcrete($productConcreteTransfer);
     }
 
-    public function getAllProductSuppliers()
+    public function formatProductSuppliersCollection(ObjectCollection $spyProductCollection)
     {
-        return $this->getRepository()->getAllProductSuppliers();
+        return $this->getFactory()->createProductSupplierFormatter()->format($spyProductCollection);
     }
 }
