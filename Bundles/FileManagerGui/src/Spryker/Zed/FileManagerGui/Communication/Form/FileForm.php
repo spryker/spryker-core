@@ -92,7 +92,7 @@ class FileForm extends AbstractType
             'required' => !empty($formData[static::FIELD_USE_REAL_NAME]),
             'constraints' => [
                 new Callback($fileNameCallback),
-            ]
+            ],
         ]);
 
         return $this;
