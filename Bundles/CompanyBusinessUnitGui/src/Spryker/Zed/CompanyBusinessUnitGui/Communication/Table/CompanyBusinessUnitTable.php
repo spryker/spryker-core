@@ -20,10 +20,6 @@ class CompanyBusinessUnitTable extends AbstractTable
 
     public const REQUEST_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
 
-//    public const URL_COMPANY_DEACTIVATE = '/company-gui/edit-company/deactivate';
-//    public const URL_COMPANY_ACTIVATE = '/company-gui/edit-company/activate';
-//    public const URL_COMPANY_DENY = '/company-gui/edit-company/deny';
-//    public const URL_COMPANY_APPROVE = '/company-gui/edit-company/approve';
     public const URL_COMPANY_BUSINESS_UNIT_EDIT = '/company-business-unit-gui/edit-company-business-unit/index?%s=%d';
 
     /**

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyGui\Communication\Form;
+namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -20,31 +20,21 @@ use Symfony\Component\Validator\Constraints\Required;
 /**
  * @method \Spryker\Zed\CompanyGui\Communication\CompanyGuiCommunicationFactory getFactory()
  */
-class CompanyForm extends AbstractType
+class CompanyBusinessUnitForm extends AbstractType
 {
-    const OPTION_COMPANY_TYPE_CHOICES = 'company_type_choices';
-
-    const FIELD_ID_COMPANY = 'id_company';
+    const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
     const FIELD_NAME = 'name';
-    const FIELD_FK_COMPANY_TYPE = 'fk_company_type';
+    const FIELD_IBAN = 'iban';
+    const FIELD_BIC = 'bic';
 
     /**
      * @return string
      */
     public function getBlockPrefix()
     {
-        return 'company';
+        return 'company-business-unit';
     }
 
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setRequired(static::OPTION_COMPANY_TYPE_CHOICES);
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -57,17 +47,18 @@ class CompanyForm extends AbstractType
         $this
             ->addIdCompanyField($builder)
             ->addNameField($builder)
-            ->addCompanyTypeField($builder, $options[self::OPTION_COMPANY_TYPE_CHOICES]);
+            ->addIbanField($builder)
+            ->addBicField($builder);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CompanyGui\Communication\Form\CompanyForm
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
      */
     protected function addIdCompanyField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_COMPANY, HiddenType::class);
+        $builder->add(self::FIELD_ID_COMPANY_BUSINESS_UNIT, HiddenType::class);
 
         return $this;
     }
@@ -75,7 +66,7 @@ class CompanyForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CompanyGui\Communication\Form\CompanyForm
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
@@ -89,20 +80,29 @@ class CompanyForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
      *
-     * @return \Spryker\Zed\CompanyGui\Communication\Form\CompanyForm
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
      */
-    protected function addCompanyTypeField(FormBuilderInterface $builder, array $choices)
+    protected function addIbanField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FK_COMPANY_TYPE, ChoiceType::class, [
-            'label' => 'Company type',
-            'placeholder' => 'Select one',
-            'choices' => array_flip($choices),
-            'choices_as_values' => true,
-            'constraints' => [
-                new NotBlank(),
-            ],
+        $builder->add(self::FIELD_IBAN, TextType::class, [
+            'label' => 'IBAN',
+            'constraints' => $this->getTextFieldConstraints(),
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     */
+    protected function addBicField(FormBuilderInterface $builder)
+    {
+        $builder->add(self::FIELD_BIC, TextType::class, [
+            'label' => 'BIC',
+            'constraints' => $this->getTextFieldConstraints(),
         ]);
 
         return $this;
