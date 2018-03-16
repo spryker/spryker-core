@@ -50,13 +50,22 @@ class ItemFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormP
     public function handleData($quoteTransfer, &$form, $request)
     {
         $items = new ArrayObject();
+        $skus = [];
+
         foreach($quoteTransfer->getItems() as $item) {
-            if ($item->getQuantity()>0) {
-                $items->append($item);
+            if ($item->getQuantity()<=0
+                || in_array($item->getSku(), $skus)
+            ) {
+                continue;
             }
+
+            $skus[] = $item->getSku();
+            $items->append($item);
         }
         $quoteTransfer->setItems($items);
-        $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
+        if (count($items)) {
+            $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
+        }
 
         $form = $this->createForm($request, $quoteTransfer);
         $form->setData($quoteTransfer->toArray());

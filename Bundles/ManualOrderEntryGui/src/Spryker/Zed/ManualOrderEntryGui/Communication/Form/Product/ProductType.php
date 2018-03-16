@@ -11,7 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 
@@ -66,10 +65,6 @@ class ProductType extends AbstractType
             'label' => 'SKU',
             'required' => false,
         ]);
-        //@todo @Artem validate on (or not)
-        // - sku
-        // - is active
-        // - stock
 
         return $this;
     }

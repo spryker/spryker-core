@@ -12,10 +12,10 @@
         <property name="idOrder" type="int" />
         <property name="idCustomer" type="int" />
         <property name="customer" type="Customer" />
+        <property name="voucherCode" type="string" />
 
         <property name="manualOrderProducts" type="ManualOrderProduct[]" />
         <property name="isProductPosted" type="int" />
-
     </transfer>
 
     <transfer name="Item">

@@ -18,9 +18,10 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomerType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\AddressCollectionDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomerDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomersListDataProvider;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\VoucherDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ItemCollectionType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductCollectionType;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Service\ProductMapper;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Voucher\VoucherType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Service\StepEngine;
 use Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,14 +53,23 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * // @todo change on bridge
-     * @return \Spryker\Zed\Cart\Business\CartFacade
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface
      *
      * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function getCartFacade()
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_CART);
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToDiscountFacadeInterface
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function getDiscountFacade()
+    {
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_DISCOUNT);
     }
 
     /**
@@ -103,19 +113,6 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createStepEngine()
     {
         return new StepEngine();
-    }
-
-    /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Service\ProductMapper
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     */
-    public function createProductMapper()
-    {
-        return new ProductMapper(
-            $this->getProductFacade(),
-            $this->getCartFacade()
-        );
     }
 
     /**
@@ -172,14 +169,6 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
            null,
             $customerFormDataProvider->getOptions()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType
-     */
-    public function createAddressCollectionType()
-    {
-        return new AddressCollectionType();
     }
 
     /**
@@ -265,6 +254,30 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
 
         return $this->getFormFactory()->create(
             ItemCollectionType::class,
+            $formDataProvider->getData($quoteTransfer),
+            $formDataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\VoucherDataProvider
+     */
+    public function createVoucherDataProvider()
+    {
+        return new VoucherDataProvider();
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createVoucherForm($quoteTransfer)
+    {
+        $formDataProvider = $this->createVoucherDataProvider();
+
+        return $this->getFormFactory()->create(
+            VoucherType::class,
             $formDataProvider->getData($quoteTransfer),
             $formDataProvider->getOptions()
         );

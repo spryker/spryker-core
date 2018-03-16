@@ -58,16 +58,18 @@ class ProductFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
     public function handleData($quoteTransfer, &$form, $request)
     {
         $cartChangeTransfer = new CartChangeTransfer();
-
+        $skus = [];
 
         foreach($quoteTransfer->getManualOrderProducts() as $manualOrderProduct) {
             if (!strlen($manualOrderProduct->getSku())
                 || (int)$manualOrderProduct->getQuantity()<=0
+                || in_array($manualOrderProduct->getSku(), $skus)
                 || !$this->productFacade->hasProductConcrete($manualOrderProduct->getSku())
             ) {
                 continue;
             }
 
+            $skus[] = $manualOrderProduct->getSku();
             $itemTransfer = new ItemTransfer();
             $itemTransfer->setSku($manualOrderProduct->getSku())
                 ->setQuantity((int)$manualOrderProduct->getQuantity())

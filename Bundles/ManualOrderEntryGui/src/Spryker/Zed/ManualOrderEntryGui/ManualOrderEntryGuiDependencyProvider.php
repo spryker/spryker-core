@@ -14,8 +14,11 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\AddressFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\CustomersListFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ItemFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ProductFormPlugin;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\VoucherFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeBridge;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToDiscountFacadeBridge;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreBridge;
@@ -25,6 +28,8 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     const FACADE_CUSTOMER = 'MANUAL_ORDER_ENTRY_GUI:FACADE_CUSTOMER';
     const FACADE_PRODUCT = 'MANUAL_ORDER_ENTRY_GUI:FACADE_PRODUCT';
     const FACADE_CART = 'MANUAL_ORDER_ENTRY_GUI:FACADE_CART';
+    const FACADE_DISCOUNT = 'MANUAL_ORDER_ENTRY_GUI:FACADE_DISCOUNT';
+    const FACADE_MESSENGER = 'MANUAL_ORDER_ENTRY_GUI:FACADE_MESSENGER';
 
     const QUERY_CONTAINER_CUSTOMER = 'MANUAL_ORDER_ENTRY_GUI:QUERY_CONTAINER_CUSTOMER';
 
@@ -43,6 +48,8 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addCustomerFacade($container);
         $container = $this->addProductFacade($container);
         $container = $this->addCartFacade($container);
+        $container = $this->addDiscountFacade($container);
+        $container = $this->addMessengerFacade($container);
         $container = $this->addCustomerQueryContainer($container);
         $container = $this->addStore($container);
         $container = $this->addManualOrderEntryFormPlugins($container);
@@ -87,6 +94,34 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container[static::FACADE_CART] = function (Container $container) {
             return new ManualOrderEntryGuiToCartFacadeBridge($container->getLocator()->cart()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDiscountFacade(Container $container)
+    {
+        $container[static::FACADE_DISCOUNT] = function (Container $container) {
+            return new ManualOrderEntryGuiToDiscountFacadeBridge($container->getLocator()->discount()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMessengerFacade(Container $container)
+    {
+        $container[static::FACADE_MESSENGER] = function (Container $container) {
+            return new ManualOrderEntryGuiToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
         };
 
         return $container;
@@ -142,12 +177,16 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     protected function getManualOrderEntryFormPlugins(Container $container)
     {
         return [
+            new CustomersListFormPlugin($container[static::FACADE_CUSTOMER]),
             new ProductFormPlugin(
                 $container[static::FACADE_CART],
                 $container[static::FACADE_PRODUCT]
             ),
             new ItemFormPlugin($container[static::FACADE_CART]),
-            new CustomersListFormPlugin($container[static::FACADE_CUSTOMER]),
+            new VoucherFormPlugin(
+                $container[static::FACADE_DISCOUNT],
+                $container[static::FACADE_MESSENGER]
+            ),
             new AddressFormPlugin(),
         ];
     }
