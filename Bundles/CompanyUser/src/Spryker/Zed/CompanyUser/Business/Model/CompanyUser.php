@@ -248,6 +248,12 @@ class CompanyUser implements CompanyUserInterface
         $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
         $customerTransfer = $companyUserTransfer->getCustomer();
 
+        if ($customerTransfer->getIdCustomer()) {
+            $companyUserTransfer->setFkCustomer($customerTransfer->getIdCustomer());
+
+            return $companyUserResponseTransfer;
+        }
+
         $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
 
         if ($customerResponseTransfer->getIsSuccess()) {

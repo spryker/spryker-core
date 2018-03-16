@@ -5,7 +5,9 @@
   "require": {
     "php": ">=7.1",
     "spryker/company-user": "^1.0.0",
+    "spryker/kernel": "^3.19.0",
     "spryker/permission": "^1.0.0",
+    "spryker/permission-extension": "^1.0.0",
     "spryker/quote": "^1.0.0"
   },
   "require-dev": {

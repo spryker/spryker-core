@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyRole\Communication\Plugin;
+namespace Spryker\Zed\SharedCart\Communication\Plugin;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 
 /**
- * @method \Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface getFacade()
+ * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
  */
-class PermissionStoragePlugin extends AbstractPlugin implements PermissionStoragePluginInterface
+class QuotePermissionStoragePlugin extends AbstractPlugin implements PermissionStoragePluginInterface
 {
     /**
-     * @param int|string $identifier
+     * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function getPermissionCollection($identifier): PermissionCollectionTransfer
+    public function getPermissionCollection($idCompanyUser): PermissionCollectionTransfer
     {
-        return $this->getFacade()->findPermissionsByIdCompanyUser((int)$identifier);
+        return $this->getFacade()->findPermissionsByIdCompanyUser((int)$idCompanyUser);
     }
 }
