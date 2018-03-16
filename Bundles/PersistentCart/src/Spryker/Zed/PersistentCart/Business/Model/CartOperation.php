@@ -209,8 +209,10 @@ class CartOperation implements CartOperationInterface
     public function validate($quoteTransfer): QuoteResponseTransfer
     {
         $quoteTransfer->requireCustomer();
-        $customerQuoteTransfer = $this->quoteFacade
-            ->findQuoteByCustomer($quoteTransfer->getCustomer());
+        $customerQuoteTransfer = $this->getCustomerQuote(
+            $quoteTransfer->getIdQuote(),
+            $quoteTransfer->getCustomer()
+        );
         if ($customerQuoteTransfer) {
             $quoteTransfer->fromArray($customerQuoteTransfer->modifiedToArray(), true);
         }

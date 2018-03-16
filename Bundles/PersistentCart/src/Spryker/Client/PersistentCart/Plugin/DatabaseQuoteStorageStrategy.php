@@ -207,6 +207,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     public function validateQuote()
     {
         $quoteTransfer = $this->getQuoteClient()->getQuote();
+        $quoteTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
         $quoteResponseTransfer = $this->getZedStub()->validateQuote($quoteTransfer);
         $this->updateQuote($quoteResponseTransfer);
         return $quoteResponseTransfer;

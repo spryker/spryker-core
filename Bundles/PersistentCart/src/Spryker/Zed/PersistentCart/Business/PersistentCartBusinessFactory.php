@@ -36,7 +36,8 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteStorageSynchronizer(
             $this->getCartFacade(),
-            $this->getQuoteFacade()
+            $this->getQuoteFacade(),
+            $this->createQuoteResponseExpander()
         );
     }
 

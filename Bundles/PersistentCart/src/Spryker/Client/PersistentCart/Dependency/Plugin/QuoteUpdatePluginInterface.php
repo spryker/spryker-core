@@ -13,7 +13,7 @@ interface QuoteUpdatePluginInterface
 {
     /**
      * Specification:
-     * - .
+     * - Plugin executed after all change quote requests.
      *
      * @api
      *
