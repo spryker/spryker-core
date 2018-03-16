@@ -9,7 +9,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/oms": "^8.0.0"
   },
   "autoload": {
     "psr-4": {
@@ -20,6 +21,9 @@
     "psr-4": {
       "SprykerTest\\": "tests/SprykerTest/"
     }
+  },
+  "suggest": {
+    "spryker/oms": "If you use offer state in you state machine, with commands and conditions from offer"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

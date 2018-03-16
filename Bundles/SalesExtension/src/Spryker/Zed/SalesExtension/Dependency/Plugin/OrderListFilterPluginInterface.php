@@ -11,7 +11,11 @@ use Generated\Shared\Transfer\OrderListTransfer;
 
 interface OrderListFilterPluginInterface
 {
+    //TODO: write spec
     /**
+     * Specification:
+     *  -
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer

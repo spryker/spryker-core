@@ -9,7 +9,6 @@ namespace Spryker\Zed\Offer\Business;
 
 use Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 
 interface OfferFacadeInterface
 {
@@ -26,14 +25,11 @@ interface OfferFacadeInterface
     public function getOfferList(OrderListTransfer $offerList): OrderListTransfer;
 
     /**
-     * Specification:
-     * - Set is_offer to false for an order and trigger state change
-     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $offer
+     * @param int $idOffer
      *
      * @return \Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer
      */
-    public function convertOfferToOrder(OrderTransfer $offer): OfferToOrderConvertResponseTransfer;
+    public function convertOfferToOrder(int $idOffer): OfferToOrderConvertResponseTransfer;
 }

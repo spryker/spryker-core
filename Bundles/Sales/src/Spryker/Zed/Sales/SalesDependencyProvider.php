@@ -33,6 +33,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const STORE = 'store';
 
     const HYDRATE_ORDER_PLUGINS = 'hydrate order plugins';
+    const PRE_SAVE_HYDRATE_ORDER_PLUGINS = 'pre save hydrate order plugins';
 
     /**
      * @deprecated Will be removed in the next major version.
@@ -53,6 +54,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStore($container);
         $container = $this->addLocaleQueryContainer($container);
         $container = $this->addHydrateOrderPlugins($container);
+        $container = $this->addPreSaveHydrateOrderPlugins($container);
         $container = $this->addCalculationFacade($container);
         $container = $this->addCustomerFacade($container);
 
@@ -86,6 +88,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::HYDRATE_ORDER_PLUGINS] = function (Container $container) {
             return $this->getOrderHydrationPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPreSaveHydrateOrderPlugins(Container $container)
+    {
+        $container[static::PRE_SAVE_HYDRATE_ORDER_PLUGINS] = function (Container $container) {
+            return $this->getPreSaveOrderHydrationPlugins();
         };
 
         return $container;
@@ -251,5 +267,13 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     protected function getOrderHydrationPlugins()
     {
          return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\PreSaveOrderHydratePluginInterface[]
+     */
+    protected function getPreSaveOrderHydrationPlugins(): array
+    {
+        return [];
     }
 }

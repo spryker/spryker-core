@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Offer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Offer\Business\Model\OfferConverter;
+use Spryker\Zed\Offer\Business\Model\OfferConverterInterface;
 use Spryker\Zed\Offer\Business\Model\OfferReader;
 use Spryker\Zed\Offer\Business\Model\OfferReaderInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface;
@@ -24,6 +26,16 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function createOfferReader(): OfferReaderInterface
     {
         return new OfferReader(
+            $this->getSalesFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Offer\Business\Model\OfferConverterInterface
+     */
+    public function createOfferConverter(): OfferConverterInterface
+    {
+        return new OfferConverter(
             $this->getSalesFacade()
         );
     }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Offer\Business;
 
 use Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -38,14 +37,14 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $offer
+     * @param int $idOffer
      *
      * @return \Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer
      */
-    public function convertOfferToOrder(OrderTransfer $offer): OfferToOrderConvertResponseTransfer
+    public function convertOfferToOrder(int $idOffer): OfferToOrderConvertResponseTransfer
     {
         return $this->getFactory()
             ->createOfferConverter()
-            ->convertToOrder($offer);
+            ->convertToOrder($idOffer);
     }
 }

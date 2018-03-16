@@ -36,7 +36,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new CustomerOrderReader(
             $this->getQueryContainer(),
             $this->createOrderHydrator(),
-            $this->getOmsFacade()
+            $this->getOmsFacade(),
+            $this->getOrderListFilterPlugins()
         );
     }
 
@@ -48,7 +49,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new PaginatedCustomerOrderReader(
             $this->getQueryContainer(),
             $this->createOrderHydrator(),
-            $this->getOmsFacade()
+            $this->getOmsFacade(),
+            $this->getOrderListFilterPlugins()
         );
     }
 
@@ -65,7 +67,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->createReferenceGenerator(),
             $this->getConfig(),
             $this->getLocaleQueryContainer(),
-            $this->getStore()
+            $this->getStore(),
+            $this->getPreSaveHydrateOrderPlugins()
         );
     }
 
@@ -80,7 +83,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->createReferenceGenerator(),
             $this->getConfig(),
             $this->getLocaleQueryContainer(),
-            $this->getStore()
+            $this->getStore(),
+            $this->getPreSaveHydrateOrderPlugins()
         );
     }
 
@@ -209,10 +213,26 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return array
+     */
+    public function getOrderListFilterPlugins()
+    {
+        return [];
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[]
      */
     public function getHydrateOrderPlugins()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::HYDRATE_ORDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\PreSaveOrderHydratePluginInterface[]
+     */
+    protected function getPreSaveHydrateOrderPlugins()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PRE_SAVE_HYDRATE_ORDER_PLUGINS);
     }
 }

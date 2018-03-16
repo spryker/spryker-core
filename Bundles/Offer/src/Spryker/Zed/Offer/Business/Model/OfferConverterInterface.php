@@ -8,14 +8,13 @@
 namespace Spryker\Zed\Offer\Business\Model;
 
 use Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 
 interface OfferConverterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $offer
+     * @param int $idOffer
      *
      * @return \Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer
      */
-    public function convertToOrder(OrderTransfer $offer): OfferToOrderConvertResponseTransfer;
+    public function convertToOrder(int $idOffer): OfferToOrderConvertResponseTransfer;
 }

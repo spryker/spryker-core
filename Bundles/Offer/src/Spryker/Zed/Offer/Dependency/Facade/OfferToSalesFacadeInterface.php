@@ -27,4 +27,11 @@ interface OfferToSalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function getCustomerOrders(OrderListTransfer $orderListTransfer, $idCustomer);
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrderByIdSalesOrder($idSalesOrder);
 }

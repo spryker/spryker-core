@@ -46,4 +46,14 @@ class OfferToSalesFacadeBridge implements OfferToSalesFacadeInterface
     {
         return $this->salesFacade->getCustomerOrders($orderListTransfer, $idCustomer);
     }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrderByIdSalesOrder($idSalesOrder)
+    {
+        return $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);
+    }
 }
