@@ -8,11 +8,14 @@
 namespace Spryker\Zed\MultiCart\Business\Model;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteActivatorRequestTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\MultiCart\Code\Messages;
+use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeInterface;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToPersistentCartFacadeInterface;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface;
 
@@ -29,13 +32,23 @@ class QuoteActivator implements QuoteActivatorInterface
     protected $persistentCartFacade;
 
     /**
+     * @var \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeInterface
+     */
+    protected $messengerFacade;
+
+    /**
      * @param \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToPersistentCartFacadeInterface $persistentCartFacade
+     * @param \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeInterface $messengerFacade
      */
-    public function __construct(MultiCartToQuoteFacadeInterface $quoteFacade, MultiCartToPersistentCartFacadeInterface $persistentCartFacade)
-    {
+    public function __construct(
+        MultiCartToQuoteFacadeInterface $quoteFacade,
+        MultiCartToPersistentCartFacadeInterface $persistentCartFacade,
+        MultiCartToMessengerFacadeInterface $messengerFacade
+    ) {
         $this->quoteFacade = $quoteFacade;
         $this->persistentCartFacade = $persistentCartFacade;
+        $this->messengerFacade = $messengerFacade;
     }
 
     /**
@@ -60,6 +73,7 @@ class QuoteActivator implements QuoteActivatorInterface
         $this->deactivateActiveQuotes($customerQuotesCollectionTransfer);
         $quoteToActivateTransfer->setCustomer($quoteActivatorRequestTransfer->getCustomer());
         $quoteToActivateTransfer->setIsActive(true);
+        $this->addSuccessMessage($quoteToActivateTransfer->getName());
         return $this->quoteFacade->persistQuote($quoteToActivateTransfer);
     }
 
@@ -110,5 +124,18 @@ class QuoteActivator implements QuoteActivatorInterface
                 $this->quoteFacade->persistQuote($quoteTransfer);
             }
         }
+    }
+
+    /**
+     * @param string $quoteName
+     *
+     * @return void
+     */
+    protected function addSuccessMessage($quoteName)
+    {
+        $messageTransfer = new MessageTransfer();
+        $messageTransfer->setValue(Messages::MULTI_CART_SET_ACTIVE_SUCCESS);
+        $messageTransfer->setParameters(['%quote%' => $quoteName]);
+        $this->messengerFacade->addInfoMessage($messageTransfer);
     }
 }

@@ -61,6 +61,14 @@ class MultiCartFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\MultiCart\Dependency\Client\MultiCartToMessengerClientInterface
+     */
+    public function getMessengerClient()
+    {
+        return $this->getProvidedDependency(MultiCartDependencyProvider::CLIENT_MESSENGER);
+    }
+
+    /**
      * @return \Spryker\Client\Session\SessionClientInterface
      */
     protected function getSessionClient()

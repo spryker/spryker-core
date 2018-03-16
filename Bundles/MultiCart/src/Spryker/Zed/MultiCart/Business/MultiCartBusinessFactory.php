@@ -23,7 +23,8 @@ class MultiCartBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteActivator(
             $this->getQuoteFacade(),
-            $this->getPersistentCartFacade()
+            $this->getPersistentCartFacade(),
+            $this->getMessengerFacade()
         );
     }
 
@@ -49,5 +50,13 @@ class MultiCartBusinessFactory extends AbstractBusinessFactory
     protected function getPersistentCartFacade()
     {
         return $this->getProvidedDependency(MultiCartDependencyProvider::FACADE_PERSISTENT_CART);
+    }
+
+    /**
+     * @return \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeInterface
+     */
+    protected function getMessengerFacade()
+    {
+        return $this->getProvidedDependency(MultiCartDependencyProvider::FACADE_MESSENGER);
     }
 }
