@@ -8,7 +8,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 class CustomerAccessStorageFactory extends AbstractFactory
 {
     /**
-     *
      * @return \Spryker\Client\CustomerAccessStorage\Storage\CustomerAccessStorageReaderInterface
      */
     public function createCustomerAccessStorageReader()

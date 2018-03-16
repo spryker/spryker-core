@@ -2,9 +2,9 @@
 
 namespace Spryker\Client\CustomerAccessStorage;
 
+use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\CustomerAccessStorage\Dependency\Client\CustomerAccessStorageToStorageClientBridge;
 use Spryker\Client\CustomerAccessStorage\Dependency\Service\CustomerAccessStorageToSynchronizationServiceBridge;
-use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
 class CustomerAccessStorageDependencyProvider extends AbstractDependencyProvider

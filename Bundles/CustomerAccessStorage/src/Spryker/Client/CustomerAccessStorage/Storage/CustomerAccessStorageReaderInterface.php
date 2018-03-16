@@ -2,11 +2,17 @@
 
 namespace Spryker\Client\CustomerAccessStorage\Storage;
 
+use Generated\Shared\Transfer\CustomerAccessTransfer;
+
 interface CustomerAccessStorageReaderInterface
 {
     /**
-     * @param $contentType
-     * @return bool
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function canUnauthenticatedCustomerAccessContentType($contentType);
+    public function getUnauthenticatedCustomerAccess(): CustomerAccessTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    public function getAuthenticatedCustomerAccess(): CustomerAccessTransfer;
 }

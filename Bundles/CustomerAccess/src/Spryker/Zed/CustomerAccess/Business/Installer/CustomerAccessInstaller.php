@@ -42,7 +42,7 @@ class CustomerAccessInstaller implements CustomerAccessInstallerInterface
     public function install()
     {
         $defaultContentAccess = $this->customerAccessConfig->getDefaultContentTypeAccess();
-        foreach($this->customerAccessConfig->getDefaultContentTypes() as $contentType) {
+        foreach($this->customerAccessConfig->getContentTypes() as $contentType) {
             if(!is_null($this->customerAccessReader->findCustomerAccessByContentType($contentType))) {
                 continue;
             }

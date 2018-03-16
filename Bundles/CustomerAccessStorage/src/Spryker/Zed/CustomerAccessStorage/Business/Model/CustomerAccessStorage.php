@@ -28,7 +28,7 @@ class CustomerAccessStorage implements CustomerAccessStorageInterface
      */
     public function publish()
     {
-        $customerAccessEntities = $this->customerAccessQueryContainer->queryCustomerAccess()->find();
+        $customerAccessEntities = $this->getUnauthenticatedCustomerAccess();
         $customerAccessStorageEntity = $this->customerAccessQueryContainer->queryCustomerAccessStorage()->findOne();
 
         $this->storeData($customerAccessEntities, $customerAccessStorageEntity);
@@ -69,5 +69,13 @@ class CustomerAccessStorage implements CustomerAccessStorageInterface
         }
 
         return $customerAccessTransfer;
+    }
+
+    /**
+     * @return \Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess[]
+     */
+    protected function getUnauthenticatedCustomerAccess()
+    {
+        return $this->customerAccessQueryContainer->queryCustomerAccess()->find();
     }
 }

@@ -11,7 +11,7 @@ class CustomerAccessConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getDefaultContentTypes()
+    public function getContentTypes()
     {
         return [];
     }

@@ -2,16 +2,17 @@
 
 namespace Spryker\Client\CustomerAccessStorage;
 
+use Generated\Shared\Transfer\CustomerAccessTransfer;
+
 interface CustomerAccessStorageClientInterface
 {
     /**
-     * Specification:
-     * - Checks if unauthenticated customer can access specific kind of content
-     *
-     * @api
-     *
-     * @param $contentType
-     * @return bool
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function canUnauthenticatedCustomerAccessContentType($contentType);
+    public function getUnauthenticatedCustomerAccess(): CustomerAccessTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    public function getAuthenticatedCustomerAccess(): CustomerAccessTransfer;
 }

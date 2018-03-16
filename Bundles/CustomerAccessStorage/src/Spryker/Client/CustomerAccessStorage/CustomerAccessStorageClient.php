@@ -2,26 +2,27 @@
 
 namespace Spryker\Client\CustomerAccessStorage;
 
+use Generated\Shared\Transfer\CustomerAccessTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
-/**
- * @method \Spryker\Client\CustomerAccessStorage\CustomerAccessStorageFactory getFactory()
+/***
+ * @method \Spryker\Client\CustomerAccessStorage\CustomerAccessStorageFactory getFactory
  */
 class CustomerAccessStorageClient extends AbstractClient implements CustomerAccessStorageClientInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $contentType
-     *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function canUnauthenticatedCustomerAccessContentType($contentType)
+    public function getAuthenticatedCustomerAccess(): CustomerAccessTransfer
     {
-        return $this->getFactory()
-            ->createCustomerAccessStorageReader()
-            ->canUnauthenticatedCustomerAccessContentType($contentType);
+        return $this->getFactory()->createCustomerAccessStorageReader()->getAuthenticatedCustomerAccess();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    public function getUnauthenticatedCustomerAccess(): CustomerAccessTransfer
+    {
+        return $this->getFactory()->createCustomerAccessStorageReader()->getUnauthenticatedCustomerAccess();
     }
 }
