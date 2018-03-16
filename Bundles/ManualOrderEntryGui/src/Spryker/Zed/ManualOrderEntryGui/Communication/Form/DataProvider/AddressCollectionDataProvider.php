@@ -30,8 +30,6 @@ class AddressCollectionDataProvider
      */
     public function __construct(ManualOrderEntryGuiToStoreInterface $store)
     {
-        // @todo @ARtem Pyz\Yves\Customer\Form\DataProvider\CheckoutAddressFormDataProvider
-        // CustomerClient for data about his addresses
         $this->store = $store;
     }
 

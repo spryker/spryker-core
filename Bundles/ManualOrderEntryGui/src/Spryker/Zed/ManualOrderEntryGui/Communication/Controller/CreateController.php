@@ -41,16 +41,6 @@ class CreateController extends AbstractController
     public function indexAction(Request $request)
     {
         $quoteTransfer = new QuoteTransfer();
-        // @todo @Artem Add select Currency, Store field
-        $currencyTransfer = new CurrencyTransfer();
-        $currencyTransfer->setCode('EUR');
-        $currencyTransfer->setIdCurrency(93);
-        $quoteTransfer->setCurrency($currencyTransfer);
-
-        $storeTransfer = new StoreTransfer();
-        $storeTransfer->setIdStore(1);
-        $storeTransfer->setName('DE');
-        $quoteTransfer->setStore($storeTransfer);
 
         $forms = [];
         $validForms = true;

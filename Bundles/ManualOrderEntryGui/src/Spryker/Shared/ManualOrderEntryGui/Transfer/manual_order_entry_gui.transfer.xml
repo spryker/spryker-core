@@ -11,8 +11,15 @@
     <transfer name="Quote">
         <property name="idOrder" type="int" />
         <property name="idCustomer" type="int" />
+        <property name="idStoreCurrency" type="string" />
+        <property name="store" type="Store" />
+        <property name="currency" type="Currency" />
         <property name="customer" type="Customer" />
+        <property name="shippingAddress" type="Address" />
+        <property name="billingAddress" type="Address" />
         <property name="voucherCode" type="string" />
+        <property name="voucherDiscounts" type="Discount[]" />
+        <property name="items" type="Item[]" />
 
         <property name="manualOrderProducts" type="ManualOrderProduct[]" />
         <property name="isProductPosted" type="int" />

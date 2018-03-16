@@ -18,9 +18,11 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomerType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\AddressCollectionDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomerDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomersListDataProvider;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\StoreDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\VoucherDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ItemCollectionType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductCollectionType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Store\StoreType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Voucher\VoucherType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Service\StepEngine;
 use Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiDependencyProvider;
@@ -70,6 +72,16 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getDiscountFacade()
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_DISCOUNT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCurrencyFacadeInterface
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function getCurrencyFacade()
+    {
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_CURRENCY);
     }
 
     /**
@@ -194,6 +206,41 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
 
         return $this->getFormFactory()->create(
             AddressCollectionType::class,
+            $formDataProvider->getData($quoteTransfer),
+            $formDataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\StoreDataProvider
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function createStoreDataProvider(Request $request)
+    {
+        return new StoreDataProvider(
+            $this->getCurrencyFacade(),
+            $request
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     */
+    public function createStoreForm(Request $request, $quoteTransfer)
+    {
+        $formDataProvider = $this->createStoreDataProvider($request);
+
+        return $this->getFormFactory()->create(
+            StoreType::class,
             $formDataProvider->getData($quoteTransfer),
             $formDataProvider->getOptions()
         );
