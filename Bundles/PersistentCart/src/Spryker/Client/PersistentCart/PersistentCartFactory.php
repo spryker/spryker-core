@@ -9,6 +9,8 @@ namespace Spryker\Client\PersistentCart;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PersistentCart\QuoteStorageSynchronizer\CustomerLoginQuoteSync;
+use Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\ChangeRequestExtendPluginExecutor;
+use Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\QuoteUpdatePluginExecutor;
 use Spryker\Client\PersistentCart\Zed\PersistentCartStub;
 
 class PersistentCartFactory extends AbstractFactory
@@ -46,13 +48,46 @@ class PersistentCartFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\QuoteUpdatePluginExecutorInterface
+     */
+    public function createQuoteUpdatePluginExecutor()
+    {
+        return new QuoteUpdatePluginExecutor($this->getQuoteUpdatePlugins());
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\ChangeRequestExtendPluginExecutorInterface
+     */
+    public function createChangeRequestExtendPluginExecutor()
+    {
+        return new ChangeRequestExtendPluginExecutor($this->getChangeRequestExtendPlugins());
+    }
+
+    /**
      * @return \Spryker\Client\PersistentCart\QuoteStorageSynchronizer\CustomerLoginQuoteSyncInterface
      */
     public function createCustomerLoginQuoteSync()
     {
         return new CustomerLoginQuoteSync(
             $this->createZedPersistentCartStub(),
-            $this->getQuoteClient()
+            $this->getQuoteClient(),
+            $this->createQuoteUpdatePluginExecutor()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCart\Dependency\Plugin\QuoteUpdatePluginInterface[]
+     */
+    protected function getQuoteUpdatePlugins()
+    {
+        return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGINS_QUOTE_UPDATE);
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCart\Dependency\Plugin\ChangeRequestExtendPluginInterface[]
+     */
+    protected function getChangeRequestExtendPlugins()
+    {
+        return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGINS_CHANGE_REQUEST_EXTEND);
     }
 }

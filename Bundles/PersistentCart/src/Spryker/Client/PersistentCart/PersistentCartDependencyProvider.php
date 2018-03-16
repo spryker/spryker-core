@@ -14,9 +14,11 @@ use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientB
 
 class PersistentCartDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_QUOTE = 'CLIENT_QUOTE';
-    const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
-    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const PLUGINS_QUOTE_UPDATE = 'PLUGINS_QUOTE_UPDATE';
+    public const PLUGINS_CHANGE_REQUEST_EXTEND = 'PLUGINS_CHANGE_REQUEST_EXTEND';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -25,9 +27,11 @@ class PersistentCartDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $container = $this->addQuoteClient($container);
-        $container = $this->addZedRequestClient($container);
         $container = $this->addCustomerClient($container);
+        $container = $this->addQuoteClient($container);
+        $container = $this->addQuoteUpdatePlugins($container);
+        $container = $this->addChangeRequestExtendPlugins($container);
+        $container = $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -72,5 +76,49 @@ class PersistentCartDependencyProvider extends AbstractDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addQuoteUpdatePlugins(Container $container)
+    {
+        $container[static::PLUGINS_QUOTE_UPDATE] = function (Container $container) {
+            return $this->getQuoteUpdatePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addChangeRequestExtendPlugins(Container $container)
+    {
+        $container[static::PLUGINS_CHANGE_REQUEST_EXTEND] = function (Container $container) {
+            return $this->getChangeRequestExtendPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCart\Dependency\Plugin\QuoteUpdatePluginInterface[]
+     */
+    protected function getQuoteUpdatePlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCart\Dependency\Plugin\ChangeRequestExtendPluginInterface[]
+     */
+    protected function getChangeRequestExtendPlugins()
+    {
+        return [];
     }
 }

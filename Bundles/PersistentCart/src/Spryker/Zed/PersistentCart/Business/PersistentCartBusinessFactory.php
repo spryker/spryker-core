@@ -9,7 +9,10 @@ namespace Spryker\Zed\PersistentCart\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PersistentCart\Business\Model\CartOperation;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleter;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpander;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizer;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteWriter;
 use Spryker\Zed\PersistentCart\PersistentCartDependencyProvider;
 
 class PersistentCartBusinessFactory extends AbstractBusinessFactory
@@ -21,7 +24,8 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     {
         return new CartOperation(
             $this->getCartFacade(),
-            $this->getQuoteFacade()
+            $this->getQuoteFacade(),
+            $this->createQuoteResponseExpander()
         );
     }
 
@@ -32,7 +36,40 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteStorageSynchronizer(
             $this->getCartFacade(),
-            $this->getQuoteFacade()
+            $this->getQuoteFacade(),
+            $this->createQuoteResponseExpander()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteDeleterInterface
+     */
+    public function createQuoteDeleter()
+    {
+        return new QuoteDeleter(
+            $this->getQuoteFacade(),
+            $this->createQuoteResponseExpander()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteWriterInterface
+     */
+    public function createQuoteWriter()
+    {
+        return new QuoteWriter(
+            $this->getQuoteFacade(),
+            $this->createQuoteResponseExpander()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface
+     */
+    public function createQuoteResponseExpander()
+    {
+        return new QuoteResponseExpander(
+            $this->getQuoteResponseExpanderPlugins()
         );
     }
 
@@ -50,5 +87,13 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     protected function getQuoteFacade()
     {
         return $this->getProvidedDependency(PersistentCartDependencyProvider::FACADE_QUOTE);
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteResponseExpanderPluginInterface[]
+     */
+    protected function getQuoteResponseExpanderPlugins()
+    {
+        return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGINS_QUOTE_RESPONSE_EXPANDER);
     }
 }
