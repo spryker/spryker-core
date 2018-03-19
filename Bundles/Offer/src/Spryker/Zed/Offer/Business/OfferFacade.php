@@ -25,7 +25,7 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getOfferList(OrderListTransfer $offerListTransfer): OrderListTransfer
+    public function getOffers(OrderListTransfer $offerListTransfer): OrderListTransfer
     {
         return $this->getFactory()
             ->createOfferReader()

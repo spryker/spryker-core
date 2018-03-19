@@ -33,26 +33,18 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     protected $omsFacade;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderListFilterPluginInterface[]
-     */
-    protected $orderListFilterPlugins;
-
-    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface $orderHydrator
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface|null $omsFacade
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderListFilterPluginInterface[] $orderListFilterPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         OrderHydratorInterface $orderHydrator,
-        SalesToOmsInterface $omsFacade,
-        array $orderListFilterPlugins
+        SalesToOmsInterface $omsFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->orderHydrator = $orderHydrator;
         $this->omsFacade = $omsFacade;
-        $this->orderListFilterPlugins = $orderListFilterPlugins;
     }
 
     /**
@@ -71,8 +63,6 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
         $orders = $this->hydrateOrderListCollectionTransferFromEntityCollection($orderCollection);
 
         $orderListTransfer->setOrders($orders);
-
-        $orderListTransfer = $this->applyAdditionalFilters($orderListTransfer);
 
         return $orderListTransfer;
     }
@@ -129,19 +119,5 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     protected function hasOmsFacade()
     {
         return $this->omsFacade !== null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    protected function applyAdditionalFilters(OrderListTransfer $orderListTransfer)
-    {
-        foreach ($this->orderListFilterPlugins as $plugin) {
-            $orderListTransfer = $plugin->filterOrders($orderListTransfer);
-        }
-
-        return $orderListTransfer;
     }
 }

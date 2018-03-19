@@ -36,8 +36,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new CustomerOrderReader(
             $this->getQueryContainer(),
             $this->createOrderHydrator(),
-            $this->getOmsFacade(),
-            $this->getOrderListFilterPlugins()
+            $this->getOmsFacade()
         );
     }
 
@@ -49,8 +48,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new PaginatedCustomerOrderReader(
             $this->getQueryContainer(),
             $this->createOrderHydrator(),
-            $this->getOmsFacade(),
-            $this->getOrderListFilterPlugins()
+            $this->getOmsFacade()
         );
     }
 
@@ -210,14 +208,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getStore()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::STORE);
-    }
-
-    /**
-     * @return array
-     */
-    public function getOrderListFilterPlugins()
-    {
-        return [];
     }
 
     /**

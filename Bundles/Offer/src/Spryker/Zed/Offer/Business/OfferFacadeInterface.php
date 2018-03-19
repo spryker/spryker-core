@@ -22,7 +22,7 @@ interface OfferFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getOfferList(OrderListTransfer $offerList): OrderListTransfer;
+    public function getOffers(OrderListTransfer $offerList): OrderListTransfer;
 
     /**
      * @api
