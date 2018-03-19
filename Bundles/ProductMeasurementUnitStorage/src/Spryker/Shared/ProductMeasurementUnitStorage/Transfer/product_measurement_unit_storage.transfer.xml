@@ -10,4 +10,22 @@
         <property name="defaultPrecision" type="int" />
     </transfer>
 
+    <transfer name="ProductConcreteMeasurementBaseUnit">
+        <property name="measurementUnitId" type="int" />
+        <property name="isSalesUnit" type="bool" />
+    </transfer>
+
+    <transfer name="ProductConcreteMeasurementSalesUnit">
+        <property name="measurementUnitId" type="int" />
+        <property name="factor" type="int" />
+        <property name="precision" type="int" />
+        <property name="isDisplay" type="bool" />
+        <property name="isDefault" type="bool" />
+    </transfer>
+
+    <transfer name="ProductConcreteMeasurementUnitStorage">
+        <property name="baseUnit" type="ProductConcreteMeasurementBaseUnit" />
+        <property name="salesUnits" type="ProductConcreteMeasurementSalesUnit[]" singular="salesUnit" />
+    </transfer>
+
 </transfers>

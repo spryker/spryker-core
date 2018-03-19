@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Business\Model;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ProductConcreteMeasurementBaseUnitTransfer;
+use Generated\Shared\Transfer\ProductConcreteMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
@@ -58,7 +62,7 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
 
             $storageEntity
                 ->setFkProduct($idProduct)
-                ->setData($this->getStorageEntityData($productConcreteMeasurementUnitEntity))
+                ->setData($this->getStorageEntityData($productConcreteMeasurementUnitEntity)->toArray(true))
                 ->save();
         }
 
@@ -73,11 +77,18 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer
      */
     protected function getStorageEntityData(SpyProduct $productEntity)
     {
-        $salesUnits = [];
+        $productConcreteMeasurementUnitStorageTransfer = (new ProductConcreteMeasurementUnitStorageTransfer())
+            ->setBaseUnit(
+                (new ProductConcreteMeasurementBaseUnitTransfer())
+                    ->setMeasurementUnitId($productEntity->getSpyProductAbstract()->getProductMeasurementBaseUnit()->getFkProductMeasurementUnit())
+                    ->setIsSalesUnit((bool)$productEntity->getSpyProductAbstract()->getProductMeasurementBaseUnit()->getIsSalesUnit())
+            )
+            ->setSalesUnits(new ArrayObject());
+
         foreach ($productEntity->getSpyProductMeasurementSalesUnits() as $productMeasurementSalesUnitEntity) {
             $exchangeDetails = $this->getExchangeDetails(
                 $productMeasurementSalesUnitEntity->getFactor(),
@@ -86,22 +97,17 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
                 $this->getProductMeasurementUnitCodeById($productEntity->getSpyProductAbstract()->getProductMeasurementBaseUnit()->getFkProductMeasurementUnit())
             );
 
-            $salesUnits[] = [
-                "measurement_unit_id" => $productMeasurementSalesUnitEntity->getFkProductMeasurementUnit(),
-                "factor" => $exchangeDetails->getFactor(),
-                "precision" => $exchangeDetails->getPrecision(),
-                "is_display" => (bool)$productMeasurementSalesUnitEntity->getIsDisplay(),
-                "is_default" => (bool)$productMeasurementSalesUnitEntity->getIsDefault(),
-            ];
+            $productConcreteMeasurementUnitStorageTransfer->addSalesUnit(
+                (new ProductConcreteMeasurementSalesUnitTransfer())
+                    ->setMeasurementUnitId($productMeasurementSalesUnitEntity->getFkProductMeasurementUnit())
+                    ->setFactor($exchangeDetails->getFactor())
+                    ->setPrecision($exchangeDetails->getPrecision())
+                    ->setIsDisplay((bool)$productMeasurementSalesUnitEntity->getIsDisplay())
+                    ->setIsDefault((bool)$productMeasurementSalesUnitEntity->getIsDefault())
+            );
         }
 
-        return [
-            'base_unit' => [
-                "measurement_unit_id" => $productEntity->getSpyProductAbstract()->getProductMeasurementBaseUnit()->getFkProductMeasurementUnit(),
-                "is_sales_unit" => (bool)$productEntity->getSpyProductAbstract()->getProductMeasurementBaseUnit()->getIsSalesUnit(),
-            ],
-            "sales_units" => $salesUnits,
-        ];
+        return $productConcreteMeasurementUnitStorageTransfer;
     }
 
     /**

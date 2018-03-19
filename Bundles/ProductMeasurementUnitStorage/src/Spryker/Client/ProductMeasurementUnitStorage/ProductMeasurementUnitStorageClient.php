@@ -29,4 +29,20 @@ class ProductMeasurementUnitStorageClient extends AbstractClient implements Prod
             ->createProductMeasurementUnitStorageReader()
             ->getProductMeasurementUnit($idProductMeasurementUnit);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer|null
+     */
+    public function getProductConcreteMeasurementUnit($idProduct)
+    {
+        return $this->getFactory()
+            ->createProductConcreteMeasurementUnitStorageReader()
+            ->getProductConcreteMeasurementUnit($idProduct);
+    }
 }

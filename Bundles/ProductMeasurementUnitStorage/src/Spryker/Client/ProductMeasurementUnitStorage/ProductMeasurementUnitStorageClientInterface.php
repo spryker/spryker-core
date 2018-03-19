@@ -20,4 +20,15 @@ interface ProductMeasurementUnitStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer|null
      */
     public function getProductMeasurementUnit($idProductMeasurementUnit);
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer|null
+     */
+    public function getProductConcreteMeasurementUnit($idProduct);
 }

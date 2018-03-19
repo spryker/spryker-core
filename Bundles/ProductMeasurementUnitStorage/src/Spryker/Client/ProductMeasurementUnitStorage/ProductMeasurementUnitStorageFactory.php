@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductMeasurementUnitStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductConcreteMeasurementUnitStorageReader;
 use Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductMeasurementUnitStorageReader;
 
 class ProductMeasurementUnitStorageFactory extends AbstractFactory
@@ -18,6 +19,17 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
     public function createProductMeasurementUnitStorageReader()
     {
         return new ProductMeasurementUnitStorageReader(
+            $this->getStorage(),
+            $this->getSynchronizationService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductConcreteMeasurementUnitStorageReaderInterface
+     */
+    public function createProductConcreteMeasurementUnitStorageReader()
+    {
+        return new ProductConcreteMeasurementUnitStorageReader(
             $this->getStorage(),
             $this->getSynchronizationService()
         );

@@ -18,4 +18,12 @@ class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
      * @api
      */
     const PRODUCT_MEASUREMENT_UNIT_RESOURCE_NAME = 'product_measurement_unit';
+
+    /**
+     * Specification:
+     * -
+     *
+     * @api
+     */
+    const PRODUCT_CONCRETE_MEASUREMENT_UNIT_RESOURCE_NAME = 'product_concrete_measurement_unit';
 }
