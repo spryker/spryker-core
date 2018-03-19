@@ -5,18 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductMeasurementUnit\Business;
+namespace Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer;
 
-interface ProductMeasurementUnitFacadeInterface
+interface ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer $exchangeDetailTransfer
      *
-     * @throws \Braintree\Exception
+     * @throws \Exception
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer
      */

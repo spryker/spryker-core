@@ -11,4 +11,12 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductMeasurementUnitConfig extends AbstractBundleConfig
 {
+    const MEASUREMENT_UNIT_EXCHANGE_COLLECTION = [
+        'KILO' => [
+            'GRAM' => [1000, 0],
+        ],
+        'GRAM' => [
+            'KILO' => [1, 3],
+        ],
+    ];
 }

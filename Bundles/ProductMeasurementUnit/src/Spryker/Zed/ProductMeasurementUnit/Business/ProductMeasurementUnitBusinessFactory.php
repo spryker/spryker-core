@@ -8,10 +8,18 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementUnitExchanger;
 
 /**
  * @method \Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitConfig getConfig()
  */
 class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementUnitExchangerInterface
+     */
+    public function createProductMeasurementUnitExchanger()
+    {
+        return new ProductMeasurementUnitExchanger($this->getConfig()::MEASUREMENT_UNIT_EXCHANGE_COLLECTION);
+    }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
+use Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -15,4 +16,15 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeasurementUnitFacadeInterface
 {
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer $exchangeDetailTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer
+     */
+    public function getExchangeDetail(ProductMeasurementUnitExchangeDetailTransfer $exchangeDetailTransfer)
+    {
+        return $this->getFactory()->createProductMeasurementUnitExchanger()->getExchangeDetail($exchangeDetailTransfer);
+    }
 }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductMeasurementUnitStorage\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductMeasurementUnitStorage\Business\Model\ProductConcreteMeasurementUnitStorageWriter;
 use Spryker\Zed\ProductMeasurementUnitStorage\Business\Model\ProductMeasurementUnitStorageWriter;
+use Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig getConfig()
@@ -30,6 +31,14 @@ class ProductMeasurementUnitStorageBusinessFactory extends AbstractBusinessFacto
      */
     public function createProductConcreteMeasurementUnitStorageWriter()
     {
-        return new ProductConcreteMeasurementUnitStorageWriter();
+        return new ProductConcreteMeasurementUnitStorageWriter($this->getProductMeasurementUnitFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade\ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface
+     */
+    public function getProductMeasurementUnitFacade()
+    {
+        return $this->getProvidedDependency(ProductMeasurementUnitStorageDependencyProvider::FACADE_PRODUCT_MEASUREMENT_UNIT);
     }
 }

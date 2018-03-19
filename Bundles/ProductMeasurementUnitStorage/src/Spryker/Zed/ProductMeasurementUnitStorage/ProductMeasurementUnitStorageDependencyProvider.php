@@ -10,10 +10,12 @@ namespace Spryker\Zed\ProductMeasurementUnitStorage;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade\ProductMeasurementUnitStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade\ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge;
 
 class ProductMeasurementUnitStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    const FACADE_PRODUCT_MEASUREMENT_UNIT = 'FACADE_PRODUCT_MEASUREMENT_UNIT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,6 +25,8 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractBundleDepe
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addProductMeasurementUnitFacade($container);
 
         return $container;
     }
@@ -50,6 +54,22 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractBundleDepe
     {
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new ProductMeasurementUnitStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductMeasurementUnitFacade(Container $container)
+    {
+        $container[static::FACADE_PRODUCT_MEASUREMENT_UNIT] = function (Container $container) {
+            return new ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge(
+                $container->getLocator()->productMeasurementUnit()->facade()
+            );
         };
 
         return $container;

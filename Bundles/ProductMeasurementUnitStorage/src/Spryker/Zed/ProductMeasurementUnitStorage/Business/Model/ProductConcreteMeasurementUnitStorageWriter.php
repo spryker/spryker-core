@@ -7,13 +7,34 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Business\Model;
 
+use Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnitQuery;
 use Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductConcreteMeasurementUnitStorage;
 use Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductConcreteMeasurementUnitStorageQuery;
+use Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade\ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface;
 
 class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeasurementUnitStorageWriterInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade\ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface
+     */
+    protected $productMeasurementUnitFacade;
+
+    /**
+     * @var array Keys are product measurement unit ids, values are product measurement unit codes.
+     */
+    protected static $productMeasurementUnitCodeBuffer;
+
+    /**
+     * @param \Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade\ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface $productMeasurementUnitFacade
+     */
+    public function __construct(ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface $productMeasurementUnitFacade)
+    {
+        $this->productMeasurementUnitFacade = $productMeasurementUnitFacade;
+    }
+
     /**
      * @param int[] $productIds
      *
@@ -58,10 +79,17 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
     {
         $salesUnits = [];
         foreach ($productEntity->getSpyProductMeasurementSalesUnits() as $productMeasurementSalesUnitEntity) {
+            $exchangeDetails = $this->getExchangeDetails(
+                $productMeasurementSalesUnitEntity->getFactor(),
+                $productMeasurementSalesUnitEntity->getPrecision(),
+                $this->getProductMeasurementUnitCodeById($productMeasurementSalesUnitEntity->getFkProductMeasurementUnit()),
+                $this->getProductMeasurementUnitCodeById($productEntity->getSpyProductAbstract()->getProductMeasurementBaseUnit()->getFkProductMeasurementUnit())
+            );
+
             $salesUnits[] = [
                 "measurement_unit_id" => $productMeasurementSalesUnitEntity->getFkProductMeasurementUnit(),
-                "factor" => (int)$productMeasurementSalesUnitEntity->getFactor(),
-                "precision" => (int)$productMeasurementSalesUnitEntity->getPrecision(),
+                "factor" => $exchangeDetails->getFactor(),
+                "precision" => $exchangeDetails->getPrecision(),
                 "is_display" => (bool)$productMeasurementSalesUnitEntity->getIsDisplay(),
                 "is_default" => (bool)$productMeasurementSalesUnitEntity->getIsDefault(),
             ];
@@ -74,6 +102,37 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
             ],
             "sales_units" => $salesUnits,
         ];
+    }
+
+    /**
+     * @param int|null $factor
+     * @param int|null $precision
+     * @param string $fromCode
+     * @param string $toCode
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer
+     */
+    protected function getExchangeDetails($factor, $precision, $fromCode, $toCode)
+    {
+        if (is_int($factor) && is_int($precision)) {
+            return (new ProductMeasurementUnitExchangeDetailTransfer())
+                ->setFactor($factor)
+                ->setPrecision($precision);
+        }
+
+        $exchangeDetails = (new ProductMeasurementUnitExchangeDetailTransfer())
+            ->setFromCode($fromCode)
+            ->setToCode($toCode);
+
+        $exchangeDetails = $this->productMeasurementUnitFacade->getExchangeDetail($exchangeDetails);
+        if (is_int($factor)) {
+            $exchangeDetails->setFactor($factor);
+        }
+        if (is_int($precision)) {
+            $exchangeDetails->setPrecision($precision);
+        }
+
+        return $exchangeDetails;
     }
 
     /**
@@ -120,5 +179,29 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
         }
 
         return $mappedProductConcreteMeasurementUnitStorageEntities;
+    }
+
+    /**
+     * @param int $idProductMeasurementUnit
+     *
+     * @return string
+     */
+    protected function getProductMeasurementUnitCodeById($idProductMeasurementUnit)
+    {
+        if (!static::$productMeasurementUnitCodeBuffer) {
+            $this->loadProductMeasurementUnitCodes();
+        }
+
+        return static::$productMeasurementUnitCodeBuffer[$idProductMeasurementUnit];
+    }
+
+    /**
+     * @return void
+     */
+    protected function loadProductMeasurementUnitCodes()
+    {
+        static::$productMeasurementUnitCodeBuffer = SpyProductMeasurementUnitQuery::create()
+            ->find()
+            ->toKeyValue('idProductMeasurementUnit', 'code');
     }
 }
