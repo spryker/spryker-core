@@ -14,6 +14,7 @@ use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressWrit
 use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddress;
 use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressInterface;
 use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutor;
+use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutorInterface;
 use Spryker\Zed\CompanyUnitAddress\CompanyUnitAddressDependencyProvider;
 use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCountryFacadeInterface;
@@ -68,7 +69,7 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutorInterface
      */
-    protected function createCompanyUnitAddressPluginExecutor()
+    protected function createCompanyUnitAddressPluginExecutor(): CompanyUnitAddressPluginExecutorInterface
     {
         return new CompanyUnitAddressPluginExecutor(
             $this->getCompanyUnitAddressHydratePlugins(),
