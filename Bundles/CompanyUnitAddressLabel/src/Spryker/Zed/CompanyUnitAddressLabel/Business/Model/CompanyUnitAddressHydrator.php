@@ -15,14 +15,14 @@ class CompanyUnitAddressHydrator implements CompanyUnitAddressHydratorInterface
     /**
      * @var \Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepositoryInterface
      */
-    protected $companyUnitAddressRepository;
+    protected $companyUnitAddressLabelRepository;
 
     /**
      * @param \Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepositoryInterface $companyUnitAddressRepository
      */
     public function __construct(CompanyUnitAddressLabelRepositoryInterface $companyUnitAddressRepository)
     {
-        $this->companyUnitAddressRepository = $companyUnitAddressRepository;
+        $this->companyUnitAddressLabelRepository = $companyUnitAddressRepository;
     }
 
     /**
@@ -32,7 +32,7 @@ class CompanyUnitAddressHydrator implements CompanyUnitAddressHydratorInterface
      */
     public function hydrate(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
     {
-        $labelCollection = $this->companyUnitAddressRepository
+        $labelCollection = $this->companyUnitAddressLabelRepository
             ->findCompanyUnitAddressLabelsByAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
         $companyUnitAddressTransfer->setLabelCollection($labelCollection);
 
