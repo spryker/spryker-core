@@ -42,7 +42,7 @@ class CustomerAccessReader implements CustomerAccessReaderInterface
             return null;
         }
 
-        return (new ContentTypeAccessTransfer())->fromArray($customerAccessEntity->toArray());
+        return (new ContentTypeAccessTransfer())->fromArray($customerAccessEntity->toArray(), true);
     }
 
     /**
