@@ -20,7 +20,7 @@
         <index name="index_spy_touch-item_event_item_type_touched">
             <index-column name="item_event"/>
             <index-column name="item_type"/>
-            <index-column name="item_touched"/>
+            <index-column name="touched"/>
         </index>
 
         <id-method-parameter value="spy_touch_pk_seq"/>
