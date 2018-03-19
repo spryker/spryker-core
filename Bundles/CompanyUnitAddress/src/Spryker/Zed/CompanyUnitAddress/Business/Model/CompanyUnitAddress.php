@@ -107,20 +107,20 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
      *
      * @return int
      */
-    protected function retrieveFkCountry(CompanyUnitAddressTransfer $companyUnitAddressTransfer): int
+    protected function retrieveIdCountry(CompanyUnitAddressTransfer $companyUnitAddressTransfer): int
     {
-        $fkCountry = $companyUnitAddressTransfer->getFkCountry();
-        if (empty($fkCountry)) {
+        $idCountry = $companyUnitAddressTransfer->getFkCountry();
+        if (empty($idCountry)) {
             $iso2Code = $companyUnitAddressTransfer->getIso2Code();
             if (empty($iso2Code) === false) {
                 $countryTransfer = $this->countryFacade->getCountryByIso2Code($iso2Code);
-                $fkCountry = $countryTransfer->getIdCountry();
+                $idCountry = $countryTransfer->getIdCountry();
             } else {
-                $fkCountry = $this->getCompanyCountryId();
+                $idCountry = $this->getCompanyCountryId();
             }
         }
 
-        return $fkCountry;
+        return $idCountry;
     }
 
     /**
@@ -174,8 +174,8 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer {
 
-        $fkCountry = $this->retrieveFkCountry($companyUnitAddressTransfer);
-        $companyUnitAddressTransfer->setFkCountry($fkCountry);
+        $idCountry = $this->retrieveIdCountry($companyUnitAddressTransfer);
+        $companyUnitAddressTransfer->setFkCountry($idCountry);
         $isDefaultBilling = $companyUnitAddressTransfer->getIsDefaultBilling();
         $companyUnitAddressSavedTransfer = $this->entityManager->saveCompanyUnitAddress($companyUnitAddressTransfer);
         $companyUnitAddressTransfer->setIsDefaultBilling($isDefaultBilling);
