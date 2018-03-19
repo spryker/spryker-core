@@ -13,6 +13,7 @@ use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressWrit
 use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressWriterInterface;
 use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddress;
 use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressInterface;
+use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutor;
 use Spryker\Zed\CompanyUnitAddress\CompanyUnitAddressDependencyProvider;
 use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCountryFacadeInterface;
@@ -38,7 +39,7 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
             $this->getCountryFacade(),
             $this->getLocaleFacade(),
             $this->getCompanyBusinessUnitFacade(),
-            $this->getCompanyUnitAddressPostSavePlugins()
+            $this->createCompanyUnitAddressPluginExecutor()
         );
     }
 
@@ -60,7 +61,18 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyBusinessUnitAddressReader(
             $this->getRepository(),
-            $this->getCompanyUnitAddressHydratePlugins()
+            $this->createCompanyUnitAddressPluginExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutorInterface
+     */
+    protected function createCompanyUnitAddressPluginExecutor()
+    {
+        return new CompanyUnitAddressPluginExecutor(
+            $this->getCompanyUnitAddressHydratePlugins(),
+            $this->getCompanyUnitAddressPostSavePlugins()
         );
     }
 

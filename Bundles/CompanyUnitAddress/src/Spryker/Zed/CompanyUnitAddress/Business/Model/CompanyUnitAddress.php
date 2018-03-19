@@ -41,29 +41,29 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
     protected $companyBusinessUnitFacade;
 
     /**
-     * @var \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressPostSavePluginInterface[]
+     * @var \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutorInterface
      */
-    protected $companyUnitAddressPostSavePlugins;
+    protected $companyUnitAddressPluginExecutor;
 
     /**
      * @param \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressEntityManagerInterface $entityManager
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCountryFacadeInterface $countryFacade
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
-     * @param array $companyUnitAddressPreUpdatePlugins
+     * @param \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutorInterface $companyUnitAddressPluginExecutor
      */
     public function __construct(
         CompanyUnitAddressEntityManagerInterface $entityManager,
         CompanyUnitAddressToCountryFacadeInterface $countryFacade,
         CompanyUnitAddressToLocaleFacadeInterface $localeFacade,
         CompanyUnitAddressToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
-        array $companyUnitAddressPreUpdatePlugins
+        CompanyUnitAddressPluginExecutorInterface $companyUnitAddressPluginExecutor
     ) {
         $this->entityManager = $entityManager;
         $this->countryFacade = $countryFacade;
         $this->localeFacade = $localeFacade;
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
-        $this->companyUnitAddressPostSavePlugins = $companyUnitAddressPreUpdatePlugins;
+        $this->companyUnitAddressPluginExecutor = $companyUnitAddressPluginExecutor;
     }
 
     /**
@@ -182,7 +182,8 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         $companyUnitAddressTransfer->setIdCompanyUnitAddress($companyUnitAddressSavedTransfer->getIdCompanyUnitAddress());
         $this->updateBusinessUnitDefaultAddresses($companyUnitAddressTransfer);
 
-        $companyUnitAddressTransfer = $this->executePostSavePlugins($companyUnitAddressTransfer);
+        $companyUnitAddressTransfer = $this->companyUnitAddressPluginExecutor
+            ->executePostSavePlugins($companyUnitAddressTransfer);
 
         return (new CompanyUnitAddressResponseTransfer())->setIsSuccessful(true)
             ->setCompanyUnitAddressTransfer($companyUnitAddressTransfer);
@@ -201,19 +202,5 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         $this->entityManager->deleteCompanyUnitAddressById(
             $companyUnitAddressTransfer->getIdCompanyUnitAddress()
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
-    protected function executePostSavePlugins(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
-    {
-        foreach ($this->companyUnitAddressPostSavePlugins as $plugin) {
-            $companyUnitAddressTransfer = $plugin->postSave($companyUnitAddressTransfer);
-        }
-
-        return $companyUnitAddressTransfer;
     }
 }
