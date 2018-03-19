@@ -12,6 +12,10 @@
         <property name="isOffer" type="bool" />
     </transfer>
 
+    <transfer name="OfferToOrderConvertRequest">
+        <property name="offerId" type="int" />
+    </transfer>
+
     <transfer name="OfferToOrderConvertResponse">
         <property name="order" type="Order" />
         <property name="isSuccessful" type="bool" />
