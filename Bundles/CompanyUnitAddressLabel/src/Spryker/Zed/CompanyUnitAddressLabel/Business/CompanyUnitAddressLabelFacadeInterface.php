@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUnitAddressLabel\Business;
 
+use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 
 interface CompanyUnitAddressLabelFacadeInterface
@@ -19,19 +20,19 @@ interface CompanyUnitAddressLabelFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function saveLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer;
+    public function saveLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
 
     /**
      * Specification:
-     *  - Fill a labelCollection property of company unit address.
+     *  - Fill a labelCollection property of company unit address.Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function hydrateCompanyUnitAddressWithLabelCollection(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer;
+    public function hydrateCompanyUnitAddressWithLabelCollection(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
 }

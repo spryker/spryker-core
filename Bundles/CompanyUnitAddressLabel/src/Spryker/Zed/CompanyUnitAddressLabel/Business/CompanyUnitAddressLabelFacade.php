@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUnitAddressLabel\Business;
 
+use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -23,9 +24,9 @@ class CompanyUnitAddressLabelFacade extends AbstractFacade implements CompanyUni
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function saveLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
+    public function saveLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
     {
         return $this->getFactory()->createCompanyUnitAddressLabelRelationSaver()
             ->saveLabelToAddressRelations($companyUnitAddressTransfer);
@@ -39,11 +40,11 @@ class CompanyUnitAddressLabelFacade extends AbstractFacade implements CompanyUni
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
     public function hydrateCompanyUnitAddressWithLabelCollection(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressTransfer {
+    ): CompanyUnitAddressResponseTransfer {
         return $this->getFactory()
             ->createCompanyUnitAddressHydrator()
             ->hydrate($companyUnitAddressTransfer);

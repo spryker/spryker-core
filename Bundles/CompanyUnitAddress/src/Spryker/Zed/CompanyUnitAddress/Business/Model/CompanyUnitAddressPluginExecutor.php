@@ -55,7 +55,8 @@ class CompanyUnitAddressPluginExecutor implements CompanyUnitAddressPluginExecut
     public function executePostSavePlugins(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
     {
         foreach ($this->companyUnitAddressPostSavePlugins as $plugin) {
-            $companyUnitAddressTransfer = $plugin->postSave($companyUnitAddressTransfer);
+            $companyUnitAddressTransfer = $plugin->postSave($companyUnitAddressTransfer)
+                ->getCompanyUnitAddressTransfer();
         }
 
         return $companyUnitAddressTransfer;
