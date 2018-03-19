@@ -5,21 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PersistentCart\Dependency\Plugin;
+namespace Spryker\Zed\MultiCart\Business\Model;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
-interface QuoteUpdatePluginInterface
+interface QuoteResponseExpanderInterface
 {
     /**
-     * Specification:
-     * - Plugin executed after all change quote requests.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function processResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer;
+    public function expand(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer;
 }

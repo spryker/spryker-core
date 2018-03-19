@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PersistentCart\Business\Model;
 
 use Generated\Shared\Transfer\QuoteMergeRequestTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Quote\QuoteConfig as SharedQuoteConfig;
@@ -28,21 +29,31 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
     protected $quoteFacade;
 
     /**
+     * @var \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface
+     */
+    protected $quoteResponseExpander;
+
+    /**
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface $quoteFacade
+     * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface $quoteResponseExpander
      */
-    public function __construct(PersistentCartToCartFacadeInterface $cartFacade, PersistentCartToQuoteFacadeInterface $quoteFacade)
-    {
+    public function __construct(
+        PersistentCartToCartFacadeInterface $cartFacade,
+        PersistentCartToQuoteFacadeInterface $quoteFacade,
+        QuoteResponseExpanderInterface $quoteResponseExpander
+    ) {
         $this->cartFacade = $cartFacade;
         $this->quoteFacade = $quoteFacade;
+        $this->quoteResponseExpander = $quoteResponseExpander;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteSyncRequestTransfer $quoteSyncRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function syncStorageQuote(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteTransfer
+    public function syncStorageQuote(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer
     {
         $this->assertDatabaseStorageStrategy();
         $this->validateRequest($quoteSyncRequestTransfer);
@@ -61,7 +72,11 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
         }
         $this->quoteFacade->persistQuote($quoteTransfer);
 
-        return $quoteTransfer;
+        $quoteResponseTransfer = new QuoteResponseTransfer();
+        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
+        $quoteResponseTransfer->setIsSuccessful(true);
+
+        return $this->quoteResponseExpander->expand($quoteResponseTransfer);
     }
 
     /**
@@ -86,6 +101,9 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
      */
     protected function mergeQuotes(QuoteTransfer $targetQuoteTransfer, QuoteTransfer $sourceQuoteTransfer)
     {
+        if (!count($targetQuoteTransfer->getItems())) {
+            return $sourceQuoteTransfer;
+        }
         $quoteMergeRequestTransfer = new QuoteMergeRequestTransfer();
         $quoteMergeRequestTransfer
             ->setTargetQuote($targetQuoteTransfer)
@@ -105,10 +123,12 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
     protected function assertDatabaseStorageStrategy(): void
     {
         if ($this->quoteFacade->getStorageStrategy() !== SharedQuoteConfig::STORAGE_STRATEGY_DATABASE) {
-            throw new QuoteSynchronizationNotAvailable(sprintf(
-                'Synchronization available for "%s" storage strategy only',
-                SharedQuoteConfig::STORAGE_STRATEGY_DATABASE
-            ));
+            throw new QuoteSynchronizationNotAvailable(
+                sprintf(
+                    'Synchronization available for "%s" storage strategy only',
+                    SharedQuoteConfig::STORAGE_STRATEGY_DATABASE
+                )
+            );
         }
     }
 }

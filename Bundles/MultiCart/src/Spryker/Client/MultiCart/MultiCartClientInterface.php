@@ -7,24 +7,39 @@
 
 namespace Spryker\Client\MultiCart;
 
+use Generated\Shared\Transfer\QuoteActivatorRequestTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface MultiCartClientInterface
 {
     /**
      * Specification:
-     * - Gets active quote
+     * - Gets active quote.
      *
      * @api
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function findActiveCart(): ?QuoteTransfer;
+    public function getActiveCart(): QuoteTransfer;
 
     /**
      * Specification:
-     * - Gets customer quote collection
+     * - Mark quote as active.
+     * - Mark all other customer carts as inactive.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setActiveQuote(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Gets customer quote collection.
      *
      * @api
      *
@@ -34,7 +49,7 @@ interface MultiCartClientInterface
 
     /**
      * Specification:
-     * - Find quote by name in customer session
+     * - Find quote by name in customer session.
      *
      * @api
      *
@@ -46,7 +61,7 @@ interface MultiCartClientInterface
 
     /**
      * Specification:
-     * - Checks if multicart functionality allowed
+     * - Checks if multicart functionality allowed.
      *
      * @api
      *
@@ -56,7 +71,7 @@ interface MultiCartClientInterface
 
     /**
      * Specification:
-     * - Get suffix for duplicated quote name
+     * - Get suffix for duplicated quote name.
      *
      * @api
      *

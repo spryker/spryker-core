@@ -22,6 +22,13 @@ interface MultiCartToQuoteFacadeInterface
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteById($idQuote): QuoteResponseTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer

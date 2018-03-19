@@ -9,6 +9,7 @@ namespace Spryker\Client\PersistentCart;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PersistentCart\QuoteStorageSynchronizer\CustomerLoginQuoteSync;
+use Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\ChangeRequestExtendPluginExecutor;
 use Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\QuoteUpdatePluginExecutor;
 use Spryker\Client\PersistentCart\Zed\PersistentCartStub;
 
@@ -55,13 +56,22 @@ class PersistentCartFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\ChangeRequestExtendPluginExecutorInterface
+     */
+    public function createChangeRequestExtendPluginExecutor()
+    {
+        return new ChangeRequestExtendPluginExecutor($this->getChangeRequestExtendPlugins());
+    }
+
+    /**
      * @return \Spryker\Client\PersistentCart\QuoteStorageSynchronizer\CustomerLoginQuoteSyncInterface
      */
     public function createCustomerLoginQuoteSync()
     {
         return new CustomerLoginQuoteSync(
             $this->createZedPersistentCartStub(),
-            $this->getQuoteClient()
+            $this->getQuoteClient(),
+            $this->createQuoteUpdatePluginExecutor()
         );
     }
 
@@ -74,10 +84,10 @@ class PersistentCartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToMessengerClientInterface
+     * @return \Spryker\Client\PersistentCart\Dependency\Plugin\ChangeRequestExtendPluginInterface[]
      */
-    public function getMessengerClient()
+    protected function getChangeRequestExtendPlugins()
     {
-        return $this->getProvidedDependency(PersistentCartDependencyProvider::CLIENT_MESSENGER);
+        return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGINS_CHANGE_REQUEST_EXTEND);
     }
 }

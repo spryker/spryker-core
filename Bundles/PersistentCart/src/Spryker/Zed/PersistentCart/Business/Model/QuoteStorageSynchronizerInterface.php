@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\PersistentCart\Business\Model;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteStorageSynchronizerInterface
 {
@@ -17,7 +17,7 @@ interface QuoteStorageSynchronizerInterface
      *
      * @throws \Spryker\Zed\PersistentCart\Business\Exception\QuoteSynchronizationNotAvailable
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function syncStorageQuote(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteTransfer;
+    public function syncStorageQuote(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): QuoteResponseTransfer;
 }
