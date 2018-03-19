@@ -1,0 +1,82 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Client\ProductQuantityStorage\Storage;
+
+use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
+use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageInterface;
+use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceInterface;
+use Spryker\Shared\ProductQuantityStorage\ProductQuantityStorageConfig;
+
+class ProductQuantityStorageReader implements ProductQuantityStorageReaderInterface
+{
+    /**
+     * @var \Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageInterface
+     */
+    protected $storageClient;
+
+    /**
+     * @var \Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceInterface
+     */
+    protected $synchronizationService;
+
+    /**
+     * @param \Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageInterface $storageClient
+     * @param \Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceInterface $synchronizationService
+     */
+    public function __construct(
+        ProductQuantityStorageToStorageInterface $storageClient,
+        ProductQuantityStorageToSynchronizationServiceInterface $synchronizationService
+    ) {
+        $this->storageClient = $storageClient;
+        $this->synchronizationService = $synchronizationService;
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
+     */
+    public function getProductQuantity($idProduct)
+    {
+        $key = $this->generateKey($idProduct);
+        $productQuantityUnitStorageData = $this->storageClient->get($key);
+
+        if (!$productQuantityUnitStorageData) {
+            return null;
+        }
+
+        return $this->mapToProductQuantityStorageTransfer($productQuantityUnitStorageData);
+    }
+
+    /**
+     * @param array $productQuantityUnitStorageData
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
+     */
+    protected function mapToProductQuantityStorageTransfer(array $productQuantityUnitStorageData)
+    {
+        return (new ProductQuantityStorageTransfer())
+            ->fromArray($productQuantityUnitStorageData, true);
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return string
+     */
+    protected function generateKey($idProduct)
+    {
+        $synchronizationDataTransfer = (new SynchronizationDataTransfer())
+            ->setReference($idProduct);
+
+        return $this->synchronizationService
+            ->getStorageKeyBuilder(ProductQuantityStorageConfig::PRODUCT_QUANTITY_RESOURCE_NAME)
+            ->generateKey($synchronizationDataTransfer);
+    }
+}
