@@ -75,7 +75,7 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
     /**
      * @return \Spryker\Zed\CompanyUnitAddressGui\Communication\Form\DataProvider\CompanyUnitAddressFormDataProvider
      */
-    protected function createCompanyUnitAddressDataProvider(): CompanyUnitAddressFormDataProvider
+    public function createCompanyUnitAddressDataProvider(): CompanyUnitAddressFormDataProvider
     {
         return new CompanyUnitAddressFormDataProvider(
             $this->getCompanyUnitAddressFacade()
