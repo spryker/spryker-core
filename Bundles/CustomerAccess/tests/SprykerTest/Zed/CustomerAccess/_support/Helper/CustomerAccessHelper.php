@@ -1,6 +1,6 @@
 <?php
 
-namespace SprykerTest\Zed\Customeraccess\Helper;
+namespace SprykerTest\Zed\CustomerAccess\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CustomerAccessBuilder;
