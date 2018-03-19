@@ -41,8 +41,7 @@ class CompanyUnitAddressPluginExecutor implements CompanyUnitAddressPluginExecut
     public function executeCompanyUnitAddressHydratorPlugins(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
     {
         foreach ($this->companyUnitAddressHydratePlugins as $plugin) {
-            $companyUnitAddressTransfer = $plugin->hydrate($companyUnitAddressTransfer)
-                ->getCompanyUnitAddressTransfer();
+            $companyUnitAddressTransfer = $plugin->hydrate($companyUnitAddressTransfer);
         }
 
         return $companyUnitAddressTransfer;
@@ -56,8 +55,7 @@ class CompanyUnitAddressPluginExecutor implements CompanyUnitAddressPluginExecut
     public function executePostSavePlugins(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
     {
         foreach ($this->companyUnitAddressPostSavePlugins as $plugin) {
-            $companyUnitAddressTransfer = $plugin->postSave($companyUnitAddressTransfer)
-                ->getCompanyUnitAddressTransfer();
+            $companyUnitAddressTransfer = $plugin->postSave($companyUnitAddressTransfer);
         }
 
         return $companyUnitAddressTransfer;
