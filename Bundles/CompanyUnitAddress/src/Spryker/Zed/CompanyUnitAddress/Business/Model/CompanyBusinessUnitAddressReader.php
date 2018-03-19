@@ -54,15 +54,12 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
     }
 
     /**
-     * @param int $idCompanyUnitAddress
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function getCompanyUnitAddressById(int $idCompanyUnitAddress): CompanyUnitAddressTransfer
+    public function getCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
     {
-        $companyUnitAddressTransfer = new CompanyUnitAddressTransfer();
-        $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
-
         $companyUnitAddress = $this->repository->getCompanyUnitAddressById($companyUnitAddressTransfer);
         $companyUnitAddress = $this->companyUnitAddressPluginExecutor
             ->executeCompanyUnitAddressHydratorPlugins($companyUnitAddress);

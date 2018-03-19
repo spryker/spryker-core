@@ -23,9 +23,9 @@ interface CompanyBusinessUnitAddressReaderInterface
     ): CompanyUnitAddressCollectionTransfer;
 
     /**
-     * @param int $idCompanyUnitAddress
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function getCompanyUnitAddressById(int $idCompanyUnitAddress): CompanyUnitAddressTransfer;
+    public function getCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer;
 }

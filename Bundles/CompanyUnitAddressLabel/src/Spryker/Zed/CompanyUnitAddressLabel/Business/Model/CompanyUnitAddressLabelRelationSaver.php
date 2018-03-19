@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CompanyUnitAddressLabel\Business\Model;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
-use Generated\Shared\Transfer\SpyCompanyUnitAddressLabelEntityTransfer;
 use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelEntityManagerInterface;
 use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepositoryInterface;
 
@@ -60,7 +59,7 @@ class CompanyUnitAddressLabelRelationSaver implements CompanyUnitAddressLabelRel
     protected function getRedundantLabelToAddressRelationIds(CompanyUnitAddressTransfer $companyUnitAddress): array
     {
         $actualLabelIds = $this->labelRepository->findCompanyUnitAddressLabelIdsByAddress($companyUnitAddress);
-        $validLabelIds = $this->getValidLabelIds($companyUnitAddress);
+        $validLabelIds = $this->getLabelIds($companyUnitAddress);
 
         $redundantLabelIds = array_diff($actualLabelIds, $validLabelIds);
 
@@ -75,15 +74,15 @@ class CompanyUnitAddressLabelRelationSaver implements CompanyUnitAddressLabelRel
      *
      * @return array
      */
-    protected function getValidLabelIds(CompanyUnitAddressTransfer $companyUnitAddressTransfer)
+    protected function getLabelIds(CompanyUnitAddressTransfer $companyUnitAddressTransfer): array
     {
-        $labels = (array)$companyUnitAddressTransfer->getLabelCollection()->getLabels();
+        $result = [];
+        $labels = $companyUnitAddressTransfer->getLabelCollection()->getLabels();
 
-        return array_map(
-            function (SpyCompanyUnitAddressLabelEntityTransfer $label) {
-                return $label->getIdCompanyUnitAddressLabel();
-            },
-            $labels
-        );
+        foreach ($labels as $label) {
+            $result[] = $label->getIdCompanyUnitAddressLabel();
+        }
+
+        return $result;
     }
 }
