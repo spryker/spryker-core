@@ -71,7 +71,7 @@ class AddressSelectionType extends AddressType
         }
 
         $choices = $options[self::OPTION_ADDRESS_CHOICES];
-        $choices[''] = 'customer.account.add_new_address';
+        $choices[''] = 'Add new address';
 
         $builder->add(self::FIELD_ID_CUSTOMER_ADDRESS, ChoiceType::class, [
             'choices' => array_flip($choices),

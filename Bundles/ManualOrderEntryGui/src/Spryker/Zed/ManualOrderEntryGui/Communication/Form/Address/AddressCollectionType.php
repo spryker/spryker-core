@@ -77,6 +77,7 @@ class AddressCollectionType extends AbstractType
     {
         $options = [
             'data_class' => AddressTransfer::class,
+            'allow_extra_fields' => true,
             'required' => false,
             'validation_groups' => function (FormInterface $form) {
                 if (!$form->has(AddressSelectionType::FIELD_ID_CUSTOMER_ADDRESS) || !$form->get(AddressSelectionType::FIELD_ID_CUSTOMER_ADDRESS)->getData()) {
@@ -123,6 +124,7 @@ class AddressCollectionType extends AbstractType
     {
         $options = [
             'data_class' => AddressTransfer::class,
+            'allow_extra_fields' => true,
             'validation_groups' => function (FormInterface $form) {
                 if ($form->getParent()->get(self::FIELD_BILLING_SAME_AS_SHIPPING)->getData()) {
                     return false;

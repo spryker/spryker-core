@@ -58,6 +58,7 @@ class AddressCollectionDataProvider
     public function getOptions()
     {
         return [
+            'data_class' => QuoteTransfer::class,
             'allow_extra_fields' => true,
             'csrf_protection' => false,
             AddressCollectionType::OPTION_ADDRESS_CHOICES => $this->getAddressChoices(),

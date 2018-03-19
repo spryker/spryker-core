@@ -36,10 +36,7 @@ class AddressType extends AbstractType
     const FIELD_CITY = 'city';
     const FIELD_ISO_2_CODE = 'iso2_code';
     const FIELD_PHONE = 'phone';
-    const FIELD_IS_DEFAULT_SHIPPING = 'is_default_shipping';
-    const FIELD_IS_DEFAULT_BILLING = 'is_default_billing';
     const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
-    const FIELD_FK_CUSTOMER = 'fk_customer';
 
     const OPTION_COUNTRY_CHOICES = 'country_choices';
 
@@ -73,10 +70,8 @@ class AddressType extends AbstractType
             ->addCityField($builder, $options)
             ->addIso2CodeField($builder, $options)
             ->addPhoneField($builder, $options)
-            ->addIsDefaultShippingField($builder, $options)
-            ->addIsDefaultBillingField($builder, $options)
             ->addIdCustomerAddressField($builder, $options)
-            ->addFkCustomerField($builder, $options);
+        ;
     }
 
     /**
@@ -89,7 +84,7 @@ class AddressType extends AbstractType
     {
         $builder->add(self::FIELD_SALUTATION, ChoiceType::class, [
             'choices' => $this->getSalutationChoices(),
-            'label' => 'profile.form.salutation',
+            'label' => 'Salutation',
             'required' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
@@ -121,7 +116,7 @@ class AddressType extends AbstractType
     protected function addFirstNameField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_FIRST_NAME, TextType::class, [
-            'label' => 'customer.address.first_name',
+            'label' => 'First name',
             'required' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
@@ -141,7 +136,7 @@ class AddressType extends AbstractType
     protected function addLastNameField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_LAST_NAME, TextType::class, [
-            'label' => 'customer.address.last_name',
+            'label' => 'Last name',
             'required' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
@@ -161,7 +156,7 @@ class AddressType extends AbstractType
     protected function addCompanyField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_COMPANY, TextType::class, [
-            'label' => 'customer.address.company',
+            'label' => 'Company',
             'required' => false,
         ]);
 
@@ -177,7 +172,7 @@ class AddressType extends AbstractType
     protected function addAddress1Field(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_ADDRESS_1, TextType::class, [
-            'label' => 'customer.address.address1',
+            'label' => 'Address line 1',
             'required' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
@@ -197,7 +192,7 @@ class AddressType extends AbstractType
     protected function addAddress2Field(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_ADDRESS_2, TextType::class, [
-            'label' => 'customer.address.number',
+            'label' => 'Number',
             'required' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
@@ -217,7 +212,7 @@ class AddressType extends AbstractType
     protected function addAddress3Field(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_ADDRESS_3, TextType::class, [
-            'label' => 'customer.address.address3',
+            'label' => 'Address line 2',
             'required' => false,
         ]);
 
@@ -233,7 +228,7 @@ class AddressType extends AbstractType
     protected function addZipCodeField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_ZIP_CODE, TextType::class, [
-            'label' => 'customer.address.zip_code',
+            'label' => 'Zip code',
             'required' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
@@ -253,7 +248,7 @@ class AddressType extends AbstractType
     protected function addCityField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_CITY, TextType::class, [
-            'label' => 'customer.address.city',
+            'label' => 'City',
             'required' => true,
             'constraints' => [
                 $this->createNotBlankConstraint($options),
@@ -273,7 +268,7 @@ class AddressType extends AbstractType
     protected function addIso2CodeField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_ISO_2_CODE, ChoiceType::class, [
-            'label' => 'customer.address.country',
+            'label' => 'Country',
             'required' => true,
             'choices' => $options[self::OPTION_COUNTRY_CHOICES],
             'constraints' => [
@@ -293,39 +288,7 @@ class AddressType extends AbstractType
     protected function addPhoneField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_PHONE, TextType::class, [
-            'label' => 'customer.address.phone',
-            'required' => false,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addIsDefaultShippingField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add(self::FIELD_IS_DEFAULT_SHIPPING, CheckboxType::class, [
-            'label' => 'customer.address.is_default_shipping',
-            'required' => false,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addIsDefaultBillingField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add(self::FIELD_IS_DEFAULT_BILLING, CheckboxType::class, [
-            'label' => 'customer.address.is_default_billing',
+            'label' => 'Phone',
             'required' => false,
         ]);
 
@@ -341,19 +304,6 @@ class AddressType extends AbstractType
     protected function addIdCustomerAddressField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_ID_CUSTOMER_ADDRESS, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addFkCustomerField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add(self::FIELD_FK_CUSTOMER, HiddenType::class);
 
         return $this;
     }

@@ -47,6 +47,7 @@ class StepEngine
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $quoteTransfer = $formPlugin->handleData($quoteTransfer, $form, $request);
             return true;
         }
 

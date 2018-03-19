@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Facade;
 
-
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 

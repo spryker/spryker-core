@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

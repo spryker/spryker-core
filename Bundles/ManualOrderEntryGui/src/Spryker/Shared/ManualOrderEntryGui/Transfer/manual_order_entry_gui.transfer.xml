@@ -20,6 +20,9 @@
         <property name="voucherCode" type="string" />
         <property name="voucherDiscounts" type="Discount[]" />
         <property name="items" type="Item[]" />
+        <property name="idShipmentMethod" type="int" />
+        <property name="shipment" type="Shipment" />
+        <property name="payments" type="Payment[]" />
 
         <property name="manualOrderProducts" type="ManualOrderProduct[]" />
         <property name="isProductPosted" type="int" />

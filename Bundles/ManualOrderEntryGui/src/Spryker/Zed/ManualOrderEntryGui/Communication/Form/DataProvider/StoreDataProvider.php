@@ -21,20 +21,12 @@ class StoreDataProvider
     protected $currencyFacade;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Request
-     */
-    protected $request;
-
-    /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCurrencyFacadeInterface $currencyFacade
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function __construct(
-        ManualOrderEntryGuiToCurrencyFacadeInterface $currencyFacade,
-        Request $request
+        ManualOrderEntryGuiToCurrencyFacadeInterface $currencyFacade
     ) {
         $this->currencyFacade = $currencyFacade;
-        $this->request = $request;
     }
 
     /**
