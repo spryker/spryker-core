@@ -33,7 +33,5 @@ interface CompanyUnitAddressLabelFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function hydrateCompanyUnitAddressWithLabelCollection(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressTransfer;
+    public function hydrateCompanyUnitAddressWithLabelCollection(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer;
 }
