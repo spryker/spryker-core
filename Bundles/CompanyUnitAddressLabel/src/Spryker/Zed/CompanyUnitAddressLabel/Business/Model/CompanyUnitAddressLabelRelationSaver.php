@@ -16,12 +16,12 @@ class CompanyUnitAddressLabelRelationSaver implements CompanyUnitAddressLabelRel
     /**
      * @var \Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelEntityManagerInterface
      */
-    protected $entityManager;
+    protected $companyUnitAddressEntityManager;
 
     /**
      * @var \Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepositoryInterface
      */
-    protected $labelRepository;
+    protected $companyUnitAddressLabelRepository;
 
     /**
      * @param \Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelEntityManagerInterface $entityManager
@@ -31,8 +31,8 @@ class CompanyUnitAddressLabelRelationSaver implements CompanyUnitAddressLabelRel
         CompanyUnitAddressLabelEntityManagerInterface $entityManager,
         CompanyUnitAddressLabelRepositoryInterface $labelRepository
     ) {
-        $this->labelRepository = $labelRepository;
-        $this->entityManager = $entityManager;
+        $this->companyUnitAddressLabelRepository = $labelRepository;
+        $this->companyUnitAddressEntityManager = $entityManager;
     }
 
     /**
@@ -43,10 +43,10 @@ class CompanyUnitAddressLabelRelationSaver implements CompanyUnitAddressLabelRel
     public function saveLabelToAddressRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
     {
         $redundantRelationIds = $this->getRedundantLabelToAddressRelationIds($companyUnitAddressTransfer);
-        $this->entityManager->deleteRedundantLabelToAddressRelations(
+        $this->companyUnitAddressEntityManager->deleteRedundantLabelToAddressRelations(
             $redundantRelationIds
         );
-        $this->entityManager->saveLabelToAddressRelations($companyUnitAddressTransfer);
+        $this->companyUnitAddressEntityManager->saveLabelToAddressRelations($companyUnitAddressTransfer);
 
         return $companyUnitAddressTransfer;
     }
@@ -58,12 +58,12 @@ class CompanyUnitAddressLabelRelationSaver implements CompanyUnitAddressLabelRel
      */
     protected function getRedundantLabelToAddressRelationIds(CompanyUnitAddressTransfer $companyUnitAddress): array
     {
-        $actualLabelIds = $this->labelRepository->findCompanyUnitAddressLabelIdsByAddress($companyUnitAddress);
+        $actualLabelIds = $this->companyUnitAddressLabelRepository->findCompanyUnitAddressLabelIdsByAddress($companyUnitAddress);
         $validLabelIds = $this->getLabelIds($companyUnitAddress);
 
         $redundantLabelIds = array_diff($actualLabelIds, $validLabelIds);
 
-        return $this->labelRepository->findCompanyUnitAddressLabelToCompanyUnitAddressRelationIdsByAddressIdAndLabelIds(
+        return $this->companyUnitAddressLabelRepository->findCompanyUnitAddressLabelToCompanyUnitAddressRelationIdsByAddressIdAndLabelIds(
             $companyUnitAddress->getIdCompanyUnitAddress(),
             $redundantLabelIds
         );
