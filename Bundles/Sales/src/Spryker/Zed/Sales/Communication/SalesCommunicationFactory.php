@@ -15,6 +15,7 @@ use Spryker\Zed\Sales\Communication\Form\CustomerForm;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CommentFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
+use Spryker\Zed\Sales\Communication\Table\CustomerOrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilder;
 use Spryker\Zed\Sales\SalesDependencyProvider;
@@ -137,6 +138,24 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_SANITIZE),
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER)
+        );
+    }
+
+    /**
+     * @param int $customerReference
+     *
+     * @return \Spryker\Zed\Sales\Communication\Table\CustomerOrdersTable
+     */
+    public function createCustomerOrdersTable($customerReference)
+    {
+        return new CustomerOrdersTable(
+            $this->createOrdersTableQueryBuilder(),
+            $this->getProvidedDependency(SalesDependencyProvider::FACADE_MONEY),
+            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_SANITIZE),
+            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER),
+            $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER),
+            $customerReference,
+            $this->getQueryContainer()
         );
     }
 

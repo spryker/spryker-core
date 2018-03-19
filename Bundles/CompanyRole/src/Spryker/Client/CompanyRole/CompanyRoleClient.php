@@ -9,9 +9,12 @@ namespace Spryker\Client\CompanyRole;
 
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -91,11 +94,11 @@ class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInter
      *
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
      */
-    public function deleteCompanyRole(CompanyRoleTransfer $companyRoleTransfer): void
+    public function deleteCompanyRole(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createZedCompanyRoleStub()
             ->deleteCompanyRole($companyRoleTransfer);
     }
@@ -114,5 +117,53 @@ class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInter
         return $this->getFactory()
             ->createZedCompanyRoleStub()
             ->findCompanyRolePermissions($companyRoleTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return void
+     */
+    public function saveCompanyUser(CompanyUserTransfer $companyUserTransfer): void
+    {
+        $this->getFactory()
+            ->createZedCompanyRoleStub()
+            ->saveCompanyUser($companyUserTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PermissionTransfer
+     */
+    public function findPermissionByIdCompanyRoleByIdPermission(PermissionTransfer $permissionTransfer): PermissionTransfer
+    {
+        return $this->getFactory()
+            ->createZedCompanyRoleStub()
+            ->findPermissionByIdCompanyRoleByIdPermission($permissionTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRolePermissionResponseTransfer
+     */
+    public function updateCompanyRolePermission(PermissionTransfer $permissionTransfer): CompanyRolePermissionResponseTransfer
+    {
+        return $this->getFactory()
+            ->createZedCompanyRoleStub()
+            ->updateCompanyRolePermission($permissionTransfer);
     }
 }

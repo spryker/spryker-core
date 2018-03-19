@@ -12,9 +12,11 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberBridge;
+use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
 class CustomerDependencyProvider extends AbstractBundleDependencyProvider
@@ -24,9 +26,13 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_MAIL = 'FACADE_MAIL';
 
+    /**
+     * @deprecated use SERVICE_UTIL_DATE_TIME instead
+     */
     const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
     const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
     const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
 
@@ -34,6 +40,8 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 
     const PLUGINS_CUSTOMER_ANONYMIZER = 'PLUGINS_CUSTOMER_ANONYMIZER';
     const PLUGINS_CUSTOMER_TRANSFER_EXPANDER = 'PLUGINS_CUSTOMER_TRANSFER_EXPANDER';
+
+    public const SUB_REQUEST_HANDLER = 'SUB_REQUEST_HANDLER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -66,7 +74,9 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDateFormatterService($container);
         $container = $this->addStore($container);
         $container = $this->addUtilSanitizeService($container);
+        $container = $this->addUtilDateTimeService($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addSubRequestHandler($container);
 
         return $container;
     }
@@ -176,7 +186,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSequenceNumberFacade(Container $container): \Spryker\Zed\Kernel\Container
+    protected function addSequenceNumberFacade(Container $container): Container
     {
         $container[static::FACADE_SEQUENCE_NUMBER] = function (Container $container) {
             return new CustomerToSequenceNumberBridge($container->getLocator()->sequenceNumber()->facade());
@@ -190,7 +200,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCountryFacade(Container $container): \Spryker\Zed\Kernel\Container
+    protected function addCountryFacade(Container $container): Container
     {
         $container[static::FACADE_COUNTRY] = function (Container $container) {
             return new CustomerToCountryBridge($container->getLocator()->country()->facade());
@@ -204,7 +214,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMailFacade(Container $container): \Spryker\Zed\Kernel\Container
+    protected function addMailFacade(Container $container): Container
     {
         $container[static::FACADE_MAIL] = function (Container $container) {
             return new CustomerToMailBridge($container->getLocator()->mail()->facade());
@@ -218,7 +228,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addLocaleQueryConainer(Container $container): \Spryker\Zed\Kernel\Container
+    protected function addLocaleQueryConainer(Container $container): Container
     {
         $container[static::QUERY_CONTAINER_LOCALE] = function (Container $container) {
             return $container->getLocator()->locale()->queryContainer();
@@ -232,10 +242,39 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addDateFormatterService(Container $container): \Spryker\Zed\Kernel\Container
+    protected function addDateFormatterService(Container $container): Container
     {
         $container[static::SERVICE_DATE_FORMATTER] = function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilDateTimeService($container): Container
+    {
+        $container[static::SERVICE_UTIL_DATE_TIME] = function (Container $container) {
+            return new CustomerToUtilDateTimeServiceBridge($container->getLocator()->utilDateTime()->service());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSubRequestHandler(Container $container): Container
+    {
+        $container[static::SUB_REQUEST_HANDLER] = function () {
+            $pimple = new Pimple();
+            return $pimple->getApplication()['sub_request'];
         };
 
         return $container;

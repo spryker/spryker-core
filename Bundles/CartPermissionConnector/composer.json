@@ -1,0 +1,32 @@
+{
+  "name": "spryker/cart-permission-connector",
+  "description": "CartPermissionConnector module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/cart-extension": "^1.0.0",
+    "spryker/kernel": "^3.19.0",
+    "spryker/messenger": "^3.1.0",
+    "spryker/permission": "^1.0.0",
+    "spryker/permission-extension": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

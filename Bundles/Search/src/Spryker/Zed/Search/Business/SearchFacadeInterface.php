@@ -17,7 +17,8 @@ interface SearchFacadeInterface
      * Specification:
      * - Loads index definition json files from the folders
      * - Installs Elasticsearch indexes and mapping types based on the loaded index definitions if they not exists already
-     * - For each configured store a separated index will be created
+     * - For each configured store a separated index name is generated
+     * - The index is created for only the current store
      * - The name of the index is automatically prefixed with the store name + underscore
      * - Generates IndexMap class for each mapping type
      * - The generated IndexMaps are not store specific and has the class name of the mapping types suffixed with "IndexMap"

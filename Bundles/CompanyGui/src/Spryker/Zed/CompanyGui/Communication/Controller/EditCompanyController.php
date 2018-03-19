@@ -37,7 +37,9 @@ class EditCompanyController extends AbstractController
         $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
 
         $companyTransfer = $this->createCompanyTransfer();
-        $companyTransfer->setIdCompany($idCompany)->setIsActive(true);
+        $companyTransfer
+            ->setIdCompany($idCompany)
+            ->setIsActive(true);
 
         $this->getFactory()
             ->getCompanyFacade()
@@ -59,7 +61,9 @@ class EditCompanyController extends AbstractController
         $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
 
         $companyTransfer = $this->createCompanyTransfer();
-        $companyTransfer->setIdCompany($idCompany)->setIsActive(false);
+        $companyTransfer
+            ->setIdCompany($idCompany)
+            ->setIsActive(false);
 
         $this->getFactory()
             ->getCompanyFacade()
