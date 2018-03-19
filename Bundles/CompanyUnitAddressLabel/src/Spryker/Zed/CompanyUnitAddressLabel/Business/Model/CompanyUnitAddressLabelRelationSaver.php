@@ -88,8 +88,8 @@ class CompanyUnitAddressLabelRelationSaver implements CompanyUnitAddressLabelRel
         $result = [];
         $labelTransfers = $companyUnitAddressTransfer->getLabelCollection()->getLabels();
 
-        foreach ($labelTransfers as $label) {
-            $result[] = $label->getIdCompanyUnitAddressLabel();
+        foreach ($labelTransfers as $labelTransfer) {
+            $result[] = $labelTransfer->getIdCompanyUnitAddressLabel();
         }
 
         return $result;
