@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CustomerAccessGui\Dependency\Facade;
 
-
 class CustomerAccessGuiToCustomerAccessFacadeBridge implements CustomerAccessGuiToCustomerAccessFacadeInterface
 {
     /**
@@ -24,7 +23,7 @@ class CustomerAccessGuiToCustomerAccessFacadeBridge implements CustomerAccessGui
     }
 
     /**
-	 * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
+     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
      *
      * @return void
      */
@@ -33,7 +32,7 @@ class CustomerAccessGuiToCustomerAccessFacadeBridge implements CustomerAccessGui
         $this->customerAccessFacade->updateOnlyContentTypesToAccessible($customerAccessTransfer);
     }
 
-	/**
+    /**
      * {@inheritdoc}
      *
      * @api
@@ -45,7 +44,7 @@ class CustomerAccessGuiToCustomerAccessFacadeBridge implements CustomerAccessGui
         return $this->customerAccessFacade->findAllContentTypes();
     }
 
-	/**
+    /**
      * {@inheritdoc}
      *
      * @api

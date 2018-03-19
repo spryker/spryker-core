@@ -5,17 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CustomerAccess\Dependency\Client;
+namespace Spryker\Client\CustomerAccessPermission\Dependency\Client;
 
-
-interface CustomerAccessToCustomerAccessStorageClientInterface
+interface CustomerAccessPermissionToCustomerAccessStorageClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function getUnauthenticatedCustomerAccess();
 
-	/**
+    /**
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function getAuthenticatedCustomerAccess();

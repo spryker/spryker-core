@@ -3,6 +3,10 @@
   "description": "CustomerAccessGui module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
+    "spryker/customer-access": "^1.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -11,11 +15,6 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

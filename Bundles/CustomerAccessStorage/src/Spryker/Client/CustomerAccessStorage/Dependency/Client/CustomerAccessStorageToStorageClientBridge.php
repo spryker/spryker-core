@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\CustomerAccessStorage\Dependency\Client;
 
-
 class CustomerAccessStorageToStorageClientBridge implements CustomerAccessStorageToStorageClientInterface
 {
     /**
@@ -24,7 +23,7 @@ class CustomerAccessStorageToStorageClientBridge implements CustomerAccessStorag
     }
 
     /**
-	 * @param string $key
+     * @param string $key
      *
      * @return mixed
      */

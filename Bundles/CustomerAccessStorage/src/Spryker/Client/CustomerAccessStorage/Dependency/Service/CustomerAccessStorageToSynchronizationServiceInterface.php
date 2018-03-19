@@ -7,11 +7,10 @@
 
 namespace Spryker\Client\CustomerAccessStorage\Dependency\Service;
 
-
 interface CustomerAccessStorageToSynchronizationServiceInterface
 {
     /**
-	 * @param string $resourceName
+     * @param string $resourceName
      *
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */

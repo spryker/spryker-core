@@ -7,17 +7,16 @@
 
 namespace Spryker\Zed\CustomerAccessGui\Dependency\Facade;
 
-
 interface CustomerAccessGuiToCustomerAccessFacadeInterface
 {
     /**
-	 * @param string[] $customerAccessTransfer
+     * @param string[] $customerAccessTransfer
      *
      * @return void
      */
     public function updateOnlyContentTypesToAccessible($customerAccessTransfer);
 
-	/**
+    /**
      * Specification:
      * - Returns all content types from the database table
      *
@@ -27,7 +26,7 @@ interface CustomerAccessGuiToCustomerAccessFacadeInterface
      */
     public function findAllContentTypes();
 
-	/**
+    /**
      * Specification:
      * - Returns the all content types that the customer can see when not logged-in in a CustomerAccessTransfer object
      *

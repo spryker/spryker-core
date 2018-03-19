@@ -1,10 +1,14 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CustomerAccessStorage\Business\Model;
 
 use Generated\Shared\Transfer\ContentTypeAccessTransfer;
 use Generated\Shared\Transfer\CustomerAccessTransfer;
-use Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorage;
 use Orm\Zed\CustomerAccessStorage\Persistence\SpyUnauthenticatedCustomerAccessStorage;
 use Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageQueryContainerInterface;
 
@@ -36,13 +40,13 @@ class CustomerAccessStorage implements CustomerAccessStorageInterface
 
     /**
      * @param \Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess[] $customerAccessEntities
-     * @param \Orm\Zed\CustomerAccessStorage\Persistence\SpyUnauthenticatedCustomerAccessStorage | null $customerAccessStorageEntity
+     * @param \Orm\Zed\CustomerAccessStorage\Persistence\SpyUnauthenticatedCustomerAccessStorage|null|null $customerAccessStorageEntity
      *
      * @return void
      */
     protected function storeData($customerAccessEntities, $customerAccessStorageEntity = null)
     {
-        if(is_null($customerAccessStorageEntity)) {
+        if ($customerAccessStorageEntity === null) {
             $customerAccessStorageEntity = new SpyUnauthenticatedCustomerAccessStorage();
         }
 
@@ -60,7 +64,7 @@ class CustomerAccessStorage implements CustomerAccessStorageInterface
     {
         $customerAccessTransfer = new CustomerAccessTransfer();
 
-        foreach($customerAccessEntities as $customerAccess) {
+        foreach ($customerAccessEntities as $customerAccess) {
             $customerAccessTransfer->addContentTypeAccess(
                 (new ContentTypeAccessTransfer())
                     ->setContentType($customerAccess->getContentType())

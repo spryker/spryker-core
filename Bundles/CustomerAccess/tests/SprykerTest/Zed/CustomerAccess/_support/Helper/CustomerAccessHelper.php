@@ -35,7 +35,7 @@ class CustomerAccessHelper extends Module
 
         $customerAccessTransfer = (new CustomerAccessBuilder(array_merge($data, $override)))->build();
 
-        foreach($customerAccessTransfer->getContentTypeAccess() as $contentType) {
+        foreach ($customerAccessTransfer->getContentTypeAccess() as $contentType) {
             $customerAccess = new SpyUnauthenticatedCustomerAccess();
             $customerAccess->setContentType($contentType->getContentType());
             $customerAccess->setCanAccess($contentType->getCanAccess());

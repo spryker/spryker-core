@@ -2,14 +2,14 @@
 <config>
     <customer>
         <pages>
-            <group>
-                <label>Access</label>
-                <title>Access</title>
-                <bundle>customer-access</bundle>
+            <customer-access>
+                <label>Customer Access</label>
+                <title>Customer Access</title>
+                <bundle>customer-access-gui</bundle>
                 <controller>index</controller>
                 <action>index</action>
                 <visible>1</visible>
-            </group>
+            </customer-access>
         </pages>
     </customer>
 </config>

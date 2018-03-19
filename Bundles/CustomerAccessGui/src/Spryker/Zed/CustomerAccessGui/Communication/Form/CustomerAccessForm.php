@@ -1,15 +1,20 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CustomerAccessGui\Communication\Form;
 
+use ArrayObject;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use ArrayObject;
 
 /**
- * @method \Spryker\Zed\CustomerAccessGui\Communication\CustomerAccessGuiCommunicationFactory getFactory
+ * @method \Spryker\Zed\CustomerAccessGui\Communication\CustomerAccessGuiCommunicationFactory getFactory()
  */
 class CustomerAccessForm extends AbstractType
 {
@@ -28,6 +33,8 @@ class CustomerAccessForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
      */
     protected function addContentTypeAccess(FormBuilderInterface $builder)
     {
@@ -43,13 +50,13 @@ class CustomerAccessForm extends AbstractType
 
         $builder
             ->get(self::FIELD_CONTENT_TYPE_ACCESS)
-            ->addModelTransformer(new CallbackTransformer(function($customerAccess) {
+            ->addModelTransformer(new CallbackTransformer(function ($customerAccess) {
                 if ($customerAccess) {
                     return (array)$customerAccess;
                 }
 
                 return [];
-            }, function($customerAccess) {
+            }, function ($customerAccess) {
                 return new ArrayObject($customerAccess);
             }));
 

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Client\CustomerAccessStorage\Storage;
 
 use Generated\Shared\Transfer\CustomerAccessTransfer;
@@ -46,7 +51,6 @@ class CustomerAccessStorageReader implements CustomerAccessStorageReaderInterfac
     }
 
     /**
-     *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function getUnauthenticatedCustomerAccess(): CustomerAccessTransfer
@@ -54,8 +58,8 @@ class CustomerAccessStorageReader implements CustomerAccessStorageReaderInterfac
         $this->readCustomerAccess();
         $customerAccessTransfer = new CustomerAccessTransfer();
 
-        foreach($this->customerAccess->getContentTypeAccess() as $contentTypeAccess) {
-            if($contentTypeAccess->getCanAccess()) {
+        foreach ($this->customerAccess->getContentTypeAccess() as $contentTypeAccess) {
+            if ($contentTypeAccess->getCanAccess()) {
                 $customerAccessTransfer->addContentTypeAccess($contentTypeAccess);
             }
         }
@@ -63,6 +67,9 @@ class CustomerAccessStorageReader implements CustomerAccessStorageReaderInterfac
         return $customerAccessTransfer;
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
     public function getAuthenticatedCustomerAccess(): CustomerAccessTransfer
     {
         $this->readCustomerAccess();
@@ -75,10 +82,10 @@ class CustomerAccessStorageReader implements CustomerAccessStorageReaderInterfac
      */
     protected function readCustomerAccess()
     {
-        if(!$this->customerAccess) {
+        if (!$this->customerAccess) {
             $unauthenticatedCustomerAccess = $this->storageClient->get($this->generateKey());
 
-            if(is_null($unauthenticatedCustomerAccess)) {
+            if ($unauthenticatedCustomerAccess === null) {
                 $unauthenticatedCustomerAccess = [];
             }
 

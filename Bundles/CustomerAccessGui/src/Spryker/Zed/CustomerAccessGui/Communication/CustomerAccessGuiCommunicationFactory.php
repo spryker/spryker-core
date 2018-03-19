@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CustomerAccessGui\Communication;
 
 use Generated\Shared\Transfer\CustomerAccessTransfer;
@@ -8,6 +13,9 @@ use Spryker\Zed\CustomerAccessGui\Communication\Form\DataProvider\CustomerAccess
 use Spryker\Zed\CustomerAccessGui\CustomerAccessGuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
+/**
+ * @method \Spryker\Zed\CustomerAccessGui\CustomerAccessGuiConfig getConfig()
+ */
 class CustomerAccessGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -29,7 +37,7 @@ class CustomerAccessGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerAccessTransfer|null $data
+     * @param \Generated\Shared\Transfer\CustomerAccessTransfer|null $customerAccessTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CustomerAccess\Business\Installer;
 
 use Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessCreatorInterface;
@@ -8,7 +13,6 @@ use Spryker\Zed\CustomerAccess\CustomerAccessConfig;
 
 class CustomerAccessInstaller implements CustomerAccessInstallerInterface
 {
-
     /**
      * @var \Spryker\Zed\CustomerAccess\Business\Model\CustomerAccessCreatorInterface
      */
@@ -42,8 +46,8 @@ class CustomerAccessInstaller implements CustomerAccessInstallerInterface
     public function install()
     {
         $defaultContentAccess = $this->customerAccessConfig->getDefaultContentTypeAccess();
-        foreach($this->customerAccessConfig->getContentTypes() as $contentType) {
-            if(!is_null($this->customerAccessReader->findCustomerAccessByContentType($contentType))) {
+        foreach ($this->customerAccessConfig->getContentTypes() as $contentType) {
+            if ($this->customerAccessReader->findCustomerAccessByContentType($contentType) !== null) {
                 continue;
             }
 

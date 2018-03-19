@@ -1,13 +1,18 @@
 <?php
 
-namespace Spryker\Client\CustomerAccess\Plugin;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Client\CustomerAccessPermission\Plugin;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 
 /**
- * @method \Spryker\Client\CustomerAccess\CustomerAccessFactory getFactory()
+ * @method \Spryker\Client\CustomerAccessPermission\CustomerAccessPermissionFactory getFactory()
  */
 class CustomerAccessPermissionStoragePlugin extends AbstractPlugin implements PermissionStoragePluginInterface
 {

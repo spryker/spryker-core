@@ -7,7 +7,14 @@ use Generated\Shared\Transfer\ContentTypeAccessTransfer;
 use Generated\Shared\Transfer\CustomerAccessTransfer;
 
 /**
- * @property \SprykerTest\Zed\CustomerAccess\CustomerAccessBusinessTester $tester
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group CustomerAccess
+ * @group Business
+ * @group Facade
+ * @group CustomerAccessFacadeTest
+ * Add your own group annotations below this line
  */
 class CustomerAccessFacadeTest extends Unit
 {
@@ -26,6 +33,9 @@ class CustomerAccessFacadeTest extends Unit
         $this->assertInstanceOf(CustomerAccessTransfer::class, $customerTransferAccess);
     }
 
+    /**
+     * @return void
+     */
     public function testFindAllContentTypesReturnsAllTableRows()
     {
         // Arrange
@@ -57,6 +67,9 @@ class CustomerAccessFacadeTest extends Unit
         }
     }
 
+    /**
+     * @return void
+     */
     public function testUpdateOnlyContentTypeToAccessibleUpdatesCorrectContentType()
     {
         // Arrange
@@ -67,24 +80,29 @@ class CustomerAccessFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->updateOnlyContentTypesToAccessible($customerAccessTransfer);
 
-        /** @var CustomerAccessTransfer $customerAccessTransferFromDB */
+        /** @var \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransferFromDB */
         $customerAccessTransferFromDB = $this->tester->getFacade()->findUnauthenticatedCustomerAccess();
 
-        foreach($customerAccessTransferFromDB->getContentTypeAccess() as $contentTypeAccess) {
-            if($contentTypeAccess->getContentType() === $removedContentTypeAccess->getContentType()) {
+        foreach ($customerAccessTransferFromDB->getContentTypeAccess() as $contentTypeAccess) {
+            if ($contentTypeAccess->getContentType() === $removedContentTypeAccess->getContentType()) {
                 $this->assertFalse($removedContentTypeAccess->getCanAccess());
                 continue;
             }
 
             $this->assertTrue($contentTypeAccess->getCanAccess());
         }
-
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
+     * @param \Generated\Shared\Transfer\ContentTypeAccessTransfer $contentTypeAccessTransfer
+     *
+     * @return void
+     */
     protected function assertCustomerAccessTransferContainsContentTypeAccess(CustomerAccessTransfer $customerAccessTransfer, ContentTypeAccessTransfer $contentTypeAccessTransfer)
     {
-        foreach($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
-            if($contentTypeAccess->getContentType() === $contentTypeAccessTransfer) {
+        foreach ($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
+            if ($contentTypeAccess->getContentType() === $contentTypeAccessTransfer) {
                 $this->assertSame($contentTypeAccess, $contentTypeAccessTransfer);
             }
         }

@@ -1,8 +1,13 @@
 <?php
 
-namespace Spryker\Client\CustomerAccess;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
-class CustomerAccessConfig
+namespace Spryker\Client\CustomerAccessPermission;
+
+class CustomerAccessPermissionConfig
 {
     /**
      * Convention is SEE_{content type}_PLUGIN for constant name and the value is the key that would be used as a
@@ -19,15 +24,15 @@ class CustomerAccessConfig
     {
         $constantName = $this->getConstantNameFromContentType($contentType);
 
-        if(defined(CustomerAccessConfig::class . '::' . $constantName)) {
-            return constant(CustomerAccessConfig::class . '::' . $constantName);
+        if (defined(CustomerAccessPermissionConfig::class . '::' . $constantName)) {
+            return constant(CustomerAccessPermissionConfig::class . '::' . $constantName);
         }
 
         return '';
     }
 
     /**
-     * @param $contentType
+     * @param string $contentType
      *
      * @return string
      */

@@ -7,11 +7,10 @@
 
 namespace Spryker\Client\CustomerAccessStorage\Dependency\Client;
 
-
 interface CustomerAccessStorageToStorageClientInterface
 {
     /**
-	 * @param string $key
+     * @param string $key
      *
      * @return mixed
      */

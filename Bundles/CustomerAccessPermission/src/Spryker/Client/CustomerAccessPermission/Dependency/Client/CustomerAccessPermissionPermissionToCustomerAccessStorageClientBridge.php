@@ -5,10 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CustomerAccess\Dependency\Client;
+namespace Spryker\Client\CustomerAccessPermission\Dependency\Client;
 
-
-class CustomerAccessToCustomerAccessStorageClientBridge implements CustomerAccessToCustomerAccessStorageClientInterface
+class CustomerAccessPermissionPermissionToCustomerAccessStorageClientBridge implements CustomerAccessPermissionToCustomerAccessStorageClientInterface
 {
     /**
      * @var \Spryker\Client\CustomerAccessStorage\CustomerAccessStorageClientInterface
@@ -31,7 +30,7 @@ class CustomerAccessToCustomerAccessStorageClientBridge implements CustomerAcces
         return $this->customerAccessStorageClient->getUnauthenticatedCustomerAccess();
     }
 
-	/**
+    /**
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function getAuthenticatedCustomerAccess()

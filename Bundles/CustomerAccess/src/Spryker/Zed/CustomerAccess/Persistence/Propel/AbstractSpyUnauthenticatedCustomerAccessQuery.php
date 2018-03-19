@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CustomerAccess\Persistence\Propel;
 
 use Orm\Zed\CustomerAccess\Persistence\Base\SpyUnauthenticatedCustomerAccessQuery as BaseSpyUnauthenticatedCustomerAccessQuery;
@@ -15,5 +20,4 @@ use Orm\Zed\CustomerAccess\Persistence\Base\SpyUnauthenticatedCustomerAccessQuer
  */
 abstract class AbstractSpyUnauthenticatedCustomerAccessQuery extends BaseSpyUnauthenticatedCustomerAccessQuery
 {
-
 }

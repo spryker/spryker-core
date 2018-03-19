@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\CustomerAccessStorage\Dependency\Service;
 
-
 class CustomerAccessStorageToSynchronizationServiceBridge implements CustomerAccessStorageToSynchronizationServiceInterface
 {
     /**
@@ -24,7 +23,7 @@ class CustomerAccessStorageToSynchronizationServiceBridge implements CustomerAcc
     }
 
     /**
-	 * @param string $resourceName
+     * @param string $resourceName
      *
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */

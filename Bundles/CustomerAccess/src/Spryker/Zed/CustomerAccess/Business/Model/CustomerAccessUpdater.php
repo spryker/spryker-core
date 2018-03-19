@@ -1,9 +1,13 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CustomerAccess\Business\Model;
 
 use Generated\Shared\Transfer\CustomerAccessTransfer;
-use Orm\Zed\CustomerAccess\Persistence\Map\SpyUnauthenticatedCustomerAccessTableMap;
 use Spryker\Zed\CustomerAccess\Persistence\CustomerAccessQueryContainerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
@@ -44,7 +48,7 @@ class CustomerAccessUpdater implements CustomerAccessUpdaterInterface
     {
         $customerAccessEntities = $this->customerAccessQueryContainer->queryCustomerAccess()->find();
 
-        foreach($customerAccessEntities as $customerAccessEntity) {
+        foreach ($customerAccessEntities as $customerAccessEntity) {
             $customerAccessEntity->setCanAccess(false);
             $customerAccessEntity->save();
         }
@@ -57,7 +61,7 @@ class CustomerAccessUpdater implements CustomerAccessUpdaterInterface
      */
     protected function setContentTypesToAccessible(CustomerAccessTransfer $customerAccessTransfer)
     {
-        foreach($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
+        foreach ($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
             $customerAccessEntity = $this->customerAccessQueryContainer
                 ->queryCustomerAccess()
                 ->filterByContentType($contentTypeAccess->getContentType())

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CustomerAccess\Business\Model;
 
 use Generated\Shared\Transfer\ContentTypeAccessTransfer;
@@ -33,7 +38,7 @@ class CustomerAccessReader implements CustomerAccessReaderInterface
             ->filterByContentType($contentType)
             ->findOne();
 
-        if(!$customerAccessEntity) {
+        if (!$customerAccessEntity) {
             return null;
         }
 
@@ -75,7 +80,7 @@ class CustomerAccessReader implements CustomerAccessReaderInterface
     {
         $customerAccessTransfer = new CustomerAccessTransfer();
 
-        foreach($customerAccessEntities as $customerAccess) {
+        foreach ($customerAccessEntities as $customerAccess) {
             $customerAccessTransfer->addContentTypeAccess(
                 (new ContentTypeAccessTransfer())
                     ->setContentType($customerAccess->getContentType())

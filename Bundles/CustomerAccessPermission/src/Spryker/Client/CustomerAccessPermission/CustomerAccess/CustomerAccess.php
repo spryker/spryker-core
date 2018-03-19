@@ -1,30 +1,35 @@
 <?php
 
-namespace Spryker\Client\CustomerAccess\CustomerAccess;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Client\CustomerAccessPermission\CustomerAccess;
 
 use Generated\Shared\Transfer\CustomerAccessTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Spryker\Client\CustomerAccess\CustomerAccessConfig;
-use Spryker\Client\CustomerAccess\Dependency\Client\CustomerAccessToCustomerAccessStorageClientInterface;
+use Spryker\Client\CustomerAccessPermission\CustomerAccessPermissionConfig;
+use Spryker\Client\CustomerAccessPermission\Dependency\Client\CustomerAccessPermissionToCustomerAccessStorageClientInterface;
 
 class CustomerAccess implements CustomerAccessInterface
 {
     /**
-     * @var \Spryker\Client\CustomerAccess\Dependency\Client\CustomerAccessToCustomerAccessStorageClientInterface
+     * @var \Spryker\Client\CustomerAccessPermission\Dependency\Client\CustomerAccessPermissionToCustomerAccessStorageClientInterface
      */
     protected $customerAccessStorageReader;
 
     /**
-     * @var \Spryker\Client\CustomerAccess\CustomerAccessConfig
+     * @var \Spryker\Client\CustomerAccessPermission\CustomerAccessPermissionConfig
      */
     protected $customerAccessConfig;
 
     /**
-     * @param \Spryker\Client\CustomerAccess\Dependency\Client\CustomerAccessToCustomerAccessStorageClientInterface $customerAccessStorageReader
-     * @param \Spryker\Client\CustomerAccess\CustomerAccessConfig $customerAccessConfig
+     * @param \Spryker\Client\CustomerAccessPermission\Dependency\Client\CustomerAccessPermissionToCustomerAccessStorageClientInterface $customerAccessStorageReader
+     * @param \Spryker\Client\CustomerAccessPermission\CustomerAccessPermissionConfig $customerAccessConfig
      */
-    public function __construct(CustomerAccessToCustomerAccessStorageClientInterface $customerAccessStorageReader, CustomerAccessConfig $customerAccessConfig)
+    public function __construct(CustomerAccessPermissionToCustomerAccessStorageClientInterface $customerAccessStorageReader, CustomerAccessPermissionConfig $customerAccessConfig)
     {
         $this->customerAccessStorageReader = $customerAccessStorageReader;
         $this->customerAccessConfig = $customerAccessConfig;
@@ -57,7 +62,7 @@ class CustomerAccess implements CustomerAccessInterface
     {
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 
-        foreach($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
+        foreach ($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
             $permission = new PermissionTransfer();
             $permission->setKey(
                 $this->customerAccessConfig->getPluginNameToSeeContentType($contentTypeAccess->getContentType())
