@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SharedCart\Persistence;
 
-use Orm\Zed\SharedCart\Persistence\SpyQuoteRoleToPermissionQuery;
+use Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroupToPermissionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -16,10 +16,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 class SharedCartPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Orm\Zed\SharedCart\Persistence\SpyQuoteRoleToPermissionQuery
+     * @return \Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroupToPermissionQuery
      */
-    public function createQuoteRoleToPermissionQuery()
+    public function createQuotePermissionGroupToPermissionQuery()
     {
-        return SpyQuoteRoleToPermissionQuery::create();
+        return SpyQuotePermissionGroupToPermissionQuery::create();
     }
 }

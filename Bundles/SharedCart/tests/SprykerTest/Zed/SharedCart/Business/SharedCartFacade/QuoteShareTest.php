@@ -57,8 +57,8 @@ class QuoteShareTest extends Unit
 
         $customerTransfer2 = $this->tester->haveCustomer();
         $companyUserTransfer = $this->tester->createCompanyUser($customerTransfer2);
-        $quoteCompanyUserRoleTransfer = $this->tester->createQuoteCompanyUserRoleTransfer($companyUserTransfer);
-        $quoteShareRequestTransfer = $this->tester->createQuoteShareRequestTransfer($quoteTransfer, $quoteCompanyUserRoleTransfer);
+        $quoteCompanyUserPermissionGroupTransfer = $this->tester->createQuoteCompanyUserPermissionGroupTransfer($companyUserTransfer);
+        $quoteShareRequestTransfer = $this->tester->createQuoteShareRequestTransfer($quoteTransfer, $quoteCompanyUserPermissionGroupTransfer);
 
         // Act
         $this->tester->getFacade()->shareQuote($quoteShareRequestTransfer);
@@ -72,7 +72,7 @@ class QuoteShareTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveCompanyUserRoleShouldDisallowToRead()
+    public function testRemoveCompanyUserPermissionGroupShouldDisallowToRead()
     {
         // Arrange
         $customerTransfer1 = $this->tester->haveCustomer();
@@ -80,13 +80,13 @@ class QuoteShareTest extends Unit
 
         $customerTransfer2 = $this->tester->haveCustomer();
         $companyUserTransfer = $this->tester->createCompanyUser($customerTransfer2);
-        $quoteCompanyUserRoleTransfer = $this->tester->createQuoteCompanyUserRoleTransfer($companyUserTransfer);
-        $quoteShareRequestTransfer = $this->tester->createQuoteShareRequestTransfer($quoteTransfer, $quoteCompanyUserRoleTransfer);
+        $quoteCompanyUserPermissionGroupTransfer = $this->tester->createQuoteCompanyUserPermissionGroupTransfer($companyUserTransfer);
+        $quoteShareRequestTransfer = $this->tester->createQuoteShareRequestTransfer($quoteTransfer, $quoteCompanyUserPermissionGroupTransfer);
 
         $this->tester->getFacade()->shareQuote($quoteShareRequestTransfer);
 
         // Act
-        $this->tester->getFacade()->removeCompanyUserQuoteRole($companyUserTransfer);
+        $this->tester->getFacade()->removeCompanyUserQuotePermissionGroup($companyUserTransfer);
 
         $actualQuoteTransfer = $this->tester->getLocator()->multiCart()->facade()->findQuote($companyUserTransfer, $quoteTransfer->getIdQuote());
 

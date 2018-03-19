@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\SharedCart\Communication\Plugin\QuotePermissionStoragePlugin;
-use Spryker\Zed\SharedCart\Communication\Plugin\ReadCartPermissionPlugin;
-use Spryker\Zed\SharedCart\Communication\Plugin\WriteCartPermissionPlugin;
+use Spryker\Zed\SharedCart\Communication\Plugin\ReadSharedCartPermissionPlugin;
+use Spryker\Zed\SharedCart\Communication\Plugin\WriteharedCartPermissionPlugin;
 
 /**
  * Auto-generated group annotations
@@ -44,8 +44,8 @@ class PermissionTest extends Unit
         ]);
 
         $this->tester->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION, [
-            new ReadCartPermissionPlugin(),
-            new WriteCartPermissionPlugin(),
+            new ReadSharedCartPermissionPlugin(),
+            new WriteharedCartPermissionPlugin(),
         ]);
 
         $this->tester->getLocator()->permission()->facade()->syncPermissionPlugins();
@@ -57,12 +57,12 @@ class PermissionTest extends Unit
     public function testQuotePermissionCheck()
     {
         // Arrange
-        $readOnlyRole = $this->tester->haveQuoteRole('READ_ONLY', [
-            ReadCartPermissionPlugin::KEY,
+        $readOnlyPermissionGroup = $this->tester->haveQuotePermissionGroup('READ_ONLY', [
+            ReadSharedCartPermissionPlugin::KEY,
         ]);
-        $fullAccessRole = $this->tester->haveQuoteRole('FULL_ACCESS', [
-            ReadCartPermissionPlugin::KEY,
-            WriteCartPermissionPlugin::KEY,
+        $fullAccessPermissionGroup = $this->tester->haveQuotePermissionGroup('FULL_ACCESS', [
+            ReadSharedCartPermissionPlugin::KEY,
+            WriteharedCartPermissionPlugin::KEY,
         ]);
 
         $companyTransfer = $this->tester->haveCompany();
@@ -81,34 +81,34 @@ class PermissionTest extends Unit
         $quoteCompanyUserEntityTransfer1 = $this->tester->haveQuoteCompanyUser(
             $companyUserTransfer,
             $quoteTransfer1,
-            $readOnlyRole
+            $readOnlyPermissionGroup
         );
         $quoteCompanyUserEntityTransfer2 = $this->tester->haveQuoteCompanyUser(
             $companyUserTransfer,
             $quoteTransfer2,
-            $fullAccessRole
+            $fullAccessPermissionGroup
         );
 
         // Act
         $userCanReadCart1 = $this->tester->getLocator()
             ->permission()
             ->facade()
-            ->can(ReadCartPermissionPlugin::KEY, $quoteCompanyUserEntityTransfer1->getFkCompanyUser(), $quoteCompanyUserEntityTransfer1->getFkQuote());
+            ->can(ReadSharedCartPermissionPlugin::KEY, $quoteCompanyUserEntityTransfer1->getFkCompanyUser(), $quoteCompanyUserEntityTransfer1->getFkQuote());
 
         $userCanNotWriteCart1 = $this->tester->getLocator()
             ->permission()
             ->facade()
-            ->can(WriteCartPermissionPlugin::KEY, $quoteCompanyUserEntityTransfer1->getFkCompanyUser(), $quoteCompanyUserEntityTransfer1->getFkQuote());
+            ->can(WriteharedCartPermissionPlugin::KEY, $quoteCompanyUserEntityTransfer1->getFkCompanyUser(), $quoteCompanyUserEntityTransfer1->getFkQuote());
 
         $userCanReadCart2 = $this->tester->getLocator()
             ->permission()
             ->facade()
-            ->can(ReadCartPermissionPlugin::KEY, $quoteCompanyUserEntityTransfer2->getFkCompanyUser(), $quoteCompanyUserEntityTransfer2->getFkQuote());
+            ->can(ReadSharedCartPermissionPlugin::KEY, $quoteCompanyUserEntityTransfer2->getFkCompanyUser(), $quoteCompanyUserEntityTransfer2->getFkQuote());
 
         $userCanWriteCart2 = $this->tester->getLocator()
             ->permission()
             ->facade()
-            ->can(WriteCartPermissionPlugin::KEY, $quoteCompanyUserEntityTransfer2->getFkCompanyUser(), $quoteCompanyUserEntityTransfer2->getFkQuote());
+            ->can(WriteharedCartPermissionPlugin::KEY, $quoteCompanyUserEntityTransfer2->getFkCompanyUser(), $quoteCompanyUserEntityTransfer2->getFkQuote());
 
         // Assert
         $this->assertTrue($userCanReadCart1, 'User should have been able to read cart #1.');

@@ -13,9 +13,9 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPlu
 /**
  * For Client PermissionDependencyProvider::getPermissionPlugins() registration
  */
-class ReadCartPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface
+class ReadSharedCartPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface
 {
-    public const KEY = 'ReadCartPermissionPlugin';
+    public const KEY = 'ReadSharedCartPermissionPlugin';
 
     public const CONFIG_ID_QUOTE_COLLECTION = 'id_quote_collection';
 

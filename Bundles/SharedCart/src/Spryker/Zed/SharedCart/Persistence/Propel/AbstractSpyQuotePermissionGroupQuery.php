@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\SharedCart\Persistence\Propel;
 
-use Orm\Zed\SharedCart\Persistence\Base\SpyQuoteRole as BaseSpyQuoteRole;
+use Orm\Zed\SharedCart\Persistence\Base\SpyQuotePermissionGroupQuery as BaseSpyQuotePermissionGroupQuery;
 
-abstract class AbstractSpyQuoteRole extends BaseSpyQuoteRole
+abstract class AbstractSpyQuotePermissionGroupQuery extends BaseSpyQuotePermissionGroupQuery
 {
 }

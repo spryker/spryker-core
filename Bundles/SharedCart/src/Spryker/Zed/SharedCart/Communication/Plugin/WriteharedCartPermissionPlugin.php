@@ -13,9 +13,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
  */
-class ReadCartPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface
+class WriteharedCartPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface
 {
-    public const KEY = 'ReadCartPermissionPlugin';
+    public const KEY = 'WriteharedCartPermissionPlugin';
 
     public const CONFIG_ID_QUOTE_COLLECTION = 'id_quote_collection';
 

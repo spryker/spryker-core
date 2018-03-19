@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SharedCart\Plugin;
+namespace Spryker\Zed\SharedCart\Communication\Plugin;
 
-use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * For Client PermissionDependencyProvider::getPermissionPlugins() registration
+ * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
  */
-class WriteCartPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface
+class ReadSharedCartPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface
 {
-    public const KEY = 'WriteCartPermissionPlugin';
+    public const KEY = 'ReadSharedCartPermissionPlugin';
 
     public const CONFIG_ID_QUOTE_COLLECTION = 'id_quote_collection';
 
@@ -28,9 +28,6 @@ class WriteCartPermissionPlugin extends AbstractPlugin implements ExecutablePerm
     }
 
     /**
-     * Specification:
-     * - Implements a business login against the configuration and the passed context
-     *
      * @api
      *
      * @param array $configuration
@@ -48,19 +45,7 @@ class WriteCartPermissionPlugin extends AbstractPlugin implements ExecutablePerm
     }
 
     /**
-     * The signature is used to draw a form for filling on assigning a permission to a role.
-     * Used a configuration array generation as well.
-     *
-     * Specification:
-     * - Provides a signature for collection the plugin configuration
-     *
      * @api
-     *
-     * @example
-     * [
-     *      'amount' => ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT,
-     *      'item_count' => ExecutablePermissionPluginInterface::CONFIG_FIELD_TYPE_INT
-     * ]
      *
      * @return array
      */

@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SharedCart\Communication\Plugin;
+namespace Spryker\Client\SharedCart\Plugin;
 
+use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
+ * For Client PermissionDependencyProvider::getPermissionPlugins() registration
  */
-class WriteCartPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface
+class WriteSharedCartPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface
 {
-    public const KEY = 'WriteCartPermissionPlugin';
+    public const KEY = 'WriteSharedCartPermissionPlugin';
 
     public const CONFIG_ID_QUOTE_COLLECTION = 'id_quote_collection';
 
@@ -28,6 +28,9 @@ class WriteCartPermissionPlugin extends AbstractPlugin implements ExecutablePerm
     }
 
     /**
+     * Specification:
+     * - Implements a business login against the configuration and the passed context
+     *
      * @api
      *
      * @param array $configuration

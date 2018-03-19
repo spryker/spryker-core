@@ -25,10 +25,6 @@ class SharedCartBusinessTester extends Actor
 {
     use _generated\SharedCartBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
-
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
@@ -56,30 +52,30 @@ class SharedCartBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserQuoteRoleTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserQuotePermissionGroupTransfer
      */
-    public function createQuoteCompanyUserRoleTransfer(CompanyUserTransfer $companyUserTransfer)
+    public function createQuoteCompanyUserPermissionGroupTransfer(CompanyUserTransfer $companyUserTransfer)
     {
-        $companyUserQuoteRoleTransfer = new CompanyUserQuoteRoleTransfer();
-        $companyUserQuoteRoleTransfer
+        $companyUserQuotePermissionGroupTransfer = new CompanyUserQuotePermissionGroupTransfer();
+        $companyUserQuotePermissionGroupTransfer
             ->setCompanyUser($companyUserTransfer) // or just ID
-            ->setRole(''); // READER/MODIFIER
+            ->setPermissionGroup(''); // READER/MODIFIER
 
-        return $companyUserQuoteRoleTransfer;
+        return $companyUserQuotePermissionGroupTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserQuoteRoleTransfer $companyUserQuoteRoleTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserQuotePermissionGroupTransfer $companyUserQuotePermissionGroupTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteShareRequestTransfer
      */
-    public function createQuoteShareRequestTransfer(QuoteTransfer $quoteTransfer, CompanyUserQuoteRoleTransfer $companyUserQuoteRoleTransfer)
+    public function createQuoteShareRequestTransfer(QuoteTransfer $quoteTransfer, CompanyUserQuotePermissionGroupTransfer $companyUserQuotePermissionGroupTransfer)
     {
         $quoteShareRequestTransfer = new QuoteShareRequestTransfer();
         $quoteShareRequestTransfer
             ->setQuote($quoteTransfer)
-            ->addCompanyUserQuoteRole($companyUserQuoteRoleTransfer);
+            ->addCompanyUserQuotePermissionGroup($companyUserQuotePermissionGroupTransfer);
 
         return $quoteShareRequestTransfer;
     }

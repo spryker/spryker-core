@@ -24,10 +24,10 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     public function findPermissionsByIdCompanyUser(int $idCompanyUser): PermissionCollectionTransfer
     {
         // TODO: refactor
-        $quoteRoleToPermissionEntities = $this->getFactory()
-            ->createQuoteRoleToPermissionQuery()
+        $quotePermissionGroupToPermissionEntities = $this->getFactory()
+            ->createQuotePermissionGroupToPermissionQuery()
             ->joinWithPermission()
-            ->useQuoteRoleQuery()
+            ->useQuotePermissionGroupQuery()
                 ->useSpyQuoteCompanyUserQuery()
                     ->filterByFkCompanyUser($idCompanyUser)
                 ->endUse()
@@ -36,12 +36,12 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
             ->find();
 
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
-        foreach ($quoteRoleToPermissionEntities as $quoteRoleToPermissionEntity) {
+        foreach ($quotePermissionGroupToPermissionEntities as $quotePermissionGroupToPermissionEntity) {
             $permissionTransfer = new PermissionTransfer();
 
-            $permissionTransfer->setKey($quoteRoleToPermissionEntity->getPermission()->getKey());
+            $permissionTransfer->setKey($quotePermissionGroupToPermissionEntity->getPermission()->getKey());
 
-            $quoteCompanyUserEntities = $quoteRoleToPermissionEntity->getQuoteRole()->getSpyQuoteCompanyUsers();
+            $quoteCompanyUserEntities = $quotePermissionGroupToPermissionEntity->getQuotePermissionGroup()->getSpyQuoteCompanyUsers();
 
             $idQuoteCollection = [];
             foreach ($quoteCompanyUserEntities as $quoteCompanyUserEntity) {

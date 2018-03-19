@@ -11,11 +11,11 @@ use Codeception\Module;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer;
-use Generated\Shared\Transfer\SpyQuoteRoleEntityTransfer;
+use Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer;
 use Orm\Zed\Permission\Persistence\SpyPermissionQuery;
 use Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser;
-use Orm\Zed\SharedCart\Persistence\SpyQuoteRole;
-use Orm\Zed\SharedCart\Persistence\SpyQuoteRoleToPermission;
+use Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroup;
+use Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroupToPermission;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class SharedCartHelper extends Module
@@ -26,51 +26,50 @@ class SharedCartHelper extends Module
      * @param string $name
      * @param array $permissionKeys
      *
-     * @return \Generated\Shared\Transfer\SpyQuoteRoleEntityTransfer
+     * @return \Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer
      */
-    public function haveQuoteRole($name, array $permissionKeys)
+    public function haveQuotePermissionGroup($name, array $permissionKeys)
     {
-        $quoteRoleEntity = new SpyQuoteRole();
-        $quoteRoleEntity->setName($name);
+        $quotePermissionGroupEntity = new SpyQuotePermissionGroup();
+        $quotePermissionGroupEntity->setName($name);
 
         foreach ($permissionKeys as $permissionKey) {
             $permissionEntity = SpyPermissionQuery::create()
                 ->filterByKey($permissionKey)
                 ->findOneOrCreate();
 
-//            $permissionEntity->save();
-            $quoteRoleToPermissionEntity = new SpyQuoteRoleToPermission();
-            $quoteRoleToPermissionEntity
+            $quotePermissionGroupToPermissionEntity = new SpyQuotePermissionGroupToPermission();
+            $quotePermissionGroupToPermissionEntity
                 ->setPermission($permissionEntity);
 
-            $quoteRoleEntity->addSpyQuoteRoleToPermission($quoteRoleToPermissionEntity);
+            $quotePermissionGroupEntity->addSpyQuotePermissionGroupToPermission($quotePermissionGroupToPermissionEntity);
         }
 
-        $quoteRoleEntity->save();
+        $quotePermissionGroupEntity->save();
 
-        $quoteRoleEntityTransfer = new SpyQuoteRoleEntityTransfer();
-        $quoteRoleEntityTransfer->fromArray($quoteRoleEntity->toArray(), true);
+        $quotePermissionGroupEntityTransfer = new SpyQuotePermissionGroupEntityTransfer();
+        $quotePermissionGroupEntityTransfer->fromArray($quotePermissionGroupEntity->toArray(), true);
 
-        return $quoteRoleEntityTransfer;
+        return $quotePermissionGroupEntityTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SpyQuoteRoleEntityTransfer $spyQuoteRoleEntityTransfer
+     * @param \Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer $spyQuotePermissionGroupEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer
      */
     public function haveQuoteCompanyUser(
         CompanyUserTransfer $companyUserTransfer,
         QuoteTransfer $quoteTransfer,
-        SpyQuoteRoleEntityTransfer $spyQuoteRoleEntityTransfer
+        SpyQuotePermissionGroupEntityTransfer $spyQuotePermissionGroupEntityTransfer
     ) {
         $quoteCompanyUserEntity = new SpyQuoteCompanyUser();
         $quoteCompanyUserEntity
             ->setFkCompanyUser($companyUserTransfer->requireIdCompanyUser()->getIdCompanyUser())
             ->setFkQuote($quoteTransfer->requireIdQuote()->getIdQuote())
-            ->setFkQuoteRole($spyQuoteRoleEntityTransfer->requireIdQuoteRole()->getIdQuoteRole())
+            ->setFkQuotePermissionGroup($spyQuotePermissionGroupEntityTransfer->requireIdQuotePermissionGroup()->getIdQuotePermissionGroup())
             ->save();
 
         $quoteCompanyUserEntityTransfer = new SpyQuoteCompanyUserEntityTransfer();

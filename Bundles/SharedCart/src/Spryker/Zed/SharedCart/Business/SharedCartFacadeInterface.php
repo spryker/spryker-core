@@ -8,10 +8,14 @@
 namespace Spryker\Zed\SharedCart\Business;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 interface SharedCartFacadeInterface
 {
     /**
+     * Specification:
+     * - TODO: add specification
+     *
      * @api
      *
      * @param int $idCompanyUser
@@ -19,4 +23,16 @@ interface SharedCartFacadeInterface
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function findPermissionsByIdCompanyUser($idCompanyUser): PermissionCollectionTransfer;
+
+    /**
+     * Specification:
+     * - TODO: add specification
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function expandQuoteResponseWithSharedCarts(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer;
 }
