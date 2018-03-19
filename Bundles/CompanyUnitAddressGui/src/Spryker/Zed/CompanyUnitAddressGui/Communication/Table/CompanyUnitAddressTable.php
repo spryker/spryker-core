@@ -165,6 +165,8 @@ class CompanyUnitAddressTable extends AbstractTable
         if ($companyUnitAddress) {
             return $companyUnitAddress->getRegion()->getName();
         }
+
+        return '';
     }
 
     /**
