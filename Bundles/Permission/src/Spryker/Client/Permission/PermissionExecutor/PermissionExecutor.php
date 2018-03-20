@@ -9,16 +9,15 @@ namespace Spryker\Client\Permission\PermissionExecutor;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface;
 use Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface;
-use Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 
 class PermissionExecutor implements PermissionExecutorInterface
 {
     /**
-     * @var \Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface
+     * @var \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
      */
-    protected $permissionStoragePlugin;
+    protected $permissionStoragePlugins;
 
     /**
      * @var \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface
@@ -26,15 +25,15 @@ class PermissionExecutor implements PermissionExecutorInterface
     protected $permissionFinder;
 
     /**
-     * @param \Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface $permissionStoragePlugin
+     * @param \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[] $permissionStoragePlugins
      * @param \Spryker\Client\Permission\PermissionFinder\PermissionFinderInterface $permissionConfigurator
      */
     public function __construct(
-        PermissionStoragePluginInterface $permissionStoragePlugin,
+        array $permissionStoragePlugins,
         PermissionFinderInterface $permissionConfigurator
     ) {
         $this->permissionFinder = $permissionConfigurator;
-        $this->permissionStoragePlugin = $permissionStoragePlugin;
+        $this->permissionStoragePlugins = $permissionStoragePlugins;
     }
 
     /**
@@ -71,7 +70,7 @@ class PermissionExecutor implements PermissionExecutorInterface
      *  a senior sales manager up to 2000. A user has both roles assigned, then he/she has
      *  the permission to place an order up to 2000.
      *
-     * @param \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface $permissionPlugin
+     * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface $permissionPlugin
      * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
      * @param string|int|array|null $context
      *
@@ -92,7 +91,7 @@ class PermissionExecutor implements PermissionExecutorInterface
     }
 
     /**
-     * @param \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface $permissionPlugin
+     * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface $permissionPlugin
      * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      * @param string|int|array|null $context
      *
@@ -112,9 +111,11 @@ class PermissionExecutor implements PermissionExecutorInterface
     {
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 
-        foreach ($this->permissionStoragePlugin->getPermissionCollection()->getPermissions() as $permission) {
-            if ($permission->getKey() === $permissionKey) {
-                $permissionCollectionTransfer->addPermission($permission);
+        foreach ($this->permissionStoragePlugins as $permissionStoragePlugin) {
+            foreach ($permissionStoragePlugin->getPermissionCollection()->getPermissions() as $permission) {
+                if ($permission->getKey() === $permissionKey) {
+                    $permissionCollectionTransfer->addPermission($permission);
+                }
             }
         }
 

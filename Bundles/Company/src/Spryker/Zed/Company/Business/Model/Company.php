@@ -9,6 +9,7 @@ namespace Spryker\Zed\Company\Business\Model;
 
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
+use Spryker\Zed\Company\Business\Exception\InvalidCompanyCreationException;
 use Spryker\Zed\Company\Persistence\CompanyEntityManagerInterface;
 use Spryker\Zed\Company\Persistence\CompanyRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -58,20 +59,32 @@ class Company implements CompanyInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
+     * @throws \Spryker\Zed\Company\Business\Exception\InvalidCompanyCreationException
+     *
      * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
     public function create(CompanyTransfer $companyTransfer): CompanyResponseTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($companyTransfer) {
-            $companyTransfer->requireInitialUserTransfer();
+        $companyResponseTransfer = (new CompanyResponseTransfer())
+            ->setCompanyTransfer($companyTransfer)
+            ->setIsSuccessful(true);
 
-            $initialUserTransfer = $companyTransfer->getInitialUserTransfer();
-            $companyResponseTransfer = $this->executeSaveCompanyTransaction($companyTransfer);
-            $companyResponseTransfer->getCompanyTransfer()->setInitialUserTransfer($initialUserTransfer);
-            $companyResponseTransfer = $this->executePostCreatePlugins($companyResponseTransfer);
+        try {
+            $companyResponseTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($companyResponseTransfer) {
+                $companyResponseTransfer = $this->executeSaveCompanyTransaction($companyResponseTransfer);
+                $companyResponseTransfer = $this->executePostCreatePlugins($companyResponseTransfer);
 
+                if (!$companyResponseTransfer->getIsSuccessful()) {
+                    throw new InvalidCompanyCreationException('Company could not be created');
+                }
+
+                return $companyResponseTransfer;
+            });
+        } catch (InvalidCompanyCreationException $exception) {
             return $companyResponseTransfer;
-        });
+        }
+
+        return $companyResponseTransfer;
     }
 
     /**
@@ -81,8 +94,12 @@ class Company implements CompanyInterface
      */
     public function save(CompanyTransfer $companyTransfer): CompanyResponseTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($companyTransfer) {
-            return $this->executeSaveCompanyTransaction($companyTransfer);
+        $companyResponseTransfer = (new CompanyResponseTransfer())
+            ->setCompanyTransfer($companyTransfer)
+            ->setIsSuccessful(true);
+
+        return $this->getTransactionHandler()->handleTransaction(function () use ($companyResponseTransfer) {
+            return $this->executeSaveCompanyTransaction($companyResponseTransfer);
         });
     }
 
@@ -98,20 +115,26 @@ class Company implements CompanyInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
-    protected function executeSaveCompanyTransaction(CompanyTransfer $companyTransfer): CompanyResponseTransfer
+    protected function executeSaveCompanyTransaction(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
     {
-        $companyTransfer = $this->companyPluginExecutor->executeCompanyPreSavePlugins($companyTransfer);
-        $storeRelationTransfer = $companyTransfer->getStoreRelation();
-        $companyTransfer = $this->companyEntityManager->saveCompany($companyTransfer);
-        $this->companyStoreRelationWriter->save($storeRelationTransfer);
-        $companyTransfer->setStoreRelation($storeRelationTransfer);
+        $companyResponseTransfer = $this->companyPluginExecutor->executeCompanyPreSavePlugins($companyResponseTransfer);
 
-        return (new CompanyResponseTransfer())->setIsSuccessful(true)
-            ->setCompanyTransfer($companyTransfer);
+        if (!$companyResponseTransfer->getIsSuccessful()) {
+            return $companyResponseTransfer;
+        }
+
+        $companyTransfer = $companyResponseTransfer->getCompanyTransfer();
+        $companyTransfer = $this->companyEntityManager->saveCompany($companyTransfer);
+        $companyResponseTransfer->setCompanyTransfer($companyTransfer);
+
+        $this->persistStoreRelations($companyResponseTransfer->getCompanyTransfer());
+        $companyResponseTransfer = $this->companyPluginExecutor->executeCompanyPostSavePlugins($companyResponseTransfer);
+
+        return $companyResponseTransfer;
     }
 
     /**
@@ -119,13 +142,24 @@ class Company implements CompanyInterface
      *
      * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
-    protected function executePostCreatePlugins(
-        CompanyResponseTransfer $companyResponseTransfer
-    ): CompanyResponseTransfer {
-        $companyTransfer = $companyResponseTransfer->getCompanyTransfer();
-        $companyTransfer = $this->companyPluginExecutor->executeCompanyPostCreatePlugins($companyTransfer);
-        $companyResponseTransfer->setCompanyTransfer($companyTransfer);
+    protected function executePostCreatePlugins(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
+    {
+
+        $companyResponseTransfer = $this->companyPluginExecutor->executeCompanyPostCreatePlugins($companyResponseTransfer);
 
         return $companyResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return void
+     */
+    protected function persistStoreRelations(CompanyTransfer $companyTransfer): void
+    {
+        if ($companyTransfer->getStoreRelation() !== null) {
+            $companyTransfer->getStoreRelation()->setIdEntity($companyTransfer->getIdCompany());
+            $this->companyStoreRelationWriter->save($companyTransfer->getStoreRelation());
+        }
     }
 }

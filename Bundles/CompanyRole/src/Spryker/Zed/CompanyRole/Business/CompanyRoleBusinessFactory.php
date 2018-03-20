@@ -30,7 +30,8 @@ class CompanyRoleBusinessFactory extends AbstractBusinessFactory
         return new CompanyRole(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createCompanyRolePermissionWriter()
+            $this->createCompanyRolePermissionWriter(),
+            $this->getConfig()
         );
     }
 

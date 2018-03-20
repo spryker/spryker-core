@@ -73,9 +73,8 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
-     * This method provides list of urls to render blocks inside customer detail page.
+     * This method provides list of URLs to render blocks inside customer detail page.
      * URL defines path to external bundle controller. For example: /sales/customer/customer-orders would call sales bundle, customer controller, customerOrders action.
-     * Action should return return array or redirect response.
      *
      * example:
      * [
