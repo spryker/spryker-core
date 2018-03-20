@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\SpyRegionEntityTransfer;
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use Orm\Zed\Country\Persistence\SpyRegionQuery;
 use Propel\Runtime\Exception\EntityNotFoundException;
+use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepository;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CompanyUnitAddressLabelDataHelper extends Module
@@ -134,10 +135,11 @@ class CompanyUnitAddressLabelDataHelper extends Module
      */
     public function haveLabelCollection()
     {
-        $queryContainer = $this->getLocator()->companyUnitAddressLabel()->queryContainer();
-        $label = $queryContainer->queryCompanyUnitAddressLabel()->findOne();
+        $repository = $this->createLabelRepository();
+        $labelCollection = $repository->findCompanyUnitAddressLabels();
+        $labels = $labelCollection->getLabels();
 
-        if (empty($label)) {
+        if (empty($labels[0])) {
             throw new EntityNotFoundException(
                 "
                 Label entity is supposed to be in table, but was not found.
@@ -145,6 +147,7 @@ class CompanyUnitAddressLabelDataHelper extends Module
                 "
             );
         }
+        $label = $labels[0];
 
         return (new CompanyUnitAddressLabelCollectionTransfer())
             ->setLabels(
@@ -196,5 +199,13 @@ class CompanyUnitAddressLabelDataHelper extends Module
     protected function getCompanyBusinessUnitFacade()
     {
         return $this->getLocator()->companyBusinessUnit()->facade();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepository
+     */
+    protected function createLabelRepository()
+    {
+        return new CompanyUnitAddressLabelRepository();
     }
 }

@@ -86,6 +86,9 @@ class CompanyUnitAddressLabelRelationSaver implements CompanyUnitAddressLabelRel
     protected function getLabelIds(CompanyUnitAddressTransfer $companyUnitAddressTransfer): array
     {
         $result = [];
+        if (empty($companyUnitAddressTransfer->getLabelCollection())) {
+            return $result;
+        }
         $labelTransfers = $companyUnitAddressTransfer->getLabelCollection()->getLabels();
 
         foreach ($labelTransfers as $labelTransfer) {
