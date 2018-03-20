@@ -177,9 +177,8 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         $idCountry = $this->retrieveIdCountry($companyUnitAddressTransfer);
         $companyUnitAddressTransfer->setFkCountry($idCountry);
         $isDefaultBilling = $companyUnitAddressTransfer->getIsDefaultBilling();
-        $companyUnitAddressSavedTransfer = $this->entityManager->saveCompanyUnitAddress($companyUnitAddressTransfer);
+        $companyUnitAddressTransfer = $this->entityManager->saveCompanyUnitAddress($companyUnitAddressTransfer);
         $companyUnitAddressTransfer->setIsDefaultBilling($isDefaultBilling);
-        $companyUnitAddressTransfer->setIdCompanyUnitAddress($companyUnitAddressSavedTransfer->getIdCompanyUnitAddress());
         $this->updateBusinessUnitDefaultAddresses($companyUnitAddressTransfer);
 
         $companyUnitAddressTransfer = $this->companyUnitAddressPluginExecutor
