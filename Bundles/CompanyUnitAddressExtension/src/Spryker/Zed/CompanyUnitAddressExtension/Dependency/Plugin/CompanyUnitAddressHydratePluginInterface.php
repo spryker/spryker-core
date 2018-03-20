@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 
 interface CompanyUnitAddressHydratePluginInterface
@@ -19,7 +20,7 @@ interface CompanyUnitAddressHydratePluginInterface
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function hydrate(CompanyUnitAddressTransfer $addressTransfer): CompanyUnitAddressTransfer;
+    public function hydrate(CompanyUnitAddressTransfer $addressTransfer): CompanyUnitAddressResponseTransfer;
 }
