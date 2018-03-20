@@ -51,7 +51,7 @@ interface CartFacadeInterface
 
     /**
      * Specification:
-     *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      *
      * @api
      *
@@ -63,7 +63,7 @@ interface CartFacadeInterface
 
     /**
      * Specification:
-     *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      *  - Check changes and add notes to messenger (-> Messenger)
      *
      * @api
@@ -72,5 +72,5 @@ interface CartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    public function validateQuote($quoteTransfer);
+    public function validateQuote(QuoteTransfer $quoteTransfer);
 }

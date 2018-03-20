@@ -11,12 +11,15 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\Kernel\PermissionAwareTrait;
 
 /**
  * @method \Spryker\Client\Cart\CartFactory getFactory()
  */
 class CartClient extends AbstractClient implements CartClientInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * {@inheritdoc}
      *
@@ -83,12 +86,13 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItem(ItemTransfer $itemTransfer)
+    public function addItem(ItemTransfer $itemTransfer, array $params = [])
     {
-        return $this->getFactory()->getQuoteStorageStrategy()->addItem($itemTransfer);
+        return $this->getFactory()->getQuoteStorageStrategy()->addItem($itemTransfer, $params);
     }
 
     /**
@@ -97,12 +101,13 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItems(array $itemTransfers)
+    public function addItems(array $itemTransfers, array $params = [])
     {
-        return $this->getFactory()->getQuoteStorageStrategy()->addItems($itemTransfers);
+        return $this->getFactory()->getQuoteStorageStrategy()->addItems($itemTransfers, $params);
     }
 
     /**
@@ -204,6 +209,18 @@ class CartClient extends AbstractClient implements CartClientInterface
     public function validateQuote()
     {
         return $this->getFactory()->getQuoteStorageStrategy()->validateQuote();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function addFlashMessagesFromLastZedRequest()
+    {
+        $this->getFactory()->createZedStub()->addFlashMessagesFromLastZedRequest();
     }
 
     /**

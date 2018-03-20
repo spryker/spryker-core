@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Cart\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -67,7 +68,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
-    public function validateQuote($quoteTransfer)
+    public function validateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createQuoteValidator()->validate($quoteTransfer);
     }

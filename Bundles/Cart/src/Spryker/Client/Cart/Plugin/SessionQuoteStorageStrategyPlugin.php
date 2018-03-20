@@ -31,13 +31,16 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItem(ItemTransfer $itemTransfer)
+    public function addItem(ItemTransfer $itemTransfer, array $params = [])
     {
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
 
+        $cartChangeTransfer = $this->getFactory()->createCartChangeRequestExpander()
+            ->addItemsRequestExpand($cartChangeTransfer);
         $quoteTransfer = $this->getCartZedStub()->addItem($cartChangeTransfer);
         $this->getQuoteClient()->setQuote($quoteTransfer);
 
@@ -46,16 +49,19 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItems(array $itemTransfers)
+    public function addItems(array $itemTransfers, array $params = [])
     {
         $cartChangeTransfer = $this->createCartChangeTransfer();
         foreach ($itemTransfers as $itemTransfer) {
             $cartChangeTransfer->addItem($itemTransfer);
         }
 
+        $cartChangeTransfer = $this->getFactory()->createCartChangeRequestExpander()
+            ->addItemsRequestExpand($cartChangeTransfer);
         $quoteTransfer = $this->getCartZedStub()->addItem($cartChangeTransfer);
         $this->getQuoteClient()->setQuote($quoteTransfer);
 
@@ -76,7 +82,8 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
         }
 
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
-
+        $cartChangeTransfer = $this->getFactory()->createCartChangeRequestExpander()
+            ->removeItemRequestExpand($cartChangeTransfer);
         $quoteTransfer = $this->getCartZedStub()->removeItem($cartChangeTransfer);
         $this->getQuoteClient()->setQuote($quoteTransfer);
 
@@ -93,6 +100,8 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
         $cartChangeTransfer = $this->createCartChangeTransfer();
         $cartChangeTransfer->setItems($items);
 
+        $cartChangeTransfer = $this->getFactory()->createCartChangeRequestExpander()
+            ->removeItemRequestExpand($cartChangeTransfer);
         $quoteTransfer = $this->getCartZedStub()->removeItem($cartChangeTransfer);
         $this->getQuoteClient()->setQuote($quoteTransfer);
 
@@ -149,6 +158,8 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
 
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
 
+        $cartChangeTransfer = $this->getFactory()->createCartChangeRequestExpander()
+            ->removeItemRequestExpand($cartChangeTransfer);
         $quoteTransfer = $this->getCartZedStub()->removeItem($cartChangeTransfer);
         $this->getQuoteClient()->setQuote($quoteTransfer);
 
@@ -212,14 +223,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     {
         $quoteTransfer = $this->getQuote();
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (($itemTransfer->getSku() === $sku && $groupKey === null) ||
-                $itemTransfer->getGroupKey() === $groupKey) {
-                return $itemTransfer;
-            }
-        }
-
-        return null;
+        return $this->getFactory()->getQuoteItemFinderPlugin()->findItem($quoteTransfer, $sku, $groupKey);
     }
 
     /**

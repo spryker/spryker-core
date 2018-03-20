@@ -77,4 +77,12 @@ class ZedRequestFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ZedRequestDependencyProvider::META_DATA_PROVIDER_PLUGINS);
     }
+
+    /**
+     * @return \Spryker\Client\ZedRequest\Dependency\Client\ZedRequestToMessengerClientInterface
+     */
+    public function getMessengerClient()
+    {
+        return $this->getProvidedDependency(ZedRequestDependencyProvider::CLIENT_MESSENGER);
+    }
 }

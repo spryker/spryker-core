@@ -101,6 +101,31 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
+     * @api
+     *
+     * @return void
+     */
+    public function addFlashMessagesFromLastZedRequest()
+    {
+        if (!$this->getClient()->hasLastResponse()) {
+            return;
+        }
+        $lastResponse = $this->getClient()->getLastResponse();
+        $messengerClient = $this->getFactory()->getMessengerClient();
+        foreach ($lastResponse->getErrorMessages() as $errorMessage) {
+            $messengerClient->addErrorMessage($errorMessage->getValue());
+        }
+
+        foreach ($lastResponse->getSuccessMessages() as $successMessage) {
+            $messengerClient->addSuccessMessage($successMessage->getValue());
+        }
+
+        foreach ($lastResponse->getInfoMessages() as $infoMessage) {
+            $messengerClient->addInfoMessage($infoMessage->getValue());
+        }
+    }
+
+    /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $requestTransfer
      *
      * @return void

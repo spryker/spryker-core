@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PersistentCart\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpander;
 use Spryker\Zed\PersistentCart\Business\Model\CartOperation;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleter;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpander;
@@ -25,6 +26,8 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
         return new CartOperation(
             $this->getCartFacade(),
             $this->getQuoteFacade(),
+            $this->getQuoteItemFinderPlugin(),
+            $this->createCartChangeRequestExpander(),
             $this->createQuoteResponseExpander()
         );
     }
@@ -71,6 +74,32 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
         return new QuoteResponseExpander(
             $this->getQuoteResponseExpanderPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpanderInterface
+     */
+    public function createCartChangeRequestExpander()
+    {
+        return new CartChangeRequestExpander(
+            $this->getRemoveItemsRequestExpanderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteItemFinderPluginInterface
+     */
+    protected function getQuoteItemFinderPlugin()
+    {
+        return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGIN_QUOTE_ITEM_FINDER);
+    }
+
+    /**
+     * @return \Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
+     */
+    protected function getRemoveItemsRequestExpanderPlugins()
+    {
+        return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER);
     }
 
     /**
