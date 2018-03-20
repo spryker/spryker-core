@@ -233,8 +233,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $salesOrderEntity->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
         $salesOrderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($quoteTransfer));
         $salesOrderEntity->setIsTest($this->salesConfiguration->isTestOrder($quoteTransfer));
-
-        $this->runPreSaveOrderHydratePlugins($quoteTransfer, $salesOrderEntity);
+        $salesOrderEntity = $this->runPreSaveOrderHydratePlugins($quoteTransfer, $salesOrderEntity);
     }
 
     /**
@@ -433,12 +432,14 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
-     * @return void
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    protected function runPreSaveOrderHydratePlugins(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity)
+    protected function runPreSaveOrderHydratePlugins(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity): SpySalesOrder
     {
         foreach ($this->preSaveOrderHydratePlugins as $plugin) {
-            $plugin->hydrate($quoteTransfer, $salesOrderEntity);
+            $salesOrderEntity = $plugin->hydrate($quoteTransfer, $salesOrderEntity);
         }
+
+        return $salesOrderEntity;
     }
 }

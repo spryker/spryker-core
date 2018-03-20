@@ -17,10 +17,12 @@ class IsOfferPreSaveHydrateOrderPlugin implements PreSaveOrderHydratePluginInter
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
-     * @return void
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    public function hydrate(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity): void
+    public function hydrate(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity): SpySalesOrder
     {
         $salesOrderEntity->setIsOffer($quoteTransfer->getIsOffer());
+
+        return $salesOrderEntity;
     }
 }

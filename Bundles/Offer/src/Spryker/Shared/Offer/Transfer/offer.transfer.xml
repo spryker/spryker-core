@@ -3,7 +3,6 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <!--TODO: clarify whether we should use order transfers or our own -->
     <transfer name="Order">
         <property name="isOffer" type="bool" />
     </transfer>
