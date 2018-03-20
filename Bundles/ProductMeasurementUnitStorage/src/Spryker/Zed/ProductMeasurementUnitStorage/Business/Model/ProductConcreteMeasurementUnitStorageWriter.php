@@ -100,8 +100,7 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
             $productConcreteMeasurementUnitStorageTransfer->addSalesUnit(
                 (new ProductConcreteMeasurementSalesUnitTransfer())
                     ->setMeasurementUnitId($productMeasurementSalesUnitEntity->getFkProductMeasurementUnit())
-                    ->setFactor($exchangeDetails->getFactor())
-                    ->setPrecision($exchangeDetails->getPrecision())
+                    ->setConversion($exchangeDetails->getFactor() / $exchangeDetails->getPrecision())
                     ->setIsDisplay((bool)$productMeasurementSalesUnitEntity->getIsDisplay())
                     ->setIsDefault((bool)$productMeasurementSalesUnitEntity->getIsDefault())
             );
