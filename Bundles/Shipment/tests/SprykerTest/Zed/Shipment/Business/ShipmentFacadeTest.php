@@ -381,7 +381,7 @@ class ShipmentFacadeTest extends Test
             ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
             ->setCurrency((new CurrencyTransfer())->setCode($currencyCode));
 
-        $priceList = $this->creteShipmentPriceList();
+        $priceList = $this->createDefaultPriceList();
 
         $idShipmentMethod = $this->tester->haveShipmentMethod([], [], $priceList)->getIdShipmentMethod();
 
