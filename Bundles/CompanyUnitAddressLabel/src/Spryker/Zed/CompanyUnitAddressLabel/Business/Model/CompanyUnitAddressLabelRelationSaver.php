@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyUnitAddressLabel\Business\Model;
 
-use Exception;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelEntityManagerInterface;
@@ -46,14 +45,10 @@ class CompanyUnitAddressLabelRelationSaver implements CompanyUnitAddressLabelRel
     {
         $redundantRelationIds = $this->getRedundantLabelToAddressRelationIds($companyUnitAddressTransfer);
         $isSuccess = true;
-        try {
-            $this->companyUnitAddressEntityManager->deleteRedundantLabelToAddressRelations(
-                $redundantRelationIds
-            );
-            $this->companyUnitAddressEntityManager->saveLabelToAddressRelations($companyUnitAddressTransfer);
-        } catch (Exception $exception) {
-            $isSuccess = false;
-        }
+        $this->companyUnitAddressEntityManager->deleteRedundantLabelToAddressRelations(
+            $redundantRelationIds
+        );
+        $this->companyUnitAddressEntityManager->saveLabelToAddressRelations($companyUnitAddressTransfer);
 
         return (new CompanyUnitAddressResponseTransfer())
             ->setCompanyUnitAddressTransfer($companyUnitAddressTransfer)
