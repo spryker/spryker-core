@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyUnitAddressLabel\Communication\Plugin;
 
-use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -22,9 +21,9 @@ class CompanyUnitAddressHydratePlugin extends AbstractPlugin implements CompanyU
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $addressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function hydrate(CompanyUnitAddressTransfer $addressTransfer): CompanyUnitAddressResponseTransfer
+    public function hydrate(CompanyUnitAddressTransfer $addressTransfer): CompanyUnitAddressTransfer
     {
         return $this->getFacade()
             ->hydrateCompanyUnitAddressWithLabelCollection($addressTransfer);

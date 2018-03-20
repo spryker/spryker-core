@@ -40,11 +40,11 @@ class CompanyUnitAddressLabelFacade extends AbstractFacade implements CompanyUni
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
     public function hydrateCompanyUnitAddressWithLabelCollection(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer {
+    ): CompanyUnitAddressTransfer {
         return $this->getFactory()
             ->createCompanyUnitAddressHydrator()
             ->hydrate($companyUnitAddressTransfer);

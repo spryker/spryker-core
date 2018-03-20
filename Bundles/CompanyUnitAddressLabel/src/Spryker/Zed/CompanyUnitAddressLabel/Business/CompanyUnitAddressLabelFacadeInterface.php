@@ -26,13 +26,13 @@ interface CompanyUnitAddressLabelFacadeInterface
 
     /**
      * Specification:
-     *  - Fill a labelCollection property of company unit address.Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface
+     *  - Fill a labelCollection property of company unit address.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function hydrateCompanyUnitAddressWithLabelCollection(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
+    public function hydrateCompanyUnitAddressWithLabelCollection(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer;
 }
