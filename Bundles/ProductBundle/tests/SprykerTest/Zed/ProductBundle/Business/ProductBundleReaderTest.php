@@ -8,12 +8,15 @@
 namespace SprykerTest\Zed\ProductBundle\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
@@ -28,6 +31,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  */
 class ProductBundleReaderTest extends Unit
 {
+    const ID_STORE = 1;
     /**
      * @var array
      */
@@ -90,12 +94,14 @@ class ProductBundleReaderTest extends Unit
     /**
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface|null $productBundleQueryContainerMock
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface|null $productBundleToAvailabilityQueryContainerMock
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
      *
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function createProductBundleReader(
         ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null,
-        ProductBundleToAvailabilityQueryContainerInterface $productBundleToAvailabilityQueryContainerMock = null
+        ProductBundleToAvailabilityQueryContainerInterface $productBundleToAvailabilityQueryContainerMock = null,
+        ProductBundleToStoreFacadeInterface $storeFacadeMock = null
     ) {
 
         if ($productBundleQueryContainerMock === null) {
@@ -106,8 +112,18 @@ class ProductBundleReaderTest extends Unit
             $productBundleToAvailabilityQueryContainerMock = $this->createAvailabilityQueryContainerMock();
         }
 
+        if ($storeFacadeMock === null) {
+            $storeFacadeMock = $this->createStoreFacadeMock();
+            $storeTransfer = (new StoreBuilder([
+                StoreTransfer::ID_STORE => self::ID_STORE,
+            ]))
+                ->build();
+            $storeFacadeMock->method('getCurrentStore')->willReturn($storeTransfer);
+            $storeFacadeMock->method('getStoreByName')->willReturn($storeTransfer);
+        }
+
         $productBundleReaderMock = $this->getMockBuilder(ProductBundleReader::class)
-            ->setConstructorArgs([$productBundleQueryContainerMock, $productBundleToAvailabilityQueryContainerMock ])
+            ->setConstructorArgs([$productBundleQueryContainerMock, $productBundleToAvailabilityQueryContainerMock, $storeFacadeMock ])
             ->setMethods(['findBundledProducts', 'findOrCreateProductBundleAvailabilityEntity'])
             ->getMock();
 
@@ -128,6 +144,14 @@ class ProductBundleReaderTest extends Unit
     protected function createAvailabilityQueryContainerMock()
     {
         return $this->getMockBuilder(ProductBundleToAvailabilityQueryContainerInterface::class)->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     */
+    protected function createStoreFacadeMock()
+    {
+        return $this->getMockBuilder(ProductBundleToStoreFacadeInterface::class)->getMock();
     }
 
     /**

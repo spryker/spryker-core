@@ -96,13 +96,12 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             return [];
         }
 
-        $adjustedQuantity = $this->adjustPromotionItemQuantity($promotionItemInQuote, $promotionMaximumQuantity);
-
-        $promotionItemInQuote->setMaxQuantity($adjustedQuantity);
+        $promotionItemInQuote->setMaxQuantity($promotionMaximumQuantity);
 
         $usedNotAppliedCodes = $this->findUsedNotAppliedVoucherCodes($discountTransfer, $quoteTransfer);
         $quoteTransfer->setUsedNotAppliedVoucherCodes($usedNotAppliedCodes);
 
+        $adjustedQuantity = $this->adjustPromotionItemQuantity($promotionItemInQuote, $promotionMaximumQuantity);
         $discountableItemTransfer = $this->createPromotionDiscountableItemTransfer($promotionItemInQuote, $adjustedQuantity);
 
         return [$discountableItemTransfer];
@@ -157,14 +156,14 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $promotionItemTransfer
-     * @param int $maxQuantity
+     * @param int $availableMaxQuantity
      *
      * @return int
      */
-    protected function adjustPromotionItemQuantity(ItemTransfer $promotionItemTransfer, $maxQuantity)
+    protected function adjustPromotionItemQuantity(ItemTransfer $promotionItemTransfer, $availableMaxQuantity)
     {
         $currentQuantity = $promotionItemTransfer->getQuantity();
-        if ($promotionItemTransfer->getQuantity() > $maxQuantity) {
+        if ($promotionItemTransfer->getQuantity() > $availableMaxQuantity) {
             $currentQuantity = $promotionItemTransfer->getMaxQuantity();
         }
         return $currentQuantity;
@@ -178,14 +177,12 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
      */
     protected function createPromotionDiscountableItemTransfer(ItemTransfer $promotionItemTransfer, $currentQuantity)
     {
-        $discountableItemTransfer = (new DiscountableItemTransfer())
+        return (new DiscountableItemTransfer())
             ->setOriginalItem($promotionItemTransfer)
             ->setOriginalItemCalculatedDiscounts($promotionItemTransfer->getCalculatedDiscounts())
             ->setQuantity($currentQuantity)
             ->setUnitPrice($promotionItemTransfer->getUnitPrice())
             ->setUnitGrossPrice($promotionItemTransfer->getUnitGrossPrice());
-
-        return $discountableItemTransfer;
     }
 
     /**

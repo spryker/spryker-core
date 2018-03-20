@@ -63,19 +63,6 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Use sumProductQuantitiesForAllSalesOrderItemsBySku($states, $sku, $returnTest) instead.
-     *
-     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
-     * @param string $sku
-     * @param bool $returnTest
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function countSalesOrderItemsForSku(array $states, $sku, $returnTest = true);
-
-    /**
-     * @api
-     *
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
@@ -83,6 +70,25 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function sumProductQuantitiesForAllSalesOrderItemsBySku(array $states, $sku, $returnTest = true);
+
+    /**
+     * @api
+     *
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
+     * @param string $sku
+     * @param string $storeName
+     * @param bool $returnTest
+     *
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function sumProductQuantitiesForAllSalesOrderItemsBySkuForStore(
+        array $states,
+        $sku,
+        $storeName,
+        $returnTest = true
+    );
 
     /**
      * @api
@@ -120,7 +126,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery
      */
-    public function getActiveProcesses(array $activeProcesses);
+    public function queryActiveProcesses(array $activeProcesses);
 
     /**
      * @api
@@ -129,7 +135,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery
      */
-    public function getOrderItemStates(array $orderItemStates);
+    public function queryOrderItemStates(array $orderItemStates);
 
     /**
      * @api
@@ -162,18 +168,6 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Not used, will be removed in the next major release.
-     *
-     * @param string $identifier
-     * @param \DateTime $expirationDate
-     *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
-     */
-    public function queryLockedItemsByIdentifierAndExpirationDate($identifier, DateTime $expirationDate);
-
-    /**
-     * @api
-     *
      * @param \DateTime $expirationDate
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
@@ -196,5 +190,67 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
      */
-    public function createOmsProductReservationQuery($sku);
+    public function queryOmsProductReservationBySku($sku);
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
+     */
+    public function queryProductReservationBySkuAndStore($sku, $idStore);
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     * @param string $storeName
+     *
+     * @return $this|\Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
+     */
+    public function queryOmsProductReservationStoreBySkuForStore($sku, $storeName);
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
+     */
+    public function queryOmsProductReservationStoreBySku($sku);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
+     */
+    public function queryMaxReservationChangeVersion();
+
+    /**
+     * @api
+     *
+     * @param int $lastExportedVersion
+     * @param int $maxVisibleVersion
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersionQuery
+     */
+    public function queryReservationChangeVersion($lastExportedVersion, $maxVisibleVersion);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationLastExportedVersionQuery
+     */
+    public function queryOmsProductReservationLastExportedVersion();
+
+    /**
+     * @api
+     *
+     * @param int $idOmsProductReservation
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
+     */
+    public function queryOmsProductReservationById($idOmsProductReservation);
 }

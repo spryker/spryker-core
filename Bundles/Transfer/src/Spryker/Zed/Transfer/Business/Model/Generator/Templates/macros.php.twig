@@ -157,3 +157,11 @@
         return $this;
     }
 {% endmacro -%}
+
+{%- macro addEntityNamespace(entityNamespace) %}
+    /**
+    * @var string
+    */
+    public static $entityNamespace = '{{ entityNamespace }}';
+{% endmacro -%}
+

@@ -31,6 +31,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class CmsBlockForm extends AbstractType
 {
     const FIELD_ID_CMS_BLOCK = 'idCmsBlock';
+    const FIELD_STORE_RELATION = 'storeRelation';
     const FIELD_FK_TEMPLATE = 'fkTemplate';
     const FIELD_NAME = 'name';
     const FIELD_IS_ACTIVE = 'is_active';
@@ -78,6 +79,7 @@ class CmsBlockForm extends AbstractType
     {
         $this
             ->addIdCmsBlockField($builder)
+            ->addStoreRelationForm($builder)
             ->addFkTemplateField($builder, $options)
             ->addNameField($builder)
             ->addValidFromField($builder)
@@ -93,6 +95,24 @@ class CmsBlockForm extends AbstractType
     protected function addIdCmsBlockField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ID_CMS_BLOCK, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addStoreRelationForm(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_STORE_RELATION,
+            $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
+            [
+                'label' => false,
+            ]
+        );
 
         return $this;
     }
@@ -323,15 +343,5 @@ class CmsBlockForm extends AbstractType
     public function getBlockPrefix()
     {
         return 'cms_block';
-    }
-
-    /**
-     * @deprecated Use `getBlockPrefix()` instead.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
     }
 }

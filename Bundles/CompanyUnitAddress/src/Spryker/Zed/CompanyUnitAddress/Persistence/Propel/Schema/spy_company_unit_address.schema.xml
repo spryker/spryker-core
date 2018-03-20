@@ -3,11 +3,9 @@
 
     <table name="spy_company_unit_address" idMethod="native" phpName="SpyCompanyUnitAddress">
         <column name="id_company_unit_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-
-        <column name="fk_company_business_unit" required="true" type="INTEGER"/>
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER"/>
-
+        <column name="fk_company" type="INTEGER"/>
         <column name="address1" size="255" type="VARCHAR"/>
         <column name="address2" size="255" type="VARCHAR"/>
         <column name="address3" size="255" type="VARCHAR"/>
@@ -16,20 +14,33 @@
         <column name="phone" size="255" type="VARCHAR"/>
         <column name="comment" size="255" type="VARCHAR"/>
 
-        <foreign-key name="spy_company_unit_address-fk_company_business_unit" foreignTable="spy_company_business_unit" phpName="CompanyBusinessUnit" refPhpName="CompanyUnitAddress" onDelete="CASCADE">
-            <reference foreign="id_company_business_unit" local="fk_company_business_unit"/>
+        <foreign-key name="spy_company_unit_address-fk_country" foreignTable="spy_country" phpName="Country" refPhpName="CompanyUnitAddress">
+            <reference local="fk_country" foreign="id_country"/>
         </foreign-key>
         <foreign-key name="spy_company_unit_address-fk_region" foreignTable="spy_region" phpName="Region" refPhpName="CompanyUnitAddress">
             <reference local="fk_region" foreign="id_region"/>
         </foreign-key>
-        <foreign-key name="spy_company_unit_address-fk_country" foreignTable="spy_country" phpName="Country" refPhpName="CompanyUnitAddress">
-            <reference local="fk_country" foreign="id_country"/>
+        <foreign-key name="spy_company_unit_address-fk_company" foreignTable="spy_company" phpName="Company" refPhpName="CompanyUnitAddress">
+            <reference local="fk_company" foreign="id_company"/>
         </foreign-key>
-        <index name="spy_company_unit_address-fk_company_business_unit">
-            <index-column name="fk_company_business_unit"/>
-        </index>
 
         <id-method-parameter value="spy_company_unit_address_pk_seq"/>
+    </table>
+
+    <table name="spy_company_unit_address_to_company_business_unit" idMethod="native" allowPkInsert="true" phpName="SpyCompanyUnitAddressToCompanyBusinessUnit">
+        <column name="id_company_unit_address_to_company_business_unit" type="INTEGER" autoIncrement="true" required="true" primaryKey="true"/>
+        <column name="fk_company_business_unit" type="INTEGER" required="true"/>
+        <column name="fk_company_unit_address" type="INTEGER" required="true"/>
+
+        <foreign-key name="spy_co_u_a_to_co_b_u-fk_co_b_u" foreignTable="spy_company_business_unit" phpName="CompanyBusinessUnit" onDelete="CASCADE">
+            <reference local="fk_company_business_unit" foreign="id_company_business_unit"/>
+        </foreign-key>
+
+        <foreign-key name="spy_co_u_a_to_co_bu_u-fk_co_u_a" foreignTable="spy_company_unit_address" phpName="CompanyUnitAddress" onDelete="CASCADE">
+            <reference local="fk_company_unit_address" foreign="id_company_unit_address"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_company_unit_address_to_company_business_unit_pk_seq"/>
     </table>
 
 </database>

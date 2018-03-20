@@ -303,7 +303,7 @@ class Trigger implements TriggerInterface
             $this->transitionLog->addSourceState($stateMachineItemTransfer, $sourceState->getName());
 
             $targetState = $sourceState;
-            if (isset($eventName) && $sourceState->hasEvent($eventName)) {
+            if ($eventName && $sourceState->hasEvent($eventName)) {
                 $transitions = $sourceState->getEvent($eventName)->getTransitionsBySource($sourceState);
                 $targetState = $this->condition->getTargetStatesFromTransitions(
                     $transitions,

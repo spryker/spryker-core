@@ -8,13 +8,15 @@
 namespace Spryker\Zed\Oms\Communication\Plugin\Oms\Command;
 
 use ArrayAccess;
+use InvalidArgumentException;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface as NewCommandInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\HasAwareCollectionInterface;
 use Spryker\Zed\Oms\Exception\CommandNotFoundException;
 
-class CommandCollection implements CommandCollectionInterface, ArrayAccess
+class CommandCollection implements CommandCollectionInterface, HasAwareCollectionInterface, ArrayAccess
 {
     /**
-     * @var \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface[]
+     * @var \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface[]|\Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface[]
      */
     protected $commands = [];
 
@@ -22,10 +24,23 @@ class CommandCollection implements CommandCollectionInterface, ArrayAccess
      * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface $command
      * @param string $name
      *
+     * @throws \InvalidArgumentException
+     *
      * @return $this
      */
-    public function add(NewCommandInterface $command, $name)
+    public function add($command, $name)
     {
+        if (!($command instanceof CommandInterface) && !($command instanceof NewCommandInterface)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    "Invalid command '%s' interface. Must implement '%s' or '%s'.",
+                    get_class($command),
+                    CommandInterface::class,
+                    NewCommandInterface::class
+                )
+            );
+        }
+
         $this->commands[$name] = $command;
 
         return $this;
@@ -46,7 +61,7 @@ class CommandCollection implements CommandCollectionInterface, ArrayAccess
      *
      * @throws \Spryker\Zed\Oms\Exception\CommandNotFoundException
      *
-     * @return \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface
+     * @return \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface
      */
     public function get($name)
     {
@@ -72,7 +87,7 @@ class CommandCollection implements CommandCollectionInterface, ArrayAccess
     /**
      * @param string $offset
      *
-     * @return \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface
+     * @return \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface
      */
     public function offsetGet($offset)
     {
@@ -81,7 +96,7 @@ class CommandCollection implements CommandCollectionInterface, ArrayAccess
 
     /**
      * @param string $offset
-     * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface $value
+     * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface $value
      *
      * @return void
      */

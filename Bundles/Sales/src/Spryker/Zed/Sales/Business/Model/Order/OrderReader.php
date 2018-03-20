@@ -17,11 +17,20 @@ class OrderReader implements OrderReaderInterface
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface
      */
-    public function __construct(SalesQueryContainerInterface $queryContainer)
-    {
+    protected $orderHydrator;
+
+    /**
+     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface $orderHydrator
+     */
+    public function __construct(
+        SalesQueryContainerInterface $queryContainer,
+        OrderHydratorInterface $orderHydrator
+    ) {
         $this->queryContainer = $queryContainer;
+        $this->orderHydrator = $orderHydrator;
     }
 
     /**
@@ -41,5 +50,24 @@ class OrderReader implements OrderReaderInterface
         }
 
         return $states;
+    }
+
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    public function findOrderByIdSalesOrderItem($idSalesOrderItem)
+    {
+        $orderItem = $this->queryContainer
+            ->querySalesOrderItem()
+            ->filterByIdSalesOrderItem($idSalesOrderItem)
+            ->findOne();
+
+        if (!$orderItem) {
+            return null;
+        }
+
+        return $this->orderHydrator->hydrateBaseOrderTransfer($orderItem->getOrder());
     }
 }

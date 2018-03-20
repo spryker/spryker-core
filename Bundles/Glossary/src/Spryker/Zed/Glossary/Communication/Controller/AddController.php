@@ -34,7 +34,7 @@ class AddController extends AbstractController
 
         $glossaryForm->handleRequest($request);
 
-        if ($glossaryForm->isValid()) {
+        if ($glossaryForm->isSubmitted() && $glossaryForm->isValid()) {
             $data = $glossaryForm->getData();
 
             $keyTranslationTransfer = new KeyTranslationTransfer();

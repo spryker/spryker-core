@@ -47,6 +47,11 @@ class Method implements MethodInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface[]
+     */
+    protected $shipmentMethodFilters;
+
+    /**
      * @var array
      */
     protected $plugins;
@@ -63,6 +68,7 @@ class Method implements MethodInterface
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface $currencyFacade
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface $storeFacade
      * @param array $plugins
+     * @param \Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface[] $shipmentMethodFilters
      */
     public function __construct(
         ShipmentQueryContainerInterface $queryContainer,
@@ -70,7 +76,8 @@ class Method implements MethodInterface
         ShipmentMethodTransformerInterface $methodTransformer,
         ShipmentToCurrencyInterface $currencyFacade,
         ShipmentToStoreInterface $storeFacade,
-        array $plugins
+        array $plugins,
+        array $shipmentMethodFilters
     ) {
         $this->queryContainer = $queryContainer;
         $this->methodPrice = $methodPrice;
@@ -78,6 +85,7 @@ class Method implements MethodInterface
         $this->currencyFacade = $currencyFacade;
         $this->storeFacade = $storeFacade;
         $this->plugins = $plugins;
+        $this->shipmentMethodFilters = $shipmentMethodFilters;
     }
 
     /**
@@ -105,16 +113,34 @@ class Method implements MethodInterface
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
+        $shipmentMethodsTransfer = $this->getAvailableMethodsTransfer($quoteTransfer);
+        $shipmentMethodsTransfer = $this->applyFilters($shipmentMethodsTransfer, $quoteTransfer);
+
+        return $shipmentMethodsTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     */
+    protected function getAvailableMethodsTransfer(QuoteTransfer $quoteTransfer)
+    {
         $shipmentMethodsTransfer = new ShipmentMethodsTransfer();
         $methods = $this->queryContainer->queryActiveMethodsWithMethodPricesAndCarrier()->find();
-        $idStoreCurrent = $this->storeFacade->getCurrentStore()->getIdStore();
 
         foreach ($methods as $shipmentMethodEntity) {
-            $shipmentMethodTransfer = $this->findAvailableMethod($shipmentMethodEntity, $quoteTransfer, $idStoreCurrent);
-            if ($shipmentMethodTransfer === null) {
+            if ($this->isShipmentMethodAvailable($shipmentMethodEntity, $quoteTransfer) === false) {
                 continue;
             }
 
+            $storeCurrencyPrice = $this->findStoreCurrencyPriceAmount($shipmentMethodEntity, $quoteTransfer);
+
+            if ($storeCurrencyPrice === null) {
+                continue;
+            }
+
+            $shipmentMethodTransfer = $this->transformShipmentMethod($shipmentMethodEntity, $quoteTransfer, $storeCurrencyPrice);
             $shipmentMethodsTransfer->addMethod($shipmentMethodTransfer);
         }
 
@@ -122,28 +148,42 @@ class Method implements MethodInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     */
+    protected function applyFilters(ShipmentMethodsTransfer $shipmentMethodsTransfer, QuoteTransfer $quoteTransfer)
+    {
+        $shipmentMethods = $shipmentMethodsTransfer->getMethods();
+
+        foreach ($this->shipmentMethodFilters as $shipmentMethodFilter) {
+            $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods($shipmentMethods, $quoteTransfer);
+        }
+
+        return $shipmentMethodsTransfer->setMethods($shipmentMethods);
+    }
+
+    /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int $idStoreCurrent
+     * @param int $storeCurrencyPrice
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
-    protected function findAvailableMethod(SpyShipmentMethod $shipmentMethodEntity, QuoteTransfer $quoteTransfer, $idStoreCurrent)
+    protected function transformShipmentMethod(SpyShipmentMethod $shipmentMethodEntity, QuoteTransfer $quoteTransfer, $storeCurrencyPrice)
     {
-        if (!$this->isAvailable($shipmentMethodEntity, $quoteTransfer)) {
-            return null;
-        }
-
-        $storeCurrencyPrice = $this->findStoreCurrencyPrice($shipmentMethodEntity, $quoteTransfer, $idStoreCurrent);
-        if ($storeCurrencyPrice === null) {
-            return null;
-        }
-
-        return $this->methodTransformer
-            ->transformEntityToTransfer($shipmentMethodEntity)
+        $shipmentMethodTransfer = $this->methodTransformer->transformEntityToTransfer($shipmentMethodEntity);
+        $shipmentMethodTransfer
             ->setStoreCurrencyPrice($storeCurrencyPrice)
-            ->setDeliveryTime($this->getDeliveryTime($shipmentMethodEntity, $quoteTransfer))
-            ->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
+            ->setDeliveryTime(
+                $this->getDeliveryTime($shipmentMethodEntity, $quoteTransfer)
+            )
+            ->setCurrencyIsoCode(
+                $quoteTransfer->getCurrency()->getCode()
+            );
+
+        return $shipmentMethodTransfer;
     }
 
     /**
@@ -276,8 +316,6 @@ class Method implements MethodInterface
      */
     public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer)
     {
-        $idStoreCurrent = $this->storeFacade->getCurrentStore()->getIdStore();
-
         $shipmentMethodEntity = $this->queryContainer
             ->queryMethodByIdMethod($idShipmentMethod)
             ->findOne();
@@ -286,7 +324,13 @@ class Method implements MethodInterface
             return null;
         }
 
-        return $this->findAvailableMethod($shipmentMethodEntity, $quoteTransfer, $idStoreCurrent);
+        $storeCurrencyPrice = $this->findStoreCurrencyPriceAmount($shipmentMethodEntity, $quoteTransfer);
+
+        if ($storeCurrencyPrice === null) {
+            return null;
+        }
+
+        return $this->transformShipmentMethod($shipmentMethodEntity, $quoteTransfer, $storeCurrencyPrice);
     }
 
     /**
@@ -295,7 +339,7 @@ class Method implements MethodInterface
      *
      * @return bool
      */
-    protected function isAvailable(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer)
+    protected function isShipmentMethodAvailable(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer)
     {
         $availabilityPlugins = $this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS];
         $isAvailable = true;
@@ -322,13 +366,14 @@ class Method implements MethodInterface
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $method
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int $idStore
      *
      * @return int|null
      */
-    protected function findStoreCurrencyPrice(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer, $idStore)
+    protected function findStoreCurrencyPriceAmount(SpyShipmentMethod $method, QuoteTransfer $quoteTransfer)
     {
+        $idStore = $this->storeFacade->getCurrentStore()->getIdStore();
         $pricePlugins = $this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS];
+
         if (isset($pricePlugins[$method->getPricePlugin()])) {
             $pricePlugin = $this->getPricePlugin($method, $pricePlugins);
             return $pricePlugin->getPrice($quoteTransfer);
@@ -341,6 +386,7 @@ class Method implements MethodInterface
                 $this->getIdCurrencyByIsoCode($quoteTransfer->getCurrency()->getCode())
             )
             ->findOne();
+
         if ($methodPriceEntity === null) {
             return null;
         }

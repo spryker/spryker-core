@@ -22,6 +22,7 @@ use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Shared\Discount\DiscountConstants;
@@ -414,6 +415,68 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testSaveDiscountPersistsStoreRelation()
+    {
+        // Assign
+        $idStores = [2];
+        $discountFacade = $this->createDiscountFacade();
+
+        $discountConfiguratorTransfer = $this->createDiscountConfiguratorTransfer();
+        $discountConfiguratorTransfer
+            ->getDiscountGeneral()
+                ->setDiscountType(DiscountConstants::TYPE_VOUCHER)
+                ->getStoreRelation()
+                    ->setIdStores($idStores);
+
+        // Act
+        $idDiscount = $discountFacade->saveDiscount($discountConfiguratorTransfer);
+
+        // Assert
+        $discountConfiguratorTransfer = $discountFacade->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
+        $this->assertEquals(
+            $discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation()->getIdStores(),
+            $idStores
+        );
+    }
+    
+    /**
+     * @return void
+     */
+    public function testUpdateDiscountPersistsStoreRelation()
+    {
+        // Assign
+        $originalIdStores = [2];
+        $expectedIdStores = [1, 3];
+
+        $discountConfiguratorTransfer = $this->createDiscountConfiguratorTransfer();
+        $discountConfiguratorTransfer
+            ->getDiscountGeneral()
+                ->setDiscountType(DiscountConstants::TYPE_VOUCHER)
+                ->getStoreRelation()
+                    ->setIdStores($originalIdStores);
+
+        $discountFacade = $this->createDiscountFacade();
+        $idDiscount = $discountFacade->saveDiscount($discountConfiguratorTransfer);
+
+        $discountConfiguratorTransfer
+            ->getDiscountGeneral()
+                ->getStoreRelation()
+                    ->setIdStores($expectedIdStores);
+
+        // Act
+        $discountFacade->updateDiscount($discountConfiguratorTransfer);
+
+        // Assert
+        $discountConfiguratorTransfer = $discountFacade->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
+        $this->assertEquals(
+            $discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation()->getIdStores(),
+            $expectedIdStores
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testValidateQueryStringByTypeShouldReturnEmptySetWhenQueryStringIsValid()
     {
         $discountFacade = $this->createDiscountFacade();
@@ -752,6 +815,7 @@ class DiscountFacadeTest extends Unit
         $discountGeneralTransfer->setDescription('Description');
         $discountGeneralTransfer->setValidFrom(new DateTime());
         $discountGeneralTransfer->setValidTo(new DateTime());
+        $discountGeneralTransfer->setStoreRelation((new StoreRelationTransfer())->setIdStores([]));
         $discountConfiguratorTransfer->setDiscountGeneral($discountGeneralTransfer);
 
         $discountCalculatorTransfer = new DiscountCalculatorTransfer();

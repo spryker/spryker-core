@@ -71,14 +71,4 @@ class ConditionsForm extends AbstractType
     {
         return 'discount_conditions';
     }
-
-    /**
-     * @deprecated Use `getBlockPrefix()` instead.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
-    }
 }
