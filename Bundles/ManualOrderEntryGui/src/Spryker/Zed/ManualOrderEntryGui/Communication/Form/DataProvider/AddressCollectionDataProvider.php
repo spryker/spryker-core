@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreInterface;
 
-class AddressCollectionDataProvider
+class AddressCollectionDataProvider implements FormDataProviderInterface
 {
 
     /**
@@ -38,7 +38,7 @@ class AddressCollectionDataProvider
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function getData(QuoteTransfer $quoteTransfer)
+    public function getData($quoteTransfer)
     {
         $this->customerTransfer = $quoteTransfer->getCustomer();
 
@@ -53,9 +53,11 @@ class AddressCollectionDataProvider
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return array
      */
-    public function getOptions()
+    public function getOptions($quoteTransfer)
     {
         return [
             'data_class' => QuoteTransfer::class,

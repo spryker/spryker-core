@@ -9,13 +9,15 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 
-class CustomerDataProvider
+class CustomerDataProvider implements FormDataProviderInterface
 {
 
     /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
      * @return array
      */
-    public function getOptions()
+    public function getOptions($customerTransfer)
     {
         return [
             'data_class' => CustomerTransfer::class
@@ -27,7 +29,7 @@ class CustomerDataProvider
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function getData(CustomerTransfer $customerTransfer)
+    public function getData($customerTransfer)
     {
         return $customerTransfer;
     }

@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\AddressFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\CustomersListFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ItemFormPlugin;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginCollection;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\PaymentFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ProductFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ShipmentFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\StoreFormPlugin;
@@ -41,6 +43,8 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     const FACADE_MONEY = 'MANUAL_ORDER_ENTRY_GUI:FACADE_MONEY';
     const FACADE_PAYMENT = 'MANUAL_ORDER_ENTRY_GUI:FACADE_PAYMENT';
 
+    const PAYMENT_SUB_FORMS = 'PAYMENT SUB FORMS';
+
     const QUERY_CONTAINER_CUSTOMER = 'MANUAL_ORDER_ENTRY_GUI:QUERY_CONTAINER_CUSTOMER';
 
     const STORE = 'MANUAL_ORDER_ENTRY_GUI:STORE';
@@ -64,6 +68,9 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addShipmentFacade($container);
         $container = $this->addMoneyFacade($container);
         $container = $this->addPaymentFacade($container);
+
+        $container = $this->addPaymentSubFormPlugins($container);
+
         $container = $this->addCustomerQueryContainer($container);
         $container = $this->addStore($container);
         $container = $this->addManualOrderEntryFormPlugins($container);
@@ -202,6 +209,28 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addPaymentSubFormPlugins(Container $container)
+    {
+        $container[static::PAYMENT_SUB_FORMS] = function () {
+            return $this->getPaymentSubFormPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginInterface[]
+     */
+    protected function getPaymentSubFormPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addCustomerQueryContainer(Container $container)
     {
         $container[static::QUERY_CONTAINER_CUSTOMER] = function (Container $container) {
@@ -249,6 +278,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
         return [
             new CustomersListFormPlugin($container[static::FACADE_CUSTOMER]),
             new StoreFormPlugin($container[static::FACADE_CURRENCY]),
+            new PaymentFormPlugin(),
             new ProductFormPlugin(
                 $container[static::FACADE_CART],
                 $container[static::FACADE_PRODUCT]

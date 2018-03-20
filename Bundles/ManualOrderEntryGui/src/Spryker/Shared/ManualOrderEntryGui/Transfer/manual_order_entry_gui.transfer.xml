@@ -22,6 +22,7 @@
         <property name="items" type="Item[]" />
         <property name="idShipmentMethod" type="int" />
         <property name="shipment" type="Shipment" />
+        <property name="payment" type="Payment" />
         <property name="payments" type="Payment[]" />
 
         <property name="manualOrderProducts" type="ManualOrderProduct[]" />

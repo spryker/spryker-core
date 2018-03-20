@@ -9,7 +9,7 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class VoucherDataProvider
+class VoucherDataProvider implements FormDataProviderInterface
 {
 
     /**
@@ -17,15 +17,17 @@ class VoucherDataProvider
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function getData(QuoteTransfer $quoteTransfer)
+    public function getData($quoteTransfer)
     {
         return $quoteTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return array
      */
-    public function getOptions()
+    public function getOptions($quoteTransfer)
     {
         return [
             'data_class' => QuoteTransfer::class,

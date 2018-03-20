@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
@@ -22,6 +23,7 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomersLis
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ShipmentDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\StoreDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\VoucherDataProvider;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Payment\PaymentType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ItemCollectionType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductCollectionType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Shipment\ShipmentType;
@@ -190,7 +192,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             CustomersListType::class,
             $formDataProvider->getData($quoteTransfer),
-            $formDataProvider->getOptions()
+            $formDataProvider->getOptions($quoteTransfer)
         );
     }
 
@@ -209,10 +211,12 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
      */
     public function createCustomerForm(CustomerDataProvider $customerFormDataProvider)
     {
+        $customerTransfer = new CustomerTransfer();
+
         return $this->getFormFactory()->create(
             CustomerType::class,
-           null,
-            $customerFormDataProvider->getOptions()
+            $customerFormDataProvider->getData($customerTransfer),
+            $customerFormDataProvider->getOptions($customerTransfer)
         );
     }
 
@@ -240,7 +244,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             AddressCollectionType::class,
             $formDataProvider->getData($quoteTransfer),
-            $formDataProvider->getOptions()
+            $formDataProvider->getOptions($quoteTransfer)
         );
     }
 
@@ -272,7 +276,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             StoreType::class,
             $formDataProvider->getData($quoteTransfer),
-            $formDataProvider->getOptions()
+            $formDataProvider->getOptions($quoteTransfer)
         );
     }
 
@@ -296,7 +300,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             ProductCollectionType::class,
             $formDataProvider->getData($quoteTransfer),
-            $formDataProvider->getOptions()
+            $formDataProvider->getOptions($quoteTransfer)
         );
     }
 
@@ -332,7 +336,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             ItemCollectionType::class,
             $formDataProvider->getData($quoteTransfer),
-            $formDataProvider->getOptions()
+            $formDataProvider->getOptions($quoteTransfer)
         );
     }
 
@@ -356,7 +360,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             VoucherType::class,
             $formDataProvider->getData($quoteTransfer),
-            $formDataProvider->getOptions()
+            $formDataProvider->getOptions($quoteTransfer)
         );
     }
 
@@ -400,7 +404,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createPaymentDataProvider()
     {
         return new PaymentDataProvider(
-            $this->getPaymentFacade()
+            $this->getPaymentMethodSubFormPluginCollection()
         );
     }
 
@@ -417,10 +421,20 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         $formDataProvider = $this->createPaymentDataProvider();
 
         return $this->getFormFactory()->create(
-            ShipmentType::class,
+            PaymentType::class,
             $formDataProvider->getData($quoteTransfer),
             $formDataProvider->getOptions($quoteTransfer)
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginCollection
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function getPaymentMethodSubFormPluginCollection()
+    {
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::PAYMENT_SUB_FORMS);
     }
 
 }

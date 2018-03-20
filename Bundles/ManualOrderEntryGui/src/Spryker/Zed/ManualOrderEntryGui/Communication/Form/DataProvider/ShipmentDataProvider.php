@@ -10,7 +10,7 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Shipment\ShipmentType;
 
-class ShipmentDataProvider
+class ShipmentDataProvider implements FormDataProviderInterface
 {
 
     /**
@@ -38,7 +38,7 @@ class ShipmentDataProvider
      *
      * @return array
      */
-    public function getOptions(QuoteTransfer $quoteTransfer)
+    public function getOptions($quoteTransfer)
     {
         return [
             'data_class' => QuoteTransfer::class,
@@ -53,7 +53,7 @@ class ShipmentDataProvider
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData(QuoteTransfer $quoteTransfer)
+    public function getData($quoteTransfer)
     {
         return $quoteTransfer;
     }

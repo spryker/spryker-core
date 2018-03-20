@@ -16,17 +16,17 @@ use Symfony\Component\HttpFoundation\Request;
 class PaymentFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
 {
 
-    /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface
-     */
-    protected $shipmentFacade;
+//    /**
+//     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface
+//     */
+//    protected $shipmentFacade;
 
     /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface $shipmentFacade
      */
-    public function __construct($shipmentFacade)
+    public function __construct()
     {
-        $this->shipmentFacade = $shipmentFacade;
+//        $this->shipmentFacade = $shipmentFacade;
     }
 
     /**
@@ -39,7 +39,7 @@ class PaymentFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
      */
     public function createForm(Request $request, $dataTransfer = null)
     {
-        return $this->getFactory()->createShipmentForm($request, $dataTransfer);
+        return $this->getFactory()->createPaymentForm($request, $dataTransfer);
     }
 
     /**
@@ -51,14 +51,14 @@ class PaymentFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
      */
     public function handleData($quoteTransfer, &$form, $request)
     {
-        $idShipmentMethod = (int)$quoteTransfer->getIdShipmentMethod();
-        if ($idShipmentMethod) {
-            $shipmentMethodTransfer = $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
-            $shipmentTransfer = new ShipmentTransfer();
-            $shipmentTransfer->setMethod($shipmentMethodTransfer);
-
-            $quoteTransfer->setShipment($shipmentTransfer);
-        }
+//        $idShipmentMethod = (int)$quoteTransfer->getIdShipmentMethod();
+//        if ($idShipmentMethod) {
+//            $shipmentMethodTransfer = $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
+//            $shipmentTransfer = new ShipmentTransfer();
+//            $shipmentTransfer->setMethod($shipmentMethodTransfer);
+//
+//            $quoteTransfer->setShipment($shipmentTransfer);
+//        }
 
         return $quoteTransfer;
     }

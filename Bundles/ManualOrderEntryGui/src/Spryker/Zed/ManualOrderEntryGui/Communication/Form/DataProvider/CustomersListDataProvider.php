@@ -13,7 +13,7 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListTyp
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class CustomersListDataProvider
+class CustomersListDataProvider implements FormDataProviderInterface
 {
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface
@@ -38,9 +38,11 @@ class CustomersListDataProvider
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return array
      */
-    public function getOptions()
+    public function getOptions($quoteTransfer)
     {
         return [
             'data_class' => QuoteTransfer::class,
@@ -55,7 +57,7 @@ class CustomersListDataProvider
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData(QuoteTransfer $quoteTransfer)
+    public function getData($quoteTransfer)
     {
         if ($this->request->getMethod() === $this->request::METHOD_GET
             && $this->request->query->get(CustomersListType::FIELD_CUSTOMER)

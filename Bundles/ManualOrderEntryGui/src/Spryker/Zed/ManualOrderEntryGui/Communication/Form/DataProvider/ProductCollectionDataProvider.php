@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ManualOrderProductTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductCollectionType;
 
-class ProductCollectionDataProvider
+class ProductCollectionDataProvider implements FormDataProviderInterface
 {
 
     /**
@@ -20,7 +20,7 @@ class ProductCollectionDataProvider
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function getData(QuoteTransfer $quoteTransfer)
+    public function getData($quoteTransfer)
     {
         if (count($quoteTransfer->getItems())) {
             $quoteTransfer->setManualOrderProducts(new ArrayObject());
@@ -36,11 +36,12 @@ class ProductCollectionDataProvider
         return $quoteTransfer;
     }
 
-
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return array
      */
-    public function getOptions()
+    public function getOptions($quoteTransfer)
     {
         return [
             'data_class' => QuoteTransfer::class,

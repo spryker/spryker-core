@@ -15,9 +15,6 @@
                 {% for form in forms %}
 
                     ==={{ form.vars.id }}----
-                    {#{{ dump(form.manualOrderProductsSku) }}#}
-                    {#{{ dump(form.manualOrderProductsQuantity) }}#}
-
 
                     {% if form.vars.id == 'customers' %}
                         {% include '@ManualOrderEntryGui/create/partials/customers.twig' with {'form': form} %}
@@ -28,7 +25,7 @@
                     {% elseif form.vars.id == 'addresses' %}
                         {% include '@ManualOrderEntryGui/create/partials/addresses.twig' with {'form': form} %}
                     {% else %}
-                        {{ form_widget(form) }}
+                        {{ form_row(form) }}
                     {% endif %}
 
                 {% endfor %}
@@ -37,20 +34,6 @@
 
             {{ form_end(forms[0]) }}
 
-            {#{{ form_start(manualOrderEntryForm) }}#}
-
-            {#@Todo @Artem step Engine here#}
-
-            {#{{ form_row(manualOrderEntryForm.id_customer) }}#}
-            {#{{ createActionButton('/manual-order-entry-gui/create/customer', 'Create Customer' | trans) }}#}
-
-            {#{% include '@ManualOrderEntryGui/create/partials/address.twig' with {'manualOrderEntryForm': manualOrderEntryForm} %}#}
-
-            {#{{ form_widget(manualOrderEntryForm) }}#}
-
-            {#<input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />#}
-
-            {#{{ form_end(manualOrderEntryForm) }}#}
         {% endblock %}
     {% endembed %}
 

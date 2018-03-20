@@ -7,24 +7,22 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Payment\PaymentType;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Shipment\ShipmentType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormInterface;
 
-class PaymentDataProvider
+class PaymentDataProvider implements FormDataProviderInterface
 {
 
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToPaymentFacadeInterface
+     * @var \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginCollection
      */
-    protected $paymentFacade;
+    protected $subFormPlugins;
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToPaymentFacadeInterface $paymentFacade
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginCollection $subFormPlugins
      */
-    public function __construct($paymentFacade)
+    public function __construct($subFormPlugins)
     {
-        $this->paymentFacade = $paymentFacade;
+        $this->subFormPlugins = $subFormPlugins;
     }
 
     /**
@@ -32,13 +30,20 @@ class PaymentDataProvider
      *
      * @return array
      */
-    public function getOptions(QuoteTransfer $quoteTransfer)
+    public function getOptions($quoteTransfer)
     {
+        $options = [];
+        foreach ($this->subFormPlugins as $subForm) {
+            $options = array_merge(
+                $options,
+                $subForm->createSubFormDataProvider()->getOptions($quoteTransfer)
+            );
+        }
+
         return [
-            'data_class' => QuoteTransfer::class,
             'allow_extra_fields' => true,
             'csrf_protection' => false,
-            PaymentType::OPTION_PAYMENT_METHODS_ARRAY => $this->getShipmentMethodList($quoteTransfer),
+            SubFormInterface::OPTIONS_FIELD_NAME => $options,
         ];
     }
 
@@ -47,37 +52,13 @@ class PaymentDataProvider
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData(QuoteTransfer $quoteTransfer)
+    public function getData($quoteTransfer)
     {
+        foreach ($this->subFormPlugins as $subForm) {
+            $quoteTransfer = $subForm->createSubFormDataProvider()->getData($quoteTransfer);
+        }
+
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array
-     */
-    protected function getShipmentMethodList(QuoteTransfer $quoteTransfer)
-    {
-        if (!$quoteTransfer->getStore() || !$quoteTransfer->getCurrency()) {
-            return [];
-        }
-        $shipmentMethodsTransfer = $this->paymentFacade->getAvailableMethods($quoteTransfer);
-        $shipmentMethodList = [];
-
-        foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
-            $moneyTransfer = $this->moneyFacade->fromInteger($shipmentMethodTransfer->getStoreCurrencyPrice(), $shipmentMethodTransfer->getCurrencyIsoCode());
-
-            $row = $shipmentMethodTransfer->getCarrierName()
-                . ' - '
-                . $shipmentMethodTransfer->getName()
-                . ': '
-                . $this->moneyFacade->formatWithSymbol($moneyTransfer);
-
-            $shipmentMethodList[$shipmentMethodTransfer->getIdShipmentMethod()] = $row;
-        }
-
-        return $shipmentMethodList;
     }
 
 }
