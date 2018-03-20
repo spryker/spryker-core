@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <sales-reclamation>
-        <label>Sales Reclamation</label>
-        <title>Sales Reclamation</title>
-        <bundle>sales-reclamation</bundle>
-        <controller>index</controller>
-        <action>index</action>
-    </sales-reclamation>
+    <sales>
+        <pages>
+            <index>
+                <label>Reclamations</label>
+                <title>Reclamations</title>
+                <bundle>sales-reclamation</bundle>
+                <controller>index</controller>
+                <action>index</action>
+            </index>
+        </pages>
+    </sales>
 </config>
