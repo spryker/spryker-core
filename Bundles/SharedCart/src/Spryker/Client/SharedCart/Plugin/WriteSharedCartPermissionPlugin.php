@@ -9,6 +9,7 @@ namespace Spryker\Client\SharedCart\Plugin;
 
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Shared\SharedCart\SharedCartConfig;
 
 /**
  * For Client PermissionDependencyProvider::getPermissionPlugins() registration
@@ -16,8 +17,6 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPlu
 class WriteSharedCartPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface
 {
     public const KEY = 'WriteSharedCartPermissionPlugin';
-
-    public const CONFIG_ID_QUOTE_COLLECTION = 'id_quote_collection';
 
     /**
      * @return string
@@ -44,7 +43,7 @@ class WriteSharedCartPermissionPlugin extends AbstractPlugin implements Executab
             return false;
         }
 
-        return in_array($idQuote, $configuration[static::CONFIG_ID_QUOTE_COLLECTION]);
+        return in_array($idQuote, $configuration[SharedCartConfig::PERMISSION_CONFIG_ID_QUOTE_COLLECTION]);
     }
 
     /**

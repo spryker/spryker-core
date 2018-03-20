@@ -8,16 +8,15 @@
 namespace Spryker\Zed\SharedCart\Communication\Plugin;
 
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Shared\SharedCart\SharedCartConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
  */
-class WriteharedCartPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface
+class WriteSharedCartPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface
 {
-    public const KEY = 'WriteharedCartPermissionPlugin';
-
-    public const CONFIG_ID_QUOTE_COLLECTION = 'id_quote_collection';
+    public const KEY = 'WriteSharedCartPermissionPlugin';
 
     /**
      * @return string
@@ -41,7 +40,7 @@ class WriteharedCartPermissionPlugin extends AbstractPlugin implements Executabl
             return false;
         }
 
-        return in_array($idQuote, $configuration[static::CONFIG_ID_QUOTE_COLLECTION]);
+        return in_array($idQuote, $configuration[SharedCartConfig::PERMISSION_CONFIG_ID_QUOTE_COLLECTION]);
     }
 
     /**

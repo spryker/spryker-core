@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
+ * @method \Spryker\Zed\SharedCart\Business\SharedCartBusinessFactory getFactory()
  * @method \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface getRepository()
  */
 class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterface
@@ -41,5 +42,8 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
      */
     public function expandQuoteResponseWithSharedCarts(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
+        return $this->getFactory()
+            ->createQuoteResponseExpander()
+            ->expand($quoteResponseTransfer);
     }
 }

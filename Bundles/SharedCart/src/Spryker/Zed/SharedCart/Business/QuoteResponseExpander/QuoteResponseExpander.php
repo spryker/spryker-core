@@ -12,19 +12,19 @@ use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface;
+use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
 
 class QuoteResponseExpander implements QuoteResponseExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface
+     * @var \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface
      */
     protected $quoteFacade;
 
     /**
-     * @param \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface $quoteFacade
+     * @param \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface $quoteFacade
      */
-    public function __construct(MultiCartToQuoteFacadeInterface $quoteFacade)
+    public function __construct(SharedCartToQuoteFacadeInterface $quoteFacade)
     {
         $this->quoteFacade = $quoteFacade;
     }
@@ -42,9 +42,9 @@ class QuoteResponseExpander implements QuoteResponseExpanderInterface
         $sharedQuoteCollectionTransfer = $this->findSharedCustomerQuotes($customerTransfer);
         $quoteResponseTransfer->addSharedCustomerQuotes($sharedQuoteCollectionTransfer);
 
-        if (!$quoteResponseTransfer->getQuoteTransfer()->getIsActive() && count($sharedQuoteCollectionTransfer->getQuotes())) {
-            $quoteResponseTransfer->setQuoteTransfer($this->getActiveQuote($sharedQuoteCollectionTransfer));
-        }
+//        if (!$quoteResponseTransfer->getQuoteTransfer()->getIsActive() && count($sharedQuoteCollectionTransfer->getQuotes())) {
+//            $quoteResponseTransfer->setQuoteTransfer($this->getActiveQuote($sharedQuoteCollectionTransfer));
+//        }
 
 //        $this->deactivateActiveQuotes($customerQuoteCollectionTransfer, $quoteResponseTransfer->getQuoteTransfer()->getIdQuote());
 
@@ -66,21 +66,21 @@ class QuoteResponseExpander implements QuoteResponseExpanderInterface
         }
         $quoteTransfer = reset($quoteTransferList);
 
-        return $this->setQuoteAsActive($quoteTransfer);
+//        return $this->setQuoteAsActive($quoteTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function setQuoteAsActive(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        $quoteTransfer->setIsActive(true);
-        $this->quoteFacade->persistQuote($quoteTransfer);
-
-        return $quoteTransfer;
-    }
+//    /**
+//     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+//     *
+//     * @return \Generated\Shared\Transfer\QuoteTransfer
+//     */
+//    protected function setQuoteAsActive(QuoteTransfer $quoteTransfer): QuoteTransfer
+//    {
+//        $quoteTransfer->setIsActive(true);
+//        $this->quoteFacade->persistQuote($quoteTransfer);
+//
+//        return $quoteTransfer;
+//    }
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

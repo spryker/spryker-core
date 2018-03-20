@@ -9,6 +9,11 @@ namespace Spryker\Zed\SharedCart\Persistence;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
+use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
+use Propel\Runtime\ActiveQuery\Join;
+use Spryker\Shared\SharedCart\SharedCartConfig;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -23,38 +28,71 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
      */
     public function findPermissionsByIdCompanyUser(int $idCompanyUser): PermissionCollectionTransfer
     {
-        // TODO: refactor
-        $quotePermissionGroupToPermissionEntities = $this->getFactory()
-            ->createQuotePermissionGroupToPermissionQuery()
-            ->joinWithPermission()
-            ->useQuotePermissionGroupQuery()
-                ->useSpyQuoteCompanyUserQuery()
-                    ->filterByFkCompanyUser($idCompanyUser)
-                ->endUse()
-            ->endUse()
-            ->groupByFkPermission()
+        $permissionCollectionTransfer = new PermissionCollectionTransfer();
+
+        $ownQuoteIdCollection = $this->findOwnQuotes($idCompanyUser);
+
+        $permissionEntities = $this->getFactory()
+            ->createPermissionQuery()
+            ->joinSpyQuotePermissionGroupToPermission()
+            ->groupByIdPermission()
             ->find();
 
-        $permissionCollectionTransfer = new PermissionCollectionTransfer();
-        foreach ($quotePermissionGroupToPermissionEntities as $quotePermissionGroupToPermissionEntity) {
+        foreach ($permissionEntities as $permissionEntity) {
+            $haredQuoteIdCollection = $this->getSharedQuoteIds($idCompanyUser, $permissionEntity->getIdPermission());
+
             $permissionTransfer = new PermissionTransfer();
-
-            $permissionTransfer->setKey($quotePermissionGroupToPermissionEntity->getPermission()->getKey());
-
-            $quoteCompanyUserEntities = $quotePermissionGroupToPermissionEntity->getQuotePermissionGroup()->getSpyQuoteCompanyUsers();
-
-            $idQuoteCollection = [];
-            foreach ($quoteCompanyUserEntities as $quoteCompanyUserEntity) {
-                $idQuoteCollection[] = $quoteCompanyUserEntity->getFkQuote();
-            }
-
+            $permissionTransfer->fromArray($permissionEntity->toArray(), true);
             $permissionTransfer->setConfiguration([
-                'id_quote_collection' => $idQuoteCollection,
+                SharedCartConfig::PERMISSION_CONFIG_ID_QUOTE_COLLECTION => $ownQuoteIdCollection + $haredQuoteIdCollection,
             ]);
 
             $permissionCollectionTransfer->addPermission($permissionTransfer);
         }
 
         return $permissionCollectionTransfer;
+    }
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return array
+     */
+    protected function findOwnQuotes(int $idCompanyUser): array
+    {
+        $join = new Join(SpyCustomerTableMap::COL_ID_CUSTOMER, SpyCompanyUserTableMap::COL_FK_CUSTOMER);
+
+        return $this->getFactory()
+            ->createQuoteQuery()
+            ->addJoin(SpyQuoteTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE)
+            ->addJoinObject($join, 'customerJoin')
+            ->addJoinCondition('customerJoin', sprintf('%s = %d', SpyCompanyUserTableMap::COL_ID_COMPANY_USER, $idCompanyUser))
+            ->select([SpyQuoteTableMap::COL_ID_QUOTE])
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @param int $idCompanyUser
+     * @param int $idPermission
+     *
+     * @return array
+     */
+    protected function getSharedQuoteIds(int $idCompanyUser, int $idPermission): array
+    {
+        return $this->getFactory()
+            ->createQuoteQuery()
+            ->useSpyQuoteCompanyUserQuery()
+                ->filterByFkCompanyUser($idCompanyUser)
+                ->useSpyQuotePermissionGroupQuery()
+                    ->useSpyQuotePermissionGroupToPermissionQuery()
+                        ->filterByFkPermission($idPermission)
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->groupByIdQuote()
+            ->select([SpyQuoteTableMap::COL_ID_QUOTE])
+            ->find()
+            ->toArray();
     }
 }

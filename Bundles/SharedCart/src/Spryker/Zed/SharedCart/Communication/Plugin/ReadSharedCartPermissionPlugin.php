@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SharedCart\Communication\Plugin;
 
 use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
+use Spryker\Shared\SharedCart\SharedCartConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -16,8 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ReadSharedCartPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface
 {
     public const KEY = 'ReadSharedCartPermissionPlugin';
-
-    public const CONFIG_ID_QUOTE_COLLECTION = 'id_quote_collection';
 
     /**
      * @return string
@@ -41,7 +40,7 @@ class ReadSharedCartPermissionPlugin extends AbstractPlugin implements Executabl
             return false;
         }
 
-        return in_array($idQuote, $configuration[static::CONFIG_ID_QUOTE_COLLECTION]);
+        return in_array($idQuote, $configuration[SharedCartConfig::PERMISSION_CONFIG_ID_QUOTE_COLLECTION]);
     }
 
     /**
