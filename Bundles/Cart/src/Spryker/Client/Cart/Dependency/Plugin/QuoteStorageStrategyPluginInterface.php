@@ -31,10 +31,11 @@ interface QuoteStorageStrategyPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItem(ItemTransfer $itemTransfer);
+    public function addItem(ItemTransfer $itemTransfer, array $params = []);
 
     /**
      * Specification:
@@ -44,10 +45,11 @@ interface QuoteStorageStrategyPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItems(array $itemTransfers);
+    public function addItems(array $itemTransfers, array $params = []);
 
     /**
      * Specification:

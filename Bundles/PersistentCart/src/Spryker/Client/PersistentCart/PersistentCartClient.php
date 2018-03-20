@@ -49,8 +49,9 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
         $quoteResponseTransfer = $persistentCartStub->persistQuote($quoteTransfer);
         $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
         if ($quoteResponseTransfer->getIsSuccessful()) {
-            $this->updateCustomerQuote($quoteResponseTransfer->getQuoteTransfer());
+            $this->getFactory()->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
         }
+        $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
 
         return $quoteResponseTransfer;
     }

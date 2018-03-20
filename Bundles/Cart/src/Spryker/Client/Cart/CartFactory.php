@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Cart;
 
+use Spryker\Client\Cart\CartChangeRequestExpander\CartChangeRequestExpander;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProvider;
 use Spryker\Client\Cart\Zed\CartStub;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -56,11 +57,23 @@ class CartFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProviderInterface
      */
-    protected function createQuoteStorageStrategyProvider()
+    public function createQuoteStorageStrategyProvider()
     {
         return new QuoteStorageStrategyProvider(
             $this->getQuoteClient(),
             $this->getQuoteStorageStrategyPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Cart\CartChangeRequestExpander\CartChangeRequestExpanderInterface
+     */
+    public function createCartChangeRequestExpander()
+    {
+        return new CartChangeRequestExpander(
+            $this->getAddItemsRequestExpanderPlugins(),
+            $this->getRemoveItemsRequestExpanderPlugins(),
+            $this->getChangeQuantityRequestExpanderPlugins()
         );
     }
 
@@ -70,5 +83,37 @@ class CartFactory extends AbstractFactory
     protected function getQuoteStorageStrategyPlugins()
     {
         return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_QUOTE_STORAGE_STRATEGY);
+    }
+
+    /**
+     * @return \Spryker\Client\Cart\Dependency\Plugin\QuoteItemFinderPluginInterface
+     */
+    public function getQuoteItemFinderPlugin()
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGIN_QUOTE_ITEM_FINDER);
+    }
+
+    /**
+     * @return \Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
+     */
+    protected function getAddItemsRequestExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_ADD_ITEMS_REQUEST_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
+     */
+    protected function getChangeQuantityRequestExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_CHANGE_QUANTITY_REQUEST_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
+     */
+    protected function getRemoveItemsRequestExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER);
     }
 }

@@ -57,4 +57,14 @@ interface ZedRequestClientInterface
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getLastResponseSuccessMessages();
+
+    /**
+     * Specification:
+     * - Takes array of MessageTransfers for the last response and push them to flash messages.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function addFlashMessagesFromLastZedRequest();
 }

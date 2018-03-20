@@ -54,7 +54,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
      */
-    protected function createStorageProvider()
+    public function createStorageProvider()
     {
         return new NonPersistentProvider();
     }
@@ -62,7 +62,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Cart\Business\Model\QuoteChangeNoteInterface
      */
-    protected function createQuoteChangeNote()
+    public function createQuoteChangeNote()
     {
         return new QuoteChangeNote($this->getMessengerFacade());
     }

@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
+use Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
 class CartOperation implements CartOperationInterface
 {
@@ -36,18 +37,34 @@ class CartOperation implements CartOperationInterface
     protected $quoteResponseExpander;
 
     /**
+     * @var \Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteItemFinderPluginInterface
+     */
+    protected $itemFinderPlugin;
+
+    /**
+     * @var \Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpanderInterface
+     */
+    protected $cartChangeRequestExpander;
+
+    /**
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface $quoteFacade
+     * @param \Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteItemFinderPluginInterface $itemFinderPlugin
+     * @param \Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpanderInterface $cartChangeRequestExpander
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface $quoteResponseExpander
      */
     public function __construct(
         PersistentCartToCartFacadeInterface $cartFacade,
         PersistentCartToQuoteFacadeInterface $quoteFacade,
+        QuoteItemFinderPluginInterface $itemFinderPlugin,
+        CartChangeRequestExpanderInterface $cartChangeRequestExpander,
         QuoteResponseExpanderInterface $quoteResponseExpander
     ) {
         $this->cartFacade = $cartFacade;
         $this->quoteFacade = $quoteFacade;
         $this->quoteResponseExpander = $quoteResponseExpander;
+        $this->itemFinderPlugin = $itemFinderPlugin;
+        $this->cartChangeRequestExpander = $cartChangeRequestExpander;
     }
 
     /**
@@ -256,6 +273,7 @@ class CartOperation implements CartOperationInterface
         foreach ($itemTransferList as $itemTransfer) {
             $cartChangeTransfer->addItem($itemTransfer);
         }
+        $cartChangeTransfer = $this->cartChangeRequestExpander->removeItemRequestExpand($cartChangeTransfer);
         $quoteTransfer = $this->cartFacade->remove($cartChangeTransfer);
         $this->quoteFacade->persistQuote($quoteTransfer);
 
@@ -273,15 +291,7 @@ class CartOperation implements CartOperationInterface
      */
     protected function findItemInQuote(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): ?ItemTransfer
     {
-        foreach ($quoteTransfer->getItems() as $quoteItemTransfer) {
-            if ($quoteItemTransfer->getSku() === $itemTransfer->getSku()
-                && $quoteItemTransfer->getGroupKey() === $itemTransfer->getGroupKey()
-            ) {
-                return $quoteItemTransfer;
-            }
-        }
-
-        return null;
+        return $this->itemFinderPlugin->findItem($quoteTransfer, $itemTransfer->getSku(), $itemTransfer->getGroupKey());
     }
 
     /**
