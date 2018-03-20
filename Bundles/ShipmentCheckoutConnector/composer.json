@@ -3,6 +3,7 @@
   "description": "ShipmentCheckoutConnector module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/kernel": "^3.14.0",
     "spryker/shipment": "^6.4.0"
   },
