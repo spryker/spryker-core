@@ -2,13 +2,26 @@
 <config>
     <sales>
         <pages>
-            <index>
+            <reclamations>
                 <label>Reclamations</label>
                 <title>Reclamations</title>
                 <bundle>sales-reclamation</bundle>
                 <controller>index</controller>
                 <action>index</action>
-            </index>
+                <visible>1</visible>
+
+                <pages>
+                    <create>
+                        <label>Create reclamation</label>
+                        <title>Create reclamation</title>
+                        <bundle>sales-reclamation</bundle>
+                        <controller>create</controller>
+                        <action>index</action>
+                        <visible>o</visible>
+                    </create>
+                </pages>
+
+            </reclamations>
         </pages>
     </sales>
 </config>
