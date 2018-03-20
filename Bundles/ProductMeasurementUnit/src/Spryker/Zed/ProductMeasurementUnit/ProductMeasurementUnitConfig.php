@@ -13,10 +13,10 @@ class ProductMeasurementUnitConfig extends AbstractBundleConfig
 {
     const MEASUREMENT_UNIT_EXCHANGE_COLLECTION = [
         'KILO' => [
-            'GRAM' => [1000, 0],
+            'GRAM' => [1000, 1],
         ],
         'GRAM' => [
-            'KILO' => [1, 3],
+            'KILO' => [1, 1000],
         ],
     ];
 }
