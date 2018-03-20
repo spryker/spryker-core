@@ -10,27 +10,27 @@ namespace Spryker\Zed\CompanyRole\Persistence\Mapper;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Generated\Shared\Transfer\SpyCompanyRoleEntityTransfer;
+use Orm\Zed\CompanyRole\Persistence\SpyCompanyRole;
 
 class CompanyRolePermissionMapper implements CompanyRolePermissionMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyCompanyRoleEntityTransfer $companyRoleEntityTransfer
+     * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole $spyCompanyRole
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
     public function hydratePermissionCollection(
-        SpyCompanyRoleEntityTransfer $companyRoleEntityTransfer,
+        SpyCompanyRole $spyCompanyRole,
         CompanyRoleTransfer $companyRoleTransfer
     ): CompanyRoleTransfer {
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 
-        foreach ($companyRoleEntityTransfer->getSpyCompanyRoleToPermissions() as $roleToPermission) {
+        foreach ($spyCompanyRole->getSpyCompanyRoleToPermissionsJoinPermission() as $spyCompanyRoleToPermission) {
             $permissionTransfer = (new PermissionTransfer())
-                ->setIdPermission($roleToPermission->getFkPermission())
-                ->setConfiguration(\json_decode($roleToPermission->getConfiguration(), true))
-                ->setKey($roleToPermission->getPermission()->getKey());
+                ->setIdPermission($spyCompanyRoleToPermission->getFkPermission())
+                ->setConfiguration(\json_decode($spyCompanyRoleToPermission->getConfiguration(), true))
+                ->setKey($spyCompanyRoleToPermission->getPermission()->getKey());
 
             $permissionCollectionTransfer->addPermission($permissionTransfer);
         }

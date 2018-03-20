@@ -10,10 +10,11 @@ namespace Spryker\Zed\CompanyRole\Persistence;
 use Generated\Shared\Transfer\CompanyRoleCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery;
+use Orm\Zed\CompanyRole\Persistence\SpyCompanyRole;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -34,11 +35,9 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
             ->createCompanyRoleQuery()
             ->filterByIdCompanyRole($companyRoleTransfer->getIdCompanyRole());
 
-        $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+        $spyCompanyRole = $this->buildQueryFromCriteria($query)->findOne();
 
-        return $this->getFactory()
-            ->createCompanyRoleMapper()
-            ->mapEntityTransferToCompanyRoleTransfer($entityTransfer, $companyRoleTransfer);
+        return $this->prepareCompanyRoleTransfer($spyCompanyRole);
     }
 
     /**
@@ -61,18 +60,19 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
 
         $companyRoleToPermissionEntities = $this->buildQueryFromCriteria($query)->find();
 
-        //mapper
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
         foreach ($companyRoleToPermissionEntities as $companyRoleToPermissionEntity) {
             $permissionTransfer = new PermissionTransfer();
 
-            $configuration = \json_decode($companyRoleToPermissionEntity->getConfiguration());
-            if (json_last_error() === \JSON_ERROR_NONE) {
-                $configuration = [];
-            }
-
-            $permissionTransfer->setConfiguration($configuration);
             $permissionTransfer->setKey($companyRoleToPermissionEntity->getPermission()->getKey());
+
+            $permissionTransfer->setConfigurationSignature(
+                $this->jsonDecode($companyRoleToPermissionEntity->getPermission()->getConfigurationSignature())
+            );
+
+            $permissionTransfer->setConfiguration(
+                $this->jsonDecode($companyRoleToPermissionEntity->getConfiguration())
+            );
 
             $permissionCollectionTransfer->addPermission($permissionTransfer);
         }
@@ -81,13 +81,67 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     }
 
     /**
+     * @param int $idCompanyRole
+     * @param int $idPermission
+     *
+     * @return \Generated\Shared\Transfer\PermissionTransfer
+     */
+    public function findPermissionsByIdCompanyRoleByIdPermission(int $idCompanyRole, int $idPermission): PermissionTransfer
+    {
+        $query = $this->getFactory()
+            ->createCompanyRoleToPermissionQuery()
+            ->filterByFkCompanyRole($idCompanyRole)
+            ->filterByFkPermission($idPermission)
+            ->joinWithPermission();
+
+        $companyRoleToPermissionEntity = $this->buildQueryFromCriteria($query)->findOne();
+
+        $permissionTransfer = new PermissionTransfer();
+
+        if (!$companyRoleToPermissionEntity) {
+            return $permissionTransfer;
+        }
+
+        $permissionTransfer->setKey($companyRoleToPermissionEntity->getPermission()->getKey());
+        $permissionTransfer->setIdPermission($companyRoleToPermissionEntity->getFkPermission());
+        $permissionTransfer->setIdCompanyRole($companyRoleToPermissionEntity->getFkCompanyRole());
+
+        $permissionTransfer->setConfigurationSignature(
+            $this->jsonDecode($companyRoleToPermissionEntity->getPermission()->getConfigurationSignature())
+        );
+
+        $permissionTransfer->setConfiguration(
+            $this->jsonDecode($companyRoleToPermissionEntity->getConfiguration())
+        );
+
+        return $permissionTransfer;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return array
+     */
+    protected function jsonDecode($value)
+    {
+        $decodedValue = \json_decode($value, true);
+
+        if (json_last_error() === \JSON_ERROR_NONE) {
+            return $decodedValue;
+        }
+
+        return [];
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
      */
     public function findCompanyRole(): CompanyRoleCollectionTransfer
     {
-        $query = SpyCompanyRoleQuery::create()
+        $query = $this->getFactory()
+            ->createCompanyRoleQuery()
             ->joinWithSpyCompanyRoleToPermission()
-            ->useSpyCompanyRoleToPermissionQuery()
+                ->useSpyCompanyRoleToPermissionQuery()
                 ->joinWithPermission()
             ->endUse();
 
@@ -95,22 +149,8 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
 
         $companyRoleCollectionTransfer = new CompanyRoleCollectionTransfer();
 
-        /** @var \Generated\Shared\Transfer\SpyCompanyRoleEntityTransfer $companyRoleEntityTransfer */
-        foreach ($companyRoleEntityTransfers as $companyRoleEntityTransfer) {
-            $companyRoleTransfer = (new CompanyRolePersistenceFactory)
-                ->createCompanyRoleMapper()
-                ->mapEntityTransferToCompanyRoleTransfer(
-                    $companyRoleEntityTransfer,
-                    new CompanyRoleTransfer()
-                );
-
-            $companyRoleTransfer = (new CompanyRolePersistenceFactory())
-                ->createCompanyRolePermissionMapper()
-                ->hydratePermissionCollection(
-                    $companyRoleEntityTransfer,
-                    $companyRoleTransfer
-                );
-
+        foreach ($companyRoleEntityTransfers as $spyCompanyRole) {
+            $companyRoleTransfer = $this->prepareCompanyRoleTransfer($spyCompanyRole);
             $companyRoleCollectionTransfer->addRole($companyRoleTransfer);
         }
 
@@ -136,7 +176,8 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         foreach ($companyRoleToPermissionEntities as $roleToPermissionEntity) {
             $permissionTransfer = (new PermissionTransfer())
                 ->setIdPermission($roleToPermissionEntity->getFkPermission())
-                ->setConfiguration(\json_decode($roleToPermissionEntity->getConfiguration(), true))
+                ->setConfiguration($this->jsonDecode($roleToPermissionEntity->getConfiguration()))
+                ->setConfigurationSignature($this->jsonDecode($roleToPermissionEntity->getPermission()->getConfigurationSignature()))
                 ->setKey($roleToPermissionEntity->getPermission()->getKey());
 
             $permissionCollectionTransfer->addPermission($permissionTransfer);
@@ -153,8 +194,6 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
     public function getCompanyRoleCollection(
         CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
     ): CompanyRoleCollectionTransfer {
-        $companyRoleCriteriaFilterTransfer->requireIdCompany();
-
         $query = $this->getFactory()
             ->createCompanyRoleQuery();
 
@@ -172,27 +211,41 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         $collection = $this->getPaginatedCollection($collection, $companyRoleCriteriaFilterTransfer->getPagination());
 
         $collectionTransfer = new CompanyRoleCollectionTransfer();
-        foreach ($collection as $companyRoleEntity) {
-            $companyRoleTransfer = $this->getFactory()
-                ->createCompanyRoleMapper()
-                ->mapEntityTransferToCompanyRoleTransfer(
-                    $companyRoleEntity,
-                    new CompanyRoleTransfer()
-                );
-
-            $companyRoleTransfer = $this->getFactory()
-                ->createCompanyRolePermissionMapper()
-                ->hydratePermissionCollection(
-                    $companyRoleEntity,
-                    $companyRoleTransfer
-                );
-
+        foreach ($collection as $spyCompanyRole) {
+            $companyRoleTransfer = $this->prepareCompanyRoleTransfer($spyCompanyRole);
             $collectionTransfer->addRole($companyRoleTransfer);
         }
 
         $collectionTransfer->setPagination($companyRoleCriteriaFilterTransfer->getPagination());
 
         return $collectionTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $criteria
+     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function buildQueryFromCriteria(ModelCriteria $criteria, FilterTransfer $filterTransfer = null): ModelCriteria
+    {
+        if (!$filterTransfer) {
+            return $criteria;
+        }
+
+        if ($filterTransfer->getLimit()) {
+            $criteria->setLimit($filterTransfer->getLimit());
+        }
+
+        if ($filterTransfer->getOffset()) {
+            $criteria->setOffset($filterTransfer->getOffset());
+        }
+
+        if ($filterTransfer->getOrderBy() && $filterTransfer->getOrderDirection()) {
+            $criteria->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection());
+        }
+
+        return $criteria;
     }
 
     /**
@@ -226,5 +279,65 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         }
 
         return $query->find();
+    }
+
+    /**
+     * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole $spyCompanyRole
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
+     */
+    protected function prepareCompanyRoleTransfer(SpyCompanyRole $spyCompanyRole): CompanyRoleTransfer
+    {
+        $companyRoleTransfer = $this->getFactory()
+            ->createCompanyRoleMapper()
+            ->mapEntityToCompanyRoleTransfer(
+                $spyCompanyRole,
+                new CompanyRoleTransfer()
+            );
+
+        $companyRoleTransfer = $this->getFactory()
+            ->createCompanyRolePermissionMapper()
+            ->hydratePermissionCollection(
+                $spyCompanyRole,
+                $companyRoleTransfer
+            );
+
+        $companyRoleTransfer = $this->getFactory()
+            ->createCompanyRoleCompanyUserMapper()
+            ->hydrateCompanyUserCollection(
+                $spyCompanyRole,
+                $companyRoleTransfer
+            );
+
+        return $companyRoleTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer
+     */
+    public function getDefaultCompanyRole(): CompanyRoleTransfer
+    {
+        $query = $this->getFactory()
+            ->createCompanyRoleQuery()
+            ->filterByIsDefault(true);
+
+        $spyCompanyRole = $this->buildQueryFromCriteria($query)->findOne();
+
+        return $this->prepareCompanyRoleTransfer($spyCompanyRole);
+    }
+
+    /**
+     * @param int $idCompanyRole
+     *
+     * @return bool
+     */
+    public function hasUsers(int $idCompanyRole): bool
+    {
+        $spyCompanyRoleToCompanyUser = $this->getFactory()
+            ->createCompanyRoleToCompanyUserQuery()
+            ->filterByFkCompanyRole($idCompanyRole)
+            ->findOne();
+
+        return ($spyCompanyRoleToCompanyUser !== null);
     }
 }

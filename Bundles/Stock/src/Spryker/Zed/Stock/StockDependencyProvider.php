@@ -55,7 +55,7 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStockUpdatePlugins(Container $container): \Spryker\Zed\Kernel\Container
+    protected function addStockUpdatePlugins(Container $container): Container
     {
         $container[static::PLUGINS_STOCK_UPDATE] = function (Container $container) {
             return $this->getStockUpdateHandlerPlugins($container);
@@ -68,7 +68,7 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductFacade(Container $container): \Spryker\Zed\Kernel\Container
+    protected function addProductFacade(Container $container): Container
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new StockToProductBridge($container->getLocator()->product()->facade());
@@ -81,7 +81,7 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addTouchFacade(Container $container): \Spryker\Zed\Kernel\Container
+    protected function addTouchFacade(Container $container): Container
     {
         $container[static::FACADE_TOUCH] = function (Container $container) {
             return new StockToTouchBridge($container->getLocator()->touch()->facade());

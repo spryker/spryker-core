@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="idCompanyBusinessUnit" dataBuilderRule="="/>
+        <property name="name" dataBuilderRule="word"/>
+        <property name="email" dataBuilderRule="email"/>
+        <property name="phone" dataBuilderRule="e164PhoneNumber"/>
+        <property name="externalUrl" dataBuilderRule="url"/>
+        <property name="fkCompany" dataBuilderRule="="/>
+    </transfer>
+
+</transfers>
+

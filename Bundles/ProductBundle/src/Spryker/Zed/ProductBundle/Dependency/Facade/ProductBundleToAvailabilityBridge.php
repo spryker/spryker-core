@@ -81,7 +81,7 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
             return $this->availabilityFacade->isProductSellableForStore($sku, $quantity, $storeTransfer);
         }
 
-        return $this->availabilityFacade->calculateStockForProduct($sku);
+        return $this->availabilityFacade->isProductSellable($sku, $quantity);
     }
 
     /**
