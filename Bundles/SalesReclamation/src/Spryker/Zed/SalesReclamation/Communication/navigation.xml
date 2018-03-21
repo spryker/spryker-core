@@ -2,7 +2,7 @@
 <config>
     <sales>
         <pages>
-            <reclamations>
+            <sales-reclamations>
                 <label>Reclamations</label>
                 <title>Reclamations</title>
                 <bundle>sales-reclamation</bundle>
@@ -18,9 +18,17 @@
                         <action>index</action>
                         <visible>0</visible>
                     </create>
+
+                    <view>
+                        <title>View reclamation</title>
+                        <bundle>sales-reclamation</bundle>
+                        <controller>detail</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </view>
                 </pages>
 
-            </reclamations>
+            </sales-reclamations>
         </pages>
     </sales>
 </config>

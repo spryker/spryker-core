@@ -18,7 +18,7 @@ use Spryker\Zed\SalesReclamation\SalesReclamationConfig;
 class ReclamationTable extends AbstractTable
 {
     public const COL_ACTIONS = 'COL_ACTIONS';
-    const URL_RECLAMATION_DETAIL = '/sales-reclamation/view';
+    public const URL_RECLAMATION_DETAIL = '/sales-reclamation/detail';
 
     /**
      * @var \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface
@@ -142,7 +142,7 @@ class ReclamationTable extends AbstractTable
 
         $buttons[] = $this->generateViewButton(
             Url::generate(static::URL_RECLAMATION_DETAIL, [
-                SalesReclamationConfig::PARAM_ID_SALES_ORDER => $idReclamation,
+                SalesReclamationConfig::PARAM_ID_RECLAMATION => $idReclamation,
             ]),
             'View'
         );
