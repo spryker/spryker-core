@@ -8,13 +8,18 @@
 namespace Spryker\Zed\SalesReclamation\Communication\Table;
 
 use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\SalesReclamation\Dependency\Service\SalesReclamationToUtilDateTimeServiceInterface;
 use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface;
+use Spryker\Zed\SalesReclamation\SalesReclamationConfig;
 
 class ReclamationTable extends AbstractTable
 {
+    public const COL_ACTIONS = 'COL_ACTIONS';
+    const URL_RECLAMATION_DETAIL = '/sales-reclamation/view';
+
     /**
      * @var \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface
      */
@@ -47,6 +52,7 @@ class ReclamationTable extends AbstractTable
         $config->setHeader($this->getHeaderFields());
 
         $config->addRawColumn(SpySalesReclamationTableMap::COL_STATE);
+        $config->addRawColumn(static::COL_ACTIONS);
 
         return $config;
     }
@@ -62,6 +68,7 @@ class ReclamationTable extends AbstractTable
             SpySalesReclamationTableMap::COL_CUSTOMER_NAME => 'Customer',
             SpySalesReclamationTableMap::COL_STATE => 'State',
             SpySalesReclamationTableMap::COL_FK_SALES_ORDER => 'Order id',
+            static::COL_ACTIONS => 'Actions',
         ];
     }
 
@@ -97,6 +104,7 @@ class ReclamationTable extends AbstractTable
                     $item[SpySalesReclamationTableMap::COL_STATE]
                 ),
                 SpySalesReclamationTableMap::COL_FK_SALES_ORDER => $item[SpySalesReclamationTableMap::COL_FK_SALES_ORDER],
+                static::COL_ACTIONS => implode(' ', $this->createActions($item[SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION])),
             ];
         }
 
@@ -108,7 +116,7 @@ class ReclamationTable extends AbstractTable
      *
      * @return string
      */
-    public function createStatusLabel(string $state): string
+    protected function createStatusLabel(string $state): string
     {
         $statusLabel = '';
         switch ($state) {
@@ -121,5 +129,24 @@ class ReclamationTable extends AbstractTable
         }
 
         return $statusLabel;
+    }
+
+    /**
+     * @param int $idReclamation
+     *
+     * @return string[]
+     */
+    protected function createActions(int $idReclamation): array
+    {
+        $buttons = [];
+
+        $buttons[] = $this->generateViewButton(
+            Url::generate(static::URL_RECLAMATION_DETAIL, [
+                SalesReclamationConfig::PARAM_ID_SALES_ORDER => $idReclamation,
+            ]),
+            'View'
+        );
+
+        return $buttons;
     }
 }
