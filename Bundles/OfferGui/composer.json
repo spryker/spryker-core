@@ -3,6 +3,7 @@
   "description": "OfferGui module",
   "license": "proprietary",
   "require": {
+    "spryker/gui": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
