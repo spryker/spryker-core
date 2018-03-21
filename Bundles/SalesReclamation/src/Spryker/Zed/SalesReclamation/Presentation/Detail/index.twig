@@ -4,5 +4,10 @@
     Reclamation id: {{ reclamation.idSalesReclamation }}<br />
     Order id: {{ reclamation.fkSalesOrder }}
 
+    <div id="items">
+        {% include '@SalesReclamation/Detail/boxes/items.twig' with {
+            'reclamation': reclamation,
+        } %}
+    </div>
 
 {% endblock %}

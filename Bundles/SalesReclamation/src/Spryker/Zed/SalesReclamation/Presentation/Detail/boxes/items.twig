@@ -1,0 +1,21 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Order Items' } %}
+
+    {% block widget_content %}
+
+        <table class="footable table toggle-arrow-tiny" data-qa="order-item-list">
+            <thead>
+            <tr class="text-left">
+                <th></th>
+                <th colspan="2">{{ 'Product' | trans }}</th>
+                <th>{{ 'Unit Price' | trans }} <small>({{ order.priceMode }})</small></th>
+                <th>{{ 'Item total' | trans }}</th>
+                <th>{{ 'State' | trans }}</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+          {% embed '@SalesReclamation/Create/boxes/no-group-items.twig' with {items: reclamation.items} %}{% endembed %}
+        </table>
+
+    {% endblock %}
+
+{% endembed %}
