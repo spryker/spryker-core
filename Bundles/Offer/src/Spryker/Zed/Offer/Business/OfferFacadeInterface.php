@@ -25,6 +25,9 @@ interface OfferFacadeInterface
     public function getOffers(OrderListTransfer $offerList): OrderListTransfer;
 
     /**
+     * Specification:
+     *  - Set is_offer flat to false for offer to make it a usual order.
+     *
      * @api
      *
      * @param int $idOffer
