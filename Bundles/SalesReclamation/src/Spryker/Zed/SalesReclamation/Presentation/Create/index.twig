@@ -3,9 +3,15 @@
 {% block content %}
     Reclamation for order {{ order.orderReference }}
 
-    <div id="items">
-        {%- include '@SalesReclamation/Create/boxes/items.twig' with {
-            'order': order,
-        } -%}
-    </div>
+    <form action="/sales-reclamation/create" method="POST">
+        <input type="hidden" name="id-sales-order" value="{{ order.idSalesOrder }}" />
+
+        <div id="items">
+            {%- include '@SalesReclamation/Create/boxes/items.twig' with {
+                'order': order,
+            } -%}
+        </div>
+
+        <input type="submit" value="Create Reclamation" class="btn btn-primary"/>
+    </form>
 {% endblock %}

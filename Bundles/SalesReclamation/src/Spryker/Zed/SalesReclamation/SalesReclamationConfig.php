@@ -12,4 +12,5 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SalesReclamationConfig extends AbstractBundleConfig
 {
     public const PARAM_ID_SALES_ORDER = 'id-sales-order';
+    public const PARAM_IDS_SALES_ORDER_ITEMS = 'id-order-item';
 }

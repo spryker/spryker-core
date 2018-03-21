@@ -5,7 +5,7 @@
 {% set image = image %}
 
 <td class="item-checker">
-    <input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check" />
+    <input type="checkbox" name="id-order-item[]" value="{{ orderItem.idSalesOrderItem }}" class="item-check" />
 </td>
 {% if displayImage %}
     <td {% if group %}rowspan="{{ itemCount }}" {% endif %}>
@@ -66,7 +66,6 @@
           priceToPay: priceToPay
       } %} {% endembed %}
     </td>
-{% else %}
 {% endif %}
 <td rowspan="{{ numberOfItemAdditions }}" class="state-history">
     <div>
