@@ -29,8 +29,12 @@ class DetailController extends AbstractController
     {
         $idReclamation = $this->castId($request->get(SalesReclamationConfig::PARAM_ID_RECLAMATION));
 
+        $reclamation = $this->getQueryContainer()
+            ->queryReclamations()
+            ->findOneByIdSalesReclamation($idReclamation);
+
         return $this->viewResponse([
-            'idReclamation' => $idReclamation,
+            'reclamation' => $reclamation,
         ]);
     }
 
@@ -59,6 +63,7 @@ class DetailController extends AbstractController
 
         $reclamation->setState(SpySalesReclamationTableMap::COL_STATE_CLOSE);
         $reclamation->save();
+
         $this->addSuccessMessage(sprintf('Reclamation with id %s closed', $idReclamation));
 
         return $this->redirectResponse(

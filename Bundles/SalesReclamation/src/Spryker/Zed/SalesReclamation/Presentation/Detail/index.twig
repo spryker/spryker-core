@@ -1,7 +1,8 @@
 {% extends '@Application/Layout/layout.twig' %}
 
 {% block content %}
-    Reclamation id: {{ idReclamation }}
+    Reclamation id: {{ reclamation.idSalesReclamation }}<br />
+    Order id: {{ reclamation.fkSalesOrder }}
 
 
 {% endblock %}
