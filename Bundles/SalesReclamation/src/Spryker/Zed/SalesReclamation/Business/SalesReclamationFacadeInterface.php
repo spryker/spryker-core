@@ -7,18 +7,17 @@
 
 namespace Spryker\Zed\SalesReclamation\Business;
 
-use Generated\Shared\Transfer\OrderTransfer;
-use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation;
+use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
+use Generated\Shared\Transfer\ReclamationTransfer;
 
 interface SalesReclamationFacadeInterface
 {
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int[] ...$idsOrderItem
+     * @param \Generated\Shared\Transfer\ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer
      *
-     * @return null|\Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation
+     * @return null|\Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function createReclamation(OrderTransfer $orderTransfer, int ... $idsOrderItem): ?SpySalesReclamation;
+    public function createReclamation(ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer): ?ReclamationTransfer;
 }

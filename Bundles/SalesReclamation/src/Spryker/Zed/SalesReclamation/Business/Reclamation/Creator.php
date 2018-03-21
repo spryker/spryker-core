@@ -7,23 +7,29 @@
 
 namespace Spryker\Zed\SalesReclamation\Business\Reclamation;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
+use Generated\Shared\Transfer\ReclamationItemTransfer;
+use Generated\Shared\Transfer\ReclamationTransfer;
+use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationItemTableMap;
 use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap;
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation;
+use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationItem;
 
 class Creator
 {
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int[] ...$idsOrderItem
+     * @param \Generated\Shared\Transfer\ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer
      *
-     * @return null|\Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation
+     * @return null|\Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function createReclamation(OrderTransfer $orderTransfer, int ... $idsOrderItem): ?SpySalesReclamation
+    public function createReclamation(ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer): ?ReclamationTransfer
     {
-        if (!$idsOrderItem) {
-            return null;
-        }
+        $reclamationCreateRequestTransfer
+            ->requireOrder()
+            ->requireOrderItems();
+
+        $orderTransfer = $reclamationCreateRequestTransfer->getOrder();
 
         $salutation = $orderTransfer->getSalutation();
 
@@ -41,6 +47,49 @@ class Creator
 
         $spySaleReclamation->save();
 
-        return $spySaleReclamation;
+        $reclamationTransfer = new ReclamationTransfer();
+        $reclamationTransfer->setOrder($orderTransfer);
+        $reclamationTransfer->setCustomerName($customer);
+        $reclamationTransfer->setIdSalesReclamation($spySaleReclamation->getIdSalesReclamation());
+        $reclamationTransfer->setStatus($spySaleReclamation->getState());
+
+        $orderItemsTransfer = $reclamationCreateRequestTransfer->getOrderItems();
+        foreach ($orderItemsTransfer as $orderItemTransfer) {
+            $reclamationTransfer = $this->addReclamationItem(
+                $spySaleReclamation,
+                $orderItemTransfer,
+                $reclamationTransfer
+            );
+        }
+
+        return $reclamationTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation $spySaleReclamation
+     * @param \Generated\Shared\Transfer\ItemTransfer $orderItemTransfer
+     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
+     */
+    protected function addReclamationItem(
+        SpySalesReclamation $spySaleReclamation,
+        ItemTransfer $orderItemTransfer,
+        ReclamationTransfer $reclamationTransfer
+    ): ReclamationTransfer {
+        $orderItemTransfer->requireIdSalesOrderItem();
+
+        $spySaleReclamationItem = new SpySalesReclamationItem();
+        $spySaleReclamationItem->setReclamation($spySaleReclamation);
+        $spySaleReclamationItem->setFkSalesOrderItem($orderItemTransfer->getIdSalesOrderItem());
+        $spySaleReclamationItem->setState(SpySalesReclamationItemTableMap::COL_STATE_OPEN);
+
+        $spySaleReclamationItem->save();
+
+        $reclamationItemTransfer = new ReclamationItemTransfer();
+        $reclamationItemTransfer->setOrderItem($orderItemTransfer);
+        $reclamationTransfer->addReclamationItem($reclamationItemTransfer);
+
+        return $reclamationTransfer;
     }
 }

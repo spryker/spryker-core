@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\SalesReclamation\Communication\Controller;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
+use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\SalesReclamation\SalesReclamationConfig;
@@ -46,13 +49,15 @@ class CreateController extends AbstractController
             return $this->showForm($orderTransfer);
         }
 
-        $reclamationTransfer = $this->getFacade()->createReclamation($orderTransfer, ...$idsOrderItem);
+        $reclamationTransfer = $this->createReclamation($orderTransfer, ...$idsOrderItem);
 
-        $this->addSuccessMessage(sprintf(
-            'Reclamation id:%s for order %s sucessfully created',
-            $reclamationTransfer->getIdSalesReclamation(),
-            $orderTransfer->getOrderReference()
-        ));
+        if ($reclamationTransfer) {
+            $this->addSuccessMessage(sprintf(
+                'Reclamation id:%s for order %s sucessfully created',
+                $reclamationTransfer->getIdSalesReclamation(),
+                $orderTransfer->getOrderReference()
+            ));
+        }
 
         return $this->redirectResponse(
             Url::generate(
@@ -71,5 +76,61 @@ class CreateController extends AbstractController
         return $this->viewResponse([
             'order' => $orderTransfer,
         ]);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param int[] ...$idsOrderItem
+     *
+     * @return null|\Generated\Shared\Transfer\ReclamationTransfer
+     */
+    protected function createReclamation(OrderTransfer $orderTransfer, int ... $idsOrderItem): ?ReclamationTransfer
+    {
+        $reclamationCreateRequestTransfer = new ReclamationCreateRequestTransfer();
+        $reclamationCreateRequestTransfer->setOrder($orderTransfer);
+
+        foreach ($idsOrderItem as $idOrderItem) {
+            $orderItemsTransfer = $this->getOrderItemById($orderTransfer, $idOrderItem);
+
+            if (!$orderItemsTransfer) {
+                $this->addErrorMessage(sprintf(
+                    'OrderItem with id %s not belong to order %s',
+                    $idOrderItem,
+                    $orderTransfer->getIdSalesOrder()
+                ));
+
+                return null;
+            }
+
+            $reclamationCreateRequestTransfer->addItem($orderItemsTransfer);
+        }
+
+        $reclamationTransfer = $this->getFacade()
+            ->createReclamation($reclamationCreateRequestTransfer);
+
+        if (!$reclamationTransfer) {
+            $this->addErrorMessage('Can not create reclamation');
+        }
+
+        return $reclamationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param int $idOrderItem
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     */
+    protected function getOrderItemById(OrderTransfer $orderTransfer, int $idOrderItem): ?ItemTransfer
+    {
+        foreach ($orderTransfer->getItems() as $orderItemTransfer) {
+            if ($orderItemTransfer->getIdSalesOrderItem() === $idOrderItem) {
+                return $orderItemTransfer;
+            }
+        }
+
+        return null;
     }
 }
