@@ -10,6 +10,7 @@ namespace Spryker\Zed\SalesReclamation\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SalesReclamation\Communication\Table\ReclamationTable;
 use Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface;
+use Spryker\Zed\SalesReclamation\Dependency\Service\SalesReclamationToUtilDateTimeServiceInterface;
 use Spryker\Zed\SalesReclamation\SalesReclamationDependencyProvider;
 
 /**
@@ -32,7 +33,16 @@ class SalesReclamationCommunicationFactory extends AbstractCommunicationFactory
     public function createReclamationTable(): ReclamationTable
     {
         return new ReclamationTable(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getDateTimeService()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReclamation\Dependency\Service\SalesReclamationToUtilDateTimeServiceInterface
+     */
+    public function getDateTimeService(): SalesReclamationToUtilDateTimeServiceInterface
+    {
+        return $this->getProvidedDependency(SalesReclamationDependencyProvider::SERVICE_DATETIME);
     }
 }

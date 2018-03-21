@@ -10,6 +10,7 @@ namespace Spryker\Zed\SalesReclamation\Communication\Table;
 use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\SalesReclamation\Dependency\Service\SalesReclamationToUtilDateTimeServiceInterface;
 use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface;
 
 class ReclamationTable extends AbstractTable
@@ -20,11 +21,20 @@ class ReclamationTable extends AbstractTable
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\SalesReclamation\Dependency\Service\SalesReclamationToUtilDateTimeServiceInterface
      */
-    public function __construct(SalesReclamationQueryContainerInterface $queryContainer)
-    {
+    protected $dateTimeService;
+
+    /**
+     * @param \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\SalesReclamation\Dependency\Service\SalesReclamationToUtilDateTimeServiceInterface $dateTimeService
+     */
+    public function __construct(
+        SalesReclamationQueryContainerInterface $queryContainer,
+        SalesReclamationToUtilDateTimeServiceInterface $dateTimeService
+    ) {
         $this->queryContainer = $queryContainer;
+        $this->dateTimeService = $dateTimeService;
     }
 
     /**
@@ -46,6 +56,7 @@ class ReclamationTable extends AbstractTable
     {
         return [
             SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION => '#',
+            SpySalesReclamationTableMap::COL_CREATED_AT => 'Created',
             SpySalesReclamationTableMap::COL_FK_SALES_ORDER => 'Order id',
         ];
     }
@@ -74,6 +85,9 @@ class ReclamationTable extends AbstractTable
         foreach ($queryResults as $item) {
             $results[] = [
                 SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION => $item[SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION],
+                SpySalesReclamationTableMap::COL_CREATED_AT => $this->dateTimeService->formatDateTime(
+                    $item[SpySalesReclamationTableMap::COL_CREATED_AT]
+                ),
                 SpySalesReclamationTableMap::COL_FK_SALES_ORDER => $item[SpySalesReclamationTableMap::COL_FK_SALES_ORDER],
             ];
         }
