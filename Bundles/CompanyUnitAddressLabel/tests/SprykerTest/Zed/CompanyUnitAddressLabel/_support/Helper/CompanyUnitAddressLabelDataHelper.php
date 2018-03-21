@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\SpyCompanyUnitAddressLabelEntityTransfer;
 use Generated\Shared\Transfer\SpyRegionEntityTransfer;
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabel;
+use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelToCompanyUnitAddress;
 use Orm\Zed\Country\Persistence\SpyRegionQuery;
 use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepository;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -73,6 +74,22 @@ class CompanyUnitAddressLabelDataHelper extends Module
         return $this->getCountryFacade()->getCountryByIso2Code(
             (new CountryBuilder())->build()->getIso2Code()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return void
+     */
+    public function haveLabelAddressRelations(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
+    {
+        $labelAddressRelation = new SpyCompanyUnitAddressLabelToCompanyUnitAddress();
+        $labels = $this->haveLabelCollection();
+        $labelAddressRelation->setFkCompanyUnitAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
+        foreach ($labels->getLabels() as $labelTransfer) {
+            $labelAddressRelation->setFkCompanyUnitAddressLabel($labelTransfer->getIdCompanyUnitAddressLabel());
+            $labelAddressRelation->save();
+        }
     }
 
     /**

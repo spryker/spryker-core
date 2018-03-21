@@ -49,6 +49,9 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
         $facade = $this->tester->getCompanyUnitAddressLabelFacade();
         $companyUnitAddressTransfer = $this->tester->haveExistingCompanyUnitAddressTransfer();
         $this->assertEmpty($companyUnitAddressTransfer->getLabelCollection());
+
+        $this->tester->haveLabelAddressRelations($companyUnitAddressTransfer);
+
         $companyUnitAddressTransfer = $facade->hydrateCompanyUnitAddressWithLabelCollection($companyUnitAddressTransfer);
         $this->assertNotEmpty($companyUnitAddressTransfer->getLabelCollection());
         $this->assertNotEmpty($companyUnitAddressTransfer->getLabelCollection()->getLabels());
