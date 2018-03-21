@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesReclamation\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\SalesReclamation\SalesReclamationConfig;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\SalesReclamation\Business\SalesReclamationFacadeInterface getFacade()
@@ -17,12 +19,17 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 class CreateController extends AbstractController
 {
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $idSalesOrder = $request->query->get(SalesReclamationConfig::PARAM_ID_SALES_ORDER);
+
         return $this->viewResponse([
             'test' => 'Greetings!',
+            'idSalesOrder' => $idSalesOrder,
         ]);
     }
 }
