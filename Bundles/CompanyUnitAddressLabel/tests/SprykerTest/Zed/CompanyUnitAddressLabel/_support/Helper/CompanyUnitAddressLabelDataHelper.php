@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\SpyCompanyUnitAddressLabelEntityTransfer;
 use Generated\Shared\Transfer\SpyRegionEntityTransfer;
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
+use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabel;
 use Orm\Zed\Country\Persistence\SpyRegionQuery;
 use Propel\Runtime\Exception\EntityNotFoundException;
 use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepository;
@@ -135,27 +136,17 @@ class CompanyUnitAddressLabelDataHelper extends Module
      */
     public function haveLabelCollection()
     {
-        $repository = $this->createLabelRepository();
-        $labelCollection = $repository->findCompanyUnitAddressLabels();
-        $labels = $labelCollection->getLabels();
-
-        if (empty($labels[0])) {
-            throw new EntityNotFoundException(
-                "
-                Label entity is supposed to be in table, but was not found.
-                Please import labels before running the test.
-                "
-            );
-        }
-        $label = $labels[0];
+        $labelEntity = new SpyCompanyUnitAddressLabel();
+        $labelEntity->setName("test label");
+        $labelEntity->save();
 
         return (new CompanyUnitAddressLabelCollectionTransfer())
             ->setLabels(
                 new ArrayObject(
                     [
                         (new SpyCompanyUnitAddressLabelEntityTransfer())
-                            ->setName($label->getName())
-                            ->setIdCompanyUnitAddressLabel($label->getIdCompanyUnitAddressLabel()),
+                            ->setName($labelEntity->getName())
+                            ->setIdCompanyUnitAddressLabel($labelEntity->getIdCompanyUnitAddressLabel()),
                     ]
                 )
             );
