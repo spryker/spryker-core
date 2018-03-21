@@ -10,4 +10,23 @@
         <property name="precision" type="int" />
     </transfer>
 
+    <transfer name="ProductMeasurementUnit">
+        <property name="idProductMeasurementUnit" type="int" />
+        <property name="name" type="string" />
+        <property name="code" type="string" />
+        <property name="defaultPrecision" type="int" />
+    </transfer>
+
+    <transfer name="ProductMeasurementSalesUnit">
+        <property name="idProductMeasurementSalesUnit" type="int" />
+        <property name="factor" type="int" />
+        <property name="precision" type="int" />
+        <property name="productMeasurementUnit" type="ProductMeasurementUnit" />
+        <property name="value" type="int" />
+    </transfer>
+
+    <transfer name="Item">
+        <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit" />
+    </transfer>
+
 </transfers>
