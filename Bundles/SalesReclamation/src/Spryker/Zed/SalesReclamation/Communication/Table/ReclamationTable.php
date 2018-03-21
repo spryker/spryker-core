@@ -105,7 +105,10 @@ class ReclamationTable extends AbstractTable
                     $item[SpySalesReclamationTableMap::COL_STATE]
                 ),
                 SpySalesReclamationTableMap::COL_FK_SALES_ORDER => $item[SpySalesReclamationTableMap::COL_FK_SALES_ORDER],
-                static::COL_ACTIONS => implode(' ', $this->createActions($item[SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION])),
+                static::COL_ACTIONS => implode(
+                    ' ',
+                    $this->createActions($item[SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION])
+                ),
             ];
         }
 
