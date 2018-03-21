@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\PaymentTransfer;
 
 class DummyPaymentInvoiceFormDataProvider
 {
-
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
@@ -40,5 +39,4 @@ class DummyPaymentInvoiceFormDataProvider
 
         return $quoteTransfer;
     }
-
 }

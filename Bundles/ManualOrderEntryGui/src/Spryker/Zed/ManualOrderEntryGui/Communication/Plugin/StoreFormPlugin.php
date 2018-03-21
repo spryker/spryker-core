@@ -71,4 +71,16 @@ class StoreFormPlugin extends AbstractFormPlugin implements ManualOrderEntryForm
 
         return $quoteTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function handleDataStepEngine($quoteTransfer, &$form, $request)
+    {
+        return $this->handleData($quoteTransfer,$form, $request);
+    }
 }

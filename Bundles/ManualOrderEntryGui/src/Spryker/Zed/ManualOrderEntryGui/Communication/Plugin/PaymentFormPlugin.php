@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -14,17 +15,24 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PaymentFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
 {
-//    /**
-//     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface
-//     */
-//    protected $shipmentFacade;
+    /**
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToPaymentFacadeInterface
+     */
+    protected $paymentFacade;
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface $shipmentFacade
+     * @var \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginCollection
      */
-    public function __construct()
+    protected $subFormPlugins;
+
+    /**
+     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToPaymentFacadeInterface $paymentFacade
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginCollection $subFormPlugins
+     */
+    public function __construct($paymentFacade, $subFormPlugins)
     {
-//        $this->shipmentFacade = $shipmentFacade;
+        $this->paymentFacade = $paymentFacade;
+        $this->subFormPlugins = $subFormPlugins;
     }
 
     /**
@@ -43,18 +51,38 @@ class PaymentFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function handleData($quoteTransfer, &$form, $request)
     {
-//        $idShipmentMethod = (int)$quoteTransfer->getIdShipmentMethod();
-//        if ($idShipmentMethod) {
-//            $shipmentMethodTransfer = $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
-//            $shipmentTransfer = new ShipmentTransfer();
-//            $shipmentTransfer->setMethod($shipmentMethodTransfer);
-//
-//            $quoteTransfer->setShipment($shipmentTransfer);
-//        }
+        $paymentSelection = $quoteTransfer->getPayment()->getPaymentSelection();
+
+        foreach($this->subFormPlugins as $subFormPlugin) {
+            if ($paymentSelection == $subFormPlugin->getName()) {
+                $quoteTransfer->getPayment()
+                    ->setPaymentProvider($subFormPlugin->getPaymentProvider())
+                    ->setPaymentMethod($subFormPlugin->getPaymentMethod());
+
+                break;
+            }
+        }
+
+        $calculableObjectTransfer = new CalculableObjectTransfer();
+        $calculableObjectTransfer->setItems($quoteTransfer->getItems());
+        $calculableObjectTransfer->setTotals($quoteTransfer->getTotals());
+        $calculableObjectTransfer->setExpenses($quoteTransfer->getExpenses());
+        $calculableObjectTransfer->setPriceMode($quoteTransfer->getPriceMode());
+        $calculableObjectTransfer->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
+        $calculableObjectTransfer->setVoucherDiscounts($quoteTransfer->getVoucherDiscounts());
+        $calculableObjectTransfer->setCartRuleDiscounts($quoteTransfer->getCartRuleDiscounts());
+        $calculableObjectTransfer->setOriginalQuote($quoteTransfer);
+        $calculableObjectTransfer->setPromotionItems($quoteTransfer->getPromotionItems());
+        $calculableObjectTransfer->setGiftCards($quoteTransfer->getGiftCards());
+        $calculableObjectTransfer->setNotApplicableGiftCardCodes($quoteTransfer->getNotApplicableGiftCardCodes());
+        $calculableObjectTransfer->setPayments($quoteTransfer->getPayments());
+        $calculableObjectTransfer->setPayment($quoteTransfer->getPayment());
+
+        $this->paymentFacade->recalculatePayments($calculableObjectTransfer);
 
         return $quoteTransfer;
     }

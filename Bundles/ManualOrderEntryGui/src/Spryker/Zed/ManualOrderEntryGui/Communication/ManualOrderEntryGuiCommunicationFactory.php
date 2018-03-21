@@ -21,12 +21,14 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\PaymentDataP
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ProductCollectionDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ShipmentDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\StoreDataProvider;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\SummaryDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\VoucherDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Payment\PaymentType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ItemCollectionType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductCollectionType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Shipment\ShipmentType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Store\StoreType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Summary\SummaryType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Voucher\VoucherType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Service\StepEngine;
 use Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiDependencyProvider;
@@ -99,6 +101,14 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getPaymentFacade()
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_PAYMENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCheckoutFacadeInterface
+     */
+    public function getCheckoutFacade()
+    {
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_CHECKOUT);
     }
 
     /**
@@ -389,11 +399,11 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\VoucherDataProvider
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\SummaryDataProvider
      */
     public function createSummaryDataProvider()
     {
-        return new VoucherDataProvider();
+        return new SummaryDataProvider();
     }
 
     /**
@@ -406,7 +416,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
         $formDataProvider = $this->createSummaryDataProvider();
 
         return $this->getFormFactory()->create(
-            VoucherType::class,
+            SummaryType::class,
             $formDataProvider->getData($quoteTransfer),
             $formDataProvider->getOptions($quoteTransfer)
         );

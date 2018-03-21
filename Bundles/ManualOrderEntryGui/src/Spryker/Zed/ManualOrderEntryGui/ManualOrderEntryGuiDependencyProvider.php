@@ -17,8 +17,10 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\PaymentFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ProductFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ShipmentFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\StoreFormPlugin;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\SummaryFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\VoucherFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeBridge;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCheckoutFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCurrencyFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToDiscountFacadeBridge;
@@ -41,6 +43,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     const FACADE_SHIPMENT = 'MANUAL_ORDER_ENTRY_GUI:FACADE_SHIPMENT';
     const FACADE_MONEY = 'MANUAL_ORDER_ENTRY_GUI:FACADE_MONEY';
     const FACADE_PAYMENT = 'MANUAL_ORDER_ENTRY_GUI:FACADE_PAYMENT';
+    const FACADE_CHECKOUT = 'MANUAL_ORDER_ENTRY_GUI:FACADE_CHECKOUT';
 
     const PAYMENT_SUB_FORMS = 'PAYMENT SUB FORMS';
 
@@ -67,6 +70,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addShipmentFacade($container);
         $container = $this->addMoneyFacade($container);
         $container = $this->addPaymentFacade($container);
+        $container = $this->addCheckoutFacade($container);
 
         $container = $this->addPaymentSubFormPlugins($container);
 
@@ -208,6 +212,20 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addCheckoutFacade(Container $container)
+    {
+        $container[static::FACADE_CHECKOUT] = function (Container $container) {
+            return new ManualOrderEntryGuiToCheckoutFacadeBridge($container->getLocator()->checkout()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addPaymentSubFormPlugins(Container $container)
     {
         $container[static::PAYMENT_SUB_FORMS] = function () {
@@ -286,9 +304,13 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
                 $container[static::FACADE_DISCOUNT],
                 $container[static::FACADE_MESSENGER]
             ),
-            new AddressFormPlugin(),
+            new AddressFormPlugin($container[static::FACADE_CUSTOMER]),
             new ShipmentFormPlugin($container[static::FACADE_SHIPMENT]),
-            new PaymentFormPlugin(),
+            new PaymentFormPlugin(
+                $container[static::FACADE_PAYMENT],
+                $container[static::PAYMENT_SUB_FORMS]
+            ),
+            new SummaryFormPlugin(),
         ];
     }
 }

@@ -17,6 +17,7 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginIn
  */
 class DummyPaymentInvoiceSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
 {
+    const PAYMENT_PROVIDER = 'DummyPayment';
 
     /**
      * @return \Spryker\Zed\Kernel\Communication\Form\AbstractType
@@ -43,6 +44,22 @@ class DummyPaymentInvoiceSubFormPlugin extends AbstractPlugin implements SubForm
     }
 
     /**
+     * @return string
+     */
+    public function getPaymentProvider()
+    {
+        return static::PAYMENT_PROVIDER;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentMethod()
+    {
+        return 'invoice';
+    }
+
+    /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
@@ -61,6 +78,4 @@ class DummyPaymentInvoiceSubFormPlugin extends AbstractPlugin implements SubForm
     {
         return $this->getFactory()->createInvoiceFormDataProvider()->getOptions($dataTransfer);
     }
-
-
 }

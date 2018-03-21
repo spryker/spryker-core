@@ -9,7 +9,6 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="idOrder" type="int" />
         <property name="idCustomer" type="int" />
         <property name="idStoreCurrency" type="string" />
         <property name="store" type="Store" />
@@ -27,6 +26,7 @@
 
         <property name="manualOrderProducts" type="ManualOrderProduct[]" />
         <property name="isProductPosted" type="int" />
+        <property name="submitOrder" type="int" />
     </transfer>
 
     <transfer name="Item">

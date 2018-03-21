@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Controller;
 
-use Exception;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
@@ -60,11 +60,10 @@ class CreateController extends AbstractController
         }
 
         if ($validForms) {
-            $this->createOrder($quoteTransfer);
+            $checkoutResponseTransfer = $this->createOrder($quoteTransfer);
 
-            // @todo @Artem redirect to order details
-            if (0 && !empty($quoteTransfer)) {
-                $redirectUrl = $this->createRedirectUrlAfterOrderCreation($quoteTransfer);
+            if ($checkoutResponseTransfer->getIsSuccess()) {
+                $redirectUrl = $this->createRedirectUrlAfterOrderCreation($checkoutResponseTransfer->getSaveOrder());
 
                 return $this->redirectResponse($redirectUrl);
             }
@@ -77,6 +76,7 @@ class CreateController extends AbstractController
 
         return $this->viewResponse([
             'forms' => $formsView,
+            'quoteTransfer' => $quoteTransfer,
         ]);
     }
 
@@ -119,22 +119,21 @@ class CreateController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     protected function createOrder(QuoteTransfer $quoteTransfer)
     {
-//        $quoteTransfer = $manualOrderEntryForm->getData();
+        $checkoutResponseTransfer = $this->getFactory()
+            ->getCheckoutFacade()
+            ->placeOrder($quoteTransfer);
 
-        try {
-            // @todo @Artem create Order here
-            $quoteTransfer->setIdOrder(1);
-
+        if ($checkoutResponseTransfer->getIsSuccess()) {
             $this->addSuccessMessage(static::SUCCESSFUL_MESSAGE_ORDER_CREATED);
-        } catch (Exception $exception) {
+        } else {
             $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
         }
 
-        return $quoteTransfer;
+        return $checkoutResponseTransfer;
     }
 
     /**
@@ -183,15 +182,15 @@ class CreateController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return string
      */
-    protected function createRedirectUrlAfterOrderCreation(QuoteTransfer $quoteTransfer)
+    protected function createRedirectUrlAfterOrderCreation(SaveOrderTransfer $saveOrderTransfer)
     {
         return Url::generate(
             '/sales/detail',
-            [SalesConfig::PARAM_ID_SALES_ORDER => $quoteTransfer->getIdOrder()]
+            [SalesConfig::PARAM_ID_SALES_ORDER => $saveOrderTransfer->getIdSalesOrder()]
         )
             ->build();
     }

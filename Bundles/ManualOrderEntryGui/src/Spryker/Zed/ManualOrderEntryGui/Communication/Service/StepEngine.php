@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Service;
 
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\CustomersListFormPlugin;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\StoreFormPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 class StepEngine
@@ -46,7 +48,7 @@ class StepEngine
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $formPlugin->handleData($quoteTransfer, $form, $request);
+            $formPlugin->handleDataStepEngine($quoteTransfer, $form, $request);
 
             return true;
         }

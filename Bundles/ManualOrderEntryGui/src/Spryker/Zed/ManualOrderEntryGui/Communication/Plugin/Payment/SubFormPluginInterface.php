@@ -25,6 +25,16 @@ interface SubFormPluginInterface
     public function getName();
 
     /**
+     * @return string
+     */
+    public function getPaymentProvider();
+
+    /**
+     * @return string
+     */
+    public function getPaymentMethod();
+
+    /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer

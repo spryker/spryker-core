@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ManualOrderEntryGuiToPaymentFacadeInterface
@@ -17,4 +18,11 @@ interface ManualOrderEntryGuiToPaymentFacadeInterface
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function recalculatePayments(CalculableObjectTransfer $calculableObjectTransfer);
 }

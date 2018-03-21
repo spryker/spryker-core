@@ -14,8 +14,6 @@
 
                 {% for form in forms %}
 
-                    ==={{ form.vars.id }}----
-
                     {% if form.vars.id == 'customers' %}
                         {% include '@ManualOrderEntryGui/create/partials/customers.twig' with {'form': form} %}
                     {% elseif form.vars.id == 'products' %}
@@ -24,6 +22,8 @@
                         {% include '@ManualOrderEntryGui/create/partials/items.twig' with {'form': form} %}
                     {% elseif form.vars.id == 'addresses' %}
                         {% include '@ManualOrderEntryGui/create/partials/addresses.twig' with {'form': form} %}
+                    {% elseif form.vars.id == 'summary' %}
+                        {% include '@ManualOrderEntryGui/create/partials/summary.twig' with {'form': form, 'quoteTransfer': quoteTransfer} %}
                     {% else %}
                         {{ form_row(form) }}
                     {% endif %}

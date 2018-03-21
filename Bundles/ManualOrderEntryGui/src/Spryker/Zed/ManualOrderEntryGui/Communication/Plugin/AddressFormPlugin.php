@@ -15,6 +15,19 @@ use Symfony\Component\HttpFoundation\Request;
 class AddressFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeInterface
+     */
+    protected $customerFacade;
+
+    /**
+     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeInterface $customerFacade
+     */
+    public function __construct($customerFacade)
+    {
+        $this->customerFacade = $customerFacade;
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      *
@@ -23,5 +36,33 @@ class AddressFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
     public function createForm(Request $request, $dataTransfer = null)
     {
         return $this->getFactory()->createAddressCollectionForm($dataTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    public function handleData($quoteTransfer, &$form, $request)
+    {
+        if ($quoteTransfer->getShippingAddress()->getIdCustomerAddress()) {
+            $addressTransfer = $quoteTransfer->getShippingAddress();
+            $addressTransfer->setFkCustomer($quoteTransfer->getCustomer()->getIdCustomer());
+
+            $addressTransfer = $this->customerFacade->getAddress($addressTransfer);
+            $quoteTransfer->setShippingAddress($addressTransfer);
+        }
+
+        if ($quoteTransfer->getBillingAddress()->getIdCustomerAddress()) {
+            $addressTransfer = $quoteTransfer->getBillingAddress();
+            $addressTransfer->setFkCustomer($quoteTransfer->getCustomer()->getIdCustomer());
+
+            $addressTransfer = $this->customerFacade->getAddress($addressTransfer);
+            $quoteTransfer->setBillingAddress($addressTransfer);
+        }
+
+        return $quoteTransfer;
     }
 }

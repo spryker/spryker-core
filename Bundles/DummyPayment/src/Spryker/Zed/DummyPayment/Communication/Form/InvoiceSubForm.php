@@ -115,5 +115,4 @@ class InvoiceSubForm extends AbstractType
     {
         return DummyPaymentConfig::PAYMENT_METHOD_INVOICE;
     }
-
 }

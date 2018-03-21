@@ -25,4 +25,16 @@ abstract class AbstractFormPlugin extends AbstractPlugin implements ManualOrderE
     {
         return $dataTransfer;
     }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    public function handleDataStepEngine($dataTransfer, &$form, $request)
+    {
+        return $dataTransfer;
+    }
 }

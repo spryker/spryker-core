@@ -27,4 +27,13 @@ interface ManualOrderEntryFormPluginInterface
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function handleData($dataTransfer, &$form, $request);
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    public function handleDataStepEngine($dataTransfer, &$form, $request);
 }

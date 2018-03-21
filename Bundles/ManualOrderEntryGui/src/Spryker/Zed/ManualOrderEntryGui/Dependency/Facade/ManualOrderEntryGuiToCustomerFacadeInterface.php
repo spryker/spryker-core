@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface ManualOrderEntryGuiToCustomerFacadeInterface
@@ -24,4 +25,11 @@ interface ManualOrderEntryGuiToCustomerFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findCustomerById(CustomerTransfer $customerTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function getAddress(AddressTransfer $addressTransfer);
 }
