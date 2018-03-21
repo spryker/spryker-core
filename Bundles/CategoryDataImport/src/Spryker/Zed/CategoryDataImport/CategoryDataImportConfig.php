@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * MIT License
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -18,6 +18,24 @@ class CategoryDataImportConfig extends DataImportConfig
      */
     public function getCategoryDataImporterConfiguration()
     {
-        return $this->buildImporterConfiguration('icecat_biz_data' . DIRECTORY_SEPARATOR . 'category.csv', static::IMPORT_TYPE_CATEGORY);
+        $moduleDataImportDirectory = $this->getModuleRoot() . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'import';
+
+        return $this->buildImporterConfiguration($moduleDataImportDirectory . DIRECTORY_SEPARATOR . 'category.csv', static::IMPORT_TYPE_CATEGORY);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getModuleRoot(): string
+    {
+        $moduleRoot = realpath(
+            __DIR__
+            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..'
+        );
+
+        return $moduleRoot;
     }
 }

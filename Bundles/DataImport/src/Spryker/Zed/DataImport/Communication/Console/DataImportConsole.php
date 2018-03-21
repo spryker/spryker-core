@@ -51,6 +51,7 @@ class DataImportConsole extends Console
 
     const OPTION_THROW_EXCEPTION = 'throw-exception';
     const OPTION_THROW_EXCEPTION_SHORT = 't';
+    const ARGUMENT_IMPORTER = 'importer';
 
     /**
      * @var \Symfony\Component\Console\Input\InputInterface
@@ -62,7 +63,7 @@ class DataImportConsole extends Console
      */
     protected function configure()
     {
-        $this->addArgument('importer', InputArgument::OPTIONAL, 'Defines which CategoryDataImport plugins should be executed. If not set full import will be executed. Run data:import:debug to see all applied CategoryDataImport plugins.');
+        $this->addArgument(static::ARGUMENT_IMPORTER, InputArgument::OPTIONAL, 'Defines which DataImport plugin should be executed. If not set, full import will be executed. Run data:import:dump to see all applied DataImporter.');
 
         $this->addOption(static::OPTION_THROW_EXCEPTION, static::OPTION_THROW_EXCEPTION_SHORT, InputOption::VALUE_OPTIONAL, 'Set this option to throw exceptions when they occur.');
 
@@ -129,8 +130,8 @@ class DataImportConsole extends Console
      */
     protected function getImporterType()
     {
-        if ($this->input && $this->input->getArgument('importer')) {
-            return $this->input->getArgument('importer');
+        if ($this->input && $this->input->getArgument(self::ARGUMENT_IMPORTER)) {
+            return $this->input->getArgument(self::ARGUMENT_IMPORTER);
         }
 
         if ($this->getName() === static::DEFAULT_NAME) {
@@ -208,7 +209,7 @@ class DataImportConsole extends Console
             $dataImporterConfigurationTransfer->setThrowException(true);
         }
 
-        if ($this->getName() !== static::DEFAULT_NAME || $input->getOption(static::OPTION_FILE_NAME)) {
+        if ($input->getArgument(static::ARGUMENT_IMPORTER) !== null || $input->getOption(static::OPTION_FILE_NAME)) {
             $dataImporterReaderConfiguration = $this->buildReaderConfiguration($input);
             $dataImporterConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfiguration);
         }

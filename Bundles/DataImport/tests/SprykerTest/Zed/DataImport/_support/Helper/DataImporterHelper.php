@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\DataImport\Helper;
 
 use Codeception\Module;
+use Codeception\Stub\Expected;
 use Codeception\Util\Stub;
 use Faker\Factory;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
@@ -37,7 +38,7 @@ class DataImporterHelper extends Module
         }
 
         $dataImporterStub = Stub::makeEmpty(DataImporterInterface::class, [
-            'import' => Stub::exactly(($isCalled ? 1 : 0), function () use ($dataImporterReportTransfer) {
+            'import' => Expected::exactly(($isCalled ? 1 : 0), function () use ($dataImporterReportTransfer) {
                 return $dataImporterReportTransfer;
             }),
             'getImportType' => function () use ($importType) {
@@ -89,7 +90,7 @@ class DataImporterHelper extends Module
     public function getBeforeImportHookMock()
     {
         $beforeHook = Stub::makeEmpty(DataImporterBeforeImportInterface::class, [
-            'beforeImport' => Stub::exactly(1),
+            'beforeImport' => Expected::exactly(1),
         ]);
 
         return $beforeHook;
@@ -101,7 +102,7 @@ class DataImporterHelper extends Module
     public function getAfterImportHookMock()
     {
         $beforeHook = Stub::makeEmpty(DataImporterAfterImportInterface::class, [
-            'afterImport' => Stub::exactly(1),
+            'afterImport' => Expected::exactly(1),
         ]);
 
         return $beforeHook;

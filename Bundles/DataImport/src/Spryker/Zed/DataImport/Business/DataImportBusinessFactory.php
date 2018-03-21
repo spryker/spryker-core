@@ -18,6 +18,8 @@ use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReader;
 use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfiguration;
 use Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfigurationInterface;
 use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
+use Spryker\Zed\DataImport\Business\Model\DataReader\FileResolver\FileResolver;
+use Spryker\Zed\DataImport\Business\Model\DataReader\FileResolver\FileResolverInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware;
@@ -88,9 +90,20 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
      */
     public function createCsvReaderFromConfig(DataImporterReaderConfigurationTransfer $dataImporterReaderConfigurationTransfer)
     {
-        $csvReaderConfiguration = new CsvReaderConfiguration($dataImporterReaderConfigurationTransfer);
+        $csvReaderConfiguration = new CsvReaderConfiguration(
+            $dataImporterReaderConfigurationTransfer,
+            $this->createFileResolver()
+        );
 
         return $this->createCsvReader($csvReaderConfiguration);
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataReader\FileResolver\FileResolverInterface
+     */
+    public function createFileResolver(): FileResolverInterface
+    {
+        return new FileResolver();
     }
 
     /**

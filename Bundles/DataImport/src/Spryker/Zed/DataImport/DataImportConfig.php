@@ -48,7 +48,9 @@ class DataImportConfig extends AbstractBundleConfig
     protected function buildImporterConfiguration($file, $importType)
     {
         $dataImportReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImportReaderConfigurationTransfer->setFileName($this->getDataImportRootPath() . $file);
+        $dataImportReaderConfigurationTransfer
+            ->setFileName($file)
+            ->addDirectory($this->getDataImportRootPath());
 
         $dataImporterConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImporterConfigurationTransfer

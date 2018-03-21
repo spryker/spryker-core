@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * MIT License
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -20,7 +20,7 @@ class CategoryDataImportPlugin extends AbstractPlugin implements DataImportPlugi
     /**
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
-     * @return \Generated\Shared\Transfer\DataImporterReportTransfer|void
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
     public function import(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
     {
