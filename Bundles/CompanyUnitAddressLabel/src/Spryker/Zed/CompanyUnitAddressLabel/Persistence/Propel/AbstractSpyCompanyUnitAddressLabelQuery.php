@@ -9,6 +9,6 @@ namespace Spryker\Zed\CompanyUnitAddressLabel\Persistence\Propel;
 
 use Orm\Zed\CompanyUnitAddressLabel\Persistence\Base\SpyCompanyUnitAddressLabelQuery as BaseCompanyUnitAddressLabelQuery;
 
-class AbstractSpyCompanyUnitAddressLabelQuery extends BaseCompanyUnitAddressLabelQuery
+abstract class AbstractSpyCompanyUnitAddressLabelQuery extends BaseCompanyUnitAddressLabelQuery
 {
 }

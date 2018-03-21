@@ -20,6 +20,6 @@ use Orm\Zed\CompanyUnitAddressLabel\Persistence\Base\SpyCompanyUnitAddressLabel
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-class AbstractSpyCompanyUnitAddressLabel extends BaseCompanyUnitAddressLabel
+abstract class AbstractSpyCompanyUnitAddressLabel extends BaseCompanyUnitAddressLabel
 {
 }
