@@ -25,10 +25,10 @@ class ShipmentCheckoutPreCheckPlugin extends AbstractPlugin implements CheckoutP
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->getFacade()->checkShipment($quoteTransfer, $checkoutResponseTransfer);
+        return $this->getFacade()->checkShipment($quoteTransfer, $checkoutResponseTransfer);
     }
 }
