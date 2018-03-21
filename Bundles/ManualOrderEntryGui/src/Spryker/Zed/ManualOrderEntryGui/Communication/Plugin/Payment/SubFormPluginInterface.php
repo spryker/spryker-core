@@ -10,14 +10,9 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment;
 interface SubFormPluginInterface
 {
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormInterface
+     * @return \Spryker\Zed\Kernel\Communication\Form\AbstractType
      */
     public function createSubForm();
-
-//    /**
-//     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\FormDataProviderInterface
-//     */
-//    public function createSubFormDataProvider();
 
     /**
      * @return string

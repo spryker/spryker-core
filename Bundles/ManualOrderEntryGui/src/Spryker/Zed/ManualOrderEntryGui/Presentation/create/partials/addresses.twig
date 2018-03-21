@@ -13,7 +13,7 @@
             <h4>{{ 'Billing address' | trans }}</h4>
 
             {{ form_widget(form.billingSameAsShipping, {'attr': {'class': '__toggler __inverted'}}) }}
-            <label for="form_billingSameAsShipping">{{ 'customer.billingSameAsShipping' | trans }}</label>
+            <label for="form_billingSameAsShipping">{{ 'Billing same as Shipping' | trans }}</label>
 
             <div class="__toggler-target">
                 {% include '@ManualOrderEntryGui/create/partials/address-selection.twig' with {'addressForm': form.billingAddress} %}

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormInterface;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Payment\PaymentType;
 
 class PaymentDataProvider implements FormDataProviderInterface
 {
@@ -33,17 +33,17 @@ class PaymentDataProvider implements FormDataProviderInterface
     public function getOptions($quoteTransfer)
     {
         $options = [];
-        foreach ($this->subFormPlugins as $subForm) {
+        foreach ($this->subFormPlugins as $subFormPlugin) {
             $options = array_merge(
                 $options,
-                $subForm->createSubFormDataProvider()->getOptions($quoteTransfer)
+                $subFormPlugin->getOptions($quoteTransfer)
             );
         }
 
         return [
             'allow_extra_fields' => true,
             'csrf_protection' => false,
-            SubFormInterface::OPTIONS_FIELD_NAME => $options,
+            PaymentType::OPTIONS_FIELD_NAME => $options,
         ];
     }
 
@@ -54,8 +54,8 @@ class PaymentDataProvider implements FormDataProviderInterface
      */
     public function getData($quoteTransfer)
     {
-        foreach ($this->subFormPlugins as $subForm) {
-            $quoteTransfer = $subForm->createSubFormDataProvider()->getData($quoteTransfer);
+        foreach ($this->subFormPlugins as $subFormPlugin) {
+            $quoteTransfer = $subFormPlugin->getData($quoteTransfer);
         }
 
         return $quoteTransfer;

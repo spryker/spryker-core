@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\DummyPayment\Communication\Plugin\Checkout;
 
+use Spryker\Shared\DummyPayment\DummyPaymentConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginInterface;
 
 /**
@@ -19,7 +19,7 @@ class DummyPaymentInvoiceSubFormPlugin extends AbstractPlugin implements SubForm
 {
 
     /**
-     * @return AbstractType
+     * @return \Spryker\Zed\Kernel\Communication\Form\AbstractType
      */
     public function createSubForm()
     {
@@ -31,8 +31,7 @@ class DummyPaymentInvoiceSubFormPlugin extends AbstractPlugin implements SubForm
      */
     public function getPropertyPath()
     {
-//        return $this->getFactory()->createInvoiceForm()->getPropertyPath();
-        return 'path in a main form';
+        return DummyPaymentConfig::PAYMENT_METHOD_INVOICE;
     }
 
     /**
@@ -40,17 +39,8 @@ class DummyPaymentInvoiceSubFormPlugin extends AbstractPlugin implements SubForm
      */
     public function getName()
     {
-//        return $this->getFactory()->createInvoiceForm()->getPropertyPath();
-        return 'name';
+        return DummyPaymentConfig::PAYMENT_METHOD_INVOICE;
     }
-
-//    /**
-//     * @return
-//     */
-//    public function createSubFormDataProvider()
-//    {
-//        return $this->getFactory()->createInvoiceFormDataProvider();
-//    }
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
@@ -65,12 +55,11 @@ class DummyPaymentInvoiceSubFormPlugin extends AbstractPlugin implements SubForm
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
-     * @return array|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return array
      */
-
     public function getOptions($dataTransfer)
     {
-        return $this->getFactory()->createInvoiceFormDataProvider()->getData($dataTransfer);
+        return $this->getFactory()->createInvoiceFormDataProvider()->getOptions($dataTransfer);
     }
 
 

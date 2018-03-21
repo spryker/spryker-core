@@ -9,7 +9,6 @@ namespace Spryker\Zed\DummyPayment\Communication\Form;
 
 use Generated\Shared\Transfer\DummyPaymentTransfer;
 use Spryker\Shared\DummyPayment\DummyPaymentConfig;
-use Spryker\Shared\DummyPayment\DummyPaymentConstants;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -35,30 +34,6 @@ class InvoiceSubForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addDateOfBirth($builder);
-    }
-
-    /**
-     * @return string
-     */
-    public function getProviderName()
-    {
-        return DummyPaymentConstants::PROVIDER_NAME;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return DummyPaymentConfig::PAYMENT_METHOD_INVOICE;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPropertyPath()
-    {
-        return DummyPaymentConfig::PAYMENT_METHOD_INVOICE;
     }
 
     /**
@@ -123,6 +98,22 @@ class InvoiceSubForm extends AbstractType
             },
             'groups' => $this->getPropertyPath(),
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getName()
+    {
+        return DummyPaymentConfig::PAYMENT_METHOD_INVOICE;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getPropertyPath()
+    {
+        return DummyPaymentConfig::PAYMENT_METHOD_INVOICE;
     }
 
 }

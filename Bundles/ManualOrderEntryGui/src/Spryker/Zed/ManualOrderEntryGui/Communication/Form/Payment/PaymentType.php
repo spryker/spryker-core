@@ -10,7 +10,6 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Payment;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormInterface;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,6 +27,11 @@ class PaymentType extends AbstractType
     const PAYMENT_PROPERTY_PATH = QuoteTransfer::PAYMENT;
     const PAYMENT_SELECTION = PaymentTransfer::PAYMENT_SELECTION;
     const PAYMENT_SELECTION_PROPERTY_PATH = self::PAYMENT_PROPERTY_PATH . '.' . self::PAYMENT_SELECTION;
+
+    const KEY_SUBFORM = 'SUBFORM';
+    const KEY_PLUGIN = 'PLUGIN';
+
+    const OPTIONS_FIELD_NAME = 'select_options';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -52,7 +56,9 @@ class PaymentType extends AbstractType
      */
     protected function addPaymentMethods(FormBuilderInterface $builder, array $options)
     {
-        $paymentMethodSubForms = $this->getPaymentMethodSubForms();
+        $paymentSubFormPlugins = $this->getFactory()
+            ->getPaymentMethodSubFormPluginCollection();
+        $paymentMethodSubForms = $this->getPaymentMethodSubForms($paymentSubFormPlugins);
         $paymentMethodChoices = $this->getPaymentMethodChoices($paymentMethodSubForms);
 
         $this->addPaymentMethodChoices($builder, $paymentMethodChoices)
@@ -91,7 +97,7 @@ class PaymentType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormInterface[] $paymentMethodSubForms
+     * @param array $paymentMethodSubForms
      * @param array $options
      *
      * @return $this
@@ -100,12 +106,12 @@ class PaymentType extends AbstractType
     {
         foreach ($paymentMethodSubForms as $paymentMethodSubForm) {
             $builder->add(
-                $paymentMethodSubForm->getName(),
-                get_class($paymentMethodSubForm),
+                $paymentMethodSubForm[static::KEY_PLUGIN]->getName(),
+                get_class($paymentMethodSubForm[static::KEY_SUBFORM]),
                 [
-                    'property_path' => static::PAYMENT_PROPERTY_PATH . '.' . $paymentMethodSubForm->getPropertyPath(),
+                    'property_path' => static::PAYMENT_PROPERTY_PATH . '.' . $paymentMethodSubForm[static::KEY_PLUGIN]->getPropertyPath(),
                     'error_bubbling' => true,
-                    SubFormInterface::OPTIONS_FIELD_NAME => $options[SubFormInterface::OPTIONS_FIELD_NAME],
+                    static::OPTIONS_FIELD_NAME => $options[static::OPTIONS_FIELD_NAME],
                 ]
             );
         }
@@ -114,26 +120,28 @@ class PaymentType extends AbstractType
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormInterface[]
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginCollection $paymentSubFormPlugins
      *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     * @return array
      */
-    protected function getPaymentMethodSubForms()
+    protected function getPaymentMethodSubForms($paymentSubFormPlugins)
     {
         $paymentMethodSubForms = [];
 
-        $paymentSubFormPlugins = $this->getFactory()
-            ->getPaymentMethodSubFormPluginCollection();
-
         foreach ($paymentSubFormPlugins as $paymentMethodSubFormPlugin) {
-            $paymentMethodSubForms[] = $this->createSubForm($paymentMethodSubFormPlugin);
+            $subform = $this->createSubForm($paymentMethodSubFormPlugin);
+
+            $paymentMethodSubForms[] = [
+                static::KEY_PLUGIN => $paymentMethodSubFormPlugin,
+                static::KEY_SUBFORM => $subform,
+            ];
         }
 
         return $paymentMethodSubForms;
     }
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormInterface[] $paymentMethodSubForms
+     * @param array $paymentMethodSubForms
      *
      * @return array
      */
@@ -142,19 +150,9 @@ class PaymentType extends AbstractType
         $choices = [];
 
         foreach ($paymentMethodSubForms as $paymentMethodSubForm) {
-            $subFormName = ucfirst($paymentMethodSubForm->getName());
+            $subFormName = ucfirst($paymentMethodSubForm[static::KEY_PLUGIN]->getName());
 
-//            if (!$paymentMethodSubForm instanceof SubFormProviderNameInterface) {
-            if (1) {
-                $choices[$subFormName] = $paymentMethodSubForm->getPropertyPath();
-                continue;
-            }
-//
-//            if (!isset($choices[$paymentMethodSubForm->getProviderName()])) {
-//                $choices[$paymentMethodSubForm->getProviderName()] = [];
-//            }
-//
-//            $choices[$paymentMethodSubForm->getProviderName()][$subFormName] = $paymentMethodSubForm->getPropertyPath();
+            $choices[$subFormName] = $paymentMethodSubForm[static::KEY_PLUGIN]->getPropertyPath();
         }
 
         return $choices;
@@ -163,7 +161,7 @@ class PaymentType extends AbstractType
     /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginInterface $paymentMethodSubForm
      *
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormInterface
+     * @return \Spryker\Zed\Kernel\Communication\Form\AbstractType
      */
     protected function createSubForm(SubFormPluginInterface $paymentMethodSubForm)
     {
@@ -189,7 +187,7 @@ class PaymentType extends AbstractType
             ],
         ]);
 
-        $resolver->setRequired(SubFormInterface::OPTIONS_FIELD_NAME);
+        $resolver->setRequired(static::OPTIONS_FIELD_NAME);
     }
 
     /**
