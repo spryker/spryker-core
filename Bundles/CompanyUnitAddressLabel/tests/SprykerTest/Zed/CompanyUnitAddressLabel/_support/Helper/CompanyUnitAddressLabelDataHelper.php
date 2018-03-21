@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\SpyRegionEntityTransfer;
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabel;
 use Orm\Zed\Country\Persistence\SpyRegionQuery;
-use Propel\Runtime\Exception\EntityNotFoundException;
 use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepository;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -130,8 +129,6 @@ class CompanyUnitAddressLabelDataHelper extends Module
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\EntityNotFoundException
-     *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer
      */
     public function haveLabelCollection()
