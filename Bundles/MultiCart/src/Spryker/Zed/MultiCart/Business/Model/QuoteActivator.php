@@ -56,7 +56,7 @@ class QuoteActivator implements QuoteActivatorInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setQuoteActive(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer
+    public function setDefaultQuote(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer
     {
         $customerQuotesCollectionTransfer = $this->findCustomerQuotes($quoteActivatorRequestTransfer->getCustomer());
         $quoteToActivateTransfer = $this->findQuoteById($quoteActivatorRequestTransfer->getIdQuote(), $customerQuotesCollectionTransfer);
@@ -65,14 +65,14 @@ class QuoteActivator implements QuoteActivatorInterface
             $quoteResponseTransfer->setIsSuccessful(false);
             return $quoteResponseTransfer;
         }
-        if ($quoteToActivateTransfer->getIsActive()) {
+        if ($quoteToActivateTransfer->getIsDefault()) {
             $quoteResponseTransfer->setIsSuccessful(true);
             $quoteResponseTransfer->setQuoteTransfer($quoteToActivateTransfer);
             return $quoteResponseTransfer;
         }
-        $this->deactivateActiveQuotes($customerQuotesCollectionTransfer);
+        $this->setQuotesNotDefault($customerQuotesCollectionTransfer);
         $quoteToActivateTransfer->setCustomer($quoteActivatorRequestTransfer->getCustomer());
-        $quoteToActivateTransfer->setIsActive(true);
+        $quoteToActivateTransfer->setIsDefault(true);
         $this->addSuccessMessage($quoteToActivateTransfer->getName());
         return $this->quoteFacade->persistQuote($quoteToActivateTransfer);
     }
@@ -116,11 +116,11 @@ class QuoteActivator implements QuoteActivatorInterface
      *
      * @return void
      */
-    protected function deactivateActiveQuotes(QuoteCollectionTransfer $quotesCollectionTransfer)
+    protected function setQuotesNotDefault(QuoteCollectionTransfer $quotesCollectionTransfer)
     {
         foreach ($quotesCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if ($quoteTransfer->getIsActive()) {
-                $quoteTransfer->setIsActive(false);
+            if ($quoteTransfer->getIsDefault()) {
+                $quoteTransfer->setIsDefault(false);
                 $this->quoteFacade->persistQuote($quoteTransfer);
             }
         }
@@ -134,7 +134,7 @@ class QuoteActivator implements QuoteActivatorInterface
     protected function addSuccessMessage($quoteName)
     {
         $messageTransfer = new MessageTransfer();
-        $messageTransfer->setValue(Messages::MULTI_CART_SET_ACTIVE_SUCCESS);
+        $messageTransfer->setValue(Messages::MULTI_CART_SET_DEFAULT_SUCCESS);
         $messageTransfer->setParameters(['%quote%' => $quoteName]);
         $this->messengerFacade->addInfoMessage($messageTransfer);
     }

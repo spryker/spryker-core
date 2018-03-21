@@ -10,7 +10,7 @@ namespace Spryker\Client\MultiCart\Plugin;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Spryker\Client\PersistentCart\Dependency\Plugin\ChangeRequestExtendPluginInterface;
 
-class QuoteInActiveChangeRequestExtendPlugin implements ChangeRequestExtendPluginInterface
+class QuoteDefaultChangeRequestExtendPlugin implements ChangeRequestExtendPluginInterface
 {
     /**
      * Specification:

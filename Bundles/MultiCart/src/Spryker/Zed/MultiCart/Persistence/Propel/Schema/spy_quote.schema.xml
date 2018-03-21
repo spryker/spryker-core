@@ -7,7 +7,7 @@
 
     <table name="spy_quote" idMethod="native" allowPkInsert="true">
         <column name="name" required="true" type="VARCHAR" size="255"/>
-        <column name="is_active" type="BOOLEAN" default="false"/>
+        <column name="is_default" type="BOOLEAN" default="false"/>
 
         <unique name="spy_quote-unique-name-customer_reference">
             <unique-column name="name"/>

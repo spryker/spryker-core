@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\MultiCart\Zed\MultiCartStubInterface;
 use Spryker\Shared\Quote\QuoteConfig;
 
 /**
@@ -27,7 +26,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getActiveCart(): QuoteTransfer
+    public function getDefaultCart(): QuoteTransfer
     {
         return $this->getFactory()->getQuoteClient()->getQuote();
     }
@@ -41,33 +40,12 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setActiveQuote(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer
+    public function setDefaultQuote(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer
     {
         $multiCartStub = $this->getFactory()->createZedMultiCartStub();
-        $quoteResponseTransfer = $multiCartStub->setActiveQuote($quoteActivatorRequestTransfer);
-        $this->addFlashMessagesFromLastZedRequest($multiCartStub);
+        $quoteResponseTransfer = $multiCartStub->setDefaultQuote($quoteActivatorRequestTransfer);
+        $multiCartStub->addFlashMessagesFromLastZedRequest();
         return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Spryker\Client\MultiCart\Zed\MultiCartStubInterface $multiCartStub
-     *
-     * @return void
-     */
-    protected function addFlashMessagesFromLastZedRequest(MultiCartStubInterface $multiCartStub)
-    {
-        $messengerClient = $this->getFactory()->getMessengerClient();
-        foreach ($multiCartStub->getErrorMessages() as $errorMessage) {
-            $messengerClient->addErrorMessage($errorMessage->getValue());
-        }
-
-        foreach ($multiCartStub->getSuccessMessages() as $successMessage) {
-            $messengerClient->addSuccessMessage($successMessage->getValue());
-        }
-
-        foreach ($multiCartStub->getInfoMessages() as $infoMessage) {
-            $messengerClient->addInfoMessage($infoMessage->getValue());
-        }
     }
 
     /**

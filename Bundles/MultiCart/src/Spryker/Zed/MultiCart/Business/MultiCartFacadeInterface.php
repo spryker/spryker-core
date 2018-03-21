@@ -14,7 +14,8 @@ interface MultiCartFacadeInterface
 {
     /**
      * Specification:
-     * -
+     * - Mark quote as default.
+     * - Mark all other customer quotes as not default.
      *
      * @api
      *
@@ -22,7 +23,7 @@ interface MultiCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setActiveQuote(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer;
+    public function setDefaultQuote(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:
