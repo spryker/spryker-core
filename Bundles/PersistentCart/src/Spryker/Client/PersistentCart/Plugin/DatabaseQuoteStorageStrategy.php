@@ -27,13 +27,16 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      * @api
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItem(ItemTransfer $itemTransfer)
+    public function addItem(ItemTransfer $itemTransfer, array $params = [])
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer();
         $persistentCartChangeTransfer->addItem($itemTransfer);
+        $persistentCartChangeTransfer = $this->getFactory()->createChangeRequestExtendPluginExecutor()
+            ->executePlugins($persistentCartChangeTransfer, $params);
         $quoteResponseTransfer = $this->getZedStub()->addItem($persistentCartChangeTransfer);
 
         return $this->updateQuote($quoteResponseTransfer);
@@ -45,15 +48,18 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      * @api
      *
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItems(array $itemTransfers)
+    public function addItems(array $itemTransfers, array $params = [])
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer();
         foreach ($itemTransfers as $itemTransfer) {
             $persistentCartChangeTransfer->addItem($itemTransfer);
         }
+        $persistentCartChangeTransfer = $this->getFactory()->createChangeRequestExtendPluginExecutor()
+            ->executePlugins($persistentCartChangeTransfer, $params);
         $quoteResponseTransfer = $this->getZedStub()->addItem($persistentCartChangeTransfer);
 
         return $this->updateQuote($quoteResponseTransfer);

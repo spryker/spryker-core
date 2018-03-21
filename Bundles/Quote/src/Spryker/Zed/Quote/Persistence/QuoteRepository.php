@@ -72,6 +72,9 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     {
         $quoteQuery = $this->getFactory()->createQuoteQuery()
             ->joinWithSpyStore();
+        if ($quoteCriteriaFilterTransfer->getCustomerReference()) {
+            $quoteQuery->filterByCustomerReference($quoteCriteriaFilterTransfer->getCustomerReference());
+        }
         $quoteEntityCollectionTransfer = $this->buildQueryFromCriteria($quoteQuery, $quoteCriteriaFilterTransfer->getFilter())
                     ->find();
 

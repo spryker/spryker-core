@@ -17,6 +17,14 @@ class MultiCartConfig extends AbstractBundleConfig
     /**
      * @return string
      */
+    public function getCustomerQuoteDefaultName()
+    {
+        return $this->getSharedConfig()->getCustomerQuoteDefaultName();
+    }
+
+    /**
+     * @return string
+     */
     public function getGuestQuoteDefaultName()
     {
         return $this->getSharedConfig()->getGuestQuoteDefaultName();

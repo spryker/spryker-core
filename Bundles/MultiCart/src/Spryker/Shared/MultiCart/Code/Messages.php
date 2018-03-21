@@ -9,5 +9,5 @@ namespace Spryker\Shared\MultiCart\Code;
 
 interface Messages
 {
-    public const MULTI_CART_SET_ACTIVE_SUCCESS = 'multi_cart.cart.set_active.success';
+    public const MULTI_CART_SET_DEFAULT_SUCCESS = 'multi_cart.cart.set_default.success';
 }

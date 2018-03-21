@@ -10,20 +10,24 @@ namespace Spryker\Client\MultiCart\Plugin;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Spryker\Client\PersistentCart\Dependency\Plugin\ChangeRequestExtendPluginInterface;
 
-class QuoteInActiveChangeRequestExtendPlugin implements ChangeRequestExtendPluginInterface
+class QuoteDefaultChangeRequestExtendPlugin implements ChangeRequestExtendPluginInterface
 {
     /**
      * Specification:
-     * - Takes quote id form item transfer options and replace it in quote change request.
+     * - Takes quote id form params and replace it in quote change request.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $cartChangeTransfer
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function extend(PersistentCartChangeTransfer $cartChangeTransfer): PersistentCartChangeTransfer
+    public function extend(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
+        if (!empty($params['quote-id'])) {
+            $cartChangeTransfer->setIdQuote($params['quote-id']);
+        }
         return $cartChangeTransfer;
     }
 }

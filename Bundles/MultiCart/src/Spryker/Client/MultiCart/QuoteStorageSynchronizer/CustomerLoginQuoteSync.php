@@ -52,6 +52,7 @@ class CustomerLoginQuoteSync implements CustomerLoginQuoteSyncInterface
             return;
         }
         $quoteTransfer->setCustomer($customerTransfer);
+        $quoteTransfer->setIsDefault(true);
 
         $this->persistentCartClient->persistQuote($quoteTransfer);
     }

@@ -22,8 +22,8 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setActiveQuoteAction(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer
+    public function setDefaultQuoteAction(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->setActiveQuote($quoteActivatorRequestTransfer);
+        return $this->getFacade()->setDefaultQuote($quoteActivatorRequestTransfer);
     }
 }
