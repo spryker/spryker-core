@@ -52,6 +52,10 @@ class ReclamationTable extends AbstractTable
     {
         $config->setHeader($this->getHeaderFields());
 
+        $config->setSearchable([
+            SpySalesReclamationTableMap::COL_CUSTOMER_NAME,
+        ]);
+
         $config->addRawColumn(SpySalesReclamationTableMap::COL_STATE);
         $config->addRawColumn(static::COL_ACTIONS);
 
