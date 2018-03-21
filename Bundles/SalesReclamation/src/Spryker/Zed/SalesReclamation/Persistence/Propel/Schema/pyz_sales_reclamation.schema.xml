@@ -10,6 +10,8 @@
         <column name="id_sales_reclamation" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
 
+        <column name="customer_name" size="511" type="VARCHAR" required="true"/>
+
         <behavior name="timestampable"/>
 
         <foreign-key name="spy_sales_reclamation-fk_sales_order" foreignTable="spy_sales_order" phpName="Order" refPhpName="Reclamation">

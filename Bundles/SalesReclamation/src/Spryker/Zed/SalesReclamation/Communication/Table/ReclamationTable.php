@@ -57,6 +57,7 @@ class ReclamationTable extends AbstractTable
         return [
             SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION => '#',
             SpySalesReclamationTableMap::COL_CREATED_AT => 'Created',
+            SpySalesReclamationTableMap::COL_CUSTOMER_NAME => 'Customer',
             SpySalesReclamationTableMap::COL_FK_SALES_ORDER => 'Order id',
         ];
     }
@@ -88,6 +89,7 @@ class ReclamationTable extends AbstractTable
                 SpySalesReclamationTableMap::COL_CREATED_AT => $this->dateTimeService->formatDateTime(
                     $item[SpySalesReclamationTableMap::COL_CREATED_AT]
                 ),
+                SpySalesReclamationTableMap::COL_CUSTOMER_NAME => $item[SpySalesReclamationTableMap::COL_CUSTOMER_NAME],
                 SpySalesReclamationTableMap::COL_FK_SALES_ORDER => $item[SpySalesReclamationTableMap::COL_FK_SALES_ORDER],
             ];
         }

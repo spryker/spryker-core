@@ -28,7 +28,7 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idSalesOrder = $this->castId($request->request->getInt(SalesReclamationConfig::PARAM_ID_SALES_ORDER));
+        $idSalesOrder = $this->castId($request->get(SalesReclamationConfig::PARAM_ID_SALES_ORDER));
 
         $orderTransfer = $this
             ->getFactory()
@@ -86,8 +86,18 @@ class CreateController extends AbstractController
             return null;
         }
 
+        $salutation = $orderTransfer->getSalutation();
+
+        $customer = sprintf(
+            '%s%s %s',
+            $salutation ? $salutation . ' ' : '',
+            $orderTransfer->getFirstName(),
+            $orderTransfer->getLastName()
+        );
+
         $spySaleReclamation = new SpySalesReclamation();
         $spySaleReclamation->setFkSalesOrder($orderTransfer->getIdSalesOrder());
+        $spySaleReclamation->setCustomerName($customer);
 
         $spySaleReclamation->save();
 
