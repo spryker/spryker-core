@@ -33,7 +33,7 @@ class CompanyUnitAddressTable extends AbstractTable
     const URL_COMPANY_UNIT_ADDRESS_EDIT = '/company-unit-address-gui/edit-company-unit-address';
 
     /**
-     * @var \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressQueryContainerInterface
+     * @var \Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface
      */
     protected $companyUnitAddressQueryContainer;
 
