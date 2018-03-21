@@ -85,7 +85,6 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
             ->setBaseUnit(
                 (new ProductConcreteMeasurementBaseUnitTransfer())
                     ->setMeasurementUnitId($productEntity->getSpyProductAbstract()->getProductMeasurementBaseUnit()->getFkProductMeasurementUnit())
-                    ->setIsSalesUnit((bool)$productEntity->getSpyProductAbstract()->getProductMeasurementBaseUnit()->getIsSalesUnit())
             )
             ->setSalesUnits(new ArrayObject());
 

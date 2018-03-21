@@ -22,7 +22,6 @@
 
     <table name="spy_product_measurement_base_unit" idMethod="native" allowPkInsert="true">
         <column name="id_product_measurement_base_unit" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="is_sales_unit" type="BOOLEAN" default="true" required="true"/>
         <column name="fk_product_measurement_unit" type="INTEGER" required="true"/>
 
         <behavior name="timestampable" />

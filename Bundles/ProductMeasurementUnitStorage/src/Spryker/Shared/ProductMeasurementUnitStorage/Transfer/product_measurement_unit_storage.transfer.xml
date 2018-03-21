@@ -12,7 +12,6 @@
 
     <transfer name="ProductConcreteMeasurementBaseUnit">
         <property name="measurementUnitId" type="int" />
-        <property name="isSalesUnit" type="bool" />
     </transfer>
 
     <transfer name="ProductConcreteMeasurementSalesUnit">
