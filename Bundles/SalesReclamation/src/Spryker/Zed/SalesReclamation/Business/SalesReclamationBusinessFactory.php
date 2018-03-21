@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesReclamation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\Creator;
 
 /**
  * @method \Spryker\Zed\SalesReclamation\SalesReclamationConfig getConfig()
@@ -15,7 +16,11 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class SalesReclamationBusinessFactory extends AbstractBusinessFactory
 {
-
-
-    //TODO Add factory methods
+    /**
+     * @return \Spryker\Zed\SalesReclamation\Business\Reclamation\Creator
+     */
+    public function createReclamationCreator(): Creator
+    {
+        return new Creator();
+    }
 }

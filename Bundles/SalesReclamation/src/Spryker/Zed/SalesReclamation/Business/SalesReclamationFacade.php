@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SalesReclamation\Business;
 
+use Generated\Shared\Transfer\OrderTransfer;
+use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -14,7 +16,18 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class SalesReclamationFacade extends AbstractFacade implements SalesReclamationFacadeInterface
 {
-
-
-    //TODO Implement SalesReclamationFacadeInterface
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param int[] ...$idsOrderItem
+     *
+     * @return null|\Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation
+     */
+    public function createReclamation(OrderTransfer $orderTransfer, int ... $idsOrderItem): ?SpySalesReclamation
+    {
+        return $this->getFactory()
+            ->createReclamationCreator()
+            ->createReclamation($orderTransfer, ...$idsOrderItem);
+    }
 }

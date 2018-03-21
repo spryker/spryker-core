@@ -8,8 +8,6 @@
 namespace Spryker\Zed\SalesReclamation\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap;
-use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\SalesReclamation\SalesReclamationConfig;
@@ -48,7 +46,7 @@ class CreateController extends AbstractController
             return $this->showForm($orderTransfer);
         }
 
-        $reclamationTransfer = $this->createReclamation($orderTransfer, ...$idsOrderItem);
+        $reclamationTransfer = $this->getFacade()->createReclamation($orderTransfer, ...$idsOrderItem);
 
         $this->addSuccessMessage(sprintf(
             'Reclamation id:%s for order %s sucessfully created',
@@ -73,36 +71,5 @@ class CreateController extends AbstractController
         return $this->viewResponse([
             'order' => $orderTransfer,
         ]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int[] ...$idsOrderItem
-     *
-     * @return null|\Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation
-     */
-    protected function createReclamation(OrderTransfer $orderTransfer, int ... $idsOrderItem): ?SpySalesReclamation
-    {
-        if (!$idsOrderItem) {
-            return null;
-        }
-
-        $salutation = $orderTransfer->getSalutation();
-
-        $customer = sprintf(
-            '%s%s %s',
-            $salutation ? $salutation . ' ' : '',
-            $orderTransfer->getFirstName(),
-            $orderTransfer->getLastName()
-        );
-
-        $spySaleReclamation = new SpySalesReclamation();
-        $spySaleReclamation->setFkSalesOrder($orderTransfer->getIdSalesOrder());
-        $spySaleReclamation->setCustomerName($customer);
-        $spySaleReclamation->setState(SpySalesReclamationTableMap::COL_STATE_OPEN);
-
-        $spySaleReclamation->save();
-
-        return $spySaleReclamation;
     }
 }
