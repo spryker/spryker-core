@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesReclamation\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method \Spryker\Zed\SalesReclamation\Business\SalesReclamationFacadeInterface getFacade()
@@ -19,10 +20,24 @@ class IndexController extends AbstractController
     /**
      * @return array
      */
-    public function indexAction()
+    public function indexAction(): array
     {
-        return $this->viewResponse([
-            'test' => 'Greetings!',
-        ]);
+        $table = $this->getFactory()->createReclamationTable();
+
+        return [
+            'orders' => $table->render(),
+        ];
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction(): JsonResponse
+    {
+        $table = $this->getFactory()->createReclamationTable();
+
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
     }
 }

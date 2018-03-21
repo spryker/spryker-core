@@ -1,5 +1,15 @@
 {% extends '@Application/Layout/layout.twig' %}
 
 {% block content %}
-    {{ test }}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'List of Reclamations' } %}
+
+        {% block widget_content %}
+
+            {{ orders | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
 {% endblock %}
