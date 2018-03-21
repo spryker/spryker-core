@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesReclamation\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface;
+use Spryker\Zed\SalesReclamation\SalesReclamationDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface getQueryContainer()
@@ -15,4 +17,11 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class SalesReclamationCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface
+     */
+    public function getSalesFacade(): SalesReclamationToSalesFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesReclamationDependencyProvider::FACADE_SALES);
+    }
 }

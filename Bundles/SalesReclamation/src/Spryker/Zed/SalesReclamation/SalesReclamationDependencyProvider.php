@@ -9,17 +9,20 @@ namespace Spryker\Zed\SalesReclamation;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeBridge;
 
 class SalesReclamationDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_SALES = 'FACADE_SALES';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
-        //TODO Provide dependencies
+        $this->addSalesFacade($container);
 
         return $container;
     }
@@ -44,6 +47,20 @@ class SalesReclamationDependencyProvider extends AbstractBundleDependencyProvide
     public function providePersistenceLayerDependencies(Container $container)
     {
         //TODO Provide dependencies
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesFacade(Container $container): Container
+    {
+        $container[static::FACADE_SALES] = function (Container $container) {
+            return new SalesReclamationToSalesFacadeBridge($container->getLocator()->sales()->facade());
+        };
 
         return $container;
     }

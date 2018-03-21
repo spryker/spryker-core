@@ -25,11 +25,17 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idSalesOrder = $request->query->get(SalesReclamationConfig::PARAM_ID_SALES_ORDER);
+        $idSalesOrder = $this->castId($request->query->getInt(SalesReclamationConfig::PARAM_ID_SALES_ORDER));
+
+        $orderTransfer = $this
+            ->getFactory()
+            ->getSalesFacade()
+            ->getOrderByIdSalesOrder($idSalesOrder);
 
         return $this->viewResponse([
             'test' => 'Greetings!',
             'idSalesOrder' => $idSalesOrder,
+            'order' => $orderTransfer,
         ]);
     }
 }
