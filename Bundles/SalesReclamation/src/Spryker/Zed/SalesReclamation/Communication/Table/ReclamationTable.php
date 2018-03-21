@@ -19,6 +19,7 @@ class ReclamationTable extends AbstractTable
 {
     public const COL_ACTIONS = 'COL_ACTIONS';
     public const URL_RECLAMATION_DETAIL = '/sales-reclamation/detail';
+    public const URL_RECLAMATION_CLOSE = '/sales-reclamation/detail/close';
 
     /**
      * @var \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface
@@ -145,6 +146,17 @@ class ReclamationTable extends AbstractTable
                 SalesReclamationConfig::PARAM_ID_RECLAMATION => $idReclamation,
             ]),
             'View'
+        );
+
+        $buttons[] = $this->generateViewButton(
+            Url::generate(static::URL_RECLAMATION_CLOSE, [
+                SalesReclamationConfig::PARAM_ID_RECLAMATION => $idReclamation,
+            ]),
+            'Close',
+            [
+                'class' => 'btn-remove',
+                'icon' => 'fa-close',
+            ]
         );
 
         return $buttons;

@@ -26,6 +26,13 @@
                         <action>index</action>
                         <visible>0</visible>
                     </view>
+                    <close>
+                        <title>View reclamation</title>
+                        <bundle>sales-reclamation</bundle>
+                        <controller>detail</controller>
+                        <action>close</action>
+                        <visible>0</visible>
+                    </close>
                 </pages>
 
             </sales-reclamations>
