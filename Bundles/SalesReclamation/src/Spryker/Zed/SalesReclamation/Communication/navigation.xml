@@ -17,7 +17,7 @@
                         <bundle>sales-reclamation</bundle>
                         <controller>create</controller>
                         <action>index</action>
-                        <visible>o</visible>
+                        <visible>0</visible>
                     </create>
                 </pages>
 
