@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class VoucherDataProvider implements FormDataProviderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -35,5 +34,4 @@ class VoucherDataProvider implements FormDataProviderInterface
             'csrf_protection' => false,
         ];
     }
-
 }

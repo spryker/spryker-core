@@ -23,13 +23,10 @@ class ManualOrderEntryGuiToCurrencyFacadeBridge implements ManualOrderEntryGuiTo
     }
 
     /**
-     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
-     *
      * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
      */
     public function getAllStoresWithCurrencies()
     {
         return $this->currencyFacade->getAllStoresWithCurrencies();
     }
-
 }

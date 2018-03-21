@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ManualOrderEntryGuiToShipmentFacadeInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -26,5 +25,4 @@ interface ManualOrderEntryGuiToShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer);
-
 }

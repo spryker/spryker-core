@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 interface ManualOrderEntryGuiToCustomerFacadeInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
@@ -25,5 +24,4 @@ interface ManualOrderEntryGuiToCustomerFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findCustomerById(CustomerTransfer $customerTransfer);
-
 }

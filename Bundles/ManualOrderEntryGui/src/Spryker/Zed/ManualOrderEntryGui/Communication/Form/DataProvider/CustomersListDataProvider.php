@@ -95,5 +95,4 @@ class CustomersListDataProvider implements FormDataProviderInterface
 
         return $customerList;
     }
-
 }

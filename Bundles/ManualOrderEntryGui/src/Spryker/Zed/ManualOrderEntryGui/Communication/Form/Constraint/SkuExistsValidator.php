@@ -51,5 +51,4 @@ class SkuExistsValidator extends ConstraintValidator
     {
         return $constraint->getProductFacade()->hasProductConcrete($concreteSku);
     }
-
 }

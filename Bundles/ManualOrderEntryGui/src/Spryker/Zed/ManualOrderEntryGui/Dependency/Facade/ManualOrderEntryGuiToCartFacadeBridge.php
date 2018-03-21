@@ -44,5 +44,4 @@ class ManualOrderEntryGuiToCartFacadeBridge implements ManualOrderEntryGuiToCart
     {
         return $this->cartFacade->reloadItems($quoteTransfer);
     }
-
 }

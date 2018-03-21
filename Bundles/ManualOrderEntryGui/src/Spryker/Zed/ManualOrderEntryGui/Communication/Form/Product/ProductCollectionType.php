@@ -7,23 +7,17 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product;
 
-use ArrayObject;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Symfony\Component\Form\CallbackTransformer;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
 class ProductCollectionType extends AbstractType
 {
-
     const FIELD_PRODUCTS = 'manualOrderProducts';
     const FIELD_IS_PRODUCT_POSTED = 'isProductPosted';
 
@@ -49,9 +43,7 @@ class ProductCollectionType extends AbstractType
     {
         $this
             ->addProductsEmptyField($builder, $options)
-            ->addIsProductPostedField($builder, $options)
-        ;
-
+            ->addIsProductPostedField($builder, $options);
     }
 
     /**
@@ -98,5 +90,4 @@ class ProductCollectionType extends AbstractType
     {
         return 'products';
     }
-
 }

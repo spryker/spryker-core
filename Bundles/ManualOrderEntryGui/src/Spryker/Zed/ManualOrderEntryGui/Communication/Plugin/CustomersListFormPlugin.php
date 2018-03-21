@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CustomersListFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
 {
-
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeInterface
      */
@@ -31,11 +30,9 @@ class CustomersListFormPlugin extends AbstractFormPlugin implements ManualOrderE
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function createForm(Request $request, $dataTransfer = null)
     {
@@ -59,5 +56,4 @@ class CustomersListFormPlugin extends AbstractFormPlugin implements ManualOrderE
 
         return $quoteTransfer;
     }
-
 }

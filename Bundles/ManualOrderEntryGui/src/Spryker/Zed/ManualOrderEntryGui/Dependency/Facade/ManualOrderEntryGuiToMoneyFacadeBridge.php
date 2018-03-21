@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\MoneyTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 class ManualOrderEntryGuiToMoneyFacadeBridge implements ManualOrderEntryGuiToMoneyFacadeInterface
 {
@@ -45,5 +44,4 @@ class ManualOrderEntryGuiToMoneyFacadeBridge implements ManualOrderEntryGuiToMon
     {
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
     }
-
 }

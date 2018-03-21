@@ -13,7 +13,6 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ItemCollectionTyp
 
 class ItemCollectionDataProvider implements FormDataProviderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -38,5 +37,4 @@ class ItemCollectionDataProvider implements FormDataProviderInterface
             'csrf_protection' => false,
         ];
     }
-
 }

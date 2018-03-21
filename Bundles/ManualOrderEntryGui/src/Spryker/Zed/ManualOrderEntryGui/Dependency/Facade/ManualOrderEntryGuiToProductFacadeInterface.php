@@ -9,7 +9,6 @@ namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Facade;
 
 interface ManualOrderEntryGuiToProductFacadeInterface
 {
-
     /**
      * @param string $concreteSku
      *
@@ -25,5 +24,4 @@ interface ManualOrderEntryGuiToProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcrete($concreteSku);
-
 }

@@ -7,22 +7,16 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product;
 
-use ArrayObject;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Symfony\Component\Form\CallbackTransformer;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
 class ItemCollectionType extends AbstractType
 {
-
     const FIELD_ITEMS = 'items';
 
     const OPTION_ITEM_CLASS_COLLECTION = 'item_class_collection';
@@ -46,8 +40,7 @@ class ItemCollectionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addItemsField($builder, $options)
-        ;
+            ->addItemsField($builder, $options);
     }
 
     /**
@@ -79,5 +72,4 @@ class ItemCollectionType extends AbstractType
     {
         return 'items';
     }
-
 }

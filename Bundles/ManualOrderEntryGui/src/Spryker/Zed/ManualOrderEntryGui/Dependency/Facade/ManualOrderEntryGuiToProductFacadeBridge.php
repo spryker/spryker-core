@@ -35,13 +35,10 @@ class ManualOrderEntryGuiToProductFacadeBridge implements ManualOrderEntryGuiToP
     /**
      * @param string $concreteSku
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function getProductConcrete($concreteSku)
     {
         return $this->productFacade->getProductConcrete($concreteSku);
     }
-
 }

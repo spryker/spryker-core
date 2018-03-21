@@ -43,5 +43,4 @@ class ManualOrderEntryGuiToCustomerFacadeBridge implements ManualOrderEntryGuiTo
     {
         return $this->customerFacade->findCustomerById($customerTransfer);
     }
-
 }

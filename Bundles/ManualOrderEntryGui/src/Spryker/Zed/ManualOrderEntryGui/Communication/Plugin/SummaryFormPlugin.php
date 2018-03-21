@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class AddressFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
+class SummaryFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -22,6 +22,18 @@ class AddressFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
      */
     public function createForm(Request $request, $dataTransfer = null)
     {
-        return $this->getFactory()->createAddressCollectionForm($dataTransfer);
+        return $this->getFactory()->createVoucherForm($dataTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function handleData($quoteTransfer, &$form, $request)
+    {
+        return $quoteTransfer;
     }
 }

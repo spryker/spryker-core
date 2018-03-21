@@ -13,7 +13,6 @@ use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCurre
 
 class StoreDataProvider implements FormDataProviderInterface
 {
-
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCurrencyFacadeInterface
      */
@@ -32,8 +31,6 @@ class StoreDataProvider implements FormDataProviderInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
-     *
-     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
      */
     public function getOptions($quoteTransfer)
     {
@@ -57,8 +54,6 @@ class StoreDataProvider implements FormDataProviderInterface
 
     /**
      * @return array
-     *
-     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
      */
     protected function getStoreList()
     {
@@ -80,5 +75,4 @@ class StoreDataProvider implements FormDataProviderInterface
 
         return $storeList;
     }
-
 }

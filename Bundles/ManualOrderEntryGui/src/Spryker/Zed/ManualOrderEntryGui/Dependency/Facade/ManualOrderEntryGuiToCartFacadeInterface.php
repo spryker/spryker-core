@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ManualOrderEntryGuiToCartFacadeInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -26,5 +25,4 @@ interface ManualOrderEntryGuiToCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function reloadItems(QuoteTransfer $quoteTransfer);
-
 }

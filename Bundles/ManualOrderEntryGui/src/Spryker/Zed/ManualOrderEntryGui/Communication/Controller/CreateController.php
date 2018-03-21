@@ -7,16 +7,13 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Controller;
 
-use Generated\Shared\Transfer\CurrencyTransfer;
+use Exception;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\CustomersListFormPlugin;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ProductFormPlugin;
 use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,8 +32,6 @@ class CreateController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function indexAction(Request $request)
     {
@@ -83,15 +78,12 @@ class CreateController extends AbstractController
         return $this->viewResponse([
             'forms' => $formsView,
         ]);
-
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function customerAction(Request $request)
     {
@@ -114,7 +106,6 @@ class CreateController extends AbstractController
                 }
 
                 $this->processResponseErrors($customerResponseTransfer);
-
             } else {
                 $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
             }
@@ -139,7 +130,7 @@ class CreateController extends AbstractController
             $quoteTransfer->setIdOrder(1);
 
             $this->addSuccessMessage(static::SUCCESSFUL_MESSAGE_ORDER_CREATED);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
         }
 
@@ -150,8 +141,6 @@ class CreateController extends AbstractController
      * @param \Symfony\Component\Form\FormInterface $customerForm
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     protected function registerCustomer(FormInterface $customerForm)
     {
@@ -171,7 +160,7 @@ class CreateController extends AbstractController
      */
     protected function getCustomerTransferFromForm(FormInterface $customerForm)
     {
-        /** @var CustomerTransfer $customerTransfer */
+        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
         $customerTransfer = $customerForm->getData();
         $customerTransfer->setPassword(uniqid());
         $customerTransfer->setSendPasswordToken(true);
@@ -218,5 +207,4 @@ class CreateController extends AbstractController
             $this->addErrorMessage($errorTransfer->getMessage());
         }
     }
-
 }

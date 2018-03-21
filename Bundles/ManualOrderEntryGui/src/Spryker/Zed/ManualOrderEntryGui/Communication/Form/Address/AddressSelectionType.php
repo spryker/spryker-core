@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AddressSelectionType extends AddressType
 {
-
     const OPTION_VALIDATION_GROUP = 'validation_group';
     const OPTION_ADDRESS_CHOICES = 'addresses_choices';
 
@@ -92,5 +91,4 @@ class AddressSelectionType extends AddressType
     {
         return new NotBlank(['groups' => $options[self::OPTION_VALIDATION_GROUP]]);
     }
-
 }

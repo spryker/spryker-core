@@ -9,10 +9,8 @@ namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Service;
 
 interface ManualOrderEntryGuiToStoreInterface
 {
-
     /**
      * @return array
      */
     public function getCountries();
-
 }

@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
 {
-
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface
      */
@@ -39,7 +38,7 @@ class ProductFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -60,9 +59,9 @@ class ProductFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
         $cartChangeTransfer = new CartChangeTransfer();
         $skus = [];
 
-        foreach($quoteTransfer->getManualOrderProducts() as $manualOrderProduct) {
+        foreach ($quoteTransfer->getManualOrderProducts() as $manualOrderProduct) {
             if (!strlen($manualOrderProduct->getSku())
-                || (int)$manualOrderProduct->getQuantity()<=0
+                || (int)$manualOrderProduct->getQuantity() <= 0
                 || in_array($manualOrderProduct->getSku(), $skus)
                 || !$this->productFacade->hasProductConcrete($manualOrderProduct->getSku())
             ) {
@@ -72,8 +71,7 @@ class ProductFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
             $skus[] = $manualOrderProduct->getSku();
             $itemTransfer = new ItemTransfer();
             $itemTransfer->setSku($manualOrderProduct->getSku())
-                ->setQuantity((int)$manualOrderProduct->getQuantity())
-            ;
+                ->setQuantity((int)$manualOrderProduct->getQuantity());
 
             $cartChangeTransfer->addItem($itemTransfer);
         }
@@ -87,5 +85,4 @@ class ProductFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
 
         return $quoteTransfer;
     }
-
 }

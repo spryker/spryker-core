@@ -33,5 +33,4 @@ class ManualOrderEntryGuiToPaymentFacadeBridge implements ManualOrderEntryGuiToP
     {
         return $this->paymentFacade->getAvailableMethods($quoteTransfer);
     }
-
 }

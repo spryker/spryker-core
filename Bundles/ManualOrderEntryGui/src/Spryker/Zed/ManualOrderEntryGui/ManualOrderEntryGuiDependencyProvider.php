@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\AddressFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\CustomersListFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ItemFormPlugin;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginCollection;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\PaymentFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ProductFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ShipmentFormPlugin;
@@ -278,7 +277,6 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
         return [
             new CustomersListFormPlugin($container[static::FACADE_CUSTOMER]),
             new StoreFormPlugin($container[static::FACADE_CURRENCY]),
-            new PaymentFormPlugin(),
             new ProductFormPlugin(
                 $container[static::FACADE_CART],
                 $container[static::FACADE_PRODUCT]
@@ -290,7 +288,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
             ),
             new AddressFormPlugin(),
             new ShipmentFormPlugin($container[static::FACADE_SHIPMENT]),
+            new PaymentFormPlugin(),
         ];
     }
-
 }

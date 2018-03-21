@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 
 class ManualOrderEntryGuiToMessengerFacadeBridge implements ManualOrderEntryGuiToMessengerFacadeInterface
 {
-
     /**
      * @var \Spryker\Zed\Messenger\Business\MessengerFacadeInterface
      */
@@ -54,5 +53,4 @@ class ManualOrderEntryGuiToMessengerFacadeBridge implements ManualOrderEntryGuiT
     {
         $this->messengerFacade->addInfoMessage($message);
     }
-
 }

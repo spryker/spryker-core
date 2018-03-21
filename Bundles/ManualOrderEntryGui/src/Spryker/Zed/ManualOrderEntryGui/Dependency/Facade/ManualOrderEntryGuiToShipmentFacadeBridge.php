@@ -44,5 +44,4 @@ class ManualOrderEntryGuiToShipmentFacadeBridge implements ManualOrderEntryGuiTo
     {
         return $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
     }
-
 }

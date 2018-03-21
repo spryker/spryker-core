@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 class CustomerDataProvider implements FormDataProviderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
@@ -20,7 +19,7 @@ class CustomerDataProvider implements FormDataProviderInterface
     public function getOptions($customerTransfer)
     {
         return [
-            'data_class' => CustomerTransfer::class
+            'data_class' => CustomerTransfer::class,
         ];
     }
 
@@ -33,5 +32,4 @@ class CustomerDataProvider implements FormDataProviderInterface
     {
         return $customerTransfer;
     }
-
 }

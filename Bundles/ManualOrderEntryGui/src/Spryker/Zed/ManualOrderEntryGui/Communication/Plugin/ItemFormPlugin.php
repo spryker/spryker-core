@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ItemFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
 {
-
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface
      */
@@ -31,7 +30,7 @@ class ItemFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormP
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -52,8 +51,8 @@ class ItemFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormP
         $items = new ArrayObject();
         $skus = [];
 
-        foreach($quoteTransfer->getItems() as $item) {
-            if ($item->getQuantity()<=0
+        foreach ($quoteTransfer->getItems() as $item) {
+            if ($item->getQuantity() <= 0
                 || in_array($item->getSku(), $skus)
             ) {
                 continue;
@@ -72,5 +71,4 @@ class ItemFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormP
 
         return $quoteTransfer;
     }
-
 }

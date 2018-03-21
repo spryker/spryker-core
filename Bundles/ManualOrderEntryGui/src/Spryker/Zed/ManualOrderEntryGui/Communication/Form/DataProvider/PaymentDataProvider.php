@@ -11,7 +11,6 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Payment\PaymentType;
 
 class PaymentDataProvider implements FormDataProviderInterface
 {
-
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginCollection
      */
@@ -60,5 +59,4 @@ class PaymentDataProvider implements FormDataProviderInterface
 
         return $quoteTransfer;
     }
-
 }

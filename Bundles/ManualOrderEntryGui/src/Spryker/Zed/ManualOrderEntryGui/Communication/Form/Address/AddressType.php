@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address;
 
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -17,14 +17,12 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
-use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
 class AddressType extends AbstractType
 {
-
     const FIELD_SALUTATION = 'salutation';
     const FIELD_FIRST_NAME = 'first_name';
     const FIELD_LAST_NAME = 'last_name';
@@ -70,8 +68,7 @@ class AddressType extends AbstractType
             ->addCityField($builder, $options)
             ->addIso2CodeField($builder, $options)
             ->addPhoneField($builder, $options)
-            ->addIdCustomerAddressField($builder, $options)
-        ;
+            ->addIdCustomerAddressField($builder, $options);
     }
 
     /**
@@ -387,5 +384,4 @@ class AddressType extends AbstractType
     {
         return 'address';
     }
-
 }

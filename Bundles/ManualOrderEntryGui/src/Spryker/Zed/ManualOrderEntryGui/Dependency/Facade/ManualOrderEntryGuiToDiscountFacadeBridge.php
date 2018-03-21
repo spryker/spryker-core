@@ -33,5 +33,4 @@ class ManualOrderEntryGuiToDiscountFacadeBridge implements ManualOrderEntryGuiTo
     {
         return $this->discountFacade->calculateDiscounts($quoteTransfer);
     }
-
 }

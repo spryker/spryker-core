@@ -73,5 +73,4 @@ class CustomersListType extends AbstractType
     {
         return 'customers';
     }
-
 }

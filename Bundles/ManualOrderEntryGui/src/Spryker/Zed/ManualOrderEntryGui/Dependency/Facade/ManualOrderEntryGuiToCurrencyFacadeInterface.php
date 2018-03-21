@@ -9,12 +9,10 @@ namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Facade;
 
 interface ManualOrderEntryGuiToCurrencyFacadeInterface
 {
-
     /**
      * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
      *
      * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
      */
     public function getAllStoresWithCurrencies();
-
 }

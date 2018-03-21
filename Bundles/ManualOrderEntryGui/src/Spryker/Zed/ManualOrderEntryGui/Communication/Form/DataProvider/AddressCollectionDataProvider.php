@@ -14,7 +14,6 @@ use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStor
 
 class AddressCollectionDataProvider implements FormDataProviderInterface
 {
-
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreInterface
      */

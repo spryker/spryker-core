@@ -23,7 +23,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class PaymentType extends AbstractType
 {
-
     const PAYMENT_PROPERTY_PATH = QuoteTransfer::PAYMENT;
     const PAYMENT_SELECTION = PaymentTransfer::PAYMENT_SELECTION;
     const PAYMENT_SELECTION_PROPERTY_PATH = self::PAYMENT_PROPERTY_PATH . '.' . self::PAYMENT_SELECTION;
@@ -38,8 +37,6 @@ class PaymentType extends AbstractType
      * @param array $options
      *
      * @return void
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -51,8 +48,6 @@ class PaymentType extends AbstractType
      * @param array $options
      *
      * @return $this
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     protected function addPaymentMethods(FormBuilderInterface $builder, array $options)
     {
@@ -197,5 +192,4 @@ class PaymentType extends AbstractType
     {
         return 'payments';
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 abstract class AbstractFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
-
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      * @param \Symfony\Component\Form\FormInterface $form
@@ -26,5 +25,4 @@ abstract class AbstractFormPlugin extends AbstractPlugin implements ManualOrderE
     {
         return $dataTransfer;
     }
-
 }

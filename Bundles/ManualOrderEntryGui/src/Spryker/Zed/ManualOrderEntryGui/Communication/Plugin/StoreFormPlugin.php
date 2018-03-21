@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class StoreFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
 {
-
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCurrencyFacadeInterface
      */
@@ -30,12 +29,9 @@ class StoreFormPlugin extends AbstractFormPlugin implements ManualOrderEntryForm
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
      */
     public function createForm(Request $request, $dataTransfer = null)
     {
@@ -48,13 +44,11 @@ class StoreFormPlugin extends AbstractFormPlugin implements ManualOrderEntryForm
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
-     *
-     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
      */
     public function handleData($quoteTransfer, &$form, $request)
     {
         $idStoreCurrency = $quoteTransfer->getIdStoreCurrency();
-        if (strlen($idStoreCurrency) && strpos($idStoreCurrency,';') !== false) {
+        if (strlen($idStoreCurrency) && strpos($idStoreCurrency, ';') !== false) {
             list($idStore, $idCurrency) = explode(';', $idStoreCurrency);
 
             $storeWithCurrencyTransfers = $this->currencyFacade->getAllStoresWithCurrencies();
@@ -77,5 +71,4 @@ class StoreFormPlugin extends AbstractFormPlugin implements ManualOrderEntryForm
 
         return $quoteTransfer;
     }
-
 }

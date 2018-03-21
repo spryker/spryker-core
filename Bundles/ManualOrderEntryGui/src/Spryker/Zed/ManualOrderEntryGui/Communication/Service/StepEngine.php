@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class StepEngine
 {
-
     /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $formPlugins
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -23,7 +22,7 @@ class StepEngine
     {
         $filteredPlugins = [];
 
-        foreach($formPlugins as $formPlugin) {
+        foreach ($formPlugins as $formPlugin) {
             $filteredPlugins[] = $formPlugin;
             if (!$this->isFormValid($formPlugin, $request, $quoteTransfer)) {
                 break;
@@ -54,5 +53,4 @@ class StepEngine
 
         return false;
     }
-
 }

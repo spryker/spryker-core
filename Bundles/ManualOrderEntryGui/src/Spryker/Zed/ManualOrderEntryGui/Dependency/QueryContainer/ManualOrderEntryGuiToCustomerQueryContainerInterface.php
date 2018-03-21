@@ -13,5 +13,4 @@ interface ManualOrderEntryGuiToCustomerQueryContainerInterface
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
     public function queryCustomers();
-
 }

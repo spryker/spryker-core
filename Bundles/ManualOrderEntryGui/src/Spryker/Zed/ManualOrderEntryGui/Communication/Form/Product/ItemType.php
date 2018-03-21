@@ -7,21 +7,19 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product;
 
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
-use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
 class ItemType extends AbstractType
 {
-
     const FIELD_SKU = 'sku';
     const FIELD_QUANTITY = 'quantity';
     const FIELD_UNIT_GROSS_PRICE = 'unitGrossPrice';
@@ -31,8 +29,6 @@ class ItemType extends AbstractType
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -55,8 +51,7 @@ class ItemType extends AbstractType
             ->addSkuField($builder, $options)
             ->addQuantityField($builder, $options)
             ->addUnitGrossPriceField($builder, $options)
-            ->addForcedUnitGrossPriceField($builder, $options)
-        ;
+            ->addForcedUnitGrossPriceField($builder, $options);
     }
 
     /**
@@ -165,5 +160,4 @@ class ItemType extends AbstractType
     {
         return 'product';
     }
-
 }

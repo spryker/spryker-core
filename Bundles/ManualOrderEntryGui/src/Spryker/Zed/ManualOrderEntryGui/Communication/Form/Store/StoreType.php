@@ -17,7 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class StoreType extends AbstractType
 {
-
     const FIELD_STORE = 'id_store_currency';
 
     const OPTION_STORES_ARRAY = 'option-stores-array';
@@ -74,5 +73,4 @@ class StoreType extends AbstractType
     {
         return 'stores';
     }
-
 }

@@ -29,5 +29,4 @@ class ManualOrderEntryGuiToCustomerQueryContainerBridge implements ManualOrderEn
     {
         return $this->customerQueryContainer->queryCustomers();
     }
-
 }

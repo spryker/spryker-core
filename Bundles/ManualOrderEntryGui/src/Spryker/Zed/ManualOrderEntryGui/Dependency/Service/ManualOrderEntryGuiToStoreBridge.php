@@ -29,5 +29,4 @@ class ManualOrderEntryGuiToStoreBridge implements ManualOrderEntryGuiToStoreInte
     {
         return $this->store->getCountries();
     }
-
 }

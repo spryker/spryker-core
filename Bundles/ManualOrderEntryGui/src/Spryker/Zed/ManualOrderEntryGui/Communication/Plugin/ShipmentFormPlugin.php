@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ShipmentFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
 {
-
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface
      */
@@ -31,11 +30,9 @@ class ShipmentFormPlugin extends AbstractFormPlugin implements ManualOrderEntryF
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
-     *
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
      */
     public function createForm(Request $request, $dataTransfer = null)
     {
@@ -62,5 +59,4 @@ class ShipmentFormPlugin extends AbstractFormPlugin implements ManualOrderEntryF
 
         return $quoteTransfer;
     }
-
 }

@@ -8,12 +8,12 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
-use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 
 class AddressCollectionType extends AbstractType
 {
@@ -63,8 +63,7 @@ class AddressCollectionType extends AbstractType
         $this
             ->addShippingAddressSubForm($builder, $options)
             ->addSameAsShipmentCheckbox($builder)
-            ->addBillingAddressSubForm($builder, $options)
-        ;
+            ->addBillingAddressSubForm($builder, $options);
     }
 
     /**
@@ -154,5 +153,4 @@ class AddressCollectionType extends AbstractType
     {
         return 'addresses';
     }
-
 }

@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class VoucherFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
 {
-
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToDiscountFacadeInterface
      */
@@ -40,7 +39,7 @@ class VoucherFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -84,6 +83,8 @@ class VoucherFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
     /**
      * @param string $message
      * @param bool $isSuccess
+     *
+     * @return void
      */
     protected function addMessage($message, $isSuccess = true)
     {
@@ -96,5 +97,4 @@ class VoucherFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
             $this->messengerFacade->addErrorMessage($messageTransfer);
         }
     }
-
 }

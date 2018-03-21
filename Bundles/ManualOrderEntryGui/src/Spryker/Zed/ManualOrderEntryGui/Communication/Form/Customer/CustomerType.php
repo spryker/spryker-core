@@ -36,8 +36,7 @@ class CustomerType extends AbstractType
             ->addSalutationField($builder)
             ->addFirstNameField($builder)
             ->addLastNameField($builder)
-            ->addEmailField($builder)
-        ;
+            ->addEmailField($builder);
     }
 
     /**
@@ -133,5 +132,4 @@ class CustomerType extends AbstractType
     {
         return 'customer';
     }
-
 }

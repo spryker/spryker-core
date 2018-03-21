@@ -7,17 +7,16 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Voucher;
 
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
 class VoucherType extends AbstractType
 {
-
     const FIELD_VOUCHER_CODE = 'voucher_code';
 
     /**
@@ -27,7 +26,6 @@ class VoucherType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-
     }
 
     /**
@@ -39,8 +37,7 @@ class VoucherType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addVoucherCodeField($builder, $options)
-        ;
+            ->addVoucherCodeField($builder, $options);
     }
 
     /**
@@ -66,5 +63,4 @@ class VoucherType extends AbstractType
     {
         return 'voucher';
     }
-
 }

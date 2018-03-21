@@ -12,7 +12,6 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Shipment\ShipmentType;
 
 class ShipmentDataProvider implements FormDataProviderInterface
 {
-
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface
      */
@@ -85,5 +84,4 @@ class ShipmentDataProvider implements FormDataProviderInterface
 
         return $shipmentMethodList;
     }
-
 }
