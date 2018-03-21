@@ -10,7 +10,8 @@
         <column name="id_sales_reclamation" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
 
-        <column name="customer_name" size="511" type="VARCHAR" required="true"/>
+        <column name="customer_name" size="511" type="VARCHAR" required="true" />
+        <column name="state" type="ENUM" valueSet="Open, Close" required="true" />
 
         <behavior name="timestampable"/>
 

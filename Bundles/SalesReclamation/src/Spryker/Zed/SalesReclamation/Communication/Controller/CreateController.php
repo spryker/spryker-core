@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesReclamation\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap;
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -98,6 +99,7 @@ class CreateController extends AbstractController
         $spySaleReclamation = new SpySalesReclamation();
         $spySaleReclamation->setFkSalesOrder($orderTransfer->getIdSalesOrder());
         $spySaleReclamation->setCustomerName($customer);
+        $spySaleReclamation->setState(SpySalesReclamationTableMap::COL_STATE_OPEN);
 
         $spySaleReclamation->save();
 

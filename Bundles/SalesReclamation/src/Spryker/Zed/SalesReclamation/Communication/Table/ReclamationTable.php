@@ -46,6 +46,8 @@ class ReclamationTable extends AbstractTable
     {
         $config->setHeader($this->getHeaderFields());
 
+        $config->addRawColumn(SpySalesReclamationTableMap::COL_STATE);
+
         return $config;
     }
 
@@ -58,6 +60,7 @@ class ReclamationTable extends AbstractTable
             SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION => '#',
             SpySalesReclamationTableMap::COL_CREATED_AT => 'Created',
             SpySalesReclamationTableMap::COL_CUSTOMER_NAME => 'Customer',
+            SpySalesReclamationTableMap::COL_STATE => 'State',
             SpySalesReclamationTableMap::COL_FK_SALES_ORDER => 'Order id',
         ];
     }
@@ -90,10 +93,33 @@ class ReclamationTable extends AbstractTable
                     $item[SpySalesReclamationTableMap::COL_CREATED_AT]
                 ),
                 SpySalesReclamationTableMap::COL_CUSTOMER_NAME => $item[SpySalesReclamationTableMap::COL_CUSTOMER_NAME],
+                SpySalesReclamationTableMap::COL_STATE => $this->createStatusLabel(
+                    $item[SpySalesReclamationTableMap::COL_STATE]
+                ),
                 SpySalesReclamationTableMap::COL_FK_SALES_ORDER => $item[SpySalesReclamationTableMap::COL_FK_SALES_ORDER],
             ];
         }
 
         return $results;
+    }
+
+    /**
+     * @param string $state
+     *
+     * @return string
+     */
+    public function createStatusLabel(string $state): string
+    {
+        $statusLabel = '';
+        switch ($state) {
+            case SpySalesReclamationTableMap::COL_STATE_OPEN:
+                $statusLabel = '<span class="label label-success" title="Active">Open</span>';
+                break;
+            case SpySalesReclamationTableMap::COL_STATE_CLOSE:
+                $statusLabel = '<span class="label label-danger" title="Deactivated">Closed</span>';
+                break;
+        }
+
+        return $statusLabel;
     }
 }
