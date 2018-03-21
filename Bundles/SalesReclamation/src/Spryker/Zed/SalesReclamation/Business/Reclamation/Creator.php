@@ -16,7 +16,7 @@ use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap;
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation;
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationItem;
 
-class Creator
+class Creator implements CreatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer

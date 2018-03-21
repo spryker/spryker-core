@@ -5,20 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesReclamation\Business;
+namespace Spryker\Zed\SalesReclamation\Business\Reclamation;
 
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 
-interface SalesReclamationFacadeInterface
+interface CreatorInterface
 {
     /**
-     * Specification:
-     * - Create new Reclamation by SalesOrder and SalesOrderItemIds
-     * - If incoming data inconsistent - return null
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer
      *
      * @return null|\Generated\Shared\Transfer\ReclamationTransfer
