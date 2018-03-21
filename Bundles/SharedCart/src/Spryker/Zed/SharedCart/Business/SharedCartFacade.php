@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\SharedCart\Business\SharedCartBusinessFactory getFactory()
  * @method \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface getRepository()
+ * @method \Spryker\Zed\SharedCart\Persistence\SharedCartEntityManagerInterface getEntityManager()
  */
 class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterface
 {
@@ -45,5 +46,19 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
         return $this->getFactory()
             ->createQuoteResponseExpander()
             ->expand($quoteResponseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function installSharedCartPermissions(): void
+    {
+        $this->getFactory()
+            ->createQuotePermissionGroupInstaller()
+            ->install();
     }
 }

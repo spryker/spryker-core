@@ -5,8 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SharedCart\Persistence;
+namespace Spryker\Zed\SharedCart\Business\Installer;
 
-interface SharedCartQueryContainerInterface
+interface QuotePermissionGroupInstallerInterface
 {
+    /**
+     * @return void
+     */
+    public function install(): void;
 }

@@ -35,4 +35,14 @@ interface SharedCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function expandQuoteResponseWithSharedCarts(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - TODO: add specification
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function installSharedCartPermissions(): void;
 }

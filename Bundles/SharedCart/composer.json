@@ -14,11 +14,13 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/installer": "*",
     "spryker/persistent-cart": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/persistent-cart": "*"
+    "spryker/persistent-cart": "To extend persistent cart saving use SharedCartPermissionInstallerPlugin. Minimum required version: 1.0.0.",
+    "spryker/installer": "If you want to use SharedCartPermissionInstallerPlugin. Minimum required version: 4.0.0."
   },
   "autoload": {
     "psr-4": {

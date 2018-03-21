@@ -9,10 +9,11 @@ namespace Spryker\Zed\SharedCart\Persistence;
 
 use Orm\Zed\Permission\Persistence\SpyPermissionQuery;
 use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
+use Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroupQuery;
+use Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroupToPermissionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
- * @method \Spryker\Zed\SharedCart\Persistence\SharedCartQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
  */
 class SharedCartPersistenceFactory extends AbstractPersistenceFactory
@@ -31,5 +32,21 @@ class SharedCartPersistenceFactory extends AbstractPersistenceFactory
     public function createQuoteQuery()
     {
         return SpyQuoteQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroupQuery
+     */
+    public function createQuotePermissionGroupQuery()
+    {
+        return SpyQuotePermissionGroupQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroupToPermissionQuery
+     */
+    public function createQuotePermissionGroupToPermissionQuery()
+    {
+        return SpyQuotePermissionGroupToPermissionQuery::create();
     }
 }
