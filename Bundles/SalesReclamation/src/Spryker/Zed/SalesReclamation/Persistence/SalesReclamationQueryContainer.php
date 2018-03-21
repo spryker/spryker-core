@@ -8,10 +8,20 @@
 namespace Spryker\Zed\SalesReclamation\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\SalesReclamation\Persistence\Propel\SpySalesReclamationQuery;
 
 /**
  * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationPersistenceFactory getFactory()
  */
 class SalesReclamationQueryContainer extends AbstractQueryContainer implements SalesReclamationQueryContainerInterface
 {
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery
+     */
+    public function queryReclamations(): SpySalesReclamationQuery
+    {
+        return $this->getFactory()->createSalesReclamationQuery();
+    }
 }
