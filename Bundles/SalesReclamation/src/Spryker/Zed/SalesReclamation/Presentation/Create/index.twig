@@ -1,7 +1,11 @@
 {% extends '@Application/Layout/layout.twig' %}
 
 {% block content %}
-    {{ test }}
-    <br />
-    Related order is {{ idSalesOrder }}
+    Reclamation for order {{ order.orderReference }}
+
+    <div id="items">
+        {%- include '@SalesReclamation/Create/boxes/items.twig' with {
+            'order': order,
+        } -%}
+    </div>
 {% endblock %}
