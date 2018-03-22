@@ -9,8 +9,6 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Application\Communication\Plugin\Exception\InvalidUrlConfigurationException;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -19,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
  */
 class AssertUrlConfigurationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -57,7 +56,7 @@ class AssertUrlConfigurationServiceProvider extends AbstractPlugin implements Se
             return;
         }
 
-        $configuredHostName = Config::get(ApplicationConstants::HOST_ZED);
+        $configuredHostName = $this->getConfig()->getHostName();
         if ($configuredHostName === $hostName) {
             return;
         }

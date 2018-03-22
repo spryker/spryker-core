@@ -9,8 +9,6 @@ namespace Spryker\Yves\Application\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Application\Plugin\Exception\InvalidUrlConfigurationException;
 use Spryker\Yves\Kernel\AbstractPlugin;
@@ -56,7 +54,7 @@ class AssertUrlConfigurationServiceProvider extends AbstractPlugin implements Se
             return;
         }
 
-        $configuredHostName = Config::get(ApplicationConstants::HOST_YVES);
+        $configuredHostName = $this->getConfig()->getHostName();
         if ($configuredHostName === $hostName) {
             return;
         }
