@@ -13,9 +13,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CompanyWriterStep implements DataImportStepInterface
 {
-    const KEY_NAME = 'name';
-    const KEY_IS_ACTIVE = 'is_active';
-    const KEY_STATUS = 'status';
+    const KEY_KEY = 'key';
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -24,13 +22,12 @@ class CompanyWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet)
     {
-        $currencyEntity = SpyCompanyQuery::create()
-            ->filterByName($dataSet[static::KEY_NAME])
+        $companyEntity = SpyCompanyQuery::create()
+            ->filterByKey($dataSet[static::KEY_KEY])
             ->findOneOrCreate();
 
-        $currencyEntity->setIsActive($dataSet[static::KEY_IS_ACTIVE]);
-        $currencyEntity->setStatus($dataSet[static::KEY_STATUS]);
+        $companyEntity->fromArray($dataSet->getArrayCopy());
 
-        $currencyEntity->save();
+        $companyEntity->save();
     }
 }

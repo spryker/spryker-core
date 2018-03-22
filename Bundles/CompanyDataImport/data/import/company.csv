@@ -1,2 +1,2 @@
-name,is_active,status
-Test Company,true,approved
+name,key,is_active,status
+Test Company,test-company,true,approved

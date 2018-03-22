@@ -4,6 +4,7 @@
     <table name="spy_company" phpName="SpyCompany">
         <column name="id_company" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="key" type="VARCHAR" size="255" required="false"/>
         <column name="is_active" type="BOOLEAN" default="false"/>
         <column name="status" required="true" size="8" type="ENUM" valueSet="pending,approved,denied" defaultValue="pending"/>
 

@@ -18,7 +18,11 @@ class CompanyDataImportHelper extends Module
     public function ensureDatabaseTableIsEmpty(): void
     {
         $companyQuery = $this->getCompanyQuery();
-        $companyQuery->find()->delete();
+        foreach ($companyQuery->find() as $companyEntity) {
+            $companyEntity->getCompanyBusinessUnits()->delete();
+            $companyEntity->getCompanyUnitAddresses()->delete();
+            $companyEntity->delete();
+        }
     }
 
     /**
