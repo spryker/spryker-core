@@ -10,6 +10,7 @@ namespace Spryker\Zed\Quote\Persistence;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
 
 interface QuoteRepositoryInterface
 {
@@ -48,4 +49,11 @@ interface QuoteRepositoryInterface
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function filterQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyQuoteEntityTransfer $quoteEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer;
 }

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteMergeRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -115,5 +116,20 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     public function getQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
         return $this->getRepository()->filterQuoteCollection($quoteCriteriaFilterTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Map Quote Entity Transfer to quote transfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SpyQuoteEntityTransfer $quoteEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer
+    {
+        return $this->getRepository()->mapQuoteTransfer($quoteEntityTransfer);
     }
 }

@@ -56,6 +56,21 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @param int $idCompanyUser
      *
+     * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer[]
+     */
+    public function findQuotesByIdCompanyUser(int $idCompanyUser): array
+    {
+        $quoteQuery = $this->getFactory()->createQuoteQuery()
+            ->joinWithSpyStore()
+            ->useSpyQuoteCompanyUserQuery()
+                ->filterByFkCompanyUser($idCompanyUser)
+            ->endUse();
+        return $this->buildQueryFromCriteria($quoteQuery)->find();
+    }
+
+    /**
+     * @param int $idCompanyUser
+     *
      * @return array
      */
     protected function findOwnQuotes(int $idCompanyUser): array

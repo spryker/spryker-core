@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\SharedCart\Dependency\Facade;
 
-use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
 
 class SharedCartToQuoteFacadeBridge implements SharedCartToQuoteFacadeInterface
 {
@@ -25,12 +26,15 @@ class SharedCartToQuoteFacadeBridge implements SharedCartToQuoteFacadeInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     * Specification:
+     * - Map Quote Entity Transfer to quote transfer
      *
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     * @param \Generated\Shared\Transfer\SpyQuoteEntityTransfer $quoteEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer)
+    public function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer
     {
-        return $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
+        return $this->quoteFacade->mapQuoteTransfer($quoteEntityTransfer);
     }
 }

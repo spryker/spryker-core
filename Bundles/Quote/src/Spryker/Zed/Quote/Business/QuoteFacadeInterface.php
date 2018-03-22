@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteMergeRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
 
 interface QuoteFacadeInterface
 {
@@ -98,4 +99,16 @@ interface QuoteFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function getQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Map Quote Entity Transfer to quote transfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SpyQuoteEntityTransfer $quoteEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer;
 }

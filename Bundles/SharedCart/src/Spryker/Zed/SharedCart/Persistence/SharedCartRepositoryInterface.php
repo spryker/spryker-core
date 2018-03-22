@@ -17,4 +17,11 @@ interface SharedCartRepositoryInterface
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function findPermissionsByIdCompanyUser(int $idCompanyUser): PermissionCollectionTransfer;
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer[]
+     */
+    public function findQuotesByIdCompanyUser(int $idCompanyUser): array;
 }

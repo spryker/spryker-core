@@ -10,6 +10,7 @@ namespace Spryker\Zed\SharedCart\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SharedCart\Business\Installer\QuotePermissionGroupInstaller;
 use Spryker\Zed\SharedCart\Business\Installer\QuotePermissionGroupInstallerInterface;
+use Spryker\Zed\SharedCart\Business\Model\QuoteReader;
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpander;
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpanderInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
@@ -17,6 +18,7 @@ use Spryker\Zed\SharedCart\SharedCartDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SharedCart\Persistence\SharedCartEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface getRepository()()
  * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
  */
 class SharedCartBusinessFactory extends AbstractBusinessFactory
@@ -26,7 +28,15 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
      */
     public function createQuoteResponseExpander(): QuoteResponseExpanderInterface
     {
-        return new QuoteResponseExpander($this->getQuoteFacade());
+        return new QuoteResponseExpander($this->createQuoteReader());
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface
+     */
+    public function createQuoteReader()
+    {
+        return new QuoteReader($this->getRepository(), $this->getQuoteFacade());
     }
 
     /**

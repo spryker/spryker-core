@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyRole\Communication\Plugin;
+namespace Spryker\Zed\SharedCart\Communication\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
@@ -13,9 +13,10 @@ use Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterfa
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface getFacade()
+ * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
+ * @method \Spryker\Zed\SharedCart\Communication\SharedCartCommunicationFactory getFactory()
  */
-class PermissionCustomerExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
+class QuotePermissionCustomerExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

@@ -15,7 +15,7 @@ use Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteResponseExpanderPluginInte
  * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
  * @method \Spryker\Zed\SharedCart\Communication\SharedCartCommunicationFactory getFactory()
  */
-class SharedCartQuoteResponseExpanderPlugin extends AbstractPlugin implements QuoteResponseExpanderPluginInterface
+class CustomerQuoteResponseExpanderPlugin extends AbstractPlugin implements QuoteResponseExpanderPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
@@ -27,6 +27,10 @@ class SharedCartQuoteResponseExpanderPlugin extends AbstractPlugin implements Qu
         if (!$quoteResponseTransfer->getQuoteTransfer()) {
             return $quoteResponseTransfer;
         }
+        $customerTransfer = $quoteResponseTransfer->getQuoteTransfer()->requireCustomer()->getCustomer();
+        $permissionCollectionTransfer = $this->getFactory()->getCustomerFacade()
+            ->getCustomer($customerTransfer)->getPermissions();
+        $quoteResponseTransfer->setCustomerPermissions($permissionCollectionTransfer);
 
         return $this->getFacade()->expandQuoteResponseWithSharedCarts($quoteResponseTransfer);
     }

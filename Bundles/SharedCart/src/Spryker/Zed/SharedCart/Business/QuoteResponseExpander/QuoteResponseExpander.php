@@ -9,24 +9,22 @@ namespace Spryker\Zed\SharedCart\Business\QuoteResponseExpander;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
-use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
+use Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface;
 
 class QuoteResponseExpander implements QuoteResponseExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface
+     * @var \Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface
      */
-    protected $quoteFacade;
+    protected $quoteReader;
 
     /**
-     * @param \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface $quoteFacade
+     * @param \Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface $quoteReader
      */
-    public function __construct(SharedCartToQuoteFacadeInterface $quoteFacade)
+    public function __construct(QuoteReaderInterface $quoteReader)
     {
-        $this->quoteFacade = $quoteFacade;
+        $this->quoteReader = $quoteReader;
     }
 
     /**
@@ -40,47 +38,10 @@ class QuoteResponseExpander implements QuoteResponseExpanderInterface
         $customerTransfer = $quoteTransfer->requireCustomer()->getCustomer();
 
         $sharedQuoteCollectionTransfer = $this->findSharedCustomerQuotes($customerTransfer);
-        $quoteResponseTransfer->addSharedCustomerQuotes($sharedQuoteCollectionTransfer);
-
-//        if (!$quoteResponseTransfer->getQuoteTransfer()->getIsActive() && count($sharedQuoteCollectionTransfer->getQuotes())) {
-//            $quoteResponseTransfer->setQuoteTransfer($this->getActiveQuote($sharedQuoteCollectionTransfer));
-//        }
-
-//        $this->deactivateActiveQuotes($customerQuoteCollectionTransfer, $quoteResponseTransfer->getQuoteTransfer()->getIdQuote());
+        $quoteResponseTransfer->setSharedCustomerQuotes($sharedQuoteCollectionTransfer);
 
         return $quoteResponseTransfer;
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function getActiveQuote(QuoteCollectionTransfer $quoteCollectionTransfer): QuoteTransfer
-    {
-        $quoteTransferList = (array)$quoteCollectionTransfer->getQuotes();
-        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if ($quoteTransfer->getIsActive()) {
-                return $quoteTransfer;
-            }
-        }
-        $quoteTransfer = reset($quoteTransferList);
-
-//        return $this->setQuoteAsActive($quoteTransfer);
-    }
-
-//    /**
-//     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-//     *
-//     * @return \Generated\Shared\Transfer\QuoteTransfer
-//     */
-//    protected function setQuoteAsActive(QuoteTransfer $quoteTransfer): QuoteTransfer
-//    {
-//        $quoteTransfer->setIsActive(true);
-//        $this->quoteFacade->persistQuote($quoteTransfer);
-//
-//        return $quoteTransfer;
-//    }
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -89,30 +50,10 @@ class QuoteResponseExpander implements QuoteResponseExpanderInterface
      */
     protected function findSharedCustomerQuotes(CustomerTransfer $customerTransfer): QuoteCollectionTransfer
     {
-        $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
-        $quoteCriteriaFilterTransfer->setCustomerReference($customerTransfer->getCustomerReference());
-        $customerQuoteCollectionTransfer = $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
-
-        foreach ($customerQuoteCollectionTransfer->getQuotes() as $customerQuoteTransfer) {
-            $customerQuoteTransfer->setCustomer($customerTransfer);
+        if ($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()) {
+            return $this->quoteReader->findCustomerSharedQuotes($customerTransfer);
         }
 
-        return $customerQuoteCollectionTransfer;
+        return new QuoteCollectionTransfer();
     }
-
-//    /**
-//     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quotesCollectionTransfer
-//     * @param int $idActiveQuote
-//     *
-//     * @return void
-//     */
-//    protected function deactivateActiveQuotes(QuoteCollectionTransfer $quotesCollectionTransfer, $idActiveQuote)
-//    {
-//        foreach ($quotesCollectionTransfer->getQuotes() as $quoteTransfer) {
-//            if ($quoteTransfer->getIsActive() && $idActiveQuote !== $quoteTransfer->getIdQuote()) {
-//                $quoteTransfer->setIsActive(false);
-//                $this->quoteFacade->persistQuote($quoteTransfer);
-//            }
-//        }
-//    }
 }

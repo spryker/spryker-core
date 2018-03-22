@@ -9,11 +9,13 @@ namespace Spryker\Zed\SharedCart;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeBridge;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeBridge;
 
 class SharedCartDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_QUOTE = 'FACADE_QUOTE';
+    public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -32,10 +34,36 @@ class SharedCartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container = $this->addCustomerFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addQuoteFacade(Container $container)
     {
         $container[static::FACADE_QUOTE] = function (Container $container) {
             return new SharedCartToQuoteFacadeBridge($container->getLocator()->quote()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomerFacade(Container $container)
+    {
+        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+            return new SharedCartToCustomerFacadeBridge($container->getLocator()->customer()->facade());
         };
 
         return $container;

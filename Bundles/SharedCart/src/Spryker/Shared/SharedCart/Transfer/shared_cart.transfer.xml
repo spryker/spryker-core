@@ -10,4 +10,11 @@
         <property name="permissions" singular="permission" type="Permission[]" />
     </transfer>
 
+    <transfer name="QuoteResponse">
+        <property name="quoteTransfer" type="Quote"/>
+        <property name="isSuccessful" type="bool" />
+        <property name="sharedCustomerQuotes" type="QuoteCollection"/>
+        <property name="customerPermissions" type="PermissionCollection"/>
+    </transfer>
+
 </transfers>
