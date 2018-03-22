@@ -14,7 +14,7 @@ interface FileResolverInterface
     /**
      * @param \Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer $dataImporterReaderConfigurationTransfer
      *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\ImportFileFileResolverException
+     * @throws \Spryker\Zed\DataImport\Business\Exception\FileResolverFileNotFoundException
      *
      * @return string
      */

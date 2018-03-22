@@ -35,11 +35,11 @@ class DataImportDumpConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $dataImporter = $this->getFacade()->dumpImporter();
-        $reformatedForTable = $this->reformatForTable($dataImporter);
+        $formattedDataImporterList = $this->formatForTable($dataImporter);
         $table = new Table($output);
         $table
             ->setHeaders(['Import Type', 'Class Name'])
-            ->setRows($reformatedForTable);
+            ->setRows($formattedDataImporterList);
 
         $table->render();
 
@@ -55,7 +55,7 @@ class DataImportDumpConsole extends Console
      *
      * @return array[]
      */
-    protected function reformatForTable(array $dataImporter): array
+    protected function formatForTable(array $dataImporter): array
     {
         $reordered = [];
         foreach ($dataImporter as $dataImportType => $dataImportClass) {

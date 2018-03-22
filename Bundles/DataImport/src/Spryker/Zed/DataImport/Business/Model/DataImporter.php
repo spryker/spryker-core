@@ -227,7 +227,7 @@ class DataImporter implements
     {
         $message = $exception->getMessage() . PHP_EOL . PHP_EOL;
         if ($dataSetPosition && $this->getImportType() !== 'full') {
-            $message .= sprintf('CategoryDataImport for "%s" at data set position "%s" has an error.', $this->getImportType(), $dataSetPosition) . PHP_EOL . PHP_EOL;
+            $message .= sprintf('DataImport for "%s" at data set position "%s" has an error.', $this->getImportType(), $dataSetPosition) . PHP_EOL . PHP_EOL;
             $message .= sprintf('For debugging execute "vendor/bin/console data:import:%s -o %s -l 1 -t"', $this->getImportType(), $dataSetPosition) . PHP_EOL . PHP_EOL;
         }
 

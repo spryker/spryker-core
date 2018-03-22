@@ -8,7 +8,7 @@ namespace SprykerTest\Zed\DataImport\Business\Model\DataReader\FileResolver;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
-use Spryker\Zed\DataImport\Business\Exception\ImportFileFileResolverException;
+use Spryker\Zed\DataImport\Business\Exception\FileResolverFileNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataReader\FileResolver\FileResolver;
 
 /**
@@ -30,7 +30,7 @@ class FileResolverTest extends Unit
      */
     public function testResolveFileThrowsExceptionWhenFileNotFound()
     {
-        $this->expectException(ImportFileFileResolverException::class);
+        $this->expectException(FileResolverFileNotFoundException::class);
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName('file_does_not_exist');
 

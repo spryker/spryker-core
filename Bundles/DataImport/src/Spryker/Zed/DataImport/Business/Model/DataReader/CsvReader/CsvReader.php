@@ -50,11 +50,6 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     protected $limit;
 
     /**
-     * @var \Spryker\Zed\DataImport\Business\Model\DataReader\FileResolver\FileResolverInterface
-     */
-    protected $fileResolver;
-
-    /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataReader\CsvReader\CsvReaderConfigurationInterface $csvReaderConfiguration
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      */

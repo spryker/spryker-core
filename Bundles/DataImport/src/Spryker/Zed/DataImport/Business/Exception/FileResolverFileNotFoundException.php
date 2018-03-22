@@ -7,6 +7,6 @@
 
 namespace Spryker\Zed\DataImport\Business\Exception;
 
-class ImportFileFileResolverException extends DataReaderException
+class FileResolverFileNotFoundException extends DataReaderException
 {
 }

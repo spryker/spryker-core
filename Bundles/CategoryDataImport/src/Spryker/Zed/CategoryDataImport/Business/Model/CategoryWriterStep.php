@@ -14,6 +14,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryTemplate;
 use Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
@@ -71,8 +72,6 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @throws \Spryker\Zed\CategoryDataImport\Business\Exception\CategoryTemplateNotFoundException
-     *
      * @return \Orm\Zed\Category\Persistence\SpyCategory
      */
     protected function findOrCreateCategory(DataSetInterface $dataSet)
@@ -84,10 +83,7 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
         $categoryEntity->fromArray($dataSet->getArrayCopy());
 
         if (!empty($dataSet[static::KEY_TEMPLATE_NAME])) {
-            $categoryTemplateEntity = SpyCategoryTemplateQuery::create()->findOneByName($dataSet[static::KEY_TEMPLATE_NAME]);
-            if (!$categoryTemplateEntity) {
-                throw new CategoryTemplateNotFoundException(sprintf('CategoryTemplate with template name "%s" not found!', $dataSet[static::KEY_TEMPLATE_NAME]));
-            }
+            $categoryTemplateEntity = $this->getCategoryTemplate($dataSet);
             $categoryEntity->setFkCategoryTemplate($categoryTemplateEntity->getIdCategoryTemplate());
         }
 
@@ -244,5 +240,22 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
         if ($categoryClosureTableEntity->isNew() || $categoryClosureTableEntity->isModified()) {
             $categoryClosureTableEntity->save();
         }
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @throws \Spryker\Zed\CategoryDataImport\Business\Exception\CategoryTemplateNotFoundException
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplate
+     */
+    protected function getCategoryTemplate(DataSetInterface $dataSet): SpyCategoryTemplate
+    {
+        $categoryTemplateEntity = SpyCategoryTemplateQuery::create()->findOneByName($dataSet[static::KEY_TEMPLATE_NAME]);
+        if (!$categoryTemplateEntity) {
+            throw new CategoryTemplateNotFoundException(sprintf('CategoryTemplate with template name "%s" not found!', $dataSet[static::KEY_TEMPLATE_NAME]));
+        }
+
+        return $categoryTemplateEntity;
     }
 }

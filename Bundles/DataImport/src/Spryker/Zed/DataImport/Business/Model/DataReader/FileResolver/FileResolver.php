@@ -8,14 +8,14 @@
 namespace Spryker\Zed\DataImport\Business\Model\DataReader\FileResolver;
 
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
-use Spryker\Zed\DataImport\Business\Exception\ImportFileFileResolverException;
+use Spryker\Zed\DataImport\Business\Exception\FileResolverFileNotFoundException;
 
 class FileResolver implements FileResolverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer $dataImporterReaderConfigurationTransfer
      *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\ImportFileFileResolverException
+     * @throws \Spryker\Zed\DataImport\Business\Exception\FileResolverFileNotFoundException
      *
      * @return string
      */
@@ -29,7 +29,7 @@ class FileResolver implements FileResolverInterface
             }
         }
 
-        throw new ImportFileFileResolverException(sprintf(
+        throw new FileResolverFileNotFoundException(sprintf(
             'Could not find file "%s". Checked path(s): %s',
             $dataImporterReaderConfigurationTransfer->getFileName(),
             implode(', ', $fileNames)
