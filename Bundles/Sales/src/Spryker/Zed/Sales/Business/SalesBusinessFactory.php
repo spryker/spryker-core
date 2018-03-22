@@ -223,6 +223,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     protected function getPreSaveHydrateOrderPlugins()
     {
-        return $this->getProvidedDependency(SalesDependencyProvider::PRE_SAVE_HYDRATE_ORDER_PLUGINS);
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_PRE_SAVE_HYDRATE_ORDER);
     }
 }

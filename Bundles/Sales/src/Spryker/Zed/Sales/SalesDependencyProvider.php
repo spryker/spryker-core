@@ -33,7 +33,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const STORE = 'store';
 
     const HYDRATE_ORDER_PLUGINS = 'hydrate order plugins';
-    const PRE_SAVE_HYDRATE_ORDER_PLUGINS = 'pre save hydrate order plugins';
+    const PLUGINS_PRE_SAVE_HYDRATE_ORDER = 'plugins pre save hydrate order';
 
     /**
      * @deprecated Will be removed in the next major version.
@@ -100,7 +100,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPreSaveHydrateOrderPlugins(Container $container)
     {
-        $container[static::PRE_SAVE_HYDRATE_ORDER_PLUGINS] = function (Container $container) {
+        $container[static::PLUGINS_PRE_SAVE_HYDRATE_ORDER] = function () {
             return $this->getPreSaveOrderHydrationPlugins();
         };
 
