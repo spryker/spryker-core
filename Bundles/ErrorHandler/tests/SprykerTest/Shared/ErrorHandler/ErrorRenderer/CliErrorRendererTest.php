@@ -22,7 +22,6 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
  */
 class CliErrorRendererTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -34,5 +33,4 @@ class CliErrorRendererTest extends Unit
 
         $this->assertInternalType('string', $exceptionString);
     }
-
 }

@@ -11,12 +11,11 @@ use Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 /**
- * @method \Spryker\Zed\Api\ApiConfig getConfig()
- * @method \Spryker\Zed\Api\Persistence\ApiQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\PropelQueryBuilder\PropelQueryBuilderConfig getConfig()
+ * @method \Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainerInterface getQueryContainer()
  */
 interface PaginationQueryMapperInterface
 {
-
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PropelQueryBuilderPaginationTransfer|null $propelQueryBuilderPaginationTransfer
@@ -27,5 +26,4 @@ interface PaginationQueryMapperInterface
         ModelCriteria $query,
         PropelQueryBuilderPaginationTransfer $propelQueryBuilderPaginationTransfer
     );
-
 }

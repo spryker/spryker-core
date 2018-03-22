@@ -12,7 +12,6 @@ use Spryker\Shared\FileSystem\FileSystemConstants;
 
 class FileSystemConfig extends AbstractBundleConfig
 {
-
     /**
      * @return array
      */
@@ -20,5 +19,4 @@ class FileSystemConfig extends AbstractBundleConfig
     {
         return $this->get(FileSystemConstants::FILESYSTEM_SERVICE);
     }
-
 }

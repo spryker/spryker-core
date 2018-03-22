@@ -13,12 +13,11 @@ use Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacade getFacade()
+ * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface getFacade()
  * @method \Spryker\Zed\DiscountPromotion\Communication\DiscountPromotionCommunicationFactory getFactory()
  */
 class DiscountPromotionCollectorStrategyPlugin extends AbstractPlugin implements CollectorStrategyPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -48,5 +47,4 @@ class DiscountPromotionCollectorStrategyPlugin extends AbstractPlugin implements
     {
         return $this->getFacade()->collect($discountTransfer, $quoteTransfer);
     }
-
 }

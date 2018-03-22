@@ -27,7 +27,6 @@ use Spryker\Zed\Touch\Business\TouchFacade;
  */
 class TouchFacadeTest extends Unit
 {
-
     const ITEM_TYPE = 'test.item';
     const ITEM_ID_1 = 1;
     const ITEM_ID_2 = 2;
@@ -48,25 +47,6 @@ class TouchFacadeTest extends Unit
         $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, self::ITEM_ID_1);
         $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, self::ITEM_ID_2);
         $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, self::ITEM_ID_3);
-    }
-
-    /**
-     * @dataProvider bulkTouchSetMethodsDataProvider
-     *
-     * @deprecated This can be removed when all `TouchFacadeInterface::bulkTouch*` methods are removed
-     *
-     * @param string $method
-     * @param array $itemIds
-     * @param int $expectedAffectedRows
-     *
-     * @return void
-     */
-    public function testBulkTouchMethods($method, array $itemIds, $expectedAffectedRows)
-    {
-        $touchFacade = new TouchFacade();
-        $affectedRows = $touchFacade->$method(self::ITEM_TYPE, $itemIds);
-
-        $this->assertSame($expectedAffectedRows, $affectedRows);
     }
 
     /**
@@ -168,5 +148,4 @@ class TouchFacadeTest extends Unit
 
         return $touchQuery->findOne();
     }
-
 }

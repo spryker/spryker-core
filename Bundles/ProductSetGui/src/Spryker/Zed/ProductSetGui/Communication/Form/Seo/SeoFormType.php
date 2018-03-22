@@ -7,13 +7,16 @@
 
 namespace Spryker\Zed\ProductSetGui\Communication\Form\Seo;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
+ */
 class SeoFormType extends AbstractType
 {
-
     const FIELD_LOCALIZED_SEO_FORM_COLLECTION = 'localized_seo_form_collection';
 
     /**
@@ -35,10 +38,9 @@ class SeoFormType extends AbstractType
     protected function addLocalizedSeoFormCollection(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_LOCALIZED_SEO_FORM_COLLECTION, CollectionType::class, [
-            'type' => LocalizedSeoFormType::class,
+            'entry_type' => LocalizedSeoFormType::class,
         ]);
 
         return $this;
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Sales\Dependency\Service;
 
 interface SalesToUtilSanitizeInterface
 {
-
     /**
      * @param string $text
      * @param bool $double
@@ -18,5 +17,4 @@ interface SalesToUtilSanitizeInterface
      * @return string
      */
     public function escapeHtml($text, $double = true, $charset = null);
-
 }

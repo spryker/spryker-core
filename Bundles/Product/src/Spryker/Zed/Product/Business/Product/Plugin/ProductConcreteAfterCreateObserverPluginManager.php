@@ -12,7 +12,6 @@ use Spryker\Zed\Product\Business\Product\Observer\ProductConcreteCreateObserverI
 
 class ProductConcreteAfterCreateObserverPluginManager implements ProductConcreteCreateObserverInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface[]
      */
@@ -27,6 +26,8 @@ class ProductConcreteAfterCreateObserverPluginManager implements ProductConcrete
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -39,5 +40,4 @@ class ProductConcreteAfterCreateObserverPluginManager implements ProductConcrete
 
         return $productConcreteTransfer;
     }
-
 }

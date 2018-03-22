@@ -21,7 +21,6 @@ use SprykerTest\Zed\Category\PageObject\CategoryEditPage;
  */
 class CategoryEditCest
 {
-
     /**
      * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
@@ -59,5 +58,4 @@ class CategoryEditCest
 
         $i->amOnPage(CategoryEditPage::getUrl($categoryTransfer->getIdCategory()));
     }
-
 }

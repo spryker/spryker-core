@@ -12,7 +12,6 @@ use Twig_Loader_Filesystem;
 
 class ClassGenerator implements GeneratorInterface
 {
-
     const TWIG_TEMPLATES_LOCATION = '/Templates/';
 
     /**
@@ -73,7 +72,7 @@ class ClassGenerator implements GeneratorInterface
             'normalizedProperties' => $classDefinition->getNormalizedProperties(),
             'deprecationDescription' => $classDefinition->getDeprecationDescription(),
             'hasArrayObject' => $classDefinition->hasArrayObject(),
+            'entityNamespace' => $classDefinition->getEntityNamespace(),
         ];
     }
-
 }

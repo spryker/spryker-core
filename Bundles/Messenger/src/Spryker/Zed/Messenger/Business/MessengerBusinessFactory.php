@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Messenger\Business;
 
-use Spryker\Shared\Messenger\MessengerConstants;
+use Spryker\Shared\Messenger\MessengerConfig;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Messenger\Business\Model\InMemoryMessageTray;
 use Spryker\Zed\Messenger\Business\Model\SessionMessageTray;
@@ -18,14 +18,13 @@ use Spryker\Zed\Messenger\MessengerDependencyProvider;
  */
 class MessengerBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Messenger\Business\Model\MessageTrayInterface
      */
     public function createMessageTray()
     {
         $messageTry = $this->getConfig()->getTray();
-        if ($messageTry === MessengerConstants::IN_MEMORY_TRAY) {
+        if ($messageTry === MessengerConfig::IN_MEMORY_TRAY) {
             return $this->createInMemoryMessageTray();
         }
 
@@ -63,5 +62,4 @@ class MessengerBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(MessengerDependencyProvider::PLUGIN_TRANSLATION);
     }
-
 }

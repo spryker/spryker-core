@@ -21,7 +21,6 @@ use Codeception\Scenario;
  */
 class CmsBlockGuiPresentationTester extends Actor
 {
-
     use _generated\CmsBlockGuiPresentationTesterActions;
 
     /**
@@ -34,5 +33,4 @@ class CmsBlockGuiPresentationTester extends Actor
         $this->amZed();
         $this->amLoggedInUser();
     }
-
 }

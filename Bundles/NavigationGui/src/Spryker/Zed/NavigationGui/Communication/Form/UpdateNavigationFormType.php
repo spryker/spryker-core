@@ -10,9 +10,12 @@ namespace Spryker\Zed\NavigationGui\Communication\Form;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
+ */
 class UpdateNavigationFormType extends NavigationFormType
 {
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -30,5 +33,4 @@ class UpdateNavigationFormType extends NavigationFormType
 
         return $this;
     }
-
 }

@@ -28,7 +28,6 @@ use SprykerTest\Zed\Collector\Business\Fixture\TouchUpdaterStub;
  */
 class AbstractTouchUpdaterTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Collector\CollectorConfig
      */
@@ -60,6 +59,7 @@ class AbstractTouchUpdaterTest extends Unit
     {
         $touchUpdaterSet = $this->createTouchUpdaterSet();
         $idLocale = 1;
+        $idStore = 1;
         $connection = $this->createConnectionMock();
 
         $touchUpdater = $this->createTouchUpdater();
@@ -84,7 +84,7 @@ class AbstractTouchUpdaterTest extends Unit
 
         $this->assertEmpty($this->bulkTouchUpdateQuery->getRawSqlString());
 
-        $touchUpdater->bulkUpdate($touchUpdaterSet, $idLocale, $connection);
+        $touchUpdater->bulkUpdate($touchUpdaterSet, $idLocale, $idStore, $connection);
     }
 
     /**
@@ -227,5 +227,4 @@ class AbstractTouchUpdaterTest extends Unit
     {
         return new CollectorConfigWithNotDefinedDbEngineFake();
     }
-
 }

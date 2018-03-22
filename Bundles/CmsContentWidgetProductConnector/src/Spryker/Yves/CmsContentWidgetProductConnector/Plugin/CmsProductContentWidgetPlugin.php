@@ -19,7 +19,6 @@ use Twig_Environment;
  */
 class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContentWidgetPluginInterface
 {
-
     /**
      * @var \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface
      */
@@ -38,12 +37,23 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
      */
     public function getContentWidgetFunction()
     {
-        return function (Twig_Environment $twig, array $context, $productAbstractSkuList, $templateIdentifier = null) {
-            return $twig->render(
-                $this->resolveTemplatePath($templateIdentifier),
-                $this->getContent($context, $productAbstractSkuList)
-            );
-        };
+        return [$this, 'contentWidgetFunction'];
+    }
+
+    /**
+     * @param \Twig_Environment $twig
+     * @param array $context
+     * @param array|string $productAbstractSkuList $productAbstractSkuList
+     * @param null|string $templateIdentifier
+     *
+     * @return string
+     */
+    public function contentWidgetFunction(Twig_Environment $twig, array $context, $productAbstractSkuList, $templateIdentifier = null)
+    {
+        return $twig->render(
+            $this->resolveTemplatePath($templateIdentifier),
+            $this->getContent($context, $productAbstractSkuList)
+        );
     }
 
     /**
@@ -72,7 +82,6 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
 
         $skuMap = $this->getProductAbstractSkuMap($cmsContent);
         if (is_array($productAbstractSkuList)) {
-
             $products = $this->collectProductAbstractList($productAbstractSkuList, $skuMap);
             $numberOfCollectedProducts = count($products);
             if ($numberOfCollectedProducts > 1) {
@@ -176,5 +185,4 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
 
         return $productData;
     }
-
 }

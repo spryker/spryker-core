@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductAbstractSearchReaderInterface
 {
-
     /**
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
@@ -19,5 +18,4 @@ interface ProductAbstractSearchReaderInterface
      * @return bool
      */
     public function isProductAbstractSearchable($idProductAbstract, LocaleTransfer $localeTransfer = null);
-
 }

@@ -10,8 +10,8 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface;
 use SprykerTest\Zed\ProductOption\Business\MockProvider;
 
 /**
@@ -26,7 +26,6 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
  */
 class TranslationSaverTest extends MockProvider
 {
-
     /**
      * @return void
      */
@@ -80,14 +79,14 @@ class TranslationSaverTest extends MockProvider
     }
 
     /**
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface|null $glossaryFacadeMock
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface|null $localeFacadeMock
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface|null $glossaryFacadeMock
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface|null $localeFacadeMock
      *
      * @return \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver
      */
     protected function createTranslationSaver(
-        ProductOptionToGlossaryInterface $glossaryFacadeMock = null,
-        ProductOptionToLocaleInterface $localeFacadeMock = null
+        ProductOptionToGlossaryFacadeInterface $glossaryFacadeMock = null,
+        ProductOptionToLocaleFacadeInterface $localeFacadeMock = null
     ) {
         if (!$glossaryFacadeMock) {
             $glossaryFacadeMock = $this->createGlossaryFacadeMock();
@@ -129,5 +128,4 @@ class TranslationSaverTest extends MockProvider
 
         return $translationSaver;
     }
-
 }

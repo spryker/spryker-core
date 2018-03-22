@@ -12,7 +12,6 @@ use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
 
 class ProductAttribute implements ProductAttributeInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReaderInterface
      */
@@ -116,5 +115,4 @@ class ProductAttribute implements ProductAttributeInterface
 
         return $result;
     }
-
 }

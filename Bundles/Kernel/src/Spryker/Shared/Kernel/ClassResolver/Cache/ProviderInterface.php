@@ -9,10 +9,8 @@ namespace Spryker\Shared\Kernel\ClassResolver\Cache;
 
 interface ProviderInterface
 {
-
     /**
      * @return \Spryker\Shared\Kernel\ClassResolver\ResolverCacheInterface
      */
     public function getCache();
-
 }

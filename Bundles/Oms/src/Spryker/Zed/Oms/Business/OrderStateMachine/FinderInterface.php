@@ -12,7 +12,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 interface FinderInterface
 {
-
     /**
      * @param int $idOrderItem
      *
@@ -94,4 +93,10 @@ interface FinderInterface
      */
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
 
+    /**
+     * @param int $idOrder
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedExcludeFromCustomer($idOrder);
 }

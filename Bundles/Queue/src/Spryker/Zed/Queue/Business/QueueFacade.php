@@ -15,21 +15,21 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class QueueFacade extends AbstractFacade implements QueueFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
      * @api
      *
      * @param string $queueName
+     * @param array $options
      *
      * @return void
      */
-    public function startTask($queueName)
+    public function startTask($queueName, array $options = [])
     {
         $this->getFactory()
             ->createTask()
-            ->run($queueName);
+            ->run($queueName, $options);
     }
 
     /**
@@ -48,5 +48,4 @@ class QueueFacade extends AbstractFacade implements QueueFacadeInterface
             ->createWorker($output)
             ->start($command);
     }
-
 }

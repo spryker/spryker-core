@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductSetGuiQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -65,5 +64,4 @@ interface ProductSetGuiQueryContainerInterface
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
     public function queryProductSetByKey($productSetKey);
-
 }

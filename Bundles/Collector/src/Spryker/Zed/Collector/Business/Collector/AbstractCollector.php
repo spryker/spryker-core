@@ -19,12 +19,12 @@ use Spryker\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Persistence\Collector\AbstractCollectorQuery;
+use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractCollector
 {
-
     use KeyBuilderTrait;
 
     /**
@@ -46,6 +46,11 @@ abstract class AbstractCollector
      * @var \Generated\Shared\Transfer\LocaleTransfer
      */
     protected $locale;
+
+    /**
+     * @var \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected $currentStoreBuffer;
 
     /**
      * @param string $touchKey
@@ -72,6 +77,29 @@ abstract class AbstractCollector
      * @return void
      */
     abstract protected function prepareCollectorScope(SpyTouchQuery $touchQuery, LocaleTransfer $locale);
+
+    /**
+     * @param array $collectItemData
+     *
+     * @return bool True if the item can be exported; false if the item should be removed when stored.
+     */
+    protected function isStorable(array $collectItemData)
+    {
+        return true;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function getCurrentStore()
+    {
+        if ($this->currentStoreBuffer === null) {
+            // Deprecated: inject StoreFacade through constructor
+            $this->currentStoreBuffer = Locator::getInstance()->store()->facade()->getCurrentStore();
+        }
+
+        return $this->currentStoreBuffer;
+    }
 
     /**
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $touchQueryContainer
@@ -123,6 +151,10 @@ abstract class AbstractCollector
         $setToExport = [];
 
         foreach ($collectedSet as $index => $collectedItemData) {
+            if (!$this->isStorable($collectedItemData)) {
+                continue;
+            }
+
             $touchKey = $this->collectKey(
                 $collectedItemData[CollectorConfig::COLLECTOR_RESOURCE_ID],
                 $locale->getLocaleName(),
@@ -132,6 +164,32 @@ abstract class AbstractCollector
         }
 
         return $setToExport;
+    }
+
+    /**
+     * @param array $collectedSet
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return string[]
+     */
+    protected function collectExpiredData(array $collectedSet, LocaleTransfer $locale)
+    {
+        $expiredData = [];
+
+        foreach ($collectedSet as $index => $collectedItemData) {
+            if ($this->isStorable($collectedItemData)) {
+                continue;
+            }
+
+            $touchKey = $this->collectKey(
+                $collectedItemData[CollectorConfig::COLLECTOR_RESOURCE_ID],
+                $locale->getLocaleName(),
+                $collectedItemData
+            );
+            $expiredData[$touchKey] = $collectedItemData;
+        }
+
+        return $expiredData;
     }
 
     /**
@@ -201,7 +259,7 @@ abstract class AbstractCollector
      */
     protected function getTouchCollectionToDelete($itemType, $offset = 0)
     {
-        $deleteQuery = $this->touchQueryContainer->queryTouchDeleteStorageAndSearch($itemType, $this->locale->getIdLocale());
+        $deleteQuery = $this->touchQueryContainer->queryTouchDeleteStorageAndSearch($itemType, $this->getCurrentStore()->getIdStore(), $this->locale->getIdLocale());
         $deleteQuery
             ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, CollectorConfig::COLLECTOR_TOUCH_ID)
             ->withColumn('search.key', CollectorConfig::COLLECTOR_SEARCH_KEY)
@@ -367,5 +425,4 @@ abstract class AbstractCollector
         $progressBar->advance();
         $progressBar->finish();
     }
-
 }

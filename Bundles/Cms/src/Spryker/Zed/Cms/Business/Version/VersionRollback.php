@@ -14,7 +14,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class VersionRollback implements VersionRollbackInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -142,5 +141,4 @@ class VersionRollback implements VersionRollbackInterface
         $latestVersionData = $versionEntity->getData();
         $this->versionMigration->migrate($latestVersionData, $latestVersionData);
     }
-
 }

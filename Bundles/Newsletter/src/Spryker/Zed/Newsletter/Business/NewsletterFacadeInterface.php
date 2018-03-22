@@ -12,8 +12,15 @@ use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 
 interface NewsletterFacadeInterface
 {
-
     /**
+     * Specification:
+     * - Identifies subscriber by provided subscriber email.
+     * - Adds subscriber to each provided newsletter type:
+     *      - Validates email.
+     *      - Registers subscription if subscriber is not registered already.
+     *      - Sends confirmation email.
+     *      - Sets subscription as confirmed.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
@@ -23,6 +30,13 @@ interface NewsletterFacadeInterface
     public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest);
 
     /**
+     * Specification:
+     * - Identifies subscriber by provided subscriber email.
+     * - Adds subscriber to each provided newsletter type:
+     *      - Validates email.
+     *      - Registers subscription if subscriber is not registered already.
+     *      - Sends confirmation email.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
@@ -32,6 +46,9 @@ interface NewsletterFacadeInterface
     public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest);
 
     /**
+     * Specification:
+     * - Confirms subscriber if subscriber was found by provided subscriber key.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
@@ -41,6 +58,10 @@ interface NewsletterFacadeInterface
     public function approveDoubleOptInSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber);
 
     /**
+     * Specification:
+     * - Checks if the provided subscriber is subscribed to any of the provided newsletter type.
+     * - Returns with a list, each element contains the result for a newsletter type.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
@@ -50,6 +71,10 @@ interface NewsletterFacadeInterface
     public function checkSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest);
 
     /**
+     * Specification:
+     * - Unsubscribes provided subscriber from provided newsletter type list.
+     * - Sends unsubscribed mail for each newsletter type.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
@@ -59,6 +84,10 @@ interface NewsletterFacadeInterface
     public function unsubscribe(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest);
 
     /**
+     * Specification:
+     * - Finds subscriber by provided subscriber email.
+     * - Connects subscriber to provided customer id.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
@@ -68,6 +97,9 @@ interface NewsletterFacadeInterface
     public function assignCustomerToExistingSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber);
 
     /**
+     * Specification:
+     * - Adds newsletter types defined in configuration to persistent storage if no newsletter type is stored yet.
+     *
      * @api
      *
      * @return void
@@ -75,9 +107,9 @@ interface NewsletterFacadeInterface
     public function install();
 
     /**
-     * Specification
-     * - Unsubscribes from signed newsletters
-     * - Anonymizes personal information of the subscriber
+     * Specification:
+     * - Unsubscribes provided subscriber from provided newsletter types.
+     * - Anonymizes personal information of the provided subscriber.
      *
      * @api
      *
@@ -86,5 +118,4 @@ interface NewsletterFacadeInterface
      * @return void
      */
     public function anonymizeSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest);
-
 }

@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductPromotionMapperPlugin extends AbstractPlugin implements PromotionProductMapperPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -30,5 +29,4 @@ class ProductPromotionMapperPlugin extends AbstractPlugin implements PromotionPr
             ->createPromotionProductMapper()
             ->mapPromotionItemsFromProductStorage($quoteTransfer, $request);
     }
-
 }

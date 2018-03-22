@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductAttributeToProductInterface
 {
-
     /**
      * @param string $key
      *
@@ -59,6 +58,8 @@ interface ProductAttributeToProductInterface
 
     /**
      * @api
+     *
+     * @deprecated Method will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
@@ -169,5 +170,4 @@ interface ProductAttributeToProductInterface
      * @return void
      */
     public function touchProductConcrete($idProductConcrete);
-
 }

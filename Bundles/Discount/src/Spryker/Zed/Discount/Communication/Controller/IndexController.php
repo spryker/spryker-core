@@ -18,12 +18,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
- * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainer getQueryContainer()
- * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
  */
 class IndexController extends AbstractController
 {
-
     const URL_PARAM_ID_DISCOUNT = 'id-discount';
     const URL_PARAM_BATCH_PARAMETER = 'batch';
     const URL_PARAM_ID_POOL = 'id-pool';
@@ -37,10 +36,10 @@ class IndexController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $discountForm = $this->getFactory()->createDiscountForm();
+        $discountForm = $this->getFactory()->getDiscountForm();
         $discountForm->handleRequest($request);
 
-        if ($discountForm->isValid()) {
+        if ($discountForm->isSubmitted() && $discountForm->isValid()) {
             $idDiscount = $this->getFacade()
                 ->saveDiscount($discountForm->getData());
             $discountType = $discountForm->getData()->getDiscountGeneral()->getDiscountType();
@@ -74,12 +73,12 @@ class IndexController extends AbstractController
         $discountConfiguratorTransfer = $this->getFacade()
             ->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
 
-        $discountForm = $this->getFactory()->createDiscountForm($idDiscount);
+        $discountForm = $this->getFactory()->getDiscountForm($idDiscount);
         $discountForm->setData($discountConfiguratorTransfer);
         $this->handleDiscountForm($request, $discountForm);
 
         $voucherFormDataProvider = $this->getFactory()->createVoucherFormDataProvider();
-        $voucherForm = $this->getFactory()->createVoucherForm(
+        $voucherForm = $this->getFactory()->getVoucherForm(
             $voucherFormDataProvider->getData($idDiscount)
         );
 
@@ -115,7 +114,7 @@ class IndexController extends AbstractController
     {
         $voucherForm->handleRequest($request);
 
-        if ($voucherForm->isValid()) {
+        if ($voucherForm->isSubmitted() && $voucherForm->isValid()) {
             $voucherCreateInfoTransfer = $this->getFacade()->saveVoucherCodes($voucherForm->getData());
             $this->addVoucherCreateMessage($voucherCreateInfoTransfer);
 
@@ -140,7 +139,10 @@ class IndexController extends AbstractController
             ->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
 
         $voucherCodesTable = $this->renderVoucherCodeTable($request, $discountConfiguratorTransfer);
-        $this->setFormattedCalculatorDiscountAmount($discountConfiguratorTransfer);
+
+        $discountConfiguratorTransfer = $this->getFactory()
+            ->createDiscountAmountFormatter()
+            ->format($discountConfiguratorTransfer);
 
         return [
             'discountConfigurator' => $discountConfiguratorTransfer,
@@ -353,23 +355,4 @@ class IndexController extends AbstractController
             }
         }
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
-     *
-     * @return void
-     */
-    protected function setFormattedCalculatorDiscountAmount(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
-    {
-        $calculatorPlugins = $this->getFactory()->getCalculatorPlugins();
-        $calculatorPluginName = $discountConfiguratorTransfer->getDiscountCalculator()->getCalculatorPlugin();
-        if (!isset($calculatorPlugins[$calculatorPluginName])) {
-            return;
-        }
-        $calculatorPlugin = $calculatorPlugins[$calculatorPluginName];
-
-        $formatterAmount = $calculatorPlugin->getFormattedAmount($discountConfiguratorTransfer->getDiscountCalculator()->getAmount());
-        $discountConfiguratorTransfer->getDiscountCalculator()->setAmount($formatterAmount);
-    }
-
 }

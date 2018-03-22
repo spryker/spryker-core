@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductConcreteManagerInterface
 {
-
     /**
      * @param string $sku
      *
@@ -84,5 +83,4 @@ interface ProductConcreteManagerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProduct|null
      */
     public function findProductEntityByAbstractAndConcrete(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer);
-
 }

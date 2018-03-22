@@ -2,7 +2,7 @@ namespace: ProductAttributeGui
 actor: Tester
 
 include:
-  - tests/SprykerTest/Zed/ProductAttributeGui
+    - tests/SprykerTest/Zed/ProductAttributeGui
 
 paths:
     tests: tests

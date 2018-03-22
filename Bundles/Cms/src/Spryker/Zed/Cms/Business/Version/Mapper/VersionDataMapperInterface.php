@@ -13,7 +13,6 @@ use Orm\Zed\Cms\Persistence\SpyCmsVersion;
 
 interface VersionDataMapperInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $cmsVersionDataTransfer
      *
@@ -55,5 +54,4 @@ interface VersionDataMapperInterface
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
     public function mapToCmsGlossaryKeyMappingsData(SpyCmsPage $cmsPageEntity);
-
 }

@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\ProductSearch\Communication\Form;
 
-use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,9 +17,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
+ */
 abstract class AbstractAttributeKeyForm extends AbstractType
 {
-
     const FIELD_KEY = 'key';
 
     const OPTION_FILTER_TYPE_CHOICES = 'filter_type_choices';
@@ -28,19 +31,6 @@ abstract class AbstractAttributeKeyForm extends AbstractType
     const OPTION_ATTRIBUTE_TRANSLATION_COLLECTION_OPTIONS = 'attribute_translation_collection_options';
 
     const GROUP_UNIQUE_KEY = 'unique_key_group';
-
-    /**
-     * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
-     */
-    protected $productSearchQueryContainer;
-
-    /**
-     * @param \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface $productSearchQueryContainer
-     */
-    public function __construct(ProductSearchQueryContainerInterface $productSearchQueryContainer)
-    {
-        $this->productSearchQueryContainer = $productSearchQueryContainer;
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -95,16 +85,13 @@ abstract class AbstractAttributeKeyForm extends AbstractType
                     'digits, numbers, underscores ("_"), hyphens ("-") and colons (":").',
             ]),
             new Callback([
-                'methods' => [
-                    function ($key, ExecutionContextInterface $context) {
-                        if (!$this->isUniqueKey($key)) {
-                            $context->addViolation('Attribute key is already used');
-                        }
-                    },
-                ],
+                'callback' => function ($key, ExecutionContextInterface $context) {
+                    if (!$this->isUniqueKey($key)) {
+                        $context->addViolation('Attribute key is already used');
+                    }
+                },
                 'groups' => [self::GROUP_UNIQUE_KEY],
             ]),
         ];
     }
-
 }

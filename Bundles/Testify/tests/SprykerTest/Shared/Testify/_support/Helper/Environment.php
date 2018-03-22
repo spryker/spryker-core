@@ -13,7 +13,6 @@ use SprykerTest\Shared\Testify\Exception\StoreNotFoundException;
 
 class Environment extends Module
 {
-
     /**
      * @var string
      */
@@ -102,7 +101,7 @@ class Environment extends Module
      */
     private function getFirstDefinedStore()
     {
-        $storesFile = $this->getRootDirectory() . '/Config/Shared/stores.php';
+        $storesFile = $this->getRootDirectory() . '/config/Shared/stores.php';
 
         if (file_exists($storesFile)) {
             $stores = include $storesFile;
@@ -112,5 +111,4 @@ class Environment extends Module
 
         return false;
     }
-
 }

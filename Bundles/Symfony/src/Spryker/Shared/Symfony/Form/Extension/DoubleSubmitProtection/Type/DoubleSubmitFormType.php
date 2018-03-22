@@ -11,6 +11,8 @@ use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\FormEventSubscr
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\StorageInterface;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -20,7 +22,6 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class DoubleSubmitFormType extends AbstractTypeExtension
 {
-
     const OPTION_KEY_ERROR_MESSAGE = 'double_submit_error';
     const OPTION_KEY_TOKEN_FIELD_NAME = 'token_field_name';
 
@@ -108,7 +109,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
 
         $tokenForm = $factory->createNamed(
             $fieldName,
-            'hidden',
+            HiddenType::class,
             $token,
             ['mapped' => false]
         );
@@ -148,7 +149,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
      */
     public function getExtendedType()
     {
-        return 'form';
+        return FormType::class;
     }
 
     /**
@@ -163,5 +164,4 @@ class DoubleSubmitFormType extends AbstractTypeExtension
             $this->translationDomain
         );
     }
-
 }

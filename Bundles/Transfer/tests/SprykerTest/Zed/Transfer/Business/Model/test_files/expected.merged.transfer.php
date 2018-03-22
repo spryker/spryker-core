@@ -15,7 +15,6 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
  */
 class FooBarTransfer extends AbstractTransfer
 {
-
     const NAME = 'name';
 
     const BLA = 'bla';
@@ -199,5 +198,4 @@ class FooBarTransfer extends AbstractTransfer
 
         return $this;
     }
-
 }

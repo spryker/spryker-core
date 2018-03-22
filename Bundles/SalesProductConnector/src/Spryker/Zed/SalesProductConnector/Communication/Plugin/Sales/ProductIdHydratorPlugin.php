@@ -12,12 +12,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 
 /**
- * @method \Spryker\Zed\Product\Communication\ProductCommunicationFactory getFactory()
- * @method \Spryker\Zed\Product\Business\ProductFacade getFacade()
+ * @method \Spryker\Zed\SalesProductConnector\Business\SalesProductConnectorFacadeInterface getFacade()
  */
 class ProductIdHydratorPlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {
-
     /**
      * Specification:
      *   - Its a plugin which hydrates OrderTransfer when order read is persistence,
@@ -33,5 +31,4 @@ class ProductIdHydratorPlugin extends AbstractPlugin implements HydrateOrderPlug
     {
         return $this->getFacade()->hydrateProductIds($orderTransfer);
     }
-
 }

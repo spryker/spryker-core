@@ -13,12 +13,11 @@ use Orm\Zed\Navigation\Persistence\SpyNavigationNodeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
- * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Navigation\Persistence\NavigationQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Navigation\NavigationConfig getConfig()
  */
 class NavigationPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
      */
@@ -42,5 +41,4 @@ class NavigationPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyNavigationNodeLocalizedAttributesQuery::create();
     }
-
 }

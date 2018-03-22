@@ -10,10 +10,10 @@ namespace Spryker\Yves\Kernel;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Yves\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 
 abstract class AbstractPlugin
 {
-
     /**
      * @var \Spryker\Yves\Kernel\FactoryInterface
      */
@@ -113,4 +113,19 @@ abstract class AbstractPlugin
         return new BundleConfigResolver();
     }
 
+    /**
+     * @return \Spryker\Shared\Kernel\Communication\Application
+     */
+    protected function getApplication()
+    {
+        return (new Pimple())->getApplication();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getLocale()
+    {
+        return $this->getApplication()['locale'];
+    }
 }

@@ -22,7 +22,6 @@ use Spryker\Shared\Application\Log\Processor\ResponseProcessor;
  */
 class ResponseProcessorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -34,5 +33,4 @@ class ResponseProcessorTest extends Unit
 
         $this->assertArrayNotHasKey(ResponseProcessor::EXTRA, $result[ResponseProcessor::RECORD_CONTEXT]);
     }
-
 }

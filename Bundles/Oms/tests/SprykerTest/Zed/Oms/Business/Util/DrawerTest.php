@@ -13,10 +13,10 @@ use Spryker\Shared\Graph\GraphInterface;
 use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface;
 
 /**
@@ -31,7 +31,6 @@ use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface;
  */
 class DrawerTest extends Unit
 {
-
     const CONDITION_NAME = 'conditionName';
     const COMMAND_NAME = 'commandName';
 
@@ -122,7 +121,7 @@ class DrawerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
      */
     private function getConditionMock()
     {
@@ -152,5 +151,4 @@ class DrawerTest extends Unit
     {
         return $this->getMockBuilder(OmsToUtilTextInterface::class)->getMock();
     }
-
 }

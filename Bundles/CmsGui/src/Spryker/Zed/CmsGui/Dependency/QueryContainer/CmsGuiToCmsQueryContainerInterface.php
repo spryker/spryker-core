@@ -7,7 +7,6 @@ namespace Spryker\Zed\CmsGui\Dependency\QueryContainer;
 
 interface CmsGuiToCmsQueryContainerInterface
 {
-
     /**
      * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
      */
@@ -68,5 +67,4 @@ interface CmsGuiToCmsQueryContainerInterface
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
      */
     public function queryCmsPageLocalizedAttributes();
-
 }

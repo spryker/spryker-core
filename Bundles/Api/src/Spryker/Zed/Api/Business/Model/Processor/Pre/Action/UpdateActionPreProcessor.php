@@ -14,11 +14,10 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 /**
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
- * @method \Spryker\Zed\Api\Business\ApiFacade getFacade()
+ * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
  */
 class UpdateActionPreProcessor implements PreProcessorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
@@ -46,5 +45,4 @@ class UpdateActionPreProcessor implements PreProcessorInterface
 
         return $apiRequestTransfer;
     }
-
 }

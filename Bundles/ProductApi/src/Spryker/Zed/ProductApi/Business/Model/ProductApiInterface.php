@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
 
 interface ProductApiInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
@@ -43,5 +42,4 @@ interface ProductApiInterface
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */
     public function find(ApiRequestTransfer $apiRequestTransfer);
-
 }

@@ -11,6 +11,8 @@ use Codeception\Test\Unit;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\DoubleSubmitProtectionExtension;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\StorageInterface;
 use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -26,7 +28,6 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class DoubleSubmitProtectionExtensionTest extends Unit
 {
-
     /**
      * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\Type\DoubleSubmitFormType
      */
@@ -79,11 +80,11 @@ class DoubleSubmitProtectionExtensionTest extends Unit
     public function testFinishViewIgnoredForNotFormRoot()
     {
         $view = $this->formFactory
-            ->createNamedBuilder('root', 'form')
+            ->createNamedBuilder('root', FormType::class)
             ->add(
                 $this->formFactory->createNamedBuilder(
                     'form',
-                    'form',
+                    FormType::class,
                     null,
                     ['token_field_name' => '_requestToken']
                 )
@@ -106,7 +107,7 @@ class DoubleSubmitProtectionExtensionTest extends Unit
             ->willReturn($expectedToken);
 
         $view = $this->formFactory
-            ->createNamed('FORM_NAME', 'form', null, ['token_field_name' => '_requestToken'])
+            ->createNamed('FORM_NAME', FormType::class, null, ['token_field_name' => '_requestToken'])
             ->createView();
 
         $this->assertEquals($expectedToken, $view['_requestToken']->vars['value']);
@@ -133,8 +134,8 @@ class DoubleSubmitProtectionExtensionTest extends Unit
             ->will($this->returnValue($valid));
 
         $form = $this->formFactory
-            ->createBuilder('form', null, ['token_field_name' => '_requestToken'])
-            ->add('child', 'text')
+            ->createBuilder(FormType::class, null, ['token_field_name' => '_requestToken'])
+            ->add('child', TextType::class)
             ->getForm();
 
         $form->submit(['child' => 'foobar', '_requestToken' => $expectedToken]);
@@ -152,7 +153,7 @@ class DoubleSubmitProtectionExtensionTest extends Unit
     protected function getFormExtensions()
     {
         return [
-            new DoubleSubmitProtectionExtension($this->generator, $this->storage, $this->translator)
+            new DoubleSubmitProtectionExtension($this->generator, $this->storage, $this->translator),
         ];
     }
 
@@ -166,5 +167,4 @@ class DoubleSubmitProtectionExtensionTest extends Unit
             [false],
         ];
     }
-
 }

@@ -11,11 +11,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\ProductDiscountConnector\ProductDiscountConnectorConfig getConfig()
- * @method \Spryker\Zed\ProductDiscountConnector\Persistence\ProductDiscountConnectorQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductDiscountConnector\Persistence\ProductDiscountConnectorQueryContainerInterface getQueryContainer()
  */
 class ProductDiscountConnectorPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
@@ -23,5 +22,4 @@ class ProductDiscountConnectorPersistenceFactory extends AbstractPersistenceFact
     {
         return SpyProductAttributeKeyQuery::create();
     }
-
 }

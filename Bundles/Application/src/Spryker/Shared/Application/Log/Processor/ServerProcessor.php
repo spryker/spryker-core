@@ -9,9 +9,11 @@ namespace Spryker\Shared\Application\Log\Processor;
 
 use Spryker\Service\UtilNetwork\Model\Host;
 
+/**
+ * @deprecated Use `ServerProcessorPlugin` from Log module instead.
+ */
 class ServerProcessor
 {
-
     const EXTRA = 'server';
 
     const URL = 'url';
@@ -128,5 +130,4 @@ class ServerProcessor
     {
         return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
     }
-
 }

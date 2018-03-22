@@ -9,12 +9,10 @@ namespace Spryker\Zed\Api\Persistence\Mapper;
 
 interface ApiCollectionMapperInterface
 {
-
     /**
      * @param array $data
      *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */
     public function toCollection(array $data);
-
 }

@@ -27,7 +27,6 @@ use Spryker\Client\Search\SearchFactory;
  */
 class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
 {
-
     /**
      * @dataProvider resultFormatterDataProvider
      *
@@ -234,5 +233,4 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
 
         return $searchConfig;
     }
-
 }

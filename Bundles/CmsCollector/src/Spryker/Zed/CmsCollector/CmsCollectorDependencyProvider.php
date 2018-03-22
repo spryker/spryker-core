@@ -7,25 +7,21 @@
 
 namespace Spryker\Zed\CmsCollector;
 
+use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCmsBridge;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToCollectorBridge;
 use Spryker\Zed\CmsCollector\Dependency\Facade\CmsCollectorToSearchBridge;
-use Spryker\Zed\CmsCollector\Dependency\Service\CmsCollectorToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
     const FACADE_SEARCH = 'FACADE_SEARCH';
-    const FACADE_CMS_CONTENT_WIDGET = 'FACADE_CMS_CONTENT_WIDGET';
+    const FACADE_CMS = 'FACADE_CMS';
 
     const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
     const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
-    const SERVICE_UTIL_ENCODING = 'UTIL_ENCODING_SERVICE';
-
-    const COLLECTOR_DATA_EXPANDER_PLUGINS = 'DATA_EXPANDER_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -50,13 +46,7 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->touch()->queryContainer();
         };
 
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            return new CmsCollectorToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
-
-        $container[static::COLLECTOR_DATA_EXPANDER_PLUGINS] = function (Container $container) {
-            return $this->getCollectorDataExpanderPlugins();
-        };
+        $container = $this->addCmsFacade($container);
 
         return $container;
     }
@@ -66,23 +56,12 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCollectorDataExpanderPlugins(Container $container)
+    protected function addCmsFacade(Container $container)
     {
-        $container[static::COLLECTOR_DATA_EXPANDER_PLUGINS] = function (Container $container) {
-            return $this->getCollectorDataExpanderPlugins();
+        $container[static::FACADE_CMS] = function (Container $container) {
+            return new CmsCollectorToCmsBridge($container->getLocator()->cms()->facade());
         };
 
         return $container;
     }
-
-    /**
-     * Stack of plugins which run during data collection for each item.
-     *
-     * @return \Spryker\Zed\CmsCollector\Dependency\Plugin\CmsPageCollectorDataExpanderPluginInterface[]
-     */
-    protected function getCollectorDataExpanderPlugins()
-    {
-        return [];
-    }
-
 }

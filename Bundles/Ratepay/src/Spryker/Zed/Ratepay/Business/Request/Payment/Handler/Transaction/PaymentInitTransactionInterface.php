@@ -12,7 +12,6 @@ use Spryker\Zed\Ratepay\Business\Request\RequestMethodInterface;
 
 interface PaymentInitTransactionInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\RatepayPaymentInitTransfer $ratepayPaymentInitTransfer
      *
@@ -26,5 +25,4 @@ interface PaymentInitTransactionInterface
      * @return void
      */
     public function registerMethodMapper(RequestMethodInterface $mapper);
-
 }

@@ -19,7 +19,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface CmsBlockCategoryConnectorFacadeInterface
 {
-
     /**
      * Specification:
      * - Perform actions based on CMS Block transfer
@@ -142,5 +141,4 @@ interface CmsBlockCategoryConnectorFacadeInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
-
 }

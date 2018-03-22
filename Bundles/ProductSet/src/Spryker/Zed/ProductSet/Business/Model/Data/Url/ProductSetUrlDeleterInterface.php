@@ -9,12 +9,10 @@ namespace Spryker\Zed\ProductSet\Business\Model\Data\Url;
 
 interface ProductSetUrlDeleterInterface
 {
-
     /**
      * @param int $idProductSet
      *
      * @return void
      */
     public function deleteUrl($idProductSet);
-
 }

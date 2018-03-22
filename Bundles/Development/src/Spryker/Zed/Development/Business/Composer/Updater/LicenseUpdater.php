@@ -11,7 +11,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class LicenseUpdater implements UpdaterInterface
 {
-
     const KEY_LICENSE = 'license';
 
     /**
@@ -39,5 +38,4 @@ class LicenseUpdater implements UpdaterInterface
 
         return $composerJson;
     }
-
 }

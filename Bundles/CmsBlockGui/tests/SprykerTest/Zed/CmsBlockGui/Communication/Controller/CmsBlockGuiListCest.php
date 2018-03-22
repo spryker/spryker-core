@@ -22,7 +22,6 @@ use SprykerTest\Zed\CmsBlockGui\PageObject\CmsBlockGuiListPage;
  */
 class CmsBlockGuiListCest
 {
-
     /**
      * @param \SprykerTest\Zed\CmsBlockGui\CmsBlockGuiCommunicationTester $i
      *
@@ -33,5 +32,4 @@ class CmsBlockGuiListCest
         $i->amOnPage(CmsBlockGuiListPage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Content Management / Blocks');
     }
-
 }

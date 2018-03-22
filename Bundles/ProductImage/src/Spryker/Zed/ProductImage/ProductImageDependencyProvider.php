@@ -13,7 +13,6 @@ use Spryker\Zed\ProductImage\Dependency\Facade\ProductImageToLocaleBridge;
 
 class ProductImageDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
@@ -49,5 +48,4 @@ class ProductImageDependencyProvider extends AbstractBundleDependencyProvider
     {
         return $container;
     }
-
 }

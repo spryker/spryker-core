@@ -12,12 +12,11 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountApplicableFilterPluginInterfa
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacade getFacade()
+ * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface getFacade()
  * @method \Spryker\Zed\DiscountPromotion\Communication\DiscountPromotionCommunicationFactory getFactory()
  */
 class DiscountPromotionFilterApplicableItemsPlugin extends AbstractPlugin implements DiscountApplicableFilterPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -41,5 +40,4 @@ class DiscountPromotionFilterApplicableItemsPlugin extends AbstractPlugin implem
 
         return $filteredItems;
     }
-
 }

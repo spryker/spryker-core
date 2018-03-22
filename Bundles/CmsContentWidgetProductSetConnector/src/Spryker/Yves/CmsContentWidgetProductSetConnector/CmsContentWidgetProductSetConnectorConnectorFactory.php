@@ -9,9 +9,11 @@ namespace Spryker\Yves\CmsContentWidgetProductSetConnector;
 
 use Spryker\Yves\Kernel\AbstractFactory;
 
+/**
+ * @deprecated use \Spryker\Yves\CmsContentWidgetProductSetConnector\CmsContentWidgetProductSetConnectorFactory instead
+ */
 class CmsContentWidgetProductSetConnectorConnectorFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Yves\CmsContentWidgetProductSetConnector\Dependency\Client\CmsContentWidgetProductSetConnectorToProductSetInterface
      */
@@ -27,5 +29,4 @@ class CmsContentWidgetProductSetConnectorConnectorFactory extends AbstractFactor
     {
         return $this->getProvidedDependency(CmsContentWidgetProductSetConnectorDependencyProvider::PRODUCT_CLIENT);
     }
-
 }

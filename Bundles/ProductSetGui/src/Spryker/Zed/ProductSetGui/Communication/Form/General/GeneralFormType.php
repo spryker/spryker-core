@@ -23,11 +23,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer();
+ * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
  */
 class GeneralFormType extends AbstractType
 {
-
     const FIELD_LOCALIZED_GENERAL_FORM_COLLECTION = 'localized_general_form_collection';
     const FIELD_IS_ACTIVE = 'is_active';
     const FIELD_ID_PRODUCT_SET = 'id_product_set';
@@ -82,12 +82,10 @@ class GeneralFormType extends AbstractType
     protected function addProductSetDataFieldCollection(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_LOCALIZED_GENERAL_FORM_COLLECTION, CollectionType::class, [
-            'type' => LocalizedGeneralFormType::class,
+            'entry_type' => LocalizedGeneralFormType::class,
             'constraints' => [
                 new Callback([
-                    'methods' => [
-                        [$this, 'validateLocalizedUrls'],
-                    ],
+                    'callback' => [$this, 'validateLocalizedUrls'],
                 ]),
             ],
         ]);
@@ -108,9 +106,7 @@ class GeneralFormType extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Callback([
-                    'methods' => [
-                        [$this, 'validateUniqueKey'],
-                    ],
+                    'callback' => [$this, 'validateUniqueKey'],
                     'groups' => [static::GROUP_UNIQUE_KEY_CHECK],
                 ]),
             ],
@@ -223,5 +219,4 @@ class GeneralFormType extends AbstractType
             $context->addViolation('Product Set Key already exists.');
         }
     }
-
 }

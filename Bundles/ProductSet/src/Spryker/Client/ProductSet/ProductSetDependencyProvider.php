@@ -14,7 +14,6 @@ use Spryker\Client\ProductSet\Dependency\Client\ProductSetToStorageBridge;
 
 class ProductSetDependencyProvider extends AbstractDependencyProvider
 {
-
     const CLIENT_SEARCH = 'CLIENT_SEARCH';
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const CLIENT_LOCALE = 'CLIENT_LOCALE';
@@ -114,5 +113,4 @@ class ProductSetDependencyProvider extends AbstractDependencyProvider
             return new ProductSetToLocaleBridge($container->getLocator()->locale()->client());
         };
     }
-
 }

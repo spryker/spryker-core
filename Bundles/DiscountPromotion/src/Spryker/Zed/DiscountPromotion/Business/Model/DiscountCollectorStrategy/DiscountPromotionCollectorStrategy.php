@@ -20,7 +20,6 @@ use Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInt
 
 class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorStrategyInterface
 {
-
     /**
      * @var \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToProductInterface
      */
@@ -66,7 +65,8 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             return [];
         }
 
-        if (!$this->productFacade->hasProductAbstract($discountPromotionEntity->getAbstractSku())) {
+        $idProductAbstract = $this->productFacade->findProductAbstractIdBySku($discountPromotionEntity->getAbstractSku());
+        if (!$idProductAbstract) {
             return [];
         }
 
@@ -74,7 +74,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
         $discountTransfer->setDiscountPromotion($discountPromotionTransfer);
 
         $promotionMaximumQuantity = $this->promotionAvailabilityCalculator->getMaximumQuantityBasedOnAvailability(
-            $discountPromotionEntity->getAbstractSku(),
+            $idProductAbstract,
             $discountPromotionEntity->getQuantity()
         );
 
@@ -96,13 +96,12 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             return [];
         }
 
-        $adjustedQuantity = $this->adjustPromotionItemQuantity($promotionItemInQuote, $promotionMaximumQuantity);
-
-        $promotionItemInQuote->setMaxQuantity($adjustedQuantity);
+        $promotionItemInQuote->setMaxQuantity($promotionMaximumQuantity);
 
         $usedNotAppliedCodes = $this->findUsedNotAppliedVoucherCodes($discountTransfer, $quoteTransfer);
         $quoteTransfer->setUsedNotAppliedVoucherCodes($usedNotAppliedCodes);
 
+        $adjustedQuantity = $this->adjustPromotionItemQuantity($promotionItemInQuote, $promotionMaximumQuantity);
         $discountableItemTransfer = $this->createPromotionDiscountableItemTransfer($promotionItemInQuote, $adjustedQuantity);
 
         return [$discountableItemTransfer];
@@ -157,14 +156,14 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $promotionItemTransfer
-     * @param int $maxQuantity
+     * @param int $availableMaxQuantity
      *
      * @return int
      */
-    protected function adjustPromotionItemQuantity(ItemTransfer $promotionItemTransfer, $maxQuantity)
+    protected function adjustPromotionItemQuantity(ItemTransfer $promotionItemTransfer, $availableMaxQuantity)
     {
         $currentQuantity = $promotionItemTransfer->getQuantity();
-        if ($promotionItemTransfer->getQuantity() > $maxQuantity) {
+        if ($promotionItemTransfer->getQuantity() > $availableMaxQuantity) {
             $currentQuantity = $promotionItemTransfer->getMaxQuantity();
         }
         return $currentQuantity;
@@ -178,13 +177,12 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
      */
     protected function createPromotionDiscountableItemTransfer(ItemTransfer $promotionItemTransfer, $currentQuantity)
     {
-        $discountableItemTransfer = (new DiscountableItemTransfer())
+        return (new DiscountableItemTransfer())
             ->setOriginalItem($promotionItemTransfer)
             ->setOriginalItemCalculatedDiscounts($promotionItemTransfer->getCalculatedDiscounts())
             ->setQuantity($currentQuantity)
+            ->setUnitPrice($promotionItemTransfer->getUnitPrice())
             ->setUnitGrossPrice($promotionItemTransfer->getUnitGrossPrice());
-
-        return $discountableItemTransfer;
     }
 
     /**
@@ -301,5 +299,4 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             $quoteTransfer->addUsedNotAppliedVoucherCode($discountTransfer->getVoucherCode());
         }
     }
-
 }

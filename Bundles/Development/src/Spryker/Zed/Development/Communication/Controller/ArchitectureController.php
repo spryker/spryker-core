@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ArchitectureController extends AbstractController
 {
-
     /**
      * vendor/spryker/spryker/Bundles/[BUNDLE]/src/
      * vendor/spryker/[BUNDLE]/src/
@@ -25,10 +24,10 @@ class ArchitectureController extends AbstractController
      */
     public function indexAction()
     {
-        $allBundles = $this->getFacade()->listAllBundles();
+        $allModules = $this->getFacade()->listAllModules();
 
         return $this->viewResponse([
-            'bundles' => $allBundles,
+            'bundles' => $allModules,
         ]);
     }
 
@@ -74,5 +73,4 @@ class ArchitectureController extends AbstractController
             'fileViolations' => $fileViolations,
         ]);
     }
-
 }

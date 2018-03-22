@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
 class QueryContainerResolver extends AbstractClassResolver
 {
-
     const CLASS_NAME_PATTERN = '\\%1$s\\Zed\\%2$s%3$s\\Persistence\\%2$sQueryContainer';
 
     /**
@@ -66,5 +65,4 @@ class QueryContainerResolver extends AbstractClassResolver
 
         return $className;
     }
-
 }

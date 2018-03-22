@@ -9,21 +9,18 @@ namespace Spryker\Zed\PriceCartConnector\Dependency\Facade;
 
 interface PriceCartToPriceInterface
 {
+    /**
+     * @return string
+     */
+    public function getNetPriceModeIdentifier();
 
     /**
-     * @param string $sku
-     * @param string|null $priceType
-     *
-     * @return bool
+     * @return string
      */
-    public function hasValidPrice($sku, $priceType = null);
+    public function getGrossPriceModeIdentifier();
 
     /**
-     * @param string $sku
-     * @param string|null $priceType
-     *
-     * @return int
+     * @return string
      */
-    public function getPriceBySku($sku, $priceType = null);
-
+    public function getDefaultPriceMode();
 }

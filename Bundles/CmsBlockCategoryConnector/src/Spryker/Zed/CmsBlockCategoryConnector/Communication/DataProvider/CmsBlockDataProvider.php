@@ -17,7 +17,6 @@ use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQ
 
 class CmsBlockDataProvider
 {
-
     /**
      * @var \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface
      */
@@ -180,5 +179,4 @@ class CmsBlockDataProvider
             ->find()
             ->toKeyValue('idCmsBlockCategoryPosition', 'name');
     }
-
 }

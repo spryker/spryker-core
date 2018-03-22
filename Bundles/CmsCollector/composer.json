@@ -3,16 +3,16 @@
   "description": "CmsCollector module",
   "license": "proprietary",
   "require": {
-    "spryker/cms": "^5.0.0 || ^6.0.0",
-    "spryker/collector": "^5.1.1",
+    "php": ">=7.1",
+    "spryker/cms": "^6.2.0",
+    "spryker/collector": "^5.1.1 || ^6.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/propel-orm": "^1.1.0",
-    "spryker/search": "^6.2.0",
+    "spryker/search": "^6.2.0 || ^7.0.0 || ^8.0.0",
     "spryker/symfony": "^3.0.0",
-    "spryker/touch": "^3.0.0",
+    "spryker/touch": "^3.0.0 || ^4.0.0",
     "spryker/url": "^3.0.0",
-    "spryker/util-data-reader": "^1.0.0",
-    "spryker/util-encoding": "^2.0.0"
+    "spryker/util-data-reader": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -21,13 +21,8 @@
     "spryker/testify": "*"
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "minimum-stability": "dev",

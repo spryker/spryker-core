@@ -18,7 +18,6 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class TransitionLog implements TransitionLogInterface
 {
-
     const SAPI_CLI = 'cli';
     const SAPI_PHPDBG = 'phpdbg';
     const QUERY_STRING = 'QUERY_STRING';
@@ -265,5 +264,4 @@ class TransitionLog implements TransitionLogInterface
     {
         return explode('&', $queryString);
     }
-
 }

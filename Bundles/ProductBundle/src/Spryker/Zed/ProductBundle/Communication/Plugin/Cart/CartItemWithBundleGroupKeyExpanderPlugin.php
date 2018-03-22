@@ -12,12 +12,11 @@ use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacade getFacade()
+ * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()
  */
 class CartItemWithBundleGroupKeyExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
-
     /**
      * @api
      *
@@ -29,5 +28,4 @@ class CartItemWithBundleGroupKeyExpanderPlugin extends AbstractPlugin implements
     {
         return $this->getFacade()->expandBundleCartItemGroupKey($cartChangeTransfer);
     }
-
 }

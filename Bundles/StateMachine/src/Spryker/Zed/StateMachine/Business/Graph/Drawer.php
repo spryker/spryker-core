@@ -17,7 +17,6 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 
 class Drawer implements DrawerInterface
 {
-
     const ATTRIBUTE_FONT_SIZE = 'fontsize';
 
     const EDGE_UPPER_HALF = 'upper half';
@@ -440,7 +439,7 @@ class Drawer implements DrawerInterface
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface $transition
-     * @param string $fromName
+     * @param string|null $fromName
      *
      * @return string
      */
@@ -484,5 +483,4 @@ class Drawer implements DrawerInterface
             $this->fontSizeSmall = $fontSize - 2;
         }
     }
-
 }

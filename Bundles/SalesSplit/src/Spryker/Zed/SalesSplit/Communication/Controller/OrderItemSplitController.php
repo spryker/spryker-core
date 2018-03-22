@@ -13,11 +13,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\SalesSplit\Communication\SalesSplitCommunicationFactory getFactory()
- * @method \Spryker\Zed\SalesSplit\Business\SalesSplitFacade getFacade()
+ * @method \Spryker\Zed\SalesSplit\Business\SalesSplitFacadeInterface getFacade()
  */
 class OrderItemSplitController extends AbstractController
 {
-
     const SALES_ORDER_DETAIL_URL = '/sales/detail?id-sales-order=%d';
     const SPLIT_SUCCESS_MESSAGE = 'Order item with "%d" was successfully split.';
 
@@ -35,7 +34,7 @@ class OrderItemSplitController extends AbstractController
 
         $formData = $orderItemForm->getData();
 
-        if ($orderItemForm->isValid()) {
+        if ($orderItemForm->isSubmitted() && $orderItemForm->isValid()) {
             $itemSplitResponseTransfer = $this->getFacade()->splitSalesOrderItem(
                 $formData[OrderItemSplitForm::FIELD_ID_ORDER_ITEM],
                 $formData[OrderItemSplitForm::FIELD_QUANTITY]
@@ -50,5 +49,4 @@ class OrderItemSplitController extends AbstractController
 
         return $this->redirectResponse(sprintf(self::SALES_ORDER_DETAIL_URL, $formData[OrderItemSplitForm::FIELD_ID_ORDER]));
     }
-
 }

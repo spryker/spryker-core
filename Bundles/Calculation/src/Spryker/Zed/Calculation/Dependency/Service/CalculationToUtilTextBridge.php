@@ -9,7 +9,6 @@ namespace Spryker\Zed\Calculation\Dependency\Service;
 
 class CalculationToUtilTextBridge implements CalculationToUtilTextInterface
 {
-
     /**
      * @var \Spryker\Service\UtilText\UtilTextServiceInterface
      */
@@ -33,5 +32,4 @@ class CalculationToUtilTextBridge implements CalculationToUtilTextInterface
     {
         return $this->utilTextService->hashValue($value, $algorithm);
     }
-
 }

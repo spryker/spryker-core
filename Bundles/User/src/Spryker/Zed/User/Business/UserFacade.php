@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class UserFacade extends AbstractFacade implements UserFacadeInterface
 {
-
     /**
      * @api
      *
@@ -257,5 +256,4 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     {
         return $this->getFactory()->createUserModel()->deactivateUser($idUser);
     }
-
 }

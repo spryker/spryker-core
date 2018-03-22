@@ -25,7 +25,5 @@ use Codeception\Actor;
  */
 class CurrencyBusinessTester extends Actor
 {
-
     use _generated\CurrencyBusinessTesterActions;
-
 }

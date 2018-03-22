@@ -9,12 +9,10 @@ namespace Spryker\Zed\ProductLabel\Dependency\Facade;
 
 interface ProductLabelToProductInterface
 {
-
     /**
      * @param int $idProductAbstract
      *
      * @return void
      */
     public function touchProductAbstract($idProductAbstract);
-
 }

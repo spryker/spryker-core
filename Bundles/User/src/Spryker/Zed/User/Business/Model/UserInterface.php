@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UserTransfer;
 
 interface UserInterface
 {
-
     /**
      * @param string $firstName
      * @param string $lastName
@@ -140,5 +139,4 @@ interface UserInterface
      * @return bool
      */
     public function deactivateUser($idUser);
-
 }

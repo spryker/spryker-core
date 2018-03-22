@@ -6,20 +6,21 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\Page;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
+/**
+ * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
+ */
 class CmsPageAttributesFormType extends AbstractType
 {
-
     const FIELD_NAME = 'name';
     const FIELD_URL = 'url';
     const FIELD_LOCALE_NAME = 'localeName';
@@ -28,29 +29,6 @@ class CmsPageAttributesFormType extends AbstractType
     const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
 
     const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
-
-    /**
-     * @var \Symfony\Component\Validator\Constraint
-     */
-    protected $uniqueUrlConstraint;
-
-    /**
-     * @var \Symfony\Component\Validator\Constraint
-     */
-    protected $uniqueNameConstraint;
-
-    /**
-     * @param \Symfony\Component\Validator\Constraint $uniqueUrlConstraint
-     * @param \Symfony\Component\Validator\Constraint $uniqueNameConstraint
-     */
-    public function __construct(
-        Constraint $uniqueUrlConstraint,
-        Constraint $uniqueNameConstraint
-    ) {
-
-        $this->uniqueUrlConstraint = $uniqueUrlConstraint;
-        $this->uniqueNameConstraint = $uniqueNameConstraint;
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -108,8 +86,8 @@ class CmsPageAttributesFormType extends AbstractType
 
         $resolver->setDefaults([
             'constraints' => [
-                $this->uniqueUrlConstraint,
-                $this->uniqueNameConstraint,
+                $this->getFactory()->createUniqueUrlConstraint(),
+                $this->getFactory()->createUniqueNameConstraint(),
             ],
         ]);
     }
@@ -125,7 +103,7 @@ class CmsPageAttributesFormType extends AbstractType
             'label' => 'Name',
             'required' => true,
             'constraints' => [
-                new NotBlank()
+                new NotBlank(),
             ],
         ]);
 
@@ -179,14 +157,6 @@ class CmsPageAttributesFormType extends AbstractType
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'cms_page_attributes';
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormEvent $event
      *
      * @return \Generated\Shared\Transfer\CmsPageAttributesTransfer
@@ -196,4 +166,21 @@ class CmsPageAttributesFormType extends AbstractType
         return $event->getData();
     }
 
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'cms_page_attributes';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

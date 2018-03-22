@@ -13,7 +13,6 @@ use Spryker\Zed\ProductLabelCollector\Persistence\Collector\Propel\ProductAbstra
 
 class ProductAbstractRelationCollector extends AbstractStoragePropelCollector
 {
-
     /**
      * @param string $touchKey
      * @param array $collectItemData
@@ -35,10 +34,14 @@ class ProductAbstractRelationCollector extends AbstractStoragePropelCollector
     protected function getProductLabelIds(array $collectItemData)
     {
         $productLabelIdsCsv = $collectItemData[ProductAbstractRelationCollectorQuery::RESULT_FIELD_ID_PRODUCT_LABELS_CSV];
-        $productLabelIds = explode(',', $productLabelIdsCsv);
-        $productLabelIds = array_map('intval', $productLabelIds);
 
-        return $productLabelIds;
+        $productLabelIds = explode(',', $productLabelIdsCsv);
+        $activeIds = $this->filterActiveLabels($productLabelIds);
+        if (!$activeIds) {
+            return [];
+        }
+
+        return array_map('intval', $activeIds);
     }
 
     /**
@@ -57,4 +60,44 @@ class ProductAbstractRelationCollector extends AbstractStoragePropelCollector
         return true;
     }
 
+    /**
+     * @param array $productLabelIds
+     *
+     * @return array
+     */
+    protected function filterActiveLabels(array $productLabelIds)
+    {
+        $activeIds = [];
+        foreach ($productLabelIds as $labelId) {
+            list($idProductLabel, $isActive) = explode(ProductAbstractRelationCollectorQuery::LABEL_DELIMITER, $labelId);
+
+            $isActive = $this->normalizeIsActive($isActive);
+
+            $isActive = filter_var($isActive, FILTER_VALIDATE_BOOLEAN);
+            if (!$isActive) {
+                continue;
+            }
+            $activeIds[] = $idProductLabel;
+        }
+        return $activeIds;
+    }
+
+    /**
+     * In PostgreSQL the return value for is active is different than MySQL, here we normalize the value.
+     *
+     * @param string $isActive
+     *
+     * @return bool
+     */
+    protected function normalizeIsActive($isActive)
+    {
+        $isActive = strtolower($isActive);
+        if ($isActive[0] === 't') {
+            return true;
+        }
+        if ($isActive[0] === 'f') {
+            return false;
+        }
+        return $isActive;
+    }
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilSaniti
 
 class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_PRODUCT_REVIEW = 'FACADE_PRODUCT_REVIEW';
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
@@ -111,5 +110,4 @@ class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvide
             return new ProductReviewGuiToLocaleBridge($container->getLocator()->locale()->facade());
         };
     }
-
 }

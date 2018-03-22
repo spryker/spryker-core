@@ -13,7 +13,6 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class CmsBlockGlossaryTabs extends AbstractTabs
 {
-
     /**
      * @var \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
      */
@@ -80,5 +79,4 @@ class CmsBlockGlossaryTabs extends AbstractTabs
     {
         return str_replace('.', '-', $value);
     }
-
 }

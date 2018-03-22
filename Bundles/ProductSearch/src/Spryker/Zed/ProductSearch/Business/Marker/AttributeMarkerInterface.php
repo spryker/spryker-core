@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductSearch\Business\Marker;
 
 interface AttributeMarkerInterface
 {
-
     /**
      * @return void
      */
     public function touchProductAbstract();
-
 }

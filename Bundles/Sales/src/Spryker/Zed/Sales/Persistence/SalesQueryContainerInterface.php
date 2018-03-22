@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface SalesQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -126,7 +125,30 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
      *
      * @return void
      */
+    public function fillOrderItemsWithLatestStates(ObjectCollection $salesOrderItems);
+
+    /**
+     * @api
+     *
+     * @deprecated Use SalesQueryContainerInterface::fillOrderItemsWithLatestStates() instead.
+     *
+     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
+     *
+     * @return void
+     */
     public function queryOrderItemsStateHistoriesOrderedByNewestState(ObjectCollection $salesOrderItems);
+
+    /**
+     * @api
+     *
+     * @deprecated Will be removed with the next major
+     *
+     * @param int $idSalesOrderItem
+     * @param int $idOmsOrderItemState
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery
+     */
+    public function queryOmsOrderItemStateHistoryByOrderItemIdAndOmsStateIdDesc($idSalesOrderItem, $idOmsOrderItemState);
 
     /**
      * @api
@@ -136,5 +158,4 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function queryCountUniqueProductsForOrder($idSalesOrder);
-
 }

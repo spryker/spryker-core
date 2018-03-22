@@ -16,7 +16,6 @@ use Throwable;
 
 class CmsPageActivator implements CmsPageActivatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -60,7 +59,6 @@ class CmsPageActivator implements CmsPageActivatorInterface
             $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage());
 
             $this->cmsQueryContainer->getConnection()->commit();
-
         } catch (Exception $exception) {
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;
@@ -109,7 +107,6 @@ class CmsPageActivator implements CmsPageActivatorInterface
             $this->touchFacade->touchActive(CmsConstants::RESOURCE_TYPE_PAGE, $cmsPageEntity->getIdCmsPage());
 
             $this->cmsQueryContainer->getConnection()->commit();
-
         } catch (Exception $exception) {
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;
@@ -152,5 +149,4 @@ class CmsPageActivator implements CmsPageActivatorInterface
     {
         return $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($idCmsPage)->count();
     }
-
 }

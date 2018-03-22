@@ -12,7 +12,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 class BraintreeToRefundBridge implements BraintreeToRefundInterface
 {
-
     /**
      * @var \Spryker\Zed\Refund\Business\RefundFacadeInterface
      */
@@ -46,5 +45,4 @@ class BraintreeToRefundBridge implements BraintreeToRefundInterface
     {
         return $this->refundFacade->saveRefund($refundTransfer);
     }
-
 }

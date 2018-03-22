@@ -13,12 +13,11 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 
 /**
- * @method \Spryker\Zed\Braintree\Business\BraintreeFacade getFacade()
+ * @method \Spryker\Zed\Braintree\Business\BraintreeFacadeInterface getFacade()
  * @method \Spryker\Zed\Braintree\Communication\BraintreeCommunicationFactory getFactory()
  */
 class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
@@ -32,5 +31,4 @@ class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
 
         return [];
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 class NotEqual implements ComparatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $withValue
@@ -70,5 +69,4 @@ class NotEqual implements ComparatorInterface
 
         return true;
     }
-
 }

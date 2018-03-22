@@ -9,10 +9,8 @@ namespace Spryker\Zed\Wishlist\Dependency\QueryContainer;
 
 interface WishlistToProductInterface
 {
-
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function queryProduct();
-
 }

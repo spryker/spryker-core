@@ -8,14 +8,13 @@
 namespace Spryker\Yves\DummyPayment\Form;
 
 use Generated\Shared\Transfer\DummyPaymentTransfer;
-use Spryker\Zed\DummyPayment\DummyPaymentConfig;
+use Spryker\Shared\DummyPayment\DummyPaymentConfig;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class InvoiceSubForm extends AbstractSubForm
 {
-
     const PAYMENT_METHOD = 'invoice';
 
     /**
@@ -76,5 +75,4 @@ class InvoiceSubForm extends AbstractSubForm
     {
         $this->addDateOfBirth($builder);
     }
-
 }

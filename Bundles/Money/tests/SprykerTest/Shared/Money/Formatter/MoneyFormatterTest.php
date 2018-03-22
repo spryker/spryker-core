@@ -25,7 +25,6 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterWithTypeInterface;
  */
 class MoneyFormatterTest extends Unit
 {
-
     const AMOUNT = '1000';
 
     /**
@@ -81,5 +80,4 @@ class MoneyFormatterTest extends Unit
     {
         return $moneyTransfer->getAmount() . ' Formatted';
     }
-
 }

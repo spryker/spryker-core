@@ -12,6 +12,12 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
 {
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    public function queryProductCategoryMappings();
 
     /**
      * @api
@@ -81,4 +87,13 @@ interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
      */
     public function queryProductCategoryChildrenMappingsByCategoryNodeId($idCategoryNode);
 
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int[] $idsCategoryNode
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    public function queryProductCategoryMappingsByIdAbstractProductAndIdsCategoryNode($idProductAbstract, array $idsCategoryNode);
 }

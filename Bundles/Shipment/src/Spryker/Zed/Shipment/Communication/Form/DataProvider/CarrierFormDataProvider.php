@@ -12,7 +12,6 @@ use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
 class CarrierFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
      */
@@ -67,5 +66,4 @@ class CarrierFormDataProvider
 
         return $carrier->getIsActive();
     }
-
 }

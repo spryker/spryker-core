@@ -18,7 +18,6 @@ use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterfa
 
 class ProductRelationUpdater implements ProductRelationUpdaterInterface
 {
-
     use LoggerTrait;
 
     /**
@@ -65,22 +64,20 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
                 $productRelationTransfer = $this->mapProductRelationTransfer($productRelationEntity);
                 $this->productRelationWriter->updateRelation($productRelationTransfer);
             } catch (Exception $exception) {
-                $this->getLogger()->log($exception->getMessage(), ['exception' => $exception]);
+                $this->getLogger()->error($exception->getMessage(), ['exception' => $exception]);
                 continue;
             }
         }
     }
 
     /**
-     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelation[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return mixed|mixed[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductRelation\Persistence\SpyProductRelation[]
      */
     protected function findActiveProductRelations()
     {
-        $productRelations = $this->productRelationQueryContainer
+        return $this->productRelationQueryContainer
             ->queryActiveAndScheduledRelations()
             ->find();
-
-        return $productRelations;
     }
 
     /**
@@ -115,5 +112,4 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
         );
         return $queryRuleBuilderSetTransfer;
     }
-
 }

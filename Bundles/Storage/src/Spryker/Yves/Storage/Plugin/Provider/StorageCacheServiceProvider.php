@@ -14,11 +14,10 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Client\Storage\StorageClient getClient()
+ * @method \Spryker\Client\Storage\StorageClientInterface getClient()
  */
 class StorageCacheServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -41,5 +40,4 @@ class StorageCacheServiceProvider extends AbstractPlugin implements ServiceProvi
     public function boot(Application $app)
     {
     }
-
 }

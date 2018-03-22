@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -83,6 +82,23 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
             ->getFactory()
             ->createLabelReader()
             ->findAllLabelIdsByIdProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findActiveLabelIdsByIdProductAbstract($idProductAbstract)
+    {
+        return $this
+            ->getFactory()
+            ->createLabelReader()
+            ->findAllActiveLabelIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -204,5 +220,4 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
             ->createProductAbstractRelationUpdater($logger)
             ->updateProductLabelRelations();
     }
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CmsContentWidgetCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\CmsContentWidget\Dependency\Service\CmsContentWidgetToUtilEncodingInterface
      */
@@ -23,5 +22,4 @@ class CmsContentWidgetCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(CmsContentWidgetDependencyProvider::SERVICE_UTIL_ENCODING);
     }
-
 }

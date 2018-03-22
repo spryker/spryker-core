@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductImageSetTransfer;
 
 class ProductSetToProductImageBridge implements ProductSetToProductImageInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface
      */
@@ -54,5 +53,4 @@ class ProductSetToProductImageBridge implements ProductSetToProductImageInterfac
     {
         $this->productImageFacade->deleteProductImageSet($productImageSetTransfer);
     }
-
 }

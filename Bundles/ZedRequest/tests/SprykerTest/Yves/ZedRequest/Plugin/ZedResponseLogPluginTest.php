@@ -24,7 +24,6 @@ use Spryker\Yves\ZedRequest\Plugin\ZedResponseLogPlugin;
  */
 class ZedResponseLogPluginTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -88,5 +87,4 @@ class ZedResponseLogPluginTest extends Unit
 
         return $zedResponseLogPluginMock;
     }
-
 }

@@ -11,7 +11,6 @@ use Exception;
 
 class PluginNotFoundException extends Exception
 {
-
     /**
      * @param string $message [optional] The Exception message to throw.
      * @param int $code [optional] The Exception code.
@@ -21,5 +20,4 @@ class PluginNotFoundException extends Exception
     {
         parent::__construct($message, $code, $previous);
     }
-
 }

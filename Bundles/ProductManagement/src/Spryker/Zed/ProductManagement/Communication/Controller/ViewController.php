@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
@@ -16,13 +18,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacade getFacade()
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
  */
 class ViewController extends AddController
 {
-
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     const PARAM_ID_PRODUCT = 'id-product';
 
@@ -70,6 +71,16 @@ class ViewController extends AddController
 
         $imageSets = $this->getProductImageSetCollection($imageSetCollection);
 
+        $relatedStoreNames = $this->getStoreNames($productAbstractTransfer->getStoreRelation()->getStores());
+
+        $isProductBundle = $this->getFactory()
+            ->createProductTypeHelper()
+            ->isProductBundleByProductAbstract($productAbstractTransfer);
+
+        $isGiftCard = $this->getFactory()
+            ->createProductTypeHelper()
+            ->isGiftCardByProductAbstractTransfer($productAbstractTransfer);
+
         return $this->viewResponse([
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
@@ -85,6 +96,9 @@ class ViewController extends AddController
             'imageUrlPrefix' => $this->getFactory()->getConfig()->getImageUrlPrefix(),
             'taxSet' => $this->getFactory()->getTaxFacade()->getTaxSet($productAbstractTransfer->getIdTaxSet()),
             'renderedPlugins' => $this->getRenderedProductAbstractViewPlugins($idProductAbstract),
+            'relatedStoreNames' => $relatedStoreNames,
+            'isProductBundle' => $isProductBundle,
+            'isGiftCard' => $isGiftCard,
         ]);
     }
 
@@ -250,7 +264,7 @@ class ViewController extends AddController
     {
         $url = $baseUrl;
 
-        if (strpos($url, '/') === 0) {
+        if (preg_match("#^\/(?!/).*$#", $url) === 1) {
             $url = $imageUrlPrefix . $url;
         }
 
@@ -276,4 +290,15 @@ class ViewController extends AddController
         return $productAbstractRenderedPlugins;
     }
 
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $stores
+     *
+     * @return string[]
+     */
+    protected function getStoreNames(ArrayObject $stores)
+    {
+        return array_map(function (StoreTransfer $storeTransfer) {
+            return $storeTransfer->getName();
+        }, $stores->getArrayCopy());
+    }
 }

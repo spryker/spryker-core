@@ -17,13 +17,13 @@ use Spryker\Zed\Testify\Locator\Business\BusinessLocator;
 
 class LocatorHelper extends ConfigHelper
 {
-
     /**
      * @var array
      */
     protected $config = [
         'projectNamespaces' => [],
         'coreNamespaces' => [
+            'SprykerShop',
             'Spryker',
         ],
     ];
@@ -102,5 +102,4 @@ class LocatorHelper extends ConfigHelper
 
         return $this->getLocator()->$bundleName()->facade();
     }
-
 }

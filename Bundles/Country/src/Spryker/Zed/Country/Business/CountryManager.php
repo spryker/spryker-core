@@ -16,7 +16,6 @@ use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
 
 class CountryManager implements CountryManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface
      */
@@ -201,5 +200,4 @@ class CountryManager implements CountryManagerInterface
             throw new CountryExistsException();
         }
     }
-
 }

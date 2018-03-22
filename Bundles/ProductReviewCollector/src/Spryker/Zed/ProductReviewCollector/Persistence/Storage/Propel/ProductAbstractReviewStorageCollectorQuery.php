@@ -15,7 +15,6 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class ProductAbstractReviewStorageCollectorQuery extends AbstractPropelCollectorQuery
 {
-
     const FIELD_FK_PRODUCT_ABSTRACT = ProductAbstractReviewTransfer::ID_PRODUCT_ABSTRACT;
     const FIELD_AVERAGE_RATING = ProductAbstractReviewTransfer::AVERAGE_RATING;
     const FIELD_COUNT = ProductAbstractReviewTransfer::REVIEW_COUNT;
@@ -49,5 +48,4 @@ class ProductAbstractReviewStorageCollectorQuery extends AbstractPropelCollector
 
         return $convertedStatus;
     }
-
 }

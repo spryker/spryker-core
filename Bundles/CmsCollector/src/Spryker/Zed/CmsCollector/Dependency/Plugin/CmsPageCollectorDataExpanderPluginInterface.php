@@ -9,9 +9,11 @@ namespace Spryker\Zed\CmsCollector\Dependency\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 
+/**
+ * @deprecated Use CmsPageDataExpanderPluginInterface instead
+ */
 interface CmsPageCollectorDataExpanderPluginInterface
 {
-
     /**
      * Specification:
      *  - Allows providing additional data before exporting to Yves data store
@@ -24,5 +26,4 @@ interface CmsPageCollectorDataExpanderPluginInterface
      * @return array
      */
     public function expand(array $collectedData, LocaleTransfer $localeTransfer);
-
 }

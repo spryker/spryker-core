@@ -11,11 +11,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginUpdateInterface;
 
 /**
- * @method \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade getFacade()
+ * @method \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacadeInterface getFacade()
  */
 class TaxSetProductAbstractAfterUpdatePlugin extends AbstractPlugin implements ProductAbstractPluginUpdateInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
@@ -25,5 +24,4 @@ class TaxSetProductAbstractAfterUpdatePlugin extends AbstractPlugin implements P
     {
         return $this->getFacade()->saveTaxSetToProductAbstract($productAbstractTransfer);
     }
-
 }

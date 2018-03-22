@@ -12,11 +12,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Ratepay\Communication\RatepayCommunicationFactory getFactory()
- * @method \Spryker\Zed\Ratepay\Business\RatepayFacade getFacade()
+ * @method \Spryker\Zed\Ratepay\Business\RatepayFacadeInterface getFacade()
  */
 class RatepayInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
-
     /**
      * @return void
      */
@@ -24,5 +23,4 @@ class RatepayInstallerPlugin extends AbstractPlugin implements InstallerPluginIn
     {
         $this->getFacade()->install();
     }
-
 }

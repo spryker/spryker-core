@@ -11,13 +11,12 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Oms\Business\OmsFacade getFacade()
+ * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Oms\Communication\OmsCommunicationFactory getFactory()
  */
 class LogController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -41,5 +40,4 @@ class LogController extends AbstractController
 
         return $this->jsonResponse($transitionLogTable->fetchData());
     }
-
 }

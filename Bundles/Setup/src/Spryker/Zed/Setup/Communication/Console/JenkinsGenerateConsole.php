@@ -13,11 +13,10 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Setup\Business\SetupFacade getFacade()
+ * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  */
 class JenkinsGenerateConsole extends Console
 {
-
     const COMMAND_NAME = 'setup:jenkins:generate';
     const DESCRIPTION = 'Generate Jenkins jobs configuration';
 
@@ -53,5 +52,4 @@ class JenkinsGenerateConsole extends Console
 
         $output->writeln($result);
     }
-
 }

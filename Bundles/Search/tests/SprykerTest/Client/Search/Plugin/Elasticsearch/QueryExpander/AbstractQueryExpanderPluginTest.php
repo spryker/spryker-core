@@ -39,7 +39,6 @@ use SprykerTest\Client\Search\Plugin\Elasticsearch\Fixtures\BaseQueryPlugin;
  */
 abstract class AbstractQueryExpanderPluginTest extends Unit
 {
-
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
@@ -151,7 +150,7 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('foo')
-                    ->setParameterName('foo')
+                    ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
                     ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
             );
@@ -169,21 +168,21 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('foo')
-                    ->setParameterName('foo')
+                    ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
                     ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
-                    ->setParameterName('bar')
+                    ->setParameterName('bar-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
                     ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('baz')
-                    ->setParameterName('baz')
+                    ->setParameterName('baz-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
                     ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
             );
@@ -201,7 +200,7 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('foo')
-                    ->setParameterName('foo')
+                    ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
                     ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
             );
@@ -219,21 +218,21 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('foo')
-                    ->setParameterName('foo')
+                    ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
                     ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
-                    ->setParameterName('bar')
+                    ->setParameterName('bar-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
                     ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('baz')
-                    ->setParameterName('baz')
+                    ->setParameterName('baz-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
                     ->setType(SharedSearchConfig::FACET_TYPE_RANGE)
             );
@@ -251,7 +250,7 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('foo')
-                    ->setParameterName('foo')
+                    ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::CATEGORY_ALL_PARENTS)
                     ->setType(SharedSearchConfig::FACET_TYPE_CATEGORY)
             );
@@ -269,21 +268,21 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('foo')
-                    ->setParameterName('foo')
+                    ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::CATEGORY_ALL_PARENTS)
                     ->setType(SharedSearchConfig::FACET_TYPE_CATEGORY)
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
-                    ->setParameterName('bar')
+                    ->setParameterName('bar-param')
                     ->setFieldName(PageIndexMap::CATEGORY_ALL_PARENTS)
                     ->setType(SharedSearchConfig::FACET_TYPE_CATEGORY)
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('baz')
-                    ->setParameterName('baz')
+                    ->setParameterName('baz-param')
                     ->setFieldName(PageIndexMap::CATEGORY_ALL_PARENTS)
                     ->setType(SharedSearchConfig::FACET_TYPE_CATEGORY)
             );
@@ -301,21 +300,21 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('foo')
-                    ->setParameterName('foo')
+                    ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
                     ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
-                    ->setParameterName('bar')
+                    ->setParameterName('bar-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
                     ->setType(SharedSearchConfig::FACET_TYPE_ENUMERATION)
             )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('baz')
-                    ->setParameterName('baz')
+                    ->setParameterName('baz-param')
                     ->setFieldName(PageIndexMap::CATEGORY_ALL_PARENTS)
                     ->setType(SharedSearchConfig::FACET_TYPE_CATEGORY)
             );
@@ -330,5 +329,4 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
     {
         return new SearchFactory();
     }
-
 }

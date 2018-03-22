@@ -16,7 +16,6 @@ use Spryker\Zed\StateMachine\StateMachineConfig;
 
 class ItemLock implements ItemLockInterface
 {
-
     /**
      * @var \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface
      */
@@ -40,7 +39,7 @@ class ItemLock implements ItemLockInterface
     }
 
     /**
-     * @param int $identifier
+     * @param string $identifier
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\LockException
      *
@@ -71,7 +70,7 @@ class ItemLock implements ItemLockInterface
     }
 
     /**
-     * @param int $identifier
+     * @param string $identifier
      *
      * @return void
      */
@@ -113,5 +112,4 @@ class ItemLock implements ItemLockInterface
     {
         return new SpyStateMachineLock();
     }
-
 }

@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\DiscountVoucherTransfer;
 
 interface DiscountPersistInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
@@ -47,5 +46,4 @@ interface DiscountPersistInterface
      * @return bool
      */
     public function toggleDiscountVisibility($idDiscount, $isActive = false);
-
 }

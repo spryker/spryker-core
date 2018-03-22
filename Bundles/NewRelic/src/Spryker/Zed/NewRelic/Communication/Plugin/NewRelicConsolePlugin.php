@@ -14,11 +14,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * @method \Spryker\Zed\NewRelic\Communication\NewRelicCommunicationFactory getFactory()
- * @method \Spryker\Zed\NewRelic\Business\NewRelicFacade getFacade()
+ * @method \Spryker\Zed\NewRelic\Business\NewRelicFacadeInterface getFacade()
  */
 class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInterface
 {
-
     const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
 
     /**
@@ -96,5 +95,4 @@ class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInt
             $newRelicApi->addCustomParameter($key, $value);
         }
     }
-
 }

@@ -11,7 +11,5 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CalculationConfig extends AbstractBundleConfig
 {
-
     const ERROR_CODE_CART_AMOUNT_DIFFERENT = '4003';
-
 }

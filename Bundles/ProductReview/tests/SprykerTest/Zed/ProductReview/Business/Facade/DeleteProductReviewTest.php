@@ -22,7 +22,6 @@ use Spryker\Shared\ProductReview\ProductReviewConfig;
  */
 class DeleteProductReviewTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\ProductReview\ProductReviewBusinessTester
      */
@@ -76,5 +75,4 @@ class DeleteProductReviewTest extends Unit
         // Assert
         $this->tester->assertTouchActive(ProductReviewConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT_REVIEW, $productReviewTransfer->getFkProductAbstract(), 'Product review abstract should have been touched as active.');
     }
-
 }

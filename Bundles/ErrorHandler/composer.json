@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "filp/whoops": "^2.1",
+    "php": ">=7.1",
     "spryker/config": "^3.0.0",
     "spryker/log": "^3.0.0",
     "spryker/new-relic-api": "^1.0.0"
@@ -18,23 +19,17 @@
     "spryker/silex": "If you want to use ServiceProvider."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ],
   "extra": {
     "branch-alias": {
       "dev-master": "2.0.x-dev"

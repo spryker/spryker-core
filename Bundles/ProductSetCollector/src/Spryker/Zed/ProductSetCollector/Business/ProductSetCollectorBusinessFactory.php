@@ -21,7 +21,6 @@ use Spryker\Zed\ProductSetCollector\ProductSetCollectorDependencyProvider;
  */
 class ProductSetCollectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductSetCollector\Business\Collector\Storage\ProductSetCollector
      */
@@ -126,5 +125,4 @@ class ProductSetCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductSetCollectorDependencyProvider::FACADE_PRODUCT_SET);
     }
-
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Collector\CollectorConfig;
 
 class TouchUpdater extends AbstractTouchUpdater
 {
-
     /**
      * @var string
      */
@@ -34,15 +33,18 @@ class TouchUpdater extends AbstractTouchUpdater
     /**
      * @param string $key
      * @param int $idLocale
+     * @param int $idStore
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchStorage
      */
-    protected function findOrCreateTouchKeyEntity($key, $idLocale)
+    protected function findOrCreateTouchKeyEntity($key, $idLocale, $idStore)
     {
-        return SpyTouchStorageQuery::create()
+        $spyTouchStorageQuery = SpyTouchStorageQuery::create()
             ->filterByKey($key)
-            ->filterByFkLocale($idLocale)
-            ->findOneOrCreate();
+            ->filterByFkStore($idStore)
+            ->filterByFkLocale($idLocale);
+
+        return $spyTouchStorageQuery->findOneOrCreate();
     }
 
     /**
@@ -58,5 +60,4 @@ class TouchUpdater extends AbstractTouchUpdater
             ->filterByFkLocale($idLocale)
             ->delete();
     }
-
 }

@@ -16,11 +16,10 @@ use Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface;
 
 class SalesPaymentHydrator implements SalesPaymentHydratorInterface
 {
-
     /**
-     * @var array
+     * @var \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollectionInterface
      */
-    protected $paymentHydratePluginCollection = [];
+    protected $paymentHydratePluginCollection;
 
     /**
      * @var \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface
@@ -105,7 +104,7 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Orm\Zed\Payment\Persistence\SpySalesPayment[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Payment\Persistence\SpySalesPayment[]|\Propel\Runtime\Collection\ObjectCollection|mixed
      */
     protected function findSalesPaymentByIdSalesOrder(OrderTransfer $orderTransfer)
     {
@@ -113,5 +112,4 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
             ->queryPaymentMethodsByIdSalesOrder($orderTransfer->getIdSalesOrder())
             ->find();
     }
-
 }

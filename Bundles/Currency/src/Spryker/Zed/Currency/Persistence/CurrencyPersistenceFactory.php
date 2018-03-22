@@ -12,11 +12,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Currency\CurrencyConfig getConfig()
- * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface getQueryContainer()
  */
 class CurrencyPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Currency\Persistence\SpyCurrencyQuery
      */
@@ -24,5 +23,4 @@ class CurrencyPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyCurrencyQuery::create();
     }
-
 }

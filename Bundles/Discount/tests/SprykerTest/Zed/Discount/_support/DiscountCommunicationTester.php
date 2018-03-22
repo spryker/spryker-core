@@ -2,6 +2,8 @@
 namespace SprykerTest\Zed\Discount;
 
 use Codeception\Actor;
+use Spryker\Zed\Discount\DiscountDependencyProvider;
+use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
 
 /**
  * Inherited Methods
@@ -20,11 +22,19 @@ use Codeception\Actor;
  */
 class DiscountCommunicationTester extends Actor
 {
-
     use _generated\DiscountCommunicationTesterActions;
 
    /**
     * Define custom actions here
     */
 
+    /**
+     * @return void
+     */
+    public function registerStoreRelationToggleFormTypePlugin()
+    {
+        $this->setDependency(DiscountDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
+            return new StoreRelationToggleFormTypePlugin();
+        });
+    }
 }

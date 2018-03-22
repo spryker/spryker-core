@@ -12,9 +12,10 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutPostSaveHookInterface
 {
-
     /**
-     * This plugin is called after the order is placed.
+     * Specification:
+     * - This plugin is called after the order is placed.
+     * - Set the success flag to false, if redirect should be headed to an error page afterwords
      *
      * @api
      *
@@ -24,5 +25,4 @@ interface CheckoutPostSaveHookInterface
      * @return void
      */
     public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
-
 }

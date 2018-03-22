@@ -10,12 +10,10 @@ use Generated\Shared\Transfer\MailTransfer;
 
 interface RendererInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return void
      */
     public function render(MailTransfer $mailTransfer);
-
 }

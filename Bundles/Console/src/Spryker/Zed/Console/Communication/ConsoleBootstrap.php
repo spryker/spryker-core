@@ -13,12 +13,12 @@ use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class ConsoleBootstrap extends Application
 {
-
     /**
      * @var \Spryker\Zed\Console\Business\ConsoleFacadeInterface
      */
@@ -90,6 +90,20 @@ class ConsoleBootstrap extends Application
     }
 
     /**
+     * Gets the default input definition.
+     *
+     * @return \Symfony\Component\Console\Input\InputDefinition An InputDefinition instance
+     */
+    protected function getDefaultInputDefinition()
+    {
+        $inputDefinitions = parent::getDefaultInputDefinition();
+        $inputDefinitions->addOption(new InputOption('--no-pre', '', InputOption::VALUE_NONE, 'Will not execute pre run hooks'));
+        $inputDefinitions->addOption(new InputOption('--no-post', '', InputOption::VALUE_NONE, 'Will not execute post run hooks'));
+
+        return $inputDefinitions;
+    }
+
+    /**
      * @return \Spryker\Zed\Console\Business\ConsoleFacadeInterface
      */
     protected function getFacade()
@@ -125,11 +139,21 @@ class ConsoleBootstrap extends Application
      */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
+        $this->setDecorated($output);
         $output->writeln($this->getInfoText());
 
         $this->application->boot();
 
-        return parent::doRun($input, $output);
+        if (!$input->hasParameterOption(['--no-pre'], true)) {
+            $this->getFacade()->preRun($input, $output);
+        }
+        $response = parent::doRun($input, $output);
+
+        if (!$input->hasParameterOption(['--no-post'], true)) {
+            $this->getFacade()->postRun($input, $output);
+        }
+
+        return $response;
     }
 
     /**
@@ -144,4 +168,22 @@ class ConsoleBootstrap extends Application
         );
     }
 
+    /**
+     * This will force color mode when executed from another tool. The env variable can be set
+     * from anybody who wants to force color mode for the execution of this Application.
+     *
+     * For Spryker's deploy tool it is needed to get colored output from the console commands
+     * executed by this script without force projects to deal with ANSI Escape sequences of the underlying
+     * console commands.
+     *
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    protected function setDecorated(OutputInterface $output)
+    {
+        if (getenv('FORCE_COLOR_MODE')) {
+            $output->setDecorated(true);
+        }
+    }
 }

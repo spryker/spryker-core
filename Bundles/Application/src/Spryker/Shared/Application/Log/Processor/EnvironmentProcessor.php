@@ -9,9 +9,11 @@ namespace Spryker\Shared\Application\Log\Processor;
 
 use Spryker\Shared\Kernel\Store;
 
+/**
+ * @deprecated Use `EnvironmentProcessor` of Log module instead.
+ */
 class EnvironmentProcessor
 {
-
     const EXTRA = 'environment';
 
     const APPLICATION = 'application';
@@ -54,5 +56,4 @@ class EnvironmentProcessor
     {
         return Store::getInstance();
     }
-
 }

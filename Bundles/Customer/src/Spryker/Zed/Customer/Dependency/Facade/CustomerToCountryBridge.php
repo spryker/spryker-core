@@ -9,7 +9,6 @@ namespace Spryker\Zed\Customer\Dependency\Facade;
 
 class CustomerToCountryBridge implements CustomerToCountryInterface
 {
-
     /**
      * @var \Spryker\Zed\Country\Business\CountryFacadeInterface
      */
@@ -42,18 +41,6 @@ class CustomerToCountryBridge implements CustomerToCountryInterface
     }
 
     /**
-     * @deprecated Use getCountryByIso2Code() instead.
-     *
-     * @param string $iso2Code
-     *
-     * @return int
-     */
-    public function getIdCountryByIso2Code($iso2Code)
-    {
-        return $this->countryFacade->getIdCountryByIso2Code($iso2Code);
-    }
-
-    /**
      * @param string $iso2Code
      *
      * @return \Generated\Shared\Transfer\CountryTransfer
@@ -62,5 +49,4 @@ class CustomerToCountryBridge implements CustomerToCountryInterface
     {
         return $this->countryFacade->getCountryByIso2Code($iso2Code);
     }
-
 }

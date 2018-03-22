@@ -17,11 +17,10 @@ use Spryker\Zed\Collector\Communication\Plugin\AbstractCollectorPlugin;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\NavigationCollector\Business\NavigationCollectorFacade getFacade()
+ * @method \Spryker\Zed\NavigationCollector\Business\NavigationCollectorFacadeInterface getFacade()
  */
 class NavigationMenuCollectorStoragePlugin extends AbstractCollectorPlugin
 {
-
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -45,5 +44,4 @@ class NavigationMenuCollectorStoragePlugin extends AbstractCollectorPlugin
         $this->getFacade()
             ->runStorageNavigationMenuCollector($baseQuery, $localeTransfer, $result, $dataReader, $dataWriter, $touchUpdater, $output);
     }
-
 }

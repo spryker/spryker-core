@@ -14,12 +14,11 @@ use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapper;
 use Spryker\Zed\Wishlist\WishlistDependencyProvider;
 
 /**
- * @method \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Wishlist\WishlistConfig getConfig()
  */
 class WishlistBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Wishlist\Business\Model\ReaderInterface
      */
@@ -77,5 +76,4 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(WishlistDependencyProvider::FACADE_PRODUCT);
     }
-
 }

@@ -13,7 +13,6 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class SubRequestHandler implements SubRequestHandlerInterface
 {
-
     /**
      * @var \Symfony\Component\HttpKernel\HttpKernelInterface
      */
@@ -119,5 +118,4 @@ class SubRequestHandler implements SubRequestHandlerInterface
             $request->server->all()
         );
     }
-
 }

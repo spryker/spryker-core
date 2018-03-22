@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\Transfer\Business\Model\Generator;
 
 class TransferDefinitionMergerHelper
 {
-
     /**
      * @return array
      */
@@ -17,6 +16,7 @@ class TransferDefinitionMergerHelper
     {
         return [
             'name' => 'Transfer',
+            'entity-namespace' => null,
             'property' => [
                 [
                     'name' => 'propertyA',
@@ -36,6 +36,7 @@ class TransferDefinitionMergerHelper
     {
         return [
             'name' => 'Transfer',
+            'entity-namespace' => null,
             'property' => [
                 [
                     'name' => 'propertyA',
@@ -62,6 +63,7 @@ class TransferDefinitionMergerHelper
     {
         return [
             'name' => 'Transfer',
+            'entity-namespace' => null,
             'deprecated' => null,
             'property' => [
                 'propertyA' => [
@@ -82,5 +84,4 @@ class TransferDefinitionMergerHelper
             ],
         ];
     }
-
 }

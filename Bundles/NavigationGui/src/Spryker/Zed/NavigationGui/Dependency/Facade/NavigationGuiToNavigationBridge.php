@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\NavigationTreeTransfer;
 
 class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterface
 {
-
     /**
      * @var \Spryker\Zed\Navigation\Business\NavigationFacadeInterface
      */
@@ -128,5 +127,4 @@ class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterf
     {
         $this->navigationFacade->updateNavigationTreeHierarchy($navigationTreeTransfer);
     }
-
 }

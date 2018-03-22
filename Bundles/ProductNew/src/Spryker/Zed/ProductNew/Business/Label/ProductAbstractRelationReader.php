@@ -15,7 +15,6 @@ use Spryker\Zed\ProductNew\ProductNewConfig;
 
 class ProductAbstractRelationReader implements ProductAbstractRelationReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductNew\Persistence\ProductNewQueryContainerInterface
      */
@@ -144,5 +143,4 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
 
         return $productLabelProductAbstractRelationsTransfer;
     }
-
 }

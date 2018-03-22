@@ -14,7 +14,6 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class ProductAbstractGroupsCollectorQuery extends AbstractPropelCollectorQuery
 {
-
     const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const FIELD_ID_PRODUCT_GROUPS = 'id_product_groups';
 
@@ -38,5 +37,4 @@ class ProductAbstractGroupsCollectorQuery extends AbstractPropelCollectorQuery
 
         $this->touchQuery->groupBy(static::FIELD_ID_PRODUCT_ABSTRACT);
     }
-
 }

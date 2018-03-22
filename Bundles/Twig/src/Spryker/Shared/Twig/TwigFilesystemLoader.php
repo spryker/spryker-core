@@ -14,7 +14,6 @@ use Twig_LoaderInterface;
 
 class TwigFilesystemLoader implements Twig_LoaderInterface
 {
-
     /**
      * @var array
      */
@@ -201,7 +200,7 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
      */
     protected function isPathInSplit($path)
     {
-        return strpos($path, 'vendor/spryker/spryker/Bundles') === false && strpos($path, 'vendor/') > 0;
+        return preg_match('/vendor\/spryker\/[a-zA-Z0-9._-]+\/Bundles/', $path) === 0 && strpos($path, 'vendor/') > 0;
     }
 
     /**
@@ -213,5 +212,4 @@ class TwigFilesystemLoader implements Twig_LoaderInterface
     {
         return strtolower(preg_replace('/([a-z])([A-Z])/', '$1' . addcslashes('-', '$') . '$2', $bundleName));
     }
-
 }

@@ -22,7 +22,6 @@ use SprykerTest\Zed\Cms\PageObject\CmsRedirectListPage;
  */
 class CmsRedirectEditCest
 {
-
     /**
      * @param \SprykerTest\Zed\Cms\CmsCommunicationTester $i
      *
@@ -36,5 +35,4 @@ class CmsRedirectEditCest
         $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Content Management / Redirects / Edit CMS Redirect');
     }
-
 }

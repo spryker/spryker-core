@@ -5,22 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\{bundle}\Dependency\Facade;
+namespace {vendor}\{application}\{module}\Dependency\{toType};
+{useStatements}
 
-class {bundle}To{toBundle}Bridge implements {bundle}To{toBundle}Interface
+class {module}To{toModule}{toType}Bridge implements {module}To{toModule}{toType}Interface
 {
+    /**
+     * @var \{toVendor}\{toApplication}\{toModule}{toModuleLayer}\{toModule}{toType}Interface
+     */
+    protected ${toModuleVariable}{toType};
 
     /**
-     * @var \Spryker\Zed\{toBundle}\Business\{toBundle}FacadeInterface
+     * @param \{toVendor}\{toApplication}\{toModule}{toModuleLayer}\{toModule}{toType}Interface ${toModuleVariable}{toType}
      */
-    protected ${toBundleVariable}Facade;
-
-    /**
-     * @param \Spryker\Zed\{toBundle}\Business\{toBundle}FacadeInterface ${toBundleVariable}Facade
-     */
-    public function __construct(${toBundleVariable}Facade)
+    public function __construct(${toModuleVariable}{toType})
     {
-        $this->{toBundleVariable}Facade = ${toBundleVariable}Facade;
+        $this->{toModuleVariable}{toType} = ${toModuleVariable}{toType};
     }
 
+    {methods}
 }

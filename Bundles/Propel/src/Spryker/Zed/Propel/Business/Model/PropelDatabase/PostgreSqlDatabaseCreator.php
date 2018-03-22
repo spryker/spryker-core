@@ -15,7 +15,6 @@ use Symfony\Component\Process\Process;
 
 class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
 {
-
     /**
      * @return string
      */
@@ -45,7 +44,7 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
     }
 
     /**
-     * @return bool
+     * @return void
      */
     protected function createDatabase()
     {
@@ -108,8 +107,6 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
     }
 
     /**
-     * Check if exit code can be used to return bool
-     *
      * @param string $command
      *
      * @throws \RuntimeException
@@ -127,9 +124,7 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
             throw new RuntimeException($process->getErrorOutput());
         }
 
-        $returnValue = (int)$process->getOutput();
-
-        return (bool)$returnValue;
+        return true;
     }
 
     /**
@@ -150,5 +145,4 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
     {
         return Config::get(PropelConstants::USE_SUDO_TO_MANAGE_DATABASE, true);
     }
-
 }

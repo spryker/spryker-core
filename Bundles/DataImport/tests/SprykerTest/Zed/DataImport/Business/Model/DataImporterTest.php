@@ -25,7 +25,6 @@ use Generated\Shared\Transfer\DataImporterReportTransfer;
  */
 class DataImporterTest extends Unit
 {
-
     const IMPORTER_TYPE = 'specific-importer';
 
     /**
@@ -142,5 +141,4 @@ class DataImporterTest extends Unit
 
         return $dataImporter;
     }
-
 }

@@ -10,13 +10,12 @@ namespace Spryker\Zed\Glossary\Communication\Controller;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
- * @method \Spryker\Zed\Glossary\Business\GlossaryFacade getFacade()
+ * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
  * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {
-
     /**
      * @return array
      */
@@ -47,5 +46,4 @@ class IndexController extends AbstractController
 
         return $this->jsonResponse($table->fetchData());
     }
-
 }

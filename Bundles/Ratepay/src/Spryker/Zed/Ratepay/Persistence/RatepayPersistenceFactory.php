@@ -13,11 +13,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Ratepay\RatepayConfig getConfig()
- * @method \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Ratepay\Persistence\RatepayQueryContainerInterface getQueryContainer()
  */
 class RatepayPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayQuery
      */
@@ -33,5 +32,4 @@ class RatepayPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyPaymentRatepayLogQuery::create();
     }
-
 }

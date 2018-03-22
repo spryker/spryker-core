@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 class CustomerApiToCustomerBridge implements CustomerApiToCustomerInterface
 {
-
     /**
      * @var \Spryker\Zed\Customer\Business\CustomerFacadeInterface
      */
@@ -64,5 +63,4 @@ class CustomerApiToCustomerBridge implements CustomerApiToCustomerInterface
     {
         return $this->customerFacade->deleteCustomer($customerTransfer);
     }
-
 }

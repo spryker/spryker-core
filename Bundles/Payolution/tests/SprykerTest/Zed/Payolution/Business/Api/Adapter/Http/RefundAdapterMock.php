@@ -9,14 +9,12 @@ namespace SprykerTest\Zed\Payolution\Business\Api\Adapter\Http;
 
 class RefundAdapterMock extends AbstractAdapterMock
 {
-
     /**
      * @return array
      */
     public function getSuccessResponse()
     {
-        return
-            'P3_VALIDATION=ACK' . '&' .
+        return 'P3_VALIDATION=ACK' . '&' .
             'IDENTIFICATION_SHOPPERID=790' . '&' .
             'CLEARING_DESCRIPTOR=9053.8347.7922 inv-ins-test-default 795' . '&' .
             'PROCESSING_CONNECTORDETAIL_ConnectorTxID1=Tx-cm3yprrtggt' . '&' .
@@ -63,8 +61,7 @@ class RefundAdapterMock extends AbstractAdapterMock
      */
     public function getFailureResponse()
     {
-        return
-            'TRANSACTION_CHANNEL=8a82941832d84c500132e875fc0c0648' . '&' .
+        return 'TRANSACTION_CHANNEL=8a82941832d84c500132e875fc0c0648' . '&' .
             'PRESENTATION_CURRENCY=EUR' . '&' .
             'IDENTIFICATION_UNIQUEID=8a8294494fd6cc31014fdf878cf50bd0' . '&' .
             'PAYMENT_CODE=VA.RF' . '&' .
@@ -97,5 +94,4 @@ class RefundAdapterMock extends AbstractAdapterMock
             'PRESENTATION_AMOUNT=10000.00' . '&' .
             'ADDRESS_COUNTRY=DE\r\n';
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 interface ProductSetGuiToUrlInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
@@ -25,5 +24,4 @@ interface ProductSetGuiToUrlInterface
      * @return bool
      */
     public function hasUrl(UrlTransfer $urlTransfer);
-
 }

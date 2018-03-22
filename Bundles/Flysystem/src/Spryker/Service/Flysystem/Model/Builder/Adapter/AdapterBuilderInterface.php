@@ -9,10 +9,8 @@ namespace Spryker\Service\Flysystem\Model\Builder\Adapter;
 
 interface AdapterBuilderInterface
 {
-
     /**
      * @return \League\Flysystem\AdapterInterface
      */
     public function build();
-
 }

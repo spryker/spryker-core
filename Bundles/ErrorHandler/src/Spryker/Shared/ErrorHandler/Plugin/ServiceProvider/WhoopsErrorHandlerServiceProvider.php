@@ -18,7 +18,6 @@ use Whoops\Run;
 
 class WhoopsErrorHandlerServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -80,5 +79,4 @@ class WhoopsErrorHandlerServiceProvider implements ServiceProviderInterface
             ErrorLogger::getInstance()->log($exception);
         });
     }
-
 }

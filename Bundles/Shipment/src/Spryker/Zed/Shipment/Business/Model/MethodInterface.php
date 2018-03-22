@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
 interface MethodInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
      *
@@ -67,4 +66,18 @@ interface MethodInterface
      */
     public function updateMethod(ShipmentMethodTransfer $methodTransfer);
 
+    /**
+     * @param int $idShipmentMethod
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer);
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return bool
+     */
+    public function isShipmentMethodActive($idShipmentMethod);
 }

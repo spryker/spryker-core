@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 
 interface FacetConfigBuilderInterface
 {
-
     /**
      * @api
      *
@@ -23,11 +22,11 @@ interface FacetConfigBuilderInterface
     /**
      * @api
      *
-     * @param string $paramName
+     * @param string $facetName
      *
      * @return \Generated\Shared\Transfer\FacetConfigTransfer|null
      */
-    public function get($paramName);
+    public function get($facetName);
 
     /**
      * @api
@@ -60,5 +59,4 @@ interface FacetConfigBuilderInterface
      * @return array
      */
     public function getActiveParamNames(array $requestParameters);
-
 }

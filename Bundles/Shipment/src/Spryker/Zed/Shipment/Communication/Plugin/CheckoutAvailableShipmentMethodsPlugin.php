@@ -11,12 +11,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Shipment\Business\ShipmentFacade getFacade()
+ * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
  */
 class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -26,5 +25,4 @@ class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
     {
         return $this->getFacade()->getAvailableMethods($quoteTransfer);
     }
-
 }

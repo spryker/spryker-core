@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ZedNavigationFacade extends AbstractFacade implements ZedNavigationFacadeInterface
 {
-
     /**
      * Specification:
      * - Returns an array with all navigation entries.
@@ -44,5 +43,4 @@ class ZedNavigationFacade extends AbstractFacade implements ZedNavigationFacadeI
     {
         $this->getFactory()->createNavigationCacheBuilder()->writeNavigationCache();
     }
-
 }

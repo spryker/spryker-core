@@ -1,5 +1,7 @@
 # CmsGui Module
 
+CmsGui is a user interface module to manage CMS functionality in the Zed Administration Interface.
+
 ## Installation
 
 ```
@@ -23,6 +25,6 @@ To enable it overwrite `CmsConfig::appendPrefixToCmsPageUrl` method in project a
 
 ## Documentation
 
-[Documentation](https://spryker.github.io)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/content_management/cms/cms.html)
 
 

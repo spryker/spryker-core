@@ -11,13 +11,13 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 interface DiscountToMoneyInterface
 {
-
     /**
      * @param int $amount
+     * @param string|null $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount);
+    public function fromInteger($amount, $isoCode = null);
 
     /**
      * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
@@ -46,5 +46,4 @@ interface DiscountToMoneyInterface
      * @return float
      */
     public function convertIntegerToDecimal($value);
-
 }

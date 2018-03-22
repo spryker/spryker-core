@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\TransactionMetaTransfer;
 
 class TransactionMetaVisitorComposite implements TransactionMetaVisitorInterface
 {
-
     /**
      * @var \Spryker\Zed\Braintree\Business\Payment\Transaction\MetaVisitor\TransactionMetaVisitorInterface[]
      */
@@ -40,5 +39,4 @@ class TransactionMetaVisitorComposite implements TransactionMetaVisitorInterface
             $visitor->visit($transactionMetaTransfer);
         }
     }
-
 }

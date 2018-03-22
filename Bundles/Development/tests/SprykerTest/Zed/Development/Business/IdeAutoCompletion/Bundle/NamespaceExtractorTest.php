@@ -23,7 +23,6 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class NamespaceExtractorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -96,5 +95,4 @@ class NamespaceExtractorTest extends Unit
         $namespace = $namespaceExtractor->fromDirectory($directory, $baseDirectory);
         $this->assertSame('Spryker\Application\Bundle', $namespace);
     }
-
 }

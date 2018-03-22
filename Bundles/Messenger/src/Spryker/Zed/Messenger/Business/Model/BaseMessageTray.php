@@ -11,7 +11,6 @@ use Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface;
 
 class BaseMessageTray
 {
-
     /**
      * @var \Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface
      */
@@ -40,5 +39,4 @@ class BaseMessageTray
 
         return $translation;
     }
-
 }

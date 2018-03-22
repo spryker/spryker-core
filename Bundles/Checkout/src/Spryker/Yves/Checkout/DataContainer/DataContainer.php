@@ -13,9 +13,8 @@ use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 
 class DataContainer implements DataContainerInterface
 {
-
     /**
-     * @var \Spryker\Client\Quote\QuoteClientInterface
+     * @var \Spryker\Yves\Checkout\Dependency\Client\CheckoutToQuoteInterface
      */
     protected $quoteClient;
 
@@ -53,5 +52,4 @@ class DataContainer implements DataContainerInterface
     {
         $this->quoteClient->setQuote($dataTransfer);
     }
-
 }

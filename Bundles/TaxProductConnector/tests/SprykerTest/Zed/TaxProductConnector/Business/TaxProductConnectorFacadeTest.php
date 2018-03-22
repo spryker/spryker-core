@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\TaxProductConnector\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Product\Business\ProductFacade;
@@ -29,7 +30,6 @@ use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
  */
 class TaxProductConnectorFacadeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -169,11 +169,11 @@ class TaxProductConnectorFacadeTest extends Unit
         $productFacade = $this->createProductFacade();
         $productAbstractTransfer = new ProductAbstractTransfer();
         $productAbstractTransfer->setSku('test-sku-123');
+        $productAbstractTransfer->setStoreRelation((new StoreRelationTransfer())->setIdStores([]));
 
         $idProductAbstractTransfer = $productFacade->createProductAbstract($productAbstractTransfer);
         $productAbstractTransfer->setIdProductAbstract($idProductAbstractTransfer);
 
         return $productAbstractTransfer;
     }
-
 }

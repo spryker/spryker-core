@@ -27,7 +27,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class DataImportBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
@@ -148,5 +147,4 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(DataImportDependencyProvider::PROPEL_CONNECTION);
     }
-
 }

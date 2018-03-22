@@ -13,11 +13,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Tax\TaxConfig getConfig()
- * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
  */
 class TaxPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
      */
@@ -33,5 +32,4 @@ class TaxPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyTaxSetQuery::create();
     }
-
 }

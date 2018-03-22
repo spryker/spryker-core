@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Container;
 
 class EventDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const EVENT_LISTENERS = 'event_listeners';
     const EVENT_SUBSCRIBERS = 'event subscribers';
 
@@ -65,5 +64,4 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
     {
         return new EventSubscriberCollection();
     }
-
 }

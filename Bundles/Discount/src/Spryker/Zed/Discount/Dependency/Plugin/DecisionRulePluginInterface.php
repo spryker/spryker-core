@@ -12,12 +12,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface DecisionRulePluginInterface
 {
-
     /**
      * Specification:
      *
-     * - Make decision on given Quote or Item transfer.
-     * - Use \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface to compare item value with ClauseTransfer.
+     * - Makes decision on given Quote or Item transfer.
+     * - Uses Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface to compare item value with ClauseTransfer.
      * - Returns false when not matching.
      *
      * @api
@@ -51,5 +50,4 @@ interface DecisionRulePluginInterface
      * @return array
      */
     public function acceptedDataTypes();
-
 }

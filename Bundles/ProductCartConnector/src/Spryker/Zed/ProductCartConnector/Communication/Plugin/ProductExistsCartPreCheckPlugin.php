@@ -13,12 +13,11 @@ use Spryker\Zed\Cart\Dependency\TerminationAwareCartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade getFacade()
+ * @method \Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductCartConnector\Communication\ProductCartConnectorCommunicationFactory getFactory()
  */
 class ProductExistsCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface, TerminationAwareCartPreCheckPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -45,5 +44,4 @@ class ProductExistsCartPreCheckPlugin extends AbstractPlugin implements CartPreC
     {
         return true;
     }
-
 }

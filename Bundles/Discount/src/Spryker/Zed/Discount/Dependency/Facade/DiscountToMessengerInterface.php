@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 
 interface DiscountToMessengerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
@@ -32,5 +31,4 @@ interface DiscountToMessengerInterface
      * @return void
      */
     public function addInfoMessage(MessageTransfer $message);
-
 }

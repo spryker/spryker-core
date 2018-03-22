@@ -11,7 +11,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 class SalesToOmsBridge implements SalesToOmsInterface
 {
-
     /**
      * @var \Spryker\Zed\Oms\Business\OmsFacadeInterface
      */
@@ -92,4 +91,13 @@ class SalesToOmsBridge implements SalesToOmsInterface
         return $this->omsFacade->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
     }
 
+    /**
+     * @param int $idOrder
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedExcludeFromCustomer($idOrder)
+    {
+        return $this->omsFacade->isOrderFlaggedExcludeFromCustomer($idOrder);
+    }
 }

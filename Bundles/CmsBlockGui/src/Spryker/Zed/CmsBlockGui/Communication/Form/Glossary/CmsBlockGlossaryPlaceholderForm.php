@@ -22,7 +22,6 @@ use Symfony\Component\Validator\Constraint;
  */
 class CmsBlockGlossaryPlaceholderForm extends AbstractType
 {
-
     const FIELD_FK_CMS_BLOCK = 'fkCmsBlock';
     const FIELD_PLACEHOLDER = 'placeholder';
     const FIELD_ID_GLOSSARY_KEY_MAPPING = 'idCmsBlockGlossaryKeyMapping';
@@ -33,14 +32,6 @@ class CmsBlockGlossaryPlaceholderForm extends AbstractType
     const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
 
     use ArrayObjectTransformerTrait;
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'cms_block_glossary_placeholder';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -137,7 +128,7 @@ class CmsBlockGlossaryPlaceholderForm extends AbstractType
     protected function addTranslationsField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_TRANSLATIONS, CollectionType::class, [
-            'type' => $this->getFactory()->createCmsBlockGlossaryPlaceholderTranslationFormType(),
+            'entry_type' => $this->getFactory()->getCmsBlockGlossaryPlaceholderTranslationFormType(),
             'allow_add' => true,
         ]);
 
@@ -147,4 +138,11 @@ class CmsBlockGlossaryPlaceholderForm extends AbstractType
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'cms_block_glossary_placeholder';
+    }
 }

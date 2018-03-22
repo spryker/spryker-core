@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductAttributeToProductBridge implements ProductAttributeToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -89,6 +88,8 @@ class ProductAttributeToProductBridge implements ProductAttributeToProductInterf
     }
 
     /**
+     * @deprecated Method will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
      *
@@ -232,5 +233,4 @@ class ProductAttributeToProductBridge implements ProductAttributeToProductInterf
     {
         $this->productFacade->touchProductConcrete($idProductConcrete);
     }
-
 }

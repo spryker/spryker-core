@@ -8,9 +8,13 @@
 namespace Spryker\Zed\Kernel\Business;
 
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
+use Spryker\Zed\Kernel\EntityManagerResolverAwareTrait;
+use Spryker\Zed\Kernel\RepositoryResolverAwareTrait;
 
 abstract class AbstractFacade
 {
+    use EntityManagerResolverAwareTrait;
+    use RepositoryResolverAwareTrait;
 
     /**
      * @var \Spryker\Zed\Kernel\Business\BusinessFactoryInterface
@@ -58,5 +62,4 @@ abstract class AbstractFacade
     {
         return new FactoryResolver();
     }
-
 }

@@ -10,23 +10,34 @@ namespace Spryker\Zed\ProductOptionCartConnector\Business\Model;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Spryker\Shared\Price\PriceMode;
-use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface;
+use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceFacadeInterface;
+use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface;
 
 class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
 {
-
     /**
-     * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface
+     * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface
      */
     protected $productOptionFacade;
 
     /**
-     * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionInterface $productOptionFacade
+     * @var \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceFacadeInterface
      */
-    public function __construct(ProductOptionCartConnectorToProductOptionInterface $productOptionFacade)
+    protected $priceFacade;
+
+    /**
+     * @var string
+     */
+    protected static $grossPriceModeIdentifierBuffer;
+
+    /**
+     * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface $productOptionFacade
+     * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceFacadeInterface $priceFacade
+     */
+    public function __construct(ProductOptionCartConnectorToProductOptionFacadeInterface $productOptionFacade, ProductOptionCartConnectorToPriceFacadeInterface $priceFacade)
     {
         $this->productOptionFacade = $productOptionFacade;
+        $this->priceFacade = $priceFacade;
     }
 
     /**
@@ -61,26 +72,36 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
                 $productOptionTransfer->getIdProductOptionValue()
             );
 
-            $this->setPrice($productOptionTransfer, $productOptionTransfer->getUnitGrossPrice(), $priceMode);
+            $this->sanitizePrices($productOptionTransfer, $priceMode);
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
-     * @param int $price
      * @param string $priceMode
      *
      * @return void
      */
-    protected function setPrice(ProductOptionTransfer $productOptionTransfer, $price, $priceMode)
+    protected function sanitizePrices(ProductOptionTransfer $productOptionTransfer, $priceMode)
     {
-        if (PriceMode::PRICE_MODE_NET === $priceMode) {
-            $productOptionTransfer->setUnitGrossPrice(0);
-            $productOptionTransfer->setUnitNetPrice($price);
-        } else {
+        if ($priceMode === $this->getGrossPriceModeIdentifier()) {
             $productOptionTransfer->setUnitNetPrice(0);
-            $productOptionTransfer->setSumGrossPrice($price);
+
+            return;
         }
+
+        $productOptionTransfer->setUnitGrossPrice(0);
     }
 
+    /**
+     * @return string
+     */
+    protected function getGrossPriceModeIdentifier()
+    {
+        if (!isset(static::$grossPriceModeIdentifierBuffer)) {
+            static::$grossPriceModeIdentifierBuffer = $this->priceFacade->getGrossPriceModeIdentifier();
+        }
+
+        return static::$grossPriceModeIdentifierBuffer;
+    }
 }

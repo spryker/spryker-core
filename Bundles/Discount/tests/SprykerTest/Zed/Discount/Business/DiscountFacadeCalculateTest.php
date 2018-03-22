@@ -11,11 +11,16 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Currency\Persistence\SpyCurrencyQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Orm\Zed\Discount\Persistence\SpyDiscountAmount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use Orm\Zed\Discount\Persistence\SpyDiscountStore;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Propel\Runtime\Propel;
@@ -40,7 +45,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
  */
 class DiscountFacadeCalculateTest extends Unit
 {
-
     use LocatorHelperTrait;
 
     /**
@@ -190,7 +194,6 @@ class DiscountFacadeCalculateTest extends Unit
                 $collectedDiscountTransfer->setDiscountableItems($discountableItems);
 
                 return $collectedDiscountTransfer;
-
             });
 
         $discountFacade = $this->createMockedDiscountFacade($filterPluginMock);
@@ -211,6 +214,12 @@ class DiscountFacadeCalculateTest extends Unit
     protected function createQuoteTransfer()
     {
         $quoteTransfer = new QuoteTransfer();
+
+        $quoteTransfer->setStore($this->getCurrentStore());
+
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode('EUR');
+        $quoteTransfer->setCurrency($currencyTransfer);
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setAbstractSku('123');
@@ -260,6 +269,18 @@ class DiscountFacadeCalculateTest extends Unit
         $discountEntity->setValidTo(new DateTime('tomorrow'));
         $discountEntity->save();
 
+        (new SpyDiscountStore())
+            ->setFkStore($this->getCurrentStore()->getIdStore())
+            ->setFkDiscount($discountEntity->getIdDiscount())
+            ->save();
+
+        $discountAmount = new SpyDiscountAmount();
+        $currencyEntity = $this->getCurrency();
+        $discountAmount->setFkCurrency($currencyEntity->getIdCurrency());
+        $discountAmount->setGrossAmount(100);
+        $discountAmount->setFkDiscount($discountEntity->getIdDiscount());
+        $discountAmount->save();
+
         return $discountEntity;
     }
 
@@ -302,6 +323,8 @@ class DiscountFacadeCalculateTest extends Unit
         $decisionRulePlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::DECISION_RULE_PLUGINS);
         $collectorStrategyPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::PLUGIN_COLLECTOR_STRATEGY_PLUGINS);
         $applicableFilterPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS);
+        $currencyFacade = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::FACADE_CURRENCY);
+        $storeFacade = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::FACADE_STORE);
 
         $container = new Container();
 
@@ -317,6 +340,10 @@ class DiscountFacadeCalculateTest extends Unit
             return $messengerFacade;
         };
 
+        $container[DiscountDependencyProvider::FACADE_STORE] = function () use ($storeFacade) {
+            return $storeFacade;
+        };
+
         $container[DiscountDependencyProvider::COLLECTOR_PLUGINS] = function () use ($collectorPlugins) {
             return $collectorPlugins;
         };
@@ -327,13 +354,16 @@ class DiscountFacadeCalculateTest extends Unit
 
         $container[DiscountDependencyProvider::PLUGIN_DISCOUNTABLE_ITEM_FILTER] = function () use ($filterPluginMock) {
             return [
-                $filterPluginMock
+                $filterPluginMock,
             ];
         };
 
         $container[DiscountDependencyProvider::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS] = function () use ($applicableFilterPlugins) {
             return $applicableFilterPlugins;
+        };
 
+        $container[DiscountDependencyProvider::FACADE_CURRENCY] = function () use ($currencyFacade) {
+            return $currencyFacade;
         };
 
         $discountBusinessFactory->setContainer($container);
@@ -352,4 +382,21 @@ class DiscountFacadeCalculateTest extends Unit
         return $this->getMockBuilder(DiscountableItemFilterPluginInterface::class)->getMock();
     }
 
+    /**
+     * @return \Orm\Zed\Currency\Persistence\SpyCurrency
+     */
+    protected function getCurrency()
+    {
+        return SpyCurrencyQuery::create()->findOneByCode('EUR');
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function getCurrentStore()
+    {
+        return (new StoreTransfer())
+            ->setIdStore(1)
+            ->setName('DE');
+    }
 }

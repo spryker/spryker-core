@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface ProductBundleAvailabilityHandlerInterface
 {
-
     /**
      * @param string $bundledProductSku
      *
@@ -26,9 +27,9 @@ interface ProductBundleAvailabilityHandlerInterface
 
     /**
      * @param string $bundleProductSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return void
      */
-    public function removeBundleAvailability($bundleProductSku);
-
+    public function removeBundleAvailability($bundleProductSku, StoreTransfer $storeTransfer);
 }

@@ -12,12 +12,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
- * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainer getQueryContainer()
- * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
  */
 class QueryStringController extends AbstractController
 {
-
     const URL_PARAM_TYPE = 'type';
     const URL_PARAM_FIELD = 'field';
     const URL_PARAM_QUERY_STRING = 'query-string';
@@ -84,5 +83,4 @@ class QueryStringController extends AbstractController
                 ->validateQueryStringByType($type, $queryString)
         );
     }
-
 }

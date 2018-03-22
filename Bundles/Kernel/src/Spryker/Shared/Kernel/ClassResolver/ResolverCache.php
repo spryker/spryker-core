@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\ClassResolver\Cache\StorageInterface;
 
 class ResolverCache implements ResolverCacheInterface
 {
-
     /**
      * @var \Everon\Component\Collection\CollectionInterface
      */
@@ -121,5 +120,4 @@ class ResolverCache implements ResolverCacheInterface
     {
         self::$modified = true;
     }
-
 }

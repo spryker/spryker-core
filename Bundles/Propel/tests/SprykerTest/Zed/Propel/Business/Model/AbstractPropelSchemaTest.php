@@ -22,7 +22,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 abstract class AbstractPropelSchemaTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -51,5 +50,4 @@ abstract class AbstractPropelSchemaTest extends Unit
     {
         return __DIR__ . '/TempFixtures';
     }
-
 }

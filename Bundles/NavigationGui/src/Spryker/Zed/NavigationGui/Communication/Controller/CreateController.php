@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -24,10 +23,10 @@ class CreateController extends AbstractController
     public function indexAction(Request $request)
     {
         $navigationForm = $this->getFactory()
-            ->createNavigationForm()
+            ->getNavigationForm()
             ->handleRequest($request);
 
-        if ($navigationForm->isValid()) {
+        if ($navigationForm->isSubmitted() && $navigationForm->isValid()) {
             $navigationTransfer = $navigationForm->getData();
             $navigationTransfer = $this->getFactory()
                 ->getNavigationFacade()
@@ -42,5 +41,4 @@ class CreateController extends AbstractController
             'navigationForm' => $navigationForm->createView(),
         ]);
     }
-
 }

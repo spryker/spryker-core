@@ -8,13 +8,12 @@
 namespace Spryker\Yves\DummyPayment\Handler;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\DummyPayment\DummyPaymentConfig;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\DummyPayment\Exception\PaymentMethodNotFoundException;
-use Spryker\Zed\DummyPayment\DummyPaymentConfig;
 
 class DummyPaymentHandler
 {
-
     const PAYMENT_PROVIDER = 'DummyPayment';
 
     /**
@@ -94,5 +93,4 @@ class DummyPaymentHandler
 
         return $dummyPaymentTransfer;
     }
-
 }

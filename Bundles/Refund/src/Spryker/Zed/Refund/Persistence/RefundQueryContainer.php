@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class RefundQueryContainer extends AbstractQueryContainer implements RefundQueryContainerInterface
 {
-
     /**
      * Specification:
      * - Returns SpyRefundQuery ordered by id descending.
@@ -28,5 +27,4 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
         return $this->getFactory()->createRefundQuery()
             ->joinWithSpySalesOrder();
     }
-
 }

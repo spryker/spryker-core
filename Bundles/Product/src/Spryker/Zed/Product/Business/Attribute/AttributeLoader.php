@@ -18,7 +18,6 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class AttributeLoader implements AttributeLoaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -54,9 +53,37 @@ class AttributeLoader implements AttributeLoaderInterface
      */
     public function getCombinedAbstractAttributeKeys(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer = null)
     {
-        $rawProductAttributesTransfer = new RawProductAttributesTransfer();
-
         $productAbstractEntity = $this->getProductAbstractEntity($productAbstractTransfer);
+
+        return $this->getCombinedAbstractAttributeKeysForEntity($productAbstractEntity, $localeTransfer);
+    }
+
+    /**
+     * @param int[] $productIds
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null|null $localeTransfer
+     *
+     * @return array
+     */
+    public function getCombinedAbstractAttributeKeysForProductIds($productIds, LocaleTransfer $localeTransfer = null)
+    {
+        $productAbstractEntities = $this->getProductAbstractEntitiesFromIds($productIds);
+        $productIdsWithAttributes = [];
+        foreach ($productAbstractEntities as $productAbstractEntity) {
+            $productIdsWithAttributes[$productAbstractEntity->getIdProductAbstract()] = $this->getCombinedAbstractAttributeKeysForEntity($productAbstractEntity, $localeTransfer);
+        }
+
+        return $productIdsWithAttributes;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer Deprecated: default null will be removed in the next major
+     *
+     * @return array
+     */
+    protected function getCombinedAbstractAttributeKeysForEntity(SpyProductAbstract $productAbstractEntity, LocaleTransfer $localeTransfer = null)
+    {
+        $rawProductAttributesTransfer = new RawProductAttributesTransfer();
         $rawProductAttributesTransfer->setAbstractAttributes($this->getAbstractAttributes($productAbstractEntity));
 
         if ($localeTransfer) {
@@ -196,6 +223,18 @@ class AttributeLoader implements AttributeLoaderInterface
     }
 
     /**
+     * @param int[] $productIds
+     *
+     * @return array|mixed|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function getProductAbstractEntitiesFromIds($productIds)
+    {
+        return $this->productQueryContainer
+            ->queryProductAbstract()
+            ->findPks($productIds);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -218,5 +257,4 @@ class AttributeLoader implements AttributeLoaderInterface
         }
         return $productEntity;
     }
-
 }

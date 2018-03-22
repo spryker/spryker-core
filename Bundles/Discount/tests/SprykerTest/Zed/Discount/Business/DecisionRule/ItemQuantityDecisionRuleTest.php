@@ -23,14 +23,13 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class ItemQuantityDecisionRuleTest extends BaseRuleTester
 {
-
     /**
      * @return void
      */
     public function testDecisionRuleWhenCurrentItemQuantityMatchesShouldReturnTrue()
     {
         $comparatorMock = $this->createComparatorMock();
-        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer  $clauseTransfer, $itemQuantity) {
+        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $itemQuantity) {
             return $clauseTransfer->getValue() === $itemQuantity;
         });
 
@@ -57,5 +56,4 @@ class ItemQuantityDecisionRuleTest extends BaseRuleTester
 
         return new ItemQuantityDecisionRule($comparatorMock);
     }
-
 }

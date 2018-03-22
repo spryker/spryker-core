@@ -15,7 +15,6 @@ use Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToTouchBridge;
 
 class ProductReviewDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
     const FACADE_LOCALE = 'FACADE_LOCALE';
@@ -103,5 +102,4 @@ class ProductReviewDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

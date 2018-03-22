@@ -13,7 +13,6 @@ use Symfony\Component\Debug\Exception\FlattenException;
 
 class ExceptionHandlerDispatcher
 {
-
     use LoggerTrait;
 
     /**
@@ -56,5 +55,4 @@ class ExceptionHandlerDispatcher
             $statusCode
         ));
     }
-
 }

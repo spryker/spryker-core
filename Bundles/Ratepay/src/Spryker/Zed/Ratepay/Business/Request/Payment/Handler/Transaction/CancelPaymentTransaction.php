@@ -12,7 +12,6 @@ use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 
 class CancelPaymentTransaction extends BaseTransaction implements OrderTransactionInterface
 {
-
     const TRANSACTION_TYPE = ApiConstants::REQUEST_MODEL_PAYMENT_CANCEL;
 
     /**
@@ -43,5 +42,4 @@ class CancelPaymentTransaction extends BaseTransaction implements OrderTransacti
             ->getTransferObjectConverter($response)
             ->convert();
     }
-
 }

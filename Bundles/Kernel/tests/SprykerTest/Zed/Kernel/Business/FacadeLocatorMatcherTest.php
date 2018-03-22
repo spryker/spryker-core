@@ -22,7 +22,6 @@ use Spryker\Zed\Kernel\Business\FacadeLocatorMatcher;
  */
 class FacadeLocatorMatcherTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -46,5 +45,4 @@ class FacadeLocatorMatcherTest extends Unit
     {
         $this->assertFalse((new FacadeLocatorMatcher())->match('locatorFacade'));
     }
-
 }

@@ -12,12 +12,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\DiscountPromotion\Communication\DiscountPromotionCommunicationFactory getFactory()
- * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainer getQueryContainer()
- * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacade getFacade()
+ * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface getFacade()
  */
 class DiscountViewBlockController extends AbstractController
 {
-
     const URL_PARAM_ID_DISCOUNT = 'id-discount';
 
     /**
@@ -36,5 +35,4 @@ class DiscountViewBlockController extends AbstractController
             'discountPromotion' => $discountPromotionTransfer,
         ];
     }
-
 }

@@ -8,17 +8,18 @@ namespace Spryker\Zed\Discount\Business\Persistence;
 
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\Exception\PersistenceException;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface;
+use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class DiscountPersist implements DiscountPersistInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -32,25 +33,39 @@ class DiscountPersist implements DiscountPersistInterface
     protected $discountQueryContainer;
 
     /**
+     * @var \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationWriterInterface
+     */
+    protected $discountStoreRelationWriter;
+
+    /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface[]
      */
-    protected $discountPostCreatePlugins = [];
+    protected $discountPostCreatePlugins;
 
     /**
      * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface[]
      */
-    protected $discountPostUpdatePlugins = [];
+    protected $discountPostUpdatePlugins;
 
     /**
      * @param \Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface $voucherEngine
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
+     * @param \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationWriterInterface $discountStoreRelationWriter
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface[] $discountPostCreatePlugins
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface[] $discountPostUpdatePlugins
      */
     public function __construct(
         VoucherEngineInterface $voucherEngine,
-        DiscountQueryContainerInterface $discountQueryContainer
+        DiscountQueryContainerInterface $discountQueryContainer,
+        DiscountStoreRelationWriterInterface $discountStoreRelationWriter,
+        array $discountPostCreatePlugins,
+        array $discountPostUpdatePlugins
     ) {
         $this->voucherEngine = $voucherEngine;
         $this->discountQueryContainer = $discountQueryContainer;
+        $this->discountStoreRelationWriter = $discountStoreRelationWriter;
+        $this->discountPostCreatePlugins = $discountPostCreatePlugins;
+        $this->discountPostUpdatePlugins = $discountPostUpdatePlugins;
     }
 
     /**
@@ -80,11 +95,19 @@ class DiscountPersist implements DiscountPersistInterface
         SpyDiscount $discountEntity,
         DiscountConfiguratorTransfer $discountConfiguratorTransfer
     ) {
+        $discountConfiguratorTransfer->getDiscountGeneral()->requireStoreRelation();
+
         if ($discountConfiguratorTransfer->getDiscountGeneral()->getDiscountType() === DiscountConstants::TYPE_VOUCHER) {
             $this->saveVoucherPool($discountEntity);
         }
 
         $discountEntity->save();
+
+        $this->saveDiscountMoneyValues($discountEntity, $discountConfiguratorTransfer);
+        $this->saveDiscountStoreRelation(
+            $discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation(),
+            $discountEntity->getIdDiscount()
+        );
 
         $discountConfiguratorTransfer->getDiscountGeneral()->setIdDiscount($discountEntity->getIdDiscount());
 
@@ -141,6 +164,9 @@ class DiscountPersist implements DiscountPersistInterface
         $this->updateVoucherPool($discountConfiguratorTransfer, $discountEntity);
 
         $affectedRows = $discountEntity->save();
+
+        $this->saveDiscountMoneyValues($discountEntity, $discountConfiguratorTransfer);
+        $this->updateDiscountStoreRelation($discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation());
 
         $this->executePostUpdatePlugins($discountConfiguratorTransfer);
 
@@ -350,23 +376,49 @@ class DiscountPersist implements DiscountPersistInterface
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface[] $discountPostCreatePlugins
+     * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
      * @return void
      */
-    public function setDiscountPostCreatePlugins(array $discountPostCreatePlugins)
+    protected function saveDiscountMoneyValues(SpyDiscount $discountEntity, DiscountConfiguratorTransfer $discountConfiguratorTransfer)
     {
-        $this->discountPostCreatePlugins = $discountPostCreatePlugins;
+        $discountCalculatorTransfer = $discountConfiguratorTransfer->getDiscountCalculator();
+        if ($discountCalculatorTransfer->getCalculatorPlugin() !== DiscountDependencyProvider::PLUGIN_CALCULATOR_FIXED) {
+            return;
+        }
+
+        foreach ($discountCalculatorTransfer->getMoneyValueCollection() as $moneyValueTransfer) {
+            $discountAmountEntity = $this->discountQueryContainer
+                ->queryDiscountAmountById($moneyValueTransfer->getIdEntity())
+                ->findOneOrCreate();
+
+            $discountAmountEntity->fromArray($moneyValueTransfer->modifiedToArray());
+            $discountAmountEntity->setFkDiscount($discountEntity->getIdDiscount());
+            $discountAmountEntity->save();
+        }
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface[] $discountPostUpdatePlugins
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     * @param int $idDiscount
      *
      * @return void
      */
-    public function setDiscountPostUpdatePlugins(array $discountPostUpdatePlugins)
+    protected function saveDiscountStoreRelation(StoreRelationTransfer $storeRelationTransfer, $idDiscount)
     {
-        $this->discountPostUpdatePlugins = $discountPostUpdatePlugins;
+        $storeRelationTransfer->setIdEntity($idDiscount);
+
+        $this->discountStoreRelationWriter->update($storeRelationTransfer);
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     *
+     * @return void
+     */
+    protected function updateDiscountStoreRelation(StoreRelationTransfer $storeRelationTransfer)
+    {
+        $this->discountStoreRelationWriter->update($storeRelationTransfer);
+    }
 }

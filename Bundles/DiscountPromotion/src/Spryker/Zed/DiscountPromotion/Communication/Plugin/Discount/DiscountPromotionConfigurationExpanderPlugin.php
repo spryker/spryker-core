@@ -12,12 +12,11 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginIn
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacade getFacade()
+ * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface getFacade()
  * @method \Spryker\Zed\DiscountPromotion\Communication\DiscountPromotionCommunicationFactory getFactory()
  */
 class DiscountPromotionConfigurationExpanderPlugin extends AbstractPlugin implements DiscountConfigurationExpanderPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -31,5 +30,4 @@ class DiscountPromotionConfigurationExpanderPlugin extends AbstractPlugin implem
     {
         return $this->getFacade()->expandDiscountConfigurationWithPromotion($discountConfiguratorTransfer);
     }
-
 }

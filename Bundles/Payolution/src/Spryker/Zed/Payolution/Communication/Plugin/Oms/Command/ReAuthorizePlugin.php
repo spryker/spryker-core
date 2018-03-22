@@ -13,12 +13,11 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 
 /**
- * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
+ * @method \Spryker\Zed\Payolution\Business\PayolutionFacadeInterface getFacade()
  * @method \Spryker\Zed\Payolution\Communication\PayolutionCommunicationFactory getFactory()
  */
 class ReAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
 {
-
     /**
      * @param array $orderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
@@ -63,5 +62,4 @@ class ReAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterfac
 
         return $paymentEntity;
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\ProductImageCartConnector\Dependency\Facade\ProductImageCartConn
 
 class ProductImageCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
 
     /**
@@ -29,5 +28,4 @@ class ProductImageCartConnectorDependencyProvider extends AbstractBundleDependen
 
         return $container;
     }
-
 }

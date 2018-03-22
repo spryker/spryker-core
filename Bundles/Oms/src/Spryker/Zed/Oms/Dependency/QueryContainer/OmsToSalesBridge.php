@@ -9,7 +9,6 @@ namespace Spryker\Zed\Oms\Dependency\QueryContainer;
 
 class OmsToSalesBridge implements OmsToSalesInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
@@ -48,5 +47,4 @@ class OmsToSalesBridge implements OmsToSalesInterface
     {
         return $this->salesQueryContainer->querySalesOrderItemsByIdSalesOrder($idOrder);
     }
-
 }

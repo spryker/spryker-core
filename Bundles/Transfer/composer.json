@@ -4,7 +4,8 @@
   "license": "proprietary",
   "require": {
     "fzaninotto/faker": "^1.6",
-    "spryker/kernel": "^3.10.0",
+    "php": ">=7.1",
+    "spryker/kernel": "^3.17.0",
     "spryker/log": "^3.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",
@@ -17,23 +18,16 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "Transfer\\Module\\": "tests/_support/Module/"
+      "SprykerTest\\Shared\\Transfer\\Helper\\": "tests/SprykerTest/Shared/Transfer/_support/Helper/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ],
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

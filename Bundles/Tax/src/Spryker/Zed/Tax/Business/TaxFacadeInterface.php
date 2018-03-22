@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\TaxSetTransfer;
  */
 interface TaxFacadeInterface
 {
-
     /**
      * Specification:
      *  - Returns all persisted tax rates
@@ -331,5 +330,4 @@ interface TaxFacadeInterface
      * @return void
      */
     public function calculateTaxRateAverageAggregation(CalculableObjectTransfer $calculableObjectTransfer);
-
 }

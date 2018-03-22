@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -44,6 +43,20 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
     public function queryProductAbstractLocalizedAttributes($idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     */
+    public function queryAllProductAbstractLocalizedAttributes();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
+     */
+    public function queryAllProductLocalizedAttributes();
 
     /**
      * @api
@@ -118,4 +131,22 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      */
     public function queryProductAbstractWithName($idLocale);
 
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery
+     */
+    public function queryProductAbstractStoreWithStoresByFkProductAbstract($idProductAbstract);
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param int[] $idStores
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery
+     */
+    public function queryProductAbstractStoresByFkProductAbstractAndFkStores($idProductAbstract, $idStores);
 }

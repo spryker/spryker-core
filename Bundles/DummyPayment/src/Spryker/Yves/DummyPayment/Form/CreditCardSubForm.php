@@ -8,14 +8,15 @@
 namespace Spryker\Yves\DummyPayment\Form;
 
 use Generated\Shared\Transfer\DummyPaymentTransfer;
-use Spryker\Zed\DummyPayment\DummyPaymentConfig;
+use Spryker\Shared\DummyPayment\DummyPaymentConfig;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CreditCardSubForm extends AbstractSubForm
 {
-
     const PAYMENT_METHOD = 'credit_card';
 
     const FIELD_CARD_TYPE = 'card_type';
@@ -101,7 +102,7 @@ class CreditCardSubForm extends AbstractSubForm
     {
         $builder->add(
             self::FIELD_CARD_TYPE,
-            'choice',
+            ChoiceType::class,
             [
                 'choices' => ['Visa' => 'Visa', 'Master Card' => 'Master Card'],
                 'label' => false,
@@ -127,7 +128,7 @@ class CreditCardSubForm extends AbstractSubForm
     {
         $builder->add(
             self::FIELD_CARD_NUMBER,
-            'text',
+            TextType::class,
             [
                 'label' => false,
                 'required' => true,
@@ -149,7 +150,7 @@ class CreditCardSubForm extends AbstractSubForm
     {
         $builder->add(
             self::FIELD_NAME_ON_CARD,
-            'text',
+            TextType::class,
             [
                 'label' => false,
                 'required' => true,
@@ -172,10 +173,11 @@ class CreditCardSubForm extends AbstractSubForm
     {
         $builder->add(
             self::FIELD_CARD_EXPIRES_MONTH,
-            'choice',
+            ChoiceType::class,
             [
                 'label' => false,
-                'choices' => $options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_EXPIRES_CHOICES_MONTH],
+                'choices' => array_flip($options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_EXPIRES_CHOICES_MONTH]),
+                'choices_as_values' => true,
                 'required' => true,
                 'constraints' => [
                     $this->createNotBlankConstraint(),
@@ -196,10 +198,11 @@ class CreditCardSubForm extends AbstractSubForm
     {
         $builder->add(
             self::FIELD_CARD_EXPIRES_YEAR,
-            'choice',
+            ChoiceType::class,
             [
                 'label' => false,
-                'choices' => $options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_EXPIRES_CHOICES_YEAR],
+                'choices' => array_flip($options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_EXPIRES_CHOICES_YEAR]),
+                'choices_as_values' => true,
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Expires year',
@@ -222,7 +225,7 @@ class CreditCardSubForm extends AbstractSubForm
     {
         $builder->add(
             self::FIELD_CARD_SECURITY_CODE,
-            'text',
+            TextType::class,
             [
                 'label' => false,
                 'required' => true,
@@ -234,5 +237,4 @@ class CreditCardSubForm extends AbstractSubForm
 
         return $this;
     }
-
 }

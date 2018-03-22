@@ -17,11 +17,10 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Acl\AclConfig getConfig()
- * @method \Spryker\Zed\Acl\Persistence\AclQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
  */
 class AclBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Acl\Business\Model\GroupInterface
      */
@@ -86,5 +85,4 @@ class AclBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(AclDependencyProvider::FACADE_USER);
     }
-
 }

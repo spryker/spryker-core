@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 class ListPageController extends AbstractController
 {
-
     const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
 
     /**
@@ -39,5 +38,4 @@ class ListPageController extends AbstractController
 
         return $this->jsonResponse($table->fetchData());
     }
-
 }

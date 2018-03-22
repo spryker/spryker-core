@@ -19,7 +19,6 @@ use Spryker\Zed\ProductGroupCollector\ProductGroupCollectorDependencyProvider;
  */
 class ProductGroupCollectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductGroupCollector\Business\Collector\Storage\ProductGroupCollector
      */
@@ -89,5 +88,4 @@ class ProductGroupCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductGroupCollectorDependencyProvider::FACADE_COLLECTOR);
     }
-
 }

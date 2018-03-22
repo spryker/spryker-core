@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\TabsViewTransfer;
 
 abstract class AbstractTabs implements TabsInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\TabsViewTransfer
      */
@@ -51,5 +50,4 @@ abstract class AbstractTabs implements TabsInterface
     {
         return new TabsViewTransfer();
     }
-
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Availability;
 
+use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -14,7 +15,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class AvailabilityClient extends AbstractClient implements AvailabilityClientInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -50,4 +50,19 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
             ->findProductAvailability($idProductAbstract);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     */
+    public function findProductConcreteAvailability(ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer)
+    {
+        return $this->getFactory()
+            ->createAvailabilityStub()
+            ->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
+    }
 }

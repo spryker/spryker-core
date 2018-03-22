@@ -9,12 +9,10 @@ namespace Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer;
 
 interface CmsBlockProductConnectorToProductAbstractQueryContainerInterface
 {
-
     /**
      * @param int $idLocale
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstractWithName($idLocale);
-
 }

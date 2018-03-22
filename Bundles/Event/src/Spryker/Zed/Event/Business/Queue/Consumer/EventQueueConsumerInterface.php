@@ -9,12 +9,10 @@ namespace Spryker\Zed\Event\Business\Queue\Consumer;
 
 interface EventQueueConsumerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
     public function processMessages(array $queueMessageTransfers);
-
 }

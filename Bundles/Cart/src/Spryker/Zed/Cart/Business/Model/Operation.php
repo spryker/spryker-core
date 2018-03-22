@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Cart\Business\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -18,9 +19,12 @@ use Spryker\Zed\Cart\Dependency\TerminationAwareCartPreCheckPluginInterface;
 
 class Operation implements OperationInterface
 {
-
     const ADD_ITEMS_SUCCESS = 'cart.add.items.success';
     const REMOVE_ITEMS_SUCCESS = 'cart.remove.items.success';
+
+    protected const TERMINATION_EVENT_NAME_ADD = 'add';
+    protected const TERMINATION_EVENT_NAME_REMOVE = 'remove';
+    protected const TERMINATION_EVENT_NAME_RELOAD = 'reload';
 
     /**
      * @var \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
@@ -53,12 +57,23 @@ class Operation implements OperationInterface
     protected $postSavePlugins = [];
 
     /**
+     * @var \Spryker\Zed\Cart\Dependency\PreReloadItemsPluginInterface[]
+     */
+    protected $preReloadPlugins = [];
+
+    /**
+     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[]
+     */
+    protected $terminationPlugins = [];
+
+    /**
      * @param \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface $cartStorageProvider
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface $calculationFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
      * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[] $itemExpanderPlugins
      * @param \Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface[] $preCheckPlugins
      * @param \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[] $postSavePlugins
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[] $terminationPlugins
      */
     public function __construct(
         StorageProviderInterface $cartStorageProvider,
@@ -66,7 +81,8 @@ class Operation implements OperationInterface
         CartToMessengerInterface $messengerFacade,
         array $itemExpanderPlugins,
         array $preCheckPlugins,
-        array $postSavePlugins
+        array $postSavePlugins,
+        array $terminationPlugins
     ) {
         $this->cartStorageProvider = $cartStorageProvider;
         $this->calculationFacade = $calculationFacade;
@@ -74,6 +90,7 @@ class Operation implements OperationInterface
         $this->itemExpanderPlugins = $itemExpanderPlugins;
         $this->preCheckPlugins = $preCheckPlugins;
         $this->postSavePlugins = $postSavePlugins;
+        $this->terminationPlugins = $terminationPlugins;
     }
 
     /**
@@ -83,6 +100,8 @@ class Operation implements OperationInterface
      */
     public function add(CartChangeTransfer $cartChangeTransfer)
     {
+        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->toArray(), true);
+
         if (!$this->preCheckCart($cartChangeTransfer)) {
             return $cartChangeTransfer->getQuote();
         }
@@ -90,9 +109,15 @@ class Operation implements OperationInterface
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
         $quoteTransfer = $this->cartStorageProvider->addItems($expandedCartChangeTransfer);
         $quoteTransfer = $this->executePostSavePlugins($quoteTransfer);
+        $quoteTransfer = $this->recalculate($quoteTransfer);
+
+        if ($this->isTerminated(static::TERMINATION_EVENT_NAME_ADD, $cartChangeTransfer, $quoteTransfer)) {
+            return $originalQuoteTransfer;
+        }
+
         $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(self::ADD_ITEMS_SUCCESS));
 
-        return $this->recalculate($quoteTransfer);
+        return $quoteTransfer;
     }
 
     /**
@@ -102,12 +127,72 @@ class Operation implements OperationInterface
      */
     public function remove(CartChangeTransfer $cartChangeTransfer)
     {
+        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->toArray(), true);
+
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
         $quoteTransfer = $this->cartStorageProvider->removeItems($expandedCartChangeTransfer);
         $quoteTransfer = $this->executePostSavePlugins($quoteTransfer);
+        $quoteTransfer = $this->recalculate($quoteTransfer);
+
+        if ($this->isTerminated(static::TERMINATION_EVENT_NAME_REMOVE, $cartChangeTransfer, $quoteTransfer)) {
+            return $originalQuoteTransfer;
+        }
+
         $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(self::REMOVE_ITEMS_SUCCESS));
 
-        return $this->recalculate($quoteTransfer);
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function reloadItems(QuoteTransfer $quoteTransfer)
+    {
+        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($quoteTransfer->toArray(), true);
+
+        $quoteTransfer = $this->executePreReloadPlugins($quoteTransfer);
+
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->setItems($quoteTransfer->getItems());
+
+        $quoteTransfer->setItems(new ArrayObject());
+
+        $cartChangeTransfer->setQuote($quoteTransfer);
+
+        if (!$this->preCheckCart($cartChangeTransfer)) {
+            return $originalQuoteTransfer;
+        }
+
+        $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
+        $quoteTransfer = $this->cartStorageProvider->addItems($expandedCartChangeTransfer);
+        $quoteTransfer = $this->executePostSavePlugins($quoteTransfer);
+        $quoteTransfer = $this->recalculate($quoteTransfer);
+
+        if ($this->isTerminated(static::TERMINATION_EVENT_NAME_RELOAD, $cartChangeTransfer, $quoteTransfer)) {
+            return $originalQuoteTransfer;
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param string $terminationEventName
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $calculatedQuoteTransfer
+     *
+     * @return bool
+     */
+    protected function isTerminated(string $terminationEventName, CartChangeTransfer $cartChangeTransfer, QuoteTransfer $calculatedQuoteTransfer)
+    {
+        foreach ($this->terminationPlugins as $terminationPlugin) {
+            if ($terminationPlugin->isTerminated($terminationEventName, $cartChangeTransfer, $calculatedQuoteTransfer)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -177,6 +262,20 @@ class Operation implements OperationInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executePreReloadPlugins(QuoteTransfer $quoteTransfer)
+    {
+        foreach ($this->preReloadPlugins as $reloadPlugin) {
+            $quoteTransfer = $reloadPlugin->preReloadItems($quoteTransfer);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
      * @param string $message
      * @param array $parameters
      *
@@ -201,4 +300,13 @@ class Operation implements OperationInterface
         return $this->calculationFacade->recalculate($quoteTransfer);
     }
 
+    /**
+     * @param array $preReloadPlugins
+     *
+     * @return void
+     */
+    public function setPreReloadLoadPlugins(array $preReloadPlugins)
+    {
+        $this->preReloadPlugins = $preReloadPlugins;
+    }
 }

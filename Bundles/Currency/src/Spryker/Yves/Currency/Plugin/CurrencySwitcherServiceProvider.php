@@ -15,10 +15,10 @@ use Twig_SimpleFunction;
 
 /**
  * @method \Spryker\Yves\Currency\CurrencyFactory getFactory()
+ * @method \Spryker\Client\Currency\CurrencyClientInterface getClient()
  */
 class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     protected static $functionName = 'spyCurrencySwitch';
 
     /**
@@ -36,7 +36,6 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
         $app['twig'] = $app->share(
             $app->extend('twig', function (Twig_Environment $twig) {
                 $twig->addFunction(
-                    static::$functionName,
                     $this->getCurrencySwitcher($twig)
                 );
 
@@ -86,12 +85,11 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
      */
     protected function getCurrencies()
     {
-        $currencyBuilder = $this->getFactory()->createCurrencyBuilder();
         $availableCurrencyCodes = $this->getFactory()->getStore()->getCurrencyIsoCodes();
 
         $currencies = [];
-        foreach ($availableCurrencyCodes as $currency) {
-            $currencies[$currency] = $currencyBuilder->fromIsoCode($currency);
+        foreach ($availableCurrencyCodes as $currencyIsoCode) {
+            $currencies[$currencyIsoCode] = $this->getClient()->fromIsoCode($currencyIsoCode);
         }
 
         return $currencies;
@@ -102,12 +100,11 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
      */
     protected function getCurrentCurrency()
     {
-        $currentCurrencyIsoCode = $this->getFactory()->createCurrencyPersistence()->getCurrentCurrencyIsoCode();
+        $currentCurrencyIsoCode = $this->getClient()->getCurrent()->getCode();
 
         if (!$currentCurrencyIsoCode) {
             return $this->getFactory()->getStore()->getCurrencyIsoCode();
         }
         return $currentCurrencyIsoCode;
     }
-
 }

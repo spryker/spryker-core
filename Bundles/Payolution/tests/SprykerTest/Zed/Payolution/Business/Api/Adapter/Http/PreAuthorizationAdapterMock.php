@@ -9,14 +9,12 @@ namespace SprykerTest\Zed\Payolution\Business\Api\Adapter\Http;
 
 class PreAuthorizationAdapterMock extends AbstractAdapterMock
 {
-
     /**
      * @return array
      */
     public function getSuccessResponse()
     {
-        return
-            'PROCESSING_RISK_SCORE=0' . '&' .
+        return 'PROCESSING_RISK_SCORE=0' . '&' .
             'P3_VALIDATION=ACK' . '&' .
             'NAME_GIVEN=John' . '&' .
             'IDENTIFICATION_SHOPPERID=158' . '&' .
@@ -71,8 +69,7 @@ class PreAuthorizationAdapterMock extends AbstractAdapterMock
      */
     public function getFailureResponse()
     {
-        return
-            'processing_risk_score=0' . '&' .
+        return 'processing_risk_score=0' . '&' .
             'p3_validation=ACK' . '&' .
             'name_given=Jane' . '&' .
             'identification_shopperid=125' . '&' .
@@ -123,5 +120,4 @@ class PreAuthorizationAdapterMock extends AbstractAdapterMock
             'address_zip=10623' . '&' .
             'name_title=Mr';
     }
-
 }

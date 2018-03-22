@@ -12,7 +12,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueDiscountNameValidator extends ConstraintValidator
 {
-
     /**
      * Checks if the passed value is valid.
      *
@@ -34,7 +33,8 @@ class UniqueDiscountNameValidator extends ConstraintValidator
         }
 
         if (!$this->isUniqueDiscountName($value, $constraint)) {
-            $this->buildViolation('Discount with this name is already used.')
+            $this->context
+                ->buildViolation('Discount with this name is already used.')
                 ->addViolation();
         }
     }
@@ -84,5 +84,4 @@ class UniqueDiscountNameValidator extends ConstraintValidator
 
         return false;
     }
-
 }

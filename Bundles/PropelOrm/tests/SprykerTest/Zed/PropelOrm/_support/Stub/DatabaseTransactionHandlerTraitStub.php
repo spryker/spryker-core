@@ -12,7 +12,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class DatabaseTransactionHandlerTraitStub
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -37,5 +36,4 @@ class DatabaseTransactionHandlerTraitStub
     {
         $this->handleDatabaseTransaction($callback, $this->connection);
     }
-
 }

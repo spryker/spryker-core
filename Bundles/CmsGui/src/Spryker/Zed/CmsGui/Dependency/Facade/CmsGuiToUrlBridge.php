@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 class CmsGuiToUrlBridge implements CmsGuiToUrlInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Business\UrlFacadeInterface
      */
@@ -25,11 +24,11 @@ class CmsGuiToUrlBridge implements CmsGuiToUrlInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer Deprecated: String format is accepted for BC reasons only.
      *
      * @return bool
      */
-    public function hasUrl(UrlTransfer $urlTransfer)
+    public function hasUrl($urlTransfer)
     {
         return $this->urlFacade->hasUrl($urlTransfer);
     }
@@ -43,5 +42,4 @@ class CmsGuiToUrlBridge implements CmsGuiToUrlInterface
     {
         return $this->urlFacade->findUrl($urlTransfer);
     }
-
 }

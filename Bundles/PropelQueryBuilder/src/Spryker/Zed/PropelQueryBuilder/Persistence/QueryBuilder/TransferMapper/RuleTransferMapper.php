@@ -13,7 +13,6 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\Exception\QueryBuilderException;
 
 class RuleTransferMapper implements RuleTransferMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\PropelQueryBuilder\Dependency\Service\PropelQueryBuilderToUtilEncodingInterface
      */
@@ -52,5 +51,4 @@ class RuleTransferMapper implements RuleTransferMapperInterface
 
         return $querySetTransfer;
     }
-
 }

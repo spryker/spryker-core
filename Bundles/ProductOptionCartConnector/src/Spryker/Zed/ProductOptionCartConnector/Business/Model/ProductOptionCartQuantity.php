@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class ProductOptionCartQuantity implements ProductOptionCartQuantityInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -27,5 +26,4 @@ class ProductOptionCartQuantity implements ProductOptionCartQuantityInterface
 
         return $quoteTransfer;
     }
-
 }

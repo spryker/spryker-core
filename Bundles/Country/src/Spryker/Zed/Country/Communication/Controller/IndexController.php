@@ -9,15 +9,16 @@ namespace Spryker\Zed\Country\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
+/**
+ * @method \Spryker\Zed\Country\Communication\CountryCommunicationFactory getFactory()
+ */
 class IndexController extends AbstractController
 {
-
     /**
      * @return array
      */
     public function indexAction()
     {
-        /** @var \Spryker\Zed\Country\Communication\Table\CountryTable $table */
         $table = $this->getFactory()->createCountryTable();
 
         return $this->viewResponse([
@@ -36,5 +37,4 @@ class IndexController extends AbstractController
             $table->fetchData()
         );
     }
-
 }

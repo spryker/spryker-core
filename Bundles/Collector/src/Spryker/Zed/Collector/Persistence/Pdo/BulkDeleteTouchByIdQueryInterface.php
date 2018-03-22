@@ -9,7 +9,6 @@ namespace Spryker\Zed\Collector\Persistence\Pdo;
 
 interface BulkDeleteTouchByIdQueryInterface
 {
-
     /**
      * @param string $tableName
      * @param string $idColumnName
@@ -28,5 +27,4 @@ interface BulkDeleteTouchByIdQueryInterface
      * @return void
      */
     public function flushQueries();
-
 }

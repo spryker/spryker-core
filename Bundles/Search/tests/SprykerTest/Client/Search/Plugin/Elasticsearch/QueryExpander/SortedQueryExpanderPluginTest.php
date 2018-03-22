@@ -28,7 +28,6 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SortedQueryExpander
  */
 class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 {
-
     /**
      * @dataProvider sortedQueryExpanderDataProvider
      *
@@ -98,7 +97,7 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
             );
 
         $requestParameters = [
-            SortConfigBuilder::DEFAULT_SORT_PARAM_KEY => 'foo',
+            SortConfigBuilder::DEFAULT_SORT_PARAM_KEY => 'foo-param',
         ];
 
         return [$searchConfig, $expectedQuery, $requestParameters];
@@ -131,11 +130,10 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
             ->addSort(
                 (new SortConfigTransfer())
                     ->setName('foo')
-                    ->setParameterName('foo')
+                    ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::STRING_SORT)
             );
 
         return $searchConfig;
     }
-
 }

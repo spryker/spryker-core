@@ -3,6 +3,7 @@
   "description": "ProductRelation module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/application": "^3.0.0",
     "spryker/category": "^3.0.0 || ^4.0.0",
     "spryker/gui": "^3.0.0",
@@ -11,15 +12,15 @@
     "spryker/locale": "^3.0.0",
     "spryker/log": "^3.0.0",
     "spryker/money": "^2.0.0",
-    "spryker/price": "^4.0.0",
-    "spryker/product": "^5.0.0",
+    "spryker/price-product": "^1.0.0",
+    "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/product-category": "^4.0.0",
     "spryker/product-image": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/propel-query-builder": "^0.1.1 || ^0.2.0 || ^0.3.0",
     "spryker/storage": "^3.0.0",
     "spryker/symfony": "^3.0.0",
-    "spryker/touch": "^3.0.0",
+    "spryker/touch": "^3.0.0 || ^4.0.0",
     "spryker/url": "^3.0.0",
     "spryker/util-encoding": "^2.0.0",
     "spryker/util-text": "^1.0.0"
@@ -38,15 +39,13 @@
     "spryker/twig": "Required because of the product relation component."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/",
-      "Acceptance": "tests/"
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

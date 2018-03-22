@@ -9,7 +9,6 @@ namespace Spryker\Zed\CustomerGroup\Dependency\QueryContainer;
 
 class CustomerGroupToCustomerQueryContainerBridge implements CustomerGroupToCustomerQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
      */
@@ -30,5 +29,4 @@ class CustomerGroupToCustomerQueryContainerBridge implements CustomerGroupToCust
     {
         return $this->customerQueryContainer->queryCustomers();
     }
-
 }

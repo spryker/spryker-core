@@ -10,11 +10,10 @@ namespace Spryker\Zed\Setup\Business\Model;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * @deprecated Use \Spryker\Zed\Setup\Business\Model\GeneratedDirectory instead
+ * @deprecated Use Spryker\Zed\Setup\Business\Model\GeneratedDirectory instead.
  */
 class DirectoryRemover implements DirectoryRemoverInterface
 {
-
     /**
      * @var string
      */
@@ -38,5 +37,4 @@ class DirectoryRemover implements DirectoryRemoverInterface
             $filesystem->remove($this->directoryToRemove);
         }
     }
-
 }

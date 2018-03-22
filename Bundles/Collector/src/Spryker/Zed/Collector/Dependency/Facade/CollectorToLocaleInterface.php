@@ -9,7 +9,6 @@ namespace Spryker\Zed\Collector\Dependency\Facade;
 
 interface CollectorToLocaleInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
@@ -23,5 +22,4 @@ interface CollectorToLocaleInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale($localeName);
-
 }

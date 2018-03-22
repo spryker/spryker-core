@@ -11,7 +11,6 @@ use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 
 class Entity implements ActiveRecordInterface
 {
-
     /**
      * @return array
      */
@@ -22,5 +21,4 @@ class Entity implements ActiveRecordInterface
             'last_name' => 'lastName',
         ];
     }
-
 }

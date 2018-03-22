@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface;
 use SprykerTest\Zed\ProductOption\Business\MockProvider;
 
 /**
@@ -28,7 +28,6 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
  */
 class ProductOptionOrderSaverTest extends MockProvider
 {
-
     /**
      * @return void
      */
@@ -76,11 +75,11 @@ class ProductOptionOrderSaverTest extends MockProvider
     }
 
     /**
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface|null $glossaryFacadeMock
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface|null $glossaryFacadeMock
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver
      */
-    protected function createProductOptionOrderSaver(ProductOptionToGlossaryInterface $glossaryFacadeMock = null)
+    protected function createProductOptionOrderSaver(ProductOptionToGlossaryFacadeInterface $glossaryFacadeMock = null)
     {
         if (!$glossaryFacadeMock) {
             $glossaryFacadeMock = $this->createGlossaryFacadeMock();
@@ -101,5 +100,4 @@ class ProductOptionOrderSaverTest extends MockProvider
             ->setMethods(['save'])
             ->getMock();
     }
-
 }

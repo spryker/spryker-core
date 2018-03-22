@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Calculation\Business;
 
 use Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator;
+use Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator\DiscountAmountAggregatorForGrossAmount;
 use Spryker\Zed\Calculation\Business\Model\Aggregator\ItemDiscountAmountFullAggregator;
 use Spryker\Zed\Calculation\Business\Model\Aggregator\ItemProductOptionPriceAggregator;
 use Spryker\Zed\Calculation\Business\Model\Aggregator\ItemSubtotalAggregator;
@@ -22,6 +23,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\GrossPrice\SumGrossPriceCa
 use Spryker\Zed\Calculation\Business\Model\Calculator\InitialGrandTotalCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\NetPrice\PriceNetCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\NetPrice\SumNetPriceCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\NetTotalCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\OrderTaxTotalCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\PriceCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\RefundableAmountCalculator;
@@ -41,7 +43,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CalculationBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Calculation\Business\Model\Executor\QuoteCalculatorExecutorInterface
      */
@@ -132,9 +133,17 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface|\Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface|\Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator\DiscountAmountAggregatorForGrossAmount
      */
     public function createDiscountAmountAggregator()
+    {
+        return new DiscountAmountAggregatorForGrossAmount();
+    }
+
+    /**
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface|\Spryker\Zed\Calculation\Business\Model\Aggregator\DiscountAmountAggregator
+     */
+    public function createDiscountAmountAggregatorForGenericAmount()
     {
         return new DiscountAmountAggregator();
     }
@@ -268,6 +277,22 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface
+     */
+    public function createRemoveAllCalculatedDiscountsCalculator()
+    {
+        return new RemoveAllCalculatedDiscountsCalculator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\NetTotalCalculator|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface
+     */
+    public function createNetTotalCalculator()
+    {
+        return new NetTotalCalculator();
+    }
+
+    /**
      * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
      */
     protected function getProvidedQuoteCalculatorPluginStack()
@@ -284,19 +309,10 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface
-     */
-    public function createRemoveAllCalculatedDiscountsCalculator()
-    {
-        return new RemoveAllCalculatedDiscountsCalculator();
-    }
-
-    /**
      * @return \Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextInterface
      */
     public function getUtilTextService()
     {
         return $this->getProvidedDependency(CalculationDependencyProvider::SERVICE_UTIL_TEXT);
     }
-
 }

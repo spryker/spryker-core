@@ -13,7 +13,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class CategoryTreeBuilder
 {
-
     const SUBTREE_DEPTH_KEY = 'depth';
     const SUBTREE_DEPTH = 3;
 
@@ -90,5 +89,4 @@ class CategoryTreeBuilder
 
         return $parentCategory;
     }
-
 }

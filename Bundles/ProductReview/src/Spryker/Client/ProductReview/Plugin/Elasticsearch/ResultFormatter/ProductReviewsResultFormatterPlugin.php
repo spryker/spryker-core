@@ -14,7 +14,6 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
 
 class ProductReviewsResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-
     const NAME = 'productReviews';
 
     /**
@@ -57,5 +56,4 @@ class ProductReviewsResultFormatterPlugin extends AbstractElasticsearchResultFor
 
         return $productReviewTransfer;
     }
-
 }

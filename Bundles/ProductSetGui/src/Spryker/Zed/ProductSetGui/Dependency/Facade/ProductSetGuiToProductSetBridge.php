@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductSetTransfer;
 
 class ProductSetGuiToProductSetBridge implements ProductSetGuiToProductSetInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSet\Business\ProductSetFacadeInterface
      */
@@ -74,5 +73,4 @@ class ProductSetGuiToProductSetBridge implements ProductSetGuiToProductSetInterf
     {
         $this->productSetFacade->reorderProductSets($productSetTransfers);
     }
-
 }

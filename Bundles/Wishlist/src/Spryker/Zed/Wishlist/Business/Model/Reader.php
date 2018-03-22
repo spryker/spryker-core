@@ -25,7 +25,6 @@ use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
 class Reader implements ReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface
      */
@@ -434,5 +433,4 @@ class Reader implements ReaderInterface
 
         return $wishlistCollection;
     }
-
 }

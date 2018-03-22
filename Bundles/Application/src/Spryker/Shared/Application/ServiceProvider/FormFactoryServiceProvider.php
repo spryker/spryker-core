@@ -11,10 +11,11 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Kernel\ContainerGlobals;
+use Symfony\Bridge\Twig\Form\TwigRenderer;
+use Twig\RuntimeLoader\FactoryRuntimeLoader;
 
 class FormFactoryServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -26,6 +27,19 @@ class FormFactoryServiceProvider implements ServiceProviderInterface
         $containerGlobals[ApplicationConstants::FORM_FACTORY] = $containerGlobals->share(function () use ($app) {
             return $app['form.factory'];
         });
+
+        $app['twig'] = $app->share(
+            $app->extend('twig', function (\Twig_Environment $twig) use ($app) {
+                $data = [
+                    TwigRenderer::class => function () use ($app) {
+                        return $app['twig.form.renderer'];
+                    },
+                ];
+                $twig->addRuntimeLoader(new FactoryRuntimeLoader($data));
+
+                return $twig;
+            })
+        );
     }
 
     /**
@@ -36,5 +50,4 @@ class FormFactoryServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
     }
-
 }

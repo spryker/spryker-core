@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsContentWidget\Dependency\Service;
 
 interface CmsContentWidgetToUtilEncodingInterface
 {
-
     /**
      * @param mixed $value
      * @param int|null $options
@@ -18,5 +17,4 @@ interface CmsContentWidgetToUtilEncodingInterface
      * @return string
      */
     public function encodeJson($value, $options = null, $depth = null);
-
 }

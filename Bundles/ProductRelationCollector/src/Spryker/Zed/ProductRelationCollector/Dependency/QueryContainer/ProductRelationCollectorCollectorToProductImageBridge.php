@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelationCollector\Dependency\QueryContainer;
 
 class ProductRelationCollectorCollectorToProductImageBridge implements ProductRelationCollectorToProductImageInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
      */
@@ -32,5 +31,4 @@ class ProductRelationCollectorCollectorToProductImageBridge implements ProductRe
     {
          return $this->productImageQueryContainer->queryImageSetByProductAbstractId($idProductAbstract);
     }
-
 }

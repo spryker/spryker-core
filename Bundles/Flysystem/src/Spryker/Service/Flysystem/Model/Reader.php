@@ -19,7 +19,6 @@ use Throwable;
 
 class Reader implements ReaderInterface
 {
-
     use ReadOperationHandlerTrait;
 
     /**
@@ -225,5 +224,4 @@ class Reader implements ReaderInterface
     {
         return mb_strtolower($type) === mb_strtolower('file');
     }
-
 }

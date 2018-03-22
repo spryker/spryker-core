@@ -15,7 +15,6 @@ use Spryker\Yves\ProductGroup\Twig\ProductGroupTwigExtension;
  */
 class ProductGroupFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Shared\Twig\TwigExtension
      */
@@ -31,5 +30,4 @@ class ProductGroupFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ProductGroupDependencyProvider::PLUGIN_APPLICATION);
     }
-
 }

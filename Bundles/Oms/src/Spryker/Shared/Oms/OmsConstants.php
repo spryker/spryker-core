@@ -9,12 +9,19 @@ namespace Spryker\Shared\Oms;
 
 interface OmsConstants
 {
-
-    const INITIAL_STATUS = 'new';
-
+    /**
+     * Specification:
+     * - Defines paths to OMS schemas
+     *
+     * @api
+     */
     const PROCESS_LOCATION = 'PROCESS_LOCATION';
+
+    /**
+     * Specification:
+     * - Defines which of defined processes will be active
+     *
+     * @api
+     */
     const ACTIVE_PROCESSES = 'ACTIVE_PROCESSES';
-
-    const NAME_CREDIT_MEMO_REFERENCE = 'CreditMemoReference';
-
 }

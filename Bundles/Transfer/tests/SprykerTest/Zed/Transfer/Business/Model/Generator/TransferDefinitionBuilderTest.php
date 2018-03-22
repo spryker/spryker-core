@@ -28,7 +28,6 @@ use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
  */
 class TransferDefinitionBuilderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -53,5 +52,4 @@ class TransferDefinitionBuilderTest extends Unit
         $transferDefinition = $result[0];
         $this->assertInstanceOf(ClassDefinition::class, $transferDefinition);
     }
-
 }

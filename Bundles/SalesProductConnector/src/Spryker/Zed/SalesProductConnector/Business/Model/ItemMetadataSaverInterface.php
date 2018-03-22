@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ItemMetadataSaverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
      */
     public function saveItemsMetadata(QuoteTransfer $quoteTransfer);
-
 }

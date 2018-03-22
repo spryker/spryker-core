@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DataImportConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string
      */
@@ -37,5 +36,4 @@ class DataImportConfig extends AbstractBundleConfig
 
         return implode(DIRECTORY_SEPARATOR, $pathParts) . DIRECTORY_SEPARATOR;
     }
-
 }

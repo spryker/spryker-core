@@ -8,12 +8,12 @@
 namespace Spryker\Zed\Queue\Business\Task;
 
 use Spryker\Client\Queue\QueueClientInterface;
+use Spryker\Shared\Queue\QueueConfig as SharedConfig;
 use Spryker\Zed\Queue\Business\Exception\MissingQueuePluginException;
 use Spryker\Zed\Queue\QueueConfig;
 
 class TaskManager implements TaskManagerInterface
 {
-
     /**
      * @var \Spryker\Client\Queue\QueueClientInterface
      */
@@ -43,10 +43,11 @@ class TaskManager implements TaskManagerInterface
 
     /**
      * @param string $queueName
+     * @param array $options
      *
      * @return void
      */
-    public function run($queueName)
+    public function run($queueName, array $options = [])
     {
         $processorPlugin = $this->getQueueProcessorPlugin($queueName);
         $queueOptions = $this->getQueueReceiverOptions($queueName);
@@ -60,7 +61,7 @@ class TaskManager implements TaskManagerInterface
             return;
         }
 
-        $this->postProcessMessages($processedMessages);
+        $this->postProcessMessages($processedMessages, $options);
     }
 
     /**
@@ -98,22 +99,27 @@ class TaskManager implements TaskManagerInterface
     /**
      * @param string $queueName
      * @param int $chunkSize
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
-    public function receiveMessages($queueName, $chunkSize, array $options = null)
+    public function receiveMessages($queueName, $chunkSize, array $options = [])
     {
         return $this->client->receiveMessages($queueName, $chunkSize, $options);
     }
 
     /**
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueReceiveMessageTransfers
+     * @param array $options
      *
      * @return void
      */
-    protected function postProcessMessages(array $queueReceiveMessageTransfers)
+    protected function postProcessMessages(array $queueReceiveMessageTransfers, array $options = [])
     {
+        if (isset($options[SharedConfig::CONFIG_QUEUE_OPTION_NO_ACK]) && $options[SharedConfig::CONFIG_QUEUE_OPTION_NO_ACK]) {
+            return;
+        }
+
         foreach ($queueReceiveMessageTransfers as $queueReceiveMessageTransfer) {
             if ($queueReceiveMessageTransfer->getAcknowledge()) {
                 $this->client->acknowledge($queueReceiveMessageTransfer);
@@ -128,5 +134,4 @@ class TaskManager implements TaskManagerInterface
             }
         }
     }
-
 }

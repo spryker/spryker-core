@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CmsBlockCategoryConnectorUpdatePlugin extends AbstractPlugin implements CmsBlockUpdatePluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
@@ -28,5 +27,4 @@ class CmsBlockCategoryConnectorUpdatePlugin extends AbstractPlugin implements Cm
         $this->getFacade()
             ->updateCmsBlockCategoryRelations($cmsBlockTransfer);
     }
-
 }

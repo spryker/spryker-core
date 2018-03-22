@@ -14,12 +14,11 @@ use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacade getFacade()
+ * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface getFacade()
  * @method \Spryker\Zed\DiscountPromotion\Communication\DiscountPromotionCommunicationFactory getFactory()
  */
 class CartGroupPromotionItems extends AbstractPlugin implements ItemExpanderPluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -50,5 +49,4 @@ class CartGroupPromotionItems extends AbstractPlugin implements ItemExpanderPlug
     {
         return $itemTransfer->getGroupKey() . '-' . DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY . '-' . $itemTransfer->getIdDiscountPromotion();
     }
-
 }

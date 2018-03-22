@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ */
 abstract class AbstractSubForm extends AbstractType
 {
-
     public static $errorFieldsDisplayed = [];
 
     /**
@@ -28,5 +32,4 @@ abstract class AbstractSubForm extends AbstractType
             'required' => false,
         ]);
     }
-
 }

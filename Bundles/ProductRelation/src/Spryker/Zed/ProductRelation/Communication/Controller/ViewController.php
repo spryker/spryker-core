@@ -18,7 +18,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ViewController extends AbstractController
 {
-
     const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';
 
     /**
@@ -76,5 +75,4 @@ class ViewController extends AbstractController
             $productTable->fetchData()
         );
     }
-
 }

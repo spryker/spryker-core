@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\TaxSetTransfer;
 
 interface TaxWriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\TaxRateTransfer $taxRateTransfer
      *
@@ -94,5 +93,4 @@ interface TaxWriterInterface
      * @return void
      */
     public function deleteTaxSet($id);
-
 }

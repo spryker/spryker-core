@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CategoryRelationReadPluginInterface
 {
-
     /**
      * Specification:
      *  - Returns a descriptive name for the relations
@@ -35,5 +34,4 @@ interface CategoryRelationReadPluginInterface
      * @return string[]
      */
     public function getRelations(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer);
-
 }

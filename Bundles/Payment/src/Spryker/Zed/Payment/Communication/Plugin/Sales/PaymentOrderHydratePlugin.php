@@ -12,11 +12,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 
 /**
- * @method \Spryker\Zed\Payment\Business\PaymentFacade getFacade()
+ * @method \Spryker\Zed\Payment\Business\PaymentFacadeInterface getFacade()
  */
 class PaymentOrderHydratePlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {
-
     /**
      * @api
      *
@@ -28,5 +27,4 @@ class PaymentOrderHydratePlugin extends AbstractPlugin implements HydrateOrderPl
     {
         return $this->getFacade()->hydrateOrderPayments($orderTransfer);
     }
-
 }

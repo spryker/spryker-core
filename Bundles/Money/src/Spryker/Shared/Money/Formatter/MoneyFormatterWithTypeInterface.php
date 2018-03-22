@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 interface MoneyFormatterWithTypeInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
      * @param string $type
@@ -19,5 +18,4 @@ interface MoneyFormatterWithTypeInterface
      * @return string
      */
     public function format(MoneyTransfer $moneyTransfer, $type);
-
 }

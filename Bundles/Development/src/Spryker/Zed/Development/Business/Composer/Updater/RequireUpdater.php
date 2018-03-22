@@ -18,8 +18,9 @@ use Zend\Filter\Word\DashToCamelCase;
 
 class RequireUpdater implements UpdaterInterface
 {
-
     const KEY_REQUIRE = 'require';
+    const KEY_REQUIRE_PHP = 'php';
+    const PHP_MINIMUM = '>=7.1';
     const RELEASE_OPERATOR = '^';
     const EXTERNAL_DEPENDENCIES_BUNDLE_NAME = 'External';
 
@@ -51,6 +52,8 @@ class RequireUpdater implements UpdaterInterface
      */
     public function update(array $composerJson, SplFileInfo $composerJsonFile)
     {
+        $composerJson = $this->requirePhpVersion($composerJson);
+
         $bundleName = $this->getBundleName($composerJson);
         $dependentBundles = $this->getDependentBundles($bundleName);
 
@@ -99,7 +102,7 @@ class RequireUpdater implements UpdaterInterface
             if ($dependency[DependencyTree::META_FOREIGN_BUNDLE] === 'external') {
                 continue;
             }
-            if ($dependency[DependencyTree::META_BUNDLE] === $bundleName) {
+            if ($dependency[DependencyTree::META_MODULE] === $bundleName) {
                 $dependentBundles[] = $dependency[DependencyTree::META_FOREIGN_BUNDLE];
             }
         }
@@ -109,4 +112,19 @@ class RequireUpdater implements UpdaterInterface
         return $dependentBundles;
     }
 
+    /**
+     * @param array $composerJson
+     *
+     * @return array
+     */
+    protected function requirePhpVersion(array $composerJson)
+    {
+        if (isset($composerJson[static::KEY_REQUIRE][static::KEY_REQUIRE_PHP])) {
+            return $composerJson;
+        }
+
+        $composerJson[static::KEY_REQUIRE][static::KEY_REQUIRE_PHP] = static::PHP_MINIMUM;
+
+        return $composerJson;
+    }
 }

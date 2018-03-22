@@ -11,7 +11,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class NotEndsWith extends EndsWith
 {
-
     const TYPE = 'not_ends_with';
 
     /**
@@ -21,5 +20,4 @@ class NotEndsWith extends EndsWith
     {
         return Criteria::NOT_LIKE;
     }
-
 }

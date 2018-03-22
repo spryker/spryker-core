@@ -9,7 +9,6 @@ namespace Spryker\Shared\KeyBuilder;
 
 interface KeyBuilderInterface
 {
-
     /**
      * @param mixed $data
      * @param string $localeName
@@ -17,5 +16,4 @@ interface KeyBuilderInterface
      * @return string
      */
     public function generateKey($data, $localeName);
-
 }

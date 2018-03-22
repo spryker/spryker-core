@@ -22,7 +22,6 @@ use SprykerTest\Zed\CmsBlockGui\PageObject\CmsBlockGuiCreatePage;
  */
 class CmsBlockGuiCreateCest
 {
-
     /**
      * @param \SprykerTest\Zed\CmsBlockGui\CmsBlockGuiCommunicationTester $i
      *
@@ -30,8 +29,8 @@ class CmsBlockGuiCreateCest
      */
     public function breadcrumbIsVisible(CmsBlockGuiCommunicationTester $i)
     {
+        $i->registerCmsBlockStoreRelationFormTypePlugin();
         $i->amOnPage(CmsBlockGuiCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Content Management / Blocks / Create new CMS Block');
     }
-
 }

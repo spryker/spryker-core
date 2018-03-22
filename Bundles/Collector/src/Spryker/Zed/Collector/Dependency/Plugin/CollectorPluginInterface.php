@@ -17,8 +17,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 interface CollectorPluginInterface
 {
-
     /**
+     * Specification:
+     * - Executes collector logic for a specific entity.
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
@@ -42,6 +44,9 @@ interface CollectorPluginInterface
     );
 
     /**
+     * Specification:
+     * - Executes logic after run.
+     *
      * @api
      *
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
@@ -61,5 +66,4 @@ interface CollectorPluginInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
-
 }

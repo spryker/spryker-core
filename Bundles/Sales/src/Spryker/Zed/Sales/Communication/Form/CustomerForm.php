@@ -7,15 +7,21 @@
 
 namespace Spryker\Zed\Sales\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
+ * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
+ */
 class CustomerForm extends AbstractType
 {
-
     const FIELD_FIRST_NAME = 'first_name';
     const FIELD_LAST_NAME = 'last_name';
     const FIELD_SALUTATION = 'salutation';
@@ -26,9 +32,19 @@ class CustomerForm extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'customer';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 
     /**
@@ -77,10 +93,11 @@ class CustomerForm extends AbstractType
     public function addSalutationField(FormBuilderInterface $builder, array $choices)
     {
         $builder
-            ->add(self::FIELD_SALUTATION, 'choice', [
+            ->add(self::FIELD_SALUTATION, ChoiceType::class, [
                 'label' => 'Salutation',
                 'placeholder' => '-select-',
-                'choices' => $choices,
+                'choices' => array_flip($choices),
+                'choices_as_values' => true,
             ]);
 
         return $this;
@@ -93,7 +110,7 @@ class CustomerForm extends AbstractType
      */
     public function addFirstNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FIRST_NAME, 'text', [
+        $builder->add(self::FIELD_FIRST_NAME, TextType::class, [
             'constraints' => [
                 new NotBlank(),
             ],
@@ -109,7 +126,7 @@ class CustomerForm extends AbstractType
      */
     public function addLastNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_LAST_NAME, 'text', [
+        $builder->add(self::FIELD_LAST_NAME, TextType::class, [
             'constraints' => [
                 new NotBlank(),
             ],
@@ -125,7 +142,7 @@ class CustomerForm extends AbstractType
      */
     public function addEmailField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_EMAIL, 'text', [
+        $builder->add(self::FIELD_EMAIL, TextType::class, [
             'constraints' => [
                 new NotBlank(),
             ],
@@ -133,5 +150,4 @@ class CustomerForm extends AbstractType
 
         return $this;
     }
-
 }

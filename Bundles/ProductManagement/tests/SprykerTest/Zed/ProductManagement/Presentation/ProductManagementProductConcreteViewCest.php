@@ -21,7 +21,6 @@ use SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester;
  */
 class ProductManagementProductConcreteViewCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester $i
      *
@@ -29,11 +28,12 @@ class ProductManagementProductConcreteViewCest
      */
     public function breadcrumbIsVisible(ProductManagementPresentationTester $i)
     {
+        $i->registerMoneyCollectionFormTypePlugin();
+
         $i->amOnPage(ProductManagementProductListPage::URL);
         $i->clickDataTableViewButton();
         $i->clickDataTableViewButton(1, 'product-variant-table_wrapper');
 
         $i->seeBreadcrumbNavigation('Dashboard / Products / Products / View Concrete Product');
     }
-
 }

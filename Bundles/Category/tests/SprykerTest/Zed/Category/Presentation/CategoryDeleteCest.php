@@ -21,7 +21,6 @@ use SprykerTest\Zed\Category\PageObject\CategoryListPage;
  */
 class CategoryDeleteCest
 {
-
     /**
      * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
@@ -30,9 +29,8 @@ class CategoryDeleteCest
     public function breadcrumbIsVisible(CategoryPresentationTester $i)
     {
         $i->amOnPage(CategoryListPage::URL);
-        $i->wait(2);
+        $i->waitForElement(CategoryListPage::getDeleteButtonSelector());
         $i->click(CategoryListPage::getDeleteButtonSelector());
         $i->seeBreadcrumbNavigation('Dashboard / Category / Delete Category');
     }
-
 }

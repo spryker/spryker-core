@@ -9,12 +9,10 @@ namespace Spryker\Client\Quote\Dependency\Plugin;
 
 interface QuoteToCurrencyInterface
 {
-
     /**
      * @api
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getCurrent();
-
 }

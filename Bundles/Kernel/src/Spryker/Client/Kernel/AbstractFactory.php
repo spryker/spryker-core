@@ -14,7 +14,6 @@ use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 
 abstract class AbstractFactory
 {
-
     use BundleConfigResolverAwareTrait;
     use ContainerMocker;
 
@@ -114,5 +113,4 @@ abstract class AbstractFactory
     {
         $dependencyProvider->provideServiceLayerDependencies($container);
     }
-
 }

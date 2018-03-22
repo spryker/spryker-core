@@ -14,9 +14,10 @@ use Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyBridge;
 
 class QuoteDependencyProvider extends AbstractDependencyProvider
 {
-
     const CLIENT_SESSION = 'session client';
+
     const CURRENCY_PLUGIN = 'currency plugin';
+    const QUOTE_TRANSFER_EXPANDER_PLUGINS = 'QUOTE_TRANSFER_EXPANDER_PLUGINS';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -27,6 +28,7 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addSessionClient($container);
         $container = $this->addCurrencyPlugin($container);
+        $container = $this->addQuoteTransferExpanderPlugins($container);
 
         return $container;
     }
@@ -59,4 +61,27 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
         return $container;
     }
 
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addQuoteTransferExpanderPlugins(Container $container)
+    {
+        $container[static::QUOTE_TRANSFER_EXPANDER_PLUGINS] = function (Container $container) {
+            return $this->getQuoteTransferExpanderPlugins($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[]
+     */
+    protected function getQuoteTransferExpanderPlugins(Container $container)
+    {
+        return [];
+    }
 }

@@ -23,14 +23,13 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class ItemSkuDecisionRuleTest extends BaseRuleTester
 {
-
     /**
      * @return void
      */
     public function testDecisionRuleWhenCurrentItemSkuMatchesShouldReturnTrue()
     {
         $comparatorMock = $this->createComparatorMock();
-        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer  $clauseTransfer, $itemSku) {
+        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $itemSku) {
             return $clauseTransfer->getValue() === $itemSku;
         });
 
@@ -57,5 +56,4 @@ class ItemSkuDecisionRuleTest extends BaseRuleTester
 
         return new ItemSkuDecisionRule($comparatorMock);
     }
-
 }

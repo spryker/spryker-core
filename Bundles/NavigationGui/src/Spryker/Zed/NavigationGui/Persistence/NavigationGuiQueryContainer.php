@@ -20,7 +20,6 @@ use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
  */
 class NavigationGuiQueryContainer extends AbstractQueryContainer implements NavigationGuiQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -97,5 +96,4 @@ class NavigationGuiQueryContainer extends AbstractQueryContainer implements Navi
 
         return $query;
     }
-
 }

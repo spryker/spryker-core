@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductRelation\Communication\QueryBuilder;
 
 interface FilterProviderInterface
 {
-
     /**
      * @return array
      */
     public function getFilters();
-
 }

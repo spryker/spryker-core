@@ -13,11 +13,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Twig_SimpleFunction;
 
 /**
- * @method \Spryker\Zed\Currency\Business\CurrencyFacade getFacade()
+ * @method \Spryker\Zed\Currency\Business\CurrencyFacadeInterface getFacade()
  */
 class TwigCurrencyServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     const NO_SYMBOL_FOUND = '-';
     const CURRENCY_SYMBOL_FUNCTION_NAME = 'currencySymbol';
 
@@ -96,5 +95,4 @@ class TwigCurrencyServiceProvider extends AbstractPlugin implements ServiceProvi
 
         return $this->getFacade()->getCurrent();
     }
-
 }

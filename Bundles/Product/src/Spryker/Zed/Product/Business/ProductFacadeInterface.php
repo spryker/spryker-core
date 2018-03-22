@@ -15,15 +15,14 @@ use Generated\Shared\Transfer\RawProductAttributesTransfer;
 
 interface ProductFacadeInterface
 {
-
     /**
      * Specification:
-     * - Adds product abstract with its attributes, meta information and concrete variants.
-     * - Throws exception if product concrete with same SKU exists.
-     * - Throws exception if abstract product with same SKU exists.
-     * - Trigger before and after CREATE plugins.
-     * - Abstract and concrete products are created but not activated or touched.
+     * - Adds abstract product with its attributes, meta data, and concrete products.
+     * - Throws exception if a concrete product with the same SKU exists.
+     * - Throws exception if an abstract product with the same SKU exists.
+     * - Triggers "before" and "after" CREATE plugins.
      * - Returns the ID of the newly created abstract product.
+     * - Does not activate or touche created abstract and concrete products.
      *
      * @api
      *
@@ -39,14 +38,14 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Saves product abstract with its concrete variants.
-     * - Saves product abstract attributes.
-     * - Saves product abstract meta.
-     * - Triggers before and after UPDATE plugins.
-     * - Throws exception if product concrete with same SKU exists.
-     * - Throws exception if abstract product with same SKU exists.
-     * - Abstract and concrete products are updated but not activated or touched.
+     * - Saves abstract product with its concrete products.
+     * - Saves abstract product attributes.
+     * - Saves abstract product meta data.
+     * - Triggers "before" and "after" UPDATE plugins.
+     * - Throws exception if a concrete product with the same SKU exists.
+     * - Throws exception if an abstract product with the same SKU exists.
      * - Returns the ID of the abstract product.
+     * - Does not activate or touche updated abstract and concrete products.
      *
      * @api
      *
@@ -62,13 +61,13 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Adds product abstract attributes.
-     * - Adds product abstract localized attributes.
-     * - Adds product abstract meta.
-     * - Triggers before and after CREATE plugins.
-     * - Throws exception if abstract product with same SKU exists.
-     * - Abstract product is created but not activated or touched.
+     * - Adds abstract product attributes.
+     * - Adds abstract product localized attributes.
+     * - Adds abstract product meta data.
+     * - Triggers "before" and "after" CREATE plugins.
+     * - Throws exception if an abstract product with the same SKU exists.
      * - Returns the ID of the newly created abstract product.
+     * - Does not activate or touche created abstract product.
      *
      * @api
      *
@@ -82,14 +81,14 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Saves product abstract attributes
-     * - Saves product abstract localized attributes
-     * - Saves product abstract meta
-     * - Updates URL of an active product when it's changed.
-     * - Triggers before and after CREATE plugins
-     * - Throws exception if abstract product with same SKU exists
-     * - Abstract product is created but not activated or touched
-     * - Returns the ID of the abstract product.
+     * - Saves abstract product attributes.
+     * - Saves abstract product localized attributes.
+     * - Saves abstract product meta data.
+     * - Updates the URL of an active abstract product if it is changed.
+     * - Triggers "before" and "after" CREATE plugins.
+     * - Throws exception if an abstract product with the same SKU exists.
+     * - Does not activate or touche created abstract product.
+     * - Returns the ID of the newly created abstract product.
      *
      * @api
      *
@@ -103,7 +102,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Checks if product abstract exists
+     * - Checks if the abstract product exists.
      *
      * @api
      *
@@ -115,7 +114,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns the ID of an abstract product for the given SKU if it exists, NULL otherwise.
+     * - Returns the ID of an abstract product for the given SKU if it exists, null otherwise.
      *
      * @api
      *
@@ -127,8 +126,8 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns abstract product with attributes and localized attributes
-     * - Triggers READ plugins
+     * - Returns an abstract product with attributes and localized attributes.
+     * - Triggers READ plugins.
      *
      * @api
      *
@@ -155,7 +154,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns the abstract product ID of the given concrete product SKU if exists.
+     * - Returns the abstract product ID of the given concrete product SKU if it exists.
      * - Throws exception if no abstract product is found.
      *
      * @api
@@ -171,8 +170,8 @@ interface ProductFacadeInterface
     /**
      * Specification:
      * - Adds concrete product with attributes and localized attributes.
-     * - Throws exception if product concrete with same SKU exists.
-     * - Triggers before and after CREATE plugins.
+     * - Throws exception if a concrete product with the same SKU exists.
+     * - Triggers "before" and "after" CREATE plugins.
      * - Returns the ID of the newly created concrete product.
      *
      * @api
@@ -188,8 +187,8 @@ interface ProductFacadeInterface
     /**
      * Specification:
      * - Saves concrete product with attributes and localized attributes.
-     * - Throws exception if product concrete with same SKU exists.
-     * - Triggers before and after UPDATE plugins.
+     * - Throws exception if a concrete product with the same SKU exists.
+     * - Triggers "before" and "after" UPDATE plugins.
      * - Returns the ID of the concrete product.
      *
      * @api
@@ -204,7 +203,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Checks if product concrete exists.
+     * - Checks if the concrete product exists.
      *
      * @api
      *
@@ -216,7 +215,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns ID of concrete product.
+     * - Returns the ID of the concrete product.
      *
      * @api
      *
@@ -228,8 +227,8 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns concrete product with attributes and localized attributes.
-     * - Returns NULL if the concrete product is not found by ID.
+     * - Returns the concrete product with attributes and localized attributes.
+     * - Returns null if the concrete product is not found by ID.
      * - Triggers READ plugins.
      *
      * @api
@@ -283,7 +282,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns product attribute key if exists, NULL otherwise.
+     * - Returns the product attribute key if it exists, null otherwise.
      *
      * @api
      *
@@ -321,9 +320,9 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches abstract product and all it's variants.
-     * - Touches related "product_abstract", "product_concrete" and "attribute_map" entries.
-     * - Used touch event statuses (active, inactive) depends on the current status of the product and it's variants.
+     * - Touches the abstract product and all of its concrete products.
+     * - Touches related "product_abstract", "product_concrete", and "attribute_map" entries.
+     * - Used touch event statuses (active, inactive) depend on the current status of the abstract product and its concrete products.
      *
      * @api
      *
@@ -335,7 +334,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as active: "product_abstract" and "product_attribute_map".
+     * - Touches "product_abstract" and "product_attribute_map" as active.
      *
      * @api
      *
@@ -347,7 +346,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as in-active: "product_abstract" and "product_attribute_map".
+     * - Touches "product_abstract" and "product_attribute_map" as in-active.
      *
      * @api
      *
@@ -359,7 +358,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as deleted: "product_abstract" and "product_attribute_map".
+     * - Touches "product_abstract" and "product_attribute_map" as deleted.
      *
      * @api
      *
@@ -372,8 +371,8 @@ interface ProductFacadeInterface
     /**
      * Specification:
      * - Touches a concrete product.
-     * - Touches related "product_concrete", "product_abstract" and "attribute_map" entries.
-     * - Used touch event statuses (active, inactive) depends on the current status of the product.
+     * - Touches related "product_concrete", "product_abstract", and "attribute_map" entries.
+     * - Used touch event statuses (active, inactive) depend on the current status of the concrete product.
      *
      * @api
      *
@@ -385,7 +384,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as active: "product_concrete".
+     * - Touches "product_concrete" as active.
      *
      * @api
      *
@@ -397,7 +396,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as in-active: "product_concrete".
+     * - Touches "product_concrete" as in-active.
      *
      * @api
      *
@@ -409,7 +408,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches as deleted: "product_concrete".
+     * - Touches "product_concrete" as deleted.
      *
      * @api
      *
@@ -421,8 +420,8 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Creates localized product URLs based on product abstract localized attributes name.
-     * - Executes touch logic for product URL activation.
+     * - Creates localized abstract product URLs based on abstract product localized attributes name.
+     * - Executes touch logic for abstract product URL activation.
      *
      * @api
      *
@@ -434,8 +433,8 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Updates localized product URLs based on product abstract localized attributes name.
-     * - Executes touch logic for product URL update.
+     * - Updates localized abstract product URLs based on abstract product localized attributes name.
+     * - Executes touch logic for abstract product URL update.
      *
      * @api
      *
@@ -447,7 +446,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns localized product URLs for all available locales.
+     * - Returns localized abstract product URLs for all available locales.
      *
      * @api
      *
@@ -459,8 +458,8 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Deletes all URLs belonging to given abstract product.
-     * - Executes touch logic for product URL deletion.
+     * - Deletes all URLs belonging to the given abstract product.
+     * - Executes touch logic for abstract product URL deletion.
      *
      * @api
      *
@@ -472,7 +471,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches the URL of the product as active for all available locales.
+     * - Touches the URL of the abstract product for all available locales as active.
      *
      * @api
      *
@@ -484,7 +483,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Touches the URL of the product as deleted for all available locales.
+     * - Touches the URL of the abstract product for all available locales as deleted.
      *
      * @api
      *
@@ -496,7 +495,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns localized product abstract name based on localized attributes.
+     * - Returns localized abstract product name based on localized attributes.
      *
      * @api
      *
@@ -509,7 +508,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns localized product concrete name based on localized attributes.
+     * - Returns localized concrete product name based on localized attributes.
      *
      * @api
      *
@@ -522,10 +521,10 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Activates product concrete.
-     * - Generates and saves product abstract URL.
-     * - Touches as active product.
-     * - Touches as active product URL.
+     * - Activates concrete product.
+     * - Generates and saves the related abstract product URL.
+     * - Touches concrete product as active.
+     * - Touches abstract product URL as active.
      *
      * @api
      *
@@ -537,10 +536,9 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Deactivates product concrete.
-     * - Removes product URL.
-     * - Touches as in-active product.
-     * - Touches as in-active product URL.
+     * - Deactivates concrete product.
+     * - Touches concrete product as active.
+     * - Deletes abstract product URL if abstract product is inactive.
      *
      * @api
      *
@@ -552,7 +550,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Generatate all possible permutations for given attributes.
+     * - Generates all possible permutations of the given attributes.
      *
      * Leaf node of a tree is concrete id.
      * (
@@ -579,10 +577,10 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Generates product variants based on attributes.
+     * - Generates concrete products based on attributes.
      *
-     * $attributeCollection = Array
-     *  (
+     * Expected input AttributeCollection structure:
+     * (
      *     [color] => Array
      *      (
      *          [red] => Red
@@ -597,7 +595,6 @@ interface ProductFacadeInterface
      *          [40] => 40
      *          [41] => 41
      *          [42] => 42
-     *          )
      *      )
      * )
      *
@@ -612,7 +609,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns true if any of the concrete products of abstract products are active.
+     * - Returns true if any of the concrete products of the abstract product is active.
      *
      * @api
      *
@@ -624,9 +621,8 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns an array with attribute keys of a persisted product.
-     * - The result is a combination of the abstract product's attribute keys and all its existing concretes' attribute keys.
-     * - If $localeTransfer is provided then localized abstract and concrete attribute keys are also part of the result.
+     * - Returns the attribute keys of the abstract product and its concrete products.
+     * - Includes localized abstract product and concrete products attribute keys when $localeTransfer is provided.
      *
      * @api
      *
@@ -641,10 +637,27 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns an associative array of attribute key - attribute value pairs of a persisted concrete product.
-     * - The result is a combination of the concrete's attributes and its abstract's attributes.
-     * - If $localeTransfer is provided then localized concrete and abstract attributes are also part of the result.
+     * - Returns an array of productIds as keys with array of attribute keys as values of a persisted products.
+     * - The attribute keys is a combination of the abstract product's attribute keys and all its existing concretes' attribute keys.
+     * - If $localeTransfer is provided then localized abstract and concrete attribute keys are also part of the result.
      *
+     * @api
+     *
+     * @param int[] $productIds
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return array
+     */
+    public function getCombinedAbstractAttributeKeysForProductIds($productIds, LocaleTransfer $localeTransfer = null);
+
+    /**
+     * Specification:
+     * - Returns an associative array of attribute key - attribute value pairs of the persisted concrete product.
+     * - The result is a combination of the concrete product's attributes and its abstract product's attributes.
+     * - Includes localized abstract product and concrete products attribute keys when $localeTransfer is provided.
+
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
@@ -690,5 +703,4 @@ interface ProductFacadeInterface
      * @return array
      */
     public function decodeProductAttributes($attributes);
-
 }

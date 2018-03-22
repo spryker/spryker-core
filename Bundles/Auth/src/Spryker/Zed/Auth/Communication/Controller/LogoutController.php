@@ -11,11 +11,10 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
  * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
- * @method \Spryker\Zed\Auth\Business\AuthFacade getFacade()
+ * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
  */
 class LogoutController extends AbstractController
 {
-
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
@@ -25,5 +24,4 @@ class LogoutController extends AbstractController
 
         return $this->redirectResponse('/', 302);
     }
-
 }

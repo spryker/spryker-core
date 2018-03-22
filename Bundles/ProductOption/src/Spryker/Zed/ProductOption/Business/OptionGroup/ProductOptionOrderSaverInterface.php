@@ -9,9 +9,11 @@ namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * @deprecated Use \Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaverInterface instead
+ */
 interface ProductOptionOrderSaverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -19,5 +21,4 @@ interface ProductOptionOrderSaverInterface
      * @return void
      */
     public function save(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
-
 }

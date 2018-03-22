@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
  */
 class BatchResult implements BatchResultInterface
 {
-
     /**
      * @var int
      */
@@ -224,5 +223,4 @@ class BatchResult implements BatchResultInterface
     {
         $this->deletedCount += $amount;
     }
-
 }

@@ -9,20 +9,22 @@ namespace Spryker\Zed\ProductRelation\Communication\Form;
 
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Generated\Shared\Transfer\ProductRelationTypeTransfer;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\DataTransformerInterface;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\ProductRelation\Business\ProductRelationFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductRelation\Communication\ProductRelationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface getQueryContainer()
+ */
 class ProductRelationFormType extends AbstractType
 {
-
     const FIELD_RELATION_TYPE = 'productRelationType';
     const FIELD_FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
     const FIELD_ID_PRODUCT_RELATION = 'idProductRelation';
@@ -30,28 +32,6 @@ class ProductRelationFormType extends AbstractType
     const FIELD_IS_REBUILD_SCHEDULED = 'isRebuildScheduled';
 
     const OPTION_RELATION_CHOICES = 'productRelationType';
-
-    /**
-     * @var \Symfony\Component\Form\DataTransformerInterface
-     */
-    protected $ruleQuerySetTransformer;
-
-    /**
-     * @var \Symfony\Component\Validator\Constraint
-     */
-    protected $uniqueRelationTypeForProductAbstract;
-
-    /**
-     * @param \Symfony\Component\Form\DataTransformerInterface $ruleQuerySetTransformer
-     * @param \Symfony\Component\Validator\Constraint $uniqueRelationTypeForProductAbstract
-     */
-    public function __construct(
-        DataTransformerInterface $ruleQuerySetTransformer,
-        Constraint $uniqueRelationTypeForProductAbstract
-    ) {
-        $this->ruleQuerySetTransformer = $ruleQuerySetTransformer;
-        $this->uniqueRelationTypeForProductAbstract = $uniqueRelationTypeForProductAbstract;
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -79,7 +59,7 @@ class ProductRelationFormType extends AbstractType
 
         $resolver->setDefaults([
             'constraints' => [
-                $this->uniqueRelationTypeForProductAbstract,
+                $this->getFactory()->createUniqueRelationTypeForProductAbstractConstraint(),
             ],
         ]);
     }
@@ -93,12 +73,12 @@ class ProductRelationFormType extends AbstractType
     {
         $builder->add(static::FIELD_QUERY_SET, HiddenType::class, [
             'constraints' => [
-                new NotBlank(['message' => 'Query not defined.'])
+                new NotBlank(['message' => 'Query not defined.']),
             ],
         ]);
 
         $builder->get(static::FIELD_QUERY_SET)
-            ->addModelTransformer($this->ruleQuerySetTransformer);
+            ->addModelTransformer($this->getFactory()->createRuleSetTransformer());
 
         return $this;
     }
@@ -141,7 +121,8 @@ class ProductRelationFormType extends AbstractType
         $builder->add(static::FIELD_RELATION_TYPE, ChoiceType::class, [
             'label' => 'Relation type',
             'property_path' => ProductRelationTransfer::PRODUCT_RELATION_TYPE . '.' . ProductRelationTypeTransfer::KEY,
-            'choices' => $options[static::OPTION_RELATION_CHOICES],
+            'choices' => array_flip($options[static::OPTION_RELATION_CHOICES]),
+            'choices_as_values' => true,
         ]);
 
         return $this;
@@ -156,7 +137,7 @@ class ProductRelationFormType extends AbstractType
     {
         $builder->add(static::FIELD_FK_PRODUCT_ABSTRACT, TextType::class, [
             'constraints' => [
-                new NotBlank(['message' => 'Abstract product is not selected.'])
+                new NotBlank(['message' => 'Abstract product is not selected.']),
             ],
         ]);
 
@@ -166,9 +147,18 @@ class ProductRelationFormType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'product_relation';
     }
 
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

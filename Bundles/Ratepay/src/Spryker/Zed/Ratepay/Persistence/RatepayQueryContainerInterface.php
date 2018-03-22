@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface RatepayQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -72,5 +71,4 @@ interface RatepayQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Ratepay\Persistence\SpyPaymentRatepayLog
      */
     public function getLastLogRecordBySalesOrderIdAndMessage($idOrder, $message);
-
 }

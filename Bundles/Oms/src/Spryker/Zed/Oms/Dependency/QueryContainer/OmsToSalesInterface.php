@@ -7,7 +7,6 @@ namespace Spryker\Zed\Oms\Dependency\QueryContainer;
 
 interface OmsToSalesInterface
 {
-
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
@@ -24,5 +23,4 @@ interface OmsToSalesInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsByIdSalesOrder($idOrder);
-
 }

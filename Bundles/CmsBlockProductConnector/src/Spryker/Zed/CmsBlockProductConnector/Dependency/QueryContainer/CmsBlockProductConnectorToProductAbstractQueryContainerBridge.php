@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockProductConnector\Dependency\QueryContainer;
 
 class CmsBlockProductConnectorToProductAbstractQueryContainerBridge implements CmsBlockProductConnectorToProductAbstractQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -33,5 +32,4 @@ class CmsBlockProductConnectorToProductAbstractQueryContainerBridge implements C
         return $this->productAbstractQueryContainer
             ->queryProductAbstractWithName($idLocale);
     }
-
 }

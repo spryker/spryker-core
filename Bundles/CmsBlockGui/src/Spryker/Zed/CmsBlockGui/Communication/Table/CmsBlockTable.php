@@ -9,17 +9,19 @@ namespace Spryker\Zed\CmsBlockGui\Communication\Table;
 
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsBlockTable extends AbstractTable
 {
-
     const COL_ID_CMS_BLOCK = SpyCmsBlockTableMap::COL_ID_CMS_BLOCK;
     const COL_NAME = SpyCmsBlockTableMap::COL_NAME;
     const COL_ACTIONS = 'Actions';
     const COL_IS_ACTIVE = SpyCmsBlockTableMap::COL_IS_ACTIVE;
+    const COL_STORE_RELATION = 'Store';
     const COL_TEMPLATE_NAME = 'template_name';
 
     const REQUEST_ID_CMS_BLOCK = 'id-cms-block';
@@ -36,11 +38,18 @@ class CmsBlockTable extends AbstractTable
     protected $cmsBlockQuery;
 
     /**
-     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery $cmsBlockQuery
+     * @var \Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface
      */
-    public function __construct(SpyCmsBlockQuery $cmsBlockQuery)
+    protected $cmsBlockQueryContainer;
+
+    /**
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery $cmsBlockQuery
+     * @param \Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer
+     */
+    public function __construct(SpyCmsBlockQuery $cmsBlockQuery, CmsBlockGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer)
     {
         $this->cmsBlockQuery = $cmsBlockQuery;
+        $this->cmsBlockQueryContainer = $cmsBlockQueryContainer;
     }
 
     /**
@@ -55,11 +64,13 @@ class CmsBlockTable extends AbstractTable
             static::COL_NAME => 'Name',
             static::COL_TEMPLATE_NAME => 'Template',
             static::COL_IS_ACTIVE => 'Status',
+            static::COL_STORE_RELATION => 'Stores',
             static::COL_ACTIONS => static::COL_ACTIONS,
         ]);
 
         $config->addRawColumn(static::COL_ACTIONS);
         $config->addRawColumn(static::COL_IS_ACTIVE);
+        $config->addRawColumn(static::COL_STORE_RELATION);
 
         $config->setSortable([
             static::COL_ID_CMS_BLOCK,
@@ -96,6 +107,7 @@ class CmsBlockTable extends AbstractTable
                 static::COL_NAME => $item[SpyCmsBlockTableMap::COL_NAME],
                 static::COL_TEMPLATE_NAME => $item[static::COL_TEMPLATE_NAME],
                 static::COL_IS_ACTIVE => $this->generateStatusLabels($item),
+                static::COL_STORE_RELATION => $this->getStoreNames($item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK]),
                 static::COL_ACTIONS => $this->buildLinks($item),
             ];
         }
@@ -177,4 +189,36 @@ class CmsBlockTable extends AbstractTable
         return '<span class="label label-danger">Inactive</span>';
     }
 
+    /**
+     * @param int $idCmsBlock
+     *
+     * @return string
+     */
+    protected function getStoreNames($idCmsBlock)
+    {
+        $cmsBlockStoreCollection = $this
+            ->cmsBlockQueryContainer
+            ->queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock)
+            ->find();
+
+        return $this->formatStoreNames($cmsBlockStoreCollection);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $cmsBlockStoreEntityCollection
+     *
+     * @return string
+     */
+    protected function formatStoreNames(ObjectCollection $cmsBlockStoreEntityCollection)
+    {
+        $storeNames = [];
+        foreach ($cmsBlockStoreEntityCollection as $cmsBlockStoreEntity) {
+            $storeNames[] = sprintf(
+                '<span class="label label-info">%s</span>',
+                $cmsBlockStoreEntity->getSpyStore()->getName()
+            );
+        }
+
+        return implode(" ", $storeNames);
+    }
 }

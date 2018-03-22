@@ -13,7 +13,6 @@ use Spryker\Shared\Application\Business\Routing\SilexRouter;
 
 class SilexRoutingServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -32,5 +31,4 @@ class SilexRoutingServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
     }
-
 }

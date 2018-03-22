@@ -19,12 +19,11 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 /**
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
- * @method \Spryker\Zed\Acl\Business\AclFacade getFacade()
- * @method \Spryker\Zed\Acl\Persistence\AclQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
+ * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
  */
 class RoleController extends AbstractController
 {
-
     const PARAM_ID_ROLE = 'id-role';
     const ACL_ROLE_LIST_URL = '/acl/role/index';
     const ROLE_UPDATE_URL = '/acl/role/update?id-role=%d';
@@ -64,7 +63,7 @@ class RoleController extends AbstractController
             ->createRoleForm()
             ->handleRequest($request);
 
-        if ($ruleForm->isValid()) {
+        if ($ruleForm->isSubmitted() && $ruleForm->isValid()) {
             $formData = $ruleForm->getData();
 
             try {
@@ -193,7 +192,7 @@ class RoleController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($ruleSetForm->isValid()) {
+        if ($ruleSetForm->isSubmitted() && $ruleSetForm->isValid()) {
             $ruleTransfer = new RuleTransfer();
             $ruleTransfer = $ruleTransfer->fromArray($ruleSetForm->getData());
 
@@ -217,7 +216,7 @@ class RoleController extends AbstractController
      */
     protected function handleRoleForm(Request $request, FormInterface $roleForm)
     {
-        if ($roleForm->isValid()) {
+        if ($roleForm->isSubmitted() && $roleForm->isValid()) {
             $formData = $roleForm->getData();
 
             $roleTransfer = new RoleTransfer();
@@ -235,5 +234,4 @@ class RoleController extends AbstractController
             }
         }
     }
-
 }

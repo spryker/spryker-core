@@ -29,7 +29,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FormCollectionHandlerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -247,5 +246,4 @@ class FormCollectionHandlerTest extends Unit
 
         return $dataTransferMock->getMock();
     }
-
 }

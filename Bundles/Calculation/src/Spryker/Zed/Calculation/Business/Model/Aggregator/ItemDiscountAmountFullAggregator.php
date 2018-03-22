@@ -14,7 +14,6 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class ItemDiscountAmountFullAggregator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -63,7 +62,6 @@ class ItemDiscountAmountFullAggregator implements CalculatorInterface
     protected function calculateDiscountAmountFullAggregationForItems(ArrayObject $items)
     {
         foreach ($items as $itemTransfer) {
-
             $unitProductOptionDiscountAmountAggregation = $this->calculateUnitProductOptionDiscountAmountAggregation($itemTransfer);
             $itemTransfer->setUnitDiscountAmountFullAggregation(
                 $itemTransfer->getUnitDiscountAmountAggregation() + $unitProductOptionDiscountAmountAggregation
@@ -75,5 +73,4 @@ class ItemDiscountAmountFullAggregator implements CalculatorInterface
             );
         }
     }
-
 }

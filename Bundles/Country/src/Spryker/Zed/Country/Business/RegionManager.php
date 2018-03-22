@@ -13,7 +13,6 @@ use Spryker\Zed\Country\Persistence\CountryQueryContainerInterface;
 
 class RegionManager implements RegionManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface
      */
@@ -75,5 +74,4 @@ class RegionManager implements RegionManagerInterface
 
         return $query->count() > 0;
     }
-
 }

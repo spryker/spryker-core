@@ -13,11 +13,10 @@ use Spryker\Zed\ProductReview\ProductReviewDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductReview\ProductReviewConfig getConfig()
- * @method \Spryker\Zed\ProductReview\Persistence\ProductReviewQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductReview\Persistence\ProductReviewQueryContainerInterface getQueryContainer()
  */
 class ProductReviewCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductReview\Communication\Controller\Mapper\CustomerReviewSubmitMapperInterface
      */
@@ -33,5 +32,4 @@ class ProductReviewCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ProductReviewDependencyProvider::FACADE_LOCALE);
     }
-
 }

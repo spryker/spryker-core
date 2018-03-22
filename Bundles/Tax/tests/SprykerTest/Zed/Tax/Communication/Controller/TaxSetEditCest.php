@@ -22,7 +22,6 @@ use SprykerTest\Zed\Tax\TaxCommunicationTester;
  */
 class TaxSetEditCest
 {
-
     /**
      * @param \SprykerTest\Zed\Tax\TaxCommunicationTester $i
      *
@@ -35,4 +34,17 @@ class TaxSetEditCest
         $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Sets / Edit Tax Set');
     }
 
+    /**
+     * @param \SprykerTest\Zed\Tax\TaxCommunicationTester $i
+     *
+     * @return void
+     */
+    public function dataIsProvided(TaxCommunicationTester $i)
+    {
+        $i->listDataTable(TaxSetListPage::DATA_TABLE_URL);
+        $i->clickDataTableEditButton();
+
+        $name = $i->grabValueFrom('[name="tax_set[name]"]');
+        $i->assertNotEmpty($name);
+    }
 }

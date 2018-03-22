@@ -28,7 +28,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class DependencyInjectorResolverTest extends Unit
 {
-
     /**
      * The bundle which calls the `getProvidedDependency()`
      *
@@ -46,22 +45,22 @@ class DependencyInjectorResolverTest extends Unit
     /**
      * @var string
      */
-    protected $coreClass = 'Unit\\Spryker\\Yves\\Kernel\\ClassResolver\\Fixtures\\FooDependencyInjector';
+    protected $coreClass = 'Spryker\\Yves\\Kernel\\ClassResolver\\FooDependencyInjector';
 
     /**
      * @var string
      */
-    protected $projectClass = 'Unit\\ProjectNamespace\\Yves\\Kernel\\ClassResolver\\Fixtures\\FooDependencyInjector';
+    protected $projectClass = 'ProjectNamespace\\Yves\\Kernel\\ClassResolver\\FooDependencyInjector';
 
     /**
      * @var string
      */
-    protected $storeClass = 'Unit\\ProjectNamespace\\Yves\\KernelDE\\ClassResolver\\Fixtures\\FooDependencyInjector';
+    protected $storeClass = 'ProjectNamespace\\Yves\\KernelDE\\ClassResolver\\FooDependencyInjector';
 
     /**
      * @var string
      */
-    protected $classPattern = 'Unit\\%namespace%\\Yves\\%fromBundle%%store%\\ClassResolver\\Fixtures\\%bundle%DependencyInjector';
+    protected $classPattern = '%namespace%\\Yves\\%fromBundle%%store%\\ClassResolver\\%bundle%DependencyInjector';
 
     /**
      * @var array
@@ -205,8 +204,10 @@ class DependencyInjectorResolverTest extends Unit
      */
     private function deleteCreatedFiles()
     {
-        $filesystem = new Filesystem();
-        $filesystem->remove($this->createdFiles);
+        if (is_dir($this->getBasePath())) {
+            $filesystem = new Filesystem();
+            $filesystem->remove($this->getBasePath());
+        }
     }
 
     /**
@@ -231,7 +232,7 @@ class DependencyInjectorResolverTest extends Unit
             $this->getBasePath(),
             implode(DIRECTORY_SEPARATOR, $classNameParts),
         ];
-        $directory = implode(DIRECTORY_SEPARATOR,  $directoryParts);
+        $directory = implode(DIRECTORY_SEPARATOR, $directoryParts);
 
         if (!is_dir($directory)) {
             mkdir($directory, 0775, true);
@@ -249,12 +250,6 @@ class DependencyInjectorResolverTest extends Unit
      */
     private function getBasePath()
     {
-        $directoryParts = explode(DIRECTORY_SEPARATOR, __DIR__);
-        $testsDirectoryPosition = array_search('tests', $directoryParts);
-
-        $basePath = implode(DIRECTORY_SEPARATOR, array_slice($directoryParts, 0, $testsDirectoryPosition + 1));
-
-        return $basePath;
+        return __DIR__ . '/../_data/Generated';
     }
-
 }

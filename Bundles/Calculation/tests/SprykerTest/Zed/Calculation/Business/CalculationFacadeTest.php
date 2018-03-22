@@ -18,7 +18,7 @@ use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\Calculation\Business\CalculationBusinessFactory;
 use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Calculation\CalculationDependencyProvider;
-use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountAmountAggregatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountAmountAggregatorForGenericAmountPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountTotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ExpenseTotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\GrandTotalCalculatorPlugin;
@@ -47,7 +47,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class CalculationFacadeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -141,7 +140,7 @@ class CalculationFacadeTest extends Unit
     {
         $calculationFacade = $this->createCalculationFacade(
             [
-                new DiscountAmountAggregatorPlugin(),
+                new DiscountAmountAggregatorForGenericAmountPlugin(),
             ]
         );
 
@@ -153,25 +152,25 @@ class CalculationFacadeTest extends Unit
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitGrossAmount(20);
+        $calculatedDiscountTransfer->setUnitAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitGrossAmount(20);
+        $calculatedDiscountTransfer->setUnitAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitGrossAmount(20);
+        $calculatedDiscountTransfer->setUnitAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitGrossAmount(20);
+        $calculatedDiscountTransfer->setUnitAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
@@ -183,7 +182,7 @@ class CalculationFacadeTest extends Unit
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitGrossAmount(20);
+        $calculatedDiscountTransfer->setUnitAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $expenseTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
@@ -606,5 +605,4 @@ class CalculationFacadeTest extends Unit
 
         return $calculationFacade;
     }
-
 }

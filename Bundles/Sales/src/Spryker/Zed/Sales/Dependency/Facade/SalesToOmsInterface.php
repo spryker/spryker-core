@@ -11,7 +11,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 interface SalesToOmsInterface
 {
-
     /**
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
@@ -58,4 +57,10 @@ interface SalesToOmsInterface
      */
     public function getOrderItemMatrix();
 
+    /**
+     * @param int $idOrder
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedExcludeFromCustomer($idOrder);
 }

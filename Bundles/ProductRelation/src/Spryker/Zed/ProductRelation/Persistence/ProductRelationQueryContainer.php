@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelation\Persistence;
 
 use Generated\Shared\Transfer\ProductRelationTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -26,7 +25,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductRelationQueryContainer extends AbstractQueryContainer implements ProductRelationQueryContainerInterface
 {
-
     const COL_ASSIGNED_CATEGORIES = 'assignedCategories';
     const COL_NUMBER_OF_RELATED_PRODUCTS = 'numberOfRelatedProducts';
     const COL_CATEGORY_NAME = 'category_name';
@@ -34,6 +32,7 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const COL_SKU = 'sku';
     const COL_IS_ACTIVE_AGGREGATION = 'is_active_aggregation';
+    const COL_PRICE_PRODUCT = 'spy_price_product.price';
 
     /**
      * @api
@@ -44,6 +43,17 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     {
         return $this->getFactory()
             ->createProductRelationTypeQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
+     */
+    public function queryAllProductRelations()
+    {
+        return $this->getFactory()
+            ->createProductRelationQuery();
     }
 
     /**
@@ -154,7 +164,7 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
                 SpyProductAbstractTableMap::COL_SKU,
                 SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
                 SpyProductAbstractLocalizedAttributesTableMap::COL_DESCRIPTION,
-                SpyPriceProductTableMap::COL_PRICE,
+                static::COL_PRICE_PRODUCT,
                 SpyProductImageTableMap::COL_EXTERNAL_URL_SMALL,
             ])
             ->withColumn(
@@ -186,7 +196,7 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
             ->addGroupByColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->addGroupByColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME)
             ->addGroupByColumn(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT)
-            ->addGroupByColumn(SpyPriceProductTableMap::COL_PRICE);
+            ->addGroupByColumn(static::COL_PRICE_PRODUCT);
     }
 
     /**
@@ -329,17 +339,17 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     {
         return $this->getRulePropelQuery($productRelationTransfer)
          ->clearSelectColumns()
-         ->withColumn(
-             'GROUP_CONCAT(' . SpyProductTableMap::COL_IS_ACTIVE . ')',
-             static::COL_IS_ACTIVE_AGGREGATION
-         )
+        ->withColumn(
+            'GROUP_CONCAT(' . SpyProductTableMap::COL_IS_ACTIVE . ')',
+            static::COL_IS_ACTIVE_AGGREGATION
+        )
          ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
          ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::COL_SKU)
          ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
-         ->withColumn(
-             'GROUP_CONCAT(DISTINCT ' . SpyCategoryAttributeTableMap::COL_NAME . ')',
-             static::COL_CATEGORY_NAME
-         );
+        ->withColumn(
+            'GROUP_CONCAT(DISTINCT ' . SpyCategoryAttributeTableMap::COL_NAME . ')',
+            static::COL_CATEGORY_NAME
+        );
     }
 
     /**
@@ -357,5 +367,4 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
                 ->filterByFkProductRelation($idProductRelation)
             ->endUse();
     }
-
 }

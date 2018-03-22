@@ -15,7 +15,6 @@ use Twig_SimpleFunction;
 
 class NavigationTwigExtension extends TwigExtension
 {
-
     const EXTENSION_NAME = 'NavigationTwigExtension';
 
     const FUNCTION_NAME_NAVIGATION = 'spyNavigation';
@@ -93,5 +92,4 @@ class NavigationTwigExtension extends TwigExtension
     {
         return $this->application['locale'];
     }
-
 }

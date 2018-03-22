@@ -13,12 +13,13 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Oms\Business\OmsFacade getFacade()
+ * @deprecated The OMS run is handled by Placing order process in Checkout ^4.0.0 module. Just remove the usage of this plugin.
+ *
+ * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  * @method \Spryker\Zed\Oms\Communication\OmsCommunicationFactory getFactory()
  */
 class OmsPostSaveHookPlugin extends AbstractPlugin implements CheckoutPostSaveHookInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -35,5 +36,4 @@ class OmsPostSaveHookPlugin extends AbstractPlugin implements CheckoutPostSaveHo
 
         $this->getFacade()->triggerEventForNewOrderItems($salesOrderItemIds);
     }
-
 }

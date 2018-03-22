@@ -17,7 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CmsGlossaryFormType extends AbstractType
 {
-
     const FIELD_GLOSSARY_ATTRIBUTES = 'glossaryAttributes';
 
     const OPTION_DATA_CLASS_ATTRIBUTES = 'data_class_glossary_attributes';
@@ -48,14 +47,6 @@ class CmsGlossaryFormType extends AbstractType
     }
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'cms_glossary';
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -64,7 +55,7 @@ class CmsGlossaryFormType extends AbstractType
     protected function addCmsGlossaryAttributeFormCollection(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_GLOSSARY_ATTRIBUTES, CollectionType::class, [
-            'type' => $this->getFactory()->createCmsGlossaryAttributesFormType(),
+            'entry_type' => CmsGlossaryAttributesFormType::class,
             'allow_add' => true,
             'entry_options' => [
                 'data_class' => $options[static::OPTION_DATA_CLASS_ATTRIBUTES],
@@ -77,4 +68,21 @@ class CmsGlossaryFormType extends AbstractType
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'cms_glossary';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

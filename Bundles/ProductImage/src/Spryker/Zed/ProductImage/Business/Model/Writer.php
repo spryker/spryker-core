@@ -18,7 +18,6 @@ use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
 
 class Writer implements WriterInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
      */
@@ -401,5 +400,4 @@ class Writer implements WriterInterface
         $this->deleteMissingProductImageSetInProductConcrete($productConcreteTransfer);
         return $productConcreteTransfer;
     }
-
 }

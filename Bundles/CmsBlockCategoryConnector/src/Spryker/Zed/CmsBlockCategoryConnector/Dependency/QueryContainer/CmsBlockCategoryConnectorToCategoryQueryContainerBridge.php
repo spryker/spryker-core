@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Dependency\QueryContainer;
 
 class CmsBlockCategoryConnectorToCategoryQueryContainerBridge implements CmsBlockCategoryConnectorToCategoryQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -52,5 +51,4 @@ class CmsBlockCategoryConnectorToCategoryQueryContainerBridge implements CmsBloc
     {
         return $this->categoryQueryContainer->queryCategoryTemplateById($idCategoryTemplate);
     }
-
 }

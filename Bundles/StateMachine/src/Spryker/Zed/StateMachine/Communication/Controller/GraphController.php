@@ -13,13 +13,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method \Spryker\Zed\StateMachine\Business\StateMachineFacade getFacade()
+ * @method \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface getFacade()
  * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\StateMachine\Communication\StateMachineCommunicationFactory getFactory()
  */
 class GraphController extends AbstractController
 {
-
     const URL_PARAM_PROCESS = 'process';
     const URL_PARAM_FORMAT = 'format';
     const URL_PARAM_FONT_SIZE = 'font';
@@ -144,5 +143,4 @@ class GraphController extends AbstractController
 
         return $headers;
     }
-
 }

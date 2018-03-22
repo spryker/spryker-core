@@ -22,7 +22,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQueryContainerInterface
 {
-
     const ALIAS_COL_ID_DISCOUNT = 'id_discount';
     const ALIAS_COL_AMOUNT = 'amount';
     const ALIAS_COL_TYPE = 'type';
@@ -75,11 +74,12 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     /**
      * @api
      *
+     * @param int $idStore
      * @param string[] $voucherCodes
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
-    public function queryDiscountsBySpecifiedVouchers(array $voucherCodes = [])
+    public function queryDiscountsBySpecifiedVouchersForStore($idStore, array $voucherCodes = [])
     {
         $query = $this->queryActiveAndRunningDiscounts()
             ->setFormatter(OnDemandFormatter::class)
@@ -89,6 +89,9 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
                     ->filterByCode(array_unique($voucherCodes), Criteria::IN)
                     ->orderByCode()
                 ->endUse()
+            ->endUse()
+            ->useSpyDiscountStoreQuery()
+                ->filterByFkStore($idStore)
             ->endUse();
 
         return $query;
@@ -97,12 +100,17 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     /**
      * @api
      *
+     * @param int $idStore
+     *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
-    public function queryActiveCartRules()
+    public function queryActiveCartRulesForStore($idStore)
     {
         $query = $this->queryActiveAndRunningDiscounts()
-            ->filterByDiscountType(DiscountConstants::TYPE_CART_RULE);
+            ->filterByDiscountType(DiscountConstants::TYPE_CART_RULE)
+            ->useSpyDiscountStoreQuery()
+                ->filterByFkStore($idStore)
+            ->endUse();
 
         return $query;
     }
@@ -235,4 +243,66 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
         return new SpySalesDiscountQuery();
     }
 
+    /**
+     * @api
+     *
+     * @param int $idDiscountAmount
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountAmountQuery
+     */
+    public function queryDiscountAmountById($idDiscountAmount)
+    {
+        return $this->getFactory()
+            ->createDiscountAmountQuery()
+            ->filterByIdDiscountAmount($idDiscountAmount);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idDiscount
+     * @param int[] $idStores
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery
+     */
+    public function queryDiscountStoreByFkDiscountAndFkStores($idDiscount, array $idStores)
+    {
+        return $this->getFactory()
+            ->createDiscountStoreQuery()
+            ->filterByFkDiscount($idDiscount)
+            ->filterByFkStore_In($idStores);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idDiscount
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery
+     */
+    public function queryDiscountStoreWithStoresByFkDiscount($idDiscount)
+    {
+        return $this->getFactory()
+            ->createDiscountStoreQuery()
+            ->leftJoinWithSpyStore()
+            ->filterByFkDiscount($idDiscount);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idDiscount
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
+     */
+    public function queryDiscountWithStoresByFkDiscount($idDiscount)
+    {
+        return $this->getFactory()
+            ->createDiscountQuery()
+            ->filterByIdDiscount($idDiscount)
+            ->leftJoinWithSpyDiscountStore()
+            ->useSpyDiscountStoreQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithSpyStore()
+            ->endUse();
+    }
 }

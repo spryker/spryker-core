@@ -28,7 +28,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFil
  */
 class CriteriaByQueryFilterPreProcessorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -67,5 +66,4 @@ class CriteriaByQueryFilterPreProcessorTest extends Unit
         $apiRequestTransferAfter = $processor->process($apiRequestTransfer);
         $this->assertSame('{foo: bar}', $apiRequestTransferAfter->getFilter()->getCriteriaJson());
     }
-
 }

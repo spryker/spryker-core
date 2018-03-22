@@ -3,31 +3,35 @@
   "description": "Cart module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/calculation": "^4.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/cart-extension": "^1.0.0",
+    "spryker/kernel": "^3.19.0",
     "spryker/messenger": "^3.0.0",
     "spryker/quote": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/price": "*",
+    "spryker/customer": "*",
+    "spryker/price-product": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/customer": "If you want to use Customer plugins, minimum required version: 7.4.0."
+  },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/",
-      "ClientUnit": "tests/"
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

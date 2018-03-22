@@ -27,7 +27,6 @@ use Spryker\Zed\ProductApi\Business\ProductApiFacade;
  */
 class ProductApiFacadeTest extends Unit
 {
-
     /**
      * @var array
      */
@@ -213,5 +212,4 @@ class ProductApiFacadeTest extends Unit
 
         $this->assertInstanceOf(ApiItemTransfer::class, $resultTransfer);
     }
-
 }

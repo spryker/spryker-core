@@ -12,6 +12,9 @@ use Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryManager;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryWriter;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockMapper;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockReader;
+use Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationMapper;
+use Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationReader;
+use Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationWriter;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateManager;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateMapper;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockWriter;
@@ -25,7 +28,6 @@ use Symfony\Component\Finder\Finder;
  */
 class CmsBlockBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\CmsBlock\Business\Model\CmsBlockReaderInterface
      */
@@ -42,7 +44,9 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsBlockMapper()
     {
-        return new CmsBlockMapper();
+        return new CmsBlockMapper(
+            $this->createCmsBlockStoreRelationMapper()
+        );
     }
 
     /**
@@ -54,6 +58,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createCmsBlockMapper(),
             $this->createCmsBlockGlossaryWriter(),
+            $this->createCmsBlockStoreRelationWriter(),
             $this->getProvidedDependency(CmsBlockDependencyProvider::FACADE_TOUCH),
             $this->createCmsBlockTemplateManager(),
             $this->getProvidedDependency(CmsBlockDependencyProvider::PLUGIN_CMS_BLOCK_UPDATE)
@@ -108,6 +113,28 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationWriterInterface
+     */
+    public function createCmsBlockStoreRelationWriter()
+    {
+        return new CmsBlockStoreRelationWriter(
+            $this->getQueryContainer(),
+            $this->createCmsBlockStoreRelationReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationReaderInterface
+     */
+    public function createCmsBlockStoreRelationReader()
+    {
+        return new CmsBlockStoreRelationReader(
+            $this->getQueryContainer(),
+            $this->createCmsBlockStoreRelationMapper()
+        );
+    }
+
+    /**
      * @return \Symfony\Component\Finder\Finder
      */
     protected function createFinder()
@@ -133,4 +160,11 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
         );
     }
 
+    /**
+     * @return \Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationMapperInterface
+     */
+    protected function createCmsBlockStoreRelationMapper()
+    {
+        return new CmsBlockStoreRelationMapper();
+    }
 }

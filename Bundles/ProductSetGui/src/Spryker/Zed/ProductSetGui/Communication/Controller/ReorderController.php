@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ReorderController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -26,13 +25,13 @@ class ReorderController extends AbstractController
     {
         $dataProvider = $this->getFactory()->createReorderProductSetsFormDataProvider();
         $reorderProductSetsForm = $this->getFactory()
-            ->createReorderProductSetsForm(
+            ->getReorderProductSetsForm(
                 $dataProvider->getData(),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
 
-        if ($reorderProductSetsForm->isValid()) {
+        if ($reorderProductSetsForm->isSubmitted() && $reorderProductSetsForm->isValid()) {
             $productSetTransfers = $this->getFactory()
                 ->createReorderFormDataToTransferMapper()
                 ->mapData($reorderProductSetsForm);
@@ -71,5 +70,4 @@ class ReorderController extends AbstractController
             $productTable->fetchData()
         );
     }
-
 }

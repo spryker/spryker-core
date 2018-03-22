@@ -17,7 +17,6 @@ use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class AttributeMapWriter implements AttributeMapWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
@@ -208,7 +207,7 @@ class AttributeMapWriter implements AttributeMapWriterInterface
      *
      * @return $this
      */
-    protected function addSuggestionTerms(ProductSearchPreferencesTransfer$productSearchPreferencesTransfer, $idProductAttributeKey)
+    protected function addSuggestionTerms(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer, $idProductAttributeKey)
     {
         if ($productSearchPreferencesTransfer->getSuggestionTerms() === true) {
             $this->createNewProductSearchAttributeMapRecord($idProductAttributeKey, PageIndexMap::SUGGESTION_TERMS);
@@ -223,7 +222,7 @@ class AttributeMapWriter implements AttributeMapWriterInterface
      *
      * @return $this
      */
-    protected function addCompletionTerms(ProductSearchPreferencesTransfer$productSearchPreferencesTransfer, $idProductAttributeKey)
+    protected function addCompletionTerms(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer, $idProductAttributeKey)
     {
         if ($productSearchPreferencesTransfer->getCompletionTerms() === true) {
             $this->createNewProductSearchAttributeMapRecord($idProductAttributeKey, PageIndexMap::COMPLETION_TERMS);
@@ -247,5 +246,4 @@ class AttributeMapWriter implements AttributeMapWriterInterface
 
         $entity->save();
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelCollector\Dependency\Facade;
 
 class ProductLabelCollectorToProductLabelBridge implements ProductLabelCollectorToProductLabelInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
      */
@@ -30,5 +29,4 @@ class ProductLabelCollectorToProductLabelBridge implements ProductLabelCollector
     {
         return $this->productLabelFacade->findAllLabels();
     }
-
 }

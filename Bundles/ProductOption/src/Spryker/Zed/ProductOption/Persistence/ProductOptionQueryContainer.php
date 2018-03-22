@@ -25,7 +25,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductOptionQueryContainer extends AbstractQueryContainer implements ProductOptionQueryContainerInterface
 {
-
     const COL_MAX_TAX_RATE = 'MaxTaxRate';
     const COL_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
 
@@ -41,6 +40,39 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         return $this->getFactory()
             ->createProductAbstractQuery()
             ->filterBySku($sku);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
+     */
+    public function queryAllProductAbstractProductOptionGroups()
+    {
+        return $this->getFactory()
+            ->createProductAbstractProductOptionGroupQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryAllProductOptionGroups()
+    {
+        return $this->getFactory()
+            ->createProductOptionGroupQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
+     */
+    public function queryAllProductOptionValues()
+    {
+        return $this->getFactory()
+            ->createProductOptionValueQuery();
     }
 
     /**
@@ -109,6 +141,54 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         return $this->getFactory()
             ->createProductOptionGroupQuery()
             ->filterByIdProductOptionGroup($idProductOptionGroup);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductOptionGroup
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup)
+    {
+        return $this->queryProductOptionGroupById($idProductOptionGroup)
+            ->leftJoinWithSpyProductOptionValue()
+            ->useSpyProductOptionValueQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithProductOptionValuePrice()
+                ->orderByIdProductOptionValue()
+                ->useProductOptionValuePriceQuery(null, Criteria::LEFT_JOIN)
+                    ->orderByFkStore()
+                    ->orderByFkCurrency()
+                ->endUse()
+            ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductOptionGroup
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryActiveProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup)
+    {
+        return $this->queryProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup)
+            ->filterByActive(true);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery
+     */
+    public function queryProductOptionValuePricesByIdProductOptionValue($idProductOptionValue)
+    {
+        return $this->getFactory()
+            ->createProductOptionValuePriceQuery()
+            ->filterByFkProductOptionValue($idProductOptionValue);
     }
 
     /**
@@ -216,7 +296,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryProductsAbstractBySearchTerm($term, LocaleTransfer $localeTransfer)
+    protected function queryProductsAbstractBySearchTerm($term, LocaleTransfer $localeTransfer)
     {
         $query = $this->getFactory()
             ->createProductAbstractQuery();
@@ -257,7 +337,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         $query->groupByAttributes();
         $query->groupByIdProductAbstract();
 
-        if (trim($term) !== '') {
+        $term = trim($term);
+        if ($term !== '') {
             $term = '%' . mb_strtoupper($term) . '%';
 
             $query->where('UPPER(' . SpyProductAbstractTableMap::COL_SKU . ') LIKE ?', $term, PDO::PARAM_STR)
@@ -267,20 +348,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
         return $query;
     }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
-     */
-    public function queryProductOptionGroupWithValues()
-    {
-        return $this->getFactory()
-            ->createProductOptionGroupQuery()
-            ->leftJoinSpyProductOptionValue()
-            ->groupByIdProductOptionGroup();
-    }
-
+    
     /**
      * @api
      *
@@ -327,5 +395,4 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ->queryCountries()
             ->filterByIso2Code($countryIso2Code);
     }
-
 }

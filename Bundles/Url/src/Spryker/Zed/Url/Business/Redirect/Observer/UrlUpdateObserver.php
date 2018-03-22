@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UrlUpdateObserver implements UrlUpdaterAfterSaveObserverInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Business\Redirect\UrlRedirectCreatorInterface
      */
@@ -90,5 +89,4 @@ class UrlUpdateObserver implements UrlUpdaterAfterSaveObserverInterface
 
         return $sourceUrlTransfer;
     }
-
 }

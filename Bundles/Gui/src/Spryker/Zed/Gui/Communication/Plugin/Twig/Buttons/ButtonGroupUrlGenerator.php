@@ -9,7 +9,6 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons;
 
 class ButtonGroupUrlGenerator
 {
-
     const BUTTON_CLASS = 'class';
     const ICON = 'icon';
 
@@ -114,5 +113,4 @@ class ButtonGroupUrlGenerator
 
         return $this->options['options'];
     }
-
 }

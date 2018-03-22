@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\Oms\Business;
 
+use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
 
 interface OmsFacadeInterface
 {
-
     /**
      * Specification:
      *  - Reads all manual event for given order.
@@ -58,6 +59,18 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
+     *  - Checks if all order items are flagged to exclude order from customer.
+     *
+     * @api
+     *
+     * @param int $idOrder
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedExcludeFromCustomer($idOrder);
+
+    /**
+     * Specification:
      *  - Triggers even for given order items, data is used as additional payload which is passed to commands.
      *  - Locks state machine trigger from concurrent access
      *  - Logs state machine transitions
@@ -68,6 +81,7 @@ interface OmsFacadeInterface
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
      *  - Returns data which was aggregated from state machine plugins
+     *  - Returns NULL is case of an internal failure
      *
      * @api
      *
@@ -75,7 +89,7 @@ interface OmsFacadeInterface
      * @param array $orderItemIds
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = []);
 
@@ -92,13 +106,14 @@ interface OmsFacadeInterface
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
      *  - Returns data which was aggregated from state machine plugins
+     *  - Returns NULL is case of an internal failure
      *
      * @api
      *
      * @param array $orderItemIds
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForNewOrderItems(array $orderItemIds, array $data = []);
 
@@ -114,6 +129,7 @@ interface OmsFacadeInterface
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
      *  - Returns data which was aggregated from state machine plugins
+     *  - Returns NULL is case of an internal failure
      *
      * @api
      *
@@ -121,7 +137,7 @@ interface OmsFacadeInterface
      * @param int $orderItemId
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOneOrderItem($eventId, $orderItemId, array $data = []);
 
@@ -132,7 +148,7 @@ interface OmsFacadeInterface
      *
      * @api
      *
-     * @return \Spryker\Zed\Oms\Business\Process\Process[]
+     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
      */
     public function getProcesses();
 
@@ -187,7 +203,7 @@ interface OmsFacadeInterface
      * @param string|null $format
      * @param int|null $fontSize
      *
-     * @return bool
+     * @return string
      */
     public function drawProcess($processName, $highlightState = null, $format = null, $fontSize = null);
 
@@ -254,7 +270,7 @@ interface OmsFacadeInterface
      *
      * @param string $sku
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function getReservedOrderItemsForSku($sku);
 
@@ -265,10 +281,24 @@ interface OmsFacadeInterface
      * @api
      *
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
      */
-    public function sumReservedProductQuantitiesForSku($sku);
+    public function sumReservedProductQuantitiesForSku($sku, StoreTransfer $storeTransfer = null);
+
+    /**
+     * Specification:
+     *  - Returns reserved quantity for the given sku which aggregated in OMS
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer);
 
     /**
      * Specification:
@@ -331,6 +361,7 @@ interface OmsFacadeInterface
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
      *  - Returns data which was aggregated from state machine plugins
+     *  - Returns NULL is case of an internal failure
      *
      * @api
      *
@@ -339,7 +370,7 @@ interface OmsFacadeInterface
      * @param array $logContext
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEvent($eventId, ObjectCollection $orderItems, array $logContext, array $data = []);
 
@@ -355,6 +386,7 @@ interface OmsFacadeInterface
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
      *  - Returns data which was aggregated from state machine plugins
+     *  - Returns NULL is case of an internal failure
      *
      * @api
      *
@@ -362,7 +394,7 @@ interface OmsFacadeInterface
      * @param array $logContext
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForNewItem(ObjectCollection $orderItems, array $logContext, array $data = []);
 
@@ -378,15 +410,16 @@ interface OmsFacadeInterface
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
      *  - Returns data which was aggregated from state machine plugins
+     *  - Returns NULL is case of an internal failure
      *
      * @api
      *
      * @param string $eventId
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderItem
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      * @param array $logContext
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOneItem($eventId, $orderItem, array $logContext, array $data = []);
 
@@ -411,7 +444,7 @@ interface OmsFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder);
 
@@ -462,4 +495,62 @@ interface OmsFacadeInterface
      */
     public function sendOrderShippedMail(SpySalesOrder $salesOrderEntity);
 
+    /**
+     * Specification:
+     *  - Handles stores stock reservation in reservation version table
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return void
+     */
+    public function saveReservationVersion($sku);
+
+    /**
+     * Specification:
+     *  - Writes reservation from other store to synchronize it.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
+     *
+     * @return void
+     */
+    public function importReservation(
+        OmsAvailabilityReservationRequestTransfer $omsAvailabilityReservationRequestTransfer
+    );
+
+    /**
+     * Specification:
+     *   - Reader non exported reservations and run through Reservation export plugins
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function exportReservation();
+
+    /**
+     * Specification:
+     *  - Reads reservation about from as it was set from other stores when stock is shared
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function getReservationsFromOtherStores($sku, StoreTransfer $storeTransfer);
+
+    /**
+     * Specification:
+     *  - Returns last exported reservation version when exporting to external stores
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getLastExportedReservationVersion();
 }

@@ -8,10 +8,10 @@ namespace Spryker\Zed\Oms\Dependency\Plugin;
 
 interface ReservationHandlerPluginInterface
 {
-
     /**
      *
-     * This plugin handles all necessary events related to reservation updates, such as updating Stock, Availability and etc.
+     * Specification:
+     *  - This plugin handles all necessary events related to reservation updates, such as updating Stock, Availability and etc.
      *
      * @api
      *
@@ -20,5 +20,4 @@ interface ReservationHandlerPluginInterface
      * @return void
      */
     public function handle($sku);
-
 }

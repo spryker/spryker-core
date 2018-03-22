@@ -29,7 +29,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PayolutionHandlerTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -84,5 +83,4 @@ class PayolutionHandlerTest extends Unit
     {
         return $this->getMockBuilder(PayolutionClientInterface::class)->getMock();
     }
-
 }

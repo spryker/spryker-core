@@ -1,3 +1,3 @@
 # Braintree Changelog
 
-[Braintree Changelog](https://github.com/spryker/Braintree/releases)
+[Release Changelog](https://github.com/spryker/braintree/releases)

@@ -23,7 +23,6 @@ use SprykerTest\Client\Kernel\Fixtures\Plugin\FooPlugin;
  */
 class AbstractPluginTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -59,5 +58,4 @@ class AbstractPluginTest extends Unit
 
         $this->assertInstanceOf(AbstractClient::class, $client);
     }
-
 }

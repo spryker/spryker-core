@@ -17,8 +17,9 @@
         <column name="fk_shipment_carrier" type="INTEGER" required="true"/>
         <column name="fk_tax_set" type="INTEGER" required="false"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
+        <column name="shipment_method_key" required="false" size="255" type="VARCHAR"/>
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
-        <column name="default_price" type="INTEGER" required="false"/>
+        <column name="default_price" type="INTEGER" required="false" description="Deprecated"/>
         <column name="availability_plugin" size="255" type="VARCHAR"/>
         <column name="price_plugin" size="255" type="VARCHAR"/>
         <column name="delivery_time_plugin" size="255" type="VARCHAR"/>
@@ -35,6 +36,33 @@
             <index-column name="is_active"/>
         </index>
         <id-method-parameter value="spy_shipment_method_pk_seq"/>
+    </table>
+
+    <table name="spy_shipment_method_price" identifierQuoting="true">
+        <column name="id_shipment_method_price" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_currency" required="true" type="INTEGER"/>
+        <column name="fk_store" required="false" type="INTEGER"/>
+        <column name="fk_shipment_method" required="true" type="INTEGER"/>
+        <column name="default_gross_price" required="false" type="INTEGER"/>
+        <column name="default_net_price" required="false" type="INTEGER"/>
+
+        <foreign-key name="spy_shipment_method_price-fk_currency" foreignTable="spy_currency" phpName="Currency" refPhpName="ShipmentMethodPrice">
+            <reference local="fk_currency" foreign="id_currency"/>
+        </foreign-key>
+        <foreign-key name="spy_shipment_method_price-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="ShipmentMethodPrice">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+        <foreign-key name="spy_shipment_method_price-fk_shipment_method" foreignTable="spy_shipment_method" phpName="ShipmentMethod" refPhpName="ShipmentMethodPrice">
+            <reference local="fk_shipment_method" foreign="id_shipment_method"/>
+        </foreign-key>
+
+        <unique name="spy_shipment_method_price-fk_shipment_method-fk_currency-fk_store">
+            <unique-column name="fk_shipment_method"/>
+            <unique-column name="fk_store"/>
+            <unique-column name="fk_currency"/>
+        </unique>
+
+        <id-method-parameter value="spy_shipment_method_price_pk_seq"/>
     </table>
 
 </database>

@@ -18,7 +18,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class DetailedGraphBuilder implements GraphBuilderInterface
 {
-
     /**
      * @var \Spryker\Shared\Graph\GraphInterface
      */
@@ -83,7 +82,7 @@ class DetailedGraphBuilder implements GraphBuilderInterface
     private function buildGraph(array $dependencyTree)
     {
         foreach ($dependencyTree as $dependency) {
-            $bundle = $dependency[DependencyTree::META_BUNDLE];
+            $bundle = $dependency[DependencyTree::META_MODULE];
             $foreignBundle = $dependency[DependencyTree::META_FOREIGN_BUNDLE];
 
             $group = $this->getGroup($bundle, $foreignBundle);
@@ -129,7 +128,7 @@ class DetailedGraphBuilder implements GraphBuilderInterface
         $label = $dependency[DependencyTree::META_LAYER];
         $this->layerAttributes['label'] = $label;
         $this->graph->addNode($rootBundleLayerNodeId, $this->layerAttributes, $group);
-        $this->graph->addEdge($this->getRootNodeId($dependency[DependencyTree::META_BUNDLE]), $rootBundleLayerNodeId);
+        $this->graph->addEdge($this->getRootNodeId($dependency[DependencyTree::META_MODULE]), $rootBundleLayerNodeId);
     }
 
     /**
@@ -223,5 +222,4 @@ class DetailedGraphBuilder implements GraphBuilderInterface
 
         return $mapped[$finderName];
     }
-
 }

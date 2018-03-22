@@ -9,10 +9,8 @@ namespace Spryker\Zed\Gui\Communication\Tabs;
 
 interface TabsInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\TabsViewTransfer
      */
     public function createView();
-
 }

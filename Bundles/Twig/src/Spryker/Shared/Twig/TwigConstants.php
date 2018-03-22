@@ -9,7 +9,6 @@ namespace Spryker\Shared\Twig;
 
 interface TwigConstants
 {
-
     /**
      * Specification:
      * - Configuration options for Yves's twig.
@@ -68,5 +67,4 @@ interface TwigConstants
      * @api
      */
     const ZED_PATH_CACHE_ENABLED = 'ZED_PATH_CACHE_ENABLED';
-
 }

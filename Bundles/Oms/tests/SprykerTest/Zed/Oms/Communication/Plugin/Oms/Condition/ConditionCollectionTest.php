@@ -27,7 +27,6 @@ use Spryker\Zed\Oms\Exception\ConditionNotFoundException;
  */
 class ConditionCollectionTest extends Unit
 {
-
     const CONDITION_NAME = 'conditionName';
 
     /**
@@ -106,11 +105,10 @@ class ConditionCollectionTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
      */
     private function getConditionMock()
     {
         return $this->getMockBuilder(ConditionInterface::class)->getMock();
     }
-
 }

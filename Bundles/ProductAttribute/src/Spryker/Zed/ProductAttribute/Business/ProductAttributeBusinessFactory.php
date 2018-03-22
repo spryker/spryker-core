@@ -24,11 +24,10 @@ use Spryker\Zed\ProductAttribute\ProductAttributeDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductAttribute\ProductAttributeConfig getConfig()
- * @method \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeQueryContainerInterface getQueryContainer()
  */
 class ProductAttributeBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeInterface
      */
@@ -197,5 +196,4 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductAttributeDependencyProvider::SERVICE_UTIL_ENCODING);
     }
-
 }

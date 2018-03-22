@@ -18,13 +18,12 @@ use Spryker\Zed\Category\Communication\Table\UrlTable;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Category\CategoryConfig getConfig()
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  */
 class CategoryCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @var string
      */
@@ -69,16 +68,11 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCategoryCreateForm($idParentNode)
     {
-        $categoryCreateForm = new CategoryType();
-        $categoryCreateForm->setFormPlugins(
-            $this->getCategoryFormPlugins()
-        );
-
         $categoryCreateDataFormProvider = $this->createCategoryCreateFormDataProvider();
         $formFactory = $this->getFormFactory();
 
         return $formFactory->create(
-            $categoryCreateForm,
+            CategoryType::class,
             $categoryCreateDataFormProvider->getData($idParentNode),
             $categoryCreateDataFormProvider->getOptions()
         );
@@ -100,16 +94,11 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCategoryEditForm()
     {
-        $categoryCreateForm = new CategoryType();
-        $categoryCreateForm->setFormPlugins(
-            $this->getCategoryFormPlugins()
-        );
-
         $categoryCreateDataFormProvider = $this->createCategoryEditFormDataProvider();
         $formFactory = $this->getFormFactory();
 
         return $formFactory->create(
-            $categoryCreateForm,
+            CategoryType::class,
             $categoryCreateDataFormProvider->getData(),
             $categoryCreateDataFormProvider->getOptions()
         );
@@ -134,12 +123,11 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCategoryDeleteForm($idCategory)
     {
-        $categoryDeleteForm = new DeleteType();
         $categoryDeleteFormDataProvider = $this->createCategoryDeleteFormDataProvider();
         $formFactory = $this->getFormFactory();
 
         return $formFactory->create(
-            $categoryDeleteForm,
+            DeleteType::class,
             $categoryDeleteFormDataProvider->getData($idCategory),
             $categoryDeleteFormDataProvider->getOptions()
         );
@@ -207,9 +195,8 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryFormPluginInterface[]
      */
-    protected function getCategoryFormPlugins()
+    public function getCategoryFormPlugins()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_FORM_PLUGINS);
     }
-
 }

@@ -7,11 +7,17 @@
 
 namespace Spryker\Zed\Glossary\Communication\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
+ * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
+ */
 class UpdateTranslationForm extends TranslationForm
 {
-
     const TYPE_DATA_EMPTY = 'empty_data';
 
     /**
@@ -21,7 +27,7 @@ class UpdateTranslationForm extends TranslationForm
      */
     protected function addGlossaryKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_GLOSSARY_KEY, 'text', [
+        $builder->add(self::FIELD_GLOSSARY_KEY, TextType::class, [
             'label' => 'Name',
             'attr' => [
                 'readonly' => 'readonly',
@@ -39,9 +45,8 @@ class UpdateTranslationForm extends TranslationForm
      */
     protected function addLocaleCollection(FormBuilderInterface $builder, array $locales)
     {
-        $builder->add(self::FIELD_LOCALES, 'collection', $this->buildLocaleFieldConfiguration(self::TYPE_DATA_EMPTY, $locales));
+        $builder->add(self::FIELD_LOCALES, CollectionType::class, $this->buildLocaleFieldConfiguration(self::TYPE_DATA_EMPTY, $locales));
 
         return $this;
     }
-
 }

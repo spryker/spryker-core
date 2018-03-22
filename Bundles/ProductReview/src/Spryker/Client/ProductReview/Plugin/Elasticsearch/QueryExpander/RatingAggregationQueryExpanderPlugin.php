@@ -19,7 +19,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
  */
 class RatingAggregationQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-
     const AGGREGATION_NAME = 'rating-aggregation';
 
     /**
@@ -47,5 +46,4 @@ class RatingAggregationQueryExpanderPlugin extends AbstractPlugin implements Que
 
         $query->addAggregation($ratingAggregation);
     }
-
 }

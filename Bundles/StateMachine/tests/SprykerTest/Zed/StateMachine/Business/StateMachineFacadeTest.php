@@ -38,7 +38,6 @@ use SprykerTest\Zed\StateMachine\Mocks\TestStateMachineHandler;
  */
 class StateMachineFacadeTest extends Unit
 {
-
     const TESTING_SM = 'TestingSm';
     const TEST_PROCESS_NAME = 'TestProcess';
     const TEST_PROCESS_WITH_LOOP_NAME = 'TestProcessWithLoop';
@@ -604,6 +603,42 @@ class StateMachineFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testStateMachineExistsReturnsTrueWhenStateMachineHasHandler()
+    {
+        // Assign
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineName = $stateMachineHandler->getStateMachineName();
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+        $expectedResult = true;
+
+        // Act
+        $actualResult = $stateMachineFacade->stateMachineExists($stateMachineName);
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testStateMachineExistsReturnsFalseWhenStateMachineHasNoHandler()
+    {
+        // Assign
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineName = $stateMachineHandler->getStateMachineName() . "SomethingElse";
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+        $expectedResult = false;
+
+        // Act
+        $actualResult = $stateMachineFacade->stateMachineExists($stateMachineName);
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
      * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface $stateMachineHandler
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachineFacade
@@ -635,5 +670,4 @@ class StateMachineFacadeTest extends Unit
 
         return $stateMachineFacade;
     }
-
 }

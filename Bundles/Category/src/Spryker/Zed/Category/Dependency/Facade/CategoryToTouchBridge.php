@@ -9,7 +9,6 @@ namespace Spryker\Zed\Category\Dependency\Facade;
 
 class CategoryToTouchBridge implements CategoryToTouchInterface
 {
-
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
      */
@@ -82,5 +81,4 @@ class CategoryToTouchBridge implements CategoryToTouchInterface
     {
         return $this->touchFacade->getItemsByType($itemType);
     }
-
 }

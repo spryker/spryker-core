@@ -16,12 +16,8 @@ use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider;
-use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryFormType;
-use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryTranslationFormType;
-use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
-use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageMetaAttributesFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Version\CmsVersionFormType;
 use Spryker\Zed\CmsGui\Communication\Mapper\CmsVersionMapper;
 use Spryker\Zed\CmsGui\Communication\Table\CmsPageTable;
@@ -34,7 +30,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\CmsGui\Communication\Table\CmsPageTable
      */
@@ -44,7 +39,8 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCmsQueryContainer(),
             $this->getLocaleFacade(),
             $this->getConfig(),
-            $this->getCmsFacade()
+            $this->getCmsFacade(),
+            $this->getCmsPageTableExpanderPlugins()
         );
     }
 
@@ -75,10 +71,8 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsVersionForm(CmsVersionDataProvider $cmsVersionDataProvider, $idCmsPage = null, $version = null)
     {
-        $cmsVersionFormType = $this->createCmsVersionFormType();
-
         return $this->getFormFactory()->create(
-            $cmsVersionFormType,
+            CmsVersionFormType::class,
             $cmsVersionDataProvider->getData($idCmsPage, $version),
             $cmsVersionDataProvider->getOptions($idCmsPage)
         );
@@ -92,10 +86,8 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsPageForm(CmsPageFormTypeDataProvider $cmsPageFormTypeDataProvider, $idCmsPage = null)
     {
-        $cmsPageFormType = $this->createCmsPageFormType();
-
         return $this->getFormFactory()->create(
-            $cmsPageFormType,
+            CmsPageFormType::class,
             $cmsPageFormTypeDataProvider->getData($idCmsPage),
             $cmsPageFormTypeDataProvider->getOptions()
         );
@@ -111,10 +103,8 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
         CmsGlossaryFormTypeDataProvider $cmsGlossaryFormTypeDataProvider,
         $idCmsPage
     ) {
-        $cmsGlossaryFormType = $this->createCmsGlossaryFormType();
-
         return $this->getFormFactory()->create(
-            $cmsGlossaryFormType,
+            CmsGlossaryFormType::class,
             $cmsGlossaryFormTypeDataProvider->getData($idCmsPage),
             $cmsGlossaryFormTypeDataProvider->getOptions()
         );
@@ -143,25 +133,6 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormTypeInterface
-     */
-    public function createCmsPageFormType()
-    {
-        return new CmsPageFormType(
-            $this->createCmsPageAttributesFormType(),
-            $this->createCmsPageMetaAttributesFormType()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsGui\Communication\Form\Version\CmsVersionFormType
-     */
-    protected function createCmsVersionFormType()
-    {
-        return new CmsVersionFormType();
-    }
-
-    /**
      * @return \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider
      */
     public function createCmsGlossaryFormTypeDataProvider()
@@ -170,41 +141,9 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormTypeInterface
-     */
-    public function createCmsGlossaryFormType()
-    {
-        return new CmsGlossaryFormType();
-    }
-
-    /**
-     * @return \Symfony\Component\Form\FormTypeInterface
-     */
-    public function createCmsGlossaryAttributesFormType()
-    {
-        return new CmsGlossaryAttributesFormType();
-    }
-
-    /**
-     * @return \Symfony\Component\Form\FormTypeInterface
-     */
-    public function createCmsPageAttributesFormType()
-    {
-        return new CmsPageAttributesFormType($this->createUniqueUrlConstraint(), $this->createUniqueNameConstraint());
-    }
-
-    /**
-     * @return \Symfony\Component\Form\FormTypeInterface
-     */
-    public function createCmsPageMetaAttributesFormType()
-    {
-        return new CmsPageMetaAttributesFormType();
-    }
-
-    /**
      * @return \Symfony\Component\Validator\Constraint
      */
-    protected function createUniqueUrlConstraint()
+    public function createUniqueUrlConstraint()
     {
         return new UniqueUrl([
             UniqueUrl::OPTION_URL_FACADE => $this->getUrlFacade(),
@@ -215,7 +154,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueName
      */
-    protected function createUniqueNameConstraint()
+    public function createUniqueNameConstraint()
     {
         return new UniqueName([
             UniqueName::OPTION_CMS_QUERY_CONTAINER => $this->getCmsQueryContainer(),
@@ -249,14 +188,6 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCmsQueryContainer(),
             $this->getUtilEncodingService()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryTranslationFormType|\Symfony\Component\Form\FormTypeInterface
-     */
-    public function createCmsGlossaryTranslationFormType()
-    {
-        return new CmsGlossaryTranslationFormType();
     }
 
     /**
@@ -325,4 +256,19 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(CmsGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
+    /**
+     * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface[]
+     */
+    protected function getCmsPageTableExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGINS_CMS_PAGE_TABLE_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CreateGlossaryExpanderPluginInterface[]
+     */
+    public function getCreateGlossaryExpanderPlugins()
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGINS_CREATE_GLOSSARY_EXPANDER);
+    }
 }

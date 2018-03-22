@@ -13,12 +13,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductApi\ProductApiConfig;
 
 /**
- * @method \Spryker\Zed\ProductApi\Business\ProductApiFacade getFacade()
+ * @method \Spryker\Zed\ProductApi\Business\ProductApiFacadeInterface getFacade()
  * @method \Spryker\Zed\Product\Communication\ProductCommunicationFactory getFactory()
  */
 class ProductApiValidatorPlugin extends AbstractPlugin implements ApiValidatorPluginInterface
 {
-
     /**
      * @api
      *
@@ -38,5 +37,4 @@ class ProductApiValidatorPlugin extends AbstractPlugin implements ApiValidatorPl
     {
         return $this->getFacade()->validate($apiDataTransfer);
     }
-
 }

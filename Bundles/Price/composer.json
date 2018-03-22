@@ -3,32 +3,27 @@
   "description": "Price module",
   "license": "proprietary",
   "require": {
-    "spryker/config": "^3.0.0",
+    "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
-    "spryker/product": "^5.0.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/touch": "^3.0.0"
+    "spryker/quote": "^1.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/twig": "*"
   },
   "suggest": {
     "spryker/installer": "If you want to use Installer plugins.",
-    "spryker/silex": "If you want to use ServiceProvider."
+    "spryker/silex": "If you want to use ServiceProvider.",
+    "spryker/twig": "If you want to use twig extension plugins"
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "minimum-stability": "dev",

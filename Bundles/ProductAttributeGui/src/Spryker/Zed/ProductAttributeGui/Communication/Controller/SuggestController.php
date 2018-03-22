@@ -11,12 +11,10 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\ProductAttributeGui\Business\ProductAttributeGuiFacade getFacade()
  * @method \Spryker\Zed\ProductAttributeGui\Communication\ProductAttributeGuiCommunicationFactory getFactory()
  */
 class SuggestController extends AbstractController
 {
-
     const PARAM_SEARCH_TEXT = 'q';
 
     /**
@@ -34,5 +32,4 @@ class SuggestController extends AbstractController
 
         return $this->jsonResponse($keys);
     }
-
 }

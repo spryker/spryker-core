@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class OrderCalculatorExecutor implements OrderCalculatorExecutorInterface
 {
-
     /**
      * @var array|\Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[]
      */
@@ -70,5 +69,4 @@ class OrderCalculatorExecutor implements OrderCalculatorExecutorInterface
 
         return $orderTransfer;
     }
-
 }

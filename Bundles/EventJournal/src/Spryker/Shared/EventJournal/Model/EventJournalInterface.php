@@ -15,7 +15,6 @@ use Spryker\Shared\EventJournal\Model\Writer\WriterInterface;
  */
 interface EventJournalInterface
 {
-
     /**
      * @param \Spryker\Shared\EventJournal\Model\Collector\DataCollectorInterface $dataCollector
      *
@@ -43,5 +42,4 @@ interface EventJournalInterface
      * @return void
      */
     public function setEventWriter(WriterInterface $writer);
-
 }

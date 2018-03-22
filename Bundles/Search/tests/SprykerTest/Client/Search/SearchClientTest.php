@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Functional\Spryker\Client;
+namespace SprykerTest\Client\Search;
 
 use Codeception\Test\Unit;
 use Elastica\Client;
@@ -17,20 +17,20 @@ use Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface;
 use Spryker\Client\Search\Model\Handler\ElasticsearchSearchHandler;
 use Spryker\Client\Search\Plugin\Config\SearchConfig;
 use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchKeysQuery;
+use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchStringQuery;
 use Spryker\Client\Search\SearchClient;
 use Spryker\Client\Search\SearchFactory;
 
 /**
  * Auto-generated group annotations
- * @group Functional
- * @group Spryker
+ * @group SprykerTest
  * @group Client
+ * @group Search
  * @group SearchClientTest
  * Add your own group annotations below this line
  */
 class SearchClientTest extends Unit
 {
-
     /**
      * @var \Spryker\Client\Search\SearchClientInterface|\Spryker\Client\Kernel\AbstractClient
      */
@@ -156,7 +156,7 @@ class SearchClientTest extends Unit
             ->willReturn($this->getMockBuilder(QueryInterface::class)->getMock());
 
         $queryExpanders = [
-            $queryExpanderMock
+            $queryExpanderMock,
         ];
 
         $result = $this->searchClient->expandQuery($queryMock, $queryExpanders);
@@ -189,6 +189,28 @@ class SearchClientTest extends Unit
     /**
      * @return void
      */
+    public function testSearchString()
+    {
+        $expectedQuery = new SearchStringQuery('foo:bar', 25, 100);
+
+        /** @var \Spryker\Client\Search\SearchClient|\PHPUnit_Framework_MockObject_MockObject $clientMock */
+        $clientMock = $this->getMockBuilder(SearchClient::class)
+            ->setMethods(['search'])
+            ->disableOriginalConstructor()
+            ->getMock();
+        $clientMock
+            ->expects($this->once())
+            ->method('search')
+            ->with($expectedQuery);
+
+        $clientMock->setFactory(new SearchFactory());
+
+        $clientMock->searchQueryString('foo:bar', 25, 100);
+    }
+
+    /**
+     * @return void
+     */
     protected function prepareSearchClientForSearchTest()
     {
         $elasticsearchSearchHandlerMock = $this->getMockBuilder(ElasticsearchSearchHandler::class)
@@ -209,5 +231,4 @@ class SearchClientTest extends Unit
 
         $this->searchClient->setFactory($searchFactoryMock);
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Url\Business\Url\UrlCreatorBeforeSaveObserverInterface;
 
 class UrlCreatePluginObserver implements UrlCreatorBeforeSaveObserverInterface, UrlCreatorAfterSaveObserverInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Dependency\Plugin\UrlCreatePluginInterface[]
      */
@@ -38,5 +37,4 @@ class UrlCreatePluginObserver implements UrlCreatorBeforeSaveObserverInterface, 
             $urlCreatePlugin->create($urlTransfer);
         }
     }
-
 }

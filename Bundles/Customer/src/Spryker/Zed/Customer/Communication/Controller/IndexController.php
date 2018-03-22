@@ -10,12 +10,11 @@ namespace Spryker\Zed\Customer\Communication\Controller;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
- * @method \Spryker\Zed\Customer\Business\CustomerFacade getFacade()
+ * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
  * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {
-
     /**
      * @return array
      */
@@ -39,5 +38,4 @@ class IndexController extends AbstractController
 
         return $this->jsonResponse($table->fetchData());
     }
-
 }

@@ -10,9 +10,11 @@ namespace Spryker\Client\Collector\Matcher;
 use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
+/**
+ * @deprecated use \Spryker\Client\Url\Matcher\UrlMatcher
+ */
 class UrlMatcher implements UrlMatcherInterface
 {
-
     /**
      * @var \Spryker\Shared\KeyBuilder\KeyBuilderInterface
      */
@@ -56,5 +58,4 @@ class UrlMatcher implements UrlMatcherInterface
 
         return false;
     }
-
 }

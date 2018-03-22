@@ -26,7 +26,6 @@ use Spryker\Shared\ProductGroup\ProductGroupConfig;
  */
 class UpdateProductGroupTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -245,5 +244,4 @@ class UpdateProductGroupTest extends Unit
         $actualProductGroupTransfer = $this->tester->getFacade()->findProductGroup($productGroupTransfer);
         $this->assertCount(1, $actualProductGroupTransfer->getIdProductAbstracts(), 'Product group should have expected number of products.');
     }
-
 }

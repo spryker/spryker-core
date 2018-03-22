@@ -9,12 +9,10 @@ namespace Spryker\Zed\Propel\Business\Model;
 
 interface PropelConfigConverterInterface
 {
-
     /**
      * @throws \Exception
      *
      * @return void
      */
     public function convertConfig();
-
 }

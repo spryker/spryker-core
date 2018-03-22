@@ -12,11 +12,10 @@ use Spryker\Zed\ProductNew\Business\Label\ProductAbstractRelationReader;
 
 /**
  * @method \Spryker\Zed\ProductNew\ProductNewConfig getConfig()
- * @method \Spryker\Zed\ProductNew\Persistence\ProductNewQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductNew\Persistence\ProductNewQueryContainerInterface getQueryContainer()
  */
 class ProductNewBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductNew\Business\Label\ProductAbstractRelationReaderInterface
      */
@@ -24,5 +23,4 @@ class ProductNewBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAbstractRelationReader($this->getQueryContainer(), $this->getConfig());
     }
-
 }

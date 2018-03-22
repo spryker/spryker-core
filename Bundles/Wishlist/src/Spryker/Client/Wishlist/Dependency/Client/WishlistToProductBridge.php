@@ -9,7 +9,6 @@ namespace Spryker\Client\Wishlist\Dependency\Client;
 
 class WishlistToProductBridge implements WishlistToProductInterface
 {
-
     /**
      * @var \Spryker\Client\Product\ProductClientInterface
      */
@@ -32,5 +31,4 @@ class WishlistToProductBridge implements WishlistToProductInterface
     {
         return $this->productClient->getProductConcreteCollection($idProductConcreteCollection);
     }
-
 }

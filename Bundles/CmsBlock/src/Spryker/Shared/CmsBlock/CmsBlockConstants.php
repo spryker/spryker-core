@@ -9,7 +9,6 @@ namespace Spryker\Shared\CmsBlock;
 
 interface CmsBlockConstants
 {
-
     /**
      * Specification
      * - Defines project name for absolute path to template folder
@@ -25,5 +24,4 @@ interface CmsBlockConstants
      * @api
      */
     const YVES_THEME = 'YVES_THEME';
-
 }

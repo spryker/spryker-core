@@ -11,7 +11,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class NamespaceExtractor implements NamespaceExtractorInterface
 {
-
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $directory
      * @param string $baseDirectoryGlobPattern
@@ -40,5 +39,4 @@ class NamespaceExtractor implements NamespaceExtractorInterface
 
         return $regularExpression;
     }
-
 }

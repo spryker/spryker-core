@@ -11,7 +11,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class UseForeignConstants implements ViolationFinderInterface
 {
-
     /**
      * @param array $dependency
      *
@@ -21,5 +20,4 @@ class UseForeignConstants implements ViolationFinderInterface
     {
         return (preg_match('/Spryker\\\\Shared\\\\(.*?)Constants/', $dependency[DependencyTree::META_FOREIGN_CLASS_NAME]));
     }
-
 }

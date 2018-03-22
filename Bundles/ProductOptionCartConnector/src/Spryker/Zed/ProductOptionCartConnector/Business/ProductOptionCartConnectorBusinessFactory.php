@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionCartQuantity;
 use Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionValueExpander;
+use Spryker\Zed\ProductOptionCartConnector\Business\Validator\ProductOptionValuePriceValidator;
 use Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorDependencyProvider;
 
 /**
@@ -19,15 +20,31 @@ use Spryker\Zed\ProductOptionCartConnector\ProductOptionCartConnectorDependencyP
  */
 class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductOptionCartConnector\Business\Model\ProductOptionValueExpanderInterface
      */
     public function createProductOptionValueExpander()
     {
         return new ProductOptionValueExpander(
-            $this->getProvidedDependency(ProductOptionCartConnectorDependencyProvider::FACADE_PRODUCT_OPTION)
+            $this->getProductOptionFacade(),
+            $this->getPriceFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface
+     */
+    protected function getProductOptionFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionCartConnectorDependencyProvider::FACADE_PRODUCT_OPTION);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceFacadeInterface
+     */
+    protected function getPriceFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionCartConnectorDependencyProvider::FACADE_PRICE);
     }
 
     /**
@@ -46,4 +63,14 @@ class ProductOptionCartConnectorBusinessFactory extends AbstractBusinessFactory
         return new GroupKeyExpander();
     }
 
+    /**
+     * @return \Spryker\Zed\ProductOptionCartConnector\Business\Validator\ProductOptionValuePriceValidatorInterface
+     */
+    public function createProductOptionValuePriceValidator()
+    {
+        return new ProductOptionValuePriceValidator(
+            $this->getProductOptionFacade(),
+            $this->getPriceFacade()
+        );
+    }
 }

@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class SymfonySharedTester extends Actor
 {
-
     use _generated\SymfonySharedTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

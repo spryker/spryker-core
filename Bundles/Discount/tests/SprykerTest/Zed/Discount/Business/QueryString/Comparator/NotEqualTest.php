@@ -24,7 +24,6 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\NotEqual;
  */
 class NotEqualTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -91,5 +90,4 @@ class NotEqualTest extends Unit
     {
         return new NotEqual();
     }
-
 }

@@ -15,11 +15,10 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig_Environment;
 
 /**
- * @method \Spryker\Yves\CmsContentWidgetProductSetConnector\CmsContentWidgetProductSetConnectorConnectorFactory getFactory()
+ * @method \Spryker\Yves\CmsContentWidgetProductSetConnector\CmsContentWidgetProductSetConnectorFactory getFactory()
  */
 class CmsProductSetContentWidgetPlugin extends AbstractPlugin implements CmsContentWidgetPluginInterface
 {
-
     /**
      * @var \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface
      */
@@ -38,12 +37,23 @@ class CmsProductSetContentWidgetPlugin extends AbstractPlugin implements CmsCont
      */
     public function getContentWidgetFunction()
     {
-        return function (Twig_Environment $twig, array $context, $productSetKeys, $templateIdentifier = null) {
-            return $twig->render(
-                $this->resolveTemplatePath($templateIdentifier),
-                $this->getContent($context, $productSetKeys)
-            );
-        };
+        return [$this, 'contentWidgetFunction'];
+    }
+
+    /**
+     * @param \Twig_Environment $twig
+     * @param array $context
+     * @param array|string $productSetKeys
+     * @param string|null $templateIdentifier
+     *
+     * @return string
+     */
+    public function contentWidgetFunction(Twig_Environment $twig, array $context, $productSetKeys, $templateIdentifier = null)
+    {
+        return $twig->render(
+            $this->resolveTemplatePath($templateIdentifier),
+            $this->getContent($context, $productSetKeys)
+        );
     }
 
     /**
@@ -182,5 +192,4 @@ class CmsProductSetContentWidgetPlugin extends AbstractPlugin implements CmsCont
 
         return $productSetKeys;
     }
-
 }

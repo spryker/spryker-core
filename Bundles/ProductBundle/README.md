@@ -1,5 +1,8 @@
 # ProductBundle Module
 
+Product bundles are two or more existing products combined into a new product for store display and sales purposes. Typically bundles consist of concrete products, because all items in the bundle need to be potential order items (i.e. have stock). The new (bundled) product does not physically exist in the bundled state. A bundle, when bought will still be handled as separate items in the order management system.
+ProductBundle provides all these product bundle features for combining multiple concrete products to a single one, and selling it.
+
 ## Installation
 
 ```
@@ -206,4 +209,4 @@ Take the new implementation for listing order items, including `src/Pyz/Yves/Cus
 
 ## Documentation
 
-[Documentation](https://spryker.github.io)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/products/product/product_bundles.html)

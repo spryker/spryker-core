@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Transformer implements TransformerInterface
 {
-
     /**
      * @var \Spryker\Zed\Api\Communication\Formatter\FormatterInterface
      */
@@ -107,5 +106,4 @@ class Transformer implements TransformerInterface
     {
         return $apiResponseTransfer->getCode() === ApiConfig::HTTP_CODE_NO_CONTENT || $apiResponseTransfer->getType() === ApiOptionsTransfer::class;
     }
-
 }

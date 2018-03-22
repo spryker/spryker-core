@@ -15,7 +15,6 @@ use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToPro
 
 class ProductValidator implements ProductValidatorInterface
 {
-
     const MESSAGE_ERROR_ABSTRACT_PRODUCT_EXISTS = 'product-cart.validation.error.abstract-product-exists';
     const MESSAGE_ERROR_CONCRETE_PRODUCT_EXISTS = 'product-cart.validation.error.concrete-product-exists';
     const MESSAGE_PARAM_SKU = 'sku';
@@ -121,5 +120,4 @@ class ProductValidator implements ProductValidatorInterface
 
         return $responseTransfer;
     }
-
 }

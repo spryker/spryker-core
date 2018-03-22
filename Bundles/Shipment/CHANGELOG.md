@@ -1,3 +1,3 @@
 # Shipment Changelog
 
-[Shipment Changelog](https://github.com/spryker/Shipment/releases)
+[Release Changelog](https://github.com/spryker/shipment/releases)

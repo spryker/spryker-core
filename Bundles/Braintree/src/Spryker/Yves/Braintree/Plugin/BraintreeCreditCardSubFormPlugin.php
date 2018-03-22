@@ -15,7 +15,6 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
  */
 class BraintreeCreditCardSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
 {
-
     /**
      * @return \Spryker\Yves\Braintree\Form\PayPalSubForm
      */
@@ -31,5 +30,4 @@ class BraintreeCreditCardSubFormPlugin extends AbstractPlugin implements SubForm
     {
         return $this->getFactory()->createCreditCardFormDataProvider();
     }
-
 }

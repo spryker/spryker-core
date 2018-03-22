@@ -9,7 +9,6 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 interface ClassDefinitionInterface extends DefinitionInterface
 {
-
     /**
      * @return array
      */
@@ -50,4 +49,8 @@ interface ClassDefinitionInterface extends DefinitionInterface
      */
     public function hasArrayObject();
 
+    /**
+     * @return string
+     */
+    public function getEntityNamespace();
 }

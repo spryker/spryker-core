@@ -12,7 +12,6 @@ use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToProductQu
 
 class ProductBundleIdHydrator implements ProductBundleIdHydratorInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToProductQueryContainerInterface
      */
@@ -57,5 +56,4 @@ class ProductBundleIdHydrator implements ProductBundleIdHydratorInterface
     {
         return $this->productQueryContainer->queryProductConcreteBySku($sku)->findOne();
     }
-
 }

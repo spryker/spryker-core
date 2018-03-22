@@ -22,7 +22,6 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderHydrator implements OrderHydratorInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
@@ -62,7 +61,7 @@ class OrderHydrator implements OrderHydratorInterface
     {
         $orderEntity = $this->getOrderEntity($orderTransfer);
 
-        $this->queryContainer->queryOrderItemsStateHistoriesOrderedByNewestState($orderEntity->getItems());
+        $this->queryContainer->fillOrderItemsWithLatestStates($orderEntity->getItems());
 
         $orderTransfer = $this->createOrderTransfer($orderEntity);
 
@@ -119,7 +118,7 @@ class OrderHydrator implements OrderHydratorInterface
             );
         }
 
-        $this->queryContainer->queryOrderItemsStateHistoriesOrderedByNewestState($orderEntity->getItems());
+        $this->queryContainer->fillOrderItemsWithLatestStates($orderEntity->getItems());
 
         $orderTransfer = $this->createOrderTransfer($orderEntity);
 
@@ -196,6 +195,8 @@ class OrderHydrator implements OrderHydratorInterface
     {
         $orderTransfer = new OrderTransfer();
         $orderTransfer->fromArray($orderEntity->toArray(), true);
+        $orderTransfer->setCustomerReference($orderEntity->getCustomerReference());
+        // Deprecated: Using FK to customer is obsolete, but needed to prevent BC break.
         $orderTransfer->setFkCustomer($orderEntity->getFkCustomer());
 
         return $orderTransfer;
@@ -300,8 +301,15 @@ class OrderHydrator implements OrderHydratorInterface
         $stateTransfer->fromArray($orderItemEntity->getState()->toArray(), true);
         $stateTransfer->setIdSalesOrder($orderItemEntity->getIdSalesOrderItem());
 
-        $lastStateHistory = $orderItemEntity->getState()->getStateHistories()->getLast();
-        $stateTransfer->setCreatedAt($lastStateHistory->getCreatedAt());
+        $lastStateHistory = $this->queryContainer
+            ->queryOmsOrderItemStateHistoryByOrderItemIdAndOmsStateIdDesc(
+                $orderItemEntity->getIdSalesOrderItem(),
+                $orderItemEntity->getFkOmsOrderItemState()
+            )->findOne();
+
+        if ($lastStateHistory) {
+            $stateTransfer->setCreatedAt($lastStateHistory->getCreatedAt());
+        }
 
         $itemTransfer->setState($stateTransfer);
     }
@@ -387,8 +395,9 @@ class OrderHydrator implements OrderHydratorInterface
     protected function hydrateMissingCustomer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
         if (!$orderEntity->getCustomer()) {
+            $orderTransfer->setCustomerReference(null);
+            // Deprecated: Using FK to customer is obsolete, but needed to prevent BC break.
             $orderTransfer->setFkCustomer(null);
         }
     }
-
 }

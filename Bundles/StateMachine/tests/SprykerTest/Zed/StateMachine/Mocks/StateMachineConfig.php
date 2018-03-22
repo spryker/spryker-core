@@ -11,7 +11,6 @@ use Spryker\Zed\StateMachine\StateMachineConfig as SprykerStateMachineConfig;
 
 class StateMachineConfig extends SprykerStateMachineConfig
 {
-
     /**
      * @return string
      */
@@ -19,5 +18,4 @@ class StateMachineConfig extends SprykerStateMachineConfig
     {
         return realpath(__DIR__ . '/../_support/Fixtures');
     }
-
 }

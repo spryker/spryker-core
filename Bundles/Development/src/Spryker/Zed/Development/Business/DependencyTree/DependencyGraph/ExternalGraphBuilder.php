@@ -12,7 +12,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class ExternalGraphBuilder implements GraphBuilderInterface
 {
-
     const FONT_COLOR = 'fontcolor';
     const LABEL = 'label';
 
@@ -37,7 +36,7 @@ class ExternalGraphBuilder implements GraphBuilderInterface
     public function build(array $dependencyTree)
     {
         foreach ($dependencyTree as $dependency) {
-            $this->graph->addNode($dependency[DependencyTree::META_BUNDLE], $this->getFromAttributes($dependency));
+            $this->graph->addNode($dependency[DependencyTree::META_MODULE], $this->getFromAttributes($dependency));
 
             if (!empty($dependency[DependencyTree::META_COMPOSER_NAME])) {
                 $this->graph->addNode($dependency[DependencyTree::META_COMPOSER_NAME], $this->getToAttributes($dependency));
@@ -48,7 +47,7 @@ class ExternalGraphBuilder implements GraphBuilderInterface
             if (empty($dependency[DependencyTree::META_COMPOSER_NAME])) {
                 continue;
             }
-            $this->graph->addEdge($dependency[DependencyTree::META_BUNDLE], $dependency[DependencyTree::META_COMPOSER_NAME], $this->getEdgeAttributes($dependency));
+            $this->graph->addEdge($dependency[DependencyTree::META_MODULE], $dependency[DependencyTree::META_COMPOSER_NAME], $this->getEdgeAttributes($dependency));
         }
 
         return $this->graph->render('svg');
@@ -62,7 +61,7 @@ class ExternalGraphBuilder implements GraphBuilderInterface
     private function getFromAttributes(array $dependency)
     {
         $attributes = [];
-        if ($dependency[DependencyTree::META_BUNDLE_IS_ENGINE]) {
+        if ($dependency[DependencyTree::META_MODULE_IS_ENGINE]) {
             $attributes[static::FONT_COLOR] = static::ENGINE_BUNDLE_FONT_COLOR;
         }
 
@@ -81,7 +80,7 @@ class ExternalGraphBuilder implements GraphBuilderInterface
             static::LABEL => $label,
         ];
 
-        if ($dependency[DependencyTree::META_BUNDLE_IS_ENGINE]) {
+        if ($dependency[DependencyTree::META_MODULE_IS_ENGINE]) {
             $attributes[static::FONT_COLOR] = static::ENGINE_BUNDLE_FONT_COLOR;
         }
 
@@ -102,5 +101,4 @@ class ExternalGraphBuilder implements GraphBuilderInterface
 
         return $attributes;
     }
-
 }

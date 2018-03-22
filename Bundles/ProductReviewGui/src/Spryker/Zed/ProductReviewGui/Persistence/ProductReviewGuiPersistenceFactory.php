@@ -12,11 +12,10 @@ use Spryker\Zed\ProductReviewGui\ProductReviewGuiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductReviewGui\ProductReviewGuiConfig getConfig()
- * @method \Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainerInterface getQueryContainer()
  */
 class ProductReviewGuiPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductReviewGui\Dependency\QueryContainer\ProductReviewGuiToProductReviewInterface
      */
@@ -24,5 +23,4 @@ class ProductReviewGuiPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(ProductReviewGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_REVIEW);
     }
-
 }

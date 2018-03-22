@@ -9,11 +9,9 @@ namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class DiscountTotalCalculator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -56,5 +54,4 @@ class DiscountTotalCalculator implements CalculatorInterface
         }
         return $totalDiscountAmount;
     }
-
 }

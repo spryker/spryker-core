@@ -14,12 +14,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
- * @method \Spryker\Zed\Tax\Business\TaxFacade getFacade()
- * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
+ * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
  */
 class RateController extends AbstractController
 {
-
     const PARAM_URL_ID_TAX_RATE = 'id-tax-rate';
 
     /**
@@ -29,12 +28,10 @@ class RateController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $taxRateFormDataProvider = $this->getFactory()->createTaxRateFormDataProvider();
-
-        $form = $this->getFactory()->createTaxRateForm($taxRateFormDataProvider);
+        $form = $this->getFactory()->getTaxRateForm();
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $taxRateTransfer = $form->getData();
 
             $rowCount = $this->getQueryContainer()
@@ -73,10 +70,10 @@ class RateController extends AbstractController
         $taxRateTransfer = $this->getFacade()->getTaxRate($idTaxRate);
         $taxRateFormDataProvider = $this->getFactory()->createTaxRateFormDataProvider($taxRateTransfer);
 
-        $form = $this->getFactory()->createTaxRateForm($taxRateFormDataProvider);
+        $form = $this->getFactory()->getTaxRateForm($taxRateFormDataProvider);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $taxRateTransfer = $form->getData();
             $taxRateTransfer->setIdTaxRate($idTaxRate);
 
@@ -158,5 +155,4 @@ class RateController extends AbstractController
             $table->fetchData()
         );
     }
-
 }

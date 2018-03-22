@@ -13,7 +13,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 class Equal implements ComparatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param string $withValue
@@ -71,5 +70,4 @@ class Equal implements ComparatorInterface
 
         return true;
     }
-
 }

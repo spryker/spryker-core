@@ -11,12 +11,11 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface;
 
 /**
- * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacade getFacade()
+ * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface getFacade()
  * @method \Spryker\Zed\DiscountPromotion\Communication\DiscountPromotionCommunicationFactory getFactory()
  */
 class DiscountPromotionPostUpdatePlugin extends BaseDiscountPromotionSaverPlugin implements DiscountPostUpdatePluginInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -38,5 +37,4 @@ class DiscountPromotionPostUpdatePlugin extends BaseDiscountPromotionSaverPlugin
 
         return $discountConfiguratorTransfer;
     }
-
 }

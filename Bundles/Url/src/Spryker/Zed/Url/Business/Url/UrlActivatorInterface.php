@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 interface UrlActivatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
@@ -25,5 +24,4 @@ interface UrlActivatorInterface
      * @return void
      */
     public function deactivateUrl(UrlTransfer $urlTransfer);
-
 }

@@ -13,11 +13,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig getConfig()
- * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterface getQueryContainer()
  */
 class ProductLabelGuiPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
      */
@@ -33,5 +32,4 @@ class ProductLabelGuiPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyProductLabelProductAbstractQuery::create();
     }
-
 }

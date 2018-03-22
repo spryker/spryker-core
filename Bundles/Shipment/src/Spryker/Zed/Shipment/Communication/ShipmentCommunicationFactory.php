@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Communication;
 
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Shipment\Communication\Form\CarrierForm;
 use Spryker\Zed\Shipment\Communication\Form\DataProvider\CarrierFormDataProvider;
@@ -16,12 +17,12 @@ use Spryker\Zed\Shipment\Communication\Table\MethodTable;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
- * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
+ * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
  */
 class ShipmentCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\Shipment\Communication\Table\MethodTable
      */
@@ -40,9 +41,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCarrierForm(array $formData, array $formOptions = [])
     {
-        $form = new CarrierForm();
-
-        return $this->getFormFactory()->create($form, $formData, $formOptions);
+        return $this->getFormFactory()->create(CarrierForm::class, $formData, $formOptions);
     }
 
     /**
@@ -52,10 +51,10 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     {
         return new MethodFormDataProvider(
             $this->getQueryContainer(),
-            $this->getTaxFacade(),
             $this->getPlugins(),
-            $this->getMoneyFacade(),
-            $this->getStore()
+            $this->getFacade(),
+            $this->getTaxFacade(),
+            $this->getMoneyFacade()
         );
     }
 
@@ -76,16 +75,14 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $data
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createMethodForm(array $data, array $options = [])
+    public function createMethodForm(ShipmentMethodTransfer $data, array $options = [])
     {
-        $form = new MethodForm();
-
-        return $this->getFormFactory()->create($form, $data, $options);
+        return $this->getFormFactory()->create(MethodForm::class, $data, $options);
     }
 
     /**
@@ -107,9 +104,24 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface
      */
-    public function getStore()
+    public function getStoreFacade()
     {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::STORE);
+        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_STORE);
     }
 
+    /**
+     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface
+     */
+    public function getCurrencyFacade()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    public function getMoneyCollectionFormTypePlugin()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::MONEY_COLLECTION_FORM_TYPE_PLUGIN);
+    }
 }

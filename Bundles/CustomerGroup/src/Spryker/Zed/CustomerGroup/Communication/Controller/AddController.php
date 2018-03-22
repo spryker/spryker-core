@@ -12,11 +12,12 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade getFacade()
+ * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomerGroup\Communication\CustomerGroupCommunicationFactory getFactory()
  */
 class AddController extends AbstractController
 {
+    const MESSAGE_CUSTOMER_GROUP_CREATE_SUCCESS = 'Customer group was created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -34,12 +35,13 @@ class AddController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             /** @var \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer */
             $customerGroupTransfer = $form->getData();
 
             $this->getFacade()->add($customerGroupTransfer);
 
+            $this->addSuccessMessage(static::MESSAGE_CUSTOMER_GROUP_CREATE_SUCCESS);
             return $this->redirectResponse('/customer-group');
         }
 
@@ -84,5 +86,4 @@ class AddController extends AbstractController
     {
         return new CustomerTransfer();
     }
-
 }

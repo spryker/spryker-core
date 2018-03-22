@@ -12,7 +12,6 @@ use Spryker\Client\Quote\Session\QuoteSession;
 
 class QuoteFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\Quote\Session\QuoteSession
      */
@@ -20,7 +19,8 @@ class QuoteFactory extends AbstractFactory
     {
         return new QuoteSession(
             $this->getSessionClient(),
-            $this->getCurrencyPlugin()
+            $this->getCurrencyPlugin(),
+            $this->getQuoteTransferExpanderPlugins()
         );
     }
 
@@ -40,4 +40,11 @@ class QuoteFactory extends AbstractFactory
         return $this->getProvidedDependency(QuoteDependencyProvider::CURRENCY_PLUGIN);
     }
 
+    /**
+     * @return \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[]
+     */
+    protected function getQuoteTransferExpanderPlugins()
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::QUOTE_TRANSFER_EXPANDER_PLUGINS);
+    }
 }

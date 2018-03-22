@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\NavigationTransfer;
 
 interface NavigationReaderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      *
      * @return \Generated\Shared\Transfer\NavigationTransfer|null
      */
     public function findNavigation(NavigationTransfer $navigationTransfer);
-
 }

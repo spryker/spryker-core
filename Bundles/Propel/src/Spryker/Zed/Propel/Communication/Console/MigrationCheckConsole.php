@@ -17,9 +17,8 @@ use Symfony\Component\Process\Process;
 
 class MigrationCheckConsole extends Console
 {
-
     const COMMAND_NAME = 'propel:migration:check';
-    const CODE_CHANGES = 2;
+    const CODE_CHANGES = 3;
 
     /**
      * @return void
@@ -74,5 +73,4 @@ class MigrationCheckConsole extends Console
 
         return static::CODE_SUCCESS;
     }
-
 }

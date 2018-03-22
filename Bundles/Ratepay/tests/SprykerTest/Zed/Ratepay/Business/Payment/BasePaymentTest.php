@@ -56,7 +56,6 @@ use SprykerTest\Zed\Ratepay\Business\Api\Response\Response;
  */
 class BasePaymentTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Ratepay\Business\Api\Mapper\MapperFactory
      */
@@ -610,5 +609,4 @@ class BasePaymentTest extends Unit
 
         return $paymentMethod;
     }
-
 }

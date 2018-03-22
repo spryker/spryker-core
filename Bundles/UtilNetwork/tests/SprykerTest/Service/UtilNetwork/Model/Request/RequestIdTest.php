@@ -23,7 +23,6 @@ use Spryker\Service\UtilNetwork\Model\Request\RequestId;
  */
 class RequestIdTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -66,5 +65,4 @@ class RequestIdTest extends Unit
         $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue(null);
     }
-
 }

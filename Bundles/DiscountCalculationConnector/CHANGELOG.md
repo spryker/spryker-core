@@ -1,3 +1,3 @@
 # DiscountCalculationConnector Changelog
 
-[DiscountCalculationConnector Changelog](https://github.com/spryker/DiscountCalculationConnector/releases)
+[Release Changelog](https://github.com/spryker/discount-calculation-connector/releases)

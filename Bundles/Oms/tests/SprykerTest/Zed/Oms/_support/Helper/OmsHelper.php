@@ -12,11 +12,14 @@ use DateInterval;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Oms\Business\OmsFacade;
+use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use Symfony\Component\Process\Process;
 
 class OmsHelper extends Module
 {
+    use ConfigHelperTrait;
 
     /**
      * @param array $idSalesOrderItems
@@ -101,4 +104,19 @@ class OmsHelper extends Module
         $process->run();
     }
 
+    /**
+     * @param array $activeProcesses
+     * @param string|null $xmlFolder
+     *
+     * @return void
+     */
+    public function configureTestStateMachine(array $activeProcesses, $xmlFolder = null)
+    {
+        if (!$xmlFolder) {
+            $xmlFolder = realpath(__DIR__ . '/../../../../../_data/state-machine/');
+        }
+
+        $this->setConfig(OmsConstants::PROCESS_LOCATION, $xmlFolder);
+        $this->setConfig(OmsConstants::ACTIVE_PROCESSES, $activeProcesses);
+    }
 }

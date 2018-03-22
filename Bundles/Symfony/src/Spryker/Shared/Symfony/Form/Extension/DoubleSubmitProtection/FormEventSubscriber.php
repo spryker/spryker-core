@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormEvents;
 
 class FormEventSubscriber implements EventSubscriberInterface
 {
-
     const DEFAULT_ERROR_MESSAGE = 'This form has been already submitted.';
     const DEFAULT_TOKEN_FIELD_NAME = '_requestToken';
 
@@ -181,8 +180,7 @@ class FormEventSubscriber implements EventSubscriberInterface
         $givenToken = $data[$this->fieldName];
         $expectedToken = $this->tokenStorage->getToken($formName);
 
-        return
-            !empty($expectedToken) &&
+        return !empty($expectedToken) &&
             !empty($givenToken) &&
             $this->tokenGenerator->checkTokenEquals($expectedToken, $givenToken);
     }
@@ -203,5 +201,4 @@ class FormEventSubscriber implements EventSubscriberInterface
 
         return $errorMessage;
     }
-
 }

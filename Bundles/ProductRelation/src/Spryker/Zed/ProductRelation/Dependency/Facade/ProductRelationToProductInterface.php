@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface ProductRelationToProductInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
@@ -25,5 +24,4 @@ interface ProductRelationToProductInterface
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
     public function findProductAbstractById($idProductAbstract);
-
 }

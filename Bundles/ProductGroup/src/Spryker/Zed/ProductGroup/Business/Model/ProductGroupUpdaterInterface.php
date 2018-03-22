@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductGroupTransfer;
 
 interface ProductGroupUpdaterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
      *
@@ -25,5 +24,4 @@ interface ProductGroupUpdaterInterface
      * @return \Generated\Shared\Transfer\ProductGroupTransfer
      */
     public function extendProductGroup(ProductGroupTransfer $productGroupTransfer);
-
 }

@@ -9,10 +9,12 @@ namespace Spryker\Zed\CmsBlockGui\Communication\Form\Block;
 
 use DateTime;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,8 +30,8 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CmsBlockForm extends AbstractType
 {
-
     const FIELD_ID_CMS_BLOCK = 'idCmsBlock';
+    const FIELD_STORE_RELATION = 'storeRelation';
     const FIELD_FK_TEMPLATE = 'fkTemplate';
     const FIELD_NAME = 'name';
     const FIELD_IS_ACTIVE = 'is_active';
@@ -39,36 +41,6 @@ class CmsBlockForm extends AbstractType
     const OPTION_TEMPLATE_CHOICES = 'template_choices';
 
     const GROUP_UNIQUE_BLOCK_CHECK = 'unique_block_check';
-
-    /**
-     * @var \Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface
-     */
-    protected $cmsBlockQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\CmsBlockGui\Communication\Plugin\CmsBlockFormPluginInterface[]
-     */
-    protected $formPlugins;
-
-    /**
-     * @param \Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer
-     * @param \Spryker\Zed\CmsBlockGui\Communication\Plugin\CmsBlockFormPluginInterface[] $formPlugins
-     */
-    public function __construct(
-        CmsBlockGuiToCmsBlockQueryContainerInterface $cmsBlockQueryContainer,
-        array $formPlugins
-    ) {
-        $this->cmsBlockQueryContainer = $cmsBlockQueryContainer;
-        $this->formPlugins = $formPlugins;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'cms_block';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -107,6 +79,7 @@ class CmsBlockForm extends AbstractType
     {
         $this
             ->addIdCmsBlockField($builder)
+            ->addStoreRelationForm($builder)
             ->addFkTemplateField($builder, $options)
             ->addNameField($builder)
             ->addValidFromField($builder)
@@ -121,7 +94,25 @@ class CmsBlockForm extends AbstractType
      */
     protected function addIdCmsBlockField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_ID_CMS_BLOCK, 'hidden');
+        $builder->add(static::FIELD_ID_CMS_BLOCK, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addStoreRelationForm(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_STORE_RELATION,
+            $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
+            [
+                'label' => false,
+            ]
+        );
 
         return $this;
     }
@@ -134,26 +125,25 @@ class CmsBlockForm extends AbstractType
      */
     protected function addFkTemplateField(FormBuilderInterface $builder, array $choices)
     {
-        $builder->add(static::FIELD_FK_TEMPLATE, 'choice', [
+        $builder->add(static::FIELD_FK_TEMPLATE, ChoiceType::class, [
             'label' => 'Template',
-            'choices' => $choices[static::OPTION_TEMPLATE_CHOICES],
+            'choices' => array_flip($choices[static::OPTION_TEMPLATE_CHOICES]),
+            'choices_as_values' => true,
             'constraints' => [
                 new Callback([
-                    'methods' => [
-                        function ($name, ExecutionContextInterface $context) {
-                            /** @var \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer */
-                            $cmsBlockTransfer = $context->getRoot()->getViewData();
+                    'callback' => function ($name, ExecutionContextInterface $context) {
+                        /** @var \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer */
+                        $cmsBlockTransfer = $context->getRoot()->getViewData();
 
-                            if (!$cmsBlockTransfer->getFkTemplate()) {
-                                return;
-                            }
+                        if (!$cmsBlockTransfer->getFkTemplate()) {
+                            return;
+                        }
 
-                            if (!$this->hasTemplateFile($cmsBlockTransfer->getFkTemplate())) {
-                                $context->addViolation('Chosen template is not available anymore');
-                            }
-                        },
-                    ],
-                ])
+                        if (!$this->hasTemplateFile($cmsBlockTransfer->getFkTemplate())) {
+                            $context->addViolation('Chosen template is not available anymore');
+                        }
+                    },
+                ]),
             ],
         ]);
 
@@ -167,23 +157,21 @@ class CmsBlockForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_NAME, 'text', [
+        $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Name *',
             'constraints' => [
                 new Required(),
                 new NotBlank(),
                 new Length(['max' => 255]),
                 new Callback([
-                    'methods' => [
-                        function ($name, ExecutionContextInterface $context) {
-                            /** @var \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer */
-                            $cmsBlockTransfer = $context->getRoot()->getViewData();
+                    'callback' => function ($name, ExecutionContextInterface $context) {
+                        /** @var \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer */
+                        $cmsBlockTransfer = $context->getRoot()->getViewData();
 
-                            if ($this->hasExistingBlock($name, $cmsBlockTransfer->getIdCmsBlock())) {
-                                $context->addViolation('Block with the same Name already exists.');
-                            }
-                        },
-                    ],
+                        if ($this->hasExistingBlock($name, $cmsBlockTransfer->getIdCmsBlock())) {
+                            $context->addViolation('Block with the same Name already exists.');
+                        }
+                    },
                     'groups' => [static::GROUP_UNIQUE_BLOCK_CHECK],
                 ]),
             ],
@@ -203,7 +191,7 @@ class CmsBlockForm extends AbstractType
             'widget' => 'single_text',
             'required' => false,
             'attr' => [
-                'class' => 'datepicker',
+                'class' => 'datepicker safe-datetime',
             ],
             'constraints' => [
                 $this->createValidFromRangeConstraint(),
@@ -227,7 +215,7 @@ class CmsBlockForm extends AbstractType
             'widget' => 'single_text',
             'required' => false,
             'attr' => [
-                'class' => 'datepicker',
+                'class' => 'datepicker safe-datetime',
             ],
             'constraints' => [
                 $this->createValidToFieldRangeConstraint(),
@@ -262,7 +250,6 @@ class CmsBlockForm extends AbstractType
                         $context->addViolation('Date "Valid from" is the same as "Valid to".');
                     }
                 }
-
             },
         ]);
     }
@@ -316,7 +303,7 @@ class CmsBlockForm extends AbstractType
      */
     protected function hasExistingBlock($name, $idCmsBlock = null)
     {
-        $blockQuery = $this->cmsBlockQueryContainer
+        $blockQuery = $this->getFactory()->getCmsBlockQueryContainer()
             ->queryCmsBlockByName($name);
 
         if ($idCmsBlock) {
@@ -343,11 +330,18 @@ class CmsBlockForm extends AbstractType
      */
     protected function addPluginForms(FormBuilderInterface $builder)
     {
-        foreach ($this->formPlugins as $formPlugin) {
+        foreach ($this->getFactory()->getCmsBlockFormPlugins() as $formPlugin) {
             $formPlugin->buildForm($builder);
         }
 
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'cms_block';
+    }
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 
 interface QueryFactoryInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      * @param mixed $filterValue
@@ -19,5 +18,4 @@ interface QueryFactoryInterface
      * @return \Elastica\Query\AbstractQuery
      */
     public function create(FacetConfigTransfer $facetConfigTransfer, $filterValue);
-
 }

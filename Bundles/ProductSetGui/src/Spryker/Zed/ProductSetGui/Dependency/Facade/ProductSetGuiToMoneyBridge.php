@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 class ProductSetGuiToMoneyBridge implements ProductSetGuiToMoneyInterface
 {
-
     /**
      * @var \Spryker\Zed\Money\Business\MoneyFacadeInterface
      */
@@ -45,5 +44,4 @@ class ProductSetGuiToMoneyBridge implements ProductSetGuiToMoneyInterface
     {
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
     }
-
 }

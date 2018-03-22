@@ -26,7 +26,6 @@ use Spryker\Zed\ProductImageCartConnector\Business\ProductImageCartConnectorFaca
  */
 class ProductImageCartPluginTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade
      */
@@ -63,5 +62,4 @@ class ProductImageCartPluginTest extends Unit
         $imageTransfer = $itemTransfer->getImages()->offsetGet(0);
         $this->assertInstanceOf(ProductImageTransfer::class, $imageTransfer);
     }
-
 }

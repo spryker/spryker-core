@@ -9,7 +9,6 @@ namespace Spryker\Client\Category;
 
 interface CategoryClientInterface
 {
-
     /**
      * Specification:
      * - Resolve template for category node
@@ -23,5 +22,4 @@ interface CategoryClientInterface
      * @return string
      */
     public function getTemplatePathByNodeId($idCategoryNode, $localeName);
-
 }

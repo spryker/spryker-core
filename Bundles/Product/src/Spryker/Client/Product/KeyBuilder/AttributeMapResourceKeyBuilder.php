@@ -11,7 +11,6 @@ use Spryker\Shared\Product\ProductConfig;
 
 class AttributeMapResourceKeyBuilder extends SharedResourceKeyBuilder
 {
-
     /**
      * @return string
      */
@@ -19,5 +18,4 @@ class AttributeMapResourceKeyBuilder extends SharedResourceKeyBuilder
     {
         return ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP;
     }
-
 }

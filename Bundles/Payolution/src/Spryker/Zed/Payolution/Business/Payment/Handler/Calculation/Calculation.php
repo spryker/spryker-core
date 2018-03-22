@@ -14,7 +14,6 @@ use Spryker\Zed\Payolution\Business\Payment\Handler\AbstractPaymentHandler;
 
 class Calculation extends AbstractPaymentHandler implements CalculationInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -60,5 +59,4 @@ class Calculation extends AbstractPaymentHandler implements CalculationInterface
     {
         return $responseTransfer->setTotalsAmountHash($hash);
     }
-
 }

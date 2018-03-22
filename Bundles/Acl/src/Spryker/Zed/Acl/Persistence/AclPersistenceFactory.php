@@ -18,11 +18,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Acl\AclConfig getConfig()
- * @method \Spryker\Zed\Acl\Persistence\AclQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
  */
 class AclPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Acl\Persistence\SpyAclGroupQuery
      */
@@ -86,5 +85,4 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(AclDependencyProvider::QUERY_CONTAINER_USER);
     }
-
 }

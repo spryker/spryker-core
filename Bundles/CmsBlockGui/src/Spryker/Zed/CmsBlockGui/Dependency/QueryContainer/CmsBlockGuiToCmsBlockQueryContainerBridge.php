@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockGui\Dependency\QueryContainer;
 
 class CmsBlockGuiToCmsBlockQueryContainerBridge implements CmsBlockGuiToCmsBlockQueryContainerInterface
 {
-
     /**
      * @var \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface
      */
@@ -49,4 +48,13 @@ class CmsBlockGuiToCmsBlockQueryContainerBridge implements CmsBlockGuiToCmsBlock
         return $this->cmsBlockQueryContainer->queryTemplates();
     }
 
+    /**
+     * @param int $idCmsBlock
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
+     */
+    public function queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock)
+    {
+        return $this->cmsBlockQueryContainer->queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock);
+    }
 }

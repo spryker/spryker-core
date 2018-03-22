@@ -5,7 +5,6 @@
  */
 namespace Spryker\Zed\Discount\Business;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
@@ -14,21 +13,21 @@ use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountBusinessFactory getFactory()
  */
 interface DiscountFacadeInterface
 {
-
     /**
      * Specification:
-     *  - Finds all discounts with voucher
-     *  - Finds all discounts matching decision rules
-     *  - Collects discountable items for each discount type
-     *  - Applies discount to exclusive if exists
-     *  - Distributes discount amount throw all discountable items
-     *  - Adds discount totals to quote discount properties
+     * - Finds all discounts with voucher within the provided Store.
+     * - Finds all discounts matching decision rules.
+     * - Collects discountable items for each discount type.
+     * - Applies discount to exclusive if exists.
+     * - Distributes discount amount throw all discountable items.
+     * - Adds discount totals to quote discount properties.
      *
      * @api
      *
@@ -384,46 +383,12 @@ interface DiscountFacadeInterface
      *
      * @api
      *
-     * @deprecated Use calculatePercentageDiscount() instead
-     *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
-     * @param float $percentage
-     *
-     * @return int
-     */
-    public function calculatePercentage(array $discountableObjects, $percentage);
-
-    /**
-     * Specification:
-     * - Loops over all discountable items and calculate discount price amount per item
-     * - Sums each amount to to total
-     * - Rounds up cent fraction for total discount amount.
-     * - Returns total calculated discount amount on given discountable items
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return int
      */
     public function calculatePercentageDiscount(array $discountableObjects, DiscountTransfer $discountTransfer);
-
-    /**
-     * Specification:
-     * - Returns amount passed as parameter
-     * - Returns 0 if negative number is given
-     *
-     * @api
-     *
-     * @deprecated Use calculateFixedDiscount() instead
-     *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableObjects
-     * @param float $amount
-     *
-     * @return int
-     */
-    public function calculateFixed(array $discountableObjects, $amount);
 
     /**
      * Specification:
@@ -488,11 +453,11 @@ interface DiscountFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
-    public function saveOrderDiscounts(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+    public function saveOrderDiscountsForCheckout(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
 
     /**
      * Specification:
@@ -519,4 +484,40 @@ interface DiscountFacadeInterface
      */
     public function getQueryStringValueOptions($type);
 
+    /**
+     * Specification:
+     *  - Checks if current currency equals to provided in decision rule
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isCurrencyDecisionRuleSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    );
+
+    /**
+     *
+     * Specification:
+     *  - Check if price mode equals provided in decision rule
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isPriceModeDecisionRuleSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    );
 }

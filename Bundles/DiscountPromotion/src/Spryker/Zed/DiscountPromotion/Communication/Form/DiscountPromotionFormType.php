@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 class DiscountPromotionFormType extends AbstractDiscountExtensionSubFormType
 {
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -37,16 +36,16 @@ class DiscountPromotionFormType extends AbstractDiscountExtensionSubFormType
      */
     protected function addAbstractSkuField(FormBuilderInterface $builder)
     {
-         $builder->add(
-             DiscountPromotionTransfer::ABSTRACT_SKU,
-             TextType::class,
-             [
+        $builder->add(
+            DiscountPromotionTransfer::ABSTRACT_SKU,
+            TextType::class,
+            [
                  'label' => 'Abstract product sku',
                  'constraints' => [
                      new NotBlank(['groups' => DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY]),
                  ],
              ]
-         );
+        );
 
          return $this;
     }
@@ -82,5 +81,4 @@ class DiscountPromotionFormType extends AbstractDiscountExtensionSubFormType
     {
         return 'DiscountPromotion/Form/discount_promotion';
     }
-
 }

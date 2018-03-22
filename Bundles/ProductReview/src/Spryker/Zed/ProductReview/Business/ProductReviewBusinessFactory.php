@@ -18,11 +18,10 @@ use Spryker\Zed\ProductReview\ProductReviewDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductReview\ProductReviewConfig getConfig()
- * @method \Spryker\Zed\ProductReview\Persistence\ProductReviewQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductReview\Persistence\ProductReviewQueryContainerInterface getQueryContainer()
  */
 class ProductReviewBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductReview\Business\Model\ProductReviewCreatorInterface
      */
@@ -86,5 +85,4 @@ class ProductReviewBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductReviewDependencyProvider::FACADE_PRODUCT);
     }
-
 }

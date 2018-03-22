@@ -8,7 +8,7 @@ namespace Spryker\Zed\CmsGui\Communication\Form\Page;
 
 use DateTime;
 use Spryker\Zed\CmsGui\Communication\Form\ArrayObjectTransformerTrait;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -16,14 +16,15 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
+ */
 class CmsPageFormType extends AbstractType
 {
-
     const FIELD_SEARCHABLE = 'isSearchable';
     const FIELD_PAGE_ATTRIBUTES = 'pageAttributes';
     const FIELD_PAGE_META_ATTRIBUTES = 'metaAttributes';
@@ -37,28 +38,6 @@ class CmsPageFormType extends AbstractType
     const OPTION_DATA_CLASS_META_ATTRIBUTES = 'data_class_meta_attributes';
 
     use ArrayObjectTransformerTrait;
-
-    /**
-     * @var \Symfony\Component\Form\FormTypeInterface
-     */
-    protected $cmsPageAttributesFormType;
-
-    /**
-     * @var \Symfony\Component\Form\FormTypeInterface
-     */
-    protected $cmsPageMetaAttributesFormType;
-
-    /**
-     * @param \Symfony\Component\Form\FormTypeInterface $cmsPageAttributesFormType
-     * @param \Symfony\Component\Form\FormTypeInterface $cmsPageMetaAttributesFormType
-     */
-    public function __construct(
-        FormTypeInterface $cmsPageAttributesFormType,
-        FormTypeInterface $cmsPageMetaAttributesFormType
-    ) {
-        $this->cmsPageAttributesFormType = $cmsPageAttributesFormType;
-        $this->cmsPageMetaAttributesFormType = $cmsPageMetaAttributesFormType;
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -128,8 +107,8 @@ class CmsPageFormType extends AbstractType
     {
         $builder->add(static::FIELD_FK_TEMPLATE, ChoiceType::class, [
             'label' => 'Template',
-            'choices' => $choices,
-
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
         ]);
 
         return $this;
@@ -144,7 +123,7 @@ class CmsPageFormType extends AbstractType
     protected function addPageAttributesFormCollection(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_PAGE_ATTRIBUTES, CollectionType::class, [
-            'type' => $this->cmsPageAttributesFormType,
+            'entry_type' => CmsPageAttributesFormType::class,
             'allow_add' => true,
             'allow_delete' => true,
             'entry_options' => [
@@ -168,7 +147,7 @@ class CmsPageFormType extends AbstractType
     protected function addPageMetaAttribuesFormCollection(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_PAGE_META_ATTRIBUTES, CollectionType::class, [
-            'type' => $this->cmsPageMetaAttributesFormType,
+            'entry_type' => CmsPageMetaAttributesFormType::class,
             'allow_add' => true,
             'allow_delete' => true,
             'entry_options' => [
@@ -193,7 +172,7 @@ class CmsPageFormType extends AbstractType
             'widget' => 'single_text',
             'required' => false,
             'attr' => [
-                'class' => 'datepicker',
+                'class' => 'datepicker safe-datetime',
             ],
             'constraints' => [
                  $this->createValidFromRangeConstraint(),
@@ -217,7 +196,7 @@ class CmsPageFormType extends AbstractType
             'widget' => 'single_text',
             'required' => false,
             'attr' => [
-                'class' => 'datepicker',
+                'class' => 'datepicker safe-datetime',
             ],
             'constraints' => [
                 $this->createValidToFieldRangeConstraint(),
@@ -301,9 +280,18 @@ class CmsPageFormType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'cms_page';
     }
 
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

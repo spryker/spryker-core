@@ -11,7 +11,6 @@ use Spryker\Service\UtilText\UtilTextService;
 
 class SubscriberKeyGenerator implements SubscriberKeyGeneratorInterface
 {
-
     /**
      * @return string
      */
@@ -21,5 +20,4 @@ class SubscriberKeyGenerator implements SubscriberKeyGeneratorInterface
 
         return $utilTextService->generateRandomString(32);
     }
-
 }

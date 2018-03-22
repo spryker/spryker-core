@@ -17,21 +17,20 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\DiscountPromotion\DiscountPromotionConfig getConfig()
- * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface getQueryContainer()
  */
 class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\DiscountPromotionCollectorStrategyInterface
      */
     public function createDiscountPromotionCollectorStrategy()
     {
-         return new DiscountPromotionCollectorStrategy(
-             $this->getProductFacade(),
-             $this->getQueryContainer(),
-             $this->createPromotionAvailabilityCalculator()
-         );
+        return new DiscountPromotionCollectorStrategy(
+            $this->getProductFacade(),
+            $this->getQueryContainer(),
+            $this->createPromotionAvailabilityCalculator()
+        );
     }
 
     /**
@@ -89,5 +88,4 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(DiscountPromotionDependencyProvider::FACADE_LOCALE);
     }
-
 }

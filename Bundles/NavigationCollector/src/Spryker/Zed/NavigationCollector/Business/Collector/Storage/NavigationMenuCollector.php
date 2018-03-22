@@ -17,7 +17,6 @@ use Spryker\Zed\NavigationCollector\Persistence\Collector\Propel\NavigationMenuC
 
 class NavigationMenuCollector extends AbstractStoragePropelCollector
 {
-
     /**
      * @var \Spryker\Zed\NavigationCollector\Dependency\Facade\NavigationCollectorToNavigationInterface
      */
@@ -126,5 +125,4 @@ class NavigationMenuCollector extends AbstractStoragePropelCollector
 
         return $filteredArray;
     }
-
 }

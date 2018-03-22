@@ -15,12 +15,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Twig_SimpleFunction;
 
 /**
- * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacade getFacade()
+ * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacadeInterface getFacade()
  * @method \Spryker\Zed\ZedNavigation\Communication\ZedNavigationCommunicationFactory getFactory()
  */
 class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     const URI_SUFFIX_INDEX = '\/index$';
     const URI_SUFFIX_SLASH = '\/$';
 
@@ -159,5 +158,4 @@ class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProv
         return (new ZedNavigation())
             ->buildNavigation($uri);
     }
-
 }

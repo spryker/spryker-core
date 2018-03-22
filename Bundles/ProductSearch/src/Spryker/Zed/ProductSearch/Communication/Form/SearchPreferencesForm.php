@@ -8,11 +8,18 @@
 namespace Spryker\Zed\ProductSearch\Communication\Form;
 
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
+ */
 class SearchPreferencesForm extends AbstractAttributeKeyForm
 {
-
     const FIELD_ID_PRODUCT_ATTRIBUTE_KEY = 'idProductAttributeKey';
     const FIELD_FULL_TEXT = 'fullText';
     const FIELD_FULL_TEXT_BOOSTED = 'fullTextBoosted';
@@ -22,9 +29,19 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'searchPreferences';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 
     /**
@@ -51,7 +68,7 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
      */
     protected function addIdProductAttributeKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_ATTRIBUTE_KEY, 'hidden');
+        $builder->add(self::FIELD_ID_PRODUCT_ATTRIBUTE_KEY, HiddenType::class);
 
         return $this;
     }
@@ -64,7 +81,7 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
      */
     protected function addKeyField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_KEY, 'text', [
+        $builder->add(self::FIELD_KEY, TextType::class, [
             'label' => 'Attribute key',
             'constraints' => $this->createAttributeKeyFieldConstraints(),
             'disabled' => $options[self::OPTION_IS_UPDATE],
@@ -80,7 +97,7 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
      */
     protected function isUniqueKey($key)
     {
-        $keyCount = $this->productSearchQueryContainer
+        $keyCount = $this->getQueryContainer()
             ->queryProductAttributeKey()
             ->joinSpyProductSearchAttributeMap()
             ->filterByKey($key)
@@ -96,8 +113,9 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
      */
     protected function addFullTextField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FULL_TEXT, 'choice', [
-            'choices' => $this->getYesNoChoices(),
+        $builder->add(self::FIELD_FULL_TEXT, ChoiceType::class, [
+            'choices' => array_flip($this->getYesNoChoices()),
+            'choices_as_values' => true,
         ]);
 
         $this->addBoolModelTransformer($builder, self::FIELD_FULL_TEXT);
@@ -112,8 +130,9 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
      */
     protected function addFullTextBoostedField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FULL_TEXT_BOOSTED, 'choice', [
-            'choices' => $this->getYesNoChoices(),
+        $builder->add(self::FIELD_FULL_TEXT_BOOSTED, ChoiceType::class, [
+            'choices' => array_flip($this->getYesNoChoices()),
+            'choices_as_values' => true,
         ]);
 
         $this->addBoolModelTransformer($builder, self::FIELD_FULL_TEXT_BOOSTED);
@@ -128,8 +147,9 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
      */
     protected function addSuggestionTermsField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SUGGESTION_TERMS, 'choice', [
-            'choices' => $this->getYesNoChoices(),
+        $builder->add(self::FIELD_SUGGESTION_TERMS, ChoiceType::class, [
+            'choices' => array_flip($this->getYesNoChoices()),
+            'choices_as_values' => true,
         ]);
 
         $this->addBoolModelTransformer($builder, self::FIELD_SUGGESTION_TERMS);
@@ -144,8 +164,9 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
      */
     protected function addCompletionTermsField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_COMPLETION_TERMS, 'choice', [
-            'choices' => $this->getYesNoChoices(),
+        $builder->add(self::FIELD_COMPLETION_TERMS, ChoiceType::class, [
+            'choices' => array_flip($this->getYesNoChoices()),
+            'choices_as_values' => true,
         ]);
 
         $this->addBoolModelTransformer($builder, self::FIELD_COMPLETION_TERMS);
@@ -181,5 +202,4 @@ class SearchPreferencesForm extends AbstractAttributeKeyForm
             }
         ));
     }
-
 }

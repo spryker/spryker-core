@@ -9,7 +9,6 @@ namespace Spryker\Shared\Config;
 
 class Environment
 {
-
     const DEFAULT_ENVIRONMENT = 'production';
 
     const PRODUCTION = 'production';
@@ -120,5 +119,4 @@ class Environment
     {
         self::$environment = $environment;
     }
-
 }

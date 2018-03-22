@@ -11,7 +11,6 @@ use Spryker\Shared\Ratepay\RatepayConstants;
 
 class Prepayment extends AbstractMapper
 {
-
     /**
      * @return string
      */
@@ -29,5 +28,4 @@ class Prepayment extends AbstractMapper
     {
         return $quoteTransfer->getPayment()->getRatepayPrepayment();
     }
-
 }

@@ -30,7 +30,6 @@ use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextBridge;
  */
 class ProductUrlGeneratorTest extends Unit
 {
-
     const PRODUCT_NAME = [
         'en_US' => 'Product name en_US',
         'de_DE' => 'Product name de_DE',
@@ -79,35 +78,35 @@ class ProductUrlGeneratorTest extends Unit
         $this->setupProductAbstract();
 
         $this->localeFacade = $this->getMockBuilder(ProductToLocaleBridge::class)
-            ->disableOriginalConstructor()->getMock();
+        ->disableOriginalConstructor()->getMock();
 
         $this->utilTextService = $this->getMockBuilder(ProductToUtilTextBridge::class)
-            ->disableOriginalConstructor()->getMock();
+        ->disableOriginalConstructor()->getMock();
 
         $availableLocalesCollection = [
-            $this->locales['de_DE']->getLocaleName() => $this->locales['de_DE'],
-            $this->locales['en_US']->getLocaleName() => $this->locales['en_US'],
+        $this->locales['de_DE']->getLocaleName() => $this->locales['de_DE'],
+        $this->locales['en_US']->getLocaleName() => $this->locales['en_US'],
         ];
 
         $this->localeFacade
-            ->expects($this->once())
-            ->method('getLocaleCollection')
-            ->willReturn($availableLocalesCollection);
+        ->expects($this->once())
+        ->method('getLocaleCollection')
+        ->willReturn($availableLocalesCollection);
 
         $this->productAbstractNameGenerator = $this->getMockBuilder(ProductAbstractNameGeneratorInterface::class)
-            ->disableOriginalConstructor()->getMock();
+        ->disableOriginalConstructor()->getMock();
 
         $this->productAbstractNameGenerator
-            ->expects($this->at(0))
-            ->method('getLocalizedProductAbstractName')
-            ->with($this->productAbstractTransfer, $this->locales['de_DE'])
-            ->willReturn(self::PRODUCT_NAME['de_DE']);
+        ->expects($this->at(0))
+        ->method('getLocalizedProductAbstractName')
+        ->with($this->productAbstractTransfer, $this->locales['de_DE'])
+        ->willReturn(self::PRODUCT_NAME['de_DE']);
 
         $this->productAbstractNameGenerator
-            ->expects($this->at(1))
-            ->method('getLocalizedProductAbstractName')
-            ->with($this->productAbstractTransfer, $this->locales['en_US'])
-            ->willReturn(self::PRODUCT_NAME['en_US']);
+        ->expects($this->at(1))
+        ->method('getLocalizedProductAbstractName')
+        ->with($this->productAbstractTransfer, $this->locales['en_US'])
+        ->willReturn(self::PRODUCT_NAME['en_US']);
     }
 
     /**
@@ -117,13 +116,13 @@ class ProductUrlGeneratorTest extends Unit
     {
         $this->locales['de_DE'] = new LocaleTransfer();
         $this->locales['de_DE']
-            ->setIdLocale(46)
-            ->setLocaleName('de_DE');
+        ->setIdLocale(46)
+        ->setLocaleName('de_DE');
 
         $this->locales['en_US'] = new LocaleTransfer();
         $this->locales['en_US']
-            ->setIdLocale(66)
-            ->setLocaleName('en_US');
+        ->setIdLocale(66)
+        ->setLocaleName('en_US');
     }
 
     /**
@@ -133,20 +132,20 @@ class ProductUrlGeneratorTest extends Unit
     {
         $this->productAbstractTransfer = new ProductAbstractTransfer();
         $this->productAbstractTransfer
-            ->setSku('foo')
-            ->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
+        ->setSku('foo')
+        ->setIdProductAbstract(self::ID_PRODUCT_ABSTRACT);
 
         $localizedAttribute = new LocalizedAttributesTransfer();
         $localizedAttribute
-            ->setName(self::PRODUCT_NAME['de_DE'])
-            ->setLocale($this->locales['de_DE']);
+        ->setName(self::PRODUCT_NAME['de_DE'])
+        ->setLocale($this->locales['de_DE']);
 
         $this->productAbstractTransfer->addLocalizedAttributes($localizedAttribute);
 
         $localizedAttribute = new LocalizedAttributesTransfer();
         $localizedAttribute
-            ->setName(self::PRODUCT_NAME['en_US'])
-            ->setLocale($this->locales['en_US']);
+        ->setName(self::PRODUCT_NAME['en_US'])
+        ->setLocale($this->locales['en_US']);
 
         $this->productAbstractTransfer->addLocalizedAttributes($localizedAttribute);
     }
@@ -157,32 +156,32 @@ class ProductUrlGeneratorTest extends Unit
     public function testGetProductUrlShouldReturnTransfer()
     {
         $expectedDEUrl = (new LocalizedUrlTransfer())
-            ->setLocale($this->locales['de_DE'])
-            ->setUrl('/de/product-name-dede-1');
+        ->setLocale($this->locales['de_DE'])
+        ->setUrl('/de/product-name-dede-1');
 
         $expectedENUrl = (new LocalizedUrlTransfer())
-            ->setLocale($this->locales['en_US'])
-            ->setUrl('/en/product-name-enus-1');
+        ->setLocale($this->locales['en_US'])
+        ->setUrl('/en/product-name-enus-1');
 
         $productUrlExpected = (new ProductUrlTransfer())
-            ->setAbstractSku(
-                $this->productAbstractTransfer->getSku()
-            )
-            ->setUrls(
-                new ArrayObject([$expectedDEUrl, $expectedENUrl])
-            );
+        ->setAbstractSku(
+            $this->productAbstractTransfer->getSku()
+        )
+        ->setUrls(
+            new ArrayObject([$expectedDEUrl, $expectedENUrl])
+        );
 
         $this->utilTextService
-            ->expects($this->at(0))
-            ->method('generateSlug')
-            ->with(self::PRODUCT_NAME['de_DE'])
-            ->willReturn('product-name-dede');
+        ->expects($this->at(0))
+        ->method('generateSlug')
+        ->with(self::PRODUCT_NAME['de_DE'])
+        ->willReturn('product-name-dede');
 
         $this->utilTextService
-            ->expects($this->at(1))
-            ->method('generateSlug')
-            ->with(self::PRODUCT_NAME['en_US'])
-            ->willReturn('product-name-enus');
+        ->expects($this->at(1))
+        ->method('generateSlug')
+        ->with(self::PRODUCT_NAME['en_US'])
+        ->willReturn('product-name-enus');
 
         $urlGenerator = new ProductUrlGenerator($this->productAbstractNameGenerator, $this->localeFacade, $this->utilTextService);
         $productUrl = $urlGenerator->generateProductUrl($this->productAbstractTransfer);
@@ -190,5 +189,4 @@ class ProductUrlGeneratorTest extends Unit
         $this->assertEquals($productUrlExpected->getAbstractSku(), $productUrl->getAbstractSku());
         $this->assertEquals($productUrlExpected, $productUrl);
     }
-
 }

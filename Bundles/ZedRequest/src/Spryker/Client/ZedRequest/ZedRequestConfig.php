@@ -8,10 +8,12 @@
 namespace Spryker\Client\ZedRequest;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Config\Config;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 class ZedRequestConfig extends AbstractBundleConfig
 {
+    const HASH_COST = 'cost';
 
     /**
      * @return string
@@ -42,18 +44,18 @@ class ZedRequestConfig extends AbstractBundleConfig
         if ($sslEnabled === true) {
             // @deprecated This is just for backward compatibility
             if (!$this->getConfig()->hasKey(ZedRequestConstants::BASE_URL_SSL_ZED_API)) {
-                return 'https://' . $this->getConfig()->get(ZedRequestConstants::HOST_SSL_ZED_API);
+                return '//' . $this->getConfig()->get(ZedRequestConstants::HOST_SSL_ZED_API);
             }
 
             return $this->getConfig()->get(ZedRequestConstants::BASE_URL_SSL_ZED_API);
-        } else {
-            // @deprecated This is just for backward compatibility
-            if (!$this->getConfig()->hasKey(ZedRequestConstants::BASE_URL_ZED_API)) {
-                return 'http://' . $this->getConfig()->get(ZedRequestConstants::HOST_ZED_API);
-            }
-
-            return $this->getConfig()->get(ZedRequestConstants::BASE_URL_ZED_API);
         }
+
+        // @deprecated This is just for backward compatibility
+        if (!$this->getConfig()->hasKey(ZedRequestConstants::BASE_URL_ZED_API)) {
+            return '//' . $this->getConfig()->get(ZedRequestConstants::HOST_ZED_API);
+        }
+
+        return $this->getConfig()->get(ZedRequestConstants::BASE_URL_ZED_API);
     }
 
     /**
@@ -64,4 +66,31 @@ class ZedRequestConfig extends AbstractBundleConfig
         return $this->getConfig()->get(ZedRequestConstants::AUTH_ZED_ENABLED, true);
     }
 
+    /**
+     * @return array
+     */
+    public function getClientConfiguration()
+    {
+        $clientConfiguration = [
+            'timeout' => 60,
+            'connect_timeout' => 1.5,
+        ];
+
+        if (Config::hasKey(ZedRequestConstants::CLIENT_OPTIONS)) {
+            $customClientConfiguration = (array)$this->get(ZedRequestConstants::CLIENT_OPTIONS);
+            $clientConfiguration = $customClientConfiguration + $clientConfiguration;
+        }
+
+        return $clientConfiguration;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTokenOptions()
+    {
+        return [
+            static::HASH_COST => $this->getHashCost(),
+        ];
+    }
 }

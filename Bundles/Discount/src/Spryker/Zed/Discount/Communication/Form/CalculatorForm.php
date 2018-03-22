@@ -9,73 +9,36 @@ namespace Spryker\Zed\Discount\Communication\Form;
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Discount\DiscountConstants;
-use Spryker\Zed\Discount\Business\DiscountFacadeInterface;
 use Spryker\Zed\Discount\Business\Exception\CalculatorException;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
-use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\DataTransformerInterface;
+use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginWithAmountInputTypeInterface;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
-use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
+ */
 class CalculatorForm extends AbstractType
 {
-
-    const MAX_MONEY_INT = 21474835;
-    const MIN_MONEY_INT = 0;
-
     const FIELD_AMOUNT = 'amount';
     const FIELD_CALCULATOR_PLUGIN = 'calculator_plugin';
     const FIELD_COLLECTOR_QUERY_STRING = 'collector_query_string';
     const FIELD_COLLECTOR_TYPE_CHOICE = 'collector_type_choice';
 
     const OPTION_COLLECTOR_TYPE_CHOICES = 'collector_type_choices';
-
-    /**
-     * @var \Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider
-     */
-    protected $calculatorFormDataProvider;
-
-    /**
-     * @var \Spryker\Zed\Discount\Business\DiscountFacadeInterface
-     */
-    protected $discountFacade;
-
-    /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
-     */
-    protected $calculatorPlugins;
-
-    /**
-     * @var \Symfony\Component\Form\DataTransformerInterface|\Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer
-     */
-    protected $calculatorAmountTransformer;
-
-    /**
-     * @param \Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider $calculatorFormDataProvider
-     * @param \Spryker\Zed\Discount\Business\DiscountFacadeInterface $discountFacade
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
-     * @param \Symfony\Component\Form\DataTransformerInterface|\Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer $calculatorAmountTransformer
-     */
-    public function __construct(
-        CalculatorFormDataProvider $calculatorFormDataProvider,
-        DiscountFacadeInterface $discountFacade,
-        array $calculatorPlugins,
-        DataTransformerInterface $calculatorAmountTransformer
-    ) {
-        $this->calculatorFormDataProvider = $calculatorFormDataProvider;
-        $this->discountFacade = $discountFacade;
-        $this->calculatorPlugins = $calculatorPlugins;
-        $this->calculatorAmountTransformer = $calculatorAmountTransformer;
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -86,19 +49,18 @@ class CalculatorForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addCalculatorType($builder)
-            ->addAmountField($builder)
+            ->addCalculatorInputs($builder)
             ->addDiscountCollectorStrategyTypeSelector($builder)
             ->addCollectorQueryString($builder);
 
-        $builder->addModelTransformer($this->calculatorAmountTransformer);
+        $builder->addModelTransformer($this->getFactory()->createCalculatorAmountTransformer());
 
-        $builder
-            ->addEventListener(
-                FormEvents::PRE_SUBMIT,
-                function (FormEvent $event) {
-                    $this->addCalculatorPluginAmountValidators($event->getForm(), $event->getData());
-                }
-            );
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event) {
+                $this->addCalculatorPluginAmountValidators($event->getForm(), $event->getData());
+            }
+        );
     }
 
     /**
@@ -110,9 +72,28 @@ class CalculatorForm extends AbstractType
     {
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
-                return [Constraint::DEFAULT_GROUP, $form->getData()->getCollectorStrategyType()];
+                return [
+                    Constraint::DEFAULT_GROUP,
+                    $form->getData()->getCollectorStrategyType(),
+                    $this->getCalculatorInputType($form->getData()->getCalculatorPlugin()),
+                ];
             },
         ]);
+    }
+
+    /**
+     * @param string $pluginName
+     *
+     * @return string
+     */
+    protected function getCalculatorInputType($pluginName)
+    {
+        $calculatorPlugin = $this->getCalculatorPlugin($pluginName);
+        if ($calculatorPlugin instanceof DiscountCalculatorPluginWithAmountInputTypeInterface) {
+            return $calculatorPlugin->getInputType();
+        }
+
+        return DiscountConstants::CALCULATOR_DEFAULT_INPUT_TYPE;
     }
 
     /**
@@ -123,20 +104,33 @@ class CalculatorForm extends AbstractType
      */
     protected function addCalculatorPluginAmountValidators(FormInterface $form, array $data)
     {
-        if (empty($data[self::FIELD_CALCULATOR_PLUGIN])) {
+        if (empty($data[static::FIELD_CALCULATOR_PLUGIN])) {
             return;
         }
 
-        $calculatorPlugin = $this->getCalculatorPlugin($data[self::FIELD_CALCULATOR_PLUGIN]);
+        $calculatorPlugin = $this->getCalculatorPlugin($data[static::FIELD_CALCULATOR_PLUGIN]);
         if (!$calculatorPlugin) {
             return;
         }
 
-        $amountField = $form->get(self::FIELD_AMOUNT);
+        $amountField = $form->get(static::FIELD_AMOUNT);
         $constraints = $amountField->getConfig()->getOption('constraints');
         $constraints = array_merge($constraints, $calculatorPlugin->getAmountValidators());
-        $form->remove(self::FIELD_AMOUNT);
+        $form->remove(static::FIELD_AMOUNT);
         $this->addAmountField($form, ['constraints' => $constraints]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addCalculatorInputs(FormBuilderInterface $builder)
+    {
+        $this->addAmountField($builder)
+            ->addMoneyValueCollectionType($builder);
+
+        return $this;
     }
 
     /**
@@ -148,21 +142,39 @@ class CalculatorForm extends AbstractType
     protected function addAmountField($builder, array $options = [])
     {
         $defaultOptions = [
-            'label' => 'Amount',
+            'label' => 'Value',
             'attr' => [
                 'class' => 'input-group',
             ],
             'constraints' => [
-                new NotBlank(),
-                new LessThanOrEqual(static::MAX_MONEY_INT),
-                new GreaterThanOrEqual(static::MIN_MONEY_INT),
+                new NotBlank([
+                    'groups' => DiscountConstants::CALCULATOR_DEFAULT_INPUT_TYPE,
+                ]),
             ],
         ];
 
         $builder->add(
-            self::FIELD_AMOUNT,
-            'money',
+            static::FIELD_AMOUNT,
+            TextType::class,
             array_merge($defaultOptions, $options)
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addMoneyValueCollectionType(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            DiscountCalculatorTransfer::MONEY_VALUE_COLLECTION,
+            MoneyCollectionType::class,
+            [
+                MoneyCollectionType::OPTION_AMOUNT_PER_STORE => false,
+            ]
         );
 
         return $this;
@@ -175,11 +187,12 @@ class CalculatorForm extends AbstractType
      */
     protected function addDiscountCollectorStrategyTypeSelector(FormBuilderInterface $builder)
     {
-        $builder->add(DiscountCalculatorTransfer::COLLECTOR_STRATEGY_TYPE, 'choice', [
+        $builder->add(DiscountCalculatorTransfer::COLLECTOR_STRATEGY_TYPE, ChoiceType::class, [
             'expanded' => true,
             'multiple' => false,
             'label' => 'Discount collection type',
-            'choices' => $this->calculatorFormDataProvider->getOptions()[static::OPTION_COLLECTOR_TYPE_CHOICES],
+            'choices' => array_flip($this->getFactory()->createCalculatorFormDataProvider()->getOptions()[static::OPTION_COLLECTOR_TYPE_CHOICES]),
+            'choices_as_values' => true,
             'attr' => [
                 'class' => 'inline-radio',
             ],
@@ -195,11 +208,17 @@ class CalculatorForm extends AbstractType
      */
     protected function addCalculatorType(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_CALCULATOR_PLUGIN, 'choice', [
+        $builder->add(static::FIELD_CALCULATOR_PLUGIN, ChoiceType::class, [
             'label' => 'Calculator type',
             'placeholder' => 'Select one',
-            'choices' => $this->calculatorFormDataProvider->getData()[static::FIELD_CALCULATOR_PLUGIN],
+            'choices' => array_flip($this->getFactory()->createCalculatorFormDataProvider()->getData()[static::FIELD_CALCULATOR_PLUGIN]),
+            'choices_as_values' => true,
             'required' => true,
+            'choice_attr' => function ($pluginName) {
+                return [
+                    'data-calculator-input-type' => $this->getCalculatorInputType($pluginName),
+                ];
+            },
             'constraints' => [
                 new NotBlank(),
             ],
@@ -217,12 +236,12 @@ class CalculatorForm extends AbstractType
     {
         $label = 'Apply to';
 
-        $builder->add(self::FIELD_COLLECTOR_QUERY_STRING, 'textarea', [
+        $builder->add(static::FIELD_COLLECTOR_QUERY_STRING, TextareaType::class, [
             'label' => $label,
             'constraints' => [
                 new NotBlank(['groups' => DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING]),
                 new QueryString([
-                    QueryString::OPTION_DISCOUNT_FACADE => $this->discountFacade,
+                    QueryString::OPTION_DISCOUNT_FACADE => $this->getFacade(),
                     QueryString::OPTION_QUERY_STRING_TYPE => MetaProviderFactory::TYPE_COLLECTOR,
                     'groups' => DiscountConstants::DISCOUNT_COLLECTOR_STRATEGY_QUERY_STRING,
                 ]),
@@ -250,8 +269,9 @@ class CalculatorForm extends AbstractType
      */
     protected function getCalculatorPlugin($pluginName)
     {
-        if (isset($this->calculatorPlugins[$pluginName])) {
-            return $this->calculatorPlugins[$pluginName];
+        $calculatorPlugins = $this->getFactory()->getCalculatorPlugins();
+        if (isset($calculatorPlugins[$pluginName])) {
+            return $calculatorPlugins[$pluginName];
         }
 
         throw new CalculatorException(sprintf(
@@ -262,13 +282,10 @@ class CalculatorForm extends AbstractType
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
+     * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'discount_calculator';
     }
-
 }

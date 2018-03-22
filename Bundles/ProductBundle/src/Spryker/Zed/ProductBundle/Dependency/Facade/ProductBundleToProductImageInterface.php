@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
 interface ProductBundleToProductImageInterface
 {
-
     /**
      * @param int $productId
      *
@@ -17,4 +16,12 @@ interface ProductBundleToProductImageInterface
      */
     public function getProductImagesSetCollectionByProductId($productId);
 
+    /**
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale);
 }

@@ -9,7 +9,6 @@ use Generated\Shared\Transfer\CmsPageTransfer;
 
 interface CmsPageSaverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
@@ -25,5 +24,4 @@ interface CmsPageSaverInterface
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
     public function updatePage(CmsPageTransfer $cmsPageTransfer);
-
 }

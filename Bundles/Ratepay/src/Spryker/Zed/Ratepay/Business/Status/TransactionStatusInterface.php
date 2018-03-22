@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 interface TransactionStatusInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -39,5 +38,4 @@ interface TransactionStatusInterface
      * @return bool
      */
     public function isRefundApproved(OrderTransfer $orderTransfer);
-
 }

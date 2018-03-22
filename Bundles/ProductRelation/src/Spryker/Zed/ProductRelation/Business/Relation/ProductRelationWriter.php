@@ -21,7 +21,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductRelationWriter implements ProductRelationWriterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
     /**
      * @var \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToTouchInterface
@@ -358,7 +357,7 @@ class ProductRelationWriter implements ProductRelationWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\Product\Persistence\SpyProductAbstract[]
+     * @return mixed|mixed[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[]
      */
     protected function findRuleMatchingProducts(ProductRelationTransfer $productRelationTransfer)
     {
@@ -388,5 +387,4 @@ class ProductRelationWriter implements ProductRelationWriterInterface
                 ->toArray(true)
         );
     }
-
 }

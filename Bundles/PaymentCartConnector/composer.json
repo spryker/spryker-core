@@ -3,18 +3,18 @@
   "description": "PaymentCartConnector module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
-    "spryker/cart": "^3.0.0"
+    "spryker/cart": "^4.0.0"
   },
   "suggest": {
     "spryker/cart": "If you want to use Cart plugins."
   },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "minimum-stability": "dev",

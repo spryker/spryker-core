@@ -13,7 +13,6 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class ClassDefinition implements ClassDefinitionInterface
 {
-
     const TYPE_FULLY_QUALIFIED = 'type_fully_qualified';
 
     /**
@@ -62,6 +61,11 @@ class ClassDefinition implements ClassDefinitionInterface
     private $propertyNameMap = [];
 
     /**
+     * @var string|null
+     */
+    private $entityNamespace;
+
+    /**
      * @param array $definition
      *
      * @return $this
@@ -73,6 +77,8 @@ class ClassDefinition implements ClassDefinitionInterface
         if (isset($definition['deprecated'])) {
             $this->deprecationDescription = $definition['deprecated'];
         }
+
+        $this->addEntityNamespace($definition);
 
         if (isset($definition['property'])) {
             $properties = $this->normalizePropertyTypes($definition['property']);
@@ -726,4 +732,23 @@ class ClassDefinition implements ClassDefinitionInterface
         return isset($property['deprecated']) ? $property['deprecated'] : null;
     }
 
+    /**
+     * @param array $definition
+     *
+     * @return void
+     */
+    protected function addEntityNamespace(array $definition)
+    {
+        if (isset($definition['entity-namespace'])) {
+            $this->entityNamespace = $definition['entity-namespace'];
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntityNamespace()
+    {
+        return $this->entityNamespace;
+    }
 }

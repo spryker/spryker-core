@@ -9,7 +9,6 @@ namespace Spryker\Zed\Propel\Business\Model;
 
 interface PropelSchemaWriterInterface
 {
-
     /**
      * @param string $fileName
      * @param string $content
@@ -17,5 +16,4 @@ interface PropelSchemaWriterInterface
      * @return void
      */
     public function write($fileName, $content);
-
 }

@@ -13,11 +13,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\ApiQueryBuilder\ApiQueryBuilderConfig getConfig()
- * @method \Spryker\Zed\ApiQueryBuilder\Persistence\ApiQueryBuilderQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ApiQueryBuilder\Persistence\ApiQueryBuilderQueryContainerInterface getQueryContainer()
  */
 class ApiQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\ApiQueryBuilder\Persistence\Mapper\ApiRequestMapperInterface
      */
@@ -52,5 +51,4 @@ class ApiQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(ApiQueryBuilderDependencyProvider::SERVICE_UTIL_ENCODING);
     }
-
 }

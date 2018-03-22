@@ -11,7 +11,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class PropelSchemaWriter implements PropelSchemaWriterInterface
 {
-
     /**
      * @var \Symfony\Component\Filesystem\Filesystem
      */
@@ -45,5 +44,4 @@ class PropelSchemaWriter implements PropelSchemaWriterInterface
             $content
         );
     }
-
 }

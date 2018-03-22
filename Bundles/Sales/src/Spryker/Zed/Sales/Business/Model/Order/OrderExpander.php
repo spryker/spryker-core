@@ -16,7 +16,6 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface;
 
 class OrderExpander implements OrderExpanderInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface
      */
@@ -143,5 +142,4 @@ class OrderExpander implements OrderExpanderInterface
 
         return new ArrayObject($appliedDiscounts);
     }
-
 }

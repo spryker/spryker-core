@@ -17,7 +17,6 @@ use Spryker\Client\Wishlist\WishlistClientInterface;
 
 class CartHandler implements CartHandlerInterface
 {
-
     /**
      * @var \Spryker\Client\Wishlist\Dependency\Client\WishlistToCartInterface
      */
@@ -39,23 +38,6 @@ class CartHandler implements CartHandlerInterface
     }
 
     /**
-     * @deprecated Use moveCollectionToCart() instead
-     *
-     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer
-     */
-    public function moveToCart(WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer)
-    {
-        $this->assertRequestTransfer($wishlistMoveToCartRequestTransfer);
-
-        $this->storeItemInQuote($wishlistMoveToCartRequestTransfer->getSku());
-        $this->wishlistClient->removeItem($wishlistMoveToCartRequestTransfer->getWishlistItem());
-
-        return $wishlistMoveToCartRequestTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $requestCollectionTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -65,13 +47,10 @@ class CartHandler implements CartHandlerInterface
     {
         $wishlistRequestCollectionDiff = new WishlistMoveToCartRequestCollectionTransfer();
 
-        $skuItems = [];
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $skuItems[] = $itemTransfer->getSku();
-        }
+        $existingSkuIndex = $this->createExistingSkuIndex($quoteTransfer);
 
         foreach ($requestCollectionTransfer->getRequests() as $wishlistRequestTransfer) {
-            if (in_array($wishlistRequestTransfer->getSku(), $skuItems)) {
+            if (isset($existingSkuIndex[$wishlistRequestTransfer->getSku()])) {
                 continue;
             }
 
@@ -179,4 +158,21 @@ class CartHandler implements CartHandlerInterface
             ->setQuantity($quantity);
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    protected function createExistingSkuIndex(QuoteTransfer $quoteTransfer)
+    {
+        $skuIndex = [];
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $skuIndex[$itemTransfer->getSku()] = true;
+        }
+
+        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
+            $skuIndex[$itemTransfer->getSku()] = true;
+        }
+        return $skuIndex;
+    }
 }

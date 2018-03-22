@@ -12,12 +12,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer getQueryContainer()
- * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacade getFacade()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface getFacade()
  */
 class ViewController extends BaseOptionController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -49,5 +48,4 @@ class ViewController extends BaseOptionController
             'taxSet' => $taxSetTransfer,
         ];
     }
-
 }

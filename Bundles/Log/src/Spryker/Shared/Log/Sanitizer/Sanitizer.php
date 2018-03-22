@@ -9,7 +9,6 @@ namespace Spryker\Shared\Log\Sanitizer;
 
 class Sanitizer implements SanitizerInterface
 {
-
     /**
      * @var array
      */
@@ -140,5 +139,4 @@ class Sanitizer implements SanitizerInterface
     {
         return (array_values($data) === $data);
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface;
 
 abstract class AbstractIntlMoneyFormatter implements MoneyFormatterInterface
 {
-
     /**
      * @var \Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface
      */
@@ -87,5 +86,4 @@ abstract class AbstractIntlMoneyFormatter implements MoneyFormatterInterface
     {
         return new ISOCurrencies();
     }
-
 }

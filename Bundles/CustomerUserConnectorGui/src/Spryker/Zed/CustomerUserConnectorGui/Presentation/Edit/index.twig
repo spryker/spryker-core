@@ -1,0 +1,39 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title %}Assign Customers to User: {{ userTransfer.username }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton('/user', 'List Users' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with {'widget_title' : 'List of customers'} %}
+
+        {% block widget_content %}
+
+            <div class="alert alert-info">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {{ 'A customer can not be assigned to multiple users at a time.' | trans }}
+            </div>
+            {{ form_start(form) }}
+
+            {{ form_widget(form) }}
+
+            {% include '@CustomerUserConnectorGui/Edit/Partial/available-customers.twig' with {'availableCustomers': availableCustomers} only %}
+            {% include '@CustomerUserConnectorGui/Edit/Partial/assigned-customers.twig' with {'assignedCustomers': assignedCustomers} only %}
+
+            <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+
+            {{ form_end(form) }}
+
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-customer-user-connector-gui-customer-user-connector.js"></script>
+{% endblock %}

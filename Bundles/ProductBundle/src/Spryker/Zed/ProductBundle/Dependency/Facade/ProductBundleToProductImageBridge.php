@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
 class ProductBundleToProductImageBridge implements ProductBundleToProductImageInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface
      */
@@ -33,4 +32,15 @@ class ProductBundleToProductImageBridge implements ProductBundleToProductImageIn
         return $this->productImageFacade->getProductImagesSetCollectionByProductId($productId);
     }
 
+    /**
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale)
+    {
+        return $this->productImageFacade->getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale);
+    }
 }

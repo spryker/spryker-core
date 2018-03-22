@@ -26,7 +26,6 @@ use Spryker\Zed\Touch\TouchDependencyProvider;
  */
 class TouchTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacade
      */
@@ -94,5 +93,4 @@ class TouchTest extends Unit
 
         $this->assertTrue($touchCountAfterTouch > $touchCountBeforeTouch);
     }
-
 }

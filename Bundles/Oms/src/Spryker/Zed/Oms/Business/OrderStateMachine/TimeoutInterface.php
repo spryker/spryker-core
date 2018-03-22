@@ -13,7 +13,6 @@ use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 
 interface TimeoutInterface
 {
-
     /**
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface $orderStateMachine
      *
@@ -44,5 +43,4 @@ interface TimeoutInterface
      * @return void
      */
     public function dropOldTimeout(ProcessInterface $process, $stateId, SpySalesOrderItem $orderItem);
-
 }

@@ -23,40 +23,70 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class PropelSchemaMergerTest extends Unit
 {
-
-    /**
-     * @return string
-     */
-    private function getFixtureDirectory()
-    {
-        return __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures' . DIRECTORY_SEPARATOR . 'PropelSchemaMerger';
-    }
+    const LEVEL_PROJECT = 'Project';
+    const LEVEL_VENDOR = 'Vendor';
 
     /**
      * @return void
      */
     public function testMergeTwoSchemaFilesMustReturnStringWithMergedContent()
     {
-        $projectFile = new SplFileInfo(
-            $this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'Project' . DIRECTORY_SEPARATOR . 'foo_bar.schema.xml',
-            '',
-            ''
-        );
-        $vendorFile = new SplFileInfo(
-            $this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'Vendor' . DIRECTORY_SEPARATOR . 'foo_bar.schema.xml',
-            '',
-            ''
-        );
-
-        $filesToMerge = [];
-        $filesToMerge['foo_bar.schema.xml'][] = $projectFile;
-        $filesToMerge['foo_bar.schema.xml'][] = $vendorFile;
+        $filesToMerge = [
+            $this->getSplFileInfo('foo_bar.schema.xml', static::LEVEL_VENDOR),
+            $this->getSplFileInfo('foo_bar.schema.xml', static::LEVEL_PROJECT),
+        ];
 
         $merger = new PropelSchemaMerger();
-        $content = $merger->merge($filesToMerge['foo_bar.schema.xml']);
-
-        $expected = file_get_contents($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'expected.merged.schema.xml');
+        $content = $merger->merge($filesToMerge);
+        $expected = file_get_contents($this->getFixtureDirectory() . 'expected.merged.schema.xml');
         $this->assertSame($expected, $content);
     }
 
+    /**
+     * @return void
+     */
+    public function testMergeAllowsToChangeAttributeValue()
+    {
+        $filesToMerge = [
+            $this->getSplFileInfo('attribute_value_change.schema.xml', static::LEVEL_VENDOR),
+            $this->getSplFileInfo('attribute_value_change.schema.xml', static::LEVEL_PROJECT),
+        ];
+
+        $merger = new PropelSchemaMerger();
+        $content = $merger->merge($filesToMerge);
+
+        $expected = file_get_contents($this->getFixtureDirectory() . 'expected.merged_attribute_change.schema.xml');
+        $this->assertSame($expected, $content);
+    }
+
+    /**
+     * @param string $fileName
+     * @param string $level
+     *
+     * @return \Symfony\Component\Finder\SplFileInfo
+     */
+    protected function getSplFileInfo($fileName, $level)
+    {
+        return new SplFileInfo($this->getFixtureDirectory($level) . $fileName, '', '');
+    }
+
+    /**
+     * @param string|null $level
+     *
+     * @return string
+     */
+    private function getFixtureDirectory($level = null)
+    {
+        $pathParts = [
+            __DIR__,
+            'Fixtures',
+            'PropelSchemaMerger',
+        ];
+
+        if ($level) {
+            $pathParts[] = $level;
+        }
+
+        return implode(DIRECTORY_SEPARATOR, $pathParts) . DIRECTORY_SEPARATOR;
+    }
 }

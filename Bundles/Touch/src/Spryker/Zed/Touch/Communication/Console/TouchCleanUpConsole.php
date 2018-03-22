@@ -12,11 +12,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Touch\Business\TouchFacade getFacade()
+ * @method \Spryker\Zed\Touch\Business\TouchFacadeInterface getFacade()
  */
 class TouchCleanUpConsole extends Console
 {
-
     const COMMAND_NAME = 'touch:cleanup';
     const COMMAND_DESCRIPTION = 'Cleans up the Touch tables by removing obsolete touch data';
 
@@ -49,5 +48,4 @@ class TouchCleanUpConsole extends Console
         $output->writeln('<fg=green>Finished. All Done.</fg=green>');
         $output->writeln('');
     }
-
 }

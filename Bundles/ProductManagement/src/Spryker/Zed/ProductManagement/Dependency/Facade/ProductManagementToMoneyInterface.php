@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 interface ProductManagementToMoneyInterface
 {
-
     /**
      * @param float $value
      *
@@ -40,5 +39,4 @@ interface ProductManagementToMoneyInterface
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
     public function fromInteger($amount, $isoCode = null);
-
 }

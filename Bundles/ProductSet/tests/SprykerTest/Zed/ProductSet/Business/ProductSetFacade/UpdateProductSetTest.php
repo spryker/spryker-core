@@ -30,7 +30,6 @@ use Spryker\Shared\ProductSet\ProductSetConfig;
  */
 class UpdateProductSetTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -282,5 +281,4 @@ class UpdateProductSetTest extends Unit
 
         $this->tester->assertTouchActive(ProductSetConfig::RESOURCE_TYPE_PRODUCT_SET, $productSetTransfer->getIdProductSet(), 'ProductSet should have been touched as active.');
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Shared\Twig\Cache\CacheLoaderInterface;
 
 class FilesystemCacheLoader implements CacheLoaderInterface
 {
-
     /**
      * @var string
      */
@@ -36,5 +35,4 @@ class FilesystemCacheLoader implements CacheLoaderInterface
 
         return include($this->cacheFilePath);
     }
-
 }

@@ -10,7 +10,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 interface RefundCalculatorInterface
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
@@ -18,5 +17,4 @@ interface RefundCalculatorInterface
      * @return \Generated\Shared\Transfer\RefundTransfer
      */
     public function calculateRefund(array $salesOrderItems, SpySalesOrder $salesOrderEntity);
-
 }

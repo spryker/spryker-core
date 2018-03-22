@@ -12,12 +12,11 @@ use Spryker\Zed\Category\Dependency\Plugin\CategoryRelationReadPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacade getFacade()
+ * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
  */
 class ReadProductCategoryRelationPlugin extends AbstractPlugin implements CategoryRelationReadPluginInterface
 {
-
     /**
      * @return string
      */
@@ -49,5 +48,4 @@ class ReadProductCategoryRelationPlugin extends AbstractPlugin implements Catego
 
         return $productNames;
     }
-
 }

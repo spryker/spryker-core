@@ -42,7 +42,6 @@ use Spryker\Zed\Braintree\Business\Order\Saver;
  */
 class SaverTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -286,5 +285,4 @@ class SaverTest extends Unit
 
         return $orderEntity;
     }
-
 }

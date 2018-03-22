@@ -9,11 +9,10 @@ namespace Spryker\Service\FlysystemAws3v3FileSystem\Model\Builder\Adapter;
 
 use Aws\S3\S3Client;
 use Generated\Shared\Transfer\FlysystemConfigAws3v3Transfer;
-use League\Flysystem\Adapter\AwsS3v3\AwsS3Adapter;
+use League\Flysystem\AwsS3v3\AwsS3Adapter;
 
 class Aws3v3AdapterBuilder implements AdapterBuilderInterface
 {
-
     const KEY = 'key';
     const SECRET = 'secret';
     const REGION = 'region';
@@ -21,7 +20,7 @@ class Aws3v3AdapterBuilder implements AdapterBuilderInterface
     const CREDENTIALS = 'credentials';
 
     /**
-     * @var \League\Flysystem\Adapter\AwsS3v3\AwsS3Adapter
+     * @var \League\Flysystem\AwsS3v3\AwsS3Adapter
      */
     protected $adapter;
 
@@ -81,5 +80,4 @@ class Aws3v3AdapterBuilder implements AdapterBuilderInterface
 
         return $this;
     }
-
 }

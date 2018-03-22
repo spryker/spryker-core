@@ -11,7 +11,6 @@ use Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface;
 
 class SessionLockReleaser implements SessionLockReleaserInterface
 {
-
     /**
      * @var \Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface
      */
@@ -57,5 +56,4 @@ class SessionLockReleaser implements SessionLockReleaserInterface
     {
         return $this->lockReader->getTokenForSession($sessionId);
     }
-
 }

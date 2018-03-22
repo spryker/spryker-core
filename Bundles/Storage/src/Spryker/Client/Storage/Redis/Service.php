@@ -12,7 +12,6 @@ use Predis\ClientInterface;
 
 class Service implements ServiceInterface
 {
-
     const KV_PREFIX = 'kv:';
 
     /**
@@ -364,7 +363,8 @@ class Service implements ServiceInterface
         return $result;
     }
 
-    /**
+    /**a
+     *
      * @param array $keys
      *
      * @return void
@@ -386,5 +386,4 @@ class Service implements ServiceInterface
 
         return $deleteCount;
     }
-
 }

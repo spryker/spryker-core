@@ -11,7 +11,6 @@ use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 class ProductAttributeDataHelper extends Module
 {
-
     use DataCleanupHelperTrait;
 
     /**
@@ -80,5 +79,4 @@ class ProductAttributeDataHelper extends Module
 
         return $productManagementAttributeEntity;
     }
-
 }

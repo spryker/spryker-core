@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CacheFacade extends AbstractFacade implements CacheFacadeInterface
 {
-
     /**
      * @api
      *
@@ -63,5 +62,4 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
     {
         return $this->getFactory()->createCacheClearer()->clearAutoLoaderCache();
     }
-
 }

@@ -16,34 +16,33 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface;
 
 /**
- * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
+ * @method \Spryker\Zed\Payolution\Business\PayolutionFacadeInterface getFacade()
  */
 class PayolutionPreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreCheckPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return bool
      */
     public function execute(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
         $payolutionTransactionResponseTransfer = $this->getFacade()->preCheckPayment($quoteTransfer);
-        $this->checkForErrors($payolutionTransactionResponseTransfer, $checkoutResponseTransfer);
+        $isPassed = $this->checkForErrors($payolutionTransactionResponseTransfer, $checkoutResponseTransfer);
         $quoteTransfer->getPayment()->getPayolution()
             ->setPreCheckId($payolutionTransactionResponseTransfer->getIdentificationUniqueid());
 
-        return $checkoutResponseTransfer;
+        return $isPassed;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PayolutionTransactionResponseTransfer $payolutionTransactionResponseTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     protected function checkForErrors(
         PayolutionTransactionResponseTransfer $payolutionTransactionResponseTransfer,
@@ -59,7 +58,9 @@ class PayolutionPreCheckPlugin extends BaseAbstractPlugin implements CheckoutPre
                 ->setErrorCode($errorCode)
                 ->setMessage($payolutionTransactionResponseTransfer->getProcessingReturn());
             $checkoutResponseTransfer->addError($error);
+            return false;
         }
-    }
 
+        return true;
+    }
 }

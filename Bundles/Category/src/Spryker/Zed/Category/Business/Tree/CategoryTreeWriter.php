@@ -20,7 +20,6 @@ use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
  */
 class CategoryTreeWriter implements CategoryTreeWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Business\Tree\NodeWriterInterface
      */
@@ -64,7 +63,7 @@ class CategoryTreeWriter implements CategoryTreeWriterInterface
         ClosureTableWriterInterface $closureTableWriter,
         CategoryTreeReaderInterface $categoryTreeReader,
         NodeUrlManagerInterface $nodeUrlManager,
-        CategoryToTouchInterface  $touchFacade,
+        CategoryToTouchInterface $touchFacade,
         ConnectionInterface $connection
     ) {
         $this->nodeWriter = $nodeWriter;
@@ -269,7 +268,6 @@ class CategoryTreeWriter implements CategoryTreeWriterInterface
         $nodeTransfer = (new NodeTransfer())
             ->fromArray($nodeEntity->toArray());
 
-        $this->nodeUrlManager->removeUrl($nodeTransfer, $locale);
+        $this->nodeUrlManager->removeUrl($nodeTransfer);
     }
-
 }

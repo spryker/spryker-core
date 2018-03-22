@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabel\Business\Touch;
 
 interface ProductAbstractRelationTouchManagerInterface
 {
-
     /**
      * @param int $idProductAbstract
      *
@@ -23,5 +22,4 @@ interface ProductAbstractRelationTouchManagerInterface
      * @return void
      */
     public function touchDeletedByIdProductAbstract($idProductAbstract);
-
 }

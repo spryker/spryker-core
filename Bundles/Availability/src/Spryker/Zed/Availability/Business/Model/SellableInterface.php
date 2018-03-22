@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface SellableInterface
 {
-
     /**
      * @param string $sku
      * @param int $quantity
@@ -25,4 +26,20 @@ interface SellableInterface
      */
     public function calculateStockForProduct($sku);
 
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer);
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     *
+     * @return int
+     */
+    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer);
 }

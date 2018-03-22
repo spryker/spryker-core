@@ -12,7 +12,6 @@ use Spryker\Zed\Product\Business\Product\Observer\ProductAbstractReadObserverInt
 
 class ProductAbstractReadObserverPluginManager implements ProductAbstractReadObserverInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface[]
      */
@@ -27,6 +26,8 @@ class ProductAbstractReadObserverPluginManager implements ProductAbstractReadObs
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
@@ -39,5 +40,4 @@ class ProductAbstractReadObserverPluginManager implements ProductAbstractReadObs
 
         return $productAbstractTransfer;
     }
-
 }

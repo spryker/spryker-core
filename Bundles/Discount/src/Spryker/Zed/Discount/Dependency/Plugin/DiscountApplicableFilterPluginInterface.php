@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface DiscountApplicableFilterPluginInterface
 {
-
     /**
      * Specification:
      *  - With this filter plugin you filter plugins before applying decision rules so that they are ignored and wont be used when matching.
@@ -26,5 +25,4 @@ interface DiscountApplicableFilterPluginInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function filter(array $discountApplicableItems, QuoteTransfer $quoteTransfer, $idDiscount);
-
 }

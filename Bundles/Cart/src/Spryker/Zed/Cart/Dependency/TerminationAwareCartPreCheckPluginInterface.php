@@ -8,7 +8,6 @@ namespace Spryker\Zed\Cart\Dependency;
 
 interface TerminationAwareCartPreCheckPluginInterface
 {
-
     /**
      * Specification:
      * - Describes should the cart pre-check process be stopped in case of failure
@@ -18,5 +17,4 @@ interface TerminationAwareCartPreCheckPluginInterface
      * @return bool
      */
     public function terminateOnFailure();
-
 }

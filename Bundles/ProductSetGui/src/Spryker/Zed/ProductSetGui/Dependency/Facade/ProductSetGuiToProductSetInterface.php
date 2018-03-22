@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductSetTransfer;
 
 interface ProductSetGuiToProductSetInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
      *
@@ -46,5 +45,4 @@ interface ProductSetGuiToProductSetInterface
      * @return void
      */
     public function reorderProductSets(array $productSetTransfers);
-
 }

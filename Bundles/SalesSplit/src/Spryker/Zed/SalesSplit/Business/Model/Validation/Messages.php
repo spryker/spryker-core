@@ -9,7 +9,6 @@ namespace Spryker\Zed\SalesSplit\Business\Model\Validation;
 
 class Messages
 {
-
     const VALIDATE_QUANTITY_MESSAGE = 'Available quantity is equal or lower than provided.';
     const VALIDATE_BUNDLE_MESSAGE = 'Could not split when order item is in bundle.';
     const VALIDATE_DISCOUNTED_MESSAGE = 'Could not split when order item is discounted.';
@@ -22,5 +21,4 @@ class Messages
     private function __construct()
     {
     }
-
 }

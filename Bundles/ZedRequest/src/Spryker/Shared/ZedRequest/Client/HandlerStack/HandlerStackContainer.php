@@ -12,7 +12,6 @@ use Spryker\Shared\ZedRequest\Client\Middleware\MiddlewareInterface;
 
 class HandlerStackContainer
 {
-
     /**
      * @var \GuzzleHttp\HandlerStack
      */
@@ -40,5 +39,4 @@ class HandlerStackContainer
         $handlerStack = $this->getHandlerStack();
         $handlerStack->push($middleware->getCallable(), $middleware->getName());
     }
-
 }

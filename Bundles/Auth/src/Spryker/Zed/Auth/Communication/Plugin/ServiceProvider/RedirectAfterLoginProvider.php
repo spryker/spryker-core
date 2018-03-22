@@ -20,11 +20,10 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
- * @method \Spryker\Zed\Auth\Business\AuthFacade getFacade()
+ * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
  */
 class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     const REFERER = 'referer';
 
     /**
@@ -179,5 +178,4 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
 
         return true;
     }
-
 }

@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\QueryContainerResolverAwareTrait;
  */
 class QueryContainerResolverAwareTraitTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -50,5 +49,4 @@ class QueryContainerResolverAwareTraitTest extends Unit
     {
         return $this->getMockForAbstractClass(AbstractQueryContainer::class);
     }
-
 }

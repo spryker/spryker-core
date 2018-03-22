@@ -25,7 +25,6 @@ use Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface;
  */
 abstract class AbstractIntlMoneyFormatterTest extends Unit
 {
-
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface
      */
@@ -48,5 +47,4 @@ abstract class AbstractIntlMoneyFormatterTest extends Unit
 
         return $money;
     }
-
 }

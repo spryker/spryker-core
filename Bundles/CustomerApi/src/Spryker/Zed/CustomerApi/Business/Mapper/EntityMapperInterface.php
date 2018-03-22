@@ -9,7 +9,6 @@ namespace Spryker\Zed\CustomerApi\Business\Mapper;
 
 interface EntityMapperInterface
 {
-
     /**
      * @param array $data
      *
@@ -23,5 +22,4 @@ interface EntityMapperInterface
      * @return \Orm\Zed\Customer\Persistence\SpyCustomer[]
      */
     public function toEntityCollection(array $data);
-
 }

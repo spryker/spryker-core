@@ -11,7 +11,6 @@ use Spryker\Zed\Ratepay\Business\Api\Adapter\AdapterInterface;
 
 abstract class AbstractHttpAdapter implements AdapterInterface
 {
-
     /**
      * @var string
      */
@@ -52,5 +51,4 @@ abstract class AbstractHttpAdapter implements AdapterInterface
      * @return string
      */
     abstract protected function send($request);
-
 }

@@ -13,10 +13,12 @@ use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\RepositoryResolverAwareTrait;
 use Symfony\Component\Form\AbstractType as SymfonyAbstractType;
 
 abstract class AbstractType extends SymfonyAbstractType
 {
+    use RepositoryResolverAwareTrait;
 
     /**
      * @var \Spryker\Zed\Kernel\Business\AbstractFacade
@@ -173,5 +175,4 @@ abstract class AbstractType extends SymfonyAbstractType
     {
         return new BundleConfigResolver();
     }
-
 }

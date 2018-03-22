@@ -3,8 +3,9 @@
   "description": "PriceDataFeed module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
-    "spryker/price": "^4.0.0"
+    "spryker/price-product": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -14,14 +15,13 @@
     "spryker/testify": "*"
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

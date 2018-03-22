@@ -10,7 +10,6 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinderInterf
 
 class IdeAutoCompletionWriter implements IdeAutoCompletionWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface[]
      */
@@ -19,7 +18,7 @@ class IdeAutoCompletionWriter implements IdeAutoCompletionWriterInterface
     /**
      * @var \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinderInterface
      */
-    protected $bundleFinder;
+    protected $moduleFinder;
 
     /**
      * @var array
@@ -28,13 +27,13 @@ class IdeAutoCompletionWriter implements IdeAutoCompletionWriterInterface
 
     /**
      * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\GeneratorInterface[] $generators
-     * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinderInterface $bundleFinder
+     * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\BundleFinderInterface $moduleFinder
      * @param array $options
      */
-    public function __construct(array $generators, BundleFinderInterface $bundleFinder, array $options)
+    public function __construct(array $generators, BundleFinderInterface $moduleFinder, array $options)
     {
         $this->generators = $generators;
-        $this->bundleFinder = $bundleFinder;
+        $this->moduleFinder = $moduleFinder;
         $this->options = $options;
     }
 
@@ -43,10 +42,10 @@ class IdeAutoCompletionWriter implements IdeAutoCompletionWriterInterface
      */
     public function writeCompletionFiles()
     {
-        $bundleTransferCollection = $this->bundleFinder->find();
+        $moduleTransferCollection = $this->moduleFinder->find();
 
         foreach ($this->generators as $generator) {
-            $fileContent = $generator->generate($bundleTransferCollection);
+            $fileContent = $generator->generate($moduleTransferCollection);
 
             $this->saveFile($generator->getName(), $fileContent);
         }
@@ -102,5 +101,4 @@ class IdeAutoCompletionWriter implements IdeAutoCompletionWriterInterface
             mkdir($directory, 0755, true);
         }
     }
-
 }

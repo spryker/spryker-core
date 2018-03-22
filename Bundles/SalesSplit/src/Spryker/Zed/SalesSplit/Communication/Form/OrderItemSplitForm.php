@@ -7,14 +7,20 @@
 
 namespace Spryker\Zed\SalesSplit\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
+/**
+ * @method \Spryker\Zed\SalesSplit\Business\SalesSplitFacadeInterface getFacade()
+ * @method \Spryker\Zed\SalesSplit\Communication\SalesSplitCommunicationFactory getFactory()
+ */
 class OrderItemSplitForm extends AbstractType
 {
-
     const FIELD_QUANTITY = 'quantity';
     const FIELD_ID_ORDER_ITEM = 'id_sales_order_item';
     const FIELD_ID_ORDER = 'id_sales_order';
@@ -25,9 +31,19 @@ class OrderItemSplitForm extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'orderItemSplit';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 
     /**
@@ -54,7 +70,7 @@ class OrderItemSplitForm extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_QUANTITY, 'text', [
+        $builder->add(self::FIELD_QUANTITY, TextType::class, [
             'label' => 'Quantity',
             'constraints' => [
                 new NotBlank([
@@ -77,7 +93,7 @@ class OrderItemSplitForm extends AbstractType
      */
     protected function addIdOrderItemField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_ORDER_ITEM, 'hidden');
+        $builder->add(self::FIELD_ID_ORDER_ITEM, HiddenType::class);
 
         return $this;
     }
@@ -89,7 +105,7 @@ class OrderItemSplitForm extends AbstractType
      */
     protected function addIdOrderField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_ORDER, 'hidden');
+        $builder->add(self::FIELD_ID_ORDER, HiddenType::class);
 
         return $this;
     }
@@ -101,7 +117,7 @@ class OrderItemSplitForm extends AbstractType
      */
     protected function addSubmitButton(FormBuilderInterface $builder)
     {
-        $builder->add('Split', 'submit', [
+        $builder->add('Split', SubmitType::class, [
             'attr' => [
                 'class' => 'btn btn-sm btn-primary',
             ],
@@ -109,5 +125,4 @@ class OrderItemSplitForm extends AbstractType
 
         return $this;
     }
-
 }

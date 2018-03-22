@@ -55,6 +55,15 @@
                         <action>edit</action>
                         <visible>0</visible>
                     </attribute-edit>
+
+                    <attribute-edit-translations>
+                        <label>Edit Attribute Translations</label>
+                        <title>Edit Attribute Translations</title>
+                        <bundle>product-attribute-gui</bundle>
+                        <controller>attribute</controller>
+                        <action>translate</action>
+                        <visible>0</visible>
+                    </attribute-edit-translations>
                 </pages>
             </attributes>
         </pages>

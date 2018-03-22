@@ -13,12 +13,12 @@ use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
 interface SearchFacadeInterface
 {
-
     /**
      * Specification:
      * - Loads index definition json files from the folders
      * - Installs Elasticsearch indexes and mapping types based on the loaded index definitions if they not exists already
-     * - For each configured store a separated index will be created
+     * - For each configured store a separated index name is generated
+     * - The index is created for only the current store
      * - The name of the index is automatically prefixed with the store name + underscore
      * - Generates IndexMap class for each mapping type
      * - The generated IndexMaps are not store specific and has the class name of the mapping types suffixed with "IndexMap"
@@ -92,11 +92,13 @@ interface SearchFacadeInterface
     public function searchKeys($searchString, $limit = null, $offset = null);
 
     /**
+     * @api
+     *
+     * @deprecated use SearchFacade::transformPageMapToDocumentByMapperName() instead
+     *
      * Specification:
      * - Transforms a raw data array into an Elasticsearch "page" mapping type document
      * - The transformation is based on the given page map what configures which data goes into which field
-     *
-     * @api
      *
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
      * @param array $data
@@ -105,6 +107,23 @@ interface SearchFacadeInterface
      * @return array
      */
     public function transformPageMapToDocument(PageMapInterface $pageMap, array $data, LocaleTransfer $localeTransfer);
+
+    /**
+     * Specification:
+     * - Transforms a raw data array into an Elasticsearch "page" mapping type document
+     * - The transformation is based on the given page map plugin name what configures which data goes into which field
+     *
+     * @api
+     *
+     * @param array $data
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $mapperName
+     *
+     * @throws \Spryker\Zed\Search\Business\Exception\InvalidPropertyNameException
+     *
+     * @return array
+     */
+    public function transformPageMapToDocumentByMapperName(array $data, LocaleTransfer $localeTransfer, $mapperName);
 
     /**
      * Specification:
@@ -121,4 +140,118 @@ interface SearchFacadeInterface
      */
     public function generatePageIndexMap(LoggerInterface $messenger);
 
+    /**
+     * Specification:
+     * - Creates a Snapshot.
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function createSnapshot($repositoryName, $snapshotName, $options = []);
+
+    /**
+     * Specification:
+     * - Checks if a Snapshot exists.
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     *
+     * @return bool
+     */
+    public function existsSnapshot($repositoryName, $snapshotName);
+
+    /**
+     * Specification:
+     * - Deletes a Snapshot.
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     *
+     * @return bool
+     */
+    public function deleteSnapshot($repositoryName, $snapshotName);
+
+    /**
+     * Specification:
+     * - Checks if a Snapshot repository exists.
+     *
+     * @api
+     *
+     * @
+     *
+     * @param string $repositoryName
+     *
+     * @return bool
+     */
+    public function existsSnapshotRepository($repositoryName);
+
+    /**
+     * Specification:
+     * - Creates a Snapshot repository.
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $type
+     * @param array $settings
+     *
+     * @return bool
+     */
+    public function createSnapshotRepository($repositoryName, $type = 'fs', $settings = []);
+
+    /**
+     * Specification:
+     * - Restores a Snapshot.
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function restoreSnapshot($repositoryName, $snapshotName, $options = []);
+
+    /**
+     * Specification:
+     * - Closes an Index.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function closeIndex();
+
+    /**
+     * Specification:
+     * - Closes all indices.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function closeAllIndices();
+
+    /**
+     * Specification:
+     * - Copies one index to another index.
+     *
+     * @api
+     *
+     * @param string $source
+     * @param string $target
+     *
+     * @return bool
+     */
+    public function copyIndex($source, $target);
 }

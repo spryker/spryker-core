@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractProductSetController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -28,13 +27,13 @@ class EditController extends AbstractProductSetController
         $dataProvider = $this->getFactory()->createUpdateFormDataProvider();
 
         $productSetForm = $this->getFactory()
-            ->createUpdateProductSetForm(
+            ->getUpdateProductSetForm(
                 $dataProvider->getData($idProductSet),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
 
-        if ($productSetForm->isValid()) {
+        if ($productSetForm->isSubmitted() && $productSetForm->isValid()) {
             $productSetTransfer = $this->getFactory()
                 ->createUpdateFormDataToTransferMapper()
                 ->mapData($productSetForm);
@@ -121,5 +120,4 @@ class EditController extends AbstractProductSetController
             Url::generate('/product-set-gui')->build()
         );
     }
-
 }

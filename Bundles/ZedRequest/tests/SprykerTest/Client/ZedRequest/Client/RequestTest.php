@@ -23,7 +23,6 @@ use SprykerTest\Client\ZedRequest\Client\Fixture\TestTransfer;
  */
 class RequestTest extends Unit
 {
-
     /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $metaTransfer1
@@ -132,5 +131,4 @@ class RequestTest extends Unit
         $this->assertEquals($request, $newRequest);
         $this->assertNotSame($request, $newRequest);
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Container;
 
 class DiscountCalculationConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_DISCOUNT = 'discount facade';
 
     /**
@@ -29,5 +28,4 @@ class DiscountCalculationConnectorDependencyProvider extends AbstractBundleDepen
 
         return $container;
     }
-
 }

@@ -15,11 +15,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
- * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
  */
 class ProductManagementPersistenceFactory extends AbstractPersistenceFactory
 {
-
     //to be removed
 
     /**
@@ -53,5 +52,4 @@ class ProductManagementPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyProductManagementAttributeValueTranslationQuery::create();
     }
-
 }

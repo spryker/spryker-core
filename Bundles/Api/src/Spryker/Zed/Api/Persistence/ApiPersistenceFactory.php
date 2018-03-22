@@ -13,11 +13,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Api\ApiConfig getConfig()
- * @method \Spryker\Zed\Api\Persistence\ApiQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Api\Persistence\ApiQueryContainerInterface getQueryContainer()
  */
 class ApiPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\Api\Persistence\Mapper\ApiCollectionMapperInterface
      */
@@ -33,5 +32,4 @@ class ApiPersistenceFactory extends AbstractPersistenceFactory
     {
         return new ApiItemMapper();
     }
-
 }

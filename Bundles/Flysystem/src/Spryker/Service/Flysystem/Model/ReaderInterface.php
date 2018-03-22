@@ -9,7 +9,6 @@ namespace Spryker\Service\Flysystem\Model;
 
 interface ReaderInterface
 {
-
     /**
      * @param string $filesystemName
      * @param string $path
@@ -100,5 +99,4 @@ interface ReaderInterface
      * @return \Generated\Shared\Transfer\FlysystemResourceTransfer[]
      */
     public function listContents($filesystemName, $directory = '', $recursive = false);
-
 }

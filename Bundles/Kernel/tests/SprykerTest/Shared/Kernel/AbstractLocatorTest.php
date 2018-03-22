@@ -20,7 +20,6 @@ use SprykerTest\Shared\Kernel\Fixtures\MissingPropertyLocator;
  */
 class AbstractLocatorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -40,5 +39,4 @@ class AbstractLocatorTest extends Unit
 
         new MissingPropertyLocator();
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContainerInterface
 {
-
     const TO_URL = 'toUrl';
     const STATUS = 'status';
 
@@ -60,6 +59,23 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
         $query = $this->getFactory()->createUrlQuery();
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $resourceType
+     * @param array $resourceIds
+     *
+     * @throws Exception\UnknownResourceTypeException
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryUrlsByResourceTypeAndIds($resourceType, array $resourceIds)
+    {
+        return $this->getFactory()
+            ->createUrlQuery()
+            ->filterByResourceTypeAndIds($resourceType, $resourceIds);
     }
 
     /**
@@ -213,5 +229,4 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
             ->createUrlQuery()
             ->filterByFkResourceRedirect(null, Criteria::ISNULL);
     }
-
 }

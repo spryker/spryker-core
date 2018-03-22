@@ -3,7 +3,9 @@
   "description": "Messenger module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
+    "spryker/session": "^3.0.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
@@ -15,13 +17,8 @@
     "spryker/silex": "If you want to use ServiceProvider."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "minimum-stability": "dev",

@@ -10,13 +10,12 @@ namespace Spryker\Zed\ProductManagement\Communication\Controller;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
- * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacade getFacade()
- * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {
-
     const ID_PRODUCT_ABSTRACT = 'id-product-abstract';
 
     /**
@@ -46,5 +45,4 @@ class IndexController extends AbstractController
             $productTable->fetchData()
         );
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
 interface TriggerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param int $identifier
@@ -44,5 +43,4 @@ interface TriggerInterface
      * @return int
      */
     public function triggerForTimeoutExpiredItems($stateMachineName);
-
 }

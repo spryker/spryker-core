@@ -16,7 +16,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
 {
-
     const FILE_EXTENSION = '.json';
 
     /**
@@ -170,7 +169,7 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
      */
     protected function getStorePrefixes(array $stores)
     {
-        array_walk($stores, function(&$store) {
+        array_walk($stores, function (&$store) {
             $store = mb_strtolower($store) . '_';
         });
 
@@ -178,8 +177,8 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     }
 
     /**
-     * @param $storePrefix
-     * @param $fileStorePrefix
+     * @param string $storePrefix
+     * @param string $fileStorePrefix
      *
      * @return bool
      */
@@ -230,5 +229,4 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
         return $this->utilEncodingService
             ->decodeJson($jsonValue, true);
     }
-
 }

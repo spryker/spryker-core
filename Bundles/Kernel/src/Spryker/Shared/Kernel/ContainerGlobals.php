@@ -38,7 +38,6 @@ use InvalidArgumentException;
 
 class ContainerGlobals implements ArrayAccess
 {
-
     /**
      * @var array
      */
@@ -195,5 +194,4 @@ class ContainerGlobals implements ArrayAccess
     {
         return array_keys(self::$containerGlobals);
     }
-
 }

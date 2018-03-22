@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductManagement\Business\Attribute;
 
+use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
 class AttributeInputManager
 {
-
     /**
      * @param string $inputType
      * @param string|null $value
@@ -25,19 +27,18 @@ class AttributeInputManager
 
         switch ($inputType) {
             case 'textarea':
-                $input = 'textarea';
+                $input = TextareaType::class;
                 break;
 
             case 'select2':
-                $input = 'select2';
+                $input = Select2ComboBoxType::class;
                 break;
         }
 
         if ($useTextArea) {
-            return 'textarea';
+            return TextareaType::class;
         }
 
         return $input;
     }
-
 }

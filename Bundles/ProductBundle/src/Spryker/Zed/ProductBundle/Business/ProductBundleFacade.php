@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -19,7 +20,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -108,13 +108,13 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function preCheckCheckoutAvailability(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
-         $this->getFactory()
+         return $this->getFactory()
             ->createProductBundleCheckoutPreCheck()
             ->checkCheckoutAvailability($quoteTransfer, $checkoutResponseTransfer);
     }
@@ -156,6 +156,22 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @api
      *
+     * @param string $concreteSku
+     *
+     * @return void
+     */
+    public function updateAffectedBundlesStock($concreteSku): void
+    {
+        $this->getFactory()
+            ->createProductBundleStockHandler()
+            ->updateAffectedBundlesStock($concreteSku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $productBundleSku
      *
      * @return void
@@ -172,6 +188,8 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @api
      *
+     * @deprecated Use saveOrderBundleItems() instead
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
@@ -182,6 +200,23 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
          $this->getFactory()
             ->createProductBundleSalesOrderSaver()
             ->saveSaleOrderBundleItems($quoteTransfer, $checkoutResponse);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
+     */
+    public function saveOrderBundleItems(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    {
+        $this->getFactory()
+            ->createProductBundleOrderSaver()
+            ->saveOrderBundleItems($quoteTransfer, $saveOrderTransfer);
     }
 
     /**
@@ -264,4 +299,19 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
             ->hydrate($orderTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function filterBundleItemsOnCartReload(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFactory()
+            ->createProductBundlePreReloadUpdater()
+            ->preReloadItems($quoteTransfer);
+    }
 }

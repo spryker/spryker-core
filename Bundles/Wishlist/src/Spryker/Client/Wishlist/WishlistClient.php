@@ -10,7 +10,6 @@ namespace Spryker\Client\Wishlist;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
-use Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -20,7 +19,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class WishlistClient extends AbstractClient implements WishlistClientInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -152,20 +150,6 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer
-     */
-    public function moveToCart(WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer)
-    {
-        return $this->createCartHandler()->moveToCart($wishlistMoveToCartRequestTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer
@@ -201,7 +185,22 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
     {
         $wishlistOverviewResponse = $this->getZedStub()->getWishlistOverview($wishlistOverviewRequestTransfer);
+
         return $this->getFactory()->createProductStorage()->expandProductDetails($wishlistOverviewResponse);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
+     */
+    public function getWishlistOverviewWithoutProductDetails(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
+    {
+        return $this->getZedStub()->getWishlistOverview($wishlistOverviewRequestTransfer);
     }
 
     /**
@@ -238,5 +237,4 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
             $this
         );
     }
-
 }

@@ -24,7 +24,6 @@ use Spryker\Zed\Cms\Business\CmsFacade;
  */
 class CmsFacadePageTest extends Unit
 {
-
     const CMS_PAGE_NEW_TITLE = 'new title';
     const CMS_PAGE_NEW_KEY_WORDS = 'new key words';
     const CMS_PAGE_NEW_DESCRIPTION = 'new description';
@@ -363,6 +362,34 @@ class CmsFacadePageTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetCmsVersionDataRetrievesDraftDataFromDatabase()
+    {
+        // Arrange
+        $idCmsPage = $this->createCmsPageWithGlossaryAttributes();
+        $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
+
+        foreach ($persistedCmsPageTransfer->getMetaAttributes() as $metaAttribute) {
+            $metaAttribute->setMetaTitle(static::CMS_PAGE_NEW_TITLE);
+            $metaAttribute->setMetaKeywords(static::CMS_PAGE_NEW_KEY_WORDS);
+            $metaAttribute->setMetaDescription(static::CMS_PAGE_NEW_DESCRIPTION);
+        }
+
+        $expectedCmsVersionData = $this->cmsFacade->updatePage($persistedCmsPageTransfer);
+
+        // Act
+        $actualCmsVersionData = $this->cmsFacade->getCmsVersionData($idCmsPage);
+
+        // Assert
+        $expectedCmsPageVersionMetaAttributes = $expectedCmsVersionData->getMetaAttributes()[0];
+        $actualCmsPageVersionMetaAttributes = $actualCmsVersionData->getCmsPage()->getMetaAttributes()[0];
+        $this->assertEquals($expectedCmsPageVersionMetaAttributes->getMetaDescription(), $actualCmsPageVersionMetaAttributes->getMetaDescription());
+        $this->assertEquals($expectedCmsPageVersionMetaAttributes->getMetaKeywords(), $actualCmsPageVersionMetaAttributes->getMetaKeywords());
+        $this->assertEquals($expectedCmsPageVersionMetaAttributes->getMetaTitle(), $actualCmsPageVersionMetaAttributes->getMetaTitle());
+    }
+
+    /**
      * @return int
      */
     protected function createCmsPageWithGlossaryAttributes()
@@ -497,5 +524,4 @@ class CmsFacadePageTest extends Unit
 
         return $translationFixtures;
     }
-
 }

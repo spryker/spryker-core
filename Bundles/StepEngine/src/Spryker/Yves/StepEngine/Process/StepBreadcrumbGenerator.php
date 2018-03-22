@@ -15,7 +15,6 @@ use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 
 class StepBreadcrumbGenerator implements StepBreadcrumbGeneratorInterface
 {
-
     /**
      * @param \Spryker\Yves\StepEngine\Process\StepCollectionInterface $stepCollection
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
@@ -111,5 +110,4 @@ class StepBreadcrumbGenerator implements StepBreadcrumbGeneratorInterface
 
         return $stepWithBreadcrumb->isBreadcrumbItemHidden($dataTransfer);
     }
-
 }

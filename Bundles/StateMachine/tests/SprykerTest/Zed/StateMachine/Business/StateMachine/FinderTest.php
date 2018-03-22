@@ -33,7 +33,6 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class FinderTest extends StateMachineMocks
 {
-
     const TEST_STATE_MACHINE_NAME = 'TestStateMachine';
 
     /**
@@ -65,6 +64,8 @@ class FinderTest extends StateMachineMocks
     }
 
     /**
+     * @uses ProcessInterface::getManuallyExecutableEventsBySource()
+     *
      * @return void
      */
     public function testGetManualEventsForStateMachineItemsShouldReturnManualEventsForGivenItems()
@@ -77,7 +78,7 @@ class FinderTest extends StateMachineMocks
         ];
 
         $processMock = $this->createProcessMock();
-        $processMock->method('getManualEventsBySource')->willReturn($manualEvents);
+        $processMock->method('getManuallyExecutableEventsBySource')->willReturn($manualEvents);
 
         $builderMock = $this->createBuilderMock();
         $builderMock->method('createProcess')->willReturn($processMock);
@@ -194,5 +195,4 @@ class FinderTest extends StateMachineMocks
             $stateMachineQueryContainerMock
         );
     }
-
 }

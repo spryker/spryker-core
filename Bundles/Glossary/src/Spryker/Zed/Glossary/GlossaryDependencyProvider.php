@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Container;
 
 class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_TOUCH = 'touch facade';
 
     const FACADE_LOCALE = 'locale facade';
@@ -64,5 +63,4 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

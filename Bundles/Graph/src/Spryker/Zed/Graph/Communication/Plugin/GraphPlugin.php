@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class GraphPlugin extends AbstractPlugin implements GraphInterface
 {
-
     /**
      * @var \Spryker\Shared\Graph\GraphInterface
      */
@@ -103,5 +102,4 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
     {
         return $this->getGraph()->render($type, $fileName);
     }
-
 }

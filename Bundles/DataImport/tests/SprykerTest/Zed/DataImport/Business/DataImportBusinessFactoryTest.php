@@ -25,7 +25,6 @@ use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
  */
 class DataImportBusinessFactoryTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -42,5 +41,4 @@ class DataImportBusinessFactoryTest extends Unit
 
         $this->assertInstanceOf(DataImporterInterface::class, $csvDataImporter);
     }
-
 }

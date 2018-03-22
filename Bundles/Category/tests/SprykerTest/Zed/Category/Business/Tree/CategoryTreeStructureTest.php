@@ -24,7 +24,6 @@ use SprykerTest\Zed\Category\Business\Tree\Fixtures\Input\CategoryStructureInput
  */
 class CategoryTreeStructureTest extends Unit
 {
-
     /**
      * @var \SprykerTest\Zed\Category\Business\Tree\Fixtures\Input\CategoryStructureInput
      */
@@ -95,5 +94,4 @@ class CategoryTreeStructureTest extends Unit
 
         $this->assertSame($this->expected->getCategoryStructureWithNonexistentParent(), $treeStructure);
     }
-
 }

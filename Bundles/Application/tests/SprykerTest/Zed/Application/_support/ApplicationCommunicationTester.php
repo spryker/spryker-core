@@ -24,7 +24,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ApplicationCommunicationTester extends Actor
 {
-
     use _generated\ApplicationCommunicationTesterActions;
 
     /**
@@ -55,5 +54,4 @@ class ApplicationCommunicationTester extends Actor
     {
         return Request::create('/foo');
     }
-
 }

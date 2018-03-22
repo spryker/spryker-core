@@ -12,12 +12,11 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Oms\Business\OmsFacade getFacade()
+ * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
  */
 class TriggerController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -59,7 +58,7 @@ class TriggerController extends AbstractController
      * @param int $idOrder
      * @param array|null $itemsList
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection|mixed[]
      */
     protected function getOrderItemsToTriggerAction($idOrder, $itemsList = null)
     {
@@ -73,5 +72,4 @@ class TriggerController extends AbstractController
 
         return $orderItems;
     }
-
 }

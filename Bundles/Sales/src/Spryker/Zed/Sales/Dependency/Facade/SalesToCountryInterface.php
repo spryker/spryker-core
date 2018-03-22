@@ -9,7 +9,6 @@ namespace Spryker\Zed\Sales\Dependency\Facade;
 
 interface SalesToCountryInterface
 {
-
     /**
      * @param string $iso2Code
      *
@@ -23,5 +22,4 @@ interface SalesToCountryInterface
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
     public function getAvailableCountries();
-
 }

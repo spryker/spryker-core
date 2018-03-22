@@ -12,12 +12,8 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractClientProvider;
 use Spryker\Shared\Search\SearchConstants;
 
-/**
- * @method \Elastica\Client getInstance()
- */
 abstract class AbstractSearchClientProvider extends AbstractClientProvider
 {
-
     /**
      * @return \Elastica\Client
      */
@@ -53,5 +49,4 @@ abstract class AbstractSearchClientProvider extends AbstractClientProvider
 
         return $config;
     }
-
 }

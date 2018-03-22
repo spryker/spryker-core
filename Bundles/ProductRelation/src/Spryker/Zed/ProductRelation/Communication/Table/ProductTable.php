@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductRelation\Communication\Table;
 
-use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -15,13 +14,13 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductRelation\Communication\Controller\ViewController;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToLocaleInterface;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToMoneyInterface;
+use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToPriceProductFacadeInterface;
 use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainer;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface;
 
 class ProductTable extends AbstractProductTable
 {
-
     const COL_ACTIONS = 'Actions';
     const COL_STATUS = 'Status';
 
@@ -51,17 +50,24 @@ class ProductTable extends AbstractProductTable
     protected $moneyFacade;
 
     /**
+     * @var \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToPriceProductFacadeInterface
+     */
+    protected $priceProductFacade;
+
+    /**
      * @param \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface $productRelationQueryContainer
      * @param \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToMoneyInterface $moneyFacade
-     * @param null|int $idProductRelation
+     * @param \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToPriceProductFacadeInterface $priceProductFacade
+     * @param int|null $idProductRelation
      */
     public function __construct(
         ProductRelationQueryContainerInterface $productRelationQueryContainer,
         ProductRelationToLocaleInterface $localeFacade,
         ProductRelationToUtilEncodingInterface $utilEncodingService,
         ProductRelationToMoneyInterface $moneyFacade,
+        ProductRelationToPriceProductFacadeInterface $priceProductFacade,
         $idProductRelation = null
     ) {
         $this->productRelationQueryContainer = $productRelationQueryContainer;
@@ -71,6 +77,7 @@ class ProductTable extends AbstractProductTable
         $this->setTableIdentifier('product-table');
         $this->idProductRelation = $idProductRelation;
         $this->moneyFacade = $moneyFacade;
+        $this->priceProductFacade = $priceProductFacade;
     }
 
     /**
@@ -101,7 +108,7 @@ class ProductTable extends AbstractProductTable
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => '#',
             SpyProductAbstractTableMap::COL_SKU => 'Sku',
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => 'Name',
-            SpyPriceProductTableMap::COL_PRICE => 'Price',
+            ProductRelationQueryContainer::COL_PRICE_PRODUCT => 'Price',
             ProductRelationQueryContainer::COL_ASSIGNED_CATEGORIES => 'Categories',
             static::COL_STATUS => 'Status',
         ];
@@ -136,7 +143,7 @@ class ProductTable extends AbstractProductTable
         $config->setSortable([
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
             SpyProductAbstractTableMap::COL_SKU,
-            SpyPriceProductTableMap::COL_PRICE,
+            ProductRelationQueryContainer::COL_PRICE_PRODUCT,
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
         ]);
     }
@@ -150,7 +157,6 @@ class ProductTable extends AbstractProductTable
     {
         $config->setSearchable([
             SpyProductAbstractTableMap::COL_SKU,
-            SpyPriceProductTableMap::COL_PRICE,
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
         ]);
     }
@@ -225,7 +231,7 @@ class ProductTable extends AbstractProductTable
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $item[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
             SpyProductAbstractTableMap::COL_SKU => $item[SpyProductAbstractTableMap::COL_SKU],
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $item[SpyProductAbstractLocalizedAttributesTableMap::COL_NAME],
-            SpyPriceProductTableMap::COL_PRICE => $this->formatProductPrice((int)$item[SpyPriceProductTableMap::COL_PRICE]),
+            ProductRelationQueryContainer::COL_PRICE_PRODUCT => $this->formatProductPrice($item[SpyProductAbstractTableMap::COL_SKU]),
             ProductRelationQueryContainer::COL_ASSIGNED_CATEGORIES => $item[ProductRelationQueryContainer::COL_ASSIGNED_CATEGORIES],
             static::COL_STATUS => $this->getStatusLabel($item),
         ];
@@ -238,12 +244,18 @@ class ProductTable extends AbstractProductTable
     }
 
     /**
-     * @param int $price
+     * @param string $sku
      *
      * @return string
      */
-    protected function formatProductPrice($price)
+    protected function formatProductPrice($sku)
     {
+        $price = $this->priceProductFacade->findPriceBySku($sku);
+
+        if ($price === null) {
+            return 'N/A';
+        }
+
         $moneyTransfer = $this->moneyFacade->fromInteger($price);
 
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
@@ -266,5 +278,4 @@ class ProductTable extends AbstractProductTable
             ]
         );
     }
-
 }

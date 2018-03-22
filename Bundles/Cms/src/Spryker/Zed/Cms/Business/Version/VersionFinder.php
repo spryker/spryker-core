@@ -8,12 +8,12 @@
 namespace Spryker\Zed\Cms\Business\Version;
 
 use Generated\Shared\Transfer\CmsVersionTransfer;
+use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class VersionFinder implements VersionFinderInterface
 {
-
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -117,4 +117,41 @@ class VersionFinder implements VersionFinderInterface
         return $cmsVersionTransfer;
     }
 
+    /**
+     * @param int $idCmsPage
+     *
+     * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
+     */
+    public function getCmsVersionData($idCmsPage)
+    {
+        $cmsPageEntity = $this->getCmsPage($idCmsPage);
+        $cmsVersionDataTransfer = $this->versionDataMapper->mapToCmsVersionDataTransfer($cmsPageEntity);
+
+        return $cmsVersionDataTransfer;
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPageException
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
+     */
+    protected function getCmsPage($idCmsPage)
+    {
+        $cmsPageCollection = $this->queryContainer
+            ->queryCmsPageWithAllRelationsByIdPage($idCmsPage)
+            ->find();
+
+        if ($cmsPageCollection->count() === 0) {
+            throw new MissingPageException(
+                sprintf(
+                    'There is no valid Cms page with this id: %d . If the page exists. please check the placeholders',
+                    $idCmsPage
+                )
+            );
+        }
+
+        return $cmsPageCollection->getFirst();
+    }
 }

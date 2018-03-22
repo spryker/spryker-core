@@ -12,7 +12,6 @@ use Spryker\Zed\Ratepay\Business\Api\Constants as ApiConstants;
 
 class CustomerMapper extends BaseMapper
 {
-
     const ALLOW_CREDIT_INQUIRY_YES = 'yes';
     const ALLOW_CREDIT_INQUIRY_NO = 'no';
 
@@ -81,5 +80,4 @@ class CustomerMapper extends BaseMapper
         return ($this->ratepayPaymentRequestTransfer->getCustomerAllowCreditInquiry() === false)
             ? self::ALLOW_CREDIT_INQUIRY_NO : self::ALLOW_CREDIT_INQUIRY_YES;
     }
-
 }

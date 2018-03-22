@@ -22,7 +22,6 @@ use Twig_Loader_Filesystem;
 
 abstract class AbstractTable
 {
-
     const TABLE_CLASS = 'gui-table-data';
     const TABLE_CLASS_NO_SEARCH_SUFFIX = '-no-search';
 
@@ -239,7 +238,7 @@ abstract class AbstractTable
     {
         $callback = function (&$value, $key) use ($safeColumns) {
             if (!in_array($key, $safeColumns)) {
-                $value = \twig_escape_filter(new Twig_Environment(), $value);
+                $value = \twig_escape_filter(new Twig_Environment(new Twig_Loader_Filesystem()), $value);
             }
 
             return $value;
@@ -381,7 +380,7 @@ abstract class AbstractTable
     protected function getTwigPaths()
     {
         return [
-            __DIR__ . '/../../Presentation/Table/'
+            __DIR__ . '/../../Presentation/Table/',
         ];
     }
 
@@ -600,7 +599,6 @@ abstract class AbstractTable
         $columns = $this->getColumnsList($query, $config);
 
         if (isset($order[0]) && isset($order[0][self::SORT_BY_COLUMN]) && isset($columns[$order[0][self::SORT_BY_COLUMN]])) {
-
             $selectedColumn = $columns[$order[0][self::SORT_BY_COLUMN]];
 
             if (in_array($selectedColumn, $config->getSortable(), true)) {
@@ -872,14 +870,12 @@ abstract class AbstractTable
     {
         $formFactory = $this->getFormFactory();
 
-        $deleteForm = new DeleteForm();
-
         $options = [
             'fields' => $options,
             'action' => $url,
         ];
 
-        $form = $formFactory->create($deleteForm, [], $options);
+        $form = $formFactory->create(DeleteForm::class, [], $options);
 
         $options['form'] = $form->createView();
         $options['title'] = $title;
@@ -1071,11 +1067,11 @@ abstract class AbstractTable
         if (preg_match('/created_at|updated_at/', $searchColumns[$column->getData()])) {
             $query->where(
                 sprintf(
-                    "(%s >= '%s' AND %s <= '%s')",
+                    "(%s >= %s AND %s <= %s)",
                     $searchColumns[$column->getData()],
-                    $this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 00:00:00',
+                    Propel::getConnection()->quote($this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 00:00:00'),
                     $searchColumns[$column->getData()],
-                    $this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 23:59:59'
+                    Propel::getConnection()->quote($this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 23:59:59')
                 )
             );
 
@@ -1088,9 +1084,9 @@ abstract class AbstractTable
         }
 
         $query->where(sprintf(
-            "%s = '%s'",
+            "%s = %s",
             $searchColumns[$column->getData()],
-            $value
+            Propel::getConnection()->quote($value)
         ));
     }
 
@@ -1111,5 +1107,4 @@ abstract class AbstractTable
             $this->addQueryCondition($query, $searchColumns, $column);
         }
     }
-
 }

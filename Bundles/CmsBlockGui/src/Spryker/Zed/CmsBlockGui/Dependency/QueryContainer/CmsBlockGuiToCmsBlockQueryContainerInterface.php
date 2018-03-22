@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockGui\Dependency\QueryContainer;
 
 interface CmsBlockGuiToCmsBlockQueryContainerInterface
 {
-
     /**
      * @param string $name
      *
@@ -27,4 +26,10 @@ interface CmsBlockGuiToCmsBlockQueryContainerInterface
      */
     public function queryTemplates();
 
+    /**
+     * @param int $idCmsBlock
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
+     */
+    public function queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock);
 }

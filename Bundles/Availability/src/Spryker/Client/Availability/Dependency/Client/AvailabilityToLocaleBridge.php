@@ -9,7 +9,6 @@ namespace Spryker\Client\Availability\Dependency\Client;
 
 class AvailabilityToLocaleBridge implements AvailabilityToLocaleInterface
 {
-
     /**
      * @var \Spryker\Client\Locale\LocaleClientInterface
      */
@@ -30,5 +29,4 @@ class AvailabilityToLocaleBridge implements AvailabilityToLocaleInterface
     {
         return $this->localeClient->getCurrentLocale();
     }
-
 }

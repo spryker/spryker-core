@@ -9,16 +9,16 @@ namespace Spryker\Zed\CmsBlock\Persistence;
 
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CmsBlock\CmsBlockConfig getConfig()
- * @method \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface getQueryContainer()
  */
 class CmsBlockPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
@@ -43,4 +43,11 @@ class CmsBlockPersistenceFactory extends AbstractPersistenceFactory
         return SpyCmsBlockTemplateQuery::create();
     }
 
+    /**
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
+     */
+    public function createCmsBlockStoreQuery()
+    {
+        return SpyCmsBlockStoreQuery::create();
+    }
 }

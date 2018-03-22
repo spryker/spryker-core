@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class SalesToCalculationBridge implements SalesToCalculationInterface
 {
-
     /**
      * @var \Spryker\Zed\Calculation\Business\CalculationFacadeInterface
      */
@@ -34,5 +33,4 @@ class SalesToCalculationBridge implements SalesToCalculationInterface
     {
         return $this->calculationFacade->recalculateOrder($orderTransfer);
     }
-
 }

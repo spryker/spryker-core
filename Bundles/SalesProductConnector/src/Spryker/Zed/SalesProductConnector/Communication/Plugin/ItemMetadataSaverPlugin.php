@@ -13,11 +13,12 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\SalesProductConnector\Business\SalesProductConnectorFacade getFacade()
+ * Deprecated: Use \Spryker\Zed\SalesProductConnector\Communication\Plugin\Checkout\ItemMetadataSaverPlugin instead
+ *
+ * @method \Spryker\Zed\SalesProductConnector\Business\SalesProductConnectorFacadeInterface getFacade()
  */
 class ItemMetadataSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
 {
-
     /**
      * Specification:
      * - This plugin retrieves (its) data item metadata from the quote object and saves it to the database.
@@ -33,5 +34,4 @@ class ItemMetadataSaverPlugin extends AbstractPlugin implements CheckoutSaveOrde
     {
         $this->getFacade()->saveItemMetadata($quoteTransfer, $checkoutResponse);
     }
-
 }

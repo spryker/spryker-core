@@ -12,12 +12,11 @@ use Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacade getFacade()
+ * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()
  */
 class CartBundleAvailabilityPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface
 {
-
     /**
      * @api
      *
@@ -29,5 +28,4 @@ class CartBundleAvailabilityPreCheckPlugin extends AbstractPlugin implements Car
     {
          return $this->getFacade()->preCheckCartAvailability($cartChangeTransfer);
     }
-
 }

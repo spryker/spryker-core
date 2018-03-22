@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class CheckoutToQuoteBridge implements CheckoutToQuoteInterface
 {
-
     /**
      * @var \Spryker\Client\Quote\QuoteClientInterface
      */
@@ -42,5 +41,4 @@ class CheckoutToQuoteBridge implements CheckoutToQuoteInterface
     {
         $this->quoteClient->setQuote($quoteTransfer);
     }
-
 }

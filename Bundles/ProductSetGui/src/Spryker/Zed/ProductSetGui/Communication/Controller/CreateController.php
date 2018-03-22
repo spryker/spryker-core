@@ -10,9 +10,11 @@ namespace Spryker\Zed\ProductSetGui\Communication\Controller;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
+ */
 class CreateController extends AbstractProductSetController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -23,13 +25,13 @@ class CreateController extends AbstractProductSetController
         $dataProvider = $this->getFactory()->createCreateFormDataProvider();
 
         $productSetForm = $this->getFactory()
-            ->createCreateProductSetForm(
+            ->getCreateProductSetForm(
                 $dataProvider->getData(),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
 
-        if ($productSetForm->isValid()) {
+        if ($productSetForm->isSubmitted() && $productSetForm->isValid()) {
             $productSetTransfer = $this->getFactory()
                 ->createCreateFormDataToTransferMapper()
                 ->mapData($productSetForm);
@@ -59,5 +61,4 @@ class CreateController extends AbstractProductSetController
             'productTable' => $this->getFactory()->createProductTable($localeTransfer)->render(),
         ]);
     }
-
 }

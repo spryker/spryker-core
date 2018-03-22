@@ -26,7 +26,6 @@ use Spryker\Zed\ProductSearch\Communication\Table\SearchPreferencesTable;
  */
 class ProductSearchQueryContainer extends AbstractQueryContainer implements ProductSearchQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -193,13 +192,23 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
+    public function queryAllProductAttributeKeys()
+    {
+        return $this
+            ->queryProductAttributeJoinProductSearchAttribute()
+            ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
     public function queryUnusedProductAttributeKeys()
     {
         return $this
-            ->queryProductAttributeKey()
-            ->addSelectColumn(SpyProductAttributeKeyTableMap::COL_KEY)
-            ->useSpyProductSearchAttributeQuery(null, Criteria::LEFT_JOIN)
-                ->filterByIdProductSearchAttribute(null)
+            ->queryProductAttributeJoinProductSearchAttribute()
+            ->filterByIdProductSearchAttribute(null)
             ->endUse();
     }
 
@@ -309,4 +318,14 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
             ->addOr(SpyProductLocalizedAttributesTableMap::COL_ATTRIBUTES, $condition, Criteria::LIKE);
     }
 
+    /**
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
+     */
+    protected function queryProductAttributeJoinProductSearchAttribute()
+    {
+        return $this
+            ->queryProductAttributeKey()
+            ->addSelectColumn(SpyProductAttributeKeyTableMap::COL_KEY)
+            ->useSpyProductSearchAttributeQuery(null, Criteria::LEFT_JOIN);
+    }
 }

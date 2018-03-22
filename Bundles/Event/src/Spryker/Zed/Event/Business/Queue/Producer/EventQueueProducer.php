@@ -16,14 +16,13 @@ use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
 
 class EventQueueProducer implements EventQueueProducerInterface
 {
-
     /**
      * @var \Spryker\Zed\Event\Dependency\Client\EventToQueueInterface
      */
     protected $queueClient;
 
     /**
-     * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
+     * @var \Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface
      */
     protected $utilEncodingService;
 
@@ -74,5 +73,4 @@ class EventQueueProducer implements EventQueueProducerInterface
             EventQueueSendMessageBodyTransfer::EVENT_NAME => $eventName,
         ];
     }
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class CmsContentWidgetToGlossaryBridge implements CmsContentWidgetToGlossaryInterface
 {
-
     /**
      * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface
      */
@@ -36,5 +35,4 @@ class CmsContentWidgetToGlossaryBridge implements CmsContentWidgetToGlossaryInte
     {
         return $this->glossaryFacade->translate($keyName, $data, $localeTransfer);
     }
-
 }

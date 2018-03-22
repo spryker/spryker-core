@@ -1,3 +1,3 @@
 # PriceCartConnector Changelog
 
-[PriceCartConnector Changelog](https://github.com/spryker/PriceCartConnector/releases)
+[Release Changelog](https://github.com/spryker/price-cart-connector/releases)

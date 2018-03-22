@@ -11,7 +11,6 @@ use Spryker\Service\Kernel\ClassResolver\Factory\FactoryResolver;
 
 class AbstractService
 {
-
     /**
      * @var \Spryker\Service\Kernel\AbstractServiceFactory
      */
@@ -58,5 +57,4 @@ class AbstractService
     {
         return new FactoryResolver();
     }
-
 }

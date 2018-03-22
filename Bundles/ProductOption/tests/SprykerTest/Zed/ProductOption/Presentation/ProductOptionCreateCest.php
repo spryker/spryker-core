@@ -21,7 +21,6 @@ use SprykerTest\Zed\ProductOption\ProductOptionPresentationTester;
  */
 class ProductOptionCreateCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductOption\ProductOptionPresentationTester $i
      *
@@ -58,5 +57,4 @@ class ProductOptionCreateCest
 
         $i->see(ProductOptionCreatePage::PRODUCT_OPTION_CREATED_SUCCESS_MESSAGE);
     }
-
 }

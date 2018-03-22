@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ZedRequestFacade extends AbstractFacade implements ZedRequestFacadeInterface
 {
-
     /**
      * @api
      *
@@ -26,5 +25,4 @@ class ZedRequestFacade extends AbstractFacade implements ZedRequestFacadeInterfa
     {
         return $this->getFactory()->createRepeater()->getRepeatData($bundleControllerAction);
     }
-
 }

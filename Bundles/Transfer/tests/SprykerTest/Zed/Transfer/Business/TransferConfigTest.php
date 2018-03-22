@@ -22,7 +22,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class TransferConfigTest extends Unit
 {
-
     /**
      * @return \Spryker\Zed\Transfer\TransferConfig
      */
@@ -86,5 +85,4 @@ class TransferConfigTest extends Unit
     {
         $this->assertInternalType('string', $this->getConfig()->getDataBuilderFileNamePattern());
     }
-
 }

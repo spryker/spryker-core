@@ -25,7 +25,6 @@ use Orm\Zed\Touch\Persistence\SpyTouchQuery;
  */
 class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
 {
-
     /**
      * @return void
      */
@@ -87,6 +86,23 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
             ->count();
 
         $this->assertEquals(0, $count);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSuggestProductSearchAttributes()
+    {
+        // Arrange
+        $key = 'suggestProductSearchAttributes';
+        $this->createProductAttributeKeyEntity($key);
+
+        // Act
+        $suggestedAttributes = $this->productSearchFacade->suggestProductSearchAttributeKeys($key);
+
+        // Assert
+        $this->assertCount(1, $suggestedAttributes);
+        $this->assertContains($key, $suggestedAttributes);
     }
 
     /**
@@ -229,5 +245,4 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
 
         return $productSearchAttributeMapEntity;
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Client\ProductGroup\Dependency\Client\ProductGroupToStorageBridge;
 
 class ProductGroupDependencyProvider extends AbstractDependencyProvider
 {
-
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
 
@@ -54,5 +53,4 @@ class ProductGroupDependencyProvider extends AbstractDependencyProvider
             return new ProductGroupToProductBridge($container->getLocator()->product()->client());
         };
     }
-
 }

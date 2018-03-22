@@ -11,7 +11,6 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueRelationTypeForProductAbstract extends SymfonyConstraint
 {
-
     const OPTION_PRODUCT_RELATION_QUERY_CONTAINER = 'productRelationQueryContainer';
 
     /**
@@ -32,7 +31,6 @@ class UniqueRelationTypeForProductAbstract extends SymfonyConstraint
      */
     public function getTargets()
     {
-        return static::CLASS_CONSTRAINT;
+         return static::CLASS_CONSTRAINT;
     }
-
 }

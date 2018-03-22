@@ -8,11 +8,9 @@
 namespace Spryker\Zed\Development\Business\Composer;
 
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 class ComposerJsonFinder implements ComposerJsonFinderInterface
 {
-
     /**
      * @var \Symfony\Component\Finder\Finder
      */
@@ -21,24 +19,34 @@ class ComposerJsonFinder implements ComposerJsonFinderInterface
     /**
      * @var string
      */
-    protected $pathToBundles;
+    protected $pathToModules;
+
+    /**
+     * @var bool
+     */
+    protected $pathIsValid = true;
 
     /**
      * @param \Symfony\Component\Finder\Finder $finder
-     * @param string $pathToBundles
+     * @param string $pathToModules
      */
-    public function __construct(Finder $finder, $pathToBundles)
+    public function __construct(Finder $finder, $pathToModules)
     {
         $this->finder = $finder;
-        $this->pathToBundles = $pathToBundles;
+        $this->pathToModules = $pathToModules;
     }
 
     /**
      * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
      */
-    public function find()
+    public function findAll()
     {
-        return $this->finder->in($this->pathToBundles)->name('composer.json')->depth('< 2');
-    }
+        if (!$this->pathIsValid || !glob($this->pathToModules)) {
+            $this->pathIsValid = false;
 
+            return [];
+        }
+
+        return iterator_to_array($this->finder->in($this->pathToModules)->name('composer.json')->depth('< 2'));
+    }
 }

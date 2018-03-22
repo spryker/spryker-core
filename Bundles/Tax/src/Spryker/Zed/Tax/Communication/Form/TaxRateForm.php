@@ -7,43 +7,25 @@
 
 namespace Spryker\Zed\Tax\Communication\Form;
 
-use Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider;
-use Spryker\Zed\Tax\Communication\Form\Transform\PercentageTransformer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
 
+/**
+ * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
+ * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
+ */
 class TaxRateForm extends AbstractType
 {
-
     const FIELD_NAME = 'name';
     const FIELD_RATE = 'rate';
     const FIELD_COUNTRY = 'fkCountry';
     const FIELD_ID_TAX_RATE = 'idTaxRate';
-
-    /**
-     * @var \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider
-     */
-    protected $taxRateFormDataProvider;
-
-    /**
-     * @var \Spryker\Zed\Tax\Communication\Form\Transform\PercentageTransformer
-     */
-    protected $percentageTransformer;
-
-    /**
-     * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider $taxRateFormDataProvider
-     * @param \Spryker\Zed\Tax\Communication\Form\Transform\PercentageTransformer $percentageTransformer
-     */
-    public function __construct(
-        TaxRateFormDataProvider $taxRateFormDataProvider,
-        PercentageTransformer $percentageTransformer
-    ) {
-        $this->taxRateFormDataProvider = $taxRateFormDataProvider;
-        $this->percentageTransformer = $percentageTransformer;
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -67,12 +49,12 @@ class TaxRateForm extends AbstractType
     {
         $builder->add(
             self::FIELD_NAME,
-            'text',
+            TextType::class,
             [
                 'label' => 'Name',
                 'required' => true,
                 'constraints' => [
-                    new NotBlank()
+                    new NotBlank(),
                 ],
             ]
         );
@@ -87,11 +69,12 @@ class TaxRateForm extends AbstractType
      */
     protected function addCountry(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_COUNTRY, 'choice', [
+        $builder->add(self::FIELD_COUNTRY, ChoiceType::class, [
             'expanded' => false,
             'multiple' => false,
             'label' => 'Country',
-            'choices' => $this->taxRateFormDataProvider->getOptions()[self::FIELD_COUNTRY],
+            'choices' => array_flip($this->getFactory()->createTaxRateFormDataProvider()->getOptions()[self::FIELD_COUNTRY]),
+            'choices_as_values' => true,
             'constraints' => [
                 new GreaterThan([
                     'value' => 0,
@@ -113,7 +96,7 @@ class TaxRateForm extends AbstractType
     {
         $builder->add(
             self::FIELD_RATE,
-            'text',
+            TextType::class,
             [
                 'label' => 'Percentage',
                 'required' => true,
@@ -127,19 +110,26 @@ class TaxRateForm extends AbstractType
         );
 
         $builder->get(self::FIELD_RATE)
-            ->addModelTransformer($this->percentageTransformer);
+            ->addModelTransformer($this->getFactory()->createPercentageTransformer());
 
         return $this;
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
+     * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'tax_rate';
     }
 
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

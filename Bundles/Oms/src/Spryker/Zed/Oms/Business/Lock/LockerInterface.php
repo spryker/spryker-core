@@ -9,16 +9,16 @@ namespace Spryker\Zed\Oms\Business\Lock;
 
 interface LockerInterface
 {
-
     /**
-     * @param int $identifier
+     * @param string $identifier
+     * @param string|null $details
      *
      * @return bool
      */
-    public function acquire($identifier);
+    public function acquire($identifier, $details = null);
 
     /**
-     * @param int $identifier
+     * @param string $identifier
      *
      * @return void
      */
@@ -28,5 +28,4 @@ interface LockerInterface
      * @return void
      */
     public function clearLocks();
-
 }

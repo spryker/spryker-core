@@ -9,7 +9,10 @@ namespace Spryker\Zed\Oms\Persistence;
 
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersionQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsProductReservationLastExportedVersionQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -17,11 +20,10 @@ use Spryker\Zed\Oms\OmsDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Oms\OmsConfig getConfig()
- * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
  */
 class OmsPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery
      */
@@ -63,11 +65,34 @@ class OmsPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
+     */
+    public function createOmsProductReservationStoreQuery()
+    {
+        return SpyOmsProductReservationStoreQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersionQuery
+     */
+    public function createOmsProductReservationChangeVersionQuery()
+    {
+        return SpyOmsProductReservationChangeVersionQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationLastExportedVersionQuery
+     */
+    public function createOmsProductReservationExportedVersionQuery()
+    {
+        return SpyOmsProductReservationLastExportedVersionQuery::create();
+    }
+
+    /**
      * @return \Spryker\Zed\Oms\Dependency\QueryContainer\OmsToSalesInterface
      */
     public function getSalesQueryContainer()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::QUERY_CONTAINER_SALES);
     }
-
 }

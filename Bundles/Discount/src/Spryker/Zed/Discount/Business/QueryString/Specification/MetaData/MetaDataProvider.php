@@ -7,21 +7,20 @@
 namespace Spryker\Zed\Discount\Business\QueryString\Specification\MetaData;
 
 use Spryker\Zed\Discount\Business\Exception\QueryStringException;
-use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
+use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 use Spryker\Zed\Discount\Business\QueryString\LogicalComparators;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithAttributesPluginInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithValueOptionsPluginInterface;
 
 class MetaDataProvider implements MetaDataProviderInterface
 {
-
     /**
      * @var array|\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]|\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[]
      */
     protected $specificationPlugins = [];
 
     /**
-     * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
+     * @var \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
     protected $comparatorOperators;
 
@@ -31,13 +30,25 @@ class MetaDataProvider implements MetaDataProviderInterface
     protected $logicalComparators;
 
     /**
+     * @var string[]|null Numerical array of available fields.
+     */
+    protected $availableFieldsBuffer = null;
+
+    /**
+     * @see MetaDataProvider::availableFieldsBuffer
+     *
+     * @var array|null Each key is an available field. Contains the flipped $availableFieldsBuffer variable for performance reason.
+     */
+    protected $availableFieldsMapBuffer = null;
+
+    /**
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]|\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[] $specificationPlugins
-     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators $comparatorOperators
+     * @param \Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface $comparatorOperators
      * @param \Spryker\Zed\Discount\Business\QueryString\LogicalComparators $logicalComparators
      */
     public function __construct(
         array $specificationPlugins,
-        ComparatorOperators $comparatorOperators,
+        ComparatorOperatorsInterface $comparatorOperators,
         LogicalComparators $logicalComparators
     ) {
         $this->specificationPlugins = $specificationPlugins;
@@ -49,6 +60,32 @@ class MetaDataProvider implements MetaDataProviderInterface
      * @return string[]
      */
     public function getAvailableFields()
+    {
+        if (!isset($this->availableFieldsBuffer)) {
+            $this->loadAvailableFieldsBuffers();
+        }
+
+        return $this->availableFieldsBuffer;
+    }
+
+    /**
+     * @param string $field
+     *
+     * @return bool
+     */
+    public function isFieldAvailable($field)
+    {
+        if (!isset($this->availableFieldsMapBuffer)) {
+            $this->loadAvailableFieldsBuffers();
+        }
+
+        return isset($this->availableFieldsMapBuffer[$field]);
+    }
+
+    /**
+     * @return void
+     */
+    protected function loadAvailableFieldsBuffers()
     {
         $queryStringFields = [];
         foreach ($this->specificationPlugins as $specificationPlugin) {
@@ -62,7 +99,8 @@ class MetaDataProvider implements MetaDataProviderInterface
             }
         }
 
-        return $queryStringFields;
+        $this->availableFieldsBuffer = $queryStringFields;
+        $this->availableFieldsMapBuffer = array_flip($queryStringFields);
     }
 
     /**
@@ -154,5 +192,4 @@ class MetaDataProvider implements MetaDataProviderInterface
 
         return $valueOptions;
     }
-
 }

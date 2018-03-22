@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Payolution\Dependency\Injector;
 
+use Spryker\Shared\Payolution\PayolutionConfig;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
@@ -14,11 +15,9 @@ use Spryker\Zed\Payment\PaymentDependencyProvider;
 use Spryker\Zed\Payolution\Communication\Plugin\Checkout\PayolutionPostCheckPlugin;
 use Spryker\Zed\Payolution\Communication\Plugin\Checkout\PayolutionPreCheckPlugin;
 use Spryker\Zed\Payolution\Communication\Plugin\Checkout\PayolutionSaveOrderPlugin;
-use Spryker\Zed\Payolution\PayolutionConfig;
 
 class PaymentDependencyInjector extends AbstractDependencyInjector
 {
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -48,5 +47,4 @@ class PaymentDependencyInjector extends AbstractDependencyInjector
 
         return $container;
     }
-
 }

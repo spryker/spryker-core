@@ -12,7 +12,6 @@ use Spryker\Zed\ProductSetGui\Communication\Form\UpdateProductSetFormType;
 
 class UpdateFormDataToTransferMapper extends AbstractProductSetFormDataToTransferMapper
 {
-
     /**
      * @return string
      */
@@ -52,5 +51,4 @@ class UpdateFormDataToTransferMapper extends AbstractProductSetFormDataToTransfe
     {
         return UpdateProductsFormType::FIELD_ID_PRODUCT_ABSTRACTS;
     }
-
 }

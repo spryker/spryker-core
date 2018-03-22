@@ -11,7 +11,6 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 
 interface ProductAbstractTableHelperInterface
 {
-
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
@@ -32,5 +31,4 @@ interface ProductAbstractTableHelperInterface
      * @return string
      */
     public function getAbstractProductStatusLabel(SpyProductAbstract $productAbstractEntity);
-
 }

@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\AvailabilityCartConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartConnectorToAvailabilityInterface
 {
-
     /**
      * @var \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface
      */
@@ -24,6 +25,8 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
     }
 
     /**
+     * @deprecated use calculateStockForProductWithStore() instead
+     *
      * @param string $sku
      * @param int $quantity
      *
@@ -35,6 +38,8 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
     }
 
     /**
+     * @deprecated use calculateStockForProduct() instead
+     *
      * @param string $sku
      *
      * @return int
@@ -44,4 +49,38 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
         return $this->availabilityFacade->calculateStockForProduct($sku);
     }
 
+    /**
+     * The method check for "method_exists" is for BC for modules without multi store support.
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer)
+    {
+        if (method_exists($this->availabilityFacade, 'calculateStockForProductWithStore')) {
+            return $this->availabilityFacade->calculateStockForProductWithStore($sku, $storeTransfer);
+        }
+
+        return $this->availabilityFacade->calculateStockForProduct($sku);
+    }
+
+    /**
+     * The method check for "method_exists" is for BC for modules without multi store support.
+     *
+     * @param string $sku
+     * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer)
+    {
+        if (method_exists($this->availabilityFacade, 'isProductSellableForStore')) {
+            return $this->availabilityFacade->isProductSellableForStore($sku, $quantity, $storeTransfer);
+        }
+
+        return $this->availabilityFacade->calculateStockForProduct($sku);
+    }
 }

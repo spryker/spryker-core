@@ -16,7 +16,6 @@ use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
  */
 class ProductManagementBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface
      */
@@ -50,11 +49,11 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface
      */
     protected function getPriceFacade()
     {
-        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRICE);
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 
     /**
@@ -96,5 +95,4 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getLocaleFacade()->getCurrentLocale();
     }
-
 }

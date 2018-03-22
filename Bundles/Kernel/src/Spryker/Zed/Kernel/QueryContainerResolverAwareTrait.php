@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 trait QueryContainerResolverAwareTrait
 {
-
     /**
      * @var \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
@@ -57,5 +56,4 @@ trait QueryContainerResolverAwareTrait
     {
         return new QueryContainerResolver();
     }
-
 }

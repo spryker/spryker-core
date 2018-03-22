@@ -22,7 +22,6 @@ use SprykerTest\Zed\Shipment\ShipmentCommunicationTester;
  */
 class ShipmentMethodEditCest
 {
-
     /**
      * @param \SprykerTest\Zed\Shipment\ShipmentCommunicationTester $i
      *
@@ -30,9 +29,10 @@ class ShipmentMethodEditCest
      */
     public function breadcrumbIsVisible(ShipmentCommunicationTester $i)
     {
+        $i->registerMoneyCollectionFormTypePlugin();
+
         $i->listDataTable(ShipmentListPage::URL . '/index/table');
         $i->clickDataTableEditButton();
         $i->seeBreadcrumbNavigation('Dashboard / Shipment / Shipment Methods / Edit Shipment Method');
     }
-
 }

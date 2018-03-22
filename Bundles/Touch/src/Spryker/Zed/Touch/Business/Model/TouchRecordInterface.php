@@ -9,7 +9,6 @@ namespace Spryker\Zed\Touch\Business\Model;
 
 interface TouchRecordInterface
 {
-
     /**
      * @param string $itemType
      * @param string $itemEvent
@@ -32,5 +31,4 @@ interface TouchRecordInterface
      * @return int
      */
     public function removeTouchEntriesMarkedAsDeleted();
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 class ProductManagementToCurrencyBridge implements ProductManagementToCurrencyInterface
 {
-
     /**
      * @var \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
      */
@@ -31,4 +30,19 @@ class ProductManagementToCurrencyBridge implements ProductManagementToCurrencyIn
         return $this->currencyFacade->getCurrent();
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
+     */
+    public function getAllStoresWithCurrencies()
+    {
+        return $this->currencyFacade->getAllStoresWithCurrencies();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function getDefaultCurrencyForCurrentStore()
+    {
+        return $this->currencyFacade->getDefaultCurrencyForCurrentStore();
+    }
 }

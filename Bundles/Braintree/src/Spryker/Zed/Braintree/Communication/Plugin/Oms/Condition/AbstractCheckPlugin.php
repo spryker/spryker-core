@@ -10,15 +10,14 @@ namespace Spryker\Zed\Braintree\Communication\Plugin\Oms\Condition;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 
 /**
- * @method \Spryker\Zed\Braintree\Business\BraintreeFacade getFacade()
+ * @method \Spryker\Zed\Braintree\Business\BraintreeFacadeInterface getFacade()
  * @method \Spryker\Zed\Braintree\Communication\BraintreeCommunicationFactory getFactory()
  */
 abstract class AbstractCheckPlugin extends AbstractPlugin implements ConditionInterface
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
@@ -42,5 +41,4 @@ abstract class AbstractCheckPlugin extends AbstractPlugin implements ConditionIn
      * @return bool
      */
     abstract protected function callFacade(OrderTransfer $orderTransfer);
-
 }

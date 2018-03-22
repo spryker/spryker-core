@@ -25,7 +25,6 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataPro
  */
 class ClauseValidatorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -59,6 +58,8 @@ class ClauseValidatorTest extends Unit
     }
 
     /**
+     * @uses MetaDataProviderInterface::isFieldAvailable()
+     *
      * @return void
      */
     public function testValidateWhenFieldIsNotWithingRegisteredRulePlugins()
@@ -70,7 +71,13 @@ class ClauseValidatorTest extends Unit
             ->willReturn(true);
 
         $metaDataProviderMock = $this->createMetaDataProviderMock();
-        $metaDataProviderMock->method('getAvailableFields')->willReturn(['undefined']);
+        $metaDataProviderMock
+            ->expects($this->any())
+            ->method('isFieldAvailable')
+            ->will($this->returnValueMap([
+                ['undefined', true],
+                ['field', false],
+            ]));
 
         $clauseValidator = $this->createClauseValidator($comparatorOperatorsMock, $metaDataProviderMock);
         $clauseTransfer = $this->createClauseTransfer();
@@ -79,6 +86,8 @@ class ClauseValidatorTest extends Unit
     }
 
     /**
+     * @uses MetaDataProviderInterface::isFieldAvailable()
+     *
      * @return void
      */
     public function testValidateWhenFieldIsValidShouldNotThrowExceptions()
@@ -88,7 +97,10 @@ class ClauseValidatorTest extends Unit
             ->willReturn(true);
 
         $metaDataProviderMock = $this->createMetaDataProviderMock();
-        $metaDataProviderMock->method('getAvailableFields')->willReturn(['field']);
+        $metaDataProviderMock
+            ->expects($this->any())
+            ->method('isFieldAvailable')
+            ->will($this->returnValueMap([['field', true]]));
 
         $clauseValidator = $this->createClauseValidator($comparatorOperatorsMock, $metaDataProviderMock);
         $clauseTransfer = $this->createClauseTransfer();
@@ -141,5 +153,4 @@ class ClauseValidatorTest extends Unit
     {
         return new ClauseTransfer();
     }
-
 }

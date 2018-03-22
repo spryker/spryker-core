@@ -24,7 +24,6 @@ use Spryker\Zed\ProductAttributeGui\ProductAttributeGuiDependencyProvider;
  */
 class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductAttributeGui\Dependency\Facade\ProductAttributeGuiToLocaleInterface
      */
@@ -74,6 +73,8 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @deprecated Use `getAttributeForm()` instead.
+     *
      * @param array $data
      * @param array $options
      *
@@ -81,9 +82,18 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
      */
     public function createAttributeForm(array $data = [], array $options = [])
     {
-        $attributeFormType = $this->createAttributeFormType();
+        return $this->getFormFactory()->create(AttributeForm::class, $data, $options);
+    }
 
-        return $this->getFormFactory()->create($attributeFormType, $data, $options);
+    /**
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getAttributeForm(array $data = [], array $options = [])
+    {
+        return $this->getFormFactory()->create(AttributeForm::class, $data, $options);
     }
 
     /**
@@ -128,6 +138,8 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @deprecated Use `getAttributeTranslationFormCollection` instead.
+     *
      * @param array $data
      * @param array $options
      *
@@ -135,17 +147,28 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
      */
     public function createAttributeTranslationFormCollection(array $data = [], array $options = [])
     {
-        $attributeTranslationFormCollectionType = $this->createAttributeTranslationFormCollectionType();
-
-        return $this->getFormFactory()->create($attributeTranslationFormCollectionType, $data, $options);
+        return $this->getFormFactory()->create(AttributeTranslationCollectionForm::class, $data, $options);
     }
 
     /**
-     * @return \Symfony\Component\Form\AbstractType
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getAttributeTranslationFormCollection(array $data = [], array $options = [])
+    {
+        return $this->createAttributeTranslationFormCollection($data, $options);
+    }
+
+    /**
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
      */
     public function createAttributeTranslationFormCollectionType()
     {
-        return new AttributeTranslationCollectionForm();
+        return AttributeTranslationCollectionForm::class;
     }
 
     /**
@@ -157,19 +180,20 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Symfony\Component\Form\AbstractType
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
      */
     protected function createAttributeFormType()
     {
-        return new AttributeForm($this->getProductAttributeQueryContainer());
+        return AttributeForm::class;
     }
 
     /**
      * @return \Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer\ProductAttributeGuiToProductAttributeQueryContainerInterface
      */
-    protected function getProductAttributeQueryContainer()
+    public function getProductAttributeQueryContainer()
     {
         return $this->getProvidedDependency(ProductAttributeGuiDependencyProvider::QUERY_CONTAINER_PRODUCT_ATTRIBUTE);
     }
-
 }

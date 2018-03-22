@@ -9,7 +9,6 @@ namespace Spryker\Shared\Url;
 
 class UrlBuilder implements UrlBuilderInterface
 {
-
     /**
      * @param string $bundle
      * @param string|null $controller
@@ -63,5 +62,4 @@ class UrlBuilder implements UrlBuilderInterface
 
         return array_filter($mca, $filterCallback);
     }
-
 }

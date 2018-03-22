@@ -12,7 +12,6 @@ use Psr\Log\LoggerInterface;
 
 interface ProductLabelFacadeInterface
 {
-
     /**
      * Specification:
      * - Finds a product label for the given ID in the database
@@ -64,6 +63,20 @@ interface ProductLabelFacadeInterface
      * @return int[]
      */
     public function findLabelIdsByIdProductAbstract($idProductAbstract);
+
+    /**
+     * Specification:
+     * - Finds all product active labels for the given abstract-product ID in the database.
+     * - Returns a collection of product-label IDs.
+     * - Returns an empty collection if either product-label or abstract-product are missing.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findActiveLabelIdsByIdProductAbstract($idProductAbstract);
 
     /**
      * Specification:
@@ -159,5 +172,4 @@ interface ProductLabelFacadeInterface
      * @return void
      */
     public function updateDynamicProductLabelRelations(LoggerInterface $logger = null);
-
 }

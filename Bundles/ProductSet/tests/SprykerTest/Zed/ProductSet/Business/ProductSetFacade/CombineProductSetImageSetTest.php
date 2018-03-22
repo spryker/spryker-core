@@ -27,7 +27,6 @@ use Generated\Shared\Transfer\ProductSetTransfer;
  */
 class CombineProductSetImageSetTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -93,5 +92,4 @@ class CombineProductSetImageSetTest extends Unit
             'Product image 2/2 should have expected external small URL.'
         );
     }
-
 }

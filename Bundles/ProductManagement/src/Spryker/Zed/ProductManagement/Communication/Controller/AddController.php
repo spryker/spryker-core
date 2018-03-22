@@ -16,13 +16,12 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacade getFacade()
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
  */
 class AddController extends AbstractController
 {
-
     const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
 
     /**
@@ -46,7 +45,7 @@ class AddController extends AbstractController
 
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $productAbstractTransfer = $this->getFactory()
                     ->createProductFormTransferGenerator()
@@ -68,7 +67,6 @@ class AddController extends AbstractController
                 ));
 
                 return $this->createRedirectResponseAfterAdd($idProductAbstract);
-
             } catch (CategoryUrlExistsException $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
@@ -163,7 +161,7 @@ class AddController extends AbstractController
             $productConcreteTransfer = new ProductConcreteTransfer();
             $productConcreteTransfer->setSku($productAbstractTransfer->getSku());
             $productConcreteTransfer->setIsActive(false);
-            $productConcreteTransfer->setPrice($productAbstractTransfer->getPrice());
+            $productConcreteTransfer->setPrices($productAbstractTransfer->getPrices());
             $productConcreteTransfer->setLocalizedAttributes($productAbstractTransfer->getLocalizedAttributes());
 
             return [$productConcreteTransfer];
@@ -181,5 +179,4 @@ class AddController extends AbstractController
 
         return $concreteProductCollection;
     }
-
 }

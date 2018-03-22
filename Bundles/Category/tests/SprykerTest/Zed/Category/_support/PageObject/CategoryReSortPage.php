@@ -8,7 +8,6 @@ namespace SprykerTest\Zed\Category\PageObject;
 
 class CategoryReSortPage
 {
-
     const URL = '/category/re-sort?id-node=1';
 
     const SELECTOR_CATEGORY_LIST = '#category-list > .dd-list';
@@ -20,5 +19,4 @@ class CategoryReSortPage
     const SELECTOR_LAST_SUB_CATEGORY_NAME_CELL = self::SELECTOR_LAST_SUB_CATEGORY . ' > .dd-handle';
     const SELECTOR_SAVE_BUTTON = '#save-button';
     const SELECTOR_ALERT_BOX = '.sweet-alert';
-
 }

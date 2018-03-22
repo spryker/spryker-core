@@ -17,15 +17,12 @@ use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
  */
 class SalesSplitCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createOrderItemSplitForm()
     {
-        $formType = new OrderItemSplitForm();
-
-        return $this->getFormFactory()->create($formType);
+        return $this->getFormFactory()->create(OrderItemSplitForm::class);
     }
 
     /**
@@ -38,10 +35,9 @@ class SalesSplitCommunicationFactory extends AbstractCommunicationFactory
         $formCollectionArray = [];
         $orderItemSplitDataProvider = $this->createOrderItemSplitDataProvider();
         foreach ($orderItems as $itemTransfer) {
-            $formType = new OrderItemSplitForm();
             $formCollectionArray[$itemTransfer->getIdSalesOrderItem()] = $this
                 ->getFormFactory()
-                ->create($formType, $orderItemSplitDataProvider->getData($itemTransfer), $orderItemSplitDataProvider->getOptions())
+                ->create(OrderItemSplitForm::class, $orderItemSplitDataProvider->getData($itemTransfer), $orderItemSplitDataProvider->getOptions())
                 ->createView();
         }
 
@@ -55,5 +51,4 @@ class SalesSplitCommunicationFactory extends AbstractCommunicationFactory
     {
         return new OrderItemSplitDataProvider();
     }
-
 }

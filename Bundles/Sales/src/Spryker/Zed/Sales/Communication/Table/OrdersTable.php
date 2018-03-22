@@ -18,7 +18,6 @@ use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface;
 
 class OrdersTable extends AbstractTable
 {
-
     const URL = 'URL';
     const ID_ORDER_ITEM_PROCESS = 'id-order-item-process';
     const ID_ORDER_ITEM_STATE = 'id-order-item-state';
@@ -108,23 +107,7 @@ class OrdersTable extends AbstractTable
         $query = $this->buildQuery();
         $queryResults = $this->runQuery($query, $config);
 
-        $results = [];
-        foreach ($queryResults as $item) {
-            $results[] = [
-                SpySalesOrderTableMap::COL_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
-                SpySalesOrderTableMap::COL_ORDER_REFERENCE => $item[SpySalesOrderTableMap::COL_ORDER_REFERENCE],
-                SpySalesOrderTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpySalesOrderTableMap::COL_CREATED_AT]),
-                SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE => $this->formatCustomer($item),
-                SpySalesOrderTableMap::COL_EMAIL => $this->formatEmailAddress($item[SpySalesOrderTableMap::COL_EMAIL]),
-                static::ITEM_STATE_NAMES_CSV => $this->groupItemStateNames($item[OrdersTableQueryBuilder::FIELD_ITEM_STATE_NAMES_CSV]),
-                static::GRAND_TOTAL => $this->getGrandTotal($item),
-                static::NUMBER_OF_ORDER_ITEMS => $item[OrdersTableQueryBuilder::FIELD_NUMBER_OF_ORDER_ITEMS],
-                static::URL => implode(' ', $this->createActionUrls($item)),
-            ];
-        }
-        unset($queryResults);
-
-        return $results;
+        return $this->formatQueryData($queryResults);
     }
 
     /**
@@ -161,7 +144,6 @@ class OrdersTable extends AbstractTable
         $customer = $this->sanitizeService->escapeHtml($customer);
 
         if (isset($item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE])) {
-
             $customerTransfer = $this->customerFacade->findCustomerByReference(
                 $item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE]
             );
@@ -323,4 +305,28 @@ class OrdersTable extends AbstractTable
         ];
     }
 
+    /**
+     * @param array $queryResults
+     *
+     * @return array
+     */
+    protected function formatQueryData(array $queryResults)
+    {
+        $results = [];
+        foreach ($queryResults as $item) {
+            $results[] = [
+                SpySalesOrderTableMap::COL_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
+                SpySalesOrderTableMap::COL_ORDER_REFERENCE => $item[SpySalesOrderTableMap::COL_ORDER_REFERENCE],
+                SpySalesOrderTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpySalesOrderTableMap::COL_CREATED_AT]),
+                SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE => $this->formatCustomer($item),
+                SpySalesOrderTableMap::COL_EMAIL => $this->formatEmailAddress($item[SpySalesOrderTableMap::COL_EMAIL]),
+                static::ITEM_STATE_NAMES_CSV => $this->groupItemStateNames($item[OrdersTableQueryBuilder::FIELD_ITEM_STATE_NAMES_CSV]),
+                static::GRAND_TOTAL => $this->getGrandTotal($item),
+                static::NUMBER_OF_ORDER_ITEMS => $item[OrdersTableQueryBuilder::FIELD_NUMBER_OF_ORDER_ITEMS],
+                static::URL => implode(' ', $this->createActionUrls($item)),
+            ];
+        }
+
+        return $results;
+    }
 }

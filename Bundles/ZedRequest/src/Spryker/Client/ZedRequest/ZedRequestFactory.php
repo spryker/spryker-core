@@ -16,9 +16,8 @@ use Spryker\Client\ZedRequest\Client\ZedClient;
  */
 class ZedRequestFactory extends AbstractFactory
 {
-
     /**
-     * @return \Spryker\Client\ZedRequest\Client\ZedClient
+     * @return \Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface
      */
     public function createClient()
     {
@@ -28,7 +27,7 @@ class ZedRequestFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ZedRequest\Client\HttpClient
+     * @return \Spryker\Client\ZedRequest\Client\HttpClientInterface|\Spryker\Shared\ZedRequest\Client\HttpClientInterface
      */
     protected function createHttpClient()
     {
@@ -38,20 +37,21 @@ class ZedRequestFactory extends AbstractFactory
             $this->getConfig()->isAuthenticationEnabled(),
             $this->getUtilTextService(),
             $this->getUtilNetworkService(),
-            $this->createTokenOptions()
+            $this->getConfig()->getTokenOptions(),
+            $this->getConfig()->getClientConfiguration()
         );
 
         return $httpClient;
     }
 
     /**
+     * @deprecated Use `$this->getConfig()->getTokenOptions()` instead.
+     *
      * @return array
      */
     protected function createTokenOptions()
     {
-        return [
-            'cost' => $this->getConfig()->getHashCost(),
-        ];
+        return $this->getConfig()->getTokenOptions();
     }
 
     /**
@@ -77,5 +77,4 @@ class ZedRequestFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ZedRequestDependencyProvider::META_DATA_PROVIDER_PLUGINS);
     }
-
 }

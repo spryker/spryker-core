@@ -12,7 +12,6 @@ use Spryker\Shared\ProductLabel\ProductLabelConstants;
 
 class LabelDictionaryKeyBuilder extends SharedResourceKeyBuilder
 {
-
     /**
      * @return string
      */
@@ -20,5 +19,4 @@ class LabelDictionaryKeyBuilder extends SharedResourceKeyBuilder
     {
         return ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY;
     }
-
 }

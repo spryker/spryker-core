@@ -9,7 +9,6 @@ namespace Spryker\Zed\ZedRequest\Dependency\Facade;
 
 interface ZedRequestToStoreInterface
 {
-
     /**
      * @param string $isoCode
      *
@@ -23,5 +22,4 @@ interface ZedRequestToStoreInterface
      * @return void
      */
     public function setCurrentLocale($localeCode);
-
 }

@@ -21,7 +21,6 @@ use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
  */
 class AvailabilityEditStockCest
 {
-
     /**
      * @param \SprykerTest\Zed\AvailabilityGui\AvailabilityGuiCommunicationTester $i
      *
@@ -37,7 +36,8 @@ class AvailabilityEditStockCest
                 AvailabilityPage::AVAILABILITY_EDIT_STOCK_URL,
                 AvailabilityPage::AVAILABILITY_ID,
                 AvailabilityPage::AVAILABILITY_SKU,
-                AvailabilityPage::AVAILABILITY_ABSTRACT_PRODUCT_ID
+                AvailabilityPage::AVAILABILITY_ABSTRACT_PRODUCT_ID,
+                AvailabilityPage::AVAILABILITY_ID_STORE
             )
         );
 
@@ -56,5 +56,4 @@ class AvailabilityEditStockCest
         $i->click('//*[@id="page-wrapper"]/div[2]/div[2]/div/a');
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_VIEW_HEADER);
     }
-
 }

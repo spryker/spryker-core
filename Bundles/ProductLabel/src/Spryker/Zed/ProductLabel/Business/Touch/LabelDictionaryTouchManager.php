@@ -12,7 +12,6 @@ use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToTouchInterface;
 
 class LabelDictionaryTouchManager implements LabelDictionaryTouchManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToTouchInterface
      */
@@ -36,5 +35,4 @@ class LabelDictionaryTouchManager implements LabelDictionaryTouchManagerInterfac
             ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER
         );
     }
-
 }

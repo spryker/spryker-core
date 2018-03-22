@@ -22,9 +22,13 @@ use Spryker\Zed\Url\Persistence\Exception\UnknownResourceTypeException;
  */
 abstract class AbstractSpyUrl extends BaseSpyUrl
 {
-
     const RESOURCE_DATA_NAME = 'name';
     const RESOURCE_DATA_VALUE = 'value';
+    /**
+     * Used to map a row to its resource type
+     * @see AbstractSpyUrlQuery::RESOURCE_PREFIX
+     */
+    const RESOURCE_PREFIX = 'fk_resource_';
 
     /**
      * @return string
@@ -33,7 +37,7 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
     {
         $resourceData = $this->findResourceData();
 
-        $resourceType = str_replace('fk_resource_', '', $resourceData[static::RESOURCE_DATA_NAME]);
+        $resourceType = str_replace(static::RESOURCE_PREFIX, '', $resourceData[static::RESOURCE_DATA_NAME]);
 
         return $resourceType;
     }
@@ -56,7 +60,7 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
     protected function findResourceData()
     {
         foreach (get_object_vars($this) as $name => $value) {
-            if (strpos($name, 'fk_resource_') !== 0) {
+            if (strpos($name, static::RESOURCE_PREFIX) !== 0) {
                 continue;
             }
             if ($value !== null) {
@@ -113,5 +117,4 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
 
         return $setterName;
     }
-
 }

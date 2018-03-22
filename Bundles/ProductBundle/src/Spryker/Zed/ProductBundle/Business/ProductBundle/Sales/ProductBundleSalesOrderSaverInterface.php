@@ -10,9 +10,11 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Sales;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * @deprecated Use \Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleSalesOrderSaverInterface instead
+ */
 interface ProductBundleSalesOrderSaverInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -20,5 +22,4 @@ interface ProductBundleSalesOrderSaverInterface
      * @return void
      */
     public function saveSaleOrderBundleItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
-
 }

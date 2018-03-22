@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class CategoryUrlConstraint extends SymfonyConstraint
 {
-
     const OPTION_URL_FACADE = 'urlFacade';
 
     /**
@@ -41,5 +40,4 @@ class CategoryUrlConstraint extends SymfonyConstraint
 
         return $this->urlFacade->findUrl($urlTransfer);
     }
-
 }

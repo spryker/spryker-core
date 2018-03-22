@@ -9,7 +9,6 @@ namespace Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue;
 
 interface ReadWriteInterface extends ReadInterface
 {
-
     /**
      * @param string $key
      * @param mixed $value
@@ -46,5 +45,4 @@ interface ReadWriteInterface extends ReadInterface
      * @return mixed
      */
     public function deleteAll();
-
 }

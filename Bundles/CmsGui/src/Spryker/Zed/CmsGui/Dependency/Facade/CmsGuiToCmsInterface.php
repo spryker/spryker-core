@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsPageTransfer;
 
 interface CmsGuiToCmsInterface
 {
-
     /**
      * @param int $idPage
      * @param string $placeholder
@@ -136,5 +135,4 @@ interface CmsGuiToCmsInterface
      * @return bool
      */
     public function syncTemplate($cmsTemplateFolderPath);
-
 }

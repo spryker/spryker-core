@@ -18,11 +18,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
+ * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
  */
 class CarrierForm extends AbstractType
 {
-
     const FIELD_NAME_GLOSSARY_FIELD = 'glossaryKeyName';
     const FIELD_NAME_FIELD = 'name';
     const FIELD_IS_ACTIVE_FIELD = 'isActive';
@@ -31,9 +32,19 @@ class CarrierForm extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'carrier';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 
     /**
@@ -62,9 +73,7 @@ class CarrierForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Callback([
-                    'methods' => [
-                        [$this, 'uniqueCarrierNameCheck'],
-                    ],
+                    'callback' => [$this, 'uniqueCarrierNameCheck'],
                 ]),
             ],
         ]);
@@ -147,5 +156,4 @@ class CarrierForm extends AbstractType
 
         return $count > 0;
     }
-
 }

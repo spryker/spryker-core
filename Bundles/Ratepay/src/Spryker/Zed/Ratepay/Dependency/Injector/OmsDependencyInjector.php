@@ -10,7 +10,7 @@ namespace Spryker\Zed\Ratepay\Dependency\Injector;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 use Spryker\Zed\Ratepay\Communication\Plugin\Oms\Command\CancelPaymentPlugin;
 use Spryker\Zed\Ratepay\Communication\Plugin\Oms\Command\ConfirmDeliveryPlugin;
@@ -25,7 +25,6 @@ use Spryker\Zed\Ratepay\Communication\Plugin\Oms\Condition\IsRefundedPlugin;
 
 class OmsDependencyInjector extends AbstractDependencyInjector
 {
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -80,5 +79,4 @@ class OmsDependencyInjector extends AbstractDependencyInjector
 
         return $container;
     }
-
 }

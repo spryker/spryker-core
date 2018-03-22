@@ -23,7 +23,6 @@ use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGe
  */
 class RedisSessionKeyGeneratorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -34,5 +33,4 @@ class RedisSessionKeyGeneratorTest extends Unit
 
         $this->assertSame('session:foo-session-123', $generatedKey);
     }
-
 }

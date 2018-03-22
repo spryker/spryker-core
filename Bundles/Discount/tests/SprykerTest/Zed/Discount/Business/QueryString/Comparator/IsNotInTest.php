@@ -25,7 +25,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
  */
 class IsNotInTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -94,5 +93,4 @@ class IsNotInTest extends Unit
     {
         return new IsNotIn();
     }
-
 }

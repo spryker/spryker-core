@@ -25,7 +25,6 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
  */
 class IdFilterUpdateTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterUpdate|\PHPUnit_Framework_MockObject_MockObject
      */
@@ -93,5 +92,4 @@ class IdFilterUpdateTest extends Unit
         $result = $this->idFilterUpdate->filter($ids, 'foo');
         $this->assertSame([], $result);
     }
-
 }

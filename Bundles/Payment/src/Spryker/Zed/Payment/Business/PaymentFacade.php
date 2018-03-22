@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Payment\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -18,8 +19,9 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
 {
-
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -35,21 +37,25 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function checkoutPreCheck(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createCheckoutPaymentPluginExecutor()
             ->executePreCheckPlugin($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -65,7 +71,6 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     }
 
     /**
-     *
      * {@inheritdoc}
      *
      * @api
@@ -82,7 +87,6 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     }
 
     /**
-     *
      * {@inheritdoc}
      *
      * @api
@@ -98,4 +102,35 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
             ->hydrateOrderWithPayment($orderTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
+     */
+    public function getAvailableMethods(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFactory()
+            ->createPaymentMethodReader()
+            ->getAvailableMethods($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function recalculatePayments(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createPaymentCalculator()
+            ->recalculatePayments($calculableObjectTransfer);
+    }
 }
