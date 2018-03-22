@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class OfferFacade extends AbstractFacade implements OfferFacadeInterface
 {
+    //TODO: remove method?.
     /**
      * {@inheritdoc}
      *
