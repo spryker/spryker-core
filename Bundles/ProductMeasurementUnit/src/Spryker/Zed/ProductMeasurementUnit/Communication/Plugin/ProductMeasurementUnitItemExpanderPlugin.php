@@ -46,10 +46,6 @@ class ProductMeasurementUnitItemExpanderPlugin extends AbstractPlugin implements
                     ->setName($productMeasurementSalesUnitEntity->getProductMeasurementUnit()->getName())
                     ->setDefaultPrecision($productMeasurementSalesUnitEntity->getProductMeasurementUnit()->getDefaultPrecision())
                 );
-
-            $itemTransfer->getQuantitySalesUnit()->setValue(
-                (int)($itemTransfer->getQuantity() * $itemTransfer->getQuantitySalesUnit()->getConversion() * $itemTransfer->getQuantitySalesUnit()->getPrecision())
-            );
         }
 
         return $cartChangeTransfer;
