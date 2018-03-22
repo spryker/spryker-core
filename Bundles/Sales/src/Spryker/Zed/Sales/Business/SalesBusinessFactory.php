@@ -13,12 +13,16 @@ use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
 use Spryker\Zed\Sales\Business\Model\Customer\PaginatedCustomerOrderReader;
+use Spryker\Zed\Sales\Business\Model\Order\Converter\OrderConverter;
+use Spryker\Zed\Sales\Business\Model\Order\Converter\OrderConverterInterface;
 use Spryker\Zed\Sales\Business\Model\Order\OrderExpander;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
+use Spryker\Zed\Sales\Business\Model\Order\Plugin\SalesOrderPluginExecutor;
+use Spryker\Zed\Sales\Business\Model\Order\Plugin\SalesOrderPluginExecutorInterface;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
@@ -66,7 +70,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getLocaleQueryContainer(),
             $this->getStore(),
-            $this->getPreSaveHydrateOrderPlugins()
+            $this->createOrderConverter(),
+            $this->createSalesOrderPluginExecutor()
         );
     }
 
@@ -82,7 +87,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getLocaleQueryContainer(),
             $this->getStore(),
-            $this->getPreSaveHydrateOrderPlugins()
+            $this->createOrderConverter(),
+            $this->createSalesOrderPluginExecutor()
         );
     }
 
@@ -144,6 +150,24 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getSequenceNumberFacade(),
             $sequenceNumberSettings
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\Plugin\SalesOrderPluginExecutorInterface
+     */
+    public function createSalesOrderPluginExecutor(): SalesOrderPluginExecutorInterface
+    {
+        return new SalesOrderPluginExecutor(
+            $this->getPreSaveHydrateOrderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\Converter\OrderConverterInterface
+     */
+    public function createOrderConverter(): OrderConverterInterface
+    {
+        return new OrderConverter();
     }
 
     /**
@@ -219,7 +243,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\PreSaveOrderHydratePluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\PreSaveOrderPluginInterface[]
      */
     protected function getPreSaveHydrateOrderPlugins()
     {

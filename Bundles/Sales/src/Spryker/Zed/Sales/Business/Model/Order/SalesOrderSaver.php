@@ -19,6 +19,8 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\Sales\Business\Model\Order\Converter\OrderConverterInterface;
+use Spryker\Zed\Sales\Business\Model\Order\Plugin\SalesOrderPluginExecutorInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\SalesConfig;
@@ -58,9 +60,14 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $store;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\PreSaveOrderHydratePluginInterface[]
+     * @var \Spryker\Zed\Sales\Business\Model\Order\Converter\OrderConverterInterface
      */
-    protected $preSaveOrderHydratePlugins;
+    protected $orderConverter;
+
+    /**
+     * @var \Spryker\Zed\Sales\Business\Model\Order\Plugin\SalesOrderPluginExecutorInterface
+     */
+    protected $salesOrderPluginExecutor;
 
     /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface $countryFacade
@@ -69,7 +76,8 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param \Spryker\Shared\Kernel\Store $store
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\PreSaveOrderHydratePluginInterface[] $preSaveOrderHydratePlugins
+     * @param \Spryker\Zed\Sales\Business\Model\Order\Converter\OrderConverterInterface $orderConverter
+     * @param \Spryker\Zed\Sales\Business\Model\Order\Plugin\SalesOrderPluginExecutorInterface $salesOrderPluginExecutor
      */
     public function __construct(
         SalesToCountryInterface $countryFacade,
@@ -78,7 +86,8 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         SalesConfig $salesConfiguration,
         LocaleQueryContainerInterface $localeQueryContainer,
         Store $store,
-        array $preSaveOrderHydratePlugins
+        OrderConverterInterface $orderConverter,
+        SalesOrderPluginExecutorInterface $salesOrderPluginExecutor
     ) {
         $this->countryFacade = $countryFacade;
         $this->omsFacade = $omsFacade;
@@ -86,7 +95,8 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $this->salesConfiguration = $salesConfiguration;
         $this->localeQueryContainer = $localeQueryContainer;
         $this->store = $store;
-        $this->preSaveOrderHydratePlugins = $preSaveOrderHydratePlugins;
+        $this->orderConverter = $orderConverter;
+        $this->salesOrderPluginExecutor = $salesOrderPluginExecutor;
     }
 
     /**
@@ -153,6 +163,9 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $this->hydrateSalesOrderEntity($quoteTransfer, $salesOrderEntity);
         $this->hydrateAddresses($quoteTransfer, $salesOrderEntity);
         $this->addLocale($salesOrderEntity);
+
+        $salesOrderEntity = $this->executeSalesOrderPreSavePlugins($quoteTransfer, $salesOrderEntity);
+
         $salesOrderEntity->save();
 
         return $salesOrderEntity;
@@ -233,7 +246,6 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $salesOrderEntity->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
         $salesOrderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($quoteTransfer));
         $salesOrderEntity->setIsTest($this->salesConfiguration->isTestOrder($quoteTransfer));
-        $salesOrderEntity = $this->runPreSaveOrderHydratePlugins($quoteTransfer, $salesOrderEntity);
     }
 
     /**
@@ -434,11 +446,11 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    protected function runPreSaveOrderHydratePlugins(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity): SpySalesOrder
+    protected function executeSalesOrderPreSavePlugins(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity): SpySalesOrder
     {
-        foreach ($this->preSaveOrderHydratePlugins as $plugin) {
-            $salesOrderEntity = $plugin->hydrate($quoteTransfer, $salesOrderEntity);
-        }
+        $salesOrderEntityTransfer = $this->orderConverter->convertToEntityTransfer($salesOrderEntity);
+        $salesOrderEntityTransfer = $this->salesOrderPluginExecutor->executePreSaveOrderPlugins($quoteTransfer, $salesOrderEntityTransfer);
+        $salesOrderEntity = $this->orderConverter->convertFromEntityTransfer($salesOrderEntityTransfer);
 
         return $salesOrderEntity;
     }
