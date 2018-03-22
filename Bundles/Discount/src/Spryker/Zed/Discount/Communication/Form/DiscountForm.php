@@ -10,43 +10,16 @@ use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConditionTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormTypeInterface;
 
+/**
+ * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
+ */
 class DiscountForm extends AbstractType
 {
-
-    /**
-     * @var \Symfony\Component\Form\FormTypeInterface|\Spryker\Zed\Discount\Communication\Form\GeneralForm
-     */
-    protected $generalForm;
-
-    /**
-     * @var \Symfony\Component\Form\FormTypeInterface|\Spryker\Zed\Discount\Communication\Form\CalculatorForm
-     */
-    protected $calculatorForm;
-
-    /**
-     * @var \Symfony\Component\Form\FormTypeInterface|\Spryker\Zed\Discount\Communication\Form\ConditionsForm
-     */
-    protected $conditionsForm;
-
-    /**
-     * @param \Symfony\Component\Form\FormTypeInterface|\Spryker\Zed\Discount\Communication\Form\GeneralForm $generalForm
-     * @param \Symfony\Component\Form\FormTypeInterface|\Spryker\Zed\Discount\Communication\Form\CalculatorForm $calculatorForm
-     * @param \Symfony\Component\Form\FormTypeInterface|\Spryker\Zed\Discount\Communication\Form\ConditionsForm $conditionsForm
-     */
-    public function __construct(
-        FormTypeInterface $generalForm,
-        FormTypeInterface $calculatorForm,
-        FormTypeInterface $conditionsForm
-    ) {
-        $this->generalForm = $generalForm;
-        $this->calculatorForm = $calculatorForm;
-        $this->conditionsForm = $conditionsForm;
-    }
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param string[] $options
@@ -58,6 +31,23 @@ class DiscountForm extends AbstractType
         $this->addGeneralSubForm($builder)
             ->addCalculatorSubForm($builder)
             ->addConditionsSubForm($builder);
+
+        $this->executeFormTypeExpanderPlugins($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    protected function executeFormTypeExpanderPlugins(FormBuilderInterface $builder, array $options)
+    {
+        foreach ($this->getFactory()->getDiscountFormTypeExpanderPlugins() as $calculatorFormTypeExpanderPlugin) {
+            $calculatorFormTypeExpanderPlugin->expandFormType($builder, $options);
+        }
+
+        return $builder;
     }
 
     /**
@@ -69,7 +59,7 @@ class DiscountForm extends AbstractType
     {
         $builder->add(
             DiscountConfiguratorTransfer::DISCOUNT_GENERAL,
-            $this->generalForm,
+            GeneralForm::class,
             [
                 'data_class' => DiscountGeneralTransfer::class,
                 'label' => false,
@@ -88,7 +78,7 @@ class DiscountForm extends AbstractType
     {
         $builder->add(
             DiscountConfiguratorTransfer::DISCOUNT_CALCULATOR,
-            $this->calculatorForm,
+            CalculatorForm::class,
             [
                 'data_class' => DiscountCalculatorTransfer::class,
                 'label' => false,
@@ -107,7 +97,7 @@ class DiscountForm extends AbstractType
     {
         $builder->add(
             DiscountConfiguratorTransfer::DISCOUNT_CONDITION,
-            $this->conditionsForm,
+            ConditionsForm::class,
             [
                 'data_class' => DiscountConditionTransfer::class,
                 'label' => false,
@@ -118,13 +108,10 @@ class DiscountForm extends AbstractType
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
+     * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'discount';
     }
-
 }

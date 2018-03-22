@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\TabsViewTransfer;
 
 class ProductConcreteFormEditTabs extends ProductFormEditTabs
 {
-
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
@@ -23,12 +22,29 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
         $this
             ->addGeneralTab($tabsViewTransfer)
             ->addPriceAndStockTab($tabsViewTransfer)
-            ->addAttributesTab($tabsViewTransfer)
             ->addImageTab($tabsViewTransfer)
             ->addAssigneBundledProductsTab($tabsViewTransfer)
             ->setFooter($tabsViewTransfer);
 
         return $tabsViewTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     *
+     * @return $this
+     */
+    protected function addGeneralTab(TabsViewTransfer $tabsViewTransfer)
+    {
+        $tabItemTransfer = new TabItemTransfer();
+        $tabItemTransfer
+            ->setName('general')
+            ->setTitle('General')
+            ->setTemplate('@ProductManagement/Product/_partials/variant-general-tab.twig');
+
+        $tabsViewTransfer->addTab($tabItemTransfer);
+
+        return $this;
     }
 
     /**
@@ -102,5 +118,4 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
 
         return $this;
     }
-
 }

@@ -12,7 +12,6 @@ use Twig_Loader_Filesystem;
 
 class DataBuilderClassGenerator implements GeneratorInterface
 {
-
     const TWIG_TEMPLATES_LOCATION = '/Templates/';
 
     /**
@@ -70,5 +69,4 @@ class DataBuilderClassGenerator implements GeneratorInterface
             'dependencies' => $dataBuilderDefinition->getDependencies(),
         ];
     }
-
 }

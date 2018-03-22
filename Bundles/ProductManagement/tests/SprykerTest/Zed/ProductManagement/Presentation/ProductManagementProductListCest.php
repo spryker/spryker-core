@@ -21,7 +21,6 @@ use SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester;
  */
 class ProductManagementProductListCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester $i
      *
@@ -29,8 +28,9 @@ class ProductManagementProductListCest
      */
     public function breadcrumbIsVisible(ProductManagementPresentationTester $i)
     {
+        $i->registerMoneyCollectionFormTypePlugin();
+
         $i->amOnPage(ProductManagementProductListPage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Products / Products');
     }
-
 }

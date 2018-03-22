@@ -12,7 +12,6 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderCommentSaver implements OrderCommentSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
@@ -29,7 +28,7 @@ class OrderCommentSaver implements OrderCommentSaverInterface
     /**
      * @param \Generated\Shared\Transfer\CommentTransfer $commentTransfer
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderComment
+     * @return \Generated\Shared\Transfer\CommentTransfer
      */
     public function save(CommentTransfer $commentTransfer)
     {
@@ -54,5 +53,4 @@ class OrderCommentSaver implements OrderCommentSaverInterface
     ) {
         $commentTransfer->fromArray($commentEntity->toArray(), true);
     }
-
 }

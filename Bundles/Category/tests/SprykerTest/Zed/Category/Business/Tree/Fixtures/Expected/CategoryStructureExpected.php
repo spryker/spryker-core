@@ -8,7 +8,6 @@ namespace SprykerTest\Zed\Category\Business\Tree\Fixtures\Expected;
 
 class CategoryStructureExpected
 {
-
     /**
      * @return array
      */
@@ -163,7 +162,7 @@ class CategoryStructureExpected
     /**
      * @return array
      */
-    public function getCategoryStructureWithNonexistantParent()
+    public function getCategoryStructureWithNonexistentParent()
     {
         $categories = [
             1 => [
@@ -202,5 +201,4 @@ class CategoryStructureExpected
 
         return $categories;
     }
-
 }

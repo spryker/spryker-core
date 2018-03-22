@@ -14,7 +14,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CountryTable extends AbstractTable
 {
-
     /**
      * @var \Orm\Zed\Country\Persistence\SpyCountryQuery
      */
@@ -56,5 +55,4 @@ class CountryTable extends AbstractTable
     {
         return $this->runQuery($this->countryQuery, $config);
     }
-
 }

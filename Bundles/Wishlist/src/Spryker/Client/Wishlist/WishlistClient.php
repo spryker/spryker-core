@@ -10,7 +10,6 @@ namespace Spryker\Client\Wishlist;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
-use Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -20,8 +19,9 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class WishlistClient extends AbstractClient implements WishlistClientInterface
 {
-
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -34,6 +34,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -46,6 +48,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -58,6 +62,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -70,6 +76,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -82,6 +90,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -94,6 +104,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
@@ -106,6 +118,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
@@ -118,6 +132,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollection
@@ -130,30 +146,22 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @api
+     * {@inheritdoc}
      *
-     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer
-     */
-    public function moveToCart(WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer)
-    {
-        return $this->createCartHandler()->moveToCart($wishlistMoveToCartRequestTransfer);
-    }
-
-    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer
      */
     public function moveCollectionToCart(WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer)
     {
-        $this->createCartHandler()->moveCollectionToCart($wishlistMoveToCartRequestCollectionTransfer);
+        return $this->createCartHandler()->moveCollectionToCart($wishlistMoveToCartRequestCollectionTransfer);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -166,6 +174,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
@@ -175,10 +185,27 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
     {
         $wishlistOverviewResponse = $this->getZedStub()->getWishlistOverview($wishlistOverviewRequestTransfer);
+
         return $this->getFactory()->createProductStorage()->expandProductDetails($wishlistOverviewResponse);
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer
+     */
+    public function getWishlistOverviewWithoutProductDetails(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
+    {
+        return $this->getZedStub()->getWishlistOverview($wishlistOverviewRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
@@ -210,5 +237,4 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
             $this
         );
     }
-
 }

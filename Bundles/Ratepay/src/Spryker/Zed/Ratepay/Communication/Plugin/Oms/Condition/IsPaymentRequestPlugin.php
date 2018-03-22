@@ -10,11 +10,10 @@ namespace Spryker\Zed\Ratepay\Communication\Plugin\Oms\Condition;
 use Generated\Shared\Transfer\OrderTransfer;
 
 /**
- * @method \Spryker\Zed\Ratepay\Business\RatepayFacade getFacade()
+ * @method \Spryker\Zed\Ratepay\Business\RatepayFacadeInterface getFacade()
  */
 class IsPaymentRequestPlugin extends AbstractCheckPlugin
 {
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -24,5 +23,4 @@ class IsPaymentRequestPlugin extends AbstractCheckPlugin
     {
         return $this->getFacade()->isPaymentRequestSuccess($orderTransfer);
     }
-
 }

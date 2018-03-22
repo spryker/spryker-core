@@ -12,13 +12,13 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 
 /**
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleBusinessFactory getFactory()
  */
 interface ProductBundleFacadeInterface
 {
-
     /**
      *
      * Specification:
@@ -107,7 +107,7 @@ interface ProductBundleFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function preCheckCheckoutAvailability(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 
@@ -140,6 +140,21 @@ interface ProductBundleFacadeInterface
     public function updateAffectedBundlesAvailability($concreteSku);
 
     /**
+     * Specification:
+     *
+     * - Gets all items which belong to bundle
+     * - Updates bundle products with new stock, given sku belong
+     * - Touch abstract stock for bundle product
+     *
+     * @api
+     *
+     * @param string $concreteSku
+     *
+     * @return void
+     */
+    public function updateAffectedBundlesStock($concreteSku): void;
+
+    /**
      *
      * Specification:
      *
@@ -156,12 +171,12 @@ interface ProductBundleFacadeInterface
     public function updateBundleAvailability($productBundleSku);
 
     /**
-     *
      * Specification:
-     *
      * - Persists bundled product to sales database tables, from QuoteTransfer
      *
      * @api
+     *
+     * @deprecated Use saveOrderBundleItems() instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -169,6 +184,19 @@ interface ProductBundleFacadeInterface
      * @return void
      */
     public function saveSalesOrderBundleItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
+
+    /**
+     * Specification:
+     * - Persists bundled product to sales database tables, from QuoteTransfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveOrderBundleItems(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
 
     /**
      *
@@ -237,4 +265,17 @@ interface ProductBundleFacadeInterface
      */
     public function hydrateProductBundleIds(OrderTransfer $orderTransfer);
 
+    /**
+     * Specification:
+     *  - Filter bundle items after cart item reload operation is called.
+     *  - Bundled items are removed from cart
+     *  - Bundle item are added as new add so new prices can be assigned.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function filterBundleItemsOnCartReload(QuoteTransfer $quoteTransfer);
 }

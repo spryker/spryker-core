@@ -18,9 +18,8 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CartClient extends AbstractClient implements CartClientInterface
 {
-
     /**
-     * Returns the stored quote
+     * {@inheritdoc}
      *
      * @api
      *
@@ -32,7 +31,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * Resets all data which is stored in the quote
+     * {@inheritdoc}
      *
      * @api
      *
@@ -44,6 +43,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return int
@@ -62,7 +63,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * Stores quote
+     * {@inheritdoc}
      *
      * @api
      *
@@ -76,7 +77,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * Adds an item (identified by SKU and quantity) makes zed request, stored cart into persistant store if used.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -111,7 +112,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * Removes the item with the given SKU
+     * {@inheritdoc}
      *
      * @api
      *
@@ -133,9 +134,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     *
-     * Specification:
-     *  - Remove all given items
+     * {@inheritdoc}
      *
      * @api
      *
@@ -164,7 +163,6 @@ class CartClient extends AbstractClient implements CartClientInterface
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (($itemTransfer->getSku() === $sku && $groupKey === null) ||
                 $itemTransfer->getGroupKey() === $groupKey) {
-
                 return $itemTransfer;
             }
         }
@@ -173,8 +171,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * Changes the quantity of the given item in the quote. If the quantity is equal to 0, the item
-     * is removed from the quote.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -209,7 +206,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * Decreases the quantity of the given item in the quote.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -235,7 +232,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * Increases the quantity of the given item in the quote.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -258,6 +255,20 @@ class CartClient extends AbstractClient implements CartClientInterface
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
 
         return $this->getZedStub()->addItem($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function reloadItems()
+    {
+        $quoteTransfer = $this->getQuote();
+        $quoteTransfer = $this->getZedStub()->reloadItems($quoteTransfer);
+        $this->storeQuote($quoteTransfer);
     }
 
     /**
@@ -292,9 +303,11 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @return \Spryker\Client\Cart\Zed\CartStubInterface
+     * @return \Spryker\Client\Cart\Zed\CartStubInterface|\Spryker\Client\ZedRequest\Stub\ZedRequestStub
      */
     public function getZedStub()
     {
@@ -308,5 +321,4 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         return $this->getFactory()->getQuoteClient();
     }
-
 }

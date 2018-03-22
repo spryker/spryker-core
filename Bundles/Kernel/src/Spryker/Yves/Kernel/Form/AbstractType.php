@@ -13,7 +13,6 @@ use Symfony\Component\Form\AbstractType as SymfonyAbstractType;
 
 abstract class AbstractType extends SymfonyAbstractType
 {
-
     /**
      * @var \Spryker\Yves\Kernel\FactoryInterface
      */
@@ -79,5 +78,4 @@ abstract class AbstractType extends SymfonyAbstractType
     {
         return new ClientResolver();
     }
-
 }

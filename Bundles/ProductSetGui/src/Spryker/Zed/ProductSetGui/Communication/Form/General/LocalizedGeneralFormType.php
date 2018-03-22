@@ -25,10 +25,10 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
  */
 class LocalizedGeneralFormType extends AbstractType
 {
-
     const FIELD_NAME = 'name';
     const FIELD_URL = 'url';
     const FIELD_URL_PREFIX = 'url_prefix';
@@ -60,9 +60,7 @@ class LocalizedGeneralFormType extends AbstractType
             },
             'constraints' => [
                 new Callback([
-                    'methods' => [
-                        [$this, 'validateUniqueUrl'],
-                    ],
+                    'callback' => [$this, 'validateUniqueUrl'],
                     'groups' => [static::GROUP_UNIQUE_URL_CHECK],
                 ]),
             ],
@@ -281,5 +279,4 @@ class LocalizedGeneralFormType extends AbstractType
 
         return $url;
     }
-
 }

@@ -7,14 +7,17 @@
 
 namespace Spryker\Zed\Gui\Communication\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
+ */
 class ImageType extends AbstractType
 {
-
     const OPTION_IMAGE_WIDTH = 'image_width';
     const OPTION_IMAGE_HEIGHT = 'image_height';
     const OPTION_IMAGE_TITLE = 'image_title';
@@ -55,15 +58,6 @@ class ImageType extends AbstractType
      */
     public function getParent()
     {
-        return 'form';
+        return FormType::class;
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'image';
-    }
-
 }

@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
 {
-
     /**
      * @api
      *
@@ -310,6 +309,23 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
             ->getFactory()
             ->createCategory()
             ->delete($idCategory);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCategoryNode
+     * @param int $idChildrenDestinationNode
+     *
+     * @return void
+     */
+    public function deleteNodeById($idCategoryNode, $idChildrenDestinationNode)
+    {
+        $this->getFactory()
+            ->createCategoryNode()
+            ->deleteNodeById($idCategoryNode, $idChildrenDestinationNode);
     }
 
     /**
@@ -606,5 +622,4 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
             ->createCategoryTemplateReader()
             ->findCategoryTemplateByName($name);
     }
-
 }

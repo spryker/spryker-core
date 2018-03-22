@@ -15,18 +15,32 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class PriceCartConnectorFacade extends AbstractFacade implements PriceCartConnectorFacadeInterface
 {
-
     /**
+     * @inheritdoc
+     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $change
-     * @param string|null $grossPriceType
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param string|null $priceType
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function addGrossPriceToItems(CartChangeTransfer $change, $grossPriceType = null)
+    public function addPriceToItems(CartChangeTransfer $cartChangeTransfer, $priceType = null)
     {
-        return $this->getFactory()->createPriceManager($grossPriceType)->addGrossPriceToItems($change);
+        return $this->getFactory()->createPriceManager()->addPriceToItems($cartChangeTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validatePrices(CartChangeTransfer $cartChangeTransfer)
+    {
+         return $this->getFactory()->createPriceProductValidator()->validatePrices($cartChangeTransfer);
+    }
 }

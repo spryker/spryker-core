@@ -16,7 +16,6 @@ use Spryker\Shared\ProductGroup\KeyBuilder\ProductGroupKeyBuilder;
 
 class ProductGroupFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Client\ProductGroup\Storage\ProductStorageReaderInterface
      */
@@ -76,5 +75,4 @@ class ProductGroupFactory extends AbstractFactory
     {
         return new ProductGroupKeyBuilder();
     }
-
 }

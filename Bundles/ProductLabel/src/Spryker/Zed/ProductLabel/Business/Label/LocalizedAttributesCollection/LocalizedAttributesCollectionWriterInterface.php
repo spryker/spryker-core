@@ -11,12 +11,10 @@ use ArrayObject;
 
 interface LocalizedAttributesCollectionWriterInterface
 {
-
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[] $localizedAttributesTransferCollection
      *
      * @return void
      */
     public function save(ArrayObject $localizedAttributesTransferCollection);
-
 }

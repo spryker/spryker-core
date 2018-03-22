@@ -11,12 +11,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Messenger\Dependency\Plugin\TranslationPluginInterface;
 
 /**
- * @method \Spryker\Zed\Glossary\Business\GlossaryFacade getFacade()
+ * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
  */
 class TranslationPlugin extends AbstractPlugin implements TranslationPluginInterface
 {
-
     /**
      * @param string $keyName
      *
@@ -24,7 +23,7 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
      */
     public function hasKey($keyName)
     {
-        return $this->getFacade()->hasKey($keyName);
+        return $this->getFacade()->hasTranslation($keyName);
     }
 
     /**
@@ -37,5 +36,4 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
     {
         return $this->getFacade()->translate($keyName, $data);
     }
-
 }

@@ -10,11 +10,14 @@ namespace Spryker\Zed\Checkout\Dependency\Plugin;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * Deprecated: Please use \Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveInterface instead
+ */
 interface CheckoutPreSaveHookInterface
 {
-
     /**
-     * Do something before orderTransfer save
+     * Specification:
+     * - Do something before orderTransfer save
      *
      * @api
      *
@@ -24,5 +27,4 @@ interface CheckoutPreSaveHookInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function preSave(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
-
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface ProductManagerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
@@ -24,12 +23,11 @@ interface ProductManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param array|\Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
      *
      * @throws \Exception
      *
      * @return int
      */
     public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
-
 }

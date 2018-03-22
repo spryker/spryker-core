@@ -1,0 +1,19 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Product Attributes' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton(url('/product-attribute-gui/attribute'), 'Back to List' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% include '@ProductAttributeGui/Attribute/partials/attribute-form.twig' %}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productattributegui-attribute.js"></script>
+{% endblock %}

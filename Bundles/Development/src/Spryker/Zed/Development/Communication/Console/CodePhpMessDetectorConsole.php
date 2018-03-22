@@ -13,14 +13,13 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Development\Business\DevelopmentFacade getFacade()
+ * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  */
 class CodePhpMessDetectorConsole extends Console
 {
-
     const COMMAND_NAME = 'code:phpmd';
-    const OPTION_BUNDLE = 'module';
-    const OPTION_BUNDLE_ALL = 'all';
+    const OPTION_MODULE = 'module';
+    const OPTION_MODULE_ALL = 'all';
     const OPTION_DRY_RUN = 'dry-run';
     const OPTION_FORMAT = 'format';
 
@@ -36,7 +35,7 @@ class CodePhpMessDetectorConsole extends Console
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Run PHPMD for project or core');
 
-        $this->addOption(static::OPTION_BUNDLE, 'm', InputOption::VALUE_OPTIONAL, 'Name of core module to run PHPMD for (or "all")');
+        $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of core module to run PHPMD for (or "all")');
         $this->addOption(static::OPTION_FORMAT, 'f', InputOption::VALUE_OPTIONAL, 'Output format [text, xml, html]');
         $this->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only');
     }
@@ -49,18 +48,17 @@ class CodePhpMessDetectorConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundle = $this->input->getOption(static::OPTION_BUNDLE);
-        $message = 'Run PHPMD in project level';
+        $module = $this->input->getOption(static::OPTION_MODULE);
 
-        if ($bundle) {
-            $message = 'Run PHPMD in all modules';
-            if ($bundle !== static::OPTION_BUNDLE_ALL) {
-                $message = 'Run PHPMD in ' . $bundle . ' module';
+        $message = 'Run PHPMD in PROJECT level';
+        if ($module) {
+            $message = 'Run PHPMD in all CORE modules';
+            if ($module !== static::OPTION_MODULE_ALL) {
+                $message = 'Run PHPMD in ' . $module . ' CORE module';
             }
         }
         $this->info($message);
 
-        return $this->getFacade()->runPhpMd($bundle, $this->input->getOptions());
+        return $this->getFacade()->runPhpMd($module, $this->input->getOptions());
     }
-
 }

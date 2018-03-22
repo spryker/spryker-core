@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductCartConnector\Dependency\Facade;
 
 class ProductCartConnectorToLocaleBridge implements ProductCartConnectorToLocaleInterface
 {
-
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
@@ -30,5 +29,4 @@ class ProductCartConnectorToLocaleBridge implements ProductCartConnectorToLocale
     {
         return $this->localeFacade->getCurrentLocale();
     }
-
 }

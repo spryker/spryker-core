@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
+use Exception;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\StateMachine\Business\Exception\ConditionNotFoundException;
 use Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface;
@@ -15,7 +16,6 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 
 class Condition implements ConditionInterface
 {
-
     /**
      * @var array
      */
@@ -98,7 +98,6 @@ class Condition implements ConditionInterface
                 if ($isValidCondition) {
                     array_push($possibleTransitions, $transition);
                 }
-
             } else {
                 array_push($possibleTransitions, $transition);
             }
@@ -128,7 +127,7 @@ class Condition implements ConditionInterface
 
         try {
             $conditionCheck = $conditionPlugin->check($stateMachineItemTransfer);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $transactionLogger->setIsError(true);
             $transactionLogger->setErrorMessage(get_class($conditionPlugin) . ' - ' . $e->getMessage());
             $transactionLogger->saveAll();
@@ -227,7 +226,7 @@ class Condition implements ConditionInterface
 
     /**
      * @param string $stateMachineName
-     * @param string[] $states
+     * @param array $states Keys are state names, values are collections of TransitionInterface.
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
      * @return void
@@ -328,9 +327,9 @@ class Condition implements ConditionInterface
     }
 
     /**
-     * @param array|\Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
-     * @return array|\Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     protected function createStateMap(array $stateMachineItems)
     {
@@ -340,5 +339,4 @@ class Condition implements ConditionInterface
         }
         return $sourceStates;
     }
-
 }

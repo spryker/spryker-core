@@ -16,7 +16,6 @@ use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 
 class LabelReader implements LabelReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface
      */
@@ -122,6 +121,19 @@ class LabelReader implements LabelReaderInterface
     /**
      * @param int $idProductAbstract
      *
+     * @return int[]
+     */
+    public function findAllActiveLabelIdsByIdProductAbstract($idProductAbstract)
+    {
+        $productLabelEntities = $this->findActiveEntitiesByIdProductAbstract($idProductAbstract);
+        $productLabelIds = $productLabelEntities->getColumnValues(ProductLabelTransfer::ID_PRODUCT_LABEL);
+
+        return $productLabelIds;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findEntitiesByIdProductAbstract($idProductAbstract)
@@ -133,7 +145,20 @@ class LabelReader implements LabelReaderInterface
     }
 
     /**
-     * @param array|\Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection $productLabelEntities
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function findActiveEntitiesByIdProductAbstract($idProductAbstract)
+    {
+        return $this
+            ->queryContainer
+            ->queryActiveProductsLabelByIdProductAbstract($idProductAbstract)
+            ->find();
+    }
+
+    /**
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[]|\Propel\Runtime\Collection\ObjectCollection $productLabelEntities
      *
      * @return array
      */
@@ -184,5 +209,4 @@ class LabelReader implements LabelReaderInterface
                 ->findAllByIdProductLabel($productLabelTransfer->getIdProductLabel())
         );
     }
-
 }

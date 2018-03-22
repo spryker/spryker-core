@@ -8,12 +8,14 @@
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
@@ -22,7 +24,6 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderHydrator implements OrderHydratorInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
@@ -41,7 +42,7 @@ class OrderHydrator implements OrderHydratorInterface
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
-     * @param array|\Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[] $hydrateOrderPlugins
+     * @param \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[] $hydrateOrderPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
@@ -62,7 +63,7 @@ class OrderHydrator implements OrderHydratorInterface
     {
         $orderEntity = $this->getOrderEntity($orderTransfer);
 
-        $this->queryContainer->queryOrderItemsStateHistoriesOrderedByNewestState($orderEntity->getItems());
+        $this->queryContainer->fillOrderItemsWithLatestStates($orderEntity->getItems());
 
         $orderTransfer = $this->createOrderTransfer($orderEntity);
 
@@ -119,7 +120,7 @@ class OrderHydrator implements OrderHydratorInterface
             );
         }
 
-        $this->queryContainer->queryOrderItemsStateHistoriesOrderedByNewestState($orderEntity->getItems());
+        $this->queryContainer->fillOrderItemsWithLatestStates($orderEntity->getItems());
 
         $orderTransfer = $this->createOrderTransfer($orderEntity);
 
@@ -196,6 +197,8 @@ class OrderHydrator implements OrderHydratorInterface
     {
         $orderTransfer = new OrderTransfer();
         $orderTransfer->fromArray($orderEntity->toArray(), true);
+        $orderTransfer->setCustomerReference($orderEntity->getCustomerReference());
+        // Deprecated: Using FK to customer is obsolete, but needed to prevent BC break.
         $orderTransfer->setFkCustomer($orderEntity->getFkCustomer());
 
         return $orderTransfer;
@@ -228,7 +231,6 @@ class OrderHydrator implements OrderHydratorInterface
 
         $itemTransfer->setUnitTaxAmount($orderItemEntity->getTaxAmount());
         $itemTransfer->setUnitTaxAmountFullAggregation($orderItemEntity->getTaxAmountFullAggregation());
-
         $itemTransfer->setUnitPriceToPayAggregation($orderItemEntity->getPriceToPayAggregation());
 
         $this->hydrateStateHistory($orderItemEntity, $itemTransfer);
@@ -245,9 +247,12 @@ class OrderHydrator implements OrderHydratorInterface
      */
     protected function hydrateBillingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
+        $countryEntity = $orderEntity->getBillingAddress()->getCountry();
+
         $billingAddressTransfer = new AddressTransfer();
         $billingAddressTransfer->fromArray($orderEntity->getBillingAddress()->toArray(), true);
-        $billingAddressTransfer->setIso2Code($orderEntity->getBillingAddress()->getCountry()->getIso2Code());
+        $this->hydrateCountryEntityIntoAddressTransfer($billingAddressTransfer, $countryEntity);
+
         $orderTransfer->setBillingAddress($billingAddressTransfer);
     }
 
@@ -259,10 +264,28 @@ class OrderHydrator implements OrderHydratorInterface
      */
     protected function hydrateShippingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
+        $countryEntity = $orderEntity->getShippingAddress()->getCountry();
+
         $shippingAddressTransfer = new AddressTransfer();
         $shippingAddressTransfer->fromArray($orderEntity->getShippingAddress()->toArray(), true);
-        $shippingAddressTransfer->setIso2Code($orderEntity->getShippingAddress()->getCountry()->getIso2Code());
+        $this->hydrateCountryEntityIntoAddressTransfer($shippingAddressTransfer, $countryEntity);
+
         $orderTransfer->setShippingAddress($shippingAddressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Orm\Zed\Country\Persistence\SpyCountry $countryEntity
+     *
+     * @return void
+     */
+    protected function hydrateCountryEntityIntoAddressTransfer(
+        AddressTransfer $addressTransfer,
+        SpyCountry $countryEntity
+    ) {
+        $addressTransfer->setIso2Code($countryEntity->getIso2Code());
+        $countryTransfer = (new CountryTransfer())->fromArray($countryEntity->toArray(), true);
+        $addressTransfer->setCountry($countryTransfer);
     }
 
     /**
@@ -300,8 +323,15 @@ class OrderHydrator implements OrderHydratorInterface
         $stateTransfer->fromArray($orderItemEntity->getState()->toArray(), true);
         $stateTransfer->setIdSalesOrder($orderItemEntity->getIdSalesOrderItem());
 
-        $lastStateHistory = $orderItemEntity->getState()->getStateHistories()->getLast();
-        $stateTransfer->setCreatedAt($lastStateHistory->getCreatedAt());
+        $lastStateHistory = $this->queryContainer
+            ->queryOmsOrderItemStateHistoryByOrderItemIdAndOmsStateIdDesc(
+                $orderItemEntity->getIdSalesOrderItem(),
+                $orderItemEntity->getFkOmsOrderItemState()
+            )->findOne();
+
+        if ($lastStateHistory) {
+            $stateTransfer->setCreatedAt($lastStateHistory->getCreatedAt());
+        }
 
         $itemTransfer->setState($stateTransfer);
     }
@@ -387,8 +417,9 @@ class OrderHydrator implements OrderHydratorInterface
     protected function hydrateMissingCustomer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
         if (!$orderEntity->getCustomer()) {
+            $orderTransfer->setCustomerReference(null);
+            // Deprecated: Using FK to customer is obsolete, but needed to prevent BC break.
             $orderTransfer->setFkCustomer(null);
         }
     }
-
 }

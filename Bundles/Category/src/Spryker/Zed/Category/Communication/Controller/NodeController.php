@@ -16,13 +16,12 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @deprecated This controller has been replaced by \Spryker\Zed\Category\Communication\Controller\ReSortController
  *
- * @method \Spryker\Zed\Category\Business\CategoryFacade getFacade()
+ * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()
- * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
  */
 class NodeController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -91,5 +90,4 @@ class NodeController extends AbstractController
             'message' => 'Category nodes successfully reordered.',
         ]);
     }
-
 }

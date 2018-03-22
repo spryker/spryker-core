@@ -17,6 +17,7 @@
     </transfer>
 
     <transfer name="WishlistItem">
+        <property name="idWishlistItem" type="int" />
         <property name="wishlistName" type="string" />
         <property name="fkWishlist" type="int" />
         <property name="fkCustomer" type="int" />
@@ -84,6 +85,11 @@
         <property name="idProductAbstract" type="int" />
         <property name="idProduct" type="int" />
         <property name="sku" type="string" />
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="bundleItems" type="Item[]" singular="bundleItem" />
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
 </transfers>

@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductGroup;
 
 interface ProductGroupClientInterface
 {
-
     /**
      * Specification:
      * - Reads all product groups of the given product.
@@ -26,5 +25,4 @@ interface ProductGroupClientInterface
      * @return array
      */
     public function findProductGroupItemsByIdProductAbstract($idProductAbstract, $localeName);
-
 }

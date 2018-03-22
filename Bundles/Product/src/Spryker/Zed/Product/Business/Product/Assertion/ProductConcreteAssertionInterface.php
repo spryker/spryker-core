@@ -9,7 +9,6 @@ namespace Spryker\Zed\Product\Business\Product\Assertion;
 
 interface ProductConcreteAssertionInterface
 {
-
     /**
      * @param string $sku
      *
@@ -37,5 +36,4 @@ interface ProductConcreteAssertionInterface
      * @return void
      */
     public function assertProductExists($idProduct);
-
 }

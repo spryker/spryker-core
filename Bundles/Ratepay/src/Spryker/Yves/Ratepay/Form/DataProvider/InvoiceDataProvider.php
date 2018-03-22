@@ -13,7 +13,6 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class InvoiceDataProvider extends DataProviderAbstract
 {
-
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -32,5 +31,4 @@ class InvoiceDataProvider extends DataProviderAbstract
 
         return $quoteTransfer;
     }
-
 }

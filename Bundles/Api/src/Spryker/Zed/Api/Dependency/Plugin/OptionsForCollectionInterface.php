@@ -12,7 +12,6 @@ namespace Spryker\Zed\Api\Dependency\Plugin;
  */
 interface OptionsForCollectionInterface
 {
-
     /**
      * @api
      *
@@ -21,5 +20,4 @@ interface OptionsForCollectionInterface
      * @return array
      */
     public function getHttpMethodsForCollection(array $params);
-
 }

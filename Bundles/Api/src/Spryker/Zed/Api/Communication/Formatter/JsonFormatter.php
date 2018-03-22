@@ -12,7 +12,6 @@ use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 
 class JsonFormatter implements FormatterInterface
 {
-
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
@@ -37,5 +36,4 @@ class JsonFormatter implements FormatterInterface
 
         return $this->service->encodeJson($value, $options);
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface;
 
 class ProductUrlGenerator implements ProductUrlGeneratorInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\Product\NameGenerator\ProductAbstractNameGeneratorInterface
      */
@@ -86,5 +85,4 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
 
         return '/' . mb_substr($localeTransfer->getLocaleName(), 0, 2) . '/' . $productName . '-' . $productAbstractTransfer->getIdProductAbstract();
     }
-
 }

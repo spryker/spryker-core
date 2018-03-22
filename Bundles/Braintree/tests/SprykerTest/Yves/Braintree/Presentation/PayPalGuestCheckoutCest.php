@@ -21,7 +21,6 @@ use Acceptance\Braintree\Checkout\Yves\Tester\CheckoutTester;
  */
 class PayPalGuestCheckoutCest
 {
-
     /**
      * @skip Broken because of new checkout
      *
@@ -35,5 +34,4 @@ class PayPalGuestCheckoutCest
         $i->addToCart(ProductDetailPage::URL);
         $i->checkoutWithPayPalAsGuest();
     }
-
 }

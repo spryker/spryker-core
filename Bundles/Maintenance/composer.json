@@ -3,23 +3,19 @@
   "description": "Maintenance module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/config": "^3.0.0",
     "spryker/error-handler": "^2.0.0",
-    "spryker/kernel": "^3.0.0"
+    "spryker/kernel": "^3.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/",
-      "Function": "tests/"
-    }
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Unit": "tests/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "minimum-stability": "dev",

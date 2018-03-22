@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductRelationConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string|null
      */
@@ -20,12 +19,10 @@ class ProductRelationConfig extends AbstractBundleConfig
     {
         $config = $this->getConfig();
 
-        $yvesHost = null;
-        if ($config->hasKey(ApplicationConstants::HOST_YVES)) {
-            $yvesHost = $config->get(ApplicationConstants::HOST_YVES);
+        if ($config->hasKey(ApplicationConstants::BASE_URL_YVES)) {
+            return $config->get(ApplicationConstants::BASE_URL_YVES);
         }
 
-        return $yvesHost;
+        return null;
     }
-
 }

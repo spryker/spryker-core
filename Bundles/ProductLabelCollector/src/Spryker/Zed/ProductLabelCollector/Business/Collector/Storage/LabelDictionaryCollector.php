@@ -17,7 +17,6 @@ use Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToP
 
 class LabelDictionaryCollector extends AbstractStoragePropelCollector
 {
-
     /**
      * @var \Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToProductLabelInterface
      */
@@ -167,5 +166,4 @@ class LabelDictionaryCollector extends AbstractStoragePropelCollector
     {
         return true;
     }
-
 }

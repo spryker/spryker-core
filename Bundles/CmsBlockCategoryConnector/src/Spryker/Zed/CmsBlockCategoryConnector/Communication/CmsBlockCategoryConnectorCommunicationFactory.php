@@ -21,7 +21,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @var string
      */
@@ -64,7 +63,7 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
      */
     public function createCategoryType()
     {
-        return new CategoryType();
+        return new CategoryType;
     }
 
     /**
@@ -119,5 +118,4 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
     {
         return $this->getProvidedDependency(CmsBlockCategoryConnectorDependencyProvider::QUERY_CONTAINER_CMS_BLOCK);
     }
-
 }

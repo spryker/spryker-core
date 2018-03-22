@@ -7,21 +7,36 @@
 
 namespace Spryker\Zed\ProductSearch\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
+ */
 class AttributeTranslationForm extends AbstractType
 {
-
     const FIELD_KEY_TRANSLATION = 'key_translation';
 
     /**
-     * @return string The name of this type
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'translation';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
      */
     public function getName()
     {
-        return 'translation';
+        return $this->getBlockPrefix();
     }
 
     /**
@@ -42,8 +57,8 @@ class AttributeTranslationForm extends AbstractType
      */
     protected function addAttributeNameTranslationField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_KEY_TRANSLATION, 'text', [
-            'label' => 'Filter name',
+        $builder->add(self::FIELD_KEY_TRANSLATION, TextType::class, [
+            'label' => 'Filter name *',
             'constraints' => [
                 new NotBlank(),
             ],
@@ -51,5 +66,4 @@ class AttributeTranslationForm extends AbstractType
 
         return $this;
     }
-
 }

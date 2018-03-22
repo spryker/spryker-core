@@ -39,7 +39,6 @@ use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer;
  */
 class WishlistFacadeTest extends Unit
 {
-
     const DEFAULT_NAME = 'default';
 
     /**
@@ -234,6 +233,23 @@ class WishlistFacadeTest extends Unit
 
         $this->assertInstanceOf(WishlistItemTransfer::class, $WishlistItemTransfer);
         $this->assertWishlistItemCount(3);
+        $this->assertNotEmpty($WishlistItemTransfer->getIdWishlistItem());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddNonExistingItemShouldSkipItem()
+    {
+        $WishlistItemTransfer = (new WishlistItemTransfer())
+            ->setWishlistName(self::DEFAULT_NAME)
+            ->setFkCustomer($this->customer->getIdCustomer())
+            ->setSku('non-existing-sku');
+
+        $WishlistItemTransfer = $this->wishlistFacade->addItem($WishlistItemTransfer);
+
+        $this->assertInstanceOf(WishlistItemTransfer::class, $WishlistItemTransfer);
+        $this->assertEmpty($WishlistItemTransfer->getIdWishlistItem());
     }
 
     /**
@@ -625,5 +641,4 @@ class WishlistFacadeTest extends Unit
 
         $this->stockFacade->createStockProduct($stockProductTransfer);
     }
-
 }

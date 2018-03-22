@@ -22,7 +22,6 @@ use Spryker\Zed\ProductRelation\Dependency\QueryContainer\ProductRelationToProdu
 
 class ProductQuery implements QueryInterface
 {
-
     const COL_CATEGORY_NAME = 'category_name';
     const ALIAS_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES = 'spy_product_abstract_localized_attributes';
 
@@ -60,7 +59,7 @@ class ProductQuery implements QueryInterface
     }
 
     /**
-     * @return array|\Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer[]
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer[]
      */
     protected function buildProductMapping()
     {
@@ -95,7 +94,7 @@ class ProductQuery implements QueryInterface
     }
 
     /**
-     * @return array|\Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer[]
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer[]
      */
     protected function buildProductAttributeMap()
     {
@@ -115,7 +114,6 @@ class ProductQuery implements QueryInterface
             ]);
 
             $attributeMap[] = $propelQueryBuilderCriteriaMappingTransfer;
-
         }
 
         return $attributeMap;
@@ -232,5 +230,4 @@ class ProductQuery implements QueryInterface
     {
         return 'product.json.' . $persistedAttributeKey;
     }
-
 }

@@ -12,11 +12,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\SequenceNumber\SequenceNumberConfig getConfig()
- * @method \Spryker\Zed\SequenceNumber\Persistence\SequenceNumberQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\SequenceNumber\Persistence\SequenceNumberQueryContainerInterface getQueryContainer()
  */
 class SequenceNumberPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery
      */
@@ -24,5 +23,4 @@ class SequenceNumberPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpySequenceNumberQuery::create();
     }
-
 }

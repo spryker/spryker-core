@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerGroupFacadeInterface
 {
-
     /**
      * Specification:
      *  - Adds new group
@@ -115,5 +114,4 @@ interface CustomerGroupFacadeInterface
      * @return void
      */
     public function removeCustomerFromAllGroups(CustomerTransfer $customerTransfer);
-
 }

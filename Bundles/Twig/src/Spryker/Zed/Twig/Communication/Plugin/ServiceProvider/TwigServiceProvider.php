@@ -14,20 +14,22 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Twig\Business\Model\RouteResolver;
+use Symfony\Bridge\Twig\Extension\HttpKernelRuntime;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Twig\RuntimeLoader\FactoryRuntimeLoader;
 use Twig_Environment;
 use Twig_Loader_Chain;
 
 /**
  * @method \Spryker\Zed\Twig\TwigConfig getConfig()
  * @method \Spryker\Zed\Twig\Communication\TwigCommunicationFactory getFactory()
- * @method \Spryker\Zed\Twig\Business\TwigFacade getFacade()
+ * @method \Spryker\Zed\Twig\Business\TwigFacadeInterface getFacade()
  */
 class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @var \Silex\Application
      */
@@ -69,6 +71,16 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
                 function (Twig_Environment $twig) use ($app) {
                     foreach ($app['twig.global.variables'] as $name => $value) {
                         $twig->addGlobal($name, $value);
+                    }
+
+                    if (class_exists('\Symfony\Bridge\Twig\Extension\HttpKernelRuntime')) {
+                        $callback = function () use ($app) {
+                            $fragmentHandler = new FragmentHandler($app['request_stack'], $app['fragment.renderers']);
+
+                            return new HttpKernelRuntime($fragmentHandler);
+                        };
+                        $factoryLoader = new FactoryRuntimeLoader([HttpKernelRuntime::class => $callback]);
+                        $twig->addRuntimeLoader($factoryLoader);
                     }
 
                     return $twig;
@@ -158,5 +170,4 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
             'bootstrap_3_layout.html.twig',
         ], $typeTemplates);
     }
-
 }

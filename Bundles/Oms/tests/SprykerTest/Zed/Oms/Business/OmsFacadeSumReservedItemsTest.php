@@ -8,8 +8,10 @@ namespace SprykerTest\Zed\Oms\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -27,15 +29,20 @@ use Spryker\Zed\Oms\Business\OmsFacade;
  */
 class OmsFacadeSumReservedItemsTest extends Unit
 {
-
     const ORDER_REFERENCE = '123';
     const ORDER_ITEM_SKU = 'oms-reserverd-sku-test';
     const RESERVER_ITEM_STATE = 'paid';
+    const DE_STORE_NAME = 'DE';
+
+    /**
+     * @var \SprykerTest\Zed\Oms\OmsBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
      */
-    public function testSumReservedItemsShouldSumAllItemsInReserverdState()
+    public function testSumReservedItemsShouldSumAllItemsInReservedState()
     {
         $this->createTestOrder();
 
@@ -43,6 +50,20 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $sumOfQuantities = $omsFacade->sumReservedProductQuantitiesForSku(self::ORDER_ITEM_SKU);
 
         $this->assertEquals(50, $sumOfQuantities);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOmsReservedProductQuantityForSkuSumAllItemsInReservedState()
+    {
+        $this->createTestOrder();
+
+        $omsFacade = $this->createOmsFacade();
+        $storeTransfer = (new StoreTransfer())->setName(static::DE_STORE_NAME);
+        $reservationQuantity = $omsFacade->getOmsReservedProductQuantityForSku(self::ORDER_ITEM_SKU, $storeTransfer);
+
+        $this->assertSame(50, $reservationQuantity);
     }
 
     /**
@@ -56,6 +77,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $omsStateEntity = $this->createOmsOrderItemState();
 
         $this->createSalesOrderItem($omsStateEntity, $salesOrderEntity);
+        $this->updateReservation($salesOrderEntity->getItems()->getFirst());
 
         return $salesOrderEntity;
     }
@@ -105,6 +127,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $salesOrderEntity->setBillingAddress($salesOrderAddressEntity);
         $salesOrderEntity->setShippingAddress(clone $salesOrderAddressEntity);
         $salesOrderEntity->setOrderReference(self::ORDER_REFERENCE);
+        $salesOrderEntity->setStore(self::DE_STORE_NAME);
         $salesOrderEntity->save();
 
         return $salesOrderEntity;
@@ -143,4 +166,31 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $salesOrderItem->save();
     }
 
+    /**
+     * @internal param string $sku
+     *
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $spySalesOrderItem
+     *
+     * @return void
+     */
+    protected function updateReservation(SpySalesOrderItem $spySalesOrderItem)
+    {
+        $spyOmsReservationEntity = SpyOmsProductReservationQuery::create()
+            ->filterBySku($spySalesOrderItem->getSku())
+            ->findOneOrCreate();
+
+        $storeTransfer = $this->getStoreFacade()->getStoreByName(static::DE_STORE_NAME);
+
+        $spyOmsReservationEntity->setFkStore($storeTransfer->getIdStore());
+        $spyOmsReservationEntity->setReservationQuantity($spySalesOrderItem->getQuantity());
+        $spyOmsReservationEntity->save();
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
+     */
+    protected function getStoreFacade()
+    {
+        return $this->tester->getLocator()->store()->facade();
+    }
 }

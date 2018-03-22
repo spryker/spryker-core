@@ -7,11 +7,12 @@ use Generated\Shared\DataBuilder\CategoryBuilder;
 use Generated\Shared\DataBuilder\NodeBuilder;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Category\CategoryConfig;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CategoryDataHelper extends Module
 {
-
+    use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
     /**
@@ -19,12 +20,14 @@ class CategoryDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    public function haveCategory($seedData = [])
+    public function haveCategory(array $seedData = [])
     {
-        $node = $this->generateCategoryNodeTransfer();
+        $seedData = $seedData + [
+            'categoryNode' => $this->generateCategoryNodeTransfer(),
+            'parentCategoryNode' => $this->generateCategoryNodeTransfer(),
+        ];
+
         $categoryTransfer = $this->generateCategoryTransfer($seedData);
-        $categoryTransfer->setCategoryNode($node);
-        $categoryTransfer->setParentCategoryNode($node);
 
         if (empty($seedData[CategoryTransfer::FK_CATEGORY_TEMPLATE])) {
             $categoryTemplateTransfer = $this->haveCategoryTemplate();
@@ -32,6 +35,10 @@ class CategoryDataHelper extends Module
         }
 
         $this->getCategoryFacade()->create($categoryTransfer);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($categoryTransfer) {
+            $this->cleanupCategory($categoryTransfer);
+        });
 
         return $categoryTransfer;
     }
@@ -41,7 +48,7 @@ class CategoryDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
      */
-    public function haveCategoryTemplate($seedData = [])
+    public function haveCategoryTemplate(array $seedData = [])
     {
         $this->getCategoryFacade()->syncCategoryTemplate();
         $categoryTemplateTransfer = $this->getCategoryFacade()
@@ -85,4 +92,13 @@ class CategoryDataHelper extends Module
         return $categoryNodeTransfer;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function cleanupCategory(CategoryTransfer $categoryTransfer)
+    {
+        $this->getCategoryFacade()->delete($categoryTransfer->getIdCategory());
+    }
 }

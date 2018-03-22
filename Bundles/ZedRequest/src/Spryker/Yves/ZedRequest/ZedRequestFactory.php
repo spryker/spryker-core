@@ -15,7 +15,6 @@ use Spryker\Yves\ZedRequest\Plugin\ZedResponseLogPlugin;
 
 class ZedRequestFactory extends AbstractFactory
 {
-
     /**
      * @return \Spryker\Shared\ZedRequest\Client\HandlerStack\HandlerStackContainer
      */
@@ -55,5 +54,4 @@ class ZedRequestFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(ZedRequestDependencyProvider::SERVICE_UTIL_NETWORK);
     }
-
 }

@@ -12,11 +12,10 @@ use Spryker\Zed\Gui\Communication\Plugin\ConstraintsPlugin;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 
 /**
- * @deprecated Use \Symfony\Component\Form\AbstractType instead.
+ * @deprecated Use `Spryker\Zed\Kernel\Communication\Form\AbstractType` for Zed instead.
  */
 abstract class AbstractForm extends SharedAbstractForm
 {
-
     /**
      * @var \Symfony\Component\HttpFoundation\Request
      */
@@ -60,5 +59,4 @@ abstract class AbstractForm extends SharedAbstractForm
 
         return $this->request;
     }
-
 }

@@ -1,0 +1,13 @@
+{% if discountPromotion %}
+    <h4>{{ 'Discount promotion to product' | trans }}</h4>
+    <table class="table">
+        <tr>
+            <td style="width: 150px;">{{ 'Abstract sku:' | trans }}</td>
+            <td>{{ discountPromotion.abstractSku }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Maximum Quantity:' | trans }}</td>
+            <td>{{ discountPromotion.quantity }}</td>
+        </tr>
+</table>
+{% endif %}

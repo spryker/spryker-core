@@ -13,7 +13,6 @@ use Spryker\Zed\Url\UrlConfig;
 
 class UrlRedirectActivator implements UrlRedirectActivatorInterface
 {
-
     /**
      * @var \Spryker\Zed\Url\Dependency\UrlToTouchInterface
      */
@@ -54,5 +53,4 @@ class UrlRedirectActivator implements UrlRedirectActivatorInterface
 
         $this->touchFacade->touchDeleted(UrlConfig::RESOURCE_TYPE_REDIRECT, $idUrlRedirect);
     }
-
 }

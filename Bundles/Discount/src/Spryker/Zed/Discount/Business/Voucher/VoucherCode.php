@@ -12,7 +12,6 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
 class VoucherCode implements VoucherCodeInterface
 {
-
     /**
      * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
@@ -117,5 +116,4 @@ class VoucherCode implements VoucherCodeInterface
     {
         return $discountVoucherEntity->save();
     }
-
 }

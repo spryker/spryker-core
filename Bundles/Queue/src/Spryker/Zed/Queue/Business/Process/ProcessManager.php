@@ -14,7 +14,6 @@ use Symfony\Component\Process\Process;
 
 class ProcessManager implements ProcessManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface
      */
@@ -110,8 +109,12 @@ class ProcessManager implements ProcessManagerInterface
      *
      * @return bool
      */
-    protected function isProcessRunning($processId)
+    public function isProcessRunning($processId)
     {
+        if ($processId === null) {
+            return false;
+        }
+
         $output = exec(sprintf('ps -p %s | grep %s | grep -v \'<defunct>\'', $processId, $processId));
 
         return trim($output) !== '';
@@ -182,5 +185,4 @@ class ProcessManager implements ProcessManagerInterface
     {
         return new Process($command);
     }
-
 }

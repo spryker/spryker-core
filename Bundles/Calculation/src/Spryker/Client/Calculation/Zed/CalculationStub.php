@@ -10,17 +10,15 @@ namespace Spryker\Client\Calculation\Zed;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ZedRequest\Stub\ZedRequestStub;
 
-class CalculationStub extends ZedRequestStub
+class CalculationStub extends ZedRequestStub implements CalculationStubInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
         return $this->zedStub->call('/calculation/gateway/recalculate', $quoteTransfer);
     }
-
 }

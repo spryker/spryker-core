@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
 class ProductFormAddDataProvider extends AbstractProductFormDataProvider
 {
-
     /**
      * @return array
      */
@@ -22,5 +21,4 @@ class ProductFormAddDataProvider extends AbstractProductFormDataProvider
 
         return $formData;
     }
-
 }

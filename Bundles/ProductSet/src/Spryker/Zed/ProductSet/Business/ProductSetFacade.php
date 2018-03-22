@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductSetFacade extends AbstractFacade implements ProductSetFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -144,5 +143,4 @@ class ProductSetFacade extends AbstractFacade implements ProductSetFacadeInterfa
             ->createProductSetImageSetCombiner()
             ->getCombinedProductSetImageSets($idProductSet, $idLocale);
     }
-
 }

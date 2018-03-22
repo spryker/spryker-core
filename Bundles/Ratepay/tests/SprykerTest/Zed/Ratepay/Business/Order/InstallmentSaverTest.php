@@ -21,7 +21,6 @@ use Spryker\Shared\Ratepay\RatepayConstants;
  */
 class InstallmentSaverTest extends AbstractSaverTest
 {
-
     /**
      * @const Payment method code.
      */
@@ -53,5 +52,4 @@ class InstallmentSaverTest extends AbstractSaverTest
     {
         $payment->setRatepayInstallment($paymentTransfer);
     }
-
 }

@@ -14,12 +14,10 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
  */
 interface CmsBlockStorageInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return array
      */
     public function getBlockByName(CmsBlockTransfer $cmsBlockTransfer);
-
 }

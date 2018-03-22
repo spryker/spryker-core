@@ -28,7 +28,6 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class TimeoutTest extends StateMachineMocks
 {
-
     const STATE_WITH_TIMEOUT = 'State with timeout';
 
     /**
@@ -122,5 +121,4 @@ class TimeoutTest extends StateMachineMocks
 
         return new Timeout($persistenceMock);
     }
-
 }

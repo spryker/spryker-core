@@ -8,13 +8,20 @@
 namespace Spryker\Zed\ProductSearch\Communication\Form;
 
 use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
+ */
 class FilterPreferencesForm extends AbstractAttributeKeyForm
 {
-
     const FIELD_ID_PRODUCT_SEARCH_ATTRIBUTE = 'id_product_search_attribute';
     const FIELD_FILTER_TYPE = 'filter_type';
     const FIELD_TRANSLATIONS = 'translations';
@@ -22,9 +29,19 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
     /**
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'attributeForm';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 
     /**
@@ -63,7 +80,7 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
      */
     protected function addIdProductSearchAttribute(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_SEARCH_ATTRIBUTE, 'hidden');
+        $builder->add(self::FIELD_ID_PRODUCT_SEARCH_ATTRIBUTE, HiddenType::class);
 
         return $this;
     }
@@ -76,7 +93,7 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
      */
     protected function addKeyField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_KEY, new AutosuggestType(), [
+        $builder->add(self::FIELD_KEY, AutosuggestType::class, [
             'label' => 'Attribute key',
             'url' => '/product-search/filter-preferences/keys',
             'constraints' => $this->createAttributeKeyFieldConstraints(),
@@ -96,7 +113,7 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
      */
     protected function isUniqueKey($key)
     {
-        $keyCount = $this->productSearchQueryContainer
+        $keyCount = $this->getQueryContainer()
             ->queryProductAttributeKey()
             ->joinSpyProductSearchAttribute()
             ->filterByKey($key)
@@ -113,9 +130,10 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
      */
     protected function addInputTypeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_FILTER_TYPE, 'choice', [
+        $builder->add(self::FIELD_FILTER_TYPE, ChoiceType::class, [
             'label' => 'Filter type',
-            'choices' => $options[self::OPTION_FILTER_TYPE_CHOICES],
+            'choices' => array_flip($options[self::OPTION_FILTER_TYPE_CHOICES]),
+            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],
@@ -132,12 +150,11 @@ class FilterPreferencesForm extends AbstractAttributeKeyForm
      */
     protected function addTranslationFields(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_TRANSLATIONS, 'collection', [
-            'type' => new AttributeTranslationForm(),
-            'options' => $options[self::OPTION_ATTRIBUTE_TRANSLATION_COLLECTION_OPTIONS],
+        $builder->add(self::FIELD_TRANSLATIONS, CollectionType::class, [
+            'entry_type' => AttributeTranslationForm::class,
+            'entry_options' => $options[self::OPTION_ATTRIBUTE_TRANSLATION_COLLECTION_OPTIONS],
         ]);
 
         return $this;
     }
-
 }

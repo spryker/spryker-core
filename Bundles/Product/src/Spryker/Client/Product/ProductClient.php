@@ -14,10 +14,8 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ProductClient extends AbstractClient implements ProductClientInterface
 {
-
     /**
-     * Specification:
-     * - Read abstract product data from yves storage, based on current shop selected locale
+     * {@inheritdoc}
      *
      * @api
      *
@@ -35,8 +33,7 @@ class ProductClient extends AbstractClient implements ProductClientInterface
     }
 
     /**
-     * Specification:
-     * - Read abstract product data from yves storage, based on provided
+     * {@inheritdoc}
      *
      * @api
      *
@@ -54,8 +51,7 @@ class ProductClient extends AbstractClient implements ProductClientInterface
     }
 
     /**
-     * Specification:
-     * - Read concrete product data from yves storage, based on current shop selected locale
+     * {@inheritdoc}
      *
      * @api
      *
@@ -73,8 +69,7 @@ class ProductClient extends AbstractClient implements ProductClientInterface
     }
 
     /**
-     * Specification:
-     * - Read concrete product data from yves storage, based on provided locale
+     * {@inheritdoc}
      *
      * @api
      *
@@ -92,8 +87,7 @@ class ProductClient extends AbstractClient implements ProductClientInterface
     }
 
     /**
-     * Specification:
-     * - Read attribute map from storage, based on current shop selected locale
+     * {@inheritdoc}
      *
      * @api
      *
@@ -111,8 +105,7 @@ class ProductClient extends AbstractClient implements ProductClientInterface
     }
 
     /**
-     * Specification:
-     * - Read attribute map from storage, based on provided
+     * {@inheritdoc}
      *
      * @api
      *
@@ -130,8 +123,7 @@ class ProductClient extends AbstractClient implements ProductClientInterface
     }
 
     /**
-     * Specification:
-     * - Read product concrete information based on product concrete id collection
+     * {@inheritdoc}
      *
      * @api
      *
@@ -146,5 +138,4 @@ class ProductClient extends AbstractClient implements ProductClientInterface
 
         return $productStorage->getProductConcreteCollection($idProductConcreteCollection);
     }
-
 }

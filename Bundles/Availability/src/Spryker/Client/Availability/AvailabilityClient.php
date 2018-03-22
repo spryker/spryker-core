@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Availability;
 
+use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -14,15 +15,14 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class AvailabilityClient extends AbstractClient implements AvailabilityClientInterface
 {
-
     /**
-     *
-     * Specification:
-     *  - Reads product availability data for current locale, from current Yves storage provider
+     * {@inheritdoc}
      *
      * @api
      *
      * @param int $idProductAbstract
+     *
+     * @throws \Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException
      *
      * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
      */
@@ -30,7 +30,39 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
     {
         $locale = $this->getFactory()->getLocaleClient()->getCurrentLocale();
         $availabilityStorage = $this->getFactory()->createAvailabilityStorage($locale);
+
         return $availabilityStorage->getProductAvailability($idProductAbstract);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer|null
+     */
+    public function findProductAvailabilityByIdProductAbstract($idProductAbstract)
+    {
+        return $this->getFactory()
+            ->createCurrentLocaleAvailabilityStorage()
+            ->findProductAvailability($idProductAbstract);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     */
+    public function findProductConcreteAvailability(ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer)
+    {
+        return $this->getFactory()
+            ->createAvailabilityStub()
+            ->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
+    }
 }

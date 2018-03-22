@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\DummyPayment\Dependency\Injector;
 
+use Spryker\Shared\DummyPayment\DummyPaymentConfig;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentPostCheckPlugin;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentPreCheckPlugin;
 use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentSaveOrderPlugin;
-use Spryker\Zed\DummyPayment\DummyPaymentConfig;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
@@ -18,7 +18,6 @@ use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 class PaymentDependencyInjector extends AbstractDependencyInjector
 {
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -48,5 +47,4 @@ class PaymentDependencyInjector extends AbstractDependencyInjector
 
         return $container;
     }
-
 }

@@ -13,11 +13,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\NewRelic\Communication\NewRelicCommunicationFactory getFactory()
- * @method \Spryker\Zed\NewRelic\Business\NewRelicFacade getFacade()
+ * @method \Spryker\Zed\NewRelic\Business\NewRelicFacadeInterface getFacade()
  */
 class NewRelicRequestTransactionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -71,5 +70,4 @@ class NewRelicRequestTransactionServiceProvider extends AbstractPlugin implement
     {
         return $app['dispatcher'];
     }
-
 }

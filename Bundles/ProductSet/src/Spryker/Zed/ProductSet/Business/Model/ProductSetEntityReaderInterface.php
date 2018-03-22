@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductSetTransfer;
 
 interface ProductSetEntityReaderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
      *
@@ -20,5 +19,4 @@ interface ProductSetEntityReaderInterface
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSet
      */
     public function getProductSetEntity(ProductSetTransfer $productSetTransfer);
-
 }

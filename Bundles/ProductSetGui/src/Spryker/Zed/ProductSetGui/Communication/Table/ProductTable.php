@@ -18,7 +18,6 @@ use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
 class ProductTable extends AbstractTable
 {
-
     const TABLE_IDENTIFIER = 'product-table';
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const COL_PREVIEW = 'preview';
@@ -118,7 +117,7 @@ class ProductTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->productSetGuiQueryContainer->queryProductAbstract($this->localeTransfer);
+        $query = $this->productSetGuiQueryContainer->queryProductAbstractForAssignment($this->idProductSetGuiGroup, $this->localeTransfer);
 
         $queryResults = $this->runQuery($query, $config, true);
 
@@ -162,5 +161,4 @@ class ProductTable extends AbstractTable
 
         return $checkbox_html;
     }
-
 }

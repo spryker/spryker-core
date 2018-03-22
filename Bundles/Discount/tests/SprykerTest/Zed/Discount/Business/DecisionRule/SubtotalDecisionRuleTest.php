@@ -24,14 +24,13 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class SubtotalDecisionRuleTest extends BaseRuleTester
 {
-
     /**
      * @return void
      */
     public function testWhenSubTotalMatchesClauseShouldReturnTrue()
     {
         $comparatorMock = $this->createComparatorMock();
-        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer  $clauseTransfer, $grandTotal) {
+        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $grandTotal) {
             return $clauseTransfer->getValue() === $grandTotal;
         });
 
@@ -85,5 +84,4 @@ class SubtotalDecisionRuleTest extends BaseRuleTester
 
         return new SubTotalDecisionRule($comparatorMock, $currencyConverterMock);
     }
-
 }

@@ -26,7 +26,6 @@ use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionInterfa
  */
 class DataSetStepBrokerTransactionAwareTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -161,5 +160,4 @@ class DataSetStepBrokerTransactionAwareTest extends Unit
 
         return $propelConnectionMock;
     }
-
 }

@@ -1,3 +1,3 @@
 # UtilEncoding Changelog
 
-[UtilEncoding](https://github.com/spryker/UtilEncoding/releases)
+[Release Changelog](https://github.com/spryker/util-encoding/releases)

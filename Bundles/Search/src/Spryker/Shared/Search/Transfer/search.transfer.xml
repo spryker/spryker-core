@@ -16,8 +16,9 @@
         <property name="fieldName" type="string" />
         <property name="type" type="string" />
         <property name="isMultiValued" type="bool" />
-        <property name="size" type="int" />
+        <property name="size" type="int" deprecated="Use aggregationParams instead" />
         <property name="valueTransformer" type="string" />
+        <property name="aggregationParams" type="array" />
     </transfer>
 
     <transfer name="SortConfig">
@@ -85,6 +86,7 @@
 
     <transfer name="FacetSearchResult">
         <property name="name" type="string" />
+        <property name="docCount" type="int" />
         <property name="values" type="FacetSearchResultValue[]" singular="value" />
         <property name="activeValue" type="string" />
         <property name="config" type="FacetConfig" />
@@ -102,6 +104,7 @@
         <property name="activeMin" type="float" />
         <property name="activeMax" type="float" />
         <property name="config" type="FacetConfig" />
+        <property name="docCount" type="int" />
     </transfer>
 
     <transfer name="PaginationSearchResult">

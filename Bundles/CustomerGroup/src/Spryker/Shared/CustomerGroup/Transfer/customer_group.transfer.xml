@@ -9,10 +9,17 @@
         <property name="description" type="string" />
 
         <property name="customers" singular="customer" type="CustomerGroupToCustomer[]" />
+        <property name="customerAssignment" type="CustomerGroupToCustomerAssignment" />
     </transfer>
 
     <transfer name="CustomerGroupToCustomer">
         <property name="fkCustomer" type="int" />
+    </transfer>
+
+    <transfer name="CustomerGroupToCustomerAssignment">
+        <property name="idCustomerGroup" type="int"/>
+        <property name="idsCustomerToAssign" singular="idCustomerToAssign" type="array"/>
+        <property name="idsCustomerToDeAssign" singular="idCustomerToDeAssign" type="array"/>
     </transfer>
 
 </transfers>

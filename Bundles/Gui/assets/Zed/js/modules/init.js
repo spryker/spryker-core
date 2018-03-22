@@ -10,6 +10,7 @@ var Tabs = require('./libs/tabs');
 var TranslationCopyFields = require('./libs/translation-copy-fields');
 var Ibox = require('./libs/ibox');
 var dataTable = require('./libs/data-table');
+var safeChecks = require('./libs/safe-checks');
 
 $(document).ready(function() {
     // editor
@@ -74,4 +75,7 @@ $(document).ready(function() {
 
     /* Init iboxes */
     new Ibox();
+
+    safeChecks.addSafeSubmitCheck();
+    safeChecks.addSafeDatetimeCheck();
 });

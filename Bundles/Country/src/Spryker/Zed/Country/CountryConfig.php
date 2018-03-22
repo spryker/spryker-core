@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CountryConfig extends AbstractBundleConfig
 {
-
     /**
      * @return array
      */
@@ -39,5 +38,4 @@ class CountryConfig extends AbstractBundleConfig
     {
         return __DIR__ . '/Business/File/cldr';
     }
-
 }

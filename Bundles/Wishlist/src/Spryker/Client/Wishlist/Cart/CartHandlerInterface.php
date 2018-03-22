@@ -6,23 +6,13 @@
 namespace Spryker\Client\Wishlist\Cart;
 
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
-use Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer;
 
 interface CartHandlerInterface
 {
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer
-     */
-    public function moveToCart(WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer);
-
     /**
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer
      */
     public function moveCollectionToCart(WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer);
-
 }

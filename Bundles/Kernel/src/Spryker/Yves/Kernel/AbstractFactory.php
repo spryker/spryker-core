@@ -18,7 +18,6 @@ use Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException;
 
 abstract class AbstractFactory implements FactoryInterface
 {
-
     use BundleConfigResolverAwareTrait;
     use ContainerMocker;
 
@@ -181,5 +180,4 @@ abstract class AbstractFactory implements FactoryInterface
     {
         return new DependencyProviderResolver();
     }
-
 }

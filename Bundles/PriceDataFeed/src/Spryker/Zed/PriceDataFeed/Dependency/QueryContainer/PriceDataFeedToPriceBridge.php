@@ -9,16 +9,13 @@ namespace Spryker\Zed\PriceDataFeed\Dependency\QueryContainer;
 
 class PriceDataFeedToPriceBridge implements PriceDataFeedToPriceInterface
 {
-
     /**
-     * @var \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface
+     * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface
      */
     protected $priceQueryContainer;
 
     /**
-     * PriceDataFeedToPriceBridge constructor.
-     *
-     * @param \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface $priceQueryContainer
+     * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceQueryContainer
      */
     public function __construct($priceQueryContainer)
     {
@@ -26,12 +23,11 @@ class PriceDataFeedToPriceBridge implements PriceDataFeedToPriceInterface
     }
 
     /**
-     * @return \Orm\Zed\Price\Persistence\SpyPriceProductQuery
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
     public function queryPriceProduct()
     {
         return $this->priceQueryContainer
             ->queryPriceProduct();
     }
-
 }

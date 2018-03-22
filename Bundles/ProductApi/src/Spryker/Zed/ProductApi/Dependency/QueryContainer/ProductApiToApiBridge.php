@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductApi\Dependency\QueryContainer;
 
 class ProductApiToApiBridge implements ProductApiToApiInterface
 {
-
     /**
      * @var \Spryker\Zed\Api\Persistence\ApiQueryContainerInterface
      */
@@ -43,5 +42,4 @@ class ProductApiToApiBridge implements ProductApiToApiInterface
     {
         return $this->apiQueryContainer->createApiItem($data, $id);
     }
-
 }

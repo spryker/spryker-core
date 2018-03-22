@@ -7,37 +7,39 @@
 
 namespace Spryker\Zed\User\Communication\Form;
 
-use Spryker\Zed\User\Business\UserFacade;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\User\Communication\Form\Constraints\CurrentPassword;
-use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\User\Business\UserFacadeInterface getFacade()
+ * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()
+ * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
+ */
 class ResetPasswordForm extends AbstractType
 {
-
     const FIELD_CURRENT_PASSWORD = 'current_password';
     const FIELD_PASSWORD = 'password';
 
     /**
-     * @var \Spryker\Zed\User\Business\UserFacade
+     * @return string
      */
-    protected $userFacade;
-
-    /**
-     * @param \Spryker\Zed\User\Business\UserFacade $userFacade
-     */
-    public function __construct(UserFacade $userFacade)
+    public function getBlockPrefix()
     {
-        $this->userFacade = $userFacade;
+        return 'reset_password';
     }
 
     /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
      * @return string
      */
     public function getName()
     {
-        return 'reset_password';
+        return $this->getBlockPrefix();
     }
 
     /**
@@ -60,12 +62,12 @@ class ResetPasswordForm extends AbstractType
      */
     protected function addCurrentPasswordField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_CURRENT_PASSWORD, 'password', [
+        $builder->add(self::FIELD_CURRENT_PASSWORD, PasswordType::class, [
             'label' => 'Current password',
             'constraints' => [
                 new NotBlank(),
                 new CurrentPassword([
-                    'userFacade' => $this->userFacade,
+                    'userFacade' => $this->getFacade(),
                 ]),
             ],
             'attr' => ['autocomplete' => 'off'],
@@ -81,7 +83,7 @@ class ResetPasswordForm extends AbstractType
      */
     protected function addPasswordField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_PASSWORD, 'repeated', [
+        $builder->add(self::FIELD_PASSWORD, RepeatedType::class, [
             'constraints' => [
                 new NotBlank(),
             ],
@@ -94,5 +96,4 @@ class ResetPasswordForm extends AbstractType
 
         return $this;
     }
-
 }

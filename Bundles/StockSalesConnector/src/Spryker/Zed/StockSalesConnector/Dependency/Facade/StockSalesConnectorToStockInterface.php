@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\StockProductTransfer;
 
 interface StockSalesConnectorToStockInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
@@ -36,5 +35,4 @@ interface StockSalesConnectorToStockInterface
      * @return void
      */
     public function incrementStockProduct($sku, $stockType, $incrementBy = 1);
-
 }

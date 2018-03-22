@@ -7,9 +7,11 @@
 
 namespace Spryker\Client\Collector\Matcher;
 
+/**
+ * @deprecated use \Spryker\Client\Url\Matcher\UrlMatcherInterface
+ */
 interface UrlMatcherInterface
 {
-
     /**
      * @param string $url
      * @param string $localeName
@@ -17,5 +19,4 @@ interface UrlMatcherInterface
      * @return array
      */
     public function matchUrl($url, $localeName);
-
 }

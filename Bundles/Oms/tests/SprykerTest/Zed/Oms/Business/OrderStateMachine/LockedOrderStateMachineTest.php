@@ -33,7 +33,6 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
  */
 class LockedOrderStateMachineTest extends Unit
 {
-
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
@@ -294,7 +293,7 @@ class LockedOrderStateMachineTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Lock\TriggerLocker
+     * @return \Spryker\Zed\Oms\Business\Lock\TriggerLocker|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function createTriggerLockerMock()
     {
@@ -378,5 +377,4 @@ class LockedOrderStateMachineTest extends Unit
 
         return implode('-', $orderItemIds);
     }
-
 }

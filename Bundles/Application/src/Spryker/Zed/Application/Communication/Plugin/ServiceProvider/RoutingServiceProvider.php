@@ -13,12 +13,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 
 /**
- * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  */
 class RoutingServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -47,5 +46,4 @@ class RoutingServiceProvider extends AbstractPlugin implements ServiceProviderIn
     public function boot(Application $app)
     {
     }
-
 }

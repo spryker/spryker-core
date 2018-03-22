@@ -9,7 +9,6 @@ namespace Spryker\Shared\Log\Sanitizer;
 
 interface SanitizerInterface
 {
-
     /**
      * @param array $data
      *
@@ -26,5 +25,4 @@ interface SanitizerInterface
      * @return mixed
      */
     public function sanitizeValue($value, $key);
-
 }

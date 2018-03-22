@@ -14,7 +14,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface;
 
 class MonthDecisionRule implements DecisionRuleInterface
 {
-
     const DATE_FORMAT = 'n';
 
     /**
@@ -66,5 +65,4 @@ class MonthDecisionRule implements DecisionRuleInterface
     {
         return new DateTime();
     }
-
 }

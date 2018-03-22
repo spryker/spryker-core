@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductBundleReaderInterface
 {
-
     /**
      * @param int $idProductConcrete
      *
@@ -25,5 +24,4 @@ interface ProductBundleReaderInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function assignBundledProductsToProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
-
 }

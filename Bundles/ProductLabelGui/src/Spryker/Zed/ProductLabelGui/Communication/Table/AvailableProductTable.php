@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Table;
 
 class AvailableProductTable extends AbstractRelatedProductRelationTable
 {
-
     /**
      * @var string
      */
@@ -21,7 +20,7 @@ class AvailableProductTable extends AbstractRelatedProductRelationTable
     protected $defaultUrl = 'available-product-table';
 
     /**
-     * @return string
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected function getQuery()
     {
@@ -35,5 +34,4 @@ class AvailableProductTable extends AbstractRelatedProductRelationTable
     {
         return '';
     }
-
 }

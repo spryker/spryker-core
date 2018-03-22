@@ -3,7 +3,8 @@
   "description": "CollectorStorageConnector module",
   "license": "proprietary",
   "require": {
-    "spryker/collector": "^5.0.0",
+    "php": ">=7.1",
+    "spryker/collector": "^5.0.0 || ^6.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/storage": "^3.0.0"
   },
@@ -12,18 +13,12 @@
     "spryker/testify": "*"
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ],
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

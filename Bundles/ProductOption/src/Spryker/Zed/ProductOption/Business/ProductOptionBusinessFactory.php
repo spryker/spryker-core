@@ -15,25 +15,29 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionItemSorter;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderHydrate;
-use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver as ObsoleteProductOptionOrderSaver;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceHydrator;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceReader;
+use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver;
+use Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaver;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductOption\ProductOptionConfig getConfig()
- * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
  */
 class ProductOptionBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReaderInterface
      */
     public function createProductOptionGroupReader()
     {
         return new ProductOptionGroupReader(
+            $this->createProductOptionValuePriceHydrator(),
             $this->getQueryContainer(),
             $this->getGlossaryFacade(),
             $this->getLocaleFacade()
@@ -60,6 +64,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     public function createProductOptionValueSaver()
     {
         return new ProductOptionValueSaver(
+            $this->createProductOptionPriceSaver(),
             $this->getQueryContainer(),
             $this->getTouchFacade(),
             $this->createTranslationSaver()
@@ -84,7 +89,8 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     {
         return new AbstractProductOptionSaver(
             $this->getQueryContainer(),
-            $this->getTouchFacade()
+            $this->getTouchFacade(),
+            $this->getEventFacade()
         );
     }
 
@@ -93,7 +99,17 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOptionOrderSaver()
     {
-        return new ProductOptionOrderSaver($this->getGlossaryFacade());
+        return new ObsoleteProductOptionOrderSaver($this->getGlossaryFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaverInterface
+     */
+    public function createPlaceOrderProductOptionOrderSaver()
+    {
+        return new ProductOptionOrderSaver(
+            $this->getGlossaryFacade()
+        );
     }
 
     /**
@@ -101,7 +117,10 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOptionValueReader()
     {
-        return new ProductOptionValueReader($this->getQueryContainer());
+        return new ProductOptionValueReader(
+            $this->createProductOptionValuePriceReader(),
+            $this->getQueryContainer()
+        );
     }
 
     /**
@@ -121,7 +140,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface
      */
     protected function getLocaleFacade()
     {
@@ -129,7 +148,23 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface
+     */
+    protected function getCurrencyFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeInterface
+     */
+    protected function getStoreFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface
      */
     protected function getTouchFacade()
     {
@@ -137,7 +172,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface
      */
     protected function getTaxFacade()
     {
@@ -145,11 +180,27 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface
      */
     protected function getGlossaryFacade()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToPriceFacadeInterface
+     */
+    protected function getPriceFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToEventFacadeInterface
+     */
+    protected function getEventFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_EVENT);
     }
 
     /**
@@ -168,4 +219,31 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
         return new ProductOptionGroupIdHydrator($this->getQueryContainer());
     }
 
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceSaverInterface
+     */
+    protected function createProductOptionPriceSaver()
+    {
+        return new ProductOptionValuePriceSaver($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceHydratorInterface
+     */
+    protected function createProductOptionValuePriceHydrator()
+    {
+        return new ProductOptionValuePriceHydrator($this->getCurrencyFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceReaderInterface
+     */
+    public function createProductOptionValuePriceReader()
+    {
+        return new ProductOptionValuePriceReader(
+            $this->getCurrencyFacade(),
+            $this->getStoreFacade(),
+            $this->getPriceFacade()
+        );
+    }
 }

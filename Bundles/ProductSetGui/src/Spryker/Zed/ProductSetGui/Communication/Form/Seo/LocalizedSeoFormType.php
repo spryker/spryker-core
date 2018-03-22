@@ -7,15 +7,18 @@
 
 namespace Spryker\Zed\ProductSetGui\Communication\Form\Seo;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
+ */
 class LocalizedSeoFormType extends AbstractType
 {
-
     const FIELD_META_TITLE = 'meta_title';
     const FIELD_META_KEYWORDS = 'meta_keywords';
     const FIELD_META_DESCRIPTION = 'meta_description';
@@ -88,5 +91,4 @@ class LocalizedSeoFormType extends AbstractType
 
         return $this;
     }
-
 }

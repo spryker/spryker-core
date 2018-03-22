@@ -15,7 +15,6 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
 class ExportMarker implements MarkerInterface
 {
-
     /**
      * @var \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface
      */
@@ -83,5 +82,4 @@ class ExportMarker implements MarkerInterface
     {
         return $this->writer->delete($keys);
     }
-
 }

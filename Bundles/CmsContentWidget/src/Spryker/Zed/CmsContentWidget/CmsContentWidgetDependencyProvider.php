@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const PLUGINS_CMS_CONTENT_WIDGET_PARAMETER_MAPPERS = 'CMS CONTENT WIDGET PARAMETER MAPPER';
     const FACADE_GLOSSARY = 'FACADE GLOSSARY';
     const SERVICE_UTIL_ENCODING = 'UTIL ENCODING';
@@ -58,11 +57,10 @@ class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return array|\Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[]
+     * @return \Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[]
      */
     protected function getCmsContentWidgetParameterMapperPlugins(Container $container)
     {
         return [];
     }
-
 }

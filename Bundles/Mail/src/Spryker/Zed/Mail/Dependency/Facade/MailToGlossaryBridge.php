@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class MailToGlossaryBridge implements MailToGlossaryInterface
 {
-
     /**
      * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface
      */
@@ -47,5 +46,4 @@ class MailToGlossaryBridge implements MailToGlossaryInterface
     {
         return $this->glossaryFacade->hasTranslation($keyName, $localeTransfer);
     }
-
 }

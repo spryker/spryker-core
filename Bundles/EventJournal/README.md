@@ -1,5 +1,7 @@
 # EventJournal Module
 
+This module is deprecated.
+
 ## Installation
 
 ```
@@ -8,4 +10,4 @@ composer require spryker/event-journal
 
 ## Documentation
 
-[Documentation](https://spryker.github.io)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/modules.html)

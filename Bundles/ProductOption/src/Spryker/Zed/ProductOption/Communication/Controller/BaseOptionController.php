@@ -11,12 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer getQueryContainer()
- * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacade getFacade()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface getFacade()
  */
 class BaseOptionController extends AbstractController
 {
-
     const URL_PARAM_ID_PRODUCT_OPTION_GROUP = 'id-product-option-group';
     const URL_PARAM_ACTIVE = 'active';
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
@@ -57,5 +56,4 @@ class BaseOptionController extends AbstractController
             $productTable->fetchData()
         );
     }
-
 }

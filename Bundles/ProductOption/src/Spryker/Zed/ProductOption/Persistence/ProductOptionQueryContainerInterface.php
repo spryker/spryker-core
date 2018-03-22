@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface ProductOptionQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -22,6 +21,27 @@ interface ProductOptionQueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstractBySku($sku);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryAllProductOptionGroups();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
+     */
+    public function queryAllProductAbstractProductOptionGroups();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
+     */
+    public function queryAllProductOptionValues();
 
     /**
      * @api
@@ -73,6 +93,33 @@ interface ProductOptionQueryContainerInterface
      * @api
      *
      * @param int $idProductOptionGroup
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup);
+
+    /**
+     * @api
+     *
+     * @param int $idProductOptionGroup
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
+     */
+    public function queryActiveProductOptionGroupWithProductOptionValuesAndProductOptionValuePricesById($idProductOptionGroup);
+
+    /**
+     * @api
+     *
+     * @param int $idProductOptionValue
+     *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery
+     */
+    public function queryProductOptionValuePricesByIdProductOptionValue($idProductOptionValue);
+
+    /**
+     * @api
+     *
+     * @param int $idProductOptionGroup
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
@@ -83,18 +130,12 @@ interface ProductOptionQueryContainerInterface
      * @api
      *
      * @param string $term
+     * @param int $idProductOptionGroup
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryProductsAbstractBySearchTerm($term, LocaleTransfer $localeTransfer);
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery
-     */
-    public function queryProductOptionGroupWithValues();
+    public function queryProductsAbstractBySearchTermForAssignment($term, $idProductOptionGroup, LocaleTransfer $localeTransfer);
 
     /**
      * @api
@@ -111,5 +152,4 @@ interface ProductOptionQueryContainerInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrder();
-
 }

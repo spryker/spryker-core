@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\Locator\LocatorInterface;
 
 class BundleProxy
 {
-
     const LOCATOR_MATCHER_SUFFIX = 'Matcher';
 
     /**
@@ -31,13 +30,18 @@ class BundleProxy
     private $locatorMatcher;
 
     /**
+     * @var array
+     */
+    protected static $cache = [];
+
+    /**
      * @param string $bundle
      *
      * @return $this
      */
     public function setBundle($bundle)
     {
-        $this->bundle = ucfirst($bundle);
+        $this->bundle = $bundle;
 
         return $this;
     }
@@ -66,7 +70,7 @@ class BundleProxy
     public function addLocator(LocatorInterface $locator)
     {
         $locatorClass = get_class($locator);
-        $matcherClass = $locatorClass . self::LOCATOR_MATCHER_SUFFIX;
+        $matcherClass = $locatorClass . static::LOCATOR_MATCHER_SUFFIX;
         if (!class_exists($matcherClass)) {
             throw new LogicException(sprintf('Could not find a "%s"!', $matcherClass));
         }
@@ -79,8 +83,6 @@ class BundleProxy
     }
 
     /**
-     * TODO Check if performance is good enough here!?
-     *
      * @param string $method
      * @param string $arguments
      *
@@ -90,14 +92,23 @@ class BundleProxy
      */
     public function __call($method, $arguments)
     {
+        $key = $this->bundle . '-' . $method;
+        if (isset(static::$cache[$key])) {
+            $locatedClassName = static::$cache[$key];
+
+            return new $locatedClassName();
+        }
+
         foreach ($this->locator as $locator) {
             $matcher = $this->locatorMatcher[get_class($locator)];
             if ($matcher->match($method)) {
-                return $locator->locate($this->bundle);
+                $located = $locator->locate(ucfirst($this->bundle));
+                static::$cache[$key] = get_class($located);
+
+                return $located;
             }
         }
 
         throw new LogicException(sprintf('Could not map method "%s" to a locator!', $method));
     }
-
 }

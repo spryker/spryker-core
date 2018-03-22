@@ -9,12 +9,10 @@ namespace Spryker\Shared\Kernel\Locator;
 
 interface LocatorMatcherInterface
 {
-
     /**
      * @param string $method
      *
      * @return bool
      */
     public function match($method);
-
 }

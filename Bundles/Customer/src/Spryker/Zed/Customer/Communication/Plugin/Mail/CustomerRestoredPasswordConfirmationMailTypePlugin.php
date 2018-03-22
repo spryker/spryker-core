@@ -12,12 +12,11 @@ use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 /**
- * @method \Spryker\Zed\Customer\Business\CustomerFacade getFacade()
+ * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
  * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
 class CustomerRestoredPasswordConfirmationMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-
     const MAIL_TYPE = 'customer restored password confirmation';
 
     /**
@@ -107,5 +106,4 @@ class CustomerRestoredPasswordConfirmationMailTypePlugin extends AbstractPlugin 
 
         return $this;
     }
-
 }

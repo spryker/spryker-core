@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface TouchQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -46,36 +45,6 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
 
     /**
      * Specification:
-     *  - return all items with given `$itemType`, `$itemEvent` and `$itemId`
-     *
-     * e.g. `queryTouchEntries('cms.page', 'active', [1, 2])->find()` will return all
-     * 'active' 'cms.page' items with id 1 and/or 2
-     *
-     * Attention: The method makes wrong use of query cache!
-     * When this method is used more then once with different itemId count it will fail.
-     *
-     * 1. `queryTouchEntries('cms.page', 'active', [1])->find()`
-     * SQL: SELECT "spy_touch"."item_id" AS "spy_touch.item_id" FROM "spy_touch" WHERE "spy_touch"."item_type"=:p1 AND "spy_touch"."item_event"=:p2 AND "spy_touch"."item_id" IN (:p3)
-     *
-     * 2. `queryTouchEntries('cms.page', 'active', [1, 2])->find()`
-     * SQL: SELECT "spy_touch"."item_id" AS "spy_touch.item_id" FROM "spy_touch" WHERE "spy_touch"."item_type"=:p1 AND "spy_touch"."item_event"=:p2 AND "spy_touch"."item_id" IN (:p3,:p4)
-     *
-     * For the 2. the first generated (cached) SQL will be used but the IN part now has one more entry and will throw an exception
-     *
-     * @api
-     *
-     * @deprecated Use `queryTouchEntriesByItemTypeAndItemIds()` instead
-     *
-     * @param string $itemType
-     * @param string $itemEvent
-     * @param array $itemIds
-     *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
-     */
-    public function queryTouchEntries($itemType, $itemEvent, array $itemIds);
-
-    /**
-     * Specification:
      *  - return all items with given `$itemType` and `$itemId` whether they are active, inactive or deleted
      *
      * @api
@@ -91,11 +60,12 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param string $itemType
+     * @param int $idStore
      * @param int|null $idLocale
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
      */
-    public function queryTouchDeleteStorageAndSearch($itemType, $idLocale = null);
+    public function queryTouchDeleteStorageAndSearch($itemType, $idStore, $idLocale = null);
 
     /**
      * @api
@@ -141,5 +111,4 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Touch\Persistence\SpyTouchStorageQuery
      */
     public function queryTouchStorageByTouchIds($touchIds);
-
 }

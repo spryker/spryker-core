@@ -7,15 +7,16 @@
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck;
 
 use ArrayObject;
+use Generated\Shared\Transfer\StoreTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class BasePreCheck
 {
-
     /**
-     * @var \Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface
      */
     protected $availabilityFacade;
 
@@ -25,21 +26,29 @@ class BasePreCheck
     protected $productBundleQueryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductBundleToAvailabilityInterface $availabilityFacade,
-        ProductBundleQueryContainerInterface $productBundleQueryContainer
+        ProductBundleQueryContainerInterface $productBundleQueryContainer,
+        ProductBundleToStoreFacadeInterface $storeFacade
     ) {
         $this->availabilityFacade = $availabilityFacade;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
      * @param string $sku
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return mixed|mixed[]|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|mixed
      */
     protected function findBundledProducts($sku)
     {
@@ -49,20 +58,25 @@ class BasePreCheck
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer $items
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle[] $bundledProducts
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param mixed|mixed[]|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection $bundledProducts
      * @param int $itemQuantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    protected function isAllBundleItemsAvailable(ArrayObject $items, ObjectCollection $bundledProducts, $itemQuantity)
-    {
+    protected function isAllBundleItemsAvailable(
+        ArrayObject $items,
+        ObjectCollection $bundledProducts,
+        $itemQuantity,
+        StoreTransfer $storeTransfer
+    ) {
         foreach ($bundledProducts as $productBundleEntity) {
             $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
 
             $sku = $bundledProductConcreteEntity->getSku();
             $totalBundledItemQuantity = $productBundleEntity->getQuantity() * $itemQuantity;
-            if (!$this->checkIfItemIsSellable($items, $sku, $totalBundledItemQuantity)) {
+            if (!$this->checkIfItemIsSellable($items, $sku, $storeTransfer, $totalBundledItemQuantity)) {
                 return false;
             }
         }
@@ -73,16 +87,21 @@ class BasePreCheck
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param int $itemQuantity
      *
      * @return bool
      */
-    protected function checkIfItemIsSellable(ArrayObject $items, $sku, $itemQuantity = 0)
-    {
+    protected function checkIfItemIsSellable(
+        ArrayObject $items,
+        $sku,
+        StoreTransfer $storeTransfer,
+        $itemQuantity = 0
+    ) {
         $currentItemQuantity = $this->getAccumulatedItemQuantityForGivenSku($items, $sku);
         $currentItemQuantity += $itemQuantity;
 
-        return $this->availabilityFacade->isProductSellable($sku, $currentItemQuantity);
+        return $this->availabilityFacade->isProductSellableForStore($sku, $currentItemQuantity, $storeTransfer);
     }
 
     /**
@@ -103,5 +122,4 @@ class BasePreCheck
 
         return $quantity;
     }
-
 }

@@ -16,6 +16,10 @@ $(document).ready( function () {
         self.find('.html-editor').each(function (index, element) {
             var editor = $(element);
 
+            if (editor.summernote('codeview.isActivated')) {
+                editor.summernote('codeview.deactivate');
+            }
+
             if (editor.summernote('isEmpty')) {
                 editor.val(null);
             }

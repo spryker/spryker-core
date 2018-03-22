@@ -12,11 +12,10 @@ use Spryker\Service\Flysystem\Dependency\Plugin\FlysystemFilesystemBuilderPlugin
 use Spryker\Service\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Service\FlysystemAws3v3FileSystem\FlysystemAws3v3FileSystemServiceFactory getFactory
+ * @method \Spryker\Service\FlysystemAws3v3FileSystem\FlysystemAws3v3FileSystemServiceFactory getFactory()
  */
 class Aws3v3FilesystemBuilderPlugin extends AbstractPlugin implements FlysystemFilesystemBuilderPluginInterface
 {
-
     /**
      * @param string $type
      *
@@ -39,5 +38,4 @@ class Aws3v3FilesystemBuilderPlugin extends AbstractPlugin implements FlysystemF
             ->createFlysystemAws3v3FileSystemBuilder($configTransfer, $flysystemPluginCollection)
             ->build();
     }
-
 }

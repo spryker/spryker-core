@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Touch\Business;
 
 use Codeception\Test\Unit;
+use DateInterval;
 use DateTime;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouch;
@@ -26,7 +27,6 @@ use Spryker\Zed\Touch\Business\TouchFacade;
  */
 class TouchFacadeTest extends Unit
 {
-
     const ITEM_TYPE = 'test.item';
     const ITEM_ID_1 = 1;
     const ITEM_ID_2 = 2;
@@ -47,25 +47,6 @@ class TouchFacadeTest extends Unit
         $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, self::ITEM_ID_1);
         $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, self::ITEM_ID_2);
         $this->createTouchEntity(SpyTouchTableMap::COL_ITEM_EVENT_DELETED, self::ITEM_ID_3);
-    }
-
-    /**
-     * @dataProvider bulkTouchSetMethodsDataProvider
-     *
-     * @deprecated This can be removed when all `TouchFacadeInterface::bulkTouch*` methods are removed
-     *
-     * @param string $method
-     * @param array $itemIds
-     * @param int $expectedAffectedRows
-     *
-     * @return void
-     */
-    public function testBulkTouchMethods($method, array $itemIds, $expectedAffectedRows)
-    {
-        $touchFacade = new TouchFacade();
-        $affectedRows = $touchFacade->$method(self::ITEM_TYPE, $itemIds);
-
-        $this->assertSame($expectedAffectedRows, $affectedRows);
     }
 
     /**
@@ -139,11 +120,14 @@ class TouchFacadeTest extends Unit
      */
     protected function createTouchEntity($itemEvent, $itemId)
     {
+        $date = new DateTime();
+        $date->sub(new DateInterval('PT1M'));
+
         $touchEntity = new SpyTouch();
         $touchEntity->setItemEvent($itemEvent)
             ->setItemId($itemId)
             ->setItemType(self::ITEM_TYPE)
-            ->setTouched(new DateTime());
+            ->setTouched($date);
 
         $touchEntity->save();
 
@@ -164,5 +148,4 @@ class TouchFacadeTest extends Unit
 
         return $touchQuery->findOne();
     }
-
 }

@@ -26,7 +26,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeInterface
 {
-
     /**
      * Specification:
      * - Iterates through the given product attribute associative array where the key is the name and the value is the value of the attributes.
@@ -178,6 +177,24 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
         return $this->getFactory()
             ->createAttributeReader()
             ->suggestUnusedKeys($searchText, $limit);
+    }
+
+    /**
+     * Specification:
+     * - Returns a filtered list of keys that exists in the persisted product attribute key list
+     *
+     * @api
+     *
+     * @param string $searchText
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function suggestProductSearchAttributeKeys($searchText = '', $limit = 10)
+    {
+        return $this->getFactory()
+            ->createAttributeReader()
+            ->suggestKeys($searchText, $limit);
     }
 
     /**
@@ -420,5 +437,4 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
             ->createProductConcreteSearchReader()
             ->isProductConcreteSearchable($idProductConcrete, $localeTransfer);
     }
-
 }

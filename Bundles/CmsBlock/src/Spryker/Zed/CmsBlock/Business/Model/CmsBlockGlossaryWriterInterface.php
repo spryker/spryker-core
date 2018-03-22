@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 
 interface CmsBlockGlossaryWriterInterface
 {
-
     /**
      * @param int $idCmsBlock
      *
@@ -25,5 +24,4 @@ interface CmsBlockGlossaryWriterInterface
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
     public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer);
-
 }

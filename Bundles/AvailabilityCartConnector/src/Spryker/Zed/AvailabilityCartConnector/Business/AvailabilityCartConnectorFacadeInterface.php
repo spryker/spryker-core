@@ -14,8 +14,11 @@ use Generated\Shared\Transfer\CartChangeTransfer;
  */
 interface AvailabilityCartConnectorFacadeInterface
 {
-
     /**
+     * Specification:
+     *  - Checks if newly added items have correct availability
+     *  - Returns transfer with error message and isSuccess flag set to false when some of items are not available.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
@@ -23,5 +26,4 @@ interface AvailabilityCartConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function checkCartAvailability(CartChangeTransfer $cartChangeTransfer);
-
 }

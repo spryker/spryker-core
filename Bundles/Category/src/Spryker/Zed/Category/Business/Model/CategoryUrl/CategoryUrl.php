@@ -12,15 +12,12 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Url\Persistence\SpyUrl;
-use Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
 use Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface;
-use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 
 class CategoryUrl implements CategoryUrlInterface
 {
-
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
@@ -37,18 +34,26 @@ class CategoryUrl implements CategoryUrlInterface
     protected $urlPathGenerator;
 
     /**
+     * @var \Spryker\Zed\Category\Dependency\Plugin\CategoryUrlPathPluginInterface[]
+     */
+    protected $categoryUrlPathPlugins;
+
+    /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface $urlFacade
      * @param \Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface $urlPathGenerator
+     * @param array $categoryUrlPathPlugins
      */
     public function __construct(
         CategoryQueryContainerInterface $queryContainer,
         CategoryToUrlInterface $urlFacade,
-        UrlPathGeneratorInterface $urlPathGenerator
+        UrlPathGeneratorInterface $urlPathGenerator,
+        array $categoryUrlPathPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->urlFacade = $urlFacade;
         $this->urlPathGenerator = $urlPathGenerator;
+        $this->categoryUrlPathPlugins = $categoryUrlPathPlugins;
     }
 
     /**
@@ -72,8 +77,6 @@ class CategoryUrl implements CategoryUrlInterface
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @throws \Spryker\Zed\Category\Business\Exception\CategoryUrlExistsException
-     *
      * @return void
      */
     public function saveLocalizedUrlForNode(
@@ -86,15 +89,16 @@ class CategoryUrl implements CategoryUrlInterface
         $categoryNodeUrl = $this->build($categoryNodeTransfer, $localeTransfer);
         $urlTransfer->setUrl($categoryNodeUrl);
 
-        try {
-            if ($urlTransfer->getIdUrl()) {
-                $this->urlFacade->updateUrl($urlTransfer);
-            } else {
-                $this->urlFacade->createUrl($urlTransfer);
-            }
-        } catch (UrlExistsException $exception) {
-            throw new CategoryUrlExistsException($exception->getMessage(), $exception->getCode(), $exception);
+        if ($this->urlFacade->hasUrl($urlTransfer)) {
+            return;
         }
+
+        if ($urlTransfer->getIdUrl()) {
+            $this->urlFacade->updateUrl($urlTransfer);
+            return;
+        }
+
+        $this->urlFacade->createUrl($urlTransfer);
     }
 
     /**
@@ -125,6 +129,10 @@ class CategoryUrl implements CategoryUrlInterface
                 $localeTransfer->requireIdLocale()->getIdLocale()
             )
             ->find();
+
+        foreach ($this->categoryUrlPathPlugins as $categoryUrlPathPlugin) {
+            $pathParts = $categoryUrlPathPlugin->update($pathParts, $localeTransfer);
+        }
 
         return $pathParts;
     }
@@ -290,5 +298,4 @@ class CategoryUrl implements CategoryUrlInterface
 
         return $urlTransfer;
     }
-
 }

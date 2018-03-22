@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\FileSystemQueryTransfer;
 
 interface FileSystemReaderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
@@ -84,5 +83,4 @@ interface FileSystemReaderInterface
      * @return bool
      */
     public function has(FileSystemQueryTransfer $fileSystemQueryTransfer);
-
 }

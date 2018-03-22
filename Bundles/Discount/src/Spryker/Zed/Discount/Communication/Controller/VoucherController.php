@@ -15,12 +15,11 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
- * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainer getQueryContainer()
- * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
  */
 class VoucherController extends AbstractController
 {
-
     const URL_PARAM_ID_POOL = 'id-pool';
     const URL_PARAM_ID_DISCOUNT = 'id-discount';
     const URL_PARAM_ID_VOUCHER = 'id-voucher';
@@ -141,5 +140,4 @@ class VoucherController extends AbstractController
 
         return $redirectUrl;
     }
-
 }

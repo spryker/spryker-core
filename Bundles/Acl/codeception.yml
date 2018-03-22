@@ -2,7 +2,7 @@ namespace: Acl
 actor: Tester
 
 include:
-  - tests/SprykerTest/Zed/Acl
+    - tests/SprykerTest/Zed/Acl
 
 paths:
     tests: tests

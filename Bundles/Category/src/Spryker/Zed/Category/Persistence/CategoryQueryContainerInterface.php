@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CategoryQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -34,6 +33,20 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
     public function queryNodeById($idNode);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryAllCategoryNodes();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
+     */
+    public function queryAllCategoryAttributes();
 
     /**
      * @api
@@ -488,5 +501,4 @@ interface CategoryQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
      */
     public function queryCategoryTemplateByName($nameCategoryTemplate);
-
 }

@@ -3,18 +3,23 @@
   "description": "Shipment module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
+    "spryker/currency": "^3.1.0",
     "spryker/gui": "^3.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.13.0",
     "spryker/money": "^2.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/sales": "^6.0.0 || ^7.0.0",
+    "spryker/sales": "^6.0.0 || ^7.0.0 || ^8.0.0",
     "spryker/session": "^3.0.0",
+    "spryker/store": "^1.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/tax": "^5.0.0",
     "spryker/util-text": "^1.1.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
+    "spryker/calculation": "*",
+    "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/country": "*",
     "spryker/propel": "*",
@@ -26,30 +31,21 @@
     "spryker/checkout": "If you want to use Checkout plugins."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\Shipment\\Helper\\": "tests/SprykerTest/Shared/Shipment/_support/Helper/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Unit": "tests/"
-    },
     "psr-4": {
       "Config\\Module\\": "vendor/spryker/config/tests/_support/Module",
       "Propel\\Module\\": "vendor/spryker/propel/tests/_support/Module",
-      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module"
+      "Transfer\\Module\\": "vendor/spryker/transfer/tests/_support/Module",
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ],
   "extra": {
     "branch-alias": {
       "dev-master": "4.0.x-dev"

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSet\Dependency\Facade;
 
 class ProductSetToTouchBridge implements ProductSetToTouchInterface
 {
-
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
      */
@@ -44,5 +43,4 @@ class ProductSetToTouchBridge implements ProductSetToTouchInterface
     {
         return $this->touchFacade->touchDeleted($itemType, $itemId);
     }
-
 }

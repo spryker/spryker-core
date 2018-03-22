@@ -25,7 +25,6 @@ use Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider;
  */
 class ZedNavigationBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ZedNavigation\Business\Model\ZedNavigationBuilder
      */
@@ -151,5 +150,4 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     {
         return new UrlUniqueValidator();
     }
-
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 class GetActionPreProcessor implements PreProcessorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
@@ -37,5 +36,4 @@ class GetActionPreProcessor implements PreProcessorInterface
 
         return $apiRequestTransfer;
     }
-
 }

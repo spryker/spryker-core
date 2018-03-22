@@ -10,9 +10,11 @@ namespace Spryker\Shared\Application\Log\Processor;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 
+/**
+ * @deprecated Use `EntityProcessorPlugin` from Propel module instead.
+ */
 class EntitySanitizerProcessor
 {
-
     const EXTRA = 'entity';
     const CONTEXT_KEY = 'entity';
     const RECORD_CONTEXT = 'context';
@@ -68,5 +70,4 @@ class EntitySanitizerProcessor
 
         return null;
     }
-
 }

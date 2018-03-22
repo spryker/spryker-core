@@ -13,11 +13,10 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Payment\Business\PaymentFacade getFacade()
+ * @method \Spryker\Zed\Payment\Business\PaymentFacadeInterface getFacade()
  */
 class PaymentPostCheckPlugin extends AbstractPlugin implements CheckoutPostSaveHookInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -28,5 +27,4 @@ class PaymentPostCheckPlugin extends AbstractPlugin implements CheckoutPostSaveH
     {
         $this->getFacade()->checkoutPostCheck($quoteTransfer, $checkoutResponse);
     }
-
 }

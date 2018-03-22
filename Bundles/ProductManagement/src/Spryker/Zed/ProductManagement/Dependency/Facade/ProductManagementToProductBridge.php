@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductManagementToProductBridge implements ProductManagementToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
@@ -164,7 +163,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $attributeCollection
      *
-     * @return array|\Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function generateVariants(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection)
     {
@@ -212,5 +211,4 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
     {
         $this->productFacade->touchProductConcrete($idProductConcrete);
     }
-
 }

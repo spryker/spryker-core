@@ -44,5 +44,4 @@ class Factory extends AbstractFactory
 
         return $container;
     }
-
 }

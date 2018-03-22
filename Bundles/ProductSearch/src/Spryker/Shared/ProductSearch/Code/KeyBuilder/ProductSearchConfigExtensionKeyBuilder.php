@@ -13,7 +13,6 @@ use Spryker\Shared\ProductSearch\ProductSearchConfig;
 
 class ProductSearchConfigExtensionKeyBuilder implements KeyBuilderInterface
 {
-
     use KeyBuilderTrait;
 
     /**
@@ -33,5 +32,4 @@ class ProductSearchConfigExtensionKeyBuilder implements KeyBuilderInterface
     {
         return 'product_search';
     }
-
 }

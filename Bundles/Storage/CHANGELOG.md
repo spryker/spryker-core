@@ -1,3 +1,3 @@
 # Storage Changelog
 
-[Storage Changelog](https://github.com/spryker/Storage/releases)
+[Release Changelog](https://github.com/spryker/storage/releases)

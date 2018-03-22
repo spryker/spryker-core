@@ -18,6 +18,8 @@
 
         {% block widget_content %}
 
+            {% set customerLocale = customer.locale.localeName | default(null) %}
+
             <div class="row">
                 <table class="table">
                     <thead></thead>
@@ -53,7 +55,7 @@
                     </tr>
                     <tr>
                         <th>{{ 'Locale' | trans }}</th>
-                        <td>{{ customer.locale }}</td>
+                        <td>{{ customerLocale }}</td>
                     </tr>
                     <tr>
                         <th>{{ 'Phone' | trans }}</th>
@@ -61,12 +63,18 @@
                     </tr>
                     <tr>
                         <th>{{ 'Date of birth' | trans }}</th>
-                        <td>{{ customer.dateOfBirth }}</td>
+                        <td>{{ customer.dateOfBirth | formatDate }}</td>
                     </tr>
                     <tr>
                         <th>{{ 'Registered at' | trans }}</th>
                         <td>{{ customer.createdAt | formatDateTime }}</td>
                     </tr>
+                    {% if customer.username is defined %}
+                        <tr>
+                            <th>{{ 'Zed Account Reference' | trans }}</th>
+                            <td><a href="{{ url('/user/edit/update', {'id-user': customer.fkUser}) }}">{{ customer.username }}</a></td>
+                        </tr>
+                    {% endif %}
                     </tbody>
                     <tfoot>
                 </table>
@@ -82,5 +90,10 @@
         {% endblock %}
     {% endembed %}
 
+    <div>
+        {% for blockName, externalBlock in blocks %}
+            <div id="{{ blockName }}">{{ externalBlock | raw }}</div>
+        {% endfor %}
+    </div>
 
 {% endblock %}

@@ -17,7 +17,6 @@ use Spryker\Zed\ProductSet\Dependency\QueryContainer\ProductSetToUrlBridge as Pr
 
 class ProductSetDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_TOUCH = 'FACADE_TOUCH';
     const FACADE_URL = 'FACADE_URL';
     const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
@@ -111,5 +110,4 @@ class ProductSetDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductSetToProductImageQueryContainerBridge($container->getLocator()->productImage()->queryContainer());
         };
     }
-
 }

@@ -20,11 +20,10 @@ use Spryker\Zed\PropelQueryBuilder\PropelQueryBuilderDependencyProvider;
 
 /**
  * @method \Spryker\Zed\PropelQueryBuilder\PropelQueryBuilderConfig getConfig()
- * @method \Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainerInterface getQueryContainer()
  */
 class PropelQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\TransferMapper\RuleTransferMapperInterface
      */
@@ -115,5 +114,4 @@ class PropelQueryBuilderPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(PropelQueryBuilderDependencyProvider::SERVICE_UTIL_ENCODING);
     }
-
 }

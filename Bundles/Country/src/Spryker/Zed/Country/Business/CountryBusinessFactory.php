@@ -13,11 +13,10 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Country\CountryConfig getConfig()
- * @method \Spryker\Zed\Country\Persistence\CountryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface getQueryContainer()
  */
 class CountryBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Country\Business\Internal\Install
      */
@@ -72,5 +71,4 @@ class CountryBusinessFactory extends AbstractBusinessFactory
             $filePath
         );
     }
-
 }

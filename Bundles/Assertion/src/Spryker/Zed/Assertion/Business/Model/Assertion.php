@@ -11,7 +11,6 @@ use Spryker\Zed\Assertion\Business\Exception\InvalidArgumentException;
 
 class Assertion implements AssertionInterface
 {
-
     /**
      * @param mixed $value
      * @param string|null $message
@@ -94,5 +93,4 @@ class Assertion implements AssertionInterface
 
         throw new InvalidArgumentException($message);
     }
-
 }

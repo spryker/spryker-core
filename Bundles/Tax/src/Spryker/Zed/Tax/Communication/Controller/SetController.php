@@ -14,33 +14,38 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
- * @method \Spryker\Zed\Tax\Business\TaxFacade getFacade()
- * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
+ * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
  */
 class SetController extends AbstractController
 {
-
     const PARAM_URL_ID_TAX_SET = 'id-tax-set';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function createAction(Request $request)
     {
         $taxSetFormDataProvider = $this->getFactory()->createTaxSetFormDataProvider();
 
-        $taxSetForm = $this->getFactory()->createTaxSetForm($taxSetFormDataProvider);
-        $taxSetForm->handleRequest($request);
+        $taxSetForm = $this->getFactory()->getTaxSetForm($taxSetFormDataProvider);
 
-        if ($taxSetForm->isValid()) {
-            $taxSetTransfer = $this->getFacade()->createTaxSet($taxSetForm->getData());
-            if ($taxSetTransfer->getIdTaxSet()) {
-                $this->addSuccessMessage('Tax set successfully created.');
-                $redirectUrl = Url::generate('/tax/set/edit', [static::PARAM_URL_ID_TAX_SET => $taxSetTransfer->getIdTaxSet()])->build();
+        if ($request->request->count() > 0) {
+            $taxSetForm->handleRequest($request);
+
+            if ($taxSetForm->isSubmitted() && $taxSetForm->isValid()) {
+                $taxSetTransfer = $this->getFacade()->createTaxSet($taxSetForm->getData());
+                $this->addSuccessMessage(sprintf('Tax set %d was created successfully.', $taxSetTransfer->getIdTaxSet()));
+                $redirectUrl = Url::generate('/tax/set/edit', [
+                    static::PARAM_URL_ID_TAX_SET => $taxSetTransfer->getIdTaxSet(),
+                ])->build();
+
                 return $this->redirectResponse($redirectUrl);
             }
+
+            $this->addErrorMessage('Tax set is not created. Please fill-in all required fields.');
         }
 
         return [
@@ -58,19 +63,22 @@ class SetController extends AbstractController
         $idTaxSet = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_SET));
 
         $taxSetTransfer = $this->getFacade()->getTaxSet($idTaxSet);
-
         $taxSetFormDataProvider = $this->getFactory()->createTaxSetFormDataProvider($taxSetTransfer);
+        $taxSetForm = $this->getFactory()->getTaxSetForm($taxSetFormDataProvider);
 
-        $taxSetForm = $this->getFactory()->createTaxSetForm($taxSetFormDataProvider);
-        $taxSetForm->handleRequest($request);
+        if ($request->request->count() > 0) {
+            $taxSetForm->handleRequest($request);
 
-        if ($taxSetForm->isValid()) {
-            $taxSetTransfer = $taxSetForm->getData();
-            $taxSetTransfer->setIdTaxSet($idTaxSet);
+            if ($taxSetForm->isSubmitted() && $taxSetForm->isValid()) {
+                $taxSetTransfer = $taxSetForm->getData();
+                $taxSetTransfer->setIdTaxSet($idTaxSet);
+                $rowsAffected = $this->getFacade()->updateTaxSet($taxSetForm->getData());
 
-            $rowsAffected = $this->getFacade()->updateTaxSet($taxSetForm->getData());
-            if ($rowsAffected > 0) {
-                $this->addSuccessMessage('Tax set successfully updated.');
+                if ($rowsAffected > 0) {
+                    $this->addSuccessMessage(sprintf('Tax set %d was updated successfully.', $idTaxSet));
+                }
+            } else {
+                $this->addErrorMessage('Tax set is not updated. Please fill-in all required fields.');
             }
         }
 
@@ -106,8 +114,9 @@ class SetController extends AbstractController
         $idTaxSet = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_SET));
 
         try {
+            $taxSetTransfer = $this->getFacade()->getTaxSet($idTaxSet);
             $this->getFacade()->deleteTaxSet($idTaxSet);
-            $this->addSuccessMessage('The tax set has been deleted.');
+            $this->addSuccessMessage(sprintf('Tax set %d was deleted successfully.', $idTaxSet));
         } catch (PropelException $e) {
             $this->addErrorMessage('Could not delete tax set. Is it assigned to product or shipping method?');
         }
@@ -138,5 +147,4 @@ class SetController extends AbstractController
             $table->fetchData()
         );
     }
-
 }

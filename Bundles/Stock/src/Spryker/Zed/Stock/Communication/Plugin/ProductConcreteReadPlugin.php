@@ -17,7 +17,6 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
  */
 class ProductConcreteReadPlugin extends AbstractPlugin implements ProductConcretePluginReadInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
@@ -27,5 +26,4 @@ class ProductConcreteReadPlugin extends AbstractPlugin implements ProductConcret
     {
         return $this->getFacade()->expandProductConcreteWithStocks($productConcreteTransfer);
     }
-
 }

@@ -15,6 +15,7 @@ use Spryker\Zed\Sales\Communication\Form\CustomerForm;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\AddressFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CommentFormDataProvider;
 use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
+use Spryker\Zed\Sales\Communication\Table\CustomerOrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilder;
 use Spryker\Zed\Sales\SalesDependencyProvider;
@@ -27,8 +28,9 @@ use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
  */
 class SalesCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
+     * @deprecated Use `getCustomerForm()` instead.
+     *
      * @param array $formData
      * @param array $formOptions
      *
@@ -36,9 +38,18 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerForm(array $formData = [], array $formOptions = [])
     {
-        $customerFormType = new CustomerForm();
+        return $this->getFormFactory()->create(CustomerForm::class, $formData, $formOptions);
+    }
 
-        return $this->getFormFactory()->create($customerFormType, $formData, $formOptions);
+    /**
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCustomerForm(array $formData = [], array $formOptions = [])
+    {
+        return $this->createCustomerForm($formData, $formOptions);
     }
 
     /**
@@ -58,6 +69,8 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `getAddressForm()` instead.
+     *
      * @param array $formData
      * @param array $formOptions
      *
@@ -65,9 +78,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createAddressForm(array $formData = [], array $formOptions = [])
     {
-        $addressFormType = new AddressForm();
-
-        return $this->getFormFactory()->create($addressFormType, $formData, $formOptions);
+        return $this->getFormFactory()->create(AddressForm::class, $formData, $formOptions);
     }
 
     /**
@@ -76,9 +87,33 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
+    public function getAddressForm(array $formData = [], array $formOptions = [])
+    {
+        return $this->createAddressForm($formData, $formOptions);
+    }
+
+    /**
+     * @deprecated Use `getCommentForm()` instead.
+     *
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function createCommentForm(array $formData = [], array $formOptions = [])
     {
-        return $this->getFormFactory()->create(new CommentForm(), $formData, $formOptions);
+        return $this->getFormFactory()->create(CommentForm::class, $formData, $formOptions);
+    }
+
+    /**
+     * @param array $formData
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCommentForm(array $formData = [], array $formOptions = [])
+    {
+        return $this->createCommentForm($formData, $formOptions);
     }
 
     /**
@@ -107,6 +142,24 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param int $customerReference
+     *
+     * @return \Spryker\Zed\Sales\Communication\Table\CustomerOrdersTable
+     */
+    public function createCustomerOrdersTable($customerReference)
+    {
+        return new CustomerOrdersTable(
+            $this->createOrdersTableQueryBuilder(),
+            $this->getProvidedDependency(SalesDependencyProvider::FACADE_MONEY),
+            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_SANITIZE),
+            $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER),
+            $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER),
+            $customerReference,
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface
      */
     protected function createOrdersTableQueryBuilder()
@@ -124,10 +177,9 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
         $formCollection = [];
         $orderItemSplitDataProvider = $this->createOrderItemSplitDataProvider();
         foreach ($orderItems as $itemTransfer) {
-            $formType = new OrderItemSplitForm();
             $formCollection[$itemTransfer->getIdSalesOrderItem()] = $this
                 ->getFormFactory()
-                ->create($formType, $orderItemSplitDataProvider->getData($itemTransfer), $orderItemSplitDataProvider->getOptions())
+                ->create(OrderItemSplitForm::class, $orderItemSplitDataProvider->getData($itemTransfer), $orderItemSplitDataProvider->getOptions())
                 ->createView();
         }
 
@@ -173,5 +225,4 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getConfig()->getSalesDetailExternalBlocksUrls();
     }
-
 }

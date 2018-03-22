@@ -14,7 +14,6 @@ use Spryker\Shared\Testify\TestifyConstants;
 
 class YvesHelper extends Module
 {
-
     /**
      * @return $this
      */
@@ -36,4 +35,14 @@ class YvesHelper extends Module
         return $this->getModule('WebDriver');
     }
 
+    /**
+     * @param string $buttonName
+     *
+     * @return void
+     */
+    public function clickButton($buttonName)
+    {
+        $i = $this->getWebDriver();
+        $i->click("//*[text()[contains(.,'$buttonName')]]");
+    }
 }

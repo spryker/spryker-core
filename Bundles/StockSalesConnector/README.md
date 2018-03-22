@@ -1,5 +1,7 @@
 # StockSalesConnector Module
 
+StockSalesConnector retrieves stock information to display in the Sales module.
+
 ## Installation
 
 ```
@@ -8,4 +10,4 @@ composer require spryker/stock-sales-connector
 
 ## Documentation
 
-[Documentation](https://spryker.github.io)
+[Module Documentation](https://academy.spryker.com/developing_with_spryker/module_guide/inventory/stock.html)

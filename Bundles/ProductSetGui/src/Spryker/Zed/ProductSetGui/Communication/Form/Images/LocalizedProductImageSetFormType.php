@@ -7,16 +7,20 @@
 
 namespace Spryker\Zed\ProductSetGui\Communication\Form\Images;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
+/**
+ * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
+ */
 class LocalizedProductImageSetFormType extends AbstractType
 {
-
     const FIELD_ID_PRODUCT_IMAGE_SET = 'id_product_image_set';
     const FIELD_NAME = 'name';
     const FIELD_FK_LOCALE = 'fk_locale';
@@ -28,9 +32,19 @@ class LocalizedProductImageSetFormType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'product_image_set';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 
     /**
@@ -75,6 +89,13 @@ class LocalizedProductImageSetFormType extends AbstractType
             'label' => 'Image Set Name *',
             'constraints' => [
                 new NotBlank(),
+                new Regex(
+                    [
+                        'pattern' => '/^[A-Za-z0-9_-]+$/',
+                        'match' => true,
+                        'message' => 'Please enter name using only letters, numbers, underscore or dash.',
+                    ]
+                ),
             ],
         ]);
 
@@ -114,7 +135,7 @@ class LocalizedProductImageSetFormType extends AbstractType
     {
         $builder
             ->add(static::FIELD_PRODUCT_IMAGE_COLLECTION, CollectionType::class, [
-                'type' => ProductImageFormType::class,
+                'entry_type' => ProductImageFormType::class,
                 'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -123,5 +144,4 @@ class LocalizedProductImageSetFormType extends AbstractType
 
         return $this;
     }
-
 }

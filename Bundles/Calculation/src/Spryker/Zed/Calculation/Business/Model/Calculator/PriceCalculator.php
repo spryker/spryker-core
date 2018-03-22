@@ -9,11 +9,9 @@ namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Spryker\Shared\Calculation\CalculationPriceMode;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class PriceCalculator implements CalculatorInterface
 {
-
     /**
      * @var array|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[]
      */
@@ -25,8 +23,8 @@ class PriceCalculator implements CalculatorInterface
     protected $grossPriceCalculators;
 
     /**
-     * @param array|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[] $netPriceCalculators
-     * @param array|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[] $grossPriceCalculators
+     * @param \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[] $netPriceCalculators
+     * @param \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[] $grossPriceCalculators
      */
     public function __construct(
         array $netPriceCalculators,
@@ -54,7 +52,7 @@ class PriceCalculator implements CalculatorInterface
     }
 
     /**
-     * @param array|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[] $calculators
+     * @param \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[] $calculators
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
@@ -65,5 +63,4 @@ class PriceCalculator implements CalculatorInterface
             $calculator->recalculate($calculableObjectTransfer);
         }
     }
-
 }

@@ -19,7 +19,6 @@ use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterfa
 
 class ProductRelationReader implements ProductRelationReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface
      */
@@ -88,7 +87,7 @@ class ProductRelationReader implements ProductRelationReaderInterface
     }
 
     /**
-     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationType[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return mixed|mixed[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductRelation\Persistence\SpyProductRelationType[]
      */
     protected function findProductRelationTemplates()
     {
@@ -189,5 +188,4 @@ class ProductRelationReader implements ProductRelationReaderInterface
 
         return $productRelationRelatedProductTransfer;
     }
-
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Persistence;
 
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery;
@@ -16,11 +17,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
- * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
  */
 class SalesPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
@@ -61,4 +61,13 @@ class SalesPersistenceFactory extends AbstractPersistenceFactory
         return SpySalesOrderCommentQuery::create();
     }
 
+    /**
+     * @deprecated Will be removed with the next major
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery
+     */
+    public function createOmsOrderItemStateHistoryQuery()
+    {
+        return SpyOmsOrderItemStateHistoryQuery::create();
+    }
 }

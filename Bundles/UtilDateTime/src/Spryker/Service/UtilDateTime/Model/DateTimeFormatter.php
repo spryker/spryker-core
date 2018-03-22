@@ -14,7 +14,6 @@ use Spryker\Shared\UtilDateTime\UtilDateTimeConstants;
 
 class DateTimeFormatter implements DateTimeFormatterInterface
 {
-
     const DEFAULT_TIME_ZONE = 'Europe/Berlin';
     const DEFAULT_FORMAT_TIME = 'H:i';
     const DEFAULT_FORMAT_DATE_TIME = 'M. d, Y H:i';
@@ -76,12 +75,11 @@ class DateTimeFormatter implements DateTimeFormatterInterface
         $configuredFormat = $this->config->get($formatConfigConstant, $defaultFormat);
 
         if (!($dateTime instanceof DateTime)) {
-            $dateTime = new DateTime($dateTime, $dateTimeZone);
-        } else {
-            $dateTime->setTimezone($dateTimeZone);
+            $dateTime = new DateTime($dateTime);
         }
+
+        $dateTime->setTimezone($dateTimeZone);
 
         return $dateTime->format($configuredFormat);
     }
-
 }

@@ -30,7 +30,6 @@ use Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
  */
 abstract class AbstractProductSearchFacadeTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Business\ProductSearchFacade
      */
@@ -111,5 +110,4 @@ abstract class AbstractProductSearchFacadeTest extends Unit
 
         return $productAbstractEntity;
     }
-
 }

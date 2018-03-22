@@ -14,7 +14,6 @@ use Spryker\Shared\Search\SearchConfig;
 
 class FacetAggregationFactory implements FacetAggregationFactoryInterface
 {
-
     /**
      * @var \Spryker\Shared\Search\IndexMapInterface
      */
@@ -74,6 +73,8 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
 
         switch ($valueType) {
             case 'string':
+            case 'keyword':
+            case 'text':
                 return $this->createStringFacetAggregation($facetConfigTransfer);
 
             case 'integer':
@@ -128,5 +129,4 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
     {
         return new NumericFacetAggregation($facetConfigTransfer, $this->aggregationBuilder);
     }
-
 }

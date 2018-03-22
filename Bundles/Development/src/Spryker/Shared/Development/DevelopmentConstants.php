@@ -9,12 +9,17 @@ namespace Spryker\Shared\Development;
 
 interface DevelopmentConstants
 {
-
     const COMPOSER_REQUIRE_VERSION = 'COMPOSER_REQUIRE_VERSION';
     const COMPOSER_REQUIRE_VERSION_EXTERNAL = 'COMPOSER_REQUIRE_VERSION_EXTERNAL';
     const COMPOSER_BRANCH_ALIAS = 'COMPOSER_BRANCH_ALIAS';
 
+    /**
+     * @see \Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACE
+     */
     const PROJECT_NAMESPACES = 'PROJECT_NAMESPACES';
-    const CORE_NAMESPACES = 'CORE_NAMESPACES';
 
+    /**
+     * @see \Spryker\Shared\Kernel\KernelConstants::CORE_NAMESPACES
+     */
+    const CORE_NAMESPACES = 'CORE_NAMESPACES';
 }

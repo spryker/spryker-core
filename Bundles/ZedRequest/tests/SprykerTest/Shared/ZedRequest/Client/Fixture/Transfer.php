@@ -11,13 +11,20 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class Transfer extends AbstractTransfer
 {
-
     const KEY = 'key';
 
     /**
      * @var string
      */
     protected $key;
+
+    /**
+     * @var array
+     */
+    protected $transferPropertyNameMap = [
+        'key' => 'key',
+        'Key' => 'key',
+    ];
 
     /**
      * @var array
@@ -39,7 +46,7 @@ class Transfer extends AbstractTransfer
     public function setKey($key)
     {
         $this->key = $key;
-        $this->addModifiedProperty(self::KEY);
+        $this->modifiedProperties[self::KEY] = $key;
 
         return $this;
     }
@@ -61,5 +68,4 @@ class Transfer extends AbstractTransfer
 
         return $this;
     }
-
 }

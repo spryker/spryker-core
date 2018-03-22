@@ -17,7 +17,6 @@ use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConn
 
 class ShipmentPriceDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterface
 {
-
     /**
      * @var \Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface
      */
@@ -82,5 +81,4 @@ class ShipmentPriceDiscountDecisionRule implements ShipmentDiscountDecisionRuleI
 
         return $this->discountFacade->queryStringCompare($clauseTransfer, $moneyAmount);
     }
-
 }

@@ -14,7 +14,6 @@ use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBr
 
 class CartItemsAvailabilityMapper implements CartItemsMapperInterface
 {
-
     const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
 
     /**
@@ -39,7 +38,7 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
     {
         $availabilityMap = [];
         foreach ($items as $item) {
-            $availabilityMap = array_merge($availabilityMap, $this->getAvailability($item));
+            $availabilityMap = array_replace($availabilityMap, $this->getAvailability($item));
         }
         return $availabilityMap;
     }
@@ -61,5 +60,4 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
 
         return $availabilityBySku;
     }
-
 }

@@ -13,11 +13,10 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Yves\Session\SessionFactory getFactory()
- * @method \Spryker\Client\Session\SessionClient getClient()
+ * @method \Spryker\Client\Session\SessionClientInterface getClient()
  */
 class SessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -72,5 +71,4 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
             return $this->getFactory()->createSessionStorage()->getAndRegisterHandler();
         };
     }
-
 }

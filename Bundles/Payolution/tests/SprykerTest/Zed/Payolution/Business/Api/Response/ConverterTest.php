@@ -25,7 +25,6 @@ use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyBridge;
  */
 class ConverterTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -55,8 +54,7 @@ class ConverterTest extends Unit
      */
     private function getTestResponseData()
     {
-        return
-            'PROCESSING_RISK_SCORE=0' . '&' .
+        return 'PROCESSING_RISK_SCORE=0' . '&' .
             'P3_VALIDATION=ACK' . '&' .
             'NAME_GIVEN=John' . '&' .
             'IDENTIFICATION_SHOPPERID=158' . '&' .
@@ -104,5 +102,4 @@ class ConverterTest extends Unit
             'CLEARING_FXDATE=2015-09-11 15:56:24' . '&' .
             'ADDRESS_ZIP=10623';
     }
-
 }

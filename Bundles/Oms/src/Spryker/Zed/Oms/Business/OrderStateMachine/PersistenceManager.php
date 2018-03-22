@@ -11,14 +11,27 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
-use Spryker\Shared\Oms\OmsConstants;
+use Spryker\Zed\Oms\Business\Exception\ProcessNotActiveException;
+use Spryker\Zed\Oms\OmsConfig;
 
 class PersistenceManager implements PersistenceManagerInterface
 {
-
     protected static $stateEntityBuffer = [];
 
     protected static $processEntityBuffer = [];
+
+    /**
+     * @var \Spryker\Zed\Oms\OmsConfig
+     */
+    protected $omsConfig;
+
+    /**
+     * @param \Spryker\Zed\Oms\OmsConfig $omsConfig
+     */
+    public function __construct(OmsConfig $omsConfig)
+    {
+        $this->omsConfig = $omsConfig;
+    }
 
     /**
      * @param string $stateName
@@ -33,7 +46,7 @@ class PersistenceManager implements PersistenceManagerInterface
 
         $stateEntity = SpyOmsOrderItemStateQuery::create()->findOneByName($stateName);
 
-        if (!isset($stateEntity)) {
+        if ($stateEntity === null) {
             $stateEntity = new SpyOmsOrderItemState();
             $stateEntity->setName($stateName);
             $stateEntity->save();
@@ -47,17 +60,26 @@ class PersistenceManager implements PersistenceManagerInterface
     /**
      * @param string $processName
      *
+     * @throws \Spryker\Zed\Oms\Business\Exception\ProcessNotActiveException
+     *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
     public function getProcessEntity($processName)
     {
+        if (!$this->isProcessActive($processName)) {
+            throw new ProcessNotActiveException(sprintf(
+                'Process with name "%s" is not in active process list. You can add it by modifying your "OmsConstants::ACTIVE_PROCESSES" environment variable constant.',
+                $processName
+            ));
+        }
+
         if (array_key_exists($processName, self::$processEntityBuffer)) {
             return self::$processEntityBuffer[$processName];
         }
 
         $processEntity = SpyOmsOrderProcessQuery::create()->findOneByName($processName);
 
-        if (!isset($processEntity)) {
+        if ($processEntity === null) {
             $processEntity = new SpyOmsOrderProcess();
             $processEntity->setName($processName);
             $processEntity->save();
@@ -69,11 +91,20 @@ class PersistenceManager implements PersistenceManagerInterface
     }
 
     /**
+     * @param string $processName
+     *
+     * @return bool
+     */
+    protected function isProcessActive($processName)
+    {
+        return in_array($processName, $this->omsConfig->getActiveProcesses());
+    }
+
+    /**
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
     public function getInitialStateEntity()
     {
-        return $this->getStateEntity(OmsConstants::INITIAL_STATUS);
+        return $this->getStateEntity($this->omsConfig->getInitialStatus());
     }
-
 }

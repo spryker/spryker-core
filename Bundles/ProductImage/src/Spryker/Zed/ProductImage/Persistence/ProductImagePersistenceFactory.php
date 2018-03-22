@@ -14,11 +14,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\ProductImage\ProductImageConfig getConfig()
- * @method \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface getQueryContainer()
  */
 class ProductImagePersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
      */
@@ -42,5 +41,4 @@ class ProductImagePersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyProductImageQuery::create();
     }
-
 }

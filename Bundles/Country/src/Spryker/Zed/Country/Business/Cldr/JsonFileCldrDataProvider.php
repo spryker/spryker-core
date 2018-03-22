@@ -9,7 +9,6 @@ namespace Spryker\Zed\Country\Business\Cldr;
 
 class JsonFileCldrDataProvider implements CldrDataProviderInterface
 {
-
     /**
      * @var string
      */
@@ -34,5 +33,4 @@ class JsonFileCldrDataProvider implements CldrDataProviderInterface
 
         return json_decode($rawFileInput, true);
     }
-
 }

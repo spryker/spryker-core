@@ -17,7 +17,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class HeadersSecurityServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * @const string
      */
@@ -71,5 +70,4 @@ class HeadersSecurityServiceProvider implements ServiceProviderInterface
         $event->getResponse()->headers->set(static::HEADER_X_CONTENT_TYPE_OPTIONS, 'nosniff');
         $event->getResponse()->headers->set(static::HEADER_X_XSS_PROTECTION, '1; mode=block');
     }
-
 }

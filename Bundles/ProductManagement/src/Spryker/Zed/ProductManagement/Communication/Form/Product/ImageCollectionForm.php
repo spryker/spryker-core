@@ -9,13 +9,19 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Spryker\Zed\Gui\Communication\Form\Type\ImageType;
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ */
 class ImageCollectionForm extends AbstractSubForm
 {
-
     const FIELD_ID_PRODUCT_IMAGE = 'id_product_image';
     const FIELD_IMAGE_SMALL = 'external_url_small';
     const FIELD_IMAGE_LARGE = 'external_url_large';
@@ -25,14 +31,6 @@ class ImageCollectionForm extends AbstractSubForm
     const FIELD_FK_IMAGE_SET_ID = 'fk_image_set_id';
 
     const OPTION_IMAGE_PREVIEW_LARGE_URL = 'option_image_preview_large_url';
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'product_image_collection';
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -63,7 +61,7 @@ class ImageCollectionForm extends AbstractSubForm
     protected function addProductImageIdHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_ID_PRODUCT_IMAGE, 'hidden', []);
+            ->add(self::FIELD_ID_PRODUCT_IMAGE, HiddenType::class, []);
 
         return $this;
     }
@@ -77,7 +75,7 @@ class ImageCollectionForm extends AbstractSubForm
     protected function addProductImageLargeUrlHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_IMAGE_PREVIEW_LARGE_URL, 'hidden', []);
+            ->add(self::FIELD_IMAGE_PREVIEW_LARGE_URL, HiddenType::class, []);
 
         return $this;
     }
@@ -91,7 +89,7 @@ class ImageCollectionForm extends AbstractSubForm
     protected function addImageSetIdHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_FK_IMAGE_SET_ID, 'hidden', []);
+            ->add(self::FIELD_FK_IMAGE_SET_ID, HiddenType::class, []);
 
         return $this;
     }
@@ -105,7 +103,7 @@ class ImageCollectionForm extends AbstractSubForm
     protected function addImagePreviewField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_IMAGE_PREVIEW, new ImageType(), [
+            ->add(self::FIELD_IMAGE_PREVIEW, ImageType::class, [
                 'required' => false,
                 'label' => false,
                 ImageType::OPTION_IMAGE_WIDTH => 150,
@@ -123,7 +121,7 @@ class ImageCollectionForm extends AbstractSubForm
     protected function addImageSmallField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_IMAGE_SMALL, 'text', [
+            ->add(self::FIELD_IMAGE_SMALL, TextType::class, [
                 'required' => true,
                 'label' => 'Small',
                 'constraints' => [
@@ -147,7 +145,7 @@ class ImageCollectionForm extends AbstractSubForm
     protected function addImageBigField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_IMAGE_LARGE, 'text', [
+            ->add(self::FIELD_IMAGE_LARGE, TextType::class, [
                 'required' => true,
                 'label' => 'Large',
                 'constraints' => [
@@ -171,9 +169,8 @@ class ImageCollectionForm extends AbstractSubForm
     protected function addOrderHiddenField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(self::FIELD_SORT_ORDER, 'hidden', []);
+            ->add(self::FIELD_SORT_ORDER, HiddenType::class, []);
 
         return $this;
     }
-
 }

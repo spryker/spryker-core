@@ -20,7 +20,6 @@ use Spryker\Zed\ProductRelation\ProductRelationDependencyProvider;
  */
 class ProductRelationBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductRelation\Business\Relation\ProductRelationWriterInterface
      */
@@ -76,5 +75,4 @@ class ProductRelationBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductRelationDependencyProvider::SERVICE_UTIL_ENCODING);
     }
-
 }

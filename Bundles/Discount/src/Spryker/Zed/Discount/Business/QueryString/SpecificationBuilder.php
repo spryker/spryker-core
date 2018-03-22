@@ -13,7 +13,6 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProvide
 
 class SpecificationBuilder implements SpecificationBuilderInterface
 {
-
     const OPEN_PARENTHESIS = '(';
     const CLOSE_PARENTHESIS = ')';
 
@@ -104,7 +103,6 @@ class SpecificationBuilder implements SpecificationBuilderInterface
         $countTokens = count($tokens);
 
         while ($countTokens > $currentTokenIndex) {
-
             $token = $this->cleanToken($tokens[$currentTokenIndex]);
 
             switch (true) {
@@ -265,14 +263,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
      */
     protected function isField($token)
     {
-        $availableFields = $this->metaDataProvider->getAvailableFields();
-        foreach ($availableFields as $field) {
-            if ($field === $token) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->metaDataProvider->isFieldAvailable($token);
     }
 
     /**
@@ -321,5 +312,4 @@ class SpecificationBuilder implements SpecificationBuilderInterface
 
          return false;
     }
-
 }

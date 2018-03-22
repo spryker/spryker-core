@@ -15,7 +15,6 @@ use Twig_SimpleFunction;
 
 class NavigationTwigExtension extends TwigExtension
 {
-
     const EXTENSION_NAME = 'NavigationTwigExtension';
 
     const FUNCTION_NAME_NAVIGATION = 'spyNavigation';
@@ -29,6 +28,11 @@ class NavigationTwigExtension extends TwigExtension
      * @var \Spryker\Yves\Kernel\Application
      */
     protected $application;
+
+    /**
+     * @var array
+     */
+    protected static $buffer = [];
 
     /**
      * @param \Spryker\Client\Navigation\NavigationClientInterface $navigationClient
@@ -62,7 +66,15 @@ class NavigationTwigExtension extends TwigExtension
      */
     public function renderNavigation(Twig_Environment $twig, $navigationKey, $template)
     {
-        $navigationTreeTransfer = $this->navigationClient->findNavigationTreeByKey($navigationKey, $this->getLocale());
+        $key = $navigationKey . '-' . $this->getLocale();
+
+        if (!isset(static::$buffer[$key])) {
+            $navigationTreeTransfer = $this->navigationClient->findNavigationTreeByKey($navigationKey, $this->getLocale());
+
+            static::$buffer[$key] = $navigationTreeTransfer;
+        }
+
+        $navigationTreeTransfer = static::$buffer[$key];
 
         if (!$navigationTreeTransfer || !$navigationTreeTransfer->getNavigation()->getIsActive()) {
             return '';
@@ -80,5 +92,4 @@ class NavigationTwigExtension extends TwigExtension
     {
         return $this->application['locale'];
     }
-
 }

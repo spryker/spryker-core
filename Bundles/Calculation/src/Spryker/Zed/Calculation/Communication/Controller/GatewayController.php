@@ -11,11 +11,10 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method \Spryker\Zed\Calculation\Business\CalculationFacade getFacade()
+ * @method \Spryker\Zed\Calculation\Business\CalculationFacadeInterface getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -25,5 +24,4 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->recalculateQuote($quoteTransfer);
     }
-
 }

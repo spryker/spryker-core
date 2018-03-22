@@ -12,11 +12,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Twig\Business\TwigFacade getFacade()
+ * @method \Spryker\Zed\Twig\Business\TwigFacadeInterface getFacade()
  */
 class CacheWarmerConsole extends Console
 {
-
     const COMMAND_NAME = 'twig:cache:warmer';
     const DESCRIPTION = 'This command will generate a cache file for twig templates';
 
@@ -41,5 +40,4 @@ class CacheWarmerConsole extends Console
     {
         $this->getFacade()->warmUpCache();
     }
-
 }

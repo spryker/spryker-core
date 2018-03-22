@@ -9,7 +9,6 @@ namespace Spryker\Yves\CmsContentWidgetProductSetConnector\Dependency\Client;
 
 class CmsContentWidgetProductSetConnectorToProductBridge implements CmsContentWidgetProductSetConnectorToProductInterface
 {
-
     /**
      * @var \Spryker\Client\Product\ProductClientInterface
      */
@@ -32,5 +31,4 @@ class CmsContentWidgetProductSetConnectorToProductBridge implements CmsContentWi
     {
         return $this->productClient->getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
     }
-
 }

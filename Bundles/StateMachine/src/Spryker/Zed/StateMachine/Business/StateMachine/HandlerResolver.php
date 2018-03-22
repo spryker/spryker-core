@@ -10,7 +10,6 @@ use Spryker\Zed\StateMachine\Business\Exception\StateMachineHandlerNotFound;
 
 class HandlerResolver implements HandlerResolverInterface
 {
-
     /**
      * @var \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface[]
      */
@@ -33,10 +32,9 @@ class HandlerResolver implements HandlerResolverInterface
      */
     public function get($stateMachineName)
     {
-        foreach ($this->handlers as $handler) {
-            if ($handler->getStateMachineName() === $stateMachineName) {
-                return $handler;
-            }
+        $stateMachineHandler = $this->find($stateMachineName);
+        if ($stateMachineHandler !== null) {
+            return $stateMachineHandler;
         }
 
         throw new StateMachineHandlerNotFound(
@@ -47,4 +45,19 @@ class HandlerResolver implements HandlerResolverInterface
         );
     }
 
+    /**
+     * @param string $stateMachineName
+     *
+     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface|null
+     */
+    public function find($stateMachineName)
+    {
+        foreach ($this->handlers as $handler) {
+            if ($handler->getStateMachineName() === $stateMachineName) {
+                return $handler;
+            }
+        }
+
+        return null;
+    }
 }

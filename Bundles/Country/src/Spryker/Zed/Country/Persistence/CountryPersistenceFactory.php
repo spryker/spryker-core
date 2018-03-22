@@ -13,11 +13,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Country\CountryConfig getConfig()
- * @method \Spryker\Zed\Country\Persistence\CountryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface getQueryContainer()
  */
 class CountryPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
      */
@@ -33,5 +32,4 @@ class CountryPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyRegionQuery::create();
     }
-
 }

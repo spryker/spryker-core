@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductSearch\Business\Attribute;
 
+use Exception;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductSearchPreferencesTransfer;
@@ -16,7 +17,6 @@ use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class AttributeMapWriter implements AttributeMapWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
@@ -64,7 +64,7 @@ class AttributeMapWriter implements AttributeMapWriterInterface
             $this->productSearchQueryContainer
                 ->getConnection()
                 ->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->productSearchQueryContainer
                 ->getConnection()
                 ->rollBack();
@@ -98,7 +98,7 @@ class AttributeMapWriter implements AttributeMapWriterInterface
             $this->productSearchQueryContainer
                 ->getConnection()
                 ->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->productSearchQueryContainer
                 ->getConnection()
                 ->rollBack();
@@ -207,7 +207,7 @@ class AttributeMapWriter implements AttributeMapWriterInterface
      *
      * @return $this
      */
-    protected function addSuggestionTerms(ProductSearchPreferencesTransfer$productSearchPreferencesTransfer, $idProductAttributeKey)
+    protected function addSuggestionTerms(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer, $idProductAttributeKey)
     {
         if ($productSearchPreferencesTransfer->getSuggestionTerms() === true) {
             $this->createNewProductSearchAttributeMapRecord($idProductAttributeKey, PageIndexMap::SUGGESTION_TERMS);
@@ -222,7 +222,7 @@ class AttributeMapWriter implements AttributeMapWriterInterface
      *
      * @return $this
      */
-    protected function addCompletionTerms(ProductSearchPreferencesTransfer$productSearchPreferencesTransfer, $idProductAttributeKey)
+    protected function addCompletionTerms(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer, $idProductAttributeKey)
     {
         if ($productSearchPreferencesTransfer->getCompletionTerms() === true) {
             $this->createNewProductSearchAttributeMapRecord($idProductAttributeKey, PageIndexMap::COMPLETION_TERMS);
@@ -246,5 +246,4 @@ class AttributeMapWriter implements AttributeMapWriterInterface
 
         $entity->save();
     }
-
 }

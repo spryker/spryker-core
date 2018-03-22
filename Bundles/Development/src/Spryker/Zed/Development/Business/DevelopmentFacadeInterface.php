@@ -8,98 +8,112 @@
 namespace Spryker\Zed\Development\Business;
 
 use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 interface DevelopmentFacadeInterface
 {
+    /**
+     * @api
+     *
+     * @param string|null $module
+     * @param array $options
+     *
+     * @return int Exit code
+     */
+    public function checkCodeStyle($module = null, array $options = []);
 
     /**
      * @api
      *
-     * @param string|null $bundle
+     * @param string|null $module
      * @param array $options
      *
      * @return void
      */
-    public function checkCodeStyle($bundle = null, array $options = []);
+    public function runTest($module, array $options = []);
 
     /**
      * @api
      *
-     * @param string|null $bundle
+     * @param string|null $module
+     * @param array $options
+     *
+     * @return int Exit code
+     */
+    public function runPhpMd($module, array $options = []);
+
+    /**
+     * @api
+     *
+     * @param string $module
+     * @param string $toModule
+     * @param array $methods
+     *
+     * @return void
+     */
+    public function createBridge($module, $toModule, array $methods);
+
+    /**
+     * @api
+     *
+     * @param string $module
      * @param array $options
      *
      * @return void
      */
-    public function runTest($bundle, array $options = []);
+    public function createModule($module, $options);
 
     /**
      * @api
      *
-     * @param string|null $bundle
+     * @param string $moduleName
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\BundleDependencyCollectionTransfer
      */
-    public function runPhpMd($bundle);
+    public function showOutgoingDependenciesForModule($moduleName);
 
     /**
      * @api
      *
-     * @param string $bundle
-     * @param string $toBundle
-     *
-     * @return void
-     */
-    public function createBridge($bundle, $toBundle);
-
-    /**
-     * @api
-     *
-     * @param string $bundle
-     * @param array $options
-     *
-     * @return void
-     */
-    public function createBundle($bundle, $options);
-
-    /**
-     * @api
-     *
-     * @param string $bundleName
+     * @param string $moduleName
      *
      * @return array
      */
-    public function showOutgoingDependenciesForBundle($bundleName);
+    public function showIncomingDependenciesForModule($moduleName);
 
     /**
      * @api
-     *
-     * @param string $bundleName
      *
      * @return array
      */
-    public function showIncomingDependenciesForBundle($bundleName);
+    public function getAllModules();
 
     /**
      * @api
+     *
+     * @deprecated Use `getAllModules()` instead.
      *
      * @return array
      */
     public function getAllBundles();
 
     /**
+     * Specification:
+     * - Builds the dependency tree for all modules if * is used as $module.
+     * - Builds the dependency tree for specific module if $module is name of a module.
+     *
      * @api
      *
-     * @param string $application
-     * @param string $bundle
-     * @param string $layer
+     * @param string $module
      *
      * @return void
      */
-    public function buildDependencyTree($application, $bundle, $layer);
+    public function buildDependencyTree(string $module);
 
     /**
      * Specification:
-     * - Calculates the stability of each bundle.
+     * - Calculates the stability of each module.
 
      * @api
      *
@@ -110,41 +124,41 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @param string|bool $bundleToView
-     * @param array $excludedBundles
+     * @param string|bool $moduleToView
+     * @param array $excludedModules
      * @param bool $showIncomingDependencies
      *
      * @return string
      */
-    public function drawOutgoingDependencyTreeGraph($bundleToView, array $excludedBundles = [], $showIncomingDependencies = false);
+    public function drawOutgoingDependencyTreeGraph($moduleToView, array $excludedModules = [], $showIncomingDependencies = false);
 
     /**
      * @api
      *
-     * @param string|bool $bundleToView
+     * @param string|bool $moduleToView
      *
      * @return string
      */
-    public function drawDetailedDependencyTreeGraph($bundleToView);
+    public function drawDetailedDependencyTreeGraph($moduleToView);
 
     /**
      * @api
      *
-     * @param bool $showEngineBundle
-     * @param string|bool $bundleToView
+     * @param bool $showEngineModule
+     * @param string|bool $moduleToView
      *
      * @return string
      */
-    public function drawSimpleDependencyTreeGraph($showEngineBundle, $bundleToView);
+    public function drawSimpleDependencyTreeGraph($showEngineModule, $moduleToView);
 
     /**
      * @api
      *
-     * @param string $bundleToView
+     * @param string $moduleToView
      *
      * @return string
      */
-    public function drawExternalDependencyTreeGraph($bundleToView);
+    public function drawExternalDependencyTreeGraph($moduleToView);
 
     /**
      * @api
@@ -165,16 +179,17 @@ interface DevelopmentFacadeInterface
      *
      * @return array
      */
-    public function getEngineBundleList();
+    public function getEngineModuleList();
 
     /**
      * @api
      *
-     * @param array $bundles
+     * @param array $modules
+     * @param bool $dryRun
      *
-     * @return void
+     * @return array
      */
-    public function updateComposerJsonInBundles(array $bundles);
+    public function updateComposerJsonInModules(array $modules, $dryRun = false);
 
     /**
      * @api
@@ -186,11 +201,11 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer
      *
      * @return array
      */
-    public function getComposerDependencyComparison(BundleDependencyCollectionTransfer $bundleDependencyCollectionTransfer);
+    public function getComposerDependencyComparison(BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer);
 
     /**
      * @api
@@ -221,20 +236,30 @@ interface DevelopmentFacadeInterface
     public function generateServiceIdeAutoCompletion();
 
     /**
-     * Run the architecture sniffer against the given bundle and returns the violations
+     * Run the architecture sniffer against the given module and returns the violations
      *
      * @api
      *
      * @param string $directory
+     * @param array $options
      *
      * @return array
      */
-    public function runArchitectureSniffer($directory);
+    public function runArchitectureSniffer($directory, array $options = []);
 
     /**
-     * Returns a list of all bundles in project and core namespaces
+     * Returns a list of all modules in project and core namespaces
      *
      * @api
+     *
+     * @return array
+     */
+    public function listAllModules();
+
+    /**
+     * @api
+     *
+     * @deprecated Use `listAllModules` instead.
      *
      * @return array
      */
@@ -249,4 +274,16 @@ interface DevelopmentFacadeInterface
      */
     public function getArchitectureRules();
 
+    /**
+     * Specification:
+     * - Runs PHPStan static code analyzing tool.
+     *
+     * @api
+     *
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return int
+     */
+    public function runPhpstan(InputInterface $input, OutputInterface $output);
 }

@@ -9,22 +9,31 @@ namespace Spryker\Client\Wishlist\Product;
 
 use ArrayObject;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
+use Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductClientInterface;
 use Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface;
 
 class ProductStorage implements ProductStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface
      */
     protected $productClient;
 
     /**
-     * @param \Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface $productClient
+     * @var \Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductClientInterface
      */
-    public function __construct(WishlistToProductInterface $productClient)
-    {
+    protected $priceProductClient;
+
+    /**
+     * @param \Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface $productClient
+     * @param \Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductClientInterface $priceProductClient
+     */
+    public function __construct(
+        WishlistToProductInterface $productClient,
+        WishlistToPriceProductClientInterface $priceProductClient
+    ) {
         $this->productClient = $productClient;
+        $this->priceProductClient = $priceProductClient;
     }
 
     /**
@@ -96,10 +105,14 @@ class ProductStorage implements ProductStorageInterface
         $storageProductCollection = $this->productClient->getProductConcreteCollection($idProductCollection);
 
         foreach ($storageProductCollection as $storageProductTransfer) {
+            $currentPriceTransfer = $this->priceProductClient->resolveProductPrice($storageProductTransfer->getPrices());
+
+            $storageProductTransfer->setPrice($currentPriceTransfer->getPrice());
+            $storageProductTransfer->setPrices($currentPriceTransfer->getPrices());
+
             $result[$storageProductTransfer->getIdProductConcrete()] = $storageProductTransfer;
         }
 
         return $result;
     }
-
 }

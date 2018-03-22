@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class InstallerBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface[]
      */
@@ -23,5 +22,4 @@ class InstallerBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(InstallerDependencyProvider::INSTALLER_PLUGINS);
     }
-
 }

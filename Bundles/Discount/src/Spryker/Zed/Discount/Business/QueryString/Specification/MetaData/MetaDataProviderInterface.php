@@ -7,18 +7,24 @@ namespace Spryker\Zed\Discount\Business\QueryString\Specification\MetaData;
 
 interface MetaDataProviderInterface
 {
-
     /**
      * @return string[]
      */
     public function getAvailableFields();
 
     /**
+     * @param string $field
+     *
+     * @return bool
+     */
+    public function isFieldAvailable($field);
+
+    /**
      * @param string $fieldName
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
      *
-     * @return array|string[]
+     * @return string[]
      */
     public function getAcceptedTypesByFieldName($fieldName);
 
@@ -48,5 +54,4 @@ interface MetaDataProviderInterface
      * @return array
      */
     public function getQueryStringValueOptions();
-
 }

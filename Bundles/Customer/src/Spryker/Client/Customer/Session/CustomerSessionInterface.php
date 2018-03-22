@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerSessionInterface
 {
-
     /**
      * @return void
      */
@@ -34,4 +33,8 @@ interface CustomerSessionInterface
      */
     public function setCustomer(CustomerTransfer $customerTransfer);
 
+    /**
+     * @return void
+     */
+    public function markCustomerAsDirty();
 }

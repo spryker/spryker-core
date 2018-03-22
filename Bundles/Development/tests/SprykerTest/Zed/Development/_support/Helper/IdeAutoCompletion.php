@@ -11,7 +11,6 @@ use Codeception\TestInterface;
 
 class IdeAutoCompletion extends Module
 {
-
     const TEST_TARGET_DIRECTORY = '/tmp/development-ide-auto-completion-test/';
 
     /**
@@ -79,5 +78,4 @@ class IdeAutoCompletion extends Module
 
         $this->removeTestTargetDirectory();
     }
-
 }

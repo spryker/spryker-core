@@ -17,7 +17,6 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class DeleteController extends AbstractController
 {
-
     const PARAM_ID_NAVIGATION = 'id-navigation';
 
     /**
@@ -46,12 +45,11 @@ class DeleteController extends AbstractController
                 ->getNavigationFacade()
                 ->deleteNavigation($navigationTransfer);
 
-            $this->addSuccessMessage(sprintf('Navigation #%d successfully deleted.', $idNavigation));
+            $this->addSuccessMessage(sprintf('Navigation element %d was deleted successfully.', $idNavigation));
         } else {
-            $this->addErrorMessage(sprintf('Navigation #%d not found.', $idNavigation));
+            $this->addErrorMessage(sprintf('Navigation element %d was not found.', $idNavigation));
         }
 
         return $this->redirectResponse('/navigation-gui');
     }
-
 }

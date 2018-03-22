@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class WishlistBusinessTester extends Actor
 {
-
     use _generated\WishlistBusinessTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

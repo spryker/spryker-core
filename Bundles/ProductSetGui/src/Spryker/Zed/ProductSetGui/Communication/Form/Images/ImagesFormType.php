@@ -13,10 +13,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
  */
 class ImagesFormType extends AbstractType
 {
-
     const FIELD_IMAGE_SET_COLLECTION_PREFIX = 'image_set_collection_';
 
     /**
@@ -40,7 +40,7 @@ class ImagesFormType extends AbstractType
     protected function addDefaultImageSetFormCollection(FormBuilderInterface $builder)
     {
         $builder->add(static::getImageSetFormName(), CollectionType::class, [
-            'type' => LocalizedProductImageSetFormType::class,
+            'entry_type' => LocalizedProductImageSetFormType::class,
             'label' => false,
             'allow_add' => true,
             'allow_delete' => true,
@@ -67,7 +67,7 @@ class ImagesFormType extends AbstractType
 
         foreach ($localeCollection as $localeTransfer) {
             $builder->add(static::getImageSetFormName($localeTransfer->getLocaleName()), CollectionType::class, [
-                'type' => LocalizedProductImageSetFormType::class,
+                'entry_type' => LocalizedProductImageSetFormType::class,
                 'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -91,5 +91,4 @@ class ImagesFormType extends AbstractType
     {
         return static::FIELD_IMAGE_SET_COLLECTION_PREFIX . $localeName;
     }
-
 }

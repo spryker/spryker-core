@@ -8,10 +8,10 @@
 namespace Spryker\Zed\AvailabilityGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
 {
-
     /**
      * @var \Spryker\Zed\Stock\Business\StockFacadeInterface
      */
@@ -75,12 +75,38 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
 
     /**
      * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return array|\Generated\Shared\Transfer\StockProductTransfer[]
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
-    public function getStockProductsByIdProduct($idProductConcrete)
+    public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer)
     {
-        return $this->stockFacade->getStockProductsByIdProduct($idProductConcrete);
+        return $this->stockFacade->findStockProductsByIdProductForStore($idProductConcrete, $storeTransfer);
     }
 
+    /**
+     * @return array
+     */
+    public function getWarehouseToStoreMapping()
+    {
+        return $this->stockFacade->getWarehouseToStoreMapping();
+    }
+
+    /**
+     * @return array
+     */
+    public function getStoreToWarehouseMapping()
+    {
+        return $this->stockFacade->getStoreToWarehouseMapping();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return array
+     */
+    public function getStockTypesForStore(StoreTransfer $storeTransfer)
+    {
+        return $this->stockFacade->getStockTypesForStore($storeTransfer);
+    }
 }

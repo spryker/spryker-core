@@ -11,9 +11,11 @@ use Spryker\Service\UtilNetwork\UtilNetworkService;
 use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Use `RequestProcessorPlugin` from Log module instead.
+ */
 class RequestProcessor
 {
-
     const EXTRA = 'request';
     const CONTEXT_KEY = 'request';
 
@@ -71,7 +73,7 @@ class RequestProcessor
         ];
 
         $request = $this->findRequest((array)$record[self::RECORD_CONTEXT]);
-        if ($request) {
+        if ($request && $request->getSession() !== null) {
             $sessionId = $request->getSession()->getId();
             $fields[static::SESSION_ID] = $sessionId;
 
@@ -103,7 +105,7 @@ class RequestProcessor
     /**
      * @param array $context
      *
-     * @return bool|\Symfony\Component\HttpFoundation\Request
+     * @return bool|\Symfony\Component\HttpFoundation\Request|null
      */
     protected function findRequest(array $context)
     {
@@ -123,5 +125,4 @@ class RequestProcessor
     {
         return $request->getSession()->get(static::SESSION_KEY_USER);
     }
-
 }

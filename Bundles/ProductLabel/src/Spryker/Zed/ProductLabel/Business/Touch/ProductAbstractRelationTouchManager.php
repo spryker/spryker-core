@@ -13,7 +13,6 @@ use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToTouchInterface;
 
 class ProductAbstractRelationTouchManager implements ProductAbstractRelationTouchManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToTouchInterface
      */
@@ -63,5 +62,4 @@ class ProductAbstractRelationTouchManager implements ProductAbstractRelationTouc
 
         $this->productFacade->touchProductAbstract($idProductAbstract);
     }
-
 }

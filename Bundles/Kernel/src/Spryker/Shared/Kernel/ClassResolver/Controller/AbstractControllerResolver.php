@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 
 abstract class AbstractControllerResolver extends AbstractClassResolver
 {
-
     const KEY_CONTROLLER = '%controller%';
 
     /**
@@ -94,5 +93,4 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
 
         return $className;
     }
-
 }

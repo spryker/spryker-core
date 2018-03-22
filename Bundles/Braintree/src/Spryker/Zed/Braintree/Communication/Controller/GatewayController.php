@@ -11,11 +11,10 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method \Spryker\Zed\Braintree\Business\BraintreeFacade getFacade()
+ * @method \Spryker\Zed\Braintree\Business\BraintreeFacadeInterface getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -25,5 +24,4 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->calculateInstallmentPayments($quoteTransfer);
     }
-
 }

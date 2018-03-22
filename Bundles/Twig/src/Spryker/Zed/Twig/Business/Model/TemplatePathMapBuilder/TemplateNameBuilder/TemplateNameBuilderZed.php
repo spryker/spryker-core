@@ -11,7 +11,6 @@ use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder\TemplateNameBuilderIn
 
 class TemplateNameBuilderZed implements TemplateNameBuilderInterface
 {
-
     /**
      * @param string $filePath
      *
@@ -27,5 +26,4 @@ class TemplateNameBuilderZed implements TemplateNameBuilderInterface
 
         return sprintf('@%s/%s', $bundle, implode('/', $template));
     }
-
 }

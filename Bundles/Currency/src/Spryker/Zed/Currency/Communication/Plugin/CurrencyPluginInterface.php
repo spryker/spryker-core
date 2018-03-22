@@ -8,11 +8,10 @@
 namespace Spryker\Zed\Currency\Communication\Plugin;
 
 /**
- * @method \Spryker\Zed\Currency\Business\CurrencyFacade getFacade()
+ * @method \Spryker\Zed\Currency\Business\CurrencyFacadeInterface getFacade()
  */
 interface CurrencyPluginInterface
 {
-
     /**
      * @param string $isoCode
      *
@@ -24,5 +23,4 @@ interface CurrencyPluginInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getCurrent();
-
 }

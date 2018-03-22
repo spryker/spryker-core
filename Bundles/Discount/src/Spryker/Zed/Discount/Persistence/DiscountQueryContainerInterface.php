@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
  */
 interface DiscountQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -62,11 +61,12 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param int $idStore
      * @param string[] $voucherCodes
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
-    public function queryDiscountsBySpecifiedVouchers(array $voucherCodes = []);
+    public function queryDiscountsBySpecifiedVouchersForStore($idStore, array $voucherCodes = []);
 
     /**
      * @api
@@ -123,8 +123,46 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param int $idStore
+     *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
-    public function queryActiveCartRules();
+    public function queryActiveCartRulesForStore($idStore);
 
+    /**
+     * @api
+     *
+     * @param int $idDiscountAmount
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountAmountQuery
+     */
+    public function queryDiscountAmountById($idDiscountAmount);
+
+    /**
+     * @api
+     *
+     * @param int $idDiscount
+     * @param int[] $idStores
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery
+     */
+    public function queryDiscountStoreByFkDiscountAndFkStores($idDiscount, array $idStores);
+
+    /**
+     * @api
+     *
+     * @param int $idDiscount
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery
+     */
+    public function queryDiscountStoreWithStoresByFkDiscount($idDiscount);
+
+    /**
+     * @api
+     *
+     * @param int $idDiscount
+     *
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
+     */
+    public function queryDiscountWithStoresByFkDiscount($idDiscount);
 }

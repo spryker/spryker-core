@@ -7,16 +7,18 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\Version;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Required;
 
+/**
+ * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
+ */
 class CmsVersionFormType extends AbstractType
 {
-
     const OPTION_VERSION_NAME_CHOICES = 'version_choices';
     const CMS_VERSION = 'cms_version';
 
@@ -57,7 +59,8 @@ class CmsVersionFormType extends AbstractType
 
         $builder->add('version', ChoiceType::class, [
             'label' => false,
-            'choices' => $choices,
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
             'required' => true,
             'constraints' => [
                 new Required(),
@@ -72,9 +75,18 @@ class CmsVersionFormType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
-        return self::CMS_VERSION;
+        return static::CMS_VERSION;
     }
 
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

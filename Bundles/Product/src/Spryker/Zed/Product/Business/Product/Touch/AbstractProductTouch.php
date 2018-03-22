@@ -15,7 +15,6 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 abstract class AbstractProductTouch
 {
-
     /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface
      */
@@ -145,5 +144,4 @@ abstract class AbstractProductTouch
     {
         $this->touchFacade->touchDeleted(ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, $idProductConcrete);
     }
-
 }

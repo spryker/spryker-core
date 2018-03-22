@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\NodeTransfer;
 
 interface ClosureTableWriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
      *
@@ -37,5 +36,4 @@ interface ClosureTableWriterInterface
      * @return void
      */
     public function rebuildCategoryNodes();
-
 }

@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\UrlTransfer;
 
 interface UrlCreatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function createUrl(UrlTransfer $urlTransfer);
-
 }

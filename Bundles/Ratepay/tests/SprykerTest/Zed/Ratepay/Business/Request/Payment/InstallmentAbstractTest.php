@@ -23,7 +23,6 @@ use SprykerTest\Zed\Ratepay\Business\Request\AbstractFacadeTest;
  */
 abstract class InstallmentAbstractTest extends AbstractFacadeTest
 {
-
     /**
      * @const Payment method code.
      */
@@ -79,5 +78,4 @@ abstract class InstallmentAbstractTest extends AbstractFacadeTest
             ->setTransactionShortId('5QTZ.2VWD.OMWW.9D3E')
             ->setDeviceFingerprint('122356');
     }
-
 }

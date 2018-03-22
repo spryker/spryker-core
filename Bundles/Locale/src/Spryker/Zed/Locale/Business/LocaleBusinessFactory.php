@@ -13,11 +13,10 @@ use Spryker\Zed\Locale\Business\Manager\LocaleManager;
 
 /**
  * @method \Spryker\Zed\Locale\LocaleConfig getConfig()
- * @method \Spryker\Zed\Locale\Persistence\LocaleQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface getQueryContainer()
  */
 class LocaleBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Locale\Business\Manager\LocaleManager
      */
@@ -49,5 +48,4 @@ class LocaleBusinessFactory extends AbstractBusinessFactory
 
         return $installer;
     }
-
 }

@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -114,6 +113,8 @@ class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeI
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -126,5 +127,4 @@ class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeI
             ->createCustomerGroup()
             ->removeCustomerFromAllGroups($customerTransfer);
     }
-
 }

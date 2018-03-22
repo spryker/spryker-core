@@ -22,7 +22,6 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
  */
 class WebErrorRendererTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -34,5 +33,4 @@ class WebErrorRendererTest extends Unit
 
         $this->assertInternalType('string', $exceptionString);
     }
-
 }

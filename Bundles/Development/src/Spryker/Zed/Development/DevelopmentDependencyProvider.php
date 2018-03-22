@@ -16,7 +16,6 @@ use Twig_Loader_Filesystem;
 
 class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const PLUGIN_GRAPH = 'graph plugin';
     const FINDER = 'finder';
     const TWIG_ENVIRONMENT = 'twig environment';
@@ -69,7 +68,7 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function createTwigEnvironment()
     {
-        return new Twig_Environment();
+        return new Twig_Environment($this->createTwigLoaderFilesystem());
     }
 
     /**
@@ -79,5 +78,4 @@ class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
     {
         return new Twig_Loader_Filesystem();
     }
-
 }

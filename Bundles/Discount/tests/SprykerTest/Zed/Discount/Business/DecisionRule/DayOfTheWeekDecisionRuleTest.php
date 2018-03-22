@@ -24,7 +24,6 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class DayOfTheWeekDecisionRuleTest extends BaseRuleTester
 {
-
     /**
      * @return void
      */
@@ -33,7 +32,7 @@ class DayOfTheWeekDecisionRuleTest extends BaseRuleTester
         $dateTime = new DateTime();
 
         $comparatorMock = $this->createComparatorMock();
-        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer  $clauseTransfer, $calendarWeek) {
+        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $calendarWeek) {
             return $clauseTransfer->getValue() === $calendarWeek;
         });
 
@@ -63,5 +62,4 @@ class DayOfTheWeekDecisionRuleTest extends BaseRuleTester
 
         return $calendarWeekDecisionRule;
     }
-
 }

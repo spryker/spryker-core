@@ -1,3 +1,3 @@
 # Development Changelog
 
-[Development Changelog](https://github.com/spryker/Development/releases)
+[Release Changelog](https://github.com/spryker/development/releases)

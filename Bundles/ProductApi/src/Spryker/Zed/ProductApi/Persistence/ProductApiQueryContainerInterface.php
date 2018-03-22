@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductApiQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -36,5 +35,4 @@ interface ProductApiQueryContainerInterface extends QueryContainerInterface
      * @return null|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryRemove($idProductAbstract);
-
 }

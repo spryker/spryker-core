@@ -15,7 +15,6 @@ use Spryker\Shared\Testify\Exception\RuleNotDefinedException;
 
 abstract class AbstractDataBuilder
 {
-
     /**
      * @var \Faker\Generator
      */
@@ -271,5 +270,4 @@ abstract class AbstractDataBuilder
     {
         return $this->seedData;
     }
-
 }

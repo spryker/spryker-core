@@ -14,11 +14,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Product\Business\ProductFacade getFacade()
+ * @method \Spryker\Zed\Product\Business\ProductFacadeInterface getFacade()
  */
 class ProductTouchConsole extends Console
 {
-
     const ACTION_ACTIVATE = 'activate';
     const ACTION_ACTIVATE_SHORT = 'a';
     const ACTION_INACTIVATE = 'inactivate';
@@ -93,5 +92,4 @@ class ProductTouchConsole extends Console
 
         return self::CODE_SUCCESS;
     }
-
 }

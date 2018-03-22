@@ -29,7 +29,6 @@ use Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
  */
 class IsProductSearchableTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Business\ProductSearchFacade
      */
@@ -226,5 +225,4 @@ class IsProductSearchableTest extends Unit
             ->setIsSearchable($isSearchable)
             ->save();
     }
-
 }

@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 
 interface DoubleOptInHandlerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
      */
     public function approveSubscriberByKey(NewsletterSubscriberTransfer $newsletterSubscriber);
-
 }

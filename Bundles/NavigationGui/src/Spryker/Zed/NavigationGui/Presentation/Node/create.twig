@@ -12,7 +12,7 @@
             </div>
 
             <div class="ibox-footer">
-                <input id="navigation-node-form-submit" type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+                <input id="navigation-node-form-submit" type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
             </div>
         {{ form_end(navigationNodeForm) }}
     </div>
@@ -21,6 +21,10 @@
 
 {% endblock %}
 
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-navigation.css" />
+{% endblock %}
 {% block footer_js %}
     {{ parent() }}
     <script src="/assets/js/spryker-zed-navigation-node-form.js"></script>

@@ -13,7 +13,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductGroupDeleter implements ProductGroupDeleterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -94,5 +93,4 @@ class ProductGroupDeleter implements ProductGroupDeleterInterface
         $this->productGroupTouch->touchProductGroupDeleted($productGroupTransfer);
         $this->productGroupTouch->touchProductAbstractGroupsDeleted($productGroupTransfer);
     }
-
 }

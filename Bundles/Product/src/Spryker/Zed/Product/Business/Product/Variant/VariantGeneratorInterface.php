@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 interface VariantGeneratorInterface
 {
-
     /**
      * @param array $tokenAttributeCollection
      *
@@ -42,8 +41,7 @@ interface VariantGeneratorInterface
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $attributeCollection
      *
-     * @return array|\Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function generate(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection);
-
 }

@@ -11,15 +11,17 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleBridge;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyBridge;
+use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductFacadeBridge;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToProductLabelBridge;
 use Spryker\Zed\ProductLabelGui\Dependency\QueryContainer\ProductLabelGuiToProductQueryContainerBridge;
 
 class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
     const FACADE_MONEY = 'FACADE_MONEY';
+    const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
     /**
@@ -33,6 +35,7 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductLabelFacade($container);
         $container = $this->addMoneyFacade($container);
         $container = $this->addProductQueryContainer($container);
+        $container = $this->addPriceProductFacade($container);
 
         return $container;
     }
@@ -107,4 +110,19 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductFacade(Container $container)
+    {
+        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+            return new ProductLabelGuiToPriceProductFacadeBridge(
+                $container->getLocator()->priceProduct()->facade()
+            );
+        };
+
+        return $container;
+    }
 }

@@ -13,7 +13,6 @@ use Spryker\Shared\Kernel\ContainerMocker\ContainerGlobals;
 
 class DependencyHelper extends Module
 {
-
     /**
      * @var \Spryker\Shared\Kernel\ContainerMocker\ContainerGlobals
      */
@@ -48,5 +47,4 @@ class DependencyHelper extends Module
     {
         $this->containerGlobals->reset();
     }
-
 }

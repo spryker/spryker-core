@@ -28,7 +28,6 @@ use SprykerTest\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock;
  */
 class OrderItemSplitTest extends Unit
 {
-
     /**
      * @var array
      */
@@ -211,5 +210,4 @@ class OrderItemSplitTest extends Unit
 
         return $spySalesOrderItem;
     }
-
 }

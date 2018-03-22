@@ -10,13 +10,13 @@ namespace Spryker\Zed\Propel\Communication;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Propel\PropelDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Propel\PropelConfig getConfig()
  */
 class PropelCommunicationFactory extends AbstractCommunicationFactory
 {
-
     const LOGGER_NAME = 'defaultLogger';
 
     /**
@@ -42,4 +42,11 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
+    /**
+     * @return \Spryker\Zed\Propel\Dependency\Facade\PropelToLogInterface
+     */
+    public function getLogFacade()
+    {
+        return $this->getProvidedDependency(PropelDependencyProvider::FACADE_LOG);
+    }
 }

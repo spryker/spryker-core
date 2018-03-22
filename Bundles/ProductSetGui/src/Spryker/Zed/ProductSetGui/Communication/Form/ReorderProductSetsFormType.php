@@ -14,10 +14,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
  */
 class ReorderProductSetsFormType extends AbstractType
 {
-
     const FIELD_PRODUCT_SET_WEIGHTS = 'product_set_weights';
 
     /**
@@ -52,5 +52,4 @@ class ReorderProductSetsFormType extends AbstractType
 
         return $this;
     }
-
 }

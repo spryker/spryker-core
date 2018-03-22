@@ -1,3 +1,3 @@
 # CustomerGroupDiscountConnector Changelog
 
-[CustomerGroupDiscountConnector Changelog](https://github.com/spryker/CustomerGroupDiscountConnector/releases)
+[Release Changelog](https://github.com/spryker/customer-group-discount-connector/releases)

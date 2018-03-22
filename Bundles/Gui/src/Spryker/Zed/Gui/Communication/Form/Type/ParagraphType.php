@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\Gui\Communication\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
+ */
 class ParagraphType extends AbstractType
 {
-
     const OPTION_TEXT = 'text';
 
     /**
@@ -50,9 +52,18 @@ class ParagraphType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'label';
     }
 
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

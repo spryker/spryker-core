@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface StepHandlerPluginWithMessengerInterface extends StepHandlerPluginInterface
 {
-
     /**
      * @api
      *
@@ -32,5 +31,4 @@ interface StepHandlerPluginWithMessengerInterface extends StepHandlerPluginInter
      * @return $this
      */
     public function setFlashMessenger(FlashMessengerInterface $flashMessenger);
-
 }

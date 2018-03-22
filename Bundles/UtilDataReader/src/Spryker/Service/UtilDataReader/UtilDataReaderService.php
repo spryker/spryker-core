@@ -17,7 +17,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
  */
 class UtilDataReaderService extends AbstractService implements UtilDataReaderServiceInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -94,7 +93,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
      */
     public function getBatchIteratorOrdered(CriteriaBuilderInterface $criteriaBuilder, QueryContainerInterface $connection, $chunkSize, $orderBy, $orderByDirection)
     {
-        return $this->getFactory()->createPdoBatchIterator($criteriaBuilder, $connection, $chunkSize, $orderBy,  $orderByDirection);
+        return $this->getFactory()->createPdoBatchIterator($criteriaBuilder, $connection, $chunkSize, $orderBy, $orderByDirection);
     }
 
     /**
@@ -143,5 +142,4 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     {
         return $this->getFactory()->createYamlBatchIterator($fileName, $chunkSize);
     }
-
 }

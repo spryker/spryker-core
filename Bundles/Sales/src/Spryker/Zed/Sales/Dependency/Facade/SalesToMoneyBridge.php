@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 class SalesToMoneyBridge implements SalesToMoneyInterface
 {
-
     /**
      * @var \Spryker\Zed\Money\Business\MoneyFacadeInterface
      */
@@ -55,5 +54,4 @@ class SalesToMoneyBridge implements SalesToMoneyInterface
     {
         return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
     }
-
 }

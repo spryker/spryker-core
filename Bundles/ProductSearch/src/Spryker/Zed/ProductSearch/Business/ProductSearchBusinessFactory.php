@@ -34,7 +34,6 @@ use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
  */
 class ProductSearchBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchInterface
      */
@@ -177,6 +176,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductSearchAttributeMarker(
             $this->getTouchFacade(),
+            $this->getEventFacade(),
             $this->getQueryContainer()
         );
     }
@@ -188,6 +188,7 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductSearchAttributeMapMarker(
             $this->getTouchFacade(),
+            $this->getEventFacade(),
             $this->getQueryContainer()
         );
     }
@@ -295,4 +296,11 @@ class ProductSearchBusinessFactory extends AbstractBusinessFactory
         );
     }
 
+    /**
+     * @return \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToEventFacadeInterface
+     */
+    protected function getEventFacade()
+    {
+        return $this->getProvidedDependency(ProductSearchDependencyProvider::FACADE_EVENT);
+    }
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface;
 
 class ProductImageSetCombiner implements ProductImageSetCombinerInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
      */
@@ -94,5 +93,4 @@ class ProductImageSetCombiner implements ProductImageSetCombinerInterface
 
         return $result;
     }
-
 }

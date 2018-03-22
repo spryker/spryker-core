@@ -25,7 +25,6 @@ use Spryker\Zed\DummyPayment\Business\Model\Payment\RefundInterface;
  */
 class DummyPaymentFacadeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -52,5 +51,4 @@ class DummyPaymentFacadeTest extends Unit
 
         return $dummyPaymentFactoryMock;
     }
-
 }

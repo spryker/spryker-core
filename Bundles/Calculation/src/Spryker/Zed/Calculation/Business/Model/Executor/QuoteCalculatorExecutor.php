@@ -13,14 +13,13 @@ use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
 {
-
     /**
      * @var array|\Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[]
      */
     protected $quoteCalculators;
 
     /**
-     * @param array|\Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[] $quoteCalculators
+     * @param \Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[] $quoteCalculators
      */
     public function __construct(array $quoteCalculators)
     {
@@ -37,7 +36,6 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
         $calculableObjectTransfer = $this->mapCalculableObjectTransfer($quoteTransfer);
 
         foreach ($this->quoteCalculators as $calculator) {
-
             if ($calculator instanceof CalculatorPluginInterface) {
                 $calculableObjectTransfer = $this->recalculateWithLegacyCalculator(
                     $quoteTransfer,
@@ -99,5 +97,4 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
 
         return $calculableObjectTransfer;
     }
-
 }

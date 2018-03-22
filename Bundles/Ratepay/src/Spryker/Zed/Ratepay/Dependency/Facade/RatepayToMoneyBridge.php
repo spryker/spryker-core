@@ -9,7 +9,6 @@ namespace Spryker\Zed\Ratepay\Dependency\Facade;
 
 class RatepayToMoneyBridge implements RatepayToMoneyInterface
 {
-
     /**
      * @var \Spryker\Zed\Money\Business\MoneyFacadeInterface
      */
@@ -42,5 +41,4 @@ class RatepayToMoneyBridge implements RatepayToMoneyInterface
     {
         return $this->moneyFacade->convertIntegerToDecimal($value);
     }
-
 }

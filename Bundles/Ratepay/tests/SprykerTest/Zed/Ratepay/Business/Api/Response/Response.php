@@ -9,14 +9,12 @@ namespace SprykerTest\Zed\Ratepay\Business\Api\Response;
 
 class Response
 {
-
     /**
      * @return string
      */
     public static function getTestPaymentConfirmResponseData()
     {
-        return
-            '<response xmlns="urn://www.ratepay.com/payment/1_0" version="1.0">
+        return '<response xmlns="urn://www.ratepay.com/payment/1_0" version="1.0">
                 <head>
                     <system-id>Spryker www.spryker.dev</system-id>
                     <transaction-id>58-201604122719694</transaction-id>
@@ -41,8 +39,7 @@ class Response
      */
     public static function getTestConfigurationResponseData()
     {
-        return
-            '<?xml version="1.0" encoding="UTF-8"?>
+        return '<?xml version="1.0" encoding="UTF-8"?>
             <response version="1.0" xmlns="urn://www.ratepay.com/payment/1_0">
                 <head>
                     <system-id>MyTestsystem</system-id>
@@ -85,8 +82,7 @@ class Response
      */
     public static function getTestCalculationResponseData()
     {
-        return
-            '<?xml version="1.0" encoding="UTF-8"?>
+        return '<?xml version="1.0" encoding="UTF-8"?>
             <response xmlns="urn://www.ratepay.com/payment/1_0" version="1.0">
             <head>
                 <system-id>MyTestsystem</system-id>
@@ -123,8 +119,7 @@ class Response
      */
     public static function getTestPaymentConfirmUnsuccessResponseData()
     {
-        return
-            '<response xmlns="urn://www.ratepay.com/payment/1_0" version="1.0">
+        return '<response xmlns="urn://www.ratepay.com/payment/1_0" version="1.0">
                 <head>
                     <system-id>Spryker www.spryker.dev</system-id>
                     <transaction-id>58-201604122719694</transaction-id>
@@ -143,5 +138,4 @@ class Response
                 <content />
             </response>';
     }
-
 }

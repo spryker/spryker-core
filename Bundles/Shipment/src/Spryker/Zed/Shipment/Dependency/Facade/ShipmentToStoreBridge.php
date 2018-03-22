@@ -9,26 +9,32 @@ namespace Spryker\Zed\Shipment\Dependency\Facade;
 
 class ShipmentToStoreBridge implements ShipmentToStoreInterface
 {
+    /**
+     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
+     */
+    protected $storeFacade;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @param \Spryker\Zed\Store\Business\StoreFacadeInterface $storeFacade
      */
-    protected $store;
-
-    /**
-     * @param \Spryker\Shared\Kernel\Store $store
-     */
-    public function __construct($store)
+    public function __construct($storeFacade)
     {
-        $this->store = $store;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
-     * @return string
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrencyIsoCode()
+    public function getCurrentStore()
     {
-        return $this->store->getCurrencyIsoCode();
+        return $this->storeFacade->getCurrentStore();
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getAllStores()
+    {
+        return $this->storeFacade->getAllStores();
+    }
 }

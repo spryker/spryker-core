@@ -14,7 +14,6 @@ use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
 
 class VariantGenerator implements VariantGeneratorInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
      */
@@ -164,7 +163,7 @@ class VariantGenerator implements VariantGeneratorInterface
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $attributeCollection
      *
-     * @return array|\Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function generate(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection)
     {
@@ -174,7 +173,6 @@ class VariantGenerator implements VariantGeneratorInterface
 
         $result = [];
         foreach ($tokenCollection as $token) {
-
             $attributeTokens = $this->convertTokensIntoAttributes($token);
 
             $productConcreteTransfer = $this->createProductConcreteTransfer($productAbstractTransfer, $attributeTokens);
@@ -208,5 +206,4 @@ class VariantGenerator implements VariantGeneratorInterface
             ->setAttributes($attributeTokens)
             ->setIsActive(false);
     }
-
 }

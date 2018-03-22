@@ -9,7 +9,5 @@ namespace Spryker\Shared\FileSystem;
 
 interface FileSystemConstants
 {
-
     const FILESYSTEM_SERVICE = 'FILESYSTEM:FILESYSTEM_SERVICE';
-
 }

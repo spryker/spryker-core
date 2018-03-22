@@ -11,8 +11,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
-use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Cart\Business\CartFacade;
@@ -31,7 +31,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class CartFacadeTest extends Unit
 {
-
     const PRICE_TYPE_DEFAULT = 'DEFAULT';
     const DUMMY_1_SKU_ABSTRACT_PRODUCT = 'ABSTRACT1';
     const DUMMY_1_SKU_CONCRETE_PRODUCT = 'CONCRETE1';
@@ -261,5 +260,4 @@ class CartFacadeTest extends Unit
             ->setPrice(100)
             ->save();
     }
-
 }

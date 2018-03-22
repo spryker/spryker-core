@@ -13,7 +13,6 @@ use Symfony\Component\Form\FormInterface;
 
 class ReorderFormDataToTransferMapper
 {
-
     /**
      * @param \Symfony\Component\Form\FormInterface $reorderProductSetForm
      *
@@ -35,5 +34,4 @@ class ReorderFormDataToTransferMapper
 
         return $productSetTransfers;
     }
-
 }

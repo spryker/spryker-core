@@ -13,7 +13,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 class StockProductTransferMapper implements StockProductTransferMapperInterface
 {
-
     /**
      * @param \Orm\Zed\Stock\Persistence\SpyStockProduct $stockProductEntity
      *
@@ -31,7 +30,7 @@ class StockProductTransferMapper implements StockProductTransferMapperInterface
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $stockProductEntityCollection
      *
-     * @return array|\Generated\Shared\Transfer\StockProductTransfer[]
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function convertStockProductCollection(ObjectCollection $stockProductEntityCollection)
     {
@@ -42,5 +41,4 @@ class StockProductTransferMapper implements StockProductTransferMapperInterface
 
         return $transferList;
     }
-
 }

@@ -8,7 +8,9 @@
 namespace SprykerTest\Zed\ProductBundle\Business\Stock;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Orm\Zed\Stock\Persistence\SpyStock;
@@ -18,6 +20,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
@@ -33,6 +36,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  */
 class ProductBundleStockWriterTest extends Unit
 {
+    const ID_STORE = 1;
 
     /**
      * @return void
@@ -50,7 +54,7 @@ class ProductBundleStockWriterTest extends Unit
 
         $productStockWriteMock = $this->createProductStockWriterMock($productBundleAvailabilityHandlerMock);
 
-        $this->setupFindProductBundleBySku($productStockWriteMock);
+        $this->setupFindProductBundleBySku($productStockWriteMock, new SpyProductBundle());
         $this->setupFindBundledItemsByIdBundleProduct($idProductBundle, $bundleQuantity, $idRelatedProductId, $relatedProductSku, $productStockWriteMock);
         $this->setupFindProductStock($productStockWriteMock, $relatedProductStock, $idRelatedProductId);
         $this->setupFindOrCreateProductStockEntity($productStockWriteMock);
@@ -73,16 +77,51 @@ class ProductBundleStockWriterTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testUpdateStockShouldResetStockWhenThereIsNoBundleItems()
+    {
+        $idProductBundle = 1;
+        $idRelatedProductId = 2;
+        $relatedProductSku = 'sku-321';
+
+        $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandlerMock();
+        $productBundleAvailabilityHandlerMock->expects($this->once())->method('removeBundleAvailability');
+
+        $productStockWriteMock = $this->createProductStockWriterMock($productBundleAvailabilityHandlerMock);
+
+        $this->setupFindProductBundleBySku($productStockWriteMock);
+        $this->setupFindProductStock($productStockWriteMock, 0, $idRelatedProductId);
+
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setSku($relatedProductSku);
+        $productConcreteTransfer->setIdProductConcrete($idProductBundle);
+
+        $updatedProductConcreteTransfer = $productStockWriteMock->updateStock($productConcreteTransfer);
+        $stocks = $updatedProductConcreteTransfer->getStocks();
+
+        $this->assertCount(2, $stocks);
+
+        $stockTransfer = $stocks[0];
+        $this->assertSame(0, $stockTransfer->getQuantity());
+
+        $stockTransfer = $stocks[1];
+        $this->assertSame(0, $stockTransfer->getQuantity());
+    }
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface|null $productBundleAvailabilityMock
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface|null $productBundleQueryContainerMock
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface|null $stockQueryContainerMock
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter
      */
     protected function createProductStockWriterMock(
         ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityMock = null,
         ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null,
-        ProductBundleToStockQueryContainerInterface $stockQueryContainerMock = null
+        ProductBundleToStockQueryContainerInterface $stockQueryContainerMock = null,
+        ProductBundleToStoreFacadeInterface $storeFacadeMock = null
     ) {
         if ($productBundleQueryContainerMock === null) {
             $productBundleQueryContainerMock = $this->createProductBundleQueryContainerMock();
@@ -96,12 +135,22 @@ class ProductBundleStockWriterTest extends Unit
             $productBundleAvailabilityMock = $this->createProductBundleAvailabilityHandlerMock();
         }
 
+        if ($storeFacadeMock === null) {
+            $storeFacadeMock = $this->createStoreFacadeMock();
+            $storeTransfer = (new StoreBuilder([
+                StoreTransfer::ID_STORE => self::ID_STORE,
+            ]))
+                ->build();
+            $storeFacadeMock->method('getCurrentStore')->willReturn($storeTransfer);
+            $storeFacadeMock->method('getStoreByName')->willReturn($storeTransfer);
+        }
+
         $connectionMock = $this->getMockBuilder(ConnectionInterface::class)->getMock();
 
         $productBundleQueryContainerMock->method('getConnection')->willReturn($connectionMock);
 
         return $this->getMockBuilder(ProductBundleStockWriter::class)
-            ->setConstructorArgs([$productBundleQueryContainerMock, $stockQueryContainerMock, $productBundleAvailabilityMock])
+            ->setConstructorArgs([$productBundleQueryContainerMock, $stockQueryContainerMock, $productBundleAvailabilityMock, $storeFacadeMock])
             ->setMethods(['findProductStocks', 'findOrCreateProductStockEntity', 'findBundledItemsByIdBundleProduct', 'findProductBundleBySku'])
             ->getMock();
     }
@@ -145,16 +194,26 @@ class ProductBundleStockWriterTest extends Unit
     }
 
     /**
-     * @param \PHPUnit_Framework_MockObject_MockObject $productStockWriteMock
-     *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
      */
-    protected function setupFindProductBundleBySku(PHPUnit_Framework_MockObject_MockObject $productStockWriteMock)
+    protected function createStoreFacadeMock()
     {
-        $productBundleEntity = new SpyProductBundle();
+        return $this->getMockBuilder(ProductBundleToStoreFacadeInterface::class)->getMock();
+    }
+
+    /**
+     * @param \PHPUnit_Framework_MockObject_MockObject $productStockWriteMock
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle|null $productBundleEntity
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle
+     */
+    protected function setupFindProductBundleBySku(
+        PHPUnit_Framework_MockObject_MockObject $productStockWriteMock,
+        SpyProductBundle $productBundleEntity = null
+    ) {
         $productStockWriteMock->method('findProductBundleBySku')->willReturn($productBundleEntity);
 
-        return $productBundleEntity;
+        return $productStockWriteMock;
     }
 
     /**
@@ -205,14 +264,14 @@ class ProductBundleStockWriterTest extends Unit
 
         $stockProducts = new ObjectCollection();
 
-        $stockProductEntity = new SpyStockProduct();
+        $stockProductEntity = $this->createStockProductEntityMock();
         $stockProductEntity->setQuantity($stock);
         $stockProductEntity->setFkProduct($idRelatedProductId);
         $stockProductEntity->setFkStock(1);
 
         $stockProducts->append($stockProductEntity);
 
-        $stockProductEntity = new SpyStockProduct();
+        $stockProductEntity = $this->createStockProductEntityMock();
         $stockProductEntity->setQuantity($stock);
         $stockProductEntity->setFkProduct($idRelatedProductId);
         $stockProductEntity->setFkStock(2);
@@ -237,5 +296,4 @@ class ProductBundleStockWriterTest extends Unit
 
         $productStockWriteMock->method('findOrCreateProductStockEntity')->willReturn($stockProductEntityMock);
     }
-
 }

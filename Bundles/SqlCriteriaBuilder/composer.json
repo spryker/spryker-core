@@ -6,15 +6,16 @@
     "everon/collection": "~1.0.3",
     "everon/criteria-builder": "~1.1.5",
     "everon/factory": "~1.1.4",
-    "everon/utils": "~1.0.4"
+    "everon/utils": "~1.0.4",
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "minimum-stability": "dev",

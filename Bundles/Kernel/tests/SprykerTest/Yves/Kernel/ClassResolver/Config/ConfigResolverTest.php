@@ -23,26 +23,25 @@ use SprykerTest\Yves\Kernel\ClassResolver\AbstractResolverTest;
  */
 class ConfigResolverTest extends AbstractResolverTest
 {
+    /**
+     * @var string
+     */
+    protected $coreClass = 'Spryker\\Yves\\Kernel\\ClassResolver\\KernelConfig';
 
     /**
      * @var string
      */
-    protected $coreClass = 'Unit\\Spryker\\Yves\\Kernel\\ClassResolver\\Fixtures\\KernelConfig';
+    protected $projectClass = 'ProjectNamespace\\Yves\\Kernel\\ClassResolver\\KernelConfig';
 
     /**
      * @var string
      */
-    protected $projectClass = 'Unit\\ProjectNamespace\\Yves\\Kernel\\ClassResolver\\Fixtures\\KernelConfig';
+    protected $storeClass = 'ProjectNamespace\\Yves\\KernelDE\\ClassResolver\\KernelConfig';
 
     /**
      * @var string
      */
-    protected $storeClass = 'Unit\\ProjectNamespace\\Yves\\KernelDE\\ClassResolver\\Fixtures\\KernelConfig';
-
-    /**
-     * @var string
-     */
-    protected $classPattern = 'Unit\\%namespace%\\Yves\\%bundle%%store%\\ClassResolver\\Fixtures\\%bundle%Config';
+    protected $classPattern = '%namespace%\\Yves\\%bundle%%store%\\ClassResolver\\%bundle%Config';
 
     /**
      * @var string
@@ -60,5 +59,4 @@ class ConfigResolverTest extends AbstractResolverTest
 
         return $resolverMock;
     }
-
 }

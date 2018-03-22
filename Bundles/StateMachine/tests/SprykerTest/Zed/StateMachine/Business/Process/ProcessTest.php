@@ -24,7 +24,6 @@ use Spryker\Zed\StateMachine\Business\Process\Transition;
  */
 class ProcessTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -33,7 +32,7 @@ class ProcessTest extends Unit
         $process = $this->createProcess();
         $process->setTransitions($this->getTransitionsWithManualAndOnEnterEvents());
 
-        $result = $process->getManualEvents();
+        $result = $process->getManuallyExecutableEvents();
         $this->assertSame(2, count($result));
 
         $this->assertSame('manual', $result[0]->getName());
@@ -77,5 +76,4 @@ class ProcessTest extends Unit
     {
         return new Process();
     }
-
 }

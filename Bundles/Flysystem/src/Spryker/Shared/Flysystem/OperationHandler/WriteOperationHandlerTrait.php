@@ -10,10 +10,10 @@ namespace Spryker\Shared\Flysystem\OperationHandler;
 use Closure;
 use Exception;
 use Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException;
+use Throwable;
 
 trait WriteOperationHandlerTrait
 {
-
     /**
      * @param \Closure $callback
      *
@@ -31,11 +31,10 @@ trait WriteOperationHandlerTrait
             }
 
             return $result;
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             throw new FileSystemWriteException($exception->getMessage(), $exception->getCode(), $exception);
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             throw new FileSystemWriteException($exception->getMessage(), $exception->getCode(), $exception);
         }
     }
-
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Client\Wishlist\Cart;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer;
@@ -16,7 +17,6 @@ use Spryker\Client\Wishlist\WishlistClientInterface;
 
 class CartHandler implements CartHandlerInterface
 {
-
     /**
      * @var \Spryker\Client\Wishlist\Dependency\Client\WishlistToCartInterface
      */
@@ -38,40 +38,86 @@ class CartHandler implements CartHandlerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $requestCollectionTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestTransfer
+     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer
      */
-    public function moveToCart(WishlistMoveToCartRequestTransfer $wishlistMoveToCartRequestTransfer)
+    protected function getWishlistRequestCollectionToCartDiff(WishlistMoveToCartRequestCollectionTransfer $requestCollectionTransfer, QuoteTransfer $quoteTransfer)
     {
-        $this->assertRequestTransfer($wishlistMoveToCartRequestTransfer);
+        $wishlistRequestCollectionDiff = new WishlistMoveToCartRequestCollectionTransfer();
 
-        $this->storeItemInQuote($wishlistMoveToCartRequestTransfer->getSku());
-        $this->wishlistClient->removeItem($wishlistMoveToCartRequestTransfer->getWishlistItem());
+        $existingSkuIndex = $this->createExistingSkuIndex($quoteTransfer);
 
-        return $wishlistMoveToCartRequestTransfer;
+        foreach ($requestCollectionTransfer->getRequests() as $wishlistRequestTransfer) {
+            if (isset($existingSkuIndex[$wishlistRequestTransfer->getSku()])) {
+                continue;
+            }
+
+            $wishlistRequestCollectionDiff->addRequest($wishlistRequestTransfer);
+        }
+
+        return $wishlistRequestCollectionDiff;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $requestedCollection
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $failedCollection
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     */
+    protected function getWishlistCollectionToRemove(
+        WishlistMoveToCartRequestCollectionTransfer $requestedCollection,
+        WishlistMoveToCartRequestCollectionTransfer $failedCollection
+    ) {
+        $failedSkus = [];
+        $successfulRequestCollection = new WishlistItemCollectionTransfer();
+
+        foreach ($failedCollection->getRequests() as $requestTransfer) {
+            $failedSkus[] = $requestTransfer->getSku();
+        }
+
+        foreach ($requestedCollection->getRequests() as $requestTransfer) {
+            if (in_array($requestTransfer->getSku(), $failedSkus)) {
+                continue;
+            }
+
+            $successfulRequestCollection->addItem($requestTransfer->getWishlistItem());
+        }
+
+        return $successfulRequestCollection;
     }
 
     /**
      * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer
      */
     public function moveCollectionToCart(WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer)
     {
         $itemTransfers = [];
-        $wishlistItemCollectionTransfer = new WishlistItemCollectionTransfer();
 
         foreach ($wishlistMoveToCartRequestCollectionTransfer->getRequests() as $wishlistMoveToCartRequestTransfer) {
             $this->assertRequestTransfer($wishlistMoveToCartRequestTransfer);
-
             $itemTransfers[] = $this->createItemTransfer($wishlistMoveToCartRequestTransfer->getSku());
-            $wishlistItemCollectionTransfer->addItem($wishlistMoveToCartRequestTransfer->getWishlistItem());
         }
 
         $quoteTransfer = $this->cartClient->addItems($itemTransfers);
         $this->cartClient->storeQuote($quoteTransfer);
+
+        $failedToMoveRequestCollectionTransfer = $this->getWishlistRequestCollectionToCartDiff(
+            $wishlistMoveToCartRequestCollectionTransfer,
+            $quoteTransfer
+        );
+
+        $wishlistItemCollectionTransfer = $this->getWishlistCollectionToRemove(
+            $wishlistMoveToCartRequestCollectionTransfer,
+            $failedToMoveRequestCollectionTransfer
+        );
+
         $this->wishlistClient->removeItemCollection($wishlistItemCollectionTransfer);
+
+        return $failedToMoveRequestCollectionTransfer;
     }
 
     /**
@@ -88,13 +134,15 @@ class CartHandler implements CartHandlerInterface
     /**
      * @param string $sku
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function storeItemInQuote($sku)
     {
         $cartItem = $this->createItemTransfer($sku);
         $quoteTransfer = $this->cartClient->addItem($cartItem);
         $this->cartClient->storeQuote($quoteTransfer);
+
+        return $quoteTransfer;
     }
 
     /**
@@ -110,4 +158,21 @@ class CartHandler implements CartHandlerInterface
             ->setQuantity($quantity);
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    protected function createExistingSkuIndex(QuoteTransfer $quoteTransfer)
+    {
+        $skuIndex = [];
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $skuIndex[$itemTransfer->getSku()] = true;
+        }
+
+        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
+            $skuIndex[$itemTransfer->getSku()] = true;
+        }
+        return $skuIndex;
+    }
 }

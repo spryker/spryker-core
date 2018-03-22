@@ -9,7 +9,6 @@ namespace Spryker\Zed\Assertion\Business;
 
 interface AssertionFacadeInterface
 {
-
     /**
      * @api
      *
@@ -69,5 +68,4 @@ interface AssertionFacadeInterface
      * @return void
      */
     public function assertAlphaNumeric($value, $message = null);
-
 }

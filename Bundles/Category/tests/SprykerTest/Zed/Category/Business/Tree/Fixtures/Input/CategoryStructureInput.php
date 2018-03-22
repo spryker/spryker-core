@@ -10,7 +10,9 @@ use Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
 
 class CategoryStructureInput
 {
-
+    /**
+     * @return array
+     */
     public function getOrderedCategoriesArray()
     {
         $categories = [
@@ -49,6 +51,9 @@ class CategoryStructureInput
         return $categories;
     }
 
+    /**
+     * @return array
+     */
     public function getSecondOrderedCategoriesArray()
     {
         $categories = [
@@ -87,6 +92,9 @@ class CategoryStructureInput
         return $categories;
     }
 
+    /**
+     * @return array
+     */
     public function getCategoryStructureWithChildrenBeforeParent()
     {
         $categories = [
@@ -125,7 +133,10 @@ class CategoryStructureInput
         return $categories;
     }
 
-    public function getCategoryStructureWithNonexistantParent()
+    /**
+     * @return array
+     */
+    public function getCategoryStructureWithNonexistentParent()
     {
         $categories = [
             [
@@ -162,5 +173,4 @@ class CategoryStructureInput
 
         return $categories;
     }
-
 }

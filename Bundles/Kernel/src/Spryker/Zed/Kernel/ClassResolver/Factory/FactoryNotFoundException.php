@@ -9,15 +9,14 @@ namespace Spryker\Zed\Kernel\ClassResolver\Factory;
 
 use Exception;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 use Spryker\Shared\Kernel\Exception\Backtrace;
 use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 
 class FactoryNotFoundException extends Exception
 {
-
     /**
-     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
+     * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
      */
     public function __construct(ClassInfo $callerClassInfo)
     {
@@ -25,7 +24,7 @@ class FactoryNotFoundException extends Exception
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
+     * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
      *
      * @return string
      */
@@ -33,12 +32,12 @@ class FactoryNotFoundException extends Exception
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
-            'Can not resolve %2$s%1$sFactory in %s layer for your bundle "%s"',
+            'Can not resolve %2$s%1$sFactory in %s layer for your module "%s"',
             $callerClassInfo->getLayer(),
             $callerClassInfo->getBundle()
         ) . PHP_EOL;
 
-        $message .= 'You can fix this by adding the missing Factory to your bundle.' . PHP_EOL;
+        $message .= 'You can fix this by adding the missing Factory to your module.' . PHP_EOL;
 
         $message .= sprintf(
             'E.g. %1$s\\Zed\\%2$s\\%3$s\\%2$s%3$sFactory' . PHP_EOL . PHP_EOL,
@@ -51,5 +50,4 @@ class FactoryNotFoundException extends Exception
 
         return $message;
     }
-
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Glossary\Business\Translation;
 
+use Exception;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -25,7 +26,6 @@ use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 class TranslationManager implements TranslationManagerInterface
 {
-
     const TOUCH_TRANSLATION = 'translation';
     const GLOSSARY_KEY = 'glossary_key';
     const LOCALE_PREFIX = 'locale_';
@@ -415,7 +415,7 @@ class TranslationManager implements TranslationManagerInterface
             }
 
             Propel::getConnection()->commit();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Propel::getConnection()->rollBack();
             throw $e;
         }
@@ -681,5 +681,4 @@ class TranslationManager implements TranslationManagerInterface
 
         return $translation;
     }
-
 }

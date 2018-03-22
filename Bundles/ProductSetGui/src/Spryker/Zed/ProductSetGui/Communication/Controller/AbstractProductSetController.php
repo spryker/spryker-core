@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class AbstractProductSetController extends AbstractController
 {
-
     const PARAM_ID = 'id';
 
     /**
@@ -60,5 +59,4 @@ abstract class AbstractProductSetController extends AbstractController
                 ->fetchData()
         );
     }
-
 }

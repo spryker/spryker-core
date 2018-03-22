@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductLabel\Business\Touch;
 
 interface LabelDictionaryTouchManagerInterface
 {
-
     /**
      * @return void
      */
     public function touchActive();
-
 }

@@ -9,15 +9,14 @@ namespace Spryker\Zed\Kernel\ClassResolver\Config;
 
 use Exception;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 use Spryker\Shared\Kernel\Exception\Backtrace;
 use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Zed\Kernel\ClassResolver\ClassInfo;
 
 class BundleConfigNotFoundException extends Exception
 {
-
     /**
-     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
+     * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
      */
     public function __construct(ClassInfo $callerClassInfo)
     {
@@ -25,7 +24,7 @@ class BundleConfigNotFoundException extends Exception
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\ClassResolver\ClassInfo $callerClassInfo
+     * @param \Spryker\Shared\Kernel\ClassResolver\ClassInfo $callerClassInfo
      *
      * @return string
      */
@@ -33,11 +32,11 @@ class BundleConfigNotFoundException extends Exception
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
-            'Can not resolve %1$sConfig for your bundle "%1$s"',
+            'Can not resolve %1$sConfig for your module "%1$s"',
             $callerClassInfo->getBundle()
         ) . PHP_EOL;
 
-        $message .= 'You can fix this by adding the missing Config to your bundle.';
+        $message .= 'You can fix this by adding the missing Config to your module.';
 
         $message .= sprintf(
             'E.g. %s\\Zed\\%2$s\\%2$sConfig',
@@ -49,5 +48,4 @@ class BundleConfigNotFoundException extends Exception
 
         return $message;
     }
-
 }

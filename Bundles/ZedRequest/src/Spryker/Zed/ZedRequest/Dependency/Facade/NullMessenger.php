@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 
 class NullMessenger implements ZedRequestToMessengerInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
@@ -45,5 +44,4 @@ class NullMessenger implements ZedRequestToMessengerInterface
     public function getStoredMessages()
     {
     }
-
 }

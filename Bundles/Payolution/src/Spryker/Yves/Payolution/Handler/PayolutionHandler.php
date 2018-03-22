@@ -11,14 +11,13 @@ use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Payolution\PayolutionClientInterface;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Payolution\PayolutionConfig;
 use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Yves\Payolution\Exception\PaymentMethodNotFoundException;
-use Spryker\Zed\Payolution\PayolutionConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 class PayolutionHandler
 {
-
     /**
      * @var array
      */
@@ -164,5 +163,4 @@ class PayolutionHandler
 
         return $payolutionPaymentTransfer;
     }
-
 }

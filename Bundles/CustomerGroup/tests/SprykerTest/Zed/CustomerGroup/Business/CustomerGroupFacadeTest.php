@@ -8,8 +8,10 @@
 namespace SprykerTest\Zed\CustomerGroup\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CustomerGroupToCustomerAssignmentTransfer;
 use Generated\Shared\Transfer\CustomerGroupToCustomerTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroup;
 use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery;
@@ -29,15 +31,12 @@ use Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade;
  */
 class CustomerGroupFacadeTest extends Unit
 {
-
     /**
      * @return void
      */
     public function testGetValid()
     {
-        $customerGroupEntity = new SpyCustomerGroup();
-        $customerGroupEntity->setName('Test' . time());
-        $customerGroupEntity->save();
+        $customerGroupEntity = $this->creteCustomerGroup();
 
         $customerEntity = $this->createCustomer();
 
@@ -46,7 +45,7 @@ class CustomerGroupFacadeTest extends Unit
         $customerGroupToCustomerEntity->setFkCustomer($customerEntity->getIdCustomer());
         $customerGroupToCustomerEntity->save();
 
-        $customerGroupFacade = new CustomerGroupFacade();
+        $customerGroupFacade = $this->createCustomerGroupFacade();
 
         $customerGroupTransfer = new CustomerGroupTransfer();
         $customerGroupTransfer->setIdCustomerGroup($customerGroupEntity->getIdCustomerGroup());
@@ -65,9 +64,7 @@ class CustomerGroupFacadeTest extends Unit
      */
     public function testFindCustomerGroupByIdCustomerShouldReturnGroupTransferWhenValidIdGiven()
     {
-        $customerGroupEntity = new SpyCustomerGroup();
-        $customerGroupEntity->setName('Test' . time());
-        $customerGroupEntity->save();
+        $customerGroupEntity = $this->creteCustomerGroup();
 
         $customerEntity = $this->createCustomer();
 
@@ -76,7 +73,7 @@ class CustomerGroupFacadeTest extends Unit
         $customerGroupToCustomerEntity->setFkCustomer($customerEntity->getIdCustomer());
         $customerGroupToCustomerEntity->save();
 
-        $customerGroupFacade = new CustomerGroupFacade();
+        $customerGroupFacade = $this->createCustomerGroupFacade();
         $customerGroupTransfer = $customerGroupFacade->findCustomerGroupByIdCustomer($customerEntity->getIdCustomer());
 
         $this->assertNotEmpty($customerGroupTransfer);
@@ -88,7 +85,7 @@ class CustomerGroupFacadeTest extends Unit
      */
     public function testAddValid()
     {
-        $customerGroupFacade = new CustomerGroupFacade();
+        $customerGroupFacade = $this->createCustomerGroupFacade();
 
         $customerEntityOne = $this->createCustomer();
         $customerEntityTwo = $this->createCustomer('two@second.de', 'Second', 'Two', 'two');
@@ -114,7 +111,7 @@ class CustomerGroupFacadeTest extends Unit
      */
     public function testUpdateValid()
     {
-        $customerGroupFacade = new CustomerGroupFacade();
+        $customerGroupFacade = $this->createCustomerGroupFacade();
 
         $customerGroup = [
             'name' => 'Test' . time(),
@@ -147,7 +144,7 @@ class CustomerGroupFacadeTest extends Unit
      */
     public function testUpdateCustomersValid()
     {
-        $customerGroupFacade = new CustomerGroupFacade();
+        $customerGroupFacade = $this->createCustomerGroupFacade();
 
         $customerGroup = [
             'name' => 'Test' . time(),
@@ -168,9 +165,11 @@ class CustomerGroupFacadeTest extends Unit
         $customerGroupTransfer->fromArray($customerGroupEntity->toArray(), true);
 
         $customerEntityTwo = $this->createCustomer('two@second.de', 'Second', 'Two', 'two');
-        $customerGroupToCustomerTransfer = new CustomerGroupToCustomerTransfer();
-        $customerGroupToCustomerTransfer->setFkCustomer($customerEntityTwo->getIdCustomer());
-        $customerGroupTransfer->addCustomer($customerGroupToCustomerTransfer);
+        $customerGroupTransfer->setCustomerAssignment(
+            (new CustomerGroupToCustomerAssignmentTransfer())
+                ->addIdCustomerToAssign($customerEntityTwo->getIdCustomer())
+                ->addIdCustomerToDeAssign($customerEntityOne->getIdCustomer())
+        );
 
         $customerGroupTransfer->setName('Foo');
         $customerGroupTransfer->setDescription('Descr');
@@ -189,11 +188,9 @@ class CustomerGroupFacadeTest extends Unit
      */
     public function testDeleteValid()
     {
-        $customerGroupFacade = new CustomerGroupFacade();
+        $customerGroupFacade = $this->createCustomerGroupFacade();
 
-        $customerGroupEntity = new SpyCustomerGroup();
-        $customerGroupEntity->setName('Test' . time());
-        $customerGroupEntity->save();
+        $customerGroupEntity = $this->creteCustomerGroup();
 
         $customerGroupTransfer = new CustomerGroupTransfer();
         $customerGroupTransfer->setIdCustomerGroup($customerGroupEntity->getIdCustomerGroup());
@@ -211,11 +208,9 @@ class CustomerGroupFacadeTest extends Unit
      */
     public function testRemoveCustomersFromGroupValid()
     {
-        $customerGroupFacade = new CustomerGroupFacade();
+        $customerGroupFacade = $this->createCustomerGroupFacade();
 
-        $customerGroupEntity = new SpyCustomerGroup();
-        $customerGroupEntity->setName('Test' . time());
-        $customerGroupEntity->save();
+        $customerGroupEntity = $this->creteCustomerGroup();
 
         $customerEntity = $this->createCustomer();
 
@@ -224,12 +219,12 @@ class CustomerGroupFacadeTest extends Unit
         $customerGroupToCustomerEntity->setFkCustomer($customerEntity->getIdCustomer());
         $customerGroupToCustomerEntity->save();
 
-        $customerGroupToCustomerTransfer = new CustomerGroupToCustomerTransfer();
-        $customerGroupToCustomerTransfer->setFkCustomer($customerEntity->getIdCustomer());
-
         $customerGroupTransfer = new CustomerGroupTransfer();
         $customerGroupTransfer->setIdCustomerGroup($customerGroupEntity->getIdCustomerGroup());
-        $customerGroupTransfer->addCustomer($customerGroupToCustomerTransfer);
+        $customerGroupTransfer->setCustomerAssignment(
+            (new CustomerGroupToCustomerAssignmentTransfer())
+                ->addIdCustomerToDeAssign($customerEntity->getIdCustomer())
+        );
 
         $customerGroupFacade->removeCustomersFromGroup($customerGroupTransfer);
 
@@ -240,6 +235,31 @@ class CustomerGroupFacadeTest extends Unit
             ->findOne();
 
         $this->assertNull($customerEntity);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCustomerFromAllGroups()
+    {
+        $customerGroupFacade = $this->createCustomerGroupFacade();
+
+        $customerGroupEntity1 = $this->creteCustomerGroup();
+        $customerGroupEntity2 = $this->creteCustomerGroup();
+
+        $customerEntity = $this->createCustomer();
+
+        $this->createCustomerToGroup($customerEntity->getIdCustomer(), $customerGroupEntity1->getIdCustomerGroup());
+        $this->createCustomerToGroup($customerEntity->getIdCustomer(), $customerGroupEntity2->getIdCustomerGroup());
+
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setIdCustomer($customerEntity->getIdCustomer());
+
+        $customerGroupFacade->removeCustomerFromAllGroups($customerTransfer);
+
+        $customerGroupTransfer = $customerGroupFacade->findCustomerGroupByIdCustomer($customerEntity->getIdCustomer());
+
+        $this->assertNull($customerGroupTransfer);
     }
 
     /**
@@ -263,4 +283,41 @@ class CustomerGroupFacadeTest extends Unit
         return $customerEntity;
     }
 
+    /**
+     * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroup
+     */
+    protected function creteCustomerGroup()
+    {
+        $customerGroupEntity = (new SpyCustomerGroup())
+            ->setName('Test' . uniqid(true));
+
+        $customerGroupEntity->save();
+
+        return $customerGroupEntity;
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade
+     */
+    protected function createCustomerGroupFacade()
+    {
+        return new CustomerGroupFacade();
+    }
+
+    /**
+     * @param int $idCustomer
+     * @param int $idCustomerGroup
+     *
+     * @return $this|\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer
+     */
+    protected function createCustomerToGroup($idCustomer, $idCustomerGroup)
+    {
+        $customerGroupToCustomerEntity = (new SpyCustomerGroupToCustomer())
+            ->setFkCustomerGroup($idCustomerGroup)
+            ->setFkCustomer($idCustomer);
+
+        $customerGroupToCustomerEntity->save();
+
+        return $customerGroupToCustomerEntity;
+    }
 }

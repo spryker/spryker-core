@@ -21,7 +21,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class TranslationTable extends AbstractTable
 {
-
     const ACTIONS = 'Actions';
     const URL_GLOSSARY_EDIT = '/glossary/edit';
     const GENERATED_KEY_MASK = 'generated.%';
@@ -82,8 +81,7 @@ class TranslationTable extends AbstractTable
         $config->setUrl('table');
 
         $config->setSortable([
-            SpyLocaleTableMap::COL_LOCALE_NAME,
-            SpyGlossaryTranslationTableMap::COL_ID_GLOSSARY_TRANSLATION,
+            SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY,
         ]);
 
         return $config;
@@ -171,5 +169,4 @@ class TranslationTable extends AbstractTable
 
         return $urls;
     }
-
 }

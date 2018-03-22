@@ -24,7 +24,6 @@ use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
  */
 interface FileSystemServiceInterface
 {
-
     /**
      * Specification:
      * - Get resource metadata
@@ -357,5 +356,4 @@ interface FileSystemServiceInterface
      * @return void
      */
     public function writeStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream);
-
 }

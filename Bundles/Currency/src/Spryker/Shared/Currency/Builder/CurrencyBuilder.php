@@ -12,7 +12,6 @@ use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternatio
 
 class CurrencyBuilder implements CurrencyBuilderInterface
 {
-
     /**
      * @var \Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface
      */
@@ -24,13 +23,23 @@ class CurrencyBuilder implements CurrencyBuilderInterface
     protected $defaultIsoCode;
 
     /**
+     * @var string
+     */
+    protected $currentCurrencyIsoCode;
+
+    /**
      * @param \Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface $currencyRepository
      * @param string $defaultIsoCode
+     * @param string $currentCurrencyIsoCode
      */
-    public function __construct(CurrencyToInternationalizationInterface $currencyRepository, $defaultIsoCode)
-    {
+    public function __construct(
+        CurrencyToInternationalizationInterface $currencyRepository,
+        $defaultIsoCode,
+        $currentCurrencyIsoCode
+    ) {
         $this->currencyRepository = $currencyRepository;
         $this->defaultIsoCode = $defaultIsoCode;
+        $this->currentCurrencyIsoCode = $currentCurrencyIsoCode;
     }
 
     /**
@@ -55,7 +64,6 @@ class CurrencyBuilder implements CurrencyBuilderInterface
      */
     public function getCurrent()
     {
-        return $this->fromIsoCode($this->defaultIsoCode);
+        return $this->fromIsoCode($this->currentCurrencyIsoCode);
     }
-
 }

@@ -18,7 +18,6 @@ use Twig_SimpleFunction;
  */
 class TwigCmsBlockPlaceholder extends AbstractPlugin implements TwigFunctionPluginInterface
 {
-
     const CMS_BLOCK_PREFIX_KEY = 'generated.cms.cms-block';
 
     /**
@@ -47,7 +46,6 @@ class TwigCmsBlockPlaceholder extends AbstractPlugin implements TwigFunctionPlug
                 }
 
                 return $this->renderCmsTwigContent($translation, $identifier, $context);
-
             }, ['needs_context' => true]),
         ];
     }
@@ -89,5 +87,4 @@ class TwigCmsBlockPlaceholder extends AbstractPlugin implements TwigFunctionPlug
     {
         return $application['translator'];
     }
-
 }

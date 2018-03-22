@@ -12,11 +12,10 @@ use Spryker\Zed\Api\ApiConfig;
 
 /**
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
- * @method \Spryker\Zed\Api\Business\ApiFacade getFacade()
+ * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
  */
 class PathPreProcessor implements PreProcessorInterface
 {
-
     const SERVER_REQUEST_URI = 'REQUEST_URI';
 
     /**
@@ -42,5 +41,4 @@ class PathPreProcessor implements PreProcessorInterface
 
         return $apiRequestTransfer;
     }
-
 }

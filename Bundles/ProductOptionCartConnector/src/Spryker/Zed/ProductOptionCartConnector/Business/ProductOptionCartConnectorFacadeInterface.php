@@ -12,9 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductOptionCartConnectorFacadeInterface
 {
-
     /**
-     *
      * Specification:
      *  - Expand product option transfer object with additional data from persistence
      *  - Returns CartChangeTransfer transfer with option data included
@@ -28,7 +26,6 @@ interface ProductOptionCartConnectorFacadeInterface
     public function expandProductOptions(CartChangeTransfer $changeTransfer);
 
     /**
-     *
      * Specification:
      *  - Set group key to itemTransfer to contain product option identifiers.
      *  - Returns CartChangeTransfer with modified group key for each item, which includes options
@@ -42,7 +39,6 @@ interface ProductOptionCartConnectorFacadeInterface
     public function expandGroupKey(CartChangeTransfer $changeTransfer);
 
     /**
-     *
      * Specification:
      *  - Sets each product quantity to item quantity
      *  - Returns CartChangeTransfer with modified item quantity
@@ -55,4 +51,18 @@ interface ProductOptionCartConnectorFacadeInterface
      */
     public function changeProductOptionInCartQuantity(QuoteTransfer $quoteTransfer);
 
+    /**
+     * Specification:
+     * - Checks changed cart product's product option prices if they exist.
+     * - Price has to be present for the current store, current currency, and current price mode.
+     * - Product option value price might be defined using the "default store" (fkStore=NULL).
+     * - Returns pre-check transfer with error messages in case of error.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateProductOptionValuePrices(CartChangeTransfer $cartChangeTransfer);
 }

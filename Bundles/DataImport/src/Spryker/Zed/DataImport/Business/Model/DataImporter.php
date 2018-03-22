@@ -25,7 +25,6 @@ class DataImporter implements
     DataImporterAfterImportAwareInterface,
     DataSetStepBrokerAwareInterface
 {
-
     /**
      * @var string
      */
@@ -123,6 +122,8 @@ class DataImporter implements
 
         $this->beforeImport();
 
+        $start = microtime(true);
+
         foreach ($dataReader as $dataSet) {
             try {
                 $this->importDataSet($dataSet);
@@ -138,6 +139,8 @@ class DataImporter implements
 
             unset($dataSet);
         }
+
+        $dataImporterReportTransfer->setImportTime(microtime(true) - $start);
 
         $this->afterImport();
 
@@ -157,18 +160,12 @@ class DataImporter implements
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @throws \Exception
-     *
      * @return void
      */
     protected function importDataSet(DataSetInterface $dataSet)
     {
         foreach ($this->dataSetStepBroker as $dataSetImporter) {
-            try {
-                $dataSetImporter->execute($dataSet);
-            } catch (Exception $exception) {
-                throw $exception;
-            }
+            $dataSetImporter->execute($dataSet);
         }
     }
 
@@ -238,5 +235,4 @@ class DataImporter implements
 
         return $message;
     }
-
 }

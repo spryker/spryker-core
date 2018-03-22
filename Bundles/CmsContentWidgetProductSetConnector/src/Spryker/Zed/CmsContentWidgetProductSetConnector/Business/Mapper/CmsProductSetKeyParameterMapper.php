@@ -12,7 +12,6 @@ use Spryker\Zed\CmsContentWidgetProductSetConnector\Persistence\CmsContentWidget
 
 class CmsProductSetKeyParameterMapper implements CmsProductSetKeyParameterMapperInterface
 {
-
     /**
      * @var \Spryker\Zed\CmsContentWidgetProductSetConnector\Persistence\CmsContentWidgetProductSetConnectorQueryContainerInterface
      */
@@ -45,5 +44,4 @@ class CmsProductSetKeyParameterMapper implements CmsProductSetKeyParameterMapper
 
         return $productSetKeyIdPairs;
     }
-
 }

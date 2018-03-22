@@ -9,7 +9,6 @@ use Generated\Shared\Transfer\ClauseTransfer;
 
 interface ClauseValidatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
@@ -18,5 +17,4 @@ interface ClauseValidatorInterface
      * @return void
      */
     public function validateClause(ClauseTransfer $clauseTransfer);
-
 }

@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductLabelCollector\Dependency\Facade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Collector\Business\Collector\DatabaseCollectorInterface;
-use Spryker\Zed\Collector\Business\CollectorFacadeInterface;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
@@ -19,7 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ProductLabelCollectorToCollectorBridge implements ProductLabelCollectorToCollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\Collector\Business\CollectorFacadeInterface
      */
@@ -28,7 +26,7 @@ class ProductLabelCollectorToCollectorBridge implements ProductLabelCollectorToC
     /**
      * @param \Spryker\Zed\Collector\Business\CollectorFacadeInterface $collectorFacade
      */
-    public function __construct(CollectorFacadeInterface $collectorFacade)
+    public function __construct($collectorFacade)
     {
         $this->collectorFacade = $collectorFacade;
     }
@@ -66,5 +64,4 @@ class ProductLabelCollectorToCollectorBridge implements ProductLabelCollectorToC
             $output
         );
     }
-
 }

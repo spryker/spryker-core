@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -120,7 +119,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     * @param array|\Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemCollection
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemCollection
      *
      * @return void
      */
@@ -242,5 +241,4 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
             ->createReader()
             ->getCustomerWishlistCollection($customerTransfer);
     }
-
 }

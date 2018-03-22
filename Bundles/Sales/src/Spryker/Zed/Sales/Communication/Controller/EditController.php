@@ -16,15 +16,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
- * @method \Spryker\Zed\Sales\Business\SalesFacade getFacade()
+ * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
  */
 class EditController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function customerAction(Request $request)
     {
@@ -32,13 +31,13 @@ class EditController extends AbstractController
 
         $dataProvider = $this->getFactory()->createCustomerFormDataProvider();
         $form = $this->getFactory()
-            ->createCustomerForm(
+            ->getCustomerForm(
                 $dataProvider->getData($idSalesOrder),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $orderTransfer = (new OrderTransfer())->fromArray($form->getData(), true);
             $this->getFacade()->updateOrder($orderTransfer, $idSalesOrder);
 
@@ -63,7 +62,7 @@ class EditController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function addressAction(Request $request)
     {
@@ -72,13 +71,13 @@ class EditController extends AbstractController
 
         $dataProvider = $this->getFactory()->createAddressFormDataProvider();
         $form = $this->getFactory()
-            ->createAddressForm(
+            ->getAddressForm(
                 $dataProvider->getData($idOrderAddress),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $addressTransfer = (new AddressTransfer())->fromArray($form->getData(), true);
             $addressTransfer->setIdSalesOrderAddress($idOrderAddress);
             $this->getFacade()
@@ -101,5 +100,4 @@ class EditController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
 }

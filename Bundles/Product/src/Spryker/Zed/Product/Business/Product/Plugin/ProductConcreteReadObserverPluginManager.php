@@ -12,7 +12,6 @@ use Spryker\Zed\Product\Business\Product\Observer\ProductConcreteReadObserverInt
 
 class ProductConcreteReadObserverPluginManager implements ProductConcreteReadObserverInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface[]
      */
@@ -27,6 +26,8 @@ class ProductConcreteReadObserverPluginManager implements ProductConcreteReadObs
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -39,5 +40,4 @@ class ProductConcreteReadObserverPluginManager implements ProductConcreteReadObs
 
         return $productConcreteTransfer;
     }
-
 }

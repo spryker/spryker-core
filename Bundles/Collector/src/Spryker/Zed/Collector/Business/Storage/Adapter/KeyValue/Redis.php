@@ -14,7 +14,6 @@ use Spryker\Shared\Storage\StorageConstants;
 
 abstract class Redis
 {
-
     /**
      * @var array
      */
@@ -36,12 +35,19 @@ abstract class Redis
     protected $debug;
 
     /**
+     * @var mixed
+     */
+    protected $options;
+
+    /**
      * @param array $config
+     * @param mixed $options
      * @param bool $debug
      */
-    public function __construct(array $config, $debug = false)
+    public function __construct(array $config, $options = null, $debug = false)
     {
         $this->config = $config;
+        $this->options = $options;
         $this->debug = $debug;
         $this->resetAccessStats();
     }
@@ -64,6 +70,14 @@ abstract class Redis
     public function getConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOptions()
+    {
+        return $this->options;
     }
 
     /**
@@ -225,7 +239,7 @@ abstract class Redis
     public function connect()
     {
         if (!$this->resource) {
-            $resource = new Client($this->config);
+            $resource = new Client($this->config, $this->options);
 
             if (!$resource) {
                 throw new ConnectionException($resource, 'Could not connect to redis server');
@@ -246,5 +260,4 @@ abstract class Redis
             $this->resource->disconnect();
         }
     }
-
 }

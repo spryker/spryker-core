@@ -17,7 +17,6 @@ use Spryker\Shared\EventJournal\Model\EventInterface;
  */
 class EventJournalClient extends AbstractClient implements EventJournalClientInterface
 {
-
     /**
      * @api
      *
@@ -29,5 +28,4 @@ class EventJournalClient extends AbstractClient implements EventJournalClientInt
     {
         $this->getFactory()->createEventJournal()->saveEvent($event);
     }
-
 }

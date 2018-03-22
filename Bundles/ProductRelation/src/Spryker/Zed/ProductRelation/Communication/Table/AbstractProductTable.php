@@ -12,7 +12,6 @@ use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainer;
 
 abstract class AbstractProductTable extends AbstractTable
 {
-
     /**
      * @param array $data
      *
@@ -36,11 +35,10 @@ abstract class AbstractProductTable extends AbstractTable
     {
         $statusAggregation = explode(',', $data[ProductRelationQueryContainer::COL_IS_ACTIVE_AGGREGATION]);
         foreach ($statusAggregation as $status) {
-            if ($status === 'true') {
+            if (filter_var($status, FILTER_VALIDATE_BOOLEAN)) {
                 return true;
             }
         }
         return false;
     }
-
 }

@@ -11,7 +11,6 @@ use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
 
 class CmsBlockReader implements CmsBlockReaderInterface
 {
-
     /**
      * @var \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface
      */
@@ -42,8 +41,9 @@ class CmsBlockReader implements CmsBlockReaderInterface
     public function findCmsBlockById($idCmsBlock)
     {
         $spyCmsBlock = $this->queryContainer
-            ->queryCmsBlockByIdWithTemplateWithGlossary($idCmsBlock)
-            ->findOne();
+            ->queryCmsBlockByIdWithTemplateWithGlossaryWithStoreRelation($idCmsBlock)
+            ->find()
+            ->getFirst();
 
         if ($spyCmsBlock) {
             return $this->mapper->mapCmsBlockEntityToTransfer($spyCmsBlock);
@@ -51,5 +51,4 @@ class CmsBlockReader implements CmsBlockReaderInterface
 
         return null;
     }
-
 }

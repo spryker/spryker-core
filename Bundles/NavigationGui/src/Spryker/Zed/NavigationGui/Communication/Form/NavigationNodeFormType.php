@@ -7,48 +7,37 @@
 
 namespace Spryker\Zed\NavigationGui\Communication\Form;
 
+use DateTime;
 use Generated\Shared\Transfer\NavigationNodeTransfer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContext;
 
+/**
+ * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
+ */
 class NavigationNodeFormType extends AbstractType
 {
-
     const FIELD_NODE_TYPE = 'node_type';
     const FIELD_NAVIGATION_NODE_LOCALIZED_ATTRIBUTES = 'navigation_node_localized_attributes';
     const FIELD_IS_ACTIVE = 'is_active';
+    const FIELD_VALID_FROM = 'valid_from';
+    const FIELD_VALID_TO = 'valid_to';
 
     const NODE_TYPE_CATEGORY = 'category';
     const NODE_TYPE_CMS_PAGE = 'cms_page';
     const NODE_TYPE_LINK = 'link';
     const NODE_TYPE_EXTERNAL_URL = 'external_url';
-
-    /**
-     * @var \Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeLocalizedAttributesFormType
-     */
-    protected $navigationNodeLocalizedAttributesFormType;
-
-    /**
-     * @param \Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeLocalizedAttributesFormType $navigationNodeLocalizedAttributesFormType
-     */
-    public function __construct(NavigationNodeLocalizedAttributesFormType $navigationNodeLocalizedAttributesFormType)
-    {
-        $this->navigationNodeLocalizedAttributesFormType = $navigationNodeLocalizedAttributesFormType;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'navigation_node';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -76,7 +65,9 @@ class NavigationNodeFormType extends AbstractType
         $this
             ->addNodeTypeField($builder)
             ->addNavigationNodeLocalizedAttributesForms($builder)
-            ->addIsActiveField($builder);
+            ->addIsActiveField($builder)
+            ->addValidFromField($builder)
+            ->addValidToField($builder);
 
         $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
             $this->unsetLocalizedUrls($event, $event->getData());
@@ -94,12 +85,12 @@ class NavigationNodeFormType extends AbstractType
             ->add(self::FIELD_NODE_TYPE, ChoiceType::class, [
                 'label' => 'Type',
                 'placeholder' => 'Label',
-                'choices' => [
-                    'Category' => self::NODE_TYPE_CATEGORY,
-                    'CMS page' => self::NODE_TYPE_CMS_PAGE,
-                    'Link' => self::NODE_TYPE_LINK,
-                    'External URL' => self::NODE_TYPE_EXTERNAL_URL,
-                ],
+                'choices' => array_flip([
+                    self::NODE_TYPE_CATEGORY => 'Category',
+                    self::NODE_TYPE_CMS_PAGE => 'CMS page',
+                    self::NODE_TYPE_LINK => 'Link',
+                    self::NODE_TYPE_EXTERNAL_URL => 'External URL',
+                ]),
                 'choices_as_values' => true,
                 'choice_attr' => [
                     'Category' => ['data-url' => '/search-for-category'],
@@ -121,7 +112,7 @@ class NavigationNodeFormType extends AbstractType
     {
         $builder
             ->add(self::FIELD_NAVIGATION_NODE_LOCALIZED_ATTRIBUTES, CollectionType::class, [
-                'type' => $this->navigationNodeLocalizedAttributesFormType,
+                'entry_type' => NavigationNodeLocalizedAttributesFormType::class,
             ]);
 
         return $this;
@@ -143,6 +134,111 @@ class NavigationNodeFormType extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addValidFromField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_VALID_FROM, DateType::class, [
+            'label' => 'Valid from',
+            'widget' => 'single_text',
+            'required' => false,
+            'attr' => [
+                'class' => 'datepicker safe-datetime',
+            ],
+            'constraints' => [
+                $this->createValidFromRangeConstraint(),
+            ],
+        ]);
+
+        $builder->get(static::FIELD_VALID_FROM)
+            ->addModelTransformer($this->createDateTimeModelTransformer());
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addValidToField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_VALID_TO, DateType::class, [
+            'label' => 'Valid to',
+            'widget' => 'single_text',
+            'required' => false,
+            'attr' => [
+                'class' => 'datepicker safe-datetime',
+            ],
+            'constraints' => [
+                $this->createValidToFieldRangeConstraint(),
+            ],
+        ]);
+
+        $builder->get(static::FIELD_VALID_TO)
+            ->addModelTransformer($this->createDateTimeModelTransformer());
+
+        return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function createValidFromRangeConstraint()
+    {
+        return new Callback([
+            'callback' => function ($dateTimeFrom, ExecutionContext $context) {
+                $dateTimeTo = $context->getRoot()->getData()->getValidTo();
+                if (empty($dateTimeFrom) || empty($dateTimeTo)) {
+                    return;
+                }
+
+                if ($dateTimeFrom > $dateTimeTo) {
+                    $context->addViolation('Date "Valid from" cannot be later than "Valid to".');
+                }
+            },
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function createValidToFieldRangeConstraint()
+    {
+        return new Callback([
+            'callback' => function ($dateTimeTo, ExecutionContext $context) {
+                $dateTimeFrom = $context->getRoot()->getData()->getValidFrom();
+                if (empty($dateTimeFrom) || empty($dateTimeTo)) {
+                    return;
+                }
+
+                if ($dateTimeTo < $dateTimeFrom) {
+                    $context->addViolation('Date "Valid to" cannot be earlier than "Valid from".');
+                }
+            },
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createDateTimeModelTransformer()
+    {
+        return new CallbackTransformer(
+            function ($value) {
+                if ($value !== null) {
+                    return new DateTime($value);
+                }
+            },
+            function ($value) {
+                return $value;
+            }
+        );
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormEvent $event
      * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
      *
@@ -161,4 +257,21 @@ class NavigationNodeFormType extends AbstractType
         $event->setData($navigationNodeTransfer);
     }
 
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'navigation_node';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

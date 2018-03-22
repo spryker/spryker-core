@@ -11,12 +11,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPluginInterface;
 
 /**
- * @method \Spryker\Zed\ProductNew\Business\ProductNewFacadeInterface getFacade
- * @method \Spryker\Zed\ProductNew\Business\ProductNewFacade getFacade()
+ * @method \Spryker\Zed\ProductNew\Business\ProductNewFacadeInterface getFacade()
  */
 class ProductNewLabelUpdaterPlugin extends AbstractPlugin implements ProductLabelRelationUpdaterPluginInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
      */
@@ -24,5 +22,4 @@ class ProductNewLabelUpdaterPlugin extends AbstractPlugin implements ProductLabe
     {
         return $this->getFacade()->findProductLabelProductAbstractRelationChanges();
     }
-
 }

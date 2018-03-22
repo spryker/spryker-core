@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\LocatorLocatorInterface;
 
 abstract class AbstractLocator implements LocatorLocatorInterface
 {
-
     /**
      * @param string $bundle
      * @param array|null $arguments
@@ -27,5 +26,4 @@ abstract class AbstractLocator implements LocatorLocatorInterface
      * @return \Spryker\Shared\Kernel\BundleProxy
      */
     abstract protected function getBundleProxy();
-
 }

@@ -12,14 +12,12 @@ namespace Spryker\Zed\CmsContentWidgetProductConnector\Persistence;
  */
 interface CmsContentWidgetProductConnectorQueryContainerInterface
 {
-
     /**
      * @api
      *
-     * @param array|string[] $skuList
+     * @param string[] $skuList
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductIdsBySkuList(array $skuList);
-
 }

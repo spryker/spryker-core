@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface EmbeddedTransferInterface
 {
-
     /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject
      *
@@ -23,5 +22,4 @@ interface EmbeddedTransferInterface
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function getTransfer();
-
 }

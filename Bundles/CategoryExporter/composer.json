@@ -3,6 +3,7 @@
   "description": "CategoryExporter module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/category": "^3.0.0 || ^4.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/key-builder": "^1.0.0",
@@ -13,8 +14,8 @@
     "spryker/testify": "*"
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "minimum-stability": "dev",

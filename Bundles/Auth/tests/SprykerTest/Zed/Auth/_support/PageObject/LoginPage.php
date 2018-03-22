@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\Auth\PageObject;
 
 class LoginPage
 {
-
     const URL = '/auth/login/';
 
     const ADMIN_USERNAME = 'admin@spryker.com';
@@ -22,5 +21,4 @@ class LoginPage
     const AUTHENTICATION_FAILED = 'Authentication failed!';
 
     const ERROR_MESSAGE_EMPTY_FIELD = 'This value should not be blank.';
-
 }

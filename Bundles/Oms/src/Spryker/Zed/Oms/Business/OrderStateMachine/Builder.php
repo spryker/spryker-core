@@ -14,12 +14,10 @@ use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Process\TransitionInterface;
-use Spryker\Zed\Oms\OmsConfig;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 
 class Builder implements BuilderInterface
 {
-
     /**
      * @var \SimpleXMLElement
      */
@@ -51,9 +49,14 @@ class Builder implements BuilderInterface
     protected $process;
 
     /**
-     * @var array
+     * @var string|array
      */
     protected $processDefinitionLocation;
+
+    /**
+     * @var string
+     */
+    protected $subProcessPrefixDelimiter;
 
     /**
      * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
@@ -61,13 +64,21 @@ class Builder implements BuilderInterface
      * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface $transition
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string|array $processDefinitionLocation
+     * @param string $subProcessPrefixDelimiter
      */
-    public function __construct(EventInterface $event, StateInterface $state, TransitionInterface $transition, ProcessInterface $process, $processDefinitionLocation)
-    {
+    public function __construct(
+        EventInterface $event,
+        StateInterface $state,
+        TransitionInterface $transition,
+        ProcessInterface $process,
+        $processDefinitionLocation,
+        $subProcessPrefixDelimiter = ' - '
+    ) {
         $this->event = $event;
         $this->state = $state;
         $this->transition = $transition;
         $this->process = $process;
+        $this->subProcessPrefixDelimiter = $subProcessPrefixDelimiter;
 
         $this->setProcessDefinitionLocation($processDefinitionLocation);
     }
@@ -110,9 +121,17 @@ class Builder implements BuilderInterface
     {
         foreach ($this->rootElement->children() as $xmlProcess) {
             $processFile = $this->getAttributeString($xmlProcess, 'file');
-            if (isset($processFile)) {
+            $processName = $this->getAttributeString($xmlProcess, 'name');
+            $processPrefix = $this->getAttributeString($xmlProcess, 'prefix');
+
+            if ($processFile) {
                 $xmlSubProcess = $this->loadXmlFromFileName(str_replace(' ', '_', $processFile));
-                $this->recursiveMerge($xmlSubProcess, $this->rootElement);
+
+                if ($processName) {
+                    $xmlSubProcess->children()->process[0]['name'] = $processName;
+                }
+
+                $this->recursiveMerge($xmlSubProcess, $this->rootElement, $processPrefix);
             }
         }
     }
@@ -120,10 +139,11 @@ class Builder implements BuilderInterface
     /**
      * @param \SimpleXMLElement $fromXmlElement
      * @param \SimpleXMLElement $intoXmlNode
+     * @param string|null $prefix
      *
      * @return void
      */
-    protected function recursiveMerge($fromXmlElement, $intoXmlNode)
+    protected function recursiveMerge($fromXmlElement, $intoXmlNode, $prefix = null)
     {
         $xmlElements = $fromXmlElement->children();
         if (!isset($xmlElements)) {
@@ -132,14 +152,59 @@ class Builder implements BuilderInterface
 
         /** @var \SimpleXMLElement $xmlElement */
         foreach ($xmlElements as $xmlElement) {
+            $xmlElement = $this->prefixSubProcessElementValue($xmlElement, $prefix);
+            $xmlElement = $this->prefixSubProcessElementAttributes($xmlElement, $prefix);
+
             $child = $intoXmlNode->addChild($xmlElement->getName(), $xmlElement);
             $attributes = $xmlElement->attributes();
             foreach ($attributes as $k => $v) {
                 $child->addAttribute($k, $v);
             }
 
-            $this->recursiveMerge($xmlElement, $child);
+            $this->recursiveMerge($xmlElement, $child, $prefix);
         }
+    }
+
+    /**
+     * @param \SimpleXMLElement $xmlElement
+     * @param string|null $prefix
+     *
+     * @return \SimpleXMLElement
+     */
+    protected function prefixSubProcessElementValue(SimpleXMLElement $xmlElement, $prefix = null)
+    {
+        if ($prefix === null) {
+            return $xmlElement;
+        }
+
+        $namespaceDependentElementNames = ['source', 'target', 'event'];
+
+        if (in_array($xmlElement->getName(), $namespaceDependentElementNames)) {
+            $xmlElement[0] = $prefix . $this->subProcessPrefixDelimiter . $xmlElement[0];
+        }
+
+        return $xmlElement;
+    }
+
+    /**
+     * @param \SimpleXMLElement $xmlElement
+     * @param string|null $prefix
+     *
+     * @return \SimpleXMLElement
+     */
+    protected function prefixSubProcessElementAttributes(SimpleXMLElement $xmlElement, $prefix = null)
+    {
+        if ($prefix === null) {
+            return $xmlElement;
+        }
+
+        $namespaceDependentElementNames = ['state', 'event'];
+
+        if (in_array($xmlElement->getName(), $namespaceDependentElementNames)) {
+            $xmlElement->attributes()['name'] = $prefix . $this->subProcessPrefixDelimiter . $xmlElement->attributes()['name'];
+        }
+
+        return $xmlElement;
     }
 
     /**
@@ -234,11 +299,11 @@ class Builder implements BuilderInterface
             $processName = $this->getAttributeString($xmlProcess, 'name');
             $process->setName($processName);
             $processMap[$processName] = $process;
-            $process->setMain($this->getAttributeBoolean($xmlProcess, 'main'));
+            $process->setIsMain($this->getAttributeBoolean($xmlProcess, 'main'));
 
             $process->setFile($this->getAttributeString($xmlProcess, 'file'));
 
-            if ($process->getMain()) {
+            if ($process->getIsMain()) {
                 $mainProcess = $process;
             }
         }
@@ -400,25 +465,7 @@ class Builder implements BuilderInterface
      */
     private function setProcessDefinitionLocation($processDefinitionLocation)
     {
-        $processDefinitionLocation = $this->setDefaultIfNull($processDefinitionLocation);
-
         $this->processDefinitionLocation = $processDefinitionLocation;
-    }
-
-    /**
-     * @deprecated This method can be removed when `$processDefinitionLocation` is mandatory
-     *
-     * @param string|array|null $processDefinitionLocation
-     *
-     * @return string|array
-     */
-    private function setDefaultIfNull($processDefinitionLocation)
-    {
-        if ($processDefinitionLocation !== null) {
-            return $processDefinitionLocation;
-        }
-
-        return $processDefinitionLocation = OmsConfig::DEFAULT_PROCESS_LOCATION;
     }
 
     /**
@@ -488,5 +535,4 @@ class Builder implements BuilderInterface
     {
         return '/\b' . dirname($fileName) . '\b/';
     }
-
 }

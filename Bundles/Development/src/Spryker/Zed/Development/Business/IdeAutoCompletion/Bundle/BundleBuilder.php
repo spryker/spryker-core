@@ -13,7 +13,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class BundleBuilder implements BundleBuilderInterface
 {
-
     /**
      * @var \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
      */
@@ -81,5 +80,4 @@ class BundleBuilder implements BundleBuilderInterface
             }
         }
     }
-
 }

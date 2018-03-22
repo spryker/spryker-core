@@ -10,11 +10,11 @@ namespace SprykerTest\Shared\Stock\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\StockProductBuilder;
 use Generated\Shared\DataBuilder\TypeBuilder;
+use Generated\Shared\Transfer\TypeTransfer;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class StockDataHelper extends Module
 {
-
     use LocatorHelperTrait;
 
     /**
@@ -22,12 +22,12 @@ class StockDataHelper extends Module
      *
      * @return void
      */
-    public function haveProductInStock($override = [])
+    public function haveProductInStock(array $override = [])
     {
         $stockFacade = $this->getStockFacade();
-        $stockType = (new TypeBuilder())->build();
-        $stockFacade->createStockType($stockType);
-        $stockFacade->createStockProduct((new StockProductBuilder($override))->build()->setStockType($stockType->getName()));
+        $stockTypeTransfer = (new TypeBuilder([TypeTransfer::NAME => 'Warehouse1']))->build();
+        $stockFacade->createStockType($stockTypeTransfer);
+        $stockFacade->createStockProduct((new StockProductBuilder($override))->build()->setStockType($stockTypeTransfer->getName()));
     }
 
     /**
@@ -37,5 +37,4 @@ class StockDataHelper extends Module
     {
         return $this->getLocator()->stock()->facade();
     }
-
 }

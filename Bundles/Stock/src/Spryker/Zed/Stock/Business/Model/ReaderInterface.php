@@ -8,14 +8,26 @@
 namespace Spryker\Zed\Stock\Business\Model;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface ReaderInterface
 {
-
     /**
      * @return array
      */
     public function getStockTypes();
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return array
+     */
+    public function getStockTypesForStore(StoreTransfer $storeTransfer);
+
+    /**
+     * @return array
+     */
+    public function getWarehouseToStoreMapping();
 
     /**
      * @param string $sku
@@ -26,10 +38,26 @@ interface ReaderInterface
 
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer);
+
+    /**
+     * @param string $sku
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
      */
     public function getStocksProduct($sku);
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
+     */
+    public function findProductStocksForStore($sku, StoreTransfer $storeTransfer);
 
     /**
      * @param string $sku
@@ -38,6 +66,14 @@ interface ReaderInterface
      * @return bool
      */
     public function hasStockProduct($sku, $stockType);
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function hastStockProductInStore($sku, StoreTransfer $storeTransfer);
 
     /**
      * @param string $sku
@@ -96,9 +132,17 @@ interface ReaderInterface
      *
      * @throws \Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException
      *
-     * @return array|\Generated\Shared\Transfer\StockProductTransfer[]
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function getStockProductsByIdProduct($idProductConcrete);
+
+    /**
+     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]|null
+     */
+    public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
@@ -106,5 +150,4 @@ interface ReaderInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer);
-
 }

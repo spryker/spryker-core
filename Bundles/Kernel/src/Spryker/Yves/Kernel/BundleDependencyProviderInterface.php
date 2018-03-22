@@ -9,12 +9,10 @@ namespace Spryker\Yves\Kernel;
 
 interface BundleDependencyProviderInterface
 {
-
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
     public function provideDependencies(Container $container);
-
 }

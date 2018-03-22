@@ -16,11 +16,10 @@ use Spryker\Zed\Newsletter\NewsletterConfig;
 
 /**
  * @method \Spryker\Zed\Newsletter\Communication\NewsletterCommunicationFactory getFactory()
- * @method \Spryker\Zed\Newsletter\Business\NewsletterFacade getFacade()
+ * @method \Spryker\Zed\Newsletter\Business\NewsletterFacadeInterface getFacade()
  */
 class DoubleOptInSubscriptionSender extends AbstractPlugin implements SubscriberOptInSenderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
@@ -161,5 +160,4 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
 
         return $keyName;
     }
-
 }

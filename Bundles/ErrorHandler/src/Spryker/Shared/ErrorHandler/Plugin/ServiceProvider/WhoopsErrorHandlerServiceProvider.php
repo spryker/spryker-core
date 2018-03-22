@@ -11,12 +11,13 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
+use Spryker\Shared\ErrorHandler\ErrorLogger;
+use Whoops\Handler\CallbackHandler;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
 class WhoopsErrorHandlerServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -24,9 +25,28 @@ class WhoopsErrorHandlerServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        $userPath = Config::get(ErrorHandlerConstants::USER_BASE_PATH, '');
-
         $whoops = new Run();
+        $whoops->pushHandler($this->getPrettyPageHandler());
+        $whoops->pushHandler($this->getErrorLoggerCallbackHandler());
+
+        $whoops->register();
+    }
+
+    /**
+     * @param \Silex\Application $app
+     *
+     * @return void
+     */
+    public function boot(Application $app)
+    {
+    }
+
+    /**
+     * @return \Whoops\Handler\PrettyPageHandler
+     */
+    protected function getPrettyPageHandler()
+    {
+        $userPath = Config::get(ErrorHandlerConstants::USER_BASE_PATH, '');
         $handler = new PrettyPageHandler();
         if ($userPath) {
             $handler->setEditor(function ($file, $line) use ($userPath) {
@@ -46,17 +66,17 @@ class WhoopsErrorHandlerServiceProvider implements ServiceProviderInterface
                 ];
             });
         }
-        $whoops->pushHandler($handler);
-        $whoops->register();
+
+        return $handler;
     }
 
     /**
-     * @param \Silex\Application $app
-     *
-     * @return void
+     * @return \Whoops\Handler\CallbackHandler
      */
-    public function boot(Application $app)
+    protected function getErrorLoggerCallbackHandler()
     {
+        return new CallbackHandler(function ($exception) {
+            ErrorLogger::getInstance()->log($exception);
+        });
     }
-
 }

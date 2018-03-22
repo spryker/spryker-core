@@ -12,6 +12,12 @@ use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
 interface FinderInterface
 {
+    /**
+     * @param string $stateMachineName
+     *
+     * @return bool
+     */
+    public function hasHandler($stateMachineName);
 
     /**
      * @param string $stateMachineName
@@ -77,5 +83,4 @@ interface FinderInterface
      * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
      */
     public function findProcessesForItems(array $stateMachineItems);
-
 }

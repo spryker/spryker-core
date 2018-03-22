@@ -13,7 +13,6 @@ use Spryker\Zed\Ratepay\Business\Api\Model\Base;
 
 class Refund extends Base
 {
-
     /**
      * @const Method operation.
      */
@@ -60,5 +59,4 @@ class Refund extends Base
     {
         return $this->basket;
     }
-
 }

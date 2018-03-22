@@ -8,15 +8,15 @@
 namespace Spryker\Client\Cart\Zed;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ZedRequest\Stub\ZedRequestStub;
 
 class CartStub extends ZedRequestStub implements CartStubInterface
 {
-
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function addItem(CartChangeTransfer $cartChangeTransfer)
     {
@@ -24,13 +24,22 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface $changeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $changeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function removeItem(CartChangeTransfer $changeTransfer)
     {
         return $this->zedStub->call('/cart/gateway/remove-item', $changeTransfer);
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function reloadItems(QuoteTransfer $quoteTransfer)
+    {
+        return $this->zedStub->call('/cart/gateway/reload-items', $quoteTransfer);
+    }
 }

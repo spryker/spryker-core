@@ -39,7 +39,6 @@ use Spryker\Zed\Payolution\Dependency\Facade\PayolutionToMoneyBridge;
  */
 class AbstractFacadeTest extends Unit
 {
-
     /**
      * @var \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
@@ -257,5 +256,4 @@ class AbstractFacadeTest extends Unit
         $this->assertNotNull($statusLog->getIdentificationShortid());
         $this->assertNotNull($statusLog->getProcessingTimestamp());
     }
-
 }

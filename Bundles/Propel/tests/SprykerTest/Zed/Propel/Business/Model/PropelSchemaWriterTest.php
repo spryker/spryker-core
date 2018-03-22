@@ -22,7 +22,6 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class PropelSchemaWriterTest extends AbstractPropelSchemaTest
 {
-
     const TEST_FILE_NAME = 'test_file';
     const TEST_CONTENT = 'some test content';
 
@@ -40,5 +39,4 @@ class PropelSchemaWriterTest extends AbstractPropelSchemaTest
             file_get_contents($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . self::TEST_FILE_NAME)
         );
     }
-
 }

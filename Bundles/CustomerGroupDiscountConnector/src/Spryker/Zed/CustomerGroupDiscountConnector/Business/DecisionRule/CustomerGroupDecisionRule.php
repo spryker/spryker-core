@@ -14,7 +14,6 @@ use Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDi
 
 class CustomerGroupDecisionRule implements CustomerGroupDecisionRuleInterface
 {
-
     /**
      * @var \Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDiscountConnectorToDiscountFacadeInterface
      */
@@ -50,12 +49,11 @@ class CustomerGroupDecisionRule implements CustomerGroupDecisionRuleInterface
         ClauseTransfer $clauseTransfer
     ) {
 
-        if (!$quoteTransfer->getCustomer()) {
+        if (!$this->rulePreCheck($quoteTransfer)) {
             return false;
         }
 
         $customerTransfer = $quoteTransfer->getCustomer();
-        $customerTransfer->requireIdCustomer();
 
         $customerGroupTransfer = $this->customerGroupFacade
             ->findCustomerGroupByIdCustomer($customerTransfer->getIdCustomer());
@@ -67,7 +65,23 @@ class CustomerGroupDecisionRule implements CustomerGroupDecisionRuleInterface
         $customerGroupTransfer->requireName();
 
         return $this->discountFacade->queryStringCompare($clauseTransfer, $customerGroupTransfer->getName());
-
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function rulePreCheck(QuoteTransfer $quoteTransfer)
+    {
+        if (!$quoteTransfer->getCustomer()) {
+            return false;
+        }
+
+        if (!$quoteTransfer->getCustomer()->getIdCustomer()) {
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -14,7 +14,6 @@ use Spryker\Zed\ZedNavigation\Business\Model\Validator\UrlUniqueValidatorInterfa
 
 class MenuFormatter implements MenuFormatterInterface
 {
-
     const VISIBLE = 'visible';
     const URI = 'uri';
     const ID = 'id';
@@ -243,5 +242,4 @@ class MenuFormatter implements MenuFormatterInterface
 
         return $pageController;
     }
-
 }

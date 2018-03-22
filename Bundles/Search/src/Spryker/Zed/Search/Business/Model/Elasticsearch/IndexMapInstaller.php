@@ -15,7 +15,6 @@ use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
 
 class IndexMapInstaller implements SearchInstallerInterface
 {
-
     /**
      * @var \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface
      */
@@ -71,5 +70,4 @@ class IndexMapInstaller implements SearchInstallerInterface
             $this->indexMapGenerator->generate($indexDefinition);
         }
     }
-
 }

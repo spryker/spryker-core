@@ -6,9 +6,10 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface AvailabilityHandlerInterface
 {
-
     /**
      * @param string $sku
      *
@@ -31,4 +32,20 @@ interface AvailabilityHandlerInterface
      */
     public function saveCurrentAvailability($sku, $quantity);
 
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function saveCurrentAvailabilityForStore($sku, $quantity, StoreTransfer $storeTransfer);
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return mixed
+     */
+    public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer);
 }

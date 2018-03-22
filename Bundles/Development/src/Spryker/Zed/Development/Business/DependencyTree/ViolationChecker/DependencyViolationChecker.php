@@ -14,7 +14,6 @@ use Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFin
 
 class DependencyViolationChecker implements DependencyViolationCheckerInterface
 {
-
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface
      */
@@ -71,5 +70,4 @@ class DependencyViolationChecker implements DependencyViolationCheckerInterface
     {
         $this->dependencyViolations[] = $dependency[DependencyTree::META_CLASS_NAME] . ' => ' . $dependency[DependencyTree::META_FOREIGN_CLASS_NAME];
     }
-
 }

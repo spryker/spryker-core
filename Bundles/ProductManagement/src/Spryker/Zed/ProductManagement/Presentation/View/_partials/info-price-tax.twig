@@ -5,8 +5,12 @@
             <div class="col-xs-6">
                 {% for price in currentProduct.prices %}
                     <div class="row">
-                        <div class="col-xs-4"><b>{{ 'Price' | trans }} ({{ price.price_type_name }}):</b></div>
-                        <div class="col-xs-8">{{ price.price | money }}</div>
+                        <div class="col-xs-4"><b>{{ 'Net price' | trans }} ({{ price.price_type_name }}):</b></div>
+                        <div class="col-xs-8">{{ price.money_value.net_amount | default(0) |  money }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4"><b>{{ 'Gross price' | trans }} ({{ price.price_type_name }}):</b></div>
+                        <div class="col-xs-8">{{ price.money_value.gross_amount | default(0) | money }}</div>
                     </div>
                 {% endfor %}
             </div>

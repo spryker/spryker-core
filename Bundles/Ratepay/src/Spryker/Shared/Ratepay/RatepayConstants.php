@@ -9,7 +9,6 @@ namespace Spryker\Shared\Ratepay;
 
 interface RatepayConstants
 {
-
     const PROVIDER_NAME = 'Ratepay';
 
     const PAYMENT_METHOD_INVOICE = 'ratepayInvoice';
@@ -94,5 +93,4 @@ interface RatepayConstants
      * Path to bundle glossary file.
      */
     const GLOSSARY_FILE_PATH = 'Business/Internal/glossary.yml';
-
 }

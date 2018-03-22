@@ -21,7 +21,6 @@ use Spryker\Yves\StepEngine\Process\StepCollectionInterface;
  */
 class StepCollectionTest extends AbstractStepEngineTest
 {
-
     /**
      * @return void
      */
@@ -371,5 +370,4 @@ class StepCollectionTest extends AbstractStepEngineTest
 
         $this->assertSame(static::STEP_URL_A, $stepCollection->getEscapeUrl($stepMockB));
     }
-
 }

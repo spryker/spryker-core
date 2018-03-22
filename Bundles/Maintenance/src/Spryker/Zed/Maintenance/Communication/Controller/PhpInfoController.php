@@ -10,12 +10,10 @@ namespace Spryker\Zed\Maintenance\Communication\Controller;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
- * @method \Spryker\Zed\Maintenance\Business\MaintenanceFacade getFacade()
  * @method \Spryker\Zed\Maintenance\Communication\MaintenanceCommunicationFactory getFactory()
  */
 class PhpInfoController extends AbstractController
 {
-
     /**
      * @return array
      */
@@ -58,5 +56,4 @@ class PhpInfoController extends AbstractController
 
         return $phpInfoContent;
     }
-
 }

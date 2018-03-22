@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Container;
 
 class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_LOCALE = 'locale facade';
     const FACADE_CMS = 'locale cms';
     const FACADE_URL = 'url facade';
@@ -30,6 +29,9 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
     const SERVICE_UTIL_ENCODING = 'util encoding service';
 
     const TWIG_ENVIRONMENT = 'twig environment';
+
+    const PLUGINS_CMS_PAGE_TABLE_EXPANDER = 'PLUGINS_CMS_PAGE_TABLE_EXPANDER';
+    const PLUGINS_CREATE_GLOSSARY_EXPANDER = 'PLUGINS_CREATE_GLOSSARY_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -66,6 +68,9 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
             return $this->getTwigEnvironment();
         };
 
+        $container = $this->addCmsPageTableExpanderPlugins($container);
+        $container = $this->addCreateGlossaryExpanderPlugins($container);
+
         return $container;
     }
 
@@ -78,4 +83,47 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
         return $pimplePlugin->getApplication()['twig'];
     }
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsPageTableExpanderPlugins(Container $container)
+    {
+        $container[static::PLUGINS_CMS_PAGE_TABLE_EXPANDER] = function (Container $container) {
+            return $this->getCmsPageTableExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface[]
+     */
+    protected function getCmsPageTableExpanderPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCreateGlossaryExpanderPlugins(Container $container)
+    {
+        $container[static::PLUGINS_CREATE_GLOSSARY_EXPANDER] = function (Container $container) {
+            return $this->getCreateGlossaryExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface[]
+     */
+    protected function getCreateGlossaryExpanderPlugins()
+    {
+        return [];
+    }
 }

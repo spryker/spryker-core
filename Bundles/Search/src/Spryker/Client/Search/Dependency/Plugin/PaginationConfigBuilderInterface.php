@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PaginationConfigTransfer;
 
 interface PaginationConfigBuilderInterface
 {
-
     /**
      * @api
      *
@@ -45,5 +44,4 @@ interface PaginationConfigBuilderInterface
      * @return int
      */
     public function getCurrentItemsPerPage(array $requestParameters);
-
 }

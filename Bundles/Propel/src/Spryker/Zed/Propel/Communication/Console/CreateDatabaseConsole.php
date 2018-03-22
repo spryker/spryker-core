@@ -12,11 +12,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Propel\Business\PropelFacade getFacade()
+ * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  */
 class CreateDatabaseConsole extends Console
 {
-
     const COMMAND_NAME = 'propel:database:create';
 
     /**
@@ -39,7 +38,6 @@ class CreateDatabaseConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->info('Creating Database');
-        $this->getFacade()->createDatabaseIfNotExists();
+        $this->getFacade()->createDatabase();
     }
-
 }

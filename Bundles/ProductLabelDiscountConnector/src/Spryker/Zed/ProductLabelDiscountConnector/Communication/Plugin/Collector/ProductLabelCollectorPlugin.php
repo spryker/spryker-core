@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ProductLabelCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface, DiscountRuleWithValueOptionsPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
@@ -56,5 +55,4 @@ class ProductLabelCollectorPlugin extends AbstractPlugin implements CollectorPlu
     {
         return $this->getFacade()->findAllLabels();
     }
-
 }

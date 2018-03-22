@@ -9,15 +9,12 @@ namespace Spryker\Zed\ProductAbstractDataFeed\Dependency\QueryContainer;
 
 class ProductAbstractDataFeedToProductBridge implements ProductAbstractDataFeedToProductInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
     protected $productQueryContainer;
 
     /**
-     * ProductAbstractDataFeedToProductBridge constructor.
-     *
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      */
     public function __construct($productQueryContainer)
@@ -33,5 +30,4 @@ class ProductAbstractDataFeedToProductBridge implements ProductAbstractDataFeedT
         return $this->productQueryContainer
             ->queryProductAbstract();
     }
-
 }

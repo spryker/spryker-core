@@ -21,11 +21,10 @@ use Spryker\Zed\NavigationGui\NavigationGuiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\NavigationGui\NavigationGuiConfig getConfig()
- * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
  */
 class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\NavigationGui\Communication\Table\NavigationTable
      */
@@ -35,6 +34,8 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `getNavigationForm()` instead.
+     *
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
      * @param array|null $options
      *
@@ -46,14 +47,29 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\NavigationGui\Communication\Form\NavigationFormType
+     * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
+     * @param array|null $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
      */
-    protected function createNavigationFormType()
+    public function getNavigationForm(NavigationTransfer $data = null, array $options = [])
     {
-        return new NavigationFormType($this->getQueryContainer());
+        return $this->createNavigationForm($data, $options);
     }
 
     /**
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
+     */
+    protected function createNavigationFormType()
+    {
+        return NavigationFormType::class;
+    }
+
+    /**
+     * @deprecated Use `getUpdateNavigationForm()` instead.
+     *
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
      * @param array|null $options
      *
@@ -65,11 +81,24 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\NavigationGui\Communication\Form\NavigationFormType
+     * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
+     * @param array|null $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getUpdateNavigationForm(NavigationTransfer $data = null, array $options = [])
+    {
+        return $this->createUpdateNavigationForm($data, $options);
+    }
+
+    /**
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
      */
     protected function createUpdateNavigationFormType()
     {
-        return new UpdateNavigationFormType($this->getQueryContainer());
+        return UpdateNavigationFormType::class;
     }
 
     /**
@@ -81,6 +110,8 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `getNavigationNodeForm()` instead.
+     *
      * @param \Generated\Shared\Transfer\NavigationNodeTransfer|null $data
      * @param array $options
      *
@@ -92,11 +123,24 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeFormType
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer|null $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getNavigationNodeForm(NavigationNodeTransfer $data = null, array $options = [])
+    {
+        return $this->createNavigationNodeForm($data, $options);
+    }
+
+    /**
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
      */
     protected function createNavigationNodeFormType()
     {
-        return new NavigationNodeFormType($this->createNavigationNodeLocalizedAttributesFormType());
+        return NavigationNodeFormType::class;
     }
 
     /**
@@ -108,11 +152,13 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeLocalizedAttributesFormType
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
      */
     protected function createNavigationNodeLocalizedAttributesFormType()
     {
-        return new NavigationNodeLocalizedAttributesFormType($this->getUrlFacade());
+        return NavigationNodeLocalizedAttributesFormType::class;
     }
 
     /**
@@ -138,5 +184,4 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(NavigationGuiDependencyProvider::FACADE_URL);
     }
-
 }

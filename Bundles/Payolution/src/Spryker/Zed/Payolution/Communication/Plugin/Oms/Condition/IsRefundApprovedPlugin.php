@@ -10,11 +10,10 @@ namespace Spryker\Zed\Payolution\Communication\Plugin\Oms\Condition;
 use Generated\Shared\Transfer\OrderTransfer;
 
 /**
- * @method \Spryker\Zed\Payolution\Business\PayolutionFacade getFacade()
+ * @method \Spryker\Zed\Payolution\Business\PayolutionFacadeInterface getFacade()
  */
 class IsRefundApprovedPlugin extends AbstractCheckPlugin
 {
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -24,5 +23,4 @@ class IsRefundApprovedPlugin extends AbstractCheckPlugin
     {
         return $this->getFacade()->isRefundApproved($orderTransfer);
     }
-
 }

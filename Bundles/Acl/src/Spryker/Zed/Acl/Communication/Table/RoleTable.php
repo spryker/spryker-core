@@ -17,7 +17,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class RoleTable extends AbstractTable
 {
-
     const ACTION = 'Action';
     const PARAM_ID_ROLE = 'id-role';
     const UPDATE_ROLE_URL = '/acl/role/update';
@@ -114,5 +113,4 @@ class RoleTable extends AbstractTable
 
         return $buttons;
     }
-
 }

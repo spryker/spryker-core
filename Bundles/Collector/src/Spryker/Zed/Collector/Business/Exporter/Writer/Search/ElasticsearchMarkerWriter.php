@@ -9,27 +9,17 @@ namespace Spryker\Zed\Collector\Business\Exporter\Writer\Search;
 
 use Elastica\Client;
 use Elastica\Type\Mapping;
+use Generated\Shared\Transfer\SearchCollectorConfigurationTransfer;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
-class ElasticsearchMarkerWriter implements WriterInterface
+class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWriterInterface
 {
-
     const WRITER_NAME = 'elasticsearch-marker-writer';
 
     /**
      * @var \Elastica\Client
      */
     protected $client;
-
-    /**
-     * @var \Elastica\Index
-     */
-    protected $index;
-
-    /**
-     * @var string
-     */
-    protected $type;
 
     /**
      * TODO stateful property must be refactored
@@ -39,6 +29,11 @@ class ElasticsearchMarkerWriter implements WriterInterface
     protected $metaData = [];
 
     /**
+     * @var \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer
+     */
+    protected $searchCollectorConfiguration;
+
+    /**
      * @param \Elastica\Client $searchClient
      * @param string $indexName
      * @param string $type
@@ -46,8 +41,11 @@ class ElasticsearchMarkerWriter implements WriterInterface
     public function __construct(Client $searchClient, $indexName, $type)
     {
         $this->client = $searchClient;
-        $this->index = $this->client->getIndex($indexName);
-        $this->type = $type;
+
+        $this->searchCollectorConfiguration = new SearchCollectorConfigurationTransfer();
+        $this->searchCollectorConfiguration
+            ->setIndexName($indexName)
+            ->setTypeName($type);
     }
 
     /**
@@ -68,7 +66,7 @@ class ElasticsearchMarkerWriter implements WriterInterface
     public function __destruct()
     {
         if (!empty($this->metaData)) {
-            $mapping = new Mapping($this->index->getType($this->type));
+            $mapping = new Mapping($this->getType());
             $mapping->setMeta($this->metaData)->send();
         }
     }
@@ -83,7 +81,7 @@ class ElasticsearchMarkerWriter implements WriterInterface
      */
     public function delete(array $dataSet)
     {
-        $mapping = new Mapping($this->index->getType($this->type));
+        $mapping = new Mapping($this->getType());
         $mapping->setMeta(['' => ''])->send(); // Empty mapping causes ClassCastException[java.util.ArrayList cannot be cast to java.util.Map]
     }
 
@@ -95,4 +93,37 @@ class ElasticsearchMarkerWriter implements WriterInterface
         return self::WRITER_NAME;
     }
 
+    /**
+     * @return \Elastica\Index
+     */
+    protected function getIndex()
+    {
+        return $this->client->getIndex($this->searchCollectorConfiguration->getIndexName());
+    }
+
+    /**
+     * @return \Elastica\Type
+     */
+    protected function getType()
+    {
+        return $this->getIndex()->getType($this->searchCollectorConfiguration->getTypeName());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer $collectorConfigurationTransfer
+     *
+     * @return void
+     */
+    public function setSearchCollectorConfiguration(SearchCollectorConfigurationTransfer $collectorConfigurationTransfer)
+    {
+        $this->searchCollectorConfiguration->fromArray($collectorConfigurationTransfer->modifiedToArray());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer
+     */
+    public function getSearchCollectorConfiguration()
+    {
+        return $this->searchCollectorConfiguration;
+    }
 }

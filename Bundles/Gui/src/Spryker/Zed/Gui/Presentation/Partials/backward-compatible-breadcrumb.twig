@@ -1,0 +1,20 @@
+{% if breadcrumbs|length > 0 %}
+    <ol class="breadcrumb">
+        <li>
+            <a href="/">{{ 'Dashboard' | trans }}</a>
+        </li>
+        {% for breadcrumbItem in breadcrumbs %}
+            <li>
+                {% if loop.last == true %}
+                    <strong>{{ breadcrumbItem.label }}</strong>
+                {% else %}
+                    {%  if breadcrumbItem.uri is not empty %}
+                        <a href="{{ breadcrumbItem.uri }}" title="{{ breadcrumbItem.title }}">{{ breadcrumbItem.label }}</a>
+                    {% else %}
+                        {{ breadcrumbItem.label }}
+                    {% endif %}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ol>
+{% endif %}

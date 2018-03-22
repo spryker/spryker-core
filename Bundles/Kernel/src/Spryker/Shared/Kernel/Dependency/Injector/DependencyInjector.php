@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\ContainerInterface;
 
 class DependencyInjector implements DependencyInjectorInterface
 {
-
     /**
      * @var \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollection
      */
@@ -38,5 +37,4 @@ class DependencyInjector implements DependencyInjectorInterface
 
         return $container;
     }
-
 }

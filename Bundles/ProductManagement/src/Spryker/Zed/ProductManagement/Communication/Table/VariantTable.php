@@ -12,6 +12,8 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\ProductValidity\Persistence\Map\SpyProductValidityTableMap;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Controller\EditController;
@@ -19,7 +21,6 @@ use Spryker\Zed\ProductManagement\ProductManagementConfig;
 
 class VariantTable extends AbstractProductTable
 {
-
     const TABLE_IDENTIFIER = 'product-variant-table';
 
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
@@ -30,6 +31,8 @@ class VariantTable extends AbstractProductTable
     const COL_ACTIONS = 'actions';
     const COL_ID_PRODUCT_BUNDLE = 'idProductBundle';
     const COL_IS_BUNDLE = 'is_bundle';
+    const COL_VALID_FROM = 'valid_from';
+    const COL_VALID_TO = 'valid_to';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -90,6 +93,8 @@ class VariantTable extends AbstractProductTable
             static::COL_STATUS => 'Status',
             static::COL_IS_BUNDLE => 'Is bundle',
             static::COL_ACTIONS => 'Actions',
+            static::COL_VALID_FROM => 'Valid from',
+            static::COL_VALID_TO => 'Valid to',
         ]);
 
         $config->setRawColumns([
@@ -100,12 +105,16 @@ class VariantTable extends AbstractProductTable
         $config->setSearchable([
             SpyProductTableMap::COL_SKU,
             SpyProductLocalizedAttributesTableMap::COL_NAME,
+            SpyProductValidityTableMap::COL_VALID_FROM,
+            SpyProductValidityTableMap::COL_VALID_TO,
         ]);
 
         $config->setSortable([
             static::COL_ID_PRODUCT,
             static::COL_SKU,
             static::COL_NAME,
+            static::COL_VALID_FROM,
+            static::COL_VALID_TO,
         ]);
 
         return $config;
@@ -122,12 +131,15 @@ class VariantTable extends AbstractProductTable
             ->productQueryQueryContainer
             ->queryProduct()
             ->innerJoinSpyProductAbstract()
+            ->leftJoinSpyProductValidity()
             ->useSpyProductLocalizedAttributesQuery()
                 ->filterByFkLocale($this->localeTransfer->getIdLocale())
             ->endUse()
             ->filterByFkProductAbstract($this->idProductAbstract)
             ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
-            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::COL_NAME);
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
+            ->withColumn(SpyProductValidityTableMap::COL_VALID_FROM, static::COL_VALID_FROM)
+            ->withColumn(SpyProductValidityTableMap::COL_VALID_TO, static::COL_VALID_TO);
 
         $queryResults = $this->runQuery($query, $config, true);
 
@@ -153,6 +165,8 @@ class VariantTable extends AbstractProductTable
             static::COL_STATUS => $this->getStatusLabel($productEntity->getIsActive()),
             static::COL_IS_BUNDLE => $this->getIsBundleProduct($productEntity),
             static::COL_ACTIONS => implode(' ', $this->createActionColumn($productEntity)),
+            static::COL_VALID_FROM => $productEntity->getVirtualColumn(static::COL_VALID_FROM),
+            static::COL_VALID_TO => $productEntity->getVirtualColumn(static::COL_VALID_TO),
         ];
     }
 
@@ -203,7 +217,13 @@ class VariantTable extends AbstractProductTable
             'Edit'
         );
 
+        $urls[] = $this->generateEditButton(
+            Url::generate('/product-attribute-gui/view/product', [
+                EditController::PARAM_ID_PRODUCT => $productEntity->getIdProduct(),
+            ]),
+            'Manage Attributes'
+        );
+
         return $urls;
     }
-
 }

@@ -20,8 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreatePageController extends AbstractController
 {
-
-    const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
+    const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Page was not created.';
+    const MESSAGE_PAGE_CREATE_SUCCESS = 'Page was created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -47,22 +47,28 @@ class CreatePageController extends AbstractController
             ->createCmsPageForm($cmsPageFormTypeDataProvider)
             ->handleRequest($request);
 
-        if ($pageForm->isSubmitted()) {
-            if ($pageForm->isValid()) {
-                $redirectUrl = $this->createPage($pageForm);
-                if (!empty($redirectUrl)) {
-                    return $this->redirectResponse($redirectUrl);
-                }
-            } else {
-                $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
-            }
-        }
-
-        return [
+        $result = [
             'pageTabs' => $pageTabs->createView(),
             'pageForm' => $pageForm->createView(),
             'availableLocales' => $availableLocales,
         ];
+
+        if (!$pageForm->isSubmitted()) {
+            return $result;
+        }
+
+        if (!$pageForm->isValid()) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
+            return $result;
+        }
+
+        $redirectUrl = $this->createPage($pageForm);
+        if (empty($redirectUrl)) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
+        }
+
+        $this->addSuccessMessage(static::MESSAGE_PAGE_CREATE_SUCCESS);
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**
@@ -77,16 +83,12 @@ class CreatePageController extends AbstractController
                 ->getCmsFacade()
                 ->createPage($pageForm->getData());
 
-            $this->addSuccessMessage('Page successfully created.');
-
             return Url::generate(
                 '/cms-gui/create-glossary/index',
                 [CreateGlossaryController::URL_PARAM_ID_CMS_PAGE => $idCmsPage]
             )
                 ->build();
         } catch (TemplateFileNotFoundException $exception) {
-            $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
-
             $error = $this->createTemplateErrorForm();
             $pageForm->get(CmsPageFormType::FIELD_FK_TEMPLATE)->addError($error);
         }
@@ -99,5 +101,4 @@ class CreatePageController extends AbstractController
     {
         return new FormError("Selected template doesn't exist anymore");
     }
-
 }

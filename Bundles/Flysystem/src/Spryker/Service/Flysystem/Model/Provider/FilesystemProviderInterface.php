@@ -9,7 +9,6 @@ namespace Spryker\Service\Flysystem\Model\Provider;
 
 interface FilesystemProviderInterface
 {
-
     /**
      * @param string $name
      *
@@ -23,5 +22,4 @@ interface FilesystemProviderInterface
      * @return \League\Flysystem\Filesystem[]
      */
     public function getFilesystemCollection();
-
 }

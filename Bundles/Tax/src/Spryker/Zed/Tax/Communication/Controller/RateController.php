@@ -14,12 +14,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
- * @method \Spryker\Zed\Tax\Business\TaxFacade getFacade()
- * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
+ * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
  */
 class RateController extends AbstractController
 {
-
     const PARAM_URL_ID_TAX_RATE = 'id-tax-rate';
 
     /**
@@ -29,12 +28,10 @@ class RateController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $taxRateFormDataProvider = $this->getFactory()->createTaxRateFormDataProvider();
-
-        $form = $this->getFactory()->createTaxRateForm($taxRateFormDataProvider);
+        $form = $this->getFactory()->getTaxRateForm();
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $taxRateTransfer = $form->getData();
 
             $rowCount = $this->getQueryContainer()
@@ -49,7 +46,7 @@ class RateController extends AbstractController
             } else {
                 $taxRateTransfer = $this->getFacade()->createTaxRate($taxRateTransfer);
                 if ($taxRateTransfer->getIdTaxRate()) {
-                    $this->addSuccessMessage('Tax rate successfully created.');
+                    $this->addSuccessMessage(sprintf('Tax rate %d was created successfully.', $taxRateTransfer->getIdTaxRate()));
                     $redirectUrl = Url::generate('/tax/rate/edit', [static::PARAM_URL_ID_TAX_RATE => $taxRateTransfer->getIdTaxRate()])->build();
                     return $this->redirectResponse($redirectUrl);
                 }
@@ -73,10 +70,10 @@ class RateController extends AbstractController
         $taxRateTransfer = $this->getFacade()->getTaxRate($idTaxRate);
         $taxRateFormDataProvider = $this->getFactory()->createTaxRateFormDataProvider($taxRateTransfer);
 
-        $form = $this->getFactory()->createTaxRateForm($taxRateFormDataProvider);
+        $form = $this->getFactory()->getTaxRateForm($taxRateFormDataProvider);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $taxRateTransfer = $form->getData();
             $taxRateTransfer->setIdTaxRate($idTaxRate);
 
@@ -93,7 +90,7 @@ class RateController extends AbstractController
             } else {
                 $rowsAffected = $this->getFacade()->updateTaxRate($taxRateTransfer);
                 if ($rowsAffected > 0) {
-                    $this->addSuccessMessage('Tax rate successfully updated.');
+                    $this->addSuccessMessage(sprintf('Tax rate %d was updated successfully.', $idTaxRate));
                 }
             }
         }
@@ -130,7 +127,7 @@ class RateController extends AbstractController
         $idTaxRate = $this->castId($request->query->getInt(static::PARAM_URL_ID_TAX_RATE));
 
         $this->getFacade()->deleteTaxRate($idTaxRate);
-        $this->addSuccessMessage('The tax rate has been deleted.');
+        $this->addSuccessMessage(sprintf('Tax rate %d was deleted successfully.', $idTaxRate));
 
         return $this->redirectResponse(Url::generate('/tax/rate/list')->build());
     }
@@ -158,5 +155,4 @@ class RateController extends AbstractController
             $table->fetchData()
         );
     }
-
 }

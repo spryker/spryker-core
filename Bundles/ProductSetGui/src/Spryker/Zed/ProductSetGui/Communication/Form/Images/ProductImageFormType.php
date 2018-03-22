@@ -8,16 +8,19 @@
 namespace Spryker\Zed\ProductSetGui\Communication\Form\Images;
 
 use Spryker\Zed\Gui\Communication\Form\Type\ImageType;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\ProductSetGui\Communication\ProductSetGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface getQueryContainer()
+ */
 class ProductImageFormType extends AbstractType
 {
-
     const FIELD_ID_PRODUCT_IMAGE = 'id_product_image';
     const FIELD_IMAGE_SMALL = 'external_url_small';
     const FIELD_IMAGE_LARGE = 'external_url_large';
@@ -31,9 +34,19 @@ class ProductImageFormType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'product_image_collection';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 
     /**
@@ -160,5 +173,4 @@ class ProductImageFormType extends AbstractType
 
         return $this;
     }
-
 }

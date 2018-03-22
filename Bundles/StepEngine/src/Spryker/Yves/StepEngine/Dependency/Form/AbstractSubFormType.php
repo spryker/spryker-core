@@ -7,13 +7,12 @@
 
 namespace Spryker\Yves\StepEngine\Dependency\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Yves\Kernel\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
 abstract class AbstractSubFormType extends AbstractType
 {
-
     const TEMPLATE_PATH = 'template_path';
 
     /**
@@ -34,5 +33,4 @@ abstract class AbstractSubFormType extends AbstractType
 
         $view->vars[self::TEMPLATE_PATH] = $this->getTemplatePath();
     }
-
 }

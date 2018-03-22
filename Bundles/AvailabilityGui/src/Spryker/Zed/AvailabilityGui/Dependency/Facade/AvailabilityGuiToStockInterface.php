@@ -8,10 +8,10 @@
 namespace Spryker\Zed\AvailabilityGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface AvailabilityGuiToStockInterface
 {
-
     /**
      * @param string $sku
      *
@@ -47,9 +47,26 @@ interface AvailabilityGuiToStockInterface
 
     /**
      * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return array|\Generated\Shared\Transfer\StockProductTransfer[]
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
-    public function getStockProductsByIdProduct($idProductConcrete);
+    public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer);
 
+    /**
+     * @return array
+     */
+    public function getWarehouseToStoreMapping();
+
+    /**
+     * @return array
+     */
+    public function getStoreToWarehouseMapping();
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return array
+     */
+    public function getStockTypesForStore(StoreTransfer $storeTransfer);
 }

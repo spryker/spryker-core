@@ -11,7 +11,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class LessOrEqual extends AbstractOperator
 {
-
     const TYPE = 'less_or_equal';
 
     /**
@@ -21,5 +20,4 @@ class LessOrEqual extends AbstractOperator
     {
         return Criteria::LESS_EQUAL;
     }
-
 }

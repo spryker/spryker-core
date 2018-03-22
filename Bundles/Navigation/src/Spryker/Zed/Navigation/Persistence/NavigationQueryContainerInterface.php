@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
  */
 interface NavigationQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -91,5 +90,4 @@ interface NavigationQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributesQuery
      */
     public function queryNavigationNodeLocalizedAttributesByFkUrl($fkUrl);
-
 }

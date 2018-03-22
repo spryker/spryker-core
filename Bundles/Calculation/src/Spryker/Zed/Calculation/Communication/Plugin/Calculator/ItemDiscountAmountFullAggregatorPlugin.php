@@ -12,12 +12,11 @@ use Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Calculation\Business\CalculationFacade getFacade()
+ * @method \Spryker\Zed\Calculation\Business\CalculationFacadeInterface getFacade()
  * @method \Spryker\Zed\Calculation\Communication\CalculationCommunicationFactory getFactory()
  */
 class ItemDiscountAmountFullAggregatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-
     /**
      * This plugin makes calculations based on the given quote. The result is added to the quote.
      *
@@ -32,5 +31,4 @@ class ItemDiscountAmountFullAggregatorPlugin extends AbstractPlugin implements C
         $this->getFacade()
             ->calculateItemDiscountAmountFullAggregation($calculableObjectTransfer);
     }
-
 }

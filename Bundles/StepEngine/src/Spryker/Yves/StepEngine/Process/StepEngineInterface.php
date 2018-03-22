@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface StepEngineInterface
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface|null $formCollection
@@ -20,5 +19,4 @@ interface StepEngineInterface
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function process(Request $request, FormCollectionHandlerInterface $formCollection = null);
-
 }

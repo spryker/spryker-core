@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+    <search-and-filters>
+        <pages>
+            <category-filters>
+                <label>Category Filters</label>
+                <title>Category Filters</title>
+                <bundle>product-category-filter-gui</bundle>
+                <controller>index</controller>
+                <action>index</action>
+            </category-filters>
+        </pages>
+    </search-and-filters>
+</config>

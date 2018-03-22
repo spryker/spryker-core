@@ -9,7 +9,6 @@ namespace Spryker\Shared\Storage;
 
 interface StorageConstants
 {
-
     const STORAGE_KV_SOURCE = 'STORAGE_KV_SOURCE';
     const STORAGE_REDIS_PROTOCOL = 'YVES_STORAGE_REDIS_PROTOCOL';
     const STORAGE_REDIS_PASSWORD = 'YVES_STORAGE_REDIS_PASSWORD';
@@ -23,4 +22,22 @@ interface StorageConstants
     const STORAGE_CACHE_STRATEGY_INCREMENTAL = 'STORAGE_CACHE_STRATEGY_INCREMENTAL';
     const STORAGE_CACHE_STRATEGY_INACTIVE = 'STORAGE_CACHE_STRATEGY_INACTIVE';
 
+    /**
+     * Specification:
+     * - Defines a custom configuration for \Predis\Client.
+     * - This configuration is used exclusively when set, e.g. no other storage configuration will be used for the client.
+     * @see https://github.com/nrk/predis/wiki/Connection-Parameters for details.
+     *
+     * @api
+     */
+    const STORAGE_PREDIS_CLIENT_CONFIGURATION = 'STORAGE_PREDIS_CLIENT_CONFIGURATION';
+
+    /**
+     * Specification:
+     * - Defines custom options for \Predis\Client.
+     * - @see https://github.com/nrk/predis/wiki/Client-Options for details.
+     *
+     * @api
+     */
+    const STORAGE_PREDIS_CLIENT_OPTIONS = 'STORAGE_PREDIS_CLIENT_OPTIONS';
 }

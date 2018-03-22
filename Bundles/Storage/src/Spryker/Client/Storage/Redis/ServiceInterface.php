@@ -9,7 +9,6 @@ namespace Spryker\Client\Storage\Redis;
 
 interface ServiceInterface
 {
-
     /**
      * @api
      *
@@ -125,5 +124,4 @@ interface ServiceInterface
      * @return $this
      */
     public function setDebug($debug);
-
 }

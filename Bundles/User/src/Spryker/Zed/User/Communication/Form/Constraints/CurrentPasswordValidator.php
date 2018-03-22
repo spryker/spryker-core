@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class CurrentPasswordValidator extends ConstraintValidator
 {
-
     /**
      * @param mixed $value
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\User\Communication\Form\Constraints\CurrentPassword $constraint
@@ -29,7 +28,7 @@ class CurrentPasswordValidator extends ConstraintValidator
         }
 
         if (!$this->isProvidedPasswordEqualsToPersisted($value, $constraint)) {
-            $this->buildViolation($constraint->getMessage())
+            $this->context->buildViolation($constraint->getMessage())
                 ->setParameter('{{ value }}', $this->formatValue($value))
                 ->addViolation();
         }
@@ -47,5 +46,4 @@ class CurrentPasswordValidator extends ConstraintValidator
 
         return $constraint->getFacadeUser()->isValidPassword($password, $userTransfer->getPassword());
     }
-
 }

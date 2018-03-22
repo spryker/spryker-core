@@ -9,12 +9,10 @@ namespace Spryker\Zed\CmsContentWidget\Business\ContentWidget;
 
 use Generated\Shared\Transfer\CmsContentWidgetFunctionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\CmsContentWidget\Business\ContentWidget\ContentWidgetFunctionMatcherInterface;
 use Spryker\Zed\CmsContentWidget\Dependency\Facade\CmsContentWidgetToGlossaryInterface;
 
 class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterface
 {
-
     /**
      * @var array|\Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[]
      */
@@ -36,7 +34,7 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
     protected $glossaryFacade;
 
     /**
-     * @param array|\Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[] $contentWidgetParameterMapperPlugins
+     * @param \Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[] $contentWidgetParameterMapperPlugins
      * @param \Spryker\Zed\CmsContentWidget\Business\ContentWidget\ContentWidgetFunctionMatcherInterface $contentWidgetFunctionMatcher
      * @param \Spryker\Zed\CmsContentWidget\Dependency\Facade\CmsContentWidgetToGlossaryInterface $glossaryFacade
      */
@@ -68,7 +66,6 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
 
         $contentWidgetParameterMap = [];
         foreach ($cmsContentWidgetFunctions->getCmsContentWidgetFunctionList() as $cmsContentWidgetFunctionTransfer) {
-
             $this->updateMapCacheWithUnprocessedItems($cmsContentWidgetFunctionTransfer);
             $mappedParameters = $this->getMappedParameters($cmsContentWidgetFunctionTransfer);
 
@@ -78,7 +75,6 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
             }
 
             $contentWidgetParameterMap[$functionName] = $contentWidgetParameterMap[$functionName] + $mappedParameters;
-
         }
 
         return $contentWidgetParameterMap;
@@ -120,7 +116,7 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
     protected function buildParameterMap($functionName, array $unProcessedFunctionParameters)
     {
         if (!isset($this->contentWidgetParameterMapperPlugins[$functionName])) {
-            return null;
+            return;
         }
 
         $mappedParameters = $this->contentWidgetParameterMapperPlugins[$functionName]->map($unProcessedFunctionParameters);
@@ -148,6 +144,7 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
 
             $functionParameters[] = $parameter;
         }
+
         return $functionParameters;
     }
 
@@ -182,5 +179,4 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
             $this->buildParameterMap($cmsContentWidgetFunctionTransfer->getFunctionName(), $unProcessedFunctionParameters);
         }
     }
-
 }

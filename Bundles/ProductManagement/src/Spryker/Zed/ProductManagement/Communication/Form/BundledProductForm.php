@@ -6,14 +6,20 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ */
 class BundledProductForm extends AbstractType
 {
-
     const FIELD_QUANTITY = 'quantity';
     const FIELD_ID_PRODUCT_CONCRETE = 'id_product_concrete';
     const FIELD_SKU = 'sku';
@@ -39,7 +45,7 @@ class BundledProductForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SKU, 'text', [
+        $builder->add(self::FIELD_SKU, TextType::class, [
             'label' => 'sku',
             'required' => true,
             'attr' => [
@@ -57,7 +63,7 @@ class BundledProductForm extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_QUANTITY, 'text', [
+        $builder->add(self::FIELD_QUANTITY, TextType::class, [
             'label' => 'quantity',
             'required' => true,
             'constraints' => [
@@ -79,7 +85,7 @@ class BundledProductForm extends AbstractType
      */
     protected function addIdProductConcreteField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_CONCRETE, 'hidden', [
+        $builder->add(self::FIELD_ID_PRODUCT_CONCRETE, HiddenType::class, [
             'label' => 'quantity',
             'required' => false,
             'constraints' => [],
@@ -89,13 +95,20 @@ class BundledProductForm extends AbstractType
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
+     * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'bundled_product';
     }
 
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

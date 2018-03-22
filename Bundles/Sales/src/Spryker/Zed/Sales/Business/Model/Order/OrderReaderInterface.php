@@ -9,7 +9,6 @@ namespace Spryker\Zed\Sales\Business\Model\Order;
 
 interface OrderReaderInterface
 {
-
     /**
      * @param int $idSalesOrder
      *
@@ -17,4 +16,10 @@ interface OrderReaderInterface
      */
     public function getDistinctOrderStates($idSalesOrder);
 
+    /**
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    public function findOrderByIdSalesOrderItem($idSalesOrderItem);
 }

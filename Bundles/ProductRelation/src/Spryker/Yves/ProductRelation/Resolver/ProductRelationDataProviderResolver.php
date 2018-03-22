@@ -9,14 +9,13 @@ namespace Spryker\Yves\ProductRelation\Resolver;
 
 class ProductRelationDataProviderResolver implements ProductRelationDataProviderResolverInterface
 {
-
     /**
      * @var array|\Spryker\Yves\ProductRelation\DataProvider\ProductRelationDataProviderInterface[]
      */
     protected $productRelationDateProviderList;
 
     /**
-     * @param array|\Spryker\Yves\ProductRelation\DataProvider\ProductRelationDataProviderInterface[] $productRelationDataProvider
+     * @param \Spryker\Yves\ProductRelation\DataProvider\ProductRelationDataProviderInterface[] $productRelationDataProvider
      */
     public function __construct(array $productRelationDataProvider)
     {
@@ -38,5 +37,4 @@ class ProductRelationDataProviderResolver implements ProductRelationDataProvider
 
         return null;
     }
-
 }

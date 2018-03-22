@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\Propel\Business;
 
+use Generated\Shared\Transfer\SchemaValidationTransfer;
+
 interface PropelFacadeInterface
 {
-
     /**
      * @api
      *
@@ -26,9 +27,11 @@ interface PropelFacadeInterface
 
     /**
      * Specification:
-     * - Create database for configured driver if it doesn't exist
+     * - Creates database for configured driver if it doesn't exist
      *
      * @api
+     *
+     * @deprecated Use `createDatabase()` instead.
      *
      * @return void
      */
@@ -36,7 +39,7 @@ interface PropelFacadeInterface
 
     /**
      * Specification:
-     * - Convert given PHP configuration into json configuration
+     * - Converts given PHP configuration into json configuration
      * - File is placed in configured phpConfDir
      *
      * @api
@@ -46,6 +49,9 @@ interface PropelFacadeInterface
     public function convertConfig();
 
     /**
+     * Specification:
+     * - Changes schema files to be compatible with PostgreSql (project)
+     *
      * @api
      *
      * @return void
@@ -53,11 +59,34 @@ interface PropelFacadeInterface
     public function adjustPropelSchemaFilesForPostgresql();
 
     /**
+     * Specification:
+     * - Changes schema files to be compatible with PostgreSql (core)
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function adjustCorePropelSchemaFilesForPostgresql();
+
+    /**
+     * Specification:
+     * - Adds missing in PostgreSql functions (project)
+     *
      * @api
      *
      * @return void
      */
     public function adjustPostgresqlFunctions();
+
+    /**
+     * Specification:
+     * - Adds missing in PostgreSql functions (core)
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function adjustCorePostgresqlFunctions();
 
     /**
      * @api
@@ -80,4 +109,68 @@ interface PropelFacadeInterface
      */
     public function getCurrentDatabaseEngineName();
 
+    /**
+     * Specification:
+     * - Deletes all migration files and the migration directory.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function deleteMigrationFilesDirectory();
+
+    /**
+     * Specification:
+     * - Creates database if not exists for configured driver.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function createDatabase();
+
+    /**
+     * Specification:
+     * - Drops database for configured driver.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function dropDatabase();
+
+    /**
+     * Specification:
+     * - Exports database backup for configured driver to `$backupPath`.
+     *
+     * @api
+     *
+     * @param string $backupPath
+     *
+     * @return void
+     */
+    public function exportDatabase($backupPath);
+
+    /**
+     * Specification:
+     * - Imports database backup for configured driver from `$backupPath`.
+     *
+     * @api
+     *
+     * @param string $backupPath
+     *
+     * @return void
+     */
+    public function importDatabase($backupPath);
+
+    /**
+     * Specification:
+     * - Validates all schema files.
+     * - When attribute value is changed in the same table, the returned transfer object contains all found errors.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SchemaValidationTransfer
+     */
+    public function validateSchemaFiles(): SchemaValidationTransfer;
 }

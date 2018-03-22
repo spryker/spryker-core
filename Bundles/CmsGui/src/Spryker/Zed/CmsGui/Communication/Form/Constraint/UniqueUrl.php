@@ -10,7 +10,6 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueUrl extends SymfonyConstraint
 {
-
     const OPTION_URL_FACADE = 'urlFacade';
     const OPTION_CMS_FACADE = 'cmsFacade';
 
@@ -47,5 +46,4 @@ class UniqueUrl extends SymfonyConstraint
     {
         return static::CLASS_CONSTRAINT;
     }
-
 }

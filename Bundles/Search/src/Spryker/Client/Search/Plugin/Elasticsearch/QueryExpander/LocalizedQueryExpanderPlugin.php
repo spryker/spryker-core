@@ -20,7 +20,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
  */
 class LocalizedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
@@ -79,5 +78,4 @@ class LocalizedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
     {
         return $this->getFactory()->getStore()->getCurrentLocale();
     }
-
 }

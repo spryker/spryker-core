@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Container;
 
 interface PersistenceFactoryInterface
 {
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -25,5 +24,4 @@ interface PersistenceFactoryInterface
      * @return mixed
      */
     public function getProvidedDependency($key);
-
 }

@@ -10,11 +10,9 @@ namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
-use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 
 class TaxTotalCalculator implements CalculatorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
@@ -60,5 +58,4 @@ class TaxTotalCalculator implements CalculatorInterface
         }
         return $totalTaxAmount;
     }
-
 }

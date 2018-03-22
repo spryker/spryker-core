@@ -15,7 +15,6 @@ use Spryker\Yves\ProductRelation\Sorting\RelationSorterInterface;
 
 class UpSellingDataProvider implements ProductRelationDataProviderInterface
 {
-
     const PARAMETER_ABSTRACT_PRODUCT_IDS = 'abstractProductIds';
     const PARAMETER_QUOTE_TRANSFER = 'quote';
 
@@ -44,7 +43,7 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
     /**
      * @param array $parameters , parameters can be (quote => QuoteTransfer, or array of abstract product ids [1,2,3])
      *
-     * @return array|\Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
      */
     public function buildTemplateData(array $parameters)
     {
@@ -72,7 +71,6 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
             $this->relationSorter->sort($productsToAdd);
 
             $upSellingProducts = array_merge($upSellingProducts, $productsToAdd);
-
         }
 
         return $upSellingProducts;
@@ -87,10 +85,10 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
     }
 
     /**
-     * @param array|\Generated\Shared\Transfer\StorageProductRelationsTransfer[] $upSellingProducts
-     * @param array|\Generated\Shared\Transfer\StorageProductRelationsTransfer[] $compareWithProducts
+     * @param \Generated\Shared\Transfer\StorageProductRelationsTransfer[] $upSellingProducts
+     * @param \Generated\Shared\Transfer\StorageProductRelationsTransfer[] $compareWithProducts
      *
-     * @return array|\Generated\Shared\Transfer\StorageProductRelationsTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductRelationsTransfer[]
      */
     protected function findNotIncludedAbstractProducts(array $upSellingProducts, array $compareWithProducts)
     {
@@ -186,5 +184,4 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
     {
         return $productRelationTransfer !== null && $productRelationTransfer->getIsActive();
     }
-
 }

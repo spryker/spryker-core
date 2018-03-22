@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CmsBlockProductAbstractListViewPlugin extends AbstractPlugin implements CmsBlockViewPluginInterface
 {
-
     /**
      * @return string
      */
@@ -36,5 +35,4 @@ class CmsBlockProductAbstractListViewPlugin extends AbstractPlugin implements Cm
         return $this->getFacade()
             ->getProductAbstractRenderedList($idCmsBlock, $idLocale);
     }
-
 }

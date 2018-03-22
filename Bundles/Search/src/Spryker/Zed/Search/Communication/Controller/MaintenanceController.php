@@ -11,12 +11,11 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Search\Business\SearchFacade getFacade()
+ * @method \Spryker\Zed\Search\Business\SearchFacadeInterface getFacade()
  * @method \Spryker\Zed\Search\Communication\SearchCommunicationFactory getFactory()
  */
 class MaintenanceController extends AbstractController
 {
-
     const MESSAGE_RESPONSE = 'Response: %s';
     const URL_SEARCH_MAINTENANCE = '/search/maintenance';
 
@@ -82,5 +81,4 @@ class MaintenanceController extends AbstractController
             'key' => $key,
         ]);
     }
-
 }

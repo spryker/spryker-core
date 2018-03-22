@@ -9,7 +9,6 @@ namespace Spryker\Zed\ZedNavigation\Business\Model\Validator;
 
 interface MenuLevelValidatorInterface
 {
-
     /**
      * @param int $currentLevel
      * @param string $pageTitle
@@ -19,5 +18,4 @@ interface MenuLevelValidatorInterface
      * @return void
      */
     public function validate($currentLevel, $pageTitle);
-
 }

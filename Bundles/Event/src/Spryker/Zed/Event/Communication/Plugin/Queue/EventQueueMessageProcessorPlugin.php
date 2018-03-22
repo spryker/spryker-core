@@ -12,10 +12,10 @@ use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface;
 
 /**
  * @method \Spryker\Zed\Event\Business\EventFacadeInterface getFacade()
+ * @method \Spryker\Zed\Event\EventConfig getConfig()
  */
 class EventQueueMessageProcessorPlugin extends AbstractPlugin implements QueueMessageProcessorPluginInterface
 {
-
     /**
      * @api
      *
@@ -36,7 +36,6 @@ class EventQueueMessageProcessorPlugin extends AbstractPlugin implements QueueMe
      */
     public function getChunkSize()
     {
-        return 100;
+        return $this->getConfig()->getEventQueueMessageChunkSize();
     }
-
 }

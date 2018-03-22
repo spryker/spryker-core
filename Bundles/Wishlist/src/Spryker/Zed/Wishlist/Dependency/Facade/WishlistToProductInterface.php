@@ -9,7 +9,6 @@ namespace Spryker\Zed\Wishlist\Dependency\Facade;
 
 interface WishlistToProductInterface
 {
-
     /**
      * @param string $concreteSku
      *
@@ -26,4 +25,10 @@ interface WishlistToProductInterface
      */
     public function getProductConcreteIdBySku($sku);
 
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductConcrete($sku);
 }

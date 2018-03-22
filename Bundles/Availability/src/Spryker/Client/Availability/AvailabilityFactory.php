@@ -8,15 +8,17 @@ namespace Spryker\Client\Availability;
 
 use Spryker\Client\Availability\KeyBuilder\AvailabilityResourceKeyBuilder;
 use Spryker\Client\Availability\Storage\AvailabilityStorage;
+use Spryker\Client\Availability\Zed\AvailabilityStub;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class AvailabilityFactory extends AbstractFactory
 {
-
     /**
+     * @deprecated Use AvailabilityFactory::createCurrentLocaleAvailabilityStorage
+     *
      * @param string $locale
      *
-     * @return \Spryker\Client\Availability\Storage\AvailabilityStorage
+     * @return \Spryker\Client\Availability\Storage\AvailabilityStorageInterface
      */
     public function createAvailabilityStorage($locale)
     {
@@ -28,11 +30,27 @@ class AvailabilityFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\Availability\Zed\AvailabilityStubInterface
+     */
+    public function createAvailabilityStub()
+    {
+        return new AvailabilityStub($this->getZedRequestClient());
+    }
+
+    /**
      * @return \Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageInterface
      */
     protected function getStorage()
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::KV_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\Availability\Dependency\Client\AvailabilityToZedRequestClientInterface
+     */
+    protected function getZedRequestClient()
+    {
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::CLIENT_ZED_REQUEST);
     }
 
     /**
@@ -51,4 +69,15 @@ class AvailabilityFactory extends AbstractFactory
         return $this->getProvidedDependency(AvailabilityDependencyProvider::CLIENT_LOCALE);
     }
 
+    /**
+     * @return \Spryker\Client\Availability\Storage\AvailabilityStorage
+     */
+    public function createCurrentLocaleAvailabilityStorage()
+    {
+        return new AvailabilityStorage(
+            $this->getStorage(),
+            $this->createKeyBuilder(),
+            $this->getLocaleClient()->getCurrentLocale()
+        );
+    }
 }

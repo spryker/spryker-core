@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CategoryClient extends AbstractClient implements CategoryClientInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -31,5 +30,4 @@ class CategoryClient extends AbstractClient implements CategoryClientInterface
             ->createCategoryNodeStorage()
             ->getTemplatePathByNodeId($idCategoryNode, $localeName);
     }
-
 }

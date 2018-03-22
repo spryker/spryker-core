@@ -13,7 +13,6 @@ use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContaine
 
 class ProductAbstractTaxWriter
 {
-
     /**
      * @var \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface
      */
@@ -56,5 +55,4 @@ class ProductAbstractTaxWriter
 
         return $productConcreteTransfer;
     }
-
 }

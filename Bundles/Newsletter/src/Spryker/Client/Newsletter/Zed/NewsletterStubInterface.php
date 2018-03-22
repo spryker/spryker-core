@@ -12,40 +12,38 @@ use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 
 interface NewsletterStubInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest);
 
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest);
 
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
      *
-     * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function approveDoubleOptInSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber);
 
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function unsubscribe(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest);
 
     /**
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
-     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function checkSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest);
-
 }

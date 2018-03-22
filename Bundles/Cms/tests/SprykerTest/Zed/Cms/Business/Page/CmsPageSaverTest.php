@@ -33,7 +33,6 @@ use SprykerTest\Zed\Cms\Business\CmsMocks;
  */
 class CmsPageSaverTest extends CmsMocks
 {
-
     /**
      * @return void
      */
@@ -173,5 +172,4 @@ class CmsPageSaverTest extends CmsMocks
             ])
             ->getMock();
     }
-
 }

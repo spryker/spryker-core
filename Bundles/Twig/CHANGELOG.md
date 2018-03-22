@@ -1,3 +1,3 @@
 # Twig Changelog
 
-[Twig Changelog](https://github.com/spryker/Twig/releases)
+[Release Changelog](https://github.com/spryker/twig/releases)

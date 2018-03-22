@@ -12,15 +12,12 @@ use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
 class CmsCollectorToSearchBridge implements CmsCollectorToSearchInterface
 {
-
     /**
      * @var \Spryker\Zed\Search\Business\SearchFacadeInterface
      */
     protected $searchFacade;
 
     /**
-     * CmsCollectorToSearchBridge constructor.
-     *
      * @param \Spryker\Zed\Search\Business\SearchFacadeInterface $searchFacade
      */
     public function __construct($searchFacade)
@@ -39,5 +36,4 @@ class CmsCollectorToSearchBridge implements CmsCollectorToSearchInterface
     {
         return $this->searchFacade->transformPageMapToDocument($pageMap, $data, $localeTransfer);
     }
-
 }

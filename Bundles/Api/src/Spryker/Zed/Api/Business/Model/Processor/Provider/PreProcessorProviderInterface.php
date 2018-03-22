@@ -9,7 +9,6 @@ namespace Spryker\Zed\Api\Business\Model\Processor\Provider;
 
 interface PreProcessorProviderInterface
 {
-
     /**
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
@@ -89,5 +88,4 @@ interface PreProcessorProviderInterface
      * @return \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface
      */
     public function buildResourcePreProcessor();
-
 }

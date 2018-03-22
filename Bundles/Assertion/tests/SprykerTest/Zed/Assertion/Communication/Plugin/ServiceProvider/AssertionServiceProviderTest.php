@@ -25,7 +25,6 @@ use Spryker\Zed\Assertion\Communication\Plugin\ServiceProvider\AssertionServiceP
  */
 class AssertionServiceProviderTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -38,5 +37,4 @@ class AssertionServiceProviderTest extends Unit
 
         $this->assertInstanceOf(AssertionFacade::class, $application[AssertionServiceProvider::ASSERTION]);
     }
-
 }

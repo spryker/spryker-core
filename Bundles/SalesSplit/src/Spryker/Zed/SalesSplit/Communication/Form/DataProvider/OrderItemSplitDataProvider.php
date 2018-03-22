@@ -12,7 +12,6 @@ use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
 
 class OrderItemSplitDataProvider
 {
-
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $orderItemTransfer
      *
@@ -33,5 +32,4 @@ class OrderItemSplitDataProvider
     {
         return [];
     }
-
 }

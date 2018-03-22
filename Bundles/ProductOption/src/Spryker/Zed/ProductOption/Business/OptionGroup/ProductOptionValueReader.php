@@ -13,6 +13,10 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
 class ProductOptionValueReader implements ProductOptionValueReaderInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceReaderInterface
+     */
+    protected $productOptionValuePriceReader;
 
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
@@ -20,10 +24,12 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
     protected $productOptionQueryContainer;
 
     /**
+     * @param \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceReaderInterface $productOptionValuePriceReader
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      */
-    public function __construct(ProductOptionQueryContainerInterface $productOptionQueryContainer)
+    public function __construct(ProductOptionValuePriceReaderInterface $productOptionValuePriceReader, ProductOptionQueryContainerInterface $productOptionQueryContainer)
     {
+        $this->productOptionValuePriceReader = $productOptionValuePriceReader;
         $this->productOptionQueryContainer = $productOptionQueryContainer;
     }
 
@@ -57,7 +63,8 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
         $productOptionTransfer = new ProductOptionTransfer();
         $productOptionTransfer->fromArray($productOptionValueEntity->toArray(), true);
         $productOptionTransfer->setGroupName($productOptionValueEntity->getSpyProductOptionGroup()->getName());
-        $productOptionTransfer->setUnitGrossPrice($productOptionValueEntity->getPrice());
+        $productOptionTransfer->setUnitGrossPrice($this->productOptionValuePriceReader->getCurrentGrossPrice($productOptionValueEntity));
+        $productOptionTransfer->setUnitNetPrice($this->productOptionValuePriceReader->getCurrentNetPrice($productOptionValueEntity));
 
         return $productOptionTransfer;
     }
@@ -75,5 +82,4 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
 
         return $productOptionValueEntity;
     }
-
 }

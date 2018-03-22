@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductCategory\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -21,13 +22,15 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductCategoryQueryContainer extends AbstractQueryContainer implements ProductCategoryQueryContainerInterface
 {
-
     const COL_CATEGORY_NAME = 'category_name';
+    const VIRTUAL_COLUMN_ID_CATEGORY_NODE = 'id_category_node';
 
     /**
+     * @api
+     *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
-    protected function queryProductCategoryMappings()
+    public function queryProductCategoryMappings()
     {
         return $this->getFactory()->createProductCategoryQuery();
     }
@@ -147,6 +150,32 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      * @api
      *
      * @param string $term
+     * @param int $idCategory
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductsAbstractBySearchTermForAssignment($term, $idCategory, LocaleTransfer $localeTransfer)
+    {
+        $query = $this->queryProductsAbstractBySearchTerm($term, $localeTransfer);
+        $query->addJoin(
+            [SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, $idCategory],
+            [SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductCategoryTableMap::COL_FK_CATEGORY],
+            Criteria::LEFT_JOIN
+        )
+            ->addAnd(
+                SpyProductCategoryTableMap::COL_FK_CATEGORY,
+                null,
+                Criteria::ISNULL
+            );
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $term
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
@@ -223,4 +252,29 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
             ->endUse();
     }
 
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param array $idsCategoryNode
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    public function queryProductCategoryMappingsByIdAbstractProductAndIdsCategoryNode(
+        $idProductAbstract,
+        array $idsCategoryNode
+    ) {
+        return $this
+            ->queryProductCategoryMappings()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->useSpyCategoryQuery()
+                ->useNodeQuery()
+                    ->withColumn(
+                        SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
+                        static::VIRTUAL_COLUMN_ID_CATEGORY_NODE
+                    )
+                    ->filterByIdCategoryNode($idsCategoryNode, Criteria::IN)
+                ->endUse()
+            ->endUse();
+    }
 }

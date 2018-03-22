@@ -14,11 +14,10 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Log\LogConstants;
 
 /**
- * @deprecated Use \Spryker\Shared\Application\EventListener\KernelLogListener instead.
+ * @deprecated Use Spryker\Shared\Application\EventListener\KernelLogListener instead.
  */
 class LogServiceProvider implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -39,5 +38,4 @@ class LogServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
     }
-
 }

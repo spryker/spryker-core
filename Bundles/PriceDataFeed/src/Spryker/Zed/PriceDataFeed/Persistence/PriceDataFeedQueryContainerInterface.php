@@ -12,14 +12,12 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface PriceDataFeedQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
      * @param \Generated\Shared\Transfer\PriceDataFeedTransfer|null $priceDataFeedTransfer
      *
-     * @return \Spryker\Zed\Price\Persistence\PriceQueryContainerInterface
+     * @return \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface
      */
     public function queryPriceDataFeed(PriceDataFeedTransfer $priceDataFeedTransfer = null);
-
 }

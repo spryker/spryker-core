@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CommentTransfer;
 
 class CommentFormDataProvider
 {
-
     /**
      * @param int $idSalesOrder
      *
@@ -32,5 +31,4 @@ class CommentFormDataProvider
     {
         return [];
     }
-
 }

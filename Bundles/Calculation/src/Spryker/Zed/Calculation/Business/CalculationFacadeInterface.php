@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 interface CalculationFacadeInterface
 {
-
     /**
      * Specification:
      *  - Maps Quote to CalculableObject
@@ -69,7 +68,7 @@ interface CalculationFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function validateCheckoutGrandTotal(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 
@@ -246,6 +245,18 @@ interface CalculationFacadeInterface
 
     /**
      * Specification:
+     *  - Calculate initial grandTotal amount (before discounts)
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateInitialGrandTotal(CalculableObjectTransfer $calculableObjectTransfer);
+
+    /**
+     * Specification:
      *  - Calculate total already canceled amount
      *
      * @api
@@ -282,4 +293,28 @@ interface CalculationFacadeInterface
      */
     public function removeAllCalculatedDiscounts(CalculableObjectTransfer $calculableObjectTransfer);
 
+    /**
+     *
+     * Specification:
+     *  - Calculates order total before taxes, net total.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateNetTotal(CalculableObjectTransfer $calculableObjectTransfer);
+
+    /**
+     * Specification:
+     *  - Calculates discount amount for items and options, using generic discount amount field CalculateDiscountTransfer.unitAmount
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateDiscountAmountAggregationForGenericAmount(CalculableObjectTransfer $calculableObjectTransfer);
 }

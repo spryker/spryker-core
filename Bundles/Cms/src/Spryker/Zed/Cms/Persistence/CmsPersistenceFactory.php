@@ -17,11 +17,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Cms\CmsConfig getConfig()
- * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
  */
 class CmsPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery
      */
@@ -69,5 +68,4 @@ class CmsPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyCmsVersionQuery::create();
     }
-
 }

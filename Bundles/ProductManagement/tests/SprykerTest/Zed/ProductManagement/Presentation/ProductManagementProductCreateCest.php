@@ -21,7 +21,6 @@ use SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester;
  */
 class ProductManagementProductCreateCest
 {
-
     /**
      * @param \SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester $i
      *
@@ -29,8 +28,10 @@ class ProductManagementProductCreateCest
      */
     public function breadcrumbIsVisible(ProductManagementPresentationTester $i)
     {
+        $i->registerProductManagementStoreRelationFormTypePlugin();
+        $i->registerMoneyCollectionFormTypePlugin();
+
         $i->amOnPage(ProductManagementProductCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Create a Product');
     }
-
 }

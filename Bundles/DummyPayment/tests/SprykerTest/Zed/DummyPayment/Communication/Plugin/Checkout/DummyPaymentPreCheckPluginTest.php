@@ -25,7 +25,6 @@ use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentPreCheckP
  */
 class DummyPaymentPreCheckPluginTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -34,9 +33,9 @@ class DummyPaymentPreCheckPluginTest extends Unit
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
         $plugin = new DummyPaymentPreCheckPlugin();
-        $checkoutResponseTransfer = $plugin->execute(new QuoteTransfer(), $checkoutResponseTransfer);
+        $result = $plugin->execute(new QuoteTransfer(), $checkoutResponseTransfer);
 
-        $this->assertInstanceOf(CheckoutResponseTransfer::class, $checkoutResponseTransfer);
+        $this->assertTrue($result);
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
     }
-
 }

@@ -15,11 +15,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\CmsBlockCategoryConnector\Communication\CmsBlockCategoryConnectorCommunicationFactory getFactory()
- * @method \Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacade getFacade()
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacadeInterface getFacade()
  */
 class CategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInterface, CategoryRelationUpdatePluginInterface
 {
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
@@ -52,5 +51,4 @@ class CategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInt
         $this->getFacade()
             ->updateCategoryCmsBlockRelations($categoryTransfer);
     }
-
 }

@@ -7,31 +7,27 @@
 namespace Spryker\Zed\Tax\Communication\Form;
 
 use ArrayObject;
-use Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider;
-use Symfony\Component\Form\AbstractType;
+use Closure;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
+/**
+ * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
+ * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
+ */
 class TaxSetForm extends AbstractType
 {
-
     const FIELD_NAME = 'name';
     const FIELD_TAX_RATES = 'taxRates';
     const FIELD_ID_TAX_SET = 'idTaxSet';
-
-    /**
-     * @var \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider
-     */
-    protected $taxSetFormDataProvider;
-
-    /**
-     * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider $taxSetFormDataProvider
-     */
-    public function __construct(TaxSetFormDataProvider $taxSetFormDataProvider)
-    {
-        $this->taxSetFormDataProvider = $taxSetFormDataProvider;
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -54,12 +50,12 @@ class TaxSetForm extends AbstractType
     {
         $builder->add(
             self::FIELD_NAME,
-            'text',
+            TextType::class,
             [
                 'label' => 'Name',
                 'required' => true,
                 'constraints' => [
-                    new NotBlank()
+                    new NotBlank(),
                 ],
             ]
         );
@@ -74,29 +70,63 @@ class TaxSetForm extends AbstractType
      */
     protected function addTaxRates(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_TAX_RATES, 'choice', [
+        $builder->add(self::FIELD_TAX_RATES, ChoiceType::class, [
             'expanded' => true,
             'multiple' => true,
             'label' => 'Tax rates',
-            'choice_list' => $this->taxSetFormDataProvider->getOptions()[self::FIELD_TAX_RATES],
+            'choices_as_values' => true,
+            'choices' => $this->getFactory()->createTaxSetFormDataProvider()->getOptions()[self::FIELD_TAX_RATES],
+            'choice_label' => 'name',
+            'choice_value' => 'idTaxRate',
             'constraints' => [
-                new NotBlank()
+                new Callback([
+                    'callback' => function (ArrayObject $taxRates, ExecutionContextInterface $context) {
+                        if ($taxRates->count() <= 0) {
+                            $context->addViolation('You should choose one or more tax rates');
+                        }
+                    },
+                ]),
             ],
         ]);
 
-        $builder->get(self::FIELD_TAX_RATES)
-            ->addModelTransformer(new CallbackTransformer(
-                function ($taxRates) {
-                    if ($taxRates) {
-                        return (array)$taxRates;
-                    }
-                },
-                function ($taxRates) {
-                    return new ArrayObject($taxRates);
-                }
-            ));
+        $builder
+            ->get(self::FIELD_TAX_RATES)
+            ->addModelTransformer($this->createModelTransformer());
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    protected function createModelTransformer(): DataTransformerInterface
+    {
+        return new CallbackTransformer(
+            $this->createTransformCallback(),
+            $this->createReverseTransformCallback()
+        );
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function createTransformCallback(): Closure
+    {
+        return function ($taxRates) {
+            if ($taxRates) {
+                return (array)$taxRates;
+            }
+        };
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function createReverseTransformCallback(): Closure
+    {
+        return function ($taxRates) {
+            return new ArrayObject($taxRates);
+        };
     }
 
     /**
@@ -104,9 +134,18 @@ class TaxSetForm extends AbstractType
      *
      * @return string The name of this type
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'tax_set';
     }
 
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

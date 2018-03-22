@@ -15,7 +15,6 @@ use Generated\Shared\Search\PageIndexMap;
  */
 class SpellingSuggestionQueryExpanderPlugin extends AbstractSuggestionExpanderPlugin
 {
-
     const SUGGESTION_NAME = 'spelling-suggestion';
 
     const SIZE = 1;
@@ -29,7 +28,7 @@ class SpellingSuggestionQueryExpanderPlugin extends AbstractSuggestionExpanderPl
     protected function createSuggestion(Query $query, array $requestParameters = [])
     {
         $suggestion = $this->getSuggestion($query);
-        if (!$suggestion->hasParam('text') || $suggestion->getParam('text') === '') {
+        if (!$suggestion->hasParam('text') || (string)$suggestion->getParam('text') === '') {
             return null;
         }
 
@@ -40,5 +39,4 @@ class SpellingSuggestionQueryExpanderPlugin extends AbstractSuggestionExpanderPl
 
         return $termSuggest;
     }
-
 }

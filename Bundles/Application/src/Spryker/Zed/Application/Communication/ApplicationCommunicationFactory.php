@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class ApplicationCommunicationFactory extends AbstractCommunicationFactory
 {
-
     use LoggerTrait;
 
     /**
@@ -28,5 +27,4 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
             $this->getLogger()
         );
     }
-
 }

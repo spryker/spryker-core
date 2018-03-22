@@ -20,11 +20,9 @@ use Codeception\Actor;
  */
 class TwigSharedTester extends Actor
 {
-
     use _generated\TwigSharedTesterActions;
 
    /**
     * Define custom actions here
     */
-
 }

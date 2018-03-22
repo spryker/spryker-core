@@ -12,7 +12,6 @@ use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchAttributeMapTableMap;
 
 class ProductSearchAttributeMapMarker extends AbstractAttributeMarker
 {
-
     /**
      * @return array
      */
@@ -34,7 +33,9 @@ class ProductSearchAttributeMapMarker extends AbstractAttributeMarker
      */
     protected function processAttributes(array $attributeNames)
     {
-        $this->touchProductAbstractByAttributeNames($attributeNames);
+        $productAbstractIds = $this->getProductAbstractIdsByAttributeNames($attributeNames);
+        $this->touchProductAbstractByIds($productAbstractIds);
+        $this->triggerSynchronizationFilterEvents($productAbstractIds);
         $this->markProductSearchAttributeMapAsSynced();
         $this->clearProductSearchAttributeMapArchive();
     }
@@ -64,5 +65,4 @@ class ProductSearchAttributeMapMarker extends AbstractAttributeMarker
             ->queryProductSearchAttributeMapArchive()
             ->deleteAll();
     }
-
 }

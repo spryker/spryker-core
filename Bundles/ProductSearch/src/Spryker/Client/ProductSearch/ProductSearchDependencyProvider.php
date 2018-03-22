@@ -13,7 +13,6 @@ use Spryker\Shared\Kernel\Store;
 
 class ProductSearchDependencyProvider extends AbstractDependencyProvider
 {
-
     const STORE = 'store';
     const CLIENT_STORAGE = 'storage client';
 
@@ -39,7 +38,7 @@ class ProductSearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function provideStore(Container $container)
     {
-        $container[self::STORE] = function () {
+        $container[static::STORE] = function () {
             return Store::getInstance();
         };
 
@@ -59,5 +58,4 @@ class ProductSearchDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

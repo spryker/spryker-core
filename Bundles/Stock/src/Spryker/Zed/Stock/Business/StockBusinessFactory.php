@@ -16,11 +16,10 @@ use Spryker\Zed\Stock\StockDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Stock\StockConfig getConfig()
- * @method \Spryker\Zed\Stock\Persistence\StockQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface getQueryContainer()
  */
 class StockBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Stock\Business\Model\CalculatorInterface
      */
@@ -39,7 +38,9 @@ class StockBusinessFactory extends AbstractBusinessFactory
         return new Reader(
             $this->getQueryContainer(),
             $this->getProductFacade(),
-            $this->createStockProductTransferMapper()
+            $this->createStockProductTransferMapper(),
+            $this->getConfig(),
+            $this->getStoreFacade()
         );
     }
 
@@ -88,4 +89,11 @@ class StockBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(StockDependencyProvider::PLUGINS_STOCK_UPDATE);
     }
 
+    /**
+     * @return \Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface
+     */
+    protected function getStoreFacade()
+    {
+        return $this->getProvidedDependency(StockDependencyProvider::FACADE_STORE);
+    }
 }

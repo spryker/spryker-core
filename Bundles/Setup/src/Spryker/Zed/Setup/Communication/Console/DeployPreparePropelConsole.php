@@ -17,7 +17,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class DeployPreparePropelConsole extends Console
 {
-
     const COMMAND_NAME = 'setup:deploy:prepare-propel';
     const DESCRIPTION = 'Prepares Propel configuration on appserver';
 
@@ -70,5 +69,4 @@ class DeployPreparePropelConsole extends Console
         $input = new ArrayInput($arguments);
         $command->run($input, $this->output);
     }
-
 }

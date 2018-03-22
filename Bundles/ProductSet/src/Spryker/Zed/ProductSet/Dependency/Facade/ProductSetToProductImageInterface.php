@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductImageSetTransfer;
 
 interface ProductSetToProductImageInterface
 {
-
     /**
      * @param int $idProductImageSet
      *
@@ -32,5 +31,4 @@ interface ProductSetToProductImageInterface
      * @return void
      */
     public function deleteProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
-
 }

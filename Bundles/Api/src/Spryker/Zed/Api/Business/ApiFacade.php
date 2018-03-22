@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ApiFacade extends AbstractFacade implements ApiFacadeInterface
 {
-
     /**
      * @api
      *
@@ -45,5 +44,4 @@ class ApiFacade extends AbstractFacade implements ApiFacadeInterface
             ->createValidator()
             ->validate($resourceName, $apiDataTransfer);
     }
-
 }

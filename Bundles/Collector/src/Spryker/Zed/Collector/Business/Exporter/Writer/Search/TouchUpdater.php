@@ -9,12 +9,12 @@ namespace Spryker\Zed\Collector\Business\Exporter\Writer\Search;
 
 use Orm\Zed\Touch\Persistence\Map\SpyTouchSearchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchSearchQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Collector\Business\Exporter\Writer\AbstractTouchUpdater;
 use Spryker\Zed\Collector\CollectorConfig;
 
 class TouchUpdater extends AbstractTouchUpdater
 {
-
     /**
      * @var string
      */
@@ -33,15 +33,31 @@ class TouchUpdater extends AbstractTouchUpdater
     /**
      * @param string $key
      * @param int $idLocale
+     * @param int $idStore
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchSearch
      */
-    protected function findOrCreateTouchKeyEntity($key, $idLocale)
+    protected function findOrCreateTouchKeyEntity($key, $idLocale, $idStore)
     {
-        return SpyTouchSearchQuery::create()
+        $spyTouchSearchQuery = SpyTouchSearchQuery::create()
             ->filterByKey($key)
-            ->filterByFkLocale($idLocale)
-            ->findOneOrCreate();
+            ->filterByFkStore($idStore)
+            ->filterByFkLocale($idLocale);
+
+        return $spyTouchSearchQuery->findOneOrCreate();
     }
 
+    /**
+     * @param string[] $keys
+     * @param int $idLocale
+     *
+     * @return void
+     */
+    public function deleteTouchKeyEntities($keys, $idLocale)
+    {
+        SpyTouchSearchQuery::create()
+            ->filterByKey($keys, Criteria::IN)
+            ->filterByFkLocale($idLocale)
+            ->delete();
+    }
 }

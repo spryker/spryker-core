@@ -19,7 +19,6 @@ use Spryker\Zed\Propel\PropelFilterCriteria;
  */
 class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -223,7 +222,33 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * Note: For performance reasons, the state history join is separated into this method.
+     *
      * @api
+     *
+     * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
+     *
+     * @return void
+     */
+    public function fillOrderItemsWithLatestStates(ObjectCollection $salesOrderItems)
+    {
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity */
+        foreach ($salesOrderItems as $orderItemEntity) {
+            $criteria = new Criteria();
+            $criteria->addDescendingOrderByColumn(SpyOmsOrderItemStateHistoryTableMap::COL_ID_OMS_ORDER_ITEM_STATE_HISTORY);
+            $orderItemEntity->getStateHistoriesJoinState($criteria);
+            $orderItemEntity->resetPartialStateHistories(false);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @deprecated Use SalesQueryContainerInterface::fillOrderItemsWithLatestStates() instead.
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
      *
@@ -231,13 +256,26 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      */
     public function queryOrderItemsStateHistoriesOrderedByNewestState(ObjectCollection $salesOrderItems)
     {
-        foreach ($salesOrderItems as $orderItemEntity) {
+        $this->fillOrderItemsWithLatestStates($salesOrderItems);
+    }
 
-            $criteria = new Criteria();
-            $criteria->addDescendingOrderByColumn(SpyOmsOrderItemStateHistoryTableMap::COL_ID_OMS_ORDER_ITEM_STATE_HISTORY);
-            $orderItemEntity->getStateHistoriesJoinState($criteria);
-            $orderItemEntity->resetPartialStateHistories(false);
-        }
+    /**
+     * @api
+     *
+     * @deprecated Will be removed with the next major
+     *
+     * @param int $idSalesOrderItem
+     * @param int $idOmsOrderItemState
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery
+     */
+    public function queryOmsOrderItemStateHistoryByOrderItemIdAndOmsStateIdDesc($idSalesOrderItem, $idOmsOrderItemState)
+    {
+        return $this->getFactory()
+            ->createOmsOrderItemStateHistoryQuery()
+            ->filterByFkSalesOrderItem($idSalesOrderItem)
+            ->filterByFkOmsOrderItemState($idOmsOrderItemState)
+            ->orderByIdOmsOrderItemStateHistory(Criteria::DESC);
     }
 
     /**
@@ -255,5 +293,4 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
             ->groupBySku()
             ->orderByCount();
     }
-
 }

@@ -11,11 +11,10 @@ use Generated\Shared\Transfer\StorageProductAbstractRelationTransfer;
 
 class RelationSorter implements RelationSorterInterface
 {
-
     /**
-     * @param array|\Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[] $relationProducts
+     * @param \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[] $relationProducts
      *
-     * @return array|\Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
      */
     public function sort(array $relationProducts)
     {
@@ -25,5 +24,4 @@ class RelationSorter implements RelationSorterInterface
 
         return $relationProducts;
     }
-
 }

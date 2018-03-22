@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface UrlQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -36,6 +35,18 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrls();
+
+    /**
+     * @api
+     *
+     * @param string $resourceType
+     * @param array $resourceIds
+     *
+     * @throws \Spryker\Zed\Url\Persistence\Exception\UnknownResourceTypeException
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryUrlsByResourceTypeAndIds($resourceType, array $resourceIds);
 
     /**
      * @api
@@ -116,5 +127,4 @@ interface UrlQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrlByIgnoringRedirects();
-
 }

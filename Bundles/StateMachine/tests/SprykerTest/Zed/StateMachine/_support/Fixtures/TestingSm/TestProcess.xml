@@ -7,6 +7,7 @@
     <process name="TestProcess" main="true">
         <subprocesses>
             <process>TestSubProcess</process>
+            <process>TestSubProcessFoo</process>
         </subprocesses>
 
         <states>
@@ -142,6 +143,30 @@
                 <event>item not returned</event>
             </transition>
 
+            <transition>
+                <source>reminder I sent</source>
+                <target>sub process state</target>
+                <event>Enter Sub-process 1</event>
+            </transition>
+
+            <transition>
+                <source>done</source>
+                <target>reminder I sent</target>
+                <event>Leave Sub-process 1</event>
+            </transition>
+
+            <transition>
+                <source>reminder II sent</source>
+                <target>Foo 1 - sub process state</target>
+                <event>Enter Sub-process 2</event>
+            </transition>
+
+            <transition>
+                <source>Foo 1 - done</source>
+                <target>reminder II sent</target>
+                <event>Leave Sub-process 2</event>
+            </transition>
+
         </transitions>
 
         <events>
@@ -155,7 +180,12 @@
             <event name="payment received" manual="true" />
             <event name="ready for return"  onEnter="true" />
             <event name="item not returned" timeout="14days" />
+            <event name="Enter Sub-process 1" manual="true" />
+            <event name="Leave Sub-process 1" manual="true" />
+            <event name="Enter Sub-process 2" manual="true" />
+            <event name="Leave Sub-process 2" manual="true" />
         </events>
     </process>
     <process name="TestSubProcess" file="SubProcesses/TestSubProcess"/>
+    <process name="TestSubProcessFoo" file="SubProcesses/TestSubProcess" prefix="Foo 1" />
 </statemachine>

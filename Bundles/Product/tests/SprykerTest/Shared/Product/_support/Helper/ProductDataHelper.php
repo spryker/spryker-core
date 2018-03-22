@@ -15,7 +15,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductDataHelper extends Module
 {
-
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
@@ -36,6 +35,7 @@ class ProductDataHelper extends Module
             ->seed($productConcreteOverride)
             ->build();
 
+        $productConcreteTransfer->setAbstractSku($productAbstractTransfer->getSku());
         $productFacade->createProductConcrete($productConcreteTransfer);
 
         $this->debug(sprintf(
@@ -121,5 +121,4 @@ class ProductDataHelper extends Module
             ->findByIdProductAbstract($idProductAbstract)
             ->delete();
     }
-
 }

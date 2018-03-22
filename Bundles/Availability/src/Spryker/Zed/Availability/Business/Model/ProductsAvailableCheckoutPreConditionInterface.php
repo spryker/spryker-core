@@ -10,13 +10,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductsAvailableCheckoutPreConditionInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
-     * @return void
+     * @return bool
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
-
 }

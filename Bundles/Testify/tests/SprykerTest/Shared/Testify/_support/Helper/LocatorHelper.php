@@ -11,18 +11,19 @@ use Codeception\Configuration;
 use Codeception\Step;
 use ReflectionClass;
 use Spryker\Shared\Kernel\AbstractLocatorLocator;
+use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Testify\Locator\Business\BusinessLocator;
 
 class LocatorHelper extends ConfigHelper
 {
-
     /**
      * @var array
      */
     protected $config = [
         'projectNamespaces' => [],
         'coreNamespaces' => [
+            'SprykerShop',
             'Spryker',
         ],
     ];
@@ -35,6 +36,7 @@ class LocatorHelper extends ConfigHelper
     public function _beforeSuite($settings = [])
     {
         $this->clearLocators();
+        $this->clearCaches();
         $this->configureNamespacesForClassResolver();
     }
 
@@ -47,6 +49,19 @@ class LocatorHelper extends ConfigHelper
         $instanceProperty = $reflection->getProperty('instance');
         $instanceProperty->setAccessible(true);
         $instanceProperty->setValue(null);
+    }
+
+    /**
+     * @return void
+     */
+    protected function clearCaches()
+    {
+        $reflection = new ReflectionClass(AbstractClassResolver::class);
+        if ($reflection->hasProperty('cache')) {
+            $instanceProperty = $reflection->getProperty('cache');
+            $instanceProperty->setAccessible(true);
+            $instanceProperty->setValue([]);
+        }
     }
 
     /**
@@ -87,5 +102,4 @@ class LocatorHelper extends ConfigHelper
 
         return $this->getLocator()->$bundleName()->facade();
     }
-
 }

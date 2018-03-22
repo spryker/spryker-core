@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\CategoryTransfer;
 
 interface CategoryAttributeInterface
 {
-
     /**
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -39,5 +38,4 @@ interface CategoryAttributeInterface
      * @return void
      */
     public function delete($idCategory);
-
 }

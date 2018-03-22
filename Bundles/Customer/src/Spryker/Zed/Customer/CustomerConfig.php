@@ -15,18 +15,15 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CustomerConfig extends AbstractBundleConfig
 {
-
     const ERROR_CODE_CUSTOMER_ALREADY_REGISTERED = 4001;
+    const ERROR_CODE_CUSTOMER_INVALID_EMAIL = 4002;
 
     /**
      * @return string
      */
     public function getHostYves()
     {
-        return $this->getConfig()->hasKey(CustomerConstants::BASE_URL_YVES)
-            ? $this->get(CustomerConstants::BASE_URL_YVES)
-            // @deprecated this is just for backward compatibility
-            : $this->get(CustomerConstants::HOST_YVES);
+        return $this->get(CustomerConstants::BASE_URL_YVES);
     }
 
     /**
@@ -75,4 +72,19 @@ class CustomerConfig extends AbstractBundleConfig
         return '-';
     }
 
+    /**
+     * This method provides list of URLs to render blocks inside customer detail page.
+     * URL defines path to external bundle controller. For example: /sales/customer/customer-orders would call sales bundle, customer controller, customerOrders action.
+     *
+     * example:
+     * [
+     *    'sales' => '/sales/customer/customer-orders',
+     * ]
+     *
+     * @return array
+     */
+    public function getCustomerDetailExternalBlocksUrls()
+    {
+        return [];
+    }
 }

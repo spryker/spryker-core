@@ -1,0 +1,43 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Product Attributes' %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton(url('/product-attribute-gui/attribute'), 'Back to List' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+        {{ form_start(form) }}
+
+        <div class="tabs-container">
+            <ul class="nav nav-tabs">
+                <li class="disabled"><a>{{ '1. General Information' | trans }}</a></li>
+                <li class="active"><a>{{ '2. Translations' | trans }}</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="tab_general" class="tab-pane active">
+                    <div class="panel-body">
+
+                        {% include '@ProductAttributeGui/Attribute/partials/translate-form-content.twig' %}
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabs-footer">
+                <a href="{{ url('/product-attribute-gui/attribute/edit', {'id': app.request.query.get('id')}) }}" class="btn btn-back">{{ 'Back' | trans }}</a>
+                <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productattributegui-attribute.js"></script>
+{% endblock %}

@@ -7,13 +7,18 @@
 
 namespace Spryker\Zed\Customer\Communication\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
+ * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
+ */
 class CustomerUpdateForm extends CustomerForm
 {
-
     const FIELD_DEFAULT_BILLING_ADDRESS = 'default_billing_address';
     const FIELD_DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
 
@@ -29,18 +34,6 @@ class CustomerUpdateForm extends CustomerForm
         parent::configureOptions($resolver);
 
         $resolver->setRequired(self::OPTION_ADDRESS_CHOICES);
-    }
-
-    /**
-     * @deprecated Use `configureOptions()` instead.
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-     *
-     * @return void
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
     }
 
     /**
@@ -65,7 +58,7 @@ class CustomerUpdateForm extends CustomerForm
      */
     protected function addEmailField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_EMAIL, 'email', [
+        $builder->add(self::FIELD_EMAIL, EmailType::class, [
             'label' => 'Email',
             'constraints' => $this->createEmailConstraints(),
             'disabled' => 'disabled',
@@ -82,10 +75,11 @@ class CustomerUpdateForm extends CustomerForm
      */
     protected function addDefaultBillingAddressField(FormBuilderInterface $builder, array $choices)
     {
-        $builder->add(self::FIELD_DEFAULT_BILLING_ADDRESS, 'choice', [
+        $builder->add(self::FIELD_DEFAULT_BILLING_ADDRESS, ChoiceType::class, [
             'label' => 'Billing Address',
             'placeholder' => 'Select one',
-            'choices' => $choices,
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -100,14 +94,32 @@ class CustomerUpdateForm extends CustomerForm
      */
     protected function addDefaultShippingAddressField(FormBuilderInterface $builder, array $choices)
     {
-        $builder->add(self::FIELD_DEFAULT_SHIPPING_ADDRESS, 'choice', [
+        $builder->add(self::FIELD_DEFAULT_SHIPPING_ADDRESS, ChoiceType::class, [
             'label' => 'Shipping Address',
             'placeholder' => 'Select one',
-            'choices' => $choices,
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
             'required' => false,
         ]);
 
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'customer';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

@@ -15,7 +15,6 @@ use Spryker\Client\Search\Dependency\Plugin\FacetSearchResultValueTransformerPlu
  */
 class ProductLabelFacetValueTransformerPlugin extends AbstractPlugin implements FacetSearchResultValueTransformerPluginInterface
 {
-
     /**
      * @param mixed $value
      *
@@ -59,5 +58,4 @@ class ProductLabelFacetValueTransformerPlugin extends AbstractPlugin implements 
     {
         return $this->getFactory()->getStore()->getCurrentLocale();
     }
-
 }

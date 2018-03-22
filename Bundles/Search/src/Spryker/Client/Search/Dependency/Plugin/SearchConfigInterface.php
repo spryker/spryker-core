@@ -9,7 +9,6 @@ namespace Spryker\Client\Search\Dependency\Plugin;
 
 interface SearchConfigInterface
 {
-
     /**
      * @api
      *
@@ -30,5 +29,4 @@ interface SearchConfigInterface
      * @return \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface
      */
     public function getPaginationConfigBuilder();
-
 }

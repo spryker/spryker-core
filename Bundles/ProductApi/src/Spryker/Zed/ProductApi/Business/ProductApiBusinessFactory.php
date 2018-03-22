@@ -16,11 +16,10 @@ use Spryker\Zed\ProductApi\ProductApiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductApi\ProductApiConfig getConfig()
- * @method \Spryker\Zed\ProductApi\Persistence\ProductApiQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductApi\Persistence\ProductApiQueryContainerInterface getQueryContainer()
  */
 class ProductApiBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductApi\Business\Model\ProductApiInterface
      */
@@ -83,5 +82,4 @@ class ProductApiBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(ProductApiDependencyProvider::FACADE_PRODUCT);
     }
-
 }

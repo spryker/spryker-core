@@ -11,12 +11,11 @@ use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Heartbeat\Business\HeartbeatFacade getFacade()
+ * @method \Spryker\Zed\Heartbeat\Business\HeartbeatFacadeInterface getFacade()
  * @method \Spryker\Zed\Heartbeat\Communication\HeartbeatCommunicationFactory getFactory()
  */
 class SessionHealthIndicatorPlugin extends AbstractPlugin implements HealthIndicatorInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\HealthIndicatorReportTransfer
      */
@@ -24,5 +23,4 @@ class SessionHealthIndicatorPlugin extends AbstractPlugin implements HealthIndic
     {
         return $this->getFacade()->doSessionHealthCheck();
     }
-
 }

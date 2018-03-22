@@ -9,7 +9,6 @@ namespace Spryker\Shared\Search;
 
 interface SearchConstants
 {
-
     /**
      * When executing boosted full text search queries the value of this config setting will be used as the boost factor.
      * I.e. to set the boost factor to 3 add this to your config: `$config[SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE] = 3;`.
@@ -71,7 +70,18 @@ interface SearchConstants
     /**
      * Specification:
      * - Defines a suffix string for the index name to be installed. (Optional)
+     *
+     * @api
      */
     const SEARCH_INDEX_NAME_SUFFIX = 'SEARCH_INDEX_NAME_SUFFIX';
 
+    /**
+     * Specification:
+     * - Defines a custom configuration for \Elastica\Client.
+     * - This configuration is used exclusively when set, e.g. no other Elastica configuration will be used for the client.
+     * - @see http://elastica.io/ for details.
+     *
+     * @api
+     */
+    const ELASTICA_CLIENT_CONFIGURATION = 'ELASTICA_CLIENT_CONFIGURATION';
 }

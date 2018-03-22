@@ -9,15 +9,12 @@ namespace Spryker\Client\Storage\Cache;
 
 class StorageCacheReplaceStrategy implements StorageCacheStrategyInterface
 {
-
     /**
      * @var \Spryker\Client\Storage\Cache\StorageCacheStrategyHelperInterface
      */
     protected $storageCacheStrategyHelper;
 
     /**
-     * StorageCacheReplaceStrategy constructor.
-     *
      * @param \Spryker\Client\Storage\Cache\StorageCacheStrategyHelperInterface $storageCacheStrategyHelper
      */
     public function __construct(StorageCacheStrategyHelperInterface $storageCacheStrategyHelper)
@@ -58,5 +55,4 @@ class StorageCacheReplaceStrategy implements StorageCacheStrategyInterface
     {
         return $this->storageCacheStrategyHelper->isNewKey($status) || $this->storageCacheStrategyHelper->isUsedKey($status);
     }
-
 }

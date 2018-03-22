@@ -29,7 +29,6 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderP
  */
 class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQueryExpanderPluginAggregationTest
 {
-
     /**
      * @return array
      */
@@ -63,7 +62,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
         ];
 
         $parameters = [
-            'foo' => 'asdf',
+            'foo-param' => 'asdf',
         ];
 
         return [$searchConfig, $expectedAggregations, $parameters];
@@ -141,9 +140,9 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
         ];
 
         $parameters = [
-            'foo' => 'asdf',
-            'bar' => 'qwer',
-            'baz' => 'yxcv',
+            'foo-param' => 'asdf',
+            'bar-param' => 'qwer',
+            'baz-param' => 'yxcv',
         ];
 
         return [$searchConfig, $expectedAggregations, $parameters];
@@ -167,7 +166,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
         ];
 
         $parameters = [
-            'foo' => 123,
+            'foo-param' => 123,
         ];
 
         return [$searchConfig, $expectedAggregations, $parameters];
@@ -251,9 +250,9 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
         ];
 
         $parameters = [
-            'foo' => 123,
-            'bar' => 456,
-            'baz' => [
+            'foo-param' => 123,
+            'bar-param' => 456,
+            'baz-param' => [
                 'min' => 789,
             ],
         ];
@@ -278,7 +277,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
         ];
 
         $parameters = [
-            'foo' => 'c1',
+            'foo-param' => 'c1',
         ];
 
         return [$searchConfig, $expectedAggregations, $parameters];
@@ -351,12 +350,11 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
         ];
 
         $parameters = [
-            'foo' => 'asdf',
-            'bar' => 456,
-            'baz' => 'c1',
+            'foo-param' => 'asdf',
+            'bar-param' => 456,
+            'baz-param' => 'c1',
         ];
 
         return [$searchConfig, $expectedAggregations, $parameters];
     }
-
 }

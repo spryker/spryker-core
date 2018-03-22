@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\NavigationTreeTransfer;
 
 interface NavigationGuiToNavigationInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      *
@@ -85,5 +84,4 @@ interface NavigationGuiToNavigationInterface
      * @return void
      */
     public function updateNavigationTreeHierarchy(NavigationTreeTransfer $navigationTreeTransfer);
-
 }

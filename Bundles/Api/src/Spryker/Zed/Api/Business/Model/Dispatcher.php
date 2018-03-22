@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Api\Business\Model;
 
 use ArrayObject;
+use Exception;
 use Generated\Shared\Transfer\ApiCollectionTransfer;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiItemTransfer;
@@ -17,10 +18,10 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Business\Model\Validator\ApiValidatorInterface;
+use Throwable;
 
 class Dispatcher implements DispatcherInterface
 {
-
     /**
      * @var \Spryker\Zed\Api\Business\Model\ResourceHandlerInterface
      */
@@ -92,7 +93,6 @@ class Dispatcher implements DispatcherInterface
                 $apiResponseTransfer->setCode(ApiConfig::HTTP_CODE_VALIDATION_ERRORS);
                 $apiResponseTransfer->setMessage('Validation errors.');
                 $apiResponseTransfer->setValidationErrors(new ArrayObject($errors));
-
             } else {
                 $apiPluginCallResponseTransfer = $this->callApiPlugin($resource, $method, $id, $params);
                 $apiResponseTransfer->setType(get_class($apiPluginCallResponseTransfer));
@@ -110,7 +110,6 @@ class Dispatcher implements DispatcherInterface
                     if (!$apiResponseTransfer->getMeta()) {
                         $apiResponseTransfer->setMeta(new ApiMetaTransfer());
                     }
-
                 } elseif ($apiPluginCallResponseTransfer instanceof ApiItemTransfer) {
                     if (!$apiResponseTransfer->getMeta()) {
                         $apiResponseTransfer->setMeta(new ApiMetaTransfer());
@@ -118,12 +117,11 @@ class Dispatcher implements DispatcherInterface
                     $apiResponseTransfer->getMeta()->setResourceId($apiPluginCallResponseTransfer->getId());
                 }
             }
-
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $apiResponseTransfer->setCode($this->resolveStatusCode($e->getCode()));
             $apiResponseTransfer->setMessage($e->getMessage());
             $apiResponseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $apiResponseTransfer->setCode($this->resolveStatusCode($e->getCode()));
             $apiResponseTransfer->setMessage($e->getMessage());
             $apiResponseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
@@ -187,5 +185,4 @@ class Dispatcher implements DispatcherInterface
             $apiDataTransfer
         );
     }
-
 }

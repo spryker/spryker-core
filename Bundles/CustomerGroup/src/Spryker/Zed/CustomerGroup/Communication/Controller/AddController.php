@@ -12,11 +12,12 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacade getFacade()
+ * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomerGroup\Communication\CustomerGroupCommunicationFactory getFactory()
  */
 class AddController extends AbstractController
 {
+    const MESSAGE_CUSTOMER_GROUP_CREATE_SUCCESS = 'Customer group was created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -34,17 +35,48 @@ class AddController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
-            $customerGroupTransfer = $dataProvider->prepareDataAsTransfer($form->getData());
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer */
+            $customerGroupTransfer = $form->getData();
 
             $this->getFacade()->add($customerGroupTransfer);
 
+            $this->addSuccessMessage(static::MESSAGE_CUSTOMER_GROUP_CREATE_SUCCESS);
             return $this->redirectResponse('/customer-group');
         }
 
         return $this->viewResponse([
+            'customerGroupFormTabs' => $this->getFactory()->createCustomerGroupFormTabs()->createView(),
             'form' => $form->createView(),
+            'availableCustomerTable' => $this->getFactory()
+                ->createAvailableCustomerTable()
+                ->render(),
+            'assignedCustomerTable' => $this->getFactory()
+                ->createAssignedCustomerTable()
+                ->render(),
         ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function availableCustomerTableAction()
+    {
+        $availableCustomerTable = $this->getFactory()
+            ->createAvailableCustomerTable();
+
+        return $this->jsonResponse($availableCustomerTable->fetchData());
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function assignedCustomerTableAction()
+    {
+        $assignedCustomerTable = $this->getFactory()
+            ->createAssignedCustomerTable();
+
+        return $this->jsonResponse($assignedCustomerTable->fetchData());
     }
 
     /**
@@ -54,5 +86,4 @@ class AddController extends AbstractController
     {
         return new CustomerTransfer();
     }
-
 }

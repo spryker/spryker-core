@@ -8,7 +8,6 @@ namespace Spryker\Zed\Oms\Dependency\Plugin\Condition;
 
 interface ConditionCollectionInterface
 {
-
     /**
      *
      * Add new condition to list of conditions
@@ -20,7 +19,7 @@ interface ConditionCollectionInterface
      *
      * @return $this
      */
-    public function add(ConditionInterface $condition, $name);
+    public function add($condition, $name);
 
     /**
      *
@@ -35,5 +34,4 @@ interface ConditionCollectionInterface
      * @return \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface
      */
     public function get($name);
-
 }

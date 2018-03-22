@@ -9,20 +9,19 @@ namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
 use Spryker\Zed\ProductOption\Business\Exception\ProductOptionGroupNotFoundException;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
 
 class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
     protected $productOptionQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface
      */
     protected $touchFacade;
 
@@ -43,14 +42,14 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
 
     /**
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchInterface $touchFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeInterface $touchFacade
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface $translationSaver
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface $abstractProductOptionSaver
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface $productOptionValueSaver
      */
     public function __construct(
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
-        ProductOptionToTouchInterface $touchFacade,
+        ProductOptionToTouchFacadeInterface $touchFacade,
         TranslationSaverInterface $translationSaver,
         AbstractProductOptionSaverInterface $abstractProductOptionSaver,
         ProductOptionValueSaverInterface $productOptionValueSaver
@@ -117,14 +116,14 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     }
 
     /**
-     * @param int $idProductOptionGroup
+     * @param int|string|null $idProductOptionGroup
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
      */
     protected function getOptionGroupById($idProductOptionGroup)
     {
         $productOptionGroupEntity = $this->productOptionQueryContainer
-            ->queryProductOptionGroupById((int)$idProductOptionGroup)
+            ->queryProductOptionGroupById($idProductOptionGroup)
             ->findOne();
 
         return $productOptionGroupEntity;
@@ -143,7 +142,6 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
 
         if ($productOptionGroupTransfer->getName() &&
             strpos($productOptionGroupTransfer->getName(), ProductOptionConfig::PRODUCT_OPTION_GROUP_NAME_TRANSLATION_PREFIX) === false) {
-
             $productOptionGroupTransfer->setName(
                 ProductOptionConfig::PRODUCT_OPTION_GROUP_NAME_TRANSLATION_PREFIX . $productOptionGroupTransfer->getName()
             );
@@ -188,5 +186,4 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     {
         return new SpyProductOptionGroup();
     }
-
 }

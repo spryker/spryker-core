@@ -1,3 +1,3 @@
 # Currency Changelog
 
-[Currency Changelog](https://github.com/spryker/Currency/releases)
+[Release Changelog](https://github.com/spryker/currency/releases)

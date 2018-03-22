@@ -3,6 +3,7 @@
   "description": "EventJournal module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/config": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/new-relic-api": "^1.0.0",
@@ -14,14 +15,8 @@
     "spryker/testify": "*"
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "minimum-stability": "dev",

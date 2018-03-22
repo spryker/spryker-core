@@ -9,7 +9,6 @@ namespace Spryker\Zed\Sales\Dependency\Facade;
 
 class SalesToCustomerBridge implements SalesToCustomerInterface
 {
-
     /**
      * @var \Spryker\Zed\Customer\Business\CustomerFacadeInterface
      */
@@ -32,5 +31,4 @@ class SalesToCustomerBridge implements SalesToCustomerInterface
     {
         return $this->customerFacade->findByReference($customerReference);
     }
-
 }

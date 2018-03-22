@@ -12,11 +12,10 @@ use PHPMD\RuleSetFactory;
 use PHPMD\TextUI\CommandLineOptions;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
-use Zend\Config\Reader\Xml;
+use Zend\Config\Reader\ReaderInterface;
 
 class ArchitectureSniffer implements ArchitectureSnifferInterface
 {
-
     const OPTION_PRIORITY = 'priority';
     const OPTION_STRICT = 'strict';
     const OPTION_DRY_RUN = 'dry-run';
@@ -27,7 +26,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected $command;
 
     /**
-     * @var \Zend\Config\Reader\Xml
+     * @var \Zend\Config\Reader\ReaderInterface
      */
     protected $xmlReader;
 
@@ -37,11 +36,11 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected $defaultPriority;
 
     /**
-     * @param \Zend\Config\Reader\Xml $xmlReader
+     * @param \Zend\Config\Reader\ReaderInterface $xmlReader
      * @param string $command
      * @param int $defaultPriority
      */
-    public function __construct(Xml $xmlReader, $command, $defaultPriority)
+    public function __construct(ReaderInterface $xmlReader, $command, $defaultPriority)
     {
         $this->xmlReader = $xmlReader;
         $this->command = $command;
@@ -72,10 +71,15 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
             }
         }
 
-        $sort = function ($a, $b) {
-            return $a["priority"] - $b["priority"];
+        $sortAlphabetically = function ($first, $second) {
+            return strcasecmp($first['name'], $second['name']) < 0;
         };
-        usort($rules, $sort);
+        usort($rules, $sortAlphabetically);
+
+        $sortPriority = function ($first, $second) {
+            return $first['priority'] - $second['priority'];
+        };
+        usort($rules, $sortPriority);
 
         return $rules;
     }
@@ -184,13 +188,11 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     protected function formatMultiFileResults(array $results, array $fileViolations)
     {
         foreach ($results['file'] as $file) {
-
             if (!is_array($file)) {
                 continue;
             }
 
             if (array_key_exists('violation', $file)) {
-
                 if (!array_key_exists($file['name'], $fileViolations)) {
                     $fileViolations[$file['name']] = [];
                 }
@@ -226,5 +228,4 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         }
         return $fileViolations;
     }
-
 }

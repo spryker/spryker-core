@@ -12,7 +12,6 @@ use League\Flysystem\Adapter\Local as LocalAdapter;
 
 class LocalAdapterBuilder implements AdapterBuilderInterface
 {
-
     /**
      * @var \League\Flysystem\Adapter\Local
      */
@@ -72,5 +71,4 @@ class LocalAdapterBuilder implements AdapterBuilderInterface
 
         return $this;
     }
-
 }

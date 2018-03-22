@@ -15,7 +15,6 @@
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {{ createActionButton('/category/add', 'Create category' | trans) }}
     {{ backActionButton('/category/root', 'List of categories' | trans) }}
 {% endblock %}
 
@@ -33,7 +32,7 @@
 
             <input
                 type="submit"
-                class="btn btn-primary"
+                class="btn btn-primary safe-submit"
                 value="{{ 'Delete' | trans }}"
                 disabled="disabled"
                 id="submit_delete"

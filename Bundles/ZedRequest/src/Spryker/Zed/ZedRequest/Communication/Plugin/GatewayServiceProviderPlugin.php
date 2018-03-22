@@ -16,17 +16,20 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * @method \Spryker\Zed\Kernel\Communication\KernelCommunicationFactory getFactory()
- * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacade getFacade()
+ * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacadeInterface getFacade()
  */
 class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
+     * @deprecated Please don't use this property anymore. The needed ControllerListenerInterface is now retrieved by the Factory.
+     *
      * @var \Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerInterface
      */
     protected $controllerListener;
 
     /**
+     * @deprecated Please remove usage of this setter. The needed ControllerListenerInterface is now retrieved by the Factory.
+     *
      * @param \Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerInterface $controllerListener
      *
      * @return void
@@ -43,15 +46,25 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
      */
     public function register(Application $app)
     {
-        /** @var \Symfony\Component\EventDispatcher\EventDispatcher $dispatcher */
-        $dispatcher = $app['dispatcher'];
-        $dispatcher->addListener(
+        $this->getEventDispatcher($app)->addListener(
             KernelEvents::CONTROLLER,
             [
-                $this->controllerListener,
+                $this->getControllerListener(),
                 'onKernelController',
             ]
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ZedRequest\Communication\Plugin\GatewayControllerListenerInterface
+     */
+    protected function getControllerListener()
+    {
+        if (!$this->controllerListener) {
+            return $this->getFactory()->createControllerListener();
+        }
+
+        return $this->controllerListener;
     }
 
     /**
@@ -66,4 +79,13 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
         });
     }
 
+    /**
+     * @param \Silex\Application $app
+     *
+     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     */
+    protected function getEventDispatcher(Application $app)
+    {
+        return $app['dispatcher'];
+    }
 }

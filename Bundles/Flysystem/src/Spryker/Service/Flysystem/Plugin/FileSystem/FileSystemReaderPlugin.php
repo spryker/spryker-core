@@ -19,7 +19,6 @@ use Spryker\Service\Kernel\AbstractPlugin;
  */
 class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
@@ -138,5 +137,4 @@ class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderP
 
         return $collection;
     }
-
 }

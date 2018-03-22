@@ -18,11 +18,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Category\CategoryConfig getConfig()
- * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface getQueryContainer()
  */
 class CategoryPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @param string|null $modelAlias
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
@@ -85,5 +84,4 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
     {
         return SpyCategoryTemplateQuery::create();
     }
-
 }

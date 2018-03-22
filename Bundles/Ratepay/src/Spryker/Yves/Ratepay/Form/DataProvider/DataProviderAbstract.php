@@ -13,7 +13,6 @@ use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
 
 abstract class DataProviderAbstract implements StepEngineFormDataProviderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -33,5 +32,4 @@ abstract class DataProviderAbstract implements StepEngineFormDataProviderInterfa
     {
         return [];
     }
-
 }

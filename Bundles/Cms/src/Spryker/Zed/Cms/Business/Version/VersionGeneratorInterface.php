@@ -9,7 +9,6 @@ namespace Spryker\Zed\Cms\Business\Version;
 
 interface VersionGeneratorInterface
 {
-
     /**
      * @param int $idCmsPage
      *
@@ -30,5 +29,4 @@ interface VersionGeneratorInterface
      * @return string
      */
     public function generateReferenceCmsVersionName($versionNumber);
-
 }

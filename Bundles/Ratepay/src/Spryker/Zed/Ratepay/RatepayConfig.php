@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class RatepayConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string
      */
@@ -68,5 +67,4 @@ class RatepayConfig extends AbstractBundleConfig
     {
         return __DIR__ . DIRECTORY_SEPARATOR . RatepayConstants::GLOSSARY_FILE_PATH;
     }
-
 }

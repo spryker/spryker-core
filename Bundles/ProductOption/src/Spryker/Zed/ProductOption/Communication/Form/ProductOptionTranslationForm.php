@@ -7,14 +7,20 @@
 namespace Spryker\Zed\ProductOption\Communication\Form;
 
 use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
+ */
 class ProductOptionTranslationForm extends AbstractType
 {
-
     const FIELD_NAME = 'name';
     const FIELD_LOCALE_CODE = 'localeCode';
     const FIELD_KEY = 'key';
@@ -53,7 +59,7 @@ class ProductOptionTranslationForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_NAME, 'text', [
+        $builder->add(self::FIELD_NAME, TextType::class, [
             'label' => 'Value',
             'required' => true,
             'constraints' => [
@@ -71,7 +77,7 @@ class ProductOptionTranslationForm extends AbstractType
      */
     protected function addLocalCode(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_LOCALE_CODE, 'hidden');
+        $builder->add(self::FIELD_LOCALE_CODE, HiddenType::class);
 
         return $this;
     }
@@ -83,7 +89,7 @@ class ProductOptionTranslationForm extends AbstractType
      */
     protected function addKey(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_KEY, 'hidden');
+        $builder->add(self::FIELD_KEY, HiddenType::class);
 
         return $this;
     }
@@ -95,19 +101,26 @@ class ProductOptionTranslationForm extends AbstractType
      */
     protected function addRelatedProductOptionValueHash(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_RELATED_OPTION_HASH, 'hidden');
+        $builder->add(self::FIELD_RELATED_OPTION_HASH, HiddenType::class);
 
         return $this;
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
+     * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'product_option_value_translation';
     }
 
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

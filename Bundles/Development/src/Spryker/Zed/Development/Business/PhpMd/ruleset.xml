@@ -20,6 +20,7 @@
 
     <rule ref="rulesets/cleancode.xml">
         <exclude name="StaticAccess" />
+        <exclude name="ElseExpression" />
     </rule>
 
     <rule ref="rulesets/design.xml">
@@ -58,7 +59,7 @@ maintainability and understandability
         </description>
         <priority>2</priority>
         <properties>
-            <property name="minimum" value="13" description="Maximum number of acceptable dependencies." />
+            <property name="minimum" value="20" description="Maximum number of acceptable dependencies." />
         </properties>
     </rule>
 

@@ -27,7 +27,6 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class ItemLockTest extends StateMachineMocks
 {
-
     /**
      * @return void
      */
@@ -39,7 +38,7 @@ class ItemLockTest extends StateMachineMocks
 
         $itemLock = $this->createItemLock($stateMachineLockEntityMock);
 
-        $lockResult = $itemLock->acquire(1);
+        $lockResult = $itemLock->acquire(sha1(1));
 
         $this->assertTrue($lockResult);
     }
@@ -57,7 +56,7 @@ class ItemLockTest extends StateMachineMocks
 
         $itemLock = $this->createItemLock($stateMachineLockEntityMock);
 
-        $lockResult = $itemLock->acquire(1);
+        $lockResult = $itemLock->acquire(sha1(1));
 
         $this->assertTrue($lockResult);
     }
@@ -127,5 +126,4 @@ class ItemLockTest extends StateMachineMocks
     {
         return $this->getMockBuilder(SpyStateMachineLockQuery::class)->getMock();
     }
-
 }

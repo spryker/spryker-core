@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
 use Generated\Shared\Transfer\DependencyBundleTransfer;
 use Generated\Shared\Transfer\DependencyTransfer;
 use Spryker\Zed\Development\Business\DependencyTree\Finder;
+use Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 use Zend\Filter\Word\SeparatorToCamelCase;
@@ -19,11 +20,15 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class BundleParser implements BundleParserInterface
 {
-
     /**
      * @var array
      */
-    protected $relevantBundleNamespaces = ['Spryker', 'Orm'];
+    protected $relevantBundleNamespaces = ['Spryker', 'SprykerEco', 'SprykerSdk', 'SprykerShop', 'Orm'];
+
+    /**
+     * @var \Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface
+     */
+    protected $finder;
 
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
@@ -41,10 +46,12 @@ class BundleParser implements BundleParserInterface
     protected $bundleDependencyCollectionTransfer;
 
     /**
+     * @param \Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface $finder
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
      */
-    public function __construct(DevelopmentConfig $config)
+    public function __construct(FinderInterface $finder, DevelopmentConfig $config)
     {
+        $this->finder = $finder;
         $this->config = $config;
     }
 
@@ -159,13 +166,13 @@ class BundleParser implements BundleParserInterface
     /**
      * We only detect dependencies which are declared in the class' use statement
      *
-     * @param string $bundle
+     * @param string $module
      *
      * @return array
      */
-    protected function parseDependencies($bundle)
+    protected function parseDependencies($module)
     {
-        $files = $this->findAllFilesOfBundle($bundle);
+        $files = $this->finder->find($module);
 
         $dependencies = [];
         foreach ($files as $file) {
@@ -187,17 +194,24 @@ class BundleParser implements BundleParserInterface
      */
     protected function isExistentBundle($bundle)
     {
-        return is_dir($this->config->getBundleDirectory() . $bundle);
+        if (is_dir($this->config->getPathToCore() . $bundle)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
-     * @param string $bundle
+     * @param string $module
      *
-     * @return \Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\SplFileInfo[]|\Symfony\Component\Finder\Finder
      */
-    protected function findAllFilesOfBundle($bundle)
+    protected function findAllFilesOfBundle($module)
     {
-        $finder = new Finder($this->config->getBundleDirectory(), '*', $bundle);
+        $finder = new Finder($this->config->getPathToCore(), '*', $module);
+        if ($finder === null) {
+            return [];
+        }
 
         return $finder->getFiles();
     }
@@ -235,18 +249,28 @@ class BundleParser implements BundleParserInterface
         foreach ($allFileDependencies as $file => $fileDependencies) {
             foreach ($fileDependencies as $fileDependency) {
                 $fileNameParts = explode('\\', $fileDependency);
-                $foreignBundle = $fileNameParts[2];
-                if ($this->bundleDependencyCollectionTransfer->getBundle() !== $foreignBundle) {
+                $foreignModule = $fileNameParts[2];
+                if ($this->bundleDependencyCollectionTransfer->getBundle() !== $foreignModule) {
                     $dependencyTransfer = new DependencyTransfer();
-                    $dependencyTransfer->setBundle($foreignBundle);
+                    $dependencyTransfer->setBundle($foreignModule);
                     $dependencyTransfer->setType('spryker');
-                    $dependencyTransfer->setIsOptional($this->isPluginFile($file));
+                    $dependencyTransfer->setIsOptional($this->isPluginFile($file) && !$this->isExtensionModule($foreignModule));
                     $dependencyTransfer->setIsInTest($this->isTestFile($file));
 
                     $this->addDependency($dependencyTransfer);
                 }
             }
         }
+    }
+
+    /**
+     * @param string $moduleName
+     *
+     * @return bool
+     */
+    protected function isExtensionModule($moduleName)
+    {
+        return preg_match('/Extension$/', $moduleName);
     }
 
     /**
@@ -288,7 +312,7 @@ class BundleParser implements BundleParserInterface
      */
     protected function addPersistenceLayerDependencies($bundleName)
     {
-        $folder = $this->config->getBundleDirectory() . $bundleName . '/src/Spryker/Zed/' . $bundleName . '/Persistence/Propel/Schema/';
+        $folder = $this->config->getPathToCore() . $bundleName . '/src/Spryker/Zed/' . $bundleName . '/Persistence/Propel/Schema/';
         if (!is_dir($folder)) {
             return;
         }
@@ -422,5 +446,4 @@ class BundleParser implements BundleParserInterface
             $this->addDependency($dependencyTransfer);
         }
     }
-
 }

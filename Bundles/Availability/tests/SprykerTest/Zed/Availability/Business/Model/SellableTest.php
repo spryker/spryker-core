@@ -8,9 +8,11 @@
 namespace SprykerTest\Zed\Availability\Business\Model;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -24,7 +26,6 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
  */
 class SellableTest extends Unit
 {
-
     const SKU_PRODUCT = 'sku-123-321';
 
     /**
@@ -33,7 +34,7 @@ class SellableTest extends Unit
     public function testIsProductIsSellableWhenNeverOutOfStockShouldReturnIsSellable()
     {
         $stockFacadeMock = $this->createStockFacadeMock();
-        $stockFacadeMock->method('isNeverOutOfStock')
+        $stockFacadeMock->method('isNeverOutOfStockForStore')
             ->with(self::SKU_PRODUCT)
             ->willReturn(true);
 
@@ -52,11 +53,11 @@ class SellableTest extends Unit
         $existingStock = 10;
 
         $stockFacadeMock = $this->createStockFacadeMock();
-        $stockFacadeMock->method('isNeverOutOfStock')
+        $stockFacadeMock->method('isNeverOutOfStockForStore')
             ->with(self::SKU_PRODUCT)
             ->willReturn(false);
 
-        $stockFacadeMock->method('calculateStockForProduct')
+        $stockFacadeMock->method('calculateProductStockForStore')
             ->with(self::SKU_PRODUCT)
             ->willReturn($existingStock);
 
@@ -74,12 +75,14 @@ class SellableTest extends Unit
     /**
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface|null $omsFacadeMock
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface|null $stockFacadeMock
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface|null $storeFacade
      *
      * @return \Spryker\Zed\Availability\Business\Model\Sellable
      */
     protected function createSellable(
         AvailabilityToOmsInterface $omsFacadeMock = null,
-        AvailabilityToStockInterface $stockFacadeMock = null
+        AvailabilityToStockInterface $stockFacadeMock = null,
+        AvailabilityToStoreFacadeInterface $storeFacade = null
     ) {
 
         if ($omsFacadeMock === null) {
@@ -90,7 +93,21 @@ class SellableTest extends Unit
             $stockFacadeMock = $this->createStockFacadeMock();
         }
 
-        return new Sellable($omsFacadeMock, $stockFacadeMock);
+        if ($storeFacade === null) {
+            $storeFacade = $this->createStoreFacade();
+            $storeFacade->method('getCurrentStore')
+                ->willReturn($this->createStoreTransfer());
+        }
+
+        return new Sellable($omsFacadeMock, $stockFacadeMock, $storeFacade);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function createStoreTransfer()
+    {
+        return (new StoreTransfer())->setName('DE');
     }
 
     /**
@@ -111,4 +128,12 @@ class SellableTest extends Unit
             ->getMock();
     }
 
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
+     */
+    protected function createStoreFacade()
+    {
+        return $this->getMockBuilder(AvailabilityToStoreFacadeInterface::class)
+            ->getMock();
+    }
 }

@@ -24,7 +24,6 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
  */
 class ComparatorOperatorsTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -308,7 +307,7 @@ class ComparatorOperatorsTest extends Unit
     }
 
     /**
-     * @param array|\Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface[] $comparators
+     * @param \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface[] $comparators
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
      */
@@ -324,5 +323,4 @@ class ComparatorOperatorsTest extends Unit
     {
         return $this->getMockBuilder(ComparatorInterface::class)->getMock();
     }
-
 }

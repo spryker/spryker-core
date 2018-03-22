@@ -10,13 +10,12 @@ namespace Spryker\Zed\ZedNavigation\Communication\Plugin;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacade getFacade()
+ * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacadeInterface getFacade()
  * @method \Spryker\Zed\ZedNavigation\Communication\ZedNavigationCommunicationFactory getFactory()
  * @method \Spryker\Zed\ZedNavigation\ZedNavigationConfig getConfig()
  */
 class ZedNavigation extends AbstractPlugin
 {
-
     /**
      * @param string $pathInfo
      *
@@ -31,5 +30,4 @@ class ZedNavigation extends AbstractPlugin
         return $this->getFacade()
             ->buildNavigation($pathInfo);
     }
-
 }

@@ -22,7 +22,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class VersionPageController extends AbstractController
 {
-
     const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
     const URL_PARAM_VERSION = 'version';
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
@@ -47,7 +46,6 @@ class VersionPageController extends AbstractController
                 ->publishWithVersion($idCmsPage);
 
             $this->addSuccessMessage(sprintf('Page with version %d successfully published.', $cmsVersionTransfer->getVersion()));
-
         } catch (CannotActivatePageException $exception) {
             $this->addErrorMessage('Cannot publish the CMS page. Please fill in all placeholders for this page.');
 
@@ -190,5 +188,4 @@ class VersionPageController extends AbstractController
 
         return $cmsVersionDataHelper->mapToCmsVersionDataTransfer($cmsTargetVersionTransfer);
     }
-
 }

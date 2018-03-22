@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 interface ProductBundleIdHydratorInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrate(OrderTransfer $orderTransfer);
-
 }

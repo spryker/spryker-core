@@ -9,12 +9,10 @@ namespace Spryker\Zed\CmsUserConnector\Dependency\QueryContainer;
 
 interface CmsUserConnectorToCmsQueryContainerInterface
 {
-
     /**
      * @param int $idCmsVersion
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsVersionQuery
      */
     public function queryCmsVersionById($idCmsVersion);
-
 }

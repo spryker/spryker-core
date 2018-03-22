@@ -16,9 +16,8 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class SalesClient extends AbstractClient implements SalesClientInterface
 {
-
     /**
-     * Returns the sales orders for the given customer and filters
+     * {@inheritdoc}
      *
      * @api
      *
@@ -34,7 +33,23 @@ class SalesClient extends AbstractClient implements SalesClientInterface
     }
 
     /**
-     * Returns details for the given order id
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getPaginatedOrder(OrderListTransfer $orderListTransfer)
+    {
+        return $this->getFactory()
+            ->createZedSalesStub()
+            ->getPaginatedOrders($orderListTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
      *
      * @api
      *
@@ -48,5 +63,4 @@ class SalesClient extends AbstractClient implements SalesClientInterface
             ->createZedSalesStub()
             ->getOrderDetails($orderTransfer);
     }
-
 }

@@ -9,11 +9,10 @@ namespace Spryker\Shared\KeyBuilder;
 
 abstract class SharedResourceKeyBuilder implements KeyBuilderInterface
 {
-
     use KeyBuilderTrait;
 
     /**
-     * @param array $identifier
+     * @param string $identifier
      *
      * @return string
      */
@@ -34,5 +33,4 @@ abstract class SharedResourceKeyBuilder implements KeyBuilderInterface
      * @return string
      */
     abstract protected function getResourceType();
-
 }

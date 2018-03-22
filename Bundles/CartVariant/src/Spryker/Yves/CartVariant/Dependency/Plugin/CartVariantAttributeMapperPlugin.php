@@ -15,7 +15,6 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class CartVariantAttributeMapperPlugin extends AbstractPlugin implements CartVariantAttributeMapperPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $items
      *
@@ -25,5 +24,4 @@ class CartVariantAttributeMapperPlugin extends AbstractPlugin implements CartVar
     {
         return $this->getFactory()->createCartItemsAttributeMapper()->buildMap($items);
     }
-
 }

@@ -12,7 +12,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 interface FinderInterface
 {
-
     /**
      * @param int $idOrderItem
      *
@@ -74,6 +73,8 @@ interface FinderInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
+     * @throws \Spryker\Zed\Oms\Business\Exception\StateNotFoundException
+     *
      * @return string
      */
     public function getStateDisplayName(SpySalesOrderItem $orderItem);
@@ -92,4 +93,10 @@ interface FinderInterface
      */
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
 
+    /**
+     * @param int $idOrder
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedExcludeFromCustomer($idOrder);
 }

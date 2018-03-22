@@ -11,7 +11,6 @@ use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
 
 class Process implements ProcessInterface
 {
-
     /**
      * @var string
      */
@@ -30,7 +29,7 @@ class Process implements ProcessInterface
     /**
      * @var bool
      */
-    protected $main = false;
+    protected $isMain = false;
 
     /**
      * @var string
@@ -79,21 +78,21 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param bool $main
+     * @param bool $isMain
      *
      * @return void
      */
-    public function setMain($main)
+    public function setIsMain($isMain)
     {
-        $this->main = $main;
+        $this->isMain = $isMain;
     }
 
     /**
      * @return bool
      */
-    public function getMain()
+    public function getIsMain()
     {
-        return $this->main;
+        return $this->isMain;
     }
 
     /**
@@ -290,11 +289,11 @@ class Process implements ProcessInterface
     }
 
     /**
-     * Gets all manual and all on enter events as manually executable ones.
+     * Gets all "manual" and "on enter" events as manually executable ones.
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface[]
      */
-    public function getManualEvents()
+    public function getManuallyExecutableEvents()
     {
         $manuallyExecutableEventList = [];
         $transitions = $this->getAllTransitions();
@@ -313,9 +312,9 @@ class Process implements ProcessInterface
     /**
      * @return array
      */
-    public function getManualEventsBySource()
+    public function getManuallyExecutableEventsBySource()
     {
-        $events = $this->getManualEvents();
+        $events = $this->getManuallyExecutableEvents();
 
         $eventsBySource = [];
         foreach ($events as $event) {
@@ -335,7 +334,7 @@ class Process implements ProcessInterface
      * @param array $eventsBySource
      * @param \Spryker\Zed\StateMachine\Business\Process\EventInterface $event
      *
-     * @return array|string
+     * @return array
      */
     protected function groupTransitionsBySourceName(array $transitions, array $eventsBySource, EventInterface $event)
     {
@@ -348,6 +347,7 @@ class Process implements ProcessInterface
                 $eventsBySource[$sourceName][] = $event->getName();
             }
         }
+
         return $eventsBySource;
     }
 
@@ -388,5 +388,4 @@ class Process implements ProcessInterface
     {
         return $this->file;
     }
-
 }

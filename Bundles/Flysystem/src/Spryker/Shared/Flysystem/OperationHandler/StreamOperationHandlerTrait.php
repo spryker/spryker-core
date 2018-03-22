@@ -10,10 +10,10 @@ namespace Spryker\Shared\Flysystem\OperationHandler;
 use Closure;
 use Exception;
 use Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException;
+use Throwable;
 
 trait StreamOperationHandlerTrait
 {
-
     /**
      * @param \Closure $callback
      *
@@ -31,11 +31,10 @@ trait StreamOperationHandlerTrait
             }
 
             return $result;
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             throw new FileSystemStreamException($exception->getMessage(), $exception->getCode(), $exception);
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             throw new FileSystemStreamException($exception->getMessage(), $exception->getCode(), $exception);
         }
     }
-
 }

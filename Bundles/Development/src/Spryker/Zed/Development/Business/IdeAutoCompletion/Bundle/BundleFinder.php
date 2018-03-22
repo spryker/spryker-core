@@ -9,11 +9,11 @@ namespace Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle;
 use ArrayIterator;
 use ArrayObject;
 use Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer;
+use InvalidArgumentException;
 use Symfony\Component\Finder\Finder;
 
 class BundleFinder implements BundleFinderInterface
 {
-
     /**
      * @var \Symfony\Component\Finder\Finder
      */
@@ -76,7 +76,7 @@ class BundleFinder implements BundleFinderInterface
                 ->directories()
                 ->in($bundleDirectoryGlobPattern)
                 ->depth('== 0');
-        } catch (\InvalidArgumentException $exception) {
+        } catch (InvalidArgumentException $exception) {
             return new ArrayIterator();
         }
 
@@ -141,5 +141,4 @@ class BundleFinder implements BundleFinderInterface
 
         return $mergedMethodTransferCollection;
     }
-
 }

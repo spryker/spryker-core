@@ -21,7 +21,6 @@ use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
 
 class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface
      */
@@ -142,14 +141,15 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     {
         return $this->cmsBlockQueryContainer
             ->queryCmsBlockByIdWithTemplateWithGlossary($idCmsBlock)
-            ->findOne();
+            ->find()
+            ->getFirst();
     }
 
     /**
      * @param int $idCmsBlock
      * @param array $placeholders
      *
-     * @return array|\Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping[]
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping[]
      */
     protected function createKeyMappingByPlaceholder($idCmsBlock, array $placeholders)
     {
@@ -230,7 +230,6 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
         $availableLocales = $this->localeFacade->getAvailableLocales();
 
         foreach ($availableLocales as $idLocale => $localeName) {
-
             $translationTransfer = new CmsBlockGlossaryPlaceholderTranslationTransfer();
             $translationTransfer->setFkLocale($idLocale);
             $translationTransfer->setLocaleName($localeName);
@@ -284,5 +283,4 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
 
         return null;
     }
-
 }

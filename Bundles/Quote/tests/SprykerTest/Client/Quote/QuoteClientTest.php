@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Quote\QuoteClient;
 use Spryker\Client\Session\SessionClient;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 /**
  * Auto-generated group annotations
@@ -24,13 +25,12 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class QuoteClientTest extends Unit
 {
-
     /**
      * @return void
      */
     public function setUp()
     {
-        $sessionContainer = new Session();
+        $sessionContainer = new Session(new MockArraySessionStorage());
         $sessionClient = new SessionClient();
         $sessionClient->setContainer($sessionContainer);
     }
@@ -71,5 +71,4 @@ class QuoteClientTest extends Unit
 
         $this->assertNotSame($quoteTransfer, $quoteClient->getQuote());
     }
-
 }

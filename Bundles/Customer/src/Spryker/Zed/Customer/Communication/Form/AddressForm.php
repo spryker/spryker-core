@@ -7,17 +7,24 @@
 
 namespace Spryker\Zed\Customer\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
+/**
+ * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
+ * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
+ */
 class AddressForm extends AbstractType
 {
-
     const OPTION_SALUTATION_CHOICES = 'salutation_choices';
     const OPTION_COUNTRY_CHOICES = 'country_choices';
     const OPTION_PREFERRED_COUNTRY_CHOICES = 'preferred_country_choices';
@@ -55,18 +62,6 @@ class AddressForm extends AbstractType
     }
 
     /**
-     * @deprecated Use `configureOptions()` instead.
-     *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
-     *
-     * @return void
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -98,7 +93,7 @@ class AddressForm extends AbstractType
      */
     protected function addIdCustomerAddressField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_ID_CUSTOMER_ADDRESS, 'hidden');
+        $builder->add(static::FIELD_ID_CUSTOMER_ADDRESS, HiddenType::class);
 
         return $this;
     }
@@ -110,7 +105,7 @@ class AddressForm extends AbstractType
      */
     protected function addFkCustomerField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_FK_CUSTOMER, 'hidden');
+        $builder->add(static::FIELD_FK_CUSTOMER, HiddenType::class);
 
         return $this;
     }
@@ -123,10 +118,11 @@ class AddressForm extends AbstractType
      */
     protected function addSalutationField(FormBuilderInterface $builder, array $choices)
     {
-        $builder->add(static::FIELD_SALUTATION, 'choice', [
+        $builder->add(static::FIELD_SALUTATION, ChoiceType::class, [
             'label' => 'Salutation',
             'placeholder' => 'Select one',
-            'choices' => $choices,
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
         ]);
 
         return $this;
@@ -139,7 +135,7 @@ class AddressForm extends AbstractType
      */
     protected function addFirstNameField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_FIRST_NAME, 'text', [
+        $builder->add(static::FIELD_FIRST_NAME, TextType::class, [
             'label' => 'First Name',
             'constraints' => $this->getTextFieldConstraints(),
         ]);
@@ -154,7 +150,7 @@ class AddressForm extends AbstractType
      */
     protected function addLastNameField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_LAST_NAME, 'text', [
+        $builder->add(static::FIELD_LAST_NAME, TextType::class, [
             'label' => 'Last Name',
             'constraints' => $this->getTextFieldConstraints(),
         ]);
@@ -169,7 +165,7 @@ class AddressForm extends AbstractType
      */
     protected function addAddress1Field(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_ADDRESS_1, 'text', [
+        $builder->add(static::FIELD_ADDRESS_1, TextType::class, [
             'label' => 'Address line 1',
             'constraints' => [
                 new NotBlank(),
@@ -187,7 +183,7 @@ class AddressForm extends AbstractType
      */
     protected function addAddress2Field(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_ADDRESS_2, 'text', [
+        $builder->add(static::FIELD_ADDRESS_2, TextType::class, [
             'label' => 'Address line 2',
             'constraints' => [
                 new Length(['max' => 255]),
@@ -204,7 +200,7 @@ class AddressForm extends AbstractType
      */
     protected function addAddress3Field(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_ADDRESS_3, 'text', [
+        $builder->add(static::FIELD_ADDRESS_3, TextType::class, [
             'label' => 'Address line 3',
             'constraints' => [
                 new Length(['max' => 255]),
@@ -221,7 +217,7 @@ class AddressForm extends AbstractType
      */
     protected function addCityField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_CITY, 'text', [
+        $builder->add(static::FIELD_CITY, TextType::class, [
             'label' => 'City',
             'constraints' => [
                 new NotBlank(),
@@ -239,7 +235,7 @@ class AddressForm extends AbstractType
      */
     protected function addZipCodeField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_ZIP_CODE, 'text', [
+        $builder->add(static::FIELD_ZIP_CODE, TextType::class, [
             'label' => 'Zip Code',
             'constraints' => [
                 new NotBlank(),
@@ -259,10 +255,11 @@ class AddressForm extends AbstractType
      */
     protected function addFkCountryField(FormBuilderInterface $builder, array $choices, array $preferredChoices = [])
     {
-        $builder->add(static::FIELD_FK_COUNTRY, 'choice', [
+        $builder->add(static::FIELD_FK_COUNTRY, ChoiceType::class, [
             'label' => 'Country',
             'placeholder' => 'Select one',
-            'choices' => $choices,
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
             'preferred_choices' => $preferredChoices,
             'constraints' => [
                 new NotBlank(),
@@ -279,7 +276,7 @@ class AddressForm extends AbstractType
      */
     protected function addPhoneField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_PHONE, 'text', [
+        $builder->add(static::FIELD_PHONE, TextType::class, [
             'label' => 'Phone',
             'constraints' => [
                 new Length(['max' => 255]),
@@ -296,7 +293,7 @@ class AddressForm extends AbstractType
      */
     protected function addCompanyField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_COMPANY, 'text', [
+        $builder->add(static::FIELD_COMPANY, TextType::class, [
             'label' => 'Company',
             'constraints' => [
                 new Length(['max' => 255]),
@@ -313,7 +310,7 @@ class AddressForm extends AbstractType
      */
     protected function addCommentField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_COMMENT, 'textarea', [
+        $builder->add(static::FIELD_COMMENT, TextareaType::class, [
             'label' => 'Comment',
             'constraints' => [
                 new Length(['max' => 255]),
@@ -338,9 +335,18 @@ class AddressForm extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'customer_address';
     }
 
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

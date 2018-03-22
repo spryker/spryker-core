@@ -12,11 +12,10 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\CustomerGroup\CustomerGroupConfig getConfig()
- * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface getQueryContainer()
  */
 class CustomerGroupBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\CustomerGroup\Business\Model\CustomerGroupInterface
      */
@@ -24,5 +23,4 @@ class CustomerGroupBusinessFactory extends AbstractBusinessFactory
     {
         return new CustomerGroup($this->getQueryContainer());
     }
-
 }

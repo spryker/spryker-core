@@ -11,12 +11,11 @@ use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
 use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface;
 
 /**
- * @method \Spryker\Zed\Availability\Business\AvailabilityFacade getFacade()
+ * @method \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface getFacade()
  * @method \Spryker\Zed\Availability\Communication\AvailabilityCommunicationFactory getFactory()
  */
 class AvailabilityHandlerPlugin extends AbstractPlugin implements ReservationHandlerPluginInterface, StockUpdateHandlerPluginInterface
 {
-
     /**
      * @param string $sku
      *
@@ -26,5 +25,4 @@ class AvailabilityHandlerPlugin extends AbstractPlugin implements ReservationHan
     {
         $this->getFacade()->updateAvailability($sku);
     }
-
 }

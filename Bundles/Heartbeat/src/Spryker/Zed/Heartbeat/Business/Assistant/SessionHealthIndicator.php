@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Heartbeat\Business\Assistant;
 
+use Exception;
 use Spryker\Shared\Heartbeat\Code\AbstractHealthIndicator;
 use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 
 class SessionHealthIndicator extends AbstractHealthIndicator implements HealthIndicatorInterface
 {
-
     const HEALTH_MESSAGE_UNABLE_TO_WRITE_SESSION = 'Unable to write session';
     const HEALTH_MESSAGE_UNABLE_TO_READ_SESSION = 'Unable to read session';
     const KEY_HEARTBEAT = 'heartbeat';
@@ -33,7 +33,7 @@ class SessionHealthIndicator extends AbstractHealthIndicator implements HealthIn
     {
         try {
             $_SESSION[self::KEY_HEARTBEAT] = 'ok';
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_WRITE_SESSION);
             $this->addDysfunction($e->getMessage());
         }
@@ -46,10 +46,9 @@ class SessionHealthIndicator extends AbstractHealthIndicator implements HealthIn
     {
         try {
             $status = $_SESSION[self::KEY_HEARTBEAT];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_READ_SESSION);
             $this->addDysfunction($e->getMessage());
         }
     }
-
 }

@@ -23,7 +23,6 @@ use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
  */
 class TransferCleanerTest extends Unit
 {
-
     const TEST_FILE_NAME = 'TestTransfer.php';
 
     /**
@@ -44,7 +43,7 @@ class TransferCleanerTest extends Unit
      */
     private function getTestDirectory()
     {
-        return __DIR__ . '/Fixtures/';
+        return __DIR__ . '/test_files/';
     }
 
     /**
@@ -74,5 +73,4 @@ class TransferCleanerTest extends Unit
 
         $this->assertFalse(file_exists($this->getTestDirectory() . static::TEST_FILE_NAME));
     }
-
 }

@@ -15,11 +15,10 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Auth\AuthConfig getConfig()
- * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface getQueryContainer()
  */
 class AuthBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Auth\Business\Model\Auth
      */
@@ -75,5 +74,4 @@ class AuthBusinessFactory extends AbstractBusinessFactory
 
         return $passwordReset;
     }
-
 }

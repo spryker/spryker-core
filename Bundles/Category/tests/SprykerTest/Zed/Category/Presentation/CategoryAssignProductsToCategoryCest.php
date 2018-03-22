@@ -21,7 +21,6 @@ use SprykerTest\Zed\Category\PageObject\CategoryListPage;
  */
 class CategoryAssignProductsToCategoryCest
 {
-
     /**
      * @param \SprykerTest\Zed\Category\CategoryPresentationTester $i
      *
@@ -30,9 +29,8 @@ class CategoryAssignProductsToCategoryCest
     public function breadcrumbIsVisible(CategoryPresentationTester $i)
     {
         $i->amOnPage(CategoryListPage::URL);
-        $i->wait(2);
+        $i->waitForElement(CategoryListPage::getAssignProductsButtonSelector());
         $i->click(CategoryListPage::getAssignProductsButtonSelector());
         $i->seeBreadcrumbNavigation('Dashboard / Category / Assign Products to Category');
     }
-
 }

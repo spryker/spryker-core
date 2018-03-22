@@ -16,8 +16,9 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterface
 {
-
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
@@ -36,6 +37,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
@@ -54,6 +57,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
@@ -68,6 +73,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
@@ -84,6 +91,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
@@ -100,6 +109,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriberTransfer $newsletterSubscriber
@@ -114,6 +125,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void
@@ -126,6 +139,8 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
@@ -138,5 +153,4 @@ class NewsletterFacade extends AbstractFacade implements NewsletterFacadeInterfa
             ->createSubscriptionAnonymizer()
             ->process($newsletterUnsubscriptionRequest);
     }
-
 }

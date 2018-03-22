@@ -24,14 +24,13 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class GrandTotalDecisionRuleTest extends BaseRuleTester
 {
-
     /**
      * @return void
      */
     public function testWhenGrandTotalMatchesShouldReturnTrue()
     {
         $comparatorMock = $this->createComparatorMock();
-        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer  $clauseTransfer, $grandTotal) {
+        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $grandTotal) {
             return $clauseTransfer->getValue() === $grandTotal;
         });
 
@@ -57,7 +56,7 @@ class GrandTotalDecisionRuleTest extends BaseRuleTester
     public function testWhenGrandTotalNotMatchingShouldReturnFalse()
     {
         $comparatorMock = $this->createComparatorMock();
-        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer  $clauseTransfer, $grandTotal) {
+        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $grandTotal) {
             return $clauseTransfer->getValue() === $grandTotal;
         });
 
@@ -111,5 +110,4 @@ class GrandTotalDecisionRuleTest extends BaseRuleTester
 
         return new GrandTotalDecisionRule($comparatorMock, $currencyConverterMock);
     }
-
 }

@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CalculationFacade extends AbstractFacade implements CalculationFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -97,6 +96,22 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
     {
         $this->getFactory()
             ->createDiscountAmountAggregator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateDiscountAmountAggregationForGenericAmount(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createDiscountAmountAggregatorForGenericAmount()
             ->recalculate($calculableObjectTransfer);
     }
 
@@ -285,6 +300,22 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
      *
      * @return void
      */
+    public function calculateInitialGrandTotal(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createInitialGrandTotalCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
     public function calculateCanceledTotal(CalculableObjectTransfer $calculableObjectTransfer)
     {
         $this->getFactory()
@@ -348,15 +379,30 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function validateCheckoutGrandTotal(
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
-        $this->getFactory()
+        return $this->getFactory()
             ->createCheckoutGrandTotalPreCondition()
             ->validateCheckoutGrandTotal($quoteTransfer, $checkoutResponseTransfer);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function calculateNetTotal(CalculableObjectTransfer $calculableObjectTransfer)
+    {
+        $this->getFactory()
+            ->createNetTotalCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
 }

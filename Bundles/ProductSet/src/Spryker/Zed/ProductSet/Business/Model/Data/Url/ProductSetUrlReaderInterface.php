@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductSet\Business\Model\Data\Url;
 
 interface ProductSetUrlReaderInterface
 {
-
     /**
      * @param int $idProductSet
      * @param int $idLocale
@@ -19,5 +18,4 @@ interface ProductSetUrlReaderInterface
      * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
     public function getProductSetUrlEntity($idProductSet, $idLocale);
-
 }

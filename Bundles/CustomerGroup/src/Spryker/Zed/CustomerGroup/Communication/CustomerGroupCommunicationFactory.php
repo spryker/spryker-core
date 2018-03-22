@@ -10,18 +10,21 @@ namespace Spryker\Zed\CustomerGroup\Communication;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Spryker\Zed\CustomerGroup\Communication\Form\CustomerGroupForm;
 use Spryker\Zed\CustomerGroup\Communication\Form\DataProvider\CustomerGroupFormDataProvider;
+use Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignedCustomerTable;
+use Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignmentCustomerQueryBuilder;
+use Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AvailableCustomerTable;
 use Spryker\Zed\CustomerGroup\Communication\Table\CustomerGroupTable;
 use Spryker\Zed\CustomerGroup\Communication\Table\CustomerTable;
+use Spryker\Zed\CustomerGroup\Communication\Tabs\CustomerGroupFormTabs;
 use Spryker\Zed\CustomerGroup\CustomerGroupDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CustomerGroup\CustomerGroupConfig getConfig()
  */
 class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\CustomerGroup\Communication\Table\CustomerGroupTable
      */
@@ -47,18 +50,62 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $data
+     * @param int|null $idCustomerGroup
+     *
+     * @return \Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignedCustomerTable
+     */
+    public function createAssignedCustomerTable($idCustomerGroup = null)
+    {
+        return new AssignedCustomerTable(
+            $this->createAssignmentCustomerQueryBuilder(),
+            $this->getUtilEncodingService(),
+            $idCustomerGroup
+        );
+    }
+
+    /**
+     * @param int|null $idCustomerGroup
+     *
+     * @return \Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AvailableCustomerTable
+     */
+    public function createAvailableCustomerTable($idCustomerGroup = null)
+    {
+        return new AvailableCustomerTable(
+            $this->createAssignmentCustomerQueryBuilder(),
+            $this->getUtilEncodingService(),
+            $idCustomerGroup
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerGroup\Communication\Table\Assignment\AssignmentCustomerQueryBuilder
+     */
+    protected function createAssignmentCustomerQueryBuilder()
+    {
+        return new AssignmentCustomerQueryBuilder(
+            $this->getCustomerQueryContainer()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $data
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCustomerGroupForm(array $data = [], array $options = [])
+    public function createCustomerGroupForm(CustomerGroupTransfer $data, array $options = [])
     {
-        $idCustomerGroup = !empty($data[CustomerGroupForm::FIELD_ID_CUSTOMER_GROUP]) ? $data[CustomerGroupForm::FIELD_ID_CUSTOMER_GROUP] : null;
+        $options[CustomerGroupForm::ID_CUSTOMER_GROUP] = $data->getIdCustomerGroup();
 
-        $customerFormType = new CustomerGroupForm($this->getQueryContainer(), $idCustomerGroup);
+        return $this->getFormFactory()->create(CustomerGroupForm::class, $data, $options);
+    }
 
-        return $this->getFormFactory()->create($customerFormType, $data, $options);
+    /**
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
+     */
+    public function createCustomerGroupFormTabs()
+    {
+        return new CustomerGroupFormTabs();
     }
 
     /**
@@ -77,4 +124,19 @@ class CustomerGroupCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(CustomerGroupDependencyProvider::SERVICE_DATE_FORMATTER);
     }
 
+    /**
+     * @return \Spryker\Zed\CustomerGroup\Dependency\QueryContainer\CustomerGroupToCustomerQueryContainerInterface
+     */
+    protected function getCustomerQueryContainer()
+    {
+        return $this->getProvidedDependency(CustomerGroupDependencyProvider::QUERY_CONTAINER_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerGroup\Dependency\Service\CustomerGroupToUtilEncodingInterface
+     */
+    protected function getUtilEncodingService()
+    {
+        return $this->getProvidedDependency(CustomerGroupDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
 }

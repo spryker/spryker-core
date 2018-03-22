@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\StockProductTransfer;
 
 class ProductManagementToStockBridge implements ProductManagementToStockInterface
 {
-
     /**
      * @var \Spryker\Zed\Stock\Business\StockFacadeInterface
      */
@@ -56,4 +55,11 @@ class ProductManagementToStockBridge implements ProductManagementToStockInterfac
         return $this->stockFacade->hasStockProduct($sku, $stockType);
     }
 
+    /**
+     * @return array
+     */
+    public function getWarehouseToStoreMapping()
+    {
+        return $this->stockFacade->getWarehouseToStoreMapping();
+    }
 }

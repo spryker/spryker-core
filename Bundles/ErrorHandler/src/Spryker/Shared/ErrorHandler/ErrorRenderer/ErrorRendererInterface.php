@@ -9,12 +9,10 @@ namespace Spryker\Shared\ErrorHandler\ErrorRenderer;
 
 interface ErrorRendererInterface
 {
-
     /**
      * @param \Exception|\Throwable $exception
      *
      * @return string
      */
     public function render($exception);
-
 }

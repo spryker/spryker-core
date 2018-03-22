@@ -21,7 +21,6 @@ use Spryker\Shared\Kernel\BundleProxy;
  */
 class LocatorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -31,5 +30,4 @@ class LocatorTest extends Unit
 
         $this->assertInstanceOf(BundleProxy::class, $locator->foo());
     }
-
 }

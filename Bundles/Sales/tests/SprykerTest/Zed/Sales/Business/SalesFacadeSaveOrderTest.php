@@ -11,10 +11,12 @@ use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
@@ -26,10 +28,10 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
+use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
@@ -53,7 +55,6 @@ use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
  */
 class SalesFacadeSaveOrderTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Sales\Business\SalesFacade
      */
@@ -82,13 +83,16 @@ class SalesFacadeSaveOrderTest extends Unit
                 'getManualEventsByIdSalesOrder',
                 'getDistinctManualEventsByIdSalesOrder',
                 'getOrderItemMatrix',
+                'isOrderFlaggedExcludeFromCustomer',
             ])
             ->getMock();
         $omsFacadeMock->method('selectProcess')
             ->will($this->returnValue('CheckoutTest01'));
 
+        $omcConfig = new OmsConfig();
+
         $initialStateEntity = SpyOmsOrderItemStateQuery::create()
-            ->filterByName(OmsConstants::INITIAL_STATUS)
+            ->filterByName($omcConfig->getInitialStatus())
             ->findOneOrCreate();
         $initialStateEntity->save();
 
@@ -144,7 +148,16 @@ class SalesFacadeSaveOrderTest extends Unit
      */
     private function getValidBaseResponseTransfer()
     {
-        return new CheckoutResponseTransfer();
+        return (new CheckoutResponseTransfer())
+            ->setSaveOrder(new SaveOrderTransfer());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    private function createSaveOrderTransfer()
+    {
+        return new SaveOrderTransfer();
     }
 
     /**
@@ -157,6 +170,10 @@ class SalesFacadeSaveOrderTest extends Unit
         $country->save();
 
         $quoteTransfer = new QuoteTransfer();
+        $currencyTransfer = new CurrencyTransfer();
+        $currencyTransfer->setCode('EUR');
+        $quoteTransfer->setCurrency($currencyTransfer);
+
         $quoteTransfer->setPriceMode(PriceMode::PRICE_MODE_GROSS);
         $billingAddress = new AddressTransfer();
 
@@ -250,7 +267,7 @@ class SalesFacadeSaveOrderTest extends Unit
     /**
      * @return void
      */
-    public function testSaveOrderCreatesOrderAndSavesFields()
+    public function testSaveOrderCreatesOrderAndSavesFieldsDeprecated()
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
         $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
@@ -258,6 +275,26 @@ class SalesFacadeSaveOrderTest extends Unit
 
         $orderQuery = SpySalesOrderQuery::create()
             ->filterByPrimaryKey($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder());
+
+        $orderEntity = $orderQuery->findOne();
+        $this->assertNotNull($orderEntity);
+
+        $this->assertSame('max@mustermann.de', $orderEntity->getEmail());
+        $this->assertSame('Max', $orderEntity->getFirstName());
+        $this->assertSame('Mustermann', $orderEntity->getLastName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderCreatesOrderAndSavesFields()
+    {
+        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $saveOrderTransfer = $this->createSaveOrderTransfer();
+        $this->salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+
+        $orderQuery = SpySalesOrderQuery::create()
+            ->filterByPrimaryKey($saveOrderTransfer->getIdSalesOrder());
 
         $orderEntity = $orderQuery->findOne();
         $this->assertNotNull($orderEntity);
@@ -295,9 +332,10 @@ class SalesFacadeSaveOrderTest extends Unit
     public function testSaveOrderCreatesAndFillsOrderItems()
     {
         $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $omsConfig = new OmsConfig();
 
         $initialState = SpyOmsOrderItemStateQuery::create()
-            ->filterByName(OmsConstants::INITIAL_STATUS)
+            ->filterByName($omsConfig->getInitialStatus())
             ->findOneOrCreate();
         $initialState->save();
 
@@ -377,5 +415,4 @@ class SalesFacadeSaveOrderTest extends Unit
 
         return $omsOrderProcessEntity;
     }
-
 }

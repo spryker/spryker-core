@@ -13,7 +13,6 @@ use PHPMD\Rule\MethodAware;
 
 class CamelCaseMethodName extends AbstractRule implements MethodAware
 {
-
     /**
      * @var array
      */
@@ -46,6 +45,8 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
         '_afterStep',
         '_before',
         '_before',
+        '_depends',
+        '_inject',
     ];
 
     /**
@@ -88,5 +89,4 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
 
         return preg_match('/^[a-z][a-zA-Z0-9]*$/', $methodName);
     }
-
 }

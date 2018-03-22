@@ -11,14 +11,13 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class RatepayToSalesAggregatorBridge implements RatepayToSalesAggregatorInterface
 {
-
     /**
-     * @var \Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacade
+     * @var \Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacadeInterface
      */
     protected $salesAggregatorFacade;
 
     /**
-     * @param \Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacade $salesAggregatorFacade
+     * @param \Spryker\Zed\SalesAggregator\Business\SalesAggregatorFacadeInterface $salesAggregatorFacade
      */
     public function __construct($salesAggregatorFacade)
     {
@@ -54,5 +53,4 @@ class RatepayToSalesAggregatorBridge implements RatepayToSalesAggregatorInterfac
     {
         return $this->salesAggregatorFacade->getOrderItemTotalsByIdSalesOrderItem($idSalesOrderItem);
     }
-
 }

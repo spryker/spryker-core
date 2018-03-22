@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductGroupTransfer;
 
 interface ProductGroupEntityReaderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductGroupTransfer $productGroupTransfer
      *
@@ -20,5 +19,4 @@ interface ProductGroupEntityReaderInterface
      * @return \Orm\Zed\ProductGroup\Persistence\SpyProductGroup
      */
     public function findProductGroupEntity(ProductGroupTransfer $productGroupTransfer);
-
 }

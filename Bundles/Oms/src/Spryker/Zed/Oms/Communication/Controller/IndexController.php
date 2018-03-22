@@ -13,14 +13,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method \Spryker\Zed\Oms\Business\OmsFacade getFacade()
+ * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
  */
 class IndexController extends AbstractController
 {
-
     const DEFAULT_FORMAT = 'svg';
-    const DEFAULT_FONT_SIZE = '14';
+    const DEFAULT_FONT_SIZE = 14;
 
     /**
      * @var array
@@ -43,7 +42,7 @@ class IndexController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\StreamedResponse
      */
     public function drawAction(Request $request)
     {
@@ -131,5 +130,4 @@ class IndexController extends AbstractController
 
         return $headers;
     }
-
 }

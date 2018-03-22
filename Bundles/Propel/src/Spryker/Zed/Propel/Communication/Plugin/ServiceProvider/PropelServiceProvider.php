@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Propel\Communication\Plugin\ServiceProvider;
 
+use Exception;
 use Propel\Runtime\Connection\ConnectionManagerSingle;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ServiceContainer\StandardServiceContainer;
@@ -18,11 +19,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
- * @method \Spryker\Zed\Propel\Business\PropelFacade getFacade()
+ * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  */
 class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     const BUNDLE = 'Propel';
 
     /**
@@ -81,7 +81,7 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
             Propel::getConnection();
 
             return true;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
     }
@@ -112,5 +112,4 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
             $serviceContainer->setLogger($logger->getName(), $logger);
         }
     }
-
 }

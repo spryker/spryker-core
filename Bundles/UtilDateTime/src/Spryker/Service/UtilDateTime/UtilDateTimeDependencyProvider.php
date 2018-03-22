@@ -12,7 +12,6 @@ use Spryker\Shared\Config\Config;
 
 class UtilDateTimeDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const CONFIG = 'config';
 
     /**
@@ -40,5 +39,4 @@ class UtilDateTimeDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 }

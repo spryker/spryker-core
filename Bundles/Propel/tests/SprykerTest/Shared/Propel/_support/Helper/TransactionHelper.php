@@ -15,12 +15,12 @@ use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvide
 
 class TransactionHelper extends Module
 {
-
     /**
      * @return void
      */
     public function _initialize()
     {
+        Propel::disableInstancePooling();
         $propelServiceProvider = new PropelServiceProvider();
         $propelServiceProvider->boot(new Application());
     }
@@ -56,5 +56,4 @@ class TransactionHelper extends Module
     {
         Propel::closeConnections();
     }
-
 }

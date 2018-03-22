@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
  */
 interface CategoryWriterInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
@@ -46,5 +45,4 @@ interface CategoryWriterInterface
      * @return void
      */
     public function addCategoryAttribute(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer);
-
 }

@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class TreeController extends AbstractController
 {
-
     const PARAM_ID_NAVIGATION = 'id-navigation';
     const PARAM_NAVIGATION_TREE = 'navigation-tree';
 
@@ -74,5 +73,4 @@ class TreeController extends AbstractController
             'message' => 'Navigation tree updated successfully.',
         ]);
     }
-
 }

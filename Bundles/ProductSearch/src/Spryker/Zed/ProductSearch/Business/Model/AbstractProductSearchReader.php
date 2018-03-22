@@ -13,7 +13,6 @@ use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 abstract class AbstractProductSearchReader
 {
-
     /**
      * @var \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface
      */
@@ -49,5 +48,4 @@ abstract class AbstractProductSearchReader
             ->getCurrentLocale()
             ->getIdLocale();
     }
-
 }

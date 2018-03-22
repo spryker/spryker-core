@@ -13,21 +13,19 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Customer\Business\CustomerFacade getFacade()
+ * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
  * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  */
 class CustomerPreConditionCheckerPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->getFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
+        return $this->getFacade()->checkOrderPreSaveConditions($quoteTransfer, $checkoutResponseTransfer);
     }
-
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Queue\Business\Process;
 
 interface ProcessManagerInterface
 {
-
     /**
      * @param string $command
      * @param string $queue
@@ -19,7 +18,7 @@ interface ProcessManagerInterface
     public function triggerQueueProcess($command, $queue);
 
     /**
-     * @param array $queueName
+     * @param string $queueName
      *
      * @return int
      */
@@ -30,4 +29,10 @@ interface ProcessManagerInterface
      */
     public function flushIdleProcesses();
 
+    /**
+     * @param int $processId
+     *
+     * @return bool
+     */
+    public function isProcessRunning($processId);
 }

@@ -14,11 +14,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Zend\Filter\Word\DashToCamelCase;
 
 /**
- * @method \Spryker\Zed\Development\Business\DevelopmentFacade getFacade()
+ * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  */
 class DependencyTreeDependencyViolationConsole extends Console
 {
-
     const COMMAND_NAME = 'dev:dependency:find-violations';
     const ARGUMENT_MODULE = 'module';
 
@@ -46,12 +45,17 @@ class DependencyTreeDependencyViolationConsole extends Console
     {
         $this->info('Find dependency violations');
 
-        $modules = $this->getFacade()->getAllBundles();
-
+        $modules = $this->getFacade()->getAllModules();
         $module = $input->getArgument(static::ARGUMENT_MODULE);
         if ($module) {
             $filter = new DashToCamelCase();
-            $modules = [ucfirst($filter->filter($module))];
+            $filteredModuleName = ucfirst($filter->filter($module));
+            if (!in_array($filteredModuleName, $modules)) {
+                $output->writeln(sprintf('Requested module <fg=green>%s</> not found in current scope.', $filteredModuleName));
+
+                return static::CODE_ERROR;
+            }
+            $modules = [$filteredModuleName];
         }
 
         $message = sprintf('Checking %d %s for dependency issues.', count($modules), (count($modules) === 1) ? 'Module (' . $modules[0] . ')' : 'Modules');
@@ -60,12 +64,11 @@ class DependencyTreeDependencyViolationConsole extends Console
         $count = 0;
         foreach ($modules as $module) {
             $violations = [];
-            $dependencies = $this->getFacade()->showOutgoingDependenciesForBundle($module);
+            $dependencies = $this->getFacade()->showOutgoingDependenciesForModule($module);
             $composerDependencies = $this->getFacade()->getComposerDependencyComparison($dependencies);
             foreach ($composerDependencies as $composerDependency) {
-
                 if (!$composerDependency['tests'] && !$composerDependency['src'] && ($composerDependency['composerRequire'] || $composerDependency['composerRequireDev'])) {
-                    if ($composerDependency['composerRequire']) {
+                    if ($composerDependency['composerRequire'] && !$composerDependency['isOwnExtensionModule']) {
                         $violations[] = 'src: - / require: ' . $composerDependency['composerRequire'];
                     }
                 }
@@ -82,6 +85,10 @@ class DependencyTreeDependencyViolationConsole extends Console
                     $violations[] = $composerDependency['src'] . ' is optional but in require';
                 }
 
+                if ($composerDependency['isOptional'] && !$composerDependency['composerRequireDev']) {
+                    $violations[] = $composerDependency['src'] . ' is optional but for testing it must be declared in require-dev';
+                }
+
                 if ($this->isMissingInSrc($composerDependency)) {
                     $violations[] = 'src: - / require: ' . $composerDependency['composerRequire'];
                 }
@@ -90,7 +97,7 @@ class DependencyTreeDependencyViolationConsole extends Console
                     $violations[] = 'tests: ' . $composerDependency['tests'] . ' / require-dev: -';
                 }
 
-                if ($this->isMissingInTests($composerDependency)) {
+                if ($this->isMissingInTests($composerDependency) && !$composerDependency['isOptional']) {
                     $violations[] = 'tests: - / require-dev: ' . $composerDependency['composerRequireDev'];
                 }
 
@@ -101,7 +108,6 @@ class DependencyTreeDependencyViolationConsole extends Console
                 if ($composerDependency['src'] && $composerDependency['isOptional'] && !$composerDependency['suggested']) {
                     $violations[] = $composerDependency['src'] . ' is optional but missing in composer suggest';
                 }
-
             }
 
             if (!$violations) {
@@ -170,5 +176,4 @@ class DependencyTreeDependencyViolationConsole extends Console
     {
         return (!$composerDependency['tests'] && $composerDependency['composerRequireDev']);
     }
-
 }

@@ -12,11 +12,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\User\UserConfig getConfig()
- * @method \Spryker\Zed\User\Persistence\UserQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
  */
 class UserPersistenceFactory extends AbstractPersistenceFactory
 {
-
     /**
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
      */
@@ -24,5 +23,4 @@ class UserPersistenceFactory extends AbstractPersistenceFactory
     {
         return new SpyUserQuery();
     }
-
 }

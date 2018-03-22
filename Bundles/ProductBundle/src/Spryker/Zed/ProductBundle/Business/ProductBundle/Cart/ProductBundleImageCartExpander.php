@@ -9,11 +9,12 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageInterface;
 
 class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterface
 {
-
     const DEFAULT_IMAGE_SET_NAME = 'default';
 
     /**
@@ -22,11 +23,20 @@ class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterfa
     protected $productImageFacade;
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageInterface $productImageFacade
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface
      */
-    public function __construct(ProductBundleToProductImageInterface $productImageFacade)
-    {
+    protected $localeFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageInterface $productImageFacade
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleInterface $localeFacade
+     */
+    public function __construct(
+        ProductBundleToProductImageInterface $productImageFacade,
+        ProductBundleToLocaleInterface $localeFacade
+    ) {
         $this->productImageFacade = $productImageFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -36,8 +46,9 @@ class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterfa
      */
     public function expandBundleItems(CartChangeTransfer $cartChangeTransfer)
     {
+        $currentLocaleTransfer = $this->localeFacade->getCurrentLocale();
         foreach ($cartChangeTransfer->getQuote()->getBundleItems() as $itemTransfer) {
-            $this->expandItemsWithImages($itemTransfer);
+            $this->expandItemsWithImages($itemTransfer, $currentLocaleTransfer);
         }
 
         return $cartChangeTransfer;
@@ -45,12 +56,17 @@ class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterfa
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    protected function expandItemsWithImages(ItemTransfer $itemTransfer)
+    protected function expandItemsWithImages(ItemTransfer $itemTransfer, LocaleTransfer $localeTransfer)
     {
-        $imageSets = $this->productImageFacade->getProductImagesSetCollectionByProductId($itemTransfer->getId());
+        $imageSets = $this->productImageFacade->getCombinedConcreteImageSets(
+            $itemTransfer->getId(),
+            $itemTransfer->getIdProductAbstract(),
+            $localeTransfer->getIdLocale()
+        );
 
         if (!$imageSets) {
             return;
@@ -66,13 +82,17 @@ class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterfa
      */
     protected function getProductImages(array $imageSets)
     {
+        $firstProductImageSetImages = [];
         foreach ($imageSets as $imageSet) {
             if ($imageSet->getName() === static::DEFAULT_IMAGE_SET_NAME) {
                 return $imageSet->getProductImages();
             }
+
+            if (!$firstProductImageSetImages) {
+                $firstProductImageSetImages = $imageSet->getProductImages();
+            }
         }
 
-        return $imageSets[0]->getProductImages();
+        return $firstProductImageSetImages;
     }
-
 }

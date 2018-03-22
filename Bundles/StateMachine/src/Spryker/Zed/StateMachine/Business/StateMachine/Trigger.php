@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\StateMachine\Business\StateMachine;
 
+use Exception;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Spryker\Zed\StateMachine\Business\Exception\CommandNotFoundException;
@@ -16,7 +17,6 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 
 class Trigger implements TriggerInterface
 {
-
     const MAX_EVENT_REPEATS = 10;
 
     /**
@@ -267,7 +267,7 @@ class Trigger implements TriggerInterface
 
             try {
                 $commandPlugin->run($stateMachineItemTransfer);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->transitionLog->setIsError(true);
                 $this->transitionLog->setErrorMessage(get_class($commandPlugin) . ' - ' . $e->getMessage());
                 $this->transitionLog->saveAll();
@@ -303,7 +303,7 @@ class Trigger implements TriggerInterface
             $this->transitionLog->addSourceState($stateMachineItemTransfer, $sourceState->getName());
 
             $targetState = $sourceState;
-            if (isset($eventName) && $sourceState->hasEvent($eventName)) {
+            if ($eventName && $sourceState->hasEvent($eventName)) {
                 $transitions = $sourceState->getEvent($eventName)->getTransitionsBySource($sourceState);
                 $targetState = $this->condition->getTargetStatesFromTransitions(
                     $transitions,
@@ -342,7 +342,7 @@ class Trigger implements TriggerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $itemsWithOnEnterEvent
+     * @param array $itemsWithOnEnterEvent Keys are event names, values are collections of StateMachineItem transfer objects
      *
      * @return bool
      */
@@ -389,7 +389,7 @@ class Trigger implements TriggerInterface
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
-     * @param string $identifier
+     * @param int $identifier
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
@@ -454,7 +454,7 @@ class Trigger implements TriggerInterface
     }
 
     /**
-     * @param int $idStateMachineItemState
+     * @param int|null $idStateMachineItemState
      * @param string $initialStateName
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\TriggerException
@@ -512,5 +512,4 @@ class Trigger implements TriggerInterface
             );
         }
     }
-
 }

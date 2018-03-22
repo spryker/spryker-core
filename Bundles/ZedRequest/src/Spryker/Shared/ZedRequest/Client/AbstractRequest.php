@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 abstract class AbstractRequest extends AbstractObject implements EmbeddedTransferInterface, RequestInterface
 {
-
     /**
      * @var array
      */
@@ -213,5 +212,4 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
 
         return $transfer;
     }
-
 }

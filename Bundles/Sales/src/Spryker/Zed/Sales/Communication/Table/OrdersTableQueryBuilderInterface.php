@@ -9,7 +9,6 @@ namespace Spryker\Zed\Sales\Communication\Table;
 
 interface OrdersTableQueryBuilderInterface
 {
-
     /**
      * @param int|null $idOrderItemProcess
      * @param int|null $idOrderItemState
@@ -18,5 +17,4 @@ interface OrdersTableQueryBuilderInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function buildQuery($idOrderItemProcess = null, $idOrderItemState = null, $dateFilter = null);
-
 }

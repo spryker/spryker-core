@@ -15,7 +15,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CustomerGroupHelper extends Module
 {
-
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
@@ -67,5 +66,4 @@ class CustomerGroupHelper extends Module
     {
         return SpyCustomerGroupQuery::create();
     }
-
 }

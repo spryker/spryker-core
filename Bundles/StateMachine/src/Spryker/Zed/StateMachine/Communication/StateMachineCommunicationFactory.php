@@ -11,11 +11,10 @@ use Spryker\Zed\StateMachine\StateMachineDependencyProvider;
 
 /**
  * @method \Spryker\Zed\StateMachine\StateMachineConfig getConfig()
- * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()
  */
 class StateMachineCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @return \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface[]
      */
@@ -31,5 +30,4 @@ class StateMachineCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getConfig();
     }
-
 }

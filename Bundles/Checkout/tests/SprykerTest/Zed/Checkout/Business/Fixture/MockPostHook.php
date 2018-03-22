@@ -13,7 +13,6 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 
 class MockPostHook implements CheckoutPostSaveHookInterface
 {
-
     /**
      * @var \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
@@ -37,5 +36,4 @@ class MockPostHook implements CheckoutPostSaveHookInterface
     {
         $checkoutResponse->fromArray($this->checkoutResponse->toArray(true), true);
     }
-
 }

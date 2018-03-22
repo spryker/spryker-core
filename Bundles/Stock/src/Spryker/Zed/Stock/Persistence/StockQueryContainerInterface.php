@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface StockQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -25,10 +24,30 @@ interface StockQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param int $idProduct
+     * @param array $stockNames
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     */
+    public function queryStockByNeverOutOfStockAllTypesForStockNames($idProduct, array $stockNames);
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
      */
     public function queryStockByProducts($idProduct);
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     * @param array $stockNames
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     */
+    public function queryStockByProductsForStockNames($idProduct, array $stockNames);
 
     /**
      * @api
@@ -53,6 +72,16 @@ interface StockQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param string $sku
+     * @param array $types
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     */
+    public function queryStockProductBySkuAndTypes($sku, array $types);
+
+    /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
@@ -65,6 +94,15 @@ interface StockQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
      */
     public function queryAllStockTypes();
+
+    /**
+     * @api
+     *
+     * @param array $names
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
+     */
+    public function queryStockByNames(array $names);
 
     /**
      * @api
@@ -98,4 +136,13 @@ interface StockQueryContainerInterface extends QueryContainerInterface
      */
     public function queryStockByIdProduct($idProduct);
 
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     * @param array $types
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     */
+    public function queryStockByIdProductAndTypes($idProduct, array $types);
 }

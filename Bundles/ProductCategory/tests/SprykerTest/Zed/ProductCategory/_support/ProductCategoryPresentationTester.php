@@ -27,7 +27,6 @@ use SprykerTest\Zed\ProductCategory\PageObject\ProductCategoryAssignPage;
  */
 class ProductCategoryPresentationTester extends Actor
 {
-
     use _generated\ProductCategoryPresentationTesterActions;
 
     /**
@@ -107,5 +106,4 @@ class ProductCategoryPresentationTester extends Actor
         $this->fillField(ProductCategoryAssignPage::SELECTOR_TABLE_SEARCH, $productName);
         $this->wait(3);
     }
-
 }

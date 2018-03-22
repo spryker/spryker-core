@@ -20,7 +20,6 @@ use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
  */
 class AvailabilityViewCest
 {
-
     /**
      * @param \SprykerTest\Zed\AvailabilityGui\AvailabilityGuiPresentationTester $i
      *
@@ -31,7 +30,11 @@ class AvailabilityViewCest
         $i->wantTo('View selected availability item');
         $i->expect('List of all availability items.');
 
-        $i->amOnPage(sprintf(AvailabilityPage::AVAILABILITY_VIEW_URL, AvailabilityPage::AVAILABILITY_ID));
+        $i->amOnPage(sprintf(
+            AvailabilityPage::AVAILABILITY_VIEW_URL,
+            AvailabilityPage::AVAILABILITY_ID,
+            AvailabilityPage::AVAILABILITY_ID_STORE
+        ));
 
         $i->seeBreadcrumbNavigation('Dashboard / Products / Availability / Product Availability');
 
@@ -43,10 +46,9 @@ class AvailabilityViewCest
         $i->click("//*[@class=\"dataTables_scrollBody\"]/table/tbody/tr/td[8]/a");
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_EDIT_HEADER);
 
-        $i->amOnPage(sprintf(AvailabilityPage::AVAILABILITY_VIEW_URL, AvailabilityPage::AVAILABILITY_ID));
+        $i->amOnPage(sprintf(AvailabilityPage::AVAILABILITY_VIEW_URL, AvailabilityPage::AVAILABILITY_ID, AvailabilityPage::AVAILABILITY_ID_STORE));
 
         $i->click('//*[@id="page-wrapper"]/div[2]/div[2]/div/a');
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_LIST_HEADER);
     }
-
 }

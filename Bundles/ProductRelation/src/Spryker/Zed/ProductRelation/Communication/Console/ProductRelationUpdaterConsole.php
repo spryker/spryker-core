@@ -12,11 +12,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\ProductRelation\Business\ProductRelationFacade getFacade()
+ * @method \Spryker\Zed\ProductRelation\Business\ProductRelationFacadeInterface getFacade()
  */
 class ProductRelationUpdaterConsole extends Console
 {
-
     const COMMAND_NAME = 'product-relation:update';
     const COMMAND_DESCRIPTION = 'Updates all active product relations';
 
@@ -39,5 +38,4 @@ class ProductRelationUpdaterConsole extends Console
     {
         $this->getFacade()->rebuildRelations();
     }
-
 }

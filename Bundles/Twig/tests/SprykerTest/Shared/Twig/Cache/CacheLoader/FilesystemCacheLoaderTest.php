@@ -23,7 +23,6 @@ use Spryker\Shared\Twig\Cache\CacheLoaderInterface;
  */
 class FilesystemCacheLoaderTest extends Unit
 {
-
     /**
      * @return string
      */
@@ -39,7 +38,7 @@ class FilesystemCacheLoaderTest extends Unit
      */
     protected function getCacheDirectory()
     {
-        return __DIR__ . '/Fixtures/';
+        return __DIR__ . DIRECTORY_SEPARATOR . 'test_files' . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -71,5 +70,4 @@ class FilesystemCacheLoaderTest extends Unit
 
         $this->assertNotCount(0, $cacheLoader->load());
     }
-
 }

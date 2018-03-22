@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductSearch;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToCollectorBridge;
+use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToEventFacadeBridge;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToGlossaryBridge;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToLocaleBridge;
 use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToProductBridge;
@@ -17,11 +18,11 @@ use Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToTouchBridge;
 
 class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_PRODUCT = 'product facade';
     const FACADE_LOCALE = 'locale facade';
     const FACADE_GLOSSARY = 'glossary facade';
     const FACADE_TOUCH = 'touch facade';
+    const FACADE_EVENT = 'FACADE_EVENT';
     const FACADE_COLLECTOR = 'collector facade';
     const QUERY_CONTAINER_TOUCH = 'touch query container';
     const SERVICE_DATA = 'util data service';
@@ -37,6 +38,7 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
         $this->provideLocaleFacade($container);
         $this->provideGlossaryFacade($container);
         $this->provideTouchFacade($container);
+        $this->provideEventFacade($container);
         $this->provideCollectorFacade($container);
         $this->provideTouchQueryContainer($container);
         $this->provideUtilDataReaderService($container);
@@ -120,6 +122,18 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
+    protected function provideEventFacade(Container $container)
+    {
+        $container[self::FACADE_EVENT] = function (Container $container) {
+            return new ProductSearchToEventFacadeBridge($container->getLocator()->event()->facade());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
     protected function provideCollectorFacade(Container $container)
     {
         $container[self::FACADE_COLLECTOR] = function (Container $container) {
@@ -150,5 +164,4 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->utilDataReader()->service();
         };
     }
-
 }

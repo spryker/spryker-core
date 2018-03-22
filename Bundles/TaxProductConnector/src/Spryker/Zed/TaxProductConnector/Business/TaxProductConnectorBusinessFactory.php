@@ -15,11 +15,10 @@ use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
 
 /**
  * @method \Spryker\Zed\TaxProductConnector\TaxProductConnectorConfig getConfig()
- * @method \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface getQueryContainer()
  */
 class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxWriter
      */
@@ -51,5 +50,4 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(TaxProductConnectorDependencyProvider::FACADE_TAX);
     }
-
 }

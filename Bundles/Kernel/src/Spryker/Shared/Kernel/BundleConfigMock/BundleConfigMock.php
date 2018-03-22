@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class BundleConfigMock
 {
-
     /**
      * @var \Spryker\Shared\Kernel\AbstractBundleConfig[]
      */
@@ -24,7 +23,7 @@ class BundleConfigMock
      */
     public function addBundleConfigMock(AbstractBundleConfig $bundleConfig)
     {
-        static::$bundleConfigMocks[$bundleConfig->__mocked] = $bundleConfig;
+        static::$bundleConfigMocks[get_class(($bundleConfig))] = $bundleConfig;
     }
 
     /**
@@ -58,5 +57,4 @@ class BundleConfigMock
     {
         static::$bundleConfigMocks = [];
     }
-
 }

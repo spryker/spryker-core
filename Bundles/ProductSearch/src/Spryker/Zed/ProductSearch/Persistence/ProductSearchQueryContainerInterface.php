@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductSearchQueryContainerInterface extends QueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -87,6 +86,13 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    public function queryAllProductAttributeKeys();
+
+    /**
+     * @api
+     *
      * @param bool $synced
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
@@ -131,5 +137,4 @@ interface ProductSearchQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery
      */
     public function queryProductSearch();
-
 }

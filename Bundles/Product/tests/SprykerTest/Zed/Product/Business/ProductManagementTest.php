@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Product\Business;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 
 /**
  * Auto-generated group annotations
@@ -21,7 +22,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
  */
 class ProductManagementTest extends FacadeTestAbstract
 {
-
     /**
      * @return void
      */
@@ -126,6 +126,78 @@ class ProductManagementTest extends FacadeTestAbstract
     }
 
     /**
+     * @return void
+     */
+    public function testCreateProductAbstractSavesStoreRelation()
+    {
+        // Assign
+        $expectedIdStores = [1, 3];
+        $this->productAbstractTransfer->setStoreRelation(
+            (new StoreRelationTransfer())
+                ->setIdStores($expectedIdStores)
+        );
+
+        // Act
+        $idProductAbstract = $this->productFacade->createProductAbstract($this->productAbstractTransfer);
+        $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
+
+        // Asssert
+        $actualIdStores = $productAbstractTransfer->getStoreRelation()->getIdStores();
+        sort($actualIdStores);
+
+        $this->assertEquals($expectedIdStores, $actualIdStores);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveProductAbstractUpdatesStoreRelation()
+    {
+        // Assign
+        $expectedIdStores = [1, 3];
+        $this->productAbstractTransfer->setStoreRelation(
+            (new StoreRelationTransfer())
+                ->setIdStores([1])
+        );
+        $idProductAbstract = $this->productFacade->createProductAbstract($this->productAbstractTransfer);
+        $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+        $this->productAbstractTransfer->getStoreRelation()->setIdStores($expectedIdStores);
+
+        // Act
+        $this->productFacade->saveProductAbstract($this->productAbstractTransfer);
+        $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
+
+        // Asssert
+        $actualIdStores = $productAbstractTransfer->getStoreRelation()->getIdStores();
+        sort($actualIdStores);
+
+        $this->assertEquals($expectedIdStores, $actualIdStores);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductAbstractByIdRetrievesStoreRelation()
+    {
+        // Assign
+        $expectedIdStores = [1, 3];
+        $this->productAbstractTransfer->setStoreRelation(
+            (new StoreRelationTransfer())
+                ->setIdStores($expectedIdStores)
+        );
+        $idProductAbstract = $this->productFacade->createProductAbstract($this->productAbstractTransfer);
+
+        // Act
+        $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
+
+        // Asssert
+        $actualIdStores = $productAbstractTransfer->getStoreRelation()->getIdStores();
+        sort($actualIdStores);
+
+        $this->assertEquals($expectedIdStores, $actualIdStores);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return void
@@ -224,5 +296,4 @@ class ProductManagementTest extends FacadeTestAbstract
             ->filterByFkProductAbstract($idProductAbstract)
             ->findOne();
     }
-
 }

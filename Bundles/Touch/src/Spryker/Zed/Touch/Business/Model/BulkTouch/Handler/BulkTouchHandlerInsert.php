@@ -13,7 +13,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 class BulkTouchHandlerInsert extends AbstractBulkTouchHandler
 {
-
     /**
      * @param string $itemType
      * @param string $itemEvent
@@ -60,5 +59,4 @@ class BulkTouchHandlerInsert extends AbstractBulkTouchHandler
 
         return $propelCollection->count();
     }
-
 }

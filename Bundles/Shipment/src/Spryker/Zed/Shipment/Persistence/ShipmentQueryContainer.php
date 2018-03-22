@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment\Persistence;
 
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -17,7 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQueryContainerInterface
 {
-
     const COL_MAX_TAX_RATE = 'MaxTaxRate';
 
     /**
@@ -28,6 +28,30 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     public function queryCarriers()
     {
         return $this->getFactory()->createShipmentCarrierQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     */
+    public function queryMethodPrices()
+    {
+        return $this->getFactory()->createShipmentMethodPriceQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idShipmentMethod
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     */
+    public function queryMethodPricesByIdShipmentMethod($idShipmentMethod)
+    {
+        return $this->getFactory()
+            ->createShipmentMethodPriceQuery()
+            ->filterByFkShipmentMethod($idShipmentMethod);
     }
 
     /**
@@ -79,6 +103,76 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
      * @api
      *
      * @param int $idShipmentMethod
+     * @param int $idStore
+     * @param int $idCurrency
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
+     */
+    public function queryMethodPriceByShipmentMethodAndStoreCurrency($idShipmentMethod, $idStore, $idCurrency)
+    {
+        return $this->queryMethodPrices()
+            ->filterByFkShipmentMethod($idShipmentMethod)
+            ->filterByFkStore($idStore)
+            ->filterByFkCurrency($idCurrency);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryMethodsWithMethodPricesAndCarrier()
+    {
+        return $this->queryMethods()
+            ->joinWithShipmentMethodPrice()
+            ->leftJoinWithShipmentCarrier();
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idShipmentMethod
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryMethodWithMethodPricesAndCarrierById($idShipmentMethod)
+    {
+        return $this
+            ->queryMethodsWithMethodPricesAndCarrier()
+            ->filterByIdShipmentMethod($idShipmentMethod);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryActiveMethodsWithMethodPricesAndCarrier()
+    {
+        return $this
+            ->queryMethodsWithMethodPricesAndCarrier()
+            ->filterByIsActive(true);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idShipmentMethod
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryActiveMethodsWithMethodPricesAndCarrierById($idShipmentMethod)
+    {
+        return $this
+            ->queryMethodsWithMethodPricesAndCarrier()
+            ->filterByIdShipmentMethod($idShipmentMethod)
+            ->filterByIsActive(true);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idShipmentMethod
      * @param string $countryIso2Code
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
@@ -118,4 +212,36 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
             ->filterByFkSalesOrder($idSalesOrder);
     }
 
+    /**
+     * @api
+     *
+     * @param string $carrierName
+     * @param int|null $idCarrier
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
+     */
+    public function queryUniqueCarrierName($carrierName, $idCarrier = null)
+    {
+        $query = $this->getFactory()
+            ->createShipmentCarrierQuery()
+            ->filterByName($carrierName);
+
+        if ($idCarrier) {
+            $query->filterByIdShipmentCarrier($idCarrier, Criteria::NOT_EQUAL);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idShipmentMethod
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryActiveShipmentMethodByIdShipmentMethod($idShipmentMethod)
+    {
+        return $this->queryActiveMethods()->filterByIdShipmentMethod($idShipmentMethod);
+    }
 }

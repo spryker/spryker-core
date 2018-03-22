@@ -8,16 +8,15 @@
 namespace Spryker\Yves\Payolution\Form;
 
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
+use Spryker\Shared\Payolution\PayolutionConfig;
 use Spryker\Shared\Payolution\PayolutionConstants;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
-use Spryker\Zed\Payolution\PayolutionConfig;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class InstallmentSubForm extends AbstractPayolutionSubForm
 {
-
     const PAYMENT_PROVIDER = PayolutionConstants::PAYOLUTION;
     const PAYMENT_METHOD = 'installment';
     const FIELD_INSTALLMENT_PAYMENT_DETAIL_INDEX = 'installment_payment_detail_index';
@@ -191,5 +190,4 @@ class InstallmentSubForm extends AbstractPayolutionSubForm
 
         return $this;
     }
-
 }

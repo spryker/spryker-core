@@ -12,7 +12,6 @@ use Spryker\Zed\Product\Business\Product\Observer\ProductAbstractCreateObserverI
 
 class ProductAbstractBeforeCreateObserverPluginManager implements ProductAbstractCreateObserverInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
      */
@@ -27,6 +26,8 @@ class ProductAbstractBeforeCreateObserverPluginManager implements ProductAbstrac
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
@@ -39,5 +40,4 @@ class ProductAbstractBeforeCreateObserverPluginManager implements ProductAbstrac
 
         return $productAbstractTransfer;
     }
-
 }

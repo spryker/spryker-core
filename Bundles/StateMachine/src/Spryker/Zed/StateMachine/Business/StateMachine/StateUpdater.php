@@ -14,7 +14,6 @@ use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 
 class StateUpdater implements StateUpdaterInterface
 {
-
     use DatabaseTransactionHandlerTrait;
 
     /**
@@ -77,12 +76,11 @@ class StateUpdater implements StateUpdaterInterface
                 $this->executeUpdateItemStateTransaction($processes, $sourceStates, $stateMachineItemTransfer);
             });
         }
-
     }
 
     /**
-     * @param array|\Generated\Shared\Transfer\StateMachineItemTransfer[] $processes
-     * @param array|\Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $sourceStates
+     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
+     * @param string[] $sourceStates
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return void
@@ -194,5 +192,4 @@ class StateUpdater implements StateUpdaterInterface
         $this->notifyHandlerStateChanged($stateMachineItemTransfer);
         $this->stateMachinePersistence->saveItemStateHistory($stateMachineItemTransfer);
     }
-
 }

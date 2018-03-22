@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductImage\Dependency\Facade;
 
 interface ProductImageToLocaleInterface
 {
-
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
@@ -40,5 +39,4 @@ interface ProductImageToLocaleInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocaleById($idLocale);
-
 }

@@ -9,9 +9,8 @@ namespace Spryker\Zed\Development\Business\DependencyTree;
 
 use Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\GraphBuilderInterface;
 
-class DependencyGraphBuilder
+class DependencyGraphBuilder implements DependencyGraphBuilderInterface
 {
-
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\GraphBuilderInterface
      */
@@ -41,5 +40,4 @@ class DependencyGraphBuilder
     {
         return $this->graphBuilder->build($this->dependencyTree);
     }
-
 }

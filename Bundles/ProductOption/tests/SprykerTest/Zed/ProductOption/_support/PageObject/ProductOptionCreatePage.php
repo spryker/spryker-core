@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\ProductOption\PageObject;
 
 class ProductOptionCreatePage
 {
-
     const URL = '/product-option/create/index';
 
     const PRODUCT_OPTION_CREATED_SUCCESS_MESSAGE = 'Product option group created.';
@@ -27,15 +26,20 @@ class ProductOptionCreatePage
                 [
                     'value_translation_key' => 'option_value_1_translation_key',
                     'value_sku' => 'option_value_1_sku_',
-                    'value_price' => '12,34',
+                    'prices' => [
+                        ['value_net_amount' => '12,34', 'value_gross_amount' => '12,34'],
+                        ['value_net_amount' => '12,34', 'value_gross_amount' => '12,34'],
+                    ],
                 ],
                 [
                     'value_translation_key' => 'option_value_2_translation_key',
                     'value_sku' => 'option_value_2_sku_',
-                    'value_price' => '12.34',
+                    'prices' => [
+                        ['value_net_amount' => 12.34, 'value_gross_amount' => 12.34],
+                        ['value_net_amount' => 12.34, 'value_gross_amount' => 12.34],
+                    ],
                 ],
             ],
         ],
     ];
-
 }

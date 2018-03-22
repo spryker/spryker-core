@@ -19,11 +19,10 @@ use Spryker\Zed\Touch\TouchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Touch\TouchConfig getConfig()
- * @method \Spryker\Zed\Touch\Persistence\TouchQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface getQueryContainer()
  */
 class TouchBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Touch\Business\Model\TouchRecordInterface
      */
@@ -106,5 +105,4 @@ class TouchBusinessFactory extends AbstractBusinessFactory
     {
         return new IdFilterUpdate($this->getQueryContainer());
     }
-
 }

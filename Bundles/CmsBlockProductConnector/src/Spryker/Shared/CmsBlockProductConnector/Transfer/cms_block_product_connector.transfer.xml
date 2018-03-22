@@ -5,7 +5,7 @@
 
     <transfer name="CmsBlock">
         <property name="idCmsBlock" type="int" />
-        <property name="idProductAbstracts" type="[]" />
+        <property name="idProductAbstracts" type="array" />
     </transfer>
 
 </transfers>

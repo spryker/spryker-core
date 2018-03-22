@@ -1,3 +1,3 @@
 # Mail Changelog
 
-[Release Changelog](https://github.com/spryker/Mail/releases)
+[Release Changelog](https://github.com/spryker/mail/releases)

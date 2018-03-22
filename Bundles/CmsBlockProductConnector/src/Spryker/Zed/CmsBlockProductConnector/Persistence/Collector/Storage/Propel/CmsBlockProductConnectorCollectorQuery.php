@@ -15,7 +15,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class CmsBlockProductConnectorCollectorQuery extends AbstractPropelCollectorQuery
 {
-
     const COL_CMS_BLOCK_NAMES = 'cms_block_names';
 
     /**
@@ -41,5 +40,4 @@ class CmsBlockProductConnectorCollectorQuery extends AbstractPropelCollectorQuer
 
         $this->touchQuery->addGroupByColumn(SpyCmsBlockProductConnectorTableMap::COL_FK_PRODUCT_ABSTRACT);
     }
-
 }

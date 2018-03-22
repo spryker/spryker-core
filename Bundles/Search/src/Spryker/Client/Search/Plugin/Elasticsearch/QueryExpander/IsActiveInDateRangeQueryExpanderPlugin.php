@@ -9,7 +9,7 @@ namespace Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
-use Elastica\Query\Missing;
+use Elastica\Query\Exists;
 use Elastica\Query\Range;
 use Generated\Shared\Search\PageIndexMap;
 use InvalidArgumentException;
@@ -22,7 +22,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
  */
 class IsActiveInDateRangeQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-
     /**
      * @api
      *
@@ -83,14 +82,15 @@ class IsActiveInDateRangeQueryExpanderPlugin extends AbstractPlugin implements Q
             ['lte' => 'now']
         );
 
-        $missingFrom = new Missing();
-        $missingFrom->setField(PageIndexMap::ACTIVE_FROM);
+        $missingFrom = $this->getFactory()
+            ->createQueryBuilder()
+            ->createBoolQuery()
+            ->addMustNot(new Exists(PageIndexMap::ACTIVE_FROM));
 
         $boolFromQuery = $this->getFactory()
             ->createQueryBuilder()
-            ->createBoolQuery();
-
-        $boolFromQuery->addShould($rangeFromQuery)
+            ->createBoolQuery()
+            ->addShould($rangeFromQuery)
             ->addShould($missingFrom);
 
         return $boolFromQuery;
@@ -107,17 +107,17 @@ class IsActiveInDateRangeQueryExpanderPlugin extends AbstractPlugin implements Q
             ['gte' => 'now']
         );
 
-        $missingTo = new Missing();
-        $missingTo->setField(PageIndexMap::ACTIVE_TO);
+        $missingTo = $this->getFactory()
+            ->createQueryBuilder()
+            ->createBoolQuery()
+            ->addMustNot(new Exists(PageIndexMap::ACTIVE_TO));
 
         $boolToQuery = $this->getFactory()
             ->createQueryBuilder()
-            ->createBoolQuery();
-
-        $boolToQuery->addShould($rangeToQuery)
+            ->createBoolQuery()
+            ->addShould($rangeToQuery)
             ->addShould($missingTo);
 
         return $boolToQuery;
     }
-
 }

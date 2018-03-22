@@ -14,7 +14,6 @@ use Spryker\Yves\Messenger\FlashMessenger\FlashMessenger;
 
 class FlashMessengerServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -45,5 +44,4 @@ class FlashMessengerServiceProvider extends AbstractPlugin implements ServicePro
     {
         return new FlashMessenger($app['session']->getFlashBag());
     }
-
 }

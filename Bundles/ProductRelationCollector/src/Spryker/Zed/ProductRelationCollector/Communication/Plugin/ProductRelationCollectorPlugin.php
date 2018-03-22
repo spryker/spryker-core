@@ -17,11 +17,10 @@ use Spryker\Zed\Collector\Communication\Plugin\AbstractCollectorPlugin;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\ProductRelationCollector\Business\ProductRelationCollectorFacade getFacade()
+ * @method \Spryker\Zed\ProductRelationCollector\Business\ProductRelationCollectorFacadeInterface getFacade()
  */
 class ProductRelationCollectorPlugin extends AbstractCollectorPlugin
 {
-
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -53,5 +52,4 @@ class ProductRelationCollectorPlugin extends AbstractCollectorPlugin
             $output
         );
     }
-
 }

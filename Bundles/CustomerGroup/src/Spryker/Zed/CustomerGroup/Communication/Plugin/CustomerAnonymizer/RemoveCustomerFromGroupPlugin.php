@@ -12,13 +12,11 @@ use Spryker\Zed\Customer\Dependency\Plugin\CustomerAnonymizerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @package Spryker\Zed\CustomerGroup\Communication\Plugin\CustomerAnonymizer
  * @method \Spryker\Zed\CustomerGroup\Business\CustomerGroupFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomerGroup\Communication\CustomerGroupCommunicationFactory getFactory()
  */
 class RemoveCustomerFromGroupPlugin extends AbstractPlugin implements CustomerAnonymizerPluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
@@ -28,5 +26,4 @@ class RemoveCustomerFromGroupPlugin extends AbstractPlugin implements CustomerAn
     {
         $this->getFacade()->removeCustomerFromAllGroups($customerTransfer);
     }
-
 }

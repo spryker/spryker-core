@@ -17,6 +17,7 @@ use Spryker\Zed\Auth\Business\Model\Auth;
 use Spryker\Zed\Auth\Dependency\Facade\AuthToUserBridge;
 use Spryker\Zed\User\Business\UserFacade;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 /**
  * Auto-generated group annotations
@@ -30,7 +31,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class AuthTest extends Unit
 {
-
     /**
      * @const string
      */
@@ -181,7 +181,7 @@ class AuthTest extends Unit
     protected function createSessionClient()
     {
         $sessionClient = $this->getMockBuilder(SessionClient::class)->setMethods(['get', 'set', 'migrate'])->getMock();
-        $sessionClient->setContainer(new Session());
+        $sessionClient->setContainer(new Session(new MockArraySessionStorage()));
 
         return $sessionClient;
     }
@@ -227,5 +227,4 @@ class AuthTest extends Unit
             ->method('migrate')
             ->will($this->returnValue(true));
     }
-
 }

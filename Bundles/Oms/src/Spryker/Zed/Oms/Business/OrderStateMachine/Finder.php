@@ -9,11 +9,12 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Shared\Oms\OmsConfig;
+use Spryker\Zed\Oms\Business\Exception\StateNotFoundException;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class Finder implements FinderInterface
 {
-
     /**
      * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
@@ -147,13 +148,29 @@ class Finder implements FinderInterface
 
         $flaggedOrderItems = $this->getItemsByFlag($order, $flag, true);
 
+        if (!$flaggedOrderItems) {
+            return false;
+        }
+
         foreach ($orderItems as $orderItem) {
-            if (in_array($orderItem, $flaggedOrderItems) === false) {
-                return false;
+            foreach ($flaggedOrderItems as $flaggedOrderItem) {
+                if ($flaggedOrderItem->getPrimaryKey() !== $orderItem->getPrimaryKey()) {
+                    return false;
+                }
             }
         }
 
         return true;
+    }
+
+    /**
+     * @param int $idOrder
+     *
+     * @return bool
+     */
+    public function isOrderFlaggedExcludeFromCustomer($idOrder)
+    {
+        return $this->isOrderFlaggedAll($idOrder, OmsConfig::STATE_TYPE_FLAG_EXCLUDE_FROM_CUSTOMER);
     }
 
     /**
@@ -343,6 +360,8 @@ class Finder implements FinderInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
+     * @throws \Spryker\Zed\Oms\Business\Exception\StateNotFoundException
+     *
      * @return string
      */
     public function getStateDisplayName(SpySalesOrderItem $orderItem)
@@ -351,9 +370,19 @@ class Finder implements FinderInterface
         $builder = clone $this->builder;
         $process = $builder->createProcess($processName);
         $stateName = $orderItem->getState()->getName();
-        $state = $process->getState($stateName);
+
+        $allStates = $process->getAllStates();
+        if (!isset($allStates[$stateName])) {
+            throw new StateNotFoundException(sprintf(
+                sprintf(
+                    'State with name "%s" not found in any StateMachine processes.',
+                    $stateName
+                )
+            ));
+        }
+
+        $state = $allStates[$stateName];
 
         return $state->getDisplay();
     }
-
 }

@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AssignController extends AbstractController
 {
-
     const PARAM_ID_CATEGORY = 'id-category';
 
     /**
@@ -38,7 +37,7 @@ class AssignController extends AbstractController
         $form = $this->getForm($idCategory);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             if ($this->updateCategoryData($form->getData())) {
                 $this->addSuccessMessage('The category was saved successfully.');
 
@@ -208,5 +207,4 @@ class AssignController extends AbstractController
 
         return $this->jsonResponse($productTable->fetchData());
     }
-
 }

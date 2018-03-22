@@ -11,11 +11,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\StateMachine\Business\StateMachineFacade getFacade()
+ * @method \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface getFacade()
  */
 class ClearLocksConsole extends Console
 {
-
     const COMMAND_NAME = 'state-machine:clear-locks';
     const COMMAND_DESCRIPTION = 'Clear expired locks from lock table';
 
@@ -40,5 +39,4 @@ class ClearLocksConsole extends Console
     {
         $this->getFacade()->clearLocks();
     }
-
 }

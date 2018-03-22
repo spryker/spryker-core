@@ -11,7 +11,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class DirectoryRemover implements DirectoryRemoverInterface
 {
-
     /**
      * @var string
      */
@@ -35,5 +34,4 @@ class DirectoryRemover implements DirectoryRemoverInterface
             $filesystem->remove($this->directoryToRemove);
         }
     }
-
 }

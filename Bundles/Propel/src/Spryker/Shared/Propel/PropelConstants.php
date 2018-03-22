@@ -9,7 +9,6 @@ namespace Spryker\Shared\Propel;
 
 interface PropelConstants
 {
-
     /**
      * Specification:
      * - Key for propel configuration.
@@ -27,6 +26,8 @@ interface PropelConstants
     const PROPEL_DEBUG = 'PROPEL_DEBUG';
 
     /**
+     * @deprecated Use Spryker\Shared\PropelOrm\PropelOrmConstants::PROPEL_SHOW_EXTENDED_EXCEPTION instead.
+     *
      * Specification:
      * - Enable this to get a better exception message when an error occurs.
      * - Should only be used on non production environments.
@@ -123,5 +124,4 @@ interface PropelConstants
      * @api
      */
     const SCHEMA_FILE_PATH_PATTERN = 'SCHEMA_FILE_PATH_PATTERN';
-
 }

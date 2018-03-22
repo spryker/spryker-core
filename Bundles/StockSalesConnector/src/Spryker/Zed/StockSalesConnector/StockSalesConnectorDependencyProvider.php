@@ -13,7 +13,6 @@ use Spryker\Zed\StockSalesConnector\Dependency\Facade\StockSalesConnectorToStock
 
 class StockSalesConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_STOCK = 'stock facade';
 
     /**
@@ -39,5 +38,4 @@ class StockSalesConnectorDependencyProvider extends AbstractBundleDependencyProv
 
         return $container;
     }
-
 }

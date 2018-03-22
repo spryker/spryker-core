@@ -9,10 +9,13 @@ namespace Spryker\Client\ZedRequest\Client;
 
 interface HttpClientInterface
 {
-
     /**
+     * Specification:
+     * - returns an array of headers which should be used for the request.
+     *
+     * @api
+     *
      * @return array
      */
     public function getHeaders();
-
 }

@@ -8,13 +8,13 @@
 namespace Spryker\Zed\ZedNavigation\Business\Model\Collector;
 
 use ErrorException;
+use Exception;
 use Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinderInterface;
 use Zend\Config\Config;
 use Zend\Config\Factory;
 
 class ZedNavigationCollector implements ZedNavigationCollectorInterface
 {
-
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinderInterface
      */
@@ -45,7 +45,7 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
         try {
             $navigationDefinition = Factory::fromFile($this->rootNavigationFile, true);
             $rootDefinition = clone $navigationDefinition;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $navigationDefinition = new Config([]);
             $rootDefinition = new Config([]);
         }
@@ -62,5 +62,4 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
 
         return $navigationDefinition->toArray();
     }
-
 }

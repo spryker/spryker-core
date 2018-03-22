@@ -9,7 +9,6 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 class DataBuilderDefinition implements DataBuilderDefinitionInterface
 {
-
     /**
      * @var string
      */
@@ -62,7 +61,6 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
     protected function getGeneratorRules(array $properties)
     {
         foreach ($properties as $property) {
-
             // non arrays and non-basic types are dependencies
             if (preg_match('/^[A-Z]\w+(\[\])?$/', $property['type'])) {
                 if (isset($property['singular']) && !isset($this->dependencies[$property['singular']])) {
@@ -123,5 +121,4 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
     {
         return $this->dependencies;
     }
-
 }

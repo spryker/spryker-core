@@ -15,7 +15,6 @@ use Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQuery
 
 class CmsBlockFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface
      */
@@ -91,5 +90,4 @@ class CmsBlockFormDataProvider
 
         return $templateList;
     }
-
 }

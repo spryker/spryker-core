@@ -11,13 +11,13 @@ use Generated\Shared\Transfer\MoneyTransfer;
 
 interface RefundToMoneyInterface
 {
-
     /**
      * @param int $amount
+     * @param string|null $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount);
+    public function fromInteger($amount, $isoCode = null);
 
     /**
      * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
@@ -32,5 +32,4 @@ interface RefundToMoneyInterface
      * @return string
      */
     public function formatWithoutSymbol(MoneyTransfer $moneyTransfer);
-
 }

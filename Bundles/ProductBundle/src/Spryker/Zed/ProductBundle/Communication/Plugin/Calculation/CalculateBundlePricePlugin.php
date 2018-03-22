@@ -12,12 +12,11 @@ use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacade getFacade()
+ * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()
  */
 class CalculateBundlePricePlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
-
     /**
      * @api
      *
@@ -29,5 +28,4 @@ class CalculateBundlePricePlugin extends AbstractPlugin implements CalculatorPlu
     {
         $this->getFacade()->calculateBundlePrice($quoteTransfer);
     }
-
 }

@@ -10,13 +10,17 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\Form;
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 use Spryker\Zed\Gui\Communication\Form\Type\ParagraphType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\Communication\CmsBlockCategoryConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQueryContainerInterface getQueryContainer()
+ */
 class CmsBlockType extends AbstractType
 {
-
     const FIELD_CATEGORIES = 'id_categories';
 
     const OPTION_CATEGORY_ARRAY = 'option-category-array';
@@ -30,14 +34,6 @@ class CmsBlockType extends AbstractType
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_WITH_CMS_BLOCK,
         CmsBlockCategoryConnectorConfig::CATEGORY_TEMPLATE_ONLY_CMS_BLOCK,
     ];
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'categories';
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -100,7 +96,7 @@ class CmsBlockType extends AbstractType
     protected function addWarningParagraphs(FormBuilderInterface $builder, array $wrongCategoryList, array $categoryList)
     {
         $warningCategoryList = [];
-        foreach ($wrongCategoryList as $idCmsBlockCategoryPosition => $list) {
+        foreach ($wrongCategoryList as $list) {
             foreach ($list as $idCategory) {
                 if ($categoryList[$idCategory]) {
                     $warningCategoryList[] = $categoryList[$idCategory];
@@ -146,10 +142,28 @@ class CmsBlockType extends AbstractType
         $builder->add(static::FIELD_CATEGORIES . '_' . $idCmsBlockCategoryPosition, Select2ComboBoxType::class, [
             'property_path' => static::FIELD_CATEGORIES . '[' . $idCmsBlockCategoryPosition . ']',
             'label' => 'Categories: ' . $positionName,
-            'choices' => $categoryList,
+            'choices' => array_flip($categoryList),
+            'choices_as_values' => true,
             'multiple' => true,
             'required' => false,
         ]);
     }
 
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'categories';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

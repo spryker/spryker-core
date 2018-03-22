@@ -23,21 +23,20 @@ use SprykerTest\Service\Kernel\ClassResolver\AbstractResolverTest;
  */
 class DependencyProviderResolverTest extends AbstractResolverTest
 {
+    /**
+     * @var string
+     */
+    protected $projectClass = 'ProjectNamespace\\Service\\Kernel\\ClassResolver\\KernelDependencyProvider';
 
     /**
      * @var string
      */
-    protected $projectClass = 'Unit\\ProjectNamespace\\Service\\Kernel\\ClassResolver\\Fixtures\\KernelDependencyProvider';
+    protected $storeClass = 'ProjectNamespace\\Service\\KernelDE\\ClassResolver\\KernelDependencyProvider';
 
     /**
      * @var string
      */
-    protected $storeClass = 'Unit\\ProjectNamespace\\Service\\KernelDE\\ClassResolver\\Fixtures\\KernelDependencyProvider';
-
-    /**
-     * @var string
-     */
-    protected $classPattern = 'Unit\\%namespace%\\Service\\%bundle%%store%\\ClassResolver\\Fixtures\\%bundle%DependencyProvider';
+    protected $classPattern = '%namespace%\\Service\\%bundle%%store%\\ClassResolver\\%bundle%DependencyProvider';
 
     /**
      * @var string
@@ -55,5 +54,4 @@ class DependencyProviderResolverTest extends AbstractResolverTest
 
         return $resolverMock;
     }
-
 }

@@ -7,11 +7,8 @@
 
 namespace Spryker\Zed\ProductLabel\Dependency\Facade;
 
-use Spryker\Zed\Touch\Business\TouchFacadeInterface;
-
 class ProductLabelToTouchBridge implements ProductLabelToTouchInterface
 {
-
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
      */
@@ -20,7 +17,7 @@ class ProductLabelToTouchBridge implements ProductLabelToTouchInterface
     /**
      * @param \Spryker\Zed\Touch\Business\TouchFacadeInterface $touchFacade
      */
-    public function __construct(TouchFacadeInterface $touchFacade)
+    public function __construct($touchFacade)
     {
         $this->touchFacade = $touchFacade;
     }
@@ -47,5 +44,4 @@ class ProductLabelToTouchBridge implements ProductLabelToTouchInterface
     {
         return $this->touchFacade->touchDeleted($itemType, $itemId);
     }
-
 }

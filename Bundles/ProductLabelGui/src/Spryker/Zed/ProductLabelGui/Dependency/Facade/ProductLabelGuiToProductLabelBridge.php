@@ -8,11 +8,9 @@
 namespace Spryker\Zed\ProductLabelGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductLabelTransfer;
-use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 
 class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLabelInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
      */
@@ -21,7 +19,7 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
     /**
      * @param \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface $productLabelFacade
      */
-    public function __construct(ProductLabelFacadeInterface $productLabelFacade)
+    public function __construct($productLabelFacade)
     {
         $this->productLabelFacade = $productLabelFacade;
     }
@@ -85,5 +83,4 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
     {
         $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, $idsProductAbstract);
     }
-
 }

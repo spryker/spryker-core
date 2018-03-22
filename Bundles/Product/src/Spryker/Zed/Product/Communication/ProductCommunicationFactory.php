@@ -10,7 +10,7 @@ namespace Spryker\Zed\Product\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\Product\Persistence\ProductQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Product\ProductConfig getConfig()
  */
 class ProductCommunicationFactory extends AbstractCommunicationFactory

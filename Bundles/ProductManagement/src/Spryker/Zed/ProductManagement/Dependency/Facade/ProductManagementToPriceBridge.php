@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
 class ProductManagementToPriceBridge implements ProductManagementToPriceInterface
 {
-
     /**
      * @var \Spryker\Zed\Price\Business\PriceFacadeInterface
      */
@@ -24,52 +23,26 @@ class ProductManagementToPriceBridge implements ProductManagementToPriceInterfac
     }
 
     /**
-     * @param int $idAbstractProduct
-     * @param string|null $priceType
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     * @return string
      */
-    public function findProductAbstractPrice($idAbstractProduct, $priceType = null)
+    public function getNetPriceModeIdentifier()
     {
-        return $this->priceFacade->findProductAbstractPrice($idAbstractProduct, $priceType);
-    }
-
-    /**
-     * @param int $idProduct
-     * @param string|null $priceType
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
-     */
-    public function findProductConcretePrice($idProduct, $priceType = null)
-    {
-        return $this->priceFacade->findProductConcretePrice($idProduct, $priceType);
-    }
-
-    /**
-     * @param string $sku
-     * @param string|null $priceTypeName
-     *
-     * @return int
-     */
-    public function getPriceBySku($sku, $priceTypeName = null)
-    {
-        return $this->priceFacade->getPriceBySku($sku, $priceTypeName);
-    }
-
-    /**
-     * @return array
-     */
-    public function getPriceTypeValues()
-    {
-        return $this->priceFacade->getPriceTypeValues();
+        return $this->priceFacade->getNetPriceModeIdentifier();
     }
 
     /**
      * @return string
      */
-    public function getDefaultPriceTypeName()
+    public function getGrossPriceModeIdentifier()
     {
-        return $this->priceFacade->getDefaultPriceTypeName();
+        return $this->priceFacade->getGrossPriceModeIdentifier();
     }
 
+    /**
+     * @return string
+     */
+    public function getDefaultPriceMode()
+    {
+        return $this->priceFacade->getDefaultPriceMode();
+    }
 }

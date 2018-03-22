@@ -11,7 +11,6 @@ use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class AttributeMapStorage implements AttributeMapStorageInterface
 {
-
     /**
      * @var \Spryker\Client\Product\Dependency\Client\ProductToStorageInterface
      */
@@ -51,5 +50,4 @@ class AttributeMapStorage implements AttributeMapStorageInterface
 
         return $attributes;
     }
-
 }

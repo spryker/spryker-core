@@ -12,12 +12,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
 
 /**
- * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacade getFacade()
+ * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
  */
 class ProductSearchProductConcreteReadPlugin extends AbstractPlugin implements ProductConcretePluginReadInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
@@ -39,5 +38,4 @@ class ProductSearchProductConcreteReadPlugin extends AbstractPlugin implements P
 
         return $productConcreteTransfer;
     }
-
 }

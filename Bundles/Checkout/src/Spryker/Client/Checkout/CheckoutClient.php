@@ -15,7 +15,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class CheckoutClient extends AbstractClient implements CheckoutClientInterface
 {
-
     /**
      * Places the order
      *
@@ -31,11 +30,10 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
     }
 
     /**
-     * @return \Spryker\Client\Checkout\Zed\CheckoutStub
+     * @return \Spryker\Client\Checkout\Zed\CheckoutStubInterface
      */
     protected function getZedStub()
     {
         return $this->getFactory()->createZedStub();
     }
-
 }

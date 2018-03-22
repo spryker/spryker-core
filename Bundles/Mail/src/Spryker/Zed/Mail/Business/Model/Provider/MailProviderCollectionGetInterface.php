@@ -8,12 +8,10 @@ namespace Spryker\Zed\Mail\Business\Model\Provider;
 
 interface MailProviderCollectionGetInterface
 {
-
     /**
      * @param string $mailType
      *
      * @return \Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface[]
      */
     public function getProviderForMailType($mailType);
-
 }

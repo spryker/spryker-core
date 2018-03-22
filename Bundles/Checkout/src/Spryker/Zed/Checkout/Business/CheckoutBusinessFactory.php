@@ -16,13 +16,13 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CheckoutBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflowInterface
      */
     public function createCheckoutWorkflow()
     {
         return new CheckoutWorkflow(
+            $this->getOmsFacade(),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_POST_HOOKS),
@@ -30,4 +30,11 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
         );
     }
 
+    /**
+     * @return \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface
+     */
+    protected function getOmsFacade()
+    {
+        return $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_OMS);
+    }
 }

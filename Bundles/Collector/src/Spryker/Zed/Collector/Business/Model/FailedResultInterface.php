@@ -12,7 +12,6 @@ namespace Spryker\Zed\Collector\Business\Model;
  */
 interface FailedResultInterface
 {
-
     /**
      * @return int
      */
@@ -72,5 +71,4 @@ interface FailedResultInterface
      * @return int
      */
     public function getFailedCount();
-
 }

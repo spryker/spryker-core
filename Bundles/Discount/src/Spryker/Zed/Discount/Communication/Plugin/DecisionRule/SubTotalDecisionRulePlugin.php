@@ -14,12 +14,11 @@ use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Discount\Business\DiscountFacade getFacade()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
 class SubTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -55,8 +54,7 @@ class SubTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
     public function acceptedDataTypes()
     {
         return [
-            ComparatorOperators::TYPE_NUMBER
+            ComparatorOperators::TYPE_NUMBER,
         ];
     }
-
 }

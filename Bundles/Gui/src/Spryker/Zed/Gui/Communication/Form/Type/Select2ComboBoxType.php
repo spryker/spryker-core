@@ -7,15 +7,18 @@
 
 namespace Spryker\Zed\Gui\Communication\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
+ */
 class Select2ComboBoxType extends AbstractType
 {
-
     /**
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
@@ -60,15 +63,24 @@ class Select2ComboBoxType extends AbstractType
      */
     public function getParent()
     {
-        return 'choice';
+        return ChoiceType::class;
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'select2';
     }
 
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

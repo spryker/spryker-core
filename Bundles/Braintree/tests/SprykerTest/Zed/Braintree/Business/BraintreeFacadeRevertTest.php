@@ -26,7 +26,6 @@ use Spryker\Zed\Braintree\Business\Payment\Transaction\RevertTransaction;
  */
 class BraintreeFacadeRevertTest extends AbstractFacadeTest
 {
-
     /**
      * @return void
      */
@@ -107,5 +106,4 @@ class BraintreeFacadeRevertTest extends AbstractFacadeTest
 
         return $response;
     }
-
 }

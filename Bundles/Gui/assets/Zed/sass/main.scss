@@ -8,6 +8,7 @@
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';
 @import '~font-awesome/scss/font-awesome';
 @import '~animate.css/animate';
+@import '~metismenu/src/metisMenu';
 @import '~datatables.net-bs/css/dataTables.bootstrap';
 @import '~datatables.net-buttons-bs/css/buttons.bootstrap';
 @import '~datatables.net-responsive-bs/css/responsive.bootstrap';
@@ -23,8 +24,10 @@
 
 // spryker customization
 @import 'variables';
+@import 'inspinia';
 @import 'custom';
 @import 'action-buttons';
 @import 'flags';
 @import 'data-tables';
 @import 'wave-loader';
+

@@ -2,6 +2,7 @@
 namespace SprykerTest\Shared\Config;
 
 use Codeception\Actor;
+use Spryker\Shared\Config\Profiler;
 
 /**
  * Inherited Methods
@@ -20,11 +21,57 @@ use Codeception\Actor;
  */
 class ConfigSharedTester extends Actor
 {
-
     use _generated\ConfigSharedTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @param string $expectedKey
+     * @param array $profileData
+     *
+     * @return void
+     */
+    public function assertProfileKey($expectedKey, array $profileData)
+    {
+        $this->assertArrayHasKey(
+            $expectedKey,
+            $profileData,
+            sprintf('The profile data for key "%s" was not found', ProfilerTest::PROFILE_KEY)
+        );
+    }
 
+    /**
+     * @param mixed $expected
+     * @param array $profileData
+     *
+     * @return void
+     */
+    public function assertProfileValue($expected, array $profileData)
+    {
+        $this->assertSame($expected, $profileData[Profiler::PROFILE_VALUE]);
+    }
+
+    /**
+     * @param mixed $expected
+     * @param array $profileData
+     *
+     * @return void
+     */
+    public function assertProfileDefaultValue($expected, array $profileData)
+    {
+        $this->assertSame($expected, $profileData[Profiler::PROFILE_DEFAULT]);
+    }
+
+    /**
+     * @param int $expectedCount
+     * @param array $profileData
+     *
+     * @return void
+     */
+    public function assertProfileCount($expectedCount, array $profileData)
+    {
+        $this->assertSame(
+            $profileData[Profiler::PROFILE_COUNT],
+            $expectedCount,
+            sprintf('The count for "%s" was expected to be "%d"', ProfilerTest::PROFILE_KEY, $expectedCount)
+        );
+    }
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class DataImportFacade extends AbstractFacade implements DataImportFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -29,5 +28,4 @@ class DataImportFacade extends AbstractFacade implements DataImportFacadeInterfa
     {
         return $this->getFactory()->getImporter()->import($dataImporterConfiguration);
     }
-
 }

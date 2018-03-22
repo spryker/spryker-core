@@ -7,12 +7,12 @@
 
 namespace Spryker\Client\Catalog;
 
+use Spryker\Client\Catalog\Listing\CatalogViewModePersistence;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 
 class CatalogFactory extends AbstractFactory
 {
-
     /**
      * @param string $searchString
      *
@@ -43,6 +43,14 @@ class CatalogFactory extends AbstractFactory
         }
 
         return $searchQuery;
+    }
+
+    /**
+     * @return \Spryker\Client\Catalog\Listing\CatalogViewModePersistenceInterface
+     */
+    public function createCatalogViewModePersistence()
+    {
+        return new CatalogViewModePersistence();
     }
 
     /**
@@ -101,4 +109,19 @@ class CatalogFactory extends AbstractFactory
         return $this->getProvidedDependency(CatalogDependencyProvider::SUGGESTION_RESULT_FORMATTER_PLUGINS);
     }
 
+    /**
+     * @return \Spryker\Client\Catalog\Dependency\Plugin\FacetConfigTransferBuilderPluginInterface[]
+     */
+    public function getFacetConfigTransferBuilderPlugins()
+    {
+        return $this->getProvidedDependency(CatalogDependencyProvider::PLUGIN_FACET_CONFIG_TRANSFER_BUILDERS);
+    }
+
+    /**
+     * @return \Spryker\Client\Catalog\Dependency\Plugin\SortConfigTransferBuilderPluginInterface[]
+     */
+    public function getSortConfigTransferBuilderPlugins()
+    {
+        return $this->getProvidedDependency(CatalogDependencyProvider::PLUGIN_SORT_CONFIG_TRANSFER_BUILDERS);
+    }
 }

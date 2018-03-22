@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Orm\Zed\Price\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -24,7 +23,6 @@ use Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig;
 
 class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilderInterface
 {
-
     const RESULT_FIELD_PRODUCT_ABSTRACT_NAME = 'abstract_product_name';
     const RESULT_FIELD_PRODUCT_ABSTRACT_PRICE = 'abstract_product_price';
     const RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV = 'abstract_product_category_names_csv';
@@ -114,7 +112,6 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
         $localeTransfer = $this->localeFacade->getCurrentLocale();
 
         $this->addProductName($query, $localeTransfer);
-        $this->addProductPrice($query);
         $this->addProductCategories($query, $localeTransfer);
         $this->addConcreteProductStates($query);
         $this->addRelation($query, $idProductLabel);
@@ -138,25 +135,6 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
                     static::RESULT_FIELD_PRODUCT_ABSTRACT_NAME
                 )
                 ->filterByFkLocale($localeTransfer->getIdLocale())
-            ->endUse();
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery $query
-     *
-     * @return void
-     */
-    protected function addProductPrice(SpyProductAbstractQuery $query)
-    {
-        $query
-            ->usePriceProductQuery()
-                ->withColumn(
-                    SpyPriceProductTableMap::COL_PRICE,
-                    static::RESULT_FIELD_PRODUCT_ABSTRACT_PRICE
-                )
-                ->usePriceTypeQuery()
-                    ->filterByName($this->bundleConfig->getDefaultPriceType())
-                ->endUse()
             ->endUse();
     }
 
@@ -258,5 +236,4 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
             static::RESULT_FIELD_PRODUCT_ABSTRACT_RELATION_COUNT
         );
     }
-
 }

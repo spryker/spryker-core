@@ -14,11 +14,10 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 
 /**
  * @method \Spryker\Zed\Nopayment\Communication\NopaymentCommunicationFactory getFactory()
- * @method \Spryker\Zed\Nopayment\Business\NopaymentFacade getFacade()
+ * @method \Spryker\Zed\Nopayment\Business\NopaymentFacadeInterface getFacade()
  */
 class NopaymentCommandPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
-
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
@@ -30,5 +29,4 @@ class NopaymentCommandPlugin extends AbstractPlugin implements CommandByOrderInt
     {
         return $this->getFacade()->setAsPaid($orderItems);
     }
-
 }

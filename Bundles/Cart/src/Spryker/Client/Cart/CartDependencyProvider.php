@@ -14,7 +14,6 @@ use Spryker\Client\Kernel\Container;
 
 class CartDependencyProvider extends AbstractDependencyProvider
 {
-
     const CLIENT_QUOTE = 'quote client';
     const CLIENT_ZED_REQUEST = 'zed request client';
     const PLUGIN_ITEM_COUNT = 'item count plugin';
@@ -74,5 +73,4 @@ class CartDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
-
 }

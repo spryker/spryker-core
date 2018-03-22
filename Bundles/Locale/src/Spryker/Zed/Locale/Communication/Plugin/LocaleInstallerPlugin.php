@@ -12,11 +12,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Locale\Communication\LocaleCommunicationFactory getFactory()
- * @method \Spryker\Zed\Locale\Business\LocaleFacade getFacade()
+ * @method \Spryker\Zed\Locale\Business\LocaleFacadeInterface getFacade()
  */
 class LocaleInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
-
     /**
      * @return void
      */
@@ -24,5 +23,4 @@ class LocaleInstallerPlugin extends AbstractPlugin implements InstallerPluginInt
     {
         $this->getFacade()->install();
     }
-
 }

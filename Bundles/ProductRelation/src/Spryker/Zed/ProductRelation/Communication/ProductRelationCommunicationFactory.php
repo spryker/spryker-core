@@ -22,13 +22,12 @@ use Spryker\Zed\ProductRelation\Communication\Tabs\ProductRelationTabs;
 use Spryker\Zed\ProductRelation\ProductRelationDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductRelation\ProductRelationConfig getConfig()
- * @method \Spryker\Zed\ProductRelation\Business\ProductRelationFacade getFacade()
+ * @method \Spryker\Zed\ProductRelation\Business\ProductRelationFacadeInterface getFacade()
  */
 class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
 {
-
     /**
      * @param int|null $idProductRelation
      *
@@ -41,6 +40,7 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
             $this->getLocaleFacade(),
             $this->getUtilEncodingService(),
             $this->getMoneyFacade(),
+            $this->getPriceProductFacade(),
             $idProductRelation
         );
     }
@@ -84,6 +84,8 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `getRelationForm()` instead.
+     *
      * @param \Spryker\Zed\ProductRelation\Communication\Form\DataProvider\ProductRelationTypeDataProviderInterface $productRelationFormTypeDataProvider
      * @param int|null $idProductRelation
      *
@@ -93,19 +95,30 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
         ProductRelationTypeDataProviderInterface $productRelationFormTypeDataProvider,
         $idProductRelation = null
     ) {
-        $productRelationFormType = $this->createRelationFormType();
-
         return $this->getFormFactory()->create(
-            $productRelationFormType,
+            ProductRelationFormType::class,
             $productRelationFormTypeDataProvider->getData($idProductRelation),
             $productRelationFormTypeDataProvider->getOptions()
         );
     }
 
     /**
+     * @param \Spryker\Zed\ProductRelation\Communication\Form\DataProvider\ProductRelationTypeDataProviderInterface $productRelationFormTypeDataProvider
+     * @param int|null $idProductRelation
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getRelationForm(
+        ProductRelationTypeDataProviderInterface $productRelationFormTypeDataProvider,
+        $idProductRelation = null
+    ) {
+        return $this->createRelationForm($productRelationFormTypeDataProvider, $idProductRelation);
+    }
+
+    /**
      * @return \Symfony\Component\Validator\Constraint
      */
-    protected function createUniqueRelationTypeForProductAbstractConstraint()
+    public function createUniqueRelationTypeForProductAbstractConstraint()
     {
         return new UniqueRelationTypeForProductAbstract([
             UniqueRelationTypeForProductAbstract::OPTION_PRODUCT_RELATION_QUERY_CONTAINER => $this->getQueryContainer(),
@@ -121,20 +134,19 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\FormTypeInterface
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
      */
     protected function createRelationFormType()
     {
-        return new ProductRelationFormType(
-            $this->createRuleSetTransformer(),
-            $this->createUniqueRelationTypeForProductAbstractConstraint()
-        );
+        return ProductRelationFormType::class;
     }
 
     /**
      * @return \Symfony\Component\Form\DataTransformerInterface
      */
-    protected function createRuleSetTransformer()
+    public function createRuleSetTransformer()
     {
         return new RuleQuerySetTransformer($this->getUtilEncodingService());
     }
@@ -179,4 +191,11 @@ class ProductRelationCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(ProductRelationDependencyProvider::FACADE_PRODUCT);
     }
 
+    /**
+     * @return \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToPriceProductFacadeInterface
+     */
+    protected function getPriceProductFacade()
+    {
+        return $this->getProvidedDependency(ProductRelationDependencyProvider::FACADE_PRICE_PRODUCT);
+    }
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Ratepay\Dependency\Facade\RatepayToMoneyInterface;
 
 class InstallmentCalculationMapper extends BaseMapper
 {
-
     /**
      * @var \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -72,5 +71,4 @@ class InstallmentCalculationMapper extends BaseMapper
         $this->requestTransfer->getHead()
             ->setOperationSubstring($this->ratepayPaymentTransfer->getInstallmentCalculationType());
     }
-
 }

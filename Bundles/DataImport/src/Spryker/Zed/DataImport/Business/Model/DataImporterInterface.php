@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 
 interface DataImporterInterface
 {
-
     /**
      * Specification:
      * - Reads data from an DataReaderInterface.
@@ -35,5 +34,4 @@ interface DataImporterInterface
      * @return string
      */
     public function getImportType();
-
 }

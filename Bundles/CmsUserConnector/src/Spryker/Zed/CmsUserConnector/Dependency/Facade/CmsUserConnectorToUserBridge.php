@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsUserConnector\Dependency\Facade;
 
 class CmsUserConnectorToUserBridge implements CmsUserConnectorToUserInterface
 {
-
     /**
      * @var \Spryker\Zed\User\Business\UserFacadeInterface
      */
@@ -48,5 +47,4 @@ class CmsUserConnectorToUserBridge implements CmsUserConnectorToUserInterface
     {
         return $this->userFacade->getUserById($idUser);
     }
-
 }

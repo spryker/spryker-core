@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
+use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
  * Auto-generated group annotations
@@ -26,12 +27,11 @@ use Orm\Zed\Sales\Persistence\SpySalesDiscount;
  */
 class SalesFacadeTest extends Unit
 {
-
     const DEFAULT_OMS_PROCESS_NAME = 'test';
     const DEFAULT_ITEM_STATE = 'test';
 
     /**
-     * @var \SprykerTest\Zed\Sales\BusinessTester
+     * @var \SprykerTest\Zed\Sales\SalesBusinessTester
      */
     protected $tester;
 
@@ -44,8 +44,6 @@ class SalesFacadeTest extends Unit
 
         $productTransfer = $this->tester->haveProduct();
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
-
-        $checkoutResponseTransfer = $this->tester->haveOrder();
 
         $salesOrderEntity = $this->tester->create();
 
@@ -76,6 +74,8 @@ class SalesFacadeTest extends Unit
     public function testCustomerOrderShouldReturnListOfCustomerPlacedOrders()
     {
         $salesOrderEntity = $this->tester->create();
+
+        $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
 
         $salesFacade = $this->createSalesFacade();
 
@@ -121,8 +121,6 @@ class SalesFacadeTest extends Unit
      */
     protected function createSalesFacade()
     {
-//        return new SalesFacade();
         return $this->tester->getLocator()->sales()->facade();
     }
-
 }

@@ -17,7 +17,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
  */
 class ZedRequestClient extends AbstractClient implements ZedRequestClientInterface
 {
-
     /**
      * @var \Spryker\Client\ZedRequest\Client\ZedClient
      */
@@ -36,15 +35,17 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $url
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $object
-     * @param int|null $timeoutInSeconds
+     * @param array|int|null $requestOptions
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function call($url, TransferInterface $object, $timeoutInSeconds = null)
+    public function call($url, TransferInterface $object, $requestOptions = null)
     {
         $localeName = Store::getInstance()->getCurrentLocale();
         $localeTransfer = new LocaleTransfer();
@@ -52,7 +53,9 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
 
         $this->getClient()->addMetaTransfer('locale', $localeTransfer);
 
-        return $this->getClient()->call($url, $object, $timeoutInSeconds);
+        $this->applyMetaData($object);
+
+        return $this->getClient()->call($url, $object, $requestOptions);
     }
 
     /**
@@ -97,4 +100,20 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
         return $this->getClient()->getLastResponse()->getSuccessMessages();
     }
 
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $requestTransfer
+     *
+     * @return void
+     */
+    protected function applyMetaData(TransferInterface $requestTransfer)
+    {
+        $plugins = $this->getFactory()->getMetaDataProviderPlugins();
+
+        foreach ($plugins as $key => $plugin) {
+            $this->getClient()->addMetaTransfer(
+                $key,
+                $plugin->getRequestMetaData($requestTransfer)
+            );
+        }
+    }
 }

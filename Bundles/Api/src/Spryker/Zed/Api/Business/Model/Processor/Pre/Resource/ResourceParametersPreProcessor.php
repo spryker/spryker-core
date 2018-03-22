@@ -12,11 +12,10 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 /**
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
- * @method \Spryker\Zed\Api\Business\ApiFacade getFacade()
+ * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
  */
 class ResourceParametersPreProcessor implements PreProcessorInterface
 {
-
     /**
      * Maps all remaining path segments as resource params.
      *
@@ -41,5 +40,4 @@ class ResourceParametersPreProcessor implements PreProcessorInterface
 
         return $apiRequestTransfer;
     }
-
 }

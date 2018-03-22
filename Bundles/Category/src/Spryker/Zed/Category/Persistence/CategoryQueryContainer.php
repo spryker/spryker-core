@@ -24,7 +24,6 @@ use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
  */
 class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQueryContainerInterface
 {
-
     /**
      * @api
      *
@@ -88,6 +87,26 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     public function queryNodeById($idNode)
     {
         return $this->getFactory()->createCategoryNodeQuery()->filterByIdCategoryNode($idNode);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryAllCategoryNodes()
+    {
+        return $this->getFactory()->createCategoryNodeQuery();
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
+     */
+    public function queryAllCategoryAttributes()
+    {
+        return $this->getFactory()->createCategoryAttributeQuery();
     }
 
     /**
@@ -1108,5 +1127,4 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         return $this->queryCategoryTemplate()
             ->filterByName($nameCategoryTemplate);
     }
-
 }

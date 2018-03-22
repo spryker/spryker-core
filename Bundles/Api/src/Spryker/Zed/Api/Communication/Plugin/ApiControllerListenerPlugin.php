@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Api\Communication\Plugin;
 
+use Exception;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
 use Spryker\Shared\Log\LoggerTrait;
@@ -16,14 +17,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Throwable;
 
 /**
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
- * @method \Spryker\Zed\Api\Business\ApiFacade getFacade()
+ * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
  */
 class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControllerListenerInterface
 {
-
     use LoggerTrait;
 
     /**
@@ -49,12 +50,12 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
 
             try {
                 $responseTransfer = $controller->$action($requestTransfer);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $responseTransfer = new ApiResponseTransfer();
                 $responseTransfer->setCode($this->resolveStatusCode($e->getCode()));
                 $responseTransfer->setMessage($e->getMessage());
                 $responseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 $responseTransfer = new ApiResponseTransfer();
                 $responseTransfer->setCode($this->resolveStatusCode($e->getCode()));
                 $responseTransfer->setMessage($e->getMessage());
@@ -164,5 +165,4 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
             json_encode($array)
         ));
     }
-
 }

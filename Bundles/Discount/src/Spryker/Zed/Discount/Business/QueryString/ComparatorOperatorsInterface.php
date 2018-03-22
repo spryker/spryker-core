@@ -9,7 +9,6 @@ use Generated\Shared\Transfer\ClauseTransfer;
 
 interface ComparatorOperatorsInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      * @param mixed $withValue
@@ -52,5 +51,4 @@ interface ComparatorOperatorsInterface
      * @return bool
      */
     public function isValidComparatorValue(ClauseTransfer $clauseTransfer);
-
 }

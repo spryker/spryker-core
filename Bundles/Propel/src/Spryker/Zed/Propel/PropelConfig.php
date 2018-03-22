@@ -14,7 +14,6 @@ use Spryker\Zed\Propel\Business\Exception\UnSupportedDatabaseEngineException;
 
 class PropelConfig extends AbstractBundleConfig
 {
-
     const DB_ENGINE_MYSQL = 'mysql';
     const DB_ENGINE_PGSQL = 'pgsql';
 
@@ -46,9 +45,39 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getMigrationDirectory()
+    {
+        $config = $this->getPropelConfig();
+        $schemaDir = $config['paths']['migrationDir'] . DIRECTORY_SEPARATOR;
+
+        return $schemaDir;
+    }
+
+    /**
      * @return array
      */
     public function getPropelSchemaPathPatterns()
+    {
+        return array_merge(
+            $this->getCorePropelSchemaPathPatterns(),
+            $this->getProjectPropelSchemaPathPatterns()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getCorePropelSchemaPathPatterns()
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getProjectPropelSchemaPathPatterns()
     {
         return glob($this->get(PropelConstants::SCHEMA_FILE_PATH_PATTERN, $this->getSchemaPathPattern()));
     }
@@ -96,4 +125,11 @@ class PropelConfig extends AbstractBundleConfig
         return $supportedEngines[$dbEngine];
     }
 
+    /**
+     * @return array
+     */
+    public function getWhitelistForAllowedAttributeValueChanges()
+    {
+        return [];
+    }
 }

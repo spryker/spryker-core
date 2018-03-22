@@ -15,11 +15,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
- * @method \Spryker\Zed\Auth\Business\AuthFacade getFacade()
+ * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
  */
 class LoginController extends AbstractController
 {
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -32,7 +31,7 @@ class LoginController extends AbstractController
             ->createLoginForm()
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
 
             $isLogged = $this->getFacade()->login(
@@ -64,5 +63,4 @@ class LoginController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
 }

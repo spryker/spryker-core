@@ -12,7 +12,6 @@ use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 abstract class AbstractSalesFormDataProvider
 {
-
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
@@ -35,5 +34,4 @@ abstract class AbstractSalesFormDataProvider
 
         return array_combine($salutationSet, $salutationSet);
     }
-
 }

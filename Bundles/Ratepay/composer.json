@@ -3,7 +3,8 @@
   "description": "Ratepay module",
   "license": "proprietary",
   "require": {
-    "spryker/checkout": "^3.0.0",
+    "php": ">=7.1",
+    "spryker/checkout": "^3.0.0 || ^4.0.0",
     "spryker/config": "^3.0.0",
     "spryker/glossary": "^3.0.0",
     "spryker/guzzle": "^2.1.0",
@@ -12,10 +13,10 @@
     "spryker/messenger": "^3.0.0",
     "spryker/money": "^2.0.0",
     "spryker/monolog": "^2.0.0",
-    "spryker/oms": "^6.0.0 || ^7.0.0",
+    "spryker/oms": "^6.0.0 || ^7.0.0 || ^8.0.0",
     "spryker/payment": "^3.0.0 || ^4.0.0",
-    "spryker/product": "^5.0.0",
-    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0",
+    "spryker/product": "^5.0.0 || ^6.0.0",
+    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
     "spryker/sales-aggregator": "^4.0.0 || ^5.0.0",
     "spryker/session": "^3.0.0",
     "spryker/step-engine": "^2.0.0 || ^3.0.0",
@@ -23,9 +24,11 @@
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
+    "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/country": "*",
     "spryker/customer": "*",
+    "spryker/installer": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
     "spryker/silex": "*",
@@ -36,14 +39,13 @@
     "spryker/cart": "If you want to use Cart plugins."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Functional": "tests/",
-      "Unit": "tests/"
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

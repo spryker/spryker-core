@@ -11,7 +11,6 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 
 class BundleUsesConnector implements ViolationFinderInterface
 {
-
     /**
      * @param array $dependency
      *
@@ -21,5 +20,4 @@ class BundleUsesConnector implements ViolationFinderInterface
     {
         return (preg_match('/Connector/', $dependency[DependencyTree::META_FOREIGN_BUNDLE]));
     }
-
 }

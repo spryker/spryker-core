@@ -6,19 +6,19 @@
 
 namespace Spryker\Zed\Development\Business\ArchitectureSniffer;
 
+use InvalidArgumentException;
 use Symfony\Component\Finder\Finder;
-use Zend\Filter\Word\CamelCaseToDash;
+use Zend\Filter\FilterInterface;
 
 class AllBundleFinder implements AllBundleFinderInterface
 {
-
     /**
      * @var \Symfony\Component\Finder\Finder
      */
     protected $finder;
 
     /**
-     * @var \Zend\Filter\Word\CamelCaseToDash
+     * @var \Zend\Filter\FilterInterface
      */
     protected $filter;
 
@@ -34,11 +34,11 @@ class AllBundleFinder implements AllBundleFinderInterface
 
     /**
      * @param \Symfony\Component\Finder\Finder $finder
-     * @param \Zend\Filter\Word\CamelCaseToDash $filter
+     * @param \Zend\Filter\FilterInterface $filter
      * @param array $projectNamespaces
      * @param array $coreNamespaces
      */
-    public function __construct(Finder $finder, CamelCaseToDash $filter, $projectNamespaces = [], $coreNamespaces = [])
+    public function __construct(Finder $finder, FilterInterface $filter, $projectNamespaces = [], $coreNamespaces = [])
     {
         $this->finder = $finder;
         $this->filter = $filter;
@@ -77,7 +77,7 @@ class AllBundleFinder implements AllBundleFinderInterface
                 ->directories()
                 ->in($path)
                 ->depth('== 0');
-        } catch (\InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             // ~ Directory does not exist. It's not an error.
         }
 
@@ -127,7 +127,6 @@ class AllBundleFinder implements AllBundleFinderInterface
     protected function loadOtherCoreBundles(array $allBundles)
     {
         foreach ($this->coreNamespaces as $coreNamespace) {
-
             $namespaceDir = $this->filter->filter($coreNamespace);
             $namespaceDir = strtolower($namespaceDir);
 
@@ -150,5 +149,4 @@ class AllBundleFinder implements AllBundleFinderInterface
         }
         return $allBundles;
     }
-
 }

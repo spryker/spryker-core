@@ -28,7 +28,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CmsGlossaryAttributesFormType extends AbstractType
 {
-
     const FIELD_PLACEHOLDER = 'placeholder';
     const FIELD_FK_PAGE = 'fkPage';
     const FIELD_FK_GLOSSARY_MAPPING = 'fkCmsGlossaryMapping';
@@ -42,14 +41,6 @@ class CmsGlossaryAttributesFormType extends AbstractType
     const OPTION_GLOSSARY_KEY_SEARCH_OPTIONS = 'glossaryKeySearchOptions';
 
     use ArrayObjectTransformerTrait;
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'cms_glossary_attribute';
-    }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -178,7 +169,7 @@ class CmsGlossaryAttributesFormType extends AbstractType
     protected function addTranslationsField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_TRANSLATIONS, CollectionType::class, [
-            'type' => $this->getFactory()->createCmsGlossaryTranslationFormType(),
+            'entry_type' => CmsGlossaryTranslationFormType::class,
             'allow_add' => true,
         ]);
 
@@ -200,18 +191,33 @@ class CmsGlossaryAttributesFormType extends AbstractType
         ];
 
         $placeholderConstraints[] = new Callback([
-            'methods' => [
-                function ($placeholder, ExecutionContextInterface $context) {
-                    $formData = $context->getRoot()->getViewData();
-                    if ($this->getFactory()->getCmsFacade()->hasPagePlaceholderMapping($formData[static::FIELD_FK_PAGE], $placeholder)) {
-                        $context->addViolation('Placeholder has already mapped.');
-                    }
-                },
-            ],
+            'callback' => function ($placeholder, ExecutionContextInterface $context) {
+                $formData = $context->getRoot()->getViewData();
+                if ($this->getFactory()->getCmsFacade()->hasPagePlaceholderMapping($formData[static::FIELD_FK_PAGE], $placeholder)) {
+                    $context->addViolation('Placeholder has already mapped.');
+                }
+            },
             'groups' => [static::GROUP_PLACEHOLDER_CHECK],
         ]);
 
         return $placeholderConstraints;
     }
 
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'cms_glossary_attribute';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
+    }
 }

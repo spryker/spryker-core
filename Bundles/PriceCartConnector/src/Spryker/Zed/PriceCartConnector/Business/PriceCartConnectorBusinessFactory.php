@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
+use Spryker\Zed\PriceCartConnector\Business\Validator\PriceProductValidator;
 use Spryker\Zed\PriceCartConnector\PriceCartConnectorDependencyProvider;
 
 /**
@@ -17,20 +18,34 @@ use Spryker\Zed\PriceCartConnector\PriceCartConnectorDependencyProvider;
  */
 class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Business\Manager\PriceManagerInterface
+     */
+    public function createPriceManager()
+    {
+        return new PriceManager(
+            $this->getPriceProductFacade(),
+            $this->getPriceFacade()
+        );
+    }
 
     /**
-     * @param string|null $grossPriceType
-     *
-     * @return \Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager
+     * @return \Spryker\Zed\PriceCartConnector\Business\Validator\PriceProductValidatorInterface
      */
-    public function createPriceManager($grossPriceType = null)
+    public function createPriceProductValidator()
     {
-        if ($grossPriceType === null) {
-            $bundleConfig = $this->getConfig();
-            $grossPriceType = $bundleConfig->getGrossPriceType();
-        }
+        return new PriceProductValidator(
+            $this->getPriceProductFacade(),
+            $this->getPriceFacade()
+        );
+    }
 
-        return new PriceManager($this->getPriceFacade(), $grossPriceType, $this->getConfig()->getPriceMode());
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface
+     */
+    protected function getPriceProductFacade()
+    {
+        return $this->getProvidedDependency(PriceCartConnectorDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 
     /**
@@ -40,5 +55,4 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(PriceCartConnectorDependencyProvider::FACADE_PRICE);
     }
-
 }

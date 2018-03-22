@@ -13,7 +13,6 @@ use Spryker\Yves\ProductRelation\Sorting\RelationSorterInterface;
 
 class RelatedProductsDataProvider implements ProductRelationDataProviderInterface
 {
-
     const PARAMETER_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
 
     /**
@@ -41,7 +40,7 @@ class RelatedProductsDataProvider implements ProductRelationDataProviderInterfac
     /**
      * @param array $parameters
      *
-     * @return array|\Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
+     * @return \Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
      */
     public function buildTemplateData(array $parameters)
     {
@@ -81,5 +80,4 @@ class RelatedProductsDataProvider implements ProductRelationDataProviderInterfac
         }
         return $productRelationCollection[$this->getAcceptedType()];
     }
-
 }

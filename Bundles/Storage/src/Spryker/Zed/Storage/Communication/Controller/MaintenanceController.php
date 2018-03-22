@@ -11,12 +11,11 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Storage\Business\StorageFacade getFacade()
+ * @method \Spryker\Zed\Storage\Business\StorageFacadeInterface getFacade()
  * @method \Spryker\Zed\Storage\Communication\StorageCommunicationFactory getFactory()
  */
 class MaintenanceController extends AbstractController
 {
-
     const REFERENCE_KEY = 'reference_key';
     const MESSAGE_REMOVED_ENTRIES = 'Removed "%" entries from storage.';
     const URL_STORAGE_MAINTENANCE = '/storage/maintenance';
@@ -103,5 +102,4 @@ class MaintenanceController extends AbstractController
 
         return $referenceKey;
     }
-
 }

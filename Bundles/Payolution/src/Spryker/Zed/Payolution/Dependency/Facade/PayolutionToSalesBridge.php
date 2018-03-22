@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -8,7 +9,6 @@ namespace Spryker\Zed\Payolution\Dependency\Facade;
 
 class PayolutionToSalesBridge implements PayolutionToSalesInterface
 {
-
     /**
      * @var \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
@@ -31,5 +31,4 @@ class PayolutionToSalesBridge implements PayolutionToSalesInterface
     {
         return $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);
     }
-
 }

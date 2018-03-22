@@ -9,11 +9,10 @@ namespace SprykerTest\Shared\Testify\Helper;
 
 use Closure;
 use Codeception\Module;
-use Codeception\TestInterface;
+use Exception;
 
 class DataCleanupHelper extends Module
 {
-
     /**
      * @var array
      */
@@ -37,11 +36,9 @@ class DataCleanupHelper extends Module
     /**
      * Cleans up inserted data
      *
-     * @param \Codeception\TestInterface $test
-     *
      * @return void
      */
-    public function _after(TestInterface $test)
+    public function _afterSuite()
     {
         if (!$this->config['cleanup']) {
             return;
@@ -49,11 +46,10 @@ class DataCleanupHelper extends Module
         foreach (array_reverse($this->cleanups) as $cleanup) {
             try {
                 $cleanup();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->debugSection('Cleanup Failure', $e->getMessage());
             }
         }
         $this->cleanups = [];
     }
-
 }

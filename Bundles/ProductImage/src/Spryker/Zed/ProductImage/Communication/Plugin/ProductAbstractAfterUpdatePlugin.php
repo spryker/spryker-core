@@ -12,12 +12,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginUpdateInterface;
 
 /**
- * @method \Spryker\Zed\ProductImage\Business\ProductImageFacade getFacade()
+ * @method \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductImage\Communication\ProductImageCommunicationFactory getFactory()
  */
 class ProductAbstractAfterUpdatePlugin extends AbstractPlugin implements ProductAbstractPluginUpdateInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
@@ -27,5 +26,4 @@ class ProductAbstractAfterUpdatePlugin extends AbstractPlugin implements Product
     {
         return $this->getFacade()->updateProductAbstractImageSetCollection($productAbstractTransfer);
     }
-
 }

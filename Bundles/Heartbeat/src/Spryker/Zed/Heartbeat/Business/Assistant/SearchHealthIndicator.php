@@ -8,12 +8,12 @@
 namespace Spryker\Zed\Heartbeat\Business\Assistant;
 
 use Elastica\Client;
+use Exception;
 use Spryker\Shared\Heartbeat\Code\AbstractHealthIndicator;
 use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 
 class SearchHealthIndicator extends AbstractHealthIndicator implements HealthIndicatorInterface
 {
-
     const HEALTH_MESSAGE_UNABLE_TO_CONNECT_TO_SEARCH = 'Unable to connect to search';
 
     /**
@@ -44,10 +44,9 @@ class SearchHealthIndicator extends AbstractHealthIndicator implements HealthInd
     {
         try {
             $this->client->getStatus();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_CONNECT_TO_SEARCH);
             $this->addDysfunction($e->getMessage());
         }
     }
-
 }

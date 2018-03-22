@@ -16,7 +16,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class EmptyAllCachesConsole extends Console
 {
-
     const COMMAND_NAME = 'cache:empty-all';
 
     /**
@@ -80,5 +79,4 @@ class EmptyAllCachesConsole extends Console
             $output->writeln($directory, OutputInterface::VERBOSITY_NORMAL);
         }
     }
-
 }

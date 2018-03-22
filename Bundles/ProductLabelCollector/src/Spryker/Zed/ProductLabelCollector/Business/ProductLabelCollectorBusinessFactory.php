@@ -14,9 +14,11 @@ use Spryker\Zed\ProductLabelCollector\Persistence\Collector\Propel\LabelDictiona
 use Spryker\Zed\ProductLabelCollector\Persistence\Collector\Propel\ProductAbstractRelationCollectorQuery;
 use Spryker\Zed\ProductLabelCollector\ProductLabelCollectorDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\ProductLabelCollector\ProductLabelCollectorConfig getConfig()
+ */
 class ProductLabelCollectorBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToCollectorInterface
      */
@@ -93,5 +95,4 @@ class ProductLabelCollectorBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAbstractRelationCollectorQuery();
     }
-
 }

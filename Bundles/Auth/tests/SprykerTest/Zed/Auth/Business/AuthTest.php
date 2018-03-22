@@ -16,6 +16,7 @@ use Spryker\Zed\Auth\Business\AuthFacade;
 use Spryker\Zed\Auth\Business\Client\StaticToken;
 use Spryker\Zed\User\Business\UserFacade;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 /**
  * Auto-generated group annotations
@@ -28,7 +29,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class AuthTest extends Unit
 {
-
     /**
      * @var \Spryker\Zed\Auth\Business\AuthFacade
      */
@@ -47,7 +47,7 @@ class AuthTest extends Unit
         parent::setUp();
 
         $sessionClient = new SessionClient();
-        $sessionClient->setContainer(new Session());
+        $sessionClient->setContainer(new Session(new MockArraySessionStorage()));
 
         $this->userFacade = new UserFacade();
         $this->authFacade = new AuthFacade();
@@ -225,5 +225,4 @@ class AuthTest extends Unit
         $isAllowed = $this->authFacade->isAuthenticated($hash);
         $this->assertTrue($isAllowed);
     }
-
 }

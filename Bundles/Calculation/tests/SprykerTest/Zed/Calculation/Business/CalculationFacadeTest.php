@@ -18,10 +18,11 @@ use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\Calculation\Business\CalculationBusinessFactory;
 use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Calculation\CalculationDependencyProvider;
-use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountAmountAggregatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountAmountAggregatorForGenericAmountPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\DiscountTotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ExpenseTotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\GrandTotalCalculatorPlugin;
+use Spryker\Zed\Calculation\Communication\Plugin\Calculator\InitialGrandTotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemDiscountAmountFullAggregatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemProductOptionPriceAggregatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\ItemSubtotalAggregatorPlugin;
@@ -46,7 +47,6 @@ use Spryker\Zed\Kernel\Container;
  */
 class CalculationFacadeTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -140,7 +140,7 @@ class CalculationFacadeTest extends Unit
     {
         $calculationFacade = $this->createCalculationFacade(
             [
-                new DiscountAmountAggregatorPlugin(),
+                new DiscountAmountAggregatorForGenericAmountPlugin(),
             ]
         );
 
@@ -152,25 +152,25 @@ class CalculationFacadeTest extends Unit
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitGrossAmount(20);
+        $calculatedDiscountTransfer->setUnitAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitGrossAmount(20);
+        $calculatedDiscountTransfer->setUnitAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitGrossAmount(20);
+        $calculatedDiscountTransfer->setUnitAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitGrossAmount(20);
+        $calculatedDiscountTransfer->setUnitAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $itemTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
@@ -182,7 +182,7 @@ class CalculationFacadeTest extends Unit
 
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount(1);
-        $calculatedDiscountTransfer->setUnitGrossAmount(20);
+        $calculatedDiscountTransfer->setUnitAmount(20);
         $calculatedDiscountTransfer->setQuantity(1);
         $expenseTransfer->addCalculatedDiscount($calculatedDiscountTransfer);
 
@@ -553,6 +553,38 @@ class CalculationFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCalculateInitialGrandTotal()
+    {
+        $calculationFacade = $this->createCalculationFacade(
+            [
+                new InitialGrandTotalCalculatorPlugin(),
+            ]
+        );
+
+        $quoteTransfer = new QuoteTransfer();
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSumSubtotalAggregation(200);
+        $quoteTransfer->addItem($itemTransfer);
+
+        $expenseTransfer = new ExpenseTransfer();
+        $expenseTransfer->setSumPrice(350);
+        $quoteTransfer->addExpense($expenseTransfer);
+
+        $totalsTransfer = new TotalsTransfer();
+
+        $quoteTransfer->setTotals($totalsTransfer);
+
+        $calculationFacade->recalculateQuote($quoteTransfer);
+
+        $calculatedGrandTotal = $quoteTransfer->getTotals()->getGrandTotal();
+
+        $this->assertSame(550, $calculatedGrandTotal);
+    }
+
+    /**
      * @param array $calculatorPlugins
      *
      * @return \Spryker\Zed\Calculation\Business\CalculationFacade
@@ -573,5 +605,4 @@ class CalculationFacadeTest extends Unit
 
         return $calculationFacade;
     }
-
 }

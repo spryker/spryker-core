@@ -12,7 +12,6 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 interface ProductApiToApiQueryBuilderInterface
 {
-
     /**
      * @param \Generated\Shared\Transfer\ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer
      *
@@ -27,5 +26,4 @@ interface ProductApiToApiQueryBuilderInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function buildQueryFromRequest(ModelCriteria $query, ApiQueryBuilderQueryTransfer $apiQueryBuilderQueryTransfer);
-
 }

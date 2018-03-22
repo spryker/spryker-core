@@ -12,13 +12,24 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SearchConfig extends AbstractBundleConfig
 {
-
     /**
      * @return string
      */
     public function getElasticaDocumentType()
     {
         return $this->get(SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE);
+    }
+
+    /**
+     * @return string
+     */
+    public function getReindexUrl()
+    {
+        return sprintf(
+            '%s:%s/_reindex?pretty',
+            $this->get(SearchConstants::ELASTICA_PARAMETER__HOST),
+            $this->get(SearchConstants::ELASTICA_PARAMETER__PORT)
+        );
     }
 
     /**
@@ -53,5 +64,4 @@ class SearchConfig extends AbstractBundleConfig
     {
         return realpath(__DIR__ . '/../../../../../');
     }
-
 }

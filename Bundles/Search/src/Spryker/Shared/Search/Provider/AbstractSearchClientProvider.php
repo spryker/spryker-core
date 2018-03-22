@@ -12,17 +12,27 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractClientProvider;
 use Spryker\Shared\Search\SearchConstants;
 
-/**
- * @method \Elastica\Client getInstance()
- */
 abstract class AbstractSearchClientProvider extends AbstractClientProvider
 {
-
     /**
      * @return \Elastica\Client
      */
     protected function createZedClient()
     {
+        $config = $this->getClientConfig();
+
+        return (new Client($config));
+    }
+
+    /**
+     * @return array
+     */
+    protected function getClientConfig()
+    {
+        if (Config::hasValue(SearchConstants::ELASTICA_CLIENT_CONFIGURATION)) {
+            return Config::get(SearchConstants::ELASTICA_CLIENT_CONFIGURATION);
+        }
+
         if (Config::hasValue(SearchConstants::ELASTICA_PARAMETER__EXTRA)) {
             $config = Config::get(SearchConstants::ELASTICA_PARAMETER__EXTRA);
         }
@@ -37,7 +47,6 @@ abstract class AbstractSearchClientProvider extends AbstractClientProvider
             ];
         }
 
-        return (new Client($config));
+        return $config;
     }
-
 }

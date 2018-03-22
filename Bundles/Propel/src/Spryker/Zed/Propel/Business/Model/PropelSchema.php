@@ -9,7 +9,6 @@ namespace Spryker\Zed\Propel\Business\Model;
 
 class PropelSchema implements PropelSchemaInterface
 {
-
     /**
      * @var \Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface
      */
@@ -78,5 +77,4 @@ class PropelSchema implements PropelSchemaInterface
 
         return $schemaFile->getContents();
     }
-
 }

@@ -12,7 +12,6 @@ use Spryker\Shared\Kernel\Store;
 
 class Environment
 {
-
     /**
      * @return void
      */
@@ -187,5 +186,4 @@ class Environment
         setlocale(LC_MESSAGES, $locale, $currentLocale);
         setlocale(LC_NUMERIC, 'en_US.UTF-8', 'en_US');
     }
-
 }

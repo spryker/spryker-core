@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class GlossaryBusinessFactory extends AbstractBusinessFactory
 {
-
     /**
      * @return \Spryker\Zed\Glossary\Business\Translation\TranslationManagerInterface
      */
@@ -81,5 +80,4 @@ class GlossaryBusinessFactory extends AbstractBusinessFactory
 
         return $installer;
     }
-
 }

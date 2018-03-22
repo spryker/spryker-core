@@ -37,7 +37,6 @@ use Spryker\Zed\Url\Business\UrlFacade;
  */
 class FacadeTestAbstract extends Unit
 {
-
     const PRODUCT_ABSTRACT_NAME = [
         'en_US' => 'Product name en_US',
         'de_DE' => 'Product name de_DE',
@@ -130,6 +129,11 @@ class FacadeTestAbstract extends Unit
      * @var \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     protected $productConcreteTransfer;
+
+    /**
+     * @var \SprykerTest\Zed\Product\ProductBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -286,5 +290,4 @@ class FacadeTestAbstract extends Unit
             ->filterByFkProductAbstract($idProductAbstract)
             ->findOne();
     }
-
 }

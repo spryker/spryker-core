@@ -20,7 +20,6 @@ use SprykerTest\Shared\Kernel\Fixtures\LocatorLocator;
  */
 class AbstractLocatorLocatorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -31,5 +30,4 @@ class AbstractLocatorLocatorTest extends Unit
 
         $this->assertInstanceOf('Spryker\Shared\Kernel\BundleProxy', $bundleProxy);
     }
-
 }

@@ -18,19 +18,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CmsBlockGlossaryForm extends AbstractType
 {
-
     const FIELD_GLOSSARY_PLACEHOLDERS = 'glossaryPlaceholders';
     const OPTION_DATA_CLASS_PLACEHOLDERS = 'data_class_glossary_placeholders';
 
     use ArrayObjectTransformerTrait;
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'cms_block_glossary';
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -62,7 +53,7 @@ class CmsBlockGlossaryForm extends AbstractType
     protected function addCmsBlockGlossaryPlaceholderFormCollection(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_GLOSSARY_PLACEHOLDERS, CollectionType::class, [
-            'type' => $this->getFactory()->createCmsBlockGlossaryPlaceholderFormType(),
+            'entry_type' => $this->getFactory()->getCmsBlockGlossaryPlaceholderFormType(),
             'allow_add' => true,
             'entry_options' => [
                 'data_class' => $options[static::OPTION_DATA_CLASS_PLACEHOLDERS],
@@ -75,4 +66,11 @@ class CmsBlockGlossaryForm extends AbstractType
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'cms_block_glossary';
+    }
 }

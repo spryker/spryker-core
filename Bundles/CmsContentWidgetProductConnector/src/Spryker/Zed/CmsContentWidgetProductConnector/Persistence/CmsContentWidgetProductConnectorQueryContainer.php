@@ -16,11 +16,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CmsContentWidgetProductConnectorQueryContainer extends AbstractQueryContainer implements CmsContentWidgetProductConnectorQueryContainerInterface
 {
-
     /**
      * @api
      *
-     * @param array|string[] $skuList
+     * @param string[] $skuList
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
@@ -35,5 +34,4 @@ class CmsContentWidgetProductConnectorQueryContainer extends AbstractQueryContai
             ])
             ->filterBySku($skuList, Criteria::IN);
     }
-
 }

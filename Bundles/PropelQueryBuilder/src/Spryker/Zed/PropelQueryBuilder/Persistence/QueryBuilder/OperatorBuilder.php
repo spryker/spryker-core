@@ -25,7 +25,6 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\NotIn;
 
 class OperatorBuilder implements OperatorBuilderInterface
 {
-
     /**
      * @var \Everon\Component\Collection\CollectionInterface
      */
@@ -88,7 +87,7 @@ class OperatorBuilder implements OperatorBuilderInterface
     }
 
     /**
-     * @param array|\Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface[] $operatorCollection
+     * @param \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface[] $operatorCollection
      *
      * @throws \Spryker\Zed\PropelQueryBuilder\Persistence\Exception\OperatorBuilderException
      *
@@ -224,5 +223,4 @@ class OperatorBuilder implements OperatorBuilderInterface
     {
         return new NotIn();
     }
-
 }

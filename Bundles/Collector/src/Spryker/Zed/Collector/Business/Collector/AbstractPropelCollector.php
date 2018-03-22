@@ -17,7 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 abstract class AbstractPropelCollector extends AbstractDatabaseCollector
 {
-
     /**
      * @var \Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery
      */
@@ -79,8 +78,8 @@ abstract class AbstractPropelCollector extends AbstractDatabaseCollector
         $this->queryBuilder->setTouchQuery($touchQuery);
 
         $this->queryBuilder
+            ->setStoreTransfer($this->getCurrentStore())
             ->setLocale($locale)
             ->prepare();
     }
-
 }

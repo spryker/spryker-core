@@ -23,14 +23,13 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
  */
 class ItemPriceDecisionRuleTest extends BaseRuleTester
 {
-
     /**
      * @return void
      */
     public function testDecisionRuleWhenCurrentItemPriceMatchesShouldReturnTrue()
     {
         $comparatorMock = $this->createComparatorMock();
-        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer  $clauseTransfer, $itemPrice) {
+        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $itemPrice) {
             return $clauseTransfer->getValue() === $itemPrice;
         });
 
@@ -62,5 +61,4 @@ class ItemPriceDecisionRuleTest extends BaseRuleTester
 
         return new ItemPriceDecisionRule($comparatorMock, $currencyConverterMock);
     }
-
 }

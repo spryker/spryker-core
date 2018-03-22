@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UserTransfer;
 
 class AuthToUserBridge implements AuthToUserInterface
 {
-
     /**
      * @var \Spryker\Zed\User\Business\UserFacadeInterface
      */
@@ -131,5 +130,4 @@ class AuthToUserBridge implements AuthToUserInterface
     {
         return $this->userFacade->hasActiveUserByUsername($username);
     }
-
 }

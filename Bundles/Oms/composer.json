@@ -3,18 +3,21 @@
   "description": "Oms module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/graph": "^3.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/mail": "^4.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0",
+    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
+    "spryker/store": "^1.5.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-network": "^1.1.0",
     "spryker/util-sanitize": "^2.0.0",
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
+    "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/propel": "*",
@@ -25,28 +28,18 @@
     "spryker/checkout": "If you want to use Checkout plugins."
   },
   "autoload": {
-    "psr-0": {
-      "Spryker": "src/"
-    },
     "psr-4": {
-      "Oms\\Module\\": "tests/_support/Module/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\Oms\\Helper\\": "tests/SprykerTest/Zed/Oms/_support/Helper/"
     }
   },
   "autoload-dev": {
-    "psr-0": {
-      "Acceptance": "tests/",
-      "Functional": "tests/",
-      "Unit": "tests/"
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ],
   "extra": {
     "branch-alias": {
       "dev-master": "6.0.x-dev"

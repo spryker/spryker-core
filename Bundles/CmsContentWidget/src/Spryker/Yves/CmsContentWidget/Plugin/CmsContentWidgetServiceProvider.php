@@ -19,7 +19,6 @@ use Twig_SimpleFunction;
  */
 class CmsContentWidgetServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
-
     /**
      * @param \Silex\Application $app
      *
@@ -43,7 +42,6 @@ class CmsContentWidgetServiceProvider extends AbstractPlugin implements ServiceP
     {
         foreach ($this->getFactory()->getCmsContentWidgetPlugins() as $functionName => $cmsContentWidgetPlugin) {
             $twig->addFunction(
-                $functionName,
                 $this->createTwigSimpleFunction($functionName, $cmsContentWidgetPlugin)
             );
         }
@@ -82,5 +80,4 @@ class CmsContentWidgetServiceProvider extends AbstractPlugin implements ServiceP
     public function boot(Application $app)
     {
     }
-
 }

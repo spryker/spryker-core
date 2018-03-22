@@ -15,12 +15,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
- * @method \Spryker\Zed\Glossary\Business\GlossaryFacade getFacade()
- * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
  */
 class KeyController extends AbstractController
 {
-
     const TERM = 'term';
 
     /**
@@ -83,5 +82,4 @@ class KeyController extends AbstractController
 
         return $this->jsonResponse($result);
     }
-
 }

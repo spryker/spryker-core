@@ -9,7 +9,6 @@ namespace Spryker\Zed\StateMachine\Business\Process;
 
 class Event implements EventInterface
 {
-
     /**
      * @var string
      */
@@ -202,5 +201,4 @@ class Event implements EventInterface
     {
         return isset($this->timeout);
     }
-
 }

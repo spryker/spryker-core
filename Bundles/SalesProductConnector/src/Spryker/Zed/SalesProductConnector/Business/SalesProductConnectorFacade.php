@@ -10,6 +10,7 @@ namespace Spryker\Zed\SalesProductConnector\Business;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -17,11 +18,12 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class SalesProductConnectorFacade extends AbstractFacade implements SalesProductConnectorFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Use saveOrderItemMetadata() instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -30,7 +32,26 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
      */
     public function saveItemMetadata(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getFactory()->createItemMetadataSaver()->saveItemsMetadata($quoteTransfer);
+        $this->getFactory()
+            ->createItemMetadataSaver()
+            ->saveItemsMetadata($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveOrderItemMetadata(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    {
+        $this->getFactory()
+            ->createItemMetadataSaver()
+            ->saveItemsMetadata($quoteTransfer);
     }
 
     /**
@@ -60,5 +81,4 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
     {
         return $this->getFactory()->createProductIdHydrator()->hydrateProductIds($orderTransfer);
     }
-
 }

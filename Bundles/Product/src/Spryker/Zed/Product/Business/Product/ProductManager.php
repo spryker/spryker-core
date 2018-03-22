@@ -12,7 +12,6 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductManager implements ProductManagerInterface
 {
-
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -69,7 +68,7 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param array|\Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
      *
      * @return int
      */
@@ -99,5 +98,4 @@ class ProductManager implements ProductManagerInterface
 
         return $idProductAbstract;
     }
-
 }

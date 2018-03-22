@@ -9,7 +9,6 @@ namespace Spryker\Zed\Oms\Business\Process;
 
 interface StateInterface
 {
-
     /**
      * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface[] $incomingTransitions
      *
@@ -186,5 +185,4 @@ interface StateInterface
      * @return void
      */
     public function setDisplay($display);
-
 }

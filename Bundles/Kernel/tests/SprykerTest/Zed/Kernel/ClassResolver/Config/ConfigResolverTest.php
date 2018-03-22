@@ -23,26 +23,25 @@ use SprykerTest\Zed\Kernel\ClassResolver\AbstractResolverTest;
  */
 class ConfigResolverTest extends AbstractResolverTest
 {
+    /**
+     * @var string
+     */
+    protected $coreClass = 'Spryker\\Zed\\Kernel\\ClassResolver\\KernelConfig';
 
     /**
      * @var string
      */
-    protected $coreClass = 'Unit\\Spryker\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelConfig';
+    protected $projectClass = 'ProjectNamespace\\Zed\\Kernel\\ClassResolver\\KernelConfig';
 
     /**
      * @var string
      */
-    protected $projectClass = 'Unit\\ProjectNamespace\\Zed\\Kernel\\ClassResolver\\Fixtures\\KernelConfig';
+    protected $storeClass = 'ProjectNamespace\\Zed\\KernelDE\\ClassResolver\\KernelConfig';
 
     /**
      * @var string
      */
-    protected $storeClass = 'Unit\\ProjectNamespace\\Zed\\KernelDE\\ClassResolver\\Fixtures\\KernelConfig';
-
-    /**
-     * @var string
-     */
-    protected $classPattern = 'Unit\\%namespace%\\Zed\\%bundle%%store%\\ClassResolver\\Fixtures\\%bundle%Config';
+    protected $classPattern = '%namespace%\\Zed\\%bundle%%store%\\ClassResolver\\%bundle%Config';
 
     /**
      * @var string
@@ -60,5 +59,4 @@ class ConfigResolverTest extends AbstractResolverTest
 
         return $resolverMock;
     }
-
 }

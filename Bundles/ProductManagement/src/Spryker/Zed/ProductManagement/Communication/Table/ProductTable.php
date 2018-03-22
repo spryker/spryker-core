@@ -16,19 +16,20 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Controller\EditController;
+use Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface;
 
 class ProductTable extends AbstractProductTable
 {
-
     const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     const COL_NAME = 'name';
     const COL_SKU = 'sku';
     const COL_TAX_SET = 'tax_set';
     const COL_VARIANT_COUNT = 'variants';
     const COL_STATUS = 'status';
-
     const COL_ACTIONS = 'actions';
     const COL_IS_BUNDLE = 'is_bundle';
+    const COL_STORE_RELATION = 'store_relation';
+    const COL_PRODUCT_TYPE = 'product_type';
 
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
@@ -41,15 +42,23 @@ class ProductTable extends AbstractProductTable
     protected $localeTransfer;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface
+     */
+    protected $productTypeHelper;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface $productTypeHelper
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
-        LocaleTransfer $localeTransfer
+        LocaleTransfer $localeTransfer,
+        ProductTypeHelperInterface $productTypeHelper
     ) {
         $this->productQueryQueryContainer = $productQueryContainer;
         $this->localeTransfer = $localeTransfer;
+        $this->productTypeHelper = $productTypeHelper;
     }
 
     /**
@@ -67,12 +76,16 @@ class ProductTable extends AbstractProductTable
             static::COL_VARIANT_COUNT => 'Variants',
             static::COL_STATUS => 'Status',
             static::COL_IS_BUNDLE => 'Contains bundles',
+            static::COL_PRODUCT_TYPE => 'Product type',
+            static::COL_STORE_RELATION => 'Stores',
             static::COL_ACTIONS => 'Actions',
         ]);
 
         $config->setRawColumns([
             static::COL_STATUS,
             static::COL_IS_BUNDLE,
+            static::COL_PRODUCT_TYPE,
+            static::COL_STORE_RELATION,
             static::COL_ACTIONS,
         ]);
 
@@ -136,8 +149,58 @@ class ProductTable extends AbstractProductTable
             static::COL_VARIANT_COUNT => $productAbstractEntity->getSpyProducts()->count(),
             static::COL_STATUS => $this->getAbstractProductStatusLabel($productAbstractEntity),
             static::COL_IS_BUNDLE => $this->getIsBundleProductLable($productAbstractEntity),
+            static::COL_PRODUCT_TYPE => $this->getTypeName($productAbstractEntity),
+            static::COL_STORE_RELATION => $this->getStoreNames($productAbstractEntity->getIdProductAbstract()),
             static::COL_ACTIONS => implode(' ', $this->createActionColumn($productAbstractEntity)),
         ];
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return string
+     */
+    protected function getStoreNames($idProductAbstract)
+    {
+        $productAbstractStoreCollection = $this->getProductAbstractStoreWithStore($idProductAbstract);
+
+        $storeNames = [];
+        foreach ($productAbstractStoreCollection as $productAbstractStoreEntity) {
+            $storeNames[] = sprintf(
+                '<span class="label label-info">%s</span>',
+                $productAbstractStoreEntity->getSpyStore()->getName()
+            );
+        }
+
+        return implode(" ", $storeNames);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStore[]
+     */
+    protected function getProductAbstractStoreWithStore($idProductAbstract)
+    {
+        return $this->productQueryQueryContainer->queryProductAbstractStoreWithStoresByFkProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     *
+     * @return string
+     */
+    protected function getTypeName(SpyProductAbstract $productAbstractEntity)
+    {
+        if ($this->productTypeHelper->isProductBundleByProductAbstractEntity($productAbstractEntity)) {
+            return 'Product Bundle';
+        }
+
+        if ($this->productTypeHelper->isGiftCardByProductAbstractEntity($productAbstractEntity)) {
+            return 'Gift card';
+        }
+
+        return 'Product';
     }
 
     /**
@@ -163,6 +226,13 @@ class ProductTable extends AbstractProductTable
             'Edit'
         );
 
+        $urls[] = $this->generateEditButton(
+            Url::generate('/product-attribute-gui/view/productAbstract', [
+                EditController::PARAM_ID_PRODUCT_ABSTRACT => $item->getIdProductAbstract(),
+            ]),
+            'Manage Attributes'
+        );
+
         return $urls;
     }
 
@@ -184,6 +254,8 @@ class ProductTable extends AbstractProductTable
     }
 
     /**
+     * @deprecated Use ProductTypeHelperInterface::isProductBundleByProductAbstractEntity() instead
+     *
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return string
@@ -198,5 +270,4 @@ class ProductTable extends AbstractProductTable
 
         return 'No';
     }
-
 }
