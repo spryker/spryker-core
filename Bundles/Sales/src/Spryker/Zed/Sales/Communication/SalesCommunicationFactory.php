@@ -137,7 +137,8 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_MONEY),
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_SANITIZE),
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER),
-            $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER)
+            $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER),
+            $this->getUISalesTablePlugins()
         );
     }
 
@@ -224,5 +225,13 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function getSalesDetailExternalBlocksUrls()
     {
         return $this->getConfig()->getSalesDetailExternalBlocksUrls();
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Plugin\UISalesTablePluginInterface[]
+     */
+    public function getUISalesTablePlugins()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::UI_SALES_TABLE_PLUGINS);
     }
 }
