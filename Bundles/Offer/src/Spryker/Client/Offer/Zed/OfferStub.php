@@ -20,6 +20,6 @@ class OfferStub extends ZedRequestStub implements OfferStubInterface
      */
     public function convertOfferToOrder(OfferToOrderConvertRequestTransfer $offerToOrderRequestTransfer): OfferToOrderConvertResponseTransfer
     {
-        return $this->zedStub->call('/offer/gateway/convertOfferToOrder', $offerToOrderRequestTransfer);
+        return $this->zedStub->call('/offer/gateway/convert-offer-to-order', $offerToOrderRequestTransfer);
     }
 }
