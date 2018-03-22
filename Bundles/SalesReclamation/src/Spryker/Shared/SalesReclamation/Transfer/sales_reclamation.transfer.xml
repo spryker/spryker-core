@@ -13,6 +13,7 @@
 
     <transfer name="ReclamationItem">
         <property name="orderItem" type="Item"/>
+        <property name="status" type="string"/>
     </transfer>
 
     <transfer name="ReclamationCreateRequest">
