@@ -25,7 +25,6 @@ use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface;
  */
 class SkuGeneratorTest extends Unit
 {
-
     /**
      * @return void
      */
@@ -77,5 +76,4 @@ class SkuGeneratorTest extends Unit
     {
         return $this->getMockBuilder(ProductToUtilTextInterface::class)->getMock();
     }
-
 }
