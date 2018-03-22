@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Service;
 
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\CustomersListFormPlugin;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\StoreFormPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 class StepEngine

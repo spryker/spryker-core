@@ -57,7 +57,7 @@ class PaymentFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
     {
         $paymentSelection = $quoteTransfer->getPayment()->getPaymentSelection();
 
-        foreach($this->subFormPlugins as $subFormPlugin) {
+        foreach ($this->subFormPlugins as $subFormPlugin) {
             if ($paymentSelection == $subFormPlugin->getName()) {
                 $quoteTransfer->getPayment()
                     ->setPaymentProvider($subFormPlugin->getPaymentProvider())

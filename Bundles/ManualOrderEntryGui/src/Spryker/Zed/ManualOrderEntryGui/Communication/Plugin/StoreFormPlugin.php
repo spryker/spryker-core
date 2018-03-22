@@ -81,6 +81,6 @@ class StoreFormPlugin extends AbstractFormPlugin implements ManualOrderEntryForm
      */
     public function handleDataStepEngine($quoteTransfer, &$form, $request)
     {
-        return $this->handleData($quoteTransfer,$form, $request);
+        return $this->handleData($quoteTransfer, $form, $request);
     }
 }

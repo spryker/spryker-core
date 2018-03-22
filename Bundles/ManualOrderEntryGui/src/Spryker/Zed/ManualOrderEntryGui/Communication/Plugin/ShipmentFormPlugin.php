@@ -48,7 +48,7 @@ class ShipmentFormPlugin extends AbstractFormPlugin implements ManualOrderEntryF
      */
     public function handleData($quoteTransfer, &$form, $request)
     {
-        $idShipmentMethod = (int)$quoteTransfer->getIdShipmentMethod();
+        $idShipmentMethod = $quoteTransfer->getIdShipmentMethod();
         if ($idShipmentMethod) {
             $shipmentMethodTransfer = $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
             $shipmentTransfer = new ShipmentTransfer();

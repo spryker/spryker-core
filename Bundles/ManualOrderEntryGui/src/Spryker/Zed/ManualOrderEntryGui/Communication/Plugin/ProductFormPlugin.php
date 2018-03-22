@@ -61,7 +61,7 @@ class ProductFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
 
         foreach ($quoteTransfer->getManualOrderProducts() as $manualOrderProduct) {
             if (!strlen($manualOrderProduct->getSku())
-                || (int)$manualOrderProduct->getQuantity() <= 0
+                || $manualOrderProduct->getQuantity() <= 0
                 || in_array($manualOrderProduct->getSku(), $skus)
                 || !$this->productFacade->hasProductConcrete($manualOrderProduct->getSku())
             ) {
@@ -71,7 +71,7 @@ class ProductFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
             $skus[] = $manualOrderProduct->getSku();
             $itemTransfer = new ItemTransfer();
             $itemTransfer->setSku($manualOrderProduct->getSku())
-                ->setQuantity((int)$manualOrderProduct->getQuantity());
+                ->setQuantity($manualOrderProduct->getQuantity());
 
             $cartChangeTransfer->addItem($itemTransfer);
         }

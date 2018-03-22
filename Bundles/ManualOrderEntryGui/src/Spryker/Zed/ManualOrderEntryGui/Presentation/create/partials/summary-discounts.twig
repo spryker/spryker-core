@@ -5,7 +5,7 @@
             {% for voucherDiscount in quoteTransfer.voucherDiscounts %}
                 <div class="row">
                     <div class="small-8 columns">{{ voucherDiscount.displayName }}</div>
-                    <div class="small-4 columns text-right">- {{ voucherDiscount.amount | money }}</div>
+                    <div class="small-4 columns">- {{ voucherDiscount.amount | money }}</div>
                 </div>
             {% endfor %}
         </div>
@@ -17,7 +17,7 @@
             {% for ruleDiscount in quoteTransfer.cartRuleDiscounts %}
                 <div class="row">
                     <div class="small-8 columns">{{ ruleDiscount.displayName }}</div>
-                    <div class="small-4 columns text-right">- {{ ruleDiscount.amount | money }}</div>
+                    <div class="small-4 columns">- {{ ruleDiscount.amount | money }}</div>
                 </div>
             {% endfor %}
         </div>

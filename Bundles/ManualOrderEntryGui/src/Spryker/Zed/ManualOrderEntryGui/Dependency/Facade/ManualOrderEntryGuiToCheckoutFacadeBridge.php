@@ -27,8 +27,6 @@ class ManualOrderEntryGuiToCheckoutFacadeBridge implements ManualOrderEntryGuiTo
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @throws \Exception
-     *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function placeOrder(QuoteTransfer $quoteTransfer)

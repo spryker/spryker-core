@@ -3,7 +3,7 @@
     <manual-order-entry-gui>
         <label>Manual Order Entry</label>
         <title>Manual Order Entry</title>
-        <uri>/manual-order-entry</uri>
+        <uri>/manual-order-entry-gui/create</uri>
         <icon>fa-shopping-cart</icon>
         <pages>
             <order-create>

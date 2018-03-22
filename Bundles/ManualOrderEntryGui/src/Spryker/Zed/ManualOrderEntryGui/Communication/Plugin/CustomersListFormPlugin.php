@@ -66,6 +66,6 @@ class CustomersListFormPlugin extends AbstractFormPlugin implements ManualOrderE
      */
     public function handleDataStepEngine($quoteTransfer, &$form, $request)
     {
-        return $this->handleData($quoteTransfer,$form, $request);
+        return $this->handleData($quoteTransfer, $form, $request);
     }
 }
