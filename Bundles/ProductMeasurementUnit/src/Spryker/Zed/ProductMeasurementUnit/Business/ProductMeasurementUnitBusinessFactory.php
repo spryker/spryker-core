@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnitValidator;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementUnitExchanger;
 
 /**
@@ -21,5 +22,13 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductMeasurementUnitExchanger()
     {
         return new ProductMeasurementUnitExchanger($this->getConfig()::MEASUREMENT_UNIT_EXCHANGE_COLLECTION);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnitValidatorInterface
+     */
+    public function createProductMeasurementSalesUnitValidator()
+    {
+        return new ProductMeasurementSalesUnitValidator();
     }
 }

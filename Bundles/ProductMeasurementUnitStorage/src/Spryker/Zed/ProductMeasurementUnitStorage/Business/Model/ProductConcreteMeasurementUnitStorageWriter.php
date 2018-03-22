@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementBaseUnitQuery;
 use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnitQuery;
 use Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductConcreteMeasurementUnitStorage;
 use Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductConcreteMeasurementUnitStorageQuery;
@@ -81,25 +82,29 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
      */
     protected function getStorageEntityData(SpyProduct $productEntity)
     {
+        $productMeasurementBaseUnitEntity = SpyProductMeasurementBaseUnitQuery::create()
+            ->findOneByFkProductAbstract($productEntity->getFkProductAbstract());
+
         $productConcreteMeasurementUnitStorageTransfer = (new ProductConcreteMeasurementUnitStorageTransfer())
             ->setBaseUnit(
                 (new ProductConcreteMeasurementBaseUnitTransfer())
-                    ->setMeasurementUnitId($productEntity->getSpyProductAbstract()->getProductMeasurementBaseUnit()->getFkProductMeasurementUnit())
+                    ->setMeasurementUnitId($productMeasurementBaseUnitEntity->getFkProductMeasurementUnit())
             )
             ->setSalesUnits(new ArrayObject());
 
         foreach ($productEntity->getSpyProductMeasurementSalesUnits() as $productMeasurementSalesUnitEntity) {
             $exchangeDetails = $this->getExchangeDetails(
-                $productMeasurementSalesUnitEntity->getFactor(),
+                $productMeasurementSalesUnitEntity->getConversion(),
                 $productMeasurementSalesUnitEntity->getPrecision(),
                 $this->getProductMeasurementUnitCodeById($productMeasurementSalesUnitEntity->getFkProductMeasurementUnit()),
-                $this->getProductMeasurementUnitCodeById($productEntity->getSpyProductAbstract()->getProductMeasurementBaseUnit()->getFkProductMeasurementUnit())
+                $this->getProductMeasurementUnitCodeById($productMeasurementBaseUnitEntity->getFkProductMeasurementUnit())
             );
 
             $productConcreteMeasurementUnitStorageTransfer->addSalesUnit(
                 (new ProductConcreteMeasurementSalesUnitTransfer())
                     ->setMeasurementUnitId($productMeasurementSalesUnitEntity->getFkProductMeasurementUnit())
-                    ->setConversion($exchangeDetails->getFactor() / $exchangeDetails->getPrecision())
+                    ->setConversion($exchangeDetails->getConversion())
+                    ->setPrecision($exchangeDetails->getPrecision())
                     ->setIsDisplay((bool)$productMeasurementSalesUnitEntity->getIsDisplay())
                     ->setIsDefault((bool)$productMeasurementSalesUnitEntity->getIsDefault())
             );
@@ -109,18 +114,18 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
     }
 
     /**
-     * @param int|null $factor
+     * @param float|null $conversion
      * @param int|null $precision
      * @param string $fromCode
      * @param string $toCode
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer
      */
-    protected function getExchangeDetails($factor, $precision, $fromCode, $toCode)
+    protected function getExchangeDetails($conversion, $precision, $fromCode, $toCode)
     {
-        if (is_int($factor) && is_int($precision)) {
+        if (is_numeric($conversion) && is_int($precision)) {
             return (new ProductMeasurementUnitExchangeDetailTransfer())
-                ->setFactor($factor)
+                ->setConversion($conversion)
                 ->setPrecision($precision);
         }
 
@@ -129,8 +134,8 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
             ->setToCode($toCode);
 
         $exchangeDetails = $this->productMeasurementUnitFacade->getExchangeDetail($exchangeDetails);
-        if (is_int($factor)) {
-            $exchangeDetails->setFactor($factor);
+        if (is_numeric($conversion)) {
+            $exchangeDetails->setConversion($conversion);
         }
         if (is_int($precision)) {
             $exchangeDetails->setPrecision($precision);
@@ -149,9 +154,6 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
         return SpyProductQuery::create()
             ->filterByIdProduct_In($productIds)
             ->joinWithSpyProductAbstract()
-            ->useSpyProductAbstractQuery()
-                ->joinWithProductMeasurementBaseUnit()
-            ->endUse()
             ->leftJoinWithSpyProductMeasurementSalesUnit()
             ->find()
             ->getArrayCopy();

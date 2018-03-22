@@ -23,10 +23,15 @@
     <table name="spy_product_measurement_base_unit" idMethod="native" allowPkInsert="true">
         <column name="id_product_measurement_base_unit" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product_measurement_unit" type="INTEGER" required="true"/>
+        <column name="fk_product_abstract" type="INTEGER" required="true"/>
 
         <behavior name="timestampable" />
 
         <id-method-parameter value="id_product_measurement_base_unit_pk_seq"/>
+
+        <foreign-key name="spy_product_measurement_base_unit-fk_product_abstract" foreignTable="spy_product_abstract" phpName="ProductAbstract">
+            <reference local="fk_product_abstract" foreign="id_product_abstract"/>
+        </foreign-key>
 
         <foreign-key name="spy_product_measurement_base_unit-fk_product_measurement_unit" foreignTable="spy_product_measurement_unit" phpName="ProductMeasurementUnit">
             <reference local="fk_product_measurement_unit" foreign="id_product_measurement_unit"/>
@@ -35,7 +40,7 @@
 
     <table name="spy_product_measurement_sales_unit" idMethod="native" allowPkInsert="true">
         <column name="id_product_measurement_sales_unit" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="factor" type="INTEGER" required="false"/>
+        <column name="conversion" type="FLOAT" required="false"/>
         <column name="precision" type="INTEGER" required="false"/>
         <column name="is_display" type="BOOLEAN" required="true"/>
         <column name="is_default" type="BOOLEAN" required="true"/>

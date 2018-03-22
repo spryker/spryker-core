@@ -6,7 +6,7 @@
     <transfer name="ProductMeasurementUnitExchangeDetail">
         <property name="fromCode" type="string" />
         <property name="toCode" type="string" />
-        <property name="factor" type="int" />
+        <property name="conversion" type="float" />
         <property name="precision" type="int" />
     </transfer>
 
@@ -19,7 +19,7 @@
 
     <transfer name="ProductMeasurementSalesUnit">
         <property name="idProductMeasurementSalesUnit" type="int" />
-        <property name="factor" type="int" />
+        <property name="conversion" type="float" />
         <property name="precision" type="int" />
         <property name="productMeasurementUnit" type="ProductMeasurementUnit" />
         <property name="value" type="int" />

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductMeasurementUnit\Business\Model;
 
 use Exception;
 use Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer;
+use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnitQuery;
 
 class ProductMeasurementUnitExchanger implements ProductMeasurementUnitExchangerInterface
 {
@@ -34,10 +35,12 @@ class ProductMeasurementUnitExchanger implements ProductMeasurementUnitExchanger
     {
         $this->assertExchangeIsDefined($exchangeDetailTransfer->getFromCode(), $exchangeDetailTransfer->getToCode());
 
-        $exchange = $this->exchangeCollection[$exchangeDetailTransfer->getFromCode()][$exchangeDetailTransfer->getToCode()];
+        $conversion = $this->exchangeCollection[$exchangeDetailTransfer->getFromCode()][$exchangeDetailTransfer->getToCode()];
 
-        $exchangeDetailTransfer->setFactor($exchange[0]);
-        $exchangeDetailTransfer->setPrecision($exchange[1]);
+        $exchangeDetailTransfer->setConversion($conversion);
+        $exchangeDetailTransfer->setPrecision(
+            SpyProductMeasurementUnitQuery::create()->findOneByCode($exchangeDetailTransfer->getFromCode())->getDefaultPrecision()
+        );
 
         return $exchangeDetailTransfer;
     }

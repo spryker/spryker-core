@@ -28,16 +28,16 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
 
         foreach ($productMeasurementUnitEntities as $productMeasurementUnitEntity) {
             $idProductMeasurementUnit = $productMeasurementUnitEntity->getIdProductMeasurementUnit();
-                $storageEntity = isset($mappedProductMeasurementUnitStorageEntities[$idProductMeasurementUnit]) ?
-                    $mappedProductMeasurementUnitStorageEntities[$idProductMeasurementUnit] :
-                    new SpyProductMeasurementUnitStorage();
+            $storageEntity = isset($mappedProductMeasurementUnitStorageEntities[$idProductMeasurementUnit]) ?
+                $mappedProductMeasurementUnitStorageEntities[$idProductMeasurementUnit] :
+                new SpyProductMeasurementUnitStorage();
 
-                unset($mappedProductMeasurementUnitStorageEntities[$idProductMeasurementUnit]);
+            unset($mappedProductMeasurementUnitStorageEntities[$idProductMeasurementUnit]);
 
-                $storageEntity
-                    ->setFkProductMeasurementUnit($idProductMeasurementUnit)
-                    ->setData($this->getStorageEntityData($productMeasurementUnitEntity))
-                    ->save();
+            $storageEntity
+                ->setFkProductMeasurementUnit($idProductMeasurementUnit)
+                ->setData($this->getStorageEntityData($productMeasurementUnitEntity))
+                ->save();
         }
 
         array_walk_recursive(

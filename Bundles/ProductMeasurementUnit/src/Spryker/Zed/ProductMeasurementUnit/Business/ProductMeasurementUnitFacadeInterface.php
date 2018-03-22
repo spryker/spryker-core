@@ -7,11 +7,15 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer;
 
 interface ProductMeasurementUnitFacadeInterface
 {
     /**
+     * Specification:
+     * -
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer $exchangeDetailTransfer
@@ -21,4 +25,16 @@ interface ProductMeasurementUnitFacadeInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer
      */
     public function getExchangeDetail(ProductMeasurementUnitExchangeDetailTransfer $exchangeDetailTransfer);
+
+    /**
+     * Specification:
+     * -
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateProductMeasurementSalesUnit(CartChangeTransfer $cartChangeTransfer);
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -17,6 +18,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeasurementUnitFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer $exchangeDetailTransfer
@@ -26,5 +29,19 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     public function getExchangeDetail(ProductMeasurementUnitExchangeDetailTransfer $exchangeDetailTransfer)
     {
         return $this->getFactory()->createProductMeasurementUnitExchanger()->getExchangeDetail($exchangeDetailTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateProductMeasurementSalesUnit(CartChangeTransfer $cartChangeTransfer)
+    {
+        return $this->getFactory()->createProductMeasurementSalesUnitValidator()->validate($cartChangeTransfer);
     }
 }
