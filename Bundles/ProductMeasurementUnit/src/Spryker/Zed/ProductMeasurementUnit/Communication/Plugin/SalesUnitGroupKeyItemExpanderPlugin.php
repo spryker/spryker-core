@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductMeasurementUnit\Business\ProductMeasurementUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductMeasurementUnit\Communication\ProductMeasurementUnitCommunicationFactory getFactory()
  */
-class SkuSalesUnitGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
+class SalesUnitGroupKeyItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
