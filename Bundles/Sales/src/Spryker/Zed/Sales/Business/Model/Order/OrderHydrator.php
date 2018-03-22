@@ -63,7 +63,7 @@ class OrderHydrator implements OrderHydratorInterface
     {
         $orderEntity = $this->getOrderEntity($orderTransfer);
 
-        $this->queryContainer->queryOrderItemsStateHistoriesOrderedByNewestState($orderEntity->getItems());
+        $this->queryContainer->fillOrderItemsWithLatestStates($orderEntity->getItems());
 
         $orderTransfer = $this->createOrderTransfer($orderEntity);
 
@@ -120,7 +120,7 @@ class OrderHydrator implements OrderHydratorInterface
             );
         }
 
-        $this->queryContainer->queryOrderItemsStateHistoriesOrderedByNewestState($orderEntity->getItems());
+        $this->queryContainer->fillOrderItemsWithLatestStates($orderEntity->getItems());
 
         $orderTransfer = $this->createOrderTransfer($orderEntity);
 
@@ -197,6 +197,8 @@ class OrderHydrator implements OrderHydratorInterface
     {
         $orderTransfer = new OrderTransfer();
         $orderTransfer->fromArray($orderEntity->toArray(), true);
+        $orderTransfer->setCustomerReference($orderEntity->getCustomerReference());
+        // Deprecated: Using FK to customer is obsolete, but needed to prevent BC break.
         $orderTransfer->setFkCustomer($orderEntity->getFkCustomer());
 
         return $orderTransfer;
@@ -416,6 +418,8 @@ class OrderHydrator implements OrderHydratorInterface
     protected function hydrateMissingCustomer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
         if (!$orderEntity->getCustomer()) {
+            $orderTransfer->setCustomerReference(null);
+            // Deprecated: Using FK to customer is obsolete, but needed to prevent BC break.
             $orderTransfer->setFkCustomer(null);
         }
     }

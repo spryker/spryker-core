@@ -14,16 +14,13 @@ use Spryker\Zed\ProductManagement\Business\Attribute\AttributeInputManager;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ */
 class AttributeSuperForm extends AttributeAbstractForm
 {
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'product_attribute_super';
-    }
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -37,46 +34,58 @@ class AttributeSuperForm extends AttributeAbstractForm
         $attributeData = new Collection($attributes[$name]);
 
         $inputManager = new AttributeInputManager();
-        $allowInput = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ALLOW_INPUT);
-        $isSuper = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_SUPER);
         $isDisabled = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_NAME_DISABLED);
         $value = $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_VALUE);
         $config = $this->getValueFieldConfig($name, $attributes);
 
         $config['attr']['data-value'] = null;
 
-        $idLocale = $this->localeProvider->getCurrentLocale()->getIdLocale();
+        $idLocale = $this->getFactory()->createLocaleProvider()->getCurrentLocale()->getIdLocale();
         if ($this->localeTransfer instanceof LocaleTransfer) {
             $idLocale = $this->localeTransfer->getIdLocale();
         }
 
-        $existingValue = $this->productManagementQueryContainer
+        $existingValue = $this->getQueryContainer()
             ->queryFindAttributeByValueOrTranslation(
                 $attributeData->get(AbstractProductFormDataProvider::FORM_FIELD_ID),
                 $idLocale,
                 $value
             )->findOne();
 
-        $input = new Select2ComboBoxType();
+        $input = Select2ComboBoxType::class;
         $config['multiple'] = true;
         $config['placeholder'] = '-';
-        $config['choices'] = $this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale);
-        $config['attr']['tags'] = false;
+        $config['choices'] = array_flip($this->getChoiceList($name, $attributes[$name], $existingValue, $idLocale));
+        $config['choices_as_values'] = true;
 
-        if ($allowInput) {
-            //$config['attr']['tags'] = true;
-        } else {
-            //$config['attr']['class'] .= ' ajax';
-        }
+        $config['attr']['tags'] = false;
 
         if ($isDisabled) {
             $config = $this->getValueFieldConfig($name, $attributes);
-            $config['read_only'] = true;
+            $config['attr']['readonly'] = 'readonly';
             $input = $inputManager->getSymfonyInputType(null, $value);
         }
 
         $builder->add(self::FIELD_VALUE, $input, $config);
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'product_attribute_super';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

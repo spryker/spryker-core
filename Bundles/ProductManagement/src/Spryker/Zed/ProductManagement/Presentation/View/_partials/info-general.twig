@@ -1,9 +1,36 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General Information' } %}
     {% block widget_content %}
 
+        {% if relatedStoreNames is defined %}
+            <div class="row">
+                <div class="col-xs-2"><b>Store relation</b></div>
+                <div class="col-xs-10">
+                    {% for storeName in relatedStoreNames %}
+                        <span class="label label-info">{{ storeName }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+        {% endif %}
+
+        {% set productType = 'Product' %}
+
+        {% if isGiftCard == true %}
+            {% set productType = 'Gift Card' %}
+        {% endif %}
+
+        {% if isProductBundle == true %}
+            {% set productType = 'Product Bundle' %}
+        {% endif %}
+
         <div class="row">
             <div class="col-xs-2"><b>Sku</b></div>
             <div class="col-xs-10">{{ currentProduct.sku }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-2"><b>Type</b></div>
+            <div class="col-xs-10">{{ productType }}</div>
         </div>
 
         <div class="m-t">
@@ -31,6 +58,17 @@
                 {% endfor %}
             {% endfor %}
         </div>
+
+        {% if currentProduct.id_product_concrete is defined %}
+            <div class="row">
+                <div class="col-xs-2"><b>Valid From</b></div>
+                <div class="col-xs-4">{{ currentProduct.valid_from }}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2"><b>Valid To</b></div>
+                <div class="col-xs-4">{{ currentProduct.valid_to }}</div>
+            </div>
+        {% endif %}
 
     {% endblock %}
 {% endembed %}

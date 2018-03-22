@@ -7,29 +7,29 @@
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface;
 use Spryker\Zed\ProductOption\ProductOptionConfig;
 
 class TranslationSaver implements TranslationSaverInterface
 {
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryInterface $glossaryFacade
-     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface $glossaryFacade
+     * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
-        ProductOptionToGlossaryInterface $glossaryFacade,
-        ProductOptionToLocaleInterface $localeFacade
+        ProductOptionToGlossaryFacadeInterface $glossaryFacade,
+        ProductOptionToLocaleFacadeInterface $localeFacade
     ) {
         $this->glossaryFacade = $glossaryFacade;
         $this->localeFacade = $localeFacade;

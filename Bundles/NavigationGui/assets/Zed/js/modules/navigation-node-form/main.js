@@ -6,6 +6,7 @@
 'use strict';
 
 require('ZedGui');
+var safeChecks = require('ZedGuiModules/libs/safe-checks');
 
 $(document).ready(function() {
     var $nodeTypeField = $('#navigation_node_node_type');
@@ -37,6 +38,8 @@ $(document).ready(function() {
             validFrom.datepicker('option', 'maxDate', selectedDate);
         }
     });
+
+    safeChecks.addSafeDatetimeCheck();
 });
 
 /**

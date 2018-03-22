@@ -3,18 +3,22 @@
   "description": "Catalog module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
-    "spryker/search": "^6.0.0"
+    "spryker/search": "^6.0.0 || ^7.0.0 || ^8.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/elastica": "*",
+    "spryker/product-page-search": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/elastica": "If you want to use Elastica plugins.",
-    "spryker/config": "If you want to use Elastica plugins."
+    "spryker/config": "If you want to use Elastica plugins.",
+    "spryker/product-page-search": "If you want to use ProductPageSearch plugins, minimum required version: 0.1.0."
   },
   "autoload": {
     "psr-4": {

@@ -3,6 +3,7 @@
   "description": "Discount module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/currency": "^3.1.0",
     "spryker/gui": "^3.7.0",
     "spryker/kernel": "^3.11.0",
@@ -24,7 +25,8 @@
     "spryker/transfer": "*"
   },
   "suggest": {
-    "spryker/checkout": "If you want to use Checkout plugins."
+    "spryker/checkout": "If you want to use Checkout plugins.",
+    "spryker/store": "StoreQuoteTransferExpander plugin can help to populate current Store into Quote, minimum required version: 1.4.0"
   },
   "autoload": {
     "psr-4": {
@@ -39,12 +41,6 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://code.spryker.com/repo/private"
-    }
-  ],
   "extra": {
     "branch-alias": {
       "dev-master": "4.0.x-dev"

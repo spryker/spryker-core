@@ -6,11 +6,14 @@
 
 namespace Spryker\Zed\CmsGui\Communication\Form\Page;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
+ */
 class CmsPageMetaAttributesFormType extends AbstractType
 {
     const FIELD_META_TITLE = 'metaTitle';

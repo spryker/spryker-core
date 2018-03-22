@@ -8,10 +8,12 @@
 namespace Spryker\Zed\Store\Business;
 
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Store\Reader\StoreReader as SharedStoreReader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProvider;
 use Spryker\Zed\Store\Business\Model\StoreMapper;
 use Spryker\Zed\Store\Business\Model\StoreReader;
+use Spryker\Zed\Store\StoreDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Store\StoreConfig getConfig()
@@ -25,7 +27,7 @@ class StoreBusinessFactory extends AbstractBusinessFactory
     public function createStoreReader()
     {
         return new StoreReader(
-            $this->createStoreConfigurationProvider(),
+            $this->getSharedStore(),
             $this->getQueryContainer(),
             $this->createStoreMapper()
         );
@@ -36,10 +38,28 @@ class StoreBusinessFactory extends AbstractBusinessFactory
      */
     protected function createStoreMapper()
     {
-        return new StoreMapper($this->createStoreConfigurationProvider());
+        return new StoreMapper($this->createSharedStoreReader());
     }
 
     /**
+     * @return \Spryker\Shared\Store\Reader\StoreReaderInterface
+     */
+    protected function createSharedStoreReader()
+    {
+        return new SharedStoreReader($this->getSharedStore());
+    }
+
+    /**
+     * @return \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface
+     */
+    protected function getSharedStore()
+    {
+        return $this->getProvidedDependency(StoreDependencyProvider::STORE);
+    }
+
+    /**
+     * @deprecated Unused method will be removed in next major.
+     *
      * @return \Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProviderInterface
      */
     protected function createStoreConfigurationProvider()
@@ -48,6 +68,8 @@ class StoreBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Unused method will be removed in next major.
+     *
      * @return \Spryker\Shared\Kernel\Store
      */
     protected function getStore()

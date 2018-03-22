@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Propel\Business;
 
+use Generated\Shared\Transfer\SchemaValidationTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -212,5 +213,17 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     public function importDatabase($backupPath)
     {
         $this->getFactory()->createPropelDatabaseAdapterCollection()->getAdapter()->importDatabase($backupPath);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SchemaValidationTransfer
+     */
+    public function validateSchemaFiles(): SchemaValidationTransfer
+    {
+        return $this->getFactory()->createSchemaValidator()->validate();
     }
 }

@@ -79,8 +79,8 @@ class StateUpdater implements StateUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $processes
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $sourceStates
+     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
+     * @param string[] $sourceStates
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
      * @return void

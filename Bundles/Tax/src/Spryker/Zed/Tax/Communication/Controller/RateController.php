@@ -28,12 +28,10 @@ class RateController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $taxRateFormDataProvider = $this->getFactory()->createTaxRateFormDataProvider();
-
-        $form = $this->getFactory()->createTaxRateForm($taxRateFormDataProvider);
+        $form = $this->getFactory()->getTaxRateForm();
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $taxRateTransfer = $form->getData();
 
             $rowCount = $this->getQueryContainer()
@@ -72,10 +70,10 @@ class RateController extends AbstractController
         $taxRateTransfer = $this->getFacade()->getTaxRate($idTaxRate);
         $taxRateFormDataProvider = $this->getFactory()->createTaxRateFormDataProvider($taxRateTransfer);
 
-        $form = $this->getFactory()->createTaxRateForm($taxRateFormDataProvider);
+        $form = $this->getFactory()->getTaxRateForm($taxRateFormDataProvider);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $taxRateTransfer = $form->getData();
             $taxRateTransfer->setIdTaxRate($idTaxRate);
 

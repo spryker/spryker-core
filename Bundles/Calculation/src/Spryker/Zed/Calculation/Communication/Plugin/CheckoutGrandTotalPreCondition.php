@@ -20,10 +20,10 @@ class CheckoutGrandTotalPreCondition implements CheckoutPreConditionInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->getFacade()->validateCheckoutGrandTotal($quoteTransfer, $checkoutResponseTransfer);
+        return $this->getFacade()->validateCheckoutGrandTotal($quoteTransfer, $checkoutResponseTransfer);
     }
 }

@@ -1,3 +1,3 @@
 # AvailabilityDataFeed Changelog
 
-[AvailabilityDataFeed Changelog](https://github.com/spryker/AvailabilityDataFeed/releases)
+[Release Changelog](https://github.com/spryker/availability-data-feed/releases)

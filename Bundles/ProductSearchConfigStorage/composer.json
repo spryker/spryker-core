@@ -1,0 +1,41 @@
+{
+  "name": "spryker/product-search-config-storage",
+  "description": "ProductSearchConfigStorage module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/event-behavior": "^0.1.2",
+    "spryker/kernel": "^3.16.0",
+    "spryker/product-search": "^5.4.0",
+    "spryker/storage": "^3.4.0",
+    "spryker/synchronization": "^0.2.0",
+    "spryker/util-sanitize": "^2.1.0"
+  },
+  "require-dev": {
+    "spryker/event": "*",
+    "spryker/product": "*",
+    "spryker/propel-orm": "*",
+    "spryker/search": "*"
+  },
+  "suggest": {
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
+    "spryker/product": "If you want to use Product plugins, minimum required version: 5.5.0 || 6.0.0",
+    "spryker/propel-orm": "If you want to use transaction functionality, minimum required version: 1.3.0",
+    "spryker/search": "If you want to use Search plugins, minimum required version: 7.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

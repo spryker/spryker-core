@@ -12,7 +12,7 @@ interface CustomerToUtilValidateServiceInterface
     /**
      * @param string $email
      *
-     * @return string
+     * @return bool
      */
     public function isEmailFormatValid($email);
 }

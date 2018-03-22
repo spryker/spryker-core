@@ -1,3 +1,3 @@
 # EventJournal Changelog
 
-[EventJournal Changelog](https://github.com/spryker/EventJournal/releases)
+[Release Changelog](https://github.com/spryker/event-journal/releases)

@@ -50,6 +50,8 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `getProductSetForm()` instead.
+     *
      * @param array $data
      * @param array $options
      *
@@ -66,9 +68,33 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
+    public function getCreateProductSetForm(array $data = [], array $options = [])
+    {
+        return $this->createCreateProductSetForm($data, $options);
+    }
+
+    /**
+     * @deprecated Use `getUpdateProductSetForm()` instead.
+     *
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function createUpdateProductSetForm(array $data = [], array $options = [])
     {
         return $this->getFormFactory()->create($this->createUpdateProductSetFormType(), $data, $options);
+    }
+
+    /**
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getUpdateProductSetForm(array $data = [], array $options = [])
+    {
+        return $this->createUpdateProductSetForm($data, $options);
     }
 
     /**
@@ -157,22 +183,28 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\AbstractType
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
      */
     protected function createCreateProductSetFormType()
     {
-        return new CreateProductSetFormType();
+        return CreateProductSetFormType::class;
     }
 
     /**
-     * @return \Symfony\Component\Form\AbstractType
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
      */
     protected function createUpdateProductSetFormType()
     {
-        return new UpdateProductSetFormType();
+        return UpdateProductSetFormType::class;
     }
 
     /**
+     * @deprecated Use `getReorderProductSetsForm` instead.
+     *
      * @param array $data
      * @param array $options
      *
@@ -184,11 +216,24 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\Form\AbstractType
+     * @param array $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getReorderProductSetsForm(array $data = [], $options = [])
+    {
+        return $this->createReorderProductSetsForm($data, $options);
+    }
+
+    /**
+     * @deprecated Use the FQCN directly.
+     *
+     * @return string
      */
     protected function createReorderProductSetsFormType()
     {
-        return new ReorderProductSetsFormType();
+        return ReorderProductSetsFormType::class;
     }
 
     /**
@@ -206,7 +251,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductAbstractTableHelper(
             $this->getProductImageFacade(),
-            $this->getPriceFacade(),
+            $this->getPriceProductFacade(),
             $this->getMoneyFacade()
         );
     }
@@ -252,11 +297,11 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceInterface
+     * @return \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToPriceProductFacadeInterface
      */
-    protected function getPriceFacade()
+    protected function getPriceProductFacade()
     {
-        return $this->getProvidedDependency(ProductSetGuiDependencyProvider::FACADE_PRICE);
+        return $this->getProvidedDependency(ProductSetGuiDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 
     /**

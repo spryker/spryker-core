@@ -1,3 +1,3 @@
 # CustomerGroup Changelog
 
-[CustomerGroup Changelog](https://github.com/spryker/CustomerGroup/releases)
+[Release Changelog](https://github.com/spryker/customer-group/releases)

@@ -18,8 +18,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CodeTestConsole extends Console
 {
     const COMMAND_NAME = 'code:test';
-    const OPTION_BUNDLE = 'module';
-    const OPTION_BUNDLE_ALL = 'all';
+    const OPTION_MODULE = 'module';
+    const OPTION_MODULE_ALL = 'all';
     const OPTION_INITIALIZE = 'initialize';
     const OPTION_GROUP = 'group';
     const OPTION_TYPE_EXCLUDE = 'exclude';
@@ -36,7 +36,7 @@ class CodeTestConsole extends Console
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Run codecept tests for project or core');
 
-        $this->addOption(static::OPTION_BUNDLE, 'm', InputOption::VALUE_OPTIONAL, 'Name of core module to run tests for (or "all")');
+        $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of core module to run tests for (or "all")');
         $this->addOption(static::OPTION_GROUP, 'g', InputOption::VALUE_OPTIONAL, 'Groups of tests to be executed (multiple values allowed, comma separated)');
         $this->addOption(static::OPTION_TYPE_EXCLUDE, 'x', InputOption::VALUE_OPTIONAL, 'Types of tests to be skipped (e.g. Presentation; multiple values allowed, comma separated)');
         $this->addOption(static::OPTION_INITIALIZE, 'i', InputOption::VALUE_NONE, 'Initialize test suite by (re)generating required test classes');
@@ -50,11 +50,11 @@ class CodeTestConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundle = $this->input->getOption(static::OPTION_BUNDLE);
+        $module = $this->input->getOption(static::OPTION_MODULE);
 
         $message = 'Run codecept tests for project level';
-        if ($bundle) {
-            $message = 'Run codecept tests for ' . $bundle . ' module';
+        if ($module) {
+            $message = 'Run codecept tests for ' . $module . ' module';
         }
         $this->info($message);
 
@@ -63,6 +63,6 @@ class CodeTestConsole extends Console
             $this->warning('Make sure you ran `codecept build` already.');
         }
 
-        $this->getFacade()->runTest($bundle, $this->input->getOptions());
+        $this->getFacade()->runTest($module, $this->input->getOptions());
     }
 }

@@ -1,3 +1,3 @@
 # Heartbeat Changelog
 
-[Heartbeat Changelog](https://github.com/spryker/Heartbeat/releases)
+[Release Changelog](https://github.com/spryker/heartbeat/releases)

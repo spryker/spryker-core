@@ -1,0 +1,8 @@
+<div>
+        <div style="text-align: center;">
+        {{ 'mail.giftCard.delivery.text' | trans }}
+        {% for giftCard in mail.giftCards %}
+                {{ giftCard.code }} ({{ giftCard.value / 100 | number_format(2) }} {{ giftCard.currencyIsoCode }})<br />
+        {% endfor %}
+        </div>
+</div>

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Shipment\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
@@ -53,7 +54,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->createShipmentMethodTransformer(),
             $this->getCurrencyFacade(),
             $this->getStoreFacade(),
-            $this->getPlugins()
+            $this->getPlugins(),
+            $this->getMethodFilterPlugins()
         );
     }
 
@@ -87,11 +89,27 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver
+     * @return \Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface[]
+     */
+    protected function getMethodFilterPlugins()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::SHIPMENT_METHOD_FILTER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaverInterface
      */
     public function createShipmentOrderSaver()
     {
         return new ShipmentOrderSaver($this->getSalesQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface
+     */
+    public function createCheckoutShipmentOrderSaver()
+    {
+        return new CheckoutShipmentOrderSaver($this->getSalesQueryContainer());
     }
 
     /**

@@ -30,11 +30,11 @@ class AddController extends AbstractController
     {
         $glossaryForm = $this
             ->getFactory()
-            ->createTranslationAddForm();
+            ->getTranslationAddForm();
 
         $glossaryForm->handleRequest($request);
 
-        if ($glossaryForm->isValid()) {
+        if ($glossaryForm->isSubmitted() && $glossaryForm->isValid()) {
             $data = $glossaryForm->getData();
 
             $keyTranslationTransfer = new KeyTranslationTransfer();

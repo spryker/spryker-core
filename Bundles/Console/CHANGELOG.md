@@ -1,3 +1,3 @@
 # Console Changelog
 
-[Console Changelog](https://github.com/spryker/Console/releases)
+[Release Changelog](https://github.com/spryker/console/releases)

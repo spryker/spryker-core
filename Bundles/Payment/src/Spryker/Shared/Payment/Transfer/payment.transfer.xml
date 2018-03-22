@@ -9,10 +9,12 @@
         <property name="paymentMethod" type="string"/>
         <property name="paymentSelection" type="string"/>
         <property name="amount" type="int"/>
+        <property name="isLimitedAmount" type="bool" />
+        <property name="availableAmount" type="int" description="Maximum amount available for a payment by the payment method" />
     </transfer>
 
     <transfer name="Quote">
-        <property name="payment" type="Payment"/>
+        <property name="payment" type="Payment" deprecated="Use payments property instead." />
         <property name="payments" type="Payment[]" singular="payment"/>
     </transfer>
 
@@ -25,6 +27,18 @@
         <property name="fkSalesOrder" type="int" />
         <property name="paymentProvider" type="string" />
         <property name="paymentMethod" type="string" />
+    </transfer>
+
+    <transfer name="PaymentMethods">
+        <property name="methods" singular="method" type="PaymentMethod[]" />
+    </transfer>
+
+    <transfer name="PaymentMethod">
+        <property name="methodName" type="string" />
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="priceToPay" type="int"/>
     </transfer>
 
 </transfers>

@@ -7,12 +7,20 @@
 
 namespace Spryker\Zed\Auth\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
+/**
+ * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
+ * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface getQueryContainer()
+ */
 class ResetPasswordRequestForm extends AbstractType
 {
     const FIELD_EMAIL = 'email';
@@ -41,7 +49,7 @@ class ResetPasswordRequestForm extends AbstractType
     protected function addEmailField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_EMAIL, 'text', [
+            ->add(self::FIELD_EMAIL, TextType::class, [
                 'constraints' => [
                     new Required(),
                     new NotBlank(),
@@ -63,7 +71,7 @@ class ResetPasswordRequestForm extends AbstractType
     protected function addSubmitField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_SUBMIT, 'submit', [
+            ->add(self::FIELD_SUBMIT, SubmitType::class, [
                 'label' => 'Recover password',
                 'attr' => [
                     'class' => 'btn btn-success btn-block btn-outline',
@@ -81,7 +89,7 @@ class ResetPasswordRequestForm extends AbstractType
     protected function addLoginField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_LOGIN, 'url', [
+            ->add(self::FIELD_LOGIN, UrlType::class, [
                 'attr' => [
                     'href' => '/auth/login',
                     'class' => 'btn btn-primary btn-block btn-outline',
@@ -95,8 +103,18 @@ class ResetPasswordRequestForm extends AbstractType
     /**
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'reset_password';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

@@ -25,13 +25,13 @@ class CreateController extends AbstractProductSetController
         $dataProvider = $this->getFactory()->createCreateFormDataProvider();
 
         $productSetForm = $this->getFactory()
-            ->createCreateProductSetForm(
+            ->getCreateProductSetForm(
                 $dataProvider->getData(),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
 
-        if ($productSetForm->isValid()) {
+        if ($productSetForm->isSubmitted() && $productSetForm->isValid()) {
             $productSetTransfer = $this->getFactory()
                 ->createCreateFormDataToTransferMapper()
                 ->mapData($productSetForm);

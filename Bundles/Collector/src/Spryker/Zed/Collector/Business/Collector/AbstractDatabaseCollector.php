@@ -8,8 +8,14 @@
 namespace Spryker\Zed\Collector\Business\Collector;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchSearchTableMap;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchStorageTableMap;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface;
+use Spryker\Shared\Collector\CollectorConstants;
+use Spryker\Shared\Config\Config;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
@@ -21,6 +27,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractDatabaseCollector extends AbstractCollector implements DatabaseCollectorInterface
 {
+    const ID_TOUCH = 'idTouch';
+
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
@@ -94,21 +102,82 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
         BatchResultInterface $batchResult,
         WriterInterface $storeWriter
     ) {
-        $batchSize = count($batch);
-        $progressBar->advance($batchSize);
+        $batchItemCount = count($batch);
+        $progressBar->advance($batchItemCount);
 
         $touchUpdaterSet = new TouchUpdaterSet(CollectorConfig::COLLECTOR_TOUCH_ID);
-        $collectedData = $this->collectData($batch, $locale, $touchUpdaterSet);
-        $collectedDataCount = count($collectedData);
+
+        $exportSubBatch = $this->collectData($batch, $locale, $touchUpdaterSet);
+        $exportedItemCount = $this->exportBatch($exportSubBatch, $locale, $touchUpdaterSet, $storeWriter, $touchUpdater);
+
+        $deletedItemCount = 0;
+        if ($this->hasUnprocessedItem($batchItemCount, $exportedItemCount)) {
+            $expiredSubBatch = $this->collectExpiredData($batch, $locale);
+            $deletedItemCount = $this->deleteBatch($expiredSubBatch, $locale, $storeWriter, $touchUpdater);
+        }
+
+        $batchResult->increaseProcessedCount($exportedItemCount + $deletedItemCount);
+    }
+
+    /**
+     * @param int $batchItemCount
+     * @param int $exportedItemCount
+     *
+     * @return bool
+     */
+    protected function hasUnprocessedItem($batchItemCount, $exportedItemCount)
+    {
+        return $batchItemCount > $exportedItemCount;
+    }
+
+    /**
+     * @param array $batch
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $storeWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     *
+     * @return int
+     */
+    protected function exportBatch($batch, LocaleTransfer $locale, TouchUpdaterSet $touchUpdaterSet, WriterInterface $storeWriter, TouchUpdaterInterface $touchUpdater)
+    {
+        $batchSize = count($batch);
+        if ($batchSize === 0) {
+            return 0;
+        }
 
         $touchUpdater->bulkUpdate(
             $touchUpdaterSet,
             $locale->getIdLocale(),
+            $this->getCurrentStore()->getIdStore(),
             $this->touchQueryContainer->getConnection()
         );
-        $storeWriter->write($collectedData);
+        $storeWriter->write($batch);
 
-        $batchResult->increaseProcessedCount($collectedDataCount);
+        return $batchSize;
+    }
+
+    /**
+     * @param array $batch Keys are expired touch keys.
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $storeWriter
+     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     *
+     * @return int
+     */
+    protected function deleteBatch(array $batch, LocaleTransfer $locale, WriterInterface $storeWriter, TouchUpdaterInterface $touchUpdater)
+    {
+        $batchSize = count($batch);
+        if ($batchSize === 0) {
+            return 0;
+        }
+
+        $touchKeys = array_keys($batch);
+
+        $touchUpdater->deleteTouchKeyEntities($touchKeys, $locale->getIdLocale());
+        $storeWriter->delete(array_flip($touchKeys));
+
+        return $batchSize;
     }
 
     /**
@@ -153,6 +222,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
 
         while ($batchCount > 0) {
             $entityCollection = $this->getTouchCollectionToDelete($itemType, $offset);
+            $batchItemIds = $this->collectItemIds($entityCollection);
             $batchCount = count($entityCollection);
 
             if ($batchCount > 0) {
@@ -169,6 +239,10 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
                     $this->deleteTouchKeyEntities($keysToDelete, $touchUpdater);
                     $storeWriter->delete($keysToDelete);
                 }
+            }
+
+            if ($this->isTouchDeleteCleanupActive()) {
+                $this->deleteObsoleteTouchRecords($itemType, $batchItemIds);
             }
         }
 
@@ -197,5 +271,76 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
             array_keys($keysToDelete),
             $this->locale->getIdLocale()
         );
+    }
+
+    /**
+     * @param array $entityCollection
+     *
+     * @return array
+     */
+    protected function collectItemIds(array $entityCollection)
+    {
+        $itemIds = [];
+        foreach ($entityCollection as $entity) {
+            $itemIds[] = $entity['item_id'];
+        }
+
+        return $itemIds;
+    }
+
+    /**
+     * @param string $itemType
+     * @param array $batchItemIds
+     *
+     * @return void
+     */
+    protected function deleteObsoleteTouchRecords($itemType, array $batchItemIds)
+    {
+        if (!$batchItemIds) {
+            return;
+        }
+        $touchIds = $this->queryObsoleteTouchIds($itemType, $batchItemIds)->find()->getData();
+
+        if (!$touchIds) {
+            return;
+        }
+
+        $this->getSpyTouchQuery()->filterByIdTouch_In($touchIds)->delete();
+    }
+
+    /**
+     * @param string $itemType
+     * @param array $batchItemIds
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     */
+    protected function queryObsoleteTouchIds($itemType, array $batchItemIds)
+    {
+        return $this->getSpyTouchQuery()
+            ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
+            ->filterByItemType($itemType)
+            ->filterByItemId_In($batchItemIds)
+            ->leftJoinTouchSearch()
+            ->leftJoinTouchStorage()
+            ->addAnd(SpyTouchStorageTableMap::COL_ID_TOUCH_STORAGE, null, Criteria::ISNULL)
+            ->addAnd(SpyTouchSearchTableMap::COL_ID_TOUCH_SEARCH, null, Criteria::ISNULL)
+            ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, static::ID_TOUCH)
+            ->select([static::ID_TOUCH]);
+    }
+
+    /**
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     */
+    protected function getSpyTouchQuery()
+    {
+        return SpyTouchQuery::create();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isTouchDeleteCleanupActive()
+    {
+        return Config::get(CollectorConstants::TOUCH_DELETE_CLEANUP_ACTIVE, false);
     }
 }

@@ -11,5 +11,13 @@ interface SalesConstants
 {
     const NAME_ORDER_REFERENCE = 'OrderReference';
     const ENVIRONMENT_PREFIX = 'ENVIRONMENT_PREFIX';
+
+    /**
+     * Specification:
+     * - Mapping payment methods to statemachine
+     * - Shared config: don't change its name: PAYMENT_METHOD_STATEMACHINE_MAPPING
+     *
+     * @api
+     */
     const PAYMENT_METHOD_STATEMACHINE_MAPPING = 'PAYMENT_METHOD_STATEMACHINE_MAPPING';
 }

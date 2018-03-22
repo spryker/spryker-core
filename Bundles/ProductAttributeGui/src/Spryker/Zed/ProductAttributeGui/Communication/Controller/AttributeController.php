@@ -21,6 +21,11 @@ class AttributeController extends AbstractController
     const PARAM_TERM = 'term';
     const PARAM_LOCALE_CODE = 'locale_code';
 
+    const MESSAGE_ATTRIBUTE_CREATE_SUCCESS = 'Product attribute was created successfully.';
+    const MESSAGE_ATTRIBUTE_CREATE_ERROR = 'Product attribute was not created.';
+    const MESSAGE_ATTRIBUTE_UPDATE_SUCCESS = 'Product attribute was updated successfully.';
+    const MESSAGE_TRANSLATION_UPDATE_SUCCESS = 'Translation was updated successfully.';
+
     /**
      * @return array
      */
@@ -62,28 +67,37 @@ class AttributeController extends AbstractController
 
         $attributeForm = $this
             ->getFactory()
-            ->createAttributeForm($dataProvider->getData(), $dataProvider->getOptions())
+            ->getAttributeForm($dataProvider->getData(), $dataProvider->getOptions())
             ->handleRequest($request);
 
-        if ($attributeForm->isValid()) {
-            $attributeTransfer = $this->getFactory()
-                ->createAttributeFormTransferGenerator()
-                ->createTransfer($attributeForm);
+        if (!$attributeForm->isValid()) {
+            return $this->viewResponse([
+                'form' => $attributeForm->createView(),
+            ]);
+        }
 
-            $attributeTransfer = $this
-                ->getFactory()
-                ->getProductAttributeFacade()
-                ->createProductManagementAttribute($attributeTransfer);
+        $attributeTransfer = $this->getFactory()
+            ->createAttributeFormTransferGenerator()
+            ->createTransfer($attributeForm);
 
+        $attributeTransfer = $this
+            ->getFactory()
+            ->getProductAttributeFacade()
+            ->createProductManagementAttribute($attributeTransfer);
+
+        if (!$attributeTransfer->getIdProductManagementAttribute()) {
+            $this->addErrorMessage(static::MESSAGE_ATTRIBUTE_CREATE_ERROR);
             return $this->redirectResponse(sprintf(
                 '/product-attribute-gui/attribute/translate?id=%d',
                 $attributeTransfer->getIdProductManagementAttribute()
             ));
         }
 
-        return $this->viewResponse([
-            'form' => $attributeForm->createView(),
-        ]);
+        $this->addSuccessMessage(static::MESSAGE_ATTRIBUTE_CREATE_SUCCESS);
+        return $this->redirectResponse(sprintf(
+            '/product-attribute-gui/attribute/translate?id=%d',
+            $attributeTransfer->getIdProductManagementAttribute()
+        ));
     }
 
     /**
@@ -101,30 +115,31 @@ class AttributeController extends AbstractController
 
         $attributeTranslateFormCollection = $this
             ->getFactory()
-            ->createAttributeTranslationFormCollection($dataProvider->getData($idProductManagementAttribute), $dataProvider->getOptions())
+            ->getAttributeTranslationFormCollection($dataProvider->getData($idProductManagementAttribute), $dataProvider->getOptions())
             ->handleRequest($request);
 
-        if ($attributeTranslateFormCollection->isValid()) {
-            $translationForms = $attributeTranslateFormCollection->get(AttributeTranslationCollectionForm::FIELD_TRANSLATIONS);
-
-            $productManagementAttributeTransfer = $this->getFactory()
-                ->createAttributeTranslationFormTransferGenerator()
-                ->createTransfer($translationForms);
-
-            $this->getFactory()
-                ->getProductAttributeFacade()
-                ->translateProductManagementAttribute($productManagementAttributeTransfer);
-
-            return $this->redirectResponse(sprintf(
-                '/product-attribute-gui/attribute/view?id=%d',
-                $idProductManagementAttribute
-            ));
+        if (!$attributeTranslateFormCollection->isValid()) {
+            return $this->viewResponse([
+                'form' => $attributeTranslateFormCollection->createView(),
+                'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
+            ]);
         }
 
-        return $this->viewResponse([
-            'form' => $attributeTranslateFormCollection->createView(),
-            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
-        ]);
+        $translationForms = $attributeTranslateFormCollection->get(AttributeTranslationCollectionForm::FIELD_TRANSLATIONS);
+
+        $productManagementAttributeTransfer = $this->getFactory()
+            ->createAttributeTranslationFormTransferGenerator()
+            ->createTransfer($translationForms);
+
+        $this->getFactory()
+            ->getProductAttributeFacade()
+            ->translateProductManagementAttribute($productManagementAttributeTransfer);
+
+        $this->addSuccessMessage(static::MESSAGE_TRANSLATION_UPDATE_SUCCESS);
+        return $this->redirectResponse(sprintf(
+            '/product-attribute-gui/attribute/view?id=%d',
+            $idProductManagementAttribute
+        ));
     }
 
     /**
@@ -158,28 +173,29 @@ class AttributeController extends AbstractController
 
         $attributeForm = $this
             ->getFactory()
-            ->createAttributeForm($dataProvider->getData($idProductManagementAttribute), $dataProvider->getOptions($idProductManagementAttribute))
+            ->getAttributeForm($dataProvider->getData($idProductManagementAttribute), $dataProvider->getOptions($idProductManagementAttribute))
             ->handleRequest($request);
 
-        if ($attributeForm->isValid()) {
-            $attributeTransfer = $this->getFactory()
-                ->createAttributeFormTransferGenerator()
-                ->createTransfer($attributeForm);
-
-            $attributeTransfer = $this
-                ->getFactory()
-                ->getProductAttributeFacade()
-                ->updateProductManagementAttribute($attributeTransfer);
-
-            return $this->redirectResponse(sprintf(
-                '/product-attribute-gui/attribute/translate?id=%d',
-                $attributeTransfer->getIdProductManagementAttribute()
-            ));
+        if (!$attributeForm->isValid()) {
+            return $this->viewResponse([
+                'form' => $attributeForm->createView(),
+            ]);
         }
 
-        return $this->viewResponse([
-            'form' => $attributeForm->createView(),
-        ]);
+        $attributeTransfer = $this->getFactory()
+            ->createAttributeFormTransferGenerator()
+            ->createTransfer($attributeForm);
+
+        $attributeTransfer = $this
+            ->getFactory()
+            ->getProductAttributeFacade()
+            ->updateProductManagementAttribute($attributeTransfer);
+
+        $this->addSuccessMessage(static::MESSAGE_ATTRIBUTE_UPDATE_SUCCESS);
+        return $this->redirectResponse(sprintf(
+            '/product-attribute-gui/attribute/translate?id=%d',
+            $attributeTransfer->getIdProductManagementAttribute()
+        ));
     }
 
     /**

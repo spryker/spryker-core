@@ -18,6 +18,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     const KEY_ENTITY = 'Entity';
     const FOREIGN_TABLE = 'foreignTable';
     const KEY_PHP_NAME = 'phpName';
+    const ENTITY_NAMESPACE = 'entity-namespace';
 
     /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\Helper\PluralizerInterface
@@ -42,7 +43,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
         $normalizedDefinitions = [];
         $filter = new UnderscoreToCamelCase();
         foreach ($transferDefinitions as $transferDefinition) {
-            $transferName = $filter->filter($transferDefinition[self::KEY_NAME]);
+            $transferName = $filter->filter($transferDefinition[self::KEY_NAME]) . static::KEY_ENTITY;
             $properties = $this->normalizeAttributes($transferDefinition[self::KEY_COLUMN], $transferDefinition[self::KEY_BUNDLE]);
             if (isset($transferDefinition[self::KEY_FOREIGN_KEY])) {
                 $properties = $this->normalizeForeignKeys($transferDefinition[self::KEY_FOREIGN_KEY], $properties, $transferDefinition[self::KEY_BUNDLE]);
@@ -53,6 +54,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
                 self::KEY_NAME => $transferName,
                 self::KEY_DEPRECATED => isset($transferDefinition[self::KEY_DEPRECATED]) ? $transferDefinition[self::KEY_DEPRECATED] : null,
                 self::KEY_PROPERTY => $properties,
+                self::ENTITY_NAMESPACE => $this->findEntityNamespace($transferDefinition),
             ];
 
             $normalizedDefinitions[] = $normalizedDefinition;
@@ -149,7 +151,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
 
             $properties[] = [
                 self::KEY_NAME => $propertyName,
-                self::KEY_TYPE => $filter->filter($foreignKey[self::FOREIGN_TABLE]),
+                self::KEY_TYPE => $filter->filter($foreignKey[self::FOREIGN_TABLE]) . static::KEY_ENTITY,
                 self::KEY_BUNDLE => [$module],
                 self::KEY_BUNDLES => [$module],
             ];
@@ -194,5 +196,24 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
             }
         }
         return $normalizedDefinition;
+    }
+
+    /**
+     * @param array $transferDefinition
+     *
+     * @return null|string
+     */
+    protected function findEntityNamespace(array $transferDefinition)
+    {
+        if (isset($transferDefinition[self::KEY_PHP_NAME])) {
+            return $transferDefinition[self::ENTITY_NAMESPACE] . '\\' . $transferDefinition[self::KEY_PHP_NAME];
+        }
+
+        if (isset($transferDefinition[self::KEY_NAME])) {
+            $entityName = str_replace('_', '', ucwords($transferDefinition[self::KEY_NAME], '_'));
+            return $transferDefinition[self::ENTITY_NAMESPACE] . '\\' . $entityName;
+        }
+
+        return null;
     }
 }

@@ -1,3 +1,3 @@
 # ZedRequest Changelog
 
-[ZedRequest Changelog](https://github.com/spryker/ZedRequest/releases)
+[Release Changelog](https://github.com/spryker/zed-request/releases)

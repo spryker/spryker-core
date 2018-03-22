@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 
 /**
  * @method \Spryker\Zed\Sales\Business\SalesBusinessFactory getFactory()
@@ -63,6 +64,8 @@ interface SalesFacadeInterface
      *
      * @api
      *
+     * @deprecated Use saveSalesOrder() instead
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
@@ -71,7 +74,23 @@ interface SalesFacadeInterface
     public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 
     /**
-     * Specification
+     * Specification:
+     * - Saves order and items to database
+     * - Sets "is test" flag
+     * - Updates checkout response with saved order data
+     * - Sets initial state for state machine
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
+
+    /**
+     * Specification:
      * - Update sales order with data from order transfer
      * - Returns true if order was successfully updated
      *
@@ -112,6 +131,21 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
+     *  - Returns a list of of orders for the given customer id and (optional) filters.
+     *  - Aggregates order totals calls -> SalesAggregator
+     *  - Paginates order list for limited result
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getPaginatedCustomerOrders(OrderListTransfer $orderListTransfer, $idCustomer);
+
+    /**
+     * Specification:
      *  - Returns the order for the given customer id and sales order id.
      *  - Aggregates order totals calls -> SalesAggregator
      *
@@ -136,6 +170,18 @@ interface SalesFacadeInterface
     public function getOrderByIdSalesOrder($idSalesOrder);
 
     /**
+     * Specification:
+     * - Returns the order for the given sales order item id.
+     *
+     * @api
+     *
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    public function findOrderByIdSalesOrderItem($idSalesOrderItem);
+
+    /**
      *
      * Specification:
      *  - Expands order by quantity 1 recalculates order transfer with new values
@@ -143,9 +189,9 @@ interface SalesFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer|null $checkoutResponseTransfer Deprecated: Parameter is not used
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function expandSalesOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
+    public function expandSalesOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer = null);
 }

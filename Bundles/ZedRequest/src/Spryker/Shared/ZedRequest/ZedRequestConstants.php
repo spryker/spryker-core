@@ -41,4 +41,12 @@ interface ZedRequestConstants
     const SET_REPEAT_DATA = 'SET_REPEAT_DATA';
 
     const YVES_REQUEST_REPEAT_DATA_PATH = 'YVES_REQUEST_REPEAT_DATA_PATH';
+
+    /**
+     * Specification:
+     * - An array of settings to be used for the Client.
+     *
+     * @api
+     */
+    const CLIENT_OPTIONS = 'ZED_REQUEST:CLIENT_OPTIONS';
 }

@@ -1,11 +1,7 @@
 language: php
-php:
-    - "5.6"
-    - "7.0"
 
-matrix:
-    allow_failures:
-        - php: "7.0"
+php:
+    - 7.1
 
 cache:
     directories:
@@ -16,11 +12,8 @@ env:
     global:
         - APPLICATION_ENV=development
         - APPLICATION_STORE=DE
-    matrix:
-        - COVERALLS=true
 
 install:
-    - composer self-update && composer --version
     - composer install --no-interaction --prefer-dist
 
 script:
@@ -32,5 +25,3 @@ after_success:
 
 notifications:
     email: false
-
-

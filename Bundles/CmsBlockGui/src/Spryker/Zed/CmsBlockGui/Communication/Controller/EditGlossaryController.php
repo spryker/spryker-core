@@ -7,37 +7,32 @@
 namespace Spryker\Zed\CmsBlockGui\Communication\Controller;
 
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\CmsBlockGui\Communication\CmsBlockGuiCommunicationFactory getFactory()
  */
-class EditGlossaryController extends AbstractController
+class EditGlossaryController extends AbstractCmsBlockController
 {
-    const URL_PARAM_ID_CMS_BLOCK = 'id-cms-block';
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
-        $idCmsBlock = $this->castId($request->get(static::URL_PARAM_ID_CMS_BLOCK));
+        $cmsBlockTransfer = $this->findCmsBlockById($request);
+
+        if ($cmsBlockTransfer === null) {
+            $this->addErrorMessage(static::MESSAGE_CMS_BLOCK_INVALID_ID_ERROR);
+            $redirectUrl = Url::generate('/cms-block-gui/list-block')->build();
+
+            return $this->redirectResponse($redirectUrl);
+        }
 
         $glossaryTransfer = $this->getFactory()
             ->getCmsBlockFacade()
-            ->findGlossary($idCmsBlock);
-
-        if ($glossaryTransfer === null) {
-            throw new NotFoundHttpException(
-                sprintf('Cms block with id "%d" not found!', $idCmsBlock)
-            );
-        }
+            ->findGlossary($cmsBlockTransfer->getIdCmsBlock());
 
         $placeholderTabs = $this->getFactory()
             ->createCmsBlockPlaceholderTabs($glossaryTransfer);
@@ -46,7 +41,7 @@ class EditGlossaryController extends AbstractController
             ->createCmsBlockGlossaryFormDataProvider();
 
         $glossaryForm = $this->getFactory()
-            ->createCmsBlockGlossaryForm($glossaryFormDataProvider, $idCmsBlock)
+            ->getCmsBlockGlossaryForm($glossaryFormDataProvider, $cmsBlockTransfer->getIdCmsBlock())
             ->handleRequest($request);
 
         if ($glossaryForm->isSubmitted()) {
@@ -59,7 +54,7 @@ class EditGlossaryController extends AbstractController
 
                 $redirectUrl = Url::generate(
                     '/cms-block-gui/edit-glossary/index',
-                    [static::URL_PARAM_ID_CMS_BLOCK => $idCmsBlock]
+                    [static::URL_PARAM_ID_CMS_BLOCK => $cmsBlockTransfer->getIdCmsBlock()]
                 )->build();
 
                 return $this->redirectResponse($redirectUrl);
@@ -74,14 +69,14 @@ class EditGlossaryController extends AbstractController
 
         $cmsBlockTransfer = $this->getFactory()
             ->getCmsBlockFacade()
-            ->findCmsBlockById($idCmsBlock);
+            ->findCmsBlockById($cmsBlockTransfer->getIdCmsBlock());
 
         return $this->viewResponse([
             'placeholderTabs' => $placeholderTabs->createView(),
             'glossaryForm' => $glossaryForm->createView(),
             'availableLocales' => $availableLocales,
             'cmsBlock' => $cmsBlockTransfer,
-            'idCmsBlock' => $idCmsBlock,
+            'idCmsBlock' => $cmsBlockTransfer->getIdCmsBlock(),
         ]);
     }
 }

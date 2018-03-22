@@ -36,16 +36,16 @@ class DiscountPromotionFormType extends AbstractDiscountExtensionSubFormType
      */
     protected function addAbstractSkuField(FormBuilderInterface $builder)
     {
-         $builder->add(
-             DiscountPromotionTransfer::ABSTRACT_SKU,
-             TextType::class,
-             [
+        $builder->add(
+            DiscountPromotionTransfer::ABSTRACT_SKU,
+            TextType::class,
+            [
                  'label' => 'Abstract product sku',
                  'constraints' => [
                      new NotBlank(['groups' => DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY]),
                  ],
              ]
-         );
+        );
 
          return $this;
     }

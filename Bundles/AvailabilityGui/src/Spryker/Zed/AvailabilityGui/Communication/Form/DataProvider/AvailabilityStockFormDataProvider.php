@@ -9,6 +9,7 @@ namespace Spryker\Zed\AvailabilityGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\AvailabilityStockTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterface;
 
 class AvailabilityStockFormDataProvider
@@ -21,11 +22,18 @@ class AvailabilityStockFormDataProvider
     protected $stockFacade;
 
     /**
-     * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterface $stockFacade
+     * @var \Generated\Shared\Transfer\StoreTransfer
      */
-    public function __construct(AvailabilityGuiToStockInterface $stockFacade)
+    protected $storeTransfer;
+
+    /**
+     * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterface $stockFacade
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     */
+    public function __construct(AvailabilityGuiToStockInterface $stockFacade, StoreTransfer $storeTransfer)
     {
         $this->stockFacade = $stockFacade;
+        $this->storeTransfer = $storeTransfer;
     }
 
     /**
@@ -36,10 +44,15 @@ class AvailabilityStockFormDataProvider
      */
     public function getData($idProduct, $sku)
     {
-        $stockProducts = $this->stockFacade->getStockProductsByIdProduct($idProduct);
-        $stockProducts = $this->sortProducts($stockProducts);
+        $stockProducts = $this->stockFacade->findStockProductsByIdProductForStore($idProduct, $this->storeTransfer);
 
-        $availabilityGuiStockTransfer = $this->loadAvailabilityGuiStockTransfer($sku, $stockProducts);
+        $availabilityGuiStockTransfer = (new AvailabilityStockTransfer())->setSku($sku);
+
+        if ($stockProducts) {
+            $stockProducts = $this->sortProducts($stockProducts);
+            $availabilityGuiStockTransfer = $this->loadAvailabilityGuiStockTransfer($availabilityGuiStockTransfer, $stockProducts);
+        }
+
         $this->addEmptyStockType($availabilityGuiStockTransfer);
 
         return $availabilityGuiStockTransfer;
@@ -56,16 +69,13 @@ class AvailabilityStockFormDataProvider
     }
 
     /**
-     * @param string $sku
+     * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $availabilityGuiStockTransfer
      * @param \Generated\Shared\Transfer\StockProductTransfer[] $stockProducts
      *
      * @return \Generated\Shared\Transfer\AvailabilityStockTransfer
      */
-    protected function loadAvailabilityGuiStockTransfer($sku, array $stockProducts)
+    protected function loadAvailabilityGuiStockTransfer(AvailabilityStockTransfer $availabilityGuiStockTransfer, array $stockProducts = [])
     {
-        $availabilityGuiStockTransfer = new AvailabilityStockTransfer();
-        $availabilityGuiStockTransfer->setSku($sku);
-
         foreach ($stockProducts as $stockProductTransfer) {
             $availabilityGuiStockTransfer->addStockProduct($stockProductTransfer);
         }
@@ -80,15 +90,16 @@ class AvailabilityStockFormDataProvider
      */
     protected function addEmptyStockType($availabilityStockTransfer)
     {
-        $allStockType = $this->stockFacade->getAvailableStockTypes();
+        $allStockType = $this->stockFacade->getStockTypesForStore($this->storeTransfer);
 
         foreach ($allStockType as $type) {
             if ($this->stockTypeExist($availabilityStockTransfer, $type)) {
                 continue;
             }
-            $stockProductTransfer = new StockProductTransfer();
-            $stockProductTransfer->setStockType($type);
-            $stockProductTransfer->setQuantity(0);
+
+            $stockProductTransfer = (new StockProductTransfer())
+                ->setStockType($type)
+                ->setQuantity(0);
 
             $availabilityStockTransfer->addStockProduct($stockProductTransfer);
         }

@@ -120,6 +120,8 @@ class TransferConfig extends AbstractBundleConfig
      */
     public function getEntitiesSourceDirectories()
     {
-        return [];
+        return [
+            APPLICATION_SOURCE_DIR . '/Orm/Propel/*/Schema/',
+        ];
     }
 }

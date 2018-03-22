@@ -10,10 +10,10 @@ namespace Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy
 interface PromotionAvailabilityCalculatorInterface
 {
     /**
-     * @param string $promotionProductAbstractSku
+     * @param int $idProductAbstract
      * @param int $maxQuantity
      *
      * @return int
      */
-    public function getMaximumQuantityBasedOnAvailability($promotionProductAbstractSku, $maxQuantity);
+    public function getMaximumQuantityBasedOnAvailability($idProductAbstract, $maxQuantity);
 }

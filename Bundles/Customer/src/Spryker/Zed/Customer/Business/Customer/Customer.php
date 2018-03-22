@@ -21,6 +21,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Customer\Code\Messages;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface;
 use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRegistrationMailTypePlugin;
@@ -73,6 +74,11 @@ class Customer implements CustomerInterface
     protected $store;
 
     /**
+     * @var \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface
+     */
+    protected $customerExpander;
+
+    /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface $customerReferenceGenerator
      * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
@@ -80,6 +86,7 @@ class Customer implements CustomerInterface
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface $mailFacade
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface $customerExpander
      */
     public function __construct(
         CustomerQueryContainerInterface $queryContainer,
@@ -88,7 +95,8 @@ class Customer implements CustomerInterface
         EmailValidatorInterface $emailValidator,
         CustomerToMailInterface $mailFacade,
         LocaleQueryContainerInterface $localeQueryContainer,
-        Store $store
+        Store $store,
+        CustomerExpanderInterface $customerExpander
     ) {
         $this->queryContainer = $queryContainer;
         $this->customerReferenceGenerator = $customerReferenceGenerator;
@@ -97,6 +105,7 @@ class Customer implements CustomerInterface
         $this->mailFacade = $mailFacade;
         $this->localeQueryContainer = $localeQueryContainer;
         $this->store = $store;
+        $this->customerExpander = $customerExpander;
     }
 
     /**
@@ -124,6 +133,8 @@ class Customer implements CustomerInterface
         $customerTransfer->fromArray($customerEntity->toArray(), true);
 
         $customerTransfer = $this->attachAddresses($customerTransfer, $customerEntity);
+        $customerTransfer = $this->attachLocale($customerTransfer, $customerEntity);
+        $customerTransfer = $this->customerExpander->expand($customerTransfer);
 
         return $customerTransfer;
     }
@@ -158,6 +169,10 @@ class Customer implements CustomerInterface
 
         $customerEntity = new SpyCustomer();
         $customerEntity->fromArray($customerTransfer->toArray());
+
+        if ($customerTransfer->getLocale() !== null) {
+            $this->addLocaleByLocaleName($customerEntity, $customerTransfer->getLocale()->getLocaleName());
+        }
 
         $this->addLocale($customerEntity);
 
@@ -217,6 +232,21 @@ class Customer implements CustomerInterface
         }
 
         $localeName = $this->store->getCurrentLocale();
+        $localeEntity = $this->localeQueryContainer->queryLocaleByName($localeName)->findOne();
+
+        if ($localeEntity) {
+            $customerEntity->setLocale($localeEntity);
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     * @param string $localeName
+     *
+     * @return void
+     */
+    protected function addLocaleByLocaleName(SpyCustomer $customerEntity, $localeName)
+    {
         $localeEntity = $this->localeQueryContainer->queryLocaleByName($localeName)->findOne();
 
         if ($localeEntity) {
@@ -410,19 +440,21 @@ class Customer implements CustomerInterface
         }
 
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
+        $customerResponseTransfer->setCustomerTransfer($customerTransfer);
+
         $customerEntity = $this->getCustomer($customerTransfer);
         $customerEntity->fromArray($customerTransfer->modifiedToArray());
 
+        if ($customerTransfer->getLocale() !== null) {
+            $this->addLocaleByLocaleName($customerEntity, $customerTransfer->getLocale()->getLocaleName());
+        }
+
         $customerResponseTransfer = $this->validateCustomerEmail($customerResponseTransfer, $customerEntity);
-        if ($customerResponseTransfer->getIsSuccess() !== true) {
+        if (!$customerEntity->isModified() || $customerResponseTransfer->getIsSuccess() !== true) {
             return $customerResponseTransfer;
         }
 
-        $changedRows = $customerEntity->save();
-
-        $customerResponseTransfer
-            ->setIsSuccess($changedRows > 0)
-            ->setCustomerTransfer($customerTransfer);
+        $customerEntity->save();
 
         if ($customerTransfer->getSendPasswordToken()) {
             $this->sendPasswordRestoreMail($customerTransfer);
