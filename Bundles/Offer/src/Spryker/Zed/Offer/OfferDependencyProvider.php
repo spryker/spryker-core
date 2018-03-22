@@ -22,6 +22,18 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $this->addSalesFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesFacade(Container $container): Container
+    {
         $container[static::FACADE_SALES] = function (Container $container) {
             return new OfferToSalesFacadeBridge(
                 $container->getLocator()->sales()->facade()
