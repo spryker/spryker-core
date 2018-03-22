@@ -26,7 +26,7 @@ interface OfferFacadeInterface
 
     /**
      * Specification:
-     *  - Set is_offer flat to false for offer to make it a usual order.
+     *  - Set is_offer flag to false for offer to make it a usual order.
      *
      * @api
      *
