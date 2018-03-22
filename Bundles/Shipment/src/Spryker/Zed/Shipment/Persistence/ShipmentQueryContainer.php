@@ -232,4 +232,16 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
 
         return $query;
     }
+
+    /**
+     * @api
+     *
+     * @param int $idShipmentMethod
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryActiveShipmentMethodByIdShipmentMethod($idShipmentMethod)
+    {
+        return $this->queryActiveMethods()->filterByIdShipmentMethod($idShipmentMethod);
+    }
 }
