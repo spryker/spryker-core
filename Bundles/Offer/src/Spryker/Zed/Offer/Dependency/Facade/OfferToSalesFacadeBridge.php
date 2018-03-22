@@ -31,7 +31,7 @@ class OfferToSalesFacadeBridge implements OfferToSalesFacadeInterface
      *
      * @return bool
      */
-    public function updateOrder(OrderTransfer $orderTransfer, $idSalesOrder)
+    public function updateOrder(OrderTransfer $orderTransfer, int $idSalesOrder): bool
     {
         return $this->salesFacade->updateOrder($orderTransfer, $idSalesOrder);
     }
@@ -42,7 +42,7 @@ class OfferToSalesFacadeBridge implements OfferToSalesFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getCustomerOrders(OrderListTransfer $orderListTransfer, $idCustomer)
+    public function getCustomerOrders(OrderListTransfer $orderListTransfer, int $idCustomer): OrderListTransfer
     {
         return $this->salesFacade->getCustomerOrders($orderListTransfer, $idCustomer);
     }
@@ -52,7 +52,7 @@ class OfferToSalesFacadeBridge implements OfferToSalesFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function getOrderByIdSalesOrder($idSalesOrder)
+    public function getOrderByIdSalesOrder(int $idSalesOrder): OrderTransfer
     {
         return $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);
     }
