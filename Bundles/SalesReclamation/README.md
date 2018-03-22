@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/sales-reclamation.svg)](https://travis-ci.org/spryker/sales-reclamation)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/sales-reclamation/badge.svg)](https://coveralls.io/github/spryker/sales-reclamation)
 
-{{ADD DESCRIPTION HERE}}
+Module for handling customer requests about orders. Operator can claim item or send another order.
 
 ## Installation
 
