@@ -212,6 +212,7 @@
     "spryker/session": "*",
     "spryker/setup": "*",
     "spryker/shipment": "*",
+    "spryker/shipment-checkout-connector": "*",
     "spryker/shipment-cart-connector": "*",
     "spryker/silex": "*",
     "spryker/sql-criteria-builder": "*",

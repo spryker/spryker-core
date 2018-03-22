@@ -355,7 +355,7 @@ class ShipmentFacadeTest extends Test
             ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
             ->setCurrency((new CurrencyTransfer())->setCode($currencyCode));
 
-        $priceList = $this->creteShipmentPriceList();
+        $priceList = $this->createDefaultPriceList();
 
         $idShipmentMethod = $this->tester->haveShipmentMethod([], [], $priceList)->getIdShipmentMethod();
 
@@ -381,13 +381,45 @@ class ShipmentFacadeTest extends Test
             ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
             ->setCurrency((new CurrencyTransfer())->setCode($currencyCode));
 
-        $priceList = $this->creteShipmentPriceList();
+        $priceList = $this->createDefaultPriceList();
 
         $idShipmentMethod = $this->tester->haveShipmentMethod([], [], $priceList)->getIdShipmentMethod();
 
         $shipmentMethodsTransfer = $this->tester->getShipmentFacade()->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
 
         $this->assertSame($shipmentMethodsTransfer->getStoreCurrencyPrice(), $expectedPriceResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsShipmentMethodActiveShouldReturnTrueWhenActive()
+    {
+        $this->tester->disableAllShipmentMethods();
+
+        $priceList = $this->createDefaultPriceList();
+
+        $idShipmentMethod = $this->tester->haveShipmentMethod([], [], $priceList)->getIdShipmentMethod();
+
+        $isActive = $this->tester->getShipmentFacade()->isShipmentMethodActive($idShipmentMethod);
+
+        $this->assertTrue($isActive);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsShipmentMethodActiveShouldReturnFalseWhenInActive()
+    {
+        $this->tester->disableAllShipmentMethods();
+
+        $priceList = $this->createDefaultPriceList();
+
+        $idShipmentMethod = $this->tester->haveShipmentMethod([ShipmentMethodTransfer::IS_ACTIVE => false], [], $priceList)->getIdShipmentMethod();
+
+        $isActive = $this->tester->getShipmentFacade()->isShipmentMethodActive($idShipmentMethod);
+
+        $this->assertFalse($isActive);
     }
 
     /**
@@ -453,7 +485,7 @@ class ShipmentFacadeTest extends Test
     /**
      * @return array
      */
-    protected function creteShipmentPriceList()
+    protected function createDefaultPriceList()
     {
         $priceList = [
             $this->tester->getDefaultStoreName() => [
