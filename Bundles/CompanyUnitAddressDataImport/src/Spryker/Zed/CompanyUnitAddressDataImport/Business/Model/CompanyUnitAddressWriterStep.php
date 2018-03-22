@@ -7,58 +7,54 @@
 
 namespace Spryker\Zed\CompanyUnitAddressDataImport\Business\Model;
 
-use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
-use Orm\Zed\Country\Persistence\SpyCountryQuery;
+use Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Resolver\Company\IdCompanyResolverInterface;
+use Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Resolver\Country\IdCountryResolverInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CompanyUnitAddressWriterStep implements DataImportStepInterface
 {
-    const KEY_FK_COUNTRY = 'fk_country';
-    const KEY_FK_COMPANY = 'fk_company';
-    const KEY_ADDRESS1 = 'address1';
-    const KEY_ADDRESS2 = 'address2';
-    const KEY_ADDRESS3 = 'address3';
-    const KEY_CITY = 'city';
-    const KEY_ZIP_CODE = 'zip_code';
-    const KEY_PHONE = 'phone';
-    const KEY_COMMENT = 'comment';
+    const KEY_ADDRESS_KEY = 'address_key';
 
     /**
-     * TODO: the current implementation disallow updates for CompanyUnitAddresses.
-     *
-     * We should add an identifier to the database table of this entity to clearly identify the entity for update or insert.
-     *
-     * E.g. test-company-address-1
-     * - if the key exists -> update company unit address
-     * - if the key not exists -> fetch id of company and create new address
-     *
+     * @var \Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Resolver\Company\IdCompanyResolverInterface
+     */
+    protected $idCompanyResolver;
+
+    /**
+     * @var \Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Resolver\Country\IdCountryResolverInterface
+     */
+    protected $idCountryResolver;
+
+    /**
+     * @param \Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Resolver\Company\IdCompanyResolverInterface $idCompanyResolver
+     * @param \Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Resolver\Country\IdCountryResolverInterface $idCountryResolver
+     */
+    public function __construct(IdCompanyResolverInterface $idCompanyResolver, IdCountryResolverInterface $idCountryResolver)
+    {
+        $this->idCompanyResolver = $idCompanyResolver;
+        $this->idCountryResolver = $idCountryResolver;
+    }
+
+    /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @return void
      */
     public function execute(DataSetInterface $dataSet)
     {
-        $idCountry = SpyCountryQuery::create()
-            ->findOne()
-            ->getIdCountry();
-
-        $idCompany = SpyCompanyQuery::create()
-            ->findOne()
-            ->getIdCompany();
+        $idCompany = $this->idCompanyResolver->getIdCompany($dataSet);
+        $idCountry = $this->idCountryResolver->getIdCountry($dataSet);
 
         $companyUnitAddressEntity = SpyCompanyUnitAddressQuery::create()
-            ->filterByFkCountry($idCountry)
-            ->filterByFkCompany($idCompany)
-            ->filterByAddress1($dataSet[static::KEY_ADDRESS1])
-            ->filterByAddress2($dataSet[static::KEY_ADDRESS2])
-            ->filterByAddress3($dataSet[static::KEY_ADDRESS3])
-            ->filterByCity($dataSet[static::KEY_CITY])
-            ->filterByZipCode($dataSet[static::KEY_ZIP_CODE])
-            ->filterByPhone($dataSet[static::KEY_PHONE])
-            ->filterByComment($dataSet[static::KEY_COMMENT])
+            ->filterByKey($dataSet[static::KEY_ADDRESS_KEY])
             ->findOneOrCreate();
+
+        $companyUnitAddressEntity->fromArray($dataSet->getArrayCopy());
+        $companyUnitAddressEntity
+            ->setFkCompany($idCompany)
+            ->setFkCountry($idCountry);
 
         $companyUnitAddressEntity->save();
     }
