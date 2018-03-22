@@ -14,7 +14,7 @@ coverage:
 suites:
     Business:
         path: Business
-        class_name: CompanyUnitAddressLabelsBusinessTester
+        class_name: CompanyUnitAddressLabelBusinessTester
         modules:
             enabled:
                 - Asserts

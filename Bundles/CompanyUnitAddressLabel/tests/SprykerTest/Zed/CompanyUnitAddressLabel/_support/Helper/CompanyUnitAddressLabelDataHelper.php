@@ -3,7 +3,6 @@ namespace SprykerTest\Zed\CompanyUnitAddressLabel\Helper;
 
 use ArrayObject;
 use Codeception\Module;
-use Exception;
 use Generated\Shared\DataBuilder\CompanyUnitAddressBuilder;
 use Generated\Shared\DataBuilder\CountryBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
@@ -13,7 +12,6 @@ use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\SpyCompanyUnitAddressLabelEntityTransfer;
 use Generated\Shared\Transfer\SpyRegionEntityTransfer;
-use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabel;
 use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelToCompanyUnitAddress;
 use Orm\Zed\Country\Persistence\SpyRegionQuery;
@@ -46,24 +44,6 @@ class CompanyUnitAddressLabelDataHelper extends Module
             ->create($companyUnitAddressTransfer);
 
         return $response->getCompanyUnitAddressTransfer();
-    }
-
-    /**
-     * @throws \Exception
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
-    public function haveExistingCompanyUnitAddressTransfer()
-    {
-        $companyUnitAddressEntity = SpyCompanyUnitAddressQuery::create()
-            ->findOne();
-
-        if (empty($companyUnitAddressEntity)) {
-            throw new Exception('CompanyUnitAddress entity was not found');
-        }
-
-        return (new CompanyUnitAddressTransfer())
-            ->fromArray($companyUnitAddressEntity->toArray());
     }
 
     /**

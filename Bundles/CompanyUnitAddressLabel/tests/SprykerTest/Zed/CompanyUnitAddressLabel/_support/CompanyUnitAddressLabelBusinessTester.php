@@ -1,5 +1,4 @@
 <?php
-
 namespace SprykerTest\Zed\CompanyUnitAddressLabel;
 
 use Codeception\Actor;

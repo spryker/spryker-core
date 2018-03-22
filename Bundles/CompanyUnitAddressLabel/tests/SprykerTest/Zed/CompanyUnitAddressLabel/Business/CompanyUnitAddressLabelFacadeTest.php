@@ -47,7 +47,7 @@ class CompanyUnitAddressLabelFacadeTest extends Unit
     public function testHydrateCompanyUnitAddressWithLabelCollection(): void
     {
         $facade = $this->tester->getCompanyUnitAddressLabelFacade();
-        $companyUnitAddressTransfer = $this->tester->haveExistingCompanyUnitAddressTransfer();
+        $companyUnitAddressTransfer = $this->tester->haveCompanyUnitAddressTransfer();
         $this->assertEmpty($companyUnitAddressTransfer->getLabelCollection());
 
         $this->tester->haveLabelAddressRelations($companyUnitAddressTransfer);
