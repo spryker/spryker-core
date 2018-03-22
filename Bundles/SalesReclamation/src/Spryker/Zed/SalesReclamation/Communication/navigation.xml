@@ -27,7 +27,7 @@
                         <visible>0</visible>
                     </view>
                     <close>
-                        <title>View reclamation</title>
+                        <title>Close reclamation</title>
                         <bundle>sales-reclamation</bundle>
                         <controller>detail</controller>
                         <action>close</action>
