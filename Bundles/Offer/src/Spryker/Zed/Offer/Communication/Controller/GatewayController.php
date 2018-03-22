@@ -22,6 +22,6 @@ class GatewayController extends AbstractGatewayController
      */
     public function convertOfferToOrderAction(OfferToOrderConvertRequestTransfer $requestTransfer)
     {
-        return $this->getFacade()->convertOfferToOrder($requestTransfer->getOfferId());
+        return $this->getFacade()->convertOfferToOrder($requestTransfer->getOrder()->getIdSalesOrder());
     }
 }

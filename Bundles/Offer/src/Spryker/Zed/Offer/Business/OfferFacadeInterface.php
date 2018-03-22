@@ -30,9 +30,9 @@ interface OfferFacadeInterface
      *
      * @api
      *
-     * @param int $idOffer
+     * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer
      */
-    public function convertOfferToOrder(int $idOffer): OfferToOrderConvertResponseTransfer;
+    public function convertOfferToOrder(int $idSalesOrder): OfferToOrderConvertResponseTransfer;
 }
