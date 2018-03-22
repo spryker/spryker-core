@@ -23,7 +23,6 @@ class OrdersTable extends AbstractTable
     const ID_ORDER_ITEM_STATE = 'id-order-item-state';
     const FILTER = 'filter';
     const URL_SALES_DETAIL = '/sales/detail';
-    const URL_CREATE_RECLAMATION = '/sales-reclamation/create';
     const PARAM_ID_SALES_ORDER = 'id-sales-order';
     const GRAND_TOTAL = 'GrandTotal';
     const ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
@@ -55,24 +54,32 @@ class OrdersTable extends AbstractTable
     protected $customerFacade;
 
     /**
+     * @var \Spryker\Zed\Sales\Dependency\Plugin\UISalesTablePluginInterface[]
+     */
+    protected $uiSalesTablePlugins;
+
+    /**
      * @param \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface $queryBuilder
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface $sanitizeService
      * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface $customerFacade
+     * @param \Spryker\Zed\Sales\Dependency\Plugin\UISalesTablePluginInterface[] $uiSalesTablePlugins
      */
     public function __construct(
         OrdersTableQueryBuilderInterface $queryBuilder,
         SalesToMoneyInterface $moneyFacade,
         SalesToUtilSanitizeInterface $sanitizeService,
         UtilDateTimeServiceInterface $utilDateTimeService,
-        SalesToCustomerInterface $customerFacade
+        SalesToCustomerInterface $customerFacade,
+        array $uiSalesTablePlugins
     ) {
         $this->queryBuilder = $queryBuilder;
         $this->moneyFacade = $moneyFacade;
         $this->sanitizeService = $sanitizeService;
         $this->utilDateTimeService = $utilDateTimeService;
         $this->customerFacade = $customerFacade;
+        $this->uiSalesTablePlugins = $uiSalesTablePlugins;
     }
 
     /**
@@ -223,17 +230,6 @@ class OrdersTable extends AbstractTable
             'View'
         );
 
-        $urls[] = $this->generateCreateButton(
-            Url::generate(static::URL_CREATE_RECLAMATION, [
-                static::PARAM_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
-            ]),
-            'Claim',
-            [
-                'class' => 'btn-remove',
-                'icon' => 'fa-repeat',
-            ]
-        );
-
         return $urls;
     }
 
@@ -326,7 +322,7 @@ class OrdersTable extends AbstractTable
     {
         $results = [];
         foreach ($queryResults as $item) {
-            $results[] = [
+            $itemLine = [
                 SpySalesOrderTableMap::COL_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
                 SpySalesOrderTableMap::COL_ORDER_REFERENCE => $item[SpySalesOrderTableMap::COL_ORDER_REFERENCE],
                 SpySalesOrderTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpySalesOrderTableMap::COL_CREATED_AT]),
@@ -337,8 +333,24 @@ class OrdersTable extends AbstractTable
                 static::NUMBER_OF_ORDER_ITEMS => $item[OrdersTableQueryBuilder::FIELD_NUMBER_OF_ORDER_ITEMS],
                 static::URL => implode(' ', $this->createActionUrls($item)),
             ];
+            $itemLine = $this->applyUIPlugins($itemLine);
+            $results[] = $itemLine;
         }
 
         return $results;
+    }
+
+    /**
+     * @param array $itemLine
+     *
+     * @return array
+     */
+    protected function applyUIPlugins(array $itemLine): array
+    {
+        foreach ($this->uiSalesTablePlugins as $uiPlugin) {
+            $itemLine = $uiPlugin->formatQueryLine($itemLine);
+        }
+
+        return $itemLine;
     }
 }
