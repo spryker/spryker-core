@@ -282,8 +282,7 @@ class OrderHydrator implements OrderHydratorInterface
     protected function hydrateCountryEntityIntoAddressTransfer(
         AddressTransfer $addressTransfer,
         SpyCountry $countryEntity
-    )
-    {
+    ) {
         $addressTransfer->setIso2Code($countryEntity->getIso2Code());
         $countryTransfer = (new CountryTransfer())->fromArray($countryEntity->toArray(), true);
         $addressTransfer->setCountry($countryTransfer);
