@@ -19,6 +19,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface;
+use Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface;
 
 class DataImporterHelper extends Module
 {
@@ -47,6 +48,33 @@ class DataImporterHelper extends Module
         ]);
 
         return $dataImporterStub;
+    }
+
+    /**
+     * @param string $importType
+     * @param bool $isCalled
+     * @param \Generated\Shared\Transfer\DataImporterReportTransfer|null $dataImporterReportTransfer
+     *
+     * @return object|\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface
+     */
+    public function getDataImporterPluginMock($importType, $isCalled = false, DataImporterReportTransfer $dataImporterReportTransfer = null)
+    {
+        if (!$dataImporterReportTransfer) {
+            $dataImporterReportTransfer = new DataImporterReportTransfer();
+            $dataImporterReportTransfer->setImportType($importType)
+                ->setImportedDataSetCount(0);
+        }
+
+        $dataImporterPluginStub = Stub::makeEmpty(DataImportPluginInterface::class, [
+            'import' => Expected::exactly(($isCalled ? 1 : 0), function () use ($dataImporterReportTransfer) {
+                return $dataImporterReportTransfer;
+            }),
+            'getImportType' => function () use ($importType) {
+                return $importType;
+            },
+        ]);
+
+        return $dataImporterPluginStub;
     }
 
     /**

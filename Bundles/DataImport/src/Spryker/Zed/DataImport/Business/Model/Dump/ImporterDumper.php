@@ -37,8 +37,6 @@ class ImporterDumper implements ImporterDumperInterface
             $dataImporter[$dataImportType] = get_class($dataImporterInstance);
         }
 
-        ksort($dataImporter);
-
         return $dataImporter;
     }
 

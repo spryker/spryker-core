@@ -12,7 +12,7 @@ interface DataImporterPluginCollectionInterface
     /**
      * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface[] $dataImporterPluginCollection
      *
-     * @return $this
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterPluginCollectionInterface
      */
     public function addDataImporterPlugins(array $dataImporterPluginCollection);
 }

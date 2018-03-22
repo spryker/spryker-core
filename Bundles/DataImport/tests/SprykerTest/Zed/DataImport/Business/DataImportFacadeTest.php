@@ -117,4 +117,13 @@ class DataImportFacadeTest extends Unit
 
         return $dataImportBusinessFactoryMock;
     }
+
+    /**
+     * @return void
+     */
+    public function testDumpImporterDumpsAListOfAppliedImporter()
+    {
+        $dumpedImporter = $this->getFacade()->dumpImporter();
+        $this->assertInternalType('array', $dumpedImporter);
+    }
 }

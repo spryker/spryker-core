@@ -17,6 +17,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
+use Spryker\Zed\CategoryDataImport\Business\Exception\CategoryTemplateNotFoundException;
 use Spryker\Zed\CategoryDataImport\Business\Model\Repository\CategoryRepositoryInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddLocalesStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -70,6 +71,8 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
+     * @throws \Spryker\Zed\CategoryDataImport\Business\Exception\CategoryTemplateNotFoundException
+     *
      * @return \Orm\Zed\Category\Persistence\SpyCategory
      */
     protected function findOrCreateCategory(DataSetInterface $dataSet)
@@ -82,6 +85,9 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
 
         if (!empty($dataSet[static::KEY_TEMPLATE_NAME])) {
             $categoryTemplateEntity = SpyCategoryTemplateQuery::create()->findOneByName($dataSet[static::KEY_TEMPLATE_NAME]);
+            if (!$categoryTemplateEntity) {
+                throw new CategoryTemplateNotFoundException(sprintf('CategoryTemplate with template name "%s" not found!', $dataSet[static::KEY_TEMPLATE_NAME]));
+            }
             $categoryEntity->setFkCategoryTemplate($categoryTemplateEntity->getIdCategoryTemplate());
         }
 

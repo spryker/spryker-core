@@ -39,10 +39,44 @@ class DataImporterCollection implements DataImporterCollectionInterface, DataImp
     public function addDataImporterPlugins(array $dataImporterPluginCollection)
     {
         foreach ($dataImporterPluginCollection as $dataImporterPlugin) {
+            if (is_array($dataImporterPlugin)) {
+                $this->addAfter($dataImporterPlugin);
+
+                continue;
+            }
             $this->dataImporter[$dataImporterPlugin->getImportType()] = $dataImporterPlugin;
         }
 
         return $this;
+    }
+
+    /**
+     * @param array $dataImporterPluginWithAddAfterDefinition
+     *
+     * @return void
+     */
+    protected function addAfter(array $dataImporterPluginWithAddAfterDefinition)
+    {
+        $dataImporterPlugin = $dataImporterPluginWithAddAfterDefinition[0];
+        $afterDataImporter = $dataImporterPluginWithAddAfterDefinition[1];
+
+        $addedAfterImporter = false;
+        $reorderedDataImporter = [];
+
+        foreach ($this->dataImporter as $dataImporterType => $dataImporter) {
+            $reorderedDataImporter[$dataImporterType] = $dataImporter;
+
+            if ($dataImporterType === $afterDataImporter) {
+                $reorderedDataImporter[$dataImporterPlugin->getImportType()] = $dataImporterPlugin;
+                $addedAfterImporter = true;
+            }
+        }
+
+        if (!$addedAfterImporter) {
+            $reorderedDataImporter[$dataImporterPlugin->getImportType()] = $dataImporterPlugin;
+        }
+
+        $this->dataImporter = $reorderedDataImporter;
     }
 
     /**
