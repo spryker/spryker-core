@@ -297,6 +297,12 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $salesOrderItemEntity->setDiscountAmountFullAggregation($itemTransfer->getUnitDiscountAmountFullAggregation());
         $salesOrderItemEntity->setRefundableAmount($itemTransfer->getRefundableAmount());
 
+        if ($itemTransfer->getQuantitySalesUnit()) {
+            $salesOrderItemEntity->setQuantityMeasurementUnitName($itemTransfer->getQuantitySalesUnit()->getProductMeasurementUnit()->getName());
+            $salesOrderItemEntity->setQuantityMeasurementUnitPrecision($itemTransfer->getQuantitySalesUnit()->getPrecision());
+            $salesOrderItemEntity->setQuantityMeasurementUnitValue($itemTransfer->getQuantitySalesUnit()->getValue());
+        }
+
         $salesOrderItemEntity->setProcess($processEntity);
     }
 

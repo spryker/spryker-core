@@ -97,7 +97,7 @@ class ProductMeasurementSalesUnitValidator implements ProductMeasurementSalesUni
      */
     protected function isInteger($number)
     {
-        if (abs($number - (int)$number) < static::FLOAT_PRECISION) {
+        if (abs($number - round($number)) < static::FLOAT_PRECISION) {
             return true;
         }
 

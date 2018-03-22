@@ -32,7 +32,7 @@ class ProductMeasurementSalesUnitValuePostSavePlugin extends AbstractPlugin impl
             }
 
             $itemTransfer->getQuantitySalesUnit()->setValue(
-                (int)($itemTransfer->getQuantity() * $itemTransfer->getQuantitySalesUnit()->getConversion() * $itemTransfer->getQuantitySalesUnit()->getPrecision())
+                round($itemTransfer->getQuantity() * $itemTransfer->getQuantitySalesUnit()->getConversion() * $itemTransfer->getQuantitySalesUnit()->getPrecision())
             );
         }
 
