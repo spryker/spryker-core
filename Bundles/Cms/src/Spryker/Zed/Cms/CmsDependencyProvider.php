@@ -31,6 +31,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS = 'cms version post save plugins';
     const PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS = 'cms version transfer expander plugins';
     const PLUGINS_CMS_PAGE_DATA_EXPANDER = 'PLUGINS_CMS_PAGE_DATA_EXPANDER';
+    const PLUGINS_CMS_PAGE_POST_ACTIVATOR = 'PLUGINS_CMS_PAGE_POST_ACTIVATOR';
 
     const SERVICE_UTIL_ENCODING = 'util encoding service';
 
@@ -41,17 +42,9 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_URL] = function (Container $container) {
-            return new CmsToUrlBridge($container->getLocator()->url()->facade());
-        };
-
-        $container[self::FACADE_LOCALE] = function (Container $container) {
-            return new CmsToLocaleBridge($container->getLocator()->locale()->facade());
-        };
-
-        $container[self::FACADE_GLOSSARY] = function (Container $container) {
-            return new CmsToGlossaryBridge($container->getLocator()->glossary()->facade());
-        };
+        $this->addUrlFacade($container);
+        $this->addLocaleFacade($container);
+        $this->addGlossaryFacade($container);
 
         return $container;
     }
@@ -63,39 +56,16 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
-            return Propel::getConnection();
-        };
-
-        $container[self::FACADE_TOUCH] = function (Container $container) {
-            return new CmsToTouchBridge($container->getLocator()->touch()->facade());
-        };
-
-        $container[self::FACADE_GLOSSARY] = function (Container $container) {
-            return new CmsToGlossaryBridge($container->getLocator()->glossary()->facade());
-        };
-
-        $container[self::FACADE_URL] = function (Container $container) {
-            return new CmsToUrlBridge($container->getLocator()->url()->facade());
-        };
-
-        $container[self::FACADE_LOCALE] = function (Container $container) {
-            return new CmsToLocaleBridge($container->getLocator()->locale()->facade());
-        };
-
-        $container[self::PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS] = function (Container $container) {
-            return $this->getPostSavePlugins($container);
-        };
-
-        $container[self::PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS] = function (Container $container) {
-            return $this->getTransferExpanderPlugins($container);
-        };
-
-        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            return new CmsToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
-
-        $container = $this->addCmsPageDataExpanderPlugins($container);
+        $this->addPropelPluginConnection($container);
+        $this->addTouchFacade($container);
+        $this->addGlossaryFacade($container);
+        $this->addUrlFacade($container);
+        $this->addLocaleFacade($container);
+        $this->addCmsVersionPostSavePlugins($container);
+        $this->addCmsVersionTransferExpanderPlugins($container);
+        $this->addCmsPagePostActivatorPlugins($container);
+        $this->addUtilEncodingService($container);
+        $this->addCmsPageDataExpanderPlugins($container);
 
         return $container;
     }
@@ -107,20 +77,131 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[self::QUERY_CONTAINER_URL] = function (Container $container) {
-            return $container->getLocator()->url()->queryContainer();
-        };
+        $this->addUrlQueryContainer($container);
+        $this->addGlossaryQueryContainer($container);
+        $this->addCategoryQueryContainer($container);
+        $this->addLocaleQueryContainer($container);
 
-        $container[self::QUERY_CONTAINER_GLOSSARY] = function (Container $container) {
-            return $container->getLocator()->glossary()->queryContainer();
-        };
+        return $container;
+    }
 
-        $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
-            return $container->getLocator()->category()->queryContainer();
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addUrlFacade(Container $container)
+    {
+        $container[self::FACADE_URL] = function (Container $container) {
+            return new CmsToUrlBridge($container->getLocator()->url()->facade());
         };
+    }
 
-        $container[self::QUERY_CONTAINER_LOCALE] = function (Container $container) {
-            return $container->getLocator()->locale()->queryContainer();
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addLocaleFacade(Container $container)
+    {
+        $container[self::FACADE_LOCALE] = function (Container $container) {
+            return new CmsToLocaleBridge($container->getLocator()->locale()->facade());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addGlossaryFacade(Container $container)
+    {
+        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+            return new CmsToGlossaryBridge($container->getLocator()->glossary()->facade());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addTouchFacade(Container $container)
+    {
+        $container[self::FACADE_TOUCH] = function (Container $container) {
+            return new CmsToTouchBridge($container->getLocator()->touch()->facade());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addPropelPluginConnection(Container $container)
+    {
+        $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
+            return Propel::getConnection();
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addUtilEncodingService(Container $container)
+    {
+        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new CmsToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addCmsVersionPostSavePlugins(Container $container)
+    {
+        $container[self::PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS] = function (Container $container) {
+            return $this->getPostSavePlugins($container);
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addCmsVersionTransferExpanderPlugins(Container $container)
+    {
+        $container[self::PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS] = function (Container $container) {
+            return $this->getTransferExpanderPlugins($container);
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addCmsPagePostActivatorPlugins(Container $container)
+    {
+        $container[self::PLUGINS_CMS_PAGE_POST_ACTIVATOR] = function (Container $container) {
+            return $this->getCmsPagePostActivatorPlugins();
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addCmsPageDataExpanderPlugins(Container $container)
+    {
+        $container[static::PLUGINS_CMS_PAGE_DATA_EXPANDER] = function (Container $container) {
+            return $this->getCmsPageDataExpanderPlugins();
         };
     }
 
@@ -145,24 +226,66 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCmsPageDataExpanderPlugins(Container $container)
-    {
-        $container[static::PLUGINS_CMS_PAGE_DATA_EXPANDER] = function (Container $container) {
-            return $this->getCmsPageDataExpanderPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
      * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
      */
     protected function getCmsPageDataExpanderPlugins()
     {
         return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Communication\Plugin\PostCmsPageActivatorPluginInterface[]
+     */
+    protected function getCmsPagePostActivatorPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addLocaleQueryContainer(Container $container)
+    {
+        $container[self::QUERY_CONTAINER_LOCALE] = function (Container $container) {
+            return $container->getLocator()->locale()->queryContainer();
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addCategoryQueryContainer(Container $container)
+    {
+        $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+            return $container->getLocator()->category()->queryContainer();
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addUrlQueryContainer(Container $container)
+    {
+        $container[self::QUERY_CONTAINER_URL] = function (Container $container) {
+            return $container->getLocator()->url()->queryContainer();
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addGlossaryQueryContainer(Container $container)
+    {
+        $container[self::QUERY_CONTAINER_GLOSSARY] = function (Container $container) {
+            return $container->getLocator()->glossary()->queryContainer();
+        };
     }
 }

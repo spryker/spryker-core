@@ -7,6 +7,8 @@
 namespace Spryker\Zed\Cms\Business\Page;
 
 use Exception;
+use Generated\Shared\Transfer\CmsPageTransfer;
+use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Business\Exception\CannotActivatePageException;
 use Spryker\Zed\Cms\Business\Exception\MissingPageException;
@@ -27,13 +29,20 @@ class CmsPageActivator implements CmsPageActivatorInterface
     protected $touchFacade;
 
     /**
+     * @var \Spryker\Zed\Cms\Communication\Plugin\PostCmsPageActivatorPluginInterface[]
+     */
+    protected $postCmsPageActivatorPlugins;
+
+    /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchInterface $touchFacade
+     * @param \Spryker\Zed\Cms\Communication\Plugin\PostCmsPageActivatorPluginInterface[] $postCmsPageActivatorPlugins
      */
-    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToTouchInterface $touchFacade)
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToTouchInterface $touchFacade, array $postCmsPageActivatorPlugins)
     {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->touchFacade = $touchFacade;
+        $this->postCmsPageActivatorPlugins = $postCmsPageActivatorPlugins;
     }
 
     /**
@@ -66,6 +75,8 @@ class CmsPageActivator implements CmsPageActivatorInterface
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;
         }
+
+        $this->runPostActivatorPlugins($this->generateCmsPageTransferFromEntity($cmsPageEntity));
     }
 
     /**
@@ -114,6 +125,8 @@ class CmsPageActivator implements CmsPageActivatorInterface
             $this->cmsQueryContainer->getConnection()->rollBack();
             throw $exception;
         }
+
+        $this->runPostActivatorPlugins($this->generateCmsPageTransferFromEntity($cmsPageEntity));
     }
 
     /**
@@ -141,6 +154,19 @@ class CmsPageActivator implements CmsPageActivatorInterface
     }
 
     /**
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
+     *
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     */
+    protected function generateCmsPageTransferFromEntity(SpyCmsPage $cmsPageEntity)
+    {
+        $cmsPageTransfer = (new CmsPageTransfer())->fromArray($cmsPageEntity->toArray(), true);
+        $cmsPageTransfer->setFkPage($cmsPageEntity->getIdCmsPage());
+
+        return $cmsPageTransfer;
+    }
+
+    /**
      * @param int $idCmsPage
      *
      * @return int
@@ -148,5 +174,17 @@ class CmsPageActivator implements CmsPageActivatorInterface
     protected function countNumberOfGlossaryKeysForIdCmsPage($idCmsPage)
     {
         return $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($idCmsPage)->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     *
+     * @return void
+     */
+    protected function runPostActivatorPlugins(CmsPageTransfer $cmsPageTransfer)
+    {
+        foreach ($this->postCmsPageActivatorPlugins as $postCmsPageActivatorPlugin) {
+            $postCmsPageActivatorPlugin->execute($cmsPageTransfer);
+        }
     }
 }
