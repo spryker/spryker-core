@@ -18,10 +18,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ProductCollectionType extends AbstractType
 {
-    const FIELD_PRODUCTS = 'manualOrderProducts';
-    const FIELD_IS_PRODUCT_POSTED = 'isProductPosted';
+    protected const FIELD_PRODUCTS = 'manualOrderProducts';
+    protected const FIELD_IS_PRODUCT_POSTED = 'isProductPosted';
 
-    const OPTION_MANUAL_ORDER_PRODUCT_CLASS_COLLECTION = 'manual_order_product_class_collection';
+    public const OPTION_MANUAL_ORDER_PRODUCT_CLASS_COLLECTION = 'manual_order_product_class_collection';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

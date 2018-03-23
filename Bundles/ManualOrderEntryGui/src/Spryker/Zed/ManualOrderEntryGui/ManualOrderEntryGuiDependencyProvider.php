@@ -10,15 +10,6 @@ namespace Spryker\Zed\ManualOrderEntryGui;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\AddressFormPlugin;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\CustomersListFormPlugin;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ItemFormPlugin;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\PaymentFormPlugin;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ProductFormPlugin;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ShipmentFormPlugin;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\StoreFormPlugin;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\SummaryFormPlugin;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\VoucherFormPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCheckoutFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCurrencyFacadeBridge;
@@ -34,24 +25,24 @@ use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStor
 
 class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_CUSTOMER = 'MANUAL_ORDER_ENTRY_GUI:FACADE_CUSTOMER';
-    const FACADE_PRODUCT = 'MANUAL_ORDER_ENTRY_GUI:FACADE_PRODUCT';
-    const FACADE_CART = 'MANUAL_ORDER_ENTRY_GUI:FACADE_CART';
-    const FACADE_DISCOUNT = 'MANUAL_ORDER_ENTRY_GUI:FACADE_DISCOUNT';
-    const FACADE_CURRENCY = 'MANUAL_ORDER_ENTRY_GUI:FACADE_CURRENCY';
-    const FACADE_MESSENGER = 'MANUAL_ORDER_ENTRY_GUI:FACADE_MESSENGER';
-    const FACADE_SHIPMENT = 'MANUAL_ORDER_ENTRY_GUI:FACADE_SHIPMENT';
-    const FACADE_MONEY = 'MANUAL_ORDER_ENTRY_GUI:FACADE_MONEY';
-    const FACADE_PAYMENT = 'MANUAL_ORDER_ENTRY_GUI:FACADE_PAYMENT';
-    const FACADE_CHECKOUT = 'MANUAL_ORDER_ENTRY_GUI:FACADE_CHECKOUT';
+    public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_CART = 'FACADE_CART';
+    public const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
+    public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+    public const FACADE_MONEY = 'FACADE_MONEY';
+    public const FACADE_PAYMENT = 'FACADE_PAYMENT';
+    public const FACADE_CHECKOUT = 'FACADE_CHECKOUT';
 
-    const PAYMENT_SUB_FORMS = 'PAYMENT SUB FORMS';
+    public const PAYMENT_SUB_FORMS = 'PAYMENT_SUB_FORMS';
 
-    const QUERY_CONTAINER_CUSTOMER = 'MANUAL_ORDER_ENTRY_GUI:QUERY_CONTAINER_CUSTOMER';
+    public const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
 
-    const STORE = 'MANUAL_ORDER_ENTRY_GUI:STORE';
+    public const STORE = 'STORE';
 
-    const PLUGINS_MANUAL_ORDER_ENTRY_FORM = 'MANUAL_ORDER_ENTRY_GUI:PLUGINS_MANUAL_ORDER_ENTRY_FORM';
+    public const PLUGINS_MANUAL_ORDER_ENTRY_FORM = 'PLUGINS_MANUAL_ORDER_ENTRY_FORM';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -279,38 +270,17 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     protected function addManualOrderEntryFormPlugins(Container $container)
     {
         $container[static::PLUGINS_MANUAL_ORDER_ENTRY_FORM] = function (Container $container) {
-            return $this->getManualOrderEntryFormPlugins($container);
+            return $this->getManualOrderEntryFormPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      */
-    protected function getManualOrderEntryFormPlugins(Container $container)
+    protected function getManualOrderEntryFormPlugins()
     {
-        return [
-            new CustomersListFormPlugin($container[static::FACADE_CUSTOMER]),
-            new StoreFormPlugin($container[static::FACADE_CURRENCY]),
-            new ProductFormPlugin(
-                $container[static::FACADE_CART],
-                $container[static::FACADE_PRODUCT]
-            ),
-            new ItemFormPlugin($container[static::FACADE_CART]),
-            new VoucherFormPlugin(
-                $container[static::FACADE_DISCOUNT],
-                $container[static::FACADE_MESSENGER]
-            ),
-            new AddressFormPlugin($container[static::FACADE_CUSTOMER]),
-            new ShipmentFormPlugin($container[static::FACADE_SHIPMENT]),
-            new PaymentFormPlugin(
-                $container[static::FACADE_PAYMENT],
-                $container[static::PAYMENT_SUB_FORMS]
-            ),
-            new SummaryFormPlugin(),
-        ];
+        return [];
     }
 }

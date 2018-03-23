@@ -17,9 +17,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CustomersListType extends AbstractType
 {
-    const FIELD_CUSTOMER = 'id_customer';
+    public const FIELD_CUSTOMER = 'id_customer';
 
-    const OPTION_CUSTOMER_ARRAY = 'option-category-array';
+    public const OPTION_CUSTOMER_ARRAY = 'option-category-array';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

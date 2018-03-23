@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class VoucherType extends AbstractType
 {
-    const FIELD_VOUCHER_CODE = 'voucher_code';
+    protected const FIELD_VOUCHER_CODE = 'voucher_code';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

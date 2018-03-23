@@ -12,19 +12,16 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class AddressFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
+class AddressManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeInterface
      */
     protected $customerFacade;
 
-    /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeInterface $customerFacade
-     */
-    public function __construct($customerFacade)
+    public function __construct()
     {
-        $this->customerFacade = $customerFacade;
+        $this->customerFacade = $this->getFactory()->getCustomerFacade();
     }
 
     /**

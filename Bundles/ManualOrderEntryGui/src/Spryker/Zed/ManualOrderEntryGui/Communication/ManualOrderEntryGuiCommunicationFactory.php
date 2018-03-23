@@ -72,6 +72,14 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeInterface
+     */
+    public function getMessengerFacade()
+    {
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
      * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCurrencyFacadeInterface
      */
     public function getCurrencyFacade()
@@ -369,7 +377,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createPaymentDataProvider()
     {
         return new PaymentDataProvider(
-            $this->getPaymentMethodSubFormPluginCollection()
+            $this->getPaymentMethodSubFormPlugins()
         );
     }
 
@@ -391,9 +399,9 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginCollection
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginInterface[]
      */
-    public function getPaymentMethodSubFormPluginCollection()
+    public function getPaymentMethodSubFormPlugins()
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::PAYMENT_SUB_FORMS);
     }

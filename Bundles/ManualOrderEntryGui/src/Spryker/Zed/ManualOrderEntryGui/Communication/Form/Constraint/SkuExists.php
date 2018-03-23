@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class SkuExists extends SymfonyConstraint
 {
-    const OPTION_PRODUCT_FACADE = 'productFacade';
+    public const OPTION_PRODUCT_FACADE = 'productFacade';
 
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeInterface

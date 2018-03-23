@@ -17,9 +17,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class StoreType extends AbstractType
 {
-    const FIELD_STORE = 'id_store_currency';
+    protected const FIELD_STORE = 'id_store_currency';
 
-    const OPTION_STORES_ARRAY = 'option-stores-array';
+    public const OPTION_STORES_ARRAY = 'option-stores-array';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

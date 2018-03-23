@@ -23,20 +23,20 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class AddressType extends AbstractType
 {
-    const FIELD_SALUTATION = 'salutation';
-    const FIELD_FIRST_NAME = 'first_name';
-    const FIELD_LAST_NAME = 'last_name';
-    const FIELD_COMPANY = 'company';
-    const FIELD_ADDRESS_1 = 'address1';
-    const FIELD_ADDRESS_2 = 'address2';
-    const FIELD_ADDRESS_3 = 'address3';
-    const FIELD_ZIP_CODE = 'zip_code';
-    const FIELD_CITY = 'city';
-    const FIELD_ISO_2_CODE = 'iso2_code';
-    const FIELD_PHONE = 'phone';
-    const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
+    protected const FIELD_SALUTATION = 'salutation';
+    protected const FIELD_FIRST_NAME = 'first_name';
+    protected const FIELD_LAST_NAME = 'last_name';
+    protected const FIELD_COMPANY = 'company';
+    protected const FIELD_ADDRESS_1 = 'address1';
+    protected const FIELD_ADDRESS_2 = 'address2';
+    protected const FIELD_ADDRESS_3 = 'address3';
+    protected const FIELD_ZIP_CODE = 'zip_code';
+    protected const FIELD_CITY = 'city';
+    protected const FIELD_ISO_2_CODE = 'iso2_code';
+    protected const FIELD_PHONE = 'phone';
+    public const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
 
-    const OPTION_COUNTRY_CHOICES = 'country_choices';
+    public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

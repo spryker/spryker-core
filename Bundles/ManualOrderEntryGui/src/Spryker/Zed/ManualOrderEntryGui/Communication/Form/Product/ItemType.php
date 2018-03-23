@@ -20,10 +20,10 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class ItemType extends AbstractType
 {
-    const FIELD_SKU = 'sku';
-    const FIELD_QUANTITY = 'quantity';
-    const FIELD_UNIT_GROSS_PRICE = 'unitGrossPrice';
-    const FIELD_FORCED_UNIT_GROSS_PRICE = 'forcedUnitGrossPrice';
+    protected const FIELD_SKU = 'sku';
+    protected const FIELD_QUANTITY = 'quantity';
+    protected const FIELD_UNIT_GROSS_PRICE = 'unitGrossPrice';
+    protected const FIELD_FORCED_UNIT_GROSS_PRICE = 'forcedUnitGrossPrice';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

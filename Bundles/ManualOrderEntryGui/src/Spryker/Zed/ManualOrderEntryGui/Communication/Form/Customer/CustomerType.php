@@ -19,10 +19,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CustomerType extends AbstractType
 {
-    const FIELD_SALUTATION = 'salutation';
-    const FIELD_FIRST_NAME = 'first_name';
-    const FIELD_LAST_NAME = 'last_name';
-    const FIELD_EMAIL = 'email';
+    protected const FIELD_SALUTATION = 'salutation';
+    protected const FIELD_FIRST_NAME = 'first_name';
+    protected const FIELD_LAST_NAME = 'last_name';
+    protected const FIELD_EMAIL = 'email';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

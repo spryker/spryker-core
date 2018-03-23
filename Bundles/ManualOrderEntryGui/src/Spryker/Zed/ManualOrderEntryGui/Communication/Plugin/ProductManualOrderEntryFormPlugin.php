@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class ProductFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
+class ProductManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface
@@ -26,14 +26,10 @@ class ProductFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
      */
     protected $productFacade;
 
-    /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface $cartFacade
-     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeInterface $productFacade
-     */
-    public function __construct($cartFacade, $productFacade)
+    public function __construct()
     {
-        $this->cartFacade = $cartFacade;
-        $this->productFacade = $productFacade;
+        $this->cartFacade = $this->getFactory()->getCartFacade();
+        $this->productFacade = $this->getFactory()->getProductFacade();
     }
 
     /**

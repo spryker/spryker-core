@@ -25,8 +25,8 @@
         <property name="payments" type="Payment[]" />
 
         <property name="manualOrderProducts" type="ManualOrderProduct[]" />
-        <property name="isProductPosted" type="int" />
-        <property name="submitOrder" type="int" />
+        <property name="isProductPosted" type="bool" />
+        <property name="submitOrder" type="bool" />
     </transfer>
 
     <transfer name="Item">

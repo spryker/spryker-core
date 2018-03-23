@@ -12,19 +12,16 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class StoreFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
+class StoreManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCurrencyFacadeInterface
      */
     protected $currencyFacade;
 
-    /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCurrencyFacadeInterface $currencyFacade
-     */
-    public function __construct($currencyFacade)
+    public function __construct()
     {
-        $this->currencyFacade = $currencyFacade;
+        $this->currencyFacade = $this->getFactory()->getCurrencyFacade();
     }
 
     /**
@@ -48,24 +45,25 @@ class StoreFormPlugin extends AbstractFormPlugin implements ManualOrderEntryForm
     public function handleData($quoteTransfer, &$form, $request)
     {
         $idStoreCurrency = $quoteTransfer->getIdStoreCurrency();
-        if (strlen($idStoreCurrency) && strpos($idStoreCurrency, ';') !== false) {
-            list($idStore, $idCurrency) = explode(';', $idStoreCurrency);
+        if (!$this->isValidIdStoreCurrency($idStoreCurrency)) {
+            return $quoteTransfer;
+        }
 
-            $storeWithCurrencyTransfers = $this->currencyFacade->getAllStoresWithCurrencies();
+        list($idStore, $idCurrency) = explode(';', $idStoreCurrency);
+        $storeWithCurrencyTransfers = $this->currencyFacade->getAllStoresWithCurrencies();
 
-            foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {
-                $storeTransfer = $storeWithCurrencyTransfer->getStore();
-                if ($idStore == $storeTransfer->getIdStore()) {
-                    $quoteTransfer->setStore($storeTransfer);
+        foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {
+            $storeTransfer = $storeWithCurrencyTransfer->getStore();
+            if ($idStore == $storeTransfer->getIdStore()) {
+                $quoteTransfer->setStore($storeTransfer);
 
-                    foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
-                        if ($idCurrency == $currencyTransfer->getIdCurrency()) {
-                            $quoteTransfer->setCurrency($currencyTransfer);
-                            break;
-                        }
+                foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
+                    if ($idCurrency == $currencyTransfer->getIdCurrency()) {
+                        $quoteTransfer->setCurrency($currencyTransfer);
+                        break;
                     }
-                    break;
                 }
+                break;
             }
         }
 
@@ -82,5 +80,16 @@ class StoreFormPlugin extends AbstractFormPlugin implements ManualOrderEntryForm
     public function handleDataStepEngine($quoteTransfer, &$form, $request)
     {
         return $this->handleData($quoteTransfer, $form, $request);
+    }
+
+    /**
+     * @param string $idStoreCurrency
+     *
+     * @return bool
+     */
+    protected function isValidIdStoreCurrency($idStoreCurrency)
+    {
+        return strlen($idStoreCurrency)
+            && strpos($idStoreCurrency, ';') !== false;
     }
 }

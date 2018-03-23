@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class SummaryType extends AbstractType
 {
-    const FIELD_SUBMIT_ORDER = 'submit_order';
+    protected const FIELD_SUBMIT_ORDER = 'submit_order';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

@@ -19,8 +19,8 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class ProductType extends AbstractType
 {
-    const FIELD_SKU = 'sku';
-    const FIELD_QUANTITY = 'quantity';
+    protected const FIELD_SKU = 'sku';
+    protected const FIELD_QUANTITY = 'quantity';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

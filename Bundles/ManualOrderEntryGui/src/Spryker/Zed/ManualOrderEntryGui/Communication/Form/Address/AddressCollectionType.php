@@ -17,15 +17,15 @@ use Symfony\Component\Validator\Constraint;
 
 class AddressCollectionType extends AbstractType
 {
-    const FIELD_SHIPPING_ADDRESS = 'shippingAddress';
-    const FIELD_BILLING_ADDRESS = 'billingAddress';
-    const FIELD_BILLING_SAME_AS_SHIPPING = 'billingSameAsShipping';
+    protected const FIELD_SHIPPING_ADDRESS = 'shippingAddress';
+    protected const FIELD_BILLING_ADDRESS = 'billingAddress';
+    protected const FIELD_BILLING_SAME_AS_SHIPPING = 'billingSameAsShipping';
 
-    const OPTION_ADDRESS_CHOICES = 'address_choices';
-    const OPTION_COUNTRY_CHOICES = 'country_choices';
+    public const OPTION_ADDRESS_CHOICES = 'address_choices';
+    public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
-    const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
-    const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
+    protected const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
+    protected const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

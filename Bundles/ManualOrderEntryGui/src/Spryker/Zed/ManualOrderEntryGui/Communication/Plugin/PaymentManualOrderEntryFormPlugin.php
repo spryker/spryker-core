@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class PaymentFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
+class PaymentManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToPaymentFacadeInterface
@@ -21,18 +21,14 @@ class PaymentFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
     protected $paymentFacade;
 
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginCollection
+     * @var \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginInterface[]
      */
     protected $subFormPlugins;
 
-    /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToPaymentFacadeInterface $paymentFacade
-     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginCollection $subFormPlugins
-     */
-    public function __construct($paymentFacade, $subFormPlugins)
+    public function __construct()
     {
-        $this->paymentFacade = $paymentFacade;
-        $this->subFormPlugins = $subFormPlugins;
+        $this->paymentFacade = $this->getFactory()->getPaymentFacade();
+        $this->subFormPlugins = $this->getFactory()->getPaymentMethodSubFormPlugins();
     }
 
     /**

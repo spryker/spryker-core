@@ -15,8 +15,11 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class VoucherFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
+class VoucherManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlugin implements ManualOrderEntryFormPluginInterface
 {
+    protected const MESSAGE_ERROR = 'Voucher code \'%s\' has not been applied';
+    protected const MESSAGE_SUCCESS = 'Voucher code \'%s\' has been applied';
+
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToDiscountFacadeInterface
      */
@@ -27,14 +30,10 @@ class VoucherFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
      */
     protected $messengerFacade;
 
-    /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToDiscountFacadeInterface $discountFacade
-     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeInterface $messengerFacade
-     */
-    public function __construct($discountFacade, $messengerFacade)
+    public function __construct()
     {
-        $this->discountFacade = $discountFacade;
-        $this->messengerFacade = $messengerFacade;
+        $this->discountFacade = $this->getFactory()->getDiscountFacade();
+        $this->messengerFacade = $this->getFactory()->getMessengerFacade();
     }
 
     /**
@@ -67,13 +66,13 @@ class VoucherFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFo
             $quoteTransfer = $this->discountFacade->calculateDiscounts($quoteTransfer);
 
             if (!count($quoteTransfer->getVoucherDiscounts())) {
-                $this->addMessage(sprintf('Voucher code \'%s\' has not been applied', $quoteTransfer->getVoucherCode()), false);
+                $this->addMessage(sprintf(static::MESSAGE_ERROR, $quoteTransfer->getVoucherCode()), false);
                 $quoteTransfer->setVoucherCode('');
 
                 $form = $this->createForm($request, $quoteTransfer);
                 $form->setData($quoteTransfer->toArray());
             } else {
-                $this->addMessage(sprintf('Voucher code \'%s\' has been applied', $quoteTransfer->getVoucherCode()));
+                $this->addMessage(sprintf(static::MESSAGE_SUCCESS, $quoteTransfer->getVoucherCode()));
             }
         }
 

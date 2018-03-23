@@ -6,19 +6,19 @@
     "php": ">=7.1",
     "spryker/cart": "^4.1.0",
     "spryker/checkout": "^4.1.0",
-    "spryker/currency": "*",
-    "spryker/customer": "*",
-    "spryker/discount": "*",
-    "spryker/gui": "*",
-    "spryker/kernel": "*",
-    "spryker/messenger": "*",
-    "spryker/money": "*",
-    "spryker/payment": "*",
-    "spryker/product": "*",
-    "spryker/sales": "*",
-    "spryker/shipment": "*",
+    "spryker/currency": "^3.1.0",
+    "spryker/customer": "^7.1.0",
+    "spryker/discount": "^6.1.0",
+    "spryker/gui": "^3.1.0",
+    "spryker/kernel": "^3.18.0",
+    "spryker/messenger": "^3.1.0",
+    "spryker/money": "^2.1.0",
+    "spryker/payment": "^4.1.0",
+    "spryker/product": "^5.1.0",
+    "spryker/sales": "^8.1.0",
+    "spryker/shipment": "^6.1.0",
     "spryker/symfony": "^3.1.0",
-    "spryker/utilText": "*"
+    "spryker/utilText": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -27,11 +27,6 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

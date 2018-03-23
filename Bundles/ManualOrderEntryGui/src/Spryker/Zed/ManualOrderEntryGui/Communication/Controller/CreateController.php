@@ -23,10 +23,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
-    const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
+    protected const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
 
-    const SUCCESSFUL_MESSAGE_CUSTOMER_CREATED = 'Customer is registered successfully.';
-    const SUCCESSFUL_MESSAGE_ORDER_CREATED = 'Order is created successfully.';
+    protected const SUCCESSFUL_MESSAGE_CUSTOMER_CREATED = 'Customer is registered successfully.';
+    protected const SUCCESSFUL_MESSAGE_ORDER_CREATED = 'Order is created successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -99,7 +99,7 @@ class CreateController extends AbstractController
                 $customerResponseTransfer = $this->registerCustomer($customerForm);
 
                 if ($customerResponseTransfer->getIsSuccess()) {
-                    $this->addSuccessMessage(self::SUCCESSFUL_MESSAGE_CUSTOMER_CREATED);
+                    $this->addSuccessMessage(static::SUCCESSFUL_MESSAGE_CUSTOMER_CREATED);
                     $redirectUrl = $this->createRedirectUrlAfterUserCreation($customerResponseTransfer->getCustomerTransfer());
 
                     return $this->redirectResponse($redirectUrl);

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class SummaryFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
+class SummaryManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

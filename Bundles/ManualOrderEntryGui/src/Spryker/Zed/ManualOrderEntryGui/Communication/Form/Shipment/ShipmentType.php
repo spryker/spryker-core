@@ -17,9 +17,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ShipmentType extends AbstractType
 {
-    const FIELD_SHIPMENT_METHOD = 'id_shipment_method';
+    protected const FIELD_SHIPMENT_METHOD = 'id_shipment_method';
 
-    const OPTION_SHIPMENT_METHODS_ARRAY = 'option-shipment-methods-array';
+    public const OPTION_SHIPMENT_METHODS_ARRAY = 'option-shipment-methods-array';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

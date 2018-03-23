@@ -64,10 +64,12 @@ class PriceManager implements PriceManagerInterface
         $currencyIsoCode = $cartChangeTransfer->getQuote()->getCurrency()->getCode();
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getForcedUnitGrossPrice()) {
-                $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $priceMode, $currencyIsoCode);
-                $this->setPrice($itemTransfer, $priceProductFilterTransfer, $priceMode);
+            if ($itemTransfer->getForcedUnitGrossPrice()) {
+                continue;
             }
+
+            $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $priceMode, $currencyIsoCode);
+            $this->setPrice($itemTransfer, $priceProductFilterTransfer, $priceMode);
         }
 
         return $cartChangeTransfer;

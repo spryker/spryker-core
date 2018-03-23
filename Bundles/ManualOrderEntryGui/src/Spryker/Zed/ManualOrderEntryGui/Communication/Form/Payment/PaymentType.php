@@ -23,14 +23,14 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class PaymentType extends AbstractType
 {
-    const PAYMENT_PROPERTY_PATH = QuoteTransfer::PAYMENT;
-    const PAYMENT_SELECTION = PaymentTransfer::PAYMENT_SELECTION;
-    const PAYMENT_SELECTION_PROPERTY_PATH = self::PAYMENT_PROPERTY_PATH . '.' . self::PAYMENT_SELECTION;
+    protected const PAYMENT_PROPERTY_PATH = QuoteTransfer::PAYMENT;
+    protected const PAYMENT_SELECTION = PaymentTransfer::PAYMENT_SELECTION;
+    protected const PAYMENT_SELECTION_PROPERTY_PATH = self::PAYMENT_PROPERTY_PATH . '.' . self::PAYMENT_SELECTION;
 
-    const KEY_SUBFORM = 'SUBFORM';
-    const KEY_PLUGIN = 'PLUGIN';
+    protected const KEY_SUBFORM = 'SUBFORM';
+    protected const KEY_PLUGIN = 'PLUGIN';
 
-    const OPTIONS_FIELD_NAME = 'select_options';
+    public const OPTIONS_FIELD_NAME = 'select_options';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -52,7 +52,7 @@ class PaymentType extends AbstractType
     protected function addPaymentMethods(FormBuilderInterface $builder, array $options)
     {
         $paymentSubFormPlugins = $this->getFactory()
-            ->getPaymentMethodSubFormPluginCollection();
+            ->getPaymentMethodSubFormPlugins();
         $paymentMethodSubForms = $this->getPaymentMethodSubForms($paymentSubFormPlugins);
         $paymentMethodChoices = $this->getPaymentMethodChoices($paymentMethodSubForms);
 
@@ -115,7 +115,7 @@ class PaymentType extends AbstractType
     }
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginCollection $paymentSubFormPlugins
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginInterface[] $paymentSubFormPlugins
      *
      * @return array
      */

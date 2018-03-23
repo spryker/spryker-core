@@ -17,9 +17,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ItemCollectionType extends AbstractType
 {
-    const FIELD_ITEMS = 'items';
+    protected const FIELD_ITEMS = 'items';
 
-    const OPTION_ITEM_CLASS_COLLECTION = 'item_class_collection';
+    public const OPTION_ITEM_CLASS_COLLECTION = 'item_class_collection';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

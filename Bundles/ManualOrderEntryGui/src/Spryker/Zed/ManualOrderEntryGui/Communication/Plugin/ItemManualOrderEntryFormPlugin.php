@@ -7,25 +7,22 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
-use Generated\Shared\Transfer\ShipmentTransfer;
+use ArrayObject;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class ShipmentFormPlugin extends AbstractFormPlugin implements ManualOrderEntryFormPluginInterface
+class ItemManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface
      */
-    protected $shipmentFacade;
+    protected $cartFacade;
 
-    /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface $shipmentFacade
-     */
-    public function __construct($shipmentFacade)
+    public function __construct()
     {
-        $this->shipmentFacade = $shipmentFacade;
+        $this->cartFacade = $this->getFactory()->getCartFacade();
     }
 
     /**
@@ -36,7 +33,7 @@ class ShipmentFormPlugin extends AbstractFormPlugin implements ManualOrderEntryF
      */
     public function createForm(Request $request, $dataTransfer = null)
     {
-        return $this->getFactory()->createShipmentForm($request, $dataTransfer);
+        return $this->getFactory()->createItemsCollectionForm($dataTransfer);
     }
 
     /**
@@ -48,14 +45,26 @@ class ShipmentFormPlugin extends AbstractFormPlugin implements ManualOrderEntryF
      */
     public function handleData($quoteTransfer, &$form, $request)
     {
-        $idShipmentMethod = $quoteTransfer->getIdShipmentMethod();
-        if ($idShipmentMethod) {
-            $shipmentMethodTransfer = $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
-            $shipmentTransfer = new ShipmentTransfer();
-            $shipmentTransfer->setMethod($shipmentMethodTransfer);
+        $items = new ArrayObject();
+        $addedSkus = [];
 
-            $quoteTransfer->setShipment($shipmentTransfer);
+        foreach ($quoteTransfer->getItems() as $item) {
+            if ($item->getQuantity() <= 0
+                || in_array($item->getSku(), $addedSkus)
+            ) {
+                continue;
+            }
+
+            $addedSkus[] = $item->getSku();
+            $items->append($item);
         }
+        $quoteTransfer->setItems($items);
+        if (count($items)) {
+            $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
+        }
+
+        $form = $this->createForm($request, $quoteTransfer);
+        $form->setData($quoteTransfer->toArray());
 
         return $quoteTransfer;
     }
