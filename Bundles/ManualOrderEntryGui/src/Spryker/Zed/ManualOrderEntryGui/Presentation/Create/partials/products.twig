@@ -1,14 +1,28 @@
 
 {% if form.manualOrderProducts|length > 0 %}
     <h4>Add Products</h4>
-    <table class="manualOrderProducts">
+    <table class="manualOrderProducts"
+           id="product-fields-list"
+           data-prototype-sku="{{ form_row(form.manualOrderProducts.vars.prototype.sku) | e }}"
+           data-prototype-quantity="{{ form_row(form.manualOrderProducts.vars.prototype.quantity) | e }}"
+    >
         {% for product in form.manualOrderProducts %}
             <tr>
                 <td>{{ form_row(product.sku) }}</td>
                 <td>{{ form_row(product.quantity) }}</td>
             </tr>
         {% endfor %}
+        {#<tr id="product-fields-list">#}
+            {#<td>#}
+                {#{{ form_row(form.manualOrderProducts.vars.prototype.sku) }}#}
+            {#</td>#}
+            {#<td>#}
+                {#{{ form_row(form.manualOrderProducts.vars.prototype.quantity) }}#}
+            {#</td>#}
+        {#</tr>#}
     </table>
+    {{ createActionButton('#', 'Add Product Field' | trans, {'id': 'add-another-product'}) }}
+
 {% else %}
     <div style="display:none;">
         {{ form_widget(form) }}
