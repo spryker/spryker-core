@@ -158,7 +158,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderPluginExecutor(): SalesOrderPluginExecutorInterface
     {
         return new SalesOrderPluginExecutor(
-            $this->getPreSaveHydrateOrderPlugins()
+            $this->getPreSaveOrderPlugins()
         );
     }
 
@@ -239,14 +239,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function getHydrateOrderPlugins()
     {
-        return $this->getProvidedDependency(SalesDependencyProvider::HYDRATE_ORDER_PLUGINS);
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_HYDRATE_ORDER);
     }
 
     /**
      * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\PreSaveOrderPluginInterface[]
      */
-    protected function getPreSaveHydrateOrderPlugins()
+    protected function getPreSaveOrderPlugins()
     {
-        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_PRE_SAVE_HYDRATE_ORDER);
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_PRE_SAVE_ORDER);
     }
 }
