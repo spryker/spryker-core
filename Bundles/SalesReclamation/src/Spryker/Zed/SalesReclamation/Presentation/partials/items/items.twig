@@ -1,0 +1,22 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Reclamation Items' } %}
+
+    {% block widget_content %}
+
+        <table class="footable table toggle-arrow-tiny" data-qa="order-item-list">
+            <thead>
+            <tr class="text-left">
+                {% block headers %}
+                <th><input type="checkbox" id="check-all-orders" /></th>
+                <th colspan="2">{{ 'Product' | trans }}</th>
+                <th>{{ 'Unit Price' | trans }} <small>({{ reclamation.order.priceMode }})</small></th>
+                <th>{{ 'Item total' | trans }}</th>
+                <th>{{ 'State' | trans }}</th>
+                {% endblock %}
+            </tr>
+            </thead>
+          {% embed '@Sales/Detail/boxes/no-group-items.twig' with {items: reclamation.reclamationItems} %}{% endembed %}
+        </table>
+
+    {% endblock %}
+
+{% endembed %}

@@ -2,7 +2,7 @@
 
 {% block content %}
     Reclamation id: {{ reclamation.idSalesReclamation }}<br />
-    Order id: {{ reclamation.fkSalesOrder }}
+    Order id: {{ reclamation.order.idSalesOrder }}
 
     <div id="items">
         {% include '@SalesReclamation/Detail/boxes/items.twig' with {

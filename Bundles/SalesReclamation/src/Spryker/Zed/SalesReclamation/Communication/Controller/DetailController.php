@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReclamation\Communication\Controller;
 
+use Generated\Shared\Transfer\ReclamationTransfer;
 use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -15,6 +16,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @method \Spryker\Zed\SalesReclamation\Business\SalesReclamationFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesReclamation\Communication\SalesReclamationCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface getQueryContainer()
  */
@@ -28,13 +30,14 @@ class DetailController extends AbstractController
     public function indexAction(Request $request)
     {
         $idReclamation = $this->castId($request->get(SalesReclamationConfig::PARAM_ID_RECLAMATION));
+        $reclamationTransfer = new ReclamationTransfer();
+        $reclamationTransfer->setIdSalesReclamation($idReclamation);
 
-        $reclamation = $this->getQueryContainer()
-            ->queryReclamations()
-            ->findOneByIdSalesReclamation($idReclamation);
+        $reclamationTransfer = $this->getFacade()
+            ->hydrateReclamationByIdReclamation($reclamationTransfer);
 
         return $this->viewResponse([
-            'reclamation' => $reclamation,
+            'reclamation' => $reclamationTransfer,
         ]);
     }
 
