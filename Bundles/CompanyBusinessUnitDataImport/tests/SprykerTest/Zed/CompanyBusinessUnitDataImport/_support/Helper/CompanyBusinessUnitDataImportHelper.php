@@ -36,7 +36,7 @@ class CompanyBusinessUnitDataImportHelper extends Module
     public function assertDatabaseTableContainsData(): void
     {
         $companyQuery = $this->getCompanyBusinessUnitQuery();
-        $this->assertCount(1, $companyQuery, 'Expected at least one entry in the database table but database table is empty.');
+        $this->assertTrue(($companyQuery->count() > 0), 'Expected at least one entry in the database table but database table is empty.');
     }
 
     /**
