@@ -110,7 +110,7 @@ class Hydrator implements HydratorInterface
     protected function getOrderItemById(OrderTransfer $orderTransfer, int $idSalesOrderItem): ?ItemTransfer
     {
         foreach ($orderTransfer->getItems() as $item) {
-            if ($item->getIdOrderItem() === $idSalesOrderItem) {
+            if ($item->getIdSalesOrderItem() === $idSalesOrderItem) {
                 return $item;
             }
         }

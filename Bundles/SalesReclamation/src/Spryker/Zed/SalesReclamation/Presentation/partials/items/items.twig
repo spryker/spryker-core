@@ -14,7 +14,7 @@
                 {% endblock %}
             </tr>
             </thead>
-          {% embed '@Sales/Detail/boxes/no-group-items.twig' with {items: reclamation.reclamationItems} %}{% endembed %}
+          {% embed '@SalesReclamation/partials/items/no-group-items.twig' with {items: reclamation.reclamationItems} %}{% endembed %}
         </table>
 
     {% endblock %}
