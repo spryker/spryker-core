@@ -3,10 +3,6 @@
 {% set priceToPay = group ? bundleItem.unitPriceToPayAggregation : orderItem.unitPriceToPayAggregation %}
 {% set image = image %}
 
-{#<td class="item-checker">#}
-    {#<input type="checkbox" name="id-order-item[]" value="{{ orderItem.idSalesOrderItem }}" class="item-check" />#}
-{#</td>#}
-{% block order_item %}
 {% if displayImage %}
     <td {% if group %}rowspan="{{ itemCount }}" {% endif %}>
         <img class="product-image" src="{{ image }}" width="150px"/>
@@ -74,4 +70,19 @@
         >{{ (orderItem.stateHistory | first).name }}</a> ({{ orderItem.process }})
     </div>
 </td>
-{% endblock %}
+<td>
+    {% if reclamationItem.status == 'Open' %}
+        {% set label = 'label-success' %}
+    {% else %}
+        {% set label = 'label-danger' %}
+    {% endif %}
+
+    <span class="label {{ label }}" title="Deactivated">{{ reclamationItem.status }}</span>
+</td>
+<td>
+    {% if reclamationItem.status == 'Open' %}
+        <a href="{{ url('sales-reclamation/detail/close', {'id-reclamation': reclamation.idSalesReclamation}) }}"
+           class="btn btn-xs btn-outline btn-view btn-remove"><i class="fa fa-close"></i>Refund
+        </a>
+    {% endif %}
+</td>

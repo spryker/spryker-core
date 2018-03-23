@@ -1,6 +1,21 @@
-{% extends '@SalesReclamation/partials/items/items.twig' %}
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Reclamation Items' } %}
 
-{% block headers %}
-    {{ parent() }}
-    <th>{{ 'Trigger event' | trans }}</th>
-{% endblock %}
+    {% block widget_content %}
+
+        <table class="footable table toggle-arrow-tiny" data-qa="order-item-list">
+            <thead>
+            <tr class="text-left">
+                <th colspan="2">{{ 'Product' | trans }}</th>
+                <th>{{ 'Unit Price' | trans }} <small>({{ reclamation.order.priceMode }})</small></th>
+                <th>{{ 'Item total' | trans }}</th>
+                <th>{{ 'State' | trans }}</th>
+                <th>State</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            {% embed '@SalesReclamation/Detail/boxes/no-group-items.twig' with {items: reclamation.reclamationItems} %}{% endembed %}
+        </table>
+
+    {% endblock %}
+
+{% endembed %}
