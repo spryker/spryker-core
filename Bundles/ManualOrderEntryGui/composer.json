@@ -3,6 +3,22 @@
   "description": "ManualOrderEntryGui module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
+    "spryker/cart": "^4.1.0",
+    "spryker/checkout": "^4.1.0",
+    "spryker/currency": "*",
+    "spryker/customer": "*",
+    "spryker/discount": "*",
+    "spryker/gui": "*",
+    "spryker/kernel": "*",
+    "spryker/messenger": "*",
+    "spryker/money": "*",
+    "spryker/payment": "*",
+    "spryker/product": "*",
+    "spryker/sales": "*",
+    "spryker/shipment": "*",
+    "spryker/symfony": "^3.1.0",
+    "spryker/utilText": "*"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

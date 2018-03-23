@@ -2,7 +2,18 @@
 [![Build Status](https://travis-ci.org/spryker/manual-order-entry-gui.svg)](https://travis-ci.org/spryker/manual-order-entry-gui)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/manual-order-entry-gui/badge.svg)](https://coveralls.io/github/spryker/manual-order-entry-gui)
 
-{{ADD DESCRIPTION HERE}}
+New module, that allows create order in Zed.
+Basic steps:
+
+    Selecting/Adding a customer
+    Selecting Store, Currency
+    Selecting products
+    Adding voucher
+    Selecting/Adding Customer Address
+    Selecting a shipment method
+    Selecting a payment method
+    Summary page
+    Submit the order
 
 ## Installation
 
