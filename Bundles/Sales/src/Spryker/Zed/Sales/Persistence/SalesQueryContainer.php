@@ -166,6 +166,31 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     /**
      * @api
      *
+     * @param int $idOrderSource
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpyOrderSourceQuery
+     */
+    public function queryOrderSourceById($idOrderSource)
+    {
+        $query = $this->getFactory()->createOrderSourceQuery();
+        $query->filterByIdOrderSource($idOrderSource);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpyOrderSourceQuery
+     */
+    public function queryOrderSource()
+    {
+        return $this->getFactory()->createOrderSourceQuery();
+    }
+
+    /**
+     * @api
+     *
      * @param int $idCustomer
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *

@@ -19,13 +19,16 @@ use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMesse
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMoneyFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToPaymentFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeBridge;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToSalesFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerBridge;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToSalesQueryContainerBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreBridge;
 
 class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_CART = 'FACADE_CART';
     public const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
@@ -35,13 +38,10 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_PAYMENT = 'FACADE_PAYMENT';
     public const FACADE_CHECKOUT = 'FACADE_CHECKOUT';
-
     public const PAYMENT_SUB_FORMS = 'PAYMENT_SUB_FORMS';
-
     public const QUERY_CONTAINER_CUSTOMER = 'QUERY_CONTAINER_CUSTOMER';
-
+    public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
     public const STORE = 'STORE';
-
     public const PLUGINS_MANUAL_ORDER_ENTRY_FORM = 'PLUGINS_MANUAL_ORDER_ENTRY_FORM';
 
     /**
@@ -53,6 +53,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addCustomerFacade($container);
+        $container = $this->addSalesFacade($container);
         $container = $this->addProductFacade($container);
         $container = $this->addCartFacade($container);
         $container = $this->addDiscountFacade($container);
@@ -66,6 +67,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addPaymentSubFormPlugins($container);
 
         $container = $this->addCustomerQueryContainer($container);
+        $container = $this->addSalesQueryContainer($container);
         $container = $this->addStore($container);
         $container = $this->addManualOrderEntryFormPlugins($container);
 
@@ -81,6 +83,20 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container[static::FACADE_CUSTOMER] = function (Container $container) {
             return new ManualOrderEntryGuiToCustomerFacadeBridge($container->getLocator()->customer()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesFacade(Container $container)
+    {
+        $container[static::FACADE_SALES] = function (Container $container) {
+            return new ManualOrderEntryGuiToSalesFacadeBridge($container->getLocator()->sales()->facade());
         };
 
         return $container;
@@ -243,6 +259,20 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container[static::QUERY_CONTAINER_CUSTOMER] = function (Container $container) {
             return new ManualOrderEntryGuiToCustomerQueryContainerBridge($container->getLocator()->customer()->queryContainer());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesQueryContainer(Container $container)
+    {
+        $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
+            return new ManualOrderEntryGuiToSalesQueryContainerBridge($container->getLocator()->sales()->queryContainer());
         };
 
         return $container;

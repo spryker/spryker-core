@@ -17,12 +17,14 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\AddressColle
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomerDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\CustomersListDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ItemCollectionDataProvider;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\OrderSourceListDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\PaymentDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ProductCollectionDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\ShipmentDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\StoreDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\SummaryDataProvider;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\VoucherDataProvider;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\OrderSource\OrderSourceListType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Payment\PaymentType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ItemCollectionType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductCollectionType;
@@ -45,6 +47,14 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getCustomerFacade()
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToSalesFacadeInterface
+     */
+    public function getSalesFacade()
+    {
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_SALES);
     }
 
     /**
@@ -128,6 +138,14 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToSalesQueryContainerInterface
+     */
+    public function getSalesQueryContainer()
+    {
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::QUERY_CONTAINER_SALES);
+    }
+
+    /**
      * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreInterface
      */
     public function getStore()
@@ -171,6 +189,19 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\OrderSourceListDataProvider
+     */
+    public function createOrderSourceListDataProvider(Request $request)
+    {
+        return new OrderSourceListDataProvider(
+            $this->getSalesQueryContainer(),
+            $request
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -181,6 +212,23 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
 
         return $this->getFormFactory()->create(
             CustomersListType::class,
+            $formDataProvider->getData($quoteTransfer),
+            $formDataProvider->getOptions($quoteTransfer)
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createOrderSourceListForm(Request $request, $quoteTransfer)
+    {
+        $formDataProvider = $this->createOrderSourceListDataProvider($request);
+
+        return $this->getFormFactory()->create(
+            OrderSourceListType::class,
             $formDataProvider->getData($quoteTransfer),
             $formDataProvider->getOptions($quoteTransfer)
         );

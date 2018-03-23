@@ -57,6 +57,23 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
 
     /**
      * Specification:
+     * - Returns the order source for the given order source id.
+     *
+     * @api
+     *
+     * @param int $idOrderSource
+     *
+     * @return \Generated\Shared\Transfer\OrderSourceTransfer|null
+     */
+    public function findOrderSourceByIdOrderSource($idOrderSource)
+    {
+        return $this->getFactory()
+            ->createOrderSourceManager()
+            ->findOrderSourceByIdOrderSource($idOrderSource);
+    }
+
+    /**
+     * Specification:
      *  - Returns a list of of orders for the given customer id and (optional) filters.
      *  - Aggregates order totals calls -> SalesAggregator
      *

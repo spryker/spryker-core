@@ -20,6 +20,7 @@ use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
+use Spryker\Zed\Sales\Business\Model\OrderSource\OrderSourceManager;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
@@ -37,6 +38,16 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createOrderHydrator(),
             $this->getOmsFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\OrderSource\OrderSourceManager
+     */
+    public function createOrderSourceManager()
+    {
+        return new OrderSourceManager(
+            $this->getQueryContainer()
         );
     }
 
