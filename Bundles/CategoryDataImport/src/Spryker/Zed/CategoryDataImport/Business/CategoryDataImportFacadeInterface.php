@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\DataImporterReportTransfer;
 interface CategoryDataImportFacadeInterface
 {
     /**
+     * Specification:
+     * - Imports category data.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer

@@ -5,22 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DataImport\Business\Model;
+namespace Spryker\Zed\DataImport\Business\Model\Publisher;
 
 interface DataImporterPublisherInterface
 {
-    /**
-     * @return array
-     */
-    public static function getImportedEntityEvents();
-
-    /**
-     * @param array $importedEntityEvents
-     *
-     * @return void
-     */
-    public static function setImportedEntityEvents(array $importedEntityEvents);
-
     /**
      * @param array $events
      *

@@ -128,7 +128,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     /**
      * @return void
      */
-    private function loadCategoryKeys()
+    protected function loadCategoryKeys()
     {
         $categoryEntityCollection = SpyCategoryQuery::create()
             ->joinWithNode()

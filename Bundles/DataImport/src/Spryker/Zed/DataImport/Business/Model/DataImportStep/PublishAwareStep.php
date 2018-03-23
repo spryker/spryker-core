@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\DataImport\Business\Model\DataImportStep;
 
-use Spryker\Zed\DataImport\Business\Model\DataImporterPublisher;
+use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
 
 /**
  * @SuppressWarnings(PHPMD.NumberOfChildren)

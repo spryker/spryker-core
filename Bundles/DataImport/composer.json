@@ -13,8 +13,12 @@
     "spryker/touch": "^3.0.0 || ^4.0.0"
   },
   "require-dev": {
+    "spryker/event-behavior": "^0.1.0",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/event-behavior": "To be able to use the DataImportEventBehaviorPlugin please install the spryker/event-behavior module, minimum required version: 0.1.0"
   },
   "autoload": {
     "psr-4": {

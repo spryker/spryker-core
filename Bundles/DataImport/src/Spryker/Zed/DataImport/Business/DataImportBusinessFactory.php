@@ -25,6 +25,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware;
 use Spryker\Zed\DataImport\Business\Model\Dump\ImporterDumper;
 use Spryker\Zed\DataImport\Business\Model\Dump\ImporterDumperInterface;
+use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -46,16 +47,64 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
      */
     public function createDataImporterCollection()
     {
-        $dataImporterCollection = new DataImporterCollection();
+        $dataImporterCollection = new DataImporterCollection(
+            $this->getDataImportBeforeImportHookPlugins(),
+            $this->getDataImportAfterImportHookPlugins()
+        );
+
         $dataImporterCollection->addDataImporterPlugins($this->getDataImporterPlugins());
 
         return $dataImporterCollection;
     }
 
     /**
+     * @return \Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface[]
+     */
+    public function getDataImportBeforeImportHookPlugins()
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::DATA_IMPORT_BEFORE_HOOK_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface[]
+     */
+    public function getDataImportAfterImportHookPlugins()
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::DATA_IMPORT_AFTER_HOOK_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisherInterface
+     */
+    public function createDataImporterPublisher()
+    {
+        return new DataImporterPublisher($this->getPublicEventFacade());
+    }
+
+    /**
+     * @deprecated This method will be renamed to `getEventFacade()` and will be public in the next major.
+     *
+     * @return \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface
+     */
+    public function getPublicEventFacade()
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_EVENT);
+    }
+
+    /**
+     * @deprecated Please make sure that your `getEventFacade()` method is public. With the next major we will use public methods only in this factory.
+     *
+     * @return \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface
+     */
+    protected function getEventFacade()
+    {
+        return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_EVENT);
+    }
+
+    /**
      * @return \Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface[]
      */
-    protected function getDataImporterPlugins(): array
+    public function getDataImporterPlugins(): array
     {
         return $this->getProvidedDependency(DataImportDependencyProvider::DATA_IMPORTER_PLUGINS);
     }
@@ -185,7 +234,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\AddLocalesStep
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
     protected function createAddLocalesStep()
     {

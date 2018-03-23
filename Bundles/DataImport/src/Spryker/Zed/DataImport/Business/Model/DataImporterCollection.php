@@ -9,8 +9,15 @@ namespace Spryker\Zed\DataImport\Business\Model;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Spryker\Zed\DataImport\Dependency\Plugin\DataImportAfterImportHookInterface;
+use Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface;
 
-class DataImporterCollection implements DataImporterCollectionInterface, DataImporterPluginCollectionInterface, DataImporterInterface
+class DataImporterCollection implements
+    DataImporterCollectionInterface,
+    DataImporterPluginCollectionInterface,
+    DataImporterInterface,
+    DataImportBeforeImportHookInterface,
+    DataImportAfterImportHookInterface
 {
     const IMPORT_TYPE = 'full';
 
@@ -18,6 +25,26 @@ class DataImporterCollection implements DataImporterCollectionInterface, DataImp
      * @var \Spryker\Zed\DataImport\Business\Model\DataImporterInterface[]
      */
     protected $dataImporter = [];
+
+    /**
+     * @var \Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface[]
+     */
+    protected $beforeImportHooks = [];
+
+    /**
+     * @var \Spryker\Zed\DataImport\Dependency\Plugin\DataImportAfterImportHookInterface[]
+     */
+    protected $afterImportHooks = [];
+
+    /**
+     * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface[] $beforeImportHooks
+     * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportAfterImportHookInterface[] $afterImportHooks
+     */
+    public function __construct(array $beforeImportHooks = [], array $afterImportHooks = [])
+    {
+        $this->beforeImportHooks = $beforeImportHooks;
+        $this->afterImportHooks = $afterImportHooks;
+    }
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataImporterInterface $dataImporter
@@ -80,6 +107,16 @@ class DataImporterCollection implements DataImporterCollectionInterface, DataImp
     }
 
     /**
+     * @return void
+     */
+    public function beforeImport()
+    {
+        foreach ($this->beforeImportHooks as $beforeImportHook) {
+            $beforeImportHook->beforeImport();
+        }
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
@@ -91,12 +128,16 @@ class DataImporterCollection implements DataImporterCollectionInterface, DataImp
         $importType = $this->getCurrentImportType($dataImporterConfigurationTransfer);
         $dataImporterReportTransfer = $this->prepareDataImporterReport($importType);
 
+        $this->beforeImport();
+
         if ($importType !== $this->getImportType()) {
             $this->executeDataImporter(
                 $this->dataImporter[$importType],
                 $dataImporterReportTransfer,
                 $dataImporterConfigurationTransfer
             );
+
+            $this->afterImport();
 
             return $dataImporterReportTransfer;
         }
@@ -109,7 +150,19 @@ class DataImporterCollection implements DataImporterCollectionInterface, DataImp
             );
         }
 
+        $this->afterImport();
+
         return $dataImporterReportTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    public function afterImport()
+    {
+        foreach ($this->afterImportHooks as $afterImportHook) {
+            $afterImportHook->afterImport();
+        }
     }
 
     /**

@@ -30,11 +30,21 @@ interface DataImportFacadeInterface
 
     /**
      * Specification:
-     * - Dumps all applied DataImporterPlugins and DataImportInterfaces.
+     * - Returns a list of all applied `DataImportPluginInterfaces` and `DataImportInterfaces`.
      *
      * @api
      *
      * @return array
      */
-    public function dumpImporter(): array;
+    public function listImporters(): array;
+
+    /**
+     * Specification:
+     * - Triggers publish event for all imported entities.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function publish();
 }

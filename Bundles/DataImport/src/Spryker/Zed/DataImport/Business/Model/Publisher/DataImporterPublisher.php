@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DataImport\Business\Model;
+namespace Spryker\Zed\DataImport\Business\Model\Publisher;
 
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Spryker\Zed\Event\Business\EventFacadeInterface;
+use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
 
 class DataImporterPublisher implements DataImporterPublisherInterface
 {
     /**
-     * @var \Spryker\Zed\Event\Business\EventFacadeInterface
+     * @var \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface
      */
     protected $eventFacade;
 
@@ -23,31 +23,11 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     protected static $importedEntityEvents = [];
 
     /**
-     * TODO use bridge
-     *
-     * @param \Spryker\Zed\Event\Business\EventFacadeInterface $eventFacade
+     * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface $eventFacade
      */
-    public function __construct(EventFacadeInterface $eventFacade)
+    public function __construct(DataImportToEventFacadeInterface $eventFacade)
     {
         $this->eventFacade = $eventFacade;
-    }
-
-    /**
-     * @return mixed
-     */
-    public static function getImportedEntityEvents()
-    {
-        return self::$importedEntityEvents;
-    }
-
-    /**
-     * @param mixed $importedEntityEvents
-     *
-     * @return void
-     */
-    public static function setImportedEntityEvents(array $importedEntityEvents)
-    {
-        self::$importedEntityEvents = $importedEntityEvents;
     }
 
     /**
@@ -55,17 +35,17 @@ class DataImporterPublisher implements DataImporterPublisherInterface
      *
      * @return void
      */
-    public static function addImportedEntityEvents(array $events)
+    public static function addImportedEntityEvents(array $events): void
     {
         $mergedArray = array_merge_recursive(static::$importedEntityEvents, $events);
 
-        self::$importedEntityEvents = static::getUniqueArray($mergedArray);
+        static::$importedEntityEvents = static::getUniqueArray($mergedArray);
     }
 
     /**
      * @return void
      */
-    public function triggerEvents()
+    public function triggerEvents(): void
     {
         foreach (static::$importedEntityEvents as $event => $ids) {
             $uniqueIds = array_unique($ids);
@@ -80,7 +60,7 @@ class DataImporterPublisher implements DataImporterPublisherInterface
      *
      * @return array
      */
-    protected static function getUniqueArray(array $mergedArray)
+    protected static function getUniqueArray(array $mergedArray): array
     {
         $uniqueArray = [];
         foreach ($mergedArray as $event => $ids) {

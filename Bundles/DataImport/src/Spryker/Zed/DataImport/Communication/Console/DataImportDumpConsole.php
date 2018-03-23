@@ -34,7 +34,7 @@ class DataImportDumpConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dataImporter = $this->getFacade()->dumpImporter();
+        $dataImporter = $this->getFacade()->listImporters();
         $formattedDataImporterList = $this->formatForTable($dataImporter);
         $table = new Table($output);
         $table
