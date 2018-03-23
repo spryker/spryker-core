@@ -81,7 +81,7 @@
 </td>
 <td>
     {% if reclamationItem.status == 'Open' %}
-        <a href="{{ url('sales-reclamation/detail/close', {'id-reclamation': reclamation.idSalesReclamation}) }}"
+        <a href="{{ url('/sales-reclamation/detail/close', {'id-reclamation': reclamation.idSalesReclamation}) }}"
            class="btn btn-xs btn-outline btn-view btn-remove"><i class="fa fa-close"></i>Refund
         </a>
     {% endif %}
