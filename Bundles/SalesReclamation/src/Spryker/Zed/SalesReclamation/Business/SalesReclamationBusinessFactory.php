@@ -10,6 +10,10 @@ namespace Spryker\Zed\SalesReclamation\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\Creator;
 use Spryker\Zed\SalesReclamation\Business\Reclamation\CreatorInterface;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\Hydrator;
+use Spryker\Zed\SalesReclamation\Business\Reclamation\HydratorInterface;
+use Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface;
+use Spryker\Zed\SalesReclamation\SalesReclamationDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesReclamation\SalesReclamationConfig getConfig()
@@ -23,5 +27,24 @@ class SalesReclamationBusinessFactory extends AbstractBusinessFactory
     public function createReclamationCreator(): CreatorInterface
     {
         return new Creator();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReclamation\Business\Reclamation\HydratorInterface
+     */
+    public function createReclamationHydrator(): HydratorInterface
+    {
+        return new Hydrator(
+            $this->getQueryContainer(),
+            $this->getSalesFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface
+     */
+    public function getSalesFacade(): SalesReclamationToSalesFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesReclamationDependencyProvider::FACADE_SALES);
     }
 }

@@ -37,7 +37,7 @@ class SalesReclamationDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        //TODO Provide dependencies
+        $this->addSalesFacade($container);
 
         return $container;
     }
