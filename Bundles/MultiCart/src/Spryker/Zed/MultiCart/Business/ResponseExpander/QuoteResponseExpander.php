@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MultiCart\Business\Model;
+namespace Spryker\Zed\MultiCart\Business\ResponseExpander;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
@@ -38,8 +38,7 @@ class QuoteResponseExpander implements QuoteResponseExpanderInterface
     public function expand(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        $quoteTransfer->requireCustomer();
-        $customerTransfer = $quoteTransfer->getCustomer();
+        $customerTransfer = $quoteTransfer->requireCustomer()->getCustomer();
 
         $customerQuoteCollectionTransfer = $this->findCustomerQuotes($customerTransfer);
         $quoteResponseTransfer->setCustomerQuotes($customerQuoteCollectionTransfer);
@@ -56,6 +55,7 @@ class QuoteResponseExpander implements QuoteResponseExpanderInterface
     {
         $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
         $quoteCriteriaFilterTransfer->setCustomerReference($customerTransfer->getCustomerReference());
+
         $customerQuoteCollectionTransfer = $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
         foreach ($customerQuoteCollectionTransfer->getQuotes() as $customerQuoteTransfer) {
             $customerQuoteTransfer->setCustomer($customerTransfer);

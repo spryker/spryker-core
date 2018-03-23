@@ -9,7 +9,6 @@
     "spryker/persistent-cart": "^0.0.1",
     "spryker/quote": "^1.0.0",
     "spryker/session": "^3.0.0",
-    "spryker/symfony": "^3.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {

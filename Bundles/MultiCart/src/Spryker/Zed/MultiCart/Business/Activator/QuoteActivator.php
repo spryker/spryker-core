@@ -5,22 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MultiCart\Business\Model;
+namespace Spryker\Zed\MultiCart\Business\Activator;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\QuoteActivatorRequestTransfer;
+use Generated\Shared\Transfer\QuoteActivationRequestTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\MultiCart\Code\Messages;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeInterface;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToPersistentCartFacadeInterface;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface;
 
 class QuoteActivator implements QuoteActivatorInterface
 {
+    use TransactionTrait;
+
+    public const MULTI_CART_SET_DEFAULT_SUCCESS = 'multi_cart.cart.set_default.success';
+
     /**
      * @var \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface
      */
@@ -52,28 +56,50 @@ class QuoteActivator implements QuoteActivatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteActivationRequestTransfer $quoteActivationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setDefaultQuote(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer
+    public function setDefaultQuote(QuoteActivationRequestTransfer $quoteActivationRequestTransfer): QuoteResponseTransfer
     {
-        $customerQuotesCollectionTransfer = $this->findCustomerQuotes($quoteActivatorRequestTransfer->getCustomer());
-        $quoteToActivateTransfer = $this->findQuoteById($quoteActivatorRequestTransfer->getIdQuote(), $customerQuotesCollectionTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteActivationRequestTransfer) {
+            return $this->executeSetDefaultQuoteTransaction($quoteActivationRequestTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteActivationRequestTransfer $quoteActivationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function executeSetDefaultQuoteTransaction(QuoteActivationRequestTransfer $quoteActivationRequestTransfer): QuoteResponseTransfer
+    {
+        $customerQuotesCollectionTransfer = $this->findCustomerQuotes($quoteActivationRequestTransfer->getCustomer());
+        $quoteToActivateTransfer = $this->findQuoteById($quoteActivationRequestTransfer->getIdQuote(), $customerQuotesCollectionTransfer);
+
         $quoteResponseTransfer = new QuoteResponseTransfer();
         if (!$quoteToActivateTransfer) {
             $quoteResponseTransfer->setIsSuccessful(false);
+
             return $quoteResponseTransfer;
         }
+
         if ($quoteToActivateTransfer->getIsDefault()) {
-            $quoteResponseTransfer->setIsSuccessful(true);
-            $quoteResponseTransfer->setQuoteTransfer($quoteToActivateTransfer);
+            $quoteResponseTransfer
+                ->setIsSuccessful(true)
+                ->setQuoteTransfer($quoteToActivateTransfer);
+
             return $quoteResponseTransfer;
         }
-        $this->setQuotesNotDefault($customerQuotesCollectionTransfer);
-        $quoteToActivateTransfer->setCustomer($quoteActivatorRequestTransfer->getCustomer());
-        $quoteToActivateTransfer->setIsDefault(true);
+
+        $this->resetQuoteDefaultFlag($customerQuotesCollectionTransfer);
+
+        $quoteToActivateTransfer
+            ->setCustomer($quoteActivationRequestTransfer->getCustomer())
+            ->setIsDefault(true);
+
         $this->addSuccessMessage($quoteToActivateTransfer->getName());
+
         return $this->quoteFacade->persistQuote($quoteToActivateTransfer);
     }
 
@@ -103,6 +129,7 @@ class QuoteActivator implements QuoteActivatorInterface
     {
         $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
         $quoteCriteriaFilterTransfer->setCustomerReference($customerTransfer->getCustomerReference());
+
         $customerQuoteCollectionTransfer = $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
         foreach ($customerQuoteCollectionTransfer->getQuotes() as $customerQuoteTransfer) {
             $customerQuoteTransfer->setCustomer($customerTransfer);
@@ -116,13 +143,15 @@ class QuoteActivator implements QuoteActivatorInterface
      *
      * @return void
      */
-    protected function setQuotesNotDefault(QuoteCollectionTransfer $quotesCollectionTransfer)
+    protected function resetQuoteDefaultFlag(QuoteCollectionTransfer $quotesCollectionTransfer)
     {
         foreach ($quotesCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if ($quoteTransfer->getIsDefault()) {
-                $quoteTransfer->setIsDefault(false);
-                $this->quoteFacade->persistQuote($quoteTransfer);
+            if (!$quoteTransfer->getIsDefault()) {
+                continue;
             }
+
+            $quoteTransfer->setIsDefault(false);
+            $this->quoteFacade->persistQuote($quoteTransfer);
         }
     }
 
@@ -134,8 +163,10 @@ class QuoteActivator implements QuoteActivatorInterface
     protected function addSuccessMessage($quoteName)
     {
         $messageTransfer = new MessageTransfer();
-        $messageTransfer->setValue(Messages::MULTI_CART_SET_DEFAULT_SUCCESS);
-        $messageTransfer->setParameters(['%quote%' => $quoteName]);
+        $messageTransfer
+            ->setValue(static::MULTI_CART_SET_DEFAULT_SUCCESS)
+            ->setParameters(['%quote%' => $quoteName]);
+
         $this->messengerFacade->addInfoMessage($messageTransfer);
     }
 }

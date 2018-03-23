@@ -39,7 +39,7 @@ class CartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Cart\Dependency\Plugin\ItemCountPluginInterface
+     * @return \Spryker\Client\Cart\Dependency\Plugin\ItemCounterPluginInterface
      */
     public function getItemCounter()
     {

@@ -8,9 +8,17 @@
 namespace Spryker\Client\MultiCart;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\MultiCart\Dependency\Client\MultiCartToMessengerClientInterface;
+use Spryker\Client\MultiCart\Dependency\Client\MultiCartToPersistentCartClientInterface;
+use Spryker\Client\MultiCart\Dependency\Client\MultiCartToQuoteClientInterface;
+use Spryker\Client\MultiCart\Dependency\Client\MultiCartToSessionClientInterface;
+use Spryker\Client\MultiCart\Dependency\Client\MultiCartToZedRequestClientInterface;
 use Spryker\Client\MultiCart\QuoteStorageSynchronizer\CustomerLoginQuoteSync;
-use Spryker\Client\MultiCart\Session\MultiCartSession;
-use Spryker\Client\MultiCart\Zed\MultiCartStub;
+use Spryker\Client\MultiCart\QuoteStorageSynchronizer\CustomerLoginQuoteSyncInterface;
+use Spryker\Client\MultiCart\Storage\MultiCartStorage;
+use Spryker\Client\MultiCart\Storage\MultiCartStorageInterface;
+use Spryker\Client\MultiCart\Zed\MultiCartZedStub;
+use Spryker\Client\MultiCart\Zed\MultiCartZedStubInterface;
 
 /**
  * @method \Spryker\Client\MultiCart\MultiCartConfig getConfig()
@@ -18,68 +26,68 @@ use Spryker\Client\MultiCart\Zed\MultiCartStub;
 class MultiCartFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\MultiCart\Dependency\Client\MultiCartToQuoteClientInterface
+     * @return \Spryker\Client\MultiCart\Zed\MultiCartZedStubInterface
      */
-    public function getQuoteClient()
+    public function createMultiCartZedStub(): MultiCartZedStubInterface
     {
-        return $this->getProvidedDependency(MultiCartDependencyProvider::CLIENT_QUOTE);
-    }
-
-    /**
-     * @return \Spryker\Client\MultiCart\Zed\MultiCartStubInterface
-     */
-    public function createZedMultiCartStub()
-    {
-        return new MultiCartStub($this->getZedRequestClient());
+        return new MultiCartZedStub($this->getZedRequestClient());
     }
 
     /**
      * @return \Spryker\Client\MultiCart\MultiCartConfig
      */
-    public function getBundleConfig()
+    public function getMultiCartConfig()
     {
         return $this->getConfig();
     }
 
     /**
-     * @return \Spryker\Client\MultiCart\Session\MultiCartSessionInterface
+     * @return \Spryker\Client\MultiCart\Storage\MultiCartStorageInterface
      */
-    public function createMultiCartSession()
+    public function createMultiCartStorage(): MultiCartStorageInterface
     {
-        return new MultiCartSession($this->getSessionClient());
+        return new MultiCartStorage($this->getSessionClient());
     }
 
     /**
      * @return \Spryker\Client\MultiCart\QuoteStorageSynchronizer\CustomerLoginQuoteSyncInterface
      */
-    public function createCustomerLoginQuoteSave()
+    public function createCustomerLoginQuoteSave(): CustomerLoginQuoteSyncInterface
     {
         return new CustomerLoginQuoteSync(
-            $this->getPersistentCartClent(),
+            $this->getPersistentCartClient(),
             $this->getQuoteClient()
         );
     }
 
     /**
+     * @return \Spryker\Client\MultiCart\Dependency\Client\MultiCartToQuoteClientInterface
+     */
+    public function getQuoteClient(): MultiCartToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(MultiCartDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
      * @return \Spryker\Client\MultiCart\Dependency\Client\MultiCartToMessengerClientInterface
      */
-    public function getMessengerClient()
+    public function getMessengerClient(): MultiCartToMessengerClientInterface
     {
         return $this->getProvidedDependency(MultiCartDependencyProvider::CLIENT_MESSENGER);
     }
 
     /**
-     * @return \Spryker\Client\Session\SessionClientInterface
+     * @return \Spryker\Client\MultiCart\Dependency\Client\MultiCartToSessionClientInterface
      */
-    protected function getSessionClient()
+    public function getSessionClient(): MultiCartToSessionClientInterface
     {
         return $this->getProvidedDependency(MultiCartDependencyProvider::CLIENT_SESSION);
     }
 
     /**
-     * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
+     * @return \Spryker\Client\MultiCart\Dependency\Client\MultiCartToZedRequestClientInterface
      */
-    protected function getZedRequestClient()
+    public function getZedRequestClient(): MultiCartToZedRequestClientInterface
     {
         return $this->getProvidedDependency(MultiCartDependencyProvider::CLIENT_ZED_REQUEST);
     }
@@ -87,7 +95,7 @@ class MultiCartFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\MultiCart\Dependency\Client\MultiCartToPersistentCartClientInterface
      */
-    protected function getPersistentCartClent()
+    public function getPersistentCartClient(): MultiCartToPersistentCartClientInterface
     {
         return $this->getProvidedDependency(MultiCartDependencyProvider::CLIENT_PERSISTENT_CART);
     }

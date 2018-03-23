@@ -29,7 +29,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     public function findQuoteByCustomer($customerReference): ?QuoteTransfer
     {
         $quoteQuery = $this->getFactory()->createQuoteQuery()
-            ->joinWithSpyStore()
+            ->joinWithSpyStore() // TODO: why do you need to join spy_store? why store is not filtered?
             ->filterByCustomerReference($customerReference);
 
         $quoteEntityTransfer = $this->buildQueryFromCriteria($quoteQuery)->findOne();
@@ -52,7 +52,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     public function findQuoteById($idQuote): ?QuoteTransfer
     {
         $quoteQuery = $this->getFactory()->createQuoteQuery()
-            ->joinWithSpyStore()
+            ->joinWithSpyStore() // TODO: why do you need to join spy_store? why store is not filtered?
             ->filterByIdQuote($idQuote);
 
         $quoteEntityTransfer = $this->buildQueryFromCriteria($quoteQuery)->findOne();
@@ -70,20 +70,20 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
      */
     public function filterQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
     {
-        $quoteQuery = $this->getFactory()->createQuoteQuery()
-            ->joinWithSpyStore();
+        $quoteQuery = $this->getFactory()
+            ->createQuoteQuery()
+            ->joinWithSpyStore(); // TODO: why do you need to join spy_store? why store is not filtered?
+
         if ($quoteCriteriaFilterTransfer->getCustomerReference()) {
             $quoteQuery->filterByCustomerReference($quoteCriteriaFilterTransfer->getCustomerReference());
         }
-        $quoteEntityCollectionTransfer = $this->buildQueryFromCriteria($quoteQuery, $quoteCriteriaFilterTransfer->getFilter())
-                    ->find();
+
+        $quoteEntityCollectionTransfer = $this->buildQueryFromCriteria($quoteQuery, $quoteCriteriaFilterTransfer->getFilter())->find();
 
         $quoteCollectionTransfer = new QuoteCollectionTransfer();
         $quoteMapper = $this->getFactory()->createQuoteMapper();
         foreach ($quoteEntityCollectionTransfer as $quoteEntityTransfer) {
-            $quoteCollectionTransfer->addQuote(
-                $quoteMapper->mapQuoteTransfer($quoteEntityTransfer)
-            );
+            $quoteCollectionTransfer->addQuote($quoteMapper->mapQuoteTransfer($quoteEntityTransfer));
         }
 
         return $quoteCollectionTransfer;

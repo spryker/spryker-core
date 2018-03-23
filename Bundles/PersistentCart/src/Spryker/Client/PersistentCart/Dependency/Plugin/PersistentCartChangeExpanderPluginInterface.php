@@ -9,7 +9,7 @@ namespace Spryker\Client\PersistentCart\Dependency\Plugin;
 
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 
-interface ChangeRequestExtendPluginInterface
+interface PersistentCartChangeExpanderPluginInterface
 {
     /**
      * Specification:

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MultiCart\Business\Model;
+namespace Spryker\Zed\MultiCart\Business\ResponseExpander;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 

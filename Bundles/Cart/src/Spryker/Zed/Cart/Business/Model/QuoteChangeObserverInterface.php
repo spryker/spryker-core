@@ -9,7 +9,7 @@ namespace Spryker\Zed\Cart\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteChangeNoteInterface
+interface QuoteChangeObserverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $resultQuoteTransfer

@@ -5,21 +5,29 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\MultiCart\Session;
+namespace Spryker\Client\MultiCart\Storage;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
-interface MultiCartSessionInterface
+interface MultiCartStorageInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
      *
      * @return void
      */
-    public function setQuoteCollection(QuoteCollectionTransfer $quoteCollectionTransfer);
+    public function setQuoteCollection(QuoteCollectionTransfer $quoteCollectionTransfer): void;
 
     /**
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function getQuoteCollection(): QuoteCollectionTransfer;
+
+    /**
+     * @param string $quoteName
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    public function findQuoteByName($quoteName): ?QuoteTransfer;
 }
