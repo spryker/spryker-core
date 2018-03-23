@@ -12,14 +12,6 @@
                 <td>{{ form_row(product.quantity) }}</td>
             </tr>
         {% endfor %}
-        {#<tr id="product-fields-list">#}
-            {#<td>#}
-                {#{{ form_row(form.manualOrderProducts.vars.prototype.sku) }}#}
-            {#</td>#}
-            {#<td>#}
-                {#{{ form_row(form.manualOrderProducts.vars.prototype.quantity) }}#}
-            {#</td>#}
-        {#</tr>#}
     </table>
     {{ createActionButton('#', 'Add Product Field' | trans, {'id': 'add-another-product'}) }}
 
