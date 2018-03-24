@@ -13,7 +13,7 @@ class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
 {
     /**
      * Specification:
-     * -
+     * - Key generation resource name of product measurement unit.
      *
      * @api
      */
@@ -21,7 +21,7 @@ class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * -
+     * - Key generation resource name of product concrete measurement unit.
      *
      * @api
      */

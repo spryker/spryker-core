@@ -11,24 +11,27 @@ interface ProductMeasurementUnitStorageClientInterface
 {
     /**
      * Specification:
-     * -
+     * - Finds a product measurement unit within Storage with a given ID.
+     * - Returns null if product measurement unit was not found.
      *
      * @api
      *
      * @param int $idProductMeasurementUnit
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer|null
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer|null
      */
-    public function getProductMeasurementUnit($idProductMeasurementUnit);
+    public function findProductMeasurementUnitStorageEntity($idProductMeasurementUnit);
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Finds a product concrete measurement unit within Storage with a given ID.
+     * - Returns null if product concrete measurement unit was not found.
      *
      * @api
      *
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer|null
+     * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer|null
      */
-    public function getProductConcreteMeasurementUnit($idProduct);
+    public function findProductConcreteMeasurementUnitStorageEntity($idProduct);
 }

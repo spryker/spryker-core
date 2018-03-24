@@ -15,6 +15,7 @@ use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasu
 class ProductMeasurementUnitStorageDependencyProvider extends AbstractDependencyProvider
 {
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**
@@ -37,7 +38,7 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractDependency
      */
     protected function addStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_STORAGE] = function (Container $container) {
+        $container[static::CLIENT_STORAGE] = function (Container $container) {
             return new ProductMeasurementUnitStorageToStorageBridge($container->getLocator()->storage()->client());
         };
 
@@ -51,7 +52,7 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractDependency
      */
     protected function addSynchronizationService(Container $container): Container
     {
-        $container[self::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
             return new ProductMeasurementUnitStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
         };
 

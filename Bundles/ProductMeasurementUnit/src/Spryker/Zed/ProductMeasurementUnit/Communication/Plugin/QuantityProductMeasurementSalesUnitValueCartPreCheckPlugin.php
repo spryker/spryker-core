@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductMeasurementUnit\Business\ProductMeasurementUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductMeasurementUnit\Communication\ProductMeasurementUnitCommunicationFactory getFactory()
  */
-class ProductMeasurementSalesUnitCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface, TerminationAwareCartPreCheckPluginInterface
+class QuantityProductMeasurementSalesUnitValueCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface, TerminationAwareCartPreCheckPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -29,7 +29,7 @@ class ProductMeasurementSalesUnitCartPreCheckPlugin extends AbstractPlugin imple
      */
     public function check(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFacade()->validateProductMeasurementSalesUnit($cartChangeTransfer);
+        return $this->getFacade()->validateQuantitySalesUnitValues($cartChangeTransfer);
     }
 
     /**

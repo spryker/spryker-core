@@ -12,7 +12,7 @@ interface ProductMeasurementUnitStorageReaderInterface
     /**
      * @param int $idProductMeasurementUnit
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer|null
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer|null
      */
-    public function getProductMeasurementUnit($idProductMeasurementUnit);
+    public function findProductMeasurementUnitStorageEntity($idProductMeasurementUnit);
 }

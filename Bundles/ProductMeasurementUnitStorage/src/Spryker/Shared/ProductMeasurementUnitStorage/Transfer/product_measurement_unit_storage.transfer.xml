@@ -11,10 +11,12 @@
     </transfer>
 
     <transfer name="ProductConcreteMeasurementBaseUnit">
+        <property name="id" type="int" />
         <property name="measurementUnitId" type="int" />
     </transfer>
 
     <transfer name="ProductConcreteMeasurementSalesUnit">
+        <property name="id" type="int" />
         <property name="measurementUnitId" type="int" />
         <property name="conversion" type="float" />
         <property name="precision" type="int" />

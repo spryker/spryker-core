@@ -8,10 +8,6 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Communication\Plugin;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer;
-use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
-use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnit;
-use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnitQuery;
 use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -24,6 +20,8 @@ class ProductMeasurementUnitItemExpanderPlugin extends AbstractPlugin implements
     /**
      * {@inheritdoc}
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
@@ -35,53 +33,14 @@ class ProductMeasurementUnitItemExpanderPlugin extends AbstractPlugin implements
                 continue;
             }
 
-            $productMeasurementSalesUnitEntity = $this->getProductMeasurementSalesUnit($itemTransfer->getQuantitySalesUnit()->getIdProductMeasurementSalesUnit());
-            $itemTransfer->getQuantitySalesUnit()
-                ->setPrecision($productMeasurementSalesUnitEntity->getPrecision() ? : $productMeasurementSalesUnitEntity->getProductMeasurementUnit()->getDefaultPrecision())
-                ->setConversion($this->getConversion($productMeasurementSalesUnitEntity))
-                ->setProductMeasurementUnit(
-                    (new ProductMeasurementUnitTransfer())
-                    ->setIdProductMeasurementUnit($productMeasurementSalesUnitEntity->getFkProductMeasurementUnit())
-                    ->setCode($productMeasurementSalesUnitEntity->getProductMeasurementUnit()->getCode())
-                    ->setName($productMeasurementSalesUnitEntity->getProductMeasurementUnit()->getName())
-                    ->setDefaultPrecision($productMeasurementSalesUnitEntity->getProductMeasurementUnit()->getDefaultPrecision())
-                );
+            $itemTransfer->getQuantitySalesUnit()->requireIdProductMeasurementSalesUnit();
+            $itemTransfer->setQuantitySalesUnit(
+                $this->getFacade()->getSalesUnitEntity(
+                    $itemTransfer->getQuantitySalesUnit()->getIdProductMeasurementSalesUnit()
+                )
+            );
         }
 
         return $cartChangeTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnit $productMeasurementSalesUnitEntity
-     *
-     * @return int
-     */
-    protected function getConversion(SpyProductMeasurementSalesUnit $productMeasurementSalesUnitEntity)
-    {
-        if ($productMeasurementSalesUnitEntity->getConversion() === null) {
-            return $this->getFacade()->getExchangeDetail(
-                (new ProductMeasurementUnitExchangeDetailTransfer())
-                    ->setFromCode($productMeasurementSalesUnitEntity->getProductMeasurementUnit()->getCode())
-                    ->setToCode($productMeasurementSalesUnitEntity->getProductMeasurementBaseUnit()->getProductMeasurementUnit()->getCode())
-            )->getConversion();
-        }
-
-        return $productMeasurementSalesUnitEntity->getConversion();
-    }
-
-    /**
-     * @param int $idProductMeasurementSalesUnit
-     *
-     * @return \Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnit
-     */
-    protected function getProductMeasurementSalesUnit($idProductMeasurementSalesUnit)
-    {
-        // TODO: base unit's measurement unit is accessed directly
-        return SpyProductMeasurementSalesUnitQuery::create()
-            ->joinWithProductMeasurementUnit()
-            ->joinWithProductMeasurementBaseUnit()
-            ->filterByIdProductMeasurementSalesUnit($idProductMeasurementSalesUnit)
-            ->find()
-            ->getFirst();
     }
 }

@@ -8,6 +8,7 @@
     <table name="spy_product_measurement_unit_storage">
         <column name="id_product_measurement_unit_storage" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product_measurement_unit" type="integer" required="true"/>
+        <column name="data" type="LONGVARCHAR" required="false"/>
 
         <id-method-parameter value="id_product_measurement_unit_storage_pk_seq"/>
 
@@ -27,6 +28,7 @@
     <table name="spy_product_concrete_measurement_unit_storage">
         <column name="id_product_concrete_measurement_unit_storage" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product" type="integer" required="true"/>
+        <column name="data" type="LONGVARCHAR" required="false"/>
 
         <id-method-parameter value="id_product_concrete_measurement_unit_storage_pk_seq"/>
 

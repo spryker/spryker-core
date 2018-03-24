@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -22,13 +22,15 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer $exchangeDetailTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function getExchangeDetail(ProductMeasurementUnitExchangeDetailTransfer $exchangeDetailTransfer)
+    public function validateQuantitySalesUnitValues(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFactory()->createProductMeasurementUnitExchanger()->getExchangeDetail($exchangeDetailTransfer);
+        return $this->getFactory()
+            ->createQuantityProductMeasurementSalesUnitValueValidator()
+            ->validate($cartChangeTransfer);
     }
 
     /**
@@ -36,12 +38,76 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     * @return string
      */
-    public function validateProductMeasurementSalesUnit(CartChangeTransfer $cartChangeTransfer)
+    public function expandItemGroupKeyWithSalesUnit(ItemTransfer $itemTransfer)
     {
-        return $this->getFactory()->createProductMeasurementSalesUnitValidator()->validate($cartChangeTransfer);
+        return $this->getFactory()
+            ->createProductMeasurementSalesUnitItemGroupKeyGenerator()
+            ->expandItemGroupKey($itemTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return int
+     */
+    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer)
+    {
+        return $this->getFactory()
+            ->createProductMeasurementSalesUnitValue()
+            ->calculateQuantityNormalizedSalesUnitValue($itemTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductMeasurementSalesUnit
+     *
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer
+     */
+    public function getSalesUnitEntity($idProductMeasurementSalesUnit)
+    {
+        return $this->getFactory()
+            ->createProductMeasurementSalesUnitReader()
+            ->getProductMeasurementSalesUnitEntity($idProductMeasurementSalesUnit);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer
+     */
+    public function getBaseUnitByIdProduct($idProduct)
+    {
+        return $this->getFactory()
+            ->createProductMeasurementBaseUnitReader()
+            ->getProductMeasurementBaseUnitEntityByIdProduct($idProduct);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
+     */
+    public function getSalesUnitsByIdProduct($idProduct)
+    {
+        return $this->getFactory()
+            ->createProductMeasurementSalesUnitReader()
+            ->getProductMeasurementSalesUnitEntitiesByIdProduct($idProduct);
     }
 }

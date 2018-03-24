@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductMeasurementUnitStorage\Storage;
 
-use Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer;
+use Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceInterface;
@@ -40,9 +40,9 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
     /**
      * @param int $idProductMeasurementUnit
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer|null
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer|null
      */
-    public function getProductMeasurementUnit($idProductMeasurementUnit)
+    public function findProductMeasurementUnitStorageEntity($idProductMeasurementUnit)
     {
         $key = $this->generateKey($idProductMeasurementUnit);
         $productMeasurementUnitStorageData = $this->storageClient->get($key);
@@ -51,29 +51,29 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
             return null;
         }
 
-        return $this->mapToProductMeasurementUnitStorageTransfer($productMeasurementUnitStorageData);
+        return $this->mapToProductMeasurementUnitStorageEntity($productMeasurementUnitStorageData);
     }
 
     /**
      * @param array $productMeasurementUnitStorageData
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer
      */
-    protected function mapToProductMeasurementUnitStorageTransfer(array $productMeasurementUnitStorageData)
+    protected function mapToProductMeasurementUnitStorageEntity(array $productMeasurementUnitStorageData)
     {
-        return (new ProductMeasurementUnitStorageTransfer())
+        return (new SpyProductMeasurementUnitStorageEntityTransfer())
             ->fromArray($productMeasurementUnitStorageData, true);
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param int $idProductMeasurementUnit
      *
      * @return string
      */
-    protected function generateKey($idProductAbstract)
+    protected function generateKey($idProductMeasurementUnit)
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
-            ->setReference($idProductAbstract);
+            ->setReference($idProductMeasurementUnit);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(ProductMeasurementUnitStorageConfig::PRODUCT_MEASUREMENT_UNIT_RESOURCE_NAME)

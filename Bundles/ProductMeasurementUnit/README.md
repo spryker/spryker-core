@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/product-measurement-unit.svg)](https://travis-ci.org/spryker/product-measurement-unit)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/product-measurement-unit/badge.svg)](https://coveralls.io/github/spryker/product-measurement-unit)
 
-{{ADD DESCRIPTION HERE}}
+Provides basic infrastructure and operations for handling measurement units for products.
 
 ## Installation
 

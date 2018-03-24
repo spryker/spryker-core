@@ -7,16 +7,19 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer;
-
 interface ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer $exchangeDetailTransfer
+     * @param int $idProduct
      *
-     * @throws \Exception
-     *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitExchangeDetailTransfer
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer
      */
-    public function getExchangeDetail(ProductMeasurementUnitExchangeDetailTransfer $exchangeDetailTransfer);
+    public function getBaseUnitByIdProduct($idProduct);
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
+     */
+    public function getSalesUnitsByIdProduct($idProduct);
 }

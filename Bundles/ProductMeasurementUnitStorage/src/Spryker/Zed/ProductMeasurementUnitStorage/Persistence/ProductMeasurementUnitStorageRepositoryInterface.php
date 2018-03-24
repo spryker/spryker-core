@@ -9,4 +9,17 @@ namespace Spryker\Zed\ProductMeasurementUnitStorage\Persistence;
 
 interface ProductMeasurementUnitStorageRepositoryInterface
 {
+    /**
+     * @param int[] $productMeasurementUnitIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
+     */
+    public function getProductMeasurementUnitStorageEntities(array $productMeasurementUnitIds);
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
+     */
+    public function getProductConcreteMeasurementUnitStorageEntities(array $productIds);
 }

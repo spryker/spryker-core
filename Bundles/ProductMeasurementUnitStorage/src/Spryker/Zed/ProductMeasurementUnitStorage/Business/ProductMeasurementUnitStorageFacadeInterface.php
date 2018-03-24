@@ -11,7 +11,7 @@ interface ProductMeasurementUnitStorageFacadeInterface
 {
     /**
      * Specification:
-     * -
+     * - Publishes product measurement unit changes to storage.
      *
      * @api
      *
@@ -23,7 +23,7 @@ interface ProductMeasurementUnitStorageFacadeInterface
 
     /**
      * Specification:
-     * -
+     * - Publishes product concrete measurement unit changes to storage.
      *
      * @api
      *

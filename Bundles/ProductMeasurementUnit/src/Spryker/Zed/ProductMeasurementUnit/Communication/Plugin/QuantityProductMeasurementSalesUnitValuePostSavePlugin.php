@@ -15,9 +15,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductMeasurementUnit\Business\ProductMeasurementUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductMeasurementUnit\Communication\ProductMeasurementUnitCommunicationFactory getFactory()
  */
-class ProductMeasurementSalesUnitValuePostSavePlugin extends AbstractPlugin implements PostSavePluginInterface
+class QuantityProductMeasurementSalesUnitValuePostSavePlugin extends AbstractPlugin implements PostSavePluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -32,7 +34,7 @@ class ProductMeasurementSalesUnitValuePostSavePlugin extends AbstractPlugin impl
             }
 
             $itemTransfer->getQuantitySalesUnit()->setValue(
-                round($itemTransfer->getQuantity() * $itemTransfer->getQuantitySalesUnit()->getConversion() * $itemTransfer->getQuantitySalesUnit()->getPrecision())
+                $this->getFacade()->calculateQuantityNormalizedSalesUnitValue($itemTransfer)
             );
         }
 

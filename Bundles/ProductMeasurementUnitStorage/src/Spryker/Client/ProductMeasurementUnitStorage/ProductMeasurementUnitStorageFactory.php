@@ -19,7 +19,7 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
     public function createProductMeasurementUnitStorageReader()
     {
         return new ProductMeasurementUnitStorageReader(
-            $this->getStorage(),
+            $this->getStorageClient(),
             $this->getSynchronizationService()
         );
     }
@@ -30,7 +30,7 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
     public function createProductConcreteMeasurementUnitStorageReader()
     {
         return new ProductConcreteMeasurementUnitStorageReader(
-            $this->getStorage(),
+            $this->getStorageClient(),
             $this->getSynchronizationService()
         );
     }
@@ -38,7 +38,7 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageInterface
      */
-    protected function getStorage()
+    public function getStorageClient()
     {
         return $this->getProvidedDependency(ProductMeasurementUnitStorageDependencyProvider::CLIENT_STORAGE);
     }
@@ -46,7 +46,7 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceBridge
      */
-    protected function getSynchronizationService()
+    public function getSynchronizationService()
     {
         return $this->getProvidedDependency(ProductMeasurementUnitStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }

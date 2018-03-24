@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductMeasurementUnitStorage\Business\Model\ProductConcreteMeasurementUnitStorageReader;
 use Spryker\Zed\ProductMeasurementUnitStorage\Business\Model\ProductConcreteMeasurementUnitStorageWriter;
 use Spryker\Zed\ProductMeasurementUnitStorage\Business\Model\ProductMeasurementUnitStorageWriter;
 use Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageDependencyProvider;
@@ -15,6 +16,7 @@ use Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageDepen
 /**
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig getConfig()
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageEntityManagerInterface getEntityManager()
  */
 class ProductMeasurementUnitStorageBusinessFactory extends AbstractBusinessFactory
 {
@@ -23,7 +25,11 @@ class ProductMeasurementUnitStorageBusinessFactory extends AbstractBusinessFacto
      */
     public function createProductMeasurementUnitStorageWriter()
     {
-        return new ProductMeasurementUnitStorageWriter();
+        return new ProductMeasurementUnitStorageWriter(
+            $this->getProductMeasurementUnitRepository(),
+            $this->getRepository(),
+            $this->getEntityManager()
+        );
     }
 
     /**
@@ -31,7 +37,30 @@ class ProductMeasurementUnitStorageBusinessFactory extends AbstractBusinessFacto
      */
     public function createProductConcreteMeasurementUnitStorageWriter()
     {
-        return new ProductConcreteMeasurementUnitStorageWriter($this->getProductMeasurementUnitFacade());
+        return new ProductConcreteMeasurementUnitStorageWriter(
+            $this->getProductMeasurementUnitRepository(),
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->createProductConcreteMeasurementUnitStorageReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnitStorage\Business\Model\ProductConcreteMeasurementUnitStorageReaderInterface
+     */
+    public function createProductConcreteMeasurementUnitStorageReader()
+    {
+        return new ProductConcreteMeasurementUnitStorageReader(
+            $this->getProductMeasurementUnitFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Repository\ProductMeasurementUnitStorageToProductMeasurementUnitRepositoryInterface
+     */
+    public function getProductMeasurementUnitRepository()
+    {
+        return $this->getProvidedDependency(ProductMeasurementUnitStorageDependencyProvider::REPOSITORY_PRODUCT_MEASUREMENT_UNIT);
     }
 
     /**
