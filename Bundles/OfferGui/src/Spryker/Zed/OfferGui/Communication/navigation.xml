@@ -6,7 +6,7 @@
                 <label>Offers</label>
                 <title>Offers</title>
                 <bundle>offer-gui</bundle>
-                <controller>offer-view</controller>
+                <controller>view</controller>
                 <action>list</action>
 
 

@@ -5,6 +5,8 @@
           package="src.Orm.Zed.Sales.Persistence">
 
     <table name="spy_sales_order" phpName="SpySalesOrder">
+        <column name="type" type="VARCHAR" required="false"/>
+
         <column name="is_offer" type="BOOLEAN" required="true" default="false"/>
     </table>
 
