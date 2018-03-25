@@ -13,11 +13,11 @@ interface PermissionFinderInterface
 {
     /**
      * Specification:
-     * - Configures a permission by its transfer
+     * - Finds a permission plugin by its key
      *
      * @param string $permissionKey
      *
-     * @return \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface
+     * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface
      */
     public function findPermissionPlugin($permissionKey);
 

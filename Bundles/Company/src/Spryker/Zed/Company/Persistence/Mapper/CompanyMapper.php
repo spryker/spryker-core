@@ -8,33 +8,40 @@
 namespace Spryker\Zed\Company\Persistence\Mapper;
 
 use Generated\Shared\Transfer\CompanyTransfer;
-use Generated\Shared\Transfer\SpyCompanyEntityTransfer;
+use Orm\Zed\Company\Persistence\SpyCompany;
 
 class CompanyMapper implements CompanyMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     * @param \Generated\Shared\Transfer\SpyCompanyEntityTransfer $companyEntityTransfer
+     * @param \Orm\Zed\Company\Persistence\SpyCompany $spyCompany
      *
-     * @return \Generated\Shared\Transfer\SpyCompanyEntityTransfer
+     * @return \Orm\Zed\Company\Persistence\SpyCompany
      */
-    public function mapCompanyTransferToEntityTransfer(
+    public function mapCompanyTransferToEntity(
         CompanyTransfer $companyTransfer,
-        SpyCompanyEntityTransfer $companyEntityTransfer
-    ): SpyCompanyEntityTransfer {
-        return $companyEntityTransfer->fromArray($companyTransfer->modifiedToArray(), true);
+        SpyCompany $spyCompany
+    ): SpyCompany {
+        $spyCompany->fromArray(
+            $companyTransfer->modifiedToArray(false)
+        );
+
+        return $spyCompany;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCompanyEntityTransfer $companyEntityTransfer
+     * @param \Orm\Zed\Company\Persistence\SpyCompany $spyCompany
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function mapEntityTransferToCompanyTransfer(
-        SpyCompanyEntityTransfer $companyEntityTransfer,
+    public function mapEntityToCompanyTransfer(
+        SpyCompany $spyCompany,
         CompanyTransfer $companyTransfer
     ): CompanyTransfer {
-        return $companyTransfer->fromArray($companyEntityTransfer->toArray(), true);
+        return $companyTransfer->fromArray(
+            $spyCompany->toArray(),
+            true
+        );
     }
 }

@@ -28,7 +28,8 @@ class CartBusinessFactory extends AbstractBusinessFactory
             $this->getMessengerFacade(),
             $this->getItemExpanderPlugins(),
             $this->getCartPreCheckPlugins(),
-            $this->getPostSavePlugins()
+            $this->getPostSavePlugins(),
+            $this->getTerminationPlugins()
         );
 
         $operation->setPreReloadLoadPlugins($this->getPreReloadItemsPlugins());
@@ -90,5 +91,13 @@ class CartBusinessFactory extends AbstractBusinessFactory
     protected function getPreReloadItemsPlugins()
     {
         return $this->getProvidedDependency(CartDependencyProvider::CART_PRE_RELOAD_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[]
+     */
+    protected function getTerminationPlugins()
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::CART_TERMINATION_PLUGINS);
     }
 }

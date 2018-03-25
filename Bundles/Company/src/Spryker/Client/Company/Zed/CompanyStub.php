@@ -35,4 +35,14 @@ class CompanyStub implements CompanyStubInterface
     {
         return $this->zedRequestClient->call('/company/gateway/create', $companyTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function getCompanyById(CompanyTransfer $companyTransfer): CompanyTransfer
+    {
+        return $this->zedRequestClient->call('/company/gateway/get-company-by-id', $companyTransfer);
+    }
 }

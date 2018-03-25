@@ -13,6 +13,14 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class ApplicationConfig extends AbstractBundleConfig
 {
     /**
+     * @return string
+     */
+    public function getHostName()
+    {
+        return $this->get(ApplicationConstants::HOST_YVES);
+    }
+
+    /**
      * @return bool
      */
     public function isSslEnabled()

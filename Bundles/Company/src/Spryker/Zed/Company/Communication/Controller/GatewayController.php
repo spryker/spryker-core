@@ -25,4 +25,14 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->create($companyTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function getCompanyByIdAction(CompanyTransfer $companyTransfer): CompanyTransfer
+    {
+        return $this->getFacade()->getCompanyById($companyTransfer);
+    }
 }

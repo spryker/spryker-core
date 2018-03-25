@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Tax\Communication\Form;
 
 use ArrayObject;
+use Closure;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -109,7 +110,7 @@ class TaxSetForm extends AbstractType
     /**
      * @return \Closure
      */
-    protected function createTransformCallback(): \Closure
+    protected function createTransformCallback(): Closure
     {
         return function ($taxRates) {
             if ($taxRates) {
@@ -121,7 +122,7 @@ class TaxSetForm extends AbstractType
     /**
      * @return \Closure
      */
-    protected function createReverseTransformCallback(): \Closure
+    protected function createReverseTransformCallback(): Closure
     {
         return function ($taxRates) {
             return new ArrayObject($taxRates);

@@ -8,18 +8,18 @@
 namespace Spryker\Zed\CompanyRole\Persistence\Mapper;
 
 use Generated\Shared\Transfer\CompanyRoleTransfer;
-use Generated\Shared\Transfer\SpyCompanyRoleEntityTransfer;
+use Orm\Zed\CompanyRole\Persistence\SpyCompanyRole;
 
 interface CompanyRolePermissionMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyCompanyRoleEntityTransfer $companyRoleEntityTransfer
+     * @param \Orm\Zed\CompanyRole\Persistence\SpyCompanyRole $spyCompanyRole
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
     public function hydratePermissionCollection(
-        SpyCompanyRoleEntityTransfer $companyRoleEntityTransfer,
+        SpyCompanyRole $spyCompanyRole,
         CompanyRoleTransfer $companyRoleTransfer
     ): CompanyRoleTransfer;
 }

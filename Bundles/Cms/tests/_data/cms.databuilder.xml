@@ -13,5 +13,10 @@
         <property name="status" dataBuilderRule="=301" />
     </transfer>
 
+    <transfer name="CmsPageAttributes">
+        <property name="name" dataBuilderRule="unique()->sentence(2)" />
+        <property name="url" dataBuilderRule="unique()->sentence(2)" />
+    </transfer>
+
 </transfers>
 
