@@ -16,12 +16,12 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
-     * @param \Generated\Shared\Transfer\OfferToOrderConvertRequestTransfer $requestTransfer
+     * @param \Generated\Shared\Transfer\OfferToOrderConvertRequestTransfer $offerToOrderConvertRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer
      */
-    public function convertOfferToOrderAction(OfferToOrderConvertRequestTransfer $requestTransfer)
+    public function convertOfferToOrderAction(OfferToOrderConvertRequestTransfer $offerToOrderConvertRequestTransfer)
     {
-        return $this->getFacade()->convertOfferToOrder($requestTransfer->getOfferId());
+        return $this->getFacade()->convertOfferToOrder($offerToOrderConvertRequestTransfer->getOrder()->getIdSalesOrder());
     }
 }

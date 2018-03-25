@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer;
 interface OfferConverterInterface
 {
     /**
-     * @param int $idOffer
+     * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer
      */
-    public function convertToOrder(int $idOffer): OfferToOrderConvertResponseTransfer;
+    public function convertToOrder(int $idSalesOrder): OfferToOrderConvertResponseTransfer;
 }

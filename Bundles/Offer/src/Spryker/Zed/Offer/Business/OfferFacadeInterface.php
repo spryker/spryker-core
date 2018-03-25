@@ -26,13 +26,13 @@ interface OfferFacadeInterface
 
     /**
      * Specification:
-     *  - Set is_offer flat to false for offer to make it a usual order.
+     *  - Set is_offer flag to false for offer to make it a usual order.
      *
      * @api
      *
-     * @param int $idOffer
+     * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer
      */
-    public function convertOfferToOrder(int $idOffer): OfferToOrderConvertResponseTransfer;
+    public function convertOfferToOrder(int $idSalesOrder): OfferToOrderConvertResponseTransfer;
 }

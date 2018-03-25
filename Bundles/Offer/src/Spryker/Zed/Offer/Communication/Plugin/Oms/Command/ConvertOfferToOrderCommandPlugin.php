@@ -20,7 +20,7 @@ class ConvertOfferToOrderCommandPlugin extends AbstractPlugin implements Command
 {
     /**
      * Specification:
-     *  - Command which is executed per order.
+     *  - Command converts offer to order.
      *
      * @api
      *

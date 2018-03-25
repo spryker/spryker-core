@@ -9,10 +9,23 @@ namespace Spryker\Client\Offer\Zed;
 
 use Generated\Shared\Transfer\OfferToOrderConvertRequestTransfer;
 use Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer;
-use Spryker\Client\ZedRequest\Stub\ZedRequestStub;
+use Spryker\Client\Offer\Dependency\Client\OfferToZedRequestClientInterface;
 
-class OfferStub extends ZedRequestStub implements OfferStubInterface
+class OfferStub implements OfferStubInterface
 {
+    /**
+     * @var \Spryker\Client\Offer\Dependency\Client\OfferToZedRequestClientInterface
+     */
+    protected $zedStub;
+
+    /**
+     * @param \Spryker\Client\Offer\Dependency\Client\OfferToZedRequestClientInterface $zedStub
+     */
+    public function __construct(OfferToZedRequestClientInterface $zedStub)
+    {
+        $this->zedStub = $zedStub;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\OfferToOrderConvertRequestTransfer $offerToOrderRequestTransfer
      *
@@ -20,6 +33,6 @@ class OfferStub extends ZedRequestStub implements OfferStubInterface
      */
     public function convertOfferToOrder(OfferToOrderConvertRequestTransfer $offerToOrderRequestTransfer): OfferToOrderConvertResponseTransfer
     {
-        return $this->zedStub->call('/offer/gateway/convertOfferToOrder', $offerToOrderRequestTransfer);
+        return $this->zedStub->call('/offer/gateway/convert-offer-to-order', $offerToOrderRequestTransfer);
     }
 }

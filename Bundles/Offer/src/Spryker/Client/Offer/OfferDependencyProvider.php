@@ -9,6 +9,7 @@ namespace Spryker\Client\Offer;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\Offer\Dependency\Client\OfferToZedRequestClientBridge;
 
 class OfferDependencyProvider extends AbstractDependencyProvider
 {
@@ -21,7 +22,7 @@ class OfferDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
-        $this->provideClients($container);
+        $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -31,11 +32,12 @@ class OfferDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function provideClients(Container $container): Container
+    protected function addZedRequestClient(Container $container): Container
     {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
-
-            return $container->getLocator()->zedRequest()->client();
+            return new OfferToZedRequestClientBridge(
+                $container->getLocator()->zedRequest()->client()
+            );
         };
 
         return $container;

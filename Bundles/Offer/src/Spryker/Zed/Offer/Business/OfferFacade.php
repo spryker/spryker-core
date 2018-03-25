@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class OfferFacade extends AbstractFacade implements OfferFacadeInterface
 {
+    //TODO: remove method?.
     /**
      * {@inheritdoc}
      *
@@ -37,14 +38,14 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
      *
      * @api
      *
-     * @param int $idOffer
+     * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer
      */
-    public function convertOfferToOrder(int $idOffer): OfferToOrderConvertResponseTransfer
+    public function convertOfferToOrder(int $idSalesOrder): OfferToOrderConvertResponseTransfer
     {
         return $this->getFactory()
             ->createOfferConverter()
-            ->convertToOrder($idOffer);
+            ->convertToOrder($idSalesOrder);
     }
 }

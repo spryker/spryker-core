@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Offer\Communication\Plugin;
+namespace Spryker\Zed\SalesExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
-use Spryker\Zed\SalesExtension\Dependency\Plugin\PreSaveOrderPluginInterface;
 
-class IsOfferPreSaveHydrateOrderPlugin implements PreSaveOrderPluginInterface
+interface PreSaveOrderPluginInterface
 {
     /**
-     * {@inheritdoc}
-     * //TODO: check if it is needed.
+     * Specification:
+     *  - Allows to do operations over SalesOrder data before saving it to db.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -23,10 +23,5 @@ class IsOfferPreSaveHydrateOrderPlugin implements PreSaveOrderPluginInterface
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
-    public function execute(QuoteTransfer $quoteTransfer, SpySalesOrderEntityTransfer $salesOrderEntityTransfer): SpySalesOrderEntityTransfer
-    {
-        $salesOrderEntityTransfer->setIsOffer($quoteTransfer->getIsOffer());
-
-        return $salesOrderEntityTransfer;
-    }
+    public function execute(QuoteTransfer $quoteTransfer, SpySalesOrderEntityTransfer $salesOrderEntityTransfer): SpySalesOrderEntityTransfer;
 }

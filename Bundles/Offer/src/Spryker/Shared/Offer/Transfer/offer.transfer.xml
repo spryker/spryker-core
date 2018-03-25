@@ -12,7 +12,7 @@
     </transfer>
 
     <transfer name="OfferToOrderConvertRequest">
-        <property name="offerId" type="int" />
+        <property name="order" type="Order" />
     </transfer>
 
     <transfer name="OfferToOrderConvertResponse">

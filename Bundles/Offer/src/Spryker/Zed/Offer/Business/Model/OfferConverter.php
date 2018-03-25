@@ -27,21 +27,21 @@ class OfferConverter implements OfferConverterInterface
     }
 
     /**
-     * @param int $idOffer
+     * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer
      */
-    public function convertToOrder(int $idOffer): OfferToOrderConvertResponseTransfer
+    public function convertToOrder(int $idSalesOrder): OfferToOrderConvertResponseTransfer
     {
-        $offer = $this->salesFacade->getOrderByIdSalesOrder($idOffer);
+        $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);
         $isSuccess = false;
-        if ($offer) {
-            $offer->setIsOffer(false);
-            $isSuccess = $this->salesFacade->updateOrder($offer, $offer->getIdSalesOrder());
+        if ($orderTransfer) {
+            $orderTransfer->setIsOffer(false);
+            $isSuccess = $this->salesFacade->updateOrder($orderTransfer, $orderTransfer->getIdSalesOrder());
         }
 
         return (new OfferToOrderConvertResponseTransfer())
-            ->setOrder($offer)
+            ->setOrder($orderTransfer)
             ->setIsSuccessful($isSuccess);
     }
 }

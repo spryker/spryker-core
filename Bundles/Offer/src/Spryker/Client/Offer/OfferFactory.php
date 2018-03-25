@@ -23,7 +23,7 @@ class OfferFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ZedRequest\ZedRequestClient
+     * @return \Spryker\Client\Offer\Dependency\Client\OfferToZedRequestClientInterface
      */
     protected function getZedRequestClient()
     {

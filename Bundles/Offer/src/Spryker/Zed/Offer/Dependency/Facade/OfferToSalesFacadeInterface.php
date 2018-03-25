@@ -18,7 +18,7 @@ interface OfferToSalesFacadeInterface
      *
      * @return bool
      */
-    public function updateOrder(OrderTransfer $orderTransfer, $idSalesOrder);
+    public function updateOrder(OrderTransfer $orderTransfer, int $idSalesOrder): bool;
 
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
@@ -26,12 +26,12 @@ interface OfferToSalesFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getCustomerOrders(OrderListTransfer $orderListTransfer, $idCustomer);
+    public function getCustomerOrders(OrderListTransfer $orderListTransfer, int $idCustomer): OrderListTransfer;
 
     /**
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function getOrderByIdSalesOrder($idSalesOrder);
+    public function getOrderByIdSalesOrder(int $idSalesOrder): OrderTransfer;
 }

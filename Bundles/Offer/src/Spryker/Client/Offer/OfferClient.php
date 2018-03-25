@@ -23,7 +23,7 @@ class OfferClient extends AbstractClient implements OfferClientInterface
      *
      * @param \Generated\Shared\Transfer\OfferToOrderConvertRequestTransfer $offerToOrderConvertRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer $offerToOrderRequestTransfer
+     * @return \Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer
      */
     public function convertOfferToOrder(OfferToOrderConvertRequestTransfer $offerToOrderConvertRequestTransfer): OfferToOrderConvertResponseTransfer
     {
