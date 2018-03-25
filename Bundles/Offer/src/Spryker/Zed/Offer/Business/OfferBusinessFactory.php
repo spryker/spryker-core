@@ -36,7 +36,8 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function createOfferConverter(): OfferConverterInterface
     {
         return new OfferConverter(
-            $this->getSalesFacade()
+            $this->getSalesFacade(),
+            $this->getConfig()
         );
     }
 

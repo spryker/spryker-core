@@ -5,6 +5,8 @@
 
     <transfer name="Order">
         <property name="isOffer" type="bool" />
+
+        <property name="type" type="string" />
     </transfer>
 
     <transfer name="OrderList">

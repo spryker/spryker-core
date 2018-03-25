@@ -19,6 +19,10 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
     const DATE_FILTER_DAY = 'day';
     const DATE_FILTER_WEEK = 'week';
     const FIELD_ORDER_GRAND_TOTAL = 'order_grand_total';
+
+    /**
+     * @deprecated Please use \Spryker\Zed\Sales\SalesConfig::getOrderTypeDefault() instead
+     */
     public const ORDER_TYPE_DEFAULT = null;
 
     /**

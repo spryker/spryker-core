@@ -7,7 +7,7 @@
     <table name="spy_sales_order" phpName="SpySalesOrder">
         <column name="type" type="VARCHAR" required="false"/>
 
-        <column name="is_offer" type="BOOLEAN" required="true" default="false"/>
+        <column name="is_offer" type="BOOLEAN" required="true" default="false" deprecated="deprecated"/>
     </table>
 
 </database>

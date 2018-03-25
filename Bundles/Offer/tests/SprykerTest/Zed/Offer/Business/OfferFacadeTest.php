@@ -3,6 +3,8 @@
 namespace SprykerTest\Zed\Offer\Business;
 
 use Codeception\Test\Unit;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Spryker\Zed\Offer\OfferConfig;
 
 /**
  * Auto-generated group annotations
@@ -31,7 +33,7 @@ class OfferFacadeTest extends Unit
 
         $response = $facade->convertOfferToOrder($offerEntity->getIdSalesOrder());
         $this->assertTrue($response->getIsSuccessful());
-        $this->assertFalse($response->getOrder()->getIsOffer());
+        $this->assertNotEquals( OfferConfig::ORDER_TYPE_OFFER, $response->getOrder()->getType());
     }
 
     /**
@@ -39,8 +41,9 @@ class OfferFacadeTest extends Unit
      */
     protected function createOffer()
     {
+        /** @var SpySalesOrder $orderEntity */
         $orderEntity = $this->tester->create();
-        $orderEntity->setIsOffer(true);
+        $orderEntity->setType(OfferConfig::ORDER_TYPE_OFFER);
         $orderEntity->save();
 
         return $orderEntity;

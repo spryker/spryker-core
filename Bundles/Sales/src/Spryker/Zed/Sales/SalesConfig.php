@@ -21,6 +21,8 @@ class SalesConfig extends AbstractBundleConfig
     const PARAM_CUSTOMER_REFERENCE = 'customer-reference';
     const TEST_CUSTOMER_FIRST_NAME = 'test order';
 
+    public const ORDER_TYPE_DEFAULT = null;
+
     /**
      * Separator for the sequence number
      *
@@ -106,5 +108,13 @@ class SalesConfig extends AbstractBundleConfig
     public function getSalesDetailExternalBlocksUrls()
     {
         return [];
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getOrderTypeDefault()
+    {
+        return static::ORDER_TYPE_DEFAULT;
     }
 }

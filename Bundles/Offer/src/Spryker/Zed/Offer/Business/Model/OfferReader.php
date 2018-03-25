@@ -33,7 +33,10 @@ class OfferReader implements OfferReaderInterface
      */
     public function getOfferList(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        $orderListTransfer->setIsOffer(true);
+        //todo: Fix to type
+        $orderListTransfer->setIsOffer(
+            true
+        );
 
         return $this->salesFacade
             ->getCustomerOrders($orderListTransfer, $orderListTransfer->getIdCustomer());

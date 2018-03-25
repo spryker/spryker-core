@@ -14,6 +14,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 /**
  * @method \Spryker\Zed\Offer\Business\OfferFacadeInterface getFacade()
  * @method \Spryker\Zed\Offer\Communication\OfferCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Offer\OfferConfig getConfig()
  */
 class IsOfferConditionPlugin extends AbstractPlugin implements ConditionInterface
 {
@@ -26,6 +27,6 @@ class IsOfferConditionPlugin extends AbstractPlugin implements ConditionInterfac
      */
     public function check(SpySalesOrderItem $orderItem)
     {
-        return $orderItem->getOrder()->getIsOffer();
+        return $orderItem->getOrder()->getType() === $this->getConfig()->getOrderTypeOffer();
     }
 }

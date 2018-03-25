@@ -9,6 +9,7 @@ namespace Spryker\Zed\Offer\Business\Model;
 
 use Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface;
+use Spryker\Zed\Offer\OfferConfig;
 
 class OfferConverter implements OfferConverterInterface
 {
@@ -18,12 +19,20 @@ class OfferConverter implements OfferConverterInterface
     protected $salesFacade;
 
     /**
+     * @var OfferConfig
+     */
+    protected $offerConfig;
+
+    /**
      * @param \Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface $salesFacade
+     * @param OfferConfig $offerConfig
      */
     public function __construct(
-        OfferToSalesFacadeInterface $salesFacade
+        OfferToSalesFacadeInterface $salesFacade,
+        OfferConfig $offerConfig
     ) {
         $this->salesFacade = $salesFacade;
+        $this->offerConfig = $offerConfig;
     }
 
     /**
@@ -36,7 +45,7 @@ class OfferConverter implements OfferConverterInterface
         $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);
         $isSuccess = false;
         if ($orderTransfer) {
-            $orderTransfer->setIsOffer(false);
+            $orderTransfer->setType($this->offerConfig->getOrderTypeDefault());
             $isSuccess = $this->salesFacade->updateOrder($orderTransfer, $orderTransfer->getIdSalesOrder());
         }
 

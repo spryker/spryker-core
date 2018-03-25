@@ -18,6 +18,11 @@ class OffersTableQueryBuilder implements OffersTableQueryBuilderInterface
     const FIELD_ORDER_GRAND_TOTAL = 'order_grand_total';
 
     /**
+     * @use \Spryker\Zed\Offer\OfferConfig::getOrderTypeOffer()
+     */
+    public const ORDER_TYPE_OFFER = 'offer';
+
+    /**
      * @var \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     protected $salesOrderQuery;
@@ -25,8 +30,9 @@ class OffersTableQueryBuilder implements OffersTableQueryBuilderInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
      */
-    public function __construct(SpySalesOrderQuery $salesOrderQuery)
-    {
+    public function __construct(
+        SpySalesOrderQuery $salesOrderQuery
+    ){
         $this->salesOrderQuery = $salesOrderQuery;
     }
 
@@ -37,7 +43,7 @@ class OffersTableQueryBuilder implements OffersTableQueryBuilderInterface
     {
         $query = $this->salesOrderQuery;
 
-        $query->filterByIsOffer(true);
+        $query->filterByType(static::ORDER_TYPE_OFFER);
         $query->addLastOrderGrandTotalToResult(static::FIELD_ORDER_GRAND_TOTAL);
 
         $query = $this->addItemStates($query);
