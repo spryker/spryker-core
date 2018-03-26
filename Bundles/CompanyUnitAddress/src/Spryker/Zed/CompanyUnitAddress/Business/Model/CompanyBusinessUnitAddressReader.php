@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyUnitAddress\Business\Model;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressRepositoryInterface;
 
 class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressReaderInterface
@@ -20,12 +21,20 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
     protected $repository;
 
     /**
+     * @var \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutorInterface
+     */
+    protected $companyUnitAddressPluginExecutor;
+
+    /**
      * @param \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressRepositoryInterface $repository
+     * @param \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutorInterface $companyUnitAddressPluginExecutor
      */
     public function __construct(
-        CompanyUnitAddressRepositoryInterface $repository
+        CompanyUnitAddressRepositoryInterface $repository,
+        CompanyUnitAddressPluginExecutorInterface $companyUnitAddressPluginExecutor
     ) {
         $this->repository = $repository;
+        $this->companyUnitAddressPluginExecutor = $companyUnitAddressPluginExecutor;
     }
 
     /**
@@ -42,5 +51,19 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
         );
 
         return $this->repository->getCompanyUnitAddressCollection($criteriaFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
+     */
+    public function getCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
+    {
+        $companyUnitAddress = $this->repository->getCompanyUnitAddressById($companyUnitAddressTransfer);
+        $companyUnitAddress = $this->companyUnitAddressPluginExecutor
+            ->executeCompanyUnitAddressHydratorPlugins($companyUnitAddress);
+
+        return $companyUnitAddress;
     }
 }
