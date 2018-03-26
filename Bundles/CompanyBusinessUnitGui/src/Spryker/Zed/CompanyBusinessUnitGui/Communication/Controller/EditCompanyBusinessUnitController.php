@@ -11,12 +11,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditCompanyBusinessUnitController extends AbstractController
 {
-    public const URL_PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
-    public const URL_PARAM_REDIRECT_URL = 'redirect-url';
-    public const REDIRECT_URL_DEFAULT = '/company-business-unit-gui/list-company-business-unit';
+    protected const URL_PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
+    protected const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    protected const REDIRECT_URL_DEFAULT = '/company-business-unit-gui/list-company-business-unit';
 
-    public const MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_SUCCESS = 'Company Business Unit has been updated.';
-    public const MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_ERROR = 'Company Business Unit has not been updated.';
+    protected const MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_SUCCESS = 'Company Business Unit has been updated.';
+    protected const MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_ERROR = 'Company Business Unit has not been updated.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

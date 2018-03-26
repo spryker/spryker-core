@@ -5,6 +5,7 @@ namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Table;
 
 
 use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -12,15 +13,15 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class CompanyBusinessUnitTable extends AbstractTable
 {
 
-    public const COL_ID_COMPANY_BUSINESS_UNIT = SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT;
-    public const COL_NAME = SpyCompanyBusinessUnitTableMap::COL_NAME;
-    public const COL_IBAN = SpyCompanyBusinessUnitTableMap::COL_IBAN;
-    public const COL_BIC = SpyCompanyBusinessUnitTableMap::COL_BIC;
-    public const COL_ACTIONS = 'Actions';
-
-    public const REQUEST_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
-
-    public const URL_COMPANY_BUSINESS_UNIT_EDIT = '/company-business-unit-gui/edit-company-business-unit/index?%s=%d';
+    protected const COL_ID_COMPANY_BUSINESS_UNIT = SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT;
+    protected const COL_NAME = SpyCompanyBusinessUnitTableMap::COL_NAME;
+    protected const COL_ADDRESS = 'address';
+    protected const COL_IBAN = SpyCompanyBusinessUnitTableMap::COL_IBAN;
+    protected const COL_BIC = SpyCompanyBusinessUnitTableMap::COL_BIC;
+    protected const COL_ACTIONS = 'Actions';
+    protected const REQUEST_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
+    protected const URL_COMPANY_BUSINESS_UNIT_EDIT = '/company-business-unit-gui/edit-company-business-unit/index?%s=%d';
+    protected const FORMAT_ADDRESS = '%s, %s, %s';
 
     /**
      * @var SpyCompanyBusinessUnitQuery
@@ -45,11 +46,13 @@ class CompanyBusinessUnitTable extends AbstractTable
         $config->setHeader([
             static::COL_ID_COMPANY_BUSINESS_UNIT => 'Id',
             static::COL_NAME => 'Name',
+            static::COL_ADDRESS => 'Address',
             static::COL_IBAN => 'IBAN',
             static::COL_BIC => 'BIC',
             static::COL_ACTIONS => static::COL_ACTIONS,
         ]);
 
+        $config->addRawColumn(static::COL_ADDRESS);
         $config->addRawColumn(static::COL_ACTIONS);
 
         $config->setSortable([
@@ -72,15 +75,16 @@ class CompanyBusinessUnitTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $queryResults = $this->runQuery($this->companyBusinessUnitQuery, $config);
+        $queryResults = $this->runQuery($this->companyBusinessUnitQuery, $config, true);
         $results = [];
 
         foreach ($queryResults as $item) {
             $results[] = [
-                static::COL_ID_COMPANY_BUSINESS_UNIT => $item[SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT],
-                static::COL_NAME => $item[SpyCompanyBusinessUnitTableMap::COL_NAME],
-                static::COL_IBAN => $item[SpyCompanyBusinessUnitTableMap::COL_IBAN],
-                static::COL_BIC => $item[SpyCompanyBusinessUnitTableMap::COL_BIC],
+                static::COL_ID_COMPANY_BUSINESS_UNIT => $item->getIdCompanyBusinessUnit(),
+                static::COL_NAME => $item->getName(),
+                static::COL_ADDRESS => $this->formatAddress($item),
+                static::COL_IBAN => $item->getIban(),
+                static::COL_BIC => $item->getBic(),
                 static::COL_ACTIONS => $this->buildLinks($item),
             ];
         }
@@ -89,17 +93,33 @@ class CompanyBusinessUnitTable extends AbstractTable
         return $results;
     }
 
+    protected function formatAddress(SpyCompanyBusinessUnit $spyCompanyBusinessUnit)
+    {
+        $result = '';
+        if ($spyCompanyBusinessUnit->getSpyCompanyUnitAddressToCompanyBusinessUnitsJoinCompanyUnitAddress()->count() > 0) {
+            $address = $spyCompanyBusinessUnit->getSpyCompanyUnitAddressToCompanyBusinessUnitsJoinCompanyUnitAddress()[0]->getCompanyUnitAddress();
+            $result = sprintf(
+                static::FORMAT_ADDRESS,
+                $address->getCity(),
+                $address->getAddress1(),
+                $address->getZipCode()
+            );
+        }
+
+        return $result;
+    }
+
     /**
-     * @param array $item
+     * @param SpyCompanyBusinessUnit $spyCompanyBusinessUnit
      *
      * @return string
      */
-    protected function buildLinks(array $item)
+    protected function buildLinks(SpyCompanyBusinessUnit $spyCompanyBusinessUnit)
     {
         $buttons = [];
 
         $buttons[] = $this->generateEditButton(
-            sprintf(static::URL_COMPANY_BUSINESS_UNIT_EDIT, static::REQUEST_ID_COMPANY_BUSINESS_UNIT, $item[static::COL_ID_COMPANY_BUSINESS_UNIT]),
+            sprintf(static::URL_COMPANY_BUSINESS_UNIT_EDIT, static::REQUEST_ID_COMPANY_BUSINESS_UNIT, $spyCompanyBusinessUnit->getIdCompanyBusinessUnit()),
             'Edit'
         );
 
