@@ -1,4 +1,10 @@
 {% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'View Prodcut Suppliers' %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
 {% block content %}
     {{ productSuppliersTable | raw }}
 {% endblock %}

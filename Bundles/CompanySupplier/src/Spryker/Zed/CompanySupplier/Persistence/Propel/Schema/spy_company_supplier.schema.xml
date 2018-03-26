@@ -24,9 +24,4 @@
         <id-method-parameter value="spy_company_supplier_to_product_pk_seq"/>
     </table>
 
-    <!--<table name="spy_company_business_unit" phpName="SpyCompanyBusinessUnit">-->
-        <!--<column name="iban" type="VARCHAR" size="255" required="false"/>-->
-        <!--<column name="bic" type="VARCHAR" size="255" required="false"/>-->
-    <!--</table>-->
-
 </database>

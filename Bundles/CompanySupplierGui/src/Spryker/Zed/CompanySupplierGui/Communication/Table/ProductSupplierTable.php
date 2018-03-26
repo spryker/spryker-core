@@ -7,6 +7,8 @@
 namespace Spryker\Zed\CompanySupplierGui\Communication\Table;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -16,9 +18,11 @@ use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToStoreFa
 use Spryker\Zed\CompanySupplierGui\Dependency\QueryContainer\CompanySupplierGuiToCompanySupplierQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class ProductSupplierTable extends AbstractTable
 {
+    protected const TABLE_IDENTIFIER = 'product-suppliers-table';
     protected const COL_SKU = 'sku';
     protected const COL_SUPPLIER_PRICE = 'supplier_price';
     protected const COL_DEFAULT_PRICE = 'default_price';
@@ -26,6 +30,10 @@ class ProductSupplierTable extends AbstractTable
     protected const PRICE_SEPARATOR = '<br/>';
     protected const PRICE_TYPE_SUPPLIER = 'SUPPLIER';
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
+    protected const PARAM_ID_COMPANY = 'id-company';
+
+    /** @var int */
+    protected $idCompany;
 
     /** @var \Spryker\Zed\CompanySupplierGui\Dependency\QueryContainer\CompanySupplierGuiToCompanySupplierQueryContainerInterface */
     protected $companySupplierQueryContainer;
@@ -40,22 +48,31 @@ class ProductSupplierTable extends AbstractTable
     protected $currencyFacade;
 
     /**
+     * @param int
      * @param \Spryker\Zed\CompanySupplierGui\Dependency\QueryContainer\CompanySupplierGuiToCompanySupplierQueryContainerInterface $companySupplierQueryContainer
      * @param \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToMoneyFacadeInterface $moneyFacade
      * @param \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCurrencyFacadeInterface $currencyFacade
      */
     public function __construct(
+        int $idCompany,
         CompanySupplierGuiToCompanySupplierQueryContainerInterface $companySupplierQueryContainer,
         CompanySupplierGuiToMoneyFacadeInterface $moneyFacade,
         CompanySupplierGuiToStoreFacadeInterface $storeFacade,
         CompanySupplierGuiToCurrencyFacadeInterface $currencyFacade
     ) {
-        $this->setTableIdentifier('product-suppliers-table');
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
+        $this->idCompany = $idCompany;
         $this->companySupplierQueryContainer = $companySupplierQueryContainer;
         $this->moneyFacade = $moneyFacade;
         $this->storeFacade = $storeFacade;
         $this->currencyFacade = $currencyFacade;
+
+        $this->defaultUrl = sprintf(
+            'table?%s=%d',
+            static::PARAM_ID_COMPANY,
+            $idCompany
+        );
     }
 
     /**
@@ -65,8 +82,6 @@ class ProductSupplierTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
-        $config->setUrl('table');
-
         $config->setHeader([
             static::COL_SKU => 'SKU',
             static::COL_SUPPLIER_PRICE => 'Purchasing price',
@@ -140,27 +155,45 @@ class ProductSupplierTable extends AbstractTable
      */
     protected function setProductSupplierPrices(SpyProduct $spyProductEntity, ProductConcreteTransfer &$productTransfer): void
     {
-        $productTransfer->setSupplierPrice('');
-        $productTransfer->setDefaultPrice('');
-        if ($spyProductEntity->getPriceProductsJoinPriceType()->count() > 0) {
-            foreach ($spyProductEntity->getPriceProductsJoinPriceType() as $priceProduct) {
-                if ($priceProduct->getPriceType()->getName() === static::PRICE_TYPE_SUPPLIER) {
-                    $productTransfer->setSupplierPrice(
-                        $this->formatPrices($priceProduct->getPriceProductStores())
-                    );
-
-                    continue;
-                }
-                if ($priceProduct->getPriceType()->getName() === static::PRICE_TYPE_DEFAULT) {
-                    $productTransfer->setDefaultPrice(
-                        $this->formatPrices($priceProduct->getPriceProductStores())
-                    );
-
-                    continue;
-                }
-            }
-        }
+        $productTransfer->setSupplierPrice($this->getSupplierPrice($spyProductEntity));
+        $productTransfer->setDefaultPrice($this->getDefaultPrice($spyProductEntity));
     }
+
+    /**
+     * @param SpyProduct $spyProductEntity
+     * @return string
+     */
+    protected function getSupplierPrice(SpyProduct $spyProductEntity): string
+    {
+        $criteria = new Criteria();
+        $criteria->add(SpyPriceTypeTableMap::COL_NAME, static::PRICE_TYPE_SUPPLIER);
+        $criteria->add(SpyPriceProductTableMap::COL_FK_COMPANY, $this->idCompany);
+
+        $prices = $spyProductEntity->getPriceProductsJoinPriceType($criteria);
+        if ($prices->count() < 1) {
+            return '';
+        }
+
+        return $this->formatPrices($prices[0]->getPriceProductStoresJoinCurrency());
+    }
+
+    /**
+     * @param SpyProduct $spyProductEntity
+     * @return string
+     */
+    protected function getDefaultPrice(SpyProduct $spyProductEntity): string
+    {
+        $criteria = new Criteria();
+        $criteria->add(SpyPriceTypeTableMap::COL_NAME, static::PRICE_TYPE_DEFAULT);
+
+        $prices = $spyProductEntity->getPriceProductsJoinPriceType($criteria);
+        if ($prices->count() < 1) {
+            return '';
+        }
+
+        return $this->formatPrices($prices[0]->getPriceProductStoresJoinCurrency());
+    }
+
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $priceProductCollection
