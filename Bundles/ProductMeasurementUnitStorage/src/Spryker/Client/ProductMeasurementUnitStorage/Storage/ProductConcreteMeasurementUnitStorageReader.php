@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductMeasurementUnitStorage\Storage;
 
-use Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer;
+use Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceInterface;
@@ -40,9 +40,9 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer|null
+     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer|null
      */
-    public function findProductConcreteMeasurementUnitStorageEntity($idProduct)
+    public function findProductConcreteMeasurementUnit($idProduct)
     {
         $key = $this->generateKey($idProduct);
         $productConcreteMeasurementUnitStorageData = $this->storageClient->get($key);
@@ -51,17 +51,17 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
             return null;
         }
 
-        return $this->mapToProductConcreteMeasurementUnitStorageEntity($productConcreteMeasurementUnitStorageData);
+        return $this->mapToProductConcreteMeasurementUnitStorage($productConcreteMeasurementUnitStorageData);
     }
 
     /**
      * @param array $productConcreteMeasurementUnitStorageData
      *
-     * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer
      */
-    protected function mapToProductConcreteMeasurementUnitStorageEntity(array $productConcreteMeasurementUnitStorageData)
+    protected function mapToProductConcreteMeasurementUnitStorage(array $productConcreteMeasurementUnitStorageData)
     {
-        return (new SpyProductConcreteMeasurementUnitStorageEntityTransfer())
+        return (new ProductConcreteMeasurementUnitStorageTransfer())
             ->fromArray($productConcreteMeasurementUnitStorageData, true);
     }
 

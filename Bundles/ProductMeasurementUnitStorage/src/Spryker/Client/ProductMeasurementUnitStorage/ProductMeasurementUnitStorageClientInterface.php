@@ -18,9 +18,9 @@ interface ProductMeasurementUnitStorageClientInterface
      *
      * @param int $idProductMeasurementUnit
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer|null
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer|null
      */
-    public function findProductMeasurementUnitStorageEntity($idProductMeasurementUnit);
+    public function findProductMeasurementUnit($idProductMeasurementUnit);
 
     /**
      * Specification:
@@ -31,7 +31,7 @@ interface ProductMeasurementUnitStorageClientInterface
      *
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer|null
+     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer|null
      */
-    public function findProductConcreteMeasurementUnitStorageEntity($idProduct);
+    public function findProductConcreteMeasurementUnit($idProduct);
 }

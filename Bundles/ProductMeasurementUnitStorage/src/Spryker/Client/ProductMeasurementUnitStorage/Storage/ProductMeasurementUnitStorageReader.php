@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductMeasurementUnitStorage\Storage;
 
-use Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceInterface;
@@ -40,9 +40,9 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
     /**
      * @param int $idProductMeasurementUnit
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer|null
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer|null
      */
-    public function findProductMeasurementUnitStorageEntity($idProductMeasurementUnit)
+    public function findProductMeasurementUnit($idProductMeasurementUnit)
     {
         $key = $this->generateKey($idProductMeasurementUnit);
         $productMeasurementUnitStorageData = $this->storageClient->get($key);
@@ -51,17 +51,17 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
             return null;
         }
 
-        return $this->mapToProductMeasurementUnitStorageEntity($productMeasurementUnitStorageData);
+        return $this->mapToProductMeasurementUnitStorage($productMeasurementUnitStorageData);
     }
 
     /**
      * @param array $productMeasurementUnitStorageData
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer
      */
-    protected function mapToProductMeasurementUnitStorageEntity(array $productMeasurementUnitStorageData)
+    protected function mapToProductMeasurementUnitStorage(array $productMeasurementUnitStorageData)
     {
-        return (new SpyProductMeasurementUnitStorageEntityTransfer())
+        return (new ProductMeasurementUnitStorageTransfer())
             ->fromArray($productMeasurementUnitStorageData, true);
     }
 
