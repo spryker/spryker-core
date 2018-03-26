@@ -57,7 +57,8 @@ class BusinessHelper extends Module
         );
 
         $this->createSpySalesShipment($salesOrderEntity->getIdSalesOrder(), $salesExpenseEntity->getIdSalesExpense());
-        $this->createOrderTotals($salesOrderEntity);
+
+        $this->createOrderTotals($salesOrderEntity->getIdSalesOrder());
 
         return $salesOrderEntity;
     }
@@ -217,22 +218,19 @@ class BusinessHelper extends Module
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $spySalesOrder
+     * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderTotals
      */
-    protected function createOrderTotals(SpySalesOrder $spySalesOrder)
+    protected function createOrderTotals($idSalesOrder)
     {
-        $orderTotals = new SpySalesOrderTotals();
-        $orderTotals->setOrder($spySalesOrder);
-        $orderTotals->setTaxTotal(45);
-        $orderTotals->setRefundTotal(0);
-        $orderTotals->setGrandTotal(100);
-        $orderTotals->setDiscountTotal(0);
-        $orderTotals->setCanceledTotal(0);
-        $orderTotals->setSubtotal(55);
-        $orderTotals->save();
+        $salesOrderTotalsEntity = new SpySalesOrderTotals();
+        $salesOrderTotalsEntity->setSubtotal(1000);
+        $salesOrderTotalsEntity->setGrandTotal(2500);
+        $salesOrderTotalsEntity->setFkSalesOrder($idSalesOrder);
 
-        return $orderTotals;
+        $salesOrderTotalsEntity->save();
+
+        return $salesOrderTotalsEntity;
     }
 }

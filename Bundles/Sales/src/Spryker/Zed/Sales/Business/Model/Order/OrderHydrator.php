@@ -142,11 +142,12 @@ class OrderHydrator implements OrderHydratorInterface
         $this->hydrateExpensesToOrderTransfer($orderEntity, $orderTransfer);
         $this->hydrateMissingCustomer($orderEntity, $orderTransfer);
 
-        $orderTransfer->setTotalOrderCount(
-            $this->getTotalCustomerOrderCount(
-                $orderTransfer->getCustomerReference()
-            )
-        );
+        $orderTransfer->setTotalOrderCount(0);
+        if ($orderTransfer->getCustomerReference()) {
+            $customerReference = $orderTransfer->getCustomerReference();
+            $totalCustomerOrderCount = $this->getTotalCustomerOrderCount($customerReference);
+            $orderTransfer->setTotalOrderCount($totalCustomerOrderCount);
+        }
 
         $uniqueProductQuantity = (int)$this->queryContainer
             ->queryCountUniqueProductsForOrder($orderEntity->getIdSalesOrder())
