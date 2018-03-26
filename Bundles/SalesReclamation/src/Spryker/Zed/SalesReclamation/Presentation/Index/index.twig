@@ -1,5 +1,9 @@
 {% extends '@Application/Layout/layout.twig' %}
 
+{% block section_title %}
+    {{ 'Overview of reclamations' | trans }}
+{% endblock %}
+
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'List of Reclamations' } %}

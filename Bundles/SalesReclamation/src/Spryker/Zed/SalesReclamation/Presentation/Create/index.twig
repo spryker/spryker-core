@@ -1,5 +1,9 @@
 {% extends '@Application/Layout/layout.twig' %}
 
+{% block section_title %}
+    {{ 'Create reclamation' | trans }}
+{% endblock %}
+
 {% block content %}
     Reclamation for order {{reclamation.order.orderReference }}
 
