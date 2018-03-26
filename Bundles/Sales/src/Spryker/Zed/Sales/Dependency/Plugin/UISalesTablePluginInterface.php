@@ -11,7 +11,7 @@ interface UISalesTablePluginInterface
 {
     /**
      * Specifications:
-     * * Get item inside foreach in AbstractTable::formatQueryData(). And update it.
+     * - Get item inside foreach in AbstractTable::formatQueryData(). And update it.
      *
      * @api
      *
