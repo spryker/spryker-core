@@ -15,7 +15,7 @@ class IsOfferPreSaveHydrateOrderPlugin implements PreSaveOrderPluginInterface
 {
     /**
      * {@inheritdoc}
-     * //TODO: check if it is needed.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
