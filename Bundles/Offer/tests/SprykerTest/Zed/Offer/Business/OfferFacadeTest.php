@@ -2,7 +2,10 @@
 
 namespace SprykerTest\Zed\Offer\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 /**
  * Auto-generated group annotations
@@ -26,23 +29,53 @@ class OfferFacadeTest extends Unit
      */
     public function testConvertOfferToOrder()
     {
-        $offerEntity = $this->createOffer();
         $facade = $this->tester->getFacade();
+        $orderEntity = $this->tester->haveOrder();
 
-        $response = $facade->convertOfferToOrder($offerEntity->getIdSalesOrder());
+        $this->assertTrue($orderEntity->getIsOffer());
+
+        $response = $facade->convertOfferToOrder($orderEntity->getIdSalesOrder());
         $this->assertTrue($response->getIsSuccessful());
         $this->assertFalse($response->getOrder()->getIsOffer());
     }
 
     /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     * @return void
      */
-    protected function createOffer()
+    public function testGetOffers()
     {
-        $orderEntity = $this->tester->create();
-        $orderEntity->setIsOffer(true);
-        $orderEntity->save();
+        $facade = $this->tester->getFacade();
+        $orderListTransfer = $this->haveOrderListTransfer();
+        $orderListTransfer = $facade->getOffers($orderListTransfer);
 
-        return $orderEntity;
+        $this->assertNotEmpty($orderListTransfer->getOrders());
+        foreach ($orderListTransfer->getOrders() as $order) {
+            $this->assertInstanceOf(OrderTransfer::class, $order);
+            $this->assertTrue($order->getIsOffer());
+        }
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    protected function haveOrderListTransfer()
+    {
+        $saveOrderTransfer = $this->tester->haveOrder();
+        $orderTransfer = $this->createSalesFacade()
+            ->getOrderByIdSalesOrder(
+                $saveOrderTransfer->getIdSalesOrder()
+            );
+
+        return (new OrderListTransfer())
+                ->setIdCustomer($orderTransfer->getFkCustomer())
+                ->setOrders(new ArrayObject([$orderTransfer]));
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
+     */
+    protected function createSalesFacade()
+    {
+        return $this->tester->getLocator()->sales()->facade();
     }
 }
