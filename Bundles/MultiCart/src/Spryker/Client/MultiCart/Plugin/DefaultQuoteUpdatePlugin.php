@@ -21,7 +21,7 @@ class DefaultQuoteUpdatePlugin extends AbstractPlugin implements QuoteUpdatePlug
 {
     /**
      * Specification:
-     * - Extract Customer Quote Collection and saves it to customer session.
+     * - Extract Customer Default Quote Collection and saves it to customer session.
      *
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
@@ -32,7 +32,7 @@ class DefaultQuoteUpdatePlugin extends AbstractPlugin implements QuoteUpdatePlug
         if ($quoteResponseTransfer->getCustomerQuotes() && !$quoteResponseTransfer->getQuoteTransfer()->getIsDefault()) {
             $defaultQuoteTransfer = $this->findDefaultQuote($quoteResponseTransfer->getCustomerQuotes());
             if ($defaultQuoteTransfer) {
-                $quoteResponseTransfer->setQuoteTransfer($defaultQuoteTransfer);
+                $this->getFactory()->getQuoteClient()->setQuote($defaultQuoteTransfer);
             }
         }
 

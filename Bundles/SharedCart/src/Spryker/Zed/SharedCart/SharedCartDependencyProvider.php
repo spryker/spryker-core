@@ -24,19 +24,8 @@ class SharedCartDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container = $this->addQuoteFacade($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function provideCommunicationLayerDependencies(Container $container)
-    {
         $container = $this->addCustomerFacade($container);
+        $container = $this->addQuoteFacade($container);
 
         return $container;
     }

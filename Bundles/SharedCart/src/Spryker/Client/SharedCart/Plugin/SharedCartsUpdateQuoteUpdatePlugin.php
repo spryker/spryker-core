@@ -14,11 +14,11 @@ use Spryker\Client\PersistentCart\Dependency\Plugin\QuoteUpdatePluginInterface;
 /**
  * @method \Spryker\Client\SharedCart\SharedCartFactory getFactory()
  */
-class PermissionUpdateQuoteUpdatePlugin extends AbstractPlugin implements QuoteUpdatePluginInterface
+class SharedCartsUpdateQuoteUpdatePlugin extends AbstractPlugin implements QuoteUpdatePluginInterface
 {
     /**
      * Specification:
-     * - Update customers permission collection.
+     * - Adds shared cart list to multi cart collection.
      *
      * @api
      *
@@ -28,11 +28,14 @@ class PermissionUpdateQuoteUpdatePlugin extends AbstractPlugin implements QuoteU
      */
     public function processResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        $permissionCollectionTransfer = $quoteResponseTransfer->requireCustomerPermissions()->getCustomerPermissions();
-        $customerClient = $this->getFactory()->getCustomerClient();
-        $customerTransfer = $customerClient->getCustomer();
-        $customerTransfer->setPermissions($permissionCollectionTransfer);
-        $customerClient->setCustomer($customerTransfer);
+        if (count($quoteResponseTransfer->getSharedCustomerQuotes()->getQuotes())) {
+            $multiCartClient = $this->getFactory()->getMultiCartClient();
+            $customerQuoteCollectionTransfer = $multiCartClient->getQuoteCollection();
+            foreach ($quoteResponseTransfer->getSharedCustomerQuotes()->getQuotes() as $quoteTransfer) {
+                $customerQuoteCollectionTransfer->addQuote($quoteTransfer);
+            }
+            $multiCartClient->setQuoteCollection($customerQuoteCollectionTransfer);
+        }
 
         return $quoteResponseTransfer;
     }

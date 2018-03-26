@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MultiCart\Business\ResponseExpander;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -55,7 +56,10 @@ class QuoteResponseExpander implements QuoteResponseExpanderInterface
     {
         $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
         $quoteCriteriaFilterTransfer->setCustomerReference($customerTransfer->getCustomerReference());
-
+        
+        $filterTransfer = new FilterTransfer();
+        $filterTransfer->setOrderBy('name');
+        $quoteCriteriaFilterTransfer->setFilter($filterTransfer);
         $customerQuoteCollectionTransfer = $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
         foreach ($customerQuoteCollectionTransfer->getQuotes() as $customerQuoteTransfer) {
             $customerQuoteTransfer->setCustomer($customerTransfer);

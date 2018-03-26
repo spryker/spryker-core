@@ -74,6 +74,20 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     *
+     * @return void
+     */
+    public function setQuoteCollection(QuoteCollectionTransfer $quoteCollectionTransfer): void
+    {
+        $this->getFactory()->createMultiCartSession()->setQuoteCollection($quoteCollectionTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $quoteName
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
@@ -92,7 +106,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
      *
      * @return bool
      */
-    public function isMultiCartAllowed()
+    public function isMultiCartAllowed(): bool
     {
         $storageStrategy = $this->getFactory()
             ->getQuoteClient()
@@ -102,14 +116,13 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * Specification:
-     * - Get suffix for duplicated quote name
+     * {@inheritdoc}
      *
      * @api
      *
      * @return string
      */
-    public function getDuplicatedQuoteNameSuffix()
+    public function getDuplicatedQuoteNameSuffix(): string
     {
         return $this->getFactory()
             ->getMultiCartConfig()

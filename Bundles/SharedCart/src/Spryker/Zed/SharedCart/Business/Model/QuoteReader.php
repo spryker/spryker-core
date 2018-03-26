@@ -64,6 +64,7 @@ class QuoteReader implements QuoteReaderInterface
         foreach ($quoteEntityTransferList as $quoteEntityTransfer) {
             $quoteCollectionTransfer->addQuote($this->mapQuoteTransfer($quoteEntityTransfer));
         }
+
         return $quoteCollectionTransfer;
     }
 

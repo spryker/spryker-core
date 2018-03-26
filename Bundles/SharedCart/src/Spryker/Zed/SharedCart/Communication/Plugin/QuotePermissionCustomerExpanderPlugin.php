@@ -56,7 +56,7 @@ class QuotePermissionCustomerExpanderPlugin extends AbstractPlugin implements Cu
         }
 
         $customerPermissionCollectionTransfer = $customerTransfer->getPermissions();
-        foreach ($customerPermissionCollectionTransfer->getPermissions() as $permissionTransfer) {
+        foreach ($permissionCollectionTransfer->getPermissions() as $permissionTransfer) {
             $customerPermissionCollectionTransfer->addPermission($permissionTransfer);
         }
         $customerTransfer->setPermissions($customerPermissionCollectionTransfer);

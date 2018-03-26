@@ -49,6 +49,18 @@ interface MultiCartClientInterface
 
     /**
      * Specification:
+     * - Set customer quote collection.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     *
+     * @return void
+     */
+    public function setQuoteCollection(QuoteCollectionTransfer $quoteCollectionTransfer): void;
+
+    /**
+     * Specification:
      * - Find quote by name in customer session.
      *
      * @api

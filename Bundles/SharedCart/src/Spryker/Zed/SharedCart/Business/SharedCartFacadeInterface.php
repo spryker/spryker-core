@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SharedCart\Business;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 interface SharedCartFacadeInterface
@@ -45,4 +47,16 @@ interface SharedCartFacadeInterface
      * @return void
      */
     public function installSharedCartPermissions(): void;
+
+    /**
+     * Specification:
+     * - TODO: add specification
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer
+     */
+    public function getQuotePermissionGroupList(QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer): QuotePermissionGroupResponseTransfer;
 }

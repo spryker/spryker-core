@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SharedCart\Persistence;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 
 interface SharedCartRepositoryInterface
 {
@@ -24,4 +25,18 @@ interface SharedCartRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer[]
      */
     public function findQuotesByIdCompanyUser(int $idCompanyUser): array;
+
+    /**
+     * @param string $customerReference
+     *
+     * @return array
+     */
+    public function findShareInformationCustomer($customerReference): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer[]
+     */
+    public function findQuotePermissionGroupList(QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer): array;
 }

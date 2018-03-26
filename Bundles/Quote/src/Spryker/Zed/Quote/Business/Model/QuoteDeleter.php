@@ -47,6 +47,7 @@ class QuoteDeleter implements QuoteDeleterInterface
         $quoteResponseTransfer->setIsSuccessful(false);
         if ($this->validateQuote($quoteTransfer)) {
             $this->quoteEntityManager->deleteQuoteById($quoteTransfer->getIdQuote());
+            $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
             $quoteResponseTransfer->setIsSuccessful(true);
         }
 
