@@ -10,10 +10,6 @@
 {% endblock %}
 
 {% block content %}
-    <a href="{{ url('/sales/detail', {'id-sales-order': reclamation.order.idSalesOrder}) }}">
-        Reclamation for order: {{ reclamation.order.orderReference }}
-    </a>
-
     <form action="/sales-reclamation/create" method="POST">
         <input type="hidden" name="id-sales-order" value="{{ reclamation.order.idSalesOrder }}" />
 
