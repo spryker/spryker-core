@@ -9,6 +9,7 @@ namespace Spryker\Client\PersistentCart\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
+// TODO: move all plugin interfaces to "Extension" module
 interface QuoteUpdatePluginInterface
 {
     /**

@@ -35,8 +35,10 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer();
         $persistentCartChangeTransfer->addItem($itemTransfer);
-        $persistentCartChangeTransfer = $this->getFactory()->createChangeRequestExtendPluginExecutor()
+        $persistentCartChangeTransfer = $this->getFactory()
+            ->createChangeRequestExtendPluginExecutor()
             ->executePlugins($persistentCartChangeTransfer, $params);
+
         $quoteResponseTransfer = $this->getZedStub()->addItem($persistentCartChangeTransfer);
 
         return $this->updateQuote($quoteResponseTransfer);
@@ -55,11 +57,15 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     public function addItems(array $itemTransfers, array $params = [])
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer();
+        
         foreach ($itemTransfers as $itemTransfer) {
             $persistentCartChangeTransfer->addItem($itemTransfer);
         }
-        $persistentCartChangeTransfer = $this->getFactory()->createChangeRequestExtendPluginExecutor()
+
+        $persistentCartChangeTransfer = $this->getFactory()
+            ->createChangeRequestExtendPluginExecutor()
             ->executePlugins($persistentCartChangeTransfer, $params);
+
         $quoteResponseTransfer = $this->getZedStub()->addItem($persistentCartChangeTransfer);
 
         return $this->updateQuote($quoteResponseTransfer);

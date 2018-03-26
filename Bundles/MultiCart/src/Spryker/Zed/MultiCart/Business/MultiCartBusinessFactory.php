@@ -8,16 +8,19 @@
 namespace Spryker\Zed\MultiCart\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MultiCart\Business\Model\QuoteActivator;
-use Spryker\Zed\MultiCart\Business\Model\QuoteActivatorInterface;
-use Spryker\Zed\MultiCart\Business\Model\QuoteResponseExpander;
-use Spryker\Zed\MultiCart\Business\Model\QuoteResponseExpanderInterface;
+use Spryker\Zed\MultiCart\Business\Activator\QuoteActivator;
+use Spryker\Zed\MultiCart\Business\Activator\QuoteActivatorInterface;
+use Spryker\Zed\MultiCart\Business\ResponseExpander\QuoteResponseExpander;
+use Spryker\Zed\MultiCart\Business\ResponseExpander\QuoteResponseExpanderInterface;
+use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeInterface;
+use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToPersistentCartFacadeInterface;
+use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface;
 use Spryker\Zed\MultiCart\MultiCartDependencyProvider;
 
 class MultiCartBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\MultiCart\Business\Model\QuoteActivatorInterface
+     * @return \Spryker\Zed\MultiCart\Business\Activator\QuoteActivatorInterface
      */
     public function createQuoteActivator(): QuoteActivatorInterface
     {
@@ -29,7 +32,7 @@ class MultiCartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MultiCart\Business\Model\QuoteResponseExpanderInterface
+     * @return \Spryker\Zed\MultiCart\Business\ResponseExpander\QuoteResponseExpanderInterface
      */
     public function createQuoteResponseExpander(): QuoteResponseExpanderInterface
     {
@@ -39,7 +42,7 @@ class MultiCartBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface
      */
-    protected function getQuoteFacade()
+    protected function getQuoteFacade(): MultiCartToQuoteFacadeInterface
     {
         return $this->getProvidedDependency(MultiCartDependencyProvider::FACADE_QUOTE);
     }
@@ -47,7 +50,7 @@ class MultiCartBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToPersistentCartFacadeInterface
      */
-    protected function getPersistentCartFacade()
+    protected function getPersistentCartFacade(): MultiCartToPersistentCartFacadeInterface
     {
         return $this->getProvidedDependency(MultiCartDependencyProvider::FACADE_PERSISTENT_CART);
     }
@@ -55,7 +58,7 @@ class MultiCartBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeInterface
      */
-    protected function getMessengerFacade()
+    protected function getMessengerFacade(): MultiCartToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(MultiCartDependencyProvider::FACADE_MESSENGER);
     }

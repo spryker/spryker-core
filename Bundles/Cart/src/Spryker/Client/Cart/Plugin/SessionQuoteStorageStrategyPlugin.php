@@ -38,9 +38,10 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     public function addItem(ItemTransfer $itemTransfer, array $params = [])
     {
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
-
-        $cartChangeTransfer = $this->getFactory()->createCartChangeRequestExpander()
+        $cartChangeTransfer = $this->getFactory()
+            ->createCartChangeRequestExpander()
             ->addItemsRequestExpand($cartChangeTransfer);
+
         $quoteTransfer = $this->getCartZedStub()->addItem($cartChangeTransfer);
         $this->getQuoteClient()->setQuote($quoteTransfer);
 
@@ -60,8 +61,10 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
             $cartChangeTransfer->addItem($itemTransfer);
         }
 
-        $cartChangeTransfer = $this->getFactory()->createCartChangeRequestExpander()
+        $cartChangeTransfer = $this->getFactory()
+            ->createCartChangeRequestExpander()
             ->addItemsRequestExpand($cartChangeTransfer);
+
         $quoteTransfer = $this->getCartZedStub()->addItem($cartChangeTransfer);
         $this->getQuoteClient()->setQuote($quoteTransfer);
 
@@ -82,8 +85,10 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
         }
 
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
-        $cartChangeTransfer = $this->getFactory()->createCartChangeRequestExpander()
+        $cartChangeTransfer = $this->getFactory()
+            ->createCartChangeRequestExpander()
             ->removeItemRequestExpand($cartChangeTransfer);
+
         $quoteTransfer = $this->getCartZedStub()->removeItem($cartChangeTransfer);
         $this->getQuoteClient()->setQuote($quoteTransfer);
 
@@ -99,9 +104,10 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     {
         $cartChangeTransfer = $this->createCartChangeTransfer();
         $cartChangeTransfer->setItems($items);
-
-        $cartChangeTransfer = $this->getFactory()->createCartChangeRequestExpander()
+        $cartChangeTransfer = $this->getFactory()
+            ->createCartChangeRequestExpander()
             ->removeItemRequestExpand($cartChangeTransfer);
+
         $quoteTransfer = $this->getCartZedStub()->removeItem($cartChangeTransfer);
         $this->getQuoteClient()->setQuote($quoteTransfer);
 
@@ -157,9 +163,10 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
         $itemTransfer->setQuantity($quantity);
 
         $cartChangeTransfer = $this->prepareCartChangeTransfer($itemTransfer);
-
-        $cartChangeTransfer = $this->getFactory()->createCartChangeRequestExpander()
+        $cartChangeTransfer = $this->getFactory()
+            ->createCartChangeRequestExpander()
             ->removeItemRequestExpand($cartChangeTransfer);
+
         $quoteTransfer = $this->getCartZedStub()->removeItem($cartChangeTransfer);
         $this->getQuoteClient()->setQuote($quoteTransfer);
 
@@ -223,7 +230,9 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     {
         $quoteTransfer = $this->getQuote();
 
-        return $this->getFactory()->getQuoteItemFinderPlugin()->findItem($quoteTransfer, $sku, $groupKey);
+        return $this->getFactory()
+            ->getQuoteItemFinderPlugin()
+            ->findItem($quoteTransfer, $sku, $groupKey);
     }
 
     /**
@@ -286,10 +295,9 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      */
     public function validateQuote()
     {
-        $quoteTransfer = $this->getQuote();
-        $quoteValidationResponseTransfer = $this->getCartZedStub()->validateQuote($quoteTransfer);
-        $this->getQuoteClient()->setQuote($quoteValidationResponseTransfer->getQuoteTransfer());
+        $quoteResponseTransfer = $this->getCartZedStub()->validateQuote($this->getQuote());
+        $this->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
 
-        return $quoteValidationResponseTransfer;
+        return $quoteResponseTransfer;
     }
 }

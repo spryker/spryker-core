@@ -8,7 +8,7 @@
 namespace Spryker\Client\Cart;
 
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteBridge;
-use Spryker\Client\Cart\Plugin\ItemCountPlugin;
+use Spryker\Client\Cart\Plugin\ItemCounterPlugin;
 use Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin;
 use Spryker\Client\Cart\Plugin\SimpleProductQuoteItemFinderPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
@@ -79,8 +79,8 @@ class CartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addItemCountPlugin(Container $container)
     {
-        $container[static::PLUGIN_ITEM_COUNT] = function (Container $container) {
-            return new ItemCountPlugin();
+        $container[static::PLUGIN_ITEM_COUNT] = function () {
+            return $this->getItemCountPlugin();
         };
 
         return $container;
@@ -93,7 +93,7 @@ class CartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addQuoteStorageStrategyPlugins(Container $container)
     {
-        $container[static::PLUGINS_QUOTE_STORAGE_STRATEGY] = function (Container $container) {
+        $container[static::PLUGINS_QUOTE_STORAGE_STRATEGY] = function () {
             return $this->getQuoteStorageStrategyPlugins();
         };
 
@@ -107,7 +107,7 @@ class CartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addQuoteItemFinderPlugin(Container $container)
     {
-        $container[static::PLUGIN_QUOTE_ITEM_FINDER] = function (Container $container) {
+        $container[static::PLUGIN_QUOTE_ITEM_FINDER] = function () {
             return $this->getQuoteItemFinderPlugin();
         };
 
@@ -121,7 +121,7 @@ class CartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addAddItemsRequestExpanderPlugins(Container $container)
     {
-        $container[static::PLUGINS_ADD_ITEMS_REQUEST_EXPANDER] = function (Container $container) {
+        $container[static::PLUGINS_ADD_ITEMS_REQUEST_EXPANDER] = function () {
             return $this->getAddItemsRequestExpanderPlugins();
         };
 
@@ -135,7 +135,7 @@ class CartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addChangeQuantityRequestExpanderPlugins(Container $container)
     {
-        $container[static::PLUGINS_CHANGE_QUANTITY_REQUEST_EXPANDER] = function (Container $container) {
+        $container[static::PLUGINS_CHANGE_QUANTITY_REQUEST_EXPANDER] = function () {
             return $this->getAddItemsRequestExpanderPlugins();
         };
 
@@ -149,11 +149,19 @@ class CartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addRemoveItemsRequestExpanderPlugins(Container $container)
     {
-        $container[static::PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER] = function (Container $container) {
+        $container[static::PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER] = function () {
             return $this->getRemoveItemsRequestExpanderPlugins();
         };
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\Cart\Dependency\Plugin\ItemCounterPluginInterface
+     */
+    protected function getItemCountPlugin()
+    {
+        return new ItemCounterPlugin();
     }
 
     /**

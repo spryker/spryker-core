@@ -50,6 +50,8 @@ interface CartStubInterface
     public function validateQuote(QuoteTransfer $quoteTransfer);
 
     /**
+     * TODO: this must go away once we have the new ZedRequestClient method for the same thing
+     *
      * @return void
      */
     public function addFlashMessagesFromLastZedRequest();
