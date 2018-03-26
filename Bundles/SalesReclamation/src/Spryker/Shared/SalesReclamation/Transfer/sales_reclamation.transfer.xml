@@ -12,6 +12,7 @@
     </transfer>
 
     <transfer name="ReclamationItem">
+        <property name="id" type="int" />
         <property name="orderItem" type="Item"/>
         <property name="status" type="string"/>
     </transfer>

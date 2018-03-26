@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesReclamation\Communication\Controller;
 
 use Generated\Shared\Transfer\ReclamationTransfer;
+use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationItemTableMap;
 use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -72,6 +73,58 @@ class DetailController extends AbstractController
         return $this->redirectResponse(
             Url::generate(
                 '/sales-reclamation'
+            )->build()
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function closeItemAction(Request $request): RedirectResponse
+    {
+        $idReclamation = $this->castId($request->get(SalesReclamationConfig::PARAM_ID_RECLAMATION));
+        $idReclamationItem = $this->castId($request->get(SalesReclamationConfig::PARAM_ID_RECLAMATION_ITEM));
+
+        $reclamationItem = $this->getQueryContainer()
+            ->queryReclamationItems()
+            ->findOneByIdSalesReclamationItem($idReclamationItem);
+
+        if (!$reclamationItem) {
+            $this->addErrorMessage(sprintf('Reclamation item with id %s not exists', $idReclamationItem));
+
+            return $this->redirectResponse(
+                Url::generate(
+                    '/sales-reclamation'
+                )->build()
+            );
+        }
+        if ($reclamationItem->getFkSalesReclamation() !== $idReclamation) {
+            $this->addErrorMessage(sprintf(
+                'Reclamation with id %s not own this item %s',
+                $idReclamation,
+                $idReclamationItem
+            ));
+
+            return $this->redirectResponse(
+                Url::generate(
+                    '/sales-reclamation'
+                )->build()
+            );
+        }
+
+        $reclamationItem->setState(SpySalesReclamationItemTableMap::COL_STATE_REFUNDED);
+        $reclamationItem->save();
+
+        $this->addSuccessMessage(sprintf('Reclamation item with id %s closed', $idReclamationItem));
+
+        return $this->redirectResponse(
+            Url::generate(
+                '/sales-reclamation/detail',
+                [
+                    SalesReclamationConfig::PARAM_ID_RECLAMATION => $idReclamation,
+                ]
             )->build()
         );
     }

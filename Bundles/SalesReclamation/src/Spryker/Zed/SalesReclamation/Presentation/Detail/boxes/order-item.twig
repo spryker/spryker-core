@@ -80,8 +80,11 @@
     <span class="label {{ label }}" title="Deactivated">{{ reclamationItem.status }}</span>
 </td>
 <td>
-    {% if reclamationItem.status == 'Open' %}
-        <a href="{{ url('/sales-reclamation/detail/close', {'id-reclamation': reclamation.idSalesReclamation}) }}"
+    {% if reclamationItem.status != 'Refund' %}
+        <a href="{{ url('/sales-reclamation/detail/close-item', {
+            'id-reclamation': reclamation.idSalesReclamation,
+            'id-reclamation-item': reclamationItem.id,
+        }) }}"
            class="btn btn-xs btn-outline btn-view btn-remove"><i class="fa fa-close"></i>Refund
         </a>
     {% endif %}

@@ -33,6 +33,13 @@
                         <action>close</action>
                         <visible>0</visible>
                     </close>
+                    <refund>
+                        <title>Refund reclamation item</title>
+                        <bundle>sales-reclamation</bundle>
+                        <controller>detail</controller>
+                        <action>close-item</action>
+                        <visible>0</visible>
+                    </refund>
                 </pages>
 
             </sales-reclamations>

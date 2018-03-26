@@ -62,6 +62,7 @@ class Hydrator implements HydratorInterface
         $reclamationItems = new ArrayObject();
         foreach ($spyReclamation->getItems() as $spyReclamationItem) {
             $reclamationItemTransfer = new ReclamationItemTransfer();
+            $reclamationItemTransfer->setId($spyReclamationItem->getIdSalesReclamationItem());
             $reclamationItemTransfer->setStatus($spyReclamationItem->getState());
             $itemTransfer = $this->getOrderItemById($orderTransfer, $spyReclamationItem->getFkSalesOrderItem());
             $reclamationItemTransfer->setOrderItem($itemTransfer);

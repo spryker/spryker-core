@@ -14,4 +14,5 @@ class SalesReclamationConfig extends AbstractBundleConfig
     public const PARAM_ID_SALES_ORDER = 'id-sales-order';
     public const PARAM_IDS_SALES_ORDER_ITEMS = 'id-order-item';
     public const PARAM_ID_RECLAMATION = 'id-reclamation';
+    public const PARAM_ID_RECLAMATION_ITEM = 'id-reclamation-item';
 }
