@@ -61,7 +61,10 @@ class CreateController extends AbstractController
 
         return $this->redirectResponse(
             Url::generate(
-                '/sales-reclamation'
+                '/sales-reclamation/detail',
+                [
+                    SalesReclamationConfig::PARAM_ID_RECLAMATION => $reclamationTransfer->getIdSalesReclamation(),
+                ]
             )->build()
         );
     }
