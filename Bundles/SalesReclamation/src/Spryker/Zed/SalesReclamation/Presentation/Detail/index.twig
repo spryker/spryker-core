@@ -4,6 +4,11 @@
     {{ 'Overview of reclamation:' | trans }} {{ reclamation.idSalesReclamation }}
 {% endblock %}
 
+{% block action %}
+    {{ backActionButton('/sales-reclamation', '
+    Back to Reclamatinos' | trans) }}
+{% endblock %}
+
 {% block content %}
 
     Reclamation id: {{ reclamation.idSalesReclamation }}<br />

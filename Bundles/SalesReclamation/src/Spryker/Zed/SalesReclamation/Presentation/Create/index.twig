@@ -4,6 +4,11 @@
     {{ 'Create reclamation' | trans }}
 {% endblock %}
 
+{% block action %}
+    {{ backActionButton('/sales', '
+    Back to Orders' | trans) }}
+{% endblock %}
+
 {% block content %}
     <a href="{{ url('/sales/detail', {'id-sales-order': reclamation.order.idSalesOrder}) }}">
         Reclamation for order: {{ reclamation.order.orderReference }}
