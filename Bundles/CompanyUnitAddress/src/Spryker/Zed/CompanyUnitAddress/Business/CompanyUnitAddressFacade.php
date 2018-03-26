@@ -73,7 +73,11 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
      */
     public function getCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
     {
-        return $this->getRepository()->getCompanyUnitAddressById($companyUnitAddressTransfer);
+        return $this->getFactory()
+            ->createCompanyBusinessUnitAddressReader()
+            ->getCompanyUnitAddressById(
+                $companyUnitAddressTransfer
+            );
     }
 
     /**
