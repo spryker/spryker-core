@@ -16,6 +16,7 @@ use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 
 // here you can define custom actions
@@ -36,7 +37,7 @@ class BusinessHelper extends Module
         $omsProcessEntity = $this->createOmsProcess();
         $salesOrderEntity = $this->createSpySalesOrderEntity($salesOrderAddressEntity);
         $salesExpenseEntity = $this->createSalesExpense($salesOrderEntity);
-
+        
         $this->createOrderItem(
             $omsStateEntity,
             $salesOrderEntity,
@@ -56,6 +57,7 @@ class BusinessHelper extends Module
         );
 
         $this->createSpySalesShipment($salesOrderEntity->getIdSalesOrder(), $salesExpenseEntity->getIdSalesExpense());
+        $this->createOrderTotals($salesOrderEntity);
 
         return $salesOrderEntity;
     }
@@ -212,5 +214,25 @@ class BusinessHelper extends Module
         $salesOrderAddressEntity->save();
 
         return $salesOrderAddressEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $spySalesOrder
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderTotals
+     */
+    protected function createOrderTotals(SpySalesOrder $spySalesOrder)
+    {
+        $orderTotals = new SpySalesOrderTotals();
+        $orderTotals->setOrder($spySalesOrder);
+        $orderTotals->setTaxTotal(45);
+        $orderTotals->setRefundTotal(0);
+        $orderTotals->setGrandTotal(100);
+        $orderTotals->setDiscountTotal(0);
+        $orderTotals->setCanceledTotal(0);
+        $orderTotals->setSubtotal(55);
+        $orderTotals->save();
+
+        return $orderTotals;
     }
 }
