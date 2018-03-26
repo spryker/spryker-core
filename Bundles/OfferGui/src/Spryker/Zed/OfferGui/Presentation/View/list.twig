@@ -4,6 +4,10 @@
     {{ 'Overview of Offers' | trans }}
 {% endblock %}
 
+{% block action %}
+    {{ createActionButton('/manual-order-entry-gui/create?type=offer&redirect-url=/offer-gui/view/list', 'Create Offer' | trans) }}
+{% endblock %}
+
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'List of offers' } %}

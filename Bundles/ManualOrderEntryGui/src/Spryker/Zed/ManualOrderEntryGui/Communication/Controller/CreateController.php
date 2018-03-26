@@ -23,8 +23,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
-    protected const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
+    public const PARAM_TYPE = 'type';
+    public const PARAM_REDIRECT_URL = 'redirect-url';
 
+    protected const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
     protected const SUCCESSFUL_MESSAGE_CUSTOMER_CREATED = 'Customer is registered successfully.';
     protected const SUCCESSFUL_MESSAGE_ORDER_CREATED = 'Order is created successfully.';
 
@@ -41,6 +43,8 @@ class CreateController extends AbstractController
         $validForms = true;
         $allFormPlugins = $this->getFactory()->getManualOrderEntryFormPlugins();
         $filteredFormPlugins = $this->getFactory()->getManualOrderEntryFilteredFormPlugins($request, $quoteTransfer);
+
+        $quoteTransfer = $this->setTypeToQuote($quoteTransfer, $request);
 
         foreach ($filteredFormPlugins as $formPlugin) {
             $form = $formPlugin->createForm($request, $quoteTransfer);
@@ -65,7 +69,7 @@ class CreateController extends AbstractController
             $checkoutResponseTransfer = $this->createOrder($quoteTransfer);
 
             if ($checkoutResponseTransfer->getIsSuccess()) {
-                $redirectUrl = $this->createRedirectUrlAfterOrderCreation($checkoutResponseTransfer->getSaveOrder());
+                $redirectUrl = $this->createRedirectUrlAfterOrderCreation($checkoutResponseTransfer->getSaveOrder(), $request);
 
                 return $this->redirectResponse($redirectUrl);
             }
@@ -189,13 +193,18 @@ class CreateController extends AbstractController
      *
      * @return string
      */
-    protected function createRedirectUrlAfterOrderCreation(SaveOrderTransfer $saveOrderTransfer)
+    protected function createRedirectUrlAfterOrderCreation(SaveOrderTransfer $saveOrderTransfer, Request $request)
     {
+        $redirectUrl = $request->get(static::PARAM_REDIRECT_URL);
+
+        if ($redirectUrl) {
+            return $redirectUrl;
+        }
+
         return Url::generate(
             '/sales/detail',
             [SalesConfig::PARAM_ID_SALES_ORDER => $saveOrderTransfer->getIdSalesOrder()]
-        )
-            ->build();
+        )->build();
     }
 
     /**
@@ -208,5 +217,20 @@ class CreateController extends AbstractController
         foreach ($customerResponseTransfer->getErrors() as $errorTransfer) {
             $this->addErrorMessage($errorTransfer->getMessage());
         }
+    }
+
+    /**
+     * @param QuoteTransfer $quoteTransfer
+     * @param Request $request
+     *
+     * @return QuoteTransfer
+     */
+    protected function setTypeToQuote(QuoteTransfer $quoteTransfer, Request $request): QuoteTransfer
+    {
+        $quoteType = $request->get(static::PARAM_TYPE, \Spryker\Shared\Sales\SalesConfig::ORDER_TYPE_DEFAULT);
+
+        $quoteTransfer->setType($quoteType);
+
+        return $quoteTransfer;
     }
 }

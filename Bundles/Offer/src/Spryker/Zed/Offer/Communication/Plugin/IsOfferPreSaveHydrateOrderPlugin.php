@@ -29,10 +29,8 @@ class IsOfferPreSaveHydrateOrderPlugin extends AbstractPlugin implements PreSave
      */
     public function execute(QuoteTransfer $quoteTransfer, SpySalesOrderEntityTransfer $salesOrderEntityTransfer): SpySalesOrderEntityTransfer
     {
-        if ($quoteTransfer->getIsOffer()) {
-            $salesOrderEntityTransfer->setType(
-                $this->getConfig()->getOrderTypeOffer()
-            );
+        if ($quoteTransfer->getType() === $this->getConfig()->getOrderTypeOffer()) {
+            $salesOrderEntityTransfer->setType($quoteTransfer->getType());
         }
 
         return $salesOrderEntityTransfer;

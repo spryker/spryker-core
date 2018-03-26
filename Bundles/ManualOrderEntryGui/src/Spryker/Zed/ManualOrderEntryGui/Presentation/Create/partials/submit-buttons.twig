@@ -7,7 +7,7 @@
 {% endif %}
 
 {% if form.vars.id == 'summary' %}
-    <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Submit Order' | trans }}" name="{{ nextStepName }}" />
+    <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Submit Order' | trans ~ quoteType}}" name="{{ nextStepName }}" />
 {% else %}
     <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Next Step' | trans }}" name="{{ nextStepName }}" />
 {% endif %}
