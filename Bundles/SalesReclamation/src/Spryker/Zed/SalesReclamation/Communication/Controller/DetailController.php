@@ -117,7 +117,7 @@ class DetailController extends AbstractController
         $reclamationItem->setState(SpySalesReclamationItemTableMap::COL_STATE_REFUNDED);
         $reclamationItem->save();
 
-        $this->addSuccessMessage(sprintf('Reclamation item with id %s closed', $idReclamationItem));
+        $this->addSuccessMessage(sprintf('Reclamation item with id %s refunded', $idReclamationItem));
 
         return $this->redirectResponse(
             Url::generate(
