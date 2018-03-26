@@ -1,0 +1,37 @@
+<div class="callout">
+    <h4>{{ 'Submit order' | trans }}</h4>
+
+        <div>
+            {{ 'Sub Total' | trans }}
+            <span>{{ quoteTransfer.totals.subtotal | money }}</span>
+        </div>
+
+        {% include '@ManualOrderEntryGui/create/partials/summary-discounts.twig' %}
+
+        <div><strong>{{ 'Shipping' | trans }}</strong></div>
+        <div>
+            {{ quoteTransfer.shipment.method.name }}
+            <span>{{ quoteTransfer.shipment.method.storeCurrencyPrice | money }}</span>
+        </div>
+
+        <div>
+            <strong>{{ 'Grand Total' | trans }}</strong>
+            <span>{{ quoteTransfer.totals.grandtotal | money }}</span>
+        </div>
+
+        <div>
+            {{ 'Tax' | trans }}
+            <span>{{ quoteTransfer.totals.taxtotal.amount | money }}</span>
+        </div>
+
+        {% include '@ManualOrderEntryGui/create/partials/summary-payment.twig' %}
+
+        <div>
+            {{ 'Price to pay' | trans }}
+            <span>{{ quoteTransfer.totals.priceToPay | money }}</span>
+        </div>
+
+</div>
+
+{{ form_widget(form) }}
+
