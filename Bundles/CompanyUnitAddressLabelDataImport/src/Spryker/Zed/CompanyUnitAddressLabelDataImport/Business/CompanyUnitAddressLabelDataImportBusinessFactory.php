@@ -9,6 +9,8 @@ namespace Spryker\Zed\CompanyUnitAddressLabelDataImport\Business;
 
 use Spryker\Zed\CompanyUnitAddressLabelDataImport\Business\Model\CompanyUnitAddressLabelRelationWriterStep;
 use Spryker\Zed\CompanyUnitAddressLabelDataImport\Business\Model\CompanyUnitAddressLabelWriterStep;
+use Spryker\Zed\CompanyUnitAddressLabelDataImport\Business\Model\Step\CompanyUnitAddressKeyToIdCompanyUnitAddressStep;
+use Spryker\Zed\CompanyUnitAddressLabelDataImport\Business\Model\Step\CompanyUnitAddressLabelNameToIdCompanyUnitAddressLabelStep;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 
 /**
@@ -36,13 +38,34 @@ class CompanyUnitAddressLabelDataImportBusinessFactory extends DataImportBusines
      */
     public function createCompanyUnitAddressLabelRelationDataImport()
     {
-        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getCompanyUnitAddressLabelRelationDataImporterConfiguration());
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $this->getConfig()->getCompanyUnitAddressLabelRelationDataImporterConfiguration()
+        );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
-        $dataSetStepBroker->addStep(new CompanyUnitAddressLabelRelationWriterStep());
+        $dataSetStepBroker
+            ->addStep($this->createCompanyUnitAddressKeyToIdCompanyUnitAddressStep())
+            ->addStep($this->createCompanyUnitAddressLabelNameToIdCompanyUnitAddressLabelStep())
+            ->addStep(new CompanyUnitAddressLabelRelationWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
         return $dataImporter;
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressLabelDataImport\Business\Model\Step\CompanyUnitAddressKeyToIdCompanyUnitAddressStep|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    protected function createCompanyUnitAddressKeyToIdCompanyUnitAddressStep()
+    {
+        return new CompanyUnitAddressKeyToIdCompanyUnitAddressStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressLabelDataImport\Business\Model\Step\CompanyUnitAddressLabelNameToIdCompanyUnitAddressLabelStep|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    protected function createCompanyUnitAddressLabelNameToIdCompanyUnitAddressLabelStep()
+    {
+        return new CompanyUnitAddressLabelNameToIdCompanyUnitAddressLabelStep();
     }
 }
