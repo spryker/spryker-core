@@ -179,7 +179,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     /**
      * @return void
      */
-    private function loadCategoryUrls()
+    protected function loadCategoryUrls()
     {
         $urlEntityCollection = SpyUrlQuery::create()->filterByFkResourceCategorynode(null, Criteria::ISNOTNULL)->find();
 

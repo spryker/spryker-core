@@ -3,6 +3,7 @@
   "description": "CompanyBusinessUnitDataImport module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/company": "^1.0.0",
     "spryker/company-business-unit": "^1.0.0",
     "spryker/data-import": "^1.2.0",
@@ -14,7 +15,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\CompanyBusinessUnitDataImport\\Helper\\": "tests/SprykerTest/Zed/CompanyBusinessUnitDataImport/_support/Helper/"
     }
   },
   "autoload-dev": {

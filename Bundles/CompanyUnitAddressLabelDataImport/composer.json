@@ -3,6 +3,7 @@
   "description": "CompanyUnitAddressLabelDataImport module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/company-unit-address": "^1.0.0",
     "spryker/company-unit-address-label": "^1.0.0",
     "spryker/data-import": "^1.2.0",
@@ -14,7 +15,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\CompanyUnitAddressLabelDataImport\\Helper\\": "tests/SprykerTest/Zed/CompanyUnitAddressLabelDataImport/_support/Helper/"
     }
   },
   "autoload-dev": {

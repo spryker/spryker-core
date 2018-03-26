@@ -3,6 +3,7 @@
   "description": "CompanyDataImport module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/company": "^1.0.0",
     "spryker/data-import": "^1.2.0",
     "spryker/kernel": "^3.0.0"
@@ -13,7 +14,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\CompanyDataImport\\Helper\\": "tests/SprykerTest/Zed/CompanyDataImport/_support/Helper/"
     }
   },
   "autoload-dev": {

@@ -104,11 +104,9 @@ class DataImportConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->input = $input;
-
         $dataImporterConfigurationTransfer = $this->buildDataImportConfiguration($input);
 
-        $this->info(sprintf('<fg=white>Start "<fg=green>%s</>" import</>', $this->getImporterType()));
+        $this->info(sprintf('<fg=white>Start "<fg=green>%s</>" import</>', $this->getImporterType($input)));
         $dataImportReportTransfer = $this->getFacade()->import($dataImporterConfigurationTransfer);
 
         if ($dataImportReportTransfer->getDataImporterReports()) {
@@ -126,17 +124,20 @@ class DataImportConsole extends Console
     }
 
     /**
+     * @param \Symfony\Component\Console\Input\InputInterface|null $input
+     *
      * @return string
      */
-    protected function getImporterType()
+    protected function getImporterType(InputInterface $input = null): string
     {
-        if ($this->input && $this->input->getArgument(self::ARGUMENT_IMPORTER)) {
-            return $this->input->getArgument(self::ARGUMENT_IMPORTER);
+        if ($input && $input->getArgument(static::ARGUMENT_IMPORTER)) {
+            return $input->getArgument(static::ARGUMENT_IMPORTER);
         }
 
         if ($this->getName() === static::DEFAULT_NAME) {
             return static::DEFAULT_IMPORTER_TYPE;
         }
+
         $commandNameParts = explode(':', $this->getName());
         $importerType = array_pop($commandNameParts);
 
@@ -202,7 +203,7 @@ class DataImportConsole extends Console
     {
         $dataImporterConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImporterConfigurationTransfer
-            ->setImportType($this->getImporterType())
+            ->setImportType($this->getImporterType($input))
             ->setThrowException(false);
 
         if ($input->hasParameterOption('--' . static::OPTION_THROW_EXCEPTION) || $input->hasParameterOption('-' . static::OPTION_THROW_EXCEPTION_SHORT)) {

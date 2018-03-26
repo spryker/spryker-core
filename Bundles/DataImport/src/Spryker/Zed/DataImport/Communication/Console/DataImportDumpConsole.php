@@ -23,7 +23,7 @@ class DataImportDumpConsole extends Console
     protected function configure()
     {
         $this->setName('data:import:dump')
-            ->setDescription('Dumpy all registered DataImportPlugins and DataImportInterfaces.');
+            ->setDescription('Dump all registered DataImportPlugins and DataImporter.');
     }
 
     /**
@@ -35,6 +35,10 @@ class DataImportDumpConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $dataImporter = $this->getFacade()->listImporters();
+        if (!$dataImporter) {
+            return static::CODE_ERROR;
+        }
+
         $formattedDataImporterList = $this->formatForTable($dataImporter);
         $table = new Table($output);
         $table
@@ -43,11 +47,7 @@ class DataImportDumpConsole extends Console
 
         $table->render();
 
-        if ($dataImporter) {
-            return static::CODE_SUCCESS;
-        }
-
-        return static::CODE_ERROR;
+        return static::CODE_SUCCESS;
     }
 
     /**
