@@ -1,7 +1,9 @@
 {% set order = reclamation.order %}
 {% set widget_title %}
     Order
-    <a href="{{ url('/sales/detail', {'id-sales-order': reclamation.order.idSalesOrder}) }}">
+    <a href="{{ url('/sales/detail', {'id-sales-order': reclamation.order.idSalesOrder}) }}"
+       target="_blank"
+    >
         {{ reclamation.order.orderReference }}
     </a>
     items:
