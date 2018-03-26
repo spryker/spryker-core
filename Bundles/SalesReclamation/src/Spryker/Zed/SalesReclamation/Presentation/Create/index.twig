@@ -22,3 +22,8 @@
         <input type="submit" value="Create Reclamation" class="btn btn-primary"/>
     </form>
 {% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-sales-reclamation-main.css">
+{% endblock %}

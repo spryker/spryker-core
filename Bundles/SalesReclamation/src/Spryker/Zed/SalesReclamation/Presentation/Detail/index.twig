@@ -17,3 +17,8 @@
     </div>
 
 {% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-sales-reclamation-main.css">
+{% endblock %}
