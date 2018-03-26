@@ -17,7 +17,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class SummaryType extends AbstractType
 {
-    protected const FIELD_SUBMIT_ORDER = 'submit_order';
+    public const TYPE_NAME = 'summary';
+
+    public const FIELD_SUBMIT_ORDER = 'submit_order';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -49,7 +51,7 @@ class SummaryType extends AbstractType
     protected function addIsSummaryPostedField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            self::FIELD_SUBMIT_ORDER,
+            static::FIELD_SUBMIT_ORDER,
             CheckboxType::class,
             [
                 'label' => 'Submit order',
@@ -65,6 +67,6 @@ class SummaryType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'summary';
+        return static::TYPE_NAME;
     }
 }

@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -19,10 +20,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CustomerType extends AbstractType
 {
-    protected const FIELD_SALUTATION = 'salutation';
-    protected const FIELD_FIRST_NAME = 'first_name';
-    protected const FIELD_LAST_NAME = 'last_name';
-    protected const FIELD_EMAIL = 'email';
+    public const FIELD_SALUTATION = 'salutation';
+    public const FIELD_FIRST_NAME = 'first_name';
+    public const FIELD_LAST_NAME = 'last_name';
+    public const FIELD_EMAIL = 'email';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -46,7 +47,7 @@ class CustomerType extends AbstractType
      */
     protected function addSalutationField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_SALUTATION, ChoiceType::class, [
+        $builder->add(static::FIELD_SALUTATION, ChoiceType::class, [
             'choices' => $this->getSalutationChoices(),
             'required' => true,
             'label' => 'Salutation',
@@ -78,7 +79,7 @@ class CustomerType extends AbstractType
      */
     protected function addFirstNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FIRST_NAME, TextType::class, [
+        $builder->add(static::FIELD_FIRST_NAME, TextType::class, [
             'label' => 'First Name',
             'required' => true,
             'constraints' => [
@@ -96,7 +97,7 @@ class CustomerType extends AbstractType
      */
     protected function addLastNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_LAST_NAME, TextType::class, [
+        $builder->add(static::FIELD_LAST_NAME, TextType::class, [
             'label' => 'Last Name',
             'required' => true,
             'constraints' => [
@@ -114,11 +115,12 @@ class CustomerType extends AbstractType
      */
     protected function addEmailField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_EMAIL, EmailType::class, [
+        $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => 'Email',
             'required' => true,
             'constraints' => [
                 new NotBlank(),
+                new Email(),
             ],
         ]);
 

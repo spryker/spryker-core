@@ -8,12 +8,14 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Payment\PaymentType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class PaymentManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlugin implements ManualOrderEntryFormPluginInterface
+class PaymentManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToPaymentFacadeInterface
@@ -32,12 +34,20 @@ class PaymentManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlug
     }
 
     /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return PaymentType::TYPE_NAME;
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null)
+    public function createForm(Request $request, $dataTransfer = null): \Symfony\Component\Form\FormInterface
     {
         return $this->getFactory()->createPaymentForm($request, $dataTransfer);
     }
@@ -49,7 +59,7 @@ class PaymentManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlug
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request)
+    public function handleData($quoteTransfer, &$form, $request): \Spryker\Shared\Kernel\Transfer\AbstractTransfer
     {
         $paymentSelection = $quoteTransfer->getPayment()->getPaymentSelection();
 
@@ -64,19 +74,19 @@ class PaymentManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlug
         }
 
         $calculableObjectTransfer = new CalculableObjectTransfer();
-        $calculableObjectTransfer->setItems($quoteTransfer->getItems());
-        $calculableObjectTransfer->setTotals($quoteTransfer->getTotals());
-        $calculableObjectTransfer->setExpenses($quoteTransfer->getExpenses());
-        $calculableObjectTransfer->setPriceMode($quoteTransfer->getPriceMode());
-        $calculableObjectTransfer->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
-        $calculableObjectTransfer->setVoucherDiscounts($quoteTransfer->getVoucherDiscounts());
-        $calculableObjectTransfer->setCartRuleDiscounts($quoteTransfer->getCartRuleDiscounts());
-        $calculableObjectTransfer->setOriginalQuote($quoteTransfer);
-        $calculableObjectTransfer->setPromotionItems($quoteTransfer->getPromotionItems());
-        $calculableObjectTransfer->setGiftCards($quoteTransfer->getGiftCards());
-        $calculableObjectTransfer->setNotApplicableGiftCardCodes($quoteTransfer->getNotApplicableGiftCardCodes());
-        $calculableObjectTransfer->setPayments($quoteTransfer->getPayments());
-        $calculableObjectTransfer->setPayment($quoteTransfer->getPayment());
+        $calculableObjectTransfer->setItems($quoteTransfer->getItems())
+            ->setTotals($quoteTransfer->getTotals())
+            ->setExpenses($quoteTransfer->getExpenses())
+            ->setPriceMode($quoteTransfer->getPriceMode())
+            ->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode())
+            ->setVoucherDiscounts($quoteTransfer->getVoucherDiscounts())
+            ->setCartRuleDiscounts($quoteTransfer->getCartRuleDiscounts())
+            ->setOriginalQuote($quoteTransfer)
+            ->setPromotionItems($quoteTransfer->getPromotionItems())
+            ->setGiftCards($quoteTransfer->getGiftCards())
+            ->setNotApplicableGiftCardCodes($quoteTransfer->getNotApplicableGiftCardCodes())
+            ->setPayments($quoteTransfer->getPayments())
+            ->setPayment($quoteTransfer->getPayment());
 
         $this->paymentFacade->recalculatePayments($calculableObjectTransfer);
 

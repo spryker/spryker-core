@@ -12,6 +12,19 @@ use Symfony\Component\HttpFoundation\Request;
 class StepEngine
 {
     /**
+     * @var string
+     */
+    protected $nextStepName;
+
+    /**
+     * @param string $nextStepName
+     */
+    public function __construct($nextStepName)
+    {
+        $this->nextStepName = $nextStepName;
+    }
+
+    /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $formPlugins
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -23,11 +36,20 @@ class StepEngine
         $filteredPlugins = [];
 
         foreach ($formPlugins as $formPlugin) {
-            $filteredPlugins[] = $formPlugin;
-            if (!$this->isFormValid($formPlugin, $request, $quoteTransfer)) {
+            if ($request->request->get($this->nextStepName) !== null) {
+                $filteredPlugins[] = $formPlugin;
+            }
+
+            if (!$this->isFormSubmitted($formPlugin, $request)) {
                 break;
             }
+
+            if ($request->request->get($this->nextStepName) === null) {
+                $filteredPlugins[] = $formPlugin;
+            }
         }
+
+        $filteredPlugins = $this->augmentFilteredPlugins($formPlugins, $filteredPlugins);
 
         return $filteredPlugins;
     }
@@ -35,22 +57,26 @@ class StepEngine
     /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface $formPlugin
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function isFormValid($formPlugin, $request, $quoteTransfer)
+    protected function isFormSubmitted($formPlugin, $request)
     {
-        $form = $formPlugin->createForm($request, $quoteTransfer);
-        $form->setData($quoteTransfer->toArray());
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $formPlugin->handleDataStepEngine($quoteTransfer, $form, $request);
-
-            return true;
+        return ($request->request->get($formPlugin->getName()) !== null);
+    }
+    
+    /**
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $formPlugins
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $filteredPlugins
+     *
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
+     */
+    protected function augmentFilteredPlugins($formPlugins, $filteredPlugins): array
+    {
+        if (count($formPlugins) && !count($filteredPlugins)) {
+            $filteredPlugins[] = array_shift($formPlugins);
         }
 
-        return false;
+        return $filteredPlugins;
     }
 }

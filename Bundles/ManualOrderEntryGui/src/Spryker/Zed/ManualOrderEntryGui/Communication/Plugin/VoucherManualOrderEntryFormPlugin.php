@@ -10,12 +10,14 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 use ArrayObject;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Voucher\VoucherType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class VoucherManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlugin implements ManualOrderEntryFormPluginInterface
+class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     protected const MESSAGE_ERROR = 'Voucher code \'%s\' has not been applied';
     protected const MESSAGE_SUCCESS = 'Voucher code \'%s\' has been applied';
@@ -37,12 +39,20 @@ class VoucherManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlug
     }
 
     /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return VoucherType::TYPE_NAME;
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null)
+    public function createForm(Request $request, $dataTransfer = null): \Symfony\Component\Form\FormInterface
     {
         return $this->getFactory()->createVoucherForm($dataTransfer);
     }
@@ -54,7 +64,7 @@ class VoucherManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlug
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request)
+    public function handleData($quoteTransfer, &$form, $request): \Spryker\Shared\Kernel\Transfer\AbstractTransfer
     {
         if (strlen($quoteTransfer->getVoucherCode())) {
             $discountTransfer = new DiscountTransfer();

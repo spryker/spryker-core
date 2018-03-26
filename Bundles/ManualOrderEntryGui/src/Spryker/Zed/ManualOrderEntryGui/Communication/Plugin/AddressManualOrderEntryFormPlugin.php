@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class AddressManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlugin implements ManualOrderEntryFormPluginInterface
+class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeInterface
@@ -25,12 +27,20 @@ class AddressManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlug
     }
 
     /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return AddressCollectionType::TYPE_NAME;
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null)
+    public function createForm(Request $request, $dataTransfer = null): \Symfony\Component\Form\FormInterface
     {
         return $this->getFactory()->createAddressCollectionForm($dataTransfer);
     }
@@ -42,7 +52,7 @@ class AddressManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlug
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request)
+    public function handleData($quoteTransfer, &$form, $request): \Spryker\Shared\Kernel\Transfer\AbstractTransfer
     {
         if ($quoteTransfer->getShippingAddress()->getIdCustomerAddress()) {
             $addressTransfer = $quoteTransfer->getShippingAddress();

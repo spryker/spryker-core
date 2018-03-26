@@ -20,10 +20,10 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class ItemType extends AbstractType
 {
-    protected const FIELD_SKU = 'sku';
-    protected const FIELD_QUANTITY = 'quantity';
-    protected const FIELD_UNIT_GROSS_PRICE = 'unitGrossPrice';
-    protected const FIELD_FORCED_UNIT_GROSS_PRICE = 'forcedUnitGrossPrice';
+    public const FIELD_SKU = 'sku';
+    public const FIELD_QUANTITY = 'quantity';
+    public const FIELD_UNIT_GROSS_PRICE = 'unitGrossPrice';
+    public const FIELD_FORCED_UNIT_GROSS_PRICE = 'forcedUnitGrossPrice';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -62,7 +62,7 @@ class ItemType extends AbstractType
      */
     protected function addSkuField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_SKU, TextType::class, [
+        $builder->add(static::FIELD_SKU, TextType::class, [
             'label' => 'SKU',
             'required' => false,
         ]);
@@ -78,7 +78,7 @@ class ItemType extends AbstractType
      */
     protected function addUnitGrossPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_UNIT_GROSS_PRICE, TextType::class, [
+        $builder->add(static::FIELD_UNIT_GROSS_PRICE, TextType::class, [
             'label' => 'Unit Gross Price',
             'required' => false,
             'constraints' => [
@@ -97,7 +97,7 @@ class ItemType extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_QUANTITY, TextType::class, [
+        $builder->add(static::FIELD_QUANTITY, TextType::class, [
             'label' => 'Quantity',
             'required' => false,
             'constraints' => [
@@ -116,7 +116,7 @@ class ItemType extends AbstractType
      */
     protected function addForcedUnitGrossPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_FORCED_UNIT_GROSS_PRICE, HiddenType::class, [
+        $builder->add(static::FIELD_FORCED_UNIT_GROSS_PRICE, HiddenType::class, [
             'data' => 1,
         ]);
 

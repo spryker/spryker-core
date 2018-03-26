@@ -23,12 +23,14 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class PaymentType extends AbstractType
 {
-    protected const PAYMENT_PROPERTY_PATH = QuoteTransfer::PAYMENT;
-    protected const PAYMENT_SELECTION = PaymentTransfer::PAYMENT_SELECTION;
-    protected const PAYMENT_SELECTION_PROPERTY_PATH = self::PAYMENT_PROPERTY_PATH . '.' . self::PAYMENT_SELECTION;
+    public const TYPE_NAME = 'payments';
 
-    protected const KEY_SUBFORM = 'SUBFORM';
-    protected const KEY_PLUGIN = 'PLUGIN';
+    public const PAYMENT_PROPERTY_PATH = QuoteTransfer::PAYMENT;
+    public const PAYMENT_SELECTION = PaymentTransfer::PAYMENT_SELECTION;
+    public const PAYMENT_SELECTION_PROPERTY_PATH = self::PAYMENT_PROPERTY_PATH . '.' . self::PAYMENT_SELECTION;
+
+    public const KEY_SUBFORM = 'SUBFORM';
+    public const KEY_PLUGIN = 'PLUGIN';
 
     public const OPTIONS_FIELD_NAME = 'select_options';
 
@@ -80,7 +82,7 @@ class PaymentType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
                 'placeholder' => false,
-                'property_path' => self::PAYMENT_SELECTION_PROPERTY_PATH,
+                'property_path' => static::PAYMENT_SELECTION_PROPERTY_PATH,
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -190,6 +192,6 @@ class PaymentType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'payments';
+        return static::TYPE_NAME;
     }
 }

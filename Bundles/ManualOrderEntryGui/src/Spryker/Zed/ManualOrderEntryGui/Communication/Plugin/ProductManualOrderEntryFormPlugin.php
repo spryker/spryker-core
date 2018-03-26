@@ -9,12 +9,15 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ManualOrderProductTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductCollectionType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class ProductManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlugin implements ManualOrderEntryFormPluginInterface
+class ProductManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface
@@ -33,12 +36,20 @@ class ProductManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlug
     }
 
     /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return ProductCollectionType::TYPE_NAME;
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null)
+    public function createForm(Request $request, $dataTransfer = null): \Symfony\Component\Form\FormInterface
     {
         return $this->getFactory()->createProductsCollectionForm($dataTransfer);
     }
@@ -50,24 +61,23 @@ class ProductManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlug
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request)
+    public function handleData($quoteTransfer, &$form, $request): \Spryker\Shared\Kernel\Transfer\AbstractTransfer
     {
         $cartChangeTransfer = new CartChangeTransfer();
-        $skus = [];
+        $addedSkus = [];
 
         foreach ($quoteTransfer->getManualOrderProducts() as $manualOrderProduct) {
             if (!strlen($manualOrderProduct->getSku())
                 || $manualOrderProduct->getQuantity() <= 0
-                || in_array($manualOrderProduct->getSku(), $skus)
+                || in_array($manualOrderProduct->getSku(), $addedSkus)
                 || !$this->productFacade->hasProductConcrete($manualOrderProduct->getSku())
             ) {
                 continue;
             }
 
-            $skus[] = $manualOrderProduct->getSku();
+            $addedSkus[] = $manualOrderProduct->getSku();
             $itemTransfer = new ItemTransfer();
-            $itemTransfer->setSku($manualOrderProduct->getSku())
-                ->setQuantity($manualOrderProduct->getQuantity());
+            $itemTransfer->fromArray($manualOrderProduct->toArray());
 
             $cartChangeTransfer->addItem($itemTransfer);
         }
@@ -76,9 +86,28 @@ class ProductManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlug
             $quoteTransfer = $this->cartFacade->add($cartChangeTransfer);
         }
 
+        $this->updateManualOrderItems($quoteTransfer);
+
         $form = $this->createForm($request, $quoteTransfer);
         $form->setData($quoteTransfer->toArray());
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function updateManualOrderItems($quoteTransfer)
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $manualOrderProductTransfer = new ManualOrderProductTransfer();
+            $manualOrderProductTransfer->setSku($itemTransfer->getSku())
+                ->setQuantity($itemTransfer->getQuantity())
+                ->setUnitGrossPrice($itemTransfer->getUnitGrossPrice());
+
+            $quoteTransfer->addManualOrderItems($manualOrderProductTransfer);
+        }
     }
 }

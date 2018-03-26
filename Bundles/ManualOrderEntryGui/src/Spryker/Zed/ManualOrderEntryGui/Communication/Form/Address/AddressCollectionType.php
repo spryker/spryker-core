@@ -17,15 +17,17 @@ use Symfony\Component\Validator\Constraint;
 
 class AddressCollectionType extends AbstractType
 {
-    protected const FIELD_SHIPPING_ADDRESS = 'shippingAddress';
-    protected const FIELD_BILLING_ADDRESS = 'billingAddress';
-    protected const FIELD_BILLING_SAME_AS_SHIPPING = 'billingSameAsShipping';
+    public const TYPE_NAME = 'addresses';
+
+    public const FIELD_SHIPPING_ADDRESS = 'shippingAddress';
+    public const FIELD_BILLING_ADDRESS = 'billingAddress';
+    public const FIELD_BILLING_SAME_AS_SHIPPING = 'billingSameAsShipping';
 
     public const OPTION_ADDRESS_CHOICES = 'address_choices';
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
-    protected const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
-    protected const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
+    public const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
+    public const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -37,19 +39,19 @@ class AddressCollectionType extends AbstractType
         /** @var \Symfony\Component\OptionsResolver\OptionsResolver $resolver */
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
-                $validationGroups = [Constraint::DEFAULT_GROUP, self::GROUP_SHIPPING_ADDRESS];
+                $validationGroups = [Constraint::DEFAULT_GROUP, static::GROUP_SHIPPING_ADDRESS];
 
-                if (!$form->get(self::FIELD_BILLING_SAME_AS_SHIPPING)->getData()) {
-                    $validationGroups[] = self::GROUP_BILLING_ADDRESS;
+                if (!$form->get(static::FIELD_BILLING_SAME_AS_SHIPPING)->getData()) {
+                    $validationGroups[] = static::GROUP_BILLING_ADDRESS;
                 }
 
                 return $validationGroups;
             },
-            self::OPTION_ADDRESS_CHOICES => [],
+            static::OPTION_ADDRESS_CHOICES => [],
         ]);
 
-        $resolver->setDefined(self::OPTION_ADDRESS_CHOICES);
-        $resolver->setRequired(self::OPTION_COUNTRY_CHOICES);
+        $resolver->setDefined(static::OPTION_ADDRESS_CHOICES);
+        $resolver->setRequired(static::OPTION_COUNTRY_CHOICES);
     }
 
     /**
@@ -80,17 +82,17 @@ class AddressCollectionType extends AbstractType
             'required' => false,
             'validation_groups' => function (FormInterface $form) {
                 if (!$form->has(AddressSelectionType::FIELD_ID_CUSTOMER_ADDRESS) || !$form->get(AddressSelectionType::FIELD_ID_CUSTOMER_ADDRESS)->getData()) {
-                    return [self::GROUP_SHIPPING_ADDRESS];
+                    return [static::GROUP_SHIPPING_ADDRESS];
                 }
 
                 return false;
             },
-            AddressSelectionType::OPTION_VALIDATION_GROUP => self::GROUP_SHIPPING_ADDRESS,
-            AddressSelectionType::OPTION_ADDRESS_CHOICES => $options[self::OPTION_ADDRESS_CHOICES],
-            AddressSelectionType::OPTION_COUNTRY_CHOICES => $options[self::OPTION_COUNTRY_CHOICES],
+            AddressSelectionType::OPTION_VALIDATION_GROUP => static::GROUP_SHIPPING_ADDRESS,
+            AddressSelectionType::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
+            AddressSelectionType::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
         ];
 
-        $builder->add(self::FIELD_SHIPPING_ADDRESS, AddressSelectionType::class, $options);
+        $builder->add(static::FIELD_SHIPPING_ADDRESS, AddressSelectionType::class, $options);
 
         return $this;
     }
@@ -103,7 +105,7 @@ class AddressCollectionType extends AbstractType
     protected function addSameAsShipmentCheckbox(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_BILLING_SAME_AS_SHIPPING,
+            static::FIELD_BILLING_SAME_AS_SHIPPING,
             CheckboxType::class,
             [
                 'required' => false,
@@ -125,23 +127,23 @@ class AddressCollectionType extends AbstractType
             'data_class' => AddressTransfer::class,
             'allow_extra_fields' => true,
             'validation_groups' => function (FormInterface $form) {
-                if ($form->getParent()->get(self::FIELD_BILLING_SAME_AS_SHIPPING)->getData()) {
+                if ($form->getParent()->get(static::FIELD_BILLING_SAME_AS_SHIPPING)->getData()) {
                     return false;
                 }
 
                 if (!$form->has(AddressSelectionType::FIELD_ID_CUSTOMER_ADDRESS) || !$form->get(AddressSelectionType::FIELD_ID_CUSTOMER_ADDRESS)->getData()) {
-                    return [self::GROUP_BILLING_ADDRESS];
+                    return [static::GROUP_BILLING_ADDRESS];
                 }
 
                 return false;
             },
             'required' => false,
-            AddressSelectionType::OPTION_VALIDATION_GROUP => self::GROUP_BILLING_ADDRESS,
-            AddressSelectionType::OPTION_ADDRESS_CHOICES => $options[self::OPTION_ADDRESS_CHOICES],
-            AddressSelectionType::OPTION_COUNTRY_CHOICES => $options[self::OPTION_COUNTRY_CHOICES],
+            AddressSelectionType::OPTION_VALIDATION_GROUP => static::GROUP_BILLING_ADDRESS,
+            AddressSelectionType::OPTION_ADDRESS_CHOICES => $options[static::OPTION_ADDRESS_CHOICES],
+            AddressSelectionType::OPTION_COUNTRY_CHOICES => $options[static::OPTION_COUNTRY_CHOICES],
         ];
 
-        $builder->add(self::FIELD_BILLING_ADDRESS, AddressSelectionType::class, $options);
+        $builder->add(static::FIELD_BILLING_ADDRESS, AddressSelectionType::class, $options);
 
         return $this;
     }
@@ -151,6 +153,6 @@ class AddressCollectionType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'addresses';
+        return static::TYPE_NAME;
     }
 }

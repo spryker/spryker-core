@@ -17,6 +17,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CustomersListType extends AbstractType
 {
+    public const TYPE_NAME = 'customers';
+
     public const FIELD_CUSTOMER = 'id_customer';
 
     public const OPTION_CUSTOMER_ARRAY = 'option-category-array';
@@ -71,6 +73,6 @@ class CustomersListType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'customers';
+        return static::TYPE_NAME;
     }
 }

@@ -18,8 +18,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ProductCollectionType extends AbstractType
 {
-    protected const FIELD_PRODUCTS = 'manualOrderProducts';
-    protected const FIELD_IS_PRODUCT_POSTED = 'isProductPosted';
+    public const TYPE_NAME = 'products';
+
+    public const FIELD_PRODUCTS = 'manualOrderProducts';
+    public const FIELD_IS_PRODUCT_POSTED = 'isProductPosted';
 
     public const OPTION_MANUAL_ORDER_PRODUCT_CLASS_COLLECTION = 'manual_order_product_class_collection';
 
@@ -54,7 +56,7 @@ class ProductCollectionType extends AbstractType
      */
     protected function addProductsEmptyField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_PRODUCTS, CollectionType::class, [
+        $builder->add(static::FIELD_PRODUCTS, CollectionType::class, [
             'entry_type' => ProductType::class,
             'label' => 'Products',
             'required' => false,
@@ -76,7 +78,7 @@ class ProductCollectionType extends AbstractType
      */
     protected function addIsProductPostedField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_IS_PRODUCT_POSTED, HiddenType::class, [
+        $builder->add(static::FIELD_IS_PRODUCT_POSTED, HiddenType::class, [
             'data' => 1,
         ]);
 
@@ -88,6 +90,6 @@ class ProductCollectionType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'products';
+        return static::TYPE_NAME;
     }
 }

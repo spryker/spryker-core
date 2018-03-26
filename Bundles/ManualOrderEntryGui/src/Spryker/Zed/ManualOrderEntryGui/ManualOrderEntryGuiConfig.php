@@ -10,4 +10,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ManualOrderEntryGuiConfig extends AbstractBundleConfig
 {
+    protected const NEXT_STEP_NAME = 'next-step';
+
+    /**
+     * @return string
+     */
+    public function getNextStepName()
+    {
+        return static::NEXT_STEP_NAME;
+    }
 }

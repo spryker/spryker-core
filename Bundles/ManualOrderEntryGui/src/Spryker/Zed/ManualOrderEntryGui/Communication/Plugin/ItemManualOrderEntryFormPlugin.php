@@ -8,12 +8,16 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ManualOrderProductTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ItemCollectionType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class ItemManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlugin implements ManualOrderEntryFormPluginInterface
+class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface
@@ -26,12 +30,20 @@ class ItemManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlugin 
     }
 
     /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return ItemCollectionType::TYPE_NAME;
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null)
+    public function createForm(Request $request, $dataTransfer = null): \Symfony\Component\Form\FormInterface
     {
         return $this->getFactory()->createItemsCollectionForm($dataTransfer);
     }
@@ -43,25 +55,46 @@ class ItemManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlugin 
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request)
+    public function handleData($quoteTransfer, &$form, $request): \Spryker\Shared\Kernel\Transfer\AbstractTransfer
     {
         $items = new ArrayObject();
         $addedSkus = [];
 
-        foreach ($quoteTransfer->getItems() as $item) {
-            if ($item->getQuantity() <= 0
-                || in_array($item->getSku(), $addedSkus)
+        foreach ($quoteTransfer->getManualOrderItems() as $manualOrderProductTransfer) {
+            if ($manualOrderProductTransfer->getQuantity() <= 0
+                || in_array($manualOrderProductTransfer->getSku(), $addedSkus)
             ) {
                 continue;
             }
 
-            $addedSkus[] = $item->getSku();
-            $items->append($item);
+            $addedSkus[] = $manualOrderProductTransfer->getSku();
+            $itemTransfer = new ItemTransfer();
+            $itemTransfer->fromArray($manualOrderProductTransfer->toArray());
+
+            $items->append($itemTransfer);
         }
+
+        foreach ($quoteTransfer->getItems() as $quoteItemTransfer) {
+            $skuAdded = false;
+            foreach ($items as $itemTransfer) {
+                if ($itemTransfer->getSku() === $quoteItemTransfer->getSku()) {
+                    $skuAdded = true;
+
+                    break;
+                }
+            }
+
+            if (!$skuAdded) {
+                $items->append($quoteItemTransfer);
+            }
+        }
+
         $quoteTransfer->setItems($items);
         if (count($items)) {
             $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
         }
+
+        $this->updateManualOrderItems($quoteTransfer);
 
         $form = $this->createForm($request, $quoteTransfer);
         $form->setData($quoteTransfer->toArray());
@@ -71,13 +104,20 @@ class ItemManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlugin 
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return void
      */
-    public function handleDataStepEngine($quoteTransfer, &$form, $request)
+    protected function updateManualOrderItems($quoteTransfer)
     {
-        return $this->handleData($quoteTransfer, $form, $request);
+        $quoteTransfer->setManualOrderItems(new ArrayObject());
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $manualOrderProductTransfer = new ManualOrderProductTransfer();
+            $manualOrderProductTransfer->setSku($itemTransfer->getSku())
+                ->setQuantity($itemTransfer->getQuantity())
+                ->setUnitGrossPrice($itemTransfer->getUnitGrossPrice());
+
+            $quoteTransfer->addManualOrderItems($manualOrderProductTransfer);
+        }
     }
 }

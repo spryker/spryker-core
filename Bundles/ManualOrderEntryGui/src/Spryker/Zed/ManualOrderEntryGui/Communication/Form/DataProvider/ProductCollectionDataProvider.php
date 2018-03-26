@@ -14,7 +14,7 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductCollection
 
 class ProductCollectionDataProvider implements FormDataProviderInterface
 {
-    protected const NUMBER_ROWS = 3;
+    protected const NUMBER_PRODUCT_ROWS = 3;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -23,15 +23,11 @@ class ProductCollectionDataProvider implements FormDataProviderInterface
      */
     public function getData($quoteTransfer)
     {
-        if (count($quoteTransfer->getItems())) {
-            $quoteTransfer->setManualOrderProducts(new ArrayObject());
-        } else {
-            $manualOrderProducts = new ArrayObject();
-            for ($i = 0; $i < static::NUMBER_ROWS; $i++) {
-                $manualOrderProducts->append(new ManualOrderProductTransfer());
-            }
-            $quoteTransfer->setManualOrderProducts($manualOrderProducts);
+        $manualOrderProducts = new ArrayObject();
+        for ($i = 0; $i < static::NUMBER_PRODUCT_ROWS; $i++) {
+            $manualOrderProducts->append(new ManualOrderProductTransfer());
         }
+        $quoteTransfer->setManualOrderProducts($manualOrderProducts);
 
         return $quoteTransfer;
     }

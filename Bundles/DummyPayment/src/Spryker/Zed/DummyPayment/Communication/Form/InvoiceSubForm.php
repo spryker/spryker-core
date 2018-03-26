@@ -45,7 +45,7 @@ class InvoiceSubForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => DummyPaymentTransfer::class,
-        ])->setRequired(self::OPTIONS_FIELD_NAME);
+        ])->setRequired(static::OPTIONS_FIELD_NAME);
     }
 
     /**
@@ -92,7 +92,7 @@ class InvoiceSubForm extends AbstractType
     {
         return new Callback([
             'callback' => function ($date, ExecutionContextInterface $context) {
-                if (strtotime($date) > strtotime(self::MIN_BIRTHDAY_DATE_STRING)) {
+                if (strtotime($date) > strtotime(static::MIN_BIRTHDAY_DATE_STRING)) {
                     $context->addViolation('Must be older than 18 years');
                 }
             },

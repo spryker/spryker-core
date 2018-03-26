@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/manual-order-entry-gui.svg)](https://travis-ci.org/spryker/manual-order-entry-gui)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/manual-order-entry-gui/badge.svg)](https://coveralls.io/github/spryker/manual-order-entry-gui)
 
-New module, that allows create order in Zed.
+Manual Order Entry module provides functionality for order creation in Zed UI.
 Basic steps:
 
     Selecting/Adding a customer
