@@ -37,8 +37,8 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
     }
 
     /**
-     * Checks if the given availability value (example: quantity) can be converted to a sales unit value with
-     * a given precision without information loss.
+     * Checks if the given availability value (example: quantity) can be converted to a unit value with
+     * a given unit precision without significant information loss.
      *
      * @see ProductMeasurementSalesUnitValue::calculateNormalizedValue()
      *
@@ -50,8 +50,8 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
      */
     public function isIntegerSalesUnitValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision)
     {
-        $salesUnitValue = $this->calculateFloatNormalizedValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision);
-        if (abs($salesUnitValue - round($salesUnitValue)) < static::FLOAT_PRECISION) {
+        $unitValue = $this->calculateFloatNormalizedValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision);
+        if (abs($unitValue - round($unitValue)) < static::FLOAT_PRECISION) {
             return true;
         }
 
@@ -59,13 +59,13 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
     }
 
     /**
-     * Converts a value (representing availability) to a given unit with a given precision.
+     * Converts a value (representing availability) to a given unit with a given unit precision.
      *
      * @example
      * 8 quantity is ordered (availability value),
      * to be displayed sales unit is KG with a unit precision of 100 (exchanged value can be displayed up to 2 decimals),
-     * and 2 KG represents 1 quantity (sales unit to stock conversion ratio is 0.5).
-     * The retrieved normalized sales unit value is 1600 (16.00 KG when displayed).
+     * and 2 KG represents 1 quantity (unit to availability conversion ratio is 0.5).
+     * The retrieved normalized unit value is 1600 (16.00 KG when displayed).
      *
      * @param int $availabilityValue
      * @param float $unitToAvailabilityConversion

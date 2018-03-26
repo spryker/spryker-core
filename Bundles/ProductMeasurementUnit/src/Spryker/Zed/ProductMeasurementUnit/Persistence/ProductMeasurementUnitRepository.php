@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Persistence;
 
+use Propel\Runtime\Exception\EntityNotFoundException;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -14,8 +15,18 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductMeasurementUnitRepository extends AbstractRepository implements ProductMeasurementUnitRepositoryInterface
 {
+    const ERROR_NO_BASE_UNIT_FOR_ID_PRODUCT = 'Product measurement base unit was not found for product id "%d".';
+    const ERROR_NO_BASE_UNIT_BY_ID = 'Product measurement base unit was not found by its id "%d".';
+    const ERROR_NO_SALES_UNIT_BY_ID = 'Product measurement sales unit was not found by its id "%d".';
+
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int $idProduct
+     *
+     * @throws \Propel\Runtime\Exception\EntityNotFoundException
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer
      */
@@ -32,8 +43,12 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->endUse()
             ->joinWithProductMeasurementUnit();
 
-        return $this->buildQueryFromCriteria($query)
-            ->find()[0];
+        $productMeasurementBaseUnitEntities = $this->buildQueryFromCriteria($query)->find();
+        if (count($productMeasurementBaseUnitEntities) < 1) {
+            throw new EntityNotFoundException(sprintf(static::ERROR_NO_BASE_UNIT_FOR_ID_PRODUCT, $idProduct));
+        }
+
+        return $productMeasurementBaseUnitEntities[0];
     }
 
     /**
@@ -42,6 +57,8 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
      * @api
      *
      * @param int $idProductMeasurementSalesUnit
+     *
+     * @throws \Propel\Runtime\Exception\EntityNotFoundException
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer
      */
@@ -52,8 +69,12 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->filterByIdProductMeasurementSalesUnit($idProductMeasurementSalesUnit)
             ->joinWithProductMeasurementUnit();
 
-        return $this->buildQueryFromCriteria($query)
-            ->find()[0];
+        $productMeasurementSalesUnitEntities = $this->buildQueryFromCriteria($query)->find();
+        if (count($productMeasurementSalesUnitEntities) < 1) {
+            throw new EntityNotFoundException(sprintf(static::ERROR_NO_SALES_UNIT_BY_ID, $idProductMeasurementSalesUnit));
+        }
+
+        return $productMeasurementSalesUnitEntities[0];
     }
 
     /**
@@ -81,27 +102,9 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
      *
      * @api
      *
-     * @param int[] $productIds
-     *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
-     */
-    public function getProductMeasurementSalesUnitEntities($productIds)
-    {
-        $query = $this->getFactory()
-            ->createProductMeasurementSalesUnitQuery()
-            ->filterByFkProduct_In($productIds)
-            ->joinWithProductMeasurementUnit();
-
-        return $this->buildQueryFromCriteria($query)
-            ->find();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idProductMeasurementBaseUnit
+     *
+     * @throws \Propel\Runtime\Exception\EntityNotFoundException
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer
      */
@@ -112,8 +115,12 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->filterByIdProductMeasurementBaseUnit($idProductMeasurementBaseUnit)
             ->joinWithProductMeasurementUnit();
 
-        return $this->buildQueryFromCriteria($query)
-            ->find()[0];
+        $productMeasurementBaseUnitEntities = $this->buildQueryFromCriteria($query)->find();
+        if (count($productMeasurementBaseUnitEntities) < 1) {
+            throw new EntityNotFoundException(sprintf(static::ERROR_NO_BASE_UNIT_BY_ID, $idProductMeasurementBaseUnit));
+        }
+
+        return $productMeasurementBaseUnitEntities[0];
     }
 
     /**

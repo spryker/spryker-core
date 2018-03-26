@@ -14,7 +14,7 @@ use Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitReposit
 
 class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitReaderInterface
 {
-    const ERROR_INVALID_EXCHANGE = 'There is no exchange defined between "%s" and "%s".';
+    const ERROR_INVALID_EXCHANGE = 'There is no automatic exchange ratio defined between "%s" and "%s" measurement unit codes.';
 
     /**
      * @var \Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface

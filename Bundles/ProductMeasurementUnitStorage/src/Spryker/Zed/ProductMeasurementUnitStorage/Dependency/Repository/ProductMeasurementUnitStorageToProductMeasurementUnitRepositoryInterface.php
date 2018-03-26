@@ -20,11 +20,4 @@ interface ProductMeasurementUnitStorageToProductMeasurementUnitRepositoryInterfa
      * @return string[]
      */
     public function getProductMeasurementUnitCodeMap();
-
-    /**
-     * @param int[] $productIds
-     *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
-     */
-    public function getProductMeasurementSalesUnitEntities($productIds);
 }

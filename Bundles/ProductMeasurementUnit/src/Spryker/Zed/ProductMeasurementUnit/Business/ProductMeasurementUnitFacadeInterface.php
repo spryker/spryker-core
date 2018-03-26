@@ -63,7 +63,7 @@ interface ProductMeasurementUnitFacadeInterface
 
     /**
      * Specification:
-     * - Returns the normalized sales unit quantity value using the provided item quantity and product measurement unit.
+     * - Returns the normalized quantity sales unit value using the provided item quantity and product measurement unit.
      *
      * @api
      *
@@ -75,7 +75,7 @@ interface ProductMeasurementUnitFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves the SpyProductMeasurementSalesUnitEntity transfer object by the provided ID.
+     * - Retrieves a product measurement sales unit transfer object by the provided ID.
      * - Sets related default precision and conversion ratio when not defined.
      *
      * @api

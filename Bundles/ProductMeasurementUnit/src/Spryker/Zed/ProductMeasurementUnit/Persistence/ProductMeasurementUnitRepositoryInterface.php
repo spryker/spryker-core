@@ -60,13 +60,4 @@ interface ProductMeasurementUnitRepositoryInterface
      * @return string[] Keys are product measurement unit IDs, values are product measurement unit codes.
      */
     public function getProductMeasurementUnitCodeMap();
-
-    /**
-     * @api
-     *
-     * @param int[] $productIds
-     *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
-     */
-    public function getProductMeasurementSalesUnitEntities($productIds);
 }

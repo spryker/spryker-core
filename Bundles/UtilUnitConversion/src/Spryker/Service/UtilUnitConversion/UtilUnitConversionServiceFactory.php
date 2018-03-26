@@ -10,6 +10,9 @@ namespace Spryker\Service\UtilUnitConversion;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Service\UtilUnitConversion\Model\MeasurementUnitConverter;
 
+/**
+ * @method \Spryker\Service\UtilUnitConversion\UtilUnitConversionConfig getConfig()
+ */
 class UtilUnitConversionServiceFactory extends AbstractServiceFactory
 {
     /**
@@ -17,6 +20,6 @@ class UtilUnitConversionServiceFactory extends AbstractServiceFactory
      */
     public function createMeasurementUnitConverter()
     {
-        return new MeasurementUnitConverter();
+        return new MeasurementUnitConverter($this->getConfig());
     }
 }

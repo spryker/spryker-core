@@ -39,14 +39,4 @@ class ProductMeasurementUnitStorageToProductMeasurementUnitRepositoryBridge impl
     {
         return $this->productMeasurementUnitRepository->getProductMeasurementUnitCodeMap();
     }
-
-    /**
-     * @param int[] $productIds
-     *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
-     */
-    public function getProductMeasurementSalesUnitEntities($productIds)
-    {
-        return $this->productMeasurementUnitRepository->getProductMeasurementSalesUnitEntities($productIds);
-    }
 }

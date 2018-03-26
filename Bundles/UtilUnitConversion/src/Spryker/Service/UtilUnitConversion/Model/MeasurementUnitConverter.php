@@ -7,26 +7,22 @@
 
 namespace Spryker\Service\UtilUnitConversion\Model;
 
+use Spryker\Service\UtilUnitConversion\UtilUnitConversionConfig;
+
 class MeasurementUnitConverter implements MeasurementUnitConverterInterface
 {
-    const MEASUREMENT_UNIT_EXCHANGE_RATIO_COLLECTION = [
-        'KILO' => [
-            'KILO' => 1,
-            'GRAM' => 1000,
-        ],
-        'GRAM' => [
-            'GRAM' => 1,
-            'KILO' => 0.001,
-        ],
-        'METR' => [
-            'METR' => 1,
-            'CMET' => 100,
-        ],
-        'CMET' => [
-            'CMET' => 1,
-            'METR' => 0.01,
-        ],
-    ];
+    /**
+     * @var \Spryker\Service\UtilUnitConversion\UtilUnitConversionConfig
+     */
+    protected $utilUnitConversionConfig;
+
+    /**
+     * @param \Spryker\Service\UtilUnitConversion\UtilUnitConversionConfig $utilUnitConversionConfig
+     */
+    public function __construct(UtilUnitConversionConfig $utilUnitConversionConfig)
+    {
+        $this->utilUnitConversionConfig = $utilUnitConversionConfig;
+    }
 
     /**
      * @param string $fromCode
@@ -36,8 +32,10 @@ class MeasurementUnitConverter implements MeasurementUnitConverterInterface
      */
     public function findExchangeRatio($fromCode, $toCode)
     {
-        if (isset(static::MEASUREMENT_UNIT_EXCHANGE_RATIO_COLLECTION[$fromCode][$toCode])) {
-            return static::MEASUREMENT_UNIT_EXCHANGE_RATIO_COLLECTION[$fromCode][$toCode];
+        $exchangeRatioMap = $this->utilUnitConversionConfig->getMeasurementUnitExchangeRatioMap();
+
+        if (isset($exchangeRatioMap[$fromCode][$toCode])) {
+            return $exchangeRatioMap[$fromCode][$toCode];
         }
 
         return null;

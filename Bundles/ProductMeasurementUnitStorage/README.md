@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/product-measurement-unit-storage.svg)](https://travis-ci.org/spryker/product-measurement-unit-storage)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/product-measurement-unit-storage/badge.svg)](https://coveralls.io/github/spryker/product-measurement-unit-storage)
 
-{{ADD DESCRIPTION HERE}}
+Manages storage for product measurement units entities.
 
 ## Installation
 
