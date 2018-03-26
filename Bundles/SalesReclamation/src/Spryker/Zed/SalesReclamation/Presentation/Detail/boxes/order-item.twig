@@ -80,7 +80,7 @@
     <span class="label {{ label }}" title="Deactivated">{{ reclamationItem.status }}</span>
 </td>
 <td>
-    {% if reclamationItem.status != 'Refund' %}
+    {% if reclamationItem.status != 'Refunded' %}
         <a href="{{ url('/sales-reclamation/detail/close-item', {
             'id-reclamation': reclamation.idSalesReclamation,
             'id-reclamation-item': reclamationItem.id,
