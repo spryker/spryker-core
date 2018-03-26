@@ -3,7 +3,18 @@
   "description": "CompanySupplierGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "spryker/kernel": "^3.0.0",
+    "spryker/gui": "^3.13.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/store": "^1.5.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/money": "^2.0.0",
+    "spryker/currency": "^3.0.0",
+    "spryker/product": "^5.0.0 || ^6.0.0",
+    "spryker/price-product": "^1.0.0",
+    "spryker/company-supplier": "^1.0.0",
+    "spryker/product-management-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -11,7 +22,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
