@@ -71,6 +71,7 @@ class ReclamationTable extends AbstractTable
             SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION => '#',
             SpySalesReclamationTableMap::COL_CREATED_AT => 'Created',
             SpySalesReclamationTableMap::COL_CUSTOMER_NAME => 'Customer',
+            SpySalesReclamationTableMap::COL_CUSTOMER_EMAIL => 'Email',
             SpySalesReclamationTableMap::COL_STATE => 'State',
             SpySalesReclamationTableMap::COL_FK_SALES_ORDER => 'Order id',
             static::COL_ACTIONS => 'Actions',
@@ -105,6 +106,7 @@ class ReclamationTable extends AbstractTable
                     $item[SpySalesReclamationTableMap::COL_CREATED_AT]
                 ),
                 SpySalesReclamationTableMap::COL_CUSTOMER_NAME => $item[SpySalesReclamationTableMap::COL_CUSTOMER_NAME],
+                SpySalesReclamationTableMap::COL_CUSTOMER_EMAIL => $item[SpySalesReclamationTableMap::COL_CUSTOMER_EMAIL],
                 SpySalesReclamationTableMap::COL_STATE => $this->createStatusLabel(
                     $item[SpySalesReclamationTableMap::COL_STATE]
                 ),

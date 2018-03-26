@@ -6,6 +6,8 @@
     <transfer name="Reclamation">
         <property name="idSalesReclamation" type="int"/>
         <property name="customerName" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="customerEmail" type="string"/>
         <property name="status" type="string"/>
         <property name="order" type="Order" />
         <property name="reclamationItems" type="ReclamationItem[]" singular="ReclamationItem" />

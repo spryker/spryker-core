@@ -57,6 +57,8 @@ class Hydrator implements HydratorInterface
         $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($spyReclamation->getFkSalesOrder());
         $reclamationTransfer->setStatus($spyReclamation->getState());
         $reclamationTransfer->setOrder($orderTransfer);
+        $reclamationTransfer->setCustomerReference($spyReclamation->getCustomerReference());
+        $reclamationTransfer->setCustomerEmail($spyReclamation->getCustomerEmail());
 
         /** @var \Generated\Shared\Transfer\ReclamationItemTransfer[]|\ArrayObject $reclamationItems */
         $reclamationItems = new ArrayObject();
@@ -82,10 +84,14 @@ class Hydrator implements HydratorInterface
      */
     public function hydrateByOrder(OrderTransfer $orderTransfer): ReclamationTransfer
     {
+        $orderTransfer->requireItems();
+
         $reclamationTransfer = new ReclamationTransfer();
 
         $reclamationTransfer->setStatus(SpySalesReclamationTableMap::COL_STATE_OPEN);
         $reclamationTransfer->setOrder($orderTransfer);
+        $reclamationTransfer->setCustomerReference($orderTransfer->getCustomerReference());
+        $reclamationTransfer->setCustomerEmail($orderTransfer->getEmail());
 
         /** @var \Generated\Shared\Transfer\ReclamationItemTransfer[]|\ArrayObject $reclamationItems */
         $reclamationItems = new ArrayObject();

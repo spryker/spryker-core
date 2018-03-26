@@ -31,6 +31,14 @@ class Creator implements CreatorInterface
 
         $orderTransfer = $reclamationCreateRequestTransfer->getOrder();
 
+        $orderTransfer
+            ->requireIdSalesOrder()
+            ->requireCustomerReference()
+            ->requireEmail()
+            ->requireFirstName()
+            ->requireLastName()
+            ->requireSalutation();
+
         $salutation = $orderTransfer->getSalutation();
 
         $customer = sprintf(
@@ -43,6 +51,8 @@ class Creator implements CreatorInterface
         $spySaleReclamation = new SpySalesReclamation();
         $spySaleReclamation->setFkSalesOrder($orderTransfer->getIdSalesOrder());
         $spySaleReclamation->setCustomerName($customer);
+        $spySaleReclamation->setCustomerReference($orderTransfer->getCustomerReference());
+        $spySaleReclamation->setCustomerEmail($orderTransfer->getEmail());
         $spySaleReclamation->setState(SpySalesReclamationTableMap::COL_STATE_OPEN);
 
         $spySaleReclamation->save();
