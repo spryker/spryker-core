@@ -48,9 +48,7 @@ class QuoteMapper implements QuoteMapperInterface
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->fromArray($quoteEntityTransfer->modifiedToArray(), true);
-        $quoteTransfer->fromArray($this->decodeQuoteData($quoteEntityTransfer));
-        $quoteTransfer->setIdQuote($quoteEntityTransfer->getIdQuote());
-        $quoteTransfer->setCustomerReference($quoteEntityTransfer->getCustomerReference());
+        $quoteTransfer->fromArray($this->decodeQuoteData($quoteEntityTransfer), true);
 
         return $quoteTransfer;
     }
@@ -64,10 +62,12 @@ class QuoteMapper implements QuoteMapperInterface
     public function mapTransferToEntity(QuoteTransfer $quoteTransfer, SpyQuote $quoteEntity): SpyQuote
     {
         $quoteEntity->fromArray($quoteTransfer->modifiedToArray());
-        $quoteEntity->setIdQuote($quoteTransfer->getIdQuote());
-        $quoteEntity->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
-        $quoteEntity->setFkStore($quoteTransfer->getStore()->getIdStore());
-        $quoteEntity->setQuoteData($this->encodeQuoteData($quoteTransfer));
+
+        $quoteEntity
+            ->setIdQuote($quoteTransfer->getIdQuote())
+            ->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference())
+            ->setFkStore($quoteTransfer->getStore()->getIdStore())
+            ->setQuoteData($this->encodeQuoteData($quoteTransfer));
 
         return $quoteEntity;
     }
@@ -89,25 +89,25 @@ class QuoteMapper implements QuoteMapperInterface
      */
     protected function encodeQuoteData(QuoteTransfer $quoteTransfer)
     {
-        $quoteData = $quoteTransfer->modifiedToArray();
-        $quoteData = $this->filterDisallowedQuoteData($quoteData);
+        $quoteData = $this->filterDisallowedQuoteData($quoteTransfer);
 
         return $this->encodingService->encodeJson($quoteData);
     }
 
     /**
-     * @param array $quoteData
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    protected function filterDisallowedQuoteData(array $quoteData)
+    protected function filterDisallowedQuoteData(QuoteTransfer $quoteTransfer)
     {
         $data = [];
         foreach ($this->quoteConfig->getQuoteFieldsAllowedForSaving() as $dataKey) {
-            if (isset($quoteData[$dataKey])) {
-                $data[$dataKey] = $quoteData[$dataKey];
+            if ($quoteTransfer->isPropertyModified($dataKey)) {
+                $data[$dataKey] = $quoteTransfer[$dataKey];
             }
         }
+
         return $data;
     }
 }

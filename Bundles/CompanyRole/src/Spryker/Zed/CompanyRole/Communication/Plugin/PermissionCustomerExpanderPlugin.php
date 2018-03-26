@@ -55,6 +55,7 @@ class PermissionCustomerExpanderPlugin extends AbstractPlugin implements Custome
         }
 
         $customerPermissionCollectionTransfer = $customerTransfer->getPermissions();
+        // TODO: shouldn't we iterate $permissionCollectionTransfer->getPermissions() instead?
         foreach ($customerPermissionCollectionTransfer->getPermissions() as $permissionTransfer) {
             $customerPermissionCollectionTransfer->addPermission($permissionTransfer);
         }

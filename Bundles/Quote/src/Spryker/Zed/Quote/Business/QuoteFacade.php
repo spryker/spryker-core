@@ -119,8 +119,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Map Quote Entity Transfer to quote transfer
+     * {@inheritdoc}
      *
      * @api
      *

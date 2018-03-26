@@ -39,7 +39,7 @@ class QuoteReader implements QuoteReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer TODO: change to CompanyUserTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */

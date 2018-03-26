@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Quote;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 /**
@@ -28,11 +29,11 @@ class QuoteConfig extends AbstractBundleConfig
     public function getQuoteFieldsAllowedForSaving()
     {
         return [
-            'items',
-            'totals',
-            'currency',
-            'price_mode',
-            'store',
+            QuoteTransfer::ITEMS,
+            QuoteTransfer::TOTALS,
+            QuoteTransfer::CURRENCY,
+            QuoteTransfer::PRICE_MODE,
+            QuoteTransfer::STORE,
         ];
     }
 }

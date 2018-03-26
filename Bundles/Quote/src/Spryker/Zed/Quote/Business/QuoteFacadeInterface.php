@@ -32,7 +32,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Find quote for customer
+     * - Find quote for customer.
      *
      * @api
      *
@@ -44,7 +44,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Find quote by id
+     * - Find quote by id.
      *
      * @api
      *
@@ -56,7 +56,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Remove quote from DB
+     * - Remove quote from DB.
      *
      * @api
      *
@@ -68,7 +68,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Merge two quotes from request
+     * - Merge two quotes from request.
      *
      * @api
      *
@@ -80,7 +80,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Get quote storage strategy type
+     * - Get quote storage strategy type.
      *
      * @api
      *
@@ -90,7 +90,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Get quote collection filtered by criteria
+     * - Get quote collection filtered by criteria.
      *
      * @api
      *
@@ -102,7 +102,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Map Quote Entity Transfer to quote transfer
+     * - Map Quote Entity Transfer to quote transfer.
      *
      * @api
      *
