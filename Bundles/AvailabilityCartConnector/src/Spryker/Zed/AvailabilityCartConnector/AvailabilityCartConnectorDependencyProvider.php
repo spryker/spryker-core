@@ -32,7 +32,7 @@ class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependen
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addAvailabilityFacade(Container $container): \Spryker\Zed\Kernel\Container
+    protected function addAvailabilityFacade(Container $container): Container
     {
         $container[static::FACADE_AVAILABILITY] = function (Container $container) {
             return new AvailabilityCartConnectorToAvailabilityBridge($container->getLocator()->availability()->facade());

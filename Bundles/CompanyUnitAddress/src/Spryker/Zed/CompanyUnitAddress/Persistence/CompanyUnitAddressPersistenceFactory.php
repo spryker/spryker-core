@@ -13,6 +13,10 @@ use Spryker\Zed\CompanyUnitAddress\Persistence\Mapper\CompanyUnitAddressMapper;
 use Spryker\Zed\CompanyUnitAddress\Persistence\Mapper\CompanyUnitAddressMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
+/**
+ * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CompanyUnitAddress\CompanyUnitAddressConfig getConfig()
+ */
 class CompanyUnitAddressPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
