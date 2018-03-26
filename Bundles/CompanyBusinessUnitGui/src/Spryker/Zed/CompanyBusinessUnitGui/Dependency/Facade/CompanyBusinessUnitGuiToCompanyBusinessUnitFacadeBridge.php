@@ -1,21 +1,22 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade;
 
-
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 
 class CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeBridge implements CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface
 {
-
-    /** @var CompanyBusinessUnitFacadeInterface */
+    /** @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface */
     protected $companyBusinessUnitFacade;
 
     /**
-     * @param CompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
+     * @param \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
      */
     public function __construct($companyBusinessUnitFacade)
     {
@@ -28,8 +29,7 @@ class CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeBridge implements Company
      */
     public function getCompanyBusinessUnitById(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): CompanyBusinessUnitTransfer
-    {
+    ): CompanyBusinessUnitTransfer {
         return $this->companyBusinessUnitFacade->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
     }
 
@@ -39,8 +39,7 @@ class CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeBridge implements Company
      */
     public function update(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): CompanyBusinessUnitResponseTransfer
-    {
+    ): CompanyBusinessUnitResponseTransfer {
         return $this->companyBusinessUnitFacade->update($companyBusinessUnitTransfer);
     }
 }

@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Table;
-
 
 use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit;
@@ -12,7 +15,6 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CompanyBusinessUnitTable extends AbstractTable
 {
-
     protected const COL_ID_COMPANY_BUSINESS_UNIT = SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT;
     protected const COL_NAME = SpyCompanyBusinessUnitTableMap::COL_NAME;
     protected const COL_ADDRESS = 'address';
@@ -24,12 +26,12 @@ class CompanyBusinessUnitTable extends AbstractTable
     protected const FORMAT_ADDRESS = '%s, %s, %s';
 
     /**
-     * @var SpyCompanyBusinessUnitQuery
+     * @var \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
      */
     protected $companyBusinessUnitQuery;
 
     /**
-     * @param SpyCompanyBusinessUnitQuery $companyBusinessUnitQuery
+     * @param \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery $companyBusinessUnitQuery
      */
     public function __construct(SpyCompanyBusinessUnitQuery $companyBusinessUnitQuery)
     {
@@ -41,7 +43,7 @@ class CompanyBusinessUnitTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config->setHeader([
             static::COL_ID_COMPANY_BUSINESS_UNIT => 'Id',
@@ -60,7 +62,6 @@ class CompanyBusinessUnitTable extends AbstractTable
             static::COL_NAME,
         ]);
 
-
         $config->setSearchable([
             static::COL_NAME,
         ]);
@@ -73,7 +74,7 @@ class CompanyBusinessUnitTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         $queryResults = $this->runQuery($this->companyBusinessUnitQuery, $config, true);
         $results = [];
@@ -93,7 +94,12 @@ class CompanyBusinessUnitTable extends AbstractTable
         return $results;
     }
 
-    protected function formatAddress(SpyCompanyBusinessUnit $spyCompanyBusinessUnit)
+    /**
+     * @param \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit $spyCompanyBusinessUnit
+     *
+     * @return string
+     */
+    protected function formatAddress(SpyCompanyBusinessUnit $spyCompanyBusinessUnit): string
     {
         $result = '';
         if ($spyCompanyBusinessUnit->getSpyCompanyUnitAddressToCompanyBusinessUnitsJoinCompanyUnitAddress()->count() > 0) {
@@ -110,11 +116,11 @@ class CompanyBusinessUnitTable extends AbstractTable
     }
 
     /**
-     * @param SpyCompanyBusinessUnit $spyCompanyBusinessUnit
+     * @param \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit $spyCompanyBusinessUnit
      *
      * @return string
      */
-    protected function buildLinks(SpyCompanyBusinessUnit $spyCompanyBusinessUnit)
+    protected function buildLinks(SpyCompanyBusinessUnit $spyCompanyBusinessUnit): string
     {
         $buttons = [];
 

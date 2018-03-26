@@ -48,7 +48,7 @@ class ProductSupplierTable extends AbstractTable
     protected $currencyFacade;
 
     /**
-     * @param int
+     * @param int $idCompany
      * @param \Spryker\Zed\CompanySupplierGui\Dependency\QueryContainer\CompanySupplierGuiToCompanySupplierQueryContainerInterface $companySupplierQueryContainer
      * @param \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToMoneyFacadeInterface $moneyFacade
      * @param \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToStoreFacadeInterface $storeFacade
@@ -160,7 +160,8 @@ class ProductSupplierTable extends AbstractTable
     }
 
     /**
-     * @param SpyProduct $spyProductEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $spyProductEntity
+     *
      * @return string
      */
     protected function getSupplierPrice(SpyProduct $spyProductEntity): string
@@ -178,7 +179,8 @@ class ProductSupplierTable extends AbstractTable
     }
 
     /**
-     * @param SpyProduct $spyProductEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $spyProductEntity
+     *
      * @return string
      */
     protected function getDefaultPrice(SpyProduct $spyProductEntity): string
@@ -193,7 +195,6 @@ class ProductSupplierTable extends AbstractTable
 
         return $this->formatPrices($prices[0]->getPriceProductStoresJoinCurrency());
     }
-
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $priceProductCollection

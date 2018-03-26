@@ -8,20 +8,17 @@
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\CompanyTransfer;
 use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface;
-use Spryker\Zed\CompanyGui\Communication\Form\CompanyForm;
-use Spryker\Zed\CompanyGui\Dependency\Facade\CompanyGuiToCompanyFacadeInterface;
 
 class CompanyBusinessUnitFormDataProvider
 {
     /**
-     * @var CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface
+     * @var \Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface
      */
     protected $companyBusinessUnitFacade;
 
     /**
-     * @param CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
+     * @param \Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
      */
     public function __construct(CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade)
     {
@@ -33,7 +30,7 @@ class CompanyBusinessUnitFormDataProvider
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    public function getData(int $idCompanyBusinessUnit)
+    public function getData(int $idCompanyBusinessUnit): CompanyBusinessUnitTransfer
     {
         return $this->companyBusinessUnitFacade->getCompanyBusinessUnitById($this->createCompanyBusinessUnitTransfer()->setIdCompanyBusinessUnit($idCompanyBusinessUnit));
     }
@@ -43,7 +40,7 @@ class CompanyBusinessUnitFormDataProvider
      *
      * @return array
      */
-    public function getOptions(int $idCompanyBusinessUnit)
+    public function getOptions(int $idCompanyBusinessUnit): array
     {
         return [];
     }
@@ -51,7 +48,7 @@ class CompanyBusinessUnitFormDataProvider
     /**
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    protected function createCompanyBusinessUnitTransfer()
+    protected function createCompanyBusinessUnitTransfer(): CompanyBusinessUnitTransfer
     {
         return new CompanyBusinessUnitTransfer();
     }

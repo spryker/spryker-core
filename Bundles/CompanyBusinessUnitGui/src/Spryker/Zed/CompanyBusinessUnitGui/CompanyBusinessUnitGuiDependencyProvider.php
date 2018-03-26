@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CompanyBusinessUnitGui;
 
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
@@ -12,6 +17,11 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
     public const COMPANY_BUSINESS_UNIT_QUERY = 'COMPANY_BUSINESS_UNIT_QUERY';
     public const COMPANY_BUSINESS_UNIT_FACADE = 'COMPANY_BUSINESS_UNIT_FACADE';
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
@@ -21,6 +31,11 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
         return $container;
     }
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addCompanyBusinessUnitQuery(Container $container): Container
     {
         $container[static::COMPANY_BUSINESS_UNIT_QUERY] = function (Container $container) {
@@ -30,6 +45,11 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
         return $container;
     }
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addCompanyBusinessUnitFacade(Container $container): Container
     {
         $container[static::COMPANY_BUSINESS_UNIT_FACADE] = function (Container $container) {

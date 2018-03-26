@@ -55,6 +55,8 @@ class CompanySupplierGuiCommunicationFactory extends AbstractCommunicationFactor
     }
 
     /**
+     * @param int $idCompany
+     *
      * @return \Spryker\Zed\CompanySupplierGui\Communication\Table\ProductSupplierTable
      */
     public function createProductSuppliersTable(int $idCompany): ProductSupplierTable

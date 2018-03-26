@@ -33,7 +33,7 @@ class CompanySupplierRepository extends AbstractRepository implements CompanySup
     {
         $query = $this->getFactory()->createCompanyQuery();
         $query->leftJoinWithCompanyType();
-        $query->where(SpyCompanyTypeTableMap::COL_NAME . ' = ?',CompanySupplierConstants::COMPANY_SUPPLIER_TYPE);
+        $query->where(SpyCompanyTypeTableMap::COL_NAME . ' = ?', CompanySupplierConstants::COMPANY_SUPPLIER_TYPE);
 
         return $this->getCompanySupplierCollectionFromQuery($query);
     }
