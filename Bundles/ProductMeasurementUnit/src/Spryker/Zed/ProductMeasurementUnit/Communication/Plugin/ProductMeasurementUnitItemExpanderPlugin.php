@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Communication\Plugin;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer;
 use Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -34,13 +36,23 @@ class ProductMeasurementUnitItemExpanderPlugin extends AbstractPlugin implements
             }
 
             $itemTransfer->getQuantitySalesUnit()->requireIdProductMeasurementSalesUnit();
-            $itemTransfer->setQuantitySalesUnit(
-                $this->getFacade()->getSalesUnitEntity(
-                    $itemTransfer->getQuantitySalesUnit()->getIdProductMeasurementSalesUnit()
-                )
-            );
+
+            $salesUnitEntity = $this->getFacade()->getSalesUnitEntity($itemTransfer->getQuantitySalesUnit()->getIdProductMeasurementSalesUnit());
+            $salesUnitTransfer = $this->mapToProductMeasurementSalesUnit($salesUnitEntity);
+            $itemTransfer->setQuantitySalesUnit($salesUnitTransfer);
         }
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer $salesUnitEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
+     */
+    protected function mapToProductMeasurementSalesUnit(SpyProductMeasurementSalesUnitEntityTransfer $salesUnitEntityTransfer)
+    {
+        return (new ProductMeasurementSalesUnitTransfer())
+            ->fromArray($salesUnitEntityTransfer->toArray(true), true);
     }
 }
