@@ -277,6 +277,20 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
+     * @param int $idShipmentMethod
+     *
+     * @return bool
+     */
+    public function isShipmentMethodActive($idShipmentMethod)
+    {
+        return $this->getFactory()->createMethod()->isShipmentMethodActive($idShipmentMethod);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getShipmentExpenseTypeIdentifier()

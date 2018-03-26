@@ -22,6 +22,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\Company\Persistence\CompanyRepositoryInterface getRepository()
  * @method \Spryker\Zed\Company\Persistence\CompanyEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Company\CompanyConfig getConfig()
  */
 class CompanyBusinessFactory extends AbstractBusinessFactory
 {
@@ -72,12 +73,13 @@ class CompanyBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyPluginExecutor(
             $this->getCompanyPreSavePlugins(),
+            $this->getCompanyPostSavePlugins(),
             $this->getCompanyPostCreatePlugins()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Company\Dependency\Plugin\CompanyPreSavePluginInterface[]
+     * @return \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPreSavePluginInterface[]
      */
     protected function getCompanyPreSavePlugins(): array
     {
@@ -85,7 +87,15 @@ class CompanyBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Company\Dependency\Plugin\CompanyPostCreatePluginInterface[]
+     * @return \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostSavePluginInterface[]
+     */
+    protected function getCompanyPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyDependencyProvider::COMPANY_POST_SAVE_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface[]
      */
     protected function getCompanyPostCreatePlugins(): array
     {

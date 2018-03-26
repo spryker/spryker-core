@@ -40,7 +40,9 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     protected function createCompanyUserPluginExecutor(): CompanyUserPluginExecutorInterface
     {
         return new CompanyUserPluginExecutor(
+            $this->getCompanyUserPreSavePlugins(),
             $this->getCompanyUserPostSavePlugins(),
+            $this->getCompanyUserPostCreatePlugins(),
             $this->getCompanyUserHydrationPlugins()
         );
     }
@@ -54,7 +56,15 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserPostSavePluginInterface[]
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface[]
+     */
+    protected function getCompanyUserPreSavePlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_COMPANY_USER_PRE_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface[]
      */
     protected function getCompanyUserPostSavePlugins(): array
     {
@@ -62,7 +72,15 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostCreatePluginInterface[]
+     */
+    protected function getCompanyUserPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_COMPANY_USER_POST_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
      */
     protected function getCompanyUserHydrationPlugins(): array
     {

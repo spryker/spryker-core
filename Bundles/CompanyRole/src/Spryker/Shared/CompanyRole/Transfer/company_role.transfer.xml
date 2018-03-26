@@ -21,8 +21,12 @@
         <property name="name" type="string"/>
         <property name="isDefault" type="bool"/>
         <property name="permissionCollection" type="PermissionCollection"/>
+        <property name="companyUserCollection" type="CompanyUserCollection"/>
     </transfer>
 
+    <transfer name="CompanyUserCollection">
+        <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
+    </transfer>
     <transfer name="PermissionCollection">
         <property name="permissions" type="Permission[]" singular="permission"/>
     </transfer>
@@ -50,6 +54,8 @@
         <property name="idPermission" type="int"/>
         <property name="key" type="string"/>
         <property name="configuration" type="array"/>
+        <property name="configurationSignature" type="array"/>
+        <property name="idCompanyRole" type="int"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -59,6 +65,12 @@
 
     <transfer name="CompanyRoleResponse">
         <property name="companyRoleTransfer" type="CompanyRole"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
+    </transfer>
+
+    <transfer name="CompanyRolePermissionResponse">
+        <property name="permission" type="Permission"/>
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="ResponseMessage[]" singular="message"/>
     </transfer>
