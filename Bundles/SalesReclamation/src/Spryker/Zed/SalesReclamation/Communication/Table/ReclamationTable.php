@@ -109,10 +109,7 @@ class ReclamationTable extends AbstractTable
                     $item[SpySalesReclamationTableMap::COL_STATE]
                 ),
                 SpySalesReclamationTableMap::COL_FK_SALES_ORDER => $item[SpySalesReclamationTableMap::COL_FK_SALES_ORDER],
-                static::COL_ACTIONS => implode(
-                    ' ',
-                    $this->createActions($item[SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION])
-                ),
+                static::COL_ACTIONS => $this->createActions($item),
             ];
         }
 
@@ -140,22 +137,48 @@ class ReclamationTable extends AbstractTable
     }
 
     /**
-     * @param int $idReclamation
+     * @param string[] $item
      *
-     * @return string[]
+     * @return string
      */
-    protected function createActions(int $idReclamation): array
+    protected function createActions(array $item): string
     {
+        $idReclamation = $item[SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION];
+        $isClosed = $item[SpySalesReclamationTableMap::COL_STATE] === SpySalesReclamationTableMap::COL_STATE_CLOSE;
         $buttons = [];
 
-        $buttons[] = $this->generateViewButton(
+        $buttons[] = $this->createViesAction($idReclamation);
+
+        if (!$isClosed) {
+            $buttons[] = $this->createCloseAction($idReclamation);
+        }
+
+        return implode(' ', $buttons);
+    }
+
+    /**
+     * @param int $idReclamation
+     *
+     * @return string
+     */
+    protected function createViesAction(int $idReclamation): string
+    {
+        return $this->generateViewButton(
             Url::generate(static::URL_RECLAMATION_DETAIL, [
                 SalesReclamationConfig::PARAM_ID_RECLAMATION => $idReclamation,
             ]),
             'View'
         );
+    }
 
-        $buttons[] = $this->generateViewButton(
+    /**
+     * @param int $idReclamation
+     *
+     * @return string
+     */
+    protected function createCloseAction(int $idReclamation): string
+    {
+        return $this->generateViewButton(
             Url::generate(static::URL_RECLAMATION_CLOSE, [
                 SalesReclamationConfig::PARAM_ID_RECLAMATION => $idReclamation,
             ]),
@@ -165,7 +188,5 @@ class ReclamationTable extends AbstractTable
                 'icon' => 'fa-close',
             ]
         );
-
-        return $buttons;
     }
 }
