@@ -19,7 +19,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
-use Spryker\Zed\Sales\Business\Model\Order\Converter\OrderConverterInterface;
+use Spryker\Zed\Sales\Business\Model\Order\Mapper\OrderMapperInterface;
 use Spryker\Zed\Sales\Business\Model\Order\Plugin\SalesOrderPluginExecutorInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
@@ -60,9 +60,9 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $store;
 
     /**
-     * @var \Spryker\Zed\Sales\Business\Model\Order\Converter\OrderConverterInterface
+     * @var \Spryker\Zed\Sales\Business\Model\Order\Mapper\OrderMapperInterface
      */
-    protected $orderConverter;
+    protected $orderMapper;
 
     /**
      * @var \Spryker\Zed\Sales\Business\Model\Order\Plugin\SalesOrderPluginExecutorInterface
@@ -76,7 +76,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param \Spryker\Shared\Kernel\Store $store
-     * @param \Spryker\Zed\Sales\Business\Model\Order\Converter\OrderConverterInterface $orderConverter
+     * @param \Spryker\Zed\Sales\Business\Model\Order\Mapper\OrderMapperInterface $orderConverter
      * @param \Spryker\Zed\Sales\Business\Model\Order\Plugin\SalesOrderPluginExecutorInterface $salesOrderPluginExecutor
      */
     public function __construct(
@@ -86,7 +86,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         SalesConfig $salesConfiguration,
         LocaleQueryContainerInterface $localeQueryContainer,
         Store $store,
-        OrderConverterInterface $orderConverter,
+        OrderMapperInterface $orderConverter,
         SalesOrderPluginExecutorInterface $salesOrderPluginExecutor
     ) {
         $this->countryFacade = $countryFacade;
@@ -95,7 +95,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $this->salesConfiguration = $salesConfiguration;
         $this->localeQueryContainer = $localeQueryContainer;
         $this->store = $store;
-        $this->orderConverter = $orderConverter;
+        $this->orderMapper = $orderConverter;
         $this->salesOrderPluginExecutor = $salesOrderPluginExecutor;
     }
 
@@ -448,9 +448,9 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      */
     protected function executeSalesOrderPreSavePlugins(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity): SpySalesOrder
     {
-        $salesOrderEntityTransfer = $this->orderConverter->convertToEntityTransfer($salesOrderEntity);
+        $salesOrderEntityTransfer = $this->orderMapper->mapOrderToEntityTransfer($salesOrderEntity);
         $salesOrderEntityTransfer = $this->salesOrderPluginExecutor->executePreSaveOrderPlugins($quoteTransfer, $salesOrderEntityTransfer);
-        $salesOrderEntity = $this->orderConverter->convertFromEntityTransfer($salesOrderEntityTransfer);
+        $salesOrderEntity = $this->orderMapper->mapEntityTransferToOrder($salesOrderEntityTransfer);
 
         return $salesOrderEntity;
     }

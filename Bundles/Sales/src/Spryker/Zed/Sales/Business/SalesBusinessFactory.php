@@ -13,8 +13,8 @@ use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
 use Spryker\Zed\Sales\Business\Model\Customer\PaginatedCustomerOrderReader;
-use Spryker\Zed\Sales\Business\Model\Order\Converter\OrderConverter;
-use Spryker\Zed\Sales\Business\Model\Order\Converter\OrderConverterInterface;
+use Spryker\Zed\Sales\Business\Model\Order\Mapper\OrderMapper;
+use Spryker\Zed\Sales\Business\Model\Order\Mapper\OrderMapperInterface;
 use Spryker\Zed\Sales\Business\Model\Order\OrderExpander;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
@@ -70,7 +70,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getLocaleQueryContainer(),
             $this->getStore(),
-            $this->createOrderConverter(),
+            $this->createOrderMapper(),
             $this->createSalesOrderPluginExecutor()
         );
     }
@@ -87,7 +87,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getLocaleQueryContainer(),
             $this->getStore(),
-            $this->createOrderConverter(),
+            $this->createOrderMapper(),
             $this->createSalesOrderPluginExecutor()
         );
     }
@@ -163,11 +163,11 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\Order\Converter\OrderConverterInterface
+     * @return \Spryker\Zed\Sales\Business\Model\Order\Mapper\OrderMapperInterface
      */
-    public function createOrderConverter(): OrderConverterInterface
+    public function createOrderMapper(): OrderMapperInterface
     {
-        return new OrderConverter();
+        return new OrderMapper();
     }
 
     /**

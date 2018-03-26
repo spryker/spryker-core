@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Offer\OfferConfig getConfig()
- * @method \Spryker\Zed\Offer\Persistence\OfferQueryContainerInterface getQueryContainer()
  */
 class OfferCommunicationFactory extends AbstractCommunicationFactory
 {
