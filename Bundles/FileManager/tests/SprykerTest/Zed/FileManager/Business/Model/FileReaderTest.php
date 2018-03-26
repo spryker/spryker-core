@@ -14,6 +14,16 @@ use Spryker\Zed\FileManager\Business\Model\FileContentInterface;
 use Spryker\Zed\FileManager\Business\Model\FileFinderInterface;
 use Spryker\Zed\FileManager\Business\Model\FileReader;
 
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group FileManager
+ * @group Business
+ * @group Model
+ * @group FileReaderTest
+ * Add your own group annotations below this line
+ */
 class FileReaderTest extends Unit
 {
     /**
@@ -62,6 +72,8 @@ class FileReaderTest extends Unit
 
     /**
      * @param \Generated\Shared\Transfer\FileManagerReadResponseTransfer $fileInfo
+     *
+     * @return void
      */
     protected function assertFileInfo($fileInfo)
     {

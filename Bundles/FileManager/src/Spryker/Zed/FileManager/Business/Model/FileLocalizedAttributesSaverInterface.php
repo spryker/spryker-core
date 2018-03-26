@@ -13,7 +13,7 @@ use Orm\Zed\FileManager\Persistence\SpyFile;
 interface FileLocalizedAttributesSaverInterface
 {
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile                  $file
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
      * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $fileManagerSaveRequestTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException

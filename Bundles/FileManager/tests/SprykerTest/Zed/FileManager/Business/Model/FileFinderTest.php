@@ -15,6 +15,16 @@ use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Spryker\Zed\FileManager\Business\Model\FileFinder;
 use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
 
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group FileManager
+ * @group Business
+ * @group Model
+ * @group FileFinderTest
+ * Add your own group annotations below this line
+ */
 class FileFinderTest extends Unit
 {
     /**

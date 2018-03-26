@@ -18,24 +18,34 @@ use Propel\Runtime\Propel;
 use Spryker\Service\FileSystem\FileSystemDependencyProvider;
 use Spryker\Service\FileSystem\FileSystemService;
 use Spryker\Service\FileSystem\FileSystemServiceFactory;
+use Spryker\Service\Flysystem\FlysystemDependencyProvider;
 use Spryker\Service\Flysystem\FlysystemService;
 use Spryker\Service\Flysystem\FlysystemServiceFactory;
 use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemReaderPlugin;
 use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemStreamPlugin;
 use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemWriterPlugin;
+use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
+use Spryker\Service\Kernel\Container as ServiceContainer;
 use Spryker\Zed\FileManager\Business\FileManagerBusinessFactory;
 use Spryker\Zed\FileManager\Business\FileManagerFacade;
 use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemBridge;
 use Spryker\Zed\FileManager\FileManagerDependencyProvider;
-use Spryker\Service\Kernel\Container as ServiceContainer;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Service\Flysystem\FlysystemDependencyProvider;
-use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 use SprykerTest\Zed\FileManager\Stub\FileManagerConfigStub;
 use SprykerTest\Zed\FileManager\Stub\FileSystemConfigStub;
 use SprykerTest\Zed\FileManager\Stub\FlysystemConfigStub;
 
-class FileManagerServiceTest extends Unit
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Service
+ * @group FileManager
+ * @group Business
+ * @group Facade
+ * @group FileManagerFacadeTest
+ * Add your own group annotations below this line
+ */
+class FileManagerFacadeTest extends Unit
 {
     const PATH_DOCUMENT = 'documents/';
     const FILE_CONTENT = 'Spryker is awesome';
@@ -294,5 +304,4 @@ class FileManagerServiceTest extends Unit
         $this->assertEquals('v. 3', $fileTransfer->getFileInfo()->getVersionName());
         $this->assertEquals(10, $fileTransfer->getFileInfo()->getSize());
     }
-
 }

@@ -32,8 +32,8 @@ class FileRemover implements FileRemoverInterface
     /**
      * FileSaver constructor.
      *
-     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface             $fileFinder
-     * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface            $fileContent
+     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
+     * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface $fileContent
      * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $fileManagerQueryContainer
      */
     public function __construct(FileFinderInterface $fileFinder, FileContentInterface $fileContent, FileManagerQueryContainerInterface $fileManagerQueryContainer)
@@ -60,7 +60,8 @@ class FileRemover implements FileRemoverInterface
             function () use ($fileInfo) {
                 $this->fileContent->delete($fileInfo->getStorageFileName());
                 $fileInfo->delete();
-            }, $this->fileManagerQueryContainer->getConnection()
+            },
+            $this->fileManagerQueryContainer->getConnection()
         );
 
         return true;
@@ -87,7 +88,8 @@ class FileRemover implements FileRemoverInterface
                 }
 
                 $file->delete();
-            }, $this->fileManagerQueryContainer->getConnection()
+            },
+            $this->fileManagerQueryContainer->getConnection()
         );
 
         return true;

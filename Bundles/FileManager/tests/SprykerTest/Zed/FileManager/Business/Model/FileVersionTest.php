@@ -14,9 +14,18 @@ use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Spryker\Zed\FileManager\Business\Model\FileFinderInterface;
 use Spryker\Zed\FileManager\Business\Model\FileVersion;
 
-class FileVersionTest  extends Unit
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group FileManager
+ * @group Business
+ * @group Model
+ * @group FileVersionTest
+ * Add your own group annotations below this line
+ */
+class FileVersionTest extends Unit
 {
-
     /**
      * @return \Orm\Zed\FileManager\Persistence\SpyFile
      */
@@ -79,5 +88,4 @@ class FileVersionTest  extends Unit
 
         $this->assertEquals('v. 2', $fileVersion->getNewVersionName(2));
     }
-
 }

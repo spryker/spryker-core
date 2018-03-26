@@ -12,6 +12,16 @@ use Spryker\Zed\FileManager\Business\Model\FileContent;
 use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface;
 use Spryker\Zed\FileManager\FileManagerConfig;
 
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group FileManager
+ * @group Business
+ * @group Model
+ * @group FileContentTest
+ * Add your own group annotations below this line
+ */
 class FileContentTest extends Unit
 {
     /**

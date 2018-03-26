@@ -16,6 +16,16 @@ use Spryker\Zed\FileManager\Business\Model\FileFinderInterface;
 use Spryker\Zed\FileManager\Business\Model\FileRemover;
 use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer;
 
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group FileManager
+ * @group Business
+ * @group Model
+ * @group FileRemoverTest
+ * Add your own group annotations below this line
+ */
 class FileRemoverTest extends Unit
 {
     /**
@@ -129,5 +139,4 @@ class FileRemoverTest extends Unit
 
         $this->assertTrue($fileRemover->deleteFileInfo(1));
     }
-
 }
