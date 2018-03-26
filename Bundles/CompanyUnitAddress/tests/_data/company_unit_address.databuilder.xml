@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<transfers
+    xmlns="spryker:transfer-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd"
+>
+
+    <transfer name="CompanyUnitAddress">
+        <property name="fkCompanyBusinessUnit" dataBuilderRule="="/>
+        <property name="fkCompany" dataBuilderRule="="/>
+        <property name="fkCountry" dataBuilderRule="="/>
+        <property name="fkRegion" dataBuilderRule="="/>
+        <property name="address1" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="address2" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="address3" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="city" dataBuilderRule="=Berlin"/>
+        <property name="zipCode" dataBuilderRule="=10115"/>
+        <property name="phone" dataBuilderRule="=1234567890"/>
+        <property name="comment" dataBuilderRule="unique()->sentence(4)"/>
+        <property name="iso2Code" dataBuilderRule="=DE"/>
+        <property name="isDefaultBilling" dataBuilderRule="boolean(100)"/>
+    </transfer>
+
+</transfers>

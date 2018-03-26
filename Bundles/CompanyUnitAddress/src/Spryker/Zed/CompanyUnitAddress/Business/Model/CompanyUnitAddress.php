@@ -41,21 +41,29 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
     protected $companyBusinessUnitFacade;
 
     /**
+     * @var \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutorInterface
+     */
+    protected $companyUnitAddressPluginExecutor;
+
+    /**
      * @param \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressEntityManagerInterface $entityManager
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCountryFacadeInterface $countryFacade
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
+     * @param \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutorInterface $companyUnitAddressPluginExecutor
      */
     public function __construct(
         CompanyUnitAddressEntityManagerInterface $entityManager,
         CompanyUnitAddressToCountryFacadeInterface $countryFacade,
         CompanyUnitAddressToLocaleFacadeInterface $localeFacade,
-        CompanyUnitAddressToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
+        CompanyUnitAddressToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
+        CompanyUnitAddressPluginExecutorInterface $companyUnitAddressPluginExecutor
     ) {
         $this->entityManager = $entityManager;
         $this->countryFacade = $countryFacade;
         $this->localeFacade = $localeFacade;
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
+        $this->companyUnitAddressPluginExecutor = $companyUnitAddressPluginExecutor;
     }
 
     /**
@@ -99,20 +107,20 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
      *
      * @return int
      */
-    protected function retrieveFkCountry(CompanyUnitAddressTransfer $companyUnitAddressTransfer): int
+    protected function retrieveIdCountry(CompanyUnitAddressTransfer $companyUnitAddressTransfer): int
     {
-        $fkCountry = $companyUnitAddressTransfer->getFkCountry();
-        if (empty($fkCountry)) {
+        $idCountry = $companyUnitAddressTransfer->getFkCountry();
+        if (empty($idCountry)) {
             $iso2Code = $companyUnitAddressTransfer->getIso2Code();
             if (empty($iso2Code) === false) {
                 $countryTransfer = $this->countryFacade->getCountryByIso2Code($iso2Code);
-                $fkCountry = $countryTransfer->getIdCountry();
+                $idCountry = $countryTransfer->getIdCountry();
             } else {
-                $fkCountry = $this->getCompanyCountryId();
+                $idCountry = $this->getCompanyCountryId();
             }
         }
 
-        return $fkCountry;
+        return $idCountry;
     }
 
     /**
@@ -166,12 +174,15 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer {
 
-        $fkCountry = $this->retrieveFkCountry($companyUnitAddressTransfer);
-        $companyUnitAddressTransfer->setFkCountry($fkCountry);
+        $idCountry = $this->retrieveIdCountry($companyUnitAddressTransfer);
+        $companyUnitAddressTransfer->setFkCountry($idCountry);
         $isDefaultBilling = $companyUnitAddressTransfer->getIsDefaultBilling();
         $companyUnitAddressTransfer = $this->entityManager->saveCompanyUnitAddress($companyUnitAddressTransfer);
         $companyUnitAddressTransfer->setIsDefaultBilling($isDefaultBilling);
         $this->updateBusinessUnitDefaultAddresses($companyUnitAddressTransfer);
+
+        $companyUnitAddressTransfer = $this->companyUnitAddressPluginExecutor
+            ->executePostSavePlugins($companyUnitAddressTransfer);
 
         return (new CompanyUnitAddressResponseTransfer())->setIsSuccessful(true)
             ->setCompanyUnitAddressTransfer($companyUnitAddressTransfer);

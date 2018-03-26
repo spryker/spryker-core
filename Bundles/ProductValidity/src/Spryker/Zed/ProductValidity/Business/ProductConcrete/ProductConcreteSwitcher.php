@@ -86,7 +86,7 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
     /**
      * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidity[]|\Traversable
      */
-    protected function findProductsBecomingActive(): \Traversable
+    protected function findProductsBecomingActive(): Traversable
     {
         return $this
             ->queryContainer
@@ -97,7 +97,7 @@ class ProductConcreteSwitcher implements ProductConcreteSwitcherInterface
     /**
      * @return \Orm\Zed\ProductValidity\Persistence\SpyProductValidity[]|\Traversable
      */
-    protected function findProductsBecomingInactive(): \Traversable
+    protected function findProductsBecomingInactive(): Traversable
     {
         return $this
             ->queryContainer
