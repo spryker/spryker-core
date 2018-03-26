@@ -58,11 +58,15 @@ class FileContent implements FileContentInterface
      */
     public function delete($fileName)
     {
-        $fileSystemDeleteTransfer = new FileSystemDeleteTransfer();
-        $fileSystemDeleteTransfer->setFileSystemName($this->config->getStorageName());
-        $fileSystemDeleteTransfer->setPath($fileName);
+        $fileSystemQueryTransfer = new FileSystemQueryTransfer();
+        $fileSystemQueryTransfer->setFileSystemName($this->config->getStorageName());
+        $fileSystemQueryTransfer->setPath($fileName);
 
-        $this->fileSystemService->delete($fileSystemDeleteTransfer);
+        if ($this->fileSystemService->has($fileSystemQueryTransfer)) {
+            $fileSystemDeleteTransfer = new FileSystemDeleteTransfer();
+            $fileSystemDeleteTransfer->fromArray($fileSystemQueryTransfer->toArray());
+            $this->fileSystemService->delete($fileSystemDeleteTransfer);
+        }
     }
 
     /**
