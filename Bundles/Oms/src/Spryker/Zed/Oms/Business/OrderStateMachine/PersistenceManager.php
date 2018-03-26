@@ -11,7 +11,6 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
-use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Oms\Business\Exception\ProcessNotActiveException;
 use Spryker\Zed\Oms\OmsConfig;
 
@@ -47,7 +46,7 @@ class PersistenceManager implements PersistenceManagerInterface
 
         $stateEntity = SpyOmsOrderItemStateQuery::create()->findOneByName($stateName);
 
-        if (!isset($stateEntity)) {
+        if ($stateEntity === null) {
             $stateEntity = new SpyOmsOrderItemState();
             $stateEntity->setName($stateName);
             $stateEntity->save();
@@ -80,7 +79,7 @@ class PersistenceManager implements PersistenceManagerInterface
 
         $processEntity = SpyOmsOrderProcessQuery::create()->findOneByName($processName);
 
-        if (!isset($processEntity)) {
+        if ($processEntity === null) {
             $processEntity = new SpyOmsOrderProcess();
             $processEntity->setName($processName);
             $processEntity->save();
@@ -106,6 +105,6 @@ class PersistenceManager implements PersistenceManagerInterface
      */
     public function getInitialStateEntity()
     {
-        return $this->getStateEntity(OmsConstants::INITIAL_STATUS);
+        return $this->getStateEntity($this->omsConfig->getInitialStatus());
     }
 }

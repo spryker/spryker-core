@@ -32,11 +32,11 @@ class BundleConfigNotFoundException extends Exception
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
-            'Can not resolve %1$sConfig for your bundle "%1$s"',
+            'Can not resolve %1$sConfig for your module "%1$s"',
             $callerClassInfo->getBundle()
         ) . PHP_EOL;
 
-        $message .= 'You can fix this by adding the missing Config to your bundle.';
+        $message .= 'You can fix this by adding the missing Config to your module.';
 
         $message .= sprintf(
             'E.g. %s\\Zed\\%2$s\\%2$sConfig',

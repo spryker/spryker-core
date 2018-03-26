@@ -10,7 +10,9 @@ namespace Spryker\Zed\AvailabilityCartConnector\Business\Cart;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface;
 
 class CheckCartAvailability implements CheckCartAvailabilityInterface
@@ -42,6 +44,8 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
         $cartPreCheckResponseTransfer = new CartPreCheckResponseTransfer();
         $cartPreCheckResponseTransfer->setIsSuccess(true);
 
+        $storeTransfer = $this->getStoreTransfer($cartChangeTransfer);
+
         $messages = new ArrayObject();
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $currentItemQuantity = $this->calculateCurrentCartQuantityForGivenSku(
@@ -50,13 +54,10 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
             );
              $currentItemQuantity += $itemTransfer->getQuantity();
 
-            $isSellable = $this->availabilityFacade->isProductSellable(
-                $itemTransfer->getSku(),
-                $currentItemQuantity
-            );
+            $isSellable = $this->isProductSellable($itemTransfer, $currentItemQuantity, $storeTransfer);
 
             if (!$isSellable) {
-                $stock = $this->availabilityFacade->calculateStockForProduct($itemTransfer->getSku());
+                $stock = $this->calculateStockForProduct($itemTransfer, $storeTransfer);
                 $cartPreCheckResponseTransfer->setIsSuccess(false);
                 $messages[] = $this->createItemIsNotAvailableMessageTransfer($stock);
             }
@@ -95,13 +96,11 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     {
         $translationKey = $this->getTranslationKey($stock);
 
-        $messageTranfer = new MessageTransfer();
-        $messageTranfer->setValue($translationKey);
-        $messageTranfer->setParameters([
-            self::STOCK_TRANSLATION_PARAMETER => $stock,
-        ]);
-
-        return $messageTranfer;
+        return (new MessageTransfer())
+            ->setValue($translationKey)
+            ->setParameters([
+                static::STOCK_TRANSLATION_PARAMETER => $stock,
+            ]);
     }
 
     /**
@@ -111,10 +110,60 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
      */
     protected function getTranslationKey($stock)
     {
-        $translationKey = self::CART_PRE_CHECK_AVAILABILITY_FAILED;
+        $translationKey = static::CART_PRE_CHECK_AVAILABILITY_FAILED;
         if ($stock <= 0) {
-            $translationKey = self::CART_PRE_CHECK_AVAILABILITY_EMPTY;
+            $translationKey = static::CART_PRE_CHECK_AVAILABILITY_EMPTY;
         }
         return $translationKey;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function getStoreTransfer(CartChangeTransfer $cartChangeTransfer)
+    {
+        $storeTransfer = $cartChangeTransfer->getQuote()->getStore();
+        if (!$storeTransfer) {
+            return new StoreTransfer();
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param int $currentItemQuantity
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     *
+     * @return bool
+     */
+    protected function isProductSellable(
+        ItemTransfer $itemTransfer,
+        $currentItemQuantity,
+        StoreTransfer $storeTransfer = null
+    ) {
+        if ($storeTransfer) {
+            return $this->availabilityFacade->isProductSellableForStore(
+                $itemTransfer->getSku(),
+                $currentItemQuantity,
+                $storeTransfer
+            );
+        }
+
+        return $this->availabilityFacade->isProductSellable($itemTransfer->getSku(), $currentItemQuantity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     *
+     * @return int
+     */
+    protected function calculateStockForProduct(ItemTransfer $itemTransfer, StoreTransfer $storeTransfer = null)
+    {
+        if ($storeTransfer) {
+            $this->availabilityFacade->calculateStockForProductWithStore($itemTransfer->getSku(), $storeTransfer);
+        }
+        return $this->availabilityFacade->calculateStockForProduct($itemTransfer->getSku());
     }
 }

@@ -41,8 +41,9 @@ class CmsBlockReader implements CmsBlockReaderInterface
     public function findCmsBlockById($idCmsBlock)
     {
         $spyCmsBlock = $this->queryContainer
-            ->queryCmsBlockByIdWithTemplateWithGlossary($idCmsBlock)
-            ->findOne();
+            ->queryCmsBlockByIdWithTemplateWithGlossaryWithStoreRelation($idCmsBlock)
+            ->find()
+            ->getFirst();
 
         if ($spyCmsBlock) {
             return $this->mapper->mapCmsBlockEntityToTransfer($spyCmsBlock);

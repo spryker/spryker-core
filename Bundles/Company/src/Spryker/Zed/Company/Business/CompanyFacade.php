@@ -6,9 +6,15 @@
 
 namespace Spryker\Zed\Company\Business;
 
+use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
+/**
+ * @method \Spryker\Zed\Company\Business\CompanyBusinessFactory getFactory()
+ * @method \Spryker\Zed\Company\Persistence\CompanyRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Company\Persistence\CompanyEntityManagerInterface getEntityManager()
+ */
 class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
 {
     /**
@@ -18,11 +24,11 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyTransfer
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
-    public function create(CompanyTransfer $companyTransfer): CompanyTransfer
+    public function create(CompanyTransfer $companyTransfer): CompanyResponseTransfer
     {
-        return new CompanyTransfer();
+        return $this->getFactory()->createCompany()->create($companyTransfer);
     }
 
     /**
@@ -32,10 +38,11 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
-    public function update(CompanyTransfer $companyTransfer): void
+    public function update(CompanyTransfer $companyTransfer): CompanyResponseTransfer
     {
+        return $this->getFactory()->createCompany()->save($companyTransfer);
     }
 
     /**
@@ -49,5 +56,20 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
      */
     public function delete(CompanyTransfer $companyTransfer): void
     {
+        $this->getFactory()->createCompany()->delete($companyTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function getCompanyById(CompanyTransfer $companyTransfer): CompanyTransfer
+    {
+        return $this->getRepository()->getCompanyById($companyTransfer->getIdCompany());
     }
 }

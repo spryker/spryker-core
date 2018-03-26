@@ -4,7 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/cms-block": "^1.2.0",
+    "spryker/cms-block": "^1.2.0 || ^2.0.0",
     "spryker/collector": "^5.0.0 || ^6.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
@@ -23,7 +23,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/cms-block-gui": "^1.0.0",
+    "spryker/cms-block-gui": "^1.0.0 || ^2.0.0",
     "spryker/product-management": "*"
   },
   "autoload": {

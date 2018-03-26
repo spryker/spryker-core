@@ -8,6 +8,7 @@ namespace SprykerTest\Zed\Oms\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery;
@@ -31,6 +32,12 @@ class OmsFacadeSumReservedItemsTest extends Unit
     const ORDER_REFERENCE = '123';
     const ORDER_ITEM_SKU = 'oms-reserverd-sku-test';
     const RESERVER_ITEM_STATE = 'paid';
+    const DE_STORE_NAME = 'DE';
+
+    /**
+     * @var \SprykerTest\Zed\Oms\OmsBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -53,7 +60,8 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $this->createTestOrder();
 
         $omsFacade = $this->createOmsFacade();
-        $reservationQuantity = $omsFacade->getOmsReservedProductQuantityForSku(self::ORDER_ITEM_SKU);
+        $storeTransfer = (new StoreTransfer())->setName(static::DE_STORE_NAME);
+        $reservationQuantity = $omsFacade->getOmsReservedProductQuantityForSku(self::ORDER_ITEM_SKU, $storeTransfer);
 
         $this->assertSame(50, $reservationQuantity);
     }
@@ -119,6 +127,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $salesOrderEntity->setBillingAddress($salesOrderAddressEntity);
         $salesOrderEntity->setShippingAddress(clone $salesOrderAddressEntity);
         $salesOrderEntity->setOrderReference(self::ORDER_REFERENCE);
+        $salesOrderEntity->setStore(self::DE_STORE_NAME);
         $salesOrderEntity->save();
 
         return $salesOrderEntity;
@@ -170,7 +179,18 @@ class OmsFacadeSumReservedItemsTest extends Unit
             ->filterBySku($spySalesOrderItem->getSku())
             ->findOneOrCreate();
 
+        $storeTransfer = $this->getStoreFacade()->getStoreByName(static::DE_STORE_NAME);
+
+        $spyOmsReservationEntity->setFkStore($storeTransfer->getIdStore());
         $spyOmsReservationEntity->setReservationQuantity($spySalesOrderItem->getQuantity());
         $spyOmsReservationEntity->save();
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
+     */
+    protected function getStoreFacade()
+    {
+        return $this->tester->getLocator()->store()->facade();
     }
 }

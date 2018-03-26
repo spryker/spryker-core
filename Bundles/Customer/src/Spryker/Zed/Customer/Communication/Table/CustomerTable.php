@@ -11,7 +11,7 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
+use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -35,15 +35,15 @@ class CustomerTable extends AbstractTable
     protected $customerQueryContainer;
 
     /**
-     * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
+     * @var \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceInterface
      */
     protected $utilDateTimeService;
 
     /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
-     * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
+     * @param \Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceInterface $utilDateTimeService
      */
-    public function __construct(CustomerQueryContainerInterface $customerQueryContainer, UtilDateTimeServiceInterface $utilDateTimeService)
+    public function __construct(CustomerQueryContainerInterface $customerQueryContainer, CustomerToUtilDateTimeServiceInterface $utilDateTimeService)
     {
         $this->customerQueryContainer = $customerQueryContainer;
         $this->utilDateTimeService = $utilDateTimeService;

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config>
+    <company-gui>
+        <label>Company Account</label>
+        <title>Company Account</title>
+        <icon>fa-files-o</icon>
+        <pages>
+            <page>
+                <label>Companies</label>
+                <title>Companies</title>
+                <bundle>company-gui</bundle>
+                <controller>list-company</controller>
+                <action>index</action>
+            </page>
+        </pages>
+    </company-gui>
+</config>

@@ -17,9 +17,12 @@
           "filter": [
             "lowercase"
           ]
-        },
-        "completion_analyzer": {
-          "tokenizer": "keyword",
+        }
+      },
+      "normalizer": {
+        "lowercase_normalizer": {
+          "type": "custom",
+          "char_filter": [],
           "filter": [
             "lowercase"
           ]
@@ -33,7 +36,7 @@
         {
           "search-result-data": {
             "mapping": {
-              "index": "no"
+              "index": "false"
             },
             "path_match": "search-result-data.*"
           }
@@ -42,7 +45,7 @@
           "string_sort": {
             "mapping": {
               "analyzer": "lowercase_keyword_analyzer",
-              "type": "string"
+              "type": "keyword"
             },
             "path_match": "string-sort.*"
           }
@@ -50,7 +53,6 @@
         {
           "integer_sort": {
             "mapping": {
-              "index": "not_analyzed",
               "type": "integer"
             },
             "path_match": "integer-sort.*"
@@ -66,14 +68,12 @@
           }
         },
         "type": {
-          "type": "string",
-          "include_in_all": false,
-          "index": "not_analyzed"
+          "type": "keyword",
+          "include_in_all": false
         },
         "store": {
-          "type": "string",
-          "include_in_all": false,
-          "index": "not_analyzed"
+          "type": "keyword",
+          "include_in_all": false
         },
         "is-active": {
           "type": "boolean",
@@ -88,16 +88,15 @@
           "include_in_all": false
         },
         "locale": {
-          "type": "string",
-          "include_in_all": false,
-          "index": "not_analyzed"
+          "type": "keyword",
+          "include_in_all": false
         },
         "full-text": {
-          "type": "string",
+          "type": "text",
           "include_in_all": false
         },
         "full-text-boosted": {
-          "type": "string",
+          "type": "text",
           "include_in_all": false
         },
         "string-facet": {
@@ -105,12 +104,10 @@
           "include_in_all": false,
           "properties": {
             "facet-name": {
-              "type": "string",
-              "index": "not_analyzed"
+              "type": "keyword"
             },
             "facet-value": {
-              "type": "string",
-              "index": "not_analyzed"
+              "type": "keyword"
             }
           }
         },
@@ -119,8 +116,7 @@
           "include_in_all": false,
           "properties": {
             "facet-name": {
-              "type": "string",
-              "index": "not_analyzed"
+              "type": "keyword"
             },
             "facet-value": {
               "type": "integer"
@@ -128,12 +124,12 @@
           }
         },
         "completion-terms": {
-          "type": "string",
+          "type": "keyword",
           "include_in_all": false,
-          "analyzer": "completion_analyzer"
+          "normalizer": "lowercase_normalizer"
         },
         "suggestion-terms": {
-          "type": "string",
+          "type": "text",
           "include_in_all": false,
           "analyzer": "suggestion_analyzer"
         },

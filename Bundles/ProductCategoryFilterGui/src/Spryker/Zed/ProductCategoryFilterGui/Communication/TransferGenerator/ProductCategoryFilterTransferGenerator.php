@@ -39,6 +39,8 @@ class ProductCategoryFilterTransferGenerator implements ProductCategoryFilterTra
         $productCategoryFilterTransfer->setFkCategory($idCategory);
         $productCategoryFilterTransfer->setIdProductCategoryFilter($idProductCategoryFilter);
         $productCategoryFilterTransfer->fromArray($this->utilEncodingService->decodeJson($jsonData, true), true);
+        $productCategoryFilterTransfer->setFilterData($jsonData);
+        $productCategoryFilterTransfer->setFilterDataArray($this->utilEncodingService->decodeJson($jsonData, true));
 
         return $productCategoryFilterTransfer;
     }
@@ -62,6 +64,7 @@ class ProductCategoryFilterTransferGenerator implements ProductCategoryFilterTra
         }
 
         $productCategoryFilterTransfer->setFilterData($this->utilEncodingService->encodeJson($productCategoryFilterItemArray, true));
+        $productCategoryFilterTransfer->setFilterDataArray($productCategoryFilterItemArray);
 
         return $productCategoryFilterTransfer;
     }

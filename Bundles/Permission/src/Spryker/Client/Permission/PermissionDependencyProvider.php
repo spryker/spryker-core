@@ -7,25 +7,29 @@
 
 namespace Spryker\Client\Permission;
 
+use Exception;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\Permission\Dependency\Client\PermissionToCustomerClientBridge;
+use Spryker\Client\Permission\Dependency\Client\PermissionToZedRequestClientBridge;
 
 class PermissionDependencyProvider extends AbstractDependencyProvider
 {
-    const PLUGINS_PERMISSION = 'PLUGINS_PERMISSION';
-    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const PLUGINS_PERMISSION = 'PLUGINS_PERMISSION';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const PLUGINS_PERMISSION_STORAGE = 'PLUGINS_PERMISSION_STORAGE';
+    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addPermissionPlugins($container);
-        $container = $this->addCustomerClient($container);
+        $container = $this->addPermissionStoragePlugins($container);
+        $container = $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -35,7 +39,7 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addPermissionPlugins(Container $container)
+    protected function addPermissionPlugins(Container $container): Container
     {
         $container[static::PLUGINS_PERMISSION] = function (Container $container) {
             return $this->getPermissionPlugins();
@@ -45,11 +49,17 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Permission\Plugin\PermissionPluginInterface[]
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
      */
-    protected function getPermissionPlugins()
+    protected function addZedRequestClient(Container $container): Container
     {
-        return [];
+        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+            return new PermissionToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
+        };
+
+        return $container;
     }
 
     /**
@@ -57,12 +67,31 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addCustomerClient(Container $container)
+    protected function addPermissionStoragePlugins($container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
-            return new PermissionToCustomerClientBridge($container->getLocator()->customer()->client());
+        $container[static::PLUGINS_PERMISSION_STORAGE] = function (Container $container) {
+            return $this->getPermissionStoragePlugins();
         };
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[]
+     */
+    protected function getPermissionPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @throws \Exception
+     *
+     * @return \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
+     */
+    protected function getPermissionStoragePlugins(): array
+    {
+        throw new Exception('Please set an array of permission storage plugins, 
+        all implementing the interface \Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface');
     }
 }

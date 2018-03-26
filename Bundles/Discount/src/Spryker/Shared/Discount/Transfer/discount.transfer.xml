@@ -43,9 +43,9 @@
         <property name="shippingAddress" type="Address"/>
         <property name="customer" type="Customer"/>
         <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
+        <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
         <property name="priceMode" type="string" />
-        <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
         <property name="currency" type="Currency" />
     </transfer>
 

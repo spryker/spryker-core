@@ -7,24 +7,32 @@
 
 namespace Spryker\Zed\CompanyUser;
 
+use Spryker\Zed\CompanyUser\Dependency\Facade\CompanyUserToCustomerFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PLUGINS_CUSTOMER_SAVE = 'PLUGINS_CUSTOMER_SAVE';
-    public const PLUGINS_CUSTOMER_HYDRATE = 'PLUGINS_CUSTOMER_HYDRATE';
+    public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+
+    public const PLUGINS_COMPANY_USER_PRE_SAVE = 'PLUGINS_COMPANY_USER_PRE_SAVE';
+    public const PLUGINS_COMPANY_USER_POST_SAVE = 'PLUGINS_COMPANY_USER_POST_SAVE';
+    public const PLUGINS_COMPANY_USER_POST_CREATE = 'PLUGINS_COMPANY_USER_POST_CREATE';
+    public const PLUGINS_COMPANY_USER_HYDRATE = 'PLUGINS_COMPANY_USER_HYDRATE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
-        $container = $this->addCustomerSavePlugins($container);
-        $container = $this->addUserDaveHydrationPlugins($container);
+        $container = $this->addCompanyUserPreSavePlugins($container);
+        $container = $this->addCompanyUserPostSavePlugins($container);
+        $container = $this->addCompanyUserPostCreatePlugins($container);
+        $container = $this->addCompanyUserHydrationPlugins($container);
+        $container = $this->addCustomerFacade($container);
 
         return $container;
     }
@@ -34,10 +42,10 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCustomerSavePlugins(Container $container)
+    protected function addCustomerFacade(Container $container): Container
     {
-        $container[static::PLUGINS_CUSTOMER_SAVE] = function () {
-            return $this->getCompanyUserSavePlugins();
+        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+            return new CompanyUserToCustomerFacadeBridge($container->getLocator()->customer()->facade());
         };
 
         return $container;
@@ -48,9 +56,51 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUserDaveHydrationPlugins(Container $container)
+    protected function addCompanyUserPreSavePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CUSTOMER_HYDRATE] = function () {
+        $container[static::PLUGINS_COMPANY_USER_PRE_SAVE] = function () {
+            return $this->getCompanyUserPreSavePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserPostSavePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_COMPANY_USER_POST_SAVE] = function () {
+            return $this->getCompanyUserPostSavePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserPostCreatePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_COMPANY_USER_POST_CREATE] = function () {
+            return $this->getCompanyUserPostCreatePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUserHydrationPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_COMPANY_USER_HYDRATE] = function () {
             return $this->getCompanyUserHydrationPlugins();
         };
 
@@ -58,17 +108,33 @@ class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserSavePluginInterface[]
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSavePluginInterface[]
      */
-    protected function getCompanyUserSavePlugins()
+    protected function getCompanyUserPreSavePlugins(): array
     {
         return [];
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface[]
      */
-    protected function getCompanyUserHydrationPlugins()
+    protected function getCompanyUserPostSavePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
+     */
+    protected function getCompanyUserHydrationPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostCreatePluginInterface[]
+     */
+    protected function getCompanyUserPostCreatePlugins(): array
     {
         return [];
     }

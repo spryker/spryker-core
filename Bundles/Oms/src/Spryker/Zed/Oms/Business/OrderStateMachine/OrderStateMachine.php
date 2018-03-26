@@ -18,13 +18,14 @@ use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Business\Util\ReservationInterface;
 use Spryker\Zed\Oms\Business\Util\TransitionLogInterface;
+use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface as LegacyCommandByOrderInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
-use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollectionInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByItemInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
+use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -238,7 +239,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param int $orderItemId
      * @param array $data
      *
-     * @return array
+     * @return array|null
      */
     public function triggerEventForOneOrderItem($eventId, $orderItemId, $data)
     {
@@ -478,6 +479,11 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
+     * Specification:
+     * - Performs commands on items
+     * - All passing items should have the same event available
+     * - For CommandByOrderInterface the command will be taken from the first order item
+     *
      * @param string $eventId
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processes
@@ -513,17 +519,21 @@ class OrderStateMachine implements OrderStateMachineInterface
             $log->addCommand($orderItemEntity, $command);
 
             try {
-                if ($type === self::BY_ITEM) {
-                    $returnData = $command->run($orderItemEntity, $data);
-                    $this->returnData = array_merge($this->returnData, $returnData);
-                    $processedOrderItems[] = $orderItemEntity;
-                } else {
+                if ($command instanceof CommandByOrderInterface || $command instanceof LegacyCommandByOrderInterface) {
                     $returnData = $command->run($orderItems, $orderEntity, $data);
                     if (is_array($returnData)) {
                         $this->returnData = array_merge($this->returnData, $returnData);
                     }
 
                     return $orderItems;
+                }
+
+                if ($command instanceof CommandByItemInterface || $command instanceof LegacyCommandByOrderInterface) {
+                    $returnData = $command->run($orderItemEntity, $data);
+                    $this->returnData = array_merge($this->returnData, $returnData);
+                    $processedOrderItems[] = $orderItemEntity;
+                } else {
+                    throw new LogicException('Unknown type of command: ' . get_class($command));
                 }
             } catch (Exception $e) {
                 $log->setIsError(true);
@@ -564,7 +574,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             $log->addSourceState($orderItem, $sourceState->getName());
 
             $targetState = $sourceState;
-            if (isset($eventId) && $sourceState->hasEvent($eventId)) {
+            if ($eventId && $sourceState->hasEvent($eventId)) {
                 $transitions = $sourceState->getEvent($eventId)->getTransitionsBySource($sourceState);
                 $targetState = $this->checkCondition($transitions, $orderItem, $sourceState, $log);
                 $log->addTargetState($orderItem, $targetState->getName());
@@ -633,7 +643,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             $state = $this->states[$stateName];
         } else {
             $state = SpyOmsOrderItemStateQuery::create()->findOneByName($stateName);
-            if (!isset($state)) {
+            if ($state === null) {
                 $state = new SpyOmsOrderItemState();
                 $state->setName($stateName);
                 $state->save();
@@ -692,7 +702,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param array $data
+     * @param array|\Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject
      */

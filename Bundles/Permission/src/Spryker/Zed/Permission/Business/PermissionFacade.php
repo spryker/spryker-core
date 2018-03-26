@@ -8,8 +8,13 @@
 namespace Spryker\Zed\Permission\Business;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
-class PermissionFacade implements PermissionFacadeInterface
+/**
+ * @method \Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Permission\Business\PermissionBusinessFactory getFactory()
+ */
+class PermissionFacade extends AbstractFacade implements PermissionFacadeInterface
 {
     /**
      * {@inheritdoc}
@@ -20,7 +25,7 @@ class PermissionFacade implements PermissionFacadeInterface
      */
     public function findAll(): PermissionCollectionTransfer
     {
-        return new PermissionCollectionTransfer();
+        return $this->getRepository()->findAll();
     }
 
     /**
@@ -34,13 +39,22 @@ class PermissionFacade implements PermissionFacadeInterface
      *
      * @return bool
      */
-    public function can($permissionKey, $identifier, $context = null)
+    public function can($permissionKey, $identifier, $context = null): bool
     {
-        //does the identifier contain permission key? (use a plugin from Company Role get this info)
-        //get configuration by PermissionKey and Identifier (use same plugin from Company Role)
-        //find the plugin in provided dependency
-        //pass the configuration and the context to the plugin.
+        return $this->getFactory()
+            ->createPermissionExecutor()
+            ->can($permissionKey, $identifier, $context);
+    }
 
-        return true;
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function syncPermissionPlugins(): void
+    {
+        $this->getFactory()
+            ->createPermissionSynchronizer()
+            ->sync();
     }
 }
