@@ -28,15 +28,6 @@ class CompanyDataImportHelper extends Module
     /**
      * @return void
      */
-    public function assertDatabaseTableIsEmpty(): void
-    {
-        $companyQuery = $this->getCompanyQuery();
-        $this->assertCount(0, $companyQuery, 'Found at least one entry in the database table but database table was expected to be empty.');
-    }
-
-    /**
-     * @return void
-     */
     public function assertDatabaseTableContainsData(): void
     {
         $companyQuery = $this->getCompanyQuery();
