@@ -42,7 +42,7 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer|null
      */
-    public function findProductMeasurementUnit($idProductMeasurementUnit)
+    public function findProductMeasurementUnitStorage($idProductMeasurementUnit)
     {
         $key = $this->generateKey($idProductMeasurementUnit);
         $productMeasurementUnitStorageData = $this->storageClient->get($key);

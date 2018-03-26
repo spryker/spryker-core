@@ -20,7 +20,7 @@ interface ProductMeasurementUnitStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer|null
      */
-    public function findProductMeasurementUnit($idProductMeasurementUnit);
+    public function findProductMeasurementUnitStorage($idProductMeasurementUnit);
 
     /**
      * Specification:
@@ -33,5 +33,5 @@ interface ProductMeasurementUnitStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer|null
      */
-    public function findProductConcreteMeasurementUnit($idProduct);
+    public function findProductConcreteMeasurementUnitStorage($idProduct);
 }

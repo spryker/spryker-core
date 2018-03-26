@@ -23,11 +23,11 @@ class ProductMeasurementUnitStorageClient extends AbstractClient implements Prod
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer|null
      */
-    public function findProductMeasurementUnit($idProductMeasurementUnit)
+    public function findProductMeasurementUnitStorage($idProductMeasurementUnit)
     {
         return $this->getFactory()
             ->createProductMeasurementUnitStorageReader()
-            ->findProductMeasurementUnit($idProductMeasurementUnit);
+            ->findProductMeasurementUnitStorage($idProductMeasurementUnit);
     }
 
     /**
@@ -39,10 +39,10 @@ class ProductMeasurementUnitStorageClient extends AbstractClient implements Prod
      *
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer|null
      */
-    public function findProductConcreteMeasurementUnit($idProduct)
+    public function findProductConcreteMeasurementUnitStorage($idProduct)
     {
         return $this->getFactory()
             ->createProductConcreteMeasurementUnitStorageReader()
-            ->findProductConcreteMeasurementUnit($idProduct);
+            ->findProductConcreteMeasurementUnitStorage($idProduct);
     }
 }

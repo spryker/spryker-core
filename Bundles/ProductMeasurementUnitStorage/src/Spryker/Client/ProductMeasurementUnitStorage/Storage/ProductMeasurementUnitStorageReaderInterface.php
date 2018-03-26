@@ -14,5 +14,5 @@ interface ProductMeasurementUnitStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer|null
      */
-    public function findProductMeasurementUnit($idProductMeasurementUnit);
+    public function findProductMeasurementUnitStorage($idProductMeasurementUnit);
 }

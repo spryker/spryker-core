@@ -14,5 +14,5 @@ interface ProductConcreteMeasurementUnitStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer|null
      */
-    public function findProductConcreteMeasurementUnit($idProduct);
+    public function findProductConcreteMeasurementUnitStorage($idProduct);
 }

@@ -42,7 +42,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
      *
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer|null
      */
-    public function findProductConcreteMeasurementUnit($idProduct)
+    public function findProductConcreteMeasurementUnitStorage($idProduct)
     {
         $key = $this->generateKey($idProduct);
         $productConcreteMeasurementUnitStorageData = $this->storageClient->get($key);
