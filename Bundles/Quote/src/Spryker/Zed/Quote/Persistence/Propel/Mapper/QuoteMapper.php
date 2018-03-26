@@ -9,6 +9,7 @@ namespace Spryker\Zed\Quote\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Quote\Persistence\SpyQuote;
 use Spryker\Zed\Quote\Dependency\Service\QuoteToUtilEncodingServiceInterface;
 use Spryker\Zed\Quote\QuoteConfig;
@@ -49,6 +50,9 @@ class QuoteMapper implements QuoteMapperInterface
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->fromArray($quoteEntityTransfer->modifiedToArray(), true);
         $quoteTransfer->fromArray($this->decodeQuoteData($quoteEntityTransfer), true);
+        $storeTransfer = new StoreTransfer();
+        $storeTransfer->fromArray($quoteEntityTransfer->getSpyStore()->modifiedToArray(), true);
+        $quoteTransfer->setStore($storeTransfer);
 
         return $quoteTransfer;
     }
