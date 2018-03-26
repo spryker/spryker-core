@@ -26,7 +26,8 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function createOfferReader(): OfferReaderInterface
     {
         return new OfferReader(
-            $this->getSalesFacade()
+            $this->getSalesFacade(),
+            $this->getConfig()
         );
     }
 
@@ -44,7 +45,7 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface
      */
-    protected function getSalesFacade(): OfferToSalesFacadeInterface
+    public function getSalesFacade(): OfferToSalesFacadeInterface
     {
         return $this->getProvidedDependency(OfferDependencyProvider::FACADE_SALES);
     }

@@ -4,7 +4,7 @@ namespace SprykerTest\Zed\Offer\Business;
 
 use Codeception\Test\Unit;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Zed\Offer\OfferConfig;
+use Spryker\Shared\Offer\OfferConfig;
 
 /**
  * Auto-generated group annotations

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Offer\Business\Model;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface;
+use Spryker\Zed\Offer\OfferConfig;
 
 class OfferReader implements OfferReaderInterface
 {
@@ -18,12 +19,20 @@ class OfferReader implements OfferReaderInterface
     protected $salesFacade;
 
     /**
+     * @var OfferConfig
+     */
+    protected $offerConfig;
+
+    /**
      * @param \Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface $salesFacade
+     * @param OfferConfig $offerConfig
      */
     public function __construct(
-        OfferToSalesFacadeInterface $salesFacade
+        OfferToSalesFacadeInterface $salesFacade,
+        OfferConfig $offerConfig
     ) {
         $this->salesFacade = $salesFacade;
+        $this->offerConfig = $offerConfig;
     }
 
     /**
@@ -33,9 +42,8 @@ class OfferReader implements OfferReaderInterface
      */
     public function getOfferList(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        //todo: Fix to type
-        $orderListTransfer->setIsOffer(
-            true
+        $orderListTransfer->setType(
+            $this->offerConfig->getOrderTypeOffer()
         );
 
         return $this->salesFacade

@@ -19,7 +19,7 @@ class IsOfferPreSaveHydrateOrderPlugin extends AbstractPlugin implements PreSave
 {
     /**
      * {@inheritdoc}
-     * //TODO: check if it is needed.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -29,9 +29,11 @@ class IsOfferPreSaveHydrateOrderPlugin extends AbstractPlugin implements PreSave
      */
     public function execute(QuoteTransfer $quoteTransfer, SpySalesOrderEntityTransfer $salesOrderEntityTransfer): SpySalesOrderEntityTransfer
     {
-        $salesOrderEntityTransfer->setType(
-            $this->getConfig()->getOrderTypeOffer()
-        );
+        if ($quoteTransfer->getIsOffer()) {
+            $salesOrderEntityTransfer->setType(
+                $this->getConfig()->getOrderTypeOffer()
+            );
+        }
 
         return $salesOrderEntityTransfer;
     }

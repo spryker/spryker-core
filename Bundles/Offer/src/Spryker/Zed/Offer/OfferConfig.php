@@ -9,30 +9,24 @@ namespace Spryker\Zed\Offer;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\Offer\OfferConfig getSharedConfig()
+ */
 class OfferConfig extends AbstractBundleConfig
 {
-    public const ORDER_TYPE_OFFER = 'offer';
-
-    /**
-     * @use \Spryker\Zed\Sales\SalesConfig::getOrderTypeDefault()
-     */
-    public const ORDER_TYPE_DEFAULT = null;
-
     /**
      * @return string
      */
     public function getOrderTypeOffer(): string
     {
-        return static::ORDER_TYPE_OFFER;
+        return $this->getSharedConfig()->getOrderTypeOffer();
     }
 
     /**
-     * @see \Spryker\Zed\Sales\SalesConfig::getOrderTypeDefault()
-     *
      * @return null|string
      */
     public function getOrderTypeDefault(): ?string
     {
-       return static::ORDER_TYPE_DEFAULT;
+       return $this->getSharedConfig()->getOrderTypeDefault();
     }
 }
