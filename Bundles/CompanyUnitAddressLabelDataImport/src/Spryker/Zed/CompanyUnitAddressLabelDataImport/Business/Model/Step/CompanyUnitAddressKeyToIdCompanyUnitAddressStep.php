@@ -10,7 +10,7 @@ namespace Spryker\Zed\CompanyUnitAddressLabelDataImport\Business\Model\Step;
 use Orm\Zed\CompanyUnitAddress\Persistence\Map\SpyCompanyUnitAddressTableMap;
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use Spryker\Zed\CompanyUnitAddressLabelDataImport\Business\Exception\CompanyUnitAddressNotFoundException;
-use Spryker\Zed\CompanyUnitAddressLabelDataImport\Business\Model\DataSet\CompanyUnitAddressLabelRelation;
+use Spryker\Zed\CompanyUnitAddressLabelDataImport\Business\Model\DataSet\CompanyUnitAddressLabelRelationDataSet;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
@@ -30,7 +30,7 @@ class CompanyUnitAddressKeyToIdCompanyUnitAddressStep implements DataImportStepI
      */
     public function execute(DataSetInterface $dataSet)
     {
-        $addressKey = $dataSet[CompanyUnitAddressLabelRelation::DATA_SET_ADDRESS_KEY];
+        $addressKey = $dataSet[CompanyUnitAddressLabelRelationDataSet::ADDRESS_KEY];
         if (!isset($this->idCompanyUnitAddressCache[$addressKey])) {
             $companyUnitAddressQuery = new SpyCompanyUnitAddressQuery();
             $idCompanyUnitAddress = $companyUnitAddressQuery
@@ -44,6 +44,6 @@ class CompanyUnitAddressKeyToIdCompanyUnitAddressStep implements DataImportStepI
             $this->idCompanyUnitAddressCache[$addressKey] = $idCompanyUnitAddress;
         }
 
-        $dataSet[CompanyUnitAddressLabelRelation::DATA_SET_ID_COMPANY_UNIT_ADDRESS] = $this->idCompanyUnitAddressCache[$addressKey];
+        $dataSet[CompanyUnitAddressLabelRelationDataSet::ID_COMPANY_UNIT_ADDRESS] = $this->idCompanyUnitAddressCache[$addressKey];
     }
 }

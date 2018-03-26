@@ -60,7 +60,7 @@ class CompanyUnitAddressDataImportPluginTest extends Unit
         $companyUnitAddressDataImportPlugin = new CompanyUnitAddressDataImportPlugin();
 
         $this->expectException(DataImportException::class);
-        $this->expectExceptionMessage('Company with key "invalid-company-key" not found!');
+        $this->expectExceptionMessage('Could not find company by key "invalid-company-key"');
 
         $companyUnitAddressDataImportPlugin->import($dataImportConfigurationTransfer);
     }

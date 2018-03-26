@@ -11,10 +11,6 @@ coverage:
     remote: false
     whitelist: { include: ['../../../../src/*'] }
 
-suites:
-    Communication:
-        path: Communication
-        class_name: CompanyUnitAddressCommunicationTester
-        modules:
-            enabled:
-                - \SprykerTest\Zed\Country\Helper\CountryDataHelper
+modules:
+    enabled:
+        - \SprykerTest\Zed\Country\Helper\CountryDataHelper

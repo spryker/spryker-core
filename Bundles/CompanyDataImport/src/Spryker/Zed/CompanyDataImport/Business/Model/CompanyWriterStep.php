@@ -8,13 +8,12 @@
 namespace Spryker\Zed\CompanyDataImport\Business\Model;
 
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
+use Spryker\Zed\CompanyDataImport\Business\Model\DataSet\CompanyDataSet;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CompanyWriterStep implements DataImportStepInterface
 {
-    const KEY_KEY = 'key';
-
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -23,7 +22,7 @@ class CompanyWriterStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet)
     {
         $companyEntity = SpyCompanyQuery::create()
-            ->filterByKey($dataSet[static::KEY_KEY])
+            ->filterByKey($dataSet[CompanyDataSet::COMPANY_KEY])
             ->findOneOrCreate();
 
         $companyEntity->fromArray($dataSet->getArrayCopy());

@@ -5,10 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUnitAddressDataImport\Exception;
+namespace Spryker\Zed\CompanyDataImport\Business\Model\DataSet;
 
-use Exception;
-
-class CompanyNotFoundException extends Exception
+interface CompanyDataSet
 {
+    public const COMPANY_KEY = 'key';
 }

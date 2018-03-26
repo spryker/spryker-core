@@ -8,13 +8,12 @@
 namespace Spryker\Zed\CompanyUnitAddressLabelDataImport\Business\Model;
 
 use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelQuery;
+use Spryker\Zed\CompanyUnitAddressLabelDataImport\Business\Model\DataSet\CompanyUnitAddressLabelDataSet;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CompanyUnitAddressLabelWriterStep implements DataImportStepInterface
 {
-    const KEY_NAME = 'name';
-
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -23,7 +22,7 @@ class CompanyUnitAddressLabelWriterStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet)
     {
         $companyUnitAddressLabelEntity = SpyCompanyUnitAddressLabelQuery::create()
-            ->filterByName($dataSet[static::KEY_NAME])
+            ->filterByName($dataSet[CompanyUnitAddressLabelDataSet::LABEL_NAME])
             ->findOneOrCreate();
 
         $companyUnitAddressLabelEntity->save();

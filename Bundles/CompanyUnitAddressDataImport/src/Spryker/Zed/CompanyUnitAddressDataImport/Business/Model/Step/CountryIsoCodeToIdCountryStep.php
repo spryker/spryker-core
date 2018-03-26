@@ -5,18 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Resolver\Country;
+namespace Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Step;
 
-use Orm\Zed\Country\Persistence\SpyCountry;
+use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
-use Spryker\Zed\CompanyUnitAddressDataImport\Exception\CountryNotFoundException;
+use Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\DataSet\CompanyUnitAddressDataSet;
+use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
-class IdCountryResolver implements IdCountryResolverInterface
+class CountryIsoCodeToIdCountryStep implements DataImportStepInterface
 {
-    const KEY_COUNTRY_ISO_2_CODE = 'country_iso2_code';
-    const KEY_COUNTRY_ISO_3_CODE = 'country_iso3_code';
-
     /**
      * @var array
      */
@@ -25,19 +24,19 @@ class IdCountryResolver implements IdCountryResolverInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @return int
+     * @return void
      */
-    public function getIdCountry(DataSetInterface $dataSet): int
+    public function execute(DataSetInterface $dataSet)
     {
         $iso2Code = $this->getIso2Code($dataSet);
         $iso3Code = $this->getIso3Code($dataSet);
 
-        $cachedIdCountry = $this->getIdCountryFromCache($iso2Code, $iso3Code);
-        if ($cachedIdCountry) {
-            return $cachedIdCountry;
+        $idCountry = $this->getIdCountryFromCache($iso2Code, $iso3Code);
+        if (!$idCountry) {
+            $idCountry = $this->getIdCountryFromDatabase($iso2Code, $iso3Code);
         }
 
-        return $this->getIdCountryFromDatabase($iso2Code, $iso3Code);
+        $dataSet[CompanyUnitAddressDataSet::ID_COUNTRY] = $idCountry;
     }
 
     /**
@@ -47,8 +46,8 @@ class IdCountryResolver implements IdCountryResolverInterface
      */
     protected function getIso2Code(DataSetInterface $dataSet)
     {
-        if (isset($dataSet[static::KEY_COUNTRY_ISO_2_CODE]) && !empty($dataSet[static::KEY_COUNTRY_ISO_2_CODE])) {
-            return $dataSet[static::KEY_COUNTRY_ISO_2_CODE];
+        if (isset($dataSet[CompanyUnitAddressDataSet::COUNTRY_ISO_2_CODE]) && !empty($dataSet[CompanyUnitAddressDataSet::COUNTRY_ISO_2_CODE])) {
+            return $dataSet[CompanyUnitAddressDataSet::COUNTRY_ISO_2_CODE];
         }
 
         return null;
@@ -61,8 +60,8 @@ class IdCountryResolver implements IdCountryResolverInterface
      */
     protected function getIso3Code(DataSetInterface $dataSet)
     {
-        if (isset($dataSet[static::KEY_COUNTRY_ISO_3_CODE]) && !empty($dataSet[static::KEY_COUNTRY_ISO_3_CODE])) {
-            return $dataSet[static::KEY_COUNTRY_ISO_3_CODE];
+        if (isset($dataSet[CompanyUnitAddressDataSet::COUNTRY_ISO_3_CODE]) && !empty($dataSet[CompanyUnitAddressDataSet::COUNTRY_ISO_3_CODE])) {
+            return $dataSet[CompanyUnitAddressDataSet::COUNTRY_ISO_3_CODE];
         }
 
         return null;
@@ -91,13 +90,15 @@ class IdCountryResolver implements IdCountryResolverInterface
      * @param string|null $iso2Code
      * @param string|null $iso3Code
      *
-     * @throws \Spryker\Zed\CompanyUnitAddressDataImport\Exception\CountryNotFoundException
+     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
      * @return int
      */
     protected function getIdCountryFromDatabase($iso2Code, $iso3Code): int
     {
         $countryQuery = SpyCountryQuery::create();
+        $countryQuery->select(SpyCountryTableMap::COL_ID_COUNTRY);
+
         if ($iso2Code !== null) {
             $countryQuery->filterByIso2Code($iso2Code);
         }
@@ -106,29 +107,31 @@ class IdCountryResolver implements IdCountryResolverInterface
             $countryQuery->filterByIso3Code($iso3Code);
         }
 
-        $countryEntity = $countryQuery->findOne();
+        $idCountry = $countryQuery->findOne();
 
-        if (!$countryEntity) {
-            throw new CountryNotFoundException(sprintf('Could not find a country by iso2_code "%s" or iso3_code "%s"!', $iso2Code, $iso3Code));
+        if (!$idCountry) {
+            throw new EntityNotFoundException(sprintf('Could not find a country by iso2_code "%s" or iso3_code "%s"!', $iso2Code, $iso3Code));
         }
 
-        $this->addCountryEntityToCache($countryEntity);
+        $this->addIdCountryToCache($idCountry, $iso2Code, $iso3Code);
 
-        return $countryEntity->getIdCountry();
+        return $idCountry;
     }
 
     /**
-     * @param \Orm\Zed\Country\Persistence\SpyCountry $countryEntity
+     * @param int $idCountry
+     * @param string|null $iso2Code
+     * @param string|null $iso3Code
      *
      * @return void
      */
-    protected function addCountryEntityToCache(SpyCountry $countryEntity): void
+    protected function addIdCountryToCache($idCountry, $iso2Code, $iso3Code): void
     {
-        if ($countryEntity->getIso2Code() !== null) {
-            $this->idCountryCache[$countryEntity->getIso2Code()] = $countryEntity->getIdCountry();
+        if ($iso2Code !== null) {
+            $this->idCountryCache[$iso2Code] = $idCountry;
         }
-        if ($countryEntity->getIso3Code() !== null) {
-            $this->idCountryCache[$countryEntity->getIso3Code()] = $countryEntity->getIdCountry();
+        if ($iso3Code !== null) {
+            $this->idCountryCache[$iso3Code] = $idCountry;
         }
     }
 }

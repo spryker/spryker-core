@@ -8,11 +8,10 @@
 namespace Spryker\Zed\CompanyUnitAddressDataImport\Business;
 
 use Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\CompanyUnitAddressWriterStep;
-use Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Resolver\Company\IdCompanyResolver;
-use Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Resolver\Company\IdCompanyResolverInterface;
-use Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Resolver\Country\IdCountryResolver;
-use Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Resolver\Country\IdCountryResolverInterface;
+use Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Step\CompanyKeyToIdCompanyStep;
+use Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Step\CountryIsoCodeToIdCountryStep;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 
 /**
  * @method \Spryker\Zed\CompanyUnitAddressDataImport\CompanyUnitAddressDataImportConfig getConfig()
@@ -27,10 +26,10 @@ class CompanyUnitAddressDataImportBusinessFactory extends DataImportBusinessFact
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getCompanyUnitAddressDataImporterConfiguration());
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
-        $dataSetStepBroker->addStep(new CompanyUnitAddressWriterStep(
-            $this->createIdCompanyResolver(),
-            $this->createIdCountryResolver()
-        ));
+        $dataSetStepBroker
+            ->addStep($this->createCompanyKeyToIdCompanyStep())
+            ->addStep($this->createCountryIsoCodeToIdCountryStep())
+            ->addStep(new CompanyUnitAddressWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
@@ -38,18 +37,18 @@ class CompanyUnitAddressDataImportBusinessFactory extends DataImportBusinessFact
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Resolver\Company\IdCompanyResolverInterface
+     * @return \Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Step\CompanyKeyToIdCompanyStep|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createIdCompanyResolver(): IdCompanyResolverInterface
+    public function createCompanyKeyToIdCompanyStep(): DataImportStepInterface
     {
-        return new IdCompanyResolver();
+        return new CompanyKeyToIdCompanyStep();
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Resolver\Country\IdCountryResolverInterface
+     * @return \Spryker\Zed\CompanyUnitAddressDataImport\Business\Model\Step\CountryIsoCodeToIdCountryStep|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createIdCountryResolver(): IdCountryResolverInterface
+    public function createCountryIsoCodeToIdCountryStep(): DataImportStepInterface
     {
-        return new IdCountryResolver();
+        return new CountryIsoCodeToIdCountryStep();
     }
 }
