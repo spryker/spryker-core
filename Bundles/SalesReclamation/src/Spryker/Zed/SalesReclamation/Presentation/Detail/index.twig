@@ -3,7 +3,9 @@
 {% block content %}
 
     Reclamation id: {{ reclamation.idSalesReclamation }}<br />
-    Order id: {{ reclamation.order.idSalesOrder }}
+    <a href="{{ url('/sales/detail', {'id-sales-order': reclamation.order.idSalesOrder}) }}">
+        Order id: {{ reclamation.order.idSalesOrder }}
+    </a>
 
     <div id="items">
         {% include '@SalesReclamation/Detail/boxes/items.twig' with {
