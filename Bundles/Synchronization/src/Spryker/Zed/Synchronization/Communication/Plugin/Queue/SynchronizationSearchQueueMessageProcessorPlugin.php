@@ -13,6 +13,7 @@ use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface;
 /**
  * @method \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface getFacade()
  * @method \Spryker\Zed\Synchronization\Communication\SynchronizationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Synchronization\SynchronizationConfig getConfig()
  */
 class SynchronizationSearchQueueMessageProcessorPlugin extends AbstractPlugin implements QueueMessageProcessorPluginInterface
 {
@@ -48,6 +49,6 @@ class SynchronizationSearchQueueMessageProcessorPlugin extends AbstractPlugin im
      */
     public function getChunkSize()
     {
-        return 10000;
+        return $this->getConfig()->getSyncSearchQueueMessageChunkSize();
     }
 }

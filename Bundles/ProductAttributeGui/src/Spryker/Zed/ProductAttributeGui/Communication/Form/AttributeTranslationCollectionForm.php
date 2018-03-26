@@ -7,20 +7,16 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Communication\Form;
 
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\ProductAttributeGui\Communication\ProductAttributeGuiCommunicationFactory getFactory()
+ */
 class AttributeTranslationCollectionForm extends AbstractType
 {
     const FIELD_TRANSLATIONS = 'translations';
-
-    /**
-     * @return string The name of this type
-     */
-    public function getName()
-    {
-        return 'translation';
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -41,11 +37,29 @@ class AttributeTranslationCollectionForm extends AbstractType
      */
     protected function addTranslationsFields(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_TRANSLATIONS, 'collection', [
-            'type' => new AttributeTranslationForm(),
-            'options' => [],
+        $builder->add(self::FIELD_TRANSLATIONS, CollectionType::class, [
+            'entry_type' => AttributeTranslationForm::class,
+            'entry_options' => [],
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix()
+    {
+        return 'translation';
+    }
+
+    /**
+     * @deprecated Use `getBlockPrefix()` instead.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

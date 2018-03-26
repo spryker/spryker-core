@@ -55,9 +55,9 @@ class RequireExternalUpdater implements UpdaterInterface
      */
     public function update(array $composerJson, SplFileInfo $composerJsonFile)
     {
-        $bundleName = $this->getBundleName($composerJson);
+        $moduleName = $this->getModuleName($composerJson);
 
-        $dependentBundles = $this->getExternalBundles($bundleName);
+        $dependentModules = $this->getExternalModules($moduleName);
 
         if (!Config::hasValue(DevelopmentConstants::COMPOSER_REQUIRE_VERSION_EXTERNAL)) {
             return $composerJson;
@@ -68,14 +68,14 @@ class RequireExternalUpdater implements UpdaterInterface
             $composerRequireVersion = static::RELEASE_OPERATOR . $composerRequireVersion;
         }
 
-        foreach ($dependentBundles as $dependentBundle) {
-            if (empty($dependentBundle) || $dependentBundle === $composerJson[static::KEY_NAME]) {
+        foreach ($dependentModules as $dependentModule) {
+            if (empty($dependentModule) || $dependentModule === $composerJson[static::KEY_NAME]) {
                 continue;
             }
             $filter = new CamelCaseToDash();
-            $dependentBundle = strtolower($filter->filter($dependentBundle));
+            $dependentModule = strtolower($filter->filter($dependentModule));
 
-            $composerJson[static::KEY_REQUIRE][$dependentBundle] = static::RELEASE_OPERATOR . $composerRequireVersion;
+            $composerJson[static::KEY_REQUIRE][$dependentModule] = static::RELEASE_OPERATOR . $composerRequireVersion;
         }
 
         return $composerJson;
@@ -86,13 +86,13 @@ class RequireExternalUpdater implements UpdaterInterface
      *
      * @return string
      */
-    protected function getBundleName(array $composerJsonData)
+    protected function getModuleName(array $composerJsonData)
     {
         $nameParts = explode('/', $composerJsonData[static::KEY_NAME]);
-        $bundleName = array_pop($nameParts);
+        $moduleName = array_pop($nameParts);
         $filter = new DashToCamelCase();
 
-        return $filter->filter($bundleName);
+        return $filter->filter($moduleName);
     }
 
     /**
@@ -100,20 +100,20 @@ class RequireExternalUpdater implements UpdaterInterface
      *
      * @return array
      */
-    protected function getExternalBundles($bundleName)
+    protected function getExternalModules($bundleName)
     {
-        $dependentBundles = [];
+        $dependentModules = [];
         foreach ($this->externalDependencyTree as $dependency) {
-            if ($dependency[DependencyTree::META_BUNDLE] === $bundleName
+            if ($dependency[DependencyTree::META_MODULE] === $bundleName
                 && !in_array($dependency[DependencyTree::META_COMPOSER_NAME], $this->ignorableDependencies)
             ) {
-                $dependentBundles[] = $this->mapExternalToInternal($dependency[DependencyTree::META_COMPOSER_NAME]);
+                $dependentModules[] = $this->mapExternalToInternal($dependency[DependencyTree::META_COMPOSER_NAME]);
             }
         }
-        $dependentBundles = array_unique($dependentBundles);
-        sort($dependentBundles);
+        $dependentModules = array_unique($dependentModules);
+        sort($dependentModules);
 
-        return $dependentBundles;
+        return $dependentModules;
     }
 
     /**

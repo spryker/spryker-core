@@ -1,3 +1,3 @@
 # ErrorHandler Changelog
 
-[ErrorHandler Changelog](https://github.com/spryker/ErrorHandler/releases)
+[Release Changelog](https://github.com/spryker/error-handler/releases)

@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductOption\Persistence;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
@@ -26,6 +27,14 @@ class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
     public function createProductOptionGroupQuery()
     {
         return SpyProductOptionGroupQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery
+     */
+    public function createProductOptionValuePriceQuery()
+    {
+        return SpyProductOptionValuePriceQuery::create();
     }
 
     /**
@@ -53,7 +62,7 @@ class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToSalesInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToSalesQueryContainerInterface
      */
     public function getSalesQueryContainer()
     {
@@ -61,7 +70,7 @@ class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToCountryInterface
+     * @return \Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToCountryQueryContainerInterface
      */
     public function getCountryQueryContainer()
     {

@@ -1,3 +1,3 @@
 # Symfony Changelog
 
-[Symfony Changelog](https://github.com/spryker/Symfony/releases)
+[Release Changelog](https://github.com/spryker/symfony/releases)

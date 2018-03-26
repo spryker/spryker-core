@@ -62,7 +62,7 @@ class SearchPreferencesController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $productSearchPreferencesTransfer = new ProductSearchPreferencesTransfer();
             $productSearchPreferencesTransfer->fromArray($form->getData(), true);
 
@@ -98,7 +98,7 @@ class SearchPreferencesController extends AbstractController
             )
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $productSearchPreferencesTransfer = new ProductSearchPreferencesTransfer();
             $productSearchPreferencesTransfer->fromArray($form->getData(), true);
 

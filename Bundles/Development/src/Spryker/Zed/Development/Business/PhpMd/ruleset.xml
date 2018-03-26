@@ -20,6 +20,7 @@
 
     <rule ref="rulesets/cleancode.xml">
         <exclude name="StaticAccess" />
+        <exclude name="ElseExpression" />
     </rule>
 
     <rule ref="rulesets/design.xml">
@@ -65,6 +66,7 @@ maintainability and understandability
     <rule ref="rulesets/codesize.xml">
         <exclude name="TooManyMethods" />
         <exclude name="TooManyPublicMethods" />
+        <exclude name="ExcessivePublicCount" />
     </rule>
 
     <rule name="TooManyMethods"

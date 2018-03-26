@@ -10,6 +10,9 @@ namespace Spryker\Client\Product;
 interface ProductClientInterface
 {
     /**
+     * Specification:
+     * - Reads abstract product data from locale specific Storage.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -20,6 +23,10 @@ interface ProductClientInterface
     public function getProductAbstractFromStorageById($idProductAbstract, $locale);
 
     /**
+     * Specification:
+     * - Reads abstract product data from Storage.
+     * - Selects Storage using current shop locale.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -29,6 +36,10 @@ interface ProductClientInterface
     public function getProductAbstractFromStorageByIdForCurrentLocale($idProductAbstract);
 
     /**
+     * Specification:
+     * - Reads attribute map from Storage.
+     * - Selects Storage using current shop locale.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -38,6 +49,9 @@ interface ProductClientInterface
     public function getAttributeMapByIdProductAbstractForCurrentLocale($idProductAbstract);
 
     /**
+     * Specification:
+     * - Reads attribute map from locale specific Storage.
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -48,6 +62,10 @@ interface ProductClientInterface
     public function getAttributeMapByIdAndLocale($idProductAbstract, $locale);
 
     /**
+     * Specification:
+     * - Reads concrete product data from Storage.
+     * - Selects Storage using current shop locale.
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -57,6 +75,9 @@ interface ProductClientInterface
     public function getProductConcreteByIdForCurrentLocale($idProductConcrete);
 
     /**
+     * Specification:
+     * - Reads concrete product data from locale specific Storage.
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -68,7 +89,7 @@ interface ProductClientInterface
 
     /**
      * Specification:
-     * - Read product concrete information based on product concrete id collection
+     * - Reads concrete product data based on provided product concrete id collection.
      *
      * @api
      *

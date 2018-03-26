@@ -1,3 +1,3 @@
 # Graph Changelog
 
-[Graph Changelog](https://github.com/spryker/Graph/releases)
+[Release Changelog](https://github.com/spryker/graph/releases)

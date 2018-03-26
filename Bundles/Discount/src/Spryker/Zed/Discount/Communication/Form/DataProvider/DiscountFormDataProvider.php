@@ -60,6 +60,7 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
         $discountGeneralTransfer->setIsExclusive(false);
         $discountGeneralTransfer->setValidFrom(new DateTime());
         $discountGeneralTransfer->setValidTo(new DateTime());
+
         return $discountGeneralTransfer;
     }
 

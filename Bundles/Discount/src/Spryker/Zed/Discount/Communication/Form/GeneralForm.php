@@ -9,8 +9,7 @@ namespace Spryker\Zed\Discount\Communication\Form;
 
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Communication\Form\Constraint\UniqueDiscountName;
-use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -18,8 +17,14 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+/**
+ * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
+ */
 class GeneralForm extends AbstractType
 {
+    const FIELD_STORE_RELATION = 'store_relation';
     const FIELD_DISCOUNT_TYPE = 'discount_type';
     const FIELD_DISPLAY_NAME = 'display_name';
     const FIELD_DESCRIPTION = 'description';
@@ -30,19 +35,6 @@ class GeneralForm extends AbstractType
     const EXCLUSIVE = 'Exclusive';
 
     /**
-     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
-     */
-    protected $discountQueryContainer;
-
-    /**
-     * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
-     */
-    public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
-    {
-        $this->discountQueryContainer = $discountQueryContainer;
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param string[] $options
      *
@@ -50,7 +42,9 @@ class GeneralForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addDiscountType($builder)
+        $this
+            ->addStoreRelationField($builder)
+            ->addDiscountType($builder)
             ->addDisplayNameField($builder)
             ->addDescriptionField($builder)
             ->addExclusive($builder)
@@ -63,11 +57,38 @@ class GeneralForm extends AbstractType
      *
      * @return $this
      */
+    protected function addStoreRelationField(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            static::FIELD_STORE_RELATION,
+            $this->getStoreRelationFormTypePlugin()->getType(),
+            [
+                'label' => false,
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function getStoreRelationFormTypePlugin()
+    {
+        return $this->getFactory()->getStoreRelationFormTypePlugin();
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
     protected function addDiscountType(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_DISCOUNT_TYPE, ChoiceType::class, [
             'label' => 'Discount Type',
-            'choices' => $this->getVoucherChoices(),
+            'choices' => array_flip($this->getVoucherChoices()),
+            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],
@@ -99,7 +120,7 @@ class GeneralForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new UniqueDiscountName([
-                    UniqueDiscountName::OPTION_DISCOUNT_QUERY_CONTAINER => $this->discountQueryContainer,
+                    UniqueDiscountName::OPTION_DISCOUNT_QUERY_CONTAINER => $this->getQueryContainer(),
                 ]),
             ],
         ]);
@@ -136,10 +157,11 @@ class GeneralForm extends AbstractType
             'expanded' => true,
             'multiple' => false,
             'label' => false,
-            'choices' => [
+            'choices' => array_flip([
                 self::NON_EXCLUSIVE,
                 self::EXCLUSIVE,
-            ],
+            ]),
+            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],
@@ -162,7 +184,7 @@ class GeneralForm extends AbstractType
             'widget' => 'single_text',
             'required' => true,
             'attr' => [
-                'class' => 'datepicker',
+                'class' => 'datepicker safe-datetime',
             ],
         ]);
 
@@ -180,7 +202,7 @@ class GeneralForm extends AbstractType
             'widget' => 'single_text',
             'required' => true,
             'attr' => [
-                'class' => 'datepicker',
+                'class' => 'datepicker safe-datetime',
             ],
         ]);
 
@@ -188,11 +210,9 @@ class GeneralForm extends AbstractType
     }
 
     /**
-     * Returns the name of this type.
-     *
-     * @return string The name of this type
+     * @return string
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'discount_general';
     }

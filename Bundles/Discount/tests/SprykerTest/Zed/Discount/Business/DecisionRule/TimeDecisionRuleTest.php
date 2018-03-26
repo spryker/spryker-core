@@ -32,7 +32,7 @@ class TimeDecisionRuleTest extends BaseRuleTester
         $dateTime = new DateTime();
 
         $comparatorMock = $this->createComparatorMock();
-        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer  $clauseTransfer, $currentMonth) {
+        $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $currentMonth) {
             return $clauseTransfer->getValue() === $currentMonth;
         });
 

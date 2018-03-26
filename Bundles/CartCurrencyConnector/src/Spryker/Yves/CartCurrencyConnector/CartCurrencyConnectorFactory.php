@@ -18,4 +18,12 @@ class CartCurrencyConnectorFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CartCurrencyConnectorDependencyProvider::CLIENT_CART);
     }
+
+    /**
+     * @return \Spryker\Yves\CartCurrencyConnector\Dependency\Client\CartCurrencyConnectorToZedRequestClientInterface
+     */
+    public function getZedRequestClient()
+    {
+        return $this->getProvidedDependency(CartCurrencyConnectorDependencyProvider::CLIENT_ZED_REQUEST);
+    }
 }

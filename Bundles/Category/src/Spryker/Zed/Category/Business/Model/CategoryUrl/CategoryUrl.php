@@ -34,18 +34,26 @@ class CategoryUrl implements CategoryUrlInterface
     protected $urlPathGenerator;
 
     /**
+     * @var \Spryker\Zed\Category\Dependency\Plugin\CategoryUrlPathPluginInterface[]
+     */
+    protected $categoryUrlPathPlugins;
+
+    /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface $urlFacade
      * @param \Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface $urlPathGenerator
+     * @param array $categoryUrlPathPlugins
      */
     public function __construct(
         CategoryQueryContainerInterface $queryContainer,
         CategoryToUrlInterface $urlFacade,
-        UrlPathGeneratorInterface $urlPathGenerator
+        UrlPathGeneratorInterface $urlPathGenerator,
+        array $categoryUrlPathPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->urlFacade = $urlFacade;
         $this->urlPathGenerator = $urlPathGenerator;
+        $this->categoryUrlPathPlugins = $categoryUrlPathPlugins;
     }
 
     /**
@@ -121,6 +129,10 @@ class CategoryUrl implements CategoryUrlInterface
                 $localeTransfer->requireIdLocale()->getIdLocale()
             )
             ->find();
+
+        foreach ($this->categoryUrlPathPlugins as $categoryUrlPathPlugin) {
+            $pathParts = $categoryUrlPathPlugin->update($pathParts, $localeTransfer);
+        }
 
         return $pathParts;
     }

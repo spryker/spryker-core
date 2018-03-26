@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface CartClientInterface
 {
     /**
+     * Specification:
+     *  - Gets current quote from session
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -21,6 +24,9 @@ interface CartClientInterface
     public function getQuote();
 
     /**
+     * Specification:
+     *  - Empty existing quote and store to session
+     *
      * @api
      *
      * @return void
@@ -28,6 +34,11 @@ interface CartClientInterface
     public function clearQuote();
 
     /**
+     * Specification:
+     * - Adds single item
+     * - Makes zed request.
+     * - Returns update quote.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -50,6 +61,11 @@ interface CartClientInterface
     public function addItems(array $itemTransfers);
 
     /**
+     * Specification:
+     *  - Removes single items from quote.
+     *  - Makes zed request.
+     *  - Returns update quote.
+     *
      * @api
      *
      * @param string $sku
@@ -61,7 +77,7 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Returns the calculated number of items in cart
+     *  - Returns the calculated number of items in cart
      *
      * @api
      *
@@ -70,6 +86,11 @@ interface CartClientInterface
     public function getItemCount();
 
     /**
+     * Specification:
+     *  - Removes all given items from quote.
+     *  - Makes zed request.
+     *  - Returns update quote.
+     *
      * @api
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
@@ -79,6 +100,11 @@ interface CartClientInterface
     public function removeItems(ArrayObject $items);
 
     /**
+     * Specification:
+     *  - Changes quantity for given item.
+     *  - Makes zed request.
+     *  - Returns updated quote.
+     *
      * @api
      *
      * @param string $sku
@@ -90,6 +116,11 @@ interface CartClientInterface
     public function changeItemQuantity($sku, $groupKey = null, $quantity = 1);
 
     /**
+     * Specification:
+     *  - Decreases quantity for given item.
+     *  - Makes zed request.
+     *  - Returns updated quote.
+     *
      * @api
      *
      * @param string $sku
@@ -101,6 +132,11 @@ interface CartClientInterface
     public function decreaseItemQuantity($sku, $groupKey = null, $quantity = 1);
 
     /**
+     * Specification:
+     *  - Increases quantity for given item.
+     *  - Makes zed request.
+     *  - Returns updated quote.
+     *
      * @api
      *
      * @param string $sku
@@ -112,6 +148,9 @@ interface CartClientInterface
     public function increaseItemQuantity($sku, $groupKey = null, $quantity = 1);
 
     /**
+     * Specification:
+     *  - Store current quote into session
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

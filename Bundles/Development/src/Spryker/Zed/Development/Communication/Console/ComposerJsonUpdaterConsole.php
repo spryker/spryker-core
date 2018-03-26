@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ComposerJsonUpdaterConsole extends Console
 {
     const COMMAND_NAME = 'dev:dependency:update-composer-files';
-    const OPTION_BUNDLE = 'module';
+    const OPTION_MODULE = 'module';
     const OPTION_DRY_RUN = 'dry-run';
     const VERBOSE = 'verbose';
 
@@ -34,7 +34,7 @@ class ComposerJsonUpdaterConsole extends Console
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Update composer.json of core modules (Spryker core dev only).');
 
-        $this->addOption(static::OPTION_BUNDLE, 'm', InputOption::VALUE_OPTIONAL, 'Name of core module (comma separated for multiple ones)');
+        $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of core module (comma separated for multiple ones)');
         $this->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only, or use in CI');
     }
 
@@ -46,14 +46,14 @@ class ComposerJsonUpdaterConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundles = [];
-        $bundleList = $this->input->getOption(static::OPTION_BUNDLE);
-        if ($bundleList) {
-            $bundles = explode(',', $this->input->getOption(static::OPTION_BUNDLE));
+        $modules = [];
+        $moduleList = $this->input->getOption(static::OPTION_MODULE);
+        if ($moduleList) {
+            $modules = explode(',', $this->input->getOption(static::OPTION_MODULE));
         }
 
         $isDryRun = $this->input->getOption(static::OPTION_DRY_RUN);
-        $processedModules = $this->getFacade()->updateComposerJsonInBundles($bundles, $isDryRun);
+        $processedModules = $this->getFacade()->updateComposerJsonInModules($modules, $isDryRun);
         $modifiedModules = [];
         foreach ($processedModules as $processedModule => $processed) {
             if (!$processed) {

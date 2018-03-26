@@ -16,8 +16,20 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class DevelopmentConfig extends AbstractBundleConfig
 {
     const BUNDLE_PLACEHOLDER = '[BUNDLE]';
+    const APPLICATION_NAMESPACES = [
+        'Orm',
+    ];
+    const APPLICATION_LAYERS = [
+        'Client',
+        'Service',
+        'Shared',
+        'Yves',
+        'Zed',
+    ];
 
     /**
+     * Gets path to application root directory.
+     *
      * @return string
      */
     public function getPathToRoot()
@@ -26,6 +38,28 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * Gets Application layers.
+     *
+     * @return array
+     */
+    public function getApplications()
+    {
+        return static::APPLICATION_LAYERS;
+    }
+
+    /**
+     * Gets Application namespaces.
+     *
+     * @return array
+     */
+    public function getApplicationNamespaces()
+    {
+        return static::APPLICATION_NAMESPACES;
+    }
+
+    /**
+     * Gets path to Spryker core modules.
+     *
      * @return string
      */
     public function getPathToCore()
@@ -34,23 +68,33 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated use getBundleDirectory() to get the path to core modules
+     * Gets path to SprykerSdk core modules.
      *
      * @return string
      */
-    public function getBundleDirectory()
+    public function getPathToSdk()
     {
-        return $this->getConfig()->get(KernelConstants::SPRYKER_ROOT) . DIRECTORY_SEPARATOR;
+        return $this->getPathToRoot() . 'vendor/spryker-sdk/';
     }
 
     /**
-     * @deprecated use getBundleDirectory() to get the path to core modules
+     * Gets path to SprykerShop core modules.
      *
      * @return string
      */
-    public function getPathToSpryker()
+    public function getPathToShop()
     {
-        return $this->getPathToCore();
+        return $this->getPathToRoot() . 'vendor/spryker-shop/';
+    }
+
+    /**
+     * Gets path to SprykerEco core modules.
+     *
+     * @return string
+     */
+    public function getPathToEco()
+    {
+        return $this->getPathToRoot() . 'vendor/spryker-eco/';
     }
 
     /**
@@ -78,6 +122,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * Gets path to Application's composer.lock file.
+     *
      * @return string
      */
     public function getPathToComposerLock()
@@ -100,6 +146,8 @@ class DevelopmentConfig extends AbstractBundleConfig
     }
 
     /**
+     * Gets path to module config that holds information about engine modules.
+     *
      * @return string
      */
     public function getPathToBundleConfig()
@@ -311,5 +359,15 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getArchitectureSnifferDefaultPriority()
     {
         return 2;
+    }
+
+    /**
+     * Gets PHPStan default level. The higher, the better.
+     *
+     * @return int
+     */
+    public function getPhpstanLevel()
+    {
+        return 1;
     }
 }

@@ -158,6 +158,21 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
      * @api
      *
      * @param int $idShipmentMethod
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryActiveMethodsWithMethodPricesAndCarrierById($idShipmentMethod)
+    {
+        return $this
+            ->queryMethodsWithMethodPricesAndCarrier()
+            ->filterByIdShipmentMethod($idShipmentMethod)
+            ->filterByIsActive(true);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idShipmentMethod
      * @param string $countryIso2Code
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
@@ -216,5 +231,17 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
         }
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idShipmentMethod
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryActiveShipmentMethodByIdShipmentMethod($idShipmentMethod)
+    {
+        return $this->queryActiveMethods()->filterByIdShipmentMethod($idShipmentMethod);
     }
 }

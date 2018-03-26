@@ -14,8 +14,7 @@ class ReversalAdapterMock extends AbstractAdapterMock
      */
     public function getSuccessResponse()
     {
-        return
-            'P3_VALIDATION=ACK' . '&' .
+        return 'P3_VALIDATION=ACK' . '&' .
             'IDENTIFICATION_SHOPPERID=789' . '&' .
             'CLEARING_DESCRIPTOR=4259.5775.3506 inv-ins-test-default 794' . '&' .
             'PROCESSING_CONNECTORDETAIL_ConnectorTxID1=Tx-3p46gixkvk3' . '&' .
@@ -62,8 +61,7 @@ class ReversalAdapterMock extends AbstractAdapterMock
      */
     public function getFailureResponse()
     {
-        return
-            'TRANSACTION_CHANNEL=8a82941832d84c500132e875fc0c0648' . '&' .
+        return 'TRANSACTION_CHANNEL=8a82941832d84c500132e875fc0c0648' . '&' .
             'PRESENTATION_CURRENCY=EUR' . '&' .
             'IDENTIFICATION_UNIQUEID=8a82944a4fd6d7cd014fdf834b276c0c' . '&' .
             'PAYMENT_CODE=VA.RV' . '&' .

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CompanyBusinessUnit\Persistence" package="src.Orm.Zed.CompanyBusinessUnit.Persistence">
+
+    <table name="spy_company_business_unit" phpName="SpyCompanyBusinessUnit">
+        <column name="id_company_business_unit" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="email" type="VARCHAR" size="255" required="false"/>
+        <column name="phone" type="VARCHAR" size="255" required="false"/>
+        <column name="external_url" type="VARCHAR" size="255" required="false"/>
+
+        <column name="fk_company" type="INTEGER" required="true"/>
+
+        <foreign-key name="spy_company_business_unit-fk_company" foreignTable="spy_company" phpName="Company" refPhpName="CompanyBusinessUnit">
+            <reference local="fk_company" foreign="id_company"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_company_business_unit_pk_seq"/>
+    </table>
+
+</database>

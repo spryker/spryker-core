@@ -85,4 +85,14 @@ interface CurrencyFacadeInterface
      * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
      */
     public function getAllStoresWithCurrencies();
+
+    /**
+     * Specification:
+     *  - Returns default currency for current store
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function getDefaultCurrencyForCurrentStore();
 }

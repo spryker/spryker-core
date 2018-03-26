@@ -1,3 +1,3 @@
 # Queue Changelog
 
-[Release Changelog](https://github.com/spryker/Queue/releases)
+[Release Changelog](https://github.com/spryker/queue/releases)

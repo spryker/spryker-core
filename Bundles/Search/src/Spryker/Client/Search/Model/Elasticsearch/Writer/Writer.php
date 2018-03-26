@@ -115,7 +115,7 @@ class Writer implements WriterInterface
         }
 
         $response = $defaultIndex->deleteDocuments($documents);
-        $defaultIndex->flush(true);
+        $defaultIndex->flush();
 
         return $response->isOk();
     }

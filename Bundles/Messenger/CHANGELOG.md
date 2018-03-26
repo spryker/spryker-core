@@ -1,3 +1,3 @@
 # Messenger Changelog
 
-[Messenger Changelog](https://github.com/spryker/Messenger/releases)
+[Release Changelog](https://github.com/spryker/messenger/releases)

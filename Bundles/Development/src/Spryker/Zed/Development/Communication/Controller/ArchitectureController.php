@@ -24,10 +24,10 @@ class ArchitectureController extends AbstractController
      */
     public function indexAction()
     {
-        $allBundles = $this->getFacade()->listAllBundles();
+        $allModules = $this->getFacade()->listAllModules();
 
         return $this->viewResponse([
-            'bundles' => $allBundles,
+            'bundles' => $allModules,
         ]);
     }
 

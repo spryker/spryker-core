@@ -34,7 +34,7 @@ class MethodController extends AbstractController
             ->createMethodForm($dataProvider->getData(), $dataProvider->getOptions())
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $shipmentMethodTransfer = $form->getData();
             $this->getFacade()->createMethod($shipmentMethodTransfer);
 
@@ -51,7 +51,7 @@ class MethodController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return array|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request)
     {
@@ -64,7 +64,7 @@ class MethodController extends AbstractController
                 ->createMethodForm($dataProvider->getData($idMethod), $dataProvider->getOptions())
                 ->handleRequest($request);
 
-            if ($form->isValid()) {
+            if ($form->isSubmitted() && $form->isValid()) {
                 $shipmentMethodTransfer = $form->getData();
 
                 $this->getFacade()

@@ -26,22 +26,20 @@ class DevelopmentCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createBundlesForm(array $data = [], array $options = [])
     {
-        $bundlesFormType = new BundlesFormType();
-
-        return $this->getFormFactory()->create($bundlesFormType, $data, $options);
+        return $this->getFormFactory()->create(BundlesFormType::class, $data, $options);
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string $bundle
+     * @param string $module
      *
      * @return \Spryker\Zed\Development\Communication\Form\DataProvider\BundleFormDataProvider
      */
-    public function createBundleFormDataProvider(Request $request, $bundle)
+    public function createBundleFormDataProvider(Request $request, $module)
     {
         $bundleFormDataProvider = new BundleFormDataProvider(
             $request,
-            $this->getFacade()->showOutgoingDependenciesForBundle($bundle)
+            $this->getFacade()->showOutgoingDependenciesForModule($module)
         );
 
         return $bundleFormDataProvider;

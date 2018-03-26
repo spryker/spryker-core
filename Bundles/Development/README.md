@@ -4,8 +4,9 @@ Development is a tooling module for (local) development.
 
 ## Installation
 
+This is a require-dev module:
 ```
-composer require spryker/development
+composer require --dev spryker/development
 ```
 
 ## Documentation

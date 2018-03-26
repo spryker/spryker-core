@@ -16,14 +16,18 @@ class ProductManagementConfig extends AbstractBundleConfig
     const PRODUCT_TYPE_REGULAR = 'regular';
 
     /**
+     * Used for validity datetimes transformation and displaying in messages.
+     * Hydration validity format is described in ProductValidity module.
+     * @see \Spryker\Zed\ProductValidity\Business\Validity\ProductValidityHydrator::VALIDITY_DATE_TIME_FORMAT
+     */
+    const VALIDITY_DATE_TIME_FORMAT = 'Y-m-d G:i';
+
+    /**
      * @return string
      */
     public function getImageUrlPrefix()
     {
-        return $this->getConfig()->hasKey(ProductManagementConstants::BASE_URL_YVES)
-            ? $this->get(ProductManagementConstants::BASE_URL_YVES)
-            // @deprecated this is just for backward compatibility
-            : $this->get(ProductManagementConstants::HOST_YVES);
+        return $this->get(ProductManagementConstants::BASE_URL_YVES);
     }
 
     /**
@@ -31,9 +35,14 @@ class ProductManagementConfig extends AbstractBundleConfig
      */
     public function getHostYves()
     {
-        return $this->getConfig()->hasKey(ProductManagementConstants::BASE_URL_YVES)
-            ? $this->get(ProductManagementConstants::BASE_URL_YVES)
-            // @deprecated this is just for backward compatibility
-            : $this->get(ProductManagementConstants::HOST_YVES);
+        return $this->get(ProductManagementConstants::BASE_URL_YVES);
+    }
+
+    /**
+     * @return string
+     */
+    public function getValidityTimeFormat()
+    {
+        return static::VALIDITY_DATE_TIME_FORMAT;
     }
 }

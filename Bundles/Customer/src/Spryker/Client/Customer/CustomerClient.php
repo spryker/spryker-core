@@ -121,7 +121,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer()
     {
@@ -349,7 +349,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
         return $this->getFactory()
-            ->createZedCustomerStub()
+            ->createCustomerAddress()
             ->updateAddressAndCustomerDefaultAddresses($addressTransfer);
     }
 
@@ -365,7 +365,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
         return $this->getFactory()
-            ->createZedCustomerStub()
+            ->createCustomerAddress()
             ->createAddressAndUpdateCustomerDefaultAddresses($addressTransfer);
     }
 
@@ -447,5 +447,19 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
         return $this->getFactory()
             ->createZedCustomerStub()
             ->anonymizeCustomer($customerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function markCustomerAsDirty()
+    {
+        $this->getFactory()
+            ->createSessionCustomerSession()
+            ->markCustomerAsDirty();
     }
 }

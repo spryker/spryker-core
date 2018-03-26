@@ -14,8 +14,7 @@ class PreCheckAdapterMock extends AbstractAdapterMock
      */
     public function getSuccessResponse()
     {
-        return
-            'PROCESSING_RISK_SCORE=0' . '&' .
+        return 'PROCESSING_RISK_SCORE=0' . '&' .
             'P3_VALIDATION=ACK' . '&' .
             'NAME_GIVEN=John' . '&' .
             'CLEARING_DESCRIPTOR=5066.2051.0882 inv-ins-test-default 668' . '&' .
@@ -70,8 +69,7 @@ class PreCheckAdapterMock extends AbstractAdapterMock
      */
     public function getFailureResponse()
     {
-        return
-            'PROCESSING_RISK_SCORE=-100' . '&' .
+        return 'PROCESSING_RISK_SCORE=-100' . '&' .
             'P3_VALIDATION=ACK' . '&' .
             'NAME_GIVEN=John' . '&' .
             'TRANSACTION_CHANNEL=8a82941832d84c500132e875fc0c0648' . '&' .

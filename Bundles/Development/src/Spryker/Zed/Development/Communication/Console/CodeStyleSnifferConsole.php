@@ -19,7 +19,7 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
  */
 class CodeStyleSnifferConsole extends Console
 {
-    const COMMAND_NAME = 'code:sniff';
+    const COMMAND_NAME = 'code:sniff:style';
     const OPTION_MODULE = 'module';
     const OPTION_SNIFFS = 'sniffs';
     const OPTION_DRY_RUN = 'dry-run';
@@ -38,6 +38,7 @@ class CodeStyleSnifferConsole extends Console
         $this->setName(static::COMMAND_NAME)
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Sniff and fix code style for project or core');
+
         $this->addAlias();
 
         $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of module to fix code style for');
@@ -57,8 +58,25 @@ class CodeStyleSnifferConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $isCore = $this->input->getOption(static::OPTION_CORE);
         $module = $this->input->getOption(static::OPTION_MODULE);
+        $path = $this->input->getArgument(static::ARGUMENT_SUB_PATH);
+
+        $this->info($this->buildMessage($module, $path));
+
+        $exitCode = $this->getFacade()->checkCodeStyle($module, $this->input->getOptions() + [static::ARGUMENT_SUB_PATH => $path]);
+
+        return $exitCode;
+    }
+
+    /**
+     * @param string|null $module
+     * @param string|null $path
+     *
+     * @return string
+     */
+    protected function buildMessage($module, $path)
+    {
+        $isCore = $this->input->getOption(static::OPTION_CORE);
         $message = sprintf('Run Code Style Sniffer for %s', $isCore ? 'CORE' : 'PROJECT');
 
         if ($module) {
@@ -66,24 +84,11 @@ class CodeStyleSnifferConsole extends Console
             $message .= ' in ' . $module . ' module';
         }
 
-        $path = $this->input->getArgument(static::ARGUMENT_SUB_PATH);
         if ($path) {
             $message .= ' (' . $path . ')';
         }
 
-        $this->info($message);
-
-        return $this->getFacade()->checkCodeStyle($module, $this->input->getOptions() + [static::ARGUMENT_SUB_PATH => $path]);
-    }
-
-    /**
-     * @deprecated Remove this in next major. Only for BC reasons. Please use new command name `code:sniff:style` (short `c:s:s`) instead.
-     *
-     * @return void
-     */
-    protected function addAlias()
-    {
-        $this->setAliases(['code:sniff:style']);
+        return $message;
     }
 
     /**
@@ -98,5 +103,15 @@ class CodeStyleSnifferConsole extends Console
         $normalized = ucfirst($normalized);
 
         return $normalized;
+    }
+
+    /**
+     * @deprecated Remove this in next major. Only for BC reasons. Please use new command name `code:sniff:style` (short `c:s:s`) instead.
+     *
+     * @return void
+     */
+    protected function addAlias(): void
+    {
+        $this->setAliases(['code:sniff:style']);
     }
 }

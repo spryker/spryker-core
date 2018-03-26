@@ -15,6 +15,13 @@ interface FinderInterface
     /**
      * @param string $stateMachineName
      *
+     * @return bool
+     */
+    public function hasHandler($stateMachineName);
+
+    /**
+     * @param string $stateMachineName
+     *
      * @return \Generated\Shared\Transfer\StateMachineProcessTransfer[]
      */
     public function getProcesses($stateMachineName);

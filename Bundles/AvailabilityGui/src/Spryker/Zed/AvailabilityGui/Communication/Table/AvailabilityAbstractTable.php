@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\AvailabilityGui\Communication\Table;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityAbstractTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
+use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -24,6 +27,7 @@ class AvailabilityAbstractTable extends AbstractTable
     const NOT_AVAILABLE = 'Not available';
     const IS_BUNDLE_PRODUCT = 'Is bundle product';
     const IS_NEVER_OUT_OF_STOCK = 'isNeverOutOfStock';
+    const URL_PARAM_ID_STORE = 'id-store';
 
     /**
      * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
@@ -31,11 +35,28 @@ class AvailabilityAbstractTable extends AbstractTable
     protected $queryProductAbstractAvailability;
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $queryProductAbstractAvailabilityGui
+     * @var \Generated\Shared\Transfer\StoreTransfer
      */
-    public function __construct(SpyProductAbstractQuery $queryProductAbstractAvailabilityGui)
-    {
+    protected $storeTransfer;
+
+    /**
+     * @var \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface
+     */
+    protected $omsFacade;
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $queryProductAbstractAvailabilityGui
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface $omsFacade
+     */
+    public function __construct(
+        SpyProductAbstractQuery $queryProductAbstractAvailabilityGui,
+        StoreTransfer $storeTransfer,
+        AvailabilityGuiToOmsFacadeInterface $omsFacade
+    ) {
         $this->queryProductAbstractAvailability = $queryProductAbstractAvailabilityGui;
+        $this->storeTransfer = $storeTransfer;
+        $this->omsFacade = $omsFacade;
     }
 
     /**
@@ -45,7 +66,12 @@ class AvailabilityAbstractTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $url = Url::generate('/availability-abstract-table');
+        $url = Url::generate(
+            '/availability-abstract-table',
+            [
+               static::URL_PARAM_ID_STORE => $this->storeTransfer->getIdStore(),
+            ]
+        );
 
         $config->setUrl($url);
         $config->setHeader([
@@ -68,7 +94,7 @@ class AvailabilityAbstractTable extends AbstractTable
 
         $config->setSearchable([
             SpyProductAbstractTableMap::COL_SKU,
-            AvailabilityQueryContainer::PRODUCT_NAME => 'Name',
+            SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
         ]);
 
         $config->setDefaultSortColumnIndex(0);
@@ -95,7 +121,7 @@ class AvailabilityAbstractTable extends AbstractTable
         foreach ($queryResult as $productAbstractEntity) {
             $haveBundledProducts = $this->haveBundledProducts($productAbstractEntity);
 
-            $isNeverOutOfStock = $this->isAllConcreteIsNeverOutOfStock($productAbstractEntity);
+            $isNeverOutOfStock = $this->isAllConcreteIsNeverOutOfStock($productAbstractEntity, $haveBundledProducts);
 
             $result[] = [
                 SpyProductAbstractTableMap::COL_SKU => $this->getProductEditPageLink($productAbstractEntity->getSku(), $productAbstractEntity->getIdProductAbstract()),
@@ -114,11 +140,17 @@ class AvailabilityAbstractTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     * @param bool $isBundle
      *
      * @return bool
      */
-    protected function isAllConcreteIsNeverOutOfStock(SpyProductAbstract $productAbstractEntity)
+    protected function isAllConcreteIsNeverOutOfStock(SpyProductAbstract $productAbstractEntity, bool $isBundle): bool
     {
+        $hasNeverOutOfStock = strpos($productAbstractEntity->getConcreteNeverOutOfStockSet(), 'true') !== false;
+        if ($isBundle && $hasNeverOutOfStock) {
+            return true;
+        }
+
         if (strpos($productAbstractEntity->getConcreteNeverOutOfStockSet(), 'false') !== false) {
             return false;
         }
@@ -168,6 +200,7 @@ class AvailabilityAbstractTable extends AbstractTable
             '/availability-gui/index/view',
             [
                 static::URL_PARAM_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
+                static::URL_PARAM_ID_STORE => $this->storeTransfer->getIdStore(),
             ]
         );
         return $this->generateViewButton($viewTaxSetUrl, 'View');
@@ -211,11 +244,15 @@ class AvailabilityAbstractTable extends AbstractTable
     {
         $reservation = 0;
         foreach ($reservationItems as $item) {
-            $value = explode(':', $item);
-
-            if (count($value) > 1) {
-                $reservation += (int)$value[1];
+            $itemParts = explode(':', $item);
+            if (count($itemParts) !== 2) {
+                continue;
             }
+
+            list($sku, $quantity) = $itemParts;
+
+            $reservation += (int)$quantity;
+            $reservation += $this->omsFacade->getReservationsFromOtherStores($sku, $this->storeTransfer);
         }
 
         return $reservation;

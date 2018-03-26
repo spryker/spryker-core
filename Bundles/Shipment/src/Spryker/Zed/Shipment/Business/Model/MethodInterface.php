@@ -65,4 +65,19 @@ interface MethodInterface
      * @return int|bool
      */
     public function updateMethod(ShipmentMethodTransfer $methodTransfer);
+
+    /**
+     * @param int $idShipmentMethod
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer);
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return bool
+     */
+    public function isShipmentMethodActive($idShipmentMethod);
 }
