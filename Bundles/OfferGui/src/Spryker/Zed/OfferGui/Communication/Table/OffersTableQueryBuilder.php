@@ -18,7 +18,7 @@ class OffersTableQueryBuilder implements OffersTableQueryBuilderInterface
     const FIELD_ORDER_GRAND_TOTAL = 'order_grand_total';
 
     /**
-     * @use \Spryker\Zed\Offer\OfferConfig::getOrderTypeOffer()
+     * @uses \Spryker\Zed\Offer\OfferConfig::getOrderTypeOffer()
      */
     public const ORDER_TYPE_OFFER = 'offer';
 

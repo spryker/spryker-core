@@ -1,0 +1,37 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Offer Overview' } %}
+
+    {% block widget_content %}
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <p><b>{{ 'Order Reference' | trans }}:</b> {{ offer.orderReference }}</p>
+                <p><b>{{ 'Order date' | trans }}:</b> {{ offer.createdAt | formatDateTime }}</p>
+                <p><b>{{ 'Grand total' | trans }}:</b> {{ offer.totals.grandTotal | money(true, offer.currencyIsoCode) }}</p>
+                <p><b>{{ 'Discount' | trans }}:</b> {{ offer.totals.discountTotal | money(true, offer.currencyIsoCode) }}</p>
+                <p><b>{{ 'Unique Product Quantity' | trans }}:</b> {{ offer.uniqueProductQuantity }}</p>
+            </div>
+            <div class="col-xs-12 col-md-4">
+                {% if offer.customerReference %}
+                    <p><b>{{ 'Customer Reference' | trans }}:</b>
+                      {{ offer.customerReference }}
+                    </p>
+                {% endif %}
+                <p><b>{{ 'Customer name' | trans }}:</b>
+                    {% if offer.customerReference %}
+                        <a href="{{ url('/customer/view', {'id-customer': offer.fkCustomer}) }}" target="_blank">{{ offer.salutation }} {{ offer.firstName }} {{ offer.lastName }}</a>
+                    {% else %}
+                        {{ offer.salutation }} {{ offer.firstName }} {{ offer.lastName }}
+                    {% endif %}
+                </p>
+              {% if offer.customer is not null and offer.customer.dateOfBirth %}
+                  <p><b>{{ 'Date of Birth' | trans }}:</b>
+                    {{ offer.customer.dateOfBirth | formatDate }}
+                  </p>
+              {% endif %}
+                <p><b>{{ 'Email' | trans }}:</b> {{ offer.email }}</p>
+                <p><b>{{ 'All orders of the customer' | trans }}:</b> ({{ offer.totalOrderCount }})</p>
+            </div>
+        </div>
+
+    {% endblock %}
+
+{% endembed %}

@@ -12,11 +12,13 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeBridge;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToSalesFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceBridge;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceBridge;
 
 class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
@@ -31,11 +33,27 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = parent::provideCommunicationLayerDependencies($container);
+
+        $container = $this->addSalesFacade($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addMoneyFacade($container);
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addUtilSanitize($container);
         $container = $this->addPropelQuerySalesOrder($container);
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addSalesFacade(Container $container)
+    {
+        $container[static::FACADE_SALES] = function (Container $container) {
+            return new OfferGuiToSalesFacadeBridge($container->getLocator()->sales()->facade());
+        };
 
         return $container;
     }

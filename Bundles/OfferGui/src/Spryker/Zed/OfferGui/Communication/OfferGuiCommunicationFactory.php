@@ -13,10 +13,14 @@ use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilder;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeInterface;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToSalesFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceInterface;
 use Spryker\Zed\OfferGui\OfferGuiDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\OfferGui\OfferGuiConfig getConfig()
+ */
 class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -81,5 +85,13 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getPropelQuerySalesOrder()
     {
         return $this->getProvidedDependency(OfferGuiDependencyProvider::PROPEL_QUERY_SALES_ORDER);
+    }
+
+    /**
+     * @return OfferGuiToSalesFacadeInterface
+     */
+    public function getSalesFacade(): OfferGuiToSalesFacadeInterface
+    {
+        return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_SALES);
     }
 }
