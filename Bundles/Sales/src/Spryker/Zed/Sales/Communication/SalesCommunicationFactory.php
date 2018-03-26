@@ -156,7 +156,8 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER),
             $customerReference,
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getUISalesTablePlugins()
         );
     }
 

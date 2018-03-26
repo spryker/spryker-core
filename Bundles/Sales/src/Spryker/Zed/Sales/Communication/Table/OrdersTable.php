@@ -72,7 +72,7 @@ class OrdersTable extends AbstractTable
         SalesToUtilSanitizeInterface $sanitizeService,
         UtilDateTimeServiceInterface $utilDateTimeService,
         SalesToCustomerInterface $customerFacade,
-        array $uiSalesTablePlugins
+        array $uiSalesTablePlugins = []
     ) {
         $this->queryBuilder = $queryBuilder;
         $this->moneyFacade = $moneyFacade;
