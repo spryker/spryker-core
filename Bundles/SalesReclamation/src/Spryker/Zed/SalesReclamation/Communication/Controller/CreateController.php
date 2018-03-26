@@ -73,8 +73,10 @@ class CreateController extends AbstractController
      */
     protected function showForm(OrderTransfer $orderTransfer)
     {
+        $reclamation = $this->getFacade()->hydrateReclamationByOrder($orderTransfer);
+
         return $this->viewResponse([
-            'order' => $orderTransfer,
+            'reclamation' => $reclamation,
         ]);
     }
 

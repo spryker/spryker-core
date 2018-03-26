@@ -1,10 +1,10 @@
 {% extends '@Application/Layout/layout.twig' %}
 
 {% block content %}
-    Reclamation for order {{ order.orderReference }}
+    Reclamation for order {{reclamation.order.orderReference }}
 
     <form action="/sales-reclamation/create" method="POST">
-        <input type="hidden" name="id-sales-order" value="{{ order.idSalesOrder }}" />
+        <input type="hidden" name="id-sales-order" value="{{ reclamation.order.idSalesOrder }}" />
 
         <div id="items">
             {%- include '@SalesReclamation/Create/boxes/items.twig' with {
