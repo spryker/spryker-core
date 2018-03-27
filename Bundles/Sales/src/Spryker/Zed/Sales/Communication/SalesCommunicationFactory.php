@@ -229,7 +229,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Dependency\Plugin\UISalesTablePluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\UISalesTablePluginInterface[]
      */
     public function getUISalesTablePlugins()
     {

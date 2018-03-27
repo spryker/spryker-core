@@ -12,7 +12,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
-use Spryker\Zed\Sales\Dependency\Plugin\UISalesTablePluginInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\UISalesTablePluginInterface;
 use Spryker\Zed\SalesReclamation\SalesReclamationConfig;
 
 class UISalesTablePlugin extends AbstractTable implements UISalesTablePluginInterface
