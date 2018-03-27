@@ -6,7 +6,6 @@
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER"/>
         <column name="fk_company" type="INTEGER"/>
-        <column name="key" type="VARCHAR" size="255"/>
         <column name="address1" size="255" type="VARCHAR"/>
         <column name="address2" size="255" type="VARCHAR"/>
         <column name="address3" size="255" type="VARCHAR"/>
