@@ -25,6 +25,9 @@ class ItemType extends AbstractType
     public const FIELD_UNIT_GROSS_PRICE = 'unitGrossPrice';
     public const FIELD_FORCED_UNIT_GROSS_PRICE = 'forcedUnitGrossPrice';
 
+    protected const ERROR_MESSAGE_QUANTITY = 'Invalid Quantity.';
+    protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -82,7 +85,7 @@ class ItemType extends AbstractType
             'label' => 'Unit Gross Price',
             'required' => false,
             'constraints' => [
-                $this->createNumberConstraint($options),
+                $this->createNumberConstraint($options, static::ERROR_MESSAGE_PRICE),
             ],
         ]);
 
@@ -101,7 +104,7 @@ class ItemType extends AbstractType
             'label' => 'Quantity',
             'required' => false,
             'constraints' => [
-                $this->createNumberConstraint($options),
+                $this->createNumberConstraint($options, static::ERROR_MESSAGE_QUANTITY),
             ],
         ]);
 
@@ -125,16 +128,17 @@ class ItemType extends AbstractType
 
     /**
      * @param array $options
+     * @param string $message
      *
      * @return \Symfony\Component\Validator\Constraints\Regex
      */
-    protected function createNumberConstraint(array $options)
+    protected function createNumberConstraint(array $options, $message)
     {
         $validationGroup = $this->getValidationGroup($options);
 
         return new Regex([
             'pattern' => '/^\d*$/',
-            'message' => 'This field should contain digits.',
+            'message' => $message,
             'groups' => $validationGroup,
         ]);
     }
