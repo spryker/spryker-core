@@ -7,6 +7,31 @@
 
 namespace Spryker\Zed\ProductQuantity\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+
 interface ProductQuantityFacadeInterface
 {
+    /**
+     * Specification:
+     * - Validates product quantities if they fulfill all quantity restriction rules during item addition.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateItemAddProductQuantityRestrictions(CartChangeTransfer $cartChangeTransfer);
+
+    /**
+     * Specification:
+     * - Retrieves product quantity entities by provided product IDs.
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
+     */
+    public function getProductQuantityEntitiesByProductIds(array $productIds);
 }

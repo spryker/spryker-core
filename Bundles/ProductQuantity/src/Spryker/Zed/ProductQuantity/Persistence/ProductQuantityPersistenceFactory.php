@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductQuantity\Persistence;
 
+use Orm\Zed\ProductQuantity\Persistence\SpyProductQuantityQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -14,4 +15,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ProductQuantityPersistenceFactory extends AbstractPersistenceFactory
 {
+    /**
+     * @return \Orm\Zed\ProductQuantity\Persistence\SpyProductQuantityQuery
+     */
+    public function createProductQuantityQuery()
+    {
+        return SpyProductQuantityQuery::create();
+    }
 }

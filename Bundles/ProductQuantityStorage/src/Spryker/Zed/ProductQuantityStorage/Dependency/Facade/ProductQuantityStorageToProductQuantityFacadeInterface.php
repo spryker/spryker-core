@@ -5,19 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductQuantity\Persistence;
+namespace Spryker\Zed\ProductQuantityStorage\Dependency\Facade;
 
-interface ProductQuantityRepositoryInterface
+interface ProductQuantityStorageToProductQuantityFacadeInterface
 {
-    /**
-     * @api
-     *
-     * @param string[] $productSkus
-     *
-     * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
-     */
-    public function getProductQuantityEntitiesByProductSku(array $productSkus);
-
     /**
      * @param int[] $productIds
      *

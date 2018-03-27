@@ -11,7 +11,7 @@ interface ProductQuantityStorageFacadeInterface
 {
     /**
      * Specification:
-     * -
+     * - Publishes product quantity changes for the given product IDs.
      *
      * @api
      *

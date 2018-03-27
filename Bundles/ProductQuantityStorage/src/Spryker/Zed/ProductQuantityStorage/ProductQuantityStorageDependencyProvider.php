@@ -10,10 +10,12 @@ namespace Spryker\Zed\ProductQuantityStorage;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductQuantityStorage\Dependency\Facade\ProductQuantityStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\ProductQuantityStorage\Dependency\Facade\ProductQuantityStorageToProductQuantityFacadeBridge;
 
 class ProductQuantityStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    const FACADE_PRODUCT_QUANTITY = 'FACADE_PRODUCT_QUANTITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,6 +25,8 @@ class ProductQuantityStorageDependencyProvider extends AbstractBundleDependencyP
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addProductQuantityFacade($container);
 
         return $container;
     }
@@ -50,6 +54,20 @@ class ProductQuantityStorageDependencyProvider extends AbstractBundleDependencyP
     {
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new ProductQuantityStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductQuantityFacade(Container $container)
+    {
+        $container[static::FACADE_PRODUCT_QUANTITY] = function (Container $container) {
+            return new ProductQuantityStorageToProductQuantityFacadeBridge($container->getLocator()->productQuantity()->facade());
         };
 
         return $container;

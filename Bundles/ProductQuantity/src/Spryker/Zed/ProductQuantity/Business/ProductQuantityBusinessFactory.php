@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductQuantity\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReader;
+use Spryker\Zed\ProductQuantity\Business\Model\Validator\ProductQuantityRestrictionValidator;
 
 /**
  * @method \Spryker\Zed\ProductQuantity\ProductQuantityConfig getConfig()
@@ -15,4 +17,19 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class ProductQuantityBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\ProductQuantity\Business\Model\Validator\ProductQuantityRestrictionValidatorInterface
+     */
+    public function createProductQuantityRestrictionValidator()
+    {
+        return new ProductQuantityRestrictionValidator($this->createProductQuantityReader());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface
+     */
+    public function createProductQuantityReader()
+    {
+        return new ProductQuantityReader($this->getRepository());
+    }
 }

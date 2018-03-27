@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductQuantityStorage\Persistence;
 
+use Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -14,4 +15,48 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class ProductQuantityStorageEntityManager extends AbstractEntityManager implements ProductQuantityStorageEntityManagerInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductQuantityStorage
+     *
+     * @return void
+     */
+    public function deleteProductQuantityStorage($idProductQuantityStorage)
+    {
+        $spyProductQuantityStorageEntity = $this->getFactory()
+            ->createProductQuantityStorageQuery()
+            ->filterByIdProductQuantityStorage($idProductQuantityStorage)
+            ->findOne();
+
+        $spyProductQuantityStorageEntity->delete();
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer $productQuantityStorageEntity
+     *
+     * @return void
+     */
+    public function saveProductQuantityStorageEntity(SpyProductQuantityStorageEntityTransfer $productQuantityStorageEntity)
+    {
+        $productQuantityStorageEntity->requireFkProduct();
+
+        $spyProductQuantityStorageEntity = $this->getFactory()
+            ->createProductQuantityStorageQuery()
+            ->filterByFkProduct($productQuantityStorageEntity->getFkProduct())
+            ->findOneOrCreate();
+
+        $spyProductQuantityStorageEntity = $this->getFactory()
+            ->createProductQuantityStorageMapper()
+            ->hydrateSpyProductQuantityStorageEntity(
+                $spyProductQuantityStorageEntity,
+                $productQuantityStorageEntity
+            );
+
+        $spyProductQuantityStorageEntity->save();
+    }
 }

@@ -42,27 +42,27 @@ class ProductQuantityStorageReader implements ProductQuantityStorageReaderInterf
      *
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
      */
-    public function getProductQuantity($idProduct)
+    public function getProductQuantityStorage($idProduct)
     {
         $key = $this->generateKey($idProduct);
-        $productQuantityUnitStorageData = $this->storageClient->get($key);
+        $productQuantityStorageData = $this->storageClient->get($key);
 
-        if (!$productQuantityUnitStorageData) {
+        if (!$productQuantityStorageData) {
             return null;
         }
 
-        return $this->mapToProductQuantityStorageTransfer($productQuantityUnitStorageData);
+        return $this->mapToProductQuantityStorageTransfer($productQuantityStorageData);
     }
 
     /**
-     * @param array $productQuantityUnitStorageData
+     * @param array $productQuantityStorageData
      *
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
      */
-    protected function mapToProductQuantityStorageTransfer(array $productQuantityUnitStorageData)
+    protected function mapToProductQuantityStorageTransfer(array $productQuantityStorageData)
     {
         return (new ProductQuantityStorageTransfer())
-            ->fromArray($productQuantityUnitStorageData, true);
+            ->fromArray($productQuantityStorageData, true);
     }
 
     /**

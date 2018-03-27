@@ -13,7 +13,7 @@ class ProductQuantityStorageConfig extends AbstractBundleConfig
 {
     /**
      * Specification:
-     * -
+     * - Key generation resource name of product quantity.
      *
      * @api
      */

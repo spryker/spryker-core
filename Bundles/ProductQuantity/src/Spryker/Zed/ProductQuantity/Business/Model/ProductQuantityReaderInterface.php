@@ -5,13 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductQuantity\Persistence;
+namespace Spryker\Zed\ProductQuantity\Business\Model;
 
-interface ProductQuantityRepositoryInterface
+interface ProductQuantityReaderInterface
 {
     /**
-     * @api
-     *
      * @param string[] $productSkus
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
