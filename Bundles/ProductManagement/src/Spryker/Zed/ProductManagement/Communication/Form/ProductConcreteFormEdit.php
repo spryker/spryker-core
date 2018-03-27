@@ -19,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -358,13 +359,15 @@ class ProductConcreteFormEdit extends ProductFormAdd
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return void
+     * @return ProductConcreteFormEdit
      */
-    protected function addFormBuildPlugins(FormBuilderInterface $builder, array $options): void
+    protected function addFormBuildPlugins(FormBuilderInterface $builder, array $options): ProductConcreteFormEdit
     {
         /** @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditFormExpanderPluginInterface $plugin */
         foreach ($this->getFactory()->getProductConcreteEditFormExpanderPlugins() as $plugin) {
             $plugin->buildForm($builder, $options);
         }
+
+        return $this;
     }
 }

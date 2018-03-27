@@ -42,12 +42,7 @@ class EditCompanyBusinessUnitController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $companyBusinessUnitTransfer = $this->createCompanyBusinessUnitTransfer();
-            $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($form->getData()->getIdCompanyBusinessUnit());
-            $companyBusinessUnitTransfer->setName($form->getData()->getName());
-            $companyBusinessUnitTransfer->setIban($form->getData()->getIban());
-            $companyBusinessUnitTransfer->setBic($form->getData()->getBic());
-
+            $companyBusinessUnitTransfer = $form->getData();
             $companyResponseTransfer = $this->getFactory()
                 ->getCompanyBusinessUnitFacde()
                 ->update($companyBusinessUnitTransfer);

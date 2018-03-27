@@ -42,7 +42,7 @@ class CompanyBusinessUnitFormDataProvider
      */
     public function getOptions(int $idCompanyBusinessUnit): array
     {
-        return [];
+        return ['data_class' => CompanyBusinessUnitTransfer::class];
     }
 
     /**

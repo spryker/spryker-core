@@ -84,7 +84,11 @@ class CompanyBusinessUnitForm extends AbstractType
     {
         $builder->add(self::FIELD_IBAN, TextType::class, [
             'label' => 'IBAN',
-            'constraints' => $this->getTextFieldConstraints(),
+            'required' => false,
+            'constraints' => [
+                new Length(['max' => 100]),
+            ],
+            'empty_data' => '',
         ]);
 
         return $this;
@@ -99,7 +103,11 @@ class CompanyBusinessUnitForm extends AbstractType
     {
         $builder->add(self::FIELD_BIC, TextType::class, [
             'label' => 'BIC',
-            'constraints' => $this->getTextFieldConstraints(),
+            'required' => false,
+            'constraints' => [
+                new Length(['max' => 100]),
+            ],
+            'empty_data' => '',
         ]);
 
         return $this;
