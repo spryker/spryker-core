@@ -9,15 +9,18 @@ namespace Spryker\Zed\SalesExtension\Dependency\Plugin;
 
 interface UISalesTablePluginInterface
 {
+    const ROW_ACTIONS = 'Actions';
+
     /**
      * Specifications:
      * - Get item inside foreach in AbstractTable::formatQueryData(). And update it.
      *
      * @api
      *
+     * @param callable $buttonGenerator
      * @param array $item
      *
      * @return array $item
      */
-    public function formatQueryLine(array $item): array;
+    public function formatTableRow(callable $buttonGenerator, array $item): array;
 }

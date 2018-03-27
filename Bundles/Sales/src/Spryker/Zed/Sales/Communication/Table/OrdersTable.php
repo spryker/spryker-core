@@ -15,10 +15,11 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\UISalesTablePluginInterface;
 
 class OrdersTable extends AbstractTable
 {
-    const URL = 'URL';
+    const URL = UISalesTablePluginInterface::ROW_ACTIONS;
     const ID_ORDER_ITEM_PROCESS = 'id-order-item-process';
     const ID_ORDER_ITEM_STATE = 'id-order-item-state';
     const FILTER = 'filter';
@@ -348,9 +349,21 @@ class OrdersTable extends AbstractTable
     protected function applyUIPlugins(array $itemLine): array
     {
         foreach ($this->uiSalesTablePlugins as $uiPlugin) {
-            $itemLine = $uiPlugin->formatQueryLine($itemLine);
+            $itemLine = $uiPlugin->formatTableRow([$this, 'buttonGeneratorCallable'], $itemLine);
         }
 
         return $itemLine;
+    }
+
+    /**
+     * @param string|\Spryker\Service\UtilText\Model\Url\Url $url
+     * @param string $title
+     * @param array $options
+     *
+     * @return string
+     */
+    public function buttonGeneratorCallable($url, $title, array $options)
+    {
+        return $this->generateButton($url, $title, $options);
     }
 }
