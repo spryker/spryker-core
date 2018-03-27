@@ -41,6 +41,7 @@ class CompanyBusinessUnitDataImportPluginTest extends Unit
         $this->tester->haveCompany(['key' => 'spryker']);
 
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer('import/company_business_unit.csv');
+        $dataImportConfigurationTransfer->setThrowException(true);
 
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
         $dataImporterReportTransfer = $companyBusinessUnitDataImportPlugin->import($dataImportConfigurationTransfer);
@@ -72,8 +73,8 @@ class CompanyBusinessUnitDataImportPluginTest extends Unit
      */
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
-        $CompanyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
-        $this->assertSame(CompanyBusinessUnitDataImportConfig::IMPORT_TYPE_COMPANY_BUSINESS_UNIT, $CompanyBusinessUnitDataImportPlugin->getImportType());
+        $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
+        $this->assertSame(CompanyBusinessUnitDataImportConfig::IMPORT_TYPE_COMPANY_BUSINESS_UNIT, $companyBusinessUnitDataImportPlugin->getImportType());
     }
 
     /**
