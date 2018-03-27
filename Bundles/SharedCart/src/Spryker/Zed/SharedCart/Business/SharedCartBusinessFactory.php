@@ -10,6 +10,8 @@ namespace Spryker\Zed\SharedCart\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SharedCart\Business\Installer\QuotePermissionGroupInstaller;
 use Spryker\Zed\SharedCart\Business\Installer\QuotePermissionGroupInstallerInterface;
+use Spryker\Zed\SharedCart\Business\Model\QuoteCompanyUserWriter;
+use Spryker\Zed\SharedCart\Business\Model\QuoteCompanyUserWriterInterface;
 use Spryker\Zed\SharedCart\Business\Model\QuotePermissionGroupReader;
 use Spryker\Zed\SharedCart\Business\Model\QuotePermissionGroupReaderInterface;
 use Spryker\Zed\SharedCart\Business\Model\QuoteReader;
@@ -35,18 +37,6 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     public function createQuoteResponseExpander(): QuoteResponseExpanderInterface
     {
         return new QuoteResponseExpander($this->getQuoteResponseExpanderList());
-    }
-
-    /**
-     * @return \Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpanderInterface[]
-     */
-    protected function getQuoteResponseExpanderList(): array
-    {
-        return [
-            $this->createCustomerPermissionQuoteResponseExpander(),
-            $this->createCustomerShareCartQuoteResponseExpander(),
-            $this->createQuoteShareDetailsQuoteResponseExpander(),
-        ];
     }
 
     /**
@@ -101,6 +91,17 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\SharedCart\Business\Model\QuoteCompanyUserWriterInterface
+     */
+    public function createQuoteCompanyUserWriter(): QuoteCompanyUserWriterInterface
+    {
+        return new QuoteCompanyUserWriter(
+            $this->getRepository(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface
      */
     public function getCustomerFacade()
@@ -114,5 +115,17 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     public function getQuoteFacade(): SharedCartToQuoteFacadeInterface
     {
         return $this->getProvidedDependency(SharedCartDependencyProvider::FACADE_QUOTE);
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpanderInterface[]
+     */
+    protected function getQuoteResponseExpanderList(): array
+    {
+        return [
+            $this->createCustomerPermissionQuoteResponseExpander(),
+            $this->createCustomerShareCartQuoteResponseExpander(),
+            $this->createQuoteShareDetailsQuoteResponseExpander(),
+        ];
     }
 }

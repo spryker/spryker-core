@@ -46,4 +46,11 @@ interface SharedCartRepositoryInterface
      * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer[]
      */
     public function findQuotePermissionGroupList(QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer): array;
+
+    /**
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer[]
+     */
+    public function findQuoteCompanyUserIdCollection(int $idQuote): array;
 }

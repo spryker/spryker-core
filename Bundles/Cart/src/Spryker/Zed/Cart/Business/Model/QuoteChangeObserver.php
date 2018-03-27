@@ -86,7 +86,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
         if (!empty($quoteItemDiff)) {
             $this->messengerFacade->addInfoMessage(
                 $this->createMessengerMessageTransfer(static::CART_SYNCHRONIZE_ITEMS_PRICE_CHANGED, [
-                    'sku' => implode(', ', $quoteItemDiff),
+                    '%sku%' => implode(', ', $quoteItemDiff),
                 ])
             );
         }

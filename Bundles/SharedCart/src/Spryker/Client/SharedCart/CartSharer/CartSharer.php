@@ -8,14 +8,15 @@
 namespace Spryker\Client\SharedCart\CartSharer;
 
 use ArrayObject;
-use Exception;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
+use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToPersistentCartClientInterface;
+use Spryker\Client\SharedCart\Exception\CartNotFoundException;
 use Spryker\Client\SharedCart\Zed\SharedCartStubInterface;
 
 class CartSharer implements CartSharerInterface
@@ -36,18 +37,26 @@ class CartSharer implements CartSharerInterface
     protected $sharedCartStub;
 
     /**
+     * @var \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface
+     */
+    protected $messengerClient;
+
+    /**
      * @param \Spryker\Client\SharedCart\Zed\SharedCartStubInterface $sharedCartStub
      * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface $multiCartClient
      * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToPersistentCartClientInterface $persistentCartClient
+     * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface $messengerClient
      */
     public function __construct(
         SharedCartStubInterface $sharedCartStub,
         SharedCartToMultiCartClientInterface $multiCartClient,
-        SharedCartToPersistentCartClientInterface $persistentCartClient
+        SharedCartToPersistentCartClientInterface $persistentCartClient,
+        SharedCartToMessengerClientInterface $messengerClient
     ) {
         $this->multiCartClient = $multiCartClient;
         $this->persistentCartClient = $persistentCartClient;
         $this->sharedCartStub = $sharedCartStub;
+        $this->messengerClient = $messengerClient;
     }
 
     /**
@@ -58,6 +67,13 @@ class CartSharer implements CartSharerInterface
     public function addShareCart(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer
     {
         $quoteTransfer = $this->getQuote($shareCartRequestTransfer->getIdQuote());
+        if (!$this->validateShareCartRequest($shareCartRequestTransfer, $quoteTransfer)) {
+            $this->messengerClient->addErrorMessage('shared_cart.share.error.already_exist');
+            $quoteResponseTransfer = new QuoteResponseTransfer();
+            $quoteResponseTransfer->setIsSuccessful(false);
+
+            return $quoteResponseTransfer;
+        }
         $quoteTransfer->addShareDetail($this->createShareCartDetail($shareCartRequestTransfer));
 
         return $this->persistentCartClient->persistQuote($quoteTransfer);
@@ -79,9 +95,26 @@ class CartSharer implements CartSharerInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function validateShareCartRequest(ShareCartRequestTransfer $shareCartRequestTransfer, QuoteTransfer $quoteTransfer): bool
+    {
+        foreach ($quoteTransfer->getShareDetails() as $shareDetailTransfer) {
+            if ($shareDetailTransfer->getIdCompanyUser() === $shareCartRequestTransfer->getIdCompanyUser()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * @param int $idQuote
      *
-     * @throws \Exception
+     * @throws \Spryker\Client\SharedCart\Exception\CartNotFoundException
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -94,7 +127,7 @@ class CartSharer implements CartSharerInterface
             }
         }
 
-        throw new Exception();
+        throw new CartNotFoundException('Cart not found');
     }
 
     /**
@@ -106,7 +139,7 @@ class CartSharer implements CartSharerInterface
     {
         $shareDetailTransfer = new ShareDetailTransfer();
         $shareDetailTransfer->setIdCompanyUser($shareCartRequestTransfer->getIdCompanyUser());
-        $shareDetailTransfer->setQuotePermissionGroup($this->findQuotePermissionGroup($shareCartRequestTransfer->getIdCompanyUser()));
+        $shareDetailTransfer->setQuotePermissionGroup($this->findQuotePermissionGroup($shareCartRequestTransfer->getIdQuotePermissionGroup()));
 
         return $shareDetailTransfer;
     }

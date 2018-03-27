@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SharedCart\Persistence;
 
 use Generated\Shared\Transfer\SpyPermissionEntityTransfer;
+use Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer;
 use Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer;
 
 interface SharedCartEntityManagerInterface
@@ -36,4 +37,18 @@ interface SharedCartEntityManagerInterface
         SpyQuotePermissionGroupEntityTransfer $quotePermissionGroupEntityTransfer,
         SpyPermissionEntityTransfer $permissionEntityTransfer
     ): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer $companyUserEntityTransfer
+     *
+     * @return void
+     */
+    public function saveQuoteCompanyUser(SpyQuoteCompanyUserEntityTransfer $companyUserEntityTransfer): void;
+
+    /**
+     * @param int $idQuoteCompanyUser
+     *
+     * @return void
+     */
+    public function deleteQuoteCompanyUser(int $idQuoteCompanyUser): void;
 }

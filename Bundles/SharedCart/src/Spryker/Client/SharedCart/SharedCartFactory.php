@@ -24,7 +24,8 @@ class SharedCartFactory extends AbstractFactory
         return new CartSharer(
             $this->createZedSharedCartStub(),
             $this->getMultiCartClient(),
-            $this->getPersistentCartClient()
+            $this->getPersistentCartClient(),
+            $this->getMessengerClient()
         );
     }
 
@@ -42,6 +43,14 @@ class SharedCartFactory extends AbstractFactory
     public function getCustomerClient()
     {
         return $this->getProvidedDependency(SharedCartDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface
+     */
+    public function getMessengerClient()
+    {
+        return $this->getProvidedDependency(SharedCartDependencyProvider::CLIENT_MESSENGER);
     }
 
     /**

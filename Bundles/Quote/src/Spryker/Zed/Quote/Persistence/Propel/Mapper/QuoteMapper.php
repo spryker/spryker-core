@@ -106,7 +106,7 @@ class QuoteMapper implements QuoteMapperInterface
     protected function filterDisallowedQuoteData(QuoteTransfer $quoteTransfer)
     {
         $data = [];
-        $quoteData = $quoteTransfer->modifiedToArray();
+        $quoteData = $quoteTransfer->modifiedToArray(true, true);
         foreach ($this->quoteConfig->getQuoteFieldsAllowedForSaving() as $dataKey) {
             if (isset($quoteData[$dataKey])) {
                 $data[$dataKey] = $quoteData[$dataKey];

@@ -149,6 +149,21 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     }
 
     /**
+     * @param int $idQuote
+     *
+     * @return array
+     */
+    public function findQuoteCompanyUserIdCollection(int $idQuote): array
+    {
+        return $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByFkQuote($idQuote)
+            ->select([SpyQuoteCompanyUserTableMap::COL_ID_QUOTE_COMPANY_USER])
+            ->find()
+            ->toArray();
+    }
+
+    /**
      * @param int $idCompanyUser
      *
      * @return array
