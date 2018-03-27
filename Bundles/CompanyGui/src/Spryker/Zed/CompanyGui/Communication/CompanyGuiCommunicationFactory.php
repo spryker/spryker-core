@@ -13,6 +13,7 @@ use Spryker\Zed\CompanyGui\Communication\Form\DataProvider\CompanyFormDataProvid
 use Spryker\Zed\CompanyGui\Communication\Table\CompanyTable;
 use Spryker\Zed\CompanyGui\CompanyGuiDependencyProvider;
 use Spryker\Zed\CompanyGui\Dependency\Facade\CompanyGuiToCompanyFacadeInterface;
+use Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableActionExtensionInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -23,9 +24,10 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCompanyTable(): CompanyTable
     {
-        $companyQuery = $this->getPropelCompanyQuery();
-
-        return new CompanyTable($companyQuery);
+        return new CompanyTable(
+            $this->getPropelCompanyQuery(),
+            $this->getCompanyTableActionExtensionPlugins()
+        );
     }
 
     /**
@@ -63,5 +65,13 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
     protected function getPropelCompanyQuery(): SpyCompanyQuery
     {
         return $this->getProvidedDependency(CompanyGuiDependencyProvider::PROPEL_COMPANY_QUERY);
+    }
+
+    /**
+     * @return CompanyTableActionExtensionInterface[]
+     */
+    protected function getCompanyTableActionExtensionPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyGuiDependencyProvider::COMPANY_TABLE_ACTION_EXTENSION_PLUGINS);
     }
 }

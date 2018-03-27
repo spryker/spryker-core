@@ -11,6 +11,7 @@ use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTypeTableMap;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableActionExtensionInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -37,11 +38,18 @@ class CompanyTable extends AbstractTable
     protected $companyQuery;
 
     /**
-     * @param \Orm\Zed\Company\Persistence\SpyCompanyQuery $companyQuery
+     * @var CompanyTableActionExtensionInterface[]
      */
-    public function __construct(SpyCompanyQuery $companyQuery)
+    protected $companyTableActionExtensionPlugins;
+
+    /**
+     * @param \Orm\Zed\Company\Persistence\SpyCompanyQuery $companyQuery
+     * @param CompanyTableActionExtensionInterface[] $companyTableActionExtensionPlugins
+     */
+    public function __construct(SpyCompanyQuery $companyQuery, array $companyTableActionExtensionPlugins)
     {
         $this->companyQuery = $companyQuery;
+        $this->companyTableActionExtensionPlugins = $companyTableActionExtensionPlugins;
         $this->prepareQuery();
     }
 
@@ -123,6 +131,20 @@ class CompanyTable extends AbstractTable
         );
         $buttons[] = $this->generateStatusChangeButton($item);
         $buttons = array_merge($buttons, $this->generateCompanyStatusChangeButton($item));
+
+        foreach ($this->companyTableActionExtensionPlugins as $companyTableActionExtensionPlugin) {
+            $button = $companyTableActionExtensionPlugin->prepareButton($item);
+            if (!$button->getUrl()) {
+                continue;
+            }
+            $buttons[] = $this->generateButton(
+                $button->getUrl(),
+                $button->getTitle(),
+                $button->getDefaultOptions(),
+                $button->getCustomOptions()
+            );
+        }
+
 
         return implode(' ', $buttons);
     }

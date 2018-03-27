@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyGui;
 
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Spryker\Zed\CompanyGui\Dependency\Facade\CompanyGuiToCompanyFacadeBridge;
+use Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableActionExtensionInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -16,6 +17,7 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_COMPANY_QUERY = 'PROPEL_COMPANY_QUERY';
     public const FACADE_COMPANY = 'FACADE_COMPANY';
+    public const COMPANY_TABLE_ACTION_EXTENSION_PLUGINS = 'COMPANY_TABLE_ACTION_EXTENSION_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,6 +29,7 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addPropelCompanyQuery($container);
         $container = $this->addCompanyFacade($container);
+        $container = $this->addCompanyTableActionExtensionPlugins($container);
 
         return $container;
     }
@@ -57,5 +60,27 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyTableActionExtensionPlugins(Container $container): Container
+    {
+        $container[static::COMPANY_TABLE_ACTION_EXTENSION_PLUGINS] = function (Container $container) {
+            return $this->getCompanyTableActionExtensionPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return CompanyTableActionExtensionInterface[]
+     */
+    protected function getCompanyTableActionExtensionPlugins(): array
+    {
+        return [];
     }
 }
