@@ -18,8 +18,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class OrderSourceListType extends AbstractType
 {
     const FIELD_ORDER_SOURCE = 'id_order_source';
-
     const OPTION_ORDER_SOURCE_ARRAY = 'option-order-source-array';
+    const TYPE_NAME = 'order-source-list';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -71,6 +71,6 @@ class OrderSourceListType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'Order-Source';
+        return self::TYPE_NAME;
     }
 }
