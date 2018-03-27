@@ -7,7 +7,10 @@
 
 namespace Spryker\Client\SharedCart\Plugin;
 
+use ArrayObject;
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PersistentCart\Dependency\Plugin\QuoteUpdatePluginInterface;
 
@@ -34,9 +37,29 @@ class SharedCartsUpdateQuoteUpdatePlugin extends AbstractPlugin implements Quote
             foreach ($quoteResponseTransfer->getSharedCustomerQuotes()->getQuotes() as $quoteTransfer) {
                 $customerQuoteCollectionTransfer->addQuote($quoteTransfer);
             }
-            $multiCartClient->setQuoteCollection($customerQuoteCollectionTransfer);
+            $multiCartClient->setQuoteCollection(
+                $this->sortQuoteCollectionByName($customerQuoteCollectionTransfer)
+            );
         }
 
         return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    protected function sortQuoteCollectionByName(QuoteCollectionTransfer $quoteCollectionTransfer): QuoteCollectionTransfer
+    {
+        $quoteTransferList = (array)$quoteCollectionTransfer->getQuotes();
+        usort($quoteTransferList, function (QuoteTransfer $quoteTransferA, QuoteTransfer $quoteTransferB) {
+            return strcmp($quoteTransferA->getName(), $quoteTransferB->getName());
+        });
+        $quoteCollectionTransfer->setQuotes(
+            new ArrayObject($quoteTransferList)
+        );
+
+        return $quoteCollectionTransfer;
     }
 }

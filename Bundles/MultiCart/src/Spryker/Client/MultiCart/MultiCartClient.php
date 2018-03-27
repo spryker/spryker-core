@@ -80,7 +80,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
      */
     public function setQuoteCollection(QuoteCollectionTransfer $quoteCollectionTransfer): void
     {
-        $this->getFactory()->createMultiCartSession()->setQuoteCollection($quoteCollectionTransfer);
+        $this->getFactory()->createMultiCartStorage()->setQuoteCollection($quoteCollectionTransfer);
     }
 
     /**

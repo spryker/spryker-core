@@ -59,6 +59,7 @@ class QuoteResponseExpander implements QuoteResponseExpanderInterface
         
         $filterTransfer = new FilterTransfer();
         $filterTransfer->setOrderBy('name');
+        $filterTransfer->setOrderDirection('ASC');
         $quoteCriteriaFilterTransfer->setFilter($filterTransfer);
         $customerQuoteCollectionTransfer = $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
         foreach ($customerQuoteCollectionTransfer->getQuotes() as $customerQuoteTransfer) {
