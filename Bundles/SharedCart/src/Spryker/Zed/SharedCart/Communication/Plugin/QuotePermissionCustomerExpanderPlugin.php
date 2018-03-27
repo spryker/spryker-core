@@ -25,15 +25,21 @@ class QuotePermissionCustomerExpanderPlugin extends AbstractPlugin implements Cu
      */
     public function expandTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        if (!$customerTransfer->getCompanyUserTransfer()) {
-            return $customerTransfer;
+        if ($customerTransfer->getCompanyUserTransfer()) {
+            $permissionCollectionTransfer = $this->getFacade()
+                ->findPermissionsByIdCompanyUser(
+                    $customerTransfer
+                        ->getCompanyUserTransfer()
+                        ->getIdCompanyUser()
+                );
+
+            return $this->addCustomerPermissions($customerTransfer, $permissionCollectionTransfer);
         }
 
         $permissionCollectionTransfer = $this->getFacade()
-            ->findPermissionsByIdCompanyUser(
+            ->findPermissionsByCustomer(
                 $customerTransfer
-                    ->getCompanyUserTransfer()
-                    ->getIdCompanyUser()
+                    ->getCustomerReference()
             );
 
         return $this->addCustomerPermissions($customerTransfer, $permissionCollectionTransfer);

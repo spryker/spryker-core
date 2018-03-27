@@ -9,9 +9,14 @@ namespace Spryker\Zed\Quote\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Quote\Business\Model\QuoteDeleter;
-use Spryker\Zed\Quote\Business\Model\QuoteMerger;
+use Spryker\Zed\Quote\Business\Model\QuoteDeleterInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteReader;
+use Spryker\Zed\Quote\Business\Model\QuoteReaderInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteWriter;
+use Spryker\Zed\Quote\Business\Model\QuoteWriterInterface;
+use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutor;
+use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutorInterface;
+use Spryker\Zed\Quote\QuoteConfig;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
 
 /**
@@ -24,18 +29,33 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Quote\Business\Model\QuoteWriterInterface
      */
-    public function createQuoteWriter()
+    public function createQuoteWriter(): QuoteWriterInterface
     {
         return new QuoteWriter(
             $this->getEntityManager(),
+            $this->getRepository(),
+            $this->createQuoteWriterPluginExecutor(),
             $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutorInterface
+     */
+    public function createQuoteWriterPluginExecutor(): QuoteWriterPluginExecutorInterface
+    {
+        return new QuoteWriterPluginExecutor(
+            $this->getQuoteCreateBeforePlugins(),
+            $this->getQuoteCreateAfterPlugins(),
+            $this->getQuoteUpdateBeforePlugins(),
+            $this->getQuoteUpdateAfterPlugins()
         );
     }
 
     /**
      * @return \Spryker\Zed\Quote\Business\Model\QuoteReaderInterface
      */
-    public function createQuoteReader()
+    public function createQuoteReader(): QuoteReaderInterface
     {
         return new QuoteReader(
             $this->getRepository()
@@ -45,7 +65,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Quote\Business\Model\QuoteDeleterInterface
      */
-    public function createQuoteDeleter()
+    public function createQuoteDeleter(): QuoteDeleterInterface
     {
         return new QuoteDeleter(
             $this->getRepository(),
@@ -56,24 +76,48 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Quote\QuoteConfig
      */
-    public function getBundleConfig()
+    public function getBundleConfig(): QuoteConfig
     {
         return $this->getConfig();
     }
 
     /**
-     * @return \Spryker\Zed\Quote\Business\Model\QuoteMergerInterface
+     * @return \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface
      */
-    public function createQuoteMerger()
+    public function getStoreFacade()
     {
-        return new QuoteMerger();
+        return $this->getProvidedDependency(QuoteDependencyProvider::FACADE_STORE);
     }
 
     /**
-     * @return \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
      */
-    protected function getStoreFacade()
+    protected function getQuoteCreateAfterPlugins(): array
     {
-        return $this->getProvidedDependency(QuoteDependencyProvider::FACADE_STORE);
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_CREATE_AFTER);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
+     */
+    protected function getQuoteCreateBeforePlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_CREATE_BEFORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
+     */
+    protected function getQuoteUpdateAfterPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_UPDATE_AFTER);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
+     */
+    protected function getQuoteUpdateBeforePlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_UPDATE_BEFORE);
     }
 }

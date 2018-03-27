@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\MultiCart\Business\MultiCartBusinessFactory getFactory()
+ * @method \Spryker\Zed\MultiCart\Persistence\MultiCartEntityManagerInterface getEntityManager()
  */
 class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
 {
@@ -42,5 +43,19 @@ class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
     public function expandQuoteResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createQuoteResponseExpander()->expand($quoteResponseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $customerReference
+     *
+     * @return void
+     */
+    public function unDefaultCustomerQuotes(string $customerReference): void
+    {
+        $this->getEntityManager()->unDefaultCustomerQuotes($customerReference);
     }
 }

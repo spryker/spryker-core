@@ -56,6 +56,41 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     }
 
     /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findPermissionsByCustomer(string $customerReference): PermissionCollectionTransfer
+    {
+        $permissionCollectionTransfer = new PermissionCollectionTransfer();
+
+        $ownQuoteIdCollection = $this->getFactory()
+            ->createQuoteQuery()
+            ->filterByCustomerReference($customerReference)
+            ->select([SpyQuoteTableMap::COL_ID_QUOTE])
+            ->find()
+            ->toArray();
+
+        $permissionEntities = $this->getFactory()
+            ->createPermissionQuery()
+            ->joinSpyQuotePermissionGroupToPermission()
+            ->groupByIdPermission()
+            ->find();
+
+        foreach ($permissionEntities as $permissionEntity) {
+            $permissionTransfer = new PermissionTransfer();
+            $permissionTransfer->fromArray($permissionEntity->toArray(), true);
+            $permissionTransfer->setConfiguration([
+                SharedCartConfig::PERMISSION_CONFIG_ID_QUOTE_COLLECTION => $ownQuoteIdCollection,
+            ]);
+
+            $permissionCollectionTransfer->addPermission($permissionTransfer);
+        }
+
+        return $permissionCollectionTransfer;
+    }
+
+    /**
      * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer[]

@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\MultiCart\Plugin;
+namespace Spryker\Client\SharedCart\Plugin;
 
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Spryker\Client\PersistentCart\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface;
 
-class QuoteSelectorPersistentCartChangeExpanderPlugin implements PersistentCartChangeExpanderPluginInterface
+class ProductSeparatePersistentCartChangeExpanderPlugin implements PersistentCartChangeExpanderPluginInterface
 {
-    public const PARAM_ID_QUOTE = 'id_quote';
+    public const PARAM_SEPARATE_PRODUCT = 'separate_product';
 
     /**
      * Specification:
@@ -27,8 +27,12 @@ class QuoteSelectorPersistentCartChangeExpanderPlugin implements PersistentCartC
      */
     public function extend(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
-        if (!empty($params[self::PARAM_ID_QUOTE])) {
-            $cartChangeTransfer->setIdQuote($params[self::PARAM_ID_QUOTE]);
+        if (!empty($params[self::PARAM_SEPARATE_PRODUCT])) {
+            foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+                $itemTransfer->setGroupKey(
+                    $itemTransfer->getGroupKey() . time()
+                );
+            }
         }
 
         return $cartChangeTransfer;

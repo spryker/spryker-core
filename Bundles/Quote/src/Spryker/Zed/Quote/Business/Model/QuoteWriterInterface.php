@@ -18,4 +18,18 @@ interface QuoteWriterInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function save(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function create(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function update(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

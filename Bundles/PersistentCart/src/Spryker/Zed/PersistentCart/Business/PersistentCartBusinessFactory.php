@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpander;
 use Spryker\Zed\PersistentCart\Business\Model\CartOperation;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleter;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteMerger;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpander;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizer;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriter;
@@ -40,7 +41,8 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
         return new QuoteStorageSynchronizer(
             $this->getCartFacade(),
             $this->getQuoteFacade(),
-            $this->createQuoteResponseExpander()
+            $this->createQuoteResponseExpander(),
+            $this->createQuoteMerger()
         );
     }
 
@@ -84,6 +86,14 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
         return new CartChangeRequestExpander(
             $this->getRemoveItemsRequestExpanderPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteMergerInterface
+     */
+    public function createQuoteMerger()
+    {
+        return new QuoteMerger();
     }
 
     /**

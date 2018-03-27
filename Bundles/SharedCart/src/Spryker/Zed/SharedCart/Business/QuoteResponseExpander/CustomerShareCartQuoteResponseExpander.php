@@ -50,7 +50,7 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
      */
     protected function findSharedCustomerQuotes(CustomerTransfer $customerTransfer): QuoteCollectionTransfer
     {
-        if ($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()) {
+        if ($customerTransfer->getCompanyUserTransfer()) {
             return $this->quoteReader->findCustomerSharedQuotes($customerTransfer);
         }
 

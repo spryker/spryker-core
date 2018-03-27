@@ -28,6 +28,9 @@ class PermissionUpdateQuoteUpdatePlugin extends AbstractPlugin implements QuoteU
      */
     public function processResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
+        if (!$quoteResponseTransfer->getCustomerPermissions()) {
+            return $quoteResponseTransfer;
+        }
         $permissionCollectionTransfer = $quoteResponseTransfer->requireCustomerPermissions()->getCustomerPermissions();
         $customerClient = $this->getFactory()->getCustomerClient();
         $customerTransfer = $customerClient->getCustomer();

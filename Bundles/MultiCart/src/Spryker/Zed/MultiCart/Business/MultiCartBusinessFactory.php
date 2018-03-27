@@ -17,6 +17,9 @@ use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToPersistentCartFacadeInter
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface;
 use Spryker\Zed\MultiCart\MultiCartDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\MultiCart\MultiCartConfig getConfig()
+ */
 class MultiCartBusinessFactory extends AbstractBusinessFactory
 {
     /**

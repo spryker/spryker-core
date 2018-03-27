@@ -33,7 +33,6 @@ class QuoteConfig extends AbstractBundleConfig
             QuoteTransfer::TOTALS,
             QuoteTransfer::CURRENCY,
             QuoteTransfer::PRICE_MODE,
-            QuoteTransfer::STORE,
         ];
     }
 }

@@ -143,7 +143,7 @@ class QuoteActivator implements QuoteActivatorInterface
      *
      * @return void
      */
-    protected function resetQuoteDefaultFlag(QuoteCollectionTransfer $quotesCollectionTransfer)
+    protected function resetQuoteDefaultFlag(QuoteCollectionTransfer $quotesCollectionTransfer): void
     {
         foreach ($quotesCollectionTransfer->getQuotes() as $quoteTransfer) {
             if (!$quoteTransfer->getIsDefault()) {
@@ -160,7 +160,7 @@ class QuoteActivator implements QuoteActivatorInterface
      *
      * @return void
      */
-    protected function addSuccessMessage($quoteName)
+    protected function addSuccessMessage($quoteName): void
     {
         $messageTransfer = new MessageTransfer();
         $messageTransfer

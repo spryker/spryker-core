@@ -32,7 +32,7 @@ class DefaultQuoteUpdatePlugin extends AbstractPlugin implements QuoteUpdatePlug
         if ($quoteResponseTransfer->getCustomerQuotes() && !$quoteResponseTransfer->getQuoteTransfer()->getIsDefault()) {
             $defaultQuoteTransfer = $this->findDefaultQuote($quoteResponseTransfer->getCustomerQuotes());
             if ($defaultQuoteTransfer) {
-                $this->getFactory()->getQuoteClient()->setQuote($defaultQuoteTransfer);
+                $quoteResponseTransfer->setQuoteTransfer($defaultQuoteTransfer);
             }
         }
 

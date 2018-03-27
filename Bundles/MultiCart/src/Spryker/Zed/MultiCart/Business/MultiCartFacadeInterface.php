@@ -37,4 +37,16 @@ interface MultiCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function expandQuoteResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Mark all customer quotes as not default.
+     *
+     * @api
+     *
+     * @param string $customerReference
+     *
+     * @return mixed
+     */
+    public function unDefaultCustomerQuotes(string $customerReference);
 }

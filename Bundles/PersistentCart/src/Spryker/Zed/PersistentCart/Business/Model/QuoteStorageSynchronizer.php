@@ -34,18 +34,26 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
     protected $quoteResponseExpander;
 
     /**
+     * @var \Spryker\Zed\PersistentCart\Business\Model\QuoteMergerInterface
+     */
+    protected $quoteMerger;
+
+    /**
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface $quoteResponseExpander
+     * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteMergerInterface $quoteMerger
      */
     public function __construct(
         PersistentCartToCartFacadeInterface $cartFacade,
         PersistentCartToQuoteFacadeInterface $quoteFacade,
-        QuoteResponseExpanderInterface $quoteResponseExpander
+        QuoteResponseExpanderInterface $quoteResponseExpander,
+        QuoteMergerInterface $quoteMerger
     ) {
         $this->cartFacade = $cartFacade;
         $this->quoteFacade = $quoteFacade;
         $this->quoteResponseExpander = $quoteResponseExpander;
+        $this->quoteMerger = $quoteMerger;
     }
 
     /**
@@ -109,7 +117,7 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
             ->setTargetQuote($targetQuoteTransfer)
             ->setSourceQuote($sourceQuoteTransfer);
 
-        $targetQuoteTransfer = $this->quoteFacade->mergeQuotes($quoteMergeRequestTransfer);
+        $targetQuoteTransfer = $this->quoteMerger->merge($quoteMergeRequestTransfer);
         $targetQuoteTransfer->setIdQuote($sourceQuoteTransfer->getIdQuote());
 
         return $targetQuoteTransfer;

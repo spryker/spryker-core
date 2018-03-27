@@ -95,7 +95,7 @@ class QuoteMapper implements QuoteMapperInterface
     {
         $quoteData = $this->filterDisallowedQuoteData($quoteTransfer);
 
-        return $this->encodingService->encodeJson($quoteData);
+        return $this->encodingService->encodeJson($quoteData, JSON_OBJECT_AS_ARRAY);
     }
 
     /**
@@ -106,9 +106,10 @@ class QuoteMapper implements QuoteMapperInterface
     protected function filterDisallowedQuoteData(QuoteTransfer $quoteTransfer)
     {
         $data = [];
+        $quoteData = $quoteTransfer->modifiedToArray();
         foreach ($this->quoteConfig->getQuoteFieldsAllowedForSaving() as $dataKey) {
-            if ($quoteTransfer->isPropertyModified($dataKey)) {
-                $data[$dataKey] = $quoteTransfer[$dataKey];
+            if (isset($quoteData[$dataKey])) {
+                $data[$dataKey] = $quoteData[$dataKey];
             }
         }
 

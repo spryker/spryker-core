@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Quote\Business\Model;
+namespace Spryker\Zed\PersistentCart\Business\Model;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
