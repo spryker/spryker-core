@@ -62,9 +62,6 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
     {
         foreach ($properties as $property) {
             // non arrays and non-basic types are dependencies
-            if (!isset($property['type'])) {
-                $stop = null;
-            }
             if (preg_match('/^[A-Z]\w+(\[\])?$/', $property['type'])) {
                 if (isset($property['singular']) && !isset($this->dependencies[$property['singular']])) {
                     $property['name'] = $property['singular'];
