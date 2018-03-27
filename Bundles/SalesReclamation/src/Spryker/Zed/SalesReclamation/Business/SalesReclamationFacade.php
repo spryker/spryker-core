@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class SalesReclamationFacade extends AbstractFacade implements SalesReclamationFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer
@@ -32,6 +34,8 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
@@ -46,6 +50,8 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
