@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\SalesReclamation\Persistence;
 
+use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationItemQuery;
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\SalesReclamation\Persistence\Propel\SpySalesReclamationItemQuery;
 
 /**
  * @method \Spryker\Zed\SalesReclamation\SalesReclamationConfig getConfig()

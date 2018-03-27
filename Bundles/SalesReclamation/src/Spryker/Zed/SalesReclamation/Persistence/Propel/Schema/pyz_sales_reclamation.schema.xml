@@ -28,7 +28,7 @@
 
     <table name="spy_sales_reclamation_item" phpName="SpySalesReclamationItem">
         <column name="id_sales_reclamation_item" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_sales_reclamation"type="INTEGER"  required="true" />
+        <column name="fk_sales_reclamation" type="INTEGER" required="true" />
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
 
         <column name="state" type="ENUM" valueSet="Open, Refunded" required="true" />
