@@ -11,7 +11,7 @@ interface ProductQuantityEvents
 {
    /**
      * Specification
-     * -
+     * - This event is used for product_quantity publishing.
      *
      * @api
      */
@@ -19,7 +19,7 @@ interface ProductQuantityEvents
 
     /**
      * Specification
-     * -
+     * - This event is used for product_quantity unpublishing.
      *
      * @api
      */
@@ -27,7 +27,7 @@ interface ProductQuantityEvents
 
     /**
      * Specification
-     * -
+     * - This event is used for spy_product_quantity entity creation.
      *
      * @api
      */
@@ -35,7 +35,7 @@ interface ProductQuantityEvents
 
     /**
      * Specification
-     * -
+     * - This event is used for spy_product_quantity entity changes.
      *
      * @api
      */
@@ -43,7 +43,7 @@ interface ProductQuantityEvents
 
     /**
      * Specification
-     * -
+     * - This event is used for spy_product_quantity entity deletion.
      *
      * @api
      */

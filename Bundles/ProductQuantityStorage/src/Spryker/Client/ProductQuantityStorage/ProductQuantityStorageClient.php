@@ -23,10 +23,10 @@ class ProductQuantityStorageClient extends AbstractClient implements ProductQuan
      *
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
      */
-    public function getProductQuantity($idProduct)
+    public function getProductQuantityStorage($idProduct)
     {
         return $this->getFactory()
             ->createProductQuantityStorageReader()
-            ->getProductQuantity($idProduct);
+            ->getProductQuantityStorage($idProduct);
     }
 }

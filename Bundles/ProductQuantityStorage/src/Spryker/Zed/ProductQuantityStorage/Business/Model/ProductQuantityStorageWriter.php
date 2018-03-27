@@ -8,13 +8,44 @@
 namespace Spryker\Zed\ProductQuantityStorage\Business\Model;
 
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
-use Orm\Zed\ProductQuantity\Persistence\SpyProductQuantity;
-use Orm\Zed\ProductQuantity\Persistence\SpyProductQuantityQuery;
-use Orm\Zed\ProductQuantityStorage\Persistence\SpyProductQuantityStorage;
-use Orm\Zed\ProductQuantityStorage\Persistence\SpyProductQuantityStorageQuery;
+use Generated\Shared\Transfer\SpyProductQuantityEntityTransfer;
+use Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer;
+use Spryker\Zed\ProductQuantityStorage\Dependency\Facade\ProductQuantityStorageToProductQuantityFacadeInterface;
+use Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageEntityManagerInterface;
+use Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageRepositoryInterface;
 
 class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageEntityManagerInterface
+     */
+    protected $productQuantityStorageEntityManager;
+
+    /**
+     * @var \Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageRepositoryInterface
+     */
+    protected $productQuantityStorageRepository;
+
+    /**
+     * @var \Spryker\Zed\ProductQuantityStorage\Dependency\Facade\ProductQuantityStorageToProductQuantityFacadeInterface
+     */
+    protected $productQuantityFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageEntityManagerInterface $productQuantityStorageEntityManager
+     * @param \Spryker\Zed\ProductQuantityStorage\Persistence\ProductQuantityStorageRepositoryInterface $productQuantityStorageRepository
+     * @param \Spryker\Zed\ProductQuantityStorage\Dependency\Facade\ProductQuantityStorageToProductQuantityFacadeInterface $productQuantityFacade
+     */
+    public function __construct(
+        ProductQuantityStorageEntityManagerInterface $productQuantityStorageEntityManager,
+        ProductQuantityStorageRepositoryInterface $productQuantityStorageRepository,
+        ProductQuantityStorageToProductQuantityFacadeInterface $productQuantityFacade
+    ) {
+        $this->productQuantityStorageEntityManager = $productQuantityStorageEntityManager;
+        $this->productQuantityStorageRepository = $productQuantityStorageRepository;
+        $this->productQuantityFacade = $productQuantityFacade;
+    }
+
     /**
      * @param int[] $productIds
      *
@@ -22,83 +53,90 @@ class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterf
      */
     public function publish(array $productIds)
     {
-        $productQuantityEntities = $this->getProductQuantityEntities($productIds);
-        $productQuantityStorageEntities = $this->getProductQuantityStorageEntities($productIds);
+        $productQuantityEntities = $this->productQuantityFacade->getProductQuantityEntitiesByProductIds($productIds);
+        $productQuantityStorageEntities = $this->productQuantityStorageRepository->getProductQuantityStorageEntitiesByProductIds($productIds);
         $mappedProductQuantityStorageEntities = $this->mapProductQuantityStorageEntities($productQuantityStorageEntities);
 
         foreach ($productQuantityEntities as $productQuantityEntity) {
-            $idProduct = $productQuantityEntity->getFkProduct();
-                $storageEntity = isset($mappedProductQuantityStorageEntities[$idProduct]) ?
-                    $mappedProductQuantityStorageEntities[$idProduct] :
-                    new SpyProductQuantityStorage();
+            $storageEntity = $this->selectStorageEntity($mappedProductQuantityStorageEntities, $productQuantityEntity->getFkProduct());
 
-                unset($mappedProductQuantityStorageEntities[$idProduct]);
+            unset($mappedProductQuantityStorageEntities[$productQuantityEntity->getFkProduct()]);
 
-                $storageEntity
-                    ->setFkProduct($idProduct)
-                    ->setData($this->getStorageEntityData($productQuantityEntity))
-                    ->save();
+            $this->saveStorageEntity($storageEntity, $productQuantityEntity);
         }
 
-        array_walk_recursive(
-            $mappedProductQuantityStorageEntities,
-            function (SpyProductQuantityStorage $productQuantityStorageEntity) {
-                $productQuantityStorageEntity->delete();
-            }
-        );
+        $this->deleteStorageEntities($mappedProductQuantityStorageEntities);
     }
 
     /**
-     * @param \Orm\Zed\ProductQuantity\Persistence\SpyProductQuantity $productQuantityEntity
+     * @param \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer $storageEntity
+     * @param \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer $productQuantityEntity
+     *
+     * @return void
+     */
+    protected function saveStorageEntity(
+        SpyProductQuantityStorageEntityTransfer $storageEntity,
+        SpyProductQuantityEntityTransfer $productQuantityEntity
+    ) {
+        $storageEntity
+            ->setFkProduct($productQuantityEntity->getFkProduct())
+            ->setData($this->getStorageEntityData($productQuantityEntity));
+
+        $this->productQuantityStorageEntityManager->saveProductQuantityStorageEntity($storageEntity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[] $mappedProductQuantityStorageEntities
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer
+     */
+    protected function selectStorageEntity(array $mappedProductQuantityStorageEntities, $idProduct)
+    {
+        if (isset($mappedProductQuantityStorageEntities[$idProduct])) {
+            return $mappedProductQuantityStorageEntities[$idProduct];
+        }
+
+        return new SpyProductQuantityStorageEntityTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer $productQuantityEntity
      *
      * @return array
      */
-    protected function getStorageEntityData(SpyProductQuantity $productQuantityEntity)
+    protected function getStorageEntityData(SpyProductQuantityEntityTransfer $productQuantityEntity)
     {
         return (new ProductQuantityStorageTransfer())
             ->fromArray($productQuantityEntity->toArray(), true)
-            ->setIdProduct($productQuantityEntity->getFkProduct())
+            ->setProductId($productQuantityEntity->getFkProduct())
             ->toArray();
     }
 
     /**
-     * @param int[] $productIds
+     * @param \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[] $productQuantityStorageEntities
      *
-     * @return \Orm\Zed\ProductQuantity\Persistence\SpyProductQuantity[]
-     */
-    protected function getProductQuantityEntities(array $productIds)
-    {
-        return SpyProductQuantityQuery::create()
-            ->filterByFkProduct_In($productIds)
-            ->find()
-            ->getArrayCopy();
-    }
-
-    /**
-     * @param int[] $productIds
-     *
-     * @return \Orm\Zed\ProductQuantityStorage\Persistence\SpyProductQuantityStorage[]
-     */
-    protected function getProductQuantityStorageEntities(array $productIds)
-    {
-        return SpyProductQuantityStorageQuery::create()
-            ->filterByFkProduct_In($productIds)
-            ->find()
-            ->getArrayCopy();
-    }
-
-    /**
-     * @param \Orm\Zed\ProductQuantityStorage\Persistence\SpyProductQuantityStorage[] $productQuantityStorageEntities
-     *
-     * @return array
+     * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
      */
     protected function mapProductQuantityStorageEntities(array $productQuantityStorageEntities)
     {
-        $mappedProductMeasurementUnitStorageEntities = [];
+        $mappedProductQuantityStorageEntities = [];
         foreach ($productQuantityStorageEntities as $entity) {
-            $mappedProductMeasurementUnitStorageEntities[$entity->getFkProduct()] = $entity;
+            $mappedProductQuantityStorageEntities[$entity->getFkProduct()] = $entity;
         }
 
-        return $mappedProductMeasurementUnitStorageEntities;
+        return $mappedProductQuantityStorageEntities;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[] $mappedProductQuantityStorageEntities
+     *
+     * @return void
+     */
+    protected function deleteStorageEntities(array $mappedProductQuantityStorageEntities)
+    {
+        foreach ($mappedProductQuantityStorageEntities as $productQuantityStorageEntity) {
+            $this->productQuantityStorageEntityManager->deleteProductQuantityStorage($productQuantityStorageEntity->getIdProductQuantityStorage());
+        }
     }
 }

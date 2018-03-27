@@ -11,7 +11,8 @@ interface ProductQuantityStorageClientInterface
 {
     /**
      * Specification:
-     * -
+     * - Finds a product quantity within Storage with the given related product ID.
+     * - Returns null if product quantity was not found.
      *
      * @api
      *
@@ -19,5 +20,5 @@ interface ProductQuantityStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
      */
-    public function getProductQuantity($idProduct);
+    public function getProductQuantityStorage($idProduct);
 }

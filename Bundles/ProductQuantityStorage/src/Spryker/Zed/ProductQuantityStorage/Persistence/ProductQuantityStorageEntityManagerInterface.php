@@ -7,6 +7,25 @@
 
 namespace Spryker\Zed\ProductQuantityStorage\Persistence;
 
+use Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer;
+
 interface ProductQuantityStorageEntityManagerInterface
 {
+    /**
+     * @api
+     *
+     * @param int $idProductQuantityStorage
+     *
+     * @return void
+     */
+    public function deleteProductQuantityStorage($idProductQuantityStorage);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer $productQuantityStorageEntity
+     *
+     * @return void
+     */
+    public function saveProductQuantityStorageEntity(SpyProductQuantityStorageEntityTransfer $productQuantityStorageEntity);
 }

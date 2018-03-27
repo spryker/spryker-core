@@ -14,5 +14,5 @@ interface ProductQuantityStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
      */
-    public function getProductQuantity($idProduct);
+    public function getProductQuantityStorage($idProduct);
 }
