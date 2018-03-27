@@ -26,7 +26,7 @@ class CompanySupplierQueryContainer extends AbstractQueryContainer implements Co
     public function queryProductSuppliers(): SpyProductQuery
     {
         $query = $this->getFactory()->createProductQueryContainer();
-        $query->addJoin(SpyProductTableMap::COL_ID_PRODUCT, SpyCompanySupplierToProductTableMap::COL_FK_PRODUCT, Criteria::RIGHT_JOIN);
+        $query->rightJoinSpyCompanySupplierToProduct();
 
         return $query;
     }

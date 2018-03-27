@@ -7,6 +7,7 @@
 namespace Spryker\Zed\CompanySupplierGui\Communication\Table;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Orm\Zed\CompanySupplier\Persistence\Map\SpyCompanySupplierToProductTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -125,7 +126,10 @@ class ProductSupplierTable extends AbstractTable
      */
     protected function prepareQuery(): SpyProductQuery
     {
-        return $this->companySupplierQueryContainer->queryProductSuppliers();
+        $query = $this->companySupplierQueryContainer->queryProductSuppliers();
+        $query->where(SpyCompanySupplierToProductTableMap::COL_FK_COMPANY.' = ?', $this->idCompany);
+
+        return $query;
     }
 
     /**
@@ -189,11 +193,15 @@ class ProductSupplierTable extends AbstractTable
         $criteria->add(SpyPriceTypeTableMap::COL_NAME, static::PRICE_TYPE_DEFAULT);
 
         $prices = $spyProductEntity->getPriceProductsJoinPriceType($criteria);
-        if ($prices->count() < 1) {
-            return '';
+        $abstractPrices = $spyProductEntity->getSpyProductAbstract()->getPriceProductsJoinPriceType($criteria);
+        if ($prices->count() > 0) {
+            return $this->formatPrices($prices[0]->getPriceProductStoresJoinCurrency());
+        }
+        if ($abstractPrices->count() > 0) {
+            return $this->formatPrices($abstractPrices[0]->getPriceProductStoresJoinCurrency());
         }
 
-        return $this->formatPrices($prices[0]->getPriceProductStoresJoinCurrency());
+        return '';
     }
 
     /**
