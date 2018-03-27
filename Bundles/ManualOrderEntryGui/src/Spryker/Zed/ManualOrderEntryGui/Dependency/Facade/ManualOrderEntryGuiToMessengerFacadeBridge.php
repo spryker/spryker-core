@@ -53,4 +53,14 @@ class ManualOrderEntryGuiToMessengerFacadeBridge implements ManualOrderEntryGuiT
     {
         $this->messengerFacade->addInfoMessage($message);
     }
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
+     */
+    public function getStoredMessages()
+    {
+        return $this->messengerFacade->getStoredMessages();
+    }
 }

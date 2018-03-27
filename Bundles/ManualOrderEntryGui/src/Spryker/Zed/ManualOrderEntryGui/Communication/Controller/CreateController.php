@@ -61,7 +61,10 @@ class CreateController extends AbstractController
             $forms[] = $form;
         }
 
-        if ($validForms && count($allFormPlugins) == count($filteredFormPlugins)) {
+        if ($validForms
+            && count($allFormPlugins)
+            && count($allFormPlugins) == count($filteredFormPlugins)
+        ) {
             $checkoutResponseTransfer = $this->createOrder($quoteTransfer);
 
             if ($checkoutResponseTransfer->getIsSuccess()) {

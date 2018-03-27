@@ -22,6 +22,8 @@ class ProductType extends AbstractType
     public const FIELD_SKU = 'sku';
     public const FIELD_QUANTITY = 'quantity';
 
+    protected const ERROR_MESSAGE_QUANTITY = 'Invalid Quantity.';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -96,7 +98,7 @@ class ProductType extends AbstractType
 
         return new Regex([
             'pattern' => '/^\d*$/',
-            'message' => 'This field should contain digits.',
+            'message' => static::ERROR_MESSAGE_QUANTITY,
             'groups' => $validationGroup,
         ]);
     }

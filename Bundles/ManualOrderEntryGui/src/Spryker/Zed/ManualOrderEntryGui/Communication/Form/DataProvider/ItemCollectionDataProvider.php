@@ -33,6 +33,7 @@ class ItemCollectionDataProvider implements FormDataProviderInterface
         return [
             'data_class' => QuoteTransfer::class,
             ItemCollectionType::OPTION_ITEM_CLASS_COLLECTION => ManualOrderProductTransfer::class,
+            ItemCollectionType::OPTION_ISO_CODE => $quoteTransfer->getCurrency()->getCode(),
             'allow_extra_fields' => true,
             'csrf_protection' => false,
         ];
