@@ -20,9 +20,9 @@ class CompanyUnitAddressLabelDataImportConfig extends DataImportConfig
      */
     public function getCompanyUnitAddressLabelDataImporterConfiguration(): DataImporterConfigurationTransfer
     {
-        $moduleDataImportDirectory = $this->getModuleRoot() . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'import';
+        $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 
-        return $this->buildImporterConfiguration($moduleDataImportDirectory . DIRECTORY_SEPARATOR . 'company_unit_address_label.csv', static::IMPORT_TYPE_COMPANY_UNIT_ADDRESS_LABEL);
+        return $this->buildImporterConfiguration($moduleDataImportDirectory . 'company_unit_address_label.csv', static::IMPORT_TYPE_COMPANY_UNIT_ADDRESS_LABEL);
     }
 
     /**
@@ -30,9 +30,9 @@ class CompanyUnitAddressLabelDataImportConfig extends DataImportConfig
      */
     public function getCompanyUnitAddressLabelRelationDataImporterConfiguration(): DataImporterConfigurationTransfer
     {
-        $moduleDataImportDirectory = $this->getModuleRoot() . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'import';
+        $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 
-        return $this->buildImporterConfiguration($moduleDataImportDirectory . DIRECTORY_SEPARATOR . 'company_unit_address_label_relation.csv', static::IMPORT_TYPE_COMPANY_UNIT_ADDRESS_LABEL_RELATION);
+        return $this->buildImporterConfiguration($moduleDataImportDirectory . 'company_unit_address_label_relation.csv', static::IMPORT_TYPE_COMPANY_UNIT_ADDRESS_LABEL_RELATION);
     }
 
     /**
@@ -48,6 +48,6 @@ class CompanyUnitAddressLabelDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
         );
 
-        return $moduleRoot;
+        return $moduleRoot . DIRECTORY_SEPARATOR;
     }
 }

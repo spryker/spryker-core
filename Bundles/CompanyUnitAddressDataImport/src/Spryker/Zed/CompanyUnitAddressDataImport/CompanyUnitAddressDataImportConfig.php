@@ -19,9 +19,9 @@ class CompanyUnitAddressDataImportConfig extends DataImportConfig
      */
     public function getCompanyUnitAddressDataImporterConfiguration(): DataImporterConfigurationTransfer
     {
-        $moduleDataImportDirectory = $this->getModuleRoot() . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'import';
+        $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 
-        return $this->buildImporterConfiguration($moduleDataImportDirectory . DIRECTORY_SEPARATOR . 'company_unit_address.csv', static::IMPORT_TYPE_COMPANY_UNIT_ADDRESS);
+        return $this->buildImporterConfiguration($moduleDataImportDirectory . 'company_unit_address.csv', static::IMPORT_TYPE_COMPANY_UNIT_ADDRESS);
     }
 
     /**
@@ -37,6 +37,6 @@ class CompanyUnitAddressDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
         );
 
-        return $moduleRoot;
+        return $moduleRoot . DIRECTORY_SEPARATOR;
     }
 }

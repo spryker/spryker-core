@@ -18,9 +18,9 @@ class CategoryDataImportConfig extends DataImportConfig
      */
     public function getCategoryDataImporterConfiguration()
     {
-        $moduleDataImportDirectory = $this->getModuleRoot() . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'import';
+        $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 
-        return $this->buildImporterConfiguration($moduleDataImportDirectory . DIRECTORY_SEPARATOR . 'category.csv', static::IMPORT_TYPE_CATEGORY);
+        return $this->buildImporterConfiguration($moduleDataImportDirectory . 'category.csv', static::IMPORT_TYPE_CATEGORY);
     }
 
     /**
@@ -36,6 +36,6 @@ class CategoryDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
         );
 
-        return $moduleRoot;
+        return $moduleRoot . DIRECTORY_SEPARATOR;
     }
 }

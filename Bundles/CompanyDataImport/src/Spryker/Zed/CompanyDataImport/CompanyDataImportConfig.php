@@ -19,9 +19,9 @@ class CompanyDataImportConfig extends DataImportConfig
      */
     public function getCompanyDataImporterConfiguration(): DataImporterConfigurationTransfer
     {
-        $moduleDataImportDirectory = $this->getModuleRoot() . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'import';
+        $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 
-        return $this->buildImporterConfiguration($moduleDataImportDirectory . DIRECTORY_SEPARATOR . 'company.csv', static::IMPORT_TYPE_COMPANY);
+        return $this->buildImporterConfiguration($moduleDataImportDirectory . 'company.csv', static::IMPORT_TYPE_COMPANY);
     }
 
     /**
@@ -37,6 +37,6 @@ class CompanyDataImportConfig extends DataImportConfig
             . DIRECTORY_SEPARATOR . '..'
         );
 
-        return $moduleRoot;
+        return $moduleRoot . DIRECTORY_SEPARATOR;
     }
 }
