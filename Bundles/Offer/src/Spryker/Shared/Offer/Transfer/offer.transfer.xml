@@ -7,6 +7,10 @@
         <property name="isOffer" type="bool" />
     </transfer>
 
+    <transfer name="Quote">
+        <property name="isOffer" type="bool" />
+    </transfer>
+
     <transfer name="OrderList">
         <property name="isOffer" type="bool" />
     </transfer>
