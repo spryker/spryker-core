@@ -8,8 +8,10 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -41,7 +43,7 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements 
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): \Symfony\Component\Form\FormInterface
+    public function createForm(Request $request, $dataTransfer = null): FormInterface
     {
         return $this->getFactory()->createCustomersListForm($request, $dataTransfer);
     }
@@ -53,7 +55,7 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements 
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
     {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($quoteTransfer->getIdCustomer());

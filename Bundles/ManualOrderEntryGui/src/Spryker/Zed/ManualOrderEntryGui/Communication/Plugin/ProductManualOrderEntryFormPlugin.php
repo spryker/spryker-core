@@ -10,8 +10,10 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ManualOrderProductTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductCollectionType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -49,7 +51,7 @@ class ProductManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): \Symfony\Component\Form\FormInterface
+    public function createForm(Request $request, $dataTransfer = null): FormInterface
     {
         return $this->getFactory()->createProductsCollectionForm($dataTransfer);
     }
@@ -61,7 +63,7 @@ class ProductManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
     {
         $cartChangeTransfer = new CartChangeTransfer();
         $addedSkus = [];
