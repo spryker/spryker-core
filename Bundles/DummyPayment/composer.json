@@ -17,7 +17,11 @@
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/manual-order-entry-gui": "*"
+  },
+  "suggest": {
+    "spryker/manual-order-entry-gui": "*"
   },
   "autoload": {
     "psr-4": {

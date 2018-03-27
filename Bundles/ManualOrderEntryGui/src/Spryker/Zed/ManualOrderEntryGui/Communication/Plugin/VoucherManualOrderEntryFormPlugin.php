@@ -25,9 +25,9 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     protected const MESSAGE_SUCCESS = 'Voucher code \'%s\' has been applied';
 
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToDiscountFacadeInterface
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface
      */
-    protected $discountFacade;
+    protected $cartFacade;
 
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeInterface
@@ -36,7 +36,7 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
 
     public function __construct()
     {
-        $this->discountFacade = $this->getFactory()->getDiscountFacade();
+        $this->cartFacade = $this->getFactory()->getCartFacade();
         $this->messengerFacade = $this->getFactory()->getMessengerFacade();
     }
 
@@ -75,7 +75,8 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
             $quoteTransfer->setVoucherDiscounts(new ArrayObject());
             $quoteTransfer->addVoucherDiscount($discountTransfer);
 
-            $quoteTransfer = $this->discountFacade->calculateDiscounts($quoteTransfer);
+            $this->messengerFacade->getStoredMessages();
+            $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
 
             if (!count($quoteTransfer->getVoucherDiscounts())) {
                 $this->addMessage(sprintf(static::MESSAGE_ERROR, $quoteTransfer->getVoucherCode()), false);

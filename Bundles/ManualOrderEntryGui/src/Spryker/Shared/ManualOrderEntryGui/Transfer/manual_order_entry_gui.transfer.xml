@@ -6,7 +6,8 @@
     <transfer name="ManualOrderProduct">
         <property name="sku" type="string" />
         <property name="quantity" type="int" />
-        <property name="unitGrossPrice" type="int" />
+        <property name="unitGrossPrice" type="string" />
+        <property name="moneyValue" type="MoneyValue" />
         <property name="forcedUnitGrossPrice" type="bool" />
     </transfer>
 

@@ -36,6 +36,28 @@ class ManualOrderEntryGuiToMoneyFacadeBridge implements ManualOrderEntryGuiToMon
     }
 
     /**
+     * @param string $amount
+     * @param string|null $isoCode
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromString($amount, $isoCode = null)
+    {
+        return $this->moneyFacade->fromString($amount, $isoCode);
+    }
+
+    /**
+     * @param float $amount
+     * @param string|null $isoCode
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromFloat($amount, $isoCode = null)
+    {
+        return $this->moneyFacade->fromFloat($amount, $isoCode);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
      *
      * @return string
@@ -43,5 +65,35 @@ class ManualOrderEntryGuiToMoneyFacadeBridge implements ManualOrderEntryGuiToMon
     public function formatWithSymbol(MoneyTransfer $moneyTransfer)
     {
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
+     *
+     * @return string
+     */
+    public function formatWithoutSymbol(MoneyTransfer $moneyTransfer)
+    {
+        return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
+    }
+
+    /**
+     * @param int $value
+     *
+     * @return float
+     */
+    public function convertIntegerToDecimal($value)
+    {
+        return $this->moneyFacade->convertIntegerToDecimal($value);
+    }
+
+    /**
+     * @param float $value
+     *
+     * @return int
+     */
+    public function convertDecimalToInteger($value)
+    {
+        return $this->moneyFacade->convertDecimalToInteger($value);
     }
 }

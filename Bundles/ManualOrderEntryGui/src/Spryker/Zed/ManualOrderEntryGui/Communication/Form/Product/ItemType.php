@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product;
 
+use Generated\Shared\Transfer\ManualOrderProductTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -25,6 +28,8 @@ class ItemType extends AbstractType
     public const FIELD_UNIT_GROSS_PRICE = 'unitGrossPrice';
     public const FIELD_FORCED_UNIT_GROSS_PRICE = 'forcedUnitGrossPrice';
 
+    public const OPTION_ISO_CODE = 'isoCode';
+
     protected const ERROR_MESSAGE_QUANTITY = 'Invalid Quantity.';
     protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
 
@@ -35,6 +40,8 @@ class ItemType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setDefined(static::OPTION_ISO_CODE);
+
         $resolver->setDefaults([
             'constraints' => [
                 $this->getFactory()->createSkuExistsConstraint(),
@@ -55,6 +62,20 @@ class ItemType extends AbstractType
             ->addQuantityField($builder, $options)
             ->addUnitGrossPriceField($builder, $options)
             ->addForcedUnitGrossPriceField($builder, $options);
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) use ($options) {
+                $this->convertIntToMoney($event, $options);
+            }
+        );
+
+        $builder->addEventListener(
+            FormEvents::SUBMIT,
+            function (FormEvent $event) use ($options) {
+                $this->convertMoneyToInt($event, $options);
+            }
+        );
     }
 
     /**
@@ -85,7 +106,7 @@ class ItemType extends AbstractType
             'label' => 'Unit Gross Price',
             'required' => false,
             'constraints' => [
-                $this->createNumberConstraint($options, static::ERROR_MESSAGE_PRICE),
+                $this->createMoneyConstraint($options),
             ],
         ]);
 
@@ -104,7 +125,7 @@ class ItemType extends AbstractType
             'label' => 'Quantity',
             'required' => false,
             'constraints' => [
-                $this->createNumberConstraint($options, static::ERROR_MESSAGE_QUANTITY),
+                $this->createNumberConstraint($options),
             ],
         ]);
 
@@ -128,17 +149,32 @@ class ItemType extends AbstractType
 
     /**
      * @param array $options
-     * @param string $message
      *
      * @return \Symfony\Component\Validator\Constraints\Regex
      */
-    protected function createNumberConstraint(array $options, $message)
+    protected function createNumberConstraint(array $options)
     {
         $validationGroup = $this->getValidationGroup($options);
 
         return new Regex([
             'pattern' => '/^\d*$/',
-            'message' => $message,
+            'message' => static::ERROR_MESSAGE_QUANTITY,
+            'groups' => $validationGroup,
+        ]);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createMoneyConstraint(array $options)
+    {
+        $validationGroup = $this->getValidationGroup($options);
+
+        return new Regex([
+            'pattern' => '/^\d*\.?\d{0,2}$/',
+            'message' => static::ERROR_MESSAGE_PRICE,
             'groups' => $validationGroup,
         ]);
     }
@@ -155,6 +191,44 @@ class ItemType extends AbstractType
             $validationGroup = $options['validation_group'];
         }
         return $validationGroup;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormEvent $event
+     * @param array $options
+     *
+     * @return void
+     */
+    protected function convertIntToMoney(FormEvent $event, array $options)
+    {
+        $moneyFacade = $this->getFactory()->getMoneyFacade();
+        $data = $event->getData();
+
+        if ($data instanceof ManualOrderProductTransfer) {
+            $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data->getUnitGrossPrice());
+            $data->setUnitGrossPrice($moneyFloat);
+
+            $event->setData($data);
+        }
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormEvent $event
+     * @param array $options
+     *
+     * @return void
+     */
+    protected function convertMoneyToInt(FormEvent $event, array $options)
+    {
+        $moneyFacade = $this->getFactory()->getMoneyFacade();
+        $data = $event->getData();
+
+        if ($data instanceof ManualOrderProductTransfer) {
+            $moneyFloat = $moneyFacade->convertDecimalToInteger((float)$data->getUnitGrossPrice());
+            $data->setUnitGrossPrice($moneyFloat);
+
+            $event->setData($data);
+        }
     }
 
     /**
