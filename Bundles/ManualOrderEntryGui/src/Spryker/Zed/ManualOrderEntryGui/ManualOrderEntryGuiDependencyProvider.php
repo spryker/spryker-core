@@ -227,7 +227,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginInterface[]
+     * @return \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface[]
      */
     protected function getPaymentSubFormPlugins()
     {

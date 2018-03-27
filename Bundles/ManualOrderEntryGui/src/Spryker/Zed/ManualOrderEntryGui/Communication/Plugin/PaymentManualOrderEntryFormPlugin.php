@@ -25,7 +25,7 @@ class PaymentManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     protected $paymentFacade;
 
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginInterface[]
+     * @var \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface[]
      */
     protected $subFormPlugins;
 

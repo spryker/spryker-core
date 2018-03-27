@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DummyPayment\Communication\Plugin\Checkout;
+namespace Spryker\Zed\DummyPayment\Communication\Plugin\ManualOrderEntry;
 
 use Spryker\Shared\DummyPayment\DummyPaymentConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginInterface;
+use Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface;
 
 /**
  * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
  */
-class DummyPaymentInvoiceSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
+class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements PaymentSubFormPluginInterface
 {
     const PAYMENT_PROVIDER = 'DummyPayment';
 
