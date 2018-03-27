@@ -13,7 +13,7 @@ use Spryker\Client\MultiCart\Dependency\Client\MultiCartToSessionClientInterface
 
 class MultiCartStorage implements MultiCartStorageInterface
 {
-    const SESSION_KEY_QUOTE_COLLECTION = 'SESSION_KEY_QUOTE_COLLECTION';
+    public const SESSION_KEY_QUOTE_COLLECTION = 'SESSION_KEY_QUOTE_COLLECTION';
 
     /**
      * @var \Spryker\Client\MultiCart\Dependency\Client\MultiCartToSessionClientInterface
@@ -47,17 +47,15 @@ class MultiCartStorage implements MultiCartStorageInterface
     }
 
     /**
-     * TODO: Make sure that shared cart doesn't use this method, because it's dangerous (customers can have access to multiple carts with the same name)!
-     *
-     * @param string $quoteName
+     * @param int $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findQuoteByName($quoteName): ?QuoteTransfer
+    public function findQuoteById(int $idQuote): ?QuoteTransfer
     {
         $quoteCollection = $this->getQuoteCollection();
         foreach ($quoteCollection->getQuotes() as $quoteTransfer) {
-            if ($quoteTransfer->getName() === $quoteName) {
+            if ($quoteTransfer->getIdQuote() === $idQuote) {
                 return $quoteTransfer;
             }
         }

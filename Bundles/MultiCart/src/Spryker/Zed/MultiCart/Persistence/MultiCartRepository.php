@@ -22,9 +22,9 @@ class MultiCartRepository extends AbstractRepository implements MultiCartReposit
      * @param string $quoteName
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer
+     * @return null|\Generated\Shared\Transfer\SpyQuoteEntityTransfer
      */
-    public function findCustomerQuoteByName(string $quoteName, string $customerReference): SpyQuoteEntityTransfer
+    public function findCustomerQuoteByName(string $quoteName, string $customerReference): ?SpyQuoteEntityTransfer
     {
         $quoteQuery = $this->getFactory()
             ->createQuoteQuery()

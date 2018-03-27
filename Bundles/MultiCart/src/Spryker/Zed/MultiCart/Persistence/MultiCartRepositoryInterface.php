@@ -15,7 +15,7 @@ interface MultiCartRepositoryInterface
      * @param string $quoteName
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\SpyQuoteEntityTransfer
+     * @return null|\Generated\Shared\Transfer\SpyQuoteEntityTransfer
      */
-    public function findCustomerQuoteByName(string $quoteName, string $customerReference): SpyQuoteEntityTransfer;
+    public function findCustomerQuoteByName(string $quoteName, string $customerReference): ?SpyQuoteEntityTransfer;
 }

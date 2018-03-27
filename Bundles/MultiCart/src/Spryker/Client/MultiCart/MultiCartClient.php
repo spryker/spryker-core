@@ -88,15 +88,15 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
      *
      * @api
      *
-     * @param string $quoteName
+     * @param int $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findQuoteByName($quoteName): ?QuoteTransfer
+    public function findQuoteById(int $idQuote): ?QuoteTransfer
     {
         return $this->getFactory()
             ->createMultiCartStorage()
-            ->findQuoteByName($quoteName);
+            ->findQuoteById($idQuote);
     }
 
     /**

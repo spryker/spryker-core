@@ -61,15 +61,15 @@ interface MultiCartClientInterface
 
     /**
      * Specification:
-     * - Find quote by name in customer session.
+     * - Find quote by id in customer session.
      *
      * @api
      *
-     * @param string $quoteName
+     * @param int $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findQuoteByName($quoteName): ?QuoteTransfer;
+    public function findQuoteById(int $idQuote): ?QuoteTransfer;
 
     /**
      * Specification:
