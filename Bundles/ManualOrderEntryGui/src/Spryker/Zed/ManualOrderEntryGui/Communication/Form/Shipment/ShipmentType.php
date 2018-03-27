@@ -17,7 +17,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ShipmentType extends AbstractType
 {
-    protected const FIELD_SHIPMENT_METHOD = 'id_shipment_method';
+    public const TYPE_NAME = 'shipments';
+
+    public const FIELD_SHIPMENT_METHOD = 'id_shipment_method';
 
     public const OPTION_SHIPMENT_METHODS_ARRAY = 'option-shipment-methods-array';
 
@@ -56,7 +58,7 @@ class ShipmentType extends AbstractType
     {
         $builder->add(static::FIELD_SHIPMENT_METHOD, Select2ComboBoxType::class, [
             'property_path' => static::FIELD_SHIPMENT_METHOD,
-            'label' => 'Shipment Method',
+            'label' => 'Selecting a shipment method',
             'choices' => array_flip($shipmentMethods),
             'choices_as_values' => true,
             'multiple' => false,
@@ -71,6 +73,6 @@ class ShipmentType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'shipments';
+        return static::TYPE_NAME;
     }
 }

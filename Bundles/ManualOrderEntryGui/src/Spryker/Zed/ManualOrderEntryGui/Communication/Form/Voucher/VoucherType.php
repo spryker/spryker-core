@@ -17,7 +17,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class VoucherType extends AbstractType
 {
-    protected const FIELD_VOUCHER_CODE = 'voucher_code';
+    public const TYPE_NAME = 'voucher';
+
+    public const FIELD_VOUCHER_CODE = 'voucher_code';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -48,8 +50,8 @@ class VoucherType extends AbstractType
      */
     protected function addVoucherCodeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_VOUCHER_CODE, TextType::class, [
-            'label' => 'Voucher',
+        $builder->add(static::FIELD_VOUCHER_CODE, TextType::class, [
+            'label' => 'Add Voucher',
             'required' => false,
         ]);
 
@@ -61,6 +63,6 @@ class VoucherType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'voucher';
+        return static::TYPE_NAME;
     }
 }

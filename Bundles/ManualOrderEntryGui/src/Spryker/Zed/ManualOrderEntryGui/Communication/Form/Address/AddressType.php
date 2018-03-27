@@ -23,17 +23,17 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class AddressType extends AbstractType
 {
-    protected const FIELD_SALUTATION = 'salutation';
-    protected const FIELD_FIRST_NAME = 'first_name';
-    protected const FIELD_LAST_NAME = 'last_name';
-    protected const FIELD_COMPANY = 'company';
-    protected const FIELD_ADDRESS_1 = 'address1';
-    protected const FIELD_ADDRESS_2 = 'address2';
-    protected const FIELD_ADDRESS_3 = 'address3';
-    protected const FIELD_ZIP_CODE = 'zip_code';
-    protected const FIELD_CITY = 'city';
-    protected const FIELD_ISO_2_CODE = 'iso2_code';
-    protected const FIELD_PHONE = 'phone';
+    public const FIELD_SALUTATION = 'salutation';
+    public const FIELD_FIRST_NAME = 'first_name';
+    public const FIELD_LAST_NAME = 'last_name';
+    public const FIELD_COMPANY = 'company';
+    public const FIELD_ADDRESS_1 = 'address1';
+    public const FIELD_ADDRESS_2 = 'address2';
+    public const FIELD_ADDRESS_3 = 'address3';
+    public const FIELD_ZIP_CODE = 'zip_code';
+    public const FIELD_CITY = 'city';
+    public const FIELD_ISO_2_CODE = 'iso2_code';
+    public const FIELD_PHONE = 'phone';
     public const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
 
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
@@ -45,7 +45,7 @@ class AddressType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(self::OPTION_COUNTRY_CHOICES);
+        $resolver->setRequired(static::OPTION_COUNTRY_CHOICES);
     }
 
     /**
@@ -79,7 +79,7 @@ class AddressType extends AbstractType
      */
     public function addSalutationField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_SALUTATION, ChoiceType::class, [
+        $builder->add(static::FIELD_SALUTATION, ChoiceType::class, [
             'choices' => $this->getSalutationChoices(),
             'label' => 'Salutation',
             'required' => true,
@@ -112,7 +112,7 @@ class AddressType extends AbstractType
      */
     protected function addFirstNameField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_FIRST_NAME, TextType::class, [
+        $builder->add(static::FIELD_FIRST_NAME, TextType::class, [
             'label' => 'First name',
             'required' => true,
             'constraints' => [
@@ -132,7 +132,7 @@ class AddressType extends AbstractType
      */
     protected function addLastNameField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_LAST_NAME, TextType::class, [
+        $builder->add(static::FIELD_LAST_NAME, TextType::class, [
             'label' => 'Last name',
             'required' => true,
             'constraints' => [
@@ -152,7 +152,7 @@ class AddressType extends AbstractType
      */
     protected function addCompanyField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_COMPANY, TextType::class, [
+        $builder->add(static::FIELD_COMPANY, TextType::class, [
             'label' => 'Company',
             'required' => false,
         ]);
@@ -168,7 +168,7 @@ class AddressType extends AbstractType
      */
     protected function addAddress1Field(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_ADDRESS_1, TextType::class, [
+        $builder->add(static::FIELD_ADDRESS_1, TextType::class, [
             'label' => 'Address line 1',
             'required' => true,
             'constraints' => [
@@ -188,7 +188,7 @@ class AddressType extends AbstractType
      */
     protected function addAddress2Field(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_ADDRESS_2, TextType::class, [
+        $builder->add(static::FIELD_ADDRESS_2, TextType::class, [
             'label' => 'Number',
             'required' => true,
             'constraints' => [
@@ -208,7 +208,7 @@ class AddressType extends AbstractType
      */
     protected function addAddress3Field(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_ADDRESS_3, TextType::class, [
+        $builder->add(static::FIELD_ADDRESS_3, TextType::class, [
             'label' => 'Address line 2',
             'required' => false,
         ]);
@@ -224,7 +224,7 @@ class AddressType extends AbstractType
      */
     protected function addZipCodeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_ZIP_CODE, TextType::class, [
+        $builder->add(static::FIELD_ZIP_CODE, TextType::class, [
             'label' => 'Zip code',
             'required' => true,
             'constraints' => [
@@ -244,7 +244,7 @@ class AddressType extends AbstractType
      */
     protected function addCityField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_CITY, TextType::class, [
+        $builder->add(static::FIELD_CITY, TextType::class, [
             'label' => 'City',
             'required' => true,
             'constraints' => [
@@ -264,10 +264,10 @@ class AddressType extends AbstractType
      */
     protected function addIso2CodeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_ISO_2_CODE, ChoiceType::class, [
+        $builder->add(static::FIELD_ISO_2_CODE, ChoiceType::class, [
             'label' => 'Country',
             'required' => true,
-            'choices' => $options[self::OPTION_COUNTRY_CHOICES],
+            'choices' => $options[static::OPTION_COUNTRY_CHOICES],
             'constraints' => [
                 $this->createNotBlankConstraint($options),
             ],
@@ -284,7 +284,7 @@ class AddressType extends AbstractType
      */
     protected function addPhoneField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_PHONE, TextType::class, [
+        $builder->add(static::FIELD_PHONE, TextType::class, [
             'label' => 'Phone',
             'required' => false,
         ]);
@@ -300,7 +300,7 @@ class AddressType extends AbstractType
      */
     protected function addIdCustomerAddressField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_ID_CUSTOMER_ADDRESS, HiddenType::class);
+        $builder->add(static::FIELD_ID_CUSTOMER_ADDRESS, HiddenType::class);
 
         return $this;
     }

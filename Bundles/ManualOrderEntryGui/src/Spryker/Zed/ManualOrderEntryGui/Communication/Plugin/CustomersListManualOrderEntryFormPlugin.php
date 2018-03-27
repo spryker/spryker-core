@@ -8,12 +8,16 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class CustomersListManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlugin implements ManualOrderEntryFormPluginInterface
+class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeInterface
@@ -26,12 +30,20 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractManualOrderEntryFo
     }
 
     /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return CustomersListType::TYPE_NAME;
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null)
+    public function createForm(Request $request, $dataTransfer = null): FormInterface
     {
         return $this->getFactory()->createCustomersListForm($request, $dataTransfer);
     }
@@ -43,7 +55,7 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractManualOrderEntryFo
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request)
+    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
     {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($quoteTransfer->getIdCustomer());
@@ -52,17 +64,5 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractManualOrderEntryFo
         $quoteTransfer->setCustomer($customerTransfer);
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function handleDataStepEngine($quoteTransfer, &$form, $request)
-    {
-        return $this->handleData($quoteTransfer, $form, $request);
     }
 }

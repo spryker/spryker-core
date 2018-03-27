@@ -17,7 +17,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ItemCollectionType extends AbstractType
 {
-    protected const FIELD_ITEMS = 'items';
+    public const TYPE_NAME = 'items';
+
+    public const FIELD_ITEMS = 'manualOrderItems';
 
     public const OPTION_ITEM_CLASS_COLLECTION = 'item_class_collection';
 
@@ -51,7 +53,7 @@ class ItemCollectionType extends AbstractType
      */
     protected function addItemsField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(self::FIELD_ITEMS, CollectionType::class, [
+        $builder->add(static::FIELD_ITEMS, CollectionType::class, [
             'entry_type' => ItemType::class,
             'label' => 'Added Items',
             'required' => false,
@@ -70,6 +72,6 @@ class ItemCollectionType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'items';
+        return static::TYPE_NAME;
     }
 }

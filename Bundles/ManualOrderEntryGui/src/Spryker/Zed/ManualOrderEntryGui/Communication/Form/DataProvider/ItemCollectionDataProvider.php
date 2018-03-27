@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ManualOrderProductTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ItemCollectionType;
 
@@ -32,7 +32,7 @@ class ItemCollectionDataProvider implements FormDataProviderInterface
     {
         return [
             'data_class' => QuoteTransfer::class,
-            ItemCollectionType::OPTION_ITEM_CLASS_COLLECTION => ItemTransfer::class,
+            ItemCollectionType::OPTION_ITEM_CLASS_COLLECTION => ManualOrderProductTransfer::class,
             'allow_extra_fields' => true,
             'csrf_protection' => false,
         ];

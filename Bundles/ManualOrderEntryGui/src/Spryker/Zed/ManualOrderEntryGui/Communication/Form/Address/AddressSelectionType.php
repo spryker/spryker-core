@@ -27,11 +27,11 @@ class AddressSelectionType extends AddressType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            self::OPTION_ADDRESS_CHOICES => [],
+            static::OPTION_ADDRESS_CHOICES => [],
         ]);
 
-        $resolver->setRequired(self::OPTION_VALIDATION_GROUP);
-        $resolver->setDefined(self::OPTION_ADDRESS_CHOICES);
+        $resolver->setRequired(static::OPTION_VALIDATION_GROUP);
+        $resolver->setDefined(static::OPTION_ADDRESS_CHOICES);
     }
 
     /**
@@ -65,14 +65,14 @@ class AddressSelectionType extends AddressType
      */
     protected function addAddressSelectField(FormBuilderInterface $builder, array $options)
     {
-        if (count($options[self::OPTION_ADDRESS_CHOICES]) === 0) {
+        if (count($options[static::OPTION_ADDRESS_CHOICES]) === 0) {
             return $this;
         }
 
-        $choices = $options[self::OPTION_ADDRESS_CHOICES];
+        $choices = $options[static::OPTION_ADDRESS_CHOICES];
         $choices[''] = 'Add new address';
 
-        $builder->add(self::FIELD_ID_CUSTOMER_ADDRESS, ChoiceType::class, [
+        $builder->add(static::FIELD_ID_CUSTOMER_ADDRESS, ChoiceType::class, [
             'choices' => array_flip($choices),
             'required' => true,
             'expanded' => true,
@@ -89,6 +89,6 @@ class AddressSelectionType extends AddressType
      */
     protected function createNotBlankConstraint(array $options)
     {
-        return new NotBlank(['groups' => $options[self::OPTION_VALIDATION_GROUP]]);
+        return new NotBlank(['groups' => $options[static::OPTION_VALIDATION_GROUP]]);
     }
 }

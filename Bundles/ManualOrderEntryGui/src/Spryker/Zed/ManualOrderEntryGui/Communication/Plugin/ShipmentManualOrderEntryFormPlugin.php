@@ -8,12 +8,16 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Shipment\ShipmentType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
  */
-class ShipmentManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlugin implements ManualOrderEntryFormPluginInterface
+class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface
@@ -26,12 +30,20 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlu
     }
 
     /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return ShipmentType::TYPE_NAME;
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null)
+    public function createForm(Request $request, $dataTransfer = null): FormInterface
     {
         return $this->getFactory()->createShipmentForm($request, $dataTransfer);
     }
@@ -43,7 +55,7 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractManualOrderEntryFormPlu
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request)
+    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
     {
         $idShipmentMethod = $quoteTransfer->getIdShipmentMethod();
         if ($idShipmentMethod) {

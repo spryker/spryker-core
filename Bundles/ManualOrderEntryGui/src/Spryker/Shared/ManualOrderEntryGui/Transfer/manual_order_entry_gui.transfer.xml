@@ -6,6 +6,8 @@
     <transfer name="ManualOrderProduct">
         <property name="sku" type="string" />
         <property name="quantity" type="int" />
+        <property name="unitGrossPrice" type="int" />
+        <property name="forcedUnitGrossPrice" type="bool" />
     </transfer>
 
     <transfer name="Quote">
@@ -25,6 +27,7 @@
         <property name="payments" type="Payment[]" />
 
         <property name="manualOrderProducts" type="ManualOrderProduct[]" />
+        <property name="manualOrderItems" type="ManualOrderProduct[]" />
         <property name="isProductPosted" type="bool" />
         <property name="submitOrder" type="bool" />
     </transfer>

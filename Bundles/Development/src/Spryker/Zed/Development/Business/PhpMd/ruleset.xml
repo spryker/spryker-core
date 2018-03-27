@@ -66,6 +66,7 @@ maintainability and understandability
     <rule ref="rulesets/codesize.xml">
         <exclude name="TooManyMethods" />
         <exclude name="TooManyPublicMethods" />
+        <exclude name="ExcessivePublicCount" />
     </rule>
 
     <rule name="TooManyMethods"

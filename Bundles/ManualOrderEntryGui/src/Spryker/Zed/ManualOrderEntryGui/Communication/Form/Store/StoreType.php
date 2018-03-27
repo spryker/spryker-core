@@ -17,7 +17,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class StoreType extends AbstractType
 {
-    protected const FIELD_STORE = 'id_store_currency';
+    public const TYPE_NAME = 'stores';
+
+    public const FIELD_STORE = 'id_store_currency';
 
     public const OPTION_STORES_ARRAY = 'option-stores-array';
 
@@ -71,6 +73,6 @@ class StoreType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'stores';
+        return static::TYPE_NAME;
     }
 }
