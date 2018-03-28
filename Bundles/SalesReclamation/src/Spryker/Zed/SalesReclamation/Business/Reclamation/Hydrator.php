@@ -64,6 +64,14 @@ class Hydrator implements HydratorInterface
         $reclamationTransfer->setCustomerReference($spyReclamation->getCustomerReference());
         $reclamationTransfer->setCustomerEmail($spyReclamation->getCustomerEmail());
 
+        $createdOrders = new ArrayObject();
+        foreach ($spyReclamation->getCreatedOrders() as $spyRelatedOrder) {
+            $createdOrderTransfer = new OrderTransfer();
+            $createdOrderTransfer->fromArray($spyRelatedOrder->toArray(), true);
+            $createdOrders->append($createdOrderTransfer);
+        }
+        $reclamationTransfer->setCreatedOrders($createdOrders);
+
         /** @var \Generated\Shared\Transfer\ReclamationItemTransfer[]|\ArrayObject $reclamationItems */
         $reclamationItems = new ArrayObject();
         foreach ($spyReclamation->getItems() as $spyReclamationItem) {

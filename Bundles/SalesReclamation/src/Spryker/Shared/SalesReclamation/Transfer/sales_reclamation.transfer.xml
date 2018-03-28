@@ -11,6 +11,7 @@
         <property name="status" type="string"/>
         <property name="order" type="Order" />
         <property name="reclamationItems" type="ReclamationItem[]" singular="ReclamationItem" />
+        <property name="createdOrders" type="Order[]" singular="Order" />
     </transfer>
 
     <transfer name="ReclamationItem">
