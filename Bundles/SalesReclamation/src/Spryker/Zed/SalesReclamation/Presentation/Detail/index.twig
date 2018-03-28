@@ -16,6 +16,17 @@
         } %}
     </div>
 
+    {% if orders %}
+        <div id="created orders">
+            Created Orders:
+            {% for order in orders %}
+                <a href="{{ url('/sales/detail', {'id-sales-order': order.idSalesOrder}) }}">
+                    Order {{ order.orderReference }}
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
 {% endblock %}
 
 {% block head_css %}
