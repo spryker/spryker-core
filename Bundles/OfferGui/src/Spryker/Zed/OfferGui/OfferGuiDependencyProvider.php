@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeBridge;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOmsFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceBridge;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceBridge;
@@ -21,6 +22,7 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_OFFER = 'FACADE_OFFER';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const FACADE_MONEY = 'FACADE_MONEY';
+    public const FACADE_OMS = 'FACADE_OMS';
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const PROPEL_QUERY_OFFER = 'PROPEL_QUERY_OFFER';
@@ -37,6 +39,7 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOfferFacade($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addMoneyFacade($container);
+        $container = $this->addOmsFacade($container);
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addUtilSanitize($container);
         $container = $this->addPropelQueryOffer($container);
@@ -67,6 +70,20 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_MONEY] = function (Container $container) {
             return new OfferGuiToMoneyFacadeBridge($container->getLocator()->money()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOmsFacade(Container $container)
+    {
+        $container[static::FACADE_OMS] = function (Container $container) {
+            return new OfferGuiToOmsFacadeBridge($container->getLocator()->oms()->facade());
         };
 
         return $container;

@@ -58,9 +58,9 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
     }
 
     /**
-     * @param SpySalesOrderQuery $query
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $query
      *
-     * @return SpySalesOrderQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     protected function filterOrderType($query)
     {
@@ -77,7 +77,7 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
      * @deprecated Will be removed with a major release,
      * and <column name="type" type="VARCHAR" required="false"/> will be added to spy_sales_order table.
      *
-     * @param SpySalesOrderQuery $query
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $query
      *
      * @return bool
      */

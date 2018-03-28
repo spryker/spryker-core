@@ -15,6 +15,7 @@ use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilder;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeInterface;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOmsFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceInterface;
@@ -61,6 +62,15 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getMoneyFacade(): OfferGuiToMoneyFacadeInterface
     {
         return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_MONEY);
+    }
+
+    /**
+     * todo: checl
+     * @return \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOmsFacadeInterface
+     */
+    public function getOmsFacade(): OfferGuiToOmsFacadeInterface
+    {
+        return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_OMS);
     }
 
     /**
