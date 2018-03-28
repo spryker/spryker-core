@@ -10,4 +10,5 @@
         <column name="is_offer" type="BOOLEAN" required="true" default="false" deprecated="deprecated"/>
     </table>
 
+
 </database>

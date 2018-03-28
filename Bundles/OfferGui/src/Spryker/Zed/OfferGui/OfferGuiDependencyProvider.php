@@ -127,4 +127,6 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
+
+
 }

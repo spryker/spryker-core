@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence">
+
+    <table name="spy_offer" phpName="SpyOffer">
+        <column name="id_offer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+
+        <column name="quote_data" type="VARCHAR" size="20000" required="true"/>
+        <column name="status" type="VARCHAR" size="20"/>
+        <column name="fk_user" type="INTEGER" required="false"/>
+        <column name="customer_reference" type="VARCHAR" size="255" required="false"/>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_offer_pk_seq"/>
+    </table>
+
+</database>

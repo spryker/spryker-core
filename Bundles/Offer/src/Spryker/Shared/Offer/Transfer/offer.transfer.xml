@@ -20,4 +20,25 @@
         <property name="isSuccessful" type="bool" />
     </transfer>
 
+
+
+
+    <transfer name="Offer">
+        <property name="idOffer" type="int"/>
+        <property name="quote" type="Quote"/>
+        <property name="status" type="string"/>
+        <property name="user" type="User"/>
+        <property name="customer" type="Customer"/>
+        <property name="createdAt" type="string" />
+    </transfer>
+
+    <transfer name="ResponseMessage">
+        <property name="text" type="string"/>
+    </transfer>
+
+    <transfer name="OfferResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="ResponseMessage[]" singular="message" />
+        <property name="offer" type="Offer"/>
+    </transfer>
 </transfers>

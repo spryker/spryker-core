@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Offer\Communication\Controller;
 
+use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferToOrderConvertRequestTransfer;
+use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -23,5 +25,15 @@ class GatewayController extends AbstractGatewayController
     public function convertOfferToOrderAction(OfferToOrderConvertRequestTransfer $offerToOrderConvertRequestTransfer)
     {
         return $this->getFacade()->convertOfferToOrder($offerToOrderConvertRequestTransfer->getOrder()->getIdSalesOrder());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return OfferResponseTransfer
+     */
+    public function placeOfferAction(OfferTransfer $offerTransfer)
+    {
+        return $this->getFacade()->placeOffer($offerTransfer);
     }
 }

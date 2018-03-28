@@ -12,6 +12,8 @@ use Spryker\Zed\Offer\Business\Model\OfferConverter;
 use Spryker\Zed\Offer\Business\Model\OfferConverterInterface;
 use Spryker\Zed\Offer\Business\Model\OfferReader;
 use Spryker\Zed\Offer\Business\Model\OfferReaderInterface;
+use Spryker\Zed\Offer\Business\Model\OfferWriter;
+use Spryker\Zed\Offer\Business\Model\OfferWriterInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface;
 use Spryker\Zed\Offer\OfferDependencyProvider;
 
@@ -48,5 +50,13 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function getSalesFacade(): OfferToSalesFacadeInterface
     {
         return $this->getProvidedDependency(OfferDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return OfferWriterInterface
+     */
+    public function createOfferWriter(): OfferWriterInterface
+    {
+        return new OfferWriter();
     }
 }

@@ -7,8 +7,10 @@
 
 namespace Spryker\Client\Offer;
 
+use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferToOrderConvertRequestTransfer;
 use Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer;
+use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -30,5 +32,20 @@ class OfferClient extends AbstractClient implements OfferClientInterface
         return $this->getFactory()
             ->createZedStub()
             ->convertOfferToOrder($offerToOrderConvertRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param OfferTransfer $offerTransfer
+     * @return OfferResponseTransfer
+     */
+    public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
+    {
+        return $this->getFactory()
+            ->createZedStub()
+            ->placeOffer($offerTransfer);
     }
 }

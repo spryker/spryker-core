@@ -7,8 +7,10 @@
 
 namespace Spryker\Client\Offer\Zed;
 
+use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferToOrderConvertRequestTransfer;
 use Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer;
+use Generated\Shared\Transfer\OfferTransfer;
 
 interface OfferStubInterface
 {
@@ -18,4 +20,11 @@ interface OfferStubInterface
      * @return \Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer
      */
     public function convertOfferToOrder(OfferToOrderConvertRequestTransfer $offerToOrderRequestTransfer): OfferToOrderConvertResponseTransfer;
+
+    /**
+     * @param OfferTransfer $offerTransfer
+     *
+     * @return OfferResponseTransfer
+     */
+    public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 }

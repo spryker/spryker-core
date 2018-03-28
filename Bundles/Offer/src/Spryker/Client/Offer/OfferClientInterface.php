@@ -7,8 +7,10 @@
 
 namespace Spryker\Client\Offer;
 
+use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferToOrderConvertRequestTransfer;
 use Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer;
+use Generated\Shared\Transfer\OfferTransfer;
 
 /**
  * @method \Spryker\Client\Offer\OfferFactory getFactory()
@@ -26,4 +28,15 @@ interface OfferClientInterface
      * @return \Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer $offerToOrderRequestTransfer
      */
     public function convertOfferToOrder(OfferToOrderConvertRequestTransfer $offerToOrderConvertRequestTransfer): OfferToOrderConvertResponseTransfer;
+
+    /**
+     * Specification:
+     * - Place an offer
+     *
+     * @api
+     *
+     * @param OfferTransfer $offerTransfer
+     * @return OfferResponseTransfer
+     */
+    public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 }
