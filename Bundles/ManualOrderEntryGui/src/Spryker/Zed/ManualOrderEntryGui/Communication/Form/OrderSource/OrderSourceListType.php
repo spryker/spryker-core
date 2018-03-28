@@ -71,6 +71,6 @@ class OrderSourceListType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return self::TYPE_NAME;
+        return static::TYPE_NAME;
     }
 }
