@@ -1,0 +1,124 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Client\ShoppingList\Zed;
+
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
+use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToZedRequestClientInterface;
+
+class ShoppingListStub implements ShoppingListStubInterface
+{
+    /**
+     * @var \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToZedRequestClientInterface
+     */
+    protected $zedRequestClient;
+
+    /**
+     * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToZedRequestClientInterface $zedRequestClient
+     */
+    public function __construct(ShoppingListToZedRequestClientInterface $zedRequestClient)
+    {
+        $this->zedRequestClient = $zedRequestClient;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function createShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->zedRequestClient->call('/shopping-list/gateway/create-shopping-list', $shoppingListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function updateShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        return $this->zedRequestClient->call('/shopping-list/gateway/update-shopping-list', $shoppingListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    public function removeShoppingList(ShoppingListTransfer $shoppingListTransfer): void
+    {
+        $this->zedRequestClient->call('/shopping-list/gateway/remove-shopping-list', $shoppingListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    {
+        return $this->zedRequestClient->call('/shopping-list/gateway/add-item', $shoppingListItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return void
+     */
+    public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    {
+        $this->zedRequestClient->call('/shopping-list/gateway/remove-item-by-id', $shoppingListItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return void
+     */
+    public function removeItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): void
+    {
+        $this->zedRequestClient->call('/shopping-list/gateway/remove-item-collection', $shoppingListItemCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function getShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
+    {
+        return $this->zedRequestClient->call('/shopping-list/gateway/get-shopping-list', $shoppingListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function getShoppingListOverview(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer
+    {
+        return $this->zedRequestClient->call('/shopping-list/gateway/get-shopping-list-overview', $shoppingListOverviewRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function getCustomerShoppingListCollection(CustomerTransfer $customerTransfer): ShoppingListCollectionTransfer
+    {
+        return $this->zedRequestClient->call('/shopping-list/gateway/get-customer-shopping-list-collection', $customerTransfer);
+    }
+}
