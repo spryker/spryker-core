@@ -1,0 +1,46 @@
+{% extends '@ManualOrderEntryGui/_layout/layout.twig' %}
+
+{% set widget_title = 'Create Order' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create Order' | trans } %}
+        {% block widget_content %}
+
+            {% if forms|length %}
+            {{ form_start(forms[0]) }}
+
+                {% for form in forms %}
+
+                    {% if form.vars.id == 'customers' %}
+                        {% include '@ManualOrderEntryGui/create/partials/customers.twig' with {'form': form} %}
+                    {% elseif form.vars.id == 'products' %}
+                        {% include '@ManualOrderEntryGui/create/partials/products.twig' with {'form': form} %}
+                    {% elseif form.vars.id == 'items' %}
+                        {% include '@ManualOrderEntryGui/create/partials/items.twig' with {'form': form} %}
+                    {% elseif form.vars.id == 'voucher' %}
+                        {% include '@ManualOrderEntryGui/create/partials/voucher.twig' with {'form': form} %}
+                    {% elseif form.vars.id == 'addresses' %}
+                        {% include '@ManualOrderEntryGui/create/partials/addresses.twig' with {'form': form} %}
+                    {% elseif form.vars.id == 'payments' %}
+                        {% include '@ManualOrderEntryGui/create/partials/payments.twig' with {'form': form} %}
+                    {% elseif form.vars.id == 'summary' %}
+                        {% include '@ManualOrderEntryGui/create/partials/summary.twig' with {'form': form, 'quoteTransfer': quoteTransfer} %}
+                    {% else %}
+                        {{ form_widget(form) }}
+                    {% endif %}
+
+                {% endfor %}
+
+                {% include '@ManualOrderEntryGui/create/partials/submit-buttons.twig' with {'form': forms|last, 'nextStepName': nextStepName} %}
+
+            {{ form_end(forms[0]) }}
+            {% endif %}
+
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
