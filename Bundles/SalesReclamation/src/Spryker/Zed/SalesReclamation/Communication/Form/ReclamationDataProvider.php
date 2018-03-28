@@ -29,7 +29,7 @@ class ReclamationDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
