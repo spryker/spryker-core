@@ -63,11 +63,6 @@ class OrderExpander implements OrderExpanderInterface
                 $expandedItemTransfer->fromArray($itemTransfer->toArray(), true);
                 $expandedItemTransfer->setQuantity(1);
 
-                // TODO: replace this with plugin stack
-                if ($itemTransfer->getQuantitySalesUnit()) {
-                    $expandedItemTransfer->getQuantitySalesUnit()->setValue($itemTransfer->getQuantitySalesUnit()->getValue() / $quantity / $itemTransfer->getQuantitySalesUnit()->getPrecision());
-                }
-
                 $expandedProductOptions = new ArrayObject();
                 foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
                     $expandedProductOptions->append($this->copyProductOptionTransfer($productOptionTransfer));

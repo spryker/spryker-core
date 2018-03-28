@@ -7,11 +7,9 @@
     <table name="spy_sales_order_item">
         <column name="amount" type="INTEGER" required="false"/>
         <column name="amount_measurement_unit_name" required="false" type="VARCHAR" size="255" />
-        <column name="amount_measurement_unit_value" required="false" type="FLOAT" />
         <column name="amount_measurement_unit_precision" required="false" type="INTEGER"/>
         <column name="amount_measurement_unit_conversion" required="false" type="FLOAT"/>
         <column name="quantity_measurement_unit_name" required="false" type="VARCHAR" size="255" />
-        <column name="quantity_measurement_unit_value" required="false" type="FLOAT" />
         <column name="quantity_measurement_unit_precision" required="false" type="INTEGER"/>
         <column name="quantity_measurement_unit_conversion" required="false" type="FLOAT"/>
     </table>
