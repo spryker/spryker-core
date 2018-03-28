@@ -103,9 +103,6 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
         $quoteTransfer->setItems($items);
         if (count($items)) {
             $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
-            if ($quoteTransfer->getTotals() === null) {
-                $quoteTransfer->setItems(new ArrayObject());
-            }
         }
 
         $this->updateManualOrderItems($quoteTransfer);

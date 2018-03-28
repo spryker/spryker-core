@@ -33,8 +33,6 @@ interface ManualOrderEntryGuiToMessengerFacadeInterface
     public function addInfoMessage(MessageTransfer $message);
 
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getStoredMessages();

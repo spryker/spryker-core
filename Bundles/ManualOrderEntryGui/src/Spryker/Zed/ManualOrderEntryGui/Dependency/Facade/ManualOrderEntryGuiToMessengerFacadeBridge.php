@@ -55,8 +55,6 @@ class ManualOrderEntryGuiToMessengerFacadeBridge implements ManualOrderEntryGuiT
     }
 
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getStoredMessages()

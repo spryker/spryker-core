@@ -31,6 +31,7 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Store\StoreType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Summary\SummaryType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Voucher\VoucherType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Service\StepEngine;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCalculationFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCheckoutFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCurrencyFacadeInterface;
@@ -131,6 +132,14 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getCheckoutFacade(): ManualOrderEntryGuiToCheckoutFacadeInterface
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_CHECKOUT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCalculationFacadeInterface
+     */
+    public function getCalculationFacade(): ManualOrderEntryGuiToCalculationFacadeInterface
+    {
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_CALCULATION);
     }
 
     /**
@@ -433,7 +442,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
      */
     public function createSummaryDataProvider(): SummaryDataProvider
     {
-        return new SummaryDataProvider();
+        return new SummaryDataProvider($this->getCalculationFacade());
     }
 
     /**

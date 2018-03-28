@@ -10,6 +10,7 @@ namespace Spryker\Zed\ManualOrderEntryGui;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCalculationFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCheckoutFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCurrencyFacadeBridge;
@@ -35,6 +36,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_PAYMENT = 'FACADE_PAYMENT';
     public const FACADE_CHECKOUT = 'FACADE_CHECKOUT';
+    public const FACADE_CALCULATION = 'FACADE_CALCULATION';
 
     public const PAYMENT_SUB_FORMS = 'PAYMENT_SUB_FORMS';
 
@@ -62,6 +64,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addMoneyFacade($container);
         $container = $this->addPaymentFacade($container);
         $container = $this->addCheckoutFacade($container);
+        $container = $this->addCalculationFacade($container);
 
         $container = $this->addPaymentSubFormPlugins($container);
 
@@ -207,6 +210,20 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     {
         $container[static::FACADE_CHECKOUT] = function (Container $container) {
             return new ManualOrderEntryGuiToCheckoutFacadeBridge($container->getLocator()->checkout()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCalculationFacade(Container $container)
+    {
+        $container[static::FACADE_CALCULATION] = function (Container $container) {
+            return new ManualOrderEntryGuiToCalculationFacadeBridge($container->getLocator()->calculation()->facade());
         };
 
         return $container;
