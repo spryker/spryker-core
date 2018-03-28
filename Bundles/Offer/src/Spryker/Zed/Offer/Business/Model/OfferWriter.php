@@ -6,7 +6,7 @@ namespace Spryker\Zed\Offer\Business\Model;
 
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
-use Orm\Zed\Sales\Persistence\SpyOffer;
+use Orm\Zed\Offer\Persistence\SpyOffer;
 
 class OfferWriter implements OfferWriterInterface
 {
