@@ -127,7 +127,7 @@ class ProductSupplierTable extends AbstractTable
     protected function prepareQuery(): SpyProductQuery
     {
         $query = $this->companySupplierQueryContainer->queryProductSuppliers();
-        $query->where(SpyCompanySupplierToProductTableMap::COL_FK_COMPANY.' = ?', $this->idCompany);
+        $query->where(SpyCompanySupplierToProductTableMap::COL_FK_COMPANY . ' = ?', $this->idCompany);
 
         return $query;
     }
@@ -193,10 +193,10 @@ class ProductSupplierTable extends AbstractTable
         $criteria->add(SpyPriceTypeTableMap::COL_NAME, static::PRICE_TYPE_DEFAULT);
 
         $prices = $spyProductEntity->getPriceProductsJoinPriceType($criteria);
-        $abstractPrices = $spyProductEntity->getSpyProductAbstract()->getPriceProductsJoinPriceType($criteria);
         if ($prices->count() > 0) {
             return $this->formatPrices($prices[0]->getPriceProductStoresJoinCurrency());
         }
+        $abstractPrices = $spyProductEntity->getSpyProductAbstract()->getPriceProductsJoinPriceType($criteria);
         if ($abstractPrices->count() > 0) {
             return $this->formatPrices($abstractPrices[0]->getPriceProductStoresJoinCurrency());
         }

@@ -556,7 +556,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteManagerPersistEntityExpanderPluginInterface[]
      */
-    protected function getPersistRelatedDataPlugins()
+    protected function getPersistRelatedDataPlugins(): array
     {
         return $this->getProvidedDependency(ProductDependencyProvider::PERSIST_RELATED_DATA_PLUGINS);
     }

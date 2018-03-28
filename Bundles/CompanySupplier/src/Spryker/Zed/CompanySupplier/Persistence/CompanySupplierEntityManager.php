@@ -23,8 +23,6 @@ class CompanySupplierEntityManager extends AbstractEntityManager implements Comp
      */
     public function saveCompanySuppliersForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
     {
-        $productConcreteTransfer->requireCompanySuppliers();
-
         $this->deleteCompanySuppliersByIdProduct($productConcreteTransfer->getIdProductConcrete());
         foreach ($productConcreteTransfer->getCompanySuppliers() as $supplier) {
             $productCompanySupplier = new SpyCompanySupplierToProduct();

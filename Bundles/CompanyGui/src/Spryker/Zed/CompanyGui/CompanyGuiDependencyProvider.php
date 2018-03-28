@@ -9,7 +9,6 @@ namespace Spryker\Zed\CompanyGui;
 
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Spryker\Zed\CompanyGui\Dependency\Facade\CompanyGuiToCompanyFacadeBridge;
-use Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableActionExtensionInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -77,7 +76,7 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return CompanyTableActionExtensionInterface[]
+     * @return \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableActionExtensionInterface[]
      */
     protected function getCompanyTableActionExtensionPlugins(): array
     {

@@ -20,15 +20,15 @@ use Symfony\Component\Validator\Constraints\Required;
  */
 class CompanyBusinessUnitForm extends AbstractType
 {
-    const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
-    const FIELD_NAME = 'name';
-    const FIELD_IBAN = 'iban';
-    const FIELD_BIC = 'bic';
+    protected const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
+    protected const FIELD_NAME = 'name';
+    protected const FIELD_IBAN = 'iban';
+    protected const FIELD_BIC = 'bic';
 
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'company-business-unit';
     }
@@ -39,7 +39,7 @@ class CompanyBusinessUnitForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addIdCompanyField($builder)
@@ -53,7 +53,7 @@ class CompanyBusinessUnitForm extends AbstractType
      *
      * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
      */
-    protected function addIdCompanyField(FormBuilderInterface $builder)
+    protected function addIdCompanyField(FormBuilderInterface $builder): CompanyBusinessUnitForm
     {
         $builder->add(self::FIELD_ID_COMPANY_BUSINESS_UNIT, HiddenType::class);
 
@@ -65,7 +65,7 @@ class CompanyBusinessUnitForm extends AbstractType
      *
      * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
      */
-    protected function addNameField(FormBuilderInterface $builder)
+    protected function addNameField(FormBuilderInterface $builder): CompanyBusinessUnitForm
     {
         $builder->add(self::FIELD_NAME, TextType::class, [
             'label' => 'Name',
@@ -80,7 +80,7 @@ class CompanyBusinessUnitForm extends AbstractType
      *
      * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
      */
-    protected function addIbanField(FormBuilderInterface $builder)
+    protected function addIbanField(FormBuilderInterface $builder): CompanyBusinessUnitForm
     {
         $builder->add(self::FIELD_IBAN, TextType::class, [
             'label' => 'IBAN',
@@ -99,7 +99,7 @@ class CompanyBusinessUnitForm extends AbstractType
      *
      * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
      */
-    protected function addBicField(FormBuilderInterface $builder)
+    protected function addBicField(FormBuilderInterface $builder): CompanyBusinessUnitForm
     {
         $builder->add(self::FIELD_BIC, TextType::class, [
             'label' => 'BIC',
@@ -116,7 +116,7 @@ class CompanyBusinessUnitForm extends AbstractType
     /**
      * @return array
      */
-    protected function getTextFieldConstraints()
+    protected function getTextFieldConstraints(): array
     {
         return [
             new Required(),

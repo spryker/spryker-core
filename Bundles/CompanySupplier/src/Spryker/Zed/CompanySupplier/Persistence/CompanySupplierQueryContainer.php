@@ -7,11 +7,8 @@
 
 namespace Spryker\Zed\CompanySupplier\Persistence;
 
-use Orm\Zed\CompanySupplier\Persistence\Map\SpyCompanySupplierToProductTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\CompanySupplier\Persistence\CompanySupplierPersistenceFactory getFactory()
@@ -19,6 +16,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class CompanySupplierQueryContainer extends AbstractQueryContainer implements CompanySupplierQueryContainerInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery

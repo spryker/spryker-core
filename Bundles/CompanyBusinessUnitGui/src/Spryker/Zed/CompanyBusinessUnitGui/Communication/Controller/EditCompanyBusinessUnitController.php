@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Controller;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -65,13 +64,5 @@ class EditCompanyBusinessUnitController extends AbstractController
             'form' => $form->createView(),
             'idCompany' => $idCompanyBusinessUnit,
         ]);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
-     */
-    protected function createCompanyBusinessUnitTransfer(): CompanyBusinessUnitTransfer
-    {
-        return new CompanyBusinessUnitTransfer();
     }
 }

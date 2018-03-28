@@ -14,11 +14,16 @@
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/price-product": "^1.0.0",
     "spryker/company-supplier": "^1.0.0",
-    "spryker/product-management-extension": "^1.0.0"
+    "spryker/product-management-extension": "^1.0.0",
+    "spryker/company-gui-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/company-gui": "*"
+  },
+  "suggest": {
+    "spryker/company-gui": "If you want to provide plugins to CompanyGui module"
   },
   "autoload": {
     "psr-4": {

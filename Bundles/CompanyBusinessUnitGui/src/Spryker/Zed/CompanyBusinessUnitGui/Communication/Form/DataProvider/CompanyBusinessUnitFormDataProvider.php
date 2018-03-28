@@ -32,7 +32,9 @@ class CompanyBusinessUnitFormDataProvider
      */
     public function getData(int $idCompanyBusinessUnit): CompanyBusinessUnitTransfer
     {
-        return $this->companyBusinessUnitFacade->getCompanyBusinessUnitById($this->createCompanyBusinessUnitTransfer()->setIdCompanyBusinessUnit($idCompanyBusinessUnit));
+        return $this->companyBusinessUnitFacade->getCompanyBusinessUnitById(
+            $this->createCompanyBusinessUnitTransfer()->setIdCompanyBusinessUnit($idCompanyBusinessUnit)
+        );
     }
 
     /**

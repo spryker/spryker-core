@@ -45,6 +45,7 @@ class CompanyFormDataProvider
     {
         return [
             CompanyForm::OPTION_COMPANY_TYPE_CHOICES => $this->prepareOptions(),
+            'data_class' => CompanyTransfer::class,
         ];
     }
 

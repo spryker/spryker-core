@@ -23,7 +23,8 @@ class CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeBridge implements Company
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
     }
 
-    /** @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
@@ -33,7 +34,8 @@ class CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeBridge implements Company
         return $this->companyBusinessUnitFacade->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
     }
 
-    /** @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */

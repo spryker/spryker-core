@@ -349,7 +349,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductConcreteEditFormExpanderPlugins(Container $container)
+    protected function addProductConcreteEditFormExpanderPlugins(Container $container): Container
     {
         $container[static::PRODUCT_CONCRETE_EDIT_FORM_EXPANDER_PLUGINS] = function (Container $container) {
             return $this->getProductConcreteEditFormExpanderPlugins();
@@ -371,7 +371,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductConcreteFormEditDataProviderExpanderPlugins(Container $container)
+    protected function addProductConcreteFormEditDataProviderExpanderPlugins(Container $container): Container
     {
         $container[static::PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS] = function (Container $container) {
             return $this->getProductConcreteFormEditDataProviderExpanderPlugins();
@@ -393,7 +393,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductFormTransferMapperExpanderPlugins(Container $container)
+    protected function addProductFormTransferMapperExpanderPlugins(Container $container): Container
     {
         $container[static::PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS] = function (Container $container) {
             return $this->getProductFormTransferMapperExpanderPlugins();

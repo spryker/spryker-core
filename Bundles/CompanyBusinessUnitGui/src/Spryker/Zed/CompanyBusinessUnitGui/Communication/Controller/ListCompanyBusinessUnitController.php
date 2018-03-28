@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitGui\Communication\CompanyBusinessUnitGuiCommunicationFactory getFactory()
@@ -17,7 +18,7 @@ class ListCompanyBusinessUnitController extends AbstractController
     /**
      * @return array
      */
-    public function indexAction()
+    public function indexAction(): array
     {
         $companyBusinessUnitTable = $this->getFactory()
             ->createCompanyBusinessUnitTable();
@@ -30,7 +31,7 @@ class ListCompanyBusinessUnitController extends AbstractController
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function tableAction()
+    public function tableAction(): JsonResponse
     {
         $table = $this->getFactory()
             ->createCompanyBusinessUnitTable();

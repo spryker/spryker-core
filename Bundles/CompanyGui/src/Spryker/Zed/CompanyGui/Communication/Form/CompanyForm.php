@@ -22,16 +22,15 @@ use Symfony\Component\Validator\Constraints\Required;
  */
 class CompanyForm extends AbstractType
 {
-    const OPTION_COMPANY_TYPE_CHOICES = 'company_type_choices';
-
-    const FIELD_ID_COMPANY = 'id_company';
-    const FIELD_NAME = 'name';
-    const FIELD_FK_COMPANY_TYPE = 'fk_company_type';
+    public const OPTION_COMPANY_TYPE_CHOICES = 'company_type_choices';
+    protected const FIELD_ID_COMPANY = 'id_company';
+    protected const FIELD_NAME = 'name';
+    protected const FIELD_FK_COMPANY_TYPE = 'fk_company_type';
 
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'company';
     }
@@ -41,7 +40,7 @@ class CompanyForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_COMPANY_TYPE_CHOICES);
     }
@@ -52,7 +51,7 @@ class CompanyForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addIdCompanyField($builder)
@@ -65,7 +64,7 @@ class CompanyForm extends AbstractType
      *
      * @return \Spryker\Zed\CompanyGui\Communication\Form\CompanyForm
      */
-    protected function addIdCompanyField(FormBuilderInterface $builder)
+    protected function addIdCompanyField(FormBuilderInterface $builder): CompanyForm
     {
         $builder->add(self::FIELD_ID_COMPANY, HiddenType::class);
 
@@ -77,7 +76,7 @@ class CompanyForm extends AbstractType
      *
      * @return \Spryker\Zed\CompanyGui\Communication\Form\CompanyForm
      */
-    protected function addNameField(FormBuilderInterface $builder)
+    protected function addNameField(FormBuilderInterface $builder): CompanyForm
     {
         $builder->add(self::FIELD_NAME, TextType::class, [
             'label' => 'Name',
@@ -93,7 +92,7 @@ class CompanyForm extends AbstractType
      *
      * @return \Spryker\Zed\CompanyGui\Communication\Form\CompanyForm
      */
-    protected function addCompanyTypeField(FormBuilderInterface $builder, array $choices)
+    protected function addCompanyTypeField(FormBuilderInterface $builder, array $choices): CompanyForm
     {
         $builder->add(self::FIELD_FK_COMPANY_TYPE, ChoiceType::class, [
             'label' => 'Company type',
@@ -111,7 +110,7 @@ class CompanyForm extends AbstractType
     /**
      * @return array
      */
-    protected function getTextFieldConstraints()
+    protected function getTextFieldConstraints(): array
     {
         return [
             new Required(),

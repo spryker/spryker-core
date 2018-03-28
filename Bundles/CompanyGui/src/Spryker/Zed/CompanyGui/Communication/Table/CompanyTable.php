@@ -11,7 +11,6 @@ use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTypeTableMap;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableActionExtensionInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -38,13 +37,13 @@ class CompanyTable extends AbstractTable
     protected $companyQuery;
 
     /**
-     * @var CompanyTableActionExtensionInterface[]
+     * @var \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableActionExtensionInterface[]
      */
     protected $companyTableActionExtensionPlugins;
 
     /**
      * @param \Orm\Zed\Company\Persistence\SpyCompanyQuery $companyQuery
-     * @param CompanyTableActionExtensionInterface[] $companyTableActionExtensionPlugins
+     * @param \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableActionExtensionInterface[] $companyTableActionExtensionPlugins
      */
     public function __construct(SpyCompanyQuery $companyQuery, array $companyTableActionExtensionPlugins)
     {
@@ -144,7 +143,6 @@ class CompanyTable extends AbstractTable
                 $button->getCustomOptions()
             );
         }
-
 
         return implode(' ', $buttons);
     }

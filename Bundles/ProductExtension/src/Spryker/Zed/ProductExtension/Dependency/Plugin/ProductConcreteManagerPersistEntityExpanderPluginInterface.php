@@ -13,7 +13,7 @@ interface ProductConcreteManagerPersistEntityExpanderPluginInterface
 {
     /**
      * Specification:
-     * - persists data related to the product concrete
+     * - Persists data related to the product concrete
      *
      * @api
      *

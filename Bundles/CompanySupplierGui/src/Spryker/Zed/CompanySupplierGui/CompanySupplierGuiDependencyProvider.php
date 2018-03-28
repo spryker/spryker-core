@@ -28,7 +28,7 @@ class CompanySupplierGuiDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addCompanySupplierFacade($container);
         $container = $this->addCompanySupplierQueryContainer($container);

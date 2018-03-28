@@ -9,13 +9,11 @@ namespace Spryker\Zed\CompanySupplier\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CompanySupplierCollectionTransfer;
-use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTypeTableMap;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Orm\Zed\CompanySupplier\Persistence\Map\SpyCompanySupplierToProductTableMap;
 use Spryker\Shared\CompanySupplier\CompanySupplierConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\CompanySupplier\Persistence\CompanySupplierPersistenceFactory getFactory()
@@ -50,8 +48,8 @@ class CompanySupplierRepository extends AbstractRepository implements CompanySup
     public function getSuppliersByIdProduct(int $idProduct): CompanySupplierCollectionTransfer
     {
         $query = $this->getFactory()->createCompanyQuery();
-        $query->addJoin(SpyCompanyTableMap::COL_ID_COMPANY, SpyCompanySupplierToProductTableMap::COL_FK_COMPANY, Criteria::LEFT_JOIN);
-        $query->where(SpyCompanySupplierToProductTableMap::COL_FK_PRODUCT . ' = ' . $idProduct);
+        $query->leftJoinSpyCompanySupplierToProduct();
+        $query->where(SpyCompanySupplierToProductTableMap::COL_FK_PRODUCT . ' = ?', $idProduct);
 
         return $this->getCompanySupplierCollectionFromQuery($query);
     }

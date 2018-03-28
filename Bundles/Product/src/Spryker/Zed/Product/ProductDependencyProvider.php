@@ -248,7 +248,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container $container
      */
-    protected function addPersistRelatedDataPlugins(Container $container)
+    protected function addPersistRelatedDataPlugins(Container $container): Container
     {
         $container[static::PERSIST_RELATED_DATA_PLUGINS] = function (Container $container) {
             return $this->getPersistRelatedDataPlugins();
@@ -260,7 +260,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteManagerPersistEntityExpanderPluginInterface[]
      */
-    protected function getPersistRelatedDataPlugins()
+    protected function getPersistRelatedDataPlugins(): array
     {
         return [];
     }

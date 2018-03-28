@@ -12,6 +12,9 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 interface CompanySupplierQueryContainerInterface
 {
     /**
+     * Specification:
+     * - Query products with company supplier relation
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery

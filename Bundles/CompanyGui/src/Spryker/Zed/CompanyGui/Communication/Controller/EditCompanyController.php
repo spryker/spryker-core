@@ -35,23 +35,19 @@ class EditCompanyController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCompany = $this->castId($request->query->get(static::URL_PARAM_ID_COMPANY));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
+        $idCompany = $this->castId($request->get(static::URL_PARAM_ID_COMPANY));
+        $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
 
         $dataProvider = $this->getFactory()->createCompanyFormDataProvider();
         $form = $this->getFactory()
-            ->createCompanyForm(
+            ->getCompanyForm(
                 $dataProvider->getData($idCompany),
                 $dataProvider->getOptions($idCompany)
             )
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $companyTransfer = $this->createCompanyTransfer();
-            $companyTransfer->setIdCompany($form->getData()->getIdCompany());
-            $companyTransfer->setName($form->getData()->getName());
-            $companyTransfer->setFkCompanyType($form->getData()->getFkCompanyType());
-
+            $companyTransfer = $form->getData();
             $companyResponseTransfer = $this->getFactory()
                 ->getCompanyFacade()
                 ->update($companyTransfer);
