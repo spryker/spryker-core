@@ -32,7 +32,7 @@ class OffersTableQueryBuilder implements OffersTableQueryBuilderInterface
      */
     public function __construct(
         SpySalesOrderQuery $salesOrderQuery
-    ){
+    ) {
         $this->salesOrderQuery = $salesOrderQuery;
     }
 

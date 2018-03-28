@@ -19,13 +19,13 @@ class OfferReader implements OfferReaderInterface
     protected $salesFacade;
 
     /**
-     * @var OfferConfig
+     * @var \Spryker\Zed\Offer\OfferConfig
      */
     protected $offerConfig;
 
     /**
      * @param \Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface $salesFacade
-     * @param OfferConfig $offerConfig
+     * @param \Spryker\Zed\Offer\OfferConfig $offerConfig
      */
     public function __construct(
         OfferToSalesFacadeInterface $salesFacade,

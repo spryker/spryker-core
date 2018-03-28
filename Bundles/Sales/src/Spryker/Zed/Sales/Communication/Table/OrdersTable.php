@@ -23,7 +23,6 @@ class OrdersTable extends AbstractTable
     const ID_ORDER_ITEM_STATE = 'id-order-item-state';
     const FILTER = 'filter';
     const URL_SALES_DETAIL = '/sales/detail';
-    const URL_OFFER_DETAIL = '/sales/offer';
     const PARAM_ID_SALES_ORDER = 'id-sales-order';
     const GRAND_TOTAL = 'GrandTotal';
     const ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
@@ -221,15 +220,6 @@ class OrdersTable extends AbstractTable
                 static::PARAM_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
             ]),
             'View'
-        );
-
-        // TODO: To remove
-        $urls[] = $this->generateViewButton(
-            Url::generate(static::URL_OFFER_DETAIL, [
-                static::PARAM_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
-            ]),
-            'Offer Details',
-            ['target' => '_blank']
         );
 
         return $urls;

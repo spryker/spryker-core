@@ -3,7 +3,6 @@
 namespace SprykerTest\Zed\Offer\Business;
 
 use Codeception\Test\Unit;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Shared\Offer\OfferConfig;
 
 /**
@@ -33,7 +32,7 @@ class OfferFacadeTest extends Unit
 
         $response = $facade->convertOfferToOrder($offerEntity->getIdSalesOrder());
         $this->assertTrue($response->getIsSuccessful());
-        $this->assertNotEquals( OfferConfig::ORDER_TYPE_OFFER, $response->getOrder()->getType());
+        $this->assertNotEquals(OfferConfig::ORDER_TYPE_OFFER, $response->getOrder()->getType());
     }
 
     /**
@@ -41,7 +40,7 @@ class OfferFacadeTest extends Unit
      */
     protected function createOffer()
     {
-        /** @var SpySalesOrder $orderEntity */
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity */
         $orderEntity = $this->tester->create();
         $orderEntity->setType(OfferConfig::ORDER_TYPE_OFFER);
         $orderEntity->save();

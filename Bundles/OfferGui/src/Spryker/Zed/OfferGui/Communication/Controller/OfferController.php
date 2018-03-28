@@ -5,21 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Communication\Controller;
+namespace Spryker\Zed\OfferGui\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
- * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
- * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
  */
 class OfferController extends AbstractController
 {
+    public const PARAM_ID_SALES_ORDER = 'id-sales-order';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -27,14 +26,17 @@ class OfferController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idSalesOrder = $this->castId($request->query->getInt(SalesConfig::PARAM_ID_SALES_ORDER));
+        $idSalesOrder = $this->castId($request->query->getInt(static::PARAM_ID_SALES_ORDER));
 
-        $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idSalesOrder);
+        $orderTransfer = $this->getFactory()
+            ->getSalesFacade()
+            ->getOrderByIdSalesOrder($idSalesOrder);
 
-        $distinctOrderStates = $this->getFacade()->getDistinctOrderStates($idSalesOrder);
+        $distinctOrderStates = $this->getFactory()
+            ->getSalesFacade()
+            ->getDistinctOrderStates($idSalesOrder);
         $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
         $eventsGroupedByItem = $this->getFactory()->getOmsFacade()->getManualEventsByIdSalesOrder($idSalesOrder);
-        $orderItemSplitFormCollection = $this->getFactory()->createOrderItemSplitFormCollection($orderTransfer->getItems());
 
         $blockResponseData = $this->renderSalesDetailBlocks($request, $orderTransfer);
         if ($blockResponseData instanceof RedirectResponse) {
@@ -46,7 +48,6 @@ class OfferController extends AbstractController
             'events' => $events,
             'distinctOrderStates' => $distinctOrderStates,
             'order' => $orderTransfer,
-            'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
         ], $blockResponseData);
     }
 
@@ -66,7 +67,13 @@ class OfferController extends AbstractController
 
         $blockData = $this->renderMultipleActions(
             $request,
-            $this->getFactory()->getSalesDetailExternalBlocksUrls(),
+            [
+                'payments' => '/payment/sales/list',
+                'giftCards' => '/gift-card/sales/list',
+                'shipment' => '/shipment/sales/list',
+                'discount' => '/discount/sales/list',
+                'refund' => '/refund/sales/list',
+            ],
             $orderTransfer
         );
 
