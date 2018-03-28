@@ -3,24 +3,20 @@
   "description": "SalesExtension module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/sales": "^8.0.0"
+    "spryker/sales": "^8.0.0",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/sales": "If you use interfaces from current module in you project"
   },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "suggest": {
-    "spryker/sales": "If you use interfaces from current module in you project"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
