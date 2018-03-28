@@ -27,8 +27,6 @@ class QuoteReader implements QuoteReaderInterface
     protected $quoteFacade;
 
     /**
-     * QuoteReader constructor.
-     *
      * @param \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface $sharedCartRepository
      * @param \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface $quoteFacade
      */

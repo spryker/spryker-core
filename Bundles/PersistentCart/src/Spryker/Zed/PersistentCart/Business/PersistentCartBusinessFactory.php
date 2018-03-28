@@ -90,6 +90,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteMergerInterface
+     * TODO: new modules should follow PHP7 return type hints in the method (e.g. public function createQuoteMerger(): QuoteMergerInterface)
      */
     public function createQuoteMerger()
     {
@@ -98,6 +99,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @return \Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteItemFinderPluginInterface
+     * TODO: please change all protected factory methods to public in all modified modules (except old protected methods for BC)
      */
     protected function getQuoteItemFinderPlugin()
     {

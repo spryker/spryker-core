@@ -92,6 +92,7 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
     {
         $criteriaFilterTransfer = new QuotePermissionGroupCriteriaFilterTransfer();
         $criteriaFilterTransfer->setFilter(new FilterTransfer());
+
         return $this->sharedCartRepository->findQuotePermissionGroupList($criteriaFilterTransfer);
     }
 
@@ -124,6 +125,7 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
         foreach ($quotePermissionGroupTransferList as $quotePermissionGroupTransfer) {
             $indexedQuotePermissionTransferList[$quotePermissionGroupTransfer->getIdQuotePermissionGroup()] = $quotePermissionGroupTransfer;
         }
+
         return $indexedQuotePermissionTransferList;
     }
 
@@ -139,15 +141,19 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
         foreach ($companyUserTransferCollection as $companyUserEntityTransfer) {
             foreach ($companyUserEntityTransfer->getSpyQuoteCompanyUsers() as $quoteCompanyUser) {
                 $shareDetailTransfer = new ShareDetailTransfer();
-                $shareDetailTransfer->setIdQuoteCompanyUser($quoteCompanyUser->getIdQuoteCompanyUser());
-                $shareDetailTransfer->setIdCompanyUser($companyUserEntityTransfer->getIdCompanyUser());
+                $shareDetailTransfer
+                    ->setIdQuoteCompanyUser($quoteCompanyUser->getIdQuoteCompanyUser())
+                    ->setIdCompanyUser($companyUserEntityTransfer->getIdCompanyUser());
+
                 $customerTransfer = $companyUserEntityTransfer->getCustomer();
                 $shareDetailTransfer->setCustomerName(
                     $customerTransfer->getLastName() . ' ' . $customerTransfer->getFirstName()
                 );
+
                 $shareDetailTransfer->setQuotePermissionGroup(
                     $quotePermissionGroupTransferList[$quoteCompanyUser->getFkQuotePermissionGroup()]
                 );
+
                 $shareDetailsTransferList->append($shareDetailTransfer);
             }
         }

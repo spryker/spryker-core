@@ -25,6 +25,7 @@ class QuotePermissionCustomerExpanderPlugin extends AbstractPlugin implements Cu
      */
     public function expandTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
+        // TODO: Zed plugins shouldn't contain business logic. You need to move this behind the facade of the module. Please also check other modules where you added plugins. (Be pragmatic, plugins which contains a couple of lines can be kept, i.e. permission plugins, etc.)
         if ($customerTransfer->getCompanyUserTransfer()) {
             $permissionCollectionTransfer = $this->getFacade()
                 ->findPermissionsByIdCompanyUser(

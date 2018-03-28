@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface QuoteWritePluginInterface
 {
     /**
+     * TODO: add specification
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

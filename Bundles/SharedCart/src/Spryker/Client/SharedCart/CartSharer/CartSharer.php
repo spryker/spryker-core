@@ -68,7 +68,7 @@ class CartSharer implements CartSharerInterface
     {
         $quoteTransfer = $this->getQuote($shareCartRequestTransfer->getIdQuote());
         if (!$this->validateShareCartRequest($shareCartRequestTransfer, $quoteTransfer)) {
-            $this->messengerClient->addErrorMessage('shared_cart.share.error.already_exist');
+            $this->messengerClient->addErrorMessage('shared_cart.share.error.already_exist'); //TODO: extract to constant
             $quoteResponseTransfer = new QuoteResponseTransfer();
             $quoteResponseTransfer->setIsSuccessful(false);
 
@@ -127,7 +127,7 @@ class CartSharer implements CartSharerInterface
             }
         }
 
-        throw new CartNotFoundException('Cart not found');
+        throw new CartNotFoundException('Cart not found'); // TODO: exception messages should always contain some extra info to help to identify the problem (e.g. add which idQuote was not found).
     }
 
     /**
@@ -147,7 +147,7 @@ class CartSharer implements CartSharerInterface
     /**
      * @param int $idQuotePermissionGroup
      *
-     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer|mixed|null
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer|null
      */
     protected function findQuotePermissionGroup(int $idQuotePermissionGroup)
     {

@@ -36,8 +36,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Create new quote entity if it does not exist.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -51,8 +50,7 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Updates existing quote entity from QuoteTransfer.
+     * {@inheritdoc}
      *
      * @api
      *

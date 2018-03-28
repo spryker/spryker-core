@@ -29,6 +29,7 @@ class ProductSeparatePersistentCartChangeExpanderPlugin implements PersistentCar
     {
         if (!empty($params[self::PARAM_SEPARATE_PRODUCT])) {
             foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+                // TODO: the group key calculation must not happen other place then in the appropriate plugin (\Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpanderInterface)
                 $itemTransfer->setGroupKey(
                     $itemTransfer->getGroupKey() . time()
                 );
