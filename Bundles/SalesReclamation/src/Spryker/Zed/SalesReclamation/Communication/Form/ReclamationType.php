@@ -38,6 +38,9 @@ class ReclamationType extends AbstractType
         $builder->add(static::FIELD_RECLAMATION, TextType::class, [
             'label' => 'Reclamation Id',
             'required' => false,
+            'attr' => [
+                'readonly' => true,
+            ],
             'constraints' => [
                 new GreaterThan(['value' => 0]),
             ],

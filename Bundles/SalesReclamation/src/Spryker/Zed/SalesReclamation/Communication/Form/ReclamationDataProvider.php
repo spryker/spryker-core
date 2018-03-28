@@ -56,7 +56,6 @@ class ReclamationDataProvider implements FormDataProviderInterface
             'data_class' => QuoteTransfer::class,
             'allow_extra_fields' => true,
             'csrf_protection' => false,
-            'disabled' => true,
         ];
     }
 }
