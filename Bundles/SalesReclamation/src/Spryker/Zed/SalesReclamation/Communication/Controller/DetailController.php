@@ -45,6 +45,7 @@ class DetailController extends AbstractController
 
         return $this->viewResponse([
             'reclamation' => $reclamationTransfer,
+            'orders' => [$reclamationTransfer->getOrder()],
         ]);
     }
 
