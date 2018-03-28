@@ -23,4 +23,8 @@
         <property name="order" type="Order"/>
         <property name="orderItems" type="Item[]" singular="Item"/>
     </transfer>
+
+    <transfer name="Quote">
+        <property name="reclamationId" type="integer"/>
+    </transfer>
 </transfers>

@@ -8,10 +8,15 @@
 namespace Spryker\Zed\SalesReclamation\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\FormDataProviderInterface;
+use Spryker\Zed\SalesReclamation\Communication\Form\ReclamationDataProvider;
+use Spryker\Zed\SalesReclamation\Communication\Form\ReclamationType;
 use Spryker\Zed\SalesReclamation\Communication\Table\ReclamationTable;
 use Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface;
 use Spryker\Zed\SalesReclamation\Dependency\Service\SalesReclamationToUtilDateTimeServiceInterface;
 use Spryker\Zed\SalesReclamation\SalesReclamationDependencyProvider;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface getQueryContainer()
@@ -36,6 +41,31 @@ class SalesReclamationCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getDateTimeService()
         );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createReclamationForm(Request $request, $quoteTransfer): FormInterface
+    {
+        $dataProvider = $this->createReclamationDataProvider();
+
+        return $this->getFormFactory()->create(
+            ReclamationType::class,
+            $dataProvider->getData($quoteTransfer),
+            $dataProvider->getOptions($quoteTransfer)
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\FormDataProviderInterface
+     */
+    public function createReclamationDataProvider(): FormDataProviderInterface
+    {
+        return new ReclamationDataProvider();
     }
 
     /**
