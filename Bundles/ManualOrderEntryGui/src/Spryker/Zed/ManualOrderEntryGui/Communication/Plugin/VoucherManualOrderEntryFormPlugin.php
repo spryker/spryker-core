@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Voucher\VoucherType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Traits\UniqueFlashMessagesTrait;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,6 +22,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
+    use UniqueFlashMessagesTrait;
+
     protected const MESSAGE_ERROR = 'Voucher code \'%s\' has not been applied';
     protected const MESSAGE_SUCCESS = 'Voucher code \'%s\' has been applied';
 
@@ -75,8 +78,9 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
             $quoteTransfer->setVoucherDiscounts(new ArrayObject());
             $quoteTransfer->addVoucherDiscount($discountTransfer);
 
-            $this->messengerFacade->getStoredMessages();
-            $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
+            if (count($quoteTransfer->getItems())) {
+                $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
+            }
 
             if (!count($quoteTransfer->getVoucherDiscounts())) {
                 $this->addMessage(sprintf(static::MESSAGE_ERROR, $quoteTransfer->getVoucherCode()), false);
@@ -87,6 +91,8 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
             } else {
                 $this->addMessage(sprintf(static::MESSAGE_SUCCESS, $quoteTransfer->getVoucherCode()));
             }
+
+            $this->uniqueFlashMessages();
         }
 
         return $quoteTransfer;
