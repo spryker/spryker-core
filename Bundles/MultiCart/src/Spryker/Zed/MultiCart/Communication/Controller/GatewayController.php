@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MultiCart\Communication\Controller;
 
-use Generated\Shared\Transfer\QuoteActivatorRequestTransfer;
+use Generated\Shared\Transfer\QuoteActivationRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -18,12 +18,12 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteActivationRequestTransfer $quoteActivationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setDefaultQuoteAction(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer
+    public function setDefaultQuoteAction(QuoteActivationRequestTransfer $quoteActivationRequestTransfer): QuoteResponseTransfer
     {
-        return $this->getFacade()->setDefaultQuote($quoteActivatorRequestTransfer);
+        return $this->getFacade()->setDefaultQuote($quoteActivationRequestTransfer);
     }
 }

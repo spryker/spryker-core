@@ -24,10 +24,5 @@
         <property name="isSuccessful" type="bool"/>
     </transfer>
 
-    <transfer name="QuoteMergeRequest">
-        <property name="targetQuote" type="Quote"/>
-        <property name="sourceQuote" type="Quote"/>
-    </transfer>
-
 </transfers>
 

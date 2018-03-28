@@ -10,7 +10,6 @@ namespace Spryker\Zed\Quote\Business;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
-use Generated\Shared\Transfer\QuoteMergeRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
@@ -32,7 +31,31 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Find quote for customer
+     * - Create new quote entity if it does not exist.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Updates existing quote entity from QuoteTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Find quote for customer.
      *
      * @api
      *
@@ -44,7 +67,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Find quote by id
+     * - Find quote by id.
      *
      * @api
      *
@@ -56,7 +79,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Remove quote from DB
+     * - Remove quote from DB.
      *
      * @api
      *
@@ -68,19 +91,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Merge two quotes from request
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteMergeRequestTransfer $quoteMergeRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function mergeQuotes(QuoteMergeRequestTransfer $quoteMergeRequestTransfer): QuoteTransfer;
-
-    /**
-     * Specification:
-     * - Get quote storage strategy type
+     * - Get quote storage strategy type.
      *
      * @api
      *
@@ -90,7 +101,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Get quote collection filtered by criteria
+     * - Get quote collection filtered by criteria.
      *
      * @api
      *
@@ -102,7 +113,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Map Quote Entity Transfer to quote transfer
+     * - Map Quote Entity Transfer to quote transfer.
      *
      * @api
      *

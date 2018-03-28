@@ -7,12 +7,13 @@
 
 namespace Spryker\Zed\MultiCart\Business;
 
-use Generated\Shared\Transfer\QuoteActivatorRequestTransfer;
+use Generated\Shared\Transfer\QuoteActivationRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\MultiCart\Business\MultiCartBusinessFactory getFactory()
+ * @method \Spryker\Zed\MultiCart\Persistence\MultiCartEntityManagerInterface getEntityManager()
  */
 class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
 {
@@ -21,13 +22,13 @@ class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteActivationRequestTransfer $quoteActivationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setDefaultQuote(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer
+    public function setDefaultQuote(QuoteActivationRequestTransfer $quoteActivationRequestTransfer): QuoteResponseTransfer
     {
-        return $this->getFactory()->createQuoteActivator()->setDefaultQuote($quoteActivatorRequestTransfer);
+        return $this->getFactory()->createQuoteActivator()->setDefaultQuote($quoteActivationRequestTransfer);
     }
 
     /**
@@ -42,5 +43,19 @@ class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
     public function expandQuoteResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createQuoteResponseExpander()->expand($quoteResponseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $customerReference
+     *
+     * @return void
+     */
+    public function unDefaultCustomerQuotes(string $customerReference): void
+    {
+        $this->getEntityManager()->unDefaultCustomerQuotes($customerReference);
     }
 }

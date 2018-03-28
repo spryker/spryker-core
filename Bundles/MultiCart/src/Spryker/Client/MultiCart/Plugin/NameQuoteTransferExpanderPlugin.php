@@ -27,11 +27,35 @@ class NameQuoteTransferExpanderPlugin extends AbstractPlugin implements QuoteTra
         if ($quoteTransfer->getName() !== null) {
             return $quoteTransfer;
         }
+
         if ($quoteTransfer->getCustomer()) {
-            $quoteTransfer->setName($this->getFactory()->getBundleConfig()->getCustomerQuoteDefaultName());
+            $quoteTransfer->setName($this->getCustomerQuoteDefaultName());
+
+            return $quoteTransfer;
         }
-        $quoteTransfer->setName($this->getFactory()->getBundleConfig()->getGuestQuoteDefaultName());
+
+        $quoteTransfer->setName($this->getGuestQuoteDefaultName());
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCustomerQuoteDefaultName()
+    {
+        return $this->getFactory()
+            ->getMultiCartConfig()
+            ->getCustomerQuoteDefaultName();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getGuestQuoteDefaultName()
+    {
+        return $this->getFactory()
+            ->getMultiCartConfig()
+            ->getGuestQuoteDefaultName();
     }
 }

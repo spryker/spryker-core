@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\MultiCart;
 
-use Generated\Shared\Transfer\QuoteActivatorRequestTransfer;
+use Generated\Shared\Transfer\QuoteActivationRequestTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -31,11 +31,11 @@ interface MultiCartClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteActivationRequestTransfer $quoteActivationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setDefaultQuote(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer;
+    public function setDefaultQuote(QuoteActivationRequestTransfer $quoteActivationRequestTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:
@@ -49,15 +49,27 @@ interface MultiCartClientInterface
 
     /**
      * Specification:
-     * - Find quote by name in customer session.
+     * - Set customer quote collection.
      *
      * @api
      *
-     * @param string $quoteName
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     *
+     * @return void
+     */
+    public function setQuoteCollection(QuoteCollectionTransfer $quoteCollectionTransfer): void;
+
+    /**
+     * Specification:
+     * - Find quote by id in customer session.
+     *
+     * @api
+     *
+     * @param int $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    public function findQuoteByName($quoteName): ?QuoteTransfer;
+    public function findQuoteById(int $idQuote): ?QuoteTransfer;
 
     /**
      * Specification:

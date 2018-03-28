@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MultiCart\Business;
 
-use Generated\Shared\Transfer\QuoteActivatorRequestTransfer;
+use Generated\Shared\Transfer\QuoteActivationRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 interface MultiCartFacadeInterface
@@ -19,11 +19,11 @@ interface MultiCartFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteActivationRequestTransfer $quoteActivationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setDefaultQuote(QuoteActivatorRequestTransfer $quoteActivatorRequestTransfer): QuoteResponseTransfer;
+    public function setDefaultQuote(QuoteActivationRequestTransfer $quoteActivationRequestTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:
@@ -37,4 +37,16 @@ interface MultiCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function expandQuoteResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Mark all customer quotes as not default.
+     *
+     * @api
+     *
+     * @param string $customerReference
+     *
+     * @return mixed
+     */
+    public function unDefaultCustomerQuotes(string $customerReference);
 }

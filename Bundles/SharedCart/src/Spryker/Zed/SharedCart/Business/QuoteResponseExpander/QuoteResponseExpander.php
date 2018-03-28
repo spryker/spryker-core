@@ -7,24 +7,21 @@
 
 namespace Spryker\Zed\SharedCart\Business\QuoteResponseExpander;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface;
 
 class QuoteResponseExpander implements QuoteResponseExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface
+     * @var array|\Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpanderInterface[]
      */
-    protected $quoteReader;
+    protected $quoteResponseExpanderList;
 
     /**
-     * @param \Spryker\Zed\SharedCart\Business\Model\QuoteReaderInterface $quoteReader
+     * @param \Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpanderInterface[] $quoteResponseExpanderList
      */
-    public function __construct(QuoteReaderInterface $quoteReader)
+    public function __construct(array $quoteResponseExpanderList)
     {
-        $this->quoteReader = $quoteReader;
+        $this->quoteResponseExpanderList = $quoteResponseExpanderList;
     }
 
     /**
@@ -34,26 +31,10 @@ class QuoteResponseExpander implements QuoteResponseExpanderInterface
      */
     public function expand(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        $customerTransfer = $quoteTransfer->requireCustomer()->getCustomer();
-
-        $sharedQuoteCollectionTransfer = $this->findSharedCustomerQuotes($customerTransfer);
-        $quoteResponseTransfer->setSharedCustomerQuotes($sharedQuoteCollectionTransfer);
-
-        return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
-     */
-    protected function findSharedCustomerQuotes(CustomerTransfer $customerTransfer): QuoteCollectionTransfer
-    {
-        if ($customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()) {
-            return $this->quoteReader->findCustomerSharedQuotes($customerTransfer);
+        foreach ($this->quoteResponseExpanderList as $quoteResponseExpander) {
+            $quoteResponseTransfer = $quoteResponseExpander->expand($quoteResponseTransfer);
         }
 
-        return new QuoteCollectionTransfer();
+        return $quoteResponseTransfer;
     }
 }

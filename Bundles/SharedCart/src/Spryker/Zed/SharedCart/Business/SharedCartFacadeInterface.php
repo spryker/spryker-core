@@ -8,7 +8,10 @@
 namespace Spryker\Zed\SharedCart\Business;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface SharedCartFacadeInterface
 {
@@ -23,6 +26,18 @@ interface SharedCartFacadeInterface
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
     public function findPermissionsByIdCompanyUser($idCompanyUser): PermissionCollectionTransfer;
+
+    /**
+     * Specification:
+     * - TODO: add specification
+     *
+     * @api
+     *
+     * @param string $idCustomerReference
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findPermissionsByCustomer(string $idCustomerReference): PermissionCollectionTransfer;
 
     /**
      * Specification:
@@ -45,4 +60,28 @@ interface SharedCartFacadeInterface
      * @return void
      */
     public function installSharedCartPermissions(): void;
+
+    /**
+     * Specification:
+     * - TODO: add specification
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer
+     */
+    public function getQuotePermissionGroupList(QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer): QuotePermissionGroupResponseTransfer;
+
+    /**
+     * Specification:
+     * - TODO: add specification
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function updateQuoteShareDetails(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

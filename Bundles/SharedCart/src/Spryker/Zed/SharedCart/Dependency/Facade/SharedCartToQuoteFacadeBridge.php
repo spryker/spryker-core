@@ -26,9 +26,6 @@ class SharedCartToQuoteFacadeBridge implements SharedCartToQuoteFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Map Quote Entity Transfer to quote transfer
-     *
      * @param \Generated\Shared\Transfer\SpyQuoteEntityTransfer $quoteEntityTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

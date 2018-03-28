@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 class ChangeRequestExtendPluginExecutor implements ChangeRequestExtendPluginExecutorInterface
 {
     /**
-     * @var array|\Spryker\Client\PersistentCart\Dependency\Plugin\ChangeRequestExtendPluginInterface[]
+     * @var array|\Spryker\Client\PersistentCart\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface[]
      */
     protected $changeRequestExtendPlugins;
 
     /**
-     * @param \Spryker\Client\PersistentCart\Dependency\Plugin\ChangeRequestExtendPluginInterface[] $changeRequestExtendPlugins
+     * @param \Spryker\Client\PersistentCart\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface[] $changeRequestExtendPlugins
      */
     public function __construct(array $changeRequestExtendPlugins)
     {

@@ -7,11 +7,15 @@
 
 namespace Spryker\Zed\SharedCart\Persistence;
 
+use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\Permission\Persistence\SpyPermissionQuery;
 use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
+use Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUserQuery;
 use Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroupQuery;
 use Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroupToPermissionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\SharedCart\Persistence\Propel\Mapper\QuotePermissionGroupMapper;
+use Spryker\Zed\SharedCart\Persistence\Propel\Mapper\QuotePermissionGroupMapperInterface;
 
 /**
  * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
@@ -43,10 +47,34 @@ class SharedCartPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUserQuery
+     */
+    public function createQuoteCompanyUserQuery()
+    {
+        return SpyQuoteCompanyUserQuery::create();
+    }
+
+    /**
      * @return \Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroupToPermissionQuery
      */
     public function createQuotePermissionGroupToPermissionQuery()
     {
         return SpyQuotePermissionGroupToPermissionQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
+     */
+    public function createCompanyUserQuery(): SpyCompanyUserQuery
+    {
+        return SpyCompanyUserQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Persistence\Propel\Mapper\QuotePermissionGroupMapperInterface
+     */
+    public function createQuotePermissionGroupMapper(): QuotePermissionGroupMapperInterface
+    {
+        return new QuotePermissionGroupMapper();
     }
 }

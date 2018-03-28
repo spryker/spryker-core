@@ -28,7 +28,7 @@ class SaveCustomerQuotesQuoteUpdatePlugin extends AbstractPlugin implements Quot
     public function processResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
         if ($quoteResponseTransfer->getCustomerQuotes()) {
-            $this->getFactory()->createMultiCartSession()->setQuoteCollection($quoteResponseTransfer->getCustomerQuotes());
+            $this->getFactory()->createMultiCartStorage()->setQuoteCollection($quoteResponseTransfer->getCustomerQuotes());
         }
 
         return $quoteResponseTransfer;

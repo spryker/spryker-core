@@ -12,6 +12,8 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToMessengerClientBridge;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToPersistentCartClientBridge;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToQuoteClientBridge;
+use Spryker\Client\MultiCart\Dependency\Client\MultiCartToSessionClientBridge;
+use Spryker\Client\MultiCart\Dependency\Client\MultiCartToZedRequestClientBridge;
 
 class MultiCartDependencyProvider extends AbstractDependencyProvider
 {
@@ -45,7 +47,7 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
     protected function addSessionClient(Container $container)
     {
         $container[static::CLIENT_SESSION] = function (Container $container) {
-            return $container->getLocator()->session()->client();
+            return new MultiCartToSessionClientBridge($container->getLocator()->session()->client());
         };
 
         return $container;
@@ -73,7 +75,7 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
     protected function addZedRequestClient(Container $container)
     {
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
-            return $container->getLocator()->zedRequest()->client();
+            return new MultiCartToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
         };
 
         return $container;

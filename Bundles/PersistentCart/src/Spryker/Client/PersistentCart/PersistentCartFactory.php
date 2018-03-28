@@ -84,7 +84,7 @@ class PersistentCartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PersistentCart\Dependency\Plugin\ChangeRequestExtendPluginInterface[]
+     * @return \Spryker\Client\PersistentCart\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface[]
      */
     protected function getChangeRequestExtendPlugins()
     {

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\CartClient;
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
-use Spryker\Client\Cart\Plugin\ItemCountPlugin;
+use Spryker\Client\Cart\Plugin\ItemCounterPlugin;
 use Spryker\Client\Cart\Zed\CartStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
@@ -189,7 +189,7 @@ class CartClientTest extends Unit
         $mockBuilder->setMethods(['getQuote', 'getItemCounter']);
         $cartClientMock = $mockBuilder->getMock();
         $cartClientMock->method('getQuote')->willReturn($quoteTransfer);
-        $cartClientMock->method('getItemCounter')->willReturn(new ItemCountPlugin());
+        $cartClientMock->method('getItemCounter')->willReturn(new ItemCounterPlugin());
 
         $this->assertSame(1, $cartClientMock->getItemCount());
     }
