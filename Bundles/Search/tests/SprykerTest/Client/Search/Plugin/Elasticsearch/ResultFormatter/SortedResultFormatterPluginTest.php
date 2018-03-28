@@ -81,7 +81,7 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         $requestParameters = [];
 
         $expectedResult = (new SortSearchResultTransfer())
-            ->setSortParamNames(['foo'])
+            ->setSortParamNames(['foo-param'])
             ->setCurrentSortParam(null)
             ->setCurrentSortOrder(null);
 
@@ -96,12 +96,12 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         $searchConfig = $this->createSimpleSearchConfigMock();
 
         $requestParameters = [
-            SortConfigBuilder::DEFAULT_SORT_PARAM_KEY => 'foo',
+            SortConfigBuilder::DEFAULT_SORT_PARAM_KEY => 'foo-param',
         ];
 
         $expectedResult = (new SortSearchResultTransfer())
-            ->setSortParamNames(['foo'])
-            ->setCurrentSortParam('foo')
+            ->setSortParamNames(['foo-param'])
+            ->setCurrentSortParam('foo-param')
             ->setCurrentSortOrder(SortConfigBuilder::DIRECTION_ASC);
 
         return [$searchConfig, $requestParameters, $expectedResult];

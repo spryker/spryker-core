@@ -4,6 +4,7 @@ namespace SprykerTest\Zed\Category\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CategoryBuilder;
+use Generated\Shared\DataBuilder\CategoryLocalizedAttributesBuilder;
 use Generated\Shared\DataBuilder\NodeBuilder;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\Category\CategoryConfig;
@@ -29,10 +30,28 @@ class CategoryDataHelper extends Module
 
         $categoryTransfer = $this->generateCategoryTransfer($seedData);
 
-        if (empty($seedData[CategoryTransfer::FK_CATEGORY_TEMPLATE])) {
-            $categoryTemplateTransfer = $this->haveCategoryTemplate();
-            $categoryTransfer->setFkCategoryTemplate($categoryTemplateTransfer->getIdCategoryTemplate());
-        }
+        $this->getCategoryFacade()->create($categoryTransfer);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($categoryTransfer) {
+            $this->cleanupCategory($categoryTransfer);
+        });
+
+        return $categoryTransfer;
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function haveLocalizedCategory(array $seedData = [])
+    {
+        $seedData = $seedData + [
+            'categoryNode' => $this->generateCategoryNodeTransfer(),
+            'parentCategoryNode' => $this->generateCategoryNodeTransfer(),
+        ];
+
+        $categoryTransfer = $this->generateLocalizedCategoryTransfer($seedData);
 
         $this->getCategoryFacade()->create($categoryTransfer);
 
@@ -76,6 +95,25 @@ class CategoryDataHelper extends Module
     {
         $categoryTransfer = (new CategoryBuilder($seedData))->build();
         $categoryTransfer->setIdCategory(null);
+
+        if (!isset($seedData[CategoryTransfer::FK_CATEGORY_TEMPLATE])) {
+            $categoryTemplateTransfer = $this->haveCategoryTemplate();
+            $categoryTransfer->setFkCategoryTemplate($categoryTemplateTransfer->getIdCategoryTemplate());
+        }
+
+        return $categoryTransfer;
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    protected function generateLocalizedCategoryTransfer(array $seedData = [])
+    {
+        $categoryTransfer = $this->generateCategoryTransfer($seedData);
+        $categoryLocalizedAttributes = (new CategoryLocalizedAttributesBuilder($seedData))->build();
+        $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributes);
 
         return $categoryTransfer;
     }

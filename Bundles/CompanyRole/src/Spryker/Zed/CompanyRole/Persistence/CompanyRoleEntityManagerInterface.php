@@ -9,10 +9,13 @@ namespace Spryker\Zed\CompanyRole\Persistence;
 
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 
 interface CompanyRoleEntityManagerInterface
 {
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
@@ -22,6 +25,8 @@ interface CompanyRoleEntityManagerInterface
     ): CompanyRoleTransfer;
 
     /**
+     * @api
+     *
      * @param int $idCompanyRole
      *
      * @return void
@@ -29,6 +34,8 @@ interface CompanyRoleEntityManagerInterface
     public function deleteCompanyRoleById(int $idCompanyRole): void;
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return void
@@ -36,6 +43,8 @@ interface CompanyRoleEntityManagerInterface
     public function saveCompanyUser(CompanyUserTransfer $companyUserTransfer): void;
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PermissionTransfer[] $permissions
      * @param int $idCompanyRole
      *
@@ -44,10 +53,21 @@ interface CompanyRoleEntityManagerInterface
     public function addPermissions(array $permissions, int $idCompanyRole): void;
 
     /**
+     * @api
+     *
      * @param array $idPermissions
      * @param int $idCompanyRole
      *
      * @return void
      */
     public function removePermissions(array $idPermissions, int $idCompanyRole): void;
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
+     *
+     * @return void
+     */
+    public function updateCompanyRolePermission(PermissionTransfer $permissionTransfer): void;
 }

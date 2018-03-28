@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUser\Business\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
@@ -66,8 +67,12 @@ class CompanyUser implements CompanyUserInterface
      */
     public function create(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($companyUserTransfer) {
-            return $this->executeCompanyUserCreateTransaction($companyUserTransfer);
+        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())
+            ->setCompanyUser($companyUserTransfer)
+            ->setIsSuccessful(true);
+
+        return $this->getTransactionHandler()->handleTransaction(function () use ($companyUserResponseTransfer) {
+            return $this->executeCreateTransaction($companyUserResponseTransfer);
         });
     }
 
@@ -78,12 +83,12 @@ class CompanyUser implements CompanyUserInterface
      */
     public function save(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($companyUserTransfer) {
-            $companyUserTransfer = $this->executeSaveCompanyUserTransaction($companyUserTransfer);
+        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())
+            ->setCompanyUser($companyUserTransfer)
+            ->setIsSuccessful(true);
 
-            $companyUserResponseTransfer = new CompanyUserResponseTransfer();
-            $companyUserResponseTransfer->setIsSuccessful(true);
-            $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($companyUserResponseTransfer) {
+            $companyUserResponseTransfer = $this->executeSaveTransaction($companyUserResponseTransfer);
 
             return $companyUserResponseTransfer;
         });
@@ -100,6 +105,7 @@ class CompanyUser implements CompanyUserInterface
             $companyUserTransfer = $this->companyUserRepository->getCompanyUserById(
                 $companyUserTransfer->getIdCompanyUser()
             );
+
             $this->companyUserEntityManager->deleteCompanyUserById($companyUserTransfer->getIdCompanyUser());
             $this->customerFacade->anonymizeCustomer($companyUserTransfer->getCustomer());
 
@@ -115,6 +121,22 @@ class CompanyUser implements CompanyUserInterface
     public function findCompanyUserByCustomerId(int $idCustomer): ?CompanyUserTransfer
     {
         $companyUserTransfer = $this->companyUserRepository->findCompanyUserByCustomerId($idCustomer);
+
+        if ($companyUserTransfer !== null) {
+            return $this->companyUserPluginExecutor->executeHydrationPlugins($companyUserTransfer);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findActiveCompanyUserByCustomerId(int $idCustomer): ?CompanyUserTransfer
+    {
+        $companyUserTransfer = $this->companyUserRepository->findActiveCompanyUserByCustomerId($idCustomer);
 
         if ($companyUserTransfer !== null) {
             return $this->companyUserPluginExecutor->executeHydrationPlugins($companyUserTransfer);
@@ -141,53 +163,127 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    protected function executeCompanyUserCreateTransaction(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    protected function executeCreateTransaction(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
-        $companyUserTransfer->requireCustomer();
-        $customerResponseTransfer = $this->customerFacade->registerCustomer(
-            $companyUserTransfer->getCustomer()
-        );
+        $companyUserResponseTransfer = $this->registerCustomer($companyUserResponseTransfer);
 
-        $companyUserResponseTransfer = new CompanyUserResponseTransfer();
-        $companyUserResponseTransfer->setIsSuccessful(true);
-
-        if (!$customerResponseTransfer->getIsSuccess()) {
-            $companyUserResponseTransfer->setIsSuccessful(false);
-            $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
-
-            foreach ($customerResponseTransfer->getErrors() as $error) {
-                $message = new ResponseMessageTransfer();
-                $message->setText($error->getMessage());
-                $companyUserResponseTransfer->addMessage($message);
-            }
-
+        if (!$companyUserResponseTransfer->getIsSuccessful()) {
             return $companyUserResponseTransfer;
         }
 
-        $companyUserTransfer->setFkCustomer($customerResponseTransfer->getCustomerTransfer()->getIdCustomer());
-        $companyUserTransfer = $this->executeSaveCompanyUserTransaction($companyUserTransfer);
-        $companyUserTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
-
+        $companyUserResponseTransfer = $this->companyUserPluginExecutor->executePreSavePlugins($companyUserResponseTransfer);
+        $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
+        $companyUserTransfer = $this->companyUserEntityManager->saveCompanyUser($companyUserTransfer);
         $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
+        $companyUserResponseTransfer = $this->companyUserPluginExecutor->executePostSavePlugins($companyUserResponseTransfer);
+        $companyUserResponseTransfer = $this->companyUserPluginExecutor->executePostCreatePlugins($companyUserResponseTransfer);
 
         return $companyUserResponseTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    protected function executeSaveCompanyUserTransaction(
-        CompanyUserTransfer $companyUserTransfer
-    ): CompanyUserTransfer {
-        $this->customerFacade->updateCustomer($companyUserTransfer->getCustomer());
-        $companyUserTransfer = $this->companyUserEntityManager->saveCompanyUser($companyUserTransfer);
+    protected function executeSaveTransaction(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
+    {
+        $companyUserResponseTransfer->requireCompanyUser();
+        $companyUserResponseTransfer->getCompanyUser()->requireCustomer();
 
-        return $this->companyUserPluginExecutor->executePostSavePlugins($companyUserTransfer);
+        $companyUserResponseTransfer = $this->updateCustomer($companyUserResponseTransfer);
+
+        if (!$companyUserResponseTransfer->getIsSuccessful()) {
+            return $companyUserResponseTransfer;
+        }
+
+        $companyUserResponseTransfer = $this->companyUserPluginExecutor->executePreSavePlugins($companyUserResponseTransfer);
+        $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
+        $companyUserTransfer = $this->companyUserEntityManager->saveCompanyUser($companyUserTransfer);
+        $companyUserResponseTransfer->setCompanyUser($companyUserTransfer);
+        $companyUserResponseTransfer = $this->companyUserPluginExecutor->executePostSavePlugins($companyUserResponseTransfer);
+
+        return $companyUserResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    protected function updateCustomer(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
+    {
+        $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
+        $customerResponseTransfer = $this->customerFacade->updateCustomer($companyUserTransfer->getCustomer());
+
+        if ($customerResponseTransfer->getIsSuccess()) {
+            $companyUserTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
+
+            return $companyUserResponseTransfer;
+        }
+
+        $companyUserResponseTransfer->setIsSuccessful(false);
+        $companyUserResponseTransfer = $this->addErrorsToResponse(
+            $companyUserResponseTransfer,
+            $customerResponseTransfer->getErrors()
+        );
+
+        return $companyUserResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    protected function registerCustomer(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
+    {
+        $companyUserResponseTransfer->requireCompanyUser();
+        $companyUserResponseTransfer->getCompanyUser()->requireCustomer();
+
+        $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
+        $customerTransfer = $companyUserTransfer->getCustomer();
+
+        $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
+
+        if ($customerResponseTransfer->getIsSuccess()) {
+            $companyUserTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
+            $companyUserTransfer->setFkCustomer(
+                $customerResponseTransfer->getCustomerTransfer()
+                    ->getIdCustomer()
+            );
+
+            return $companyUserResponseTransfer;
+        }
+
+        $companyUserResponseTransfer->setIsSuccessful(false);
+
+        $companyUserResponseTransfer = $this->addErrorsToResponse(
+            $companyUserResponseTransfer,
+            $customerResponseTransfer->getErrors()
+        );
+
+        return $companyUserResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\CustomerErrorTransfer[] $errors
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    protected function addErrorsToResponse(CompanyUserResponseTransfer $companyUserResponseTransfer, ArrayObject $errors): CompanyUserResponseTransfer
+    {
+        foreach ($errors as $error) {
+            $companyUserResponseTransfer->addMessage(
+                (new ResponseMessageTransfer())->setText($error->getMessage())
+            );
+        }
+
+        return $companyUserResponseTransfer;
     }
 }
