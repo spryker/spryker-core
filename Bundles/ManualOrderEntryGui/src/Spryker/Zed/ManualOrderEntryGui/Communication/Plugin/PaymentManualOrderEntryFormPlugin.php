@@ -90,7 +90,9 @@ class PaymentManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
             ->setPayments($quoteTransfer->getPayments())
             ->setPayment($quoteTransfer->getPayment());
 
-        $this->paymentFacade->recalculatePayments($calculableObjectTransfer);
+        if (count($calculableObjectTransfer->getItems())) {
+            $this->paymentFacade->recalculatePayments($calculableObjectTransfer);
+        }
 
         return $quoteTransfer;
     }

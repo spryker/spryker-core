@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ManualOrderProductTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ItemCollectionType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Traits\UniqueFlashMessagesTrait;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,14 +22,22 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
+    use UniqueFlashMessagesTrait;
+
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface
      */
     protected $cartFacade;
 
+    /**
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeInterface
+     */
+    protected $messengerFacade;
+
     public function __construct()
     {
         $this->cartFacade = $this->getFactory()->getCartFacade();
+        $this->messengerFacade = $this->getFactory()->getMessengerFacade();
     }
 
     /**
@@ -94,12 +103,17 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
         $quoteTransfer->setItems($items);
         if (count($items)) {
             $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
+            if ($quoteTransfer->getTotals() === null) {
+                $quoteTransfer->setItems(new ArrayObject());
+            }
         }
 
         $this->updateManualOrderItems($quoteTransfer);
 
         $form = $this->createForm($request, $quoteTransfer);
         $form->setData($quoteTransfer->toArray());
+
+        $this->uniqueFlashMessages();
 
         return $quoteTransfer;
     }

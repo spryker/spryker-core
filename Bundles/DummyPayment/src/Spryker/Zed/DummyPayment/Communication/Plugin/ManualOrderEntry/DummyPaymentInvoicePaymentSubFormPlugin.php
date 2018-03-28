@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\DummyPayment\Communication\Plugin\ManualOrderEntry;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\DummyPayment\DummyPaymentConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface;
 
 /**
@@ -22,7 +24,7 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     /**
      * @return \Spryker\Zed\Kernel\Communication\Form\AbstractType
      */
-    public function createSubForm()
+    public function createSubForm(): AbstractType
     {
         return $this->getFactory()->createInvoiceForm();
     }
@@ -30,7 +32,7 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     /**
      * @return string
      */
-    public function getPropertyPath()
+    public function getPropertyPath(): string
     {
         return DummyPaymentConfig::PAYMENT_METHOD_INVOICE;
     }
@@ -38,7 +40,7 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return DummyPaymentConfig::PAYMENT_METHOD_INVOICE;
     }
@@ -46,7 +48,7 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     /**
      * @return string
      */
-    public function getPaymentProvider()
+    public function getPaymentProvider(): string
     {
         return static::PAYMENT_PROVIDER;
     }
@@ -54,7 +56,7 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     /**
      * @return string
      */
-    public function getPaymentMethod()
+    public function getPaymentMethod(): string
     {
         return 'invoice';
     }
@@ -64,7 +66,7 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($dataTransfer)
+    public function getData($dataTransfer): QuoteTransfer
     {
         return $this->getFactory()->createInvoiceFormDataProvider()->getData($dataTransfer);
     }
@@ -74,7 +76,7 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
      *
      * @return array
      */
-    public function getOptions($dataTransfer)
+    public function getOptions($dataTransfer): array
     {
         return $this->getFactory()->createInvoiceFormDataProvider()->getOptions($dataTransfer);
     }

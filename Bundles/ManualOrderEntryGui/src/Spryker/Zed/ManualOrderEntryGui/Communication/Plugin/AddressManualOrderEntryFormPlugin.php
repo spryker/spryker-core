@@ -64,7 +64,9 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
             $quoteTransfer->setShippingAddress($addressTransfer);
         }
 
-        if ($quoteTransfer->getBillingAddress()->getIdCustomerAddress()) {
+        if ($quoteTransfer->getBillingSameAsShipping()) {
+            $quoteTransfer->setBillingAddress($quoteTransfer->getShippingAddress());
+        } elseif ($quoteTransfer->getBillingAddress()->getIdCustomerAddress()) {
             $addressTransfer = $quoteTransfer->getBillingAddress();
             $addressTransfer->setFkCustomer($quoteTransfer->getCustomer()->getIdCustomer());
 
