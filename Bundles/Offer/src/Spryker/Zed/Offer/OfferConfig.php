@@ -27,6 +27,6 @@ class OfferConfig extends AbstractBundleConfig
      */
     public function getOrderTypeDefault(): ?string
     {
-       return $this->getSharedConfig()->getOrderTypeDefault();
+        return $this->getSharedConfig()->getOrderTypeDefault();
     }
 }

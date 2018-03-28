@@ -7,19 +7,19 @@
 
 namespace Spryker\Zed\OfferGui\Dependency\Facade;
 
-interface OfferGuiToSalesFacadeInterface
+interface OfferGuiToOmsFacadeInterface
 {
     /**
      * @param int $idSalesOrder
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
      */
-    public function getOrderByIdSalesOrder($idSalesOrder);
+    public function getManualEventsByIdSalesOrder(int $idSalesOrder);
 
     /**
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return array
      */
-    public function getDistinctOrderStates($idSalesOrder);
+    public function getDistinctManualEventsByIdSalesOrder(int $idSalesOrder);
 }

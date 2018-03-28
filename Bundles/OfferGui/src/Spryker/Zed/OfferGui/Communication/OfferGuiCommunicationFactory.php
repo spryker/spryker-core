@@ -13,6 +13,7 @@ use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilder;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeInterface;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOmsFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToSalesFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceInterface;
@@ -62,6 +63,14 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOmsFacadeInterface
+     */
+    public function getOmsFacade(): OfferGuiToOmsFacadeInterface
+    {
+        return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_OMS);
+    }
+
+    /**
      * @return \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface
      */
     public function getCustomerFacade(): OfferGuiToCustomerFacadeInterface
@@ -88,7 +97,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return OfferGuiToSalesFacadeInterface
+     * @return \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToSalesFacadeInterface
      */
     public function getSalesFacade(): OfferGuiToSalesFacadeInterface
     {

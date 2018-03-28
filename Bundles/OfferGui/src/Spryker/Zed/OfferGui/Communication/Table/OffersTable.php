@@ -24,6 +24,7 @@ class OffersTable extends AbstractTable
     const FILTER = 'filter';
     const URL_OFFER_GUI_EDIT = '/offer-gui/edit/';
     const URL_OFFER_GUI_VIEW_DETAILS = '/offer-gui/view/details';
+    const URL_OFFER_GUI_PRINT_VERSION = '/offer-gui/offer';
     const PARAM_ID_SALES_ORDER = 'id-sales-order';
     const GRAND_TOTAL = 'GrandTotal';
     const ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
@@ -227,6 +228,14 @@ class OffersTable extends AbstractTable
                 static::PARAM_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
             ]),
             'View'
+        );
+
+        $urls[] = $this->generateViewButton(
+            Url::generate(static::URL_OFFER_GUI_PRINT_VERSION, [
+                static::PARAM_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
+            ]),
+            'Print version',
+            ['target' => '_blank']
         );
 
         return $urls;

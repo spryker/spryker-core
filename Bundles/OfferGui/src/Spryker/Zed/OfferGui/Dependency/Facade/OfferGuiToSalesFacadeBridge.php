@@ -1,20 +1,21 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\OfferGui\Dependency\Facade;
-
-
-use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 
 class OfferGuiToSalesFacadeBridge implements OfferGuiToSalesFacadeInterface
 {
     /**
-     * @var SalesFacadeInterface
+     * @var \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
     protected $salesFacade;
 
     /**
-     * @param SalesFacadeInterface $salesFacade
+     * @param \Spryker\Zed\Sales\Business\SalesFacadeInterface $salesFacade
      */
     public function __construct($salesFacade)
     {
@@ -29,5 +30,16 @@ class OfferGuiToSalesFacadeBridge implements OfferGuiToSalesFacadeInterface
     public function getOrderByIdSalesOrder($idSalesOrder)
     {
         return $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return string[]
+     */
+    public function getDistinctOrderStates($idSalesOrder)
+    {
+        return $this->salesFacade
+            ->getDistinctOrderStates($idSalesOrder);
     }
 }

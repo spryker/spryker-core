@@ -14,6 +14,8 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\PreSaveOrderPluginInterface;
 
 /**
  * @method \Spryker\Zed\Offer\OfferConfig getConfig()
+ * @method \Spryker\Zed\Offer\Business\OfferFacadeInterface getFacade()
+ * @method \Spryker\Zed\Offer\Communication\OfferCommunicationFactory getFactory()
  */
 class IsOfferPreSaveHydrateOrderPlugin extends AbstractPlugin implements PreSaveOrderPluginInterface
 {
