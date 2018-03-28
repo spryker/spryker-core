@@ -32,7 +32,7 @@
         <property name="quote" type="Quote"/>
         <property name="status" type="string"/>
         <property name="user" type="User"/>
-        <property name="customer" type="Customer"/>
+        <property name="customerReference"  type="string" />
         <property name="createdAt" type="string" />
     </transfer>
 

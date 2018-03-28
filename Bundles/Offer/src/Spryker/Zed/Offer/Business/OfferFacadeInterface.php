@@ -9,12 +9,15 @@ namespace Spryker\Zed\Offer\Business;
 
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer;
-use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OfferTransfer;
 
 interface OfferFacadeInterface
 {
     /**
+     * todo: remove
+     * @deprecated make getOffersByCustomerReference
+     *
      * Specification:
      * - Return list of offers, using filter and pagination.
      *
@@ -39,7 +42,7 @@ interface OfferFacadeInterface
     public function convertOfferToOrder(int $idSalesOrder): OfferToOrderConvertResponseTransfer;
 
     /**
-     *
+     *todo:
      * @api
      *
      * @param OfferTransfer $offerTransfer
@@ -47,4 +50,18 @@ interface OfferFacadeInterface
      * @return OfferResponseTransfer
      */
     public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
+
+
+    /**
+     * todo:
+     * Specification:
+     * -
+     *
+     * @api
+     *
+     * @param OfferTransfer $offerTransfer
+     *
+     * @return OfferTransfer
+     */
+    public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer;
 }

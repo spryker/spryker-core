@@ -9,6 +9,10 @@
         <column name="fk_user" type="INTEGER" required="false"/>
         <column name="customer_reference" type="VARCHAR" size="255" required="false"/>
 
+        <foreign-key name="spy_offer-fk_user" foreignTable="spy_user" phpName="User">
+            <reference local="fk_user" foreign="id_user" />
+        </foreign-key>
+
         <behavior name="timestampable"/>
 
         <id-method-parameter value="spy_offer_pk_seq"/>

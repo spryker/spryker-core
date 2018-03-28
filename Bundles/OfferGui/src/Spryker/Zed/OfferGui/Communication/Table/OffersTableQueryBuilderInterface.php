@@ -9,6 +9,9 @@ namespace Spryker\Zed\OfferGui\Communication\Table;
 
 interface OffersTableQueryBuilderInterface
 {
+    const FIELD_ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
+    const FIELD_NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
+
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */

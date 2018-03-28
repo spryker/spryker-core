@@ -30,12 +30,15 @@ interface OfferClientInterface
     public function convertOfferToOrder(OfferToOrderConvertRequestTransfer $offerToOrderConvertRequestTransfer): OfferToOrderConvertResponseTransfer;
 
     /**
+     * todo:
+     *
      * Specification:
-     * - Place an offer
+     * - Places an offer
      *
      * @api
      *
      * @param OfferTransfer $offerTransfer
+     *
      * @return OfferResponseTransfer
      */
     public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;

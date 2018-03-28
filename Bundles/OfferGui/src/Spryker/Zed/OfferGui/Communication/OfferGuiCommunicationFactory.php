@@ -7,13 +7,15 @@
 
 namespace Spryker\Zed\OfferGui\Communication;
 
+use Orm\Zed\Offer\Persistence\SpyOfferQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Offer\Business\OfferFacadeInterface;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTable;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilder;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeInterface;
-use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToSalesFacadeInterface;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceInterface;
 use Spryker\Zed\OfferGui\OfferGuiDependencyProvider;
@@ -75,23 +77,23 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createOffersTableQueryBuilder(): OffersTableQueryBuilderInterface
     {
         return new OffersTableQueryBuilder(
-            $this->getPropelQuerySalesOrder()
+            $this->getPropelQueryOffer()
         );
     }
 
     /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     * @return SpyOfferQuery
      */
-    public function getPropelQuerySalesOrder()
+    public function getPropelQueryOffer()
     {
-        return $this->getProvidedDependency(OfferGuiDependencyProvider::PROPEL_QUERY_SALES_ORDER);
+        return $this->getProvidedDependency(OfferGuiDependencyProvider::PROPEL_QUERY_OFFER);
     }
 
     /**
-     * @return OfferGuiToSalesFacadeInterface
+     * @return OfferGuiToOfferFacadeInterface
      */
-    public function getSalesFacade(): OfferGuiToSalesFacadeInterface
+    public function getOfferFacade(): OfferGuiToOfferFacadeInterface
     {
-        return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_SALES);
+        return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_OFFER);
     }
 }

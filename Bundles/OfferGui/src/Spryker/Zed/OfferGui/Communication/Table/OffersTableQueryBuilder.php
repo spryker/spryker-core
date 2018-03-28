@@ -7,68 +7,32 @@
 
 namespace Spryker\Zed\OfferGui\Communication\Table;
 
+use Orm\Zed\Offer\Persistence\SpyOffer;
+use Orm\Zed\Offer\Persistence\SpyOfferQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 
 class OffersTableQueryBuilder implements OffersTableQueryBuilderInterface
 {
-    const FIELD_ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
-    const FIELD_NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
-    const DATE_FILTER_DAY = 'day';
-    const DATE_FILTER_WEEK = 'week';
-    const FIELD_ORDER_GRAND_TOTAL = 'order_grand_total';
+    /**
+     * @var SpyOfferQuery
+     */
+    protected $offerQuery;
 
     /**
-     * @uses \Spryker\Zed\Offer\OfferConfig::getOrderTypeOffer()
+     * @param SpyOfferQuery $offerQuery
      */
-    public const ORDER_TYPE_OFFER = 'offer';
-
-    /**
-     * @var \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
-     */
-    protected $salesOrderQuery;
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
-     */
-    public function __construct(
-        SpySalesOrderQuery $salesOrderQuery
-    ){
-        $this->salesOrderQuery = $salesOrderQuery;
+    public function __construct(SpyOfferQuery $offerQuery){
+        $this->offerQuery = $offerQuery;
     }
 
     /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     * @return SpyOfferQuery
      */
     public function buildQuery()
     {
-        $query = $this->salesOrderQuery;
-
-        $query->filterByType(static::ORDER_TYPE_OFFER);
-        $query->addLastOrderGrandTotalToResult(static::FIELD_ORDER_GRAND_TOTAL);
-
-        $query = $this->addItemStates($query);
-        $query = $this->addItemCount($query);
+        $query = $this->offerQuery;
 
         return $query;
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $query
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
-     */
-    protected function addItemStates(SpySalesOrderQuery $query)
-    {
-        return $query->addItemStateNameAggregationToResult(static::FIELD_ITEM_STATE_NAMES_CSV);
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $query
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
-     */
-    protected function addItemCount(SpySalesOrderQuery $query)
-    {
-        return $query->addItemCountToResult(static::FIELD_NUMBER_OF_ORDER_ITEMS);
     }
 }

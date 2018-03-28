@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\OfferGui\Communication\Table;
 
-use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\Offer\Persistence\Map\SpyOfferTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -18,16 +20,18 @@ use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceInterfa
 
 class OffersTable extends AbstractTable
 {
-    const URL = 'URL';
-    const ID_ORDER_ITEM_PROCESS = 'id-order-item-process';
-    const ID_ORDER_ITEM_STATE = 'id-order-item-state';
-    const FILTER = 'filter';
     const URL_OFFER_GUI_EDIT = '/offer-gui/edit/';
     const URL_OFFER_GUI_VIEW_DETAILS = '/offer-gui/view/details';
-    const PARAM_ID_SALES_ORDER = 'id-sales-order';
-    const GRAND_TOTAL = 'GrandTotal';
-    const ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
-    const NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
+    const URL_PARAM_ID_OFFER = 'id-offer';
+
+    const COL_ID_OFFER = SpyOfferTableMap::COL_ID_OFFER;
+    const COL_CREATED_AT = SpyOfferTableMap::COL_CREATED_AT;
+    const COL_CUSTOMER_REFERENCE = SpyOfferTableMap::COL_CUSTOMER_REFERENCE;
+    const COL_EMAIL = 'email';
+    const COL_GRAND_TOTAL = 'grand_total';
+    const COL_NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
+    const COL_URL = 'url';
+
 
     /**
      * @var \Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface
@@ -86,13 +90,11 @@ class OffersTable extends AbstractTable
         $config->setSearchable($this->getSearchableFields());
         $config->setSortable($this->getSortableFields());
 
-        $config->addRawColumn(static::URL);
-        $config->addRawColumn(SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE);
-        $config->addRawColumn(SpySalesOrderTableMap::COL_EMAIL);
+        $config->addRawColumn(static::COL_URL);
+        $config->addRawColumn(static::COL_CUSTOMER_REFERENCE);
+        $config->addRawColumn(static::COL_EMAIL);
 
-        $config->setDefaultSortField(SpySalesOrderTableMap::COL_ID_SALES_ORDER, TableConfiguration::SORT_DESC);
-
-        $this->persistFilters($config);
+        $config->setDefaultSortField(static::COL_ID_OFFER, TableConfiguration::SORT_DESC);
 
         return $config;
     }
@@ -111,63 +113,65 @@ class OffersTable extends AbstractTable
     }
 
     /**
-     * @param array $item
-     *
-     * @return int
-     */
-    protected function getGrandTotal(array $item)
-    {
-        $currencyIsoCode = $item[SpySalesOrderTableMap::COL_CURRENCY_ISO_CODE];
-        if (!isset($item[OffersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL])) {
-            return $this->formatPrice(0, true, $currencyIsoCode);
-        }
-
-        return $this->formatPrice((int)$item[OffersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL], true, $currencyIsoCode);
-    }
-
-    /**
-     * @param array $item
+     * @param QuoteTransfer $quoteTransfer
      *
      * @return string
      */
-    protected function formatCustomer(array $item)
+    protected function getGrandTotal(QuoteTransfer $quoteTransfer)
     {
-        $salutation = $item[SpySalesOrderTableMap::COL_SALUTATION];
+        $currencyIsoCode = $quoteTransfer->getCurrency()->getCode();
+        if (!$quoteTransfer->getTotals()->getGrandTotal()) {
+            return $this->formatPrice(0, true, $currencyIsoCode);
+        }
+
+        return $this->formatPrice($quoteTransfer->getTotals()->getGrandTotal(), true, $currencyIsoCode);
+    }
+
+    /**
+     * @param CustomerTransfer|null $customerTransfer
+     *
+     * @return string
+     */
+    protected function formatCustomer(?CustomerTransfer $customerTransfer)
+    {
+        if (!$customerTransfer) {
+            return 'No reference';
+        }
 
         $customer = sprintf(
             '%s%s %s',
-            $salutation ? $salutation . ' ' : '',
-            $item[SpySalesOrderTableMap::COL_FIRST_NAME],
-            $item[SpySalesOrderTableMap::COL_LAST_NAME]
+            $customerTransfer->getSalutation(),
+            $customerTransfer->getFirstName(),
+            $customerTransfer->getLastName()
         );
 
         $customer = $this->sanitizeService->escapeHtml($customer);
 
-        if (isset($item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE])) {
-            $customerTransfer = $this->customerFacade->findCustomerByReference(
-                $item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE]
-            );
-
-            if (!$customerTransfer) {
-                return $customer;
-            }
-            $url = Url::generate('/customer/view', [
-                'id-customer' => $customerTransfer->getIdCustomer(),
-            ]);
-            $customer = '<a href="' . $url . '">' . $customer . '</a>';
+        if (!$customerTransfer) {
+            return $customer;
         }
+
+        $url = Url::generate('/customer/view', [
+            'id-customer' => $customerTransfer->getIdCustomer(),
+        ]);
+
+        $customer = '<a href="' . $url . '">' . $customer . '</a>';
 
         return $customer;
     }
 
     /**
-     * @param string $emailAddress
+     * @param CustomerTransfer $customerTransfer
      *
      * @return string
      */
-    protected function formatEmailAddress($emailAddress)
+    protected function formatEmailAddress(CustomerTransfer $customerTransfer)
     {
-        $escapedEmailAddress = $this->sanitizeService->escapeHtml($emailAddress);
+        if (!$customerTransfer) {
+            return '';
+        }
+
+        $escapedEmailAddress = $this->sanitizeService->escapeHtml($customerTransfer->getEmail());
         $emailAddressLink = sprintf('<a href="mailto:%1$s">%1$s</a>', $escapedEmailAddress);
 
         return $emailAddressLink;
@@ -217,14 +221,14 @@ class OffersTable extends AbstractTable
 
         $urls[] = $this->generateEditButton(
             Url::generate(static::URL_OFFER_GUI_EDIT, [
-                static::PARAM_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
+                static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
             ]),
             'Edit'
         );
 
         $urls[] = $this->generateViewButton(
             Url::generate(static::URL_OFFER_GUI_VIEW_DETAILS, [
-                static::PARAM_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
+                static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
             ]),
             'View'
         );
@@ -233,43 +237,18 @@ class OffersTable extends AbstractTable
     }
 
     /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return void
-     */
-    protected function persistFilters(TableConfiguration $config)
-    {
-        $idOrderItemProcess = $this->request->query->getInt(static::ID_ORDER_ITEM_PROCESS);
-        if ($idOrderItemProcess) {
-            $idOrderItemState = $this->request->query->getInt(static::ID_ORDER_ITEM_STATE);
-            $filter = $this->request->query->get(static::FILTER);
-
-            $config->setUrl(
-                sprintf(
-                    'table?id-order-item-process=%s&id-order-item-state=%s&filter=%s',
-                    $idOrderItemProcess,
-                    $idOrderItemState,
-                    $filter
-                )
-            );
-        }
-    }
-
-    /**
      * @return array
      */
     protected function getHeaderFields()
     {
         return [
-            SpySalesOrderTableMap::COL_ID_SALES_ORDER => '#',
-            SpySalesOrderTableMap::COL_ORDER_REFERENCE => 'Order Reference',
-            SpySalesOrderTableMap::COL_CREATED_AT => 'Created',
-            SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE => 'Customer Full Name',
-            SpySalesOrderTableMap::COL_EMAIL => 'Email',
-            static::ITEM_STATE_NAMES_CSV => 'Order State',
-            static::GRAND_TOTAL => 'GrandTotal',
-            static::NUMBER_OF_ORDER_ITEMS => 'Number of Items',
-            static::URL => 'Actions',
+            static::COL_ID_OFFER => '#',
+            static::COL_CREATED_AT => 'Created',
+            static::COL_CUSTOMER_REFERENCE => 'Customer Full Name',
+            static::COL_EMAIL => 'Email',
+            static::COL_GRAND_TOTAL => 'GrandTotal',
+            static::COL_NUMBER_OF_ORDER_ITEMS => 'Number of Items',
+            static::COL_URL => 'Actions',
         ];
     }
 
@@ -279,10 +258,9 @@ class OffersTable extends AbstractTable
     protected function getSearchableFields()
     {
         return [
-            SpySalesOrderTableMap::COL_ID_SALES_ORDER,
-            SpySalesOrderTableMap::COL_ORDER_REFERENCE,
-            SpySalesOrderTableMap::COL_CREATED_AT,
-            SpySalesOrderTableMap::COL_EMAIL,
+            static::COL_ID_OFFER,
+            static::COL_CREATED_AT,
+            static::COL_CUSTOMER_REFERENCE,
         ];
     }
 
@@ -292,11 +270,10 @@ class OffersTable extends AbstractTable
     protected function getSortableFields()
     {
         return [
-            SpySalesOrderTableMap::COL_ID_SALES_ORDER,
-            SpySalesOrderTableMap::COL_ORDER_REFERENCE,
-            SpySalesOrderTableMap::COL_CREATED_AT,
-            SpySalesOrderTableMap::COL_EMAIL,
-            static::NUMBER_OF_ORDER_ITEMS,
+            static::COL_ID_OFFER,
+            static::COL_CREATED_AT,
+            static::COL_EMAIL,
+            static::COL_NUMBER_OF_ORDER_ITEMS,
         ];
     }
 
@@ -309,19 +286,51 @@ class OffersTable extends AbstractTable
     {
         $results = [];
         foreach ($queryResults as $item) {
+            $quoteTransfer = $this->mapQuote($item);
+            $customerTransfer = $this->getCustomer($item);
+
             $results[] = [
-                SpySalesOrderTableMap::COL_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
-                SpySalesOrderTableMap::COL_ORDER_REFERENCE => $item[SpySalesOrderTableMap::COL_ORDER_REFERENCE],
-                SpySalesOrderTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpySalesOrderTableMap::COL_CREATED_AT]),
-                SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE => $this->formatCustomer($item),
-                SpySalesOrderTableMap::COL_EMAIL => $this->formatEmailAddress($item[SpySalesOrderTableMap::COL_EMAIL]),
-                static::ITEM_STATE_NAMES_CSV => $this->groupItemStateNames($item[OffersTableQueryBuilder::FIELD_ITEM_STATE_NAMES_CSV]),
-                static::GRAND_TOTAL => $this->getGrandTotal($item),
-                static::NUMBER_OF_ORDER_ITEMS => $item[OffersTableQueryBuilder::FIELD_NUMBER_OF_ORDER_ITEMS],
-                static::URL => implode(' ', $this->createActionUrls($item)),
+                static::COL_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
+                static::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpyOfferTableMap::COL_CREATED_AT]),
+                static::COL_CUSTOMER_REFERENCE => $this->formatCustomer($customerTransfer),
+                static::COL_EMAIL=> $this->formatEmailAddress($customerTransfer),
+                static::COL_GRAND_TOTAL => $this->getGrandTotal($quoteTransfer),
+                static::COL_NUMBER_OF_ORDER_ITEMS => $quoteTransfer->getItems()->count(),
+                static::COL_URL => implode(' ', $this->createActionUrls($item)),
             ];
         }
 
         return $results;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return QuoteTransfer
+     */
+    protected function mapQuote(array $item)
+    {
+        $quoteTransfer = new QuoteTransfer();
+
+        if (empty($item[SpyOfferTableMap::COL_QUOTE_DATA])) {
+            return $quoteTransfer;
+        }
+
+        $quoteArray = json_decode($item[SpyOfferTableMap::COL_QUOTE_DATA], true);
+        $quoteTransfer->fromArray($quoteArray, true);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected function getCustomer(array $item): ?CustomerTransfer
+    {
+        return $this->customerFacade->findCustomerByReference(
+            $item[SpyOfferTableMap::COL_CUSTOMER_REFERENCE]
+        );
     }
 }

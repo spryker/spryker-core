@@ -7,32 +7,28 @@
 
 namespace Spryker\Zed\Offer\Business\Model;
 
+use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface;
 use Spryker\Zed\Offer\OfferConfig;
+use Spryker\Zed\Offer\Persistence\OfferRepositoryInterface;
 
 class OfferReader implements OfferReaderInterface
 {
-    /**
-     * @var \Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface
-     */
-    protected $salesFacade;
 
     /**
-     * @var OfferConfig
+     * @var OfferRepositoryInterface
      */
-    protected $offerConfig;
+    protected $offerRepository;
 
     /**
      * @param \Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface $salesFacade
      * @param OfferConfig $offerConfig
      */
     public function __construct(
-        OfferToSalesFacadeInterface $salesFacade,
-        OfferConfig $offerConfig
+        OfferRepositoryInterface $offerRepository
     ) {
-        $this->salesFacade = $salesFacade;
-        $this->offerConfig = $offerConfig;
+        $this->offerRepository = $offerRepository;
     }
 
     /**
@@ -42,11 +38,18 @@ class OfferReader implements OfferReaderInterface
      */
     public function getOfferList(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        $orderListTransfer->setType(
-            $this->offerConfig->getOrderTypeOffer()
-        );
-
-        return $this->salesFacade
-            ->getCustomerOrders($orderListTransfer, $orderListTransfer->getIdCustomer());
+//        $orderListTransfer->setType(
+//            $this->offerConfig->getOrderTypeOffer()
+//        );
+//
+//        return $this->salesFacade
+//            ->getCustomerOrders($orderListTransfer, $orderListTransfer->getIdCustomer());
     }
+
+    public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer
+    {
+        $offerTransfer = $this->offerRepository->getOfferById($offerTransfer->getIdOffer());
+
+    }
+
 }

@@ -9,12 +9,13 @@ namespace Spryker\Zed\Offer\Business;
 
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer;
-use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Offer\Business\OfferBusinessFactory getFactory()
+ * @method \Spryker\Zed\Offer\Persistence\OfferRepository getRepository()
  */
 class OfferFacade extends AbstractFacade implements OfferFacadeInterface
 {
@@ -61,5 +62,19 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
         return $this->getFactory()
             ->createOfferWriter()
             ->placeOffer($offerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param OfferTransfer $offerTransfer
+     *
+     * @return OfferTransfer
+     */
+    public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer
+    {
+        return $this->getRepository()->getOfferById($offerTransfer->getIdOffer());
     }
 }
