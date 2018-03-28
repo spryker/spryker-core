@@ -52,8 +52,8 @@ class CompanySupplierFacade extends AbstractFacade implements CompanySupplierFac
      *
      * @return void
      */
-    public function saveCompanySuppliersForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
+    public function saveCompanySupplierRelationsForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
     {
-        $this->getEntityManager()->saveCompanySuppliersForProductConcrete($productConcreteTransfer);
+        $this->getEntityManager()->saveCompanySupplierRelationsForProductConcrete($productConcreteTransfer);
     }
 }

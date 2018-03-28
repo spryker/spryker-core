@@ -29,5 +29,5 @@ interface CompanySupplierGuiToCompanySupplierFacadeInterface
      *
      * @return void
      */
-    public function saveCompanySuppliersForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void;
+    public function saveCompanySupplierRelationsForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void;
 }

@@ -14,8 +14,8 @@ use Spryker\Zed\Kernel\Container;
 
 class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const COMPANY_BUSINESS_UNIT_QUERY = 'COMPANY_BUSINESS_UNIT_QUERY';
-    public const COMPANY_BUSINESS_UNIT_FACADE = 'COMPANY_BUSINESS_UNIT_FACADE';
+    public const QUERY_COMPANY_BUSINESS_UNIT = 'QUERY_COMPANY_BUSINESS_UNIT';
+    public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,7 +38,7 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addCompanyBusinessUnitQuery(Container $container): Container
     {
-        $container[static::COMPANY_BUSINESS_UNIT_QUERY] = function (Container $container) {
+        $container[static::QUERY_COMPANY_BUSINESS_UNIT] = function (Container $container) {
             return SpyCompanyBusinessUnitQuery::create();
         };
 
@@ -52,7 +52,7 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addCompanyBusinessUnitFacade(Container $container): Container
     {
-        $container[static::COMPANY_BUSINESS_UNIT_FACADE] = function (Container $container) {
+        $container[static::FACADE_COMPANY_BUSINESS_UNIT] = function (Container $container) {
             return new CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeBridge(
                 $container->getLocator()->companyBusinessUnit()->facade()
             );

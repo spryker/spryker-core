@@ -36,7 +36,7 @@ interface CompanySupplierFacadeInterface
 
     /**
      * Specification:
-     * - Save supplier companies for the concrete product
+     * - Save supplier company - concrete product relations
      *
      * @api
      *
@@ -44,5 +44,5 @@ interface CompanySupplierFacadeInterface
      *
      * @return void
      */
-    public function saveCompanySuppliersForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void;
+    public function saveCompanySupplierRelationsForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void;
 }

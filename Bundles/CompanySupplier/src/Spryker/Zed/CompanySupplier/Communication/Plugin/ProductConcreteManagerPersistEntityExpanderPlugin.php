@@ -27,6 +27,6 @@ class ProductConcreteManagerPersistEntityExpanderPlugin extends AbstractPlugin i
      */
     public function persistRelatedData(ProductConcreteTransfer $productConcrete): void
     {
-        $this->getFacade()->saveCompanySuppliersForProductConcrete($productConcrete);
+        $this->getFacade()->saveCompanySupplierRelationsForProductConcrete($productConcrete);
     }
 }

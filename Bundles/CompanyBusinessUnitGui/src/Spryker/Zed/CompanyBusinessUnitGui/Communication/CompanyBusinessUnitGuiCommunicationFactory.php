@@ -34,7 +34,7 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCompanyBusinessUnitForm($data = null, array $options = []): FormInterface
+    public function getCompanyBusinessUnitForm($data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(CompanyBusinessUnitForm::class, $data, $options);
     }
@@ -44,15 +44,15 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
      */
     public function createCompanyBusinessUnitFormDataProvider(): CompanyBusinessUnitFormDataProvider
     {
-        return new CompanyBusinessUnitFormDataProvider($this->getCompanyBusinessUnitFacde());
+        return new CompanyBusinessUnitFormDataProvider($this->getCompanyBusinessUnitFacade());
     }
 
     /**
      * @return \Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface
      */
-    public function getCompanyBusinessUnitFacde(): CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface
+    public function getCompanyBusinessUnitFacade(): CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface
     {
-        return $this->getProvidedDependency(CompanyBusinessUnitGuiDependencyProvider::COMPANY_BUSINESS_UNIT_FACADE);
+        return $this->getProvidedDependency(CompanyBusinessUnitGuiDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT);
     }
 
     /**
@@ -60,6 +60,6 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
      */
     protected function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
     {
-        return $this->getProvidedDependency(CompanyBusinessUnitGuiDependencyProvider::COMPANY_BUSINESS_UNIT_QUERY);
+        return $this->getProvidedDependency(CompanyBusinessUnitGuiDependencyProvider::QUERY_COMPANY_BUSINESS_UNIT);
     }
 }

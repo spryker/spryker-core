@@ -17,7 +17,7 @@ class CompanyBusinessUnitTable extends AbstractTable
 {
     protected const COL_ID_COMPANY_BUSINESS_UNIT = SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT;
     protected const COL_NAME = SpyCompanyBusinessUnitTableMap::COL_NAME;
-    protected const COL_ADDRESS = 'address';
+    protected const COL_ADDRESS = 'Address';
     protected const COL_IBAN = SpyCompanyBusinessUnitTableMap::COL_IBAN;
     protected const COL_BIC = SpyCompanyBusinessUnitTableMap::COL_BIC;
     protected const COL_ACTIONS = 'Actions';
@@ -48,7 +48,7 @@ class CompanyBusinessUnitTable extends AbstractTable
         $config->setHeader([
             static::COL_ID_COMPANY_BUSINESS_UNIT => 'Id',
             static::COL_NAME => 'Name',
-            static::COL_ADDRESS => 'Address',
+            static::COL_ADDRESS => static::COL_ADDRESS,
             static::COL_IBAN => 'IBAN',
             static::COL_BIC => 'BIC',
             static::COL_ACTIONS => static::COL_ACTIONS,

@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\CompanySupplierGui\Communication\CompanySupplierGuiCommunicationFactory getFactory()
  */
-class CompanyTableActionViewSupply extends AbstractPlugin implements CompanyTableActionExtensionInterface
+class CompanyTableActionViewSupplier extends AbstractPlugin implements CompanyTableActionExtensionInterface
 {
     protected const BUTTON_URL_FORMAT = '/company-supplier-gui/product-supplier?id-company=%d';
     protected const BUTTON_TITLE = 'View items';

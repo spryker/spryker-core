@@ -12,7 +12,9 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
 class CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeBridge implements CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface
 {
-    /** @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface */
+    /**
+     * @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface
+     */
     protected $companyBusinessUnitFacade;
 
     /**

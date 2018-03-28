@@ -11,7 +11,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/symfony": "If you want to provide plugins to CompanyGui module"
+    "spryker/company-gui": "If you want to provide plugins to CompanyGui module"
   },
   "autoload": {
     "psr-4": {

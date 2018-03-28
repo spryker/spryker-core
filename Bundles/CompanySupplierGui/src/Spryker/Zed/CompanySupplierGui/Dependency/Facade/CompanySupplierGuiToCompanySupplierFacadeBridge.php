@@ -48,8 +48,8 @@ class CompanySupplierGuiToCompanySupplierFacadeBridge implements CompanySupplier
      *
      * @return void
      */
-    public function saveCompanySuppliersForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
+    public function saveCompanySupplierRelationsForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
     {
-        $this->companySupplierFacade->saveCompanySuppliersForProductConcrete($productConcreteTransfer);
+        $this->companySupplierFacade->saveCompanySupplierRelationsForProductConcrete($productConcreteTransfer);
     }
 }

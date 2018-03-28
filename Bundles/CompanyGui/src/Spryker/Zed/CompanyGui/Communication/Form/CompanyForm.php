@@ -108,7 +108,7 @@ class CompanyForm extends AbstractType
     }
 
     /**
-     * @return array
+     * @return \Symfony\Component\Validator\Constraint[]
      */
     protected function getTextFieldConstraints(): array
     {

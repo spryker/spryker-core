@@ -21,9 +21,9 @@ class CompanySupplierEntityManager extends AbstractEntityManager implements Comp
      *
      * @return void
      */
-    public function saveCompanySuppliersForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
+    public function saveCompanySupplierRelationsForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
     {
-        $this->deleteCompanySuppliersByIdProduct($productConcreteTransfer->getIdProductConcrete());
+        $this->deleteCompanySupplierRelationsById($productConcreteTransfer->getIdProductConcrete());
         foreach ($productConcreteTransfer->getCompanySuppliers() as $supplier) {
             $productCompanySupplier = new SpyCompanySupplierToProduct();
             $productCompanySupplier->setFkProduct($productConcreteTransfer->getIdProductConcrete());
@@ -38,7 +38,7 @@ class CompanySupplierEntityManager extends AbstractEntityManager implements Comp
      *
      * @return void
      */
-    protected function deleteCompanySuppliersByIdProduct(int $idProduct): void
+    protected function deleteCompanySupplierRelationsById(int $idProduct): void
     {
         $this->getFactory()->createCompanySupplierToProductQuery()
             ->filterByFkProduct($idProduct)

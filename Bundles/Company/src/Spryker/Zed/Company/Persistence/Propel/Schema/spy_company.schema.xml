@@ -7,7 +7,7 @@
         <id-method-parameter value="spy_company_type_pk_seq"/>
     </table>
 
-    <table name="spy_company" phpName="SpyCompany">
+    <table name="spy_company" phpName="SpyCompany" idMethod="native" allowPkInsert="true">
         <column name="id_company" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="is_active" type="BOOLEAN" default="false"/>

@@ -34,7 +34,7 @@ class EditCompanyBusinessUnitController extends AbstractController
 
         $dataProvider = $this->getFactory()->createCompanyBusinessUnitFormDataProvider();
         $form = $this->getFactory()
-            ->createCompanyBusinessUnitForm(
+            ->getCompanyBusinessUnitForm(
                 $dataProvider->getData($idCompanyBusinessUnit),
                 $dataProvider->getOptions($idCompanyBusinessUnit)
             )
@@ -43,7 +43,7 @@ class EditCompanyBusinessUnitController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $companyBusinessUnitTransfer = $form->getData();
             $companyResponseTransfer = $this->getFactory()
-                ->getCompanyBusinessUnitFacde()
+                ->getCompanyBusinessUnitFacade()
                 ->update($companyBusinessUnitTransfer);
 
             if (!$companyResponseTransfer->getIsSuccessful()) {
