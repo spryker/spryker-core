@@ -13,13 +13,6 @@ use Orm\Zed\Category\Persistence\SpyCategoryNode;
 interface CategoryRepositoryInterface
 {
     /**
-     * @param string $categoryKey
-     *
-     * @return bool
-     */
-    public function hasCategory($categoryKey);
-
-    /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $categoryNodeEntity
      *
@@ -35,15 +28,6 @@ interface CategoryRepositoryInterface
      * @return int
      */
     public function getIdCategoryNodeByCategoryKey($categoryKey);
-
-    /**
-     * @param string $categoryKey
-     *
-     * @throws \Spryker\Zed\CategoryDataImport\Business\Exception\CategoryByKeyNotFoundException
-     *
-     * @return int
-     */
-    public function getIdCategoryByCategoryKey($categoryKey);
 
     /**
      * @param string $categoryKey

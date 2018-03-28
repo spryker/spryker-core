@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CategoryDataImportFacade extends AbstractFacade implements CategoryDataImportFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer

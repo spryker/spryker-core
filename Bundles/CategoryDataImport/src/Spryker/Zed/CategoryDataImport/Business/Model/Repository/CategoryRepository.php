@@ -39,20 +39,6 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
 
     /**
-     * @param string $categoryKey
-     *
-     * @return bool
-     */
-    public function hasCategory($categoryKey)
-    {
-        if ($this->categoryKeys->count() === 0) {
-            $this->loadCategoryKeys();
-        }
-
-        return $this->categoryKeys->offsetExists($categoryKey);
-    }
-
-    /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
      * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $categoryNodeEntity
      *
@@ -100,29 +86,6 @@ class CategoryRepository implements CategoryRepositoryInterface
         }
 
         return $this->categoryKeys[$categoryKey][static::ID_CATEGORY_NODE];
-    }
-
-    /**
-     * @param string $categoryKey
-     *
-     * @throws \Spryker\Zed\CategoryDataImport\Business\Exception\CategoryByKeyNotFoundException
-     *
-     * @return int
-     */
-    public function getIdCategoryByCategoryKey($categoryKey)
-    {
-        if ($this->categoryKeys->count() === 0) {
-            $this->loadCategoryKeys();
-        }
-
-        if (!$this->categoryKeys->offsetExists($categoryKey)) {
-            throw new CategoryByKeyNotFoundException(sprintf(
-                'Category by key "%s" not found. Maybe you have a typo in the category key.',
-                $categoryKey
-            ));
-        }
-
-        return $this->categoryKeys[$categoryKey][static::ID_CATEGORY];
     }
 
     /**

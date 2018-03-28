@@ -14,7 +14,8 @@ interface CompanyUnitAddressLabelDataImportFacadeInterface
 {
     /**
      * Specification:
-     * - Imports CompanyUnitAddressLabel data.
+     * - Imports data from a specified file.
+     * - Iterates over the data sets and imports the data into the database.
      *
      * @api
      *
@@ -26,7 +27,8 @@ interface CompanyUnitAddressLabelDataImportFacadeInterface
 
     /**
      * Specification:
-     * - Imports CompanyUnitAddressLabel relation data.
+     * - Imports data from a specified file.
+     * - Iterates over the data sets and imports the data into the database.
      *
      * @api
      *

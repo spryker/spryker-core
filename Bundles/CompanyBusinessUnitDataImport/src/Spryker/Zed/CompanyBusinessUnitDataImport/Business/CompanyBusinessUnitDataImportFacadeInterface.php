@@ -14,7 +14,8 @@ interface CompanyBusinessUnitDataImportFacadeInterface
 {
     /**
      * Specification:
-     * - Imports Company data.
+     * - Imports data from a specified file.
+     * - Iterates over the data sets and imports the data into the database.
      *
      * @api
      *
