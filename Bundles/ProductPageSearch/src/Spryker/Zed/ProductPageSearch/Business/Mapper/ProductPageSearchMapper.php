@@ -158,11 +158,11 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
         }
 
         return [
-            'concreteNames' => implode(',', $concreteNames),
-            'concreteSkus' => implode(',', $concreteSkus),
-            'concreteAttributes' => implode(',', $concreteAttributes),
-            'concreteLocalizedAttributes' => implode(',', $concreteLocalizedAttributes),
-            'concreteDescriptions' => implode(',', $concreteDescriptions),
+            'concreteNames' => implode(', ', $concreteNames),
+            'concreteSkus' => implode(', ', $concreteSkus),
+            'concreteAttributes' => implode(', ', $concreteAttributes),
+            'concreteLocalizedAttributes' => implode(', ', $concreteLocalizedAttributes),
+            'concreteDescriptions' => implode(', ', $concreteDescriptions),
         ];
     }
 
