@@ -6,7 +6,10 @@
 
 {% block action %}
     {{ backActionButton('/sales-reclamation', 'Back to Reclamatinos' | trans) }}
-    {{ createActionButton('/manual-order-entry-gui/create', 'Create order' | trans) }}
+    {{ createActionButton(
+        url('/manual-order-entry-gui/create', {'reclamation': reclamation.idSalesReclamation}),
+        'Create order' | trans
+    ) }}
 {% endblock %}
 
 {% block content %}
