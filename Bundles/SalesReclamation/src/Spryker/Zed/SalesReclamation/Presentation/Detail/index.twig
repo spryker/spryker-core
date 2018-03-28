@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block action %}
-    {{ backActionButton('/sales-reclamation', '
-    Back to Reclamatinos' | trans) }}
+    {{ backActionButton('/sales-reclamation', 'Back to Reclamatinos' | trans) }}
+    {{ createActionButton('/manual-order-entry-gui/create', 'Create order' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -28,6 +28,8 @@
             {% endfor %}
         </ul>
     {% endif %}
+
+
 
 {% endblock %}
 
