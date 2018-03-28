@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Model\Order\Converter;
+namespace Spryker\Zed\Sales\Business\Model\Order\Mapper;
 
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
-class OrderConverter implements OrderConverterInterface
+class OrderMapper implements OrderMapperInterface
 {
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $spySalesOrder
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
-    public function convertToEntityTransfer(SpySalesOrder $spySalesOrder): SpySalesOrderEntityTransfer
+    public function mapOrderToEntityTransfer(SpySalesOrder $spySalesOrder): SpySalesOrderEntityTransfer
     {
         $salesOrderEntityTransfer = new SpySalesOrderEntityTransfer();
         $salesOrderEntityTransfer->fromArray($spySalesOrder->toArray(), true);
@@ -30,7 +30,7 @@ class OrderConverter implements OrderConverterInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    public function convertFromEntityTransfer(SpySalesOrderEntityTransfer $salesOrderEntityTransfer): SpySalesOrder
+    public function mapEntityTransferToOrder(SpySalesOrderEntityTransfer $salesOrderEntityTransfer): SpySalesOrder
     {
         $salesOrder = new SpySalesOrder();
         $salesOrder->fromArray($salesOrderEntityTransfer->toArray());

@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Model\Order\Converter;
+namespace Spryker\Zed\Sales\Business\Model\Order\Mapper;
 
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
-interface OrderConverterInterface
+interface OrderMapperInterface
 {
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $spySalesOrder
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
-    public function convertToEntityTransfer(SpySalesOrder $spySalesOrder): SpySalesOrderEntityTransfer;
+    public function mapOrderToEntityTransfer(SpySalesOrder $spySalesOrder): SpySalesOrderEntityTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    public function convertFromEntityTransfer(SpySalesOrderEntityTransfer $salesOrderEntityTransfer): SpySalesOrder;
+    public function mapEntityTransferToOrder(SpySalesOrderEntityTransfer $salesOrderEntityTransfer): SpySalesOrder;
 }

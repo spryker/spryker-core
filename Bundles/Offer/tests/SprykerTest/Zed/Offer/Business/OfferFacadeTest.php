@@ -3,8 +3,6 @@
 namespace SprykerTest\Zed\Offer\Business;
 
 use Codeception\Test\Unit;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Shared\Offer\OfferConfig;
 
 /**
  * Auto-generated group annotations
@@ -28,24 +26,27 @@ class OfferFacadeTest extends Unit
      */
     public function testConvertOfferToOrder()
     {
-        $offerEntity = $this->createOffer();
-        $facade = $this->tester->getFacade();
+        $this->markTestIncomplete('We moved to offer entities and storing a quote');
 
-        $response = $facade->convertOfferToOrder($offerEntity->getIdSalesOrder());
+        $facade = $this->tester->getFacade();
+        $orderTransfer = $this->tester->haveOrder([], 'Nopayment01');
+        $orderTransfer = $this->createSalesFacade()
+            ->getOrderByIdSalesOrder(
+                $orderTransfer->getIdSalesOrder()
+            );
+
+        $this->assertTrue($orderTransfer->getIsOffer());
+
+        $response = $facade->convertOfferToOrder($orderTransfer->getIdSalesOrder());
         $this->assertTrue($response->getIsSuccessful());
-        $this->assertNotEquals( OfferConfig::ORDER_TYPE_OFFER, $response->getOrder()->getType());
+        $this->assertFalse($response->getOrder()->getIsOffer());
     }
 
     /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
-    protected function createOffer()
+    protected function createSalesFacade()
     {
-        /** @var SpySalesOrder $orderEntity */
-        $orderEntity = $this->tester->create();
-        $orderEntity->setType(OfferConfig::ORDER_TYPE_OFFER);
-        $orderEntity->save();
-
-        return $orderEntity;
+        return $this->tester->getLocator()->sales()->facade();
     }
 }

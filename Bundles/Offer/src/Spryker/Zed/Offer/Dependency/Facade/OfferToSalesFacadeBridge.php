@@ -27,22 +27,22 @@ class OfferToSalesFacadeBridge implements OfferToSalesFacadeInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int $idSalesOrder
+     * @param int|null $idSalesOrder
      *
      * @return bool
      */
-    public function updateOrder(OrderTransfer $orderTransfer, int $idSalesOrder): bool
+    public function updateOrder(OrderTransfer $orderTransfer, $idSalesOrder): bool
     {
         return $this->salesFacade->updateOrder($orderTransfer, $idSalesOrder);
     }
 
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     * @param int $idCustomer
+     * @param int|null $idCustomer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getCustomerOrders(OrderListTransfer $orderListTransfer, int $idCustomer): OrderListTransfer
+    public function getCustomerOrders(OrderListTransfer $orderListTransfer, $idCustomer): OrderListTransfer
     {
         return $this->salesFacade->getCustomerOrders($orderListTransfer, $idCustomer);
     }

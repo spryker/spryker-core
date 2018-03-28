@@ -3,6 +3,7 @@
   "description": "Offer module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
     "spryker/sales": "^8.0.0",
     "spryker/sales-extension": "^1.0.0",
@@ -10,21 +11,22 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/oms": "^8.0.0"
+    "spryker/oms": "^8.0.0",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/oms": "If you use offer state in you state machine, with commands and conditions from offer"
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\Offer\\Helper\\": "tests/SprykerTest/Zed/Offer/_support/Helper/"
     }
   },
   "autoload-dev": {
     "psr-4": {
       "SprykerTest\\": "tests/SprykerTest/"
     }
-  },
-  "suggest": {
-    "spryker/oms": "If you use offer state in you state machine, with commands and conditions from offer"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

@@ -34,6 +34,7 @@ class SalesDataHelper extends Module
             ->withShippingAddress()
             ->withBillingAddress()
             ->withCurrency()
+            ->withPayment()
             ->build();
 
         $saveOrderTransfer = (new SaveOrderBuilder())->makeEmpty()->build();
