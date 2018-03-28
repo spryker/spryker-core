@@ -18,7 +18,7 @@ class ProductMeasurementSalesUnitGroupKeyGenerator implements ProductMeasurement
      *
      * @return string
      */
-    public function expandItemGroupKey(ItemTransfer $item)
+    public function expandItemGroupKey(ItemTransfer $item): string
     {
         if (!$item->getQuantitySalesUnit()) {
             return $item->getGroupKey();

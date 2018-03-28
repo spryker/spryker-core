@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 
 interface QuantityProductMeasurementSalesUnitValueValidatorInterface
 {
@@ -16,5 +17,5 @@ interface QuantityProductMeasurementSalesUnitValueValidatorInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function validate(CartChangeTransfer $cartChangeTransfer);
+    public function validate(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }

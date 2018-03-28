@@ -51,7 +51,7 @@ class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterf
      *
      * @return void
      */
-    public function publish(array $productIds)
+    public function publish(array $productIds): void
     {
         $productQuantityEntities = $this->productQuantityFacade->getProductQuantityEntitiesByProductIds($productIds);
         $productQuantityStorageEntities = $this->productQuantityStorageRepository->getProductQuantityStorageEntitiesByProductIds($productIds);
@@ -77,7 +77,7 @@ class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterf
     protected function saveStorageEntity(
         SpyProductQuantityStorageEntityTransfer $storageEntity,
         SpyProductQuantityEntityTransfer $productQuantityEntity
-    ) {
+    ): void {
         $storageEntity
             ->setFkProduct($productQuantityEntity->getFkProduct())
             ->setData($this->getStorageEntityData($productQuantityEntity));
@@ -91,7 +91,7 @@ class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterf
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer
      */
-    protected function selectStorageEntity(array $mappedProductQuantityStorageEntities, $idProduct)
+    protected function selectStorageEntity(array $mappedProductQuantityStorageEntities, int $idProduct): SpyProductQuantityStorageEntityTransfer
     {
         if (isset($mappedProductQuantityStorageEntities[$idProduct])) {
             return $mappedProductQuantityStorageEntities[$idProduct];
@@ -105,11 +105,11 @@ class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterf
      *
      * @return array
      */
-    protected function getStorageEntityData(SpyProductQuantityEntityTransfer $productQuantityEntity)
+    protected function getStorageEntityData(SpyProductQuantityEntityTransfer $productQuantityEntity): array
     {
         return (new ProductQuantityStorageTransfer())
             ->fromArray($productQuantityEntity->toArray(), true)
-            ->setProductId($productQuantityEntity->getFkProduct())
+            ->setIdProduct($productQuantityEntity->getFkProduct())
             ->toArray();
     }
 
@@ -118,7 +118,7 @@ class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterf
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
      */
-    protected function mapProductQuantityStorageEntities(array $productQuantityStorageEntities)
+    protected function mapProductQuantityStorageEntities(array $productQuantityStorageEntities): array
     {
         $mappedProductQuantityStorageEntities = [];
         foreach ($productQuantityStorageEntities as $entity) {
@@ -133,7 +133,7 @@ class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterf
      *
      * @return void
      */
-    protected function deleteStorageEntities(array $mappedProductQuantityStorageEntities)
+    protected function deleteStorageEntities(array $mappedProductQuantityStorageEntities): void
     {
         foreach ($mappedProductQuantityStorageEntities as $productQuantityStorageEntity) {
             $this->productQuantityStorageEntityManager->deleteProductQuantityStorage($productQuantityStorageEntity->getIdProductQuantityStorage());

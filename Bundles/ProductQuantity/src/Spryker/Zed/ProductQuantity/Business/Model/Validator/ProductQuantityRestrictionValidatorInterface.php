@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductQuantity\Business\Model\Validator;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 
 interface ProductQuantityRestrictionValidatorInterface
 {
@@ -16,5 +17,5 @@ interface ProductQuantityRestrictionValidatorInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function validateItemAdd(CartChangeTransfer $cartChangeTransfer);
+    public function validateItemAdd(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }

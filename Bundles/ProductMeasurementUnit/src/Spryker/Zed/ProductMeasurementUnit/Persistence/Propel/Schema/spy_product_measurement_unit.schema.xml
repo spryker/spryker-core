@@ -42,7 +42,7 @@
         <column name="id_product_measurement_sales_unit" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="conversion" type="FLOAT" required="false"/>
         <column name="precision" type="INTEGER" required="false"/>
-        <column name="is_display" type="BOOLEAN" required="true"/>
+        <column name="is_displayed" type="BOOLEAN" required="true"/>
         <column name="is_default" type="BOOLEAN" required="true"/>
         <column name="key" required="false" type="VARCHAR" size="255" />
         <column name="fk_product" type="INTEGER" required="true"/>

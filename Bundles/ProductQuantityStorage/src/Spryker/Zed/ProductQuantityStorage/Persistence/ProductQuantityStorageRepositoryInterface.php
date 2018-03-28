@@ -10,14 +10,9 @@ namespace Spryker\Zed\ProductQuantityStorage\Persistence;
 interface ProductQuantityStorageRepositoryInterface
 {
     /**
-     * Specification:
-     * - Retrieves product quantity storage entities by the provided related product IDs.
-     *
-     * @api
-     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
      */
-    public function getProductQuantityStorageEntitiesByProductIds(array $productIds);
+    public function getProductQuantityStorageEntitiesByProductIds(array $productIds): array;
 }

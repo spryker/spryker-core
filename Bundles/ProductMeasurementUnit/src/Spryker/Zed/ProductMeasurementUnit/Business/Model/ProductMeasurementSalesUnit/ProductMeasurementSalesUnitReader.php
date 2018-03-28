@@ -8,14 +8,11 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit;
 
 use Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer;
-use Spryker\Zed\ProductMeasurementUnit\Business\Exception\InvalidProductMeasurementUnitExchangeException;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilUnitConversionServiceInterface;
 use Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface;
 
 class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitReaderInterface
 {
-    const ERROR_INVALID_EXCHANGE = 'There is no automatic exchange ratio defined between "%s" and "%s" measurement unit codes.';
-
     /**
      * @var \Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface
      */
@@ -43,7 +40,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
      */
-    public function getProductMeasurementSalesUnitEntitiesByIdProduct($idProduct)
+    public function getProductMeasurementSalesUnitEntitiesByIdProduct(int $idProduct): array
     {
         $productMeasurementSalesUnitEntities = $this->productMeasurementUnitRepository
             ->getProductMeasurementSalesUnitEntitiesByIdProduct($idProduct);
@@ -60,7 +57,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer
      */
-    public function getProductMeasurementSalesUnitEntity($idProductMeasurementSalesUnit)
+    public function getProductMeasurementSalesUnitEntity(int $idProductMeasurementSalesUnit): SpyProductMeasurementSalesUnitEntityTransfer
     {
         $productMeasurementSalesUnitEntity = $this->productMeasurementUnitRepository
             ->getProductMeasurementSalesUnitEntity($idProductMeasurementSalesUnit);
@@ -75,7 +72,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
      *
      * @return void
      */
-    protected function setDefaults(SpyProductMeasurementSalesUnitEntityTransfer $productMeasurementSalesUnitEntity)
+    protected function setDefaults(SpyProductMeasurementSalesUnitEntityTransfer $productMeasurementSalesUnitEntity): void
     {
         if ($productMeasurementSalesUnitEntity->getPrecision() === null) {
             $productMeasurementSalesUnitEntity->setPrecision($this->getDefaultPrecision($productMeasurementSalesUnitEntity));
@@ -91,7 +88,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
      *
      * @return int
      */
-    protected function getDefaultPrecision(SpyProductMeasurementSalesUnitEntityTransfer $productMeasurementSalesUnitEntity)
+    protected function getDefaultPrecision(SpyProductMeasurementSalesUnitEntityTransfer $productMeasurementSalesUnitEntity): int
     {
         $productMeasurementSalesUnitEntity->getProductMeasurementUnit()->requireDefaultPrecision();
 
@@ -101,11 +98,9 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
     /**
      * @param \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer $productMeasurementSalesUnitEntity
      *
-     * @throws \Spryker\Zed\ProductMeasurementUnit\Business\Exception\InvalidProductMeasurementUnitExchangeException
-     *
      * @return float
      */
-    protected function getDefaultConversion(SpyProductMeasurementSalesUnitEntityTransfer $productMeasurementSalesUnitEntity)
+    protected function getDefaultConversion(SpyProductMeasurementSalesUnitEntityTransfer $productMeasurementSalesUnitEntity): float
     {
         $productMeasurementBaseUnitEntity = $this
             ->productMeasurementUnitRepository
@@ -114,16 +109,10 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
         $salesUnitMeasurementUnitCode = $productMeasurementSalesUnitEntity->getProductMeasurementUnit()->getCode();
         $baseUnitMeasurementUnitCode = $productMeasurementBaseUnitEntity->getProductMeasurementUnit()->getCode();
 
-        $exchangeRatio = $this->utilUnitConversionService->findMeasurementUnitExchangeRatio(
+        $exchangeRatio = $this->utilUnitConversionService->getMeasurementUnitExchangeRatio(
             $salesUnitMeasurementUnitCode,
             $baseUnitMeasurementUnitCode
         );
-
-        if ($exchangeRatio === null) {
-            throw new InvalidProductMeasurementUnitExchangeException(
-                sprintf(static::ERROR_INVALID_EXCHANGE, $salesUnitMeasurementUnitCode, $baseUnitMeasurementUnitCode)
-            );
-        }
 
         return $exchangeRatio;
     }

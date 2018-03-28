@@ -21,7 +21,7 @@ class ProductMeasurementUnitStorageMapper implements ProductMeasurementUnitStora
     public function hydrateSpyProductMeasurementUnitStorageEntity(
         SpyProductMeasurementUnitStorage $spyProductMeasurementUnitStorageEntity,
         SpyProductMeasurementUnitStorageEntityTransfer $productMeasurementUnitStorageEntity
-    ) {
+    ): SpyProductMeasurementUnitStorage {
         $spyProductMeasurementUnitStorageEntity->fromArray($productMeasurementUnitStorageEntity->toArray());
 
         return $spyProductMeasurementUnitStorageEntity;

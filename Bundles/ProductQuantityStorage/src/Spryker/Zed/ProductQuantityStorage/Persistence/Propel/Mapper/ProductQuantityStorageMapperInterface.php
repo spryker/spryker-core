@@ -21,5 +21,5 @@ interface ProductQuantityStorageMapperInterface
     public function hydrateSpyProductQuantityStorageEntity(
         SpyProductQuantityStorage $spyProductQuantityStorageEntity,
         SpyProductQuantityStorageEntityTransfer $productQuantityStorageEntity
-    );
+    ): SpyProductQuantityStorage;
 }

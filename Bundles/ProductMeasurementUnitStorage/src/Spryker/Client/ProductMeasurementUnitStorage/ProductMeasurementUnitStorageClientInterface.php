@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\ProductMeasurementUnitStorage;
 
+use Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer;
+
 interface ProductMeasurementUnitStorageClientInterface
 {
     /**
@@ -20,7 +23,7 @@ interface ProductMeasurementUnitStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer|null
      */
-    public function findProductMeasurementUnitStorage($idProductMeasurementUnit);
+    public function findProductMeasurementUnitStorage(int $idProductMeasurementUnit): ?ProductMeasurementUnitStorageTransfer;
 
     /**
      * Specification:
@@ -33,5 +36,5 @@ interface ProductMeasurementUnitStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer|null
      */
-    public function findProductConcreteMeasurementUnitStorage($idProduct);
+    public function findProductConcreteMeasurementUnitStorage(int $idProduct): ?ProductConcreteMeasurementUnitStorageTransfer;
 }

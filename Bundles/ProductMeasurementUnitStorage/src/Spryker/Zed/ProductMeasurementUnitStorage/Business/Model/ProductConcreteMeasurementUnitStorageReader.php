@@ -33,7 +33,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
      *
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer
      */
-    public function getProductConcreteMeasurementUnitStorageByIdProduct($idProduct)
+    public function getProductConcreteMeasurementUnitStorageByIdProduct(int $idProduct): ProductConcreteMeasurementUnitStorageTransfer
     {
         $productMeasurementBaseUnitEntity = $this->productMeasurementUnitFacade->getBaseUnitByIdProduct($idProduct);
         $productMeasurementSalesUnitEntities = $this->productMeasurementUnitFacade->getSalesUnitsByIdProduct($idProduct);
@@ -41,8 +41,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
         $productConcreteMeasurementUnitStorageTransfer = (new ProductConcreteMeasurementUnitStorageTransfer())
             ->setBaseUnit(
                 (new ProductConcreteMeasurementBaseUnitTransfer())
-                    ->setId($productMeasurementBaseUnitEntity->getIdProductMeasurementBaseUnit())
-                    ->setMeasurementUnitId($productMeasurementBaseUnitEntity->getFkProductMeasurementUnit())
+                    ->setIdProductMeasurementUnit($productMeasurementBaseUnitEntity->getFkProductMeasurementUnit())
             )
             ->setSalesUnits(new ArrayObject());
 
@@ -50,8 +49,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
             $productConcreteMeasurementUnitStorageTransfer->addSalesUnit(
                 (new ProductConcreteMeasurementSalesUnitTransfer())
                     ->fromArray($productMeasurementSalesUnitEntity->toArray(), true)
-                    ->setId($productMeasurementSalesUnitEntity->getIdProductMeasurementSalesUnit())
-                    ->setMeasurementUnitId($productMeasurementSalesUnitEntity->getFkProductMeasurementUnit())
+                    ->setIdProductMeasurementUnit($productMeasurementSalesUnitEntity->getFkProductMeasurementUnit())
             );
         }
 

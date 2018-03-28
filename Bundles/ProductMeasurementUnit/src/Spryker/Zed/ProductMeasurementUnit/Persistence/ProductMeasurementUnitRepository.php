@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Persistence;
 
+use Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer;
+use Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer;
 use Propel\Runtime\Exception\EntityNotFoundException;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -15,22 +17,18 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductMeasurementUnitRepository extends AbstractRepository implements ProductMeasurementUnitRepositoryInterface
 {
-    const ERROR_NO_BASE_UNIT_FOR_ID_PRODUCT = 'Product measurement base unit was not found for product id "%d".';
-    const ERROR_NO_BASE_UNIT_BY_ID = 'Product measurement base unit was not found by its id "%d".';
-    const ERROR_NO_SALES_UNIT_BY_ID = 'Product measurement sales unit was not found by its id "%d".';
+    const ERROR_NO_BASE_UNIT_FOR_ID_PRODUCT = 'Product measurement base unit was not found for product ID "%d".';
+    const ERROR_NO_BASE_UNIT_BY_ID = 'Product measurement base unit was not found by its ID "%d".';
+    const ERROR_NO_SALES_UNIT_BY_ID = 'Product measurement sales unit was not found by its ID "%d".';
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idProduct
      *
      * @throws \Propel\Runtime\Exception\EntityNotFoundException
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer
      */
-    public function getProductMeasurementBaseUnitEntityByIdProduct($idProduct)
+    public function getProductMeasurementBaseUnitEntityByIdProduct(int $idProduct): SpyProductMeasurementBaseUnitEntityTransfer
     {
         $query = $this->getFactory()
             ->createProductMeasurementBaseUnitQuery()
@@ -52,17 +50,13 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idProductMeasurementSalesUnit
      *
      * @throws \Propel\Runtime\Exception\EntityNotFoundException
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer
      */
-    public function getProductMeasurementSalesUnitEntity($idProductMeasurementSalesUnit)
+    public function getProductMeasurementSalesUnitEntity(int $idProductMeasurementSalesUnit): SpyProductMeasurementSalesUnitEntityTransfer
     {
         $query = $this->getFactory()
             ->createProductMeasurementSalesUnitQuery()
@@ -78,15 +72,11 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
      */
-    public function getProductMeasurementSalesUnitEntitiesByIdProduct($idProduct)
+    public function getProductMeasurementSalesUnitEntitiesByIdProduct(int $idProduct): array
     {
         $query = $this->getFactory()
             ->createProductMeasurementSalesUnitQuery()
@@ -98,17 +88,13 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idProductMeasurementBaseUnit
      *
      * @throws \Propel\Runtime\Exception\EntityNotFoundException
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer
      */
-    public function getProductMeasurementBaseUnitEntity($idProductMeasurementBaseUnit)
+    public function getProductMeasurementBaseUnitEntity(int $idProductMeasurementBaseUnit): SpyProductMeasurementBaseUnitEntityTransfer
     {
         $query = $this->getFactory()
             ->createProductMeasurementBaseUnitQuery()
@@ -124,15 +110,11 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int[] $productMeasurementUnitIds
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
      */
-    public function getProductMeasurementUnitEntities(array $productMeasurementUnitIds)
+    public function getProductMeasurementUnitEntities(array $productMeasurementUnitIds): array
     {
         $query = $this->getFactory()
             ->createProductMeasurementUnitQuery()
@@ -143,13 +125,9 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string[]
      */
-    public function getProductMeasurementUnitCodeMap()
+    public function getProductMeasurementUnitCodeMap(): array
     {
         return $this->getFactory()
             ->createProductMeasurementUnitQuery()

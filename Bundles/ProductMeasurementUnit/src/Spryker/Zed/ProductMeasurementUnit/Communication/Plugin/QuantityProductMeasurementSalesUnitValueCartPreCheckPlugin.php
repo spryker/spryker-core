@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Communication\Plugin;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface;
 use Spryker\Zed\Cart\Dependency\TerminationAwareCartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -27,7 +28,7 @@ class QuantityProductMeasurementSalesUnitValueCartPreCheckPlugin extends Abstrac
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function check(CartChangeTransfer $cartChangeTransfer)
+    public function check(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         return $this->getFacade()->validateQuantitySalesUnitValues($cartChangeTransfer);
     }
@@ -39,7 +40,7 @@ class QuantityProductMeasurementSalesUnitValueCartPreCheckPlugin extends Abstrac
      *
      * @return bool
      */
-    public function terminateOnFailure()
+    public function terminateOnFailure(): bool
     {
         return true;
     }

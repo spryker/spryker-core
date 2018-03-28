@@ -32,7 +32,7 @@ class ProductQuantityReader implements ProductQuantityReaderInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
      */
-    public function getProductQuantityEntitiesByProductIds(array $productIds)
+    public function getProductQuantityEntitiesByProductIds(array $productIds): array
     {
         $productQuantityEntities = $this->productQuantityRepository->getProductQuantityEntitiesByProductIds($productIds);
 
@@ -48,7 +48,7 @@ class ProductQuantityReader implements ProductQuantityReaderInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
      */
-    public function getProductQuantityEntitiesByProductSku(array $productSkus)
+    public function getProductQuantityEntitiesByProductSku(array $productSkus): array
     {
         $productQuantityEntities = $this->productQuantityRepository->getProductQuantityEntitiesByProductSku($productSkus);
 
@@ -64,7 +64,7 @@ class ProductQuantityReader implements ProductQuantityReaderInterface
      *
      * @return void
      */
-    protected function filterProductQuantityEntity(SpyProductQuantityEntityTransfer $productQuantityEntity)
+    protected function filterProductQuantityEntity(SpyProductQuantityEntityTransfer $productQuantityEntity): void
     {
         if ($productQuantityEntity->getQuantityInterval() === null) {
             $productQuantityEntity->setQuantityInterval(static::DEFAULT_INTERVAL);

@@ -8,7 +8,10 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer;
+use Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer;
 
 interface ProductMeasurementUnitFacadeInterface
 {
@@ -22,7 +25,7 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer
      */
-    public function getBaseUnitByIdProduct($idProduct);
+    public function getBaseUnitByIdProduct(int $idProduct): SpyProductMeasurementBaseUnitEntityTransfer;
 
     /**
      * Specification:
@@ -34,7 +37,7 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
      */
-    public function getSalesUnitsByIdProduct($idProduct);
+    public function getSalesUnitsByIdProduct(int $idProduct): array;
 
     /**
      * Specification:
@@ -46,7 +49,7 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function validateQuantitySalesUnitValues(CartChangeTransfer $cartChangeTransfer);
+    public function validateQuantitySalesUnitValues(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 
     /**
      * Specification:
@@ -59,7 +62,7 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return string
      */
-    public function expandItemGroupKeyWithSalesUnit(ItemTransfer $itemTransfer);
+    public function expandItemGroupKeyWithSalesUnit(ItemTransfer $itemTransfer): string;
 
     /**
      * Specification:
@@ -71,7 +74,7 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return int
      */
-    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer);
+    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer): int;
 
     /**
      * Specification:
@@ -84,5 +87,27 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer
      */
-    public function getSalesUnitEntity($idProductMeasurementSalesUnit);
+    public function getSalesUnitEntity(int $idProductMeasurementSalesUnit): SpyProductMeasurementSalesUnitEntityTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves a list of all product measurement unit codes, mapped by their own ID.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getProductMeasurementUnitCodeMap(): array;
+
+    /**
+     * Specification:
+     * - Retrieves a collection of product measurement unit entities by the provided IDs.
+     *
+     * @api
+     *
+     * @param int[] $productMeasurementUnitIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
+     */
+    public function getProductMeasurementUnitEntities(array $productMeasurementUnitIds): array;
 }

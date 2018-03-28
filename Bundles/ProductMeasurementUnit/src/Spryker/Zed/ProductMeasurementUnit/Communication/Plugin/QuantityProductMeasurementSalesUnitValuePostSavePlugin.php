@@ -26,7 +26,7 @@ class QuantityProductMeasurementSalesUnitValuePostSavePlugin extends AbstractPlu
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      */
-    public function postSave(QuoteTransfer $quoteTransfer)
+    public function postSave(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getQuantitySalesUnit() === null) {

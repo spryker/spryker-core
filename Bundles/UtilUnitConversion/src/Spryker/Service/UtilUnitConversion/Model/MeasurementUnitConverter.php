@@ -7,10 +7,13 @@
 
 namespace Spryker\Service\UtilUnitConversion\Model;
 
+use Spryker\Service\UtilUnitConversion\Exception\InvalidMeasurementUnitExchangeException;
 use Spryker\Service\UtilUnitConversion\UtilUnitConversionConfig;
 
 class MeasurementUnitConverter implements MeasurementUnitConverterInterface
 {
+    const ERROR_INVALID_EXCHANGE = 'There is no exchange ratio defined between "%s" and "%s" measurement unit codes.';
+
     /**
      * @var \Spryker\Service\UtilUnitConversion\UtilUnitConversionConfig
      */
@@ -28,9 +31,11 @@ class MeasurementUnitConverter implements MeasurementUnitConverterInterface
      * @param string $fromCode
      * @param string $toCode
      *
-     * @return float|null
+     * @throws \Spryker\Service\UtilUnitConversion\Exception\InvalidMeasurementUnitExchangeException
+     *
+     * @return float
      */
-    public function findExchangeRatio($fromCode, $toCode)
+    public function getExchangeRatio(string $fromCode, string $toCode): float
     {
         $exchangeRatioMap = $this->utilUnitConversionConfig->getMeasurementUnitExchangeRatioMap();
 
@@ -38,6 +43,8 @@ class MeasurementUnitConverter implements MeasurementUnitConverterInterface
             return $exchangeRatioMap[$fromCode][$toCode];
         }
 
-        return null;
+        throw new InvalidMeasurementUnitExchangeException(
+            sprintf(static::ERROR_INVALID_EXCHANGE, $fromCode, $toCode)
+        );
     }
 }

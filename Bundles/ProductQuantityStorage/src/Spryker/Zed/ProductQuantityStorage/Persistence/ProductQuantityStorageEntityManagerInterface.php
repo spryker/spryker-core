@@ -18,7 +18,7 @@ interface ProductQuantityStorageEntityManagerInterface
      *
      * @return void
      */
-    public function deleteProductQuantityStorage($idProductQuantityStorage);
+    public function deleteProductQuantityStorage(int $idProductQuantityStorage): void;
 
     /**
      * @api
@@ -27,5 +27,5 @@ interface ProductQuantityStorageEntityManagerInterface
      *
      * @return void
      */
-    public function saveProductQuantityStorageEntity(SpyProductQuantityStorageEntityTransfer $productQuantityStorageEntity);
+    public function saveProductQuantityStorageEntity(SpyProductQuantityStorageEntityTransfer $productQuantityStorageEntity): void;
 }

@@ -26,10 +26,10 @@ class ProductMeasurementUnitToUtilUnitConversionServiceBridge implements Product
      * @param string $fromCode
      * @param string $toCode
      *
-     * @return float|null
+     * @return float
      */
-    public function findMeasurementUnitExchangeRatio($fromCode, $toCode)
+    public function getMeasurementUnitExchangeRatio(string $fromCode, string $toCode): float
     {
-        return $this->utilUnitConversionService->findMeasurementUnitExchangeRatio($fromCode, $toCode);
+        return $this->utilUnitConversionService->getMeasurementUnitExchangeRatio($fromCode, $toCode);
     }
 }

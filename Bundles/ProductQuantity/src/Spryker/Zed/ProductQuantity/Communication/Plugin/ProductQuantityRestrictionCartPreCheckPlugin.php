@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductQuantity\Communication\Plugin;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface;
 use Spryker\Zed\Cart\Dependency\TerminationAwareCartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -27,7 +28,7 @@ class ProductQuantityRestrictionCartPreCheckPlugin extends AbstractPlugin implem
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function check(CartChangeTransfer $cartChangeTransfer)
+    public function check(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         return $this->getFacade()
             ->validateItemAddProductQuantityRestrictions($cartChangeTransfer);
@@ -40,7 +41,7 @@ class ProductQuantityRestrictionCartPreCheckPlugin extends AbstractPlugin implem
      *
      * @return bool
      */
-    public function terminateOnFailure()
+    public function terminateOnFailure(): bool
     {
         return true;
     }

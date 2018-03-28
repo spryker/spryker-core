@@ -42,7 +42,7 @@ class ProductQuantityStorageReader implements ProductQuantityStorageReaderInterf
      *
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
      */
-    public function getProductQuantityStorage($idProduct)
+    public function findProductQuantityStorage(int $idProduct): ?ProductQuantityStorageTransfer
     {
         $key = $this->generateKey($idProduct);
         $productQuantityStorageData = $this->storageClient->get($key);
@@ -59,7 +59,7 @@ class ProductQuantityStorageReader implements ProductQuantityStorageReaderInterf
      *
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
      */
-    protected function mapToProductQuantityStorageTransfer(array $productQuantityStorageData)
+    protected function mapToProductQuantityStorageTransfer(array $productQuantityStorageData): ProductQuantityStorageTransfer
     {
         return (new ProductQuantityStorageTransfer())
             ->fromArray($productQuantityStorageData, true);
@@ -70,7 +70,7 @@ class ProductQuantityStorageReader implements ProductQuantityStorageReaderInterf
      *
      * @return string
      */
-    protected function generateKey($idProduct)
+    protected function generateKey(int $idProduct): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
             ->setReference($idProduct);

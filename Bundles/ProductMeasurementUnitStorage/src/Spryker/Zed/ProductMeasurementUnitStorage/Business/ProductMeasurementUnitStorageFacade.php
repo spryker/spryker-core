@@ -23,7 +23,7 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
      *
      * @return void
      */
-    public function publishProductMeasurementUnit(array $productMeasurementUnitIds)
+    public function publishProductMeasurementUnit(array $productMeasurementUnitIds): void
     {
         $this->getFactory()->createProductMeasurementUnitStorageWriter()->publish($productMeasurementUnitIds);
     }
@@ -37,7 +37,7 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
      *
      * @return void
      */
-    public function publishProductConcreteMeasurementUnit(array $productIds)
+    public function publishProductConcreteMeasurementUnit(array $productIds): void
     {
         $this->getFactory()->createProductConcreteMeasurementUnitStorageWriter()->publish($productIds);
     }

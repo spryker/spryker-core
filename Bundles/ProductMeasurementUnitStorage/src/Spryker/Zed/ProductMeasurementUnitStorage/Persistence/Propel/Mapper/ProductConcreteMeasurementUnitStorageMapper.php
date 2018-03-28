@@ -21,7 +21,7 @@ class ProductConcreteMeasurementUnitStorageMapper implements ProductConcreteMeas
     public function hydrateSpyProductMeasurementUnitStorageEntity(
         SpyProductConcreteMeasurementUnitStorage $spyProductConcreteMeasurementUnitStorageEntity,
         SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntity
-    ) {
+    ): SpyProductConcreteMeasurementUnitStorage {
         $spyProductConcreteMeasurementUnitStorageEntity->fromArray($productConcreteMeasurementUnitStorageEntity->toArray(true));
 
         return $spyProductConcreteMeasurementUnitStorageEntity;

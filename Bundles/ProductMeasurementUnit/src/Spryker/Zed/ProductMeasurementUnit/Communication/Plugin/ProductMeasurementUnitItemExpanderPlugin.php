@@ -28,7 +28,7 @@ class ProductMeasurementUnitItemExpanderPlugin extends AbstractPlugin implements
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $cartChangeTransfer)
+    public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getQuantitySalesUnit() === null) {
@@ -50,8 +50,9 @@ class ProductMeasurementUnitItemExpanderPlugin extends AbstractPlugin implements
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    protected function mapToProductMeasurementSalesUnit(SpyProductMeasurementSalesUnitEntityTransfer $salesUnitEntityTransfer)
-    {
+    protected function mapToProductMeasurementSalesUnit(
+        SpyProductMeasurementSalesUnitEntityTransfer $salesUnitEntityTransfer
+    ): ProductMeasurementSalesUnitTransfer {
         return (new ProductMeasurementSalesUnitTransfer())
             ->fromArray($salesUnitEntityTransfer->toArray(true), true);
     }

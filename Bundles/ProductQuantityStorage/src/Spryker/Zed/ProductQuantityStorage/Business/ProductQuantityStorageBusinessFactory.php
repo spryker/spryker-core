@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductQuantityStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductQuantityStorage\Business\Model\ProductQuantityStorageWriter;
+use Spryker\Zed\ProductQuantityStorage\Business\Model\ProductQuantityStorageWriterInterface;
+use Spryker\Zed\ProductQuantityStorage\Dependency\Facade\ProductQuantityStorageToProductQuantityFacadeInterface;
 use Spryker\Zed\ProductQuantityStorage\ProductQuantityStorageDependencyProvider;
 
 /**
@@ -21,7 +23,7 @@ class ProductQuantityStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductQuantityStorage\Business\Model\ProductQuantityStorageWriterInterface
      */
-    public function createProductQuantityStorageWriter()
+    public function createProductQuantityStorageWriter(): ProductQuantityStorageWriterInterface
     {
         return new ProductQuantityStorageWriter(
             $this->getEntityManager(),
@@ -33,7 +35,7 @@ class ProductQuantityStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductQuantityStorage\Dependency\Facade\ProductQuantityStorageToProductQuantityFacadeInterface
      */
-    public function getProductQuantityFacade()
+    public function getProductQuantityFacade(): ProductQuantityStorageToProductQuantityFacadeInterface
     {
         return $this->getProvidedDependency(ProductQuantityStorageDependencyProvider::FACADE_PRODUCT_QUANTITY);
     }

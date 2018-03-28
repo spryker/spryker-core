@@ -8,15 +8,19 @@
 namespace Spryker\Client\ProductMeasurementUnitStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageInterface;
+use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductConcreteMeasurementUnitStorageReader;
+use Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductConcreteMeasurementUnitStorageReaderInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductMeasurementUnitStorageReader;
+use Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductMeasurementUnitStorageReaderInterface;
 
 class ProductMeasurementUnitStorageFactory extends AbstractFactory
 {
     /**
      * @return \Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductMeasurementUnitStorageReaderInterface
      */
-    public function createProductMeasurementUnitStorageReader()
+    public function createProductMeasurementUnitStorageReader(): ProductMeasurementUnitStorageReaderInterface
     {
         return new ProductMeasurementUnitStorageReader(
             $this->getStorageClient(),
@@ -27,7 +31,7 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductConcreteMeasurementUnitStorageReaderInterface
      */
-    public function createProductConcreteMeasurementUnitStorageReader()
+    public function createProductConcreteMeasurementUnitStorageReader(): ProductConcreteMeasurementUnitStorageReaderInterface
     {
         return new ProductConcreteMeasurementUnitStorageReader(
             $this->getStorageClient(),
@@ -38,15 +42,15 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageInterface
      */
-    public function getStorageClient()
+    public function getStorageClient(): ProductMeasurementUnitStorageToStorageInterface
     {
         return $this->getProvidedDependency(ProductMeasurementUnitStorageDependencyProvider::CLIENT_STORAGE);
     }
 
     /**
-     * @return \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceBridge
+     * @return \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceInterface
      */
-    public function getSynchronizationService()
+    public function getSynchronizationService(): ProductMeasurementUnitStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ProductMeasurementUnitStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }

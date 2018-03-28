@@ -10,16 +10,16 @@ namespace Spryker\Zed\ProductMeasurementUnitStorage\Business\Model;
 use Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer;
-use Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Repository\ProductMeasurementUnitStorageToProductMeasurementUnitRepositoryInterface;
+use Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade\ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageEntityManagerInterface;
 use Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageRepositoryInterface;
 
 class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStorageWriterInterface
 {
     /**
-     * @var \Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Repository\ProductMeasurementUnitStorageToProductMeasurementUnitRepositoryInterface
+     * @var \Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade\ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface
      */
-    protected $productMeasurementUnitRepository;
+    protected $productMeasurementUnitFacade;
 
     /**
      * @var \Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageRepositoryInterface
@@ -32,16 +32,16 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
     protected $productMeasurementUnitStorageEntityManager;
 
     /**
-     * @param \Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Repository\ProductMeasurementUnitStorageToProductMeasurementUnitRepositoryInterface $productMeasurementUnitRepository
+     * @param \Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade\ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface $productMeasurementUnitFacade
      * @param \Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageRepositoryInterface $productMeasurementUnitStorageRepository
      * @param \Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageEntityManagerInterface $productMeasurementUnitStorageEntityManager
      */
     public function __construct(
-        ProductMeasurementUnitStorageToProductMeasurementUnitRepositoryInterface $productMeasurementUnitRepository,
+        ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface $productMeasurementUnitFacade,
         ProductMeasurementUnitStorageRepositoryInterface $productMeasurementUnitStorageRepository,
         ProductMeasurementUnitStorageEntityManagerInterface $productMeasurementUnitStorageEntityManager
     ) {
-        $this->productMeasurementUnitRepository = $productMeasurementUnitRepository;
+        $this->productMeasurementUnitFacade = $productMeasurementUnitFacade;
         $this->productMeasurementUnitStorageRepository = $productMeasurementUnitStorageRepository;
         $this->productMeasurementUnitStorageEntityManager = $productMeasurementUnitStorageEntityManager;
     }
@@ -51,7 +51,7 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
      *
      * @return void
      */
-    public function publish(array $productMeasurementUnitIds)
+    public function publish(array $productMeasurementUnitIds): void
     {
         $productMeasurementUnitEntities = $this->getProductMeasurementUnitEntities($productMeasurementUnitIds);
         $productMeasurementUnitStorageEntities = $this->getProductMeasurementUnitStorageEntities($productMeasurementUnitIds);
@@ -84,7 +84,6 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
             ->setData(
                 (new ProductMeasurementUnitStorageTransfer())
                     ->fromArray($productMeasurementUnitEntity->toArray(), true)
-                    ->setId($productMeasurementUnitEntity->getIdProductMeasurementUnit())
                     ->toArray()
             );
 
@@ -92,7 +91,7 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
     }
 
     /**
-     * @param array $mappedProductMeasurementUnitStorageEntities
+     * @param \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[] $mappedProductMeasurementUnitStorageEntities
      * @param int $idProductMeasurementUnit
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer
@@ -107,20 +106,17 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
     }
 
     /**
-     * @param array $mappedProductMeasurementUnitStorageEntities
+     * @param \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[] $productMeasurementUnitStorageEntities
      *
      * @return void
      */
-    protected function deleteStorageEntities(array $mappedProductMeasurementUnitStorageEntities): void
+    protected function deleteStorageEntities(array $productMeasurementUnitStorageEntities): void
     {
-        array_walk_recursive(
-            $mappedProductMeasurementUnitStorageEntities,
-            function (SpyProductMeasurementUnitStorageEntityTransfer $productMeasurementUnitStorageEntity) {
-                $this->productMeasurementUnitStorageEntityManager->deleteProductMeasurementUnitStorage(
-                    $productMeasurementUnitStorageEntity->getIdProductMeasurementUnitStorage()
-                );
-            }
-        );
+        foreach ($productMeasurementUnitStorageEntities as $productMeasurementUnitStorageEntity) {
+            $this->productMeasurementUnitStorageEntityManager->deleteProductMeasurementUnitStorage(
+                $productMeasurementUnitStorageEntity->getIdProductMeasurementUnitStorage()
+            );
+        }
     }
 
     /**
@@ -128,9 +124,9 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
      */
-    protected function getProductMeasurementUnitEntities(array $productMeasurementUnitIds)
+    protected function getProductMeasurementUnitEntities(array $productMeasurementUnitIds): array
     {
-        return $this->productMeasurementUnitRepository->getProductMeasurementUnitEntities($productMeasurementUnitIds);
+        return $this->productMeasurementUnitFacade->getProductMeasurementUnitEntities($productMeasurementUnitIds);
     }
 
     /**
@@ -138,7 +134,7 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
      */
-    protected function getProductMeasurementUnitStorageEntities(array $productMeasurementUnitIds)
+    protected function getProductMeasurementUnitStorageEntities(array $productMeasurementUnitIds): array
     {
         return $this->productMeasurementUnitStorageRepository->getProductMeasurementUnitStorageEntities($productMeasurementUnitIds);
     }
@@ -146,9 +142,9 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
     /**
      * @param \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[] $productMeasurementUnitStorageEntities
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
      */
-    protected function mapProductMeasurementUnitStorageEntities(array $productMeasurementUnitStorageEntities)
+    protected function mapProductMeasurementUnitStorageEntities(array $productMeasurementUnitStorageEntities): array
     {
         $mappedProductMeasurementUnitStorageEntities = [];
         foreach ($productMeasurementUnitStorageEntities as $entity) {

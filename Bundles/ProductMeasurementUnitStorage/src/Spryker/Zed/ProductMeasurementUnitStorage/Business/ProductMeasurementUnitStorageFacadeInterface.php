@@ -19,7 +19,7 @@ interface ProductMeasurementUnitStorageFacadeInterface
      *
      * @return void
      */
-    public function publishProductMeasurementUnit(array $productMeasurementUnitIds);
+    public function publishProductMeasurementUnit(array $productMeasurementUnitIds): void;
 
     /**
      * Specification:
@@ -31,5 +31,5 @@ interface ProductMeasurementUnitStorageFacadeInterface
      *
      * @return void
      */
-    public function publishProductConcreteMeasurementUnit(array $productIds);
+    public function publishProductConcreteMeasurementUnit(array $productIds): void;
 }

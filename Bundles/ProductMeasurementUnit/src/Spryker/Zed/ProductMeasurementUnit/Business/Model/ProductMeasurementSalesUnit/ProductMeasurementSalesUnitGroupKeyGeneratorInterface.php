@@ -16,5 +16,5 @@ interface ProductMeasurementSalesUnitGroupKeyGeneratorInterface
      *
      * @return string
      */
-    public function expandItemGroupKey(ItemTransfer $item);
+    public function expandItemGroupKey(ItemTransfer $item): string;
 }

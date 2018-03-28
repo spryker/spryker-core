@@ -20,12 +20,12 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
      *
      * @return int
      */
-    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer)
+    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer): int
     {
         $itemTransfer
             ->requireQuantitySalesUnit()
             ->requireQuantity()
-                ->getQuantitySalesUnit()
+            ->getQuantitySalesUnit()
                 ->requireConversion()
                 ->requirePrecision();
 
@@ -48,7 +48,7 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
      *
      * @return bool
      */
-    public function isIntegerSalesUnitValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision)
+    public function isIntegerSalesUnitValue(int $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): bool
     {
         $unitValue = $this->calculateFloatNormalizedValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision);
         if (abs($unitValue - round($unitValue)) < static::FLOAT_PRECISION) {
@@ -73,7 +73,7 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
      *
      * @return int
      */
-    protected function calculateNormalizedValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision)
+    protected function calculateNormalizedValue(int $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): int
     {
         return (int)round(
             $this->calculateFloatNormalizedValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision)
@@ -89,7 +89,7 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
      *
      * @return float
      */
-    protected function calculateFloatNormalizedValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision)
+    protected function calculateFloatNormalizedValue(int $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): float
     {
         return $availabilityValue / $unitToAvailabilityConversion * $unitPrecision;
     }

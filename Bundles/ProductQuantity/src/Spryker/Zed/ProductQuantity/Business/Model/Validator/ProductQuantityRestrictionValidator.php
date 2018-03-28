@@ -15,9 +15,9 @@ use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface;
 
 class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionValidatorInterface
 {
-    const ERROR_QUANTITY_MIN_NOT_FULFILLED = 'cart.change.error.quantity.min';
-    const ERROR_QUANTITY_MAX_NOT_FULFILLED = 'cart.change.error.quantity.max';
-    const ERROR_QUANTITY_INTERVAL_NOT_FULFILLED = 'cart.change.error.quantity.interval';
+    const ERROR_QUANTITY_MIN_NOT_FULFILLED = 'cart.pre.check.quantity.min.failed';
+    const ERROR_QUANTITY_MAX_NOT_FULFILLED = 'cart.pre.check.quantity.max.failed';
+    const ERROR_QUANTITY_INTERVAL_NOT_FULFILLED = 'cart.pre.check.quantity.interval.failed';
 
     const RESTRICTION_MIN = 'min';
     const RESTRICTION_MAX = 'max';
@@ -41,7 +41,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function validateItemAdd(CartChangeTransfer $cartChangeTransfer)
+    public function validateItemAdd(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         $responseTransfer = new CartPreCheckResponseTransfer();
 
@@ -63,7 +63,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      *
      * @return void
      */
-    protected function validateItem($sku, $quantity, SpyProductQuantityEntityTransfer $productQuantityEntity, CartPreCheckResponseTransfer $responseTransfer)
+    protected function validateItem(string $sku, int $quantity, SpyProductQuantityEntityTransfer $productQuantityEntity, CartPreCheckResponseTransfer $responseTransfer): void
     {
         $min = $productQuantityEntity->getQuantityMin();
         $max = $productQuantityEntity->getQuantityMax();
@@ -87,7 +87,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      *
      * @return int[] Keys are product SKUs, values are product quantities as 'quote.quantity + change.quantity'
      */
-    protected function getCartQuantityMap(CartChangeTransfer $cartChangeTransfer)
+    protected function getCartQuantityMap(CartChangeTransfer $cartChangeTransfer): array
     {
         $quoteQuantityMap = $this->getQuoteQuantityMap($cartChangeTransfer);
 
@@ -109,7 +109,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      *
      * @return array
      */
-    protected function getQuoteQuantityMap(CartChangeTransfer $cartChangeTransfer)
+    protected function getQuoteQuantityMap(CartChangeTransfer $cartChangeTransfer): array
     {
         $quoteQuantityMap = [];
         foreach ($cartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
@@ -124,30 +124,73 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[] Keys are product SKUs.
      */
-    protected function getProductQuantityEntityMap(CartChangeTransfer $cartChangeTransfer)
+    protected function getProductQuantityEntityMap(CartChangeTransfer $cartChangeTransfer): array
+    {
+        $skus = $this->getChangedSkus($cartChangeTransfer);
+        $productQuantityEntities = $this->productQuantityReader->getProductQuantityEntitiesByProductSku($skus);
+
+        $productQuantityEntityMap = $this->mapProductQuantityEntitiesBySku($productQuantityEntities);
+        $productQuantityEntityMap = $this->replaceMissingSkus($productQuantityEntityMap, $skus);
+
+        return $productQuantityEntityMap;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return string[]
+     */
+    protected function getChangedSkus(CartChangeTransfer $cartChangeTransfer): array
     {
         $skus = [];
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $skus[] = $itemTransfer->getSku();
         }
 
-        $productQuantityEntities = $this->productQuantityReader->getProductQuantityEntitiesByProductSku($skus);
+        return $skus;
+    }
 
-        $productQuantityEntityMap = [];
-        foreach ($productQuantityEntities as $productQuantityEntity) {
-            $productQuantityEntityMap[$productQuantityEntity->getProduct()->getSku()] = $productQuantityEntity;
-        }
-
-        $defaultProductQuantityEntity = (new SpyProductQuantityEntityTransfer())
+    /**
+     * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer
+     */
+    protected function getDefaultProductQuantityEntity()
+    {
+        return (new SpyProductQuantityEntityTransfer())
             ->setQuantityInterval(1)
             ->setQuantityMin(1);
+    }
 
-        foreach ($skus as $sku) {
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[] $productQuantityEntityMap
+     * @param string[] $requiredSkus
+     *
+     * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
+     */
+    protected function replaceMissingSkus($productQuantityEntityMap, $requiredSkus)
+    {
+        $defaultProductQuantityEntity = $this->getDefaultProductQuantityEntity();
+
+        foreach ($requiredSkus as $sku) {
             if (isset($productQuantityEntityMap[$sku])) {
                 continue;
             }
 
             $productQuantityEntityMap[$sku] = $defaultProductQuantityEntity;
+        }
+
+        return $productQuantityEntityMap;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[] $productQuantityEntities
+     *
+     * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
+     */
+    protected function mapProductQuantityEntitiesBySku(array $productQuantityEntities)
+    {
+        $productQuantityEntityMap = [];
+        foreach ($productQuantityEntities as $productQuantityEntity) {
+            $productQuantityEntityMap[$productQuantityEntity->getProduct()->getSku()] = $productQuantityEntity;
         }
 
         return $productQuantityEntityMap;
@@ -161,7 +204,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      *
      * @return void
      */
-    protected function addViolationMessage($message, $sku, $restrictionValue, CartPreCheckResponseTransfer $responseTransfer)
+    protected function addViolationMessage(string $message, string $sku, int $restrictionValue, CartPreCheckResponseTransfer $responseTransfer): void
     {
         $responseTransfer->addMessage(
             (new MessageTransfer())
@@ -175,7 +218,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    protected function setResponseIsSuccess(CartPreCheckResponseTransfer $responseTransfer)
+    protected function setResponseIsSuccess(CartPreCheckResponseTransfer $responseTransfer): CartPreCheckResponseTransfer
     {
         $isSuccessful = count($responseTransfer->getMessages()) === 0;
         $responseTransfer->setIsSuccess($isSuccessful);

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductQuantity\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 
 interface ProductQuantityFacadeInterface
 {
@@ -21,7 +22,7 @@ interface ProductQuantityFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function validateItemAddProductQuantityRestrictions(CartChangeTransfer $cartChangeTransfer);
+    public function validateItemAddProductQuantityRestrictions(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 
     /**
      * Specification:
@@ -33,5 +34,5 @@ interface ProductQuantityFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
      */
-    public function getProductQuantityEntitiesByProductIds(array $productIds);
+    public function getProductQuantityEntitiesByProductIds(array $productIds): array;
 }

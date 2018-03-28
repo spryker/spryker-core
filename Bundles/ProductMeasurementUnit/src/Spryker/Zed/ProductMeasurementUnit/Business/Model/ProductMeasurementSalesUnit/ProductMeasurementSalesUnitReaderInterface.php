@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit;
 
+use Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer;
+
 interface ProductMeasurementSalesUnitReaderInterface
 {
     /**
@@ -14,12 +16,12 @@ interface ProductMeasurementSalesUnitReaderInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer
      */
-    public function getProductMeasurementSalesUnitEntity($idProductMeasurementSalesUnit);
+    public function getProductMeasurementSalesUnitEntity(int $idProductMeasurementSalesUnit): SpyProductMeasurementSalesUnitEntityTransfer;
 
     /**
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
      */
-    public function getProductMeasurementSalesUnitEntitiesByIdProduct($idProduct);
+    public function getProductMeasurementSalesUnitEntitiesByIdProduct(int $idProduct): array;
 }

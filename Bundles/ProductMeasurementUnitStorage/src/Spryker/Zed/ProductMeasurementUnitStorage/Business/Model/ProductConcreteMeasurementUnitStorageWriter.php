@@ -7,17 +7,18 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Business\Model;
 
+use Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer;
 use Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer;
-use Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Repository\ProductMeasurementUnitStorageToProductMeasurementUnitRepositoryInterface;
+use Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade\ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageEntityManagerInterface;
 use Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageRepositoryInterface;
 
 class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeasurementUnitStorageWriterInterface
 {
     /**
-     * @var \Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Repository\ProductMeasurementUnitStorageToProductMeasurementUnitRepositoryInterface
+     * @var \Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade\ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface
      */
-    protected $productMeasurementUnitRepository;
+    protected $productMeasurementUnitFacade;
 
     /**
      * @var \Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageRepositoryInterface
@@ -40,18 +41,18 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
     protected static $productMeasurementUnitCodeBuffer;
 
     /**
-     * @param \Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Repository\ProductMeasurementUnitStorageToProductMeasurementUnitRepositoryInterface $productMeasurementUnitRepository
+     * @param \Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade\ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface $productMeasurementUnitFacade
      * @param \Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageRepositoryInterface $productMeasurementUnitStorageRepository
      * @param \Spryker\Zed\ProductMeasurementUnitStorage\Persistence\ProductMeasurementUnitStorageEntityManagerInterface $productMeasurementUnitStorageEntityManager
      * @param \Spryker\Zed\ProductMeasurementUnitStorage\Business\Model\ProductConcreteMeasurementUnitStorageReaderInterface $productConcreteMeasurementUnitStorageReader
      */
     public function __construct(
-        ProductMeasurementUnitStorageToProductMeasurementUnitRepositoryInterface $productMeasurementUnitRepository,
+        ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface $productMeasurementUnitFacade,
         ProductMeasurementUnitStorageRepositoryInterface $productMeasurementUnitStorageRepository,
         ProductMeasurementUnitStorageEntityManagerInterface $productMeasurementUnitStorageEntityManager,
         ProductConcreteMeasurementUnitStorageReaderInterface $productConcreteMeasurementUnitStorageReader
     ) {
-        $this->productMeasurementUnitRepository = $productMeasurementUnitRepository;
+        $this->productMeasurementUnitFacade = $productMeasurementUnitFacade;
         $this->productMeasurementUnitStorageRepository = $productMeasurementUnitStorageRepository;
         $this->productMeasurementUnitStorageEntityManager = $productMeasurementUnitStorageEntityManager;
         $this->productConcreteMeasurementUnitStorageReader = $productConcreteMeasurementUnitStorageReader;
@@ -62,7 +63,7 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
      *
      * @return void
      */
-    public function publish(array $productIds)
+    public function publish(array $productIds): void
     {
         $mappedProductConcreteMeasurementUnitStorageEntities =
             $this->getMappedProductConcreteMeasurementUnitStorageEntities($productIds);
@@ -84,7 +85,7 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
      *
      * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer
      */
-    protected function selectStorageEntity(array $mappedProductConcreteMeasurementUnitStorageEntities, $idProduct)
+    protected function selectStorageEntity(array $mappedProductConcreteMeasurementUnitStorageEntities, int $idProduct): SpyProductConcreteMeasurementUnitStorageEntityTransfer
     {
         if (isset($mappedProductConcreteMeasurementUnitStorageEntities[$idProduct])) {
             return $mappedProductConcreteMeasurementUnitStorageEntities[$idProduct];
@@ -99,7 +100,7 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
      *
      * @return void
      */
-    protected function saveStorageEntity($idProduct, SpyProductConcreteMeasurementUnitStorageEntityTransfer $storageEntityTransfer)
+    protected function saveStorageEntity(int $idProduct, SpyProductConcreteMeasurementUnitStorageEntityTransfer $storageEntityTransfer): void
     {
         $storageEntityTransfer
             ->setFkProduct($idProduct)
@@ -109,20 +110,17 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[] $mappedProductConcreteMeasurementUnitStorageEntities
+     * @param \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[] $productConcreteMeasurementUnitStorageEntities
      *
      * @return void
      */
-    protected function deleteStorageEntities(array $mappedProductConcreteMeasurementUnitStorageEntities)
+    protected function deleteStorageEntities(array $productConcreteMeasurementUnitStorageEntities): void
     {
-        array_walk_recursive(
-            $mappedProductConcreteMeasurementUnitStorageEntities,
-            function (SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntity) {
-                $this->productMeasurementUnitStorageEntityManager->deleteProductConcreteMeasurementUnitStorage(
-                    $productConcreteMeasurementUnitStorageEntity->getIdProductConcreteMeasurementUnitStorage()
-                );
-            }
-        );
+        foreach ($productConcreteMeasurementUnitStorageEntities as $productConcreteMeasurementUnitStorageEntity) {
+            $this->productMeasurementUnitStorageEntityManager->deleteProductConcreteMeasurementUnitStorage(
+                $productConcreteMeasurementUnitStorageEntity->getIdProductConcreteMeasurementUnitStorage()
+            );
+        }
     }
 
     /**
@@ -130,7 +128,7 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
      *
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer
      */
-    protected function getStorageEntityData($idProduct)
+    protected function getStorageEntityData(int $idProduct): ProductConcreteMeasurementUnitStorageTransfer
     {
         return $this->productConcreteMeasurementUnitStorageReader->getProductConcreteMeasurementUnitStorageByIdProduct($idProduct);
     }
@@ -140,7 +138,7 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
      *
      * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[] Keys are product IDs
      */
-    protected function getMappedProductConcreteMeasurementUnitStorageEntities(array $productIds)
+    protected function getMappedProductConcreteMeasurementUnitStorageEntities(array $productIds): array
     {
         $productConcreteMeasurementUnitStorageEntities = $this->productMeasurementUnitStorageRepository
             ->getProductConcreteMeasurementUnitStorageEntities($productIds);
@@ -158,7 +156,7 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
      *
      * @return string
      */
-    protected function getProductMeasurementUnitCodeById($idProductMeasurementUnit)
+    protected function getProductMeasurementUnitCodeById(int $idProductMeasurementUnit): string
     {
         if (!static::$productMeasurementUnitCodeBuffer) {
             $this->loadProductMeasurementUnitCodes();
@@ -170,8 +168,8 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
     /**
      * @return void
      */
-    protected function loadProductMeasurementUnitCodes()
+    protected function loadProductMeasurementUnitCodes(): void
     {
-        static::$productMeasurementUnitCodeBuffer = $this->productMeasurementUnitRepository->getProductMeasurementUnitCodeMap();
+        static::$productMeasurementUnitCodeBuffer = $this->productMeasurementUnitFacade->getProductMeasurementUnitCodeMap();
     }
 }

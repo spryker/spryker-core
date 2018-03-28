@@ -8,14 +8,17 @@
 namespace Spryker\Client\ProductQuantityStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageInterface;
+use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReader;
+use Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface;
 
 class ProductQuantityStorageFactory extends AbstractFactory
 {
     /**
      * @return \Spryker\Client\ProductQuantityStorage\Storage\ProductQuantityStorageReaderInterface
      */
-    public function createProductQuantityStorageReader()
+    public function createProductQuantityStorageReader(): ProductQuantityStorageReaderInterface
     {
         return new ProductQuantityStorageReader(
             $this->getStorage(),
@@ -26,15 +29,15 @@ class ProductQuantityStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageInterface
      */
-    protected function getStorage()
+    protected function getStorage(): ProductQuantityStorageToStorageInterface
     {
         return $this->getProvidedDependency(ProductQuantityStorageDependencyProvider::CLIENT_STORAGE);
     }
 
     /**
-     * @return \Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceBridge
+     * @return \Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceInterface
      */
-    protected function getSynchronizationService()
+    protected function getSynchronizationService(): ProductQuantityStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ProductQuantityStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }

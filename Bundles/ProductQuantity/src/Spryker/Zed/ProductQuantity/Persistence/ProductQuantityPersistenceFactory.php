@@ -18,7 +18,7 @@ class ProductQuantityPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\ProductQuantity\Persistence\SpyProductQuantityQuery
      */
-    public function createProductQuantityQuery()
+    public function createProductQuantityQuery(): SpyProductQuantityQuery
     {
         return SpyProductQuantityQuery::create();
     }

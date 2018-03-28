@@ -7,57 +7,48 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Persistence;
 
+use Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer;
+use Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer;
+
 interface ProductMeasurementUnitRepositoryInterface
 {
     /**
-     * @api
-     *
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer
      */
-    public function getProductMeasurementBaseUnitEntityByIdProduct($idProduct);
+    public function getProductMeasurementBaseUnitEntityByIdProduct(int $idProduct): SpyProductMeasurementBaseUnitEntityTransfer;
 
     /**
-     * @api
-     *
      * @param int $idProductMeasurementSalesUnit
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer
      */
-    public function getProductMeasurementSalesUnitEntity($idProductMeasurementSalesUnit);
+    public function getProductMeasurementSalesUnitEntity(int $idProductMeasurementSalesUnit): SpyProductMeasurementSalesUnitEntityTransfer;
 
     /**
-     * @api
-     *
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
      */
-    public function getProductMeasurementSalesUnitEntitiesByIdProduct($idProduct);
+    public function getProductMeasurementSalesUnitEntitiesByIdProduct(int $idProduct): array;
 
     /**
-     * @api
-     *
      * @param int $idProductMeasurementBaseUnit
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer
      */
-    public function getProductMeasurementBaseUnitEntity($idProductMeasurementBaseUnit);
+    public function getProductMeasurementBaseUnitEntity(int $idProductMeasurementBaseUnit): SpyProductMeasurementBaseUnitEntityTransfer;
 
     /**
-     * @api
-     *
      * @param int[] $productMeasurementUnitIds
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
      */
-    public function getProductMeasurementUnitEntities(array $productMeasurementUnitIds);
+    public function getProductMeasurementUnitEntities(array $productMeasurementUnitIds): array;
 
     /**
-     * @api
-     *
      * @return string[] Keys are product measurement unit IDs, values are product measurement unit codes.
      */
-    public function getProductMeasurementUnitCodeMap();
+    public function getProductMeasurementUnitCodeMap(): array;
 }

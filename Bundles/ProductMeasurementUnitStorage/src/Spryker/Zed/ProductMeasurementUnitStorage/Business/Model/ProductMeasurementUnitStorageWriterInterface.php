@@ -14,5 +14,5 @@ interface ProductMeasurementUnitStorageWriterInterface
      *
      * @return void
      */
-    public function publish(array $productMeasurementUnitIds);
+    public function publish(array $productMeasurementUnitIds): void;
 }

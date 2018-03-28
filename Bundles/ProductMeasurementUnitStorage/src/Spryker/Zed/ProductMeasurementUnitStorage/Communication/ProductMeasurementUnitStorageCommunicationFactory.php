@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade\ProductMeasurementUnitStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageDependencyProvider;
 
 /**
@@ -18,7 +19,7 @@ class ProductMeasurementUnitStorageCommunicationFactory extends AbstractCommunic
     /**
      * @return \Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade\ProductMeasurementUnitStorageToEventBehaviorFacadeInterface
      */
-    public function getEventBehaviorFacade()
+    public function getEventBehaviorFacade(): ProductMeasurementUnitStorageToEventBehaviorFacadeInterface
     {
         return $this->getProvidedDependency(ProductMeasurementUnitStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }

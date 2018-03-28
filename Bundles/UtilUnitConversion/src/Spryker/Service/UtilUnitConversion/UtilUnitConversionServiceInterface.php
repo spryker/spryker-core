@@ -10,13 +10,16 @@ interface UtilUnitConversionServiceInterface
     /**
      * Specification:
      * - Retrieves the exchange ratio between the provided measurement unit codes.
+     * - Throws exception if no exchange ratio was found for the given codes.
      *
      * @api
      *
      * @param string $fromCode
      * @param string $toCode
      *
-     * @return float|null
+     * @throws \Spryker\Service\UtilUnitConversion\Exception\InvalidMeasurementUnitExchangeException
+     *
+     * @return float
      */
-    public function findMeasurementUnitExchangeRatio($fromCode, $toCode);
+    public function getMeasurementUnitExchangeRatio(string $fromCode, string $toCode): float;
 }

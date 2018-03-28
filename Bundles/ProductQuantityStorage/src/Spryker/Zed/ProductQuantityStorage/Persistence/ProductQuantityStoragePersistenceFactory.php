@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductQuantityStorage\Persistence;
 use Orm\Zed\ProductQuantityStorage\Persistence\SpyProductQuantityStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductQuantityStorage\Persistence\Propel\Mapper\ProductQuantityStorageMapper;
+use Spryker\Zed\ProductQuantityStorage\Persistence\Propel\Mapper\ProductQuantityStorageMapperInterface;
 
 /**
  * @method \Spryker\Zed\ProductQuantityStorage\ProductQuantityStorageConfig getConfig()
@@ -19,7 +20,7 @@ class ProductQuantityStoragePersistenceFactory extends AbstractPersistenceFactor
     /**
      * @return \Orm\Zed\ProductQuantityStorage\Persistence\SpyProductQuantityStorageQuery
      */
-    public function createProductQuantityStorageQuery()
+    public function createProductQuantityStorageQuery(): SpyProductQuantityStorageQuery
     {
         return SpyProductQuantityStorageQuery::create();
     }
@@ -27,7 +28,7 @@ class ProductQuantityStoragePersistenceFactory extends AbstractPersistenceFactor
     /**
      * @return \Spryker\Zed\ProductQuantityStorage\Persistence\Propel\Mapper\ProductQuantityStorageMapperInterface
      */
-    public function createProductQuantityStorageMapper()
+    public function createProductQuantityStorageMapper(): ProductQuantityStorageMapperInterface
     {
         return new ProductQuantityStorageMapper();
     }

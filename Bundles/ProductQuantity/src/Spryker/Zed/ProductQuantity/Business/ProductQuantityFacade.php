@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductQuantity\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -24,7 +25,7 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function validateItemAddProductQuantityRestrictions(CartChangeTransfer $cartChangeTransfer)
+    public function validateItemAddProductQuantityRestrictions(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         return $this->getFactory()
             ->createProductQuantityRestrictionValidator()
@@ -40,7 +41,7 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
      */
-    public function getProductQuantityEntitiesByProductIds(array $productIds)
+    public function getProductQuantityEntitiesByProductIds(array $productIds): array
     {
         return $this->getFactory()
             ->createProductQuantityReader()

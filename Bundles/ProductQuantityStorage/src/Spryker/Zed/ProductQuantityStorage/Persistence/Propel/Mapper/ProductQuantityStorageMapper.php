@@ -21,7 +21,7 @@ class ProductQuantityStorageMapper implements ProductQuantityStorageMapperInterf
     public function hydrateSpyProductQuantityStorageEntity(
         SpyProductQuantityStorage $spyProductQuantityStorageEntity,
         SpyProductQuantityStorageEntityTransfer $productQuantityStorageEntity
-    ) {
+    ): SpyProductQuantityStorage {
         $spyProductQuantityStorageEntity->fromArray($productQuantityStorageEntity->toArray(true));
 
         return $spyProductQuantityStorageEntity;

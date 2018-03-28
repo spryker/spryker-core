@@ -14,5 +14,5 @@ interface ProductQuantityStorageWriterInterface
      *
      * @return void
      */
-    public function publish(array $productIds);
+    public function publish(array $productIds): void;
 }

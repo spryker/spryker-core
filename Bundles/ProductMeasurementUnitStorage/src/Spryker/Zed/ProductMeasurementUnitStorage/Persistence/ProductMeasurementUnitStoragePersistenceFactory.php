@@ -11,7 +11,9 @@ use Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductConcreteMeasurem
 use Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductMeasurementUnitStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductMeasurementUnitStorage\Persistence\Propel\Mapper\ProductConcreteMeasurementUnitStorageMapper;
+use Spryker\Zed\ProductMeasurementUnitStorage\Persistence\Propel\Mapper\ProductConcreteMeasurementUnitStorageMapperInterface;
 use Spryker\Zed\ProductMeasurementUnitStorage\Persistence\Propel\Mapper\ProductMeasurementUnitStorageMapper;
+use Spryker\Zed\ProductMeasurementUnitStorage\Persistence\Propel\Mapper\ProductMeasurementUnitStorageMapperInterface;
 
 /**
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig getConfig()
@@ -21,7 +23,7 @@ class ProductMeasurementUnitStoragePersistenceFactory extends AbstractPersistenc
     /**
      * @return \Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductMeasurementUnitStorageQuery
      */
-    public function createProductMeasurementUnitStorageQuery()
+    public function createProductMeasurementUnitStorageQuery(): SpyProductMeasurementUnitStorageQuery
     {
         return SpyProductMeasurementUnitStorageQuery::create();
     }
@@ -29,7 +31,7 @@ class ProductMeasurementUnitStoragePersistenceFactory extends AbstractPersistenc
     /**
      * @return \Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductConcreteMeasurementUnitStorageQuery
      */
-    public function createProductConcreteMeasurementUnitStorageQuery()
+    public function createProductConcreteMeasurementUnitStorageQuery(): SpyProductConcreteMeasurementUnitStorageQuery
     {
         return SpyProductConcreteMeasurementUnitStorageQuery::create();
     }
@@ -37,7 +39,7 @@ class ProductMeasurementUnitStoragePersistenceFactory extends AbstractPersistenc
     /**
      * @return \Spryker\Zed\ProductMeasurementUnitStorage\Persistence\Propel\Mapper\ProductMeasurementUnitStorageMapperInterface
      */
-    public function createProductMeasurementUnitStorageMapper()
+    public function createProductMeasurementUnitStorageMapper(): ProductMeasurementUnitStorageMapperInterface
     {
         return new ProductMeasurementUnitStorageMapper();
     }
@@ -45,7 +47,7 @@ class ProductMeasurementUnitStoragePersistenceFactory extends AbstractPersistenc
     /**
      * @return \Spryker\Zed\ProductMeasurementUnitStorage\Persistence\Propel\Mapper\ProductConcreteMeasurementUnitStorageMapperInterface
      */
-    public function createProductConcreteMeasurementUnitStorageMapper()
+    public function createProductConcreteMeasurementUnitStorageMapper(): ProductConcreteMeasurementUnitStorageMapperInterface
     {
         return new ProductConcreteMeasurementUnitStorageMapper();
     }

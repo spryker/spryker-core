@@ -8,6 +8,7 @@
 namespace SprykerTest\Service\UtilUnitConversion;
 
 use Codeception\Test\Unit;
+use Spryker\Service\UtilUnitConversion\Exception\InvalidMeasurementUnitExchangeException;
 
 /**
  * Auto-generated group annotations
@@ -32,7 +33,7 @@ class UtilUnitConversionServiceTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -48,10 +49,10 @@ class UtilUnitConversionServiceTest extends Unit
      *
      * @return void
      */
-    public function testGetMeasurementUnitExchangeRatioRetrievesValue($fromCode, $toCode, $expectedResult)
+    public function testGetMeasurementUnitExchangeRatioRetrievesValue(string $fromCode, string $toCode, float $expectedResult): void
     {
         // Act
-        $actualResult = $this->utilUnitConversionService->findMeasurementUnitExchangeRatio($fromCode, $toCode);
+        $actualResult = $this->utilUnitConversionService->getMeasurementUnitExchangeRatio($fromCode, $toCode);
 
         // Assert
         $this->assertSame($expectedResult, $actualResult);
@@ -60,11 +61,26 @@ class UtilUnitConversionServiceTest extends Unit
     /**
      * @return array
      */
-    public function getExampleMeasurementUnitConversions()
+    public function getExampleMeasurementUnitConversions(): array
     {
         return [
             ["METR", "CMET", 100],
             ["CMET", "METR", 0.01],
         ];
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMeasurementUnitExchangeRatioThrowsExceptionOnUndefinedExchangeRequest(): void
+    {
+        // Assign
+        $unknownCode = "UNKNOWN";
+
+        // Assert
+        $this->expectException(InvalidMeasurementUnitExchangeException::class);
+
+        // Act
+        $this->utilUnitConversionService->getMeasurementUnitExchangeRatio($unknownCode, $unknownCode);
     }
 }

@@ -42,7 +42,7 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer|null
      */
-    public function findProductMeasurementUnitStorage($idProductMeasurementUnit)
+    public function findProductMeasurementUnitStorage(int $idProductMeasurementUnit): ?ProductMeasurementUnitStorageTransfer
     {
         $key = $this->generateKey($idProductMeasurementUnit);
         $productMeasurementUnitStorageData = $this->storageClient->get($key);
@@ -59,7 +59,7 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer
      */
-    protected function mapToProductMeasurementUnitStorage(array $productMeasurementUnitStorageData)
+    protected function mapToProductMeasurementUnitStorage(array $productMeasurementUnitStorageData): ProductMeasurementUnitStorageTransfer
     {
         return (new ProductMeasurementUnitStorageTransfer())
             ->fromArray($productMeasurementUnitStorageData, true);
@@ -70,7 +70,7 @@ class ProductMeasurementUnitStorageReader implements ProductMeasurementUnitStora
      *
      * @return string
      */
-    protected function generateKey($idProductMeasurementUnit)
+    protected function generateKey(int $idProductMeasurementUnit): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
             ->setReference($idProductMeasurementUnit);

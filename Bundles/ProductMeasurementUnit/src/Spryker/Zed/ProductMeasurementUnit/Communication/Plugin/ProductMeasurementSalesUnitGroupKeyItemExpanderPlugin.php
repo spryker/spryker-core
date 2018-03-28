@@ -26,7 +26,7 @@ class ProductMeasurementSalesUnitGroupKeyItemExpanderPlugin extends AbstractPlug
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $cartChangeTransfer)
+    public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $itemTransfer->setGroupKey(

@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductQuantityStorage;
 
+use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
+
 interface ProductQuantityStorageClientInterface
 {
     /**
@@ -20,5 +22,5 @@ interface ProductQuantityStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer|null
      */
-    public function getProductQuantityStorage($idProduct);
+    public function findProductQuantityStorage(int $idProduct): ?ProductQuantityStorageTransfer;
 }

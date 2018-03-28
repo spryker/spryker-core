@@ -16,7 +16,7 @@ interface ProductMeasurementSalesUnitValueInterface
      *
      * @return int
      */
-    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer);
+    public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer): int;
 
     /**
      * @param int $availabilityValue
@@ -25,5 +25,5 @@ interface ProductMeasurementSalesUnitValueInterface
      *
      * @return bool
      */
-    public function isIntegerSalesUnitValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision);
+    public function isIntegerSalesUnitValue(int $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): bool;
 }

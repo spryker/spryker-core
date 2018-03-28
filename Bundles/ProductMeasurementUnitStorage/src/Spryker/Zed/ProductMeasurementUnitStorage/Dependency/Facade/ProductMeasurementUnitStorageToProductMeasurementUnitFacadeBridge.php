@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer;
+
 class ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge implements ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface
 {
     /**
@@ -27,7 +29,7 @@ class ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge implemen
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer
      */
-    public function getBaseUnitByIdProduct($idProduct)
+    public function getBaseUnitByIdProduct(int $idProduct): SpyProductMeasurementBaseUnitEntityTransfer
     {
         return $this->productMeasurementUnitFacade->getBaseUnitByIdProduct($idProduct);
     }
@@ -37,8 +39,26 @@ class ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge implemen
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
      */
-    public function getSalesUnitsByIdProduct($idProduct)
+    public function getSalesUnitsByIdProduct(int $idProduct): array
     {
         return $this->productMeasurementUnitFacade->getSalesUnitsByIdProduct($idProduct);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getProductMeasurementUnitCodeMap(): array
+    {
+        return $this->productMeasurementUnitFacade->getProductMeasurementUnitCodeMap();
+    }
+
+    /**
+     * @param int[] $productMeasurementUnitIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
+     */
+    public function getProductMeasurementUnitEntities(array $productMeasurementUnitIds): array
+    {
+        return $this->productMeasurementUnitFacade->getProductMeasurementUnitEntities($productMeasurementUnitIds);
     }
 }

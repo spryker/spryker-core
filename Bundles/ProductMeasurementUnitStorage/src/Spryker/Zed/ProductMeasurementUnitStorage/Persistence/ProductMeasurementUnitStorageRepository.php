@@ -19,7 +19,7 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
      */
-    public function getProductMeasurementUnitStorageEntities(array $productMeasurementUnitIds)
+    public function getProductMeasurementUnitStorageEntities(array $productMeasurementUnitIds): array
     {
         $query = $this->getFactory()
             ->createProductMeasurementUnitStorageQuery()
@@ -33,7 +33,7 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
      *
      * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
      */
-    public function getProductConcreteMeasurementUnitStorageEntities(array $productIds)
+    public function getProductConcreteMeasurementUnitStorageEntities(array $productIds): array
     {
         $query = $this->getFactory()
             ->createProductConcreteMeasurementUnitStorageQuery()

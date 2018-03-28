@@ -43,7 +43,7 @@ class QuantityProductMeasurementSalesUnitValueValidator implements QuantityProdu
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function validate(CartChangeTransfer $cartChangeTransfer)
+    public function validate(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())
             ->setIsSuccess(true);
@@ -68,7 +68,7 @@ class QuantityProductMeasurementSalesUnitValueValidator implements QuantityProdu
      *
      * @return bool
      */
-    protected function isValidItemTransfer(ItemTransfer $itemTransfer)
+    protected function isValidItemTransfer(ItemTransfer $itemTransfer): bool
     {
         $itemTransfer->requireQuantity();
         $itemTransfer->getQuantitySalesUnit()->requireIdProductMeasurementSalesUnit();
@@ -94,7 +94,7 @@ class QuantityProductMeasurementSalesUnitValueValidator implements QuantityProdu
      *
      * @return void
      */
-    protected function addInvalidSalesUnitValueViolation(CartPreCheckResponseTransfer $cartPreCheckResponse, $sku)
+    protected function addInvalidSalesUnitValueViolation(CartPreCheckResponseTransfer $cartPreCheckResponse, string $sku): void
     {
         $cartPreCheckResponse
             ->setIsSuccess(false)

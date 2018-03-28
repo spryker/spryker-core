@@ -15,7 +15,7 @@
         <property name="fkProductMeasurementBaseUnit" type="int" />
         <property name="conversion" type="float" />
         <property name="precision" type="int" />
-        <property name="isDisplay" type="bool" />
+        <property name="isDisplayed" type="bool" />
         <property name="isDefault" type="bool" />
         <property name="productMeasurementUnit" type="ProductMeasurementUnit" />
         <property name="value" type="int" />

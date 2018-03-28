@@ -15,15 +15,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductQuantityStorageRepository extends AbstractRepository implements ProductQuantityStorageRepositoryInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
      */
-    public function getProductQuantityStorageEntitiesByProductIds(array $productIds)
+    public function getProductQuantityStorageEntitiesByProductIds(array $productIds): array
     {
         if (!$productIds) {
             return [];

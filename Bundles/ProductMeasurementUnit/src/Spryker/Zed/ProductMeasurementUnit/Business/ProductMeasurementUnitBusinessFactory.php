@@ -9,10 +9,16 @@ namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementBaseUnit\ProductMeasurementBaseUnitReader;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementBaseUnit\ProductMeasurementBaseUnitReaderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitGroupKeyGenerator;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitGroupKeyGeneratorInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitReader;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitReaderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitValue;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitValueInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\QuantityProductMeasurementSalesUnitValueValidator;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\QuantityProductMeasurementSalesUnitValueValidatorInterface;
+use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilUnitConversionServiceInterface;
 use Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitDependencyProvider;
 
 /**
@@ -24,7 +30,7 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementBaseUnit\ProductMeasurementBaseUnitReaderInterface
      */
-    public function createProductMeasurementBaseUnitReader()
+    public function createProductMeasurementBaseUnitReader(): ProductMeasurementBaseUnitReaderInterface
     {
         return new ProductMeasurementBaseUnitReader($this->getRepository());
     }
@@ -32,7 +38,7 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitValueInterface
      */
-    public function createProductMeasurementSalesUnitValue()
+    public function createProductMeasurementSalesUnitValue(): ProductMeasurementSalesUnitValueInterface
     {
         return new ProductMeasurementSalesUnitValue();
     }
@@ -40,7 +46,7 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitReaderInterface
      */
-    public function createProductMeasurementSalesUnitReader()
+    public function createProductMeasurementSalesUnitReader(): ProductMeasurementSalesUnitReaderInterface
     {
         return new ProductMeasurementSalesUnitReader(
             $this->getRepository(),
@@ -51,7 +57,7 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitGroupKeyGeneratorInterface
      */
-    public function createProductMeasurementSalesUnitItemGroupKeyGenerator()
+    public function createProductMeasurementSalesUnitItemGroupKeyGenerator(): ProductMeasurementSalesUnitGroupKeyGeneratorInterface
     {
         return new ProductMeasurementSalesUnitGroupKeyGenerator();
     }
@@ -59,7 +65,7 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\QuantityProductMeasurementSalesUnitValueValidatorInterface
      */
-    public function createQuantityProductMeasurementSalesUnitValueValidator()
+    public function createQuantityProductMeasurementSalesUnitValueValidator(): QuantityProductMeasurementSalesUnitValueValidatorInterface
     {
         return new QuantityProductMeasurementSalesUnitValueValidator(
             $this->createProductMeasurementSalesUnitValue(),
@@ -70,7 +76,7 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilUnitConversionServiceInterface
      */
-    public function getUtilUnitConversionService()
+    public function getUtilUnitConversionService(): ProductMeasurementUnitToUtilUnitConversionServiceInterface
     {
         return $this->getProvidedDependency(ProductMeasurementUnitDependencyProvider::SERVICE_UTIL_UNIT_CONVERSION);
     }

@@ -21,5 +21,5 @@ interface ProductConcreteMeasurementUnitStorageMapperInterface
     public function hydrateSpyProductMeasurementUnitStorageEntity(
         SpyProductConcreteMeasurementUnitStorage $spyProductConcreteMeasurementUnitStorageEntity,
         SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntity
-    );
+    ): SpyProductConcreteMeasurementUnitStorage;
 }

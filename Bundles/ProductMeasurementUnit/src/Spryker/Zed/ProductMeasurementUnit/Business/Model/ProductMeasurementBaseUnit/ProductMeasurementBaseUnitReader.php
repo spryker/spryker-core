@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementBaseUnit;
 
+use Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer;
 use Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface;
 
 class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitReaderInterface
@@ -29,7 +30,7 @@ class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitRead
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer
      */
-    public function getProductMeasurementBaseUnitEntityByIdProduct($idProduct)
+    public function getProductMeasurementBaseUnitEntityByIdProduct(int $idProduct): SpyProductMeasurementBaseUnitEntityTransfer
     {
         return $this->productMeasurementUnitRepository->getProductMeasurementBaseUnitEntityByIdProduct($idProduct);
     }

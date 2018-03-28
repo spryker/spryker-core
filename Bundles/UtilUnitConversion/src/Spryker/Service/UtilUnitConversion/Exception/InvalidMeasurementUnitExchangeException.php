@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductMeasurementUnit\Business\Exception;
+namespace Spryker\Service\UtilUnitConversion\Exception;
 
 use Exception;
 
-class InvalidProductMeasurementUnitExchangeException extends Exception
+class InvalidMeasurementUnitExchangeException extends Exception
 {
 }

@@ -42,7 +42,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
      *
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer|null
      */
-    public function findProductConcreteMeasurementUnitStorage($idProduct)
+    public function findProductConcreteMeasurementUnitStorage(int $idProduct): ?ProductConcreteMeasurementUnitStorageTransfer
     {
         $key = $this->generateKey($idProduct);
         $productConcreteMeasurementUnitStorageData = $this->storageClient->get($key);
@@ -59,7 +59,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
      *
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer
      */
-    protected function mapToProductConcreteMeasurementUnitStorage(array $productConcreteMeasurementUnitStorageData)
+    protected function mapToProductConcreteMeasurementUnitStorage(array $productConcreteMeasurementUnitStorageData): ProductConcreteMeasurementUnitStorageTransfer
     {
         return (new ProductConcreteMeasurementUnitStorageTransfer())
             ->fromArray($productConcreteMeasurementUnitStorageData, true);
@@ -70,7 +70,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
      *
      * @return string
      */
-    protected function generateKey($idProduct)
+    protected function generateKey(int $idProduct): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
             ->setReference($idProduct);

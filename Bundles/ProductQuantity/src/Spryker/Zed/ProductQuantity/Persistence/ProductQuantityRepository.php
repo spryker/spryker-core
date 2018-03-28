@@ -15,15 +15,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductQuantityRepository extends AbstractRepository implements ProductQuantityRepositoryInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * @uses SpyProductQuery
      *
      * @param string[] $productSkus
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
      */
-    public function getProductQuantityEntitiesByProductSku(array $productSkus)
+    public function getProductQuantityEntitiesByProductSku(array $productSkus): array
     {
         if (!$productSkus) {
             return [];
@@ -44,7 +42,7 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
      */
-    public function getProductQuantityEntitiesByProductIds(array $productIds)
+    public function getProductQuantityEntitiesByProductIds(array $productIds): array
     {
         if (!$productIds) {
             return [];

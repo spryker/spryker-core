@@ -17,26 +17,26 @@ interface ProductMeasurementUnitStorageEntityManagerInterface
      *
      * @return void
      */
-    public function saveProductMeasurementUnitStorageEntity(SpyProductMeasurementUnitStorageEntityTransfer $productMeasurementUnitStorageEntity);
+    public function saveProductMeasurementUnitStorageEntity(SpyProductMeasurementUnitStorageEntityTransfer $productMeasurementUnitStorageEntity): void;
 
     /**
      * @param int $idProductMeasurementUnitStorage
      *
      * @return void
      */
-    public function deleteProductMeasurementUnitStorage($idProductMeasurementUnitStorage);
+    public function deleteProductMeasurementUnitStorage(int $idProductMeasurementUnitStorage): void;
 
     /**
      * @param \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntity
      *
      * @return void
      */
-    public function saveProductConcreteMeasurementUnitStorageEntity(SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntity);
+    public function saveProductConcreteMeasurementUnitStorageEntity(SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntity): void;
 
     /**
      * @param int $idProduct
      *
      * @return void
      */
-    public function deleteProductConcreteMeasurementUnitStorage($idProduct);
+    public function deleteProductConcreteMeasurementUnitStorage(int $idProduct): void;
 }

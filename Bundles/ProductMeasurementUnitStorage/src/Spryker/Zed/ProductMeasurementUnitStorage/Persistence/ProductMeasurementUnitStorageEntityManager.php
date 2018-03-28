@@ -21,7 +21,7 @@ class ProductMeasurementUnitStorageEntityManager extends AbstractEntityManager i
      *
      * @return void
      */
-    public function saveProductMeasurementUnitStorageEntity(SpyProductMeasurementUnitStorageEntityTransfer $productMeasurementUnitStorageEntity)
+    public function saveProductMeasurementUnitStorageEntity(SpyProductMeasurementUnitStorageEntityTransfer $productMeasurementUnitStorageEntity): void
     {
         $productMeasurementUnitStorageEntity->requireFkProductMeasurementUnit();
 
@@ -41,12 +41,14 @@ class ProductMeasurementUnitStorageEntityManager extends AbstractEntityManager i
      *
      * @return void
      */
-    public function deleteProductMeasurementUnitStorage($idProductMeasurementUnitStorage)
+    public function deleteProductMeasurementUnitStorage(int $idProductMeasurementUnitStorage): void
     {
-        $this->getFactory()
+        $spyProductMeasurementUnitStorageEntity = $this->getFactory()
             ->createProductMeasurementUnitStorageQuery()
             ->filterByIdProductMeasurementUnitStorage($idProductMeasurementUnitStorage)
-            ->delete();
+            ->findOne();
+
+        $spyProductMeasurementUnitStorageEntity->delete();
     }
 
     /**
@@ -54,7 +56,7 @@ class ProductMeasurementUnitStorageEntityManager extends AbstractEntityManager i
      *
      * @return void
      */
-    public function saveProductConcreteMeasurementUnitStorageEntity(SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntity)
+    public function saveProductConcreteMeasurementUnitStorageEntity(SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntity): void
     {
         $productConcreteMeasurementUnitStorageEntity->requireFkProduct();
 
@@ -77,11 +79,13 @@ class ProductMeasurementUnitStorageEntityManager extends AbstractEntityManager i
      *
      * @return void
      */
-    public function deleteProductConcreteMeasurementUnitStorage($idProduct)
+    public function deleteProductConcreteMeasurementUnitStorage(int $idProduct): void
     {
-        $this->getFactory()
+        $spyProductConcreteMeasurementUnitStorageEntity = $this->getFactory()
             ->createProductConcreteMeasurementUnitStorageQuery()
             ->filterByFkProduct($idProduct)
-            ->delete();
+            ->findOne();
+
+        $spyProductConcreteMeasurementUnitStorageEntity->delete();
     }
 }

@@ -13,7 +13,9 @@ interface MeasurementUnitConverterInterface
      * @param string $fromCode
      * @param string $toCode
      *
-     * @return float|null
+     * @throws \Spryker\Service\UtilUnitConversion\Exception\InvalidMeasurementUnitExchangeException
+     *
+     * @return float
      */
-    public function findExchangeRatio($fromCode, $toCode);
+    public function getExchangeRatio(string $fromCode, string $toCode): float;
 }

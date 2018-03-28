@@ -20,7 +20,7 @@ class ProductMeasurementUnitPersistenceFactory extends AbstractPersistenceFactor
     /**
      * @return \Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnitQuery
      */
-    public function createProductMeasurementSalesUnitQuery()
+    public function createProductMeasurementSalesUnitQuery(): SpyProductMeasurementSalesUnitQuery
     {
         return SpyProductMeasurementSalesUnitQuery::create();
     }
@@ -28,7 +28,7 @@ class ProductMeasurementUnitPersistenceFactory extends AbstractPersistenceFactor
     /**
      * @return \Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementBaseUnitQuery
      */
-    public function createProductMeasurementBaseUnitQuery()
+    public function createProductMeasurementBaseUnitQuery(): SpyProductMeasurementBaseUnitQuery
     {
         return SpyProductMeasurementBaseUnitQuery::create();
     }
@@ -36,7 +36,7 @@ class ProductMeasurementUnitPersistenceFactory extends AbstractPersistenceFactor
     /**
      * @return \Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnitQuery
      */
-    public function createProductMeasurementUnitQuery()
+    public function createProductMeasurementUnitQuery(): SpyProductMeasurementUnitQuery
     {
         return SpyProductMeasurementUnitQuery::create();
     }

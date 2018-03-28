@@ -24,7 +24,7 @@ class ProductQuantityStorageEntityManager extends AbstractEntityManager implemen
      *
      * @return void
      */
-    public function deleteProductQuantityStorage($idProductQuantityStorage)
+    public function deleteProductQuantityStorage(int $idProductQuantityStorage): void
     {
         $spyProductQuantityStorageEntity = $this->getFactory()
             ->createProductQuantityStorageQuery()
@@ -41,7 +41,7 @@ class ProductQuantityStorageEntityManager extends AbstractEntityManager implemen
      *
      * @return void
      */
-    public function saveProductQuantityStorageEntity(SpyProductQuantityStorageEntityTransfer $productQuantityStorageEntity)
+    public function saveProductQuantityStorageEntity(SpyProductQuantityStorageEntityTransfer $productQuantityStorageEntity): void
     {
         $productQuantityStorageEntity->requireFkProduct();
 

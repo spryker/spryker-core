@@ -22,7 +22,7 @@ class ProductQuantityStorageDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
@@ -36,7 +36,7 @@ class ProductQuantityStorageDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
 
@@ -50,7 +50,7 @@ class ProductQuantityStorageDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addEventBehaviorFacade(Container $container)
+    protected function addEventBehaviorFacade(Container $container): Container
     {
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new ProductQuantityStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
@@ -64,7 +64,7 @@ class ProductQuantityStorageDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductQuantityFacade(Container $container)
+    protected function addProductQuantityFacade(Container $container): Container
     {
         $container[static::FACADE_PRODUCT_QUANTITY] = function (Container $container) {
             return new ProductQuantityStorageToProductQuantityFacadeBridge($container->getLocator()->productQuantity()->facade());
@@ -78,7 +78,7 @@ class ProductQuantityStorageDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function providePersistenceLayerDependencies(Container $container)
+    public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::providePersistenceLayerDependencies($container);
 
