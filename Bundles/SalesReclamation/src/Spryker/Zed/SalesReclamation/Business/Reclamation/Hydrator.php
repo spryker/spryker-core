@@ -44,15 +44,19 @@ class Hydrator implements HydratorInterface
     /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationTransfer
+     * @return \Generated\Shared\Transfer\ReclamationTransfer|null
      */
-    public function hydrateByIdReclamation(ReclamationTransfer $reclamationTransfer): ReclamationTransfer
+    public function hydrateByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer
     {
         $reclamationTransfer->requireIdSalesReclamation();
 
         $spyReclamation = $this->queryContainer
             ->queryReclamations()
             ->findOneByIdSalesReclamation($reclamationTransfer->getIdSalesReclamation());
+
+        if (!$spyReclamation) {
+            return null;
+        }
 
         $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($spyReclamation->getFkSalesOrder());
         $reclamationTransfer->setStatus($spyReclamation->getState());

@@ -37,6 +37,12 @@ class DetailController extends AbstractController
         $reclamationTransfer = $this->getFacade()
             ->hydrateReclamationByIdReclamation($reclamationTransfer);
 
+        if (!$reclamationTransfer) {
+            $this->addErrorMessage(sprintf('No reclamation with given id %s', $idReclamation));
+
+            return $this->redirectResponse('/sales-reclamation/');
+        }
+
         return $this->viewResponse([
             'reclamation' => $reclamationTransfer,
         ]);
