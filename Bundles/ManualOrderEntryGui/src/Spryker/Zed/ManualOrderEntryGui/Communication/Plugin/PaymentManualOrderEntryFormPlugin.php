@@ -25,7 +25,7 @@ class PaymentManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     protected $paymentFacade;
 
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginInterface[]
+     * @var \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface[]
      */
     protected $subFormPlugins;
 
@@ -90,7 +90,9 @@ class PaymentManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
             ->setPayments($quoteTransfer->getPayments())
             ->setPayment($quoteTransfer->getPayment());
 
-        $this->paymentFacade->recalculatePayments($calculableObjectTransfer);
+        if (count($calculableObjectTransfer->getItems())) {
+            $this->paymentFacade->recalculatePayments($calculableObjectTransfer);
+        }
 
         return $quoteTransfer;
     }

@@ -12,12 +12,12 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Payment\PaymentType;
 class PaymentDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginInterface[]
+     * @var \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface[]
      */
     protected $subFormPlugins;
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginInterface[] $subFormPlugins
+     * @param \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface[] $subFormPlugins
      */
     public function __construct($subFormPlugins)
     {

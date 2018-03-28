@@ -10,7 +10,7 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Payment;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginInterface;
+use Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -117,7 +117,7 @@ class PaymentType extends AbstractType
     }
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginInterface[] $paymentSubFormPlugins
+     * @param \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface[] $paymentSubFormPlugins
      *
      * @return array
      */
@@ -156,11 +156,11 @@ class PaymentType extends AbstractType
     }
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginInterface $paymentMethodSubForm
+     * @param \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface $paymentMethodSubForm
      *
      * @return \Spryker\Zed\Kernel\Communication\Form\AbstractType
      */
-    protected function createSubForm(SubFormPluginInterface $paymentMethodSubForm)
+    protected function createSubForm(PaymentSubFormPluginInterface $paymentMethodSubForm)
     {
         return $paymentMethodSubForm->createSubForm();
     }

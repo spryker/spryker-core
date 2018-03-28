@@ -19,7 +19,7 @@ class DummyPaymentCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\DummyPayment\Communication\Form\InvoiceSubForm
      */
-    public function createInvoiceForm()
+    public function createInvoiceForm(): InvoiceSubForm
     {
         return new InvoiceSubForm();
     }
@@ -27,7 +27,7 @@ class DummyPaymentCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\DummyPayment\Communication\Form\DataProvider\DummyPaymentInvoiceFormDataProvider
      */
-    public function createInvoiceFormDataProvider()
+    public function createInvoiceFormDataProvider(): DummyPaymentInvoiceFormDataProvider
     {
         return new DummyPaymentInvoiceFormDataProvider();
     }

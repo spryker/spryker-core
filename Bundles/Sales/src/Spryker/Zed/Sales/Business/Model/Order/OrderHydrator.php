@@ -355,15 +355,19 @@ class OrderHydrator implements OrderHydratorInterface
     }
 
     /**
-     * @param int $customerReference
+     * @param int|null $customerReference
      *
      * @return int
      */
     protected function getTotalCustomerOrderCount($customerReference)
     {
+        if ($customerReference === null) {
+            return 0;
+        }
+
         $totalOrderCount = $this->queryContainer
             ->querySalesOrder()
-            ->findByCustomerReference($customerReference)
+            ->filterByCustomerReference($customerReference)
             ->count();
 
         return $totalOrderCount;
