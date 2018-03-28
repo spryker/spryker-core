@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CategoryDataImport\Business;
 
 use Spryker\Zed\CategoryDataImport\Business\Model\CategoryWriterStep;
-use Spryker\Zed\CategoryDataImport\Business\Model\Repository\CategoryRepository;
+use Spryker\Zed\CategoryDataImport\Business\Model\Reader\CategoryReader;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 
 /**
@@ -41,10 +41,10 @@ class CategoryDataImportBusinessFactory extends DataImportBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryDataImport\Business\Model\Repository\CategoryRepositoryInterface
+     * @return \Spryker\Zed\CategoryDataImport\Business\Model\Reader\CategoryReaderInterface
      */
     protected function createCategoryRepository()
     {
-        return new CategoryRepository();
+        return new CategoryReader();
     }
 }

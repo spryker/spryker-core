@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryDataImport\Business\Model\Repository;
+namespace Spryker\Zed\CategoryDataImport\Business\Model\Reader;
 
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 
-interface CategoryRepositoryInterface
+interface CategoryReaderInterface
 {
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity

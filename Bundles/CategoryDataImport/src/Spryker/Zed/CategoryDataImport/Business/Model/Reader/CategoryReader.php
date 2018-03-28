@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryDataImport\Business\Model\Repository;
+namespace Spryker\Zed\CategoryDataImport\Business\Model\Reader;
 
 use ArrayObject;
 use Orm\Zed\Category\Persistence\SpyCategory;
@@ -15,7 +15,7 @@ use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\CategoryDataImport\Business\Exception\CategoryByKeyNotFoundException;
 
-class CategoryRepository implements CategoryRepositoryInterface
+class CategoryReader implements CategoryReaderInterface
 {
     const ID_CATEGORY_NODE = 'id_category_node';
     const ID_LOCALE = 'idLocale';

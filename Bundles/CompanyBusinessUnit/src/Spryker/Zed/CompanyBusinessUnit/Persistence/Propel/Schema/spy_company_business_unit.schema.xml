@@ -4,9 +4,9 @@
     <table name="spy_company_business_unit" phpName="SpyCompanyBusinessUnit">
         <column name="id_company_business_unit" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="email" type="VARCHAR" size="255"/>
-        <column name="phone" type="VARCHAR" size="255"/>
-        <column name="external_url" type="VARCHAR" size="255"/>
+        <column name="email" type="VARCHAR" size="255" required="false"/>
+        <column name="phone" type="VARCHAR" size="255" required="false"/>
+        <column name="external_url" type="VARCHAR" size="255" required="false"/>
 
         <column name="fk_company" type="INTEGER" required="true"/>
 

@@ -19,7 +19,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\CategoryDataImport\Business\Exception\CategoryTemplateNotFoundException;
-use Spryker\Zed\CategoryDataImport\Business\Model\Repository\CategoryRepositoryInterface;
+use Spryker\Zed\CategoryDataImport\Business\Model\Reader\CategoryReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddLocalesStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
@@ -43,16 +43,16 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
     const KEY_TEMPLATE_NAME = 'template_name';
 
     /**
-     * @var \Spryker\Zed\CategoryDataImport\Business\Model\Repository\CategoryRepositoryInterface
+     * @var \Spryker\Zed\CategoryDataImport\Business\Model\Reader\CategoryReaderInterface
      */
-    protected $categoryRepository;
+    protected $categoryReader;
 
     /**
-     * @param \Spryker\Zed\CategoryDataImport\Business\Model\Repository\CategoryRepositoryInterface $categoryRepository
+     * @param \Spryker\Zed\CategoryDataImport\Business\Model\Reader\CategoryReaderInterface $categoryReader
      */
-    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    public function __construct(CategoryReaderInterface $categoryReader)
     {
-        $this->categoryRepository = $categoryRepository;
+        $this->categoryReader = $categoryReader;
     }
 
     /**
@@ -66,7 +66,7 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
         $this->findOrCreateAttributes($categoryEntity, $dataSet);
         $categoryNodeEntity = $this->findOrCreateNode($categoryEntity, $dataSet);
 
-        $this->categoryRepository->addCategory($categoryEntity, $categoryNodeEntity);
+        $this->categoryReader->addCategory($categoryEntity, $categoryNodeEntity);
     }
 
     /**
@@ -130,7 +130,7 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
             ->findOneOrCreate();
 
         if (!empty($dataSet[static::KEY_PARENT_CATEGORY_KEY])) {
-            $idParentCategoryNode = $this->categoryRepository->getIdCategoryNodeByCategoryKey($dataSet[static::KEY_PARENT_CATEGORY_KEY]);
+            $idParentCategoryNode = $this->categoryReader->getIdCategoryNodeByCategoryKey($dataSet[static::KEY_PARENT_CATEGORY_KEY]);
             $categoryNodeEntity->setFkParentCategoryNode($idParentCategoryNode);
         }
 
@@ -148,7 +148,7 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
             $languageIdentifier = $this->getLanguageIdentifier($idLocale, $dataSet);
             $urlPathParts = [$languageIdentifier];
             if (!$categoryNodeEntity->getIsRoot()) {
-                $parentUrl = $this->categoryRepository->getParentUrl(
+                $parentUrl = $this->categoryReader->getParentUrl(
                     $dataSet[static::KEY_PARENT_CATEGORY_KEY],
                     $idLocale
                 );
