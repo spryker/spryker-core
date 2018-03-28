@@ -65,7 +65,7 @@ class OrderExpander implements OrderExpanderInterface
 
                 // TODO: replace this with plugin stack
                 if ($itemTransfer->getQuantitySalesUnit()) {
-                    $expandedItemTransfer->getQuantitySalesUnit()->setValue(round($itemTransfer->getQuantitySalesUnit()->getValue() / $quantity));
+                    $expandedItemTransfer->getQuantitySalesUnit()->setValue($itemTransfer->getQuantitySalesUnit()->getValue() / $quantity / $itemTransfer->getQuantitySalesUnit()->getPrecision());
                 }
 
                 $expandedProductOptions = new ArrayObject();
