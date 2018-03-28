@@ -9,6 +9,9 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Traits;
 
 use Generated\Shared\Transfer\MessageTransfer;
 
+/**
+ * @internal will be removed with a major release
+ */
 trait UniqueFlashMessagesTrait
 {
     /**
