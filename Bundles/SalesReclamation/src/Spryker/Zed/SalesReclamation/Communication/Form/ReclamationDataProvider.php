@@ -9,9 +9,25 @@ namespace Spryker\Zed\SalesReclamation\Communication\Form;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\FormDataProviderInterface;
+use Spryker\Zed\SalesReclamation\SalesReclamationConfig;
+use Symfony\Component\HttpFoundation\Request;
 
 class ReclamationDataProvider implements FormDataProviderInterface
 {
+    /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
+    protected $request;
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function __construct(
+        Request $request
+    ) {
+        $this->request = $request;
+    }
+
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
      *
@@ -19,6 +35,13 @@ class ReclamationDataProvider implements FormDataProviderInterface
      */
     public function getData($dataTransfer)
     {
+        if ($this->request->getMethod() === $this->request::METHOD_GET
+            && $this->request->query->has(SalesReclamationConfig::PARAM_ID_RECLAMATION)
+        ) {
+            $idReclamation = $this->request->query->get(SalesReclamationConfig::PARAM_ID_RECLAMATION);
+            $dataTransfer->setReclamationId($idReclamation);
+        }
+
         return $dataTransfer;
     }
 

@@ -51,7 +51,7 @@ class SalesReclamationCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createReclamationForm(Request $request, $quoteTransfer): FormInterface
     {
-        $dataProvider = $this->createReclamationDataProvider();
+        $dataProvider = $this->createReclamationDataProvider($request);
 
         return $this->getFormFactory()->create(
             ReclamationType::class,
@@ -61,11 +61,15 @@ class SalesReclamationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\FormDataProviderInterface
      */
-    public function createReclamationDataProvider(): FormDataProviderInterface
+    public function createReclamationDataProvider(Request $request): FormDataProviderInterface
     {
-        return new ReclamationDataProvider();
+        return new ReclamationDataProvider(
+            $request
+        );
     }
 
     /**
