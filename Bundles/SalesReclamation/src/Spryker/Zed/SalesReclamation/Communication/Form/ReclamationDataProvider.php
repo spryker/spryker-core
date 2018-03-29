@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesReclamation\Communication\Form;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\FormDataProviderInterface;
+use Spryker\Zed\SalesReclamation\SalesReclamationConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 class ReclamationDataProvider implements FormDataProviderInterface
@@ -47,9 +48,9 @@ class ReclamationDataProvider implements FormDataProviderInterface
         $value = null;
 
         if (!$quoteTransfer->getReclamationId()
-            && $this->request->query->has(ReclamationType::FIELD_RECLAMATION)
+            && $this->request->query->has(SalesReclamationConfig::PARAM_ID_RECLAMATION)
         ) {
-            $value = $this->request->query->get(ReclamationType::FIELD_RECLAMATION);
+            $value = $this->request->query->get(SalesReclamationConfig::PARAM_ID_RECLAMATION);
         }
 
         return [
