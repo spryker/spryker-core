@@ -31,9 +31,14 @@ class CompanyFormDataProvider
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function getData(int $idCompany)
+    public function getData(int $idCompany = 0)
     {
-        return $this->companyFacade->getCompanyById($this->createCompanyTransfer()->setIdCompany($idCompany));
+        $company = $this->createCompanyTransfer();
+        if (!$idCompany) {
+            return $company;
+        }
+
+        return $this->companyFacade->getCompanyById($company->setIdCompany($idCompany));
     }
 
     /**
@@ -41,7 +46,7 @@ class CompanyFormDataProvider
      *
      * @return array
      */
-    public function getOptions(int $idCompany)
+    public function getOptions(int $idCompany = 0)
     {
         return [
             CompanyForm::OPTION_COMPANY_TYPE_CHOICES => $this->prepareOptions(),

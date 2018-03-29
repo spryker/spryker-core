@@ -55,7 +55,7 @@ class CompanyBusinessUnitForm extends AbstractType
      */
     protected function addIdCompanyField(FormBuilderInterface $builder): CompanyBusinessUnitForm
     {
-        $builder->add(self::FIELD_ID_COMPANY_BUSINESS_UNIT, HiddenType::class);
+        $builder->add(static::FIELD_ID_COMPANY_BUSINESS_UNIT, HiddenType::class);
 
         return $this;
     }
@@ -67,7 +67,7 @@ class CompanyBusinessUnitForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder): CompanyBusinessUnitForm
     {
-        $builder->add(self::FIELD_NAME, TextType::class, [
+        $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Name',
             'constraints' => $this->getTextFieldConstraints(),
         ]);
@@ -82,7 +82,7 @@ class CompanyBusinessUnitForm extends AbstractType
      */
     protected function addIbanField(FormBuilderInterface $builder): CompanyBusinessUnitForm
     {
-        $builder->add(self::FIELD_IBAN, TextType::class, [
+        $builder->add(static::FIELD_IBAN, TextType::class, [
             'label' => 'IBAN',
             'required' => false,
             'constraints' => [
@@ -101,7 +101,7 @@ class CompanyBusinessUnitForm extends AbstractType
      */
     protected function addBicField(FormBuilderInterface $builder): CompanyBusinessUnitForm
     {
-        $builder->add(self::FIELD_BIC, TextType::class, [
+        $builder->add(static::FIELD_BIC, TextType::class, [
             'label' => 'BIC',
             'required' => false,
             'constraints' => [
