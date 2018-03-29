@@ -24,7 +24,8 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
     public function createAddressTable(): CompanyUnitAddressTable
     {
         return new CompanyUnitAddressTable(
-            $this->getCompanyUnitAddressQueryContainer()
+            $this->getCompanyUnitAddressQueryContainer(),
+            $this->getCompanyUnitAddressTableExpanderPlugins()
         );
     }
 
@@ -70,6 +71,12 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
     public function getCompanyUnitAddressFormPlugins(): array
     {
         return $this->getProvidedDependency(CompanyUnitAddressGuiDependencyProvider::PLUGINS_COMPANY_UNIT_ADDRESS_FORM);
+    }
+
+
+    public function getCompanyUnitAddressTableExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyUnitAddressGuiDependencyProvider::PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_EXPANDER);
     }
 
     /**
