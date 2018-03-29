@@ -58,7 +58,7 @@ class CustomersListType extends AbstractType
     {
         $builder->add(static::FIELD_CUSTOMER, Select2ComboBoxType::class, [
             'property_path' => static::FIELD_CUSTOMER,
-            'label' => 'Customers',
+            'label' => 'Select Customer',
             'choices' => array_flip($customerList),
             'choices_as_values' => true,
             'multiple' => false,
