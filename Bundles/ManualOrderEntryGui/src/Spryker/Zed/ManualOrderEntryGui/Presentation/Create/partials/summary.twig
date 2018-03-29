@@ -6,7 +6,7 @@
     <div><br/></div>
     <div><br/></div>
     <div>
-        <strong>{{ 'Sub Total' | trans }}</strong>
+        <strong>{{ 'Sub Total' | trans }}:</strong>
         <span>
             {% if quoteTransfer.totals %}
             {{ quoteTransfer.totals.subtotal | money }}
@@ -17,15 +17,15 @@
     {% include '@ManualOrderEntryGui/create/partials/summary-discounts.twig' %}
 
     {% if quoteTransfer.shipment %}
-    <div><strong>{{ 'Shipping' | trans }}</strong></div>
+    <div><strong>{{ 'Shipping' | trans }}:</strong></div>
     <div>
-        {{ quoteTransfer.shipment.method.name }}
+        {{ quoteTransfer.shipment.method.name }}:
         <span>{{ quoteTransfer.shipment.method.storeCurrencyPrice | money }}</span>
     </div>
     {% endif %}
 
     <div>
-        <strong>{{ 'Grand Total' | trans }}</strong>
+        <strong>{{ 'Grand Total' | trans }}:</strong>
         <span>
             {% if quoteTransfer.totals %}
             {{ quoteTransfer.totals.grandtotal | money }}
@@ -34,7 +34,7 @@
     </div>
 
     <div>
-        {{ 'Tax' | trans }}
+        <strong>{{ 'Tax' | trans }}:</strong>
         <span>
             {% if quoteTransfer.totals %}
             {{ quoteTransfer.totals.taxtotal.amount | money }}
@@ -45,7 +45,7 @@
     {% include '@ManualOrderEntryGui/create/partials/summary-payment.twig' %}
 
     <div>
-        {{ 'Price to pay' | trans }}
+        <strong>{{ 'Price to pay' | trans }}:</strong>
         <span>
             {% if quoteTransfer.totals %}
             {{ quoteTransfer.totals.priceToPay | money }}
