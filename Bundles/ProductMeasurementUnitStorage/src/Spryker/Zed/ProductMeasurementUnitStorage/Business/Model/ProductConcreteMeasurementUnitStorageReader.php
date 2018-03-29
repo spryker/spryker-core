@@ -40,6 +40,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
         $productConcreteMeasurementUnitStorageTransfer = (new ProductConcreteMeasurementUnitStorageTransfer())
             ->setBaseUnit(
                 (new ProductConcreteMeasurementBaseUnitTransfer())
+                    ->fromArray($productMeasurementBaseUnitEntity->toArray(), true)
                     ->setIdProductMeasurementUnit($productMeasurementBaseUnitEntity->getFkProductMeasurementUnit())
             )
             ->setSalesUnits($this->getProductConcreteMeasurementSalesUnitTransfers($idProduct));
