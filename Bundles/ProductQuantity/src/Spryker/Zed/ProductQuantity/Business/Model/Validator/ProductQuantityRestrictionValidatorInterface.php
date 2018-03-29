@@ -17,5 +17,12 @@ interface ProductQuantityRestrictionValidatorInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function validateItemAdd(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+    public function validateItemAddition(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateItemRemoval(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }

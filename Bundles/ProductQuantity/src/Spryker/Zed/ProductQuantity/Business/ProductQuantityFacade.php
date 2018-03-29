@@ -29,7 +29,23 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
     {
         return $this->getFactory()
             ->createProductQuantityRestrictionValidator()
-            ->validateItemAdd($cartChangeTransfer);
+            ->validateItemAddition($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateItemRemoveProductQuantityRestrictions(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    {
+        return $this->getFactory()
+            ->createProductQuantityRestrictionValidator()
+            ->validateItemRemoval($cartChangeTransfer);
     }
 
     /**

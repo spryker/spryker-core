@@ -41,11 +41,30 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function validateItemAdd(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    public function validateItemAddition(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         $responseTransfer = new CartPreCheckResponseTransfer();
 
-        $cartQuantityMap = $this->getCartQuantityMap($cartChangeTransfer);
+        $cartQuantityMap = $this->getItemAddCartQuantityMap($cartChangeTransfer);
+        $productQuantityEntityMap = $this->getProductQuantityEntityMap($cartChangeTransfer);
+
+        foreach ($cartQuantityMap as $productSku => $productQuantity) {
+            $this->validateItem($productSku, $productQuantity, $productQuantityEntityMap[$productSku], $responseTransfer);
+        }
+
+        return $this->setResponseIsSuccess($responseTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateItemRemoval(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    {
+        $responseTransfer = new CartPreCheckResponseTransfer();
+
+        $cartQuantityMap = $this->getItemRemoveCartQuantityMap($cartChangeTransfer);
         $productQuantityEntityMap = $this->getProductQuantityEntityMap($cartChangeTransfer);
 
         foreach ($cartQuantityMap as $productSku => $productQuantity) {
@@ -87,7 +106,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      *
      * @return int[] Keys are product SKUs, values are product quantities as 'quote.quantity + change.quantity'
      */
-    protected function getCartQuantityMap(CartChangeTransfer $cartChangeTransfer): array
+    protected function getItemAddCartQuantityMap(CartChangeTransfer $cartChangeTransfer): array
     {
         $quoteQuantityMap = $this->getQuoteQuantityMap($cartChangeTransfer);
 
@@ -95,6 +114,28 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $productSku = $itemTransfer->getSku();
             $cartQuantityMap[$productSku] = $itemTransfer->getQuantity();
+
+            if (isset($quoteQuantityMap[$productSku])) {
+                $cartQuantityMap[$productSku] += $quoteQuantityMap[$productSku];
+            }
+        }
+
+        return $cartQuantityMap;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return int[] Keys are product SKUs, values are product quantities as 'quote.quantity - change.quantity'
+     */
+    protected function getItemRemoveCartQuantityMap(CartChangeTransfer $cartChangeTransfer): array
+    {
+        $quoteQuantityMap = $this->getQuoteQuantityMap($cartChangeTransfer);
+
+        $cartQuantityMap = [];
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $productSku = $itemTransfer->getSku();
+            $cartQuantityMap[$productSku] = -$itemTransfer->getQuantity();
 
             if (isset($quoteQuantityMap[$productSku])) {
                 $cartQuantityMap[$productSku] += $quoteQuantityMap[$productSku];

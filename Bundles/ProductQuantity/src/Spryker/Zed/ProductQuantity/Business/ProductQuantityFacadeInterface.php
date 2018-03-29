@@ -26,6 +26,18 @@ interface ProductQuantityFacadeInterface
 
     /**
      * Specification:
+     * - Validates product quantities if they fulfill all quantity restriction rules during item removal.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateItemRemoveProductQuantityRestrictions(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * Specification:
      * - Retrieves product quantity entities by provided product IDs.
      *
      * @api
