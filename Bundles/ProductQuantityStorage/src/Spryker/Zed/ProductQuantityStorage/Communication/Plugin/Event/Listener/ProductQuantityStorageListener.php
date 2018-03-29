@@ -33,6 +33,6 @@ class ProductQuantityStorageListener extends AbstractPlugin implements EventBulk
 
         $productIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        $this->getFacade()->publish($productIds);
+        $this->getFacade()->publishProductQuantity($productIds);
     }
 }

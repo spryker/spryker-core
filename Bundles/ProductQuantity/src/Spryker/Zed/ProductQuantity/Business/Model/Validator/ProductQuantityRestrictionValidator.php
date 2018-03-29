@@ -127,7 +127,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     protected function getProductQuantityEntityMap(CartChangeTransfer $cartChangeTransfer): array
     {
         $skus = $this->getChangedSkus($cartChangeTransfer);
-        $productQuantityEntities = $this->productQuantityReader->getProductQuantityEntitiesByProductSku($skus);
+        $productQuantityEntities = $this->productQuantityReader->findProductQuantityEntitiesByProductSku($skus);
 
         $productQuantityEntityMap = $this->mapProductQuantityEntitiesBySku($productQuantityEntities);
         $productQuantityEntityMap = $this->replaceMissingSkus($productQuantityEntityMap, $skus);

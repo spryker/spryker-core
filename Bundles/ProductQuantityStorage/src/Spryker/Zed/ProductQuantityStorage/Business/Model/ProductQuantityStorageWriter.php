@@ -53,8 +53,8 @@ class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterf
      */
     public function publish(array $productIds): void
     {
-        $productQuantityEntities = $this->productQuantityFacade->getProductQuantityEntitiesByProductIds($productIds);
-        $productQuantityStorageEntities = $this->productQuantityStorageRepository->getProductQuantityStorageEntitiesByProductIds($productIds);
+        $productQuantityEntities = $this->productQuantityFacade->findProductQuantityEntitiesByProductIds($productIds);
+        $productQuantityStorageEntities = $this->productQuantityStorageRepository->findProductQuantityStorageEntitiesByProductIds($productIds);
         $mappedProductQuantityStorageEntities = $this->mapProductQuantityStorageEntities($productQuantityStorageEntities);
 
         foreach ($productQuantityEntities as $productQuantityEntity) {

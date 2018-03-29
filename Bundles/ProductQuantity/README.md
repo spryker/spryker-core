@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/product-quantity.svg)](https://travis-ci.org/spryker/product-quantity)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/product-quantity/badge.svg)](https://coveralls.io/github/spryker/product-quantity)
 
-{{ADD DESCRIPTION HERE}}
+Provides basic operations over the product quantity entities.
 
 ## Installation
 

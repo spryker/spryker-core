@@ -21,7 +21,13 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     const ERROR_NO_BASE_UNIT_BY_ID = 'Product measurement base unit was not found by its ID "%d".';
     const ERROR_NO_SALES_UNIT_BY_ID = 'Product measurement sales unit was not found by its ID "%d".';
 
+    const COL_ID_PRODUCT_MEASUREMENT_UNIT = 'idProductMeasurementUnit';
+    const COL_CODE = 'code';
+
     /**
+     * @uses SpyProductAbstractQuery
+     * @uses SpyProductQuery
+     *
      * @param int $idProduct
      *
      * @throws \Propel\Runtime\Exception\EntityNotFoundException
@@ -114,8 +120,12 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
      */
-    public function getProductMeasurementUnitEntities(array $productMeasurementUnitIds): array
+    public function findProductMeasurementUnitEntities(array $productMeasurementUnitIds): array
     {
+        if (!$productMeasurementUnitIds) {
+            return [];
+        }
+
         $query = $this->getFactory()
             ->createProductMeasurementUnitQuery()
             ->filterByIdProductMeasurementUnit_In($productMeasurementUnitIds);
@@ -132,6 +142,6 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
         return $this->getFactory()
             ->createProductMeasurementUnitQuery()
             ->find()
-            ->toKeyValue('idProductMeasurementUnit', 'code');
+            ->toKeyValue(static::COL_ID_PRODUCT_MEASUREMENT_UNIT, static::COL_CODE);
     }
 }

@@ -14,12 +14,12 @@ interface ProductMeasurementUnitStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
      */
-    public function getProductMeasurementUnitStorageEntities(array $productMeasurementUnitIds): array;
+    public function findProductMeasurementUnitStorageEntities(array $productMeasurementUnitIds): array;
 
     /**
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
      */
-    public function getProductConcreteMeasurementUnitStorageEntities(array $productIds): array;
+    public function findProductConcreteMeasurementUnitStorageEntities(array $productIds): array;
 }

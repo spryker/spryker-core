@@ -32,9 +32,9 @@ class ProductQuantityReader implements ProductQuantityReaderInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
      */
-    public function getProductQuantityEntitiesByProductIds(array $productIds): array
+    public function findProductQuantityEntitiesByProductIds(array $productIds): array
     {
-        $productQuantityEntities = $this->productQuantityRepository->getProductQuantityEntitiesByProductIds($productIds);
+        $productQuantityEntities = $this->productQuantityRepository->findProductQuantityEntitiesByProductIds($productIds);
 
         foreach ($productQuantityEntities as $productQuantityEntity) {
             $this->filterProductQuantityEntity($productQuantityEntity);
@@ -48,9 +48,9 @@ class ProductQuantityReader implements ProductQuantityReaderInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
      */
-    public function getProductQuantityEntitiesByProductSku(array $productSkus): array
+    public function findProductQuantityEntitiesByProductSku(array $productSkus): array
     {
-        $productQuantityEntities = $this->productQuantityRepository->getProductQuantityEntitiesByProductSku($productSkus);
+        $productQuantityEntities = $this->productQuantityRepository->findProductQuantityEntitiesByProductSku($productSkus);
 
         foreach ($productQuantityEntities as $productQuantityEntity) {
             $this->filterProductQuantityEntity($productQuantityEntity);

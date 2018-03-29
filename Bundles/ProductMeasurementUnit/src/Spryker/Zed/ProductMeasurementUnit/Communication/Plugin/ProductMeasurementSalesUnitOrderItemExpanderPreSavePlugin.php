@@ -15,8 +15,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginI
 class ProductMeasurementSalesUnitOrderItemExpanderPreSavePlugin implements OrderItemExpanderPreSavePluginInterface
 {
     /**
-     * Specification:
-     *  - Allows to manipulate SpySalesOrderItemEntity transfer object data before storing in Persistence.
+     * {@inheritdoc}
      *
      * @api
      *

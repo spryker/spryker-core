@@ -17,7 +17,7 @@ class SalesOrderItemMapper implements SalesOrderItemMapperInterface
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function mapSpyOrderItemEntityToOrderItemEntity(SpySalesOrderItem $spySalesOrderItemEntity): SpySalesOrderItemEntityTransfer
+    public function mapSpySalesOrderItemEntityToSalesOrderItemEntity(SpySalesOrderItem $spySalesOrderItemEntity): SpySalesOrderItemEntityTransfer
     {
         $salesOrderItemEntity = (new SpySalesOrderItemEntityTransfer())
             ->fromArray($spySalesOrderItemEntity->toArray(), true);
@@ -30,7 +30,7 @@ class SalesOrderItemMapper implements SalesOrderItemMapperInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
-    public function mapOrderItemEntityToSpyOrderItemEntity(SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItem
+    public function mapSalesOrderItemEntityToSpySalesOrderItemEntity(SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItem
     {
         $spySalesOrderItemEntity = new SpySalesOrderItem();
         $spySalesOrderItemEntity->fromArray($salesOrderItemEntity->toArray(true));

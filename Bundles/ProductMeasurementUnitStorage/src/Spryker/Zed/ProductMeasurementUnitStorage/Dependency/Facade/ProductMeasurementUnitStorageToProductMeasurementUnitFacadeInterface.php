@@ -35,5 +35,5 @@ interface ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
      */
-    public function getProductMeasurementUnitEntities(array $productMeasurementUnitIds): array;
+    public function findProductMeasurementUnitEntities(array $productMeasurementUnitIds): array;
 }

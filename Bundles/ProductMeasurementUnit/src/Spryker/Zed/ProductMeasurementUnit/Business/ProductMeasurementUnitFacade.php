@@ -137,8 +137,8 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
      */
-    public function getProductMeasurementUnitEntities(array $productMeasurementUnitIds): array
+    public function findProductMeasurementUnitEntities(array $productMeasurementUnitIds): array
     {
-        return $this->getRepository()->getProductMeasurementUnitEntities($productMeasurementUnitIds);
+        return $this->getRepository()->findProductMeasurementUnitEntities($productMeasurementUnitIds);
     }
 }

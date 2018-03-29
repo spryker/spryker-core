@@ -41,10 +41,10 @@ class ProductQuantityFacade extends AbstractFacade implements ProductQuantityFac
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
      */
-    public function getProductQuantityEntitiesByProductIds(array $productIds): array
+    public function findProductQuantityEntitiesByProductIds(array $productIds): array
     {
         return $this->getFactory()
             ->createProductQuantityReader()
-            ->getProductQuantityEntitiesByProductIds($productIds);
+            ->findProductQuantityEntitiesByProductIds($productIds);
     }
 }

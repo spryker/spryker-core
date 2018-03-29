@@ -23,7 +23,7 @@ class ProductQuantityStorageFacade extends AbstractFacade implements ProductQuan
      *
      * @return void
      */
-    public function publish(array $productIds): void
+    public function publishProductQuantity(array $productIds): void
     {
         $this->getFactory()->createProductQuantityStorageWriter()->publish($productIds);
     }

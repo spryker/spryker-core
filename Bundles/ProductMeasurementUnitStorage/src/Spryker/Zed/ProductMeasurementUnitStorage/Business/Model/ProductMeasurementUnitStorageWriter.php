@@ -53,8 +53,8 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
      */
     public function publish(array $productMeasurementUnitIds): void
     {
-        $productMeasurementUnitEntities = $this->getProductMeasurementUnitEntities($productMeasurementUnitIds);
-        $productMeasurementUnitStorageEntities = $this->getProductMeasurementUnitStorageEntities($productMeasurementUnitIds);
+        $productMeasurementUnitEntities = $this->findProductMeasurementUnitEntities($productMeasurementUnitIds);
+        $productMeasurementUnitStorageEntities = $this->findProductMeasurementUnitStorageEntities($productMeasurementUnitIds);
         $mappedProductMeasurementUnitStorageEntities = $this->mapProductMeasurementUnitStorageEntities($productMeasurementUnitStorageEntities);
 
         foreach ($productMeasurementUnitEntities as $productMeasurementUnitEntity) {
@@ -124,9 +124,9 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
      */
-    protected function getProductMeasurementUnitEntities(array $productMeasurementUnitIds): array
+    protected function findProductMeasurementUnitEntities(array $productMeasurementUnitIds): array
     {
-        return $this->productMeasurementUnitFacade->getProductMeasurementUnitEntities($productMeasurementUnitIds);
+        return $this->productMeasurementUnitFacade->findProductMeasurementUnitEntities($productMeasurementUnitIds);
     }
 
     /**
@@ -134,9 +134,9 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
      */
-    protected function getProductMeasurementUnitStorageEntities(array $productMeasurementUnitIds): array
+    protected function findProductMeasurementUnitStorageEntities(array $productMeasurementUnitIds): array
     {
-        return $this->productMeasurementUnitStorageRepository->getProductMeasurementUnitStorageEntities($productMeasurementUnitIds);
+        return $this->productMeasurementUnitStorageRepository->findProductMeasurementUnitStorageEntities($productMeasurementUnitIds);
     }
 
     /**

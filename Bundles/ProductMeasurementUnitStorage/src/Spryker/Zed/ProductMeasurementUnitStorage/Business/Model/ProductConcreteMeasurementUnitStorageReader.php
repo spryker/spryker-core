@@ -36,23 +36,35 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     public function getProductConcreteMeasurementUnitStorageByIdProduct(int $idProduct): ProductConcreteMeasurementUnitStorageTransfer
     {
         $productMeasurementBaseUnitEntity = $this->productMeasurementUnitFacade->getBaseUnitByIdProduct($idProduct);
-        $productMeasurementSalesUnitEntities = $this->productMeasurementUnitFacade->getSalesUnitsByIdProduct($idProduct);
 
         $productConcreteMeasurementUnitStorageTransfer = (new ProductConcreteMeasurementUnitStorageTransfer())
             ->setBaseUnit(
                 (new ProductConcreteMeasurementBaseUnitTransfer())
                     ->setIdProductMeasurementUnit($productMeasurementBaseUnitEntity->getFkProductMeasurementUnit())
             )
-            ->setSalesUnits(new ArrayObject());
+            ->setSalesUnits($this->getProductConcreteMeasurementSalesUnitTransfers($idProduct));
 
+        return $productConcreteMeasurementUnitStorageTransfer;
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementSalesUnitTransfer[]|\ArrayObject
+     */
+    protected function getProductConcreteMeasurementSalesUnitTransfers(int $idProduct): ArrayObject
+    {
+        $productMeasurementSalesUnitEntities = $this->productMeasurementUnitFacade->getSalesUnitsByIdProduct($idProduct);
+
+        $productConcreteSalesUnitTransfers = new ArrayObject();
         foreach ($productMeasurementSalesUnitEntities as $productMeasurementSalesUnitEntity) {
-            $productConcreteMeasurementUnitStorageTransfer->addSalesUnit(
+            $productConcreteSalesUnitTransfers->append(
                 (new ProductConcreteMeasurementSalesUnitTransfer())
                     ->fromArray($productMeasurementSalesUnitEntity->toArray(), true)
                     ->setIdProductMeasurementUnit($productMeasurementSalesUnitEntity->getFkProductMeasurementUnit())
             );
         }
 
-        return $productConcreteMeasurementUnitStorageTransfer;
+        return $productConcreteSalesUnitTransfers;
     }
 }

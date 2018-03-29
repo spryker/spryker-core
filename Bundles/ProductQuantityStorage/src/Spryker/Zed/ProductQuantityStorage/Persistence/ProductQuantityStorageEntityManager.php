@@ -16,10 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class ProductQuantityStorageEntityManager extends AbstractEntityManager implements ProductQuantityStorageEntityManagerInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idProductQuantityStorage
      *
      * @return void
@@ -35,8 +31,6 @@ class ProductQuantityStorageEntityManager extends AbstractEntityManager implemen
     }
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer $productQuantityStorageEntity
      *
      * @return void

@@ -14,5 +14,5 @@ interface ProductQuantityStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
      */
-    public function getProductQuantityStorageEntitiesByProductIds(array $productIds): array;
+    public function findProductQuantityStorageEntitiesByProductIds(array $productIds): array;
 }

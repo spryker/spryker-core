@@ -13,8 +13,6 @@ interface ProductMeasurementUnitToUtilUnitConversionServiceInterface
      * @param string $fromCode
      * @param string $toCode
      *
-     * @throws \Spryker\Service\UtilUnitConversion\Exception\InvalidMeasurementUnitExchangeException
-     *
      * @return float
      */
     public function getMeasurementUnitExchangeRatio(string $fromCode, string $toCode): float;

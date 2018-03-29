@@ -21,7 +21,7 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
      */
-    public function getProductQuantityEntitiesByProductSku(array $productSkus): array
+    public function findProductQuantityEntitiesByProductSku(array $productSkus): array
     {
         if (!$productSkus) {
             return [];
@@ -42,7 +42,7 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
      */
-    public function getProductQuantityEntitiesByProductIds(array $productIds): array
+    public function findProductQuantityEntitiesByProductIds(array $productIds): array
     {
         if (!$productIds) {
             return [];

@@ -446,9 +446,9 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      */
     protected function executeOrderItemExpanderPreSavePlugins(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, SpySalesOrderItem $spySalesOrderItemEntity): SpySalesOrderItem
     {
-        $salesOrderItemEntity = $this->salesOrderItemMapper->mapSpyOrderItemEntityToOrderItemEntity($spySalesOrderItemEntity);
+        $salesOrderItemEntity = $this->salesOrderItemMapper->mapSpySalesOrderItemEntityToSalesOrderItemEntity($spySalesOrderItemEntity);
         $salesOrderItemEntity = $this->salesOrderSaverPluginExecutor->executeOrderItemExpanderPreSavePlugins($quoteTransfer, $itemTransfer, $salesOrderItemEntity);
-        $spySalesOrderItemEntity = $this->salesOrderItemMapper->mapOrderItemEntityToSpyOrderItemEntity($salesOrderItemEntity);
+        $spySalesOrderItemEntity = $this->salesOrderItemMapper->mapSalesOrderItemEntityToSpySalesOrderItemEntity($salesOrderItemEntity);
 
         return $spySalesOrderItemEntity;
     }

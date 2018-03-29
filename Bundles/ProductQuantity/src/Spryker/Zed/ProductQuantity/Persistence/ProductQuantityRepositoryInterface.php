@@ -16,12 +16,12 @@ interface ProductQuantityRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
      */
-    public function getProductQuantityEntitiesByProductSku(array $productSkus): array;
+    public function findProductQuantityEntitiesByProductSku(array $productSkus): array;
 
     /**
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
      */
-    public function getProductQuantityEntitiesByProductIds(array $productIds): array;
+    public function findProductQuantityEntitiesByProductIds(array $productIds): array;
 }

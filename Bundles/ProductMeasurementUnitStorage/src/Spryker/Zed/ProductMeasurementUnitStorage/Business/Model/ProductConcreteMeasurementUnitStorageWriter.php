@@ -66,7 +66,7 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
     public function publish(array $productIds): void
     {
         $mappedProductConcreteMeasurementUnitStorageEntities =
-            $this->getMappedProductConcreteMeasurementUnitStorageEntities($productIds);
+            $this->findMappedProductConcreteMeasurementUnitStorageEntities($productIds);
 
         foreach ($productIds as $idProduct) {
             $storageEntity = $this->selectStorageEntity($mappedProductConcreteMeasurementUnitStorageEntities, $idProduct);
@@ -138,10 +138,10 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
      *
      * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[] Keys are product IDs
      */
-    protected function getMappedProductConcreteMeasurementUnitStorageEntities(array $productIds): array
+    protected function findMappedProductConcreteMeasurementUnitStorageEntities(array $productIds): array
     {
         $productConcreteMeasurementUnitStorageEntities = $this->productMeasurementUnitStorageRepository
-            ->getProductConcreteMeasurementUnitStorageEntities($productIds);
+            ->findProductConcreteMeasurementUnitStorageEntities($productIds);
 
         $mappedProductConcreteMeasurementUnitStorageEntities = [];
         foreach ($productConcreteMeasurementUnitStorageEntities as $entity) {

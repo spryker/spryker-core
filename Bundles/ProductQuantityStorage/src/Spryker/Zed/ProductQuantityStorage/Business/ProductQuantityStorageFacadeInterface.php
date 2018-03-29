@@ -19,5 +19,5 @@ interface ProductQuantityStorageFacadeInterface
      *
      * @return void
      */
-    public function publish(array $productIds): void;
+    public function publishProductQuantity(array $productIds): void;
 }

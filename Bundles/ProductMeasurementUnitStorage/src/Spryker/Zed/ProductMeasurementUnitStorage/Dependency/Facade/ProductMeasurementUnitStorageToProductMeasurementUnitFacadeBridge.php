@@ -57,8 +57,8 @@ class ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge implemen
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
      */
-    public function getProductMeasurementUnitEntities(array $productMeasurementUnitIds): array
+    public function findProductMeasurementUnitEntities(array $productMeasurementUnitIds): array
     {
-        return $this->productMeasurementUnitFacade->getProductMeasurementUnitEntities($productMeasurementUnitIds);
+        return $this->productMeasurementUnitFacade->findProductMeasurementUnitEntities($productMeasurementUnitIds);
     }
 }

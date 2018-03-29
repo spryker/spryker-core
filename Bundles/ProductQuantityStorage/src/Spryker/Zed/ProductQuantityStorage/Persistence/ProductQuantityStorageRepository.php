@@ -19,7 +19,7 @@ class ProductQuantityStorageRepository extends AbstractRepository implements Pro
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
      */
-    public function getProductQuantityStorageEntitiesByProductIds(array $productIds): array
+    public function findProductQuantityStorageEntitiesByProductIds(array $productIds): array
     {
         if (!$productIds) {
             return [];

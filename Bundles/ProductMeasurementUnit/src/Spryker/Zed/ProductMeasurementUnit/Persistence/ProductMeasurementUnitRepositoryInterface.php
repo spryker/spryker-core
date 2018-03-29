@@ -45,7 +45,7 @@ interface ProductMeasurementUnitRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
      */
-    public function getProductMeasurementUnitEntities(array $productMeasurementUnitIds): array;
+    public function findProductMeasurementUnitEntities(array $productMeasurementUnitIds): array;
 
     /**
      * @return string[] Keys are product measurement unit IDs, values are product measurement unit codes.

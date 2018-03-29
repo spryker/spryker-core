@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer;
 interface ProductQuantityStorageEntityManagerInterface
 {
     /**
-     * @api
-     *
      * @param int $idProductQuantityStorage
      *
      * @return void
@@ -21,8 +19,6 @@ interface ProductQuantityStorageEntityManagerInterface
     public function deleteProductQuantityStorage(int $idProductQuantityStorage): void;
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer $productQuantityStorageEntity
      *
      * @return void
