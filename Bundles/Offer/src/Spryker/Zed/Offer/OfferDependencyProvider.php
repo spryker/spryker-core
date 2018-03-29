@@ -10,10 +10,12 @@ namespace Spryker\Zed\Offer;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeBridge;
+use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 
 class OfferDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SALES = 'FACADE_SALES';
+    public const PLUGINS_OFFER_HYDRATOR = 'PLUGINS_OFFER_HYDRATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,6 +25,7 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $this->addSalesFacade($container);
+        $this->addOfferHydratorPlugins($container);
 
         return $container;
     }
@@ -41,5 +44,27 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addOfferHydratorPlugins(Container $container)
+    {
+        $container[static::PLUGINS_OFFER_HYDRATOR] = function (Container $container) {
+            return $this->getOfferHydratorPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return OfferHydratorPluginInterface[]
+     */
+    protected function getOfferHydratorPlugins(): array
+    {
+        return [];
     }
 }

@@ -37,6 +37,7 @@
         <property name="status" type="string"/>
         <property name="user" type="User"/>
         <property name="customerReference"  type="string" />
+        <property name="customer" type="Customer" />
         <property name="createdAt" type="string" />
     </transfer>
 

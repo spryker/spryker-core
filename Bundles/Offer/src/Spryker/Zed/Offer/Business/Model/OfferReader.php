@@ -22,13 +22,20 @@ class OfferReader implements OfferReaderInterface
     protected $offerRepository;
 
     /**
-     * @param \Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface $salesFacade
-     * @param OfferConfig $offerConfig
+     * @var OfferPluginExecutorInterface
+     */
+    protected $offerPluginExecutor;
+
+    /**
+     * @param OfferRepositoryInterface $offerRepository
+     * @param OfferPluginExecutorInterface $offerPluginExecutor
      */
     public function __construct(
-        OfferRepositoryInterface $offerRepository
+        OfferRepositoryInterface $offerRepository,
+        OfferPluginExecutorInterface $offerPluginExecutor
     ) {
         $this->offerRepository = $offerRepository;
+        $this->offerPluginExecutor = $offerPluginExecutor;
     }
 
     /**
@@ -46,10 +53,17 @@ class OfferReader implements OfferReaderInterface
 //            ->getCustomerOrders($orderListTransfer, $orderListTransfer->getIdCustomer());
     }
 
+    /**
+     * @param OfferTransfer $offerTransfer
+     *
+     * @return OfferTransfer
+     */
     public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer
     {
         $offerTransfer = $this->offerRepository->getOfferById($offerTransfer->getIdOffer());
+        $offerTransfer = $this->offerPluginExecutor->hydrateOffer($offerTransfer);
 
+        return $offerTransfer;
     }
 
 }

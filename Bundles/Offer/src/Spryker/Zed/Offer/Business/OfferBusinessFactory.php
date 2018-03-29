@@ -10,6 +10,8 @@ namespace Spryker\Zed\Offer\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Offer\Business\Model\OfferConverter;
 use Spryker\Zed\Offer\Business\Model\OfferConverterInterface;
+use Spryker\Zed\Offer\Business\Model\OfferPluginExecutor;
+use Spryker\Zed\Offer\Business\Model\OfferPluginExecutorInterface;
 use Spryker\Zed\Offer\Business\Model\OfferReader;
 use Spryker\Zed\Offer\Business\Model\OfferReaderInterface;
 use Spryker\Zed\Offer\Business\Model\OfferWriter;
@@ -19,6 +21,7 @@ use Spryker\Zed\Offer\OfferDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Offer\OfferConfig getConfig()
+ * @method \Spryker\Zed\Offer\Persistence\OfferRepositoryInterface getRepository()
  */
 class OfferBusinessFactory extends AbstractBusinessFactory
 {
@@ -28,8 +31,8 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function createOfferReader(): OfferReaderInterface
     {
         return new OfferReader(
-            $this->getSalesFacade(),
-            $this->getConfig()
+            $this->getRepository(),
+            $this->createOfferPluginExecutor()
         );
     }
 
@@ -58,5 +61,23 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function createOfferWriter(): OfferWriterInterface
     {
         return new OfferWriter();
+    }
+
+    /**
+     * @return OfferPluginExecutorInterface
+     */
+    public function createOfferPluginExecutor()
+    {
+        return new OfferPluginExecutor(
+            $this->getOfferHydratorPlugins()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getOfferHydratorPlugins(): array
+    {
+        return $this->getProvidedDependency(OfferDependencyProvider::PLUGINS_OFFER_HYDRATOR);
     }
 }
