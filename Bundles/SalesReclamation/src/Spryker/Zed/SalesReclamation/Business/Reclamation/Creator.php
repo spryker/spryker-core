@@ -33,7 +33,6 @@ class Creator implements CreatorInterface
 
         $orderTransfer
             ->requireIdSalesOrder()
-            ->requireCustomerReference()
             ->requireEmail()
             ->requireFirstName()
             ->requireLastName()

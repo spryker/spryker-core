@@ -11,7 +11,7 @@
         <column name="fk_sales_order" type="INTEGER" required="true"/>
 
         <column name="customer_name" size="511" type="VARCHAR" required="true" />
-        <column name="customer_reference" size="255" type="VARCHAR" required="true" />
+        <column name="customer_reference" size="255" type="VARCHAR" required="false" />
         <column name="customer_email" size="255" type="VARCHAR" required="true" />
         <column name="state" type="ENUM" valueSet="Open, Close" required="true" />
 
