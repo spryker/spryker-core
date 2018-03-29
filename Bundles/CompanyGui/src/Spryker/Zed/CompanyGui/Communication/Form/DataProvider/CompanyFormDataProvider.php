@@ -31,7 +31,7 @@ class CompanyFormDataProvider
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function getData(?int $idCompany = null)
+    public function getData(?int $idCompany = null): CompanyTransfer
     {
         $company = $this->createCompanyTransfer();
         if (!$idCompany) {
@@ -46,7 +46,7 @@ class CompanyFormDataProvider
      *
      * @return array
      */
-    public function getOptions(?int $idCompany = null)
+    public function getOptions(?int $idCompany = null): array
     {
         return [
             CompanyForm::OPTION_COMPANY_TYPE_CHOICES => $this->prepareCompanyTypeChoices(),
@@ -57,7 +57,7 @@ class CompanyFormDataProvider
     /**
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    protected function createCompanyTransfer()
+    protected function createCompanyTransfer(): CompanyTransfer
     {
         return new CompanyTransfer();
     }
