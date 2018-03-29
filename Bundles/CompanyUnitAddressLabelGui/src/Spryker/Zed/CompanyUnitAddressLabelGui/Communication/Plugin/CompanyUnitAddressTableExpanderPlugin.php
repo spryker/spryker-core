@@ -42,6 +42,22 @@ class CompanyUnitAddressTableExpanderPlugin extends AbstractPlugin implements Co
      */
     public function expandData(array $item): array
     {
-        return [static::COL_COMPANY_UNIT_ADDRESS_LABELS => "Label 1, Label 2"];
+        return [static::COL_COMPANY_UNIT_ADDRESS_LABELS => $this->getLabels($item)];
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function getLabels(array $item)
+    {
+        $labelCollection = $this->getFacade()
+            ->getRepository()
+            ->findCompanyUnitAddressLabelsByAddress($item[static::ID_COMPANY_UNIT_ADDRESS]);
+
+        $labels = (array)$labelCollection->getLabels();
+
+        return implode($labels);
     }
 }
