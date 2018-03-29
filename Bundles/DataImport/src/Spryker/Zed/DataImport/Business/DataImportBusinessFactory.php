@@ -27,6 +27,7 @@ use Spryker\Zed\DataImport\Business\Model\Dump\ImporterDumper;
 use Spryker\Zed\DataImport\Business\Model\Dump\ImporterDumperInterface;
 use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
+use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -64,7 +65,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface[]
+     * @return \Spryker\Zed\DataImport\Dependency\Plugin\DataImportAfterImportHookInterface[]
      */
     public function getDataImportAfterImportHookPlugins()
     {
@@ -84,9 +85,9 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface
      */
-    public function getPublicEventFacade()
+    public function getPublicEventFacade(): DataImportToEventFacadeInterface
     {
-        return $this->getProvidedDependency(DataImportDependencyProvider::FACADE_EVENT);
+        return $this->getEventFacade();
     }
 
     /**

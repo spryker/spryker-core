@@ -48,7 +48,7 @@ class DataImportFacade extends AbstractFacade implements DataImportFacadeInterfa
      *
      * @return void
      */
-    public function publish()
+    public function publish(): void
     {
         $this->getFactory()->createDataImporterPublisher()->triggerEvents();
     }

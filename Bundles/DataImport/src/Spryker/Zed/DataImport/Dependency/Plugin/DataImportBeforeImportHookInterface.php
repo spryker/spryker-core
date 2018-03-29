@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\DataImport\Dependency\Plugin;
 
-interface DataImportBeforeImportHookInterface extends DataImportHookInterface
+interface DataImportBeforeImportHookInterface
 {
     /**
+     * Specification:
+     * - This will be executed before the import was running.
+     *
      * @api
      *
      * @return void
