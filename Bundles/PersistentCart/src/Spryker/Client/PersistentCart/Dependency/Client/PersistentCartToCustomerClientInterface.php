@@ -7,10 +7,12 @@
 
 namespace Spryker\Client\PersistentCart\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 interface PersistentCartToCustomerClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer();
+    public function getCustomer(): ?CustomerTransfer;
 }

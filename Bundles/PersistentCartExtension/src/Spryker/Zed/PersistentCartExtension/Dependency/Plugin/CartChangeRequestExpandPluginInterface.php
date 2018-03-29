@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PersistentCart\Dependency\Plugin;
+namespace Spryker\Zed\PersistentCartExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 

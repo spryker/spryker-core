@@ -9,20 +9,28 @@ namespace Spryker\Zed\PersistentCart\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpander;
+use Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpanderInterface;
 use Spryker\Zed\PersistentCart\Business\Model\CartOperation;
+use Spryker\Zed\PersistentCart\Business\Model\CartOperationInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleter;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleterInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteMerger;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteMergerInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpander;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizer;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizerInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriter;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteWriterInterface;
 use Spryker\Zed\PersistentCart\PersistentCartDependencyProvider;
+use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
 class PersistentCartBusinessFactory extends AbstractBusinessFactory
 {
     /**
      * @return \Spryker\Zed\PersistentCart\Business\Model\CartOperationInterface
      */
-    public function createCartOperation()
+    public function createCartOperation(): CartOperationInterface
     {
         return new CartOperation(
             $this->getCartFacade(),
@@ -37,7 +45,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizerInterface
      */
-    public function createQuoteStorageSynchronizer()
+    public function createQuoteStorageSynchronizer(): QuoteStorageSynchronizerInterface
     {
         return new QuoteStorageSynchronizer(
             $this->getCartFacade(),
@@ -50,7 +58,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteDeleterInterface
      */
-    public function createQuoteDeleter()
+    public function createQuoteDeleter(): QuoteDeleterInterface
     {
         return new QuoteDeleter(
             $this->getQuoteFacade(),
@@ -62,7 +70,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteWriterInterface
      */
-    public function createQuoteWriter()
+    public function createQuoteWriter(): QuoteWriterInterface
     {
         return new QuoteWriter(
             $this->getQuoteFacade(),
@@ -73,7 +81,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface
      */
-    public function createQuoteResponseExpander()
+    public function createQuoteResponseExpander(): QuoteResponseExpanderInterface
     {
         return new QuoteResponseExpander(
             $this->getQuoteResponseExpanderPlugins()
@@ -83,7 +91,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpanderInterface
      */
-    public function createCartChangeRequestExpander()
+    public function createCartChangeRequestExpander(): CartChangeRequestExpanderInterface
     {
         return new CartChangeRequestExpander(
             $this->getRemoveItemsRequestExpanderPlugins()
@@ -92,28 +100,10 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
 
     /**
      * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteMergerInterface
-     * TODO: new modules should follow PHP7 return type hints in the method (e.g. public function createQuoteMerger(): QuoteMergerInterface)
      */
-    public function createQuoteMerger()
+    public function createQuoteMerger(): QuoteMergerInterface
     {
         return new QuoteMerger();
-    }
-
-    /**
-     * @return \Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteItemFinderPluginInterface
-     * TODO: please change all protected factory methods to public in all modified modules (except old protected methods for BC)
-     */
-    protected function getQuoteItemFinderPlugin()
-    {
-        return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGIN_QUOTE_ITEM_FINDER);
-    }
-
-    /**
-     * @return \Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
-     */
-    protected function getRemoveItemsRequestExpanderPlugins()
-    {
-        return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER);
     }
 
     /**
@@ -141,9 +131,25 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteResponseExpanderPluginInterface[]
+     * @return \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface
      */
-    protected function getQuoteResponseExpanderPlugins()
+    protected function getQuoteItemFinderPlugin(): QuoteItemFinderPluginInterface
+    {
+        return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGIN_QUOTE_ITEM_FINDER);
+    }
+
+    /**
+     * @return \Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
+     */
+    protected function getRemoveItemsRequestExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteResponseExpanderPluginInterface[]
+     */
+    protected function getQuoteResponseExpanderPlugins(): array
     {
         return $this->getProvidedDependency(PersistentCartDependencyProvider::PLUGINS_QUOTE_RESPONSE_EXPANDER);
     }

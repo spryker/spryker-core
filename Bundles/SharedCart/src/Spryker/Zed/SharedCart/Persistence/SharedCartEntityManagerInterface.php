@@ -65,5 +65,5 @@ interface SharedCartEntityManagerInterface
      *
      * @return void
      */
-    public function unDefaultCustomerQuotes(int $idCompanyUser): void;
+    public function resetQuoteDefaultFlagByCustomer(int $idCompanyUser): void;
 }

@@ -116,9 +116,9 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
      *
      * @return void
      */
-    public function unDefaultCustomerQuotes(int $idCompanyUser): void
+    public function resetQuoteDefaultFlagByCustomer(int $idCompanyUser): void
     {
-        $this->getEntityManager()->unDefaultCustomerQuotes($idCompanyUser);
+        $this->getEntityManager()->resetQuoteDefaultFlagByCustomer($idCompanyUser);
     }
 
     /**

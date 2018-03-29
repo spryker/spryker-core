@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\PersistentCart\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 class PersistentCartToCustomerClientBridge implements PersistentCartToCustomerClientInterface
 {
     /**
@@ -25,7 +27,7 @@ class PersistentCartToCustomerClientBridge implements PersistentCartToCustomerCl
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer()
+    public function getCustomer(): ?CustomerTransfer
     {
         return $this->customerClient->getCustomer();
     }

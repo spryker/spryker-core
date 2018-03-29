@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PersistentCart\Dependency\Plugin;
+namespace Spryker\Zed\PersistentCartExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -24,5 +24,5 @@ interface QuoteItemFinderPluginInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    public function findItem(QuoteTransfer $quoteTransfer, $sku, $groupKey = null): ?ItemTransfer;
+    public function findItem(QuoteTransfer $quoteTransfer, string $sku, string $groupKey = null): ?ItemTransfer;
 }

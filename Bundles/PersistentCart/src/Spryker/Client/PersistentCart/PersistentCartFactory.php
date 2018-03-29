@@ -76,7 +76,7 @@ class PersistentCartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PersistentCart\Dependency\Plugin\QuoteUpdatePluginInterface[]
+     * @return \Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteUpdatePluginInterface[]
      */
     protected function getQuoteUpdatePlugins()
     {
@@ -84,7 +84,7 @@ class PersistentCartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PersistentCart\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface[]
+     * @return \Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface[]
      */
     protected function getChangeRequestExtendPlugins()
     {

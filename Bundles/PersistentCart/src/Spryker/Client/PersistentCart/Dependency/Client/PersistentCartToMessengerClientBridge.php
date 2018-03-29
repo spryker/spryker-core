@@ -27,7 +27,7 @@ class PersistentCartToMessengerClientBridge implements PersistentCartToMessenger
      *
      * @return void
      */
-    public function addSuccessMessage($message)
+    public function addSuccessMessage($message): void
     {
         $this->messengerClient->addSuccessMessage($message);
     }
@@ -37,7 +37,7 @@ class PersistentCartToMessengerClientBridge implements PersistentCartToMessenger
      *
      * @return void
      */
-    public function addInfoMessage($message)
+    public function addInfoMessage($message): void
     {
         $this->messengerClient->addInfoMessage($message);
     }
@@ -47,7 +47,7 @@ class PersistentCartToMessengerClientBridge implements PersistentCartToMessenger
      *
      * @return void
      */
-    public function addErrorMessage($message)
+    public function addErrorMessage($message): void
     {
         $this->messengerClient->addErrorMessage($message);
     }

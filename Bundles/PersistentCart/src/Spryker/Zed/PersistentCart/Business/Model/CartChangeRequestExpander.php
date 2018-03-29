@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 class CartChangeRequestExpander implements CartChangeRequestExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\PersistentCart\Dependency\Plugin\CartChangeRequestExpandPluginInterface[]
+     * @var \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\CartChangeRequestExpandPluginInterface[]
      */
     protected $removeItemRequestExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\PersistentCart\Dependency\Plugin\CartChangeRequestExpandPluginInterface[] $removeItemRequestExpanderPlugins
+     * @param \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\CartChangeRequestExpandPluginInterface[] $removeItemRequestExpanderPlugins
      */
     public function __construct(array $removeItemRequestExpanderPlugins)
     {

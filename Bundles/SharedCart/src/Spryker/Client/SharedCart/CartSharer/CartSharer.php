@@ -23,6 +23,8 @@ use Spryker\Client\SharedCart\Zed\SharedCartStubInterface;
 
 class CartSharer implements CartSharerInterface
 {
+    public const GLOSSARY_KEY_SHARED_CART_SHARE_ERROR_ALREADY_EXIST = 'shared_cart.share.error.already_exist';
+
     /**
      * @var \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface
      */
@@ -70,7 +72,7 @@ class CartSharer implements CartSharerInterface
     {
         $quoteTransfer = $this->getQuote($shareCartRequestTransfer->getIdQuote());
         if (!$this->validateShareCartRequest($shareCartRequestTransfer, $quoteTransfer)) {
-            $this->messengerClient->addErrorMessage('shared_cart.share.error.already_exist'); //TODO: extract to constant
+            $this->messengerClient->addErrorMessage(self::GLOSSARY_KEY_SHARED_CART_SHARE_ERROR_ALREADY_EXIST);
             $quoteResponseTransfer = new QuoteResponseTransfer();
             $quoteResponseTransfer->setIsSuccessful(false);
 
@@ -136,7 +138,9 @@ class CartSharer implements CartSharerInterface
             }
         }
 
-        throw new CartNotFoundException('Cart not found'); // TODO: exception messages should always contain some extra info to help to identify the problem (e.g. add which idQuote was not found).
+        throw new CartNotFoundException(
+            sprintf('Cart with id %s was not found', $idQuote)
+        );
     }
 
     /**

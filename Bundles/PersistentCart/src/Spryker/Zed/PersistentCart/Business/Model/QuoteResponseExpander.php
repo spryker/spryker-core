@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 class QuoteResponseExpander implements QuoteResponseExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteResponseExpanderPluginInterface[]
+     * @var \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteResponseExpanderPluginInterface[]
      */
     protected $quoteResponseExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteResponseExpanderPluginInterface[] $quoteResponseExpanderPlugins
+     * @param \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteResponseExpanderPluginInterface[] $quoteResponseExpanderPlugins
      */
     public function __construct($quoteResponseExpanderPlugins)
     {

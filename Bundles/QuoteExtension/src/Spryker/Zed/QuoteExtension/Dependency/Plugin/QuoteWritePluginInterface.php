@@ -12,7 +12,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface QuoteWritePluginInterface
 {
     /**
-     * TODO: add specification
+     * Specification:
+     * - Plugins which can be called before or after quote save
      *
      * @api
      *

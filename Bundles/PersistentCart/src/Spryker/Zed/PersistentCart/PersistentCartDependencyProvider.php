@@ -13,7 +13,7 @@ use Spryker\Zed\PersistentCart\Communication\Plugin\SimpleProductQuoteItemFinder
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeBridge;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeBridge;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeBridge;
-use Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteItemFinderPluginInterface;
+use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
 class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -126,7 +126,7 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteItemFinderPluginInterface
+     * @return \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface
      */
     protected function getQuoteItemFinderPlugin(): QuoteItemFinderPluginInterface
     {
@@ -134,7 +134,7 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteResponseExpanderPluginInterface[]
+     * @return \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteResponseExpanderPluginInterface[]
      */
     protected function getQuoteResponseExpanderPlugins(): array
     {
@@ -142,7 +142,7 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\PersistentCart\Dependency\Plugin\CartChangeRequestExpandPluginInterface[]
+     * @return \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\CartChangeRequestExpandPluginInterface[]
      */
     protected function getRemoveItemsRequestExpanderPlugins(): array
     {

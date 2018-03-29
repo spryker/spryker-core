@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\PersistentCart\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface;
+use Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface;
 
 /**
  * @method \Spryker\Client\SharedCart\SharedCartFactory getFactory()

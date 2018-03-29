@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
-use Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteItemFinderPluginInterface;
+use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
 class CartOperation implements CartOperationInterface
 {
@@ -45,7 +45,7 @@ class CartOperation implements CartOperationInterface
     protected $quoteResponseExpander;
 
     /**
-     * @var \Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteItemFinderPluginInterface
+     * @var \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface
      */
     protected $itemFinderPlugin;
 
@@ -62,7 +62,7 @@ class CartOperation implements CartOperationInterface
     /**
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface $quoteFacade
-     * @param \Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteItemFinderPluginInterface $itemFinderPlugin
+     * @param \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface $itemFinderPlugin
      * @param \Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpanderInterface $cartChangeRequestExpander
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface $quoteResponseExpander
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeInterface $messengerFacade

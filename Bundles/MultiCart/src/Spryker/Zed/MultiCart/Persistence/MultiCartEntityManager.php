@@ -19,7 +19,7 @@ class MultiCartEntityManager extends AbstractEntityManager implements MultiCartE
      *
      * @return void
      */
-    public function unDefaultCustomerQuotes(string $customerReference): void
+    public function resetQuoteDefaultFlagByCustomer(string $customerReference): void
     {
         $this->getFactory()
             ->createQuoteQuery()
