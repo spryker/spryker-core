@@ -17,9 +17,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class OrderSourceListType extends AbstractType
 {
-    const FIELD_ORDER_SOURCE = 'id_order_source';
-    const OPTION_ORDER_SOURCE_ARRAY = 'option-order-source-array';
-    const TYPE_NAME = 'order-source-list';
+    public const TYPE_NAME = 'order-source-list';
+
+    public const FIELD_ORDER_SOURCE = 'id_order_source';
+
+    public const OPTION_ORDER_SOURCE_ARRAY = 'option-order-source-array';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
