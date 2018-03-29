@@ -7,8 +7,27 @@
 
 namespace Spryker\Zed\CompanyUnitAddressLabelGui;
 
+use Spryker\Zed\CompanyUnitAddressLabelGui\Dependency\Facade\CompanyUnitAddressLabelGuiToCompanyUnitAddressLabelFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 class CompanyUnitAddressLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_COMPANY_UNIT_ADDRESS_LABEL = 'FACADE_COMPANY_UNIT_ADDRESS_LABEL';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container[static::FACADE_COMPANY_UNIT_ADDRESS_LABEL] = function (Container $container) {
+            return new CompanyUnitAddressLabelGuiToCompanyUnitAddressLabelFacadeBridge(
+                $container->getLocator()->companyUnitAddressLabel()->facade()
+            );
+        };
+
+        return $container;
+    }
 }

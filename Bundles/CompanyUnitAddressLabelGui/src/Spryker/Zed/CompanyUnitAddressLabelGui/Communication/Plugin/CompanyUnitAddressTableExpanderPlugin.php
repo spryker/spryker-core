@@ -7,10 +7,14 @@
 
 namespace Spryker\Zed\CompanyUnitAddressLabelGui\Communication\Plugin;
 
+use Generated\Shared\Transfer\SpyCompanyUnitAddressLabelEntityTransfer;
 use Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\CompanyUnitAddressTableExpanderInterface;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
+/**
+ * @method \Spryker\Zed\CompanyUnitAddressLabelGui\Communication\CompanyUnitAddressLabelGuiCommunicationFactory getFactory()
+ */
 class CompanyUnitAddressTableExpanderPlugin extends AbstractPlugin implements CompanyUnitAddressTableExpanderInterface
 {
     const COL_COMPANY_UNIT_ADDRESS_LABELS = 'Labels';
@@ -52,12 +56,29 @@ class CompanyUnitAddressTableExpanderPlugin extends AbstractPlugin implements Co
      */
     protected function getLabels(array $item)
     {
-        $labelCollection = $this->getFacade()
-            ->getRepository()
-            ->findCompanyUnitAddressLabelsByAddress($item[static::ID_COMPANY_UNIT_ADDRESS]);
+        $labelCollection = $this->getFactory()
+            ->getCompanyUnitAddressLabelFacade()
+            ->getCompanyUnitAddressLabelsByAddress($item[static::ID_COMPANY_UNIT_ADDRESS]);
 
         $labels = (array)$labelCollection->getLabels();
 
-        return implode($labels);
+        return implode(
+            array_map(
+                function (SpyCompanyUnitAddressLabelEntityTransfer $item) {
+                        return $this->beautifyLabel($item->getName());
+                },
+                $labels
+            )
+        );
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return string
+     */
+    protected function beautifyLabel(string $name): string
+    {
+        return "<span class='company-unit-address-label'>$name</span>";
     }
 }

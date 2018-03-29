@@ -10,7 +10,6 @@ namespace Spryker\Zed\CompanyUnitAddressGui\Communication\Table;
 use Orm\Zed\CompanyUnitAddress\Persistence\Map\SpyCompanyUnitAddressTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface;
-use Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\CompanyUnitAddressTableExpanderInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -120,9 +119,9 @@ class CompanyUnitAddressTable extends AbstractTable
             static::COL_CITY => 'City',
             static::COL_ZIPCODE => 'Zipcode',
             static::COL_COMPANY_RELATION => 'Company',
-            static::COL_ADDRESS1 => 'Address 1',
-            static::COL_ADDRESS2 => 'Address 2',
-            static::COL_ADDRESS3 => 'Address 3'
+            static::COL_ADDRESS1 => 'Address',
+            static::COL_ADDRESS2 => 'Number',
+            static::COL_ADDRESS3 => 'Additional address',
         ];
 
         $externalData = $this->getProvidedHeaders();
@@ -148,6 +147,11 @@ class CompanyUnitAddressTable extends AbstractTable
         return $config;
     }
 
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
     protected function prepareRowData(array $item): array
     {
         $baseData = [
@@ -159,7 +163,7 @@ class CompanyUnitAddressTable extends AbstractTable
             static::COL_COMPANY_RELATION => $this->getCompanyName((int)$item[static::COL_ID_COMPANY_UNIT_ADDRESS]),
             static::COL_ADDRESS1 => $item[static::COL_ADDRESS1],
             static::COL_ADDRESS2 => $item[static::COL_ADDRESS2],
-            static::COL_ADDRESS3 => $item[static::COL_ADDRESS3]
+            static::COL_ADDRESS3 => $item[static::COL_ADDRESS3],
         ];
 
         $externalData = $this->prepareRowExternalData($item);
@@ -169,6 +173,11 @@ class CompanyUnitAddressTable extends AbstractTable
         return $baseData + $externalData + $actions;
     }
 
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
     protected function prepareRowExternalData(array $item): array
     {
         $result = [];

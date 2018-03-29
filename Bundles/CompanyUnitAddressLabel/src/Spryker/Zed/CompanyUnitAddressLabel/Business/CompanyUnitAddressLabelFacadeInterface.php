@@ -7,11 +7,24 @@
 
 namespace Spryker\Zed\CompanyUnitAddressLabel\Business;
 
+use Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 
 interface CompanyUnitAddressLabelFacadeInterface
 {
+    /**
+     * Specifications:
+     *  - Returns labels by address.
+     *
+     * @api
+     *
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer
+     */
+    public function getCompanyUnitAddressLabelsByAddress(int $idCompanyUnitAddress): CompanyUnitAddressLabelCollectionTransfer;
+
     /**
      * Specification:
      *  - Save label to address relation to their relations table.

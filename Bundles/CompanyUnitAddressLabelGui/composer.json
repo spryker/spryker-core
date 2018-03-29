@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
+    "spryker/company-unit-address-label": "1.0.0",
     "spryker/company-unit-address-gui-extension": "^1.0.0"
   },
   "require-dev": {

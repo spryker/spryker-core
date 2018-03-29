@@ -73,7 +73,9 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
         return $this->getProvidedDependency(CompanyUnitAddressGuiDependencyProvider::PLUGINS_COMPANY_UNIT_ADDRESS_FORM);
     }
 
-
+    /**
+     * @return array
+     */
     public function getCompanyUnitAddressTableExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CompanyUnitAddressGuiDependencyProvider::PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_EXPANDER);
