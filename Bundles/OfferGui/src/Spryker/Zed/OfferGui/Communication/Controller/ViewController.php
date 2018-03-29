@@ -56,7 +56,29 @@ class ViewController extends AbstractController
         $offerTransfer = new OfferTransfer();
         $offerTransfer->setIdOffer($idOffer);
 
-        $offerTransfer = $this->getFactory()->getOfferFacade()->getOfferById($offerTransfer);
+        $offerTransfer = $this->getFactory()
+            ->getOfferFacade()
+            ->getOfferById($offerTransfer);
+
+        return $this->viewResponse([
+            'offer' => $offerTransfer,
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function printVersionAction(Request $request)
+    {
+        $idOffer = $this->castId($request->query->getInt(static::PARAM_ID_OFFER));
+        $offerTransfer = new OfferTransfer();
+        $offerTransfer->setIdOffer($idOffer);
+
+        $offerTransfer = $this->getFactory()
+            ->getOfferFacade()
+            ->getOfferById($offerTransfer);
 
         return $this->viewResponse([
             'offer' => $offerTransfer,
