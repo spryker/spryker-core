@@ -14,8 +14,12 @@
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
+    "spryker/checkout": "^3.0.0 || ^4.0.0",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/checkout": "Used interfase for SaveOrder plugin. Version from 3.0.0"
   },
   "autoload": {
     "psr-4": {

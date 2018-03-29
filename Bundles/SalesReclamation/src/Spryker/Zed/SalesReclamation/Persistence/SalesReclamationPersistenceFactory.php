@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReclamation\Persistence;
 
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationItemQuery;
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -31,5 +32,13 @@ class SalesReclamationPersistenceFactory extends AbstractPersistenceFactory
     public function createSalesReclamationItemQuery(): SpySalesReclamationItemQuery
     {
         return SpySalesReclamationItemQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    public function createSalesOrderQuery(): SpySalesOrderQuery
+    {
+        return SpySalesOrderQuery::create();
     }
 }

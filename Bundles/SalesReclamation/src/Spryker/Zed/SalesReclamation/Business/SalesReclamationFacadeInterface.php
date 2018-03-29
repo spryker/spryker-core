@@ -8,8 +8,10 @@
 namespace Spryker\Zed\SalesReclamation\Business;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 
 interface SalesReclamationFacadeInterface
 {
@@ -52,4 +54,14 @@ interface SalesReclamationFacadeInterface
      * @return null|\Generated\Shared\Transfer\ReclamationTransfer
      */
     public function hydrateReclamationByOrder(OrderTransfer $orderTransfer): ReclamationTransfer;
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveOrderReclamation(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
 }
