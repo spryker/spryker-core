@@ -76,6 +76,16 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
     }
 
     /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     *
+     * @return bool
+     */
+    public function isPreFilled($dataTransfer = null): bool
+    {
+        return false;
+    }
+
+    /**
      * @param string $storeCurrencyString
      *
      * @return bool
