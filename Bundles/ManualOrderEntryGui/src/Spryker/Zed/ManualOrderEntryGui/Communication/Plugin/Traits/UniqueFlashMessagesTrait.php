@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Traits;
 
+use Exception;
 use Generated\Shared\Transfer\MessageTransfer;
 
 /**
@@ -30,12 +31,14 @@ trait UniqueFlashMessagesTrait
      * @param array $messages
      * @param string $addMethod
      *
+     * @throws \Exception
+     *
      * @return void
      */
-    protected function addUniqueFlashMessagesByType($messages, $addMethod)
+    protected function addUniqueFlashMessagesByType($messages, $addMethod): void
     {
         if (!method_exists($this->messengerFacade, $addMethod)) {
-            return;
+            throw new Exception(sprintf('Method %s not exists in messengerFacade', $addMethod));
         }
 
         $resultMessages = [];
