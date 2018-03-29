@@ -58,9 +58,6 @@ class ViewController extends AbstractController
 
         $offerTransfer = $this->getFactory()->getOfferFacade()->getOfferById($offerTransfer);
 
-        dump($offerTransfer);
-        exit;
-
         return $this->viewResponse([
             'offer' => $offerTransfer,
         ]);

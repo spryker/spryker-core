@@ -1,6 +1,6 @@
 {% for orderItem in items %}
   <tr>
-      {% embed '@OfferGui/View/_partials/order-item.twig' with {orderItem: orderItem, displayImage: true, image: orderItem.metadata.image, displayTotals: true, group: false} %}{% endembed %}
+      {% embed '@OfferGui/View/_partials/order-item.twig' with {orderItem: orderItem, displayTotals: true} %}{% endembed %}
   </tr>
   {% embed '@OfferGui/View/_partials/order-item-option.twig' with {orderItem: orderItem} %} {% endembed %}
 {% endfor %}

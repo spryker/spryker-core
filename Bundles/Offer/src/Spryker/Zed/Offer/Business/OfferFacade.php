@@ -75,6 +75,8 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
      */
     public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer
     {
-        return $this->getRepository()->getOfferById($offerTransfer->getIdOffer());
+        return $this->getFactory()
+            ->createOfferReader()
+            ->getOfferById($offerTransfer);
     }
 }

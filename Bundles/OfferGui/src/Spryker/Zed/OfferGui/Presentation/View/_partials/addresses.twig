@@ -28,15 +28,15 @@
 {% import _self as show %}
 
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Addresses' } %}
-
+    {% set quote = offer.quote %}
     {% block widget_content %}
 
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                {{ show.address(offer, offer.billingAddress, 'Billing address', 'Billing address not provided') }}
+                {{ show.address(quote, quote.billingAddress, 'Billing address', 'Billing address not provided') }}
             </div>
             <div class="col-xs-12 col-sm-6">
-                {{ show.address(offer, offer.shippingAddress, 'Shipping address', 'Shipping address not provided') }}
+                {{ show.address(quote, quote.shippingAddress, 'Shipping address', 'Shipping address not provided') }}
             </div>
         </div>
 
