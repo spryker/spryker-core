@@ -16,14 +16,14 @@
 </td>
 <td>
     <div>
-      {% embed '@OfferGui/View/_partials/discounted-price.twig' with {subtotal: orderItem.unitPrice, priceToPay: orderItem.unitPrice - orderItem.unitDiscountAmountFullAggregation | default(0)} %} {% endembed %}
+      {% embed '@OfferGui/View/_details/discounted-price.twig' with {subtotal: orderItem.unitPrice, priceToPay: orderItem.unitPrice - orderItem.unitDiscountAmountFullAggregation | default(0)} %} {% endembed %}
     </div>
     <div class="tax-info">incl. {{ orderItem.taxRate|default(0) }} % tax </div>
 </td>
 
 {% if displayTotals %}
     <td data-qa="item-total-amount" data-qa-raw="{{ priceToPay }}">
-      {% embed '@OfferGui/View/_partials/discounted-price.twig' with {subtotal: subtotal, priceToPay: priceToPay} %} {% endembed %}
+      {% embed '@OfferGui/View/_details/discounted-price.twig' with {subtotal: subtotal, priceToPay: priceToPay} %} {% endembed %}
     </td>
 {% else %}
 {% endif %}

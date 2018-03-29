@@ -12,7 +12,7 @@
                 <th>{{ 'Item total' | trans }}</th>
             </tr>
             </thead>
-            {% embed '@OfferGui/View/_partials/no-group-items.twig' with {items: quote.items} %}{% endembed %}
+            {% embed '@OfferGui/View/_details/no-group-items.twig' with {items: quote.items} %}{% endembed %}
         </table>
 
     {% endblock %}
