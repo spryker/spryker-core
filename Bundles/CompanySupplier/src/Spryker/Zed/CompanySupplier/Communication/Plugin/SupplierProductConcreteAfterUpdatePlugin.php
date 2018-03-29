@@ -9,12 +9,12 @@ namespace Spryker\Zed\CompanySupplier\Communication\Plugin;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteManagerPersistEntityExpanderPluginInterface;
+use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface;
 
 /**
  * @method \Spryker\Zed\CompanySupplier\Business\CompanySupplierFacadeInterface getFacade()
  */
-class ProductConcreteManagerPersistEntityExpanderPlugin extends AbstractPlugin implements ProductConcreteManagerPersistEntityExpanderPluginInterface
+class SupplierProductConcreteAfterUpdatePlugin extends AbstractPlugin implements ProductConcretePluginUpdateInterface
 {
     /**
      * {@inheritdoc}
@@ -23,10 +23,10 @@ class ProductConcreteManagerPersistEntityExpanderPlugin extends AbstractPlugin i
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcrete
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function persistRelatedData(ProductConcreteTransfer $productConcrete): void
+    public function update(ProductConcreteTransfer $productConcrete): ProductConcreteTransfer
     {
-        $this->getFacade()->saveCompanySupplierRelationsForProductConcrete($productConcrete);
+        return $this->getFacade()->saveCompanySupplierRelationsForProductConcrete($productConcrete);
     }
 }

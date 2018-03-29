@@ -189,7 +189,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
         $productConcreteTransfer->setValidTo($formData[ProductConcreteFormEdit::FIELD_VALID_TO]);
 
         foreach ($this->productFormTransferMapperExpanderPlugins as $plugin) {
-            $plugin->map($productConcreteTransfer, $formData);
+            $productConcreteTransfer = $plugin->map($productConcreteTransfer, $formData);
         }
 
         return $productConcreteTransfer;

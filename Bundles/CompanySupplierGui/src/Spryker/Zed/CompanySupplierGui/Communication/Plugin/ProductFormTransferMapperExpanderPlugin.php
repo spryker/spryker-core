@@ -24,10 +24,12 @@ class ProductFormTransferMapperExpanderPlugin extends AbstractPlugin implements 
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcrete
      * @param array $formData
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function map(ProductConcreteTransfer &$productConcrete, array $formData): void
+    public function map(ProductConcreteTransfer $productConcrete, array $formData): ProductConcreteTransfer
     {
         $productConcrete->setCompanySuppliers($formData[ProductConcreteTransfer::COMPANY_SUPPLIERS]);
+
+        return $productConcrete;
     }
 }

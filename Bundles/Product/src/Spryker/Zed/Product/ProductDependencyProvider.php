@@ -41,8 +41,6 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     const PRODUCT_CONCRETE_PLUGINS_AFTER_CREATE = 'PRODUCT_CONCRETE_PLUGINS_AFTER_CREATE';
     const PRODUCT_CONCRETE_PLUGINS_AFTER_UPDATE = 'PRODUCT_CONCRETE_PLUGINS_AFTER_UPDATE';
 
-    public const PERSIST_RELATED_DATA_PLUGINS = 'PRODUCT:PERSIST_RELATED_DATA_PLUGINS';
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -113,8 +111,6 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::PRODUCT_CONCRETE_PLUGINS_AFTER_UPDATE] = function (Container $container) {
             return $this->getProductConcreteAfterUpdatePlugins($container);
         };
-
-        $container = $this->addPersistRelatedDataPlugins($container);
 
         return $container;
     }
@@ -239,28 +235,6 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface[]
      */
     protected function getProductConcreteAfterUpdatePlugins(Container $container)
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container $container
-     */
-    protected function addPersistRelatedDataPlugins(Container $container): Container
-    {
-        $container[static::PERSIST_RELATED_DATA_PLUGINS] = function (Container $container) {
-            return $this->getPersistRelatedDataPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteManagerPersistEntityExpanderPluginInterface[]
-     */
-    protected function getPersistRelatedDataPlugins(): array
     {
         return [];
     }

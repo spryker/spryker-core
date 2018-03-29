@@ -19,9 +19,9 @@ class CompanySupplierEntityManager extends AbstractEntityManager implements Comp
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function saveCompanySupplierRelationsForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
+    public function saveCompanySupplierRelationsForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         $this->deleteCompanySupplierRelationsById($productConcreteTransfer->getIdProductConcrete());
         foreach ($productConcreteTransfer->getCompanySuppliers() as $supplier) {
@@ -31,6 +31,8 @@ class CompanySupplierEntityManager extends AbstractEntityManager implements Comp
 
             $productCompanySupplier->save();
         }
+
+        return $productConcreteTransfer;
     }
 
     /**
