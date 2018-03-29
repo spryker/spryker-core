@@ -8,7 +8,7 @@
     {{ backActionButton('/sales-reclamation', 'Back to Reclamatinos' | trans) }}
     {{ createActionButton(
         url('/manual-order-entry-gui/create', {'id-reclamation': reclamation.idSalesReclamation}),
-        'Create order' | trans
+        'Create connected order' | trans
     ) }}
 {% endblock %}
 
@@ -20,15 +20,9 @@
     </div>
 
     {% if reclamation.createdOrders|length %}
-        <ul id="created orders">
-            Created Orders:
-            {% for order in reclamation.createdOrders %}
-                <li>
-                <a href="{{ url('/sales/detail', {'id-sales-order': order.idSalesOrder}) }}">
-                    Order {{ order.orderReference }}
-                </a>
-                </li>
-            {% endfor %}
+        {% include '@SalesReclamation/Detail/_connected_orders.twig' with {
+            'createdOrders': reclamation.createdOrders,
+        } %}
         </ul>
     {% endif %}
 
