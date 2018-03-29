@@ -9,7 +9,6 @@ namespace Spryker\Zed\SalesReclamation\Communication\Form;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\FormDataProviderInterface;
-use Spryker\Zed\SalesReclamation\SalesReclamationConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 class ReclamationDataProvider implements FormDataProviderInterface
@@ -29,33 +28,35 @@ class ReclamationDataProvider implements FormDataProviderInterface
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function getData($dataTransfer)
+    public function getData($quoteTransfer)
     {
-        if ($this->request->getMethod() === $this->request::METHOD_GET
-            && $this->request->query->has(SalesReclamationConfig::PARAM_ID_RECLAMATION)
-        ) {
-            $idReclamation = $this->request->query->get(SalesReclamationConfig::PARAM_ID_RECLAMATION);
-            $dataTransfer->setReclamationId($idReclamation);
-        }
-
-        return $dataTransfer;
+        return $quoteTransfer;
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    public function getOptions($dataTransfer)
+    public function getOptions($quoteTransfer)
     {
+        $value = null;
+
+        if (!$quoteTransfer->getReclamationId()
+            && $this->request->query->has(ReclamationType::FIELD_RECLAMATION)
+        ) {
+            $value = $this->request->query->get(ReclamationType::FIELD_RECLAMATION);
+        }
+
         return [
             'data_class' => QuoteTransfer::class,
             'allow_extra_fields' => true,
             'csrf_protection' => false,
+            ReclamationType::OPTION_VALUE => $value,
         ];
     }
 }
