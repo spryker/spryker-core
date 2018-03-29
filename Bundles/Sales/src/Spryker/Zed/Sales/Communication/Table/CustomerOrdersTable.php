@@ -36,7 +36,7 @@ class CustomerOrdersTable extends OrdersTable
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface $customerFacade
      * @param string $customerReference
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\UISalesTablePluginInterface[] $uiSalesTablePlugins
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface[] $salesTablePlugins
      */
     public function __construct(
         OrdersTableQueryBuilderInterface $queryBuilder,
@@ -46,7 +46,7 @@ class CustomerOrdersTable extends OrdersTable
         SalesToCustomerInterface $customerFacade,
         $customerReference,
         SalesQueryContainerInterface $salesQueryContainer,
-        array $uiSalesTablePlugins = []
+        array $salesTablePlugins = []
     ) {
         parent::__construct(
             $queryBuilder,
@@ -54,7 +54,7 @@ class CustomerOrdersTable extends OrdersTable
             $sanitizeService,
             $utilDateTimeService,
             $customerFacade,
-            $uiSalesTablePlugins
+            $salesTablePlugins
         );
         $this->customerReference = $customerReference;
         $this->salesQueryContainer = $salesQueryContainer;

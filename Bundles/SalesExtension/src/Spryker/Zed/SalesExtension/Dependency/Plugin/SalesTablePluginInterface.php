@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SalesExtension\Dependency\Plugin;
 
-interface UISalesTablePluginInterface
+interface SalesTablePluginInterface
 {
     const ROW_ACTIONS = 'Actions';
 

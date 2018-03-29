@@ -9,10 +9,10 @@ namespace Spryker\Zed\SalesReclamation\Communication\Plugin;
 
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\SalesExtension\Dependency\Plugin\UISalesTablePluginInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface;
 use Spryker\Zed\SalesReclamation\SalesReclamationConfig;
 
-class UISalesTablePlugin implements UISalesTablePluginInterface
+class SalesTablePlugin implements SalesTablePluginInterface
 {
     const URL_CREATE_RECLAMATION = '/sales-reclamation/create';
 

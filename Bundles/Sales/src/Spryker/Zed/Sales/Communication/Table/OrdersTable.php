@@ -15,11 +15,11 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface;
-use Spryker\Zed\SalesExtension\Dependency\Plugin\UISalesTablePluginInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface;
 
 class OrdersTable extends AbstractTable
 {
-    const URL = UISalesTablePluginInterface::ROW_ACTIONS;
+    const URL = SalesTablePluginInterface::ROW_ACTIONS;
     const ID_ORDER_ITEM_PROCESS = 'id-order-item-process';
     const ID_ORDER_ITEM_STATE = 'id-order-item-state';
     const FILTER = 'filter';
@@ -55,9 +55,9 @@ class OrdersTable extends AbstractTable
     protected $customerFacade;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\UISalesTablePluginInterface[]
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface[]
      */
-    protected $uiSalesTablePlugins;
+    protected $salesTablePlugins;
 
     /**
      * @param \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface $queryBuilder
@@ -65,7 +65,7 @@ class OrdersTable extends AbstractTable
      * @param \Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface $sanitizeService
      * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface $customerFacade
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\UISalesTablePluginInterface[] $uiSalesTablePlugins
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface[] $salesTablePlugins
      */
     public function __construct(
         OrdersTableQueryBuilderInterface $queryBuilder,
@@ -73,14 +73,14 @@ class OrdersTable extends AbstractTable
         SalesToUtilSanitizeInterface $sanitizeService,
         UtilDateTimeServiceInterface $utilDateTimeService,
         SalesToCustomerInterface $customerFacade,
-        array $uiSalesTablePlugins = []
+        array $salesTablePlugins = []
     ) {
         $this->queryBuilder = $queryBuilder;
         $this->moneyFacade = $moneyFacade;
         $this->sanitizeService = $sanitizeService;
         $this->utilDateTimeService = $utilDateTimeService;
         $this->customerFacade = $customerFacade;
-        $this->uiSalesTablePlugins = $uiSalesTablePlugins;
+        $this->salesTablePlugins = $salesTablePlugins;
     }
 
     /**
@@ -348,7 +348,7 @@ class OrdersTable extends AbstractTable
      */
     protected function applyUIPlugins(array $itemLine): array
     {
-        foreach ($this->uiSalesTablePlugins as $uiPlugin) {
+        foreach ($this->salesTablePlugins as $uiPlugin) {
             $itemLine = $uiPlugin->formatTableRow([$this, 'buttonGeneratorCallable'], $itemLine);
         }
 

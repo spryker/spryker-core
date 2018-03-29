@@ -138,7 +138,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_SANITIZE),
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_DATE_FORMATTER),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER),
-            $this->getUISalesTablePlugins()
+            $this->getSalesTablePlugins()
         );
     }
 
@@ -157,7 +157,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_CUSTOMER),
             $customerReference,
             $this->getQueryContainer(),
-            $this->getUISalesTablePlugins()
+            $this->getSalesTablePlugins()
         );
     }
 
@@ -229,9 +229,9 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\UISalesTablePluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface[]
      */
-    public function getUISalesTablePlugins()
+    public function getSalesTablePlugins()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::UI_SALES_TABLE_PLUGINS);
     }

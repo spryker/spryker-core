@@ -74,7 +74,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMoneyPlugin($container);
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addCustomerFacade($container);
-        $container = $this->addUISalesTablePlugins($container);
+        $container = $this->addSalesTablePlugins($container);
 
         return $container;
     }
@@ -98,10 +98,10 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUISalesTablePlugins(Container $container)
+    protected function addSalesTablePlugins(Container $container)
     {
         $container[static::UI_SALES_TABLE_PLUGINS] = function (Container $container) {
-            return $this->getUISalesTablePlugins();
+            return $this->getSalesTablePlugins();
         };
 
         return $container;
@@ -270,9 +270,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\UISalesTablePluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface[]
      */
-    protected function getUISalesTablePlugins()
+    protected function getSalesTablePlugins()
     {
          return [];
     }
