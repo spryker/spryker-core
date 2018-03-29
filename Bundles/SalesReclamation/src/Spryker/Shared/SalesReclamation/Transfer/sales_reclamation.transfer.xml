@@ -26,7 +26,7 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="reclamationId" type="integer"/>
+        <property name="reclamationId" type="int"/>
     </transfer>
 
     <transfer name="Order">
