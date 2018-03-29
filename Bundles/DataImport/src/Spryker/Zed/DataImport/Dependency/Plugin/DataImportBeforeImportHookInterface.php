@@ -11,7 +11,7 @@ interface DataImportBeforeImportHookInterface
 {
     /**
      * Specification:
-     * - This will be executed before the import was running.
+     * - This will be executed before the import has been run.
      *
      * @api
      *

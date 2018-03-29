@@ -11,7 +11,7 @@ interface DataImportAfterImportHookInterface
 {
     /**
      * Specification:
-     * - This will be executed after the import was running.
+     * - This will be executed after the import has been run.
      *
      * @api
      *
