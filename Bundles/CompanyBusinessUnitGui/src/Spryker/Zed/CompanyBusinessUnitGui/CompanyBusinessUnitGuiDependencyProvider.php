@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyBusinessUnitGui;
 
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeBridge;
+use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -16,6 +17,7 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
 {
     public const PROPEL_QUERY_COMPANY_BUSINESS_UNIT = 'PROPEL_QUERY_COMPANY_BUSINESS_UNIT';
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
+    public const FACADE_COMPANY = 'FACADE_COMPANY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,6 +29,7 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addCompanyBusinessUnitQuery($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
+        $container = $this->addCompanyFacade($container);
 
         return $container;
     }
@@ -55,6 +58,22 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
         $container[static::FACADE_COMPANY_BUSINESS_UNIT] = function (Container $container) {
             return new CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeBridge(
                 $container->getLocator()->companyBusinessUnit()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyFacade(Container $container): Container
+    {
+        $container[static::FACADE_COMPANY] = function (Container $container) {
+            return new CompanyBusinessUnitGuiToCompanyFacadeBridge(
+                $container->getLocator()->company()->facade()
             );
         };
 

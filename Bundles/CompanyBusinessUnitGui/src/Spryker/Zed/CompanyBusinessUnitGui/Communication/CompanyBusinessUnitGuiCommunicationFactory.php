@@ -13,6 +13,7 @@ use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyBu
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Table\CompanyBusinessUnitTable;
 use Spryker\Zed\CompanyBusinessUnitGui\CompanyBusinessUnitGuiDependencyProvider;
 use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface;
+use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -44,7 +45,10 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
      */
     public function createCompanyBusinessUnitFormDataProvider(): CompanyBusinessUnitFormDataProvider
     {
-        return new CompanyBusinessUnitFormDataProvider($this->getCompanyBusinessUnitFacade());
+        return new CompanyBusinessUnitFormDataProvider(
+            $this->getCompanyBusinessUnitFacade(),
+            $this->getCompanyFacade()
+        );
     }
 
     /**
@@ -61,5 +65,13 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
     protected function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
     {
         return $this->getProvidedDependency(CompanyBusinessUnitGuiDependencyProvider::PROPEL_QUERY_COMPANY_BUSINESS_UNIT);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyFacadeInterface
+     */
+    public function getCompanyFacade(): CompanyBusinessUnitGuiToCompanyFacadeInterface
+    {
+        return $this->getProvidedDependency(CompanyBusinessUnitGuiDependencyProvider::FACADE_COMPANY);
     }
 }

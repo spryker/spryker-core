@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\Company\Business;
 
+use Generated\Shared\Transfer\CompanyCollectionTransfer;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyTypeCollectionTransfer;
@@ -84,5 +85,17 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
     public function getCompanyTypes(): CompanyTypeCollectionTransfer
     {
         return $this->getRepository()->getCompanyTypes();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
+     */
+    public function getCompanies(): CompanyCollectionTransfer
+    {
+        return $this->getRepository()->getCompanies();
     }
 }

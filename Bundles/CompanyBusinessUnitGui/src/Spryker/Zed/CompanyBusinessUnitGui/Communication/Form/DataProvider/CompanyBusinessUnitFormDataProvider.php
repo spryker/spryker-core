@@ -8,7 +8,9 @@
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm;
 use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface;
+use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyFacadeInterface;
 
 class CompanyBusinessUnitFormDataProvider
 {
@@ -18,33 +20,50 @@ class CompanyBusinessUnitFormDataProvider
     protected $companyBusinessUnitFacade;
 
     /**
-     * @param \Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
+     * @var \Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyFacadeInterface
      */
-    public function __construct(CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade)
-    {
+    protected $companyFacade;
+
+    /**
+     * @param \Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
+     * @param \Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyFacadeInterface $companyFacade
+     */
+    public function __construct(
+        CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
+        CompanyBusinessUnitGuiToCompanyFacadeInterface $companyFacade
+    ) {
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
+        $this->companyFacade = $companyFacade;
     }
 
     /**
-     * @param int $idCompanyBusinessUnit
+     * @param int|null $idCompanyBusinessUnit
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    public function getData(int $idCompanyBusinessUnit): CompanyBusinessUnitTransfer
+    public function getData(?int $idCompanyBusinessUnit = null): CompanyBusinessUnitTransfer
     {
+        $companyBusinessUnitTransfer = $this->createCompanyBusinessUnitTransfer();
+        if (!$idCompanyBusinessUnit) {
+            return $companyBusinessUnitTransfer;
+        }
+
         return $this->companyBusinessUnitFacade->getCompanyBusinessUnitById(
-            $this->createCompanyBusinessUnitTransfer()->setIdCompanyBusinessUnit($idCompanyBusinessUnit)
+            $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit)
         );
     }
 
     /**
-     * @param int $idCompanyBusinessUnit
+     * @param int|null $idCompanyBusinessUnit
      *
      * @return array
      */
-    public function getOptions(int $idCompanyBusinessUnit): array
+    public function getOptions(?int $idCompanyBusinessUnit = null): array
     {
-        return ['data_class' => CompanyBusinessUnitTransfer::class];
+        return [
+            'data_class' => CompanyBusinessUnitTransfer::class,
+            CompanyBusinessUnitForm::OPTION_COMPANY_CHOICES => $this->prepareCompanyChoices(),
+        ];
     }
 
     /**
@@ -53,5 +72,19 @@ class CompanyBusinessUnitFormDataProvider
     protected function createCompanyBusinessUnitTransfer(): CompanyBusinessUnitTransfer
     {
         return new CompanyBusinessUnitTransfer();
+    }
+
+    /**
+     * @return array
+     */
+    protected function prepareCompanyChoices(): array
+    {
+        $result = [];
+
+        foreach ($this->companyFacade->getCompanies()->getCompanies() as $company) {
+            $result[$company->getIdCompany()] = $company->getName();
+        }
+
+        return $result;
     }
 }

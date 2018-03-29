@@ -31,4 +31,8 @@
     <transfer name="CompanyTypeCollection">
         <property name="companyTypes" type="SpyCompanyTypeEntity[]" singular="companyType"/>
     </transfer>
+
+    <transfer name="CompanyCollection">
+        <property name="companies" type="Company[]" singular="company" />
+    </transfer>
 </transfers>
