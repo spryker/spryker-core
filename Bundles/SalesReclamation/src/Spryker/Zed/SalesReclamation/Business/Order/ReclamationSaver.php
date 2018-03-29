@@ -35,7 +35,10 @@ class ReclamationSaver implements ReclamationSaverInterface
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
-        $quoteTransfer->requireReclamationId();
+        if (!$quoteTransfer->getReclamationId()) {
+            return;
+        }
+
         $saveOrderTransfer->requireIdSalesOrder();
 
         $spySalesOrder = $this->queryContainer
