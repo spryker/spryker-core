@@ -18,11 +18,13 @@
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
+    "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/cart": "If you want to use cart plugins.",
     "spryker/installer": "If you want to use SharedCartPermissionInstallerPlugin. Minimum required version: 4.0.0."
   },
   "autoload": {

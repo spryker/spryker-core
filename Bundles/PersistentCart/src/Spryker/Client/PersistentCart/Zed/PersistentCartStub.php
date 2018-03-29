@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Spryker\Client\ZedRequest\Stub\ZedRequestStub;
 
 class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInterface
@@ -114,5 +115,25 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
     public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->zedStub->call('/persistent-cart/gateway/persist-quote', $quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->zedStub->call('/persistent-cart/gateway/create-quote', $quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->zedStub->call('/persistent-cart/gateway/update-quote', $quoteUpdateRequestTransfer);
     }
 }

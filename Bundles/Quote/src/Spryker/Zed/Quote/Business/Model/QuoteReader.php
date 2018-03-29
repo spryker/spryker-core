@@ -53,6 +53,7 @@ class QuoteReader implements QuoteReaderInterface
             return $quoteResponseTransfer;
         }
 
+        $quoteResponseTransfer->setCustomer($customerTransfer);
         $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
         $quoteResponseTransfer->setIsSuccessful(true);
 

@@ -9,6 +9,7 @@ namespace Spryker\Zed\PersistentCart\Business\Model;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
 
 class QuoteWriter implements QuoteWriterInterface
@@ -40,8 +41,27 @@ class QuoteWriter implements QuoteWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->quoteResponseExpander->expand($this->quoteFacade->persistQuote($quoteTransfer));
+        return $this->quoteResponseExpander->expand($this->quoteFacade->createQuote($quoteTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
+    {
+        $quoteResponseTransfer = $this->quoteFacade->findQuoteById($quoteUpdateRequestTransfer->getIdQuote());
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            $quoteResponseTransfer->setCustomer($quoteUpdateRequestTransfer->getCustomer());
+            return $this->quoteResponseExpander->expand($quoteResponseTransfer);
+        }
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+        $quoteTransfer->setCustomer($quoteUpdateRequestTransfer->getCustomer());
+        $quoteTransfer->fromArray($quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->modifiedToArray(), true);
+
+        return $this->quoteResponseExpander->expand($this->quoteFacade->updateQuote($quoteTransfer));
     }
 }

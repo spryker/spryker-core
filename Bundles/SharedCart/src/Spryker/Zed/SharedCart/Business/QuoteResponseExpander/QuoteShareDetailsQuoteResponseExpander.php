@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 
@@ -47,6 +48,9 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
         );
         if (count($companyUserTransferCollection)) {
             return $this->addShareInformation($quoteResponseTransfer, $companyUserTransferCollection);
+        }
+        if ($this->isCustomerQuoteOwner($quoteResponseTransfer->getQuoteTransfer())) {
+            $quoteResponseTransfer->getQuoteTransfer()->setShareDetails(new ArrayObject());
         }
 
         return $quoteResponseTransfer;
@@ -159,5 +163,16 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
         }
 
         return $shareDetailsTransferList;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isCustomerQuoteOwner(QuoteTransfer $quoteTransfer): bool
+    {
+        $customer = $quoteTransfer->getCustomer();
+        return strcmp($customer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
     }
 }

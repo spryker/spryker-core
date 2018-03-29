@@ -31,7 +31,7 @@ class SharedCartsUpdateQuoteUpdatePlugin extends AbstractPlugin implements Quote
      */
     public function processResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        if (count($quoteResponseTransfer->getSharedCustomerQuotes()->getQuotes())) {
+        if ($quoteResponseTransfer->getSharedCustomerQuotes() && count($quoteResponseTransfer->getSharedCustomerQuotes()->getQuotes())) {
             $multiCartClient = $this->getFactory()->getMultiCartClient();
             $customerQuoteCollectionTransfer = $multiCartClient->getQuoteCollection();
             foreach ($quoteResponseTransfer->getSharedCustomerQuotes()->getQuotes() as $quoteTransfer) {

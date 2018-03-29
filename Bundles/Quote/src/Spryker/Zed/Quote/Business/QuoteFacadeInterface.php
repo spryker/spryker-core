@@ -18,19 +18,6 @@ interface QuoteFacadeInterface
 {
     /**
      * Specification:
-     * - Persists new quote entity if it does not exist.
-     * - Updates existing quote entity from QuoteTransfer.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
-
-    /**
-     * Specification:
      * - Create new quote entity if it does not exist.
      *
      * @api

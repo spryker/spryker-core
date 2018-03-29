@@ -78,7 +78,7 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
         if (count($quoteTransfer->getItems())) {
             $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
         }
-        $this->quoteFacade->persistQuote($quoteTransfer);
+        $this->quoteFacade->updateQuote($quoteTransfer);
 
         $quoteResponseTransfer = new QuoteResponseTransfer();
         $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
@@ -110,6 +110,7 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
     protected function mergeQuotes(QuoteTransfer $targetQuoteTransfer, QuoteTransfer $sourceQuoteTransfer)
     {
         if (!count($targetQuoteTransfer->getItems())) {
+            $sourceQuoteTransfer->fromArray($targetQuoteTransfer->modifiedToArray(), true);
             return $sourceQuoteTransfer;
         }
         $quoteMergeRequestTransfer = new QuoteMergeRequestTransfer();

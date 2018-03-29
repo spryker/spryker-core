@@ -32,7 +32,10 @@ class DefaultQuoteUpdatePlugin extends AbstractPlugin implements QuoteUpdatePlug
         if ($quoteResponseTransfer->getCustomerQuotes() && !$quoteResponseTransfer->getQuoteTransfer()->getIsDefault()) {
             $defaultQuoteTransfer = $this->findDefaultQuote($quoteResponseTransfer->getCustomerQuotes());
             if ($defaultQuoteTransfer) {
+                $defaultQuoteTransfer = $this->updateSessionQuote($defaultQuoteTransfer);
+                $this->getFactory()->getQuoteClient()->setQuote($defaultQuoteTransfer);
                 $quoteResponseTransfer->setQuoteTransfer($defaultQuoteTransfer);
+                return $quoteResponseTransfer;
             }
         }
 
@@ -44,14 +47,37 @@ class DefaultQuoteUpdatePlugin extends AbstractPlugin implements QuoteUpdatePlug
      *
      * @return null|\Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function findDefaultQuote(QuoteCollectionTransfer $quoteCollectionTransfer): ?QuoteTransfer
+    protected function findDefaultQuote(QuoteCollectionTransfer $quoteCollectionTransfer): QuoteTransfer
     {
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             if ($quoteTransfer->getIsDefault()) {
                 return $quoteTransfer;
             }
         }
+        $quoteTransfer = new QuoteTransfer();
+        if (count($quoteCollectionTransfer->getQuotes())) {
+            $quoteTransfer = $quoteCollectionTransfer->getQuotes()->offsetGet(0);
+        }
+        $quoteTransfer->setIsDefault(true);
 
-        return null;
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function updateSessionQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $sessionQuoteTransfer = $this->getFactory()->getQuoteClient()->getQuote();
+        if ($sessionQuoteTransfer->getIdQuote() === $quoteTransfer->getIdQuote()) {
+            $quoteTransfer = $sessionQuoteTransfer->fromArray(
+                $quoteTransfer->modifiedToArray(),
+                true
+            );
+        }
+
+        return $quoteTransfer;
     }
 }

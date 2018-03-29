@@ -15,5 +15,14 @@
         <property name="cartNote" type="string"/>
     </transfer>
 
+    <transfer name="QuoteResponse">
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="QuoteUpdateRequestAttributes">
+        <property name="cartNote" type="string"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
 </transfers>
 

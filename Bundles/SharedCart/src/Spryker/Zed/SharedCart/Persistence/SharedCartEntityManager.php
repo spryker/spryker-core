@@ -97,4 +97,32 @@ class SharedCartEntityManager extends AbstractEntityManager implements SharedCar
             ->filterByIdQuoteCompanyUser($idQuoteCompanyUser)
             ->delete();
     }
+
+    /**
+     * @param int $idCompanyUser
+     * @param int $idQuote
+     *
+     * @return void
+     */
+    public function setQuoteDefault(int $idCompanyUser, int $idQuote): void
+    {
+        $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByFkQuote($idQuote)
+            ->filterByFkCompanyUser($idCompanyUser)
+            ->update(['IsDefault' => true]);
+    }
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return void
+     */
+    public function unDefaultCustomerQuotes(int $idCompanyUser): void
+    {
+        $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByFkCompanyUser($idCompanyUser)
+            ->update(['IsDefault' => false]);
+    }
 }

@@ -26,6 +26,21 @@ class UpdateShareDetailsQuoteAfterSavePlugin extends AbstractPlugin implements Q
      */
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
+        if (!$quoteTransfer->isPropertyModified(QuoteTransfer::SHARE_DETAILS) || !$this->isCustomerQuoteOwner($quoteTransfer)) {
+            return $quoteTransfer;
+        }
+
         return $this->getFacade()->updateQuoteShareDetails($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isCustomerQuoteOwner(QuoteTransfer $quoteTransfer): bool
+    {
+        $customer = $quoteTransfer->getCustomer();
+        return strcmp($customer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
     }
 }

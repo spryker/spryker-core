@@ -25,5 +25,15 @@
         <property name="sourceQuote" type="Quote"/>
     </transfer>
 
+    <transfer name="QuoteUpdateRequest">
+        <property name="idQuote" type="int"/>
+        <property name="customer" type="Customer"/>
+        <property name="quoteUpdateRequestAttributes" type="QuoteUpdateRequestAttributes"/>
+    </transfer>
+
+    <transfer name="QuoteUpdateRequestAttributes">
+        <property name="currency" type="Currency"/>
+    </transfer>
+
 </transfers>
 

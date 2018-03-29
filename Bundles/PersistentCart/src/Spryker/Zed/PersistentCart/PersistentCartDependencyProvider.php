@@ -11,15 +11,18 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PersistentCart\Communication\Plugin\SimpleProductQuoteItemFinderPlugin;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeBridge;
+use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeBridge;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeBridge;
+use Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
 class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_CART = 'FACADE_CART';
-    const FACADE_QUOTE = 'FACADE_QUOTE';
-    const PLUGIN_QUOTE_ITEM_FINDER = 'PLUGIN_QUOTE_ITEM_FINDER';
-    const PLUGINS_QUOTE_RESPONSE_EXPANDER = 'PLUGINS_QUOTE_RESPONSE_EXPANDER';
-    const PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER = 'PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER';
+    public const FACADE_CART = 'FACADE_CART';
+    public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    public const FACADE_QUOTE = 'FACADE_QUOTE';
+    public const PLUGIN_QUOTE_ITEM_FINDER = 'PLUGIN_QUOTE_ITEM_FINDER';
+    public const PLUGINS_QUOTE_RESPONSE_EXPANDER = 'PLUGINS_QUOTE_RESPONSE_EXPANDER';
+    public const PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER = 'PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,6 +32,7 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addCartFacade($container);
+        $container = $this->addMessengerFacade($container);
         $container = $this->addQuoteItemFinderPlugin($container);
         $container = $this->addQuoteFacade($container);
         $container = $this->addQuoteResponseExpanderPlugins($container);
@@ -42,7 +46,7 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addQuoteFacade(Container $container)
+    protected function addQuoteFacade(Container $container): Container
     {
         $container[static::FACADE_QUOTE] = function (Container $container) {
             return new PersistentCartToQuoteFacadeBridge($container->getLocator()->quote()->facade());
@@ -56,7 +60,7 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCartFacade(Container $container)
+    protected function addCartFacade(Container $container): Container
     {
         $container[static::FACADE_CART] = function (Container $container) {
             return new PersistentCartToCartFacadeBridge($container->getLocator()->cart()->facade());
@@ -70,7 +74,21 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addQuoteItemFinderPlugin(Container $container)
+    protected function addMessengerFacade(Container $container): Container
+    {
+        $container[static::FACADE_MESSENGER] = function (Container $container) {
+            return new PersistentCartToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteItemFinderPlugin(Container $container): Container
     {
         $container[static::PLUGIN_QUOTE_ITEM_FINDER] = function (Container $container) {
             return $this->getQuoteItemFinderPlugin();
@@ -84,7 +102,7 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addQuoteResponseExpanderPlugins(Container $container)
+    protected function addQuoteResponseExpanderPlugins(Container $container): Container
     {
         $container[static::PLUGINS_QUOTE_RESPONSE_EXPANDER] = function (Container $container) {
             return $this->getQuoteResponseExpanderPlugins();
@@ -98,7 +116,7 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addRemoveItemsRequestExpanderPlugins(Container $container)
+    protected function addRemoveItemsRequestExpanderPlugins(Container $container): Container
     {
         $container[static::PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER] = function (Container $container) {
             return $this->getRemoveItemsRequestExpanderPlugins();
@@ -110,7 +128,7 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteItemFinderPluginInterface
      */
-    protected function getQuoteItemFinderPlugin()
+    protected function getQuoteItemFinderPlugin(): QuoteItemFinderPluginInterface
     {
         return new SimpleProductQuoteItemFinderPlugin();
     }
@@ -118,7 +136,7 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteResponseExpanderPluginInterface[]
      */
-    protected function getQuoteResponseExpanderPlugins()
+    protected function getQuoteResponseExpanderPlugins(): array
     {
         return [];
     }
@@ -126,7 +144,7 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\PersistentCart\Dependency\Plugin\CartChangeRequestExpandPluginInterface[]
      */
-    protected function getRemoveItemsRequestExpanderPlugins()
+    protected function getRemoveItemsRequestExpanderPlugins(): array
     {
         return [];
     }

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\PersistentCart\Dependency\Facade;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteMergeRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -32,9 +31,19 @@ class PersistentCartToQuoteFacadeBridge implements PersistentCartToQuoteFacadeIn
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->quoteFacade->persistQuote($quoteTransfer);
+        return $this->quoteFacade->createQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->quoteFacade->updateQuote($quoteTransfer);
     }
 
     /**
@@ -58,19 +67,9 @@ class PersistentCartToQuoteFacadeBridge implements PersistentCartToQuoteFacadeIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteMergeRequestTransfer $quoteMergeRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function mergeQuotes(QuoteMergeRequestTransfer $quoteMergeRequestTransfer): QuoteTransfer
-    {
-        return $this->quoteFacade->mergeQuotes($quoteMergeRequestTransfer);
-    }
-
-    /**
      * @return string
      */
-    public function getStorageStrategy()
+    public function getStorageStrategy(): string
     {
         return $this->quoteFacade->getStorageStrategy();
     }

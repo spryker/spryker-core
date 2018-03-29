@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SharedCart\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SharedCart\Business\Activator\QuoteActivator;
+use Spryker\Zed\SharedCart\Business\Activator\QuoteActivatorInterface;
 use Spryker\Zed\SharedCart\Business\Installer\QuotePermissionGroupInstaller;
 use Spryker\Zed\SharedCart\Business\Installer\QuotePermissionGroupInstallerInterface;
 use Spryker\Zed\SharedCart\Business\Model\QuoteCompanyUserWriter;
@@ -88,6 +90,14 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getEntityManager()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Business\Activator\QuoteActivatorInterface
+     */
+    public function createQuoteActivator(): QuoteActivatorInterface
+    {
+        return new QuoteActivator($this->getEntityManager());
     }
 
     /**
