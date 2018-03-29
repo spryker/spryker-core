@@ -60,6 +60,6 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
      */
     protected function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
     {
-        return $this->getProvidedDependency(CompanyBusinessUnitGuiDependencyProvider::QUERY_COMPANY_BUSINESS_UNIT);
+        return $this->getProvidedDependency(CompanyBusinessUnitGuiDependencyProvider::PROPEL_QUERY_COMPANY_BUSINESS_UNIT);
     }
 }

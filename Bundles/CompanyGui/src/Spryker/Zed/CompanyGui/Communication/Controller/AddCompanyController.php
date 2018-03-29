@@ -15,8 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddCompanyController extends AbstractController
 {
-    public const URL_PARAM_REDIRECT_URL = 'redirect-url';
-    public const REDIRECT_URL_DEFAULT = '/company-gui/list-company';
+    protected const PARAM_REDIRECT_URL = 'redirect-url';
+    protected const REDIRECT_URL_DEFAULT = '/company-gui/list-company';
 
     protected const MESSAGE_COMPANY_CREATE_SUCCESS = 'Company has been created.';
     protected const MESSAGE_COMPANY_CREATE_ERROR = 'Company has not been created.';
@@ -28,7 +28,7 @@ class AddCompanyController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
+        $redirectUrl = $request->get(static::PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
 
         $dataProvider = $this->getFactory()->createCompanyFormDataProvider();
         $form = $this->getFactory()

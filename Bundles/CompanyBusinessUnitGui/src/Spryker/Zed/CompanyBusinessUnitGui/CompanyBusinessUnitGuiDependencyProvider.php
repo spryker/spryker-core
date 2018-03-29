@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Container;
 
 class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const QUERY_COMPANY_BUSINESS_UNIT = 'QUERY_COMPANY_BUSINESS_UNIT';
+    public const PROPEL_QUERY_COMPANY_BUSINESS_UNIT = 'PROPEL_QUERY_COMPANY_BUSINESS_UNIT';
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
 
     /**
@@ -38,7 +38,7 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addCompanyBusinessUnitQuery(Container $container): Container
     {
-        $container[static::QUERY_COMPANY_BUSINESS_UNIT] = function (Container $container) {
+        $container[static::PROPEL_QUERY_COMPANY_BUSINESS_UNIT] = function (Container $container) {
             return SpyCompanyBusinessUnitQuery::create();
         };
 
