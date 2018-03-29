@@ -7,60 +7,74 @@
 
 namespace Spryker\Zed\CompanyUnitAddress\Business;
 
-use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressReader;
-use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressReaderInterface;
-use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressWriter;
-use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressWriterInterface;
+use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReader;
+use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReaderInterface;
+use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressWriter;
+use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressWriterInterface;
+use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddress;
+use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressInterface;
+use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutor;
+use Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutorInterface;
 use Spryker\Zed\CompanyUnitAddress\CompanyUnitAddressDependencyProvider;
 use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCountryFacadeInterface;
 use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToLocaleFacadeInterface;
-use Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressRepositoryInterface;
-use Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressWriterRepositoryInterface;
-use Spryker\Zed\CompanyUnitAddress\Persistence\Propel\CompanyUnitAddressPropelRepository;
-use Spryker\Zed\CompanyUnitAddress\Persistence\Propel\CompanyUnitAddressWriterPropelRepository;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
+ * @method \Spryker\Zed\CompanyUnitAddress\CompanyUnitAddressConfig getConfig()
+ * @method \Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressBusinessFactory getFactory()
+ * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressQueryContainerInterface getQueryContainer()
  */
 class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressWriterInterface
+     * @return \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressInterface
      */
-    public function createCompanyUnitAddressWriter(): CompanyUnitAddressWriterInterface
+    public function createCompanyUnitAddress(): CompanyUnitAddressInterface
     {
-        return new CompanyUnitAddressWriter(
-            $this->createCompanyUnitAddressWriterRepository(),
+        return new CompanyUnitAddress(
+            $this->getEntityManager(),
             $this->getCountryFacade(),
             $this->getLocaleFacade(),
-            $this->getCompanyBusinessUnitFacade()
+            $this->getCompanyBusinessUnitFacade(),
+            $this->createCompanyUnitAddressPluginExecutor()
         );
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressReaderInterface
+     * @return \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressWriterInterface
      */
-    public function createCompanyUnitAddressReader(): CompanyUnitAddressReaderInterface
+    public function createCompanyBusinessUnitAddressWriter(): CompanyBusinessUnitAddressWriterInterface
     {
-        return new CompanyUnitAddressReader($this->createCompanyUnitAddressRepository());
+        return new CompanyBusinessUnitAddressWriter(
+            $this->createCompanyBusinessUnitAddressReader(),
+            $this->getEntityManager()
+        );
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressRepositoryInterface
+     * @return \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReaderInterface
      */
-    public function createCompanyUnitAddressRepository(): CompanyUnitAddressRepositoryInterface
+    public function createCompanyBusinessUnitAddressReader(): CompanyBusinessUnitAddressReaderInterface
     {
-        return new CompanyUnitAddressPropelRepository();
+        return new CompanyBusinessUnitAddressReader(
+            $this->getRepository(),
+            $this->createCompanyUnitAddressPluginExecutor()
+        );
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressWriterRepositoryInterface
+     * @return \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutorInterface
      */
-    public function createCompanyUnitAddressWriterRepository(): CompanyUnitAddressWriterRepositoryInterface
+    protected function createCompanyUnitAddressPluginExecutor(): CompanyUnitAddressPluginExecutorInterface
     {
-        return new CompanyUnitAddressWriterPropelRepository();
+        return new CompanyUnitAddressPluginExecutor(
+            $this->getCompanyUnitAddressHydratePlugins(),
+            $this->getCompanyUnitAddressPostSavePlugins()
+        );
     }
 
     /**
@@ -85,5 +99,21 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
     protected function getLocaleFacade(): CompanyUnitAddressToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(CompanyUnitAddressDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressPostSavePluginInterface[]
+     */
+    protected function getCompanyUnitAddressPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyUnitAddressDependencyProvider::PLUGIN_ADDRESS_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressExtension\Dependency\Plugin\CompanyUnitAddressHydratePluginInterface[]
+     */
+    protected function getCompanyUnitAddressHydratePlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyUnitAddressDependencyProvider::PLUGIN_ADDRESS_TRANSFER_HYDRATING);
     }
 }

@@ -8,44 +8,40 @@
 namespace Spryker\Zed\CompanyBusinessUnit\Persistence;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
-use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
 interface CompanyBusinessUnitRepositoryInterface
 {
     /**
-     * Specification:
-     * - Finds a company business unit by CompanyBusinessUnitTransfer::idCompanyBusinessUnit in the transfer
+     * @param int $idCompanyBusinessUnit
      *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
     public function getCompanyBusinessUnitById(
-        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-    ): CompanyBusinessUnitResponseTransfer;
+        int $idCompanyBusinessUnit
+    ): CompanyBusinessUnitTransfer;
 
     /**
-     * Specification:
-     * - Retrieve business unit collection
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer $businessUnitCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
     public function getCompanyBusinessUnitCollection(
-        CompanyBusinessUnitCollectionTransfer $businessUnitCollectionTransfer
+        CompanyBusinessUnitCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer;
 
     /**
-     * Specification:
-     * - Retrieve collection of company users assigned to company business init
-     *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     * @param int $idCompanyBusinessUnit
      *
      * @return bool
      */
-    public function isCompanyBusinessUnitHasUsers(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool;
+    public function hasUsers(int $idCompanyBusinessUnit): bool;
+
+    /**
+     * @param int $idCompany
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
+     */
+    public function findDefaultBusinessUnitByCompanyId(int $idCompany): ?CompanyBusinessUnitTransfer;
 }

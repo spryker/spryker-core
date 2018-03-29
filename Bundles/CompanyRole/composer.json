@@ -4,11 +4,14 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/company": "^0.0.2",
-    "spryker/company-user": "^0.0.3",
+    "spryker/company": "^1.0.0",
+    "spryker/company-extension": "^1.0.0",
+    "spryker/company-user": "^1.0.0",
+    "spryker/company-user-extension": "^1.0.0",
     "spryker/customer": "^7.5.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/permission": "^0.0.3",
+    "spryker/permission": "^1.0.0",
+    "spryker/permission-extension": "^1.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
   },

@@ -57,6 +57,14 @@ class AutoloadUpdater implements UpdaterInterface
     ];
 
     /**
+     * @var array
+     */
+    protected $sprykerCodeNamespaces = [
+        self::SPRYKER_NAMESPACE,
+        self::SPRYKER_SHOP_NAMESPACE,
+    ];
+
+    /**
      * @param array $composerJson
      * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
      *
@@ -103,15 +111,18 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function updateAutoloadWithDefaultSrcDirectory(array $composerJson, $modulePath)
     {
-        $pathParts = [
-            static::BASE_SRC_DIRECTORY,
-            static::SPRYKER_NAMESPACE,
-        ];
-        $directoryPath = $this->getPath(array_merge([rtrim($modulePath, DIRECTORY_SEPARATOR)], $pathParts));
+        foreach ($this->sprykerCodeNamespaces as $sprykerCodeNamespace) {
+            $pathParts = [
+                static::BASE_SRC_DIRECTORY,
+                $sprykerCodeNamespace,
+            ];
 
-        if ($this->pathExists($directoryPath)) {
-            $composerJson = $this->addAutoloadPsr4($composerJson);
-            $composerJson[static::AUTOLOAD_KEY][static::PSR_4][static::SPRYKER_NAMESPACE . '\\'] = $this->getPath($pathParts);
+            $directoryPath = $this->getPath(array_merge([rtrim($modulePath, DIRECTORY_SEPARATOR)], $pathParts));
+
+            if ($this->pathExists($directoryPath)) {
+                $composerJson = $this->addAutoloadPsr4($composerJson);
+                $composerJson[static::AUTOLOAD_KEY][static::PSR_4][$sprykerCodeNamespace . '\\'] = $this->getPath($pathParts);
+            }
         }
 
         return $composerJson;
@@ -143,7 +154,7 @@ class AutoloadUpdater implements UpdaterInterface
                 foreach ($nonEmptySupportDirectories as $directory) {
                     preg_match('/' . static::BASE_SUPPORT_DIRECTORY . '\/(.+)/', $directory, $subNameSpace);
                     $composerJson[static::AUTOLOAD_KEY][static::PSR_4][static::SPRYKER_TEST_NAMESPACE . '\\' . $application . '\\' . $moduleName . '\\' . str_replace('/', '\\', $subNameSpace[1]) . '\\']
-                        = $this->getPath(array_merge($pathParts, explode('/', $subNameSpace[1])));
+                        = $this->getPath(array_merge($pathParts, explode(DIRECTORY_SEPARATOR, $subNameSpace[1])));
                 }
             }
         }
@@ -177,7 +188,7 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function getLastPartOfPath($path)
     {
-        $pathArray = explode('/', rtrim($path, '/'));
+        $pathArray = explode(DIRECTORY_SEPARATOR, rtrim($path, DIRECTORY_SEPARATOR));
         return end($pathArray);
     }
 
@@ -223,7 +234,7 @@ class AutoloadUpdater implements UpdaterInterface
 
         if ($this->pathExists($directoryPath)) {
             $composerJson = $this->addAutoloadDevPsr0($composerJson);
-            $composerJson[static::AUTOLOAD_DEV_KEY][static::PSR_0][$testDirectoryKey] = static::BASE_TESTS_DIRECTORY . '/';
+            $composerJson[static::AUTOLOAD_DEV_KEY][static::PSR_0][$testDirectoryKey] = static::BASE_TESTS_DIRECTORY . DIRECTORY_SEPARATOR;
         }
 
         if (isset($composerJson[static::AUTOLOAD_KEY][static::PSR_0][$testDirectoryKey])) {
@@ -240,7 +251,17 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function pathExists($path)
     {
-        return (is_dir($path) || is_file(rtrim($path, '/')));
+        return (is_dir($path) || $this->isFile($path));
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return bool
+     */
+    protected function isFile($path)
+    {
+        return is_file(rtrim($path, DIRECTORY_SEPARATOR));
     }
 
     /**
@@ -266,7 +287,7 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function getPath(array $pathParts)
     {
-        return implode($pathParts, DIRECTORY_SEPARATOR) . '/';
+        return implode($pathParts, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -383,7 +404,7 @@ class AutoloadUpdater implements UpdaterInterface
             ]);
 
             if (!$this->pathExists($path) || !in_array($this->getLastPartOfPath($relativeDirectory), $this->autoloadPSR4Whitelist)) {
-                if (is_file($path)) {
+                if ($this->isFile($path)) {
                     continue;
                 }
 

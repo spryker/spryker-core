@@ -65,4 +65,9 @@ interface StoreToStoreInterface
      * @return string
      */
     public function getCurrentStoreSelectedCurrencyIsoCode();
+
+    /**
+     * @return string[]
+     */
+    public function getStoresWithSharedPersistence();
 }

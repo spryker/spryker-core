@@ -9,6 +9,7 @@ namespace Spryker\Zed\Stock\Business;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 
 interface StockFacadeInterface
@@ -27,6 +28,19 @@ interface StockFacadeInterface
 
     /**
      * Specification:
+     * - Checks if the concrete product with the provided SKU has any stock type that is set as "never out of stock".
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer);
+
+    /**
+     * Specification:
      * - Returns the total stock amount of the concrete product for all its available stock types.
      *
      * @api
@@ -36,6 +50,19 @@ interface StockFacadeInterface
      * @return int
      */
     public function calculateStockForProduct($sku);
+
+    /**
+     * Specification:
+     *  - Returns the total stock amount of the concrete product for all its available stock types and store.
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer);
 
     /**
      * Specification:
@@ -172,4 +199,60 @@ interface StockFacadeInterface
      * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function getStockProductsByIdProduct($idProductConcrete);
+
+    /**
+     * Specification:
+     *  - Returns stock product by given id product
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer);
+
+    /**
+     * Specification:
+     *  - Gets stocks for store
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return array
+     */
+    public function getStockTypesForStore(StoreTransfer $storeTransfer);
+
+    /**
+     *
+     * Specification:
+     *  - Returns stock mapping per store/warehouse pair
+     *
+     *  [
+     *    'Warehouse1' => ['DE', 'US'],
+     *    'Warehouse1' => ['US']
+     * ]
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getWarehouseToStoreMapping();
+
+    /**
+     * Specification:
+     *  - Returns stock configuration mock per store/warehouse pair:
+     *
+     * [
+     *     'DE' => ['Warehouse1']
+     *     'US' => [ 'Warehouse1', 'Warehouse2'],
+     * ]
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getStoreToWarehouseMapping();
 }

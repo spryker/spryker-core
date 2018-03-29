@@ -7,21 +7,42 @@
 
 namespace Spryker\Zed\CompanyUser\Business\Model;
 
+use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 
 interface CompanyUserPluginExecutorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function executeCompanyUserSavePlugins(CompanyUserTransfer $companyUserTransfer): void;
+    public function executePreSavePlugins(
+        CompanyUserResponseTransfer $companyUserResponseTransfer
+    ): CompanyUserResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function executePostSavePlugins(
+        CompanyUserResponseTransfer $companyUserResponseTransfer
+    ): CompanyUserResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function executePostCreatePlugins(
+        CompanyUserResponseTransfer $companyUserResponseTransfer
+    ): CompanyUserResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function executeCompanyUserHydrationPlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
+    public function executeHydrationPlugins(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
 }

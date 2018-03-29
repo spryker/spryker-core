@@ -7,39 +7,64 @@
 
 namespace Spryker\Client\Permission\PermissionFinder;
 
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
+
 class PermissionFinder implements PermissionFinderInterface
 {
     /**
-     * @var \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface[]
+     * @var \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface[]
      */
-    protected $executablePermissionPlugins = [];
+    protected $permissionPlugins = [];
 
     /**
-     * @param \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface[] $permissionPlugins
+     * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface[] $permissionPlugins
      */
     public function __construct(array $permissionPlugins)
     {
-        $this->executablePermissionPlugins = $this->indexPermissions($permissionPlugins);
+        $this->permissionPlugins = $this->indexPermissions($permissionPlugins);
     }
 
     /**
      * @param string $permissionKey
      *
-     * @return \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface|null
+     * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface|null
      */
     public function findPermissionPlugin($permissionKey)
     {
-        if (!isset($this->executablePermissionPlugins[$permissionKey])) {
+        if (!isset($this->permissionPlugins[$permissionKey])) {
             return null;
         }
 
-        return $this->executablePermissionPlugins[$permissionKey];
+        return $this->permissionPlugins[$permissionKey];
     }
 
     /**
-     * @param \Spryker\Client\Permission\Plugin\PermissionPluginInterface[] $permissionPlugins
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getRegisteredPermissionCollection(): PermissionCollectionTransfer
+    {
+        $permissionCollectionTransfer = new PermissionCollectionTransfer();
+
+        foreach ($this->permissionPlugins as $permissionPlugin) {
+            $permissionTransfer = (new PermissionTransfer())
+                ->setKey($permissionPlugin->getKey());
+
+            if ($permissionPlugin instanceof ExecutablePermissionPluginInterface) {
+                $permissionTransfer->setConfigurationSignature($permissionPlugin->getConfigurationSignature());
+            }
+
+            $permissionCollectionTransfer->addPermission($permissionTransfer);
+        }
+
+        return $permissionCollectionTransfer;
+    }
+
+    /**
+     * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[] $permissionPlugins
      *
-     * @return \Spryker\Client\Permission\Plugin\ExecutablePermissionPluginInterface[]
+     * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface[]
      */
     protected function indexPermissions(array $permissionPlugins)
     {

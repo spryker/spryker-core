@@ -7,17 +7,20 @@
 namespace SprykerTest\Zed\Availability\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ProductConcreteAvailabilityRequestBuilder;
+use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use InvalidArgumentException;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
+use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Zed\Availability\Business\AvailabilityFacade;
 
 /**
@@ -34,6 +37,7 @@ class AvailabilityFacadeTest extends Unit
 {
     const ABSTRACT_SKU = '123_availability_test';
     const CONCRETE_SKU = '123_availability_test-concrete';
+    const ID_STORE = 1;
 
     /**
      * @return void
@@ -44,7 +48,7 @@ class AvailabilityFacadeTest extends Unit
 
         $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['is_never_out_of_stock' => true]);
 
-        $isProductSellable = $availabilityFacade->isProductSellable(self::CONCRETE_SKU, 1);
+        $isProductSellable = $availabilityFacade->isProductSellable(self::CONCRETE_SKU, self::ID_STORE);
 
         $this->assertTrue($isProductSellable);
     }
@@ -58,7 +62,7 @@ class AvailabilityFacadeTest extends Unit
 
         $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 0]);
 
-        $isProductSellable = $availabilityFacade->isProductSellable(self::CONCRETE_SKU, 1);
+        $isProductSellable = $availabilityFacade->isProductSellable(self::CONCRETE_SKU, self::ID_STORE);
 
         $this->assertFalse($isProductSellable);
     }
@@ -72,7 +76,7 @@ class AvailabilityFacadeTest extends Unit
 
         $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 5]);
 
-        $isProductSellable = $availabilityFacade->isProductSellable(self::CONCRETE_SKU, 1);
+        $isProductSellable = $availabilityFacade->isProductSellable(self::CONCRETE_SKU, self::ID_STORE);
 
         $this->assertTrue($isProductSellable);
     }
@@ -91,16 +95,6 @@ class AvailabilityFacadeTest extends Unit
         $calculatedQuantity = $availabilityFacade->calculateStockForProduct(self::CONCRETE_SKU);
 
         $this->assertSame($quantity, $calculatedQuantity);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCalculateStockWhenProductDoesNotExistsShouldThrowException()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $availabilityFacade = $this->createAvailabilityFacade();
-        $availabilityFacade->calculateStockForProduct(self::CONCRETE_SKU);
     }
 
     /**
@@ -191,9 +185,32 @@ class AvailabilityFacadeTest extends Unit
 
         $availabilityFacade->updateAvailability(self::CONCRETE_SKU);
 
-        $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(self::CONCRETE_SKU);
+        $availabilityEntity = SpyAvailabilityQuery::create()
+            ->findOneBySku(self::CONCRETE_SKU);
 
         $this->assertSame(0, $availabilityEntity->getQuantity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveProductAvailabilityForStoreShouldStoreAvailability()
+    {
+        $availabilityFacade = $this->createAvailabilityFacade();
+
+        $storeTransfer = (new StoreBuilder([StoreTransfer::NAME => 'DE', StoreTransfer::ID_STORE => self::ID_STORE]))->build();
+
+        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 0]);
+
+        $availabilityFacade->saveProductAvailabilityForStore(self::CONCRETE_SKU, 2, $storeTransfer);
+
+        $productConcreteAvailabilityRequestTransfer = (new ProductConcreteAvailabilityRequestBuilder([
+            ProductConcreteAvailabilityRequestTransfer::SKU => self::CONCRETE_SKU,
+        ]))->build();
+
+        $productConcreteAvailabilityTransfer = $availabilityFacade->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
+
+        $this->assertSame(2, $productConcreteAvailabilityTransfer->getAvailability());
     }
 
     /**
@@ -225,8 +242,10 @@ class AvailabilityFacadeTest extends Unit
         $productEntity->setFkProductAbstract($productAbstractEntity->getIdProductAbstract());
         $productEntity->save();
 
-        $stockEntity = new SpyStock();
-        $stockEntity->setName('test-case-warehause');
+        $stockEntity = (new SpyStockQuery())
+            ->filterByName('Warehouse1')
+            ->findOneOrCreate();
+
         $stockEntity->save();
 
         $stockProductEntity = new SpyStockProduct();
@@ -244,9 +263,10 @@ class AvailabilityFacadeTest extends Unit
     protected function createQuoteTransfer()
     {
         $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku(self::CONCRETE_SKU);
-        $itemTransfer->setQuantity(1);
+        $itemTransfer->setQuantity(self::ID_STORE);
         $quoteTransfer->addItem($itemTransfer);
 
         return $quoteTransfer;
@@ -262,11 +282,13 @@ class AvailabilityFacadeTest extends Unit
         $availabilityAbstractEntity = new SpyAvailabilityAbstract();
         $availabilityAbstractEntity->setAbstractSku(self::ABSTRACT_SKU);
         $availabilityAbstractEntity->setQuantity($quantity);
+        $availabilityAbstractEntity->setFkStore(static::ID_STORE);
         $availabilityAbstractEntity->save();
 
         $availabilityEntity = new SpyAvailability();
         $availabilityEntity->setFkAvailabilityAbstract($availabilityAbstractEntity->getIdAvailabilityAbstract());
         $availabilityEntity->setQuantity($quantity);
+        $availabilityEntity->setFkStore(static::ID_STORE);
         $availabilityEntity->setSku(self::CONCRETE_SKU);
         $availabilityEntity->save();
 
