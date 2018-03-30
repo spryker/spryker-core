@@ -23,8 +23,9 @@ class ItemType extends AbstractType
 {
     public const FIELD_SKU = 'sku';
     public const FIELD_QUANTITY = 'quantity';
-    public const FIELD_UNIT_GROSS_PRICE = 'unitGrossPrice';
 
+    public const FIELD_OFFER_FEE = 'offerFee';
+    public const FIELD_UNIT_GROSS_PRICE = 'unitGrossPrice';
     public const FIELD_OFFER_DISCOUNT = 'offerDiscount';
     public const FIELD_UNIT_SUBTOTAL_AGGREGATION = 'unitSubtotalAggregation';
     public const FIELD_SUM_SUBTOTAL_AGGREGATION = 'sumSubtotalAggregation';
@@ -58,6 +59,7 @@ class ItemType extends AbstractType
             ->addQuantityField($builder, $options)
             ->addUnitGrossPriceField($builder, $options)
             ->addOfferDiscountField($builder, $options)
+            ->addOfferFeeField($builder, $options)
             ->addUnitSubtotalAggregationPriceField($builder, $options)
             ->addSumSubtotalAggregationPriceField($builder, $options)
             ->addForcedUnitGrossPriceField($builder, $options);
@@ -75,26 +77,6 @@ class ItemType extends AbstractType
             'label' => 'SKU',
             'required' => false,
         ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addPurchasingUnitGrossPriceField(FormBuilderInterface $builder, array $options)
-    {
-//        $builder->add(static::FIELD_UNIT_GROSS_PRICE, TextType::class, [
-//            'label' => 'Unit Gross Price',
-//            'required' => false,
-//            'disabled' => true,
-//            'constraints' => [
-//                $this->createNumberConstraint($options),
-//            ],
-//        ]);
 
         return $this;
     }
@@ -166,16 +148,15 @@ class ItemType extends AbstractType
      *
      * @return $this
      */
-    protected function addFeePriceField(FormBuilderInterface $builder, array $options)
+    protected function addOfferFeeField(FormBuilderInterface $builder, array $options)
     {
-//        $builder->add(static::FIELD_UNIT_GROSS_PRICE, TextType::class, [
-//            'label' => 'Unit Gross Price',
-//            'required' => false,
-//            'disabled' => true,
-//            'constraints' => [
-//                $this->createNumberConstraint($options),
-//            ],
-//        ]);
+        $builder->add(static::FIELD_OFFER_FEE, TextType::class, [
+            'label' => 'Fee',
+            'required' => false,
+            'constraints' => [
+                $this->createNumberConstraint($options),
+            ],
+        ]);
 
         return $this;
     }

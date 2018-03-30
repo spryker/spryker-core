@@ -8,6 +8,7 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 class OfferItemSubtotalAggregationPlugin implements \Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface
 {
     //todo: move to BL
+    //todo: move to Offer module
     //Guide: This calculator plugin must be placed under ItemSubtotalAggregatorPlugin
     //after the generic logic is executed
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
