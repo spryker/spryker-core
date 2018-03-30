@@ -18,6 +18,8 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
     public const PROPEL_QUERY_COMPANY_BUSINESS_UNIT = 'PROPEL_QUERY_COMPANY_BUSINESS_UNIT';
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
     public const FACADE_COMPANY = 'FACADE_COMPANY';
+    public const COMPANY_BUSINESS_UNIT_FORM_EXPANDER_PLUGINS = 'COMPANY_BUSINESS_UNIT_FORM_EXPANDER_PLUGINS';
+    public const COMPANY_BUSINESS_UNIT_EDIT_FORM_EXPANDER_PLUGINS = 'COMPANY_BUSINESS_UNIT_EDIT_FORM_EXPANDER_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -30,6 +32,8 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
         $container = $this->addCompanyBusinessUnitQuery($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
         $container = $this->addCompanyFacade($container);
+        $container = $this->addCompanyBusinessUnitFormExpanderPlugins($container);
+        $container = $this->addCompanyBusinessUnitEditFormExpanderPlugins($container);
 
         return $container;
     }
@@ -78,5 +82,49 @@ class CompanyBusinessUnitGuiDependencyProvider extends AbstractBundleDependencyP
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyBusinessUnitFormExpanderPlugins(Container $container): Container
+    {
+        $container[static::COMPANY_BUSINESS_UNIT_FORM_EXPANDER_PLUGINS] = function (Container $container) {
+            return $this->getCompanyBusinessUnitFormExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyBusinessUnitEditFormExpanderPlugins(Container $container): Container
+    {
+        $container[static::COMPANY_BUSINESS_UNIT_EDIT_FORM_EXPANDER_PLUGINS] = function (Container $container) {
+            return $this->getCompanyBusinessUnitEditFormExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitGuiExtension\Communication\Plugin\CompanyBusinessUnitFormExpanderPluginInterface[]
+     */
+    protected function getCompanyBusinessUnitFormExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitGuiExtension\Communication\Plugin\CompanyBusinessUnitFormExpanderPluginInterface[]
+     */
+    protected function getCompanyBusinessUnitEditFormExpanderPlugins(): array
+    {
+        return [];
     }
 }

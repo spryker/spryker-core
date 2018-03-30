@@ -34,7 +34,7 @@ class EditCompanyBusinessUnitController extends AbstractController
 
         $dataProvider = $this->getFactory()->createCompanyBusinessUnitFormDataProvider();
         $form = $this->getFactory()
-            ->getCompanyBusinessUnitForm(
+            ->getCompanyBusinessUnitEditForm(
                 $dataProvider->getData($idCompanyBusinessUnit),
                 $dataProvider->getOptions($idCompanyBusinessUnit)
             )

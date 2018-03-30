@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\CompanyUnitAddressGui\Communication;
 
+use Spryker\Zed\CompanyUnitAddressGui\Communication\Form\CompanyBusinessUnitAddressChoiceFormType;
 use Spryker\Zed\CompanyUnitAddressGui\Communication\Form\CompanyUnitAddressForm;
+use Spryker\Zed\CompanyUnitAddressGui\Communication\Form\DataProvider\CompanyBusinessUnitAddressFormDataProvider;
 use Spryker\Zed\CompanyUnitAddressGui\Communication\Form\DataProvider\CompanyUnitAddressFormDataProvider;
 use Spryker\Zed\CompanyUnitAddressGui\Communication\Table\CompanyUnitAddressTable;
 use Spryker\Zed\CompanyUnitAddressGui\CompanyUnitAddressGuiDependencyProvider;
@@ -113,5 +115,23 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
             $this->getCompanyFacade(),
             $this->getCountryFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressGui\Communication\Form\DataProvider\CompanyBusinessUnitAddressFormDataProvider
+     */
+    public function createCompanyBusinessUnitAddressChoiceFormDataProvider(): CompanyBusinessUnitAddressFormDataProvider
+    {
+        return new CompanyBusinessUnitAddressFormDataProvider(
+            $this->getCompanyUnitAddressFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressGui\Communication\Form\CompanyBusinessUnitAddressChoiceFormType
+     */
+    public function createCompanyBusinessUnitAddressChoiceFormType(): CompanyBusinessUnitAddressChoiceFormType
+    {
+        return new CompanyBusinessUnitAddressChoiceFormType();
     }
 }

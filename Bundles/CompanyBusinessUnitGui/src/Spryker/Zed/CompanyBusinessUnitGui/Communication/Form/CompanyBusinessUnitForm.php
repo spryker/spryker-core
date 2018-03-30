@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
 /**
- * @method \Spryker\Zed\CompanyGui\Communication\CompanyGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyBusinessUnitGui\Communication\CompanyBusinessUnitGuiCommunicationFactory getFactory()
  */
 class CompanyBusinessUnitForm extends AbstractType
 {
@@ -60,7 +60,9 @@ class CompanyBusinessUnitForm extends AbstractType
             ->addIdCompanyBusinessUnitField($builder)
             ->addNameField($builder)
             ->addIbanField($builder)
-            ->addBicField($builder);
+            ->addBicField($builder)
+            ->addPluginForms($builder);
+        ;
     }
 
     /**
@@ -159,5 +161,19 @@ class CompanyBusinessUnitForm extends AbstractType
             new NotBlank(),
             new Length(['max' => 100]),
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     */
+    protected function addPluginForms(FormBuilderInterface $builder): AbstractType
+    {
+        foreach ($this->getFactory()->getCompanyBusinessUnitFormPlugins() as $formPlugin) {
+            $formPlugin->buildForm($builder);
+        }
+
+        return $this;
     }
 }

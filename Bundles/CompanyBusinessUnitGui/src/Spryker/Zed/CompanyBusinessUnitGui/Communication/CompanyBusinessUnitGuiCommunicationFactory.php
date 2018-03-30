@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication;
 
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitEditForm;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyBusinessUnitFormDataProvider;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Table\CompanyBusinessUnitTable;
@@ -38,6 +39,17 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
     public function getCompanyBusinessUnitForm($data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(CompanyBusinessUnitForm::class, $data, $options);
+    }
+
+    /**
+     * @param array|null $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCompanyBusinessUnitEditForm($data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(CompanyBusinessUnitEditForm::class, $data, $options);
     }
 
     /**
@@ -73,5 +85,21 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
     public function getCompanyFacade(): CompanyBusinessUnitGuiToCompanyFacadeInterface
     {
         return $this->getProvidedDependency(CompanyBusinessUnitGuiDependencyProvider::FACADE_COMPANY);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitGuiExtension\Communication\Plugin\CompanyBusinessUnitFormExpanderPluginInterface[]
+     */
+    public function getCompanyBusinessUnitFormPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyBusinessUnitGuiDependencyProvider::COMPANY_BUSINESS_UNIT_FORM_EXPANDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitGuiExtension\Communication\Plugin\CompanyBusinessUnitFormExpanderPluginInterface[]
+     */
+    public function getCompanyBusinessUnitEditFormPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyBusinessUnitGuiDependencyProvider::COMPANY_BUSINESS_UNIT_EDIT_FORM_EXPANDER_PLUGINS);
     }
 }
