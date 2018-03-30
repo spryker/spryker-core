@@ -4,8 +4,8 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/company-unit-address-gui-extension": "^1.0.0",
-    "spryker/company-unit-address-label": "1.0.0",
+    "spryker/company-unit-address-gui-extension": "^2.0.0",
+    "spryker/company-unit-address-label": "1.1.0",
     "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
